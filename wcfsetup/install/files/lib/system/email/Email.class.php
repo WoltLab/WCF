@@ -5,9 +5,7 @@ use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\mime\AbstractMimePart;
 use wcf\system\email\mime\IRecipientAwareMimePart;
-use wcf\system\email\mime\TextMimePart;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
 
@@ -78,42 +76,16 @@ class Email {
 	protected $extraHeaders = [];
 	
 	/**
-	 * Text parts of this email
-	 * @var	array
+	 * The body of this Email.
+	 * @var	AbstractMimePart
 	 */
-	protected $text = [];
-	
-	/**
-	 * Attachments of this email
-	 * @var	array
-	 */
-	protected $attachments = [];
-	
-	/**
-	 * Boundary between the 'Text' parts of this email
-	 * @var	string
-	 */
-	private $textBoundary;
-	
-	/**
-	 * Boundary between the mime parts of this email
-	 * @var	string
-	 */
-	private $mimeBoundary;
+	protected $content = null;
 	
 	/**
 	 * Mail host for use in the Message-Id
 	 * @var	string
 	 */
 	private static $host = null;
-	
-	/**
-	 * Generates boundaries for the mime parts.
-	 */
-	public function __construct() {
-		$this->textBoundary = "WoltLab_Community_Framework=_".StringUtil::getRandomID();
-		$this->mimeBoundary = "WoltLab_Community_Framework=_".StringUtil::getRandomID();
-	}
 	
 	/**
 	 * Returns the mail host for use in the Message-Id.
@@ -338,7 +310,10 @@ class Email {
 				throw new \DomainException("The given type '".$type."' is invalid. Must be one of 'to', 'cc', 'bcc'.");
 		}
 		
-		$this->recipients[$recipient->getAddress()] = [$type, $recipient];
+		$this->recipients[$recipient->getAddress()] = [
+			'type' => $type,
+			'mailbox' => $recipient
+		];
 	}
 	
 	/**
@@ -376,60 +351,12 @@ class Email {
 	}
 	
 	/**
-	 * Adds a mime part to this email. Should be either \wcf\system\email\mime\TextMimePart
-	 * or \wcf\system\email\mime\AttachmentMimePart.
-	 * The given priority determines the ordering within the Email. A higher priority
-	 * mime part will be further down the email (see RFC 2046, 5.1.4).
+	 * Sets the body of this email.
 	 * 
-	 * @param	AbstractMimePart	$part
-	 * @param	integer			$priority
-	 * @throws	\InvalidArgumentException
-	 * @throws	\DomainException
+	 * @param	AbstractMimePart	$body
 	 */
-	public function addMimePart(AbstractMimePart $part, $priority = 1000) {
-		foreach ($part->getAdditionalHeaders() as $header) {
-			$header[0] = mb_strtolower($header[0]);
-			if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
-				throw new \InvalidArgumentException("The header '".$header[0]."' may not be set. Use the proper methods.");
-			}
-			
-			if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {
-				throw new \DomainException("The header '".$header[0]."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
-			}
-		}
-		
-		switch ($part->getContentTransferEncoding()) {
-			case 'base64':
-			case 'quoted-printable':
-			break;
-			default:
-				throw new \DomainException("The Content-Transfer-Encoding '".$part->getContentTransferEncoding()."' may not be set. You may only use 'quoted-printable' or 'base64'.");
-		}
-		
-		if ($part instanceof TextMimePart) {
-			$this->text[] = [$priority, $part];
-		}
-		else {
-			$this->attachments[] = [$priority, $part];
-		}
-	}
-	
-	/**
-	 * Returns the text mime parts of this email.
-	 * 
-	 * @return	array
-	 */
-	public function getText() {
-		return $this->text;
-	}
-	
-	/**
-	 * Returns the attachments (i.e. the mime parts that are not a TextMimePart) of this email.
-	 * 
-	 * @return	array
-	 */
-	public function getAttachments() {
-		return $this->attachments;
+	public function setBody(AbstractMimePart $body) {
+		$this->body = $body;
 	}
 	
 	/**
@@ -445,8 +372,8 @@ class Email {
 		$to = [];
 		$cc = [];
 		foreach ($this->getRecipients() as $recipient) {
-			if ($recipient[0] == 'to') $to[] = $recipient[1];
-			else if ($recipient[0] == 'cc') $cc[] = $recipient[1];
+			if ($recipient['type'] == 'to') $to[] = $recipient['mailbox'];
+			else if ($recipient['type'] == 'cc') $cc[] = $recipient['mailbox'];
 		}
 		$headers[] = ['from', (string) $this->getSender()];
 		if ($this->getReplyTo()->getAddress() !== $this->getSender()->getAddress()) {
@@ -480,22 +407,14 @@ class Email {
 		}
 		$headers[] = ['mime-version', '1.0'];
 		
-		if (!$this->text) {
-			throw new \LogicException("Cannot generate message headers, you must specify at least one 'Text' part.");
+		if (!$this->body) {
+			throw new \LogicException("Cannot generate message headers, you must set a body.");
 		}
-		if ($this->attachments) {
-			$headers[] = ['content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\""];
+		$headers[] = ['content-type', $this->body->getContentType()];
+		if ($this->body->getContentTransferEncoding()) {
+			$headers[] = ['content-transfer-encoding', $this->body->getContentTransferEncoding()];
 		}
-		else {
-			if (count($this->text) > 1) {
-				$headers[] = ['content-type', "multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\""];
-			}
-			else {
-				$headers[] = ['content-type', $this->text[0][1]->getContentType()];
-				$headers[] = ['content-transfer-encoding', $this->text[0][1]->getContentTransferEncoding()];
-				$headers = array_merge($headers, $this->text[0][1]->getAdditionalHeaders());
-			}
-		}
+		$headers = array_merge($headers, $this->body->getAdditionalHeaders());
 		
 		return array_merge($headers, $this->extraHeaders);
 	}
@@ -518,80 +437,18 @@ class Email {
 	 * @return	string
 	 */
 	public function getBodyString() {
-		$text = "";
-		$body = "";
-		
-		if (count($this->text) > 1 || $this->attachments) {
-			$body .= StringUtil::wordwrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
-			$body .= "\r\n\r\n";
+		switch ($this->body->getContentTransferEncoding()) {
+			case 'quoted-printable':
+				return quoted_printable_encode($this->body->getContent());
+			break;
+			case 'base64':
+				return chunk_split(base64_encode($this->body->getContent()));
+			break;
+			case '':
+				return $this->body->getContent();
 		}
 		
-		usort($this->text, function ($a, $b) {
-			return $a[0] - $b[0];
-		});
-		foreach ($this->text as $part) {
-			if (count($this->text) > 1) {
-				$text .= "--".$this->textBoundary."\r\n";
-			}
-			if (count($this->text) > 1 || $this->attachments) {
-				$text .= "content-type: ".$part[1]->getContentType()."\r\n";
-				$text .= "content-transfer-encoding: ".$part[1]->getContentTransferEncoding()."\r\n";
-				if ($part[1]->getAdditionalHeaders()) {
-					$text .= implode("\r\n", array_map(function ($item) {
-						return implode(': ', $item);
-					}, $part[1]->getAdditionalHeaders()))."\r\n";
-				}
-				$text .= "\r\n";
-			}
-			switch ($part[1]->getContentTransferEncoding()) {
-				case 'quoted-printable':
-					$text .= quoted_printable_encode($part[1]->getContent());
-				break;
-				case 'base64':
-					$text .= chunk_split(base64_encode($part[1]->getContent()));
-				break;
-			}
-			$text .= "\r\n";
-		}
-		if (count($this->text) > 1) {
-			$text .= "--".$this->textBoundary."--\r\n";
-		}
-		
-		if ($this->attachments) {
-			$body .= "--".$this->mimeBoundary."\r\n";
-			if (count($this->text) > 1) {
-				$body .= "Content-Type: multipart/alternative;\r\n   boundary=\"".$this->textBoundary."\"\r\n";
-				$body .= "\r\n";
-			}
-			$body .= $text;
-			
-			foreach ($this->attachments as $part) {
-				$body .= "\r\n--".$this->mimeBoundary."\r\n";
-				$body .= "content-type: ".$part[1]->getContentType()."\r\n";
-				$body .= "content-transfer-encoding: ".$part[1]->getContentTransferEncoding()."\r\n";
-				if ($part[1]->getAdditionalHeaders()) {
-					$body .= implode("\r\n", array_map(function ($item) {
-						return implode(': ', $item);
-					}, $part[1]->getAdditionalHeaders()))."\r\n";
-				}
-				$body .= "\r\n";
-				switch ($part[1]->getContentTransferEncoding()) {
-					case 'quoted-printable':
-						$body .= quoted_printable_encode($part[1]->getContent());
-					break;
-					case 'base64':
-						$body .= chunk_split(base64_encode($part[1]->getContent()));
-					break;
-				}
-				$body .= "\r\n";
-			}
-			$body .= "--".$this->mimeBoundary."--\r\n";
-		}
-		else {
-			$body .= $text;
-		}
-		
-		return $body;
+		throw new \LogicException('Unreachable');
 	}
 	
 	/**
@@ -608,21 +465,23 @@ class Email {
 		foreach ($this->recipients as $recipient) {
 			$mail = clone $this;
 			
-			if ($recipient[1] instanceof UserMailbox) {
-				$mail->addHeader('X-Community-Framework-Recipient', $recipient[1]->getUser()->username);
+			if ($recipient['mailbox'] instanceof UserMailbox) {
+				$mail->addHeader('X-Community-Framework-Recipient', $recipient['mailbox']->getUser()->username);
 			}
 			
-			foreach (array_merge($mail->getText(), $mail->getAttachments()) as $mimePart) {
-				if ($mimePart[1] instanceof IRecipientAwareMimePart) $mimePart[1]->setRecipient($recipient[1]);
-			}
+			if ($this->body instanceof IRecipientAwareMimePart) $this->body->setRecipient($recipient['mailbox']);
 			
-			$data = ['mail' => $mail, 'recipient' => $recipient, 'skip' => false];
+			$data = [
+				'mail' => $mail,
+				'recipient' => $recipient,
+				'skip' => false
+			];
 			EventHandler::getInstance()->fireAction($this, 'getJobs', $data);
 			
 			// an event decided that this email should be skipped
 			if ($data['skip']) continue;
 			
-			$jobs[] = new EmailDeliveryBackgroundJob($mail, $recipient[1]);
+			$jobs[] = new EmailDeliveryBackgroundJob($mail, $recipient['mailbox']);
 		}
 		
 		return $jobs;
@@ -642,11 +501,18 @@ class Email {
 	}
 	
 	/**
+	 * @see	Email::getEmail()
+	 */
+	public function __toString() {
+		return $this->getEmail();
+	}
+	
+	/**
 	 * Returns the email RFC 2822 representation of this email.
 	 * 
 	 * @return	string
 	 */
-	public function __toString() {
+	public function getEmail() {
 		return $this->getHeaderString()."\r\n\r\n".$this->getBodyString();
 	}
 }
