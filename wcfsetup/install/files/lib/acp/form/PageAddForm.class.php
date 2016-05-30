@@ -4,6 +4,7 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
+use wcf\data\language\Language;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
@@ -97,6 +98,12 @@ class PageAddForm extends AbstractForm {
 	public $availableBoxes = [];
 	
 	/**
+	 * list of available languages
+	 * @var	Language[]
+	 */
+	public $availableLanguages = [];
+	
+	/**
 	 * page custom URL
 	 * @var	string[]
 	 */
@@ -144,6 +151,9 @@ class PageAddForm extends AbstractForm {
 		$applicationList = new ApplicationList();
 		$applicationList->readObjects();
 		$this->availableApplications = $applicationList->getObjects();
+		
+		// get available languages
+		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 		
 		// get boxes
 		$boxList = new BoxList();
@@ -209,7 +219,7 @@ class PageAddForm extends AbstractForm {
 		
 		$this->validateApplicationPackageID();
 		
-		$this->validateCustomUrl();
+		$this->validateCustomUrls();
 		
 		$this->validateBoxIDs();
 	}
@@ -271,10 +281,49 @@ class PageAddForm extends AbstractForm {
 	 * 
 	 * @throws	UserInputException
 	 */
-	protected function validateCustomUrl() {
-		foreach ($this->customURL as $type => $customURL) {
-			if (!empty($customURL) && !RouteHandler::isValidCustomUrl($customURL)) {
-				throw new UserInputException('customURL_' . $type, 'invalid');
+	protected function validateCustomUrls() {
+		if (empty($this->customURL) && $this->pageType != 'system') {
+			if ($this->isMultilingual) {
+				$language1 = reset($this->availableLanguages);
+				throw new UserInputException('customURL_'.$language1->languageID);
+			}
+			else {
+				throw new UserInputException('customURL_0');
+			}
+		} 
+		
+		foreach ($this->customURL as $languageID => $customURL) {
+			$this->validateCustomUrl($languageID, $customURL);
+		}
+	}
+	
+	/**
+	 * Validates given custom url.
+	 * 
+	 * @param       integer                 $languageID
+	 * @param       string                  $customURL
+	 *
+	 * @throws	UserInputException
+	 */
+	protected function validateCustomUrl($languageID, $customURL) {
+		if (empty($customURL)) {
+			if ($this->pageType != 'system') {
+				throw new UserInputException('customURL_' . $languageID, 'invalid');
+			}
+		}
+		else if (!RouteHandler::isValidCustomUrl($customURL)) {
+			throw new UserInputException('customURL_' . $languageID, 'invalid');
+		}
+		else {
+			// check whether url is already in use
+			if (!PageEditor::isUniqueCustomUrl($customURL, $this->applicationPackageID)) {
+				throw new UserInputException('customURL_' . $languageID, 'notUnique');
+			}
+			
+			foreach ($this->customURL as $languageID2 => $customURL2) {
+				if ($languageID != $languageID2 && $customURL = $customURL2) {
+					throw new UserInputException('customURL_' . $languageID, 'notUnique');
+				}
 			}
 		}
 	}
@@ -429,7 +478,7 @@ class PageAddForm extends AbstractForm {
 			'metaKeywords' => $this->metaKeywords,
 			'boxIDs' => $this->boxIDs,
 			'availableApplications' => $this->availableApplications,
-			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
+			'availableLanguages' => $this->availableLanguages,
 			'availableBoxes' => $this->availableBoxes,
 			'pageNodeList' => (new PageNodeTree())->getNodeList()
 		]);

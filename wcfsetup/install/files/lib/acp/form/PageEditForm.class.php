@@ -96,6 +96,22 @@ class PageEditForm extends PageAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validateCustomUrl($languageID, $customURL) {
+		if ($this->pageType == 'system') {
+			if ($customURL != $this->page->controllerCustomURL) {
+				parent::validateCustomUrl($languageID, $customURL);
+			}
+		}
+		else {
+			if ($customURL != $this->page->getPageContent()[$languageID]) {
+				parent::validateCustomUrl($languageID, $customURL);
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 		

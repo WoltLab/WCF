@@ -123,11 +123,11 @@
 				</dl>
 				
 				{if !$isMultilingual}
-					<dl{if $errorField == 'customURL'} class="formError"{/if}>
+					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
 						<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
 						<dd>
 							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" />
-							{if $errorField == 'customURL'}
+							{if $errorField == 'customURL_0'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
@@ -140,11 +140,12 @@
 					</dl>
 				{else}
 					{foreach from=$availableLanguages item=availableLanguage}
-						<dl{if $errorField == 'customURL'} class="formError"{/if}>
+						{assign var='__errorFieldName' value='customURL_'|concat:$availableLanguage->languageID}
+						<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 							<dt><label for="customURL{@$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang} ({$availableLanguage->languageName})</label></dt>
 							<dd>
 								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" />
-								{if $errorField == 'customURL'}
+								{if $errorField == $__errorFieldName}
 									<small class="innerError">
 										{if $errorType == 'empty'}
 											{lang}wcf.global.form.error.empty{/lang}
