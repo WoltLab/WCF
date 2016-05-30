@@ -26,8 +26,10 @@
 	.collapsibleButton,
 	.columnMark,
 	.statusDisplay,
+	.dialogContainer,
+	.formSubmit,
 	.tabMenu > ul > li:not(.active),
-	.userProfileButtonContainer,
+	
 	.showMore, 
 	
 	/* box layout */
@@ -44,10 +46,14 @@
 	.messageAuthor .badgeOnline,
 
 	/* comment layout */
-	.jsCommentAdd {
+	.jsCommentAdd,
+	
+	/* user profile */
+	.userProfileCoverPhoto,
+	.userProfileButtonContainer,
+	.likeTypeSelection {
 		display: none !important;
 	}
-	
 	
 	/** minor optimizations **/
 	.main {
@@ -71,5 +77,9 @@
 		&::after {
 			content: ")";
 		}
+	}
+	
+	.userProfileUser {
+		position: static !important;
 	}
 }
