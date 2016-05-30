@@ -83,7 +83,7 @@ class SmtpEmailTransport implements EmailTransport {
 	 * @param	string	$username	username to use for authentication
 	 * @param	string	$password	corresponding password
 	 * @param	string	$starttls	one of 'none', 'may' and 'encrypt'
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = MAIL_SMTP_STARTTLS) {
 		$this->host = $host;
@@ -98,7 +98,7 @@ class SmtpEmailTransport implements EmailTransport {
 				$this->starttls = $starttls;
 			break;
 			default:
-				throw new SystemException("Invalid STARTTLS preference '".$starttls."'. Must be one of 'none', 'may' and 'encrypt'.");
+				throw new \InvalidArgumentException("Invalid STARTTLS preference '".$starttls."'. Must be one of 'none', 'may' and 'encrypt'.");
 		}
 	}
 	
@@ -174,6 +174,8 @@ class SmtpEmailTransport implements EmailTransport {
 	/**
 	 * Connects to the server and enables STARTTLS if available. Bails
 	 * out if STARTTLS is not available and connection is set to 'encrypt'.
+	 * 
+	 * @throws	PermanentFailure
 	 */
 	protected function connect() {
 		$this->connection = new RemoteFile($this->host, $this->port);
@@ -221,6 +223,8 @@ class SmtpEmailTransport implements EmailTransport {
 	
 	/**
 	 * Enables STARTTLS on the connection.
+	 * 
+	 * @throws	TransientFailure
 	 */
 	protected function starttls() {
 		$this->write("STARTTLS");
@@ -313,6 +317,7 @@ class SmtpEmailTransport implements EmailTransport {
 	 * @param	Mailbox		$envelopeTo
 	 * @throws	\Exception
 	 * @throws	PermanentFailure
+	 * @throws	TransientFailure
 	 * @throws	SystemException
 	 */
 	public function deliver(Email $email, Mailbox $envelopeTo) {

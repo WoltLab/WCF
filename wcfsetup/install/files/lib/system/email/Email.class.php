@@ -179,7 +179,7 @@ class Email {
 	 * Sets the part left of the at sign (@) in the email's 'Message-Id'.
 	 * 
 	 * @param	string		$messageID
-	 * @throws	SystemException
+	 * @throws	\DomainException
 	 */
 	public function setMessageID($messageID = null) {
 		if ($messageID === null) {
@@ -188,10 +188,10 @@ class Email {
 		}
 		
 		if (!preg_match('(^'.EmailGrammar::getGrammar('id-left').'$)', $messageID)) {
-			throw new SystemException("The given message id '".$messageID."' is invalid. Note: You must not specify the part right of the at sign (@).");
+			throw new \DomainException("The given message id '".$messageID."' is invalid. Note: You must not specify the part right of the at sign (@).");
 		}
 		if (strlen($messageID) > 50) {
-			throw new SystemException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 50 bytes.");
+			throw new \DomainException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 50 bytes.");
 		}
 		
 		$this->messageID = $messageID;
@@ -215,11 +215,11 @@ class Email {
 	 * Adds a message id to the email's 'In-Reply-To'.
 	 * 
 	 * @param	string		$messageID
-	 * @throws	SystemException
+	 * @throws	\DomainException
 	 */
 	public function addInReplyTo($messageID) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('msg-id').'$)', $messageID)) {
-			throw new SystemException("The given reference '".$messageID."' is invalid.");
+			throw new \DomainException("The given reference '".$messageID."' is invalid.");
 		}
 		
 		$this->inReplyTo[$messageID] = $messageID;
@@ -247,11 +247,11 @@ class Email {
 	 * Adds a message id to the email's 'References'.
 	 * 
 	 * @param	string		$messageID
-	 * @throws	SystemException
+	 * @throws	\DomainException
 	 */
 	public function addReferences($messageID) {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('msg-id').'$)', $messageID)) {
-			throw new SystemException("The given reference '".$messageID."' is invalid.");
+			throw new \DomainException("The given reference '".$messageID."' is invalid.");
 		}
 		
 		$this->references[$messageID] = $messageID;
@@ -326,7 +326,7 @@ class Email {
 	 * 
 	 * @param	Mailbox		$recipient
 	 * @param	string		$type		One of 'to', 'cc', 'bcc'
-	 * @throws	SystemException
+	 * @throws	\DomainException
 	 */
 	public function addRecipient(Mailbox $recipient, $type = 'to') {
 		switch ($type) {
@@ -335,7 +335,7 @@ class Email {
 			case 'bcc':
 			break;
 			default:
-				throw new SystemException("The given type '".$type."' is invalid. Must be one of 'to', 'cc', 'bcc'.");
+				throw new \DomainException("The given type '".$type."' is invalid. Must be one of 'to', 'cc', 'bcc'.");
 		}
 		
 		$this->recipients[$recipient->getAddress()] = [$type, $recipient];
@@ -364,12 +364,12 @@ class Email {
 	 * 
 	 * @param	string		$header
 	 * @param	string		$value
-	 * @throws	SystemException
+	 * @throws	\DomainException
 	 */
 	public function addHeader($header, $value) {
 		$header = mb_strtolower($header);
 		if (!StringUtil::startsWith($header, 'x-')) {
-			throw new SystemException("The header '".$header."' may not be set. You may only set user defined headers (starting with 'X-').");
+			throw new \DomainException("The header '".$header."' may not be set. You may only set user defined headers (starting with 'X-').");
 		}
 		
 		$this->extraHeaders[] = [$header, EmailGrammar::encodeQuotedPrintableHeader($value)];
@@ -383,17 +383,18 @@ class Email {
 	 * 
 	 * @param	AbstractMimePart	$part
 	 * @param	integer			$priority
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
+	 * @throws	\DomainException
 	 */
 	public function addMimePart(AbstractMimePart $part, $priority = 1000) {
 		foreach ($part->getAdditionalHeaders() as $header) {
 			$header[0] = mb_strtolower($header[0]);
 			if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
-				throw new SystemException("The header '".$header[0]."' may not be set. Use the proper methods.");
+				throw new \InvalidArgumentException("The header '".$header[0]."' may not be set. Use the proper methods.");
 			}
 			
 			if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {
-				throw new SystemException("The header '".$header[0]."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
+				throw new \DomainException("The header '".$header[0]."' may not be set. You may only set headers starting with 'X-' or 'Content-'.");
 			}
 		}
 		
@@ -402,7 +403,7 @@ class Email {
 			case 'quoted-printable':
 			break;
 			default:
-				throw new SystemException("The Content-Transfer-Encoding '".$part->getContentTransferEncoding()."' may not be set. You may only use 'quoted-printable' or 'base64'.");
+				throw new \DomainException("The Content-Transfer-Encoding '".$part->getContentTransferEncoding()."' may not be set. You may only use 'quoted-printable' or 'base64'.");
 		}
 		
 		if ($part instanceof TextMimePart) {
@@ -437,7 +438,7 @@ class Email {
 	 *       headers will fail.
 	 * 
 	 * @return	array
-	 * @throws	SystemException
+	 * @throws	\LogicException
 	 */
 	public function getHeaders() {
 		$headers = [];
@@ -456,7 +457,7 @@ class Email {
 			$headers[] = ['to', implode(",\r\n   ", $to)];
 		}
 		else {
-			throw new SystemException("Cannot generate message headers, you must specify a recipient.");
+			throw new \LogicException("Cannot generate message headers, you must specify a recipient.");
 		}
 		
 		if ($cc) {
@@ -466,7 +467,7 @@ class Email {
 			$headers[] = ['subject', EmailGrammar::encodeQuotedPrintableHeader($this->getSubject())];
 		}
 		else {
-			throw new SystemException("Cannot generate message headers, you must specify a subject.");
+			throw new \LogicException("Cannot generate message headers, you must specify a subject.");
 		}
 		
 		$headers[] = ['date', $this->getDate()->format(\DateTime::RFC2822)];
@@ -480,7 +481,7 @@ class Email {
 		$headers[] = ['mime-version', '1.0'];
 		
 		if (!$this->text) {
-			throw new SystemException("Cannot generate message headers, you must specify at least one 'Text' part.");
+			throw new \LogicException("Cannot generate message headers, you must specify at least one 'Text' part.");
 		}
 		if ($this->attachments) {
 			$headers[] = ['content-type', "multipart/mixed;\r\n   boundary=\"".$this->mimeBoundary."\""];
