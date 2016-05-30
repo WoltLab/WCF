@@ -325,10 +325,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
 		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum File Size]]></item>
-		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount.description"><![CDATA[The maximum number of attachments allowed per message.]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Can manage attachments]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -350,10 +351,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.user.profile.avatar"><![CDATA[Avatars]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.group.option.category.user.signature"><![CDATA[Signatures]]></item>
-		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Allowed File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Allowed Image Extensions]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canSeeAvatars"><![CDATA[Can see avatars of other users]]></item>
 		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Can upload their own avatar]]></item>
-		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum File Size]]></item>
+		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change their own email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit their own user title]]></item>
 		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can send emails to other users]]></item>
@@ -417,7 +418,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
-		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[“About Me” maximum length]]></item>
+		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum “About Me” Length]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
@@ -692,9 +693,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.cache_source_redis_host.description"><![CDATA[The server’s address, for example “localhost” or “10.0.13.37:1337”.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from “Filesystem” require special extensions or services running on your machine.]]></item>
-		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Filesystem (default)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
-		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Redis]]></item>
+		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Use Filesystem (default)]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Use Memcached]]></item>
+		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Use Redis]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
@@ -760,8 +761,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://en.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
-		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (default)]]></item>
-		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[Use GD Graphics Library (default)]]></item>
+		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-created content, e.g. sessions, profiles, or forum posts.]]></item>
@@ -773,9 +774,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Sender’s Name]]></item>
 		<item name="wcf.acp.option.mail_from_name.description"><![CDATA[The name of the sender used for all generated emails.]]></item>
 		<item name="wcf.acp.option.mail_send_method"><![CDATA[Send Method]]></item>
-		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Debug]]></item>
-		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[PHP]]></item>
-		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP]]></item>
+		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Use Debug]]></item>
+		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[Use PHP]]></item>
+		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[Use SMTP]]></item>
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Sender’s Signature]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[The signature that will be appended to every message.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP Server]]></item>
@@ -821,10 +822,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
 		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery Source]]></item>
-		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
-		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[CloudFlare CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Use Local Version]]></item>
+		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Use Google Hosted Libraries CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Use Microsoft Ajax CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Use CloudFlare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in production environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
@@ -927,7 +928,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
-		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Height of Images in Signatures]]></item>
+		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height in Signatures]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
@@ -960,7 +961,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display like summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Display online status]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Display author’s online status]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Display author’s likes received]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Display author’s activity points]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Display Selected Author Profile Fields]]></item>
@@ -980,7 +981,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
-		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Display profile visitors]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Display user’s profile visitors in profile sidebar]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL Replacements]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[You may replace parts of the title within the URL. You could use it to replace special characters or to expand abbreviations. (One replacement per line)<br />
 Examples:<br />
@@ -1052,7 +1053,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster id]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
-		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (default)]]></item>
+		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[Use MySQL FULLTEXT (default)]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Display recommended products]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Displays recommended products from the WoltLab® Plugin-Store on the Administration Control Panel’s start page.]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
@@ -2564,7 +2565,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.payment">
-		<item name="wcf.payment.com.woltlab.wcf.payment.method.paypal"><![CDATA[PayPal]]></item>
+		<item name="wcf.payment.com.woltlab.wcf.payment.method.paypal"><![CDATA[Use PayPal]]></item>
 		<item name="wcf.payment.paypal.button.purchase"><![CDATA[Purchase with PayPal]]></item>
 		<item name="wcf.payment.paypal.button.subscribe"><![CDATA[Subscribe with PayPal]]></item>
 	</category>
@@ -3230,7 +3231,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.homepage"><![CDATA[Website]]></item>
 		<item name="wcf.user.option.location"><![CDATA[Location]]></item>
 		<item name="wcf.user.option.occupation"><![CDATA[Occupation]]></item>
-		<item name="wcf.user.option.showSignature"><![CDATA[Display members signatures]]></item>
+		<item name="wcf.user.option.showSignature"><![CDATA[Display members’ signatures]]></item>
 		<item name="wcf.user.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.user.option.icq"><![CDATA[ICQ]]></item>
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>

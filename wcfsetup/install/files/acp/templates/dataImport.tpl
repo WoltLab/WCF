@@ -135,10 +135,10 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd class="jsImportCollection">
-						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData}checked="checked" {/if}/> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if} /> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 						<p>
 							{foreach from=$objectTypes item=objectTypeName}
-								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData}checked="checked" {/if}/> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if} /> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 							{/foreach}
 						</p>
 					</dd>

@@ -63,6 +63,25 @@
 				</dl>
 			</div>
 		</section>
+		
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.gdLib{/lang}</h2>
+			
+			<div class="row rowColGap formGrid">
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
+					<dd>2.0.0</dd>
+				</dl>
+				
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+					<dd>
+						<span class="badge {if !$system.gdLib.result}red{else}green{/if}">{$system.gdLib.value}</span>
+						{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
+					</dd>
+				</dl>
+			</div>
+		</section>
 	</section>
 	
 	<section class="section">
@@ -86,29 +105,10 @@
 				</dl>
 			</div>
 		</section>
-		
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.gdLib{/lang}</h2>
-			
-			<div class="row rowColGap formGrid">
-				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
-					<dd>2.0.0</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
-					<dd>
-						<span class="badge {if !$system.gdLib.result}yellow{else}green{/if}">{$system.gdLib.value}</span>
-						{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
-					</dd>
-				</dl>
-			</div>
-		</section>
 	</section>
 
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result} disabled="disabled"{/if} accesskey="s"/>
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result || !$system.gdLib.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />

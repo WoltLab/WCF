@@ -91,6 +91,14 @@ else if (!extension_loaded('pcre')) {
 	<?php
 }
 
+// check GD extension
+else if (!extension_loaded('gd')) {
+	?>
+	<p>The 'GD' PHP extension is missing. GD is required for a stable work of this software.<br />
+	Die 'GD' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
 // check Hash extension
 else if (!extension_loaded('hash')) {
 	?>
