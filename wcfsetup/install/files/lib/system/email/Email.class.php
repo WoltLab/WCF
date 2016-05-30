@@ -351,15 +351,6 @@ class Email {
 	}
 	
 	/**
-	 * Sets the body of this email.
-	 * 
-	 * @param	AbstractMimePart	$body
-	 */
-	public function setBody(AbstractMimePart $body) {
-		$this->body = $body;
-	}
-	
-	/**
 	 * Returns an array of [ name, value ] tuples representing the email's headers.
 	 * Note: You must have set a Subject and at least one recipient, otherwise fetching the
 	 *       headers will fail.
@@ -429,6 +420,24 @@ class Email {
 		return implode("\r\n", array_map(function ($item) {
 			return implode(': ', $item);
 		}, $this->getHeaders()));
+	}
+	
+	/**
+	 * Sets the body of this email.
+	 * 
+	 * @param	AbstractMimePart	$body
+	 */
+	public function setBody(AbstractMimePart $body) {
+		$this->body = $body;
+	}
+	
+	/**
+	 * Returns the body of this email.
+	 * 
+	 * @return	AbstractMimePart
+	 */
+	public function getBody() {
+		return $this->body;
 	}
 	
 	/**
