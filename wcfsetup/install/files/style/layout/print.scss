@@ -65,21 +65,46 @@
 		max-width: none !important;
 	}
 	
-	.pageNavigation .breadcrumbs {
-		margin-left: 0;
+	.pageNavigation {
+		display: block;
+		padding-top: 10px;
+		
+		.breadcrumbs {
+			margin-left: 0;
+		}
 	}
 	
 	.badge {
+		padding: 0 !important;
+		
 		&::before {
-			content: "(";
+			content: "[";
 		}
 		
 		&::after {
-			content: ")";
+			content: "]";
 		}
 	}
 	
 	.userProfileUser {
 		position: static !important;
+	}
+	
+	a.externalURL::after {
+		content: " (" attr(href) ")";
+	}
+	
+	.messageList,
+	.messageList > li:not(:first-child) {
+		border-top: 1px solid $wcfContentBorder;
+	}
+	
+	.messageList > li {
+		padding-top: 20px;
+	}
+	
+	.messageSidebar {
+		margin: 0 !important;
+		padding: 0 !important;
 	}
 }
