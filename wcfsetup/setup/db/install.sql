@@ -2081,6 +2081,9 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextSha
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipBackground', 'rgba(0, 0, 0, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipText', 'rgba(255, 255, 255, 1)');
 
+-- Email template group
+INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
+
 -- media providers
 -- Videos
 	-- Youtube

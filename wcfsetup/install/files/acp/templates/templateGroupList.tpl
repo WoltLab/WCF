@@ -58,13 +58,26 @@
 				{foreach from=$objects item=templateGroup}
 					<tr class="jsTemplateGroupRow">
 						<td class="columnIcon">
-							<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.group.delete.sure{/lang}"></span>
+							{if !$templateGroup->isImmutable()}
+								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.group.delete.sure{/lang}"></span>
+							{else}
+								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{/if}
 							
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$templateGroup->templateGroupID}</td>
-						<td class="columnTitle columnTemplateGroupName"><a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}">{$templateGroup->templateGroupName}</a></td>
+						<td class="columnTitle columnTemplateGroupName">
+							{if !$templateGroup->isImmutable()}
+								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}">
+									{$templateGroup->getName()}
+								</a>
+							{else}
+								{$templateGroup->getName()}
+							{/if}
+						</td>
 						<td class="columnText columnTemplateGroupFolderName">{$templateGroup->templateGroupFolderName}</td>
 						<td class="columnDigits columnTemplates">{#$templateGroup->templates}</td>
 						
