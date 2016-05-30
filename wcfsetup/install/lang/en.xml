@@ -2695,7 +2695,6 @@ Errors are:
 		<item name="wcf.user.access.registered"><![CDATA[Registered Users]]></item>
 		<item name="wcf.user.button.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
-		<item name="wcf.user.button.registerNow"><![CDATA[Register Now]]></item>
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
 		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
 		<item name="wcf.user.useCookies"><![CDATA[Remain logged in]]></item>

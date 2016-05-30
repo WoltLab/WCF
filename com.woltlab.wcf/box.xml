@@ -83,9 +83,9 @@
 			<boxType>system</boxType>
 			<objectType>com.woltlab.wcf.registerButton</objectType>
 			<position>sidebarRight</position>
-			<showHeader>0</showHeader>
+			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
-			<!--<cssClassName></cssClassName> todo -->
+			<cssClassName>boxInfo</cssClassName>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
