@@ -51,6 +51,14 @@ class GDImageAdapter implements IImageAdapter {
 	protected $width = 0;
 	
 	/**
+	 * GDImageAdapter constructor.
+	 */
+	public function __construct() {
+		// suppress warnings like "recoverable error: Invalid SOS parameters for sequential JPEG"
+		@ini_set('gd.jpeg_ignore_warning', 1);
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
 	 */
 	public function load($image, $type = '') {
@@ -81,7 +89,11 @@ class GDImageAdapter implements IImageAdapter {
 			break;
 			
 			case IMAGETYPE_JPEG:
-				$this->image = imageCreateFromJpeg($file);
+				// suppress warnings and properly handle errors
+				$this->image = @imageCreateFromJpeg($file);
+				if ($this->image === false) {
+					throw new SystemException("Could not read jpeg image '".$file."'.");
+				}
 			break;
 			
 			case IMAGETYPE_PNG:
