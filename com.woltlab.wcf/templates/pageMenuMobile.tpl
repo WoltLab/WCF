@@ -50,9 +50,9 @@
 				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
 					<li class="menuOverlayItem">
 						<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
-							<span class="menuOverlayItemTitle"{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 10}px" {/if}>
+							<span{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 20}px" {/if} class="box24"> 
 								<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
-								{$breadcrumb->getLabel()}
+								<span class="menuOverlayItemTitle">{$breadcrumb->getLabel()}</span>
 							</span>
 						</a>
 					</li>
