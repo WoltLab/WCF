@@ -89,15 +89,10 @@
 			margin-left: 10px;
 			order: 3;
 			
-			.pageHeaderSearchInput {
-				border-radius: 0 0 2px 2px;
-				height: 100%;
-				width: 100%;
-			}
-			
 			.pageHeaderSearchLabel {
-				background-color: $wcfHeaderSearchBoxBackground;
+				background-color: $wcfHeaderMenuBackground;
 				bottom: 0;
+				color: $wcfHeaderMenuLink;
 				cursor: pointer;
 				display: block;
 				position: absolute;
@@ -105,10 +100,12 @@
 				width: 50px;
 				
 				&:hover {
-					background-color: $wcfHeaderSearchBoxBackgroundActive;
+					background: $wcfHeaderMenuBackgroundActive;
+					color: $wcfHeaderMenuLinkActive;
 				}
 				
 				&::before {
+					color: inherit;
 					content: $fa-var-search;
 					display: block;
 					font-family: FontAwesome;
@@ -138,8 +135,8 @@
 			}
 			
 			.pageHeaderSearchLabel {
-				background-color: $wcfHeaderSearchBoxBackgroundActive;
-				width: 50px;
+				background: $wcfHeaderMenuBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
 			}
 		}
 	}
