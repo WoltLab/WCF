@@ -5,6 +5,7 @@ use wcf\acp\form\MasterPasswordInitForm;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
@@ -212,7 +213,8 @@ class WCFACP extends WCF {
 		$path = RouteHandler::getPath();
 		
 		self::getTPL()->assign([
-			'baseHref' => $host . $path
+			'baseHref' => $host . $path,
+			'availableAcpSearchProviders' => ACPSearchProviderCacheBuilder::getInstance()->getData()
 		]);
 	}
 	

@@ -215,8 +215,10 @@
 				> .badgeUpdate {
 					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
 					left: 26px;
+					padding: 1px 6px;
 					position: absolute;
-					top: 2px;
+					top: 4px;
+					z-index: 101;
 				}
 			}
 			
@@ -265,8 +267,8 @@
 	
 	.pageHeaderSearchType > .button {
 		border-radius: 2px 0 0 2px;
-		min-width: 100px;
-		padding: 4px 22px 4px 7px;
+		min-width: 140px;
+		padding: 4px 24px 4px 8px;
 		position: relative;
 		text-align: left;
 		white-space: nowrap;
@@ -276,7 +278,7 @@
 			content: $fa-var-caret-down;
 			font-family: FontAwesome;
 			position: absolute;
-			right: 7px;
+			right: 8px;
 		}
 	}
 	

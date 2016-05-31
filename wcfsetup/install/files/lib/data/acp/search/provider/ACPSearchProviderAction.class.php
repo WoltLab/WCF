@@ -36,7 +36,7 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 	 */
 	public function getSearchResultList() {
 		$data = [];
-		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString']);
+		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString'], 10, (!empty($this->parameters['data']['providerName']) ? $this->parameters['data']['providerName'] : ''));
 		
 		foreach ($results as $resultList) {
 			$items = [];

@@ -42,15 +42,19 @@ class ACPSearchHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$query
 	 * @param	integer		$limit
+	 * @param       string          $providerName
 	 * @return	ACPSearchResultList[]
 	 * @throws	SystemException
 	 */
-	public function search($query, $limit = 10) {
+	public function search($query, $limit = 10, $providerName = '') {
 		$data = [];
-		$maxResultsPerProvider = ceil($limit / 2);
+		if ($providerName) $maxResultsPerProvider = $limit;
+		else $maxResultsPerProvider = ceil($limit / 2);
 		$totalResultCount = 0;
 		
 		foreach ($this->cache as $acpSearchProvider) {
+			if ($providerName && $acpSearchProvider->providerName != $providerName) continue;
+			
 			$className = $acpSearchProvider->className;
 			if (!is_subclass_of($className, IACPSearchResultProvider::class)) {
 				throw new ImplementationException($className, IACPSearchResultProvider::class);

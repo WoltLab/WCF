@@ -1876,6 +1876,12 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
  */
 WCF.ACP.Search = WCF.Search.Base.extend({
 	/**
+	 * name of the selected search provider
+	 * @var	string
+	 */
+	_providerName: '',
+	
+	/**
 	 * @see	WCF.Search.Base.init()
 	 */
 	init: function() {
@@ -1886,6 +1892,29 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		$('#pageHeaderSearch > form').on('submit', function(event) {
 			event.preventDefault();
 		});
+		
+		var $dropdown = WCF.Dropdown.getDropdownMenu('pageHeaderSearchType');
+		$dropdown.find('a[data-provider-name]').on('click', $.proxy(function(event) {
+			event.preventDefault();
+			var $button = $(event.target);
+			$('.pageHeaderSearchType > .button').text($button.text());
+			
+			var $oldProviderName = this._providerName;
+			this._providerName = ($button.data('providerName') != 'everywhere' ? $button.data('providerName') : '');
+			
+			if ($oldProviderName != this._providerName) {
+				var $searchString = $.trim(this._searchInput.val());
+				if ($searchString) {
+					var $parameters = {
+						data: {
+							excludedSearchValues: this._excludedSearchValues,
+							searchString: $searchString
+						}
+					};
+					this._queryServer($parameters);
+				}
+			}	
+		}, this));
 	},
 	
 	/**
@@ -1942,6 +1971,15 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		this._super(data);
 		
 		this._list.addClass('acpSearchDropdown');
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._getParameters()
+	 */
+	_getParameters: function(parameters) {
+		parameters.data.providerName = this._providerName;
+		
+		return parameters;
 	}
 });
 
