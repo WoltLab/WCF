@@ -189,7 +189,7 @@ class StyleAddForm extends AbstractForm {
 		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->getConditionBuilder()->add('templateGroupPath <> ?', ['_wcf_email/']);
+		$templateGroupList->getConditionBuilder()->add('templateGroupFolderName <> ?', ['_wcf_email/']);
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();
 		
