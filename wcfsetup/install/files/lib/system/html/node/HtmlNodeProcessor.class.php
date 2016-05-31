@@ -15,8 +15,14 @@ class HtmlNodeProcessor implements IHtmlNodeProcessor {
 	
 	protected $nodeData = [];
 	
+	/**
+	 * @var \DOMXPath
+	 */
+	protected $xpath;
+	
 	public function load($html) {
 		$this->document = new \DOMDocument();
+		$this->xpath = null;
 		
 		// convert entities as DOMDocument screws them up
 		$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
@@ -55,6 +61,14 @@ class HtmlNodeProcessor implements IHtmlNodeProcessor {
 	
 	public function getDocument() {
 		return $this->document;
+	}
+	
+	public function getXPath() {
+		if ($this->xpath === null) {
+			$this->xpath = new \DOMXPath($this->getDocument());
+		}
+		
+		return $this->xpath;
 	}
 	
 	public function renameTag(\DOMElement $element, $tagName) {

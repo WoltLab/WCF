@@ -1,8 +1,13 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
+use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\Callback;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\Regex;
 use wcf\util\DOMUtil;
+use wcf\util\StringUtil;
 
 /**
  * TOOD documentation
@@ -28,6 +33,10 @@ class HtmlInputNodeProcessor extends HtmlNodeProcessor implements IHtmlInputNode
 		// handle static converters
 		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacode());
 		$this->invokeHtmlNode(new HtmlInputNodeImg());
+		
+		// detect mentions, urls, emails and smileys
+		$textParser = new HtmlInputNodeTextParser($this);
+		$textParser->parse();
 		
 		// extract embedded content
 		$this->parseEmbeddedContent();
@@ -107,5 +116,22 @@ class HtmlInputNodeProcessor extends HtmlNodeProcessor implements IHtmlInputNode
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Creates a new `<woltlab-metacode>` element contained in the same document
+	 * as the provided `$node`.
+	 * 
+	 * @param       \DOMNode        $node           reference node used to extract the owner document
+	 * @param       string          $name           metacode name
+	 * @param       mixed[]         $attributes     list of attributes
+	 * @return      \DOMElement     new metacode element
+	 */
+	public function createMetacodeElement(\DOMNode $node, $name, array $attributes) {
+		$element = $node->ownerDocument->createElement('woltlab-metacode');
+		$element->setAttribute('data-name', $name);
+		$element->setAttribute('data-attributes', base64_encode(json_encode($attributes)));
+		
+		return $element;
 	}
 }
