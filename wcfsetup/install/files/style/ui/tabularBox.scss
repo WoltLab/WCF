@@ -65,12 +65,12 @@
 	}
 	
 	&.ASC > a:after {
-		content: $fa-var-caret-up;
+		content: "\f0d8";
 		top: 1px;
 	}
 	
 	&.DESC > a:after {
-		content: $fa-var-caret-down;
+		content: "\f0d7";
 		top: 2px;
 	}
 	
@@ -168,11 +168,11 @@
 		}
 		
 		&.ASC > a::after {
-			content: $fa-var-caret-up;
+			content: "\f0d8";
 		}
 		
 		&.DESC > a::after {
-			content: $fa-var-caret-down;
+			content: "\f0d7";
 		}
 		
 		/* alignment only */

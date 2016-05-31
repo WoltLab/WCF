@@ -219,7 +219,7 @@
 	
 	&.menuOverlayItemLinkMore::after {
 		color: rgb(204, 204, 204);
-		content: $fa-var-angle-right;
+		content: "\f105";
 		display: block;
 		font-family: FontAwesome;
 		font-size: 24px;
@@ -264,7 +264,7 @@
 
 .menuOverlayBackLink::before {
 	color: rgb(204, 204, 204);
-	content: $fa-var-angle-left;
+	content: "\f104";
 	display: block;
 	font-family: FontAwesome;
 	font-size: 18px;

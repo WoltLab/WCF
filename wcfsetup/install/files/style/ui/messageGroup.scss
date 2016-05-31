@@ -78,14 +78,14 @@
 	
 	.messageDeleted .columnAvatar::before {
 		color: rgb(180, 0, 0);
-		content: $fa-var-trash-o;
+		content: "\f014";
 		left: 17px;
 		top: -2px;
 	}
 	
 	.messageDisabled .columnAvatar::before {
 		color: rgb(0, 140, 0);
-		content: $fa-var-eye-slash;
+		content: "\f070";
 		left: 13px;
 		top: -2px;
 	}
