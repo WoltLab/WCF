@@ -21,10 +21,10 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 		});
 		
 		// add event listeners
-		DomTraverse.childByClass(this._button, '.button').addEventListener('click', this._validateLimit.bind(this));
-		elByClass(this._target, 'jsButtonInsertAttachment').addEventListener('click', this._insert.bind(this));
-		elByClass(this._target, 'jsButtonAttachmentInsertThumbnail').addEventListener('click', this._insert.bind(this));
-		elByClass(this._target, 'jsButtonAttachmentInsertFull').addEventListener('click', this._insert.bind(this));
+		DomTraverse.childByClass(this._button, '.button').addEventListener(WCF_CLICK_EVENT, this._validateLimit.bind(this));
+		elByClass(this._target, 'jsButtonInsertAttachment').addEventListener(WCF_CLICK_EVENT, this._insert.bind(this));
+		elByClass(this._target, 'jsButtonAttachmentInsertThumbnail').addEventListener(WCF_CLICK_EVENT, this._insert.bind(this));
+		elByClass(this._target, 'jsButtonAttachmentInsertFull').addEventListener(WCF_CLICK_EVENT, this._insert.bind(this));
 		
 		// TODO: WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment_' + this._wysiwygContainerId, $.proxy(this._removeLimitError, this));
 		
@@ -36,7 +36,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 		if (DomTraverse.childBySel(this._target, 'li:not(.uploadFailed)')) {
 			elHide(this._insertAllButton);
 		}
-		this._insertAllButton.addEventListener('click', this._insertAll.bind(this));
+		this._insertAllButton.addEventListener(WCF_CLICK_EVENT, this._insertAll.bind(this));
 		this._button.appendChild(this._insertAllButton);
 		
 		if (this._wysiwygContainerId) {
@@ -197,7 +197,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 							span.className = 'button small jsButtonAttachmentInsertThumbnail';
 							span.textContent = Language.get('wcf.global.button.insertThumbnail');
 							elData(span, 'object-id', attachment.attachmentID);
-							span.addEventListener('click', this._insert.bind(this));
+							span.addEventListener(WCF_CLICK_EVENT, this._insert.bind(this));
 							insertThumbnailButton.appendChild(span);
 							
 							var insertOriginalButton = elCreate('li');
@@ -207,7 +207,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 							span.className = 'button small jsButtonAttachmentInsertFull';
 							span.textContent = Language.get('wcf.global.button.insertFull');
 							elData(span, 'object-id', attachment.attachmentID);
-							span.addEventListener('click', this._insert.bind(this));
+							span.addEventListener(WCF_CLICK_EVENT, this._insert.bind(this));
 							insertOriginalButton.appendChild(span);
 						}
 						else {
@@ -218,7 +218,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 							span.className = 'button small jsButtonAttachmentInsertPlain';
 							span.textContent = Language.get('wcf.global.button.insert');
 							elData(span, 'object-id', attachment.attachmentID);
-							span.addEventListener('click', this._insert.bind(this));
+							span.addEventListener(WCF_CLICK_EVENT, this._insert.bind(this));
 							insertPlainButton.appendChild(span);
 						}
 					}

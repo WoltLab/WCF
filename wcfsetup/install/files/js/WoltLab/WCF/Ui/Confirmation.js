@@ -115,12 +115,12 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 			_confirmButton = elCreate('button');
 			_confirmButton.classList.add('buttonPrimary');
 			_confirmButton.textContent = Language.get('wcf.global.confirmation.confirm');
-			_confirmButton.addEventListener('click', this._confirm.bind(this));
+			_confirmButton.addEventListener(WCF_CLICK_EVENT, this._confirm.bind(this));
 			formSubmit.appendChild(_confirmButton);
 			
 			var cancelButton = elCreate('button');
 			cancelButton.textContent = Language.get('wcf.global.confirmation.cancel');
-			cancelButton.addEventListener('click', function() { UiDialog.close('wcfSystemConfirmation'); });
+			cancelButton.addEventListener(WCF_CLICK_EVENT, function() { UiDialog.close('wcfSystemConfirmation'); });
 			formSubmit.appendChild(cancelButton);
 			
 			document.body.appendChild(dialog);

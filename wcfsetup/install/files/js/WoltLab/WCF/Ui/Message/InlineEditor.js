@@ -67,7 +67,7 @@ define(
 					canEdit = elDataBool(element, 'can-edit');
 					
 					if (this._options.canEditInline) {
-						button.addEventListener('click', this._clickDropdown.bind(this, element));
+						button.addEventListener(WCF_CLICK_EVENT, this._clickDropdown.bind(this, element));
 						button.classList.add('jsDropdownEnabled');
 						
 						if (canEdit) {
@@ -75,7 +75,7 @@ define(
 						}
 					}
 					else if (canEdit) {
-						button.addEventListener('click', this._click.bind(this, element));
+						button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, element));
 					}
 				}
 				
@@ -140,7 +140,7 @@ define(
 			button.classList.add('dropdownToggle');
 			button.parentNode.classList.add('dropdown');
 			(function(button, element) {
-				button.addEventListener('click', (function(event) {
+				button.addEventListener(WCF_CLICK_EVENT, (function(event) {
 					event.preventDefault();
 					event.stopPropagation();
 					
@@ -167,7 +167,7 @@ define(
 			}
 			
 			setTimeout(function() {
-				Core.triggerEvent(button, 'click');
+				Core.triggerEvent(button, WCF_CLICK_EVENT);
 			}, 10);
 		},
 		
@@ -195,10 +195,10 @@ define(
 					listItem.appendChild(label);
 					
 					if (item.item === 'editItem') {
-						listItem.addEventListener('click', this._click.bind(this, null));
+						listItem.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, null));
 					}
 					else {
-						listItem.addEventListener('click', callbackClick);
+						listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
 					}
 				}
 				
@@ -338,10 +338,10 @@ define(
 			var formSubmit = elBySel('.formSubmit', editor);
 			
 			var buttonSave = elBySel('button[data-type="save"]', formSubmit);
-			buttonSave.addEventListener('click', this._save.bind(this));
+			buttonSave.addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 			
 			var buttonCancel = elBySel('button[data-type="cancel"]', formSubmit);
-			buttonCancel.addEventListener('click', this._restoreMessage.bind(this));
+			buttonCancel.addEventListener(WCF_CLICK_EVENT, this._restoreMessage.bind(this));
 			
 			EventHandler.add('com.woltlab.wcf.redactor', 'submitEditor_' + id, (function(data) {
 				data.cancel = true;

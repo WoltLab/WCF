@@ -58,7 +58,7 @@ define(
 					var editIcon = elByClass('jsMediaEditIcon', listItem)[0];
 					if (editIcon) {
 						editIcon.classList.remove('jsMediaEditIcon');
-						editIcon.addEventListener('click', this._editMedia.bind(this));
+						editIcon.addEventListener(WCF_CLICK_EVENT, this._editMedia.bind(this));
 					}
 				}
 			}

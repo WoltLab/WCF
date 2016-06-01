@@ -89,7 +89,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 				button.disabled = !checkbox.checked;
 			});
 			
-			button.addEventListener('click', function() {
+			button.addEventListener(WCF_CLICK_EVENT, function() {
 				Ajax.apiOnce({
 					data: {
 						actionName: 'markAsTainted',

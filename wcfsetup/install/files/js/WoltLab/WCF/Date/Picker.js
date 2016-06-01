@@ -96,7 +96,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.parentNode.insertBefore(shadowElement, element);
 				element.removeAttribute('name');
 				
-				element.addEventListener('click', _callbackOpen);
+				element.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 				
 				// create input addon
 				var container = elCreate('div');
@@ -104,7 +104,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				var button = elCreate('a');
 				button.className = 'inputSuffix button';
-				button.addEventListener('click', _callbackOpen);
+				button.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 				container.appendChild(button);
 				
 				var icon = elCreate('span');
@@ -448,7 +448,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			_datePicker = elCreate('div');
 			_datePicker.className = 'datePicker';
-			_datePicker.addEventListener('click', function(event) { event.stopPropagation(); });
+			_datePicker.addEventListener(WCF_CLICK_EVENT, function(event) { event.stopPropagation(); });
 			
 			var pointer = elCreate('span');
 			pointer.className = 'elementPointer';
@@ -460,7 +460,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			_dateMonthPrevious = elCreate('a');
 			_dateMonthPrevious.className = 'icon icon16 fa-arrow-left previous';
-			_dateMonthPrevious.addEventListener('click', this.previousMonth.bind(this));
+			_dateMonthPrevious.addEventListener(WCF_CLICK_EVENT, this.previousMonth.bind(this));
 			header.appendChild(_dateMonthPrevious);
 			
 			var monthYearContainer = elCreate('span');
@@ -492,7 +492,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			_dateMonthNext = elCreate('a');
 			_dateMonthNext.className = 'icon icon16 fa-arrow-right next';
-			_dateMonthNext.addEventListener('click', this.nextMonth.bind(this));
+			_dateMonthNext.addEventListener(WCF_CLICK_EVENT, this.nextMonth.bind(this));
 			header.appendChild(_dateMonthNext);
 			
 			_dateGrid = elCreate('ul');
@@ -520,7 +520,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				for (var j = 0; j < 7; j++) {
 					cell = elCreate('a');
-					cell.addEventListener('click', callbackClick);
+					cell.addEventListener(WCF_CLICK_EVENT, callbackClick);
 					_dateCells.push(cell);
 					
 					row.appendChild(cell);
@@ -692,7 +692,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element.value = data.shadow.value;
 			
 			element.removeAttribute('data-value');
-			element.removeEventListener('click', _callbackOpen);
+			element.removeEventListener(WCF_CLICK_EVENT, _callbackOpen);
 			elRemove(data.shadow);
 			
 			element.classList.remove('inputDatePicker');

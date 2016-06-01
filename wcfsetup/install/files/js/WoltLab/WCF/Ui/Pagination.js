@@ -68,7 +68,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 				link.title = Language.get('wcf.global.page.previous');
 				listItem.appendChild(link);
 				
-				link.addEventListener('click', this.switchPage.bind(this, this._options.activePage - 1));
+				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage - 1));
 			}
 			else {
 				listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
@@ -166,7 +166,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 				link.title = Language.get('wcf.global.page.next');
 				listItem.appendChild(link);
 				
-				link.addEventListener('click', this.switchPage.bind(this, this._options.activePage + 1));
+				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage + 1));
 			}
 			else {
 				listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
@@ -193,7 +193,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			if (pageNo !== this._options.activePage) {
 				var link = elCreate('a');
 				link.textContent = StringUtil.addThousandsSeparator(pageNo);
-				link.addEventListener('click', this.switchPage.bind(this, pageNo));
+				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, pageNo));
 				listItem.appendChild(link);
 			}
 			else {

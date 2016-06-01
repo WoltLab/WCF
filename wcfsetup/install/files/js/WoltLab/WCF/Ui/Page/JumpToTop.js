@@ -32,7 +32,7 @@ define(['Environment', 'Language', './Action'], function(Environment, Language, 
 			elAttr(button, 'title', Language.get('wcf.global.scrollUp'));
 			button.innerHTML = '<span class="icon icon16 fa-arrow-up"></span>';
 			
-			button.addEventListener('click', this._jump.bind(this));
+			button.addEventListener(WCF_CLICK_EVENT, this._jump.bind(this));
 			
 			PageAction.add('toTop', button);
 			

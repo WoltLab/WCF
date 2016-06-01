@@ -42,7 +42,7 @@ define(
 			_container = elCreate('div');
 			_container.classList.add('dialogOverlay');
 			elAttr(_container, 'aria-hidden', 'true');
-			_container.addEventListener('click', this._closeOnBackdrop.bind(this));
+			_container.addEventListener(WCF_CLICK_EVENT, this._closeOnBackdrop.bind(this));
 			
 			elById('content').appendChild(_container);
 			
@@ -80,7 +80,7 @@ define(
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
 						elHide(container);
-						button.addEventListener('click', this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
+						button.addEventListener(WCF_CLICK_EVENT, this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
 					}).bind(this))(button, container);
 				}
 			}
@@ -288,7 +288,7 @@ define(
 				closeButton.className = 'dialogCloseButton jsTooltip';
 				elAttr(closeButton, 'title', options.closeButtonLabel);
 				elAttr(closeButton, 'aria-label', options.closeButtonLabel);
-				closeButton.addEventListener('click', this._close.bind(this));
+				closeButton.addEventListener(WCF_CLICK_EVENT, this._close.bind(this));
 				header.appendChild(closeButton);
 				
 				var span = elCreate('span');

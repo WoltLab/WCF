@@ -46,7 +46,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 			if (!_elements.has(element)) {
 				var jumpTo = elBySel('.jumpTo', element);
 				if (jumpTo !== null) {
-					jumpTo.addEventListener('click', this._click.bind(this, element));
+					jumpTo.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, element));
 					
 					_elements.set(element, { callback: callback });
 				}
@@ -128,7 +128,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 						_description = elByTag('small', content)[0];
 						
 						_buttonSubmit = elByTag('button', content)[0];
-						_buttonSubmit.addEventListener('click', this._submit.bind(this));
+						_buttonSubmit.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
 					}).bind(this),
 					title: Language.get('wcf.global.page.pagination')
 				},

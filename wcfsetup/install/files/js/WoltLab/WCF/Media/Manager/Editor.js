@@ -18,7 +18,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 		this._activeButton = null;
 		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton');
 		for (var i = 0, length = this._buttons.length; i < length; i++) {
-			this._buttons[i].addEventListener('click', this._click.bind(this));
+			this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 		}
 		
 		this._activeButton = null;
@@ -39,7 +39,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 				var insertIcon = elByClass('jsMediaInsertIcon', listItem)[0];
 				if (insertIcon) {
 					insertIcon.classList.remove('jsMediaInsertIcon');
-					insertIcon.addEventListener('click', this._openInsertDialog.bind(this));
+					insertIcon.addEventListener(WCF_CLICK_EVENT, this._openInsertDialog.bind(this));
 				}
 			}
 		},
@@ -119,7 +119,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Mana
 					submitButton.className = 'buttonPrimary';
 					submitButton.textContent = Language.get('wcf.global.button.insert');
 					elData(submitButton, 'object-id', media.mediaID);
-					submitButton.addEventListener('click', this._insertMedia.bind(this));
+					submitButton.addEventListener(WCF_CLICK_EVENT, this._insertMedia.bind(this));
 					formSubmit.appendChild(submitButton);
 					
 					UiDialog.open({

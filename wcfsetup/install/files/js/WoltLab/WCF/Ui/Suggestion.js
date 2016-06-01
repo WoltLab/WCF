@@ -53,7 +53,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 				throw new Error("Expected a valid callback for option 'callbackSelect'.");
 			}
 			
-			this._element.addEventListener('click', function(event) { event.stopPropagation(); });
+			this._element.addEventListener(WCF_CLICK_EVENT, function(event) { event.stopPropagation(); });
 			this._element.addEventListener('keydown', this._keyDown.bind(this));
 			this._element.addEventListener('keyup', this._keyUp.bind(this));
 		},
@@ -224,7 +224,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					anchor = elCreate('a');
 					anchor.textContent = item.label;
 					elData(anchor, 'object-id', item.objectID);
-					anchor.addEventListener('click', this._select.bind(this));
+					anchor.addEventListener(WCF_CLICK_EVENT, this._select.bind(this));
 					
 					listItem = elCreate('li');
 					if (i === 0) listItem.className = 'active';

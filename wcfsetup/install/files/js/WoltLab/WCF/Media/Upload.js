@@ -147,7 +147,7 @@ define(
 					fileIcon.classList.add('pointer');
 					
 					file.classList.add('uploadFailed');
-					file.addEventListener('click', function() {
+					file.addEventListener(WCF_CLICK_EVENT, function() {
 						elRemove(this);
 					});
 					
