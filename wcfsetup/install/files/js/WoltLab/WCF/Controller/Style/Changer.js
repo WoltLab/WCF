@@ -24,7 +24,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 			
 			var listItem = elCreate('li');
 			listItem.classList.add('styleChanger');
-			listItem.addEventListener('click', this.showDialog.bind(this));
+			listItem.addEventListener(WCF_CLICK_EVENT, this.showDialog.bind(this));
 			
 			var link = elCreate('a');
 			elAttr(link, 'href', '#');
@@ -63,7 +63,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 							var style = styles[i];
 							
 							style.classList.add('pointer');
-							style.addEventListener('click', this._click.bind(this));
+							style.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 						}
 					}).bind(this)
 				}

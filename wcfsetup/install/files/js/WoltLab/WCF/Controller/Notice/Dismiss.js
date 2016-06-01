@@ -22,7 +22,7 @@ define(['Ajax'], function(Ajax) {
 			if (buttons.length) {
 				var clickCallback = this._click.bind(this);
 				for (var i = 0, length = buttons.length; i < length; i++) {
-					buttons[i].addEventListener('click', clickCallback);
+					buttons[i].addEventListener(WCF_CLICK_EVENT, clickCallback);
 				}
 			}
 		},

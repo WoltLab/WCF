@@ -22,7 +22,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLab/WCF/Med
 		this._input.addEventListener('keypress', this._keyPress.bind(this));
 		
 		this._cancelButton = elById(this._getIdPrefix() + 'SearchCancelButton');
-		this._cancelButton.addEventListener('click', this._cancelSearch.bind(this));
+		this._cancelButton.addEventListener(WCF_CLICK_EVENT, this._cancelSearch.bind(this));
 	};
 	Core.inherit(MediaManagerSearch, MediaSearch, {
 		/**

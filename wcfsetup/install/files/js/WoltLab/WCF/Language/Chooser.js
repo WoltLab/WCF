@@ -115,7 +115,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					
 					listItem = elCreate('li');
 					listItem.className = 'boxFlag';
-					listItem.addEventListener('click', callbackClick);
+					listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
 					elData(listItem, 'language-id', availableLanguageId);
 					dropdownMenu.appendChild(listItem);
 					
@@ -154,7 +154,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 				
 				listItem = elCreate('li');
 				elData(listItem, 'language-id', availableLanguageId);
-				listItem.addEventListener('click', callbackClick);
+				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
 				dropdownMenu.appendChild(listItem);
 				
 				a = elCreate('a');
@@ -165,7 +165,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
 				}
 				
-				listItem.addEventListener('click', callbackClick)
+				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick)
 			}
 			else if (languageId === 0) {
 				dropdownToggle.innerHTML = null;

@@ -117,7 +117,7 @@ define(
 						
 						setTimeout(this._setData.bind(this), 100);
 						
-						elBySel('button[data-type="submit"]', editor).addEventListener('click', this._saveData.bind(this));
+						elBySel('button[data-type="submit"]', editor).addEventListener(WCF_CLICK_EVENT, this._saveData.bind(this));
 					}).bind(this),
 					data: {
 						actionName: 'getEditorDialog',

@@ -19,7 +19,7 @@ define(['CallbackList'], function(CallbackList) {
 		 * Sets up global event listener for bubbled clicks events.
 		 */
 		setup: function() {
-			document.body.addEventListener('click', this.execute.bind(this));
+			document.body.addEventListener(WCF_CLICK_EVENT, this.execute.bind(this));
 		},
 		
 		/**
