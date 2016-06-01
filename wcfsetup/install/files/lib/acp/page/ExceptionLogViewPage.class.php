@@ -133,24 +133,23 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		// TODO: This needs to be adapted for WCF 2.2
-		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*
-Message: (?P<message>.*?)\s*
-PHP version: (?P<phpVersion>.*?)\s*
-WCF version: (?P<wcfVersion>.*?)\s*
-Request URI: (?P<requestURI>.*?)\s*
-Referrer: (?P<referrer>.*?)\s*
-User Agent: (?P<userAgent>.*?)\s*
-Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*
-(?<chain>======
-.*)', Regex::DOT_ALL);
-		$chainRegex = new Regex('======
-Error Class: (?P<class>.*?)\s*
-Error Message: (?P<message>.*?)\s*
-Error Code: (?P<code>\d+)\s*
-File: (?P<file>.*?) \((?P<line>\d+)\)\s*
-Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*
-Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})', Regex::DOT_ALL);
+		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*\n".
+"Message: (?P<message>.*?)\s*\n".
+"PHP version: (?P<phpVersion>.*?)\s*\n".
+"WCF version: (?P<wcfVersion>.*?)\s*\n".
+"Request URI: (?P<requestURI>.*?)\s*\n".
+"Referrer: (?P<referrer>.*?)\s*\n".
+"User Agent: (?P<userAgent>.*?)\s*\n".
+"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*\n".
+"(?<chain>======\n".
+".*)", Regex::DOT_ALL);
+		$chainRegex = new Regex("======\n".
+"Error Class: (?P<class>.*?)\s*\n".
+"Error Message: (?P<message>.*?)\s*\n".
+"Error Code: (?P<code>\d+)\s*\n".
+"File: (?P<file>.*?) \((?P<line>\d+)\)\s*\n".
+"Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
+"Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})", Regex::DOT_ALL);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
 			if ($i < $this->startIndex || $i > $this->endIndex) {
