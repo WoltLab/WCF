@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\package\PackageCache;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\data\package\PackageCache;
 use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\request\ControllerMap;

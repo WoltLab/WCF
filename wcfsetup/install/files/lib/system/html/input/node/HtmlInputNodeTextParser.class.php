@@ -3,12 +3,8 @@ namespace wcf\system\html\input\node;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
-use wcf\data\user\UserList;
 use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\Callback;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\Regex;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 

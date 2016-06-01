@@ -1,13 +1,8 @@
 <?php
 namespace wcf\system\html\input\node;
-use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
-use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\Callback;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\HtmlNodeProcessor;
-use wcf\system\Regex;
 use wcf\util\DOMUtil;
-use wcf\util\StringUtil;
 
 /**
  * TOOD documentation
