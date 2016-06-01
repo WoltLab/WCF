@@ -134,67 +134,77 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		
 		// move uploaded file
 		if (@move_uploaded_file($uploadFile->getLocation(), $object->getLocation())) {
-			// rotate image based on the exif data
-			if (!empty($this->options['rotateImages'])) {
-				if ($object->isImage) {
-					if (FileUtil::checkMemoryLimit($object->width * $object->height * ($object->fileType == 'image/png' ? 4 : 3) * 2.1)) {
-						$exifData = ExifUtil::getExifData($object->getLocation());
-						if (!empty($exifData)) {
-							$orientation = ExifUtil::getOrientation($exifData);
-							if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
-								$adapter = ImageHandler::getInstance()->getAdapter();
-								$adapter->loadFile($object->getLocation());
-								
-								$newImage = null;
-								switch ($orientation) {
-									case ExifUtil::ORIENTATION_180_ROTATE:
-										$newImage = $adapter->rotate(180);
-									break;
+			try {
+				// rotate image based on the exif data
+				if (!empty($this->options['rotateImages'])) {
+					if ($object->isImage) {
+						if (FileUtil::checkMemoryLimit($object->width * $object->height * ($object->fileType == 'image/png' ? 4 : 3) * 2.1)) {
+							$exifData = ExifUtil::getExifData($object->getLocation());
+							if (!empty($exifData)) {
+								$orientation = ExifUtil::getOrientation($exifData);
+								if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
+									$adapter = ImageHandler::getInstance()->getAdapter();
+									$adapter->loadFile($object->getLocation());
 									
-									case ExifUtil::ORIENTATION_90_ROTATE:
-										$newImage = $adapter->rotate(90);
-									break;
+									$newImage = null;
+									switch ($orientation) {
+										case ExifUtil::ORIENTATION_180_ROTATE:
+											$newImage = $adapter->rotate(180);
+											break;
+										
+										case ExifUtil::ORIENTATION_90_ROTATE:
+											$newImage = $adapter->rotate(90);
+											break;
+										
+										case ExifUtil::ORIENTATION_270_ROTATE:
+											$newImage = $adapter->rotate(270);
+											break;
+										
+										case ExifUtil::ORIENTATION_HORIZONTAL_FLIP:
+										case ExifUtil::ORIENTATION_VERTICAL_FLIP:
+										case ExifUtil::ORIENTATION_VERTICAL_FLIP_270_ROTATE:
+										case ExifUtil::ORIENTATION_HORIZONTAL_FLIP_270_ROTATE:
+											// unsupported
+											break;
+									}
 									
-									case ExifUtil::ORIENTATION_270_ROTATE:
-										$newImage = $adapter->rotate(270);
-									break;
+									if ($newImage !== null) {
+										$adapter->load($newImage, $adapter->getType());
+									}
 									
-									case ExifUtil::ORIENTATION_HORIZONTAL_FLIP:
-									case ExifUtil::ORIENTATION_VERTICAL_FLIP:
-									case ExifUtil::ORIENTATION_VERTICAL_FLIP_270_ROTATE:
-									case ExifUtil::ORIENTATION_HORIZONTAL_FLIP_270_ROTATE:
-										// unsupported
-									break;
-								}
-								
-								if ($newImage !== null) {
-									$adapter->load($newImage, $adapter->getType());
-								}
-								
-								$adapter->writeImage($object->getLocation());
-								
-								// update width, height and filesize of the object
-								if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
-									(new $this->editorClassName($object))->update([
-										'height' => $object->width,
-										'width' => $object->height,
-										'filesize' => filesize($object->getLocation())
-									]);
+									$adapter->writeImage($object->getLocation());
+									
+									// update width, height and filesize of the object
+									if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
+										(new $this->editorClassName($object))->update([
+											'height' => $object->width,
+											'width' => $object->height,
+											'filesize' => filesize($object->getLocation())
+										]);
+									}
 								}
 							}
 						}
 					}
 				}
+				
+				$this->objects[$uploadFile->getInternalFileID()] = $object;
 			}
-			
-			$this->objects[$uploadFile->getInternalFileID()] = $object;
+			catch (SystemException $e) {
+				(new $this->editorClassName($object))->delete();
+			}
 		}
 		else {
 			(new $this->editorClassName($object))->delete();
 		}
 		
 		if ($object->isImage && !empty($this->options['generateThumbnails']) && $object instanceof IThumbnailFile) {
-			$this->generateThumbnails($object);
+			try {
+				$this->generateThumbnails($object);
+			}
+			catch (SystemException $e) {
+				(new $this->editorClassName($object))->delete();
+			}
 		}
 	}
 	
