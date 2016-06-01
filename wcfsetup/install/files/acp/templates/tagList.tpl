@@ -35,12 +35,12 @@
 {if $items}
 	<form action="{link controller='TagList'}{/link}" method="post">
 		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.acp.tag.list.search{/lang}</h2>
+			<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 			
 			<dl>
-				<dt><label for="tagSearch">{lang}wcf.acp.tag.list.search.query{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="text" id="tagSearch" name="search" value="{$search}" autofocus="autofocus" class="medium" />
+					<input type="text" id="tagSearch" name="search" value="{$search}" placeholder="{lang}wcf.acp.tag.list.search.query{/lang}" autofocus="autofocus" class="medium" />
 				</dd>
 			</dl>
 		</section>
