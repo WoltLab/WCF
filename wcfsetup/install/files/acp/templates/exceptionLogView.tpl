@@ -120,7 +120,7 @@
 							{foreach from=$chain[stack] item=stack}
 							<li>{$stack[file]} ({$stack[line]}): {$stack[class]}{$stack[type]}{$stack[function]}(&hellip;)</li>
 							{/foreach}
-						</ul>
+						</ol>
 					</dd>
 				</dl>
 				{/foreach}
