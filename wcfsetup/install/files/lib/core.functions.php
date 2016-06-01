@@ -508,30 +508,30 @@ EXPLANATION;
 					}, $item['args']);
 				}
 			}
-
+			
 			if (!$ignorePaths) {
 				$item['args'] = array_map(function ($item) {
 					if (!is_string($item)) return $item;
-
-					if (preg_match('~^'.preg_quote($_SERVER['DOCUMENT_ROOT'], '~').'~', $item)) {
+					
+					if (preg_match('~^('.preg_quote($_SERVER['DOCUMENT_ROOT'], '~').'|'.preg_quote(WCF_DIR, '~').')~', $item)) {
 						$item = sanitizePath($item);
 					}
 
-					return preg_replace('~^'.preg_quote(WCF_DIR, '~').'~', '*/', $item);
+					return $item;
 				}, $item['args']);
-
+				
 				$item['file'] = sanitizePath($item['file']);
 			}
-
+			
 			return $item;
 		}, $trace);
 	}
-
+	
 	function sanitizePath($path) {
 		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
-
+		
 		return '*/'.FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
 	}
 }
