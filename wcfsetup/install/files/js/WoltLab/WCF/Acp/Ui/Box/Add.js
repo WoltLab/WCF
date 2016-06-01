@@ -51,9 +51,18 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 							event.preventDefault();
 							
 							var boxType = elBySel('input[name="boxType"]:checked', content).value;
-							var isMultilingual = elBySel('input[name="isMultilingual"]:checked', content).value;
+							var isMultilingual = 0;
+							if (boxType !== 'system') isMultilingual = elBySel('input[name="isMultilingual"]:checked', content).value;
 							
 							window.location = _link.replace(/{\$boxType}/, boxType).replace(/{\$isMultilingual}/, isMultilingual);
+						});
+						
+						elBySelAll('input[type="radio"][name="boxType"]', content, function(element) {
+							element.addEventListener('change', function(event) {
+								elBySelAll('input[type="radio"][name="isMultilingual"]', content, function(element) {
+									element.disabled = (event.currentTarget.value === 'system');
+								});
+							});
 						});
 					},
 					title: Language.get('wcf.acp.box.add')
