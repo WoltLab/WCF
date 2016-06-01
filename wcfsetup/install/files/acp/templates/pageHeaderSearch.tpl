@@ -6,8 +6,8 @@
 				<li><a href="#" data-provider-name="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 				<li class="dropdownDivider"></li>
 				
-				{foreach from=$availableAcpSearchProviders item='availableAcpSearchProvider'}
-					<li><a href="#" data-provider-name="{@$availableAcpSearchProvider->providerName}">{lang}wcf.acp.search.provider.{@$availableAcpSearchProvider->providerName}{/lang}</a></li>
+				{foreach from=$availableAcpSearchProviders key='availableAcpSearchProviderName' item='availableAcpSearchProviderLabel'}
+					<li><a href="#" data-provider-name="{@$availableAcpSearchProviderName}">{@$availableAcpSearchProviderLabel}</a></li>
 				{/foreach}
 			</ul>
 		</div>

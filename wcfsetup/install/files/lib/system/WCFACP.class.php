@@ -212,9 +212,16 @@ class WCFACP extends WCF {
 		$host = RouteHandler::getHost();
 		$path = RouteHandler::getPath();
 		
+		// available acp search providers
+		$availableAcpSearchProviders = [];
+		foreach (ACPSearchProviderCacheBuilder::getInstance()->getData() as $searchProvider) {
+			$availableAcpSearchProviders[$searchProvider->providerName] = self::getLanguage()->get('wcf.acp.search.provider.'.$searchProvider->providerName);
+		}
+		asort($availableAcpSearchProviders);
+		
 		self::getTPL()->assign([
 			'baseHref' => $host . $path,
-			'availableAcpSearchProviders' => ACPSearchProviderCacheBuilder::getInstance()->getData()
+			'availableAcpSearchProviders' => $availableAcpSearchProviders
 		]);
 	}
 	
