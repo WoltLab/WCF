@@ -100,6 +100,8 @@ class TemplateListPage extends SortablePage {
 		
 		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', array('%'.$this->searchTemplateName.'%'));
 		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', array($this->application));
+		
+		$this->objectList->getConditionBuilder()->add('templateName <> ?', array('.htac'));
 	}
 	
 	/**
