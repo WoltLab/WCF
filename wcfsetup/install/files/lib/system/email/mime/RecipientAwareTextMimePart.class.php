@@ -67,14 +67,23 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 		try {
 			if ($this->mailbox) WCF::setLanguage($this->mailbox->getLanguage()->languageID);
 			
-			return EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, [
-				'content' => $this->content,
-				'mimeType' => $this->mimeType,
-				'mailbox' => $this->mailbox
-			], true);
+			return EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, $this->getTemplateVariables(), true);
 		}
 		finally {
 			WCF::setLanguage($language->languageID);
 		}
+	}
+	
+	/**
+	 * Returns the templates variables to be passed to the EmailTemplateEngine.
+	 * 
+	 * @return	mixed[]
+	 */
+	protected function getTemplateVariables() {
+		return [
+			'content' => $this->content,
+			'mimeType' => $this->mimeType,
+			'mailbox' => $this->mailbox
+		];
 	}
 }
