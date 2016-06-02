@@ -1,4 +1,7 @@
 {capture assign='__searchLink'}{link controller='Search'}{/link}{/capture}
+{if $__searchTypeLabel|empty}
+	{capture assign='__searchTypeLabel'}{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}{/lang}{/capture}
+{/if}
 
 {event name='settings'}
 
@@ -6,7 +9,7 @@
 	<form method="post" action="{@$__searchLink}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
-				<a href="#" class="button dropdownToggle">{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}{/lang}</a>
+				<a href="#" class="button dropdownToggle">{@$__searchTypeLabel}</a>
 				<ul class="dropdownMenu">
 					<li><a href="#" data-object-type="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 					<li class="dropdownDivider"></li>
