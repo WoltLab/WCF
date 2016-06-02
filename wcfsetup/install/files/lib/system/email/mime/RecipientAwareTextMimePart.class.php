@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\email\mime;
+use wcf\data\style\ActiveStyle;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\email\Mailbox;
 use wcf\system\template\EmailTemplateEngine;
 use wcf\system\WCF;
@@ -80,10 +82,13 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 	 * @return	mixed[]
 	 */
 	protected function getTemplateVariables() {
+		$styleCache = StyleCacheBuilder::getInstance()->getData();
+		
 		return [
 			'content' => $this->content,
 			'mimeType' => $this->mimeType,
-			'mailbox' => $this->mailbox
+			'mailbox' => $this->mailbox,
+			'style' => new ActiveStyle($styleCache['styles'][$styleCache['default']])
 		];
 	}
 }
