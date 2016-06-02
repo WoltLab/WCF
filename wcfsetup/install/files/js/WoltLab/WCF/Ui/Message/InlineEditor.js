@@ -81,6 +81,7 @@ define(
 				
 				var messageBody = elBySel('.messageBody', element);
 				var messageFooter = elBySel('.messageFooter', element);
+				var messageHeader = elBySel('.messageHeader', element);
 				
 				this._elements.set(element, {
 					button: button,
@@ -88,6 +89,7 @@ define(
 					messageBodyEditor: null,
 					messageFooter: messageFooter,
 					messageFooterButtons: elBySel('.messageFooterButtons', messageFooter),
+					messageHeader: messageHeader,
 					messageText: elBySel('.messageText', messageBody)
 				});
 			}
@@ -349,7 +351,8 @@ define(
 				this._save();
 			}).bind(this));
 			
-			// hide message options
+			// hide message header and footer
+			elHide(elementData.messageHeader);
 			elHide(elementData.messageFooter);
 			
 			var editorElement = elById(id);
@@ -384,6 +387,7 @@ define(
 			
 			elShow(elementData.messageBody);
 			elShow(elementData.messageFooter);
+			elShow(elementData.messageHeader);
 			this._activeElement.classList.remove('jsInvalidQuoteTarget');
 			
 			this._activeElement = null;
