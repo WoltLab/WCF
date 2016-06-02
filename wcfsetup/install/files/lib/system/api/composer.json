@@ -3,6 +3,7 @@
         "vendor-dir": "./"
     },
     "require": {
-        "ezyang/htmlpurifier": "4.7.*"
+        "ezyang/htmlpurifier": "4.7.*",
+        "erusev/parsedown": "1.6.*"
     }
 }
