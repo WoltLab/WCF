@@ -3025,11 +3025,50 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass 
 	
 	<category name="wcf.user.register">
 		<item name="wcf.user.register"><![CDATA[Registrierung]]></item>
+		
+		<!-- Need Activation -->
+		<item name="wcf.user.register.needActivation"><![CDATA[Ihr Benutzerkonto ist noch nicht aktiviert. Sie müssen den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Aktivierung der Registrierung auf der Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.register.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br>
+		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
+<p>vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: <a href="{link}{/link}">{@PAGE_TITLE|language}</a>. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if}
+Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if} ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit Ihrer E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren!]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{@$mailbox->getUser()->activationCode}</code>.</p>
+<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung Ihres Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator
+unter: <a href="mailto:{@MAIL_ADMIN_ADDRESS}">{@MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
+dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
+		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Hallo {$mailbox->getUser()->username},
+
+vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language} [1].
+Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if} ist es notwendig,
+dass Sie einmalig durch Klicken des Folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if}
+E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:
+
+    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
+
+Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung Ihres Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende
+dich{else}wenden
+Sie sich{/if} bitte an den Administrator unter: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
+dich{else}Sie
+sich{/if} nicht bei uns registriert haben, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.
+
+[1] {link}{/link}]]></item>
+		
+		<!-- Success Messages -->
+		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. Ihre Registrierung ist hiermit vollständig abgeschlossen.]]></item>
+		<item name="wcf.user.register.success.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br>
 Wir haben {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} eine E-Mail an {$user->email} geschickt. Die E-Mail enthält einen Link, den {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig aufrufen {if LANGUAGE_USE_INFORMAL_VARIANT}musst{else}müssen{/if}, um die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse zu bestätigen und damit {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung abzuschließen.]]></item>
-		<item name="wcf.user.register.awaitActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Benutzerdaten werden in Kürze von einem Administrator geprüft.<br>
+		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Benutzerdaten werden in Kürze von einem Administrator geprüft.<br>
 Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freigeschaltet ist, {if LANGUAGE_USE_INFORMAL_VARIANT}wirst du{else}werden Sie{/if} per E-Mail darüber in Kenntnis gesetzt.]]></item>
+		
+		<!-- Error Messages -->
+		<item name="wcf.user.register.error.disabled"><![CDATA[Die Registrierung ist momentan deaktiviert.]]></item>
+		
+		<!-- Administrator Notification -->
 		<item name="wcf.user.register.notification.mail"><![CDATA[Hallo Administrator,
 		
 auf der Website {@PAGE_TITLE|language} erfolgte eine neue Benutzeranmeldung durch: {@$user->username} 
@@ -3039,30 +3078,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du erreichst{else}Sie erreichen{/if} das Benutzerprofil des neuen Benutzers, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} folgenden Link {if LANGUAGE_USE_INFORMAL_VARIANT}aufrufst{else}aufrufen{/if}:
 {link controller='User' object=$user isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[Neue Benutzeranmeldung auf der Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.register.error.disabled"><![CDATA[Die Registrierung ist momentan deaktiviert.]]></item>
-		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Registrierung ist hiermit vollständig abgeschlossen.]]></item>
-		<item name="wcf.user.register.needActivation.mail"><![CDATA[Hallo {@$user->username},
-
-vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language}. 
-Bevor wir {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung aktivieren können, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse bestätigen.
-
-Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}bestätige{else}bestätigen Sie{/if} die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du folgenden Link aufrufst{else}Sie folgenden Link aufrufen{/if}:
-{link controller='RegisterActivation' isEmail=true}u={@$user->userID}&a={@$user->activationCode}{/link} 
-
-**** Funktioniert der Link oben nicht? ****
-Wenn der Link nicht funktioniert, {if LANGUAGE_USE_INFORMAL_VARIANT}solltest du{else}sollten Sie{/if} folgende Adresse in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Browser aufrufen:
-{link controller='RegisterActivation' isEmail=true}{/link} 
-
-Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass keine Leerzeichen in der Adresse sind.
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du den Link aufgerufen hast, musst du auf der erscheinenden Seite deinen{else}Sie den Link aufgerufen haben, müssen Sie auf der erscheinenden Seite Ihren{/if} Benutzernamen sowie den Aktivierungscode eingeben.
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzername lautet: 	{@$user->username} 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: 	{@$user->activationCode} 
-
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du Probleme mit der Aktivierung haben solltest, wende dich{else}Sie Probleme mit der Aktivierung haben, wenden Sie sich{/if} bitte an den Administrator: {@MAIL_ADMIN_ADDRESS} 
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du dich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben, kannst du diese E-Mail ignorieren{else}Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben, können Sie diese E-Mail ignorieren{/if}. ]]></item>
-		<item name="wcf.user.register.needActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto ist noch nicht aktiviert. {if LANGUAGE_USE_INFORMAL_VARIANT}du musst{else}Sie müssen{/if} den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
+		
+		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Akzeptieren]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Ablehnen]]></item>
 		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h2>Haftungsbeschränkung für eigene Inhalte</h2>

@@ -15,7 +15,10 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\Regex;
@@ -465,16 +468,19 @@ class RegisterForm extends UserAddForm {
 				$this->message = 'wcf.user.register.success';
 			}
 			else {
-				$mail = new Mail([$this->username => $this->email],
-					WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'),
-					WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail', ['user' => $user])
-				);
-				$mail->send();
-				$this->message = 'wcf.user.register.needActivation';
+				$email = new Email();
+				$email->addRecipient(new UserMailbox(WCF::getUser()));
+				$email->setSubject(WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+				$email->setBody(new MimePartFacade([
+					new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+					new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation')
+				]));
+				$email->send();
+				$this->message = 'wcf.user.register.success.needActivation';
 			}
 		}
 		else if (REGISTER_ACTIVATION_METHOD == 2) {
-			$this->message = 'wcf.user.register.awaitActivation';
+			$this->message = 'wcf.user.register.success.awaitActivation';
 		}
 		
 		// notify admin

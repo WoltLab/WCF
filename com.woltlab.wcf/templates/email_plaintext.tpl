@@ -1,7 +1,7 @@
 {@$content}
-{hascontent}
+{hascontent} {* this line ends with a space *}
 
--- {* The Space is important, do not remove *}
+-- {* this line ends with a space *}
 {content}
 {@MAIL_SIGNATURE|language}
 {if $mailbox|is_a:'wcf\system\email\UserMailbox'}{if MAIL_SIGNATURE|language}{* add newlines *}

@@ -3063,12 +3063,49 @@ If you cannot activate your email address or have any troubles following the ins
 	
 	<category name="wcf.user.register">
 		<item name="wcf.user.register"><![CDATA[Registration]]></item>
+		
+		<!-- Need Activation -->
+		<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.register.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
+		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
+<p>thank you for registering at: <a href="{link}{/link}">{@PAGE_TITLE|language}</a>. Before you are able to use your
+user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address!]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
+<p>Your activation code is: <code>{@$mailbox->getUser()->activationCode}</code>.</p>
+<p>If you have troubles confirming your email address, please contact the administrator at:
+<a href="mailto:{@MAIL_ADMIN_ADDRESS}">{@MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
+you did not register an account with us.</p>]]></item>
+		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
+
+thank your for registering at: {@PAGE_TITLE|language} [1]. Before you are
+able to user your user account to it's full extent it is required that you
+confirm the validity of your email address once:
+
+    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
+
+Your activation code is: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
+
+If you have troubles confirming your email address, please contect the
+administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
+not register with us.
+
+[1] {link}{/link}]]></item>
+		
+		<!-- Success Messages -->
+		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
+Your registration is now completed.]]></item>
+		<item name="wcf.user.register.success.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
 An email was sent to “{$user->email}” containing a one-time link to verify your account and ultimately completing your registration.]]></item>
-		<item name="wcf.user.register.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
+		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your account is awaiting approval from an administrator.<br>
 A notification will be sent once your account has been approved.]]></item>
+		
+		<!-- Error Messages -->
+		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
+		
+		<!-- Administrator Notification -->
 		<item name="wcf.user.register.notification.mail"><![CDATA[Dear Administrator,
 
 someone registered with your website {@PAGE_TITLE|language}: {@$user->username} 
@@ -3078,29 +3115,9 @@ Email address used: {@$user->email}
 Open the link below to access the user profile:
 {link controller='User' object=$user isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[New Registration with Your Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
-		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
-Your registration is now completed.]]></item>
-		<item name="wcf.user.register.needActivation.mail"><![CDATA[Dear {@$user->username},
-
-thank you for registering on our website: {@PAGE_TITLE|language}. It is required to open the link below in order to verify your email address. 
-
-{link controller='RegisterActivation' isEmail=true}u={@$user->userID}&a={@$user->activationCode}{/link} 
-
-**** Unable to click or open the link above? ****
-Please open the link below in your browser:
-{link controller='RegisterActivation' isEmail=true}{/link} 
-
-Once prompted provide the details as shown below:
-
-Your username: 		{@$user->username} 
-Activation Code: 	{@$user->activationCode} 
-
-If you cannot open the link or have troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS} 
-
-You can safely ignore this email if you did not register with the website: {@PAGE_TITLE|language}.]]></item>
-		<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
-    		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
+		
+		<!-- Disclaimer -->
+		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Decline]]></item>
 		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h2>Limitation of liability for internal content</h2>
     <p>The content of our website has been compiled with meticulous care and to the best of our knowledge. However, we cannot assume any liability for the up-to-dateness, completeness or accuracy of any of the pages.</p>
