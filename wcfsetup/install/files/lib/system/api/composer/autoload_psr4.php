@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'Pelago\\' => array($vendorDir . '/pelago/emogrifier/Classes'),
 );
