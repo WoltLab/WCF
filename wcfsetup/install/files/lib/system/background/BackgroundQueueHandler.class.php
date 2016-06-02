@@ -100,6 +100,10 @@ class BackgroundQueueHandler extends SingletonFactory {
 			
 			if ($job->getFailures() <= $job::MAX_FAILURES) {
 				$this->enqueueIn($job, $job->retryAfter());
+				
+				if (WCF::debugModeIsEnabled()) {
+					\wcf\functions\exception\logThrowable($e);
+				}
 			}
 			else {
 				// job failed too often: log
@@ -112,6 +116,10 @@ class BackgroundQueueHandler extends SingletonFactory {
 			
 			if ($job->getFailures() <= $job::MAX_FAILURES) {
 				$this->enqueueIn($job, $job->retryAfter());
+				
+				if (WCF::debugModeIsEnabled()) {
+					\wcf\functions\exception\logThrowable($e);
+				}
 			}
 			else {
 				// job failed too often: log
