@@ -40,6 +40,7 @@
 		<div class="formSubmit jsOnly"{if !$poll->canVote() && $__pollView === 'result'} style="display: none"{/if}>
 			{content}
 				{if $__wcf->getUser()->userID}
+					<button class="small jsButtonPollVote"{if $poll->canVote()} disabled{else} style="display: none;"{/if}>{lang}wcf.poll.button.vote{/lang}</button>
 					<button class="small jsButtonPollShowVote"{if $__pollView === 'vote'} style="display: none;"{/if}>{lang}wcf.poll.button.showVote{/lang}</button>
 					<button class="small jsButtonPollShowResult"{if $__pollView === 'result'} style="display: none;"{/if}>{lang}wcf.poll.button.showResult{/lang}</button>
 				{/if}
