@@ -16,14 +16,18 @@
 		<div class="pollInnerContainer">
 			{if !$__wcf->getUser()->userID}
 				{if $poll->canSeeResult()}
+					{assign var='__pollView' value='result'}
 					{include file='pollResult'}
 				{else}
+					{assign var='__pollView' value='vote'}
 					{include file='pollVote'}
 				{/if}
 			{else}
 				{if $poll->canVote() && !$poll->isParticipant()}
+					{assign var='__pollView' value='vote'}
 					{include file='pollVote'}
 				{else}
+					{assign var='__pollView' value='result'}
 					{include file='pollResult'}
 				{/if}
 			{/if}
@@ -33,15 +37,14 @@
 	</section>
 	
 	{hascontent}
-		<div class="formSubmit jsOnly">
+		<div class="formSubmit jsOnly"{if !$poll->canVote() && $__pollView === 'result'} style="display: none"{/if}>
 			{content}
 				{if $__wcf->getUser()->userID}
-					<button class="small jsButtonPollVote">{lang}wcf.poll.button.vote{/lang}</button>
-					<button class="small jsButtonPollShowVote">{lang}wcf.poll.button.showVote{/lang}</button>
-					<button class="small jsButtonPollShowResult">{lang}wcf.poll.button.showResult{/lang}</button>
+					<button class="small jsButtonPollShowVote"{if $__pollView === 'vote'} style="display: none;"{/if}>{lang}wcf.poll.button.showVote{/lang}</button>
+					<button class="small jsButtonPollShowResult"{if $__pollView === 'result'} style="display: none;"{/if}>{lang}wcf.poll.button.showResult{/lang}</button>
 				{/if}
 				{if $poll->canViewParticipants()}
-					<button class="small jsButtonPollShowParticipants">{lang}wcf.poll.button.showParticipants{/lang}</button>
+					<button class="small jsButtonPollShowParticipants"{if $__pollView === 'vote' || !$poll->canVote()} style="display: none"{/if}>{lang}wcf.poll.button.showParticipants{/lang}</button>
 				{/if}
 				
 				{event name='pollButtons'}
