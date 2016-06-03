@@ -416,7 +416,7 @@ define(
 			var id = this._getEditorId();
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
-			EventHandler.fire('com.woltlab.wcf.messageOptionsInline', 'submit_' + id, parameters);
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
 			
 			Ajax.api(this, {
 				actionName: 'save',
@@ -451,6 +451,22 @@ define(
 				while (element.childNodes.length) {
 					elementData.messageBody.appendChild(element.childNodes[0]);
 				}
+			}
+			
+			// handle poll
+			if (typeof data.returnValues.poll === 'string') {
+				// find current poll
+				var poll = elBySel('.pollContainer', elementData.messageBody);
+				if (poll !== null) {
+					// poll contain is wrapped inside `.jsInlineEditorHideContent`
+					elRemove(poll.parentNode);
+				}
+				
+				var pollContainer = elCreate('div');
+				pollContainer.className = 'jsInlineEditorHideContent';
+				DomUtil.setInnerHtml(pollContainer, data.returnValues.poll);
+				
+				DomUtil.prepend(pollContainer, elementData.messageBody);
 			}
 			
 			this._restoreMessage();

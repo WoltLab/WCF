@@ -28,7 +28,7 @@
 			<dt>
 				<label>{lang}wcf.poll.options{/lang}</label>
 			</dt>
-			<dd id="pollOptionContainer" class="sortableListContainer">
+			<dd id="pollOptionContainer" class="pollOptionContainer sortableListContainer">
 				<ol class="sortableList"></ol>
 				{if $errorField == 'pollOptions'}
 					<small class="innerError">

@@ -157,27 +157,33 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * Reads form parameters for polls.
+	 * 
+	 * @param       array   $postData       optional post data to be used instead of $_POST
 	 */
-	public function readFormParameters() {
+	public function readFormParameters(array $postData = array()) {
+		if (empty($postData)) {
+			$postData &= $_POST;
+		}
+		
 		// reset poll data and options prior to reading form input
 		$this->pollData = $this->pollOptions = [];
 		
 		// poll data
-		if (isset($_POST['pollEndTime'])) {
-			$d = \DateTime::createFromFormat('Y-m-d H:i', $_POST['pollEndTime'], WCF::getUser()->getTimeZone());
+		if (isset($postData['pollEndTime'])) {
+			$d = \DateTime::createFromFormat('Y-m-d H:i', $postData['pollEndTime'], WCF::getUser()->getTimeZone());
 			$this->pollData['endTime'] = ($d !== false) ? $d->getTimestamp() : 0;
 		}
 		
-		if (isset($_POST['pollMaxVotes'])) $this->pollData['maxVotes'] = max(intval($_POST['pollMaxVotes']), 1); // force a minimum of 1
-		if (isset($_POST['pollQuestion'])) $this->pollData['question'] = StringUtil::trim($_POST['pollQuestion']);
+		if (isset($postData['pollMaxVotes'])) $this->pollData['maxVotes'] = max(intval($postData['pollMaxVotes']), 1); // force a minimum of 1
+		if (isset($postData['pollQuestion'])) $this->pollData['question'] = StringUtil::trim($postData['pollQuestion']);
 		
 		// boolean values
-		$this->pollData['isChangeable'] = (isset($_POST['pollIsChangeable'])) ? 1 : 0;
-		$this->pollData['resultsRequireVote'] = (isset($_POST['pollResultsRequireVote'])) ? 1 : 0;
-		$this->pollData['sortByVotes'] = (isset($_POST['pollSortByVotes'])) ? 1 : 0;
+		$this->pollData['isChangeable'] = (isset($postData['pollIsChangeable'])) ? 1 : 0;
+		$this->pollData['resultsRequireVote'] = (isset($postData['pollResultsRequireVote'])) ? 1 : 0;
+		$this->pollData['sortByVotes'] = (isset($postData['pollSortByVotes'])) ? 1 : 0;
 		
 		if ($this->poll === null) {
-			$this->pollData['isPublic'] = (isset($_POST['pollIsPublic']) && $this->canStartPublicPoll()) ? 1 : 0;
+			$this->pollData['isPublic'] = (isset($postData['pollIsPublic']) && $this->canStartPublicPoll()) ? 1 : 0;
 		}
 		else {
 			// visibility cannot be changed after creation
@@ -185,8 +191,8 @@ class PollManager extends SingletonFactory {
 		}
 		
 		// poll options
-		if (isset($_POST['pollOptions']) && is_array($_POST['pollOptions'])) {
-			foreach ($_POST['pollOptions'] as $showOrder => $value) {
+		if (isset($postData['pollOptions']) && is_array($postData['pollOptions'])) {
+			foreach ($postData['pollOptions'] as $showOrder => $value) {
 				list($optionID, $optionValue) = explode('_', $value, 2);
 				$this->pollOptions[$showOrder] = [
 					'optionID' => intval($optionID),

@@ -242,12 +242,16 @@ class QuickReplyManager extends SingletonFactory {
 			
 			return [
 				'lastPostTime' => $message->time,
+				'objectID' => $message->getObjectID(),
 				'template' => WCF::getTPL()->fetch($templateName, $application)
 			];
 		}
 		else {
 			// redirect
-			return ['url' => $object->getRedirectUrl($this->container, $message)];
+			return [
+				'objectID' => $message->getObjectID(),
+				'url' => $object->getRedirectUrl($this->container, $message)
+			];
 		}
 	}
 	

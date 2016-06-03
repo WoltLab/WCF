@@ -29,6 +29,12 @@ WCF.Poll.Management = Class.extend({
 	_count: 0,
 	
 	/**
+	 * editor element id
+	 * @var string
+	 */
+	_editorId: '',
+	
+	/**
 	 * maximum allowed number of options
 	 * @var	int
 	 */
@@ -37,11 +43,12 @@ WCF.Poll.Management = Class.extend({
 	/**
 	 * Initializes the WCF.Poll.Management class.
 	 * 
-	 * @param	string		containerID
-	 * @param	array<object>	optionList
-	 * @param	integer		maxOptions
+	 * @param       {string}        containerID
+	 * @param       {Object[]}      optionList
+	 * @param       {int}           maxOptions
+	 * @param       {string}        editorId
 	 */
-	init: function(containerID, optionList, maxOptions) {
+	init: function(containerID, optionList, maxOptions, editorId) {
 		this._count = 0;
 		this._maxOptions = maxOptions || -1;
 		this._container = $('#' + containerID).children('ol:eq(0)');
@@ -50,11 +57,19 @@ WCF.Poll.Management = Class.extend({
 			return;
 		}
 		
-		optionList = optionList || [ ];
+		optionList = optionList || [];
 		this._createOptionList(optionList);
 		
 		// bind event listener
-		this._container.parents('form').submit($.proxy(this._submit, this));
+		if (editorId) {
+			this._editorId = editorId;
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + editorId, this._reset.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
+		}
+		else {
+			this._container.parents('form').submit($.proxy(this._submit, this));
+		}
 		
 		// init sorting
 		new WCF.Sortable.List(containerID, '', undefined, {
@@ -152,7 +167,7 @@ WCF.Poll.Management = Class.extend({
 			return false;
 		}
 		
-		var $listItem = $(event.currentTarget).parents('li');
+		var $listItem = $(event.currentTarget).closest('li', this._container[0]);
 		
 		this._createOption(undefined, undefined, $listItem);
 	},
@@ -163,7 +178,7 @@ WCF.Poll.Management = Class.extend({
 	 * @param	object		event
 	 */
 	_removeOption: function(event) {
-		$(event.currentTarget).parents('li').remove();
+		$(event.currentTarget).closest('li', this._container[0]).remove();
 		
 		this._count--;
 		this._container.find('span.jsAddOption').addClass('pointer').removeClass('disabled');
@@ -175,31 +190,81 @@ WCF.Poll.Management = Class.extend({
 	
 	/**
 	 * Inserts hidden input elements storing the option values.
+	 * 
+	 * @param       {(Event|Object)}        event
 	 */
-	_submit: function() {
-		var $options = [ ];
-		this._container.children('li').each(function(index, listItem) {
+	_submit: function(event) {
+		var $options = [];
+		this._container.children('li').each(function (index, listItem) {
 			var $listItem = $(listItem);
 			var $optionValue = $.trim($listItem.find('input').val());
 			
 			// ignore empty values
 			if ($optionValue != '') {
-				$options.push({
-					optionID: $listItem.data('optionID'),
-					optionValue: $optionValue
-				});
+				$options.push($listItem.data('optionID') + '_' + $optionValue);
 			}
 		});
 		
-		// create hidden input fields
-		if ($options.length) {
-			var $formSubmit = this._container.parents('form').find('.formSubmit');
-			
-			for (var $i = 0, $length = $options.length; $i < $length; $i++) {
-				var $option = $options[$i];
-				$('<input type="hidden" name="pollOptions[' + $i + ']" />').val($option.optionID + '_' + $option.optionValue).appendTo($formSubmit);
+		if (event instanceof Event) {
+			// create hidden input fields
+			if ($options.length) {
+				var $formSubmit = this._container.parents('form').find('.formSubmit');
+				
+				for (var $i = 0, $length = $options.length; $i < $length; $i++) {
+					$('<input type="hidden" name="pollOptions[' + $i + ']">').val($options[$i]).appendTo($formSubmit);
+				}
 			}
 		}
+		else {
+			event.poll = { pollOptions: $options };
+			
+			// get form input fields
+			var parentContainer = this._container.parents('.messageTabMenuContent:eq(0)');
+			parentContainer.find('input').each(function(index, input) {
+				if (input.name) {
+					if (input.type !== 'checkbox' || input.checked) {
+						event.poll[input.name] = input.value;
+					}
+				}
+			});
+		}
+	},
+	
+	/**
+	 * Resets the poll option form.
+	 * 
+	 * @private
+	 */
+	_reset: function() {
+		// reset options
+		/** @type Element */
+		var container = this._container[0];
+		while (container.childElementCount > 1) {
+			container.removeChild(container.children[1]);
+		}
+		
+		elBySel('input', container.children[0]).value = '';
+		
+		// reset input fields and checkboxes
+		var parentContainer = this._container.parents('.messageTabMenuContent:eq(0)');
+		parentContainer.find('input').each(function(index, input) {
+			if (input.name) {
+				if (input.type === 'checkbox') {
+					input.checked = false;
+				}
+				else if (input.type === 'text') {
+					input.value = '';
+				}
+				else if (input.type === 'number') {
+					input.value = input.min;
+				}
+			}
+		});
+		
+		// reset date picker
+		require(['WoltLab/WCF/Date/Picker'], (function(UiDatePicker) {
+			UiDatePicker.clear('pollEndTime_' + this._editorId);
+		}).bind(this));
 	}
 });
 
