@@ -176,9 +176,10 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	string					$sortOrder
 	 * @param	string					$templateName
 	 * @param	string					$application
+	 * @param       callable                                $callbackCreatedMessage
 	 * @return	array
 	 */
-	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf') {
+	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf', callable $callbackCreatedMessage = null) {
 		$additionalFields = [];
 		EventHandler::getInstance()->fireAction($this, 'createMessage', $additionalFields);
 		
@@ -204,6 +205,10 @@ class QuickReplyManager extends SingletonFactory {
 		$message = $object->create();
 		$eventParameters = ['message' => $message];
 		EventHandler::getInstance()->fireAction($this, 'createdMessage', $eventParameters);
+		
+		if ($callbackCreatedMessage !== null) {
+			$callbackCreatedMessage($message);
+		}
 		
 		if ($message instanceof IMessage && !$message->isVisible()) {
 			return ['isVisible' => false];
