@@ -68,7 +68,7 @@ WCF.Poll.Management = Class.extend({
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
 		}
 		else {
-			this._container.parents('form').submit($.proxy(this._submit, this));
+			this._container.closest('form').submit($.proxy(this._submit, this));
 		}
 		
 		// init sorting
@@ -205,7 +205,7 @@ WCF.Poll.Management = Class.extend({
 			}
 		});
 		
-		if (event instanceof Event) {
+		if (typeof event.originalEvent === 'object' && event.originalEvent instanceof Event) {
 			// create hidden input fields
 			if ($options.length) {
 				var $formSubmit = this._container.parents('form').find('.formSubmit');
