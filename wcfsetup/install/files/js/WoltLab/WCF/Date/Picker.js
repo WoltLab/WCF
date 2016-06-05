@@ -232,11 +232,16 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			if (data.isDateTime) {
 				_dateHour.value = date.getHours();
 				_dateMinute.value = date.getMinutes();
+				
+				_datePicker.classList.add('datePickerTime');
+			}
+			else {
+				_datePicker.classList.remove('datePickerTime');
 			}
 			
 			this._renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 			
-			UiAlignment.set(_datePicker, _input, { pointer: true });
+			UiAlignment.set(_datePicker, _input);
 		},
 		
 		/**
@@ -449,11 +454,6 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_datePicker = elCreate('div');
 			_datePicker.className = 'datePicker';
 			_datePicker.addEventListener(WCF_CLICK_EVENT, function(event) { event.stopPropagation(); });
-			
-			var pointer = elCreate('span');
-			pointer.className = 'elementPointer';
-			pointer.innerHTML = '<span></span>';
-			_datePicker.appendChild(pointer);
 			
 			var header = elCreate('header');
 			_datePicker.appendChild(header);

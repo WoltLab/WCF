@@ -6,55 +6,20 @@
 
 .datePicker {
 	background-color: $wcfDropdownBackground;
-	border: 1px solid $wcfDropdownBorder;
-	box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	color: $wcfDropdownText;
-	opacity: 0;
+	display: none;
 	position: absolute;
-	transition: visibility .3s linear .3s, opacity .3s linear;
-	visibility: hidden;
 	width: 240px;
 	z-index: 450;
 	
 	&.active {
-		opacity: 1;
-		transition-delay: 0s;
-		visibility: visible;
+		display: block;
 	}
 	
 	&.datePickerTime > footer {
 		display: block;
-	}
-	
-	> .elementPointer {
-		border: 10px solid transparent;
-		border-bottom-color: $wcfDropdownBorder;
-		border-top-width: 0;
-		
-		> span {
-			border: 9px solid transparent;
-			border-bottom-color: $wcfDropdownBackground;
-			border-top-width: 0;
-			left: -9px;
-			position: absolute;
-			top: 1px;
-		}
-		
-		&.flipVertical {
-			border: 10px transparent solid;
-			border-top-color: $wcfDropdownBorder;
-			border-bottom-width: 0;
-			bottom: 0;
-			top: auto;
-			
-			> span {
-				border: 9px transparent solid;
-				border-top-color: $wcfDropdownBackground;
-				border-bottom-width: 0;
-				bottom: 1px;
-				top: auto;
-			}
-		}
 	}
 	
 	> header,
@@ -136,6 +101,7 @@
 	}
 	
 	> footer {
+		border-top: 1px solid $wcfDropdownBorder;
 		display: none;
 	}
 }
