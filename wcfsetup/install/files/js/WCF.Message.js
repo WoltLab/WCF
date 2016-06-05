@@ -2569,6 +2569,15 @@ $.widget('wcf.messageTabMenu', {
 		this._span = $('<span />').appendTo($nav);
 		
 		var $preselect = this.element.data('preselect');
+		
+		// check for tabs containing '.innerError' and select the first matching one instead
+		$tabContainers.each(function(index, container) {
+			if (elBySel('.innerError', container) !== null) {
+				$preselect = $($tabs[index]).data('name');
+				return false;
+			}
+		});
+		
 		this._tabs = [ ];
 		this._tabsByName = { };
 		for (var $i = 0; $i < $tabs.length; $i++) {
