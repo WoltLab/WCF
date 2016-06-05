@@ -162,7 +162,7 @@ class PollManager extends SingletonFactory {
 	 */
 	public function readFormParameters(array $postData = array()) {
 		if (empty($postData)) {
-			$postData &= $_POST;
+			$postData =& $_POST;
 		}
 		
 		// reset poll data and options prior to reading form input
@@ -170,7 +170,7 @@ class PollManager extends SingletonFactory {
 		
 		// poll data
 		if (isset($postData['pollEndTime'])) {
-			$d = \DateTime::createFromFormat('Y-m-d H:i', $postData['pollEndTime'], WCF::getUser()->getTimeZone());
+			$d = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $postData['pollEndTime'], WCF::getUser()->getTimeZone());
 			$this->pollData['endTime'] = ($d !== false) ? $d->getTimestamp() : 0;
 		}
 		
