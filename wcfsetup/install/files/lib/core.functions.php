@@ -33,6 +33,7 @@ namespace {
 		$args = func_get_args();
 		$length = count($args);
 		if ($length === 0) {
+			echo "ERROR: No arguments provided.<hr>";
 		}
 		else {
 			for ($i = 0; $i < $length; $i++) {
