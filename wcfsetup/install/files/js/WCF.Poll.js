@@ -66,6 +66,7 @@ WCF.Poll.Management = Class.extend({
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + editorId, this._reset.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + editorId, this._validate.bind(this));
 		}
 		else {
 			this._container.closest('form').submit($.proxy(this._submit, this));
@@ -265,6 +266,27 @@ WCF.Poll.Management = Class.extend({
 		require(['WoltLab/WCF/Date/Picker'], (function(UiDatePicker) {
 			UiDatePicker.clear('pollEndTime_' + this._editorId);
 		}).bind(this));
+	},
+	
+	_validate: function(data) {
+		var question = elById('pollQuestion_' + this._editorId);
+		if (question.value.trim() === '') {
+			// no question provided, ignore
+			return;
+		}
+		
+		// get options
+		var hasOptions = false;
+		elBySelAll('li input[type="text"]', this._container[0], function(input) {
+			if (input.value.trim() !== '') {
+				hasOptions = true;
+			}
+		});
+		
+		if (hasOptions === false) {
+			data.api.throwError(this._container[0], WCF.Language.get('wcf.global.form.error.empty'));
+			data.valid = false;
+		}
 	}
 });
 

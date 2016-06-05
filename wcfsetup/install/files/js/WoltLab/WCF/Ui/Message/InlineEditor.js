@@ -416,6 +416,12 @@ define(
 			var id = this._getEditorId();
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
+			
+			if (!this._validate(parameters)) {
+				// validation failed
+				return;
+			}
+			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
 			
 			Ajax.api(this, {
@@ -424,6 +430,45 @@ define(
 			});
 			
 			this._hideEditor();
+		},
+		
+		/**
+		 * Validates the message and invokes listeners to perform additional validation.
+		 *
+		 * @param       {Object}        parameters      request parameters
+		 * @return      {boolean}       validation result
+		 * @protected
+		 */
+		_validate: function(parameters) {
+			// remove all existing error elements
+			var errorMessages = elByClass('innerError', this._activeElement);
+			while (errorMessages.length) {
+				elRemove(errorMessages[0]);
+			}
+			
+			var data = {
+				api: this,
+				parameters: parameters,
+				valid: true
+			};
+			
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'validate_' + this._getEditorId(), data);
+			
+			return (data.valid !== false);
+		},
+		
+		/**
+		 * Throws an error by adding an inline error to target element.
+		 *
+		 * @param       {Element}       element         erroneous element
+		 * @param       {string}        message         error message
+		 */
+		throwError: function(element, message) {
+			var error = elCreate('small');
+			error.className = 'innerError';
+			error.textContent = message;
+			
+			DomUtil.insertAfter(error, element);
 		},
 		
 		/**

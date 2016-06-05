@@ -93,7 +93,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 			// remove all existing error elements
 			var errorMessages = elByClass('innerError', this._container);
 			while (errorMessages.length) {
-				errorMessages[0].parentNode.removeChild(errorMessages[0]);
+				elRemove(errorMessages[0]);
 			}
 			
 			// check if editor contains actual content
@@ -103,10 +103,10 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 			}
 			
 			var data = {
-				'api': this,
-				'editor': this._getEditor(),
-				'message': this._getEditor().code.get(),
-				'valid': true
+				api: this,
+				editor: this._getEditor(),
+				message: this._getEditor().code.get(),
+				valid: true
 			};
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'validate_text', data);
