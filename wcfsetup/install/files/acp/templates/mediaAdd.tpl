@@ -168,9 +168,9 @@
 			updateLanguageFields();
 			
 			{if !$isMultilingual}
-				elById('title').value = '{$i18nPlainValues['title']|encodeJs}';
-				elById('title').caption = '{$i18nPlainValues['caption']|encodeJs}';
-				elById('title').altText = '{$i18nPlainValues['altText']|encodeJs}';
+				elById('title').value = '{$i18nPlainValues['title']|encodeJS}';
+				elById('title').caption = '{$i18nPlainValues['caption']|encodeJS}';
+				elById('title').altText = '{$i18nPlainValues['altText']|encodeJS}';
 			{/if}
 		});
 	</script>
