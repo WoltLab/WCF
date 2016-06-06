@@ -289,7 +289,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					switch ($imageData[2]) {
 						case IMAGETYPE_PNG:
 						case IMAGETYPE_JPEG:
-						case IMAGETYPE_JPG:
 						case IMAGETYPE_GIF:
 							// fine
 						break;
