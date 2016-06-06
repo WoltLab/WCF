@@ -287,10 +287,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 						throw new UserInputException('image');
 					}
 					switch ($imageData[2]) {
-						case IMG_PNG:
-						case IMG_JPEG:
-						case IMG_JPG:
-						case IMG_GIF:
+						case IMAGETYPE_PNG:
+						case IMAGETYPE_JPEG:
+						case IMAGETYPE_JPG:
+						case IMAGETYPE_GIF:
 							// fine
 						break;
 						default:
