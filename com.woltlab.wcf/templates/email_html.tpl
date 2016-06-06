@@ -1,16 +1,29 @@
 <html>
 	<head>
 		<style type="text/css">
+		* {
+			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
+		}
 		html {
 			padding: 0;
 			margin: 0;
-			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
 		}
 		body {
 			padding: 0;
 			margin: 0;
 			background-color: {$style->getVariable('wcfContentBackground', true)};
 		}
+		
+		a {
+			color: {$style->getVariable('wcfContentLink', true)};
+			text-decoration: none;
+		}
+		
+		{* see email_paddingHelper.tpl *}
+		table.paddingHelper.block {
+			width: 100%;
+		}
+		
 		.content {
 			padding: 0 20px;
 		}
@@ -25,15 +38,15 @@
 			font-size: {$style->getVariable('wcfFontSizeTitle')};
 			color: {$style->getVariable('wcfContentHeadlineText')};
 		}
-		a {
-			color: {$style->getVariable('wcfContentLink', true)};
-			text-decoration: none;
-		}
-		a.button {
+		
+		{* Buttons *}
+		td.button {
 			background-color: {$style->getVariable('wcfButtonPrimaryBackground', true)};
-			color: {$style->getVariable('wcfButtonPrimaryText', true)};
 			border-radius: 2px;
 			padding: 6px 12px;
+		}
+		td.button a {
+			color: {$style->getVariable('wcfButtonPrimaryText', true)};
 		}
 		</style>
 	</head>
@@ -41,8 +54,8 @@
 	<div class="content">
 		{@$content}
 	</div>
+	{capture assign='footer'}
 	{hascontent}
-	<div class="footer">
 	-- <br>
 	{content}
 	{@MAIL_SIGNATURE|language|nl2br}
@@ -50,8 +63,9 @@
 	{if MAIL_SIGNATURE|language}<br><br>{/if}
 	This email was sent to you, because you registered on the {$mailbox->getUser()->registrationDate|plainTime} at {@PAGE_TITLE|language}.{/if} {* TODO: language item *}
 	{/content}
-	</div>
 	{/hascontent}
+	{/capture}
+	{include file='email_paddingHelper' block=true class='footer' content=$footer sandbox=true}
 	
 	<table>{* Do not remove: This table is needed by certain less able email clients to properly support background colors. Don't ask. *}</table>
 	</body>
