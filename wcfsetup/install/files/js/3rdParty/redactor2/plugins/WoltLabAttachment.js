@@ -12,6 +12,8 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 		_insert: function(data) {
 			var attachmentId = data.attachmentId;
 			
+			this.buffer.set();
+			
 			if (data.url) {
 				this.insert.html('<img src="' + data.url + '" class="woltlabAttachment" data-attachment-id="' + attachmentId + '">');
 			}
