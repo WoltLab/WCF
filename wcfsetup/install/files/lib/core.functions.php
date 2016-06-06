@@ -220,7 +220,7 @@ EXPLANATION;
 				
 				.exceptionHeader {
 					background-color: rgb(44, 62, 80);
-					padding: 20px 0;
+					padding: 30px 0;
 				}
 				
 				.exceptionTitle {

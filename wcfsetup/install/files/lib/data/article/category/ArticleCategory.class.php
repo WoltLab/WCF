@@ -2,8 +2,8 @@
 namespace wcf\data\article\category;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\user\User;
-use wcf\data\ITitledLinkObject;
 use wcf\data\user\UserProfile;
+use wcf\data\ITitledLinkObject;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
 use wcf\system\request\LinkHandler;

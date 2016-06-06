@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\article\content;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\media\ViewableMedia;
+use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Represents a viewable article content.

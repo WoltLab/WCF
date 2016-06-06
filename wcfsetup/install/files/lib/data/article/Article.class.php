@@ -2,9 +2,9 @@
 namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
+use wcf\data\media\ViewableMedia;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
-use wcf\data\media\ViewableMedia;
 use wcf\system\WCF;
 
 /**
