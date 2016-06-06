@@ -16,8 +16,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\PlainTextMimePart;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
+use wcf\system\email\Mailbox;
 use wcf\system\email\UserMailbox;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -488,13 +490,11 @@ class RegisterForm extends UserAddForm {
 			// get default language
 			$language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
 			
-			// send mail
-			$mail = new Mail(MAIL_ADMIN_ADDRESS, 
-				$language->getDynamicVariable('wcf.user.register.notification.mail.subject'),
-				$language->getDynamicVariable('wcf.user.register.notification.mail', ['user' => $user])
-			);
-			$mail->setLanguage($language);
-			$mail->send();
+			$email = new Email();
+			$email->addRecipient(new Mailbox(MAIL_ADMIN_ADDRESS, null, $language));
+			$email->setSubject($language->getDynamicVariable('wcf.user.register.notification.mail.subject'));
+			$email->setBody(new PlainTextMimePart($language->getDynamicVariable('wcf.user.register.notification.mail', ['user' => $user])));
+			$email->send();
 		}
 		
 		if ($this->captchaObjectType) {
