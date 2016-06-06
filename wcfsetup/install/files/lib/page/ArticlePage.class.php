@@ -185,7 +185,7 @@ class ArticlePage extends AbstractPage {
 					FROM		wcf" . WCF_N . "_tag_to_object
 					" . $conditionBuilder . "
 					GROUP BY	objectID
-					HAVING		count > " . (round(count($this->tags) * (ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100))) . "
+					HAVING		COUNT(*) > " . (round(count($this->tags) * (ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100))) . "
 					ORDER BY	count DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, ARTICLE_RELATED_ARTICLES);
 				$statement->execute($conditionBuilder->getParameters());
