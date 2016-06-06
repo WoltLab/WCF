@@ -1799,11 +1799,18 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter <em>System -&gt; O
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Datum]]></item>
-		<item name="wcf.acp.user.activation.mail"><![CDATA[Hallo {@$username},
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde vom Administrator freigeschaltet.
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
+		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
+		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: <a href="{link}{/link}">{PAGE_TITLE|language}</a> wurde von einem Administrator
+freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos nun in vollem Umfang nutzen.</p>]]></item>
+		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Ihr{else}Dein{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [1] wurde von
+einem Administrator freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if}
+Benutzerkontos nun in vollem Umfang nutzen.
+
+[1] {link}{/link}]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
@@ -3031,13 +3038,13 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass 
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Aktivierung der Registrierung auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: <a href="{link}{/link}">{@PAGE_TITLE|language}</a>. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if}
-Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if} ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit Ihrer E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
+<p>vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: <a href="{link}{/link}">{PAGE_TITLE|language}</a>. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if}
+Benutzerkonto vollständig verwenden können ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren!]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{@$mailbox->getUser()->activationCode}</code>.</p>
-<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung Ihres Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator
-unter: <a href="mailto:{@MAIL_ADMIN_ADDRESS}">{@MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{$mailbox->getUser()->activationCode}</code>.</p>
+<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator
+unter: <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
 dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Hallo {$mailbox->getUser()->username},
 
@@ -3054,7 +3061,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivie
 dich{else}wenden
 Sie sich{/if} bitte an den Administrator unter: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
 dich{else}Sie
-sich{/if} nicht bei uns registriert haben, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.
+sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.
 
 [1] {link}{/link}]]></item>
 		

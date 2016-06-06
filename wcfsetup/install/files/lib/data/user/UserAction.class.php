@@ -11,7 +11,10 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -585,10 +588,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		// send e-mail notification
 		if (empty($this->parameters['skipNotification'])) {
 			foreach ($this->getObjects() as $user) {
-				$mail = new Mail([$user->username => $user->email], $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail', [
-					'username' => $user->username
+				$email = new Email();
+				$email->addRecipient(new UserMailbox($user->getDecoratedObject()));
+				$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'));
+				$email->setBody(new MimePartFacade([
+					new RecipientAwareTextMimePart('text/html', 'email_adminActivation'),
+					new RecipientAwareTextMimePart('text/plain', 'email_adminActivation')
 				]));
-				$mail->send();
+				$email->send();
 			}
 		}
 		
