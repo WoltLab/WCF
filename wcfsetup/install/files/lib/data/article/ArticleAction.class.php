@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\article;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
 

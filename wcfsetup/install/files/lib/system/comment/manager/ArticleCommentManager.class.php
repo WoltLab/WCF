@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\comment\manager;
-use wcf\data\article\ArticleEditor;
 use wcf\data\article\content\ArticleContent;
+use wcf\data\article\ArticleEditor;
 use wcf\system\WCF;
 
 /**

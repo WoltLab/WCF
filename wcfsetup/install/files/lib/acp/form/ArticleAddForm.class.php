@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\article\ArticleAction;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\ArticleAction;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\language\Language;
 use wcf\data\media\Media;

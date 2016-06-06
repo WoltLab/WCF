@@ -1,24 +1,24 @@
 <?php
 namespace wcf\page;
+use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\CategoryArticleList;
-use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\ViewableArticle;
 use wcf\data\comment\StructuredCommentList;
 use wcf\data\like\object\LikeObject;
 use wcf\data\tag\Tag;
-use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
+use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\like\LikeHandler;
-use wcf\system\MetaTagHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\tagging\TagEngine;
+use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
 
 /**

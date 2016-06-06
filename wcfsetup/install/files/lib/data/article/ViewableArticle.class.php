@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContent;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
