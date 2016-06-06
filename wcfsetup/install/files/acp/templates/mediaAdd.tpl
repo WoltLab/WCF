@@ -169,8 +169,8 @@
 			
 			{if !$isMultilingual}
 				elById('title').value = '{$i18nPlainValues['title']|encodeJS}';
-				elById('title').caption = '{$i18nPlainValues['caption']|encodeJS}';
-				elById('title').altText = '{$i18nPlainValues['altText']|encodeJS}';
+				elById('caption').value = '{$i18nPlainValues['caption']|encodeJS}';
+				elById('altText').value = '{$i18nPlainValues['altText']|encodeJS}';
 			{/if}
 		});
 	</script>
