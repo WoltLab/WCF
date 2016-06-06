@@ -70,11 +70,18 @@ class ControllerMap extends SingletonFactory {
 		$parts = array_map('ucfirst', $parts);
 		$controller = implode('', $parts);
 		
-		if ($controller === 'AjaxProxy') $controller = 'AJAXProxy';
-		
 		$classData = $this->getClassData($application, $controller, $isAcpRequest, 'page');
 		if ($classData === null) $classData = $this->getClassData($application, $controller, $isAcpRequest, 'form');
 		if ($classData === null) $classData = $this->getClassData($application, $controller, $isAcpRequest, 'action');
+		
+		// if no valid controller was found, try to use the first part as uppercase
+		if ($classData === null && strlen($parts[0])>1){
+			$parts[0] = strtoupper($parts[0]);
+			$controller = implode('', $parts);
+			$classData = $this->getClassData($application, $controller, $isAcpRequest, 'page');
+			if ($classData === null) $classData = $this->getClassData($application, $controller, $isAcpRequest, 'form');
+			if ($classData === null) $classData = $this->getClassData($application, $controller, $isAcpRequest, 'action');
+		}
 		
 		if ($classData === null) {
 			throw new SystemException("Unknown controller '" . $controller . "'");
