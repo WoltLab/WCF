@@ -179,6 +179,13 @@
 		}
 	}
 	
+	&.sectionContainerList {
+		> .sectionHeader,
+		> .sectionTitle {
+			margin-bottom: 10px;
+		}
+	}
+	
 	&.tabularBox {
 		> .sectionHeader,
 		> .sectionTitle {
