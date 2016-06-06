@@ -55,7 +55,16 @@
 			'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
 		});
 		
-		new WCF.Attachment.Upload($('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > dl > dd > div'), $('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > ul'), '{@$attachmentObjectType}', '{@$attachmentObjectID}', '{$tmpHash|encodeJS}', '{@$attachmentParentObjectID}', {@$attachmentHandler->getMaxCount()}, '{@$wysiwygContainerID}');
+		new WCF.Attachment.Upload(
+			$('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > dl > dd > div'),
+			$('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > ul'),
+			'{@$attachmentObjectType}',
+			'{@$attachmentObjectID}',
+			'{$tmpHash|encodeJS}',
+			'{@$attachmentParentObjectID}',
+			{@$attachmentHandler->getMaxCount()},
+			'{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}'
+		);
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});
 	//]]>
