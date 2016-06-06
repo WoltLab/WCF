@@ -12,7 +12,7 @@
 		<link rel="prev" href="{link controller='MembersList'}{if $pageNo > 2}pageNo={@$pageNo-1}&{/if}{@$canonicalURLParameters}{/link}" />
 	{/if}
 	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}{@$canonicalURLParameters}{/link}" />
-{/capture}	
+{/capture}
 
 {capture assign='sidebarRight'}
 	{assign var=encodedLetter value=$letter|rawurlencode}

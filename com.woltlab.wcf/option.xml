@@ -247,6 +247,9 @@
 			<category name="cms.media.thumbnail">
 				<parent>cms.media</parent>
 			</category>
+			<category name="cms.article">
+				<parent>cms</parent>
+			</category>
 			<!-- /cms -->
 		</categories>
 		
@@ -312,6 +315,12 @@
 			
 			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_article">
+				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -1427,7 +1436,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
 			<!-- /message.general.poll -->
 			
-			<!-- cms.media.thumnail -->
+			<!-- cms.media.thumbnail -->
 			<option name="media_small_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
@@ -1489,7 +1498,51 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<!-- cms.media.thumnail -->
+			<!-- /cms.media.thumbnail -->
+			
+			<!-- cms.article -->
+			<option name="article_show_about_author">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
+			</option>
+			<option name="article_enable_comments_default_value">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
+			<option name="article_enable_like">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
+			<option name="articles_per_page">
+				<categoryname>cms.article</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>20</defaultvalue>
+				<options>module_article</options>
+				<minvalue>1</minvalue>
+			</option>
+			<option name="article_related_articles">
+				<categoryname>cms.article</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<options>module_article</options>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="article_related_articles_match_threshold">
+				<categoryname>cms.article</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>50</defaultvalue>
+				<options>module_article</options>
+				<minvalue>1</minvalue>
+				<maxvalue>100</maxvalue>
+				<suffix>percent</suffix>
+			</option>
+			<!-- /cms.article -->
 		</options>
 	</import>
 	

@@ -136,6 +136,38 @@ CREATE TABLE wcf1_application (
 	cookiePath VARCHAR(255) NOT NULL DEFAULT '/'
 );
 
+DROP TABLE IF EXISTS wcf1_article;
+CREATE TABLE wcf1_article (
+	articleID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10),
+	username VARCHAR(255) NOT NULL DEFAULT '',
+	time INT(10) NOT NULL DEFAULT 0,
+	categoryID INT(10),
+	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
+	publicationStatus TINYINT(1) NOT NULL DEFAULT 1,
+	publicationDate INT(10) NOT NULL DEFAULT 0,
+	enableComments TINYINT(1) NOT NULL DEFAULT 1,
+	comments SMALLINT(5) NOT NULL DEFAULT 0,
+	views MEDIUMINT(7) NOT NULL DEFAULT 0,
+	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
+	
+	KEY (time)
+);
+
+DROP TABLE IF EXISTS wcf1_article_content;
+CREATE TABLE wcf1_article_content (
+	articleContentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	articleID INT(10) NOT NULL,
+	languageID INT(10),
+	title VARCHAR(255) NOT NULL,
+	teaser TEXT,
+	content MEDIUMTEXT,
+	imageID INT(10),
+	
+	UNIQUE KEY (articleID, languageID)
+);
+
 DROP TABLE IF EXISTS wcf1_attachment;
 CREATE TABLE wcf1_attachment (
 	attachmentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1618,6 +1650,13 @@ ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_packag
 ALTER TABLE wcf1_ad ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_article ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_article_content ADD FOREIGN KEY (articleID) REFERENCES wcf1_article (articleID) ON DELETE CASCADE;
+ALTER TABLE wcf1_article_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
+ALTER TABLE wcf1_article_content ADD FOREIGN KEY (imageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;

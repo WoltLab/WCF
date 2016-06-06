@@ -113,7 +113,8 @@ define(
 		_buildWidget: function(element, elementData) {
 			// build summary
 			if (this._options.canViewSummary) {
-				var summary, summaryContainer = elBySel(this._options.summarySelector, element), summaryContent, summaryIcon;
+				var summary, summaryContent, summaryIcon;
+				var summaryContainer = (this._options.isSingleItem) ? elBySel(this._options.summarySelector) : elBySel(this._options.summarySelector, element)
 				if (summaryContainer !== null) {
 					summary = elCreate('div');
 					summary.className = 'likesSummary';
@@ -143,7 +144,8 @@ define(
 			}
 			
 			// cumulative likes
-			var badge, badgeContainer = elBySel(this._options.badgeContainerSelector, element), listItem;
+			var badge, listItem;
+			var badgeContainer = (this._options.isSingleItem) ? elBySel(this._options.badgeContainerSelector) : elBySel(this._options.badgeContainerSelector, element);
 			if (badgeContainer !== null) {
 				badge = elCreate('a');
 				badge.href = '#';
@@ -164,9 +166,9 @@ define(
 				this._updateBadge(element);
 			}
 			
-			if (WCF.User.userID != elData(element, 'user-id') || this._options.canLikeOwnContent) {
-				var appendTo = (this._options.buttonAppendToSelector) ? elBySel(this._options.buttonAppendToSelector, element) : null;
-				var insertPosition = (this._options.buttonBeforeSelector) ? elBySel(this._options.buttonBeforeSelector, element) : null;
+			if (this._options.canLike && (WCF.User.userID != elData(element, 'user-id') || this._options.canLikeOwnContent)) {
+				var appendTo = (this._options.buttonAppendToSelector) ? ((this._options.isSingleItem) ? elBySel(this._options.buttonAppendToSelector) : elBySel(this._options.buttonAppendToSelector, element)) : null;
+				var insertPosition = (this._options.buttonBeforeSelector) ? ((this._options.isSingleItem) ? elBySel(this._options.buttonBeforeSelector) : elBySel(this._options.buttonBeforeSelector, element)) : null;
 				if (insertPosition === null && appendTo === null) {
 					throw new Error("Unable to find insert location for like/dislike buttons.");
 				}
@@ -203,7 +205,7 @@ define(
 			button.className = 'jsTooltip' + (this._options.renderAsButton ? ' button' : '');
 			button.href = '#';
 			button.title = title;
-			button.innerHTML = '<span class="icon icon16 fa-thumbs-o-' + (isLike ? 'up' : 'down') + '" /> <span class="invisible">' + title + '</span>';
+			button.innerHTML = '<span class="icon icon16 fa-thumbs-o-' + (isLike ? 'up' : 'down') + '"></span> <span class="invisible">' + title + '</span>';
 			button.addEventListener(WCF_CLICK_EVENT, this._like.bind(this, element));
 			elData(button, 'type', (isLike ? 'like' : 'dislike'));
 			

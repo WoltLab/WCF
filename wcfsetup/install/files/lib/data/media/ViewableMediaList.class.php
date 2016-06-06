@@ -3,7 +3,7 @@ namespace wcf\data\media;
 use wcf\system\WCF;
 
 /**
- * Represents a list of viewable madia files.
+ * Represents a list of viewable media files.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

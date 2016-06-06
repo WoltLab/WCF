@@ -7,6 +7,12 @@
 			<title language="en"><![CDATA[Dashboard]]></title>
 			<page>com.woltlab.wcf.Dashboard</page>
 		</item>
+		<item identifier="com.woltlab.wcf.ArticleList">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<title language="de"><![CDATA[Artikel]]></title>
+			<title language="en"><![CDATA[Articles]]></title>
+			<page>com.woltlab.wcf.ArticleList</page>
+		</item>
 		
 		<item identifier="com.woltlab.wcf.MembersList">
 			<menu>com.woltlab.wcf.MainMenu</menu>

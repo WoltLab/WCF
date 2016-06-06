@@ -286,7 +286,7 @@
 					{/if}
 					
 					<dl{if $errorField == 'title'} class="formError"{/if}>
-						<dt><label for="title">{lang}wcf.acp.box.title{/lang}</label></dt>
+						<dt><label for="title0">{lang}wcf.acp.box.title{/lang}</label></dt>
 						<dd>
 							<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
 							{if $errorField == 'title'}

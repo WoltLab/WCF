@@ -35,7 +35,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 */
 	public function __toString() {
 		if ($this->isImage) {
-			return '<img src="'.$this->getLink().'" alt="'.StringUtil::encodeHTML($this->altText).'" />';
+			return '<img src="'.$this->getLink().'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'/>';
 		}
 		
 		return '<a href="'.$this->getLink().'>'.$this->getTitle().'</a>';
@@ -51,7 +51,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 		if ($this->isImage && $this->tinyThumbnailType) {
 			$tinyThumbnail = Media::getThumbnailSizes()['tiny'];
 			if ($size <= $tinyThumbnail['width'] && $size <= $tinyThumbnail['height']) {
-				return '<img src="' . $this->getThumbnailLink('tiny') . '" alt="' . StringUtil::encodeHTML($this->altText) . '" style="width: ' . $size . 'px; height: ' . $size . 'px;" />';
+				return '<img src="' . $this->getThumbnailLink('tiny') . '" alt="' . StringUtil::encodeHTML($this->altText) . '" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $size . 'px; height: ' . $size . 'px;" />';
 			}
 		}
 		
@@ -65,12 +65,12 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * @return	string
 	 * @throws	SystemException
 	 */
-	public function getThumbnailTag($size = '') {
+	public function getThumbnailTag($size = 'tiny') {
 		if (!isset(Media::getThumbnailSizes()[$size])) {
 			throw new SystemException("Unknown thumbnail size '".$size."'");
 		}
 		
-		return '<img src="'.$this->getThumbnailLink($size).'" alt="'.StringUtil::encodeHTML($this->altText).'" />';
+		return '<img src="'.$this->getThumbnailLink($size).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'/>';
 	}
 	
 	/**

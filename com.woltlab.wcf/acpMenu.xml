@@ -322,11 +322,44 @@
 				<icon>fa-plus</icon>
 			</acpmenuitem>
 			<!-- /cms -->
+		
+			<!-- article -->
+			<acpmenuitem name="wcf.acp.menu.link.article">
+				<parent>wcf.acp.menu.link.content</parent>
+				<options>module_article</options>
+				<showorder>2</showorder>
+			</acpmenuitem>
 			
+			<acpmenuitem name="wcf.acp.menu.link.article.list">
+				<controller><![CDATA[wcf\acp\page\ArticleListPage]]></controller>
+				<parent>wcf.acp.menu.link.article</parent>
+				<permissions>admin.content.article.canManageArticle</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.article.add">
+				<controller><![CDATA[wcf\acp\form\ArticleAddForm]]></controller>
+				<parent>wcf.acp.menu.link.article.list</parent>
+				<permissions>admin.content.article.canManageArticle</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.article.category.list">
+				<controller><![CDATA[wcf\acp\page\ArticleCategoryListPage]]></controller>
+				<parent>wcf.acp.menu.link.article</parent>
+				<permissions>admin.content.article.canManageCategory</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.article.category.add">
+				<controller><![CDATA[wcf\acp\form\ArticleCategoryAddForm]]></controller>
+				<parent>wcf.acp.menu.link.article.category.list</parent>
+				<permissions>admin.content.article.canManageCategory</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /article -->
+		
 			<!-- label -->
 			<acpmenuitem name="wcf.acp.menu.link.label">
 				<parent>wcf.acp.menu.link.content</parent>
-				<showorder>2</showorder>
+				<showorder>3</showorder>
 			</acpmenuitem>
 			<acpmenuitem name="wcf.acp.menu.link.label.list">
 				<controller><![CDATA[wcf\acp\page\LabelListPage]]></controller>
@@ -356,7 +389,7 @@
 			<!-- bbcode -->
 			<acpmenuitem name="wcf.acp.menu.link.bbcode">
 				<parent>wcf.acp.menu.link.content</parent>
-				<showorder>3</showorder>
+				<showorder>4</showorder>
 			</acpmenuitem>
 			<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
 				<controller><![CDATA[wcf\acp\page\BBCodeListPage]]></controller>
@@ -386,7 +419,7 @@
 			<acpmenuitem name="wcf.acp.menu.link.tag">
 				<parent>wcf.acp.menu.link.content</parent>
 				<options>module_tagging</options>
-				<showorder>4</showorder>
+				<showorder>5</showorder>
 			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.tag.list">
@@ -405,7 +438,7 @@
 			<!-- attachment -->
 			<acpmenuitem name="wcf.acp.menu.link.attachment">
 				<parent>wcf.acp.menu.link.content</parent>
-				<showorder>5</showorder>
+				<showorder>6</showorder>
 			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.attachment.list">

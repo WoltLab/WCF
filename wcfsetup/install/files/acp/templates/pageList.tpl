@@ -168,6 +168,8 @@
 			</ul>
 		</nav>
 	</footer>
+{else}
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='pageAddDialog'}

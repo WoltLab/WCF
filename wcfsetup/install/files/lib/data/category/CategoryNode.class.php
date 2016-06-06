@@ -91,6 +91,23 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	}
 	
 	/**
+	 * Returns node depth.
+	 *
+	 * @return	integer
+	 */
+	public function getDepth() {
+		$element = $this;
+		$depth = 1;
+		
+		while ($element->parentNode->parentNode != null) {
+			$depth++;
+			$element = $element->parentNode;
+		}
+		
+		return $depth;
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function count() {

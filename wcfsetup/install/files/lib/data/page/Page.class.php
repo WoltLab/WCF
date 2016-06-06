@@ -200,7 +200,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return	\wcf\system\page\handler\IMenuPageHandler|null
 	 */
 	public function getHandler() {
-		if ($this->handler) {
+		if ($this->pageHandler === null && $this->handler) {
 			$this->pageHandler = new $this->handler();
 		}
 		

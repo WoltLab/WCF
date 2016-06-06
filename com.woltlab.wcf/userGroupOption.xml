@@ -32,6 +32,9 @@
 			<category name="user.pageComment">
 				<parent>user</parent>
 			</category>
+			<category name="user.article">
+				<parent>user</parent>
+			</category>
 			
 			<category name="mod" />
 			<category name="mod.general">
@@ -41,6 +44,9 @@
 				<parent>mod.general</parent>
 			</category>
 			<category name="mod.pageComment">
+				<parent>mod.general</parent>
+			</category>
+			<category name="mod.article">
 				<parent>mod.general</parent>
 			</category>
 			
@@ -355,6 +361,21 @@
 				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.content.cms.canUseMedia">
+				<categoryname>admin.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			
+			<option name="admin.content.article.canManageArticle">
+				<categoryname>admin.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="admin.content.article.canManageCategory">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
@@ -719,6 +740,30 @@ png]]></defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
 			
+			<option name="user.article.canReadArticle">
+				<categoryname>user.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.article.canAddComment">
+				<categoryname>user.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.article.canEditComment">
+				<categoryname>user.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="user.article.canDeleteComment">
+				<categoryname>user.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			
 			<option name="mod.general.canUseModeration">
 				<categoryname>mod.general</categoryname>
 				<optiontype>boolean</optiontype>
@@ -781,6 +826,28 @@ png]]></defaultvalue>
 			</option>
 			<option name="mod.pageComment.canModerateComment">
 				<categoryname>mod.pageComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			
+			<option name="mod.article.canEditComment">
+				<categoryname>mod.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="mod.article.canDeleteComment">
+				<categoryname>mod.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="mod.article.canModerateComment">
+				<categoryname>mod.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>

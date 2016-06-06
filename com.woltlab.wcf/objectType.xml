@@ -24,6 +24,29 @@
 			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
 		</type>
 		
+		<!-- articles -->
+		<type>
+			<name>com.woltlab.wcf.article.category</name>
+			<definitionname>com.woltlab.wcf.category</definitionname>
+			<classname>wcf\system\category\ArticleCategoryType</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.category</name>
+			<definitionname>com.woltlab.wcf.acl</definitionname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.tagging.taggableObject</definitionname>
+			<classname>wcf\system\tagging\TaggableArticle</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.likeableArticle</name>
+			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
+			<classname>wcf\data\article\LikeableArticleProvider</classname>
+		</type>
+		
+		<!-- /articles -->
+		
 		<type>
 			<name>com.woltlab.wcf.bbcode.smiley</name>
 			<definitionname>com.woltlab.wcf.category</definitionname>
@@ -156,6 +179,12 @@
 			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
 			<classname><![CDATA[wcf\system\comment\manager\PageCommentManager]]></classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
+			<classname><![CDATA[wcf\system\comment\manager\ArticleCommentManager]]></classname>
 		</type>
 		<!-- /comments -->
 		

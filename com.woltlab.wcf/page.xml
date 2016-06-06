@@ -473,6 +473,40 @@
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<requireObjectID>1</requireObjectID>
 		</page>
+		<page identifier="com.woltlab.wcf.ArticleList">
+			<pageType>system</pageType>
+			<controller>wcf\page\ArticleListPage</controller>
+			<name language="de"><![CDATA[Artikel-Liste]]></name>
+			<name language="en"><![CDATA[Article List]]></name>
+			<options>module_article</options>
+			
+			<content language="en">
+				<title>Articles</title>
+			</content>
+			<content language="de">
+				<title>Artikel</title>
+			</content>
+		</page>
+		<page identifier="com.woltlab.wcf.CategoryArticleList">
+			<pageType>system</pageType>
+			<controller>wcf\page\CategoryArticleListPage</controller>
+			<handler>wcf\system\page\handler\CategoryArticleListPageHandler</handler>
+			<name language="de"><![CDATA[Liste von Artikeln aus bestimmter Kategorie]]></name>
+			<name language="en"><![CDATA[List of Articles in Certain Category]]></name>
+			<options>module_article</options>
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			<requireObjectID>1</requireObjectID>
+		</page>
+		<page identifier="com.woltlab.wcf.Article">
+			<pageType>system</pageType>
+			<controller>wcf\page\ArticlePage</controller>
+			<handler>wcf\system\page\handler\ArticlePageHandler</handler>
+			<name language="de"><![CDATA[Artikel]]></name>
+			<name language="en"><![CDATA[Article]]></name>
+			<options>module_article</options>
+			<parent>com.woltlab.wcf.CategoryArticleList</parent>
+			<requireObjectID>1</requireObjectID>
+		</page>
 		
 		<!-- static -->
 		<page identifier="com.woltlab.wcf.Dashboard">
