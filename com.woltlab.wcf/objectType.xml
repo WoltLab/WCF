@@ -19,11 +19,6 @@
 		</type>
 		<!-- /clipboard items -->
 		
-		<type>
-			<name>com.woltlab.wcf.collapsibleSidebar</name>
-			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
-		</type>
-		
 		<!-- articles -->
 		<type>
 			<name>com.woltlab.wcf.article.category</name>
