@@ -2131,8 +2131,6 @@ INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templ
 	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube Playlist', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/)playlist\\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>');
 	-- Vimeo
 	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Vimeo', 'https?://vimeo\\.com/(?P<ID>\\d+)', '<iframe src="https://player.vimeo.com/video/{$ID}" width="400" height="225" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-	-- MyVideo
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('MyVideo', 'http://(?:www\\.)?myvideo\\.de/watch/(?P<ID>\\d+)', '<object width="611" height="383" type="application/x-shockwave-flash" data="http://www.myvideo.de/movie/{$ID}"><param name="movie" value="http://www.myvideo.de/movie/{$ID}" /><param name="AllowFullscreen" value="true" /><param name="AllowScriptAccess" value="always" /><param name="wmode" value="transparent" /></object>');
 	-- Clipfish
 	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Clipfish', 'http://(?:www\\.)?clipfish\\.de/(?:.*?/)?video/(?P<ID>\\d+)/', '<div style="width:464px; height:404px;"><div style="width:464px; height:384px;"><iframe src="http://www.clipfish.de/embed_video/?vid={$ID}&amp;as=0&amp;col=990000" name="Clipfish Embedded Video" width="464" height="384" align="left" marginheight="0" marginwidth="0" scrolling="no"></iframe></div></div>');
 	-- Veoh

@@ -493,10 +493,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						try {
 							if (($imageData = getimagesize($filename)) !== false) {
 								switch ($imageData[2]) {
-									case IMG_PNG:
-									case IMG_JPEG:
-									case IMG_JPG:
-									case IMG_GIF:
+									case IMAGETYPE_PNG:
+									case IMAGETYPE_JPEG:
+									case IMAGETYPE_JPG:
+									case IMAGETYPE_GIF:
 										$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
 								}
 							}
