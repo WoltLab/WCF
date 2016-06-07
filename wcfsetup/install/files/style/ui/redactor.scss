@@ -476,3 +476,14 @@
 .woltlab-size-18 { font-size: 18px; }
 .woltlab-size-24 { font-size: 24px; }
 .woltlab-size-36 { font-size: 36px; }
+
+/* image float */
+.messageFloatObjectLeft {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.messageFloatObjectRight {
+	float: right;
+	margin: 0 0 20px 20px;
+}

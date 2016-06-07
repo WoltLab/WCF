@@ -14,6 +14,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 				}
 				
 				//noinspection JSUnresolvedVariable
+				if (!this.opts.woltlab.buttons.hasOwnProperty(buttonName)) {
+					throw new Error("Missing button definition for '" + buttonName + "'.");
+				}
+				
+				//noinspection JSUnresolvedVariable
 				buttonData = this.opts.woltlab.buttons[buttonName];
 				
 				if (buttonName === 'subscript' || buttonName === 'superscript') {
@@ -27,7 +32,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 				// set icon
 				this.button.setIcon(button, '<span class="icon icon16 ' + buttonData.icon + '"></span>');
 				if (!button[0]) {
-					console.debug(buttonName);
+					throw new Error("Missing button element for '" + buttonName + "'.");
 				}
 				// set title
 				//noinspection JSUnresolvedVariable
