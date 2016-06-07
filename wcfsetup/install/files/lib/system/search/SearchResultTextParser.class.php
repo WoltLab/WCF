@@ -68,7 +68,7 @@ class SearchResultTextParser extends SingletonFactory {
 	 */
 	protected function getMessageAbstract($text) {
 		// replace newlines with spaces
-		$text = Regex::compile("\s+")->replace($text, ' ');
+		$text = Regex::compile("\s+", Regex::UTF_8)->replace($text, ' ');
 		
 		if (mb_strlen($text) > static::MAX_LENGTH) {
 			if ($this->searchQuery) {
