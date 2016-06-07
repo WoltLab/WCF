@@ -197,9 +197,16 @@ class PollManager extends SingletonFactory {
 	 * Validates poll parameters.
 	 */
 	public function validate() {
-		// if no question is given, ignore poll completely
-		if (empty($this->pollData['question'])) {
+		$count = count($this->pollOptions);
+
+		// if no question and no options are given, ignore poll completely
+		if (empty($this->pollData['question']) && !$count) {
 			return;
+		}
+
+		// no question given
+		if (empty($this->pollData['question'])) {
+			throw new UserInputException('pollQuestion');
 		}
 		
 		if ($this->pollData['endTime'] && $this->pollData['endTime'] <= TIME_NOW) {
@@ -210,7 +217,6 @@ class PollManager extends SingletonFactory {
 		}
 		
 		// no options given
-		$count = count($this->pollOptions);
 		if (!$count) {
 			throw new UserInputException('pollOptions');
 		}
