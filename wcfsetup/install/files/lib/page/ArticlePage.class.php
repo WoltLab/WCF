@@ -262,6 +262,7 @@ class ArticlePage extends AbstractPage {
 			'articleContentID' => $this->articleContentID,
 			'articleContent' => $this->articleContent,
 			'article' => $this->article,
+			'category' => $this->article->getCategory(),
 			'previousArticle' => $this->previousArticle,
 			'nextArticle' => $this->nextArticle,
 			'commentCanAdd' => WCF::getSession()->getPermission('user.article.canAddComment'),

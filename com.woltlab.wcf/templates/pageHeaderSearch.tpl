@@ -3,6 +3,21 @@
 	{capture assign='__searchTypeLabel'}{lang}wcf.search.type.{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}{/lang}{/capture}
 {/if}
 
+{if MODULE_ARTICLE && ($templateName == 'articleList' || $templateName == 'categoryArticleList' || $templateName == 'article')}
+	{if $category|isset}
+		{capture assign='__searchTypeLabel'}{$category->getTitle()}{/capture}
+	{else}
+		{capture assign='__searchTypeLabel'}{lang}wcf.search.type.com.woltlab.wcf.article{/lang}{/capture}
+	{/if}
+	
+	{assign var='__searchObjectTypeName' value='com.woltlab.wcf.article'}
+	
+	{capture assign='__searchTypesScoped'}
+		{if $category|isset}<li><a href="#" data-object-type="com.woltlab.wcf.article" data-parameters='{ "articleCategoryIDs[]": {@$category->categoryID} }'>{$category->getTitle()}</a></li>{/if}
+	{/capture}
+	{assign var='__searchAreaInitialized' value=true}
+{/if}
+
 {event name='settings'}
 
 <div id="pageHeaderSearch" class="pageHeaderSearch">
