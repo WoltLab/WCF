@@ -39,7 +39,12 @@
 			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
 			<classname>wcf\data\article\LikeableArticleProvider</classname>
 		</type>
-		
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.searchableObjectType</definitionname>
+			<classname>wcf\system\search\ArticleSearch</classname>
+			<searchindex>wcf1_article_search_index</searchindex>
+		</type>
 		<!-- /articles -->
 		
 		<type>

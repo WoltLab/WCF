@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\article\content;
+use wcf\data\article\ViewableArticle;
 use wcf\data\media\ViewableMedia;
 use wcf\data\DatabaseObjectDecorator;
 
@@ -10,7 +11,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.article
+ * @subpackage	data.article.content
  * @category	Community Framework
  * @since	2.2
  *
@@ -30,6 +31,12 @@ class ViewableArticleContent extends DatabaseObjectDecorator {
 	protected $image;
 	
 	/**
+	 * article object
+	 * @var ViewableArticle
+	 */
+	protected $article;
+	
+	/**
 	 * Gets a specific article content decorated as viewable article content.
 	 *
 	 * @param	integer		$articleContentID
@@ -42,6 +49,28 @@ class ViewableArticleContent extends DatabaseObjectDecorator {
 		$objects = $list->getObjects();
 		if (isset($objects[$articleContentID])) return $objects[$articleContentID];
 		return null;
+	}
+	
+	/**
+	 * Returns article object.
+	 *
+	 * @return ViewableArticle
+	 */
+	public function getArticle() {
+		if ($this->article === null) {
+			$this->article = new ViewableArticle($this->getDecoratedObject()->getArticle());
+		}
+		
+		return $this->article;
+	}
+	
+	/**
+	 * Sets the article objects.
+	 *
+	 * @param ViewableArticle $article
+	 */
+	public function setArticle(ViewableArticle $article) {
+		$this->article = $article;
 	}
 	
 	/**

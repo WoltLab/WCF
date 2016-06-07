@@ -3,7 +3,10 @@ namespace wcf\data\article;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\comment\CommentHandler;
 use wcf\system\language\LanguageFactory;
+use wcf\system\like\LikeHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 
 /**
@@ -57,6 +60,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// save article content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->parameters['content'] as $languageID => $content) {
+				/** @var ArticleContent $articleContent */
 				$articleContent = ArticleContentEditor::create([
 					'articleID' => $article->articleID,
 					'languageID' => ($languageID ?: null),
@@ -70,6 +74,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				if (!empty($content['tags'])) {
 					TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, $content['tags'], ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
 				}
+				
+				// update search index
+				SearchIndexManager::getInstance()->add('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
 			}
 		}
 		
@@ -118,8 +125,38 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					if (!empty($content['tags'])) {
 						TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, $content['tags'], ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
 					}
+					
+					// update search index
+					SearchIndexManager::getInstance()->add('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
 				}
 			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function delete() {
+		$articleIDs = $articleContentIDs = [];
+		foreach ($this->getObjects() as $article) {
+			$articleIDs[] = $article->articleID;
+			foreach ($article->getArticleContent() as $articleContent) {
+				$articleContentIDs[] = $articleContent->articleContentID;
+			}
+		}
+		
+		// delete articles
+		parent::delete();
+		
+		if (!empty($articleIDs)) {
+			// delete like data
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.likeableArticle', $articleIDs);
+			// delete comments
+			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.article', $articleContentIDs);
+			// delete tag to object entries
+			TagEngine::getInstance()->deleteObjects('com.woltlab.wcf.article', $articleContentIDs);
+			// delete entry from search index
+			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
 		}
 	}
 }
