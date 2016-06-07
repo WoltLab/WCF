@@ -10,35 +10,48 @@ $.Redactor.prototype.WoltLabImage = function() {
 			// TODO: float
 			var mpShowEdit = this.image.showEdit;
 			this.image.showEdit = function($image) {
+				var image = $image[0];
+				if (image.classList.contains('smiley')) {
+					// smilies cannot be edited
+					return;
+				}
+				
 				mpShowEdit($image);
 				
-				elById('redactor-image-source').value = $image[0].src;
+				elById('redactor-image-source').value = image.src;
 				
 				var float = elById('redactor-image-float');
-				if ($image[0].classList.contains('messageFloatObjectLeft')) float.value = 'left';
-				else if ($image[0].classList.contains('messageFloatObjectRight')) float.value = 'right';
+				if (image.classList.contains('messageFloatObjectLeft')) float.value = 'left';
+				else if (image.classList.contains('messageFloatObjectRight')) float.value = 'right';
+				
+				// hide source if image is an attachment
+				if (image.classList.contains('woltlabAttachment')) {
+					elRemove(elById('redactor-image-source-container'));
+				}
 			};
 			
 			var mpUpdate = this.image.update;
 			this.image.update = (function() {
+				var image = this.observe.image[0];
+				
 				var sourceInput = elById('redactor-image-source');
 				var showError = function(inputElement, message) {
 					$('<small class="innerError" />').text(message).insertAfter(inputElement);
 				};
 				
-				// check if source is valid
-				var source = sourceInput.value.trim();
-				if (source === '') {
-					return showError(sourceInput, WCF.Language.get('wcf.global.form.error.empty'));
+				if (!image.classList.contains('woltlabAttachment')) {
+					// check if source is valid
+					var source = sourceInput.value.trim();
+					if (source === '') {
+						return showError(sourceInput, WCF.Language.get('wcf.global.form.error.empty'));
+					}
+					else if (!source.match(this.opts.regexps.url)) {
+						return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
+					}
+					
+					// update image source
+					image.src = source;
 				}
-				else if (!source.match(this.opts.regexps.url)) {
-					return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
-				}
-				
-				var image = this.observe.image[0];
-				
-				// update image source
-				image.src = source;
 				
 				// remove old float classes
 				image.classList.remove('messageFloatObjectLeft');
@@ -59,7 +72,7 @@ $.Redactor.prototype.WoltLabImage = function() {
 			
 			// overwrite modal template
 			this.opts.modal['image-edit'] = '<div class="section">'
-					+ '<dl>'
+					+ '<dl id="redactor-image-source-container">'
 						+ '<dt><label for="redactor-image-source">' + WCF.Language.get('wcf.editor.image.source') + '</label></dt>'
 						+ '<dd>'
 							+ '<input type="text" id="redactor-image-source" class="long">'

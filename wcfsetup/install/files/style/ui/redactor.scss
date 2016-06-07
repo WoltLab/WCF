@@ -88,9 +88,12 @@
 	}
 	
 	img {
-		// TODO: the border was required for 'Old Redactor', check if it is still a thing
-		border: 1px solid transparent;
 		max-width: 100%;
+		
+		&:not(.smiley) {
+			// show cursor to indicate editing capability excluding smilies
+			cursor: pointer;
+		}
 	}
 	
 	// TODO: this is somewhat out of sync
