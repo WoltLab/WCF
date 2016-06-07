@@ -1,5 +1,5 @@
 <?php
-namespace wcf\data\article\content;;
+namespace wcf\data\article\content;
 use wcf\data\search\ISearchResultObject;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchResultTextParser;

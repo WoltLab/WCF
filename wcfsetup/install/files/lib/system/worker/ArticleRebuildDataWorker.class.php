@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\article\content\ArticleContentList;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleList;
-use wcf\data\article\content\ArticleContentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\search\SearchIndexManager;
