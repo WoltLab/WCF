@@ -284,6 +284,12 @@
 			<nicevalue>-90</nicevalue>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\ArticleRebuildDataWorker]]></classname>
+			<nicevalue>50</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.poll</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname><![CDATA[wcf\system\worker\PollRebuildDataWorker]]></classname>
