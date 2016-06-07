@@ -5,14 +5,16 @@ use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\IFeedEntry;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /**
  * Provides a default implementation for user notification events.
  * 
- * @author	Marcel Werk, Oliver Kliebisch
+ * @author	Joshua Ruesweg, Marcel Werk, Oliver Kliebisch
  * @copyright	2001-2016 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -22,7 +24,7 @@ use wcf\util\DateUtil;
  * @method	UserNotificationEvent	getDecoratedObject()
  * @mixin	UserNotificationEvent
  */
-abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements IUserNotificationEvent {
+abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements IUserNotificationEvent, IFeedEntry {
 	/**
 	 * @inheritDoc
 	 */
@@ -239,5 +241,63 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 */
 	public function getUserNotificationObject() {
 		return $this->userNotificationObject;
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getComments() {
+		return 0; 
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getCategories() {
+		return [
+			$this->notification->objectType
+		];
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getExcerpt($maxLength = 255) {
+		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getFormattedMessage() {
+		return $this->getMessage(); 
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function __toString() {
+		return $this->getFormattedMessage(); 
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getTime() {
+		return $this->getNotification()->time; 
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getUserID() {
+		return $this->getAuthorID(); 
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function getUsername() {
+		return $this->getAuthor()->username; 
 	}
 }

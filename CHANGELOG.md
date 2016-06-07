@@ -58,6 +58,7 @@
 * Overhauled language import form
 * Removed sitemap function/overlay
 * Added rebuild polls worker
+* Added notification feed page
 
 #### CMS
 
