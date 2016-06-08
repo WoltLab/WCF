@@ -1740,6 +1740,17 @@ You can now fully access the website.]]></item>
 		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session expired, please login again.]]></item>
 	</category>
 	
+	<category name="wcf.article">
+		<item name="wcf.article.comments"><![CDATA[Comments]]></item>
+		<item name="wcf.article.nextArticle"><![CDATA[Next Article]]></item>
+		<item name="wcf.article.previousArticle"><![CDATA[Previous Article]]></item>
+		<item name="wcf.article.relatedArticles"><![CDATA[Related Articles]]></item>
+		<item name="wcf.article.aboutAuthor"><![CDATA[About the Author]]></item>
+		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Comment{if $article->comments != 1}s{/if}]]></item>
+		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
+		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Liked the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+	</category>
+	
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
 		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
@@ -2989,6 +3000,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Follow]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.likeableArticle.recentActivityEvent"><![CDATA[Like (Article)]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
 	</category>
