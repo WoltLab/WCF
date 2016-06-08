@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\article\content;
 use wcf\data\article\Article;
+use wcf\data\language\Language;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
-use wcf\data\language\Language;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
