@@ -120,7 +120,7 @@ class ArticleSearch extends AbstractSearchableObjectType {
 	 * @inheritDoc
 	 */
 	public function getJoins() {
-		return 'JOIN wcf'.WCF_N.'_article ON (wcf'.WCF_N.'_article.articleID = '.$this->getTableName().'.articleID)';
+		return 'INNER JOIN wcf'.WCF_N.'_article ON (wcf'.WCF_N.'_article.articleID = '.$this->getTableName().'.articleID)';
 	}
 	
 	/** @noinspection PhpMissingParentCallCommonInspection */
