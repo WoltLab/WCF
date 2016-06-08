@@ -9,7 +9,7 @@ $.Redactor.prototype.WoltLabImage = function() {
 			// add support for image source when editing
 			// TODO: float
 			var mpShowEdit = this.image.showEdit;
-			this.image.showEdit = function($image) {
+			this.image.showEdit = (function($image) {
 				var image = $image[0];
 				if (image.classList.contains('smiley')) {
 					// smilies cannot be edited
@@ -17,6 +17,11 @@ $.Redactor.prototype.WoltLabImage = function() {
 				}
 				
 				mpShowEdit($image);
+				
+				// enforce title and button labels
+				this.modal.setTitle(WCF.Language.get('wcf.editor.image.edit'));
+				this.modal.getActionButton().text(WCF.Language.get('wcf.global.button.save'));
+				this.modal.getDeleteButton().text(WCF.Language.get('wcf.global.button.delete'));
 				
 				elById('redactor-image-source').value = image.src;
 				
@@ -28,7 +33,7 @@ $.Redactor.prototype.WoltLabImage = function() {
 				if (image.classList.contains('woltlabAttachment')) {
 					elRemove(elById('redactor-image-source-container'));
 				}
-			};
+			}).bind(this);
 			
 			var mpUpdate = this.image.update;
 			this.image.update = (function() {
@@ -74,17 +79,11 @@ $.Redactor.prototype.WoltLabImage = function() {
 			this.opts.modal['image-edit'] = '<div class="section">'
 					+ '<dl id="redactor-image-source-container">'
 						+ '<dt><label for="redactor-image-source">' + WCF.Language.get('wcf.editor.image.source') + '</label></dt>'
-						+ '<dd>'
-							+ '<input type="text" id="redactor-image-source" class="long">'
-							+ '<small>' + WCF.Language.get('wcf.editor.image.source.description') + '</small>'
-						+ '</dd>'
+						+ '<dd><input type="text" id="redactor-image-source" class="long"></dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="redactor-image-link">' + WCF.Language.get('wcf.editor.image.link') + '</label></dt>'
-						+ '<dd>'
-							+ '<input type="text" id="redactor-image-link" class="long">'
-							+ '<small>' + WCF.Language.get('wcf.editor.image.link.description') + '</small>'
-						+ '</dd>'
+						+ '<dd><input type="text" id="redactor-image-link" class="long"></dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="redactor-image-float">' + WCF.Language.get('wcf.editor.image.float') + '</label></dt>'
@@ -94,7 +93,6 @@ $.Redactor.prototype.WoltLabImage = function() {
 								+ '<option value="left">' + WCF.Language.get('wcf.editor.image.float.left') + '</option>'
 								+ '<option value="right">' + WCF.Language.get('wcf.editor.image.float.right') + '</option>'
 							+ '</select>'
-							+ '<small>' + WCF.Language.get('wcf.editor.image.float.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
 					+ '<input id="redactor-image-title" style="display: none">' /* dummy because redactor expects it to be present */
@@ -111,8 +109,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 			this.modal.show();
 			
 			this.modal.getDeleteButton().hide();
-			var button = this.modal.getActionButton();
-			button[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabImage.insert);
+			var button = this.modal.getActionButton()[0];
+			button.addEventListener(WCF_CLICK_EVENT, this.WoltLabImage.insert);
+			button.textContent = WCF.Language.get('wcf.global.button.insert');
 		},
 		
 		insert: function(event) {

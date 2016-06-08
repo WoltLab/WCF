@@ -2116,6 +2116,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
+		<item name="wcf.editor.button.image"><![CDATA[Bild]]></item>
 		<item name="wcf.editor.button.italic"><![CDATA[Kursiv]]></item>
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
@@ -2127,6 +2128,16 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.superscript"><![CDATA[Hochgestellt]]></item>
 		<item name="wcf.editor.button.table"><![CDATA[Tabelle]]></item>
 		<item name="wcf.editor.button.underline"><![CDATA[Unterstrichen]]></item>
+		
+		<item name="wcf.editor.image.edit"><![CDATA[Bild bearbeiten]]></item>
+		<item name="wcf.editor.image.insert"><![CDATA[Bild einfügen]]></item>
+		<item name="wcf.editor.image.link"><![CDATA[Verlinkung]]></item>
+		<item name="wcf.editor.image.link.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
+		<item name="wcf.editor.image.float"><![CDATA[Textumfluss]]></item>
+		<item name="wcf.editor.image.float.left"><![CDATA[Links]]></item>
+		<item name="wcf.editor.image.float.right"><![CDATA[Rechts]]></item>
+		<item name="wcf.editor.image.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.editor.image.source.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.global">
@@ -2143,6 +2154,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.global.button.fullscreen"><![CDATA[Vollbildmodus]]></item>
 		<item name="wcf.global.button.hide"><![CDATA[Ausblenden]]></item>
+		<item name="wcf.global.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>

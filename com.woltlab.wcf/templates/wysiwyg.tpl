@@ -36,7 +36,19 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/combined.min.js?v={@LAST_UPDATE_TIME}'
 		{/if}
 	], function () {
-		require(['WoltLab/WCF/Ui/Redactor/Metacode'], function(UiRedactorMetacode) {
+		require(['Language', 'WoltLab/WCF/Ui/Redactor/Metacode'], function(Language, UiRedactorMetacode) {
+			Language.addObject({
+				'wcf.editor.image.edit': '{lang}wcf.editor.image.edit{/lang}',
+				'wcf.editor.image.insert': '{lang}wcf.editor.image.insert{/lang}',
+				'wcf.editor.image.link': '{lang}wcf.editor.image.link{/lang}',
+				'wcf.editor.image.link.error.invalid': '{lang}wcf.editor.image.link.error.invalid{/lang}',
+				'wcf.editor.image.float': '{lang}wcf.editor.image.float{/lang}',
+				'wcf.editor.image.float.left': '{lang}wcf.editor.image.float.left{/lang}',
+				'wcf.editor.image.float.right': '{lang}wcf.editor.image.float.right{/lang}',
+				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
+				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}'
+			});
+			
 			var buttons = [], buttonOptions = [];
 			{include file='wysiwygToolbar'}
 			

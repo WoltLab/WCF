@@ -2127,6 +2127,7 @@ Errors are:
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
+		<item name="wcf.editor.button.image"><![CDATA[Image]]></item>
 		<item name="wcf.editor.button.italic"><![CDATA[Italic]]></item>
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
@@ -2138,6 +2139,16 @@ Errors are:
 		<item name="wcf.editor.button.superscript"><![CDATA[Superscript]]></item>
 		<item name="wcf.editor.button.table"><![CDATA[Table]]></item>
 		<item name="wcf.editor.button.underline"><![CDATA[Underline]]></item>
+		
+		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>
+		<item name="wcf.editor.image.insert"><![CDATA[Insert Image]]></item>
+		<item name="wcf.editor.image.link"><![CDATA[Link]]></item>
+		<item name="wcf.editor.image.link.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
+		<item name="wcf.editor.image.float"><![CDATA[Float]]></item>
+		<item name="wcf.editor.image.float.left"><![CDATA[Left]]></item>
+		<item name="wcf.editor.image.float.right"><![CDATA[Right]]></item>
+		<item name="wcf.editor.image.source"><![CDATA[Source]]></item>
+		<item name="wcf.editor.image.source.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 	</category>
 	
 	<category name="wcf.global">
