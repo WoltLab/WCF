@@ -37,8 +37,8 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	public $objectIDs = [];
 	
 	/**
-	 * list of feed-entries for the current page
-	 * @var	\wcf\data\DatabaseObjectList
+	 * list of feed-entries for the current page object must be an \Iterator with \wcf\data\IFeedEntry-Elements
+	 * @var	\Iterator
 	 */
 	public $items = null;
 	
