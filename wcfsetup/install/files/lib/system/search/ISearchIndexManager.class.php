@@ -13,6 +13,21 @@ namespace wcf\system\search;
  */
 interface ISearchIndexManager {
 	/**
+	 * Adds or updates an entry.
+	 * 
+	 * @param	string		$objectType
+	 * @param	integer		$objectID
+	 * @param	string		$message
+	 * @param	string		$subject
+	 * @param	integer		$time
+	 * @param	integer		$userID
+	 * @param	string		$username
+	 * @param	integer		$languageID
+	 * @param	string		$metaData
+	 */
+	public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
+	
+	/**
 	 * Adds a new entry.
 	 * 
 	 * @param	string		$objectType
@@ -24,6 +39,7 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
+	 * @deprecated  2.2 - please use `set()` instead
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	
@@ -39,6 +55,7 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
+	 * @deprecated  2.2 - please use `set() instead`
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	

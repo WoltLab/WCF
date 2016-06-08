@@ -104,6 +104,13 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * @inheritDoc
 	 */
+	public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		$this->getSearchIndexManager()->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		$this->getSearchIndexManager()->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
