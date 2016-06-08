@@ -36,6 +36,11 @@ $.Redactor.prototype.WoltLabEvent = function() {
 			EventHandler.add('com.woltlab.wcf.redactor2', 'getText_' + elementId, (function(data) {
 				data.message = this.code.get();
 			}).bind(this));
+			
+			// clear editor content on reset
+			EventHandler.add('com.woltlab.wcf.redactor2', 'reset_' + elementId, (function() {
+				this.code.set('');
+			}).bind(this));
 		},
 		
 		register: function(callbackName, callback) {
