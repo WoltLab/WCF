@@ -3,7 +3,9 @@ namespace wcf\data\article\content;
 use wcf\data\article\Article;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
+use wcf\data\language\Language;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -86,6 +88,19 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 		}
 		
 		return $this->article;
+	}
+	
+	/**
+	 * Returns the language of this article content as language object.
+	 * 
+	 * @return Language|null
+	 */
+	public function getLanguage() {
+		if ($this->languageID) {
+			return LanguageFactory::getInstance()->getLanguage($this->languageID);
+		}
+		
+		return null;
 	}
 	
 	public static function getArticleContent($articleID, $languageID) {

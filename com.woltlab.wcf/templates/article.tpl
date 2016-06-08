@@ -48,6 +48,16 @@
 	</header>
 {/capture}
 
+{capture assign='headContent'}
+	{if $article->isMultilingual}
+		{foreach from=$article->getLanguageLinks() item='langArticleContent'}
+			{if $langArticleContent->getLanguage()}
+				<link rel="alternate" hreflang="{$langArticleContent->getLanguage()->languageCode}" href="{$langArticleContent->getLink()}" />
+			{/if}
+		{/foreach}
+	{/if}
+{/capture}
+
 {include file='header'}
 
 {if $articleContent->getImage()}
@@ -84,6 +94,14 @@
 	<div class="articleLikesSummery"></div>
 	
 	<ul class="articleLikeButtons buttonGroup"></ul>
+	
+	{if $article->isMultilingual}
+		{foreach from=$article->getLanguageLinks() item='langArticleContent'}
+			{if $langArticleContent->getLanguage() && $langArticleContent->languageID != $articleContent->languageID}
+				<a href="{$langArticleContent->getLink()}">{$langArticleContent->getLanguage()->languageName}</a>
+			{/if}
+		{/foreach}
+	{/if}
 	
 	{if ENABLE_SHARE_BUTTONS}
 		<section class="section jsOnly">

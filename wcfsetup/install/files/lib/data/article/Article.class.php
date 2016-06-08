@@ -49,6 +49,12 @@ class Article extends DatabaseObject implements ILinkableObject {
 	public $articleContent;
 	
 	/**
+	 * language links
+	 * @var	ArticleContent[]
+	 */
+	public $languageLinks;
+	
+	/**
 	 * article's category
 	 * @var ArticleCategory
 	 */
@@ -203,6 +209,27 @@ class Article extends DatabaseObject implements ILinkableObject {
 		}
 		
 		return $this->articleContent;
+	}
+	
+	/**
+	 * Returns the article's language links.
+	 *
+	 * @return	ArticleContent[]
+	 */
+	public function getLanguageLinks() {
+		if ($this->languageLinks === null) {
+			$this->languageLinks = [];
+			$sql = "SELECT	articleContentID, title, languageID
+				FROM	wcf" . WCF_N . "_article_content
+				WHERE	articleID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->articleID]);
+			while ($row = $statement->fetchArray()) {
+				$this->languageLinks[($row['languageID'] ?: 0)] = new ArticleContent(null, $row);
+			}
+		}
+		
+		return $this->languageLinks;
 	}
 	
 	/**
