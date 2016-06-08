@@ -16,8 +16,6 @@ buttonOptions = {
 	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
 	woltlabSize: { icon: 'fa-text-height', title: '{lang}wcf.editor.button.size{/lang}' }
 };
-	
-buttons = [];
 
 buttons.push('html');
 
@@ -58,3 +56,9 @@ buttons.push('wcfSeparator');
 
 buttons.push('woltlabMedia');
 buttons.push('woltlabQuote');
+
+{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
+	buttonOptions['{$__bbcode->bbcodeTag}'] = { icon: '{$__bbcode->wysiwygIcon}', title: '{lang}{$__bbcode->buttonLabel}{/lang}' };
+	buttons.push('{$__bbcode->bbcodeTag}');
+	customButtons.push('{$__bbcode->bbcodeTag}');
+{/foreach}

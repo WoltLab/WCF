@@ -3,9 +3,20 @@ $.Redactor.prototype.WoltLabButton = function() {
 	
 	return {
 		init: function() {
+			// add custom buttons
+			var button, buttonName, i, length;
+			//noinspection JSUnresolvedVariable
+			for (i = 0, length = this.opts.woltlab.customButtons.length; i < length; i++) {
+				//noinspection JSUnresolvedVariable
+				buttonName = this.opts.woltlab.customButtons[i];
+				
+				button = this.button.add(buttonName, '');
+				this.button.addCallback(button, this.WoltLabButton._handleCustomButton);
+			}
+			
 			// set button icons and labels
-			var button, buttonData, buttonName;
-			for (var i = 0, length = this.opts.buttons.length; i < length; i++) {
+			var buttonData;
+			for (i = 0, length = this.opts.buttons.length; i < length; i++) {
 				buttonName = this.opts.buttons[i];
 				
 				if (buttonName === 'wcfSeparator') {
@@ -75,6 +86,21 @@ $.Redactor.prototype.WoltLabButton = function() {
 			});
 			
 			WCF.DOMNodeInsertedHandler.execute();
+		},
+		
+		_handleCustomButton: function (bbcode) {
+			var data = { cancel: false };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'bbcode_' + bbcode + '_' + this.$element[0].id, data);
+			
+			if (data.cancel === true) {
+				return;
+			}
+			
+			this.buffer.set();
+			
+			var html = '[' + bbcode + ']' + this.selection.html() + (this.selection.is() ? '' : this.marker.html()) + '[/' + bbcode + ']';
+			this.insert.html(html);
+			this.selection.restore();
 		}
 	};
 };

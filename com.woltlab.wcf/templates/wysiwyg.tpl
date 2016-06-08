@@ -49,7 +49,7 @@
 				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}'
 			});
 			
-			var buttons = [], buttonOptions = [];
+			var buttons = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
 			// TODO: Should the media stuff be here?
@@ -85,7 +85,8 @@
 				toolbarFixed: false,
 				woltlab: {
 					autosave: autosave,
-					buttons: buttonOptions
+					buttons: buttonOptions,
+					customButtons: customButtons
 				}
 			};
 			

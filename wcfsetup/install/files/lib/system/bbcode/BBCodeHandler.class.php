@@ -78,11 +78,17 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
+	 * @param       boolean         $excludeCoreBBCodes     do not return bbcodes that are available by default
 	 * @return	BBCode[]
 	 */
-	public function getButtonBBCodes() {
+	public function getButtonBBCodes($excludeCoreBBCodes = false) {
 		$buttons = [];
+		$coreBBCodes = ['align', 'b', 'color', 'i', 'img', 'list', 's', 'size', 'sub', 'sup', 'quote', 'table', 'u', 'url'];
 		foreach ($this->buttonBBCodes as $bbcode) {
+			if ($excludeCoreBBCodes && in_array($bbcode->bbcodeTag, $coreBBCodes)) {
+				continue;
+			}
+			
 			if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
 				$buttons[] = $bbcode;
 			}
