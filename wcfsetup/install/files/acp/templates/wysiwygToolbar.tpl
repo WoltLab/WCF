@@ -11,12 +11,11 @@ buttonOptions = {
 	table: { icon: 'fa-table', title: '{lang}wcf.editor.button.table{/lang}' },
 	underline: { icon: 'fa-underline', title: '{lang}wcf.editor.button.underline{/lang}' },
 	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
+	woltlabImage: { icon: 'fa-picture-o', title: '{lang}wcf.editor.button.image{/lang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
 	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
 	woltlabSize: { icon: 'fa-text-height', title: '{lang}wcf.editor.button.size{/lang}' }
 };
-	
-buttons = [];
 
 buttons.push('html');
 
@@ -46,11 +45,9 @@ buttons.push('alignment');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}
 	buttons.push('link');
 {/if}
-{*
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}
-	buttons.push('image');
+	buttons.push('woltlabImage');
 {/if}
-*}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
 	buttons.push('table');
 {/if}
@@ -59,3 +56,9 @@ buttons.push('wcfSeparator');
 
 buttons.push('woltlabMedia');
 buttons.push('woltlabQuote');
+
+{foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
+	buttonOptions['{$__bbcode->bbcodeTag}'] = { icon: '{$__bbcode->wysiwygIcon}', title: '{lang}{$__bbcode->buttonLabel}{/lang}' };
+	buttons.push('{$__bbcode->bbcodeTag}');
+	customButtons.push('{$__bbcode->bbcodeTag}');
+{/foreach}
