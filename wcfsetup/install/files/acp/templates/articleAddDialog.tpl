@@ -17,7 +17,7 @@
 </div>
 <script data-relocate="true">
 	require(['WoltLab/WCF/Acp/Ui/Article/Add'], function(AcpUiArticleAdd) {
-		AcpUiArticleAdd.init('{link controller='ArticleAdd' encode=false}{literal}isMultilingual={$isMultilingual}{/literal}{/link}');
+		AcpUiArticleAdd.init('{link controller='ArticleAdd' encode=false}{literal}isMultilingual={$isMultilingual}{/literal}{if $categoryID}&categoryID={@$categoryID}{/if}{/link}');
 		
 		{if $showArticleAddDialog}
 			window.setTimeout(function() {

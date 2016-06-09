@@ -93,7 +93,7 @@ class ArticleListPage extends SortablePage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_POST['categoryID'])) $this->categoryID = intval($_POST['categoryID']);
+		if (isset($_REQUEST['categoryID'])) $this->categoryID = intval($_REQUEST['categoryID']);
 		if (!empty($_REQUEST['username'])) $this->username = StringUtil::trim($_REQUEST['username']);
 		if (!empty($_REQUEST['title'])) $this->title = StringUtil::trim($_REQUEST['title']);
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);

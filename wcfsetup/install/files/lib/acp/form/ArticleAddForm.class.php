@@ -152,6 +152,8 @@ class ArticleAddForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
+		if (isset($_REQUEST['categoryID'])) $this->categoryID = intval($_REQUEST['categoryID']);
+		
 		$this->readMultilingualSetting();
 		
 		// get available languages
@@ -166,7 +168,9 @@ class ArticleAddForm extends AbstractForm {
 		
 		// work-around to force adding article via dialog overlay
 		if (empty($_POST) && !isset($_REQUEST['isMultilingual'])) {
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('ArticleList', ['showArticleAddDialog' => 1]));
+			$parameters = ['showArticleAddDialog' => 1];
+			if ($this->categoryID) $parameters['categoryID'] = $this->categoryID;
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('ArticleList', $parameters));
 			exit;
 		}
 	}
@@ -178,7 +182,6 @@ class ArticleAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		$this->enableComments = 0;
-		if (isset($_POST['categoryID'])) $this->categoryID = intval($_POST['categoryID']);
 		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['time'])) {
 			$this->time = $_POST['time'];
