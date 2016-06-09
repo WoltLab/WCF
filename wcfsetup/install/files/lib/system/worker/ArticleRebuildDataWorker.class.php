@@ -55,7 +55,7 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 		}
 		$articles = $this->objectList->getObjects();
 		
-		$commentObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.article');
+		$commentObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.articleComment');
 		$sql = "SELECT	COUNT(*) AS comments, SUM(responses) AS responses
 			FROM	wcf".WCF_N."_comment
 			WHERE	objectTypeID = ?

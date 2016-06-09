@@ -152,7 +152,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			// delete like data
 			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.likeableArticle', $articleIDs);
 			// delete comments
-			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.article', $articleContentIDs);
+			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.articleComment', $articleContentIDs);
 			// delete tag to object entries
 			TagEngine::getInstance()->deleteObjects('com.woltlab.wcf.article', $articleContentIDs);
 			// delete entry from search index

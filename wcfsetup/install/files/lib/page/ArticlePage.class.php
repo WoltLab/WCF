@@ -144,7 +144,7 @@ class ArticlePage extends AbstractPage {
 		
 		// get comments
 		if ($this->article->enableComments) {
-			$this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article');
+			$this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment');
 			$this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();
 			$this->commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->articleContent->articleContentID);
 		}

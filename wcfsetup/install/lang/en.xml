@@ -1749,6 +1749,8 @@ You can now fully access the website.]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Comment{if $article->comments != 1}s{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Liked the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -3001,6 +3003,8 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.likeableArticle.recentActivityEvent"><![CDATA[Like (Article)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.recentActivityEvent"><![CDATA[Comment (Article)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.response.recentActivityEvent"><![CDATA[Reply (Article)]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
 	</category>

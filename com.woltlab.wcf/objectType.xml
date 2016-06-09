@@ -45,6 +45,16 @@
 			<classname>wcf\system\user\activity\event\LikeableArticleUserActivityEvent</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.articleComment.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\ArticleCommentUserActivityEvent</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.articleComment.response.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\ArticleCommentResponseUserActivityEvent</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.searchableObjectType</definitionname>
 			<classname>wcf\system\search\ArticleSearch</classname>
@@ -187,7 +197,7 @@
 		</type>
 		
 		<type>
-			<name>com.woltlab.wcf.article</name>
+			<name>com.woltlab.wcf.articleComment</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
 			<classname><![CDATA[wcf\system\comment\manager\ArticleCommentManager]]></classname>
 		</type>
