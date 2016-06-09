@@ -71,6 +71,7 @@ define(['Language'], function(Language) {
 					case 'i':
 						// `00` through `59`
 						char = date.getMinutes();
+						if (char < 10) char = "0" + char;
 						break;
 					
 					// hours
