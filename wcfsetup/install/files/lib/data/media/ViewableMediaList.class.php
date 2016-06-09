@@ -20,12 +20,12 @@ use wcf\system\WCF;
  */
 class ViewableMediaList extends MediaList {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $decoratorClassName = ViewableMedia::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();

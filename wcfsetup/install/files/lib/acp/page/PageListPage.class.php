@@ -22,27 +22,27 @@ use wcf\util\StringUtil;
  */
 class PageListPage extends SortablePage {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.page.list';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $objectListClassName = PageList::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.cms.canManagePage'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'name';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['pageID', 'name', 'lastUpdateTime'];
 	
@@ -89,7 +89,7 @@ class PageListPage extends SortablePage {
 	public $showPageAddDialog = 0;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -108,7 +108,7 @@ class PageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -134,7 +134,7 @@ class PageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

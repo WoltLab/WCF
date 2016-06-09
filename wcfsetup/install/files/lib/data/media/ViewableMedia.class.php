@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  */
 class ViewableMedia extends DatabaseObjectDecorator {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $baseClass = Media::class;
 	

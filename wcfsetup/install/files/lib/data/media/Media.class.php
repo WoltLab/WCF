@@ -57,12 +57,12 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	protected $i18nData = null;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'media';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'mediaID';
 

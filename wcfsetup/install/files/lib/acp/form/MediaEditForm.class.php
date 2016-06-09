@@ -23,7 +23,7 @@ use wcf\util\ArrayUtil;
  */
 class MediaEditForm extends AbstractForm {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.media.list';
 	
@@ -52,12 +52,12 @@ class MediaEditForm extends AbstractForm {
 	public $mediaID = 0;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.cms.canManageMedia'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -74,7 +74,7 @@ class MediaEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -106,7 +106,7 @@ class MediaEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -119,7 +119,7 @@ class MediaEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -137,7 +137,7 @@ class MediaEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -159,7 +159,7 @@ class MediaEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 * @throws	UserInputException
 	 */
 	public function validate() {

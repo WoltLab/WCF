@@ -33,12 +33,12 @@ use wcf\util\FileUtil;
  */
 class AttachmentAction extends AbstractDatabaseObjectAction implements ISortableAction, IUploadAction {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['delete', 'updatePosition', 'upload'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $className = AttachmentEditor::class;
 	
@@ -55,7 +55,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 	public $eventData = [];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		// read objects
@@ -80,7 +80,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateUpload() {
 		// IE<10 fallback
@@ -127,7 +127,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function upload() {
 		// get object type
@@ -224,7 +224,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		$this->readInteger('objectID', true);
@@ -281,7 +281,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$sql = "UPDATE	wcf".WCF_N."_attachment

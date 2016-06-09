@@ -21,27 +21,27 @@ use wcf\util\StringUtil;
  */
 class BoxListPage extends SortablePage {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.box.list';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $objectListClassName = BoxList::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.cms.canManageBox'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'name';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['boxID', 'name', 'boxType', 'position', 'showOrder'];
 	
@@ -82,7 +82,7 @@ class BoxListPage extends SortablePage {
 	public $showBoxAddDialog = 0;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -96,7 +96,7 @@ class BoxListPage extends SortablePage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -125,7 +125,7 @@ class BoxListPage extends SortablePage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

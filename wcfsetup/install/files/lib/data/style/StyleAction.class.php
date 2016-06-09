@@ -33,27 +33,27 @@ use wcf\util\FileUtil;
  */
 class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['changeStyle', 'getStyleChooser'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $className = StyleEditor::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.style.canManageStyle'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.style.canManageStyle'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['copy', 'delete', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo'];
 	
@@ -70,7 +70,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	public $styleEditor = null;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 * @return	Style
 	 */
 	public function create() {
@@ -87,7 +87,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -105,7 +105,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$count = parent::delete();
@@ -248,7 +248,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateUpload() {
 		// check upload permissions
@@ -280,7 +280,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function upload() {
 		// save files
@@ -584,7 +584,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -597,7 +597,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $style) {

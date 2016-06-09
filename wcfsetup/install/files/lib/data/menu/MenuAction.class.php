@@ -46,7 +46,7 @@ class MenuAction extends AbstractDatabaseObjectAction {
 	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 * @return	Menu
 	 */
 	public function create() {

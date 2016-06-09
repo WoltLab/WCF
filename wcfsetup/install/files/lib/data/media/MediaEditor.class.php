@@ -18,7 +18,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class MediaEditor extends DatabaseObjectEditor {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $baseClass = Media::class;
 

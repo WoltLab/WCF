@@ -49,7 +49,7 @@ class MediaPage extends AbstractPage {
 	public $thumbnail = '';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $useTemplate = false;
 	
@@ -69,7 +69,7 @@ class MediaPage extends AbstractPage {
 	// TODO: remove the following line once method is implemented
 	// @codingStandardsIgnoreStart
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		parent::checkPermissions();
@@ -80,7 +80,7 @@ class MediaPage extends AbstractPage {
 	// @codingStandardsIgnoreEnd
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -117,7 +117,7 @@ class MediaPage extends AbstractPage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -147,7 +147,7 @@ class MediaPage extends AbstractPage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function show() {
 		parent::show();

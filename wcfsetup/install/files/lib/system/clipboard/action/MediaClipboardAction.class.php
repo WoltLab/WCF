@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class MediaClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $actionClassActions = ['delete'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected $supportedActions = [
 		'delete',
@@ -30,7 +30,7 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -52,14 +52,14 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return MediaAction::class;
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.media';

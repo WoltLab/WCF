@@ -68,7 +68,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -81,7 +81,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $language) {

@@ -21,7 +21,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 class MediaList extends DatabaseObjectList {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $className = Media::class;
 	

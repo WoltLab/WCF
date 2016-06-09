@@ -23,12 +23,12 @@ use wcf\util\StringUtil;
  */
 class ArticleListPage extends SortablePage {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.article.list';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $objectListClassName = ViewableArticleList::class;
 	
@@ -38,22 +38,22 @@ class ArticleListPage extends SortablePage {
 	public $neededModules = ['MODULE_ARTICLE'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.content.article.canManageArticle'];
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'time';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public $validSortFields = ['articleID', 'title', 'time', 'views', 'comments'];
 	
@@ -88,7 +88,7 @@ class ArticleListPage extends SortablePage {
 	public $showArticleAddDialog = 0;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -101,7 +101,7 @@ class ArticleListPage extends SortablePage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -125,7 +125,7 @@ class ArticleListPage extends SortablePage {
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

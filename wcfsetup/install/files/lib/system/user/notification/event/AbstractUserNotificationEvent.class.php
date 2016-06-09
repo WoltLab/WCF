@@ -244,14 +244,14 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getComments() {
 		return 0; 
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getCategories() {
 		return [
@@ -260,42 +260,42 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
 		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
 		return $this->getMessage(); 
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage(); 
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getTime() {
 		return $this->getNotification()->time; 
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getUserID() {
 		return $this->getAuthorID(); 
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getUsername() {
 		return $this->getAuthor()->username; 

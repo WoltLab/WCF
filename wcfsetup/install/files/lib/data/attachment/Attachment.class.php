@@ -45,12 +45,12 @@ use wcf\util\FileUtil;
  */
 class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'attachment';
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'attachmentID';
 	
@@ -132,7 +132,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getLocation() {
 		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-' . $this->fileHash;
@@ -148,7 +148,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getThumbnailLocation($size = '') {
 		if ($size == 'tiny') {
@@ -159,7 +159,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getThumbnailLink($size = '') {
 		$parameters = [
@@ -174,7 +174,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->filename;
@@ -247,7 +247,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public static function getThumbnailSizes() {
 		return [
