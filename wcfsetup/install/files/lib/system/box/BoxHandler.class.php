@@ -57,7 +57,7 @@ class BoxHandler extends SingletonFactory {
 	 * @param	string		$conditionDefinition
 	 * @param	string		$conditionObjectType
 	 * @param	array		$conditionData
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function createBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, array $conditionData) {
 		// do not rely on caches during package installation
@@ -72,12 +72,12 @@ class BoxHandler extends SingletonFactory {
 		$objectTypeID = $statement->fetchSingleColumn();
 		
 		if (!$objectTypeID) {
-			throw new SystemException("Unknown box condition '{$conditionObjectType}' of condition definition '{$conditionDefinition}'");
+			throw new \InvalidArgumentException("Unknown box condition '{$conditionObjectType}' of condition definition '{$conditionDefinition}'");
 		}
 		
 		$box = Box::getBoxByIdentifier($boxIdentifier);
 		if ($box === null) {
-			throw new SystemException("Unknown box with idenifier '{$boxIdentifier}'");
+			throw new \InvalidArgumentException("Unknown box with idenifier '{$boxIdentifier}'");
 		}
 		
 		(new ConditionAction([], 'create', [
