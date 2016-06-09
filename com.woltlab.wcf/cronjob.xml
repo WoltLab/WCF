@@ -189,6 +189,19 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob name="articlePublication">
+			<classname>wcf\system\cronjob\ArticlePublicationCronjob</classname>
+			<description><![CDATA[Publishes delayed articles]]></description>
+			<description language="de"><![CDATA[Veröffentlicht Artikel]]></description>
+			<startminute>*/5</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 	
 	<delete>
