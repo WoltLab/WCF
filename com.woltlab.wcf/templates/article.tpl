@@ -113,7 +113,7 @@
 	{/if}
 </section>
 
-{if ARTICLE_SHOW_ABOUT_AUTHOR}
+{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
 	<div class="section articleAboutAuthor">
 		<h2 class="sectionTitle">{lang}wcf.article.aboutAuthor{/lang}</h2>
 		
