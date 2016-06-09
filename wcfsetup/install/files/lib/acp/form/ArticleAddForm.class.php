@@ -351,10 +351,12 @@ class ArticleAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->username = $this->publicationDate = '';
+		$this->publicationDate = '';
 		$this->categoryID = 0;
 		$this->publicationStatus = $this->enableComments = 1;
 		$this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->tags = [];
+		
+		$this->setDefaultValues();
 	}
 	
 	/**
@@ -364,13 +366,20 @@ class ArticleAddForm extends AbstractForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			$this->username = WCF::getUser()->username;
-			$dateTime = DateUtil::getDateTimeByTimestamp(TIME_NOW);
-			$dateTime->setTimezone(WCF::getUser()->getTimeZone());
-			$this->time = $dateTime->format('c');
+			$this->setDefaultValues();
 		}
-	}	
-		
+	}
+	
+	/**
+	 * Sets the default values of properties.
+	 */
+	protected function setDefaultValues() {
+		$this->username = WCF::getUser()->username;
+		$dateTime = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+		$dateTime->setTimezone(WCF::getUser()->getTimeZone());
+		$this->time = $dateTime->format('c');
+	}
+	
 	/**
 	 * @inheritDoc
 	 */
