@@ -77,7 +77,7 @@ class BoxHandler extends SingletonFactory {
 		
 		$box = Box::getBoxByIdentifier($boxIdentifier);
 		if ($box === null) {
-			throw new \InvalidArgumentException("Unknown box with idenifier '{$boxIdentifier}'");
+			throw new \InvalidArgumentException("Unknown box with identifier '{$boxIdentifier}'");
 		}
 		
 		(new ConditionAction([], 'create', [
