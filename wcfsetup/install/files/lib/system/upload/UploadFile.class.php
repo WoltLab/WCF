@@ -172,7 +172,7 @@ class UploadFile {
 				return [
 					'width' => $imageData[0],
 					'height' => $imageData[1],
-					'mimeType' => $imageData['mime'],
+					'mimeType' => $imageData['mime']
 				];
 			}
 		}

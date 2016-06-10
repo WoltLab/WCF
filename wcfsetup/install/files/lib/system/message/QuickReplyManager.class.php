@@ -230,7 +230,7 @@ class QuickReplyManager extends SingletonFactory {
 				'container' => $this->container,
 				'objects' => $messageList,
 				'startIndex' => $startIndex,
-				'sortOrder' => $sortOrder,
+				'sortOrder' => $sortOrder
 			]);
 			
 			// assign 'to top' link

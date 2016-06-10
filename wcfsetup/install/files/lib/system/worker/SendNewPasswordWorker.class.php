@@ -92,7 +92,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 		// send mail
 		$mail = new Mail([$userEditor->username => $userEditor->email], $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail', [
 			'password' => $newPassword,
-			'username' => $userEditor->username,
+			'username' => $userEditor->username
 		]));
 		$mail->send();
 	}

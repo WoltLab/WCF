@@ -28,7 +28,7 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
 		WCF::getTPL()->assign([
 			'likeList' => $likeList,
 			'userID' => $userID,
-			'lastLikeTime' => $likeList->getLastLikeTime(),
+			'lastLikeTime' => $likeList->getLastLikeTime()
 		]);
 		
 		return WCF::getTPL()->fetch('userProfileLikes');

@@ -433,7 +433,7 @@ class RegisterForm extends UserAddForm {
 			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
 				'email' => $this->email,
-				'password' => $this->password,
+				'password' => $this->password
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,

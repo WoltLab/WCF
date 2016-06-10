@@ -180,7 +180,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 						'attributeHtml' => (!empty($attribute['html']) ? $attribute['html'] : ''),
 						'validationPattern' => (!empty($attribute['validationpattern']) ? $attribute['validationpattern'] : ''),
 						'required' => (!empty($attribute['required']) ? $attribute['required'] : 0),
-						'useText' => (!empty($attribute['usetext']) ? $attribute['usetext'] : 0),
+						'useText' => (!empty($attribute['usetext']) ? $attribute['usetext'] : 0)
 					]);
 				}
 			}

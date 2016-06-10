@@ -118,7 +118,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 				'attributeHtml' => $attribute->attributeHtml,
 				'validationPattern' => $attribute->validationPattern,
 				'required' => $attribute->required,
-				'useText' => $attribute->useText,
+				'useText' => $attribute->useText
 			]]);
 			$attributeAction->executeAction();
 		}
