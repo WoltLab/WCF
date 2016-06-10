@@ -114,7 +114,7 @@ define(
 			// build summary
 			if (this._options.canViewSummary) {
 				var summary, summaryContent, summaryIcon;
-				var summaryContainer = (this._options.isSingleItem) ? elBySel(this._options.summarySelector) : elBySel(this._options.summarySelector, element)
+				var summaryContainer = (this._options.isSingleItem) ? elBySel(this._options.summarySelector) : elBySel(this._options.summarySelector, element);
 				if (summaryContainer !== null) {
 					summary = elCreate('div');
 					summary.className = 'likesSummary';
