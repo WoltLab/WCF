@@ -1,26 +1,3 @@
-.articleContentHeader {
-	.contentHeaderTitle {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	
-	.contentTitle,
-	.contentHeaderDescription {
-		width: 100%;
-	}
-	
-	.contentTitle {
-		margin-top: 5px;
-	}
-	
-	.contentHeaderDescription {
-		color: $wcfContentText;
-		margin-top: 0;
-		order: -1;
-		text-transform: uppercase;
-	}
-}
-
 .articleImage {
 	.articleImageWrapper {
 		align-items: center;

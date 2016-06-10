@@ -4,9 +4,6 @@
 	<header class="contentHeader articleContentHeader">
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$articleContent->title}</h1>
-			<div class="contentHeaderDescription">
-				{$articleContent->getArticle()->getCategory()->getTitle()}
-			</div>
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
 				<li>
 					<span class="icon icon16 fa-user"></span>
@@ -40,6 +37,27 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
+						{if $article->isMultilingual}
+							<li class="dropdown">
+								<a class="dropdownToggle boxFlag box24 button">
+									<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag" /></span>
+									<span>{$articleContent->getLanguage()->languageName}</span>
+								</a>
+								<ul class="dropdownMenu">
+									{foreach from=$article->getLanguageLinks() item='langArticleContent'}
+										{if $langArticleContent->getLanguage()}
+											<li class="boxFlag">
+												<a class="box24" href="{$langArticleContent->getLink()}">
+													<span><img src="{$langArticleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag" /></span>
+													<span>{$langArticleContent->getLanguage()->languageName}</span>
+												</a>
+											</li>
+										{/if}
+									{/foreach}
+								</ul>
+							</li>
+						{/if}
+					
 						{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}<li><a href="{link controller='ArticleEdit' id=$article->articleID isACP=true}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.edit{/lang}</span></a></li>{/if}
 						{event name='contentHeaderNavigation'}
 					{/content}
@@ -95,23 +113,15 @@
 	<div class="articleLikesSummery"></div>
 	
 	<ul class="articleLikeButtons buttonGroup"></ul>
-	
-	{if $article->isMultilingual}
-		{foreach from=$article->getLanguageLinks() item='langArticleContent'}
-			{if $langArticleContent->getLanguage() && $langArticleContent->languageID != $articleContent->languageID}
-				<a href="{$langArticleContent->getLink()}">{$langArticleContent->getLanguage()->languageName}</a>
-			{/if}
-		{/foreach}
-	{/if}
-	
-	{if ENABLE_SHARE_BUTTONS}
-		<section class="section jsOnly">
-			<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
-			
-			{include file='shareButtons'}
-		</section>
-	{/if}
 </section>
+
+{if ENABLE_SHARE_BUTTONS}
+	<section class="section jsOnly">
+		<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
+		
+		{include file='shareButtons'}
+	</section>
+{/if}
 
 {if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
 	<div class="section articleAboutAuthor">
