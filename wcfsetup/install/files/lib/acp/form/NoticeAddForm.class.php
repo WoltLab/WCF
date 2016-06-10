@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\notice\NoticeAction;
 use wcf\data\notice\NoticeEditor;
