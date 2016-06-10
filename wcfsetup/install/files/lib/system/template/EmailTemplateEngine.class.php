@@ -34,10 +34,10 @@ class EmailTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * This method always throws, because changing the template
-	 * group is not supported.
+	 * This method always throws, because changing the template group is not supported.
 	 * 
-	 * @throws \BadMethodCallException
+	 * @param	integer		$templateGroupID
+	 * @throws	\BadMethodCallException
 	 */
 	public function setTemplateGroupID($templateGroupID) {
 		throw new \BadMethodCallException("You may not change the template group of the email template engine");

@@ -57,6 +57,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 	 * Concatenates the given mime parts.
 	 * 
 	 * @param	\Traversable	$parts
+	 * @return	string
 	 */
 	protected function getConcatenatedParts($parts) {
 		$content = "";
