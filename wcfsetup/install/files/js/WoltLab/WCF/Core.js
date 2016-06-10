@@ -153,7 +153,7 @@ define([], function() {
 					configurable: true,
 					enumerable: false,
 					value: constructor,
-					writable: true,
+					writable: true
 				}
 			}), propertiesObject || {});
 		},
