@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-abstract class AbstractSingleFieldCondition extends AbstractCondition implements ICondition {
+abstract class AbstractSingleFieldCondition extends AbstractCondition {
 	/**
 	 * language item of the input element description
 	 * @var	string
