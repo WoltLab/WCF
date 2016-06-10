@@ -127,7 +127,7 @@ class LabelListPage extends SortablePage {
 				$this->objectList->getConditionBuilder()->add('(label LIKE ? OR labelID IN (?))', ['%'.addcslashes($this->label, '_%').'%', $labelIDs]);
 			}
 			else {
-				$this->objectList->getConditionBuilder()->add('label LIKE ?', ['%'.addcslashes($this->label, '_%').'%',]);
+				$this->objectList->getConditionBuilder()->add('label LIKE ?', ['%'.addcslashes($this->label, '_%').'%']);
 			}
 		}
 	}

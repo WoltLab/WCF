@@ -54,7 +54,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 			UserIgnoreEditor::create([
 				'ignoreUserID' => $this->parameters['data']['userID'],
 				'time' => TIME_NOW,
-				'userID' => WCF::getUser()->userID,
+				'userID' => WCF::getUser()->userID
 			]);
 			
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');

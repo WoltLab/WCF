@@ -30,7 +30,7 @@ class MessageUserOptionOutput implements IUserOptionOutput {
 		
 		WCF::getTPL()->assign([
 			'option' => $option,
-			'value' => MessageParser::getInstance()->parse($value),
+			'value' => MessageParser::getInstance()->parse($value)
 		]);
 		return WCF::getTPL()->fetch('messageUserOptionOutput');
 	}

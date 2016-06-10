@@ -214,7 +214,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				$mediaData[$row['mediaID']] = [
 					'altText' => [],
 					'caption' => [],
-					'title' => [],
+					'title' => []
 				];
 			}
 			

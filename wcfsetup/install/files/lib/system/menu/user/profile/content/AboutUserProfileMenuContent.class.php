@@ -37,7 +37,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
 		
 		WCF::getTPL()->assign([
 			'options' => $this->optionHandler->getOptionTree(),
-			'userID' => $user->userID,
+			'userID' => $user->userID
 		]);
 		
 		return WCF::getTPL()->fetch('userProfileAbout');

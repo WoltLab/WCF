@@ -610,7 +610,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'data' => [
 				'activationCode' => UserRegistrationUtil::getActivationCode()
 			],
-			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS]),
+			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS])
 		]);
 		$action->executeAction();
 		$action = new UserAction($this->objects, 'addToGroups', [

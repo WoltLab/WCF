@@ -39,7 +39,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * @see	\wcf\system\background\BackgroundQueueHandler::enqueueAt()
 	 */
 	public function enqueueIn($jobs, $time = 0) {
-		self::enqueueAt($jobs, TIME_NOW + $time);
+		$this->enqueueAt($jobs, TIME_NOW + $time);
 	}
 	
 	/**

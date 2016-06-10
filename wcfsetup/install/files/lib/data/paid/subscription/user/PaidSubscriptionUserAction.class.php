@@ -233,7 +233,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			}
 			if (!empty($groupIDs)) {
 				$action = new UserAction([$subscriptionUser->userID], 'removeFromGroups', [
-					'groups' => $groupIDs,
+					'groups' => $groupIDs
 				]);
 				$action->executeAction();
 			}

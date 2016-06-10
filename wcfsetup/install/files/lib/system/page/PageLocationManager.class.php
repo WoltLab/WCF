@@ -100,7 +100,7 @@ class PageLocationManager extends SingletonFactory {
 			'pageID' => $page->pageID,
 			'pageObjectID' => $pageObjectID,
 			'title' => $title,
-			'useAsParentLocation' => $useAsParentLocation,
+			'useAsParentLocation' => $useAsParentLocation
 		];
 	}
 	

@@ -144,7 +144,7 @@ class MailForm extends AbstractCaptchaForm {
 		$messageData = [
 			'message' => $this->message,
 			'recipient' => $this->user,
-			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email,
+			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email
 		];
 		
 		// build mail

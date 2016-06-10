@@ -158,9 +158,9 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Reads form parameters for polls.
 	 * 
-	 * @param       array   $postData       optional post data to be used instead of $_POST
+	 * @param	array	$postData	optional post data to be used instead of $_POST
 	 */
-	public function readFormParameters(array $postData = array()) {
+	public function readFormParameters(array $postData = []) {
 		if (empty($postData)) {
 			$postData =& $_POST;
 		}
