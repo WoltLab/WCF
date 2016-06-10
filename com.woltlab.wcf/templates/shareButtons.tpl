@@ -1,50 +1,60 @@
 <div class="messageShareButtons jsOnly">
 	<ul class="inlineList">
-		<li class="jsShareFacebook">
-			<a>
-				<span class="icon icon32 fa-facebook-square jsTooltip" title="{lang}wcf.message.share.facebook{/lang}"></span>
-				<span class="invisible">{lang}wcf.message.share.facebook{/lang}</span>
+		<li>
+			<a class="button jsShareFacebook" title="{lang}wcf.message.share.facebook{/lang}">
+				<span class="icon icon24 fa-facebook-official"></span>
+				<span>{lang}wcf.message.share.facebook{/lang}</span>
 			</a>
-			<span class="badge" style="display: none">0</span>
 		</li>
-		<li class="jsShareTwitter">
-			<a>
-				<span class="icon icon32 fa-twitter-square jsTooltip" title="{lang}wcf.message.share.twitter{/lang}"></span>
-				<span class="invisible">{lang}wcf.message.share.twitter{/lang}</span>
+		<li>
+			<a class="button jsShareTwitter" title="{lang}wcf.message.share.twitter{/lang}">
+				<span class="icon icon24 fa-twitter"></span>
+				<span>{lang}wcf.message.share.twitter{/lang}</span>
 			</a>
-			<span class="badge" style="display: none">0</span>
 		</li>
-		<li class="jsShareGoogle">
-			<a>
-				<span class="icon icon32 fa-google-plus-square jsTooltip" title="{lang}wcf.message.share.google{/lang}"></span>
-				<span class="invisible">{lang}wcf.message.share.google{/lang}</span>
+		<li>
+			<a class="button jsShareGoogle" title="{lang}wcf.message.share.google{/lang}">
+				<span class="icon icon24 fa-google-plus"></span>{*@todo: change to fa-google-plus-official (fa 4.6)*}
+				<span>{lang}wcf.message.share.google{/lang}</span>
 			</a>
-			<span class="badge" style="display: none">0</span>
 		</li>
-		<li class="jsShareReddit">
-			<a>
-				<span class="icon icon32 fa-reddit-square jsTooltip" title="{lang}wcf.message.share.reddit{/lang}"></span>
-				<span class="invisible">{lang}wcf.message.share.reddit{/lang}</span>
+		<li>
+			<a class="button jsShareReddit" title="{lang}wcf.message.share.reddit{/lang}">
+				<span class="icon icon24 fa-reddit"></span>
+				<span>{lang}wcf.message.share.reddit{/lang}</span>
 			</a>
-			<span class="badge" style="display: none">0</span>
+		</li>
+		<li>
+			<a class="button jsShareWhatsApp" title="{lang}wcf.message.share.whatsApp{/lang}">
+				<span class="icon icon24 fa-whatsapp jsTooltip"></span>
+				<span>{lang}wcf.message.share.whatsApp{/lang}</span>
+			</a>
+		</li>
+		<li>
+			<a class="button jsShareLinkedIn" title="{lang}wcf.message.share.linkedIn{/lang}">
+				<span class="icon icon24 fa-linkedin jsTooltip"></span>
+				<span>{lang}wcf.message.share.linkedIn{/lang}</span>
+			</a>
+		</li>
+		<li>
+			<a class="button jsSharePinterest" title="{lang}wcf.message.share.pinterest{/lang}">
+				<span class="icon icon24 fa-pinterest-p jsTooltip"></span>
+				<span>{lang}wcf.message.share.pinterest{/lang}</span>
+			</a>
+		</li>
+		<li>
+			<a class="button jsShareXing" title="{lang}wcf.message.share.xing{/lang}">
+				<span class="icon icon24 fa-xing jsTooltip"></span>
+				<span>{lang}wcf.message.share.xing{/lang}</span>
+			</a>
 		</li>
 		
 		{event name='buttons'}
 	</ul>
 	
 	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.message.share.facebook': '{lang}wcf.message.share.facebook{/lang}',
-				'wcf.message.share.google': '{lang}wcf.message.share.google{/lang}',
-				'wcf.message.share.reddit': '{lang}wcf.message.share.reddit{/lang}',
-				'wcf.message.share.twitter': '{lang}wcf.message.share.twitter{/lang}',
-				'wcf.message.share.privacy': '{lang}wcf.message.share.privacy{/lang}'
-			});
-			var $privacySettings = { {implode from=$__wcf->getUser()->getSocialNetworkPrivacySettings() key=provider item=value}'{$provider}': {if $value}true{else}false{/if}{/implode} };
-			new WCF.Message.Share.Page({if SHARE_BUTTONS_SHOW_COUNT}true{else}false{/if}, $privacySettings);
+		require(['WoltLab/WCF/Ui/Message/Share'], function(UiMessageShare) {
+			UiMessageShare.init();
 		});
-		//]]>
 	</script>
 </div>

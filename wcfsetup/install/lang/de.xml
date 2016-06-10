@@ -2352,12 +2352,16 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.settings.showSignature.description"><![CDATA[Die im Profil eingestellte Signatur wird an diese Nachricht angehängt.]]></item>
 		<item name="wcf.message.share"><![CDATA[Teilen]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
-		<item name="wcf.message.share.google"><![CDATA[Google Plus]]></item>
+		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
 		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
 		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
 		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
 		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.share.whatsApp"><![CDATA[WhatsApp]]></item>
+		<item name="wcf.message.share.linkedIn"><![CDATA[LinkedIn]]></item>
+		<item name="wcf.message.share.pinterest"><![CDATA[Pinterest]]></item>
+		<item name="wcf.message.share.xing"><![CDATA[XING]]></item>
 		<item name="wcf.message.share.privacy"><![CDATA[Einstellungen zum Teilen]]></item>
 		<item name="wcf.message.share.privacy.description"><![CDATA[Die Anzahl der Teilungen auf der jeweiligen Plattform werden nur bei aktivierten Anbietern ermittelt, diese Angaben werden durch Ihren Browser direkt vom Anbieter abgefragt.]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>

@@ -2389,12 +2389,16 @@ Errors are:
 		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, which can be edited in your profile.]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
-		<item name="wcf.message.share.google"><![CDATA[Google Plus]]></item>
+		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
 		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
 		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
 		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
 		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.share.whatsApp"><![CDATA[WhatsApp]]></item>
+		<item name="wcf.message.share.linkedIn"><![CDATA[LinkedIn]]></item>
+		<item name="wcf.message.share.pinterest"><![CDATA[Pinterest]]></item>
+		<item name="wcf.message.share.xing"><![CDATA[XING]]></item>
 		<item name="wcf.message.share.privacy"><![CDATA[Privacy Settings]]></item>
 		<item name="wcf.message.share.privacy.description"><![CDATA[Displaying the number of shares is only available for enabled providers, data will be fetched directly using your browser.]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smilies]]></item>
