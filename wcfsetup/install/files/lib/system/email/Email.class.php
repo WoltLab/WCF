@@ -79,7 +79,7 @@ class Email {
 	 * The body of this Email.
 	 * @var	AbstractMimePart
 	 */
-	protected $content = null;
+	protected $body = null;
 	
 	/**
 	 * Mail host for use in the Message-Id
