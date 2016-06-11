@@ -446,6 +446,10 @@ class Email {
 	 * @return	string
 	 */
 	public function getBodyString() {
+		if ($this->body === null) {
+			throw new \LogicException('Cannot generate message body, you must specify a body');
+		}
+		
 		switch ($this->body->getContentTransferEncoding()) {
 			case 'quoted-printable':
 				return quoted_printable_encode($this->body->getContent());
@@ -470,6 +474,9 @@ class Email {
 		
 		// ensure every header is filled in
 		$this->getHeaders();
+		
+		// ensure the body is filled in
+		$this->getBodyString();
 		
 		foreach ($this->recipients as $recipient) {
 			$mail = clone $this;
