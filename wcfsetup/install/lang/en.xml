@@ -479,7 +479,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label “{$label}”?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Edit Label]]></item>
-		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> prior to creating labels.]]></item>
+		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> before creating labels.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
@@ -672,7 +672,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice “{$notice->noticeName}”?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notice]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
-		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable Notice]]></item>
+		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable notice]]></item>
 		<item name="wcf.acp.notice.isDismissible"><![CDATA[User can dismiss notice]]></item>
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not display for them again.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
@@ -1197,14 +1197,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.newVersion"><![CDATA[New Version]]></item>
 		<item name="wcf.acp.package.validation"><![CDATA[Validation Result]]></item>
 		<item name="wcf.acp.package.validation.errorCode.1"><![CDATA[The file “{$archive}”{if !$targetArchive|empty} within the archive “{$targetArchive}”{/if} is missing.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[The package “{$archive}” is missing the required “package.xml“ file.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[The package “{$archive}” is missing the required “package.xml” file.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not met the expectations and was rejected.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not met the expectations and was rejected.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[The package “{lang}{$packageName}{/lang}” does not contain valid install instructions.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[The package “{lang}{$packageName}{/lang}” (installed version: “{$packageVersion}”) should be updated to version “{$deliveredPackageVersion}”, but an update is not supported.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[The following installed packages exclude the current package due to known incompatibilities: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[This package is incompatible with the following installed packages: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
-		<item name="wcf.acp.package.validation.errorCode.9"><![CDATA[The installation requires the package “{$packageName}” in version “{$packageVersion}“ or higher, but only version “{$deliveredPackageVersion}“ is shipped.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.9"><![CDATA[The installation requires the package “{$packageName}” in version “{$packageVersion}” or higher, but only version “{$deliveredPackageVersion}” is shipped.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package {if $package === null}“{$packageName}”{else}“{$package}”{/if} in version “{$packageVersion}” or higher, {if $package === null}but it is neither installed nor shipped.{else}but only version “{$package->packageVersion}” is installed.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
@@ -1418,7 +1418,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.advanced.individualLess"><![CDATA[Individual CSS and LESS]]></item>
 		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Content will be appended to the style sheet and may contain pure CSS. Furthermore you can use LESS including all Mixins provided by Community Framework.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[LESS Variables Override]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Allows you to override LESS variables not available through the style editor itself. Syntax: “@variableName: variableValue;”, referred variables must be declared prior any attempt to read their value.]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Allows you to override LESS variables not available through the style editor itself. Syntax: “@variableName: variableValue;”, referred variables must be declared before any attempt to read their value.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error"><![CDATA[Provided value was invalid, please verify these items:]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Input for “{$error[text]}” invalid]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable “{$error[text]}” is already defined by the style editor]]></item>
@@ -1664,7 +1664,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP Class Name for Output]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
-		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Please <a href="{link controller='UserOptionCategoryAdd'}{/link}">add a user field category</a> prior to creating custom user fields.]]></item>
+		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Please <a href="{link controller='UserOptionCategoryAdd'}{/link}">add a user field category</a> before creating custom user fields.]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
@@ -1685,7 +1685,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Path must be either relative to WCF’s directory or absolute.]]></item>
 		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Rank might optionally be restricted to a specific gender.]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Points]]></item>
-		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[Required amount of activity points to obtain this rank.]]></item>
+		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[The required number of activity points to obtain this rank.]]></item>
 		<item name="wcf.acp.user.rank.requirement"><![CDATA[Restrictions]]></item>
 		<item name="wcf.acp.user.rank.repeatImage"><![CDATA[Repeat User Image]]></item>
 		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[The number of times the rank image will be repeated.]]></item>
@@ -2901,7 +2901,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
-		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
+		<item name="wcf.user.birthdayToday"><![CDATA[It’s their birthday]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[There have been too many failed login attempts originating from your ip address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
 		<item name="wcf.user.banned"><![CDATA[The user {$user->username} has been banned{if $user->banExpires != 0} until {@$user->banExpires|date}{/if}.]]></item>
 		<item name="wcf.user.panel.markAllAsRead"><![CDATA[Mark All as Read]]></item>
@@ -3099,28 +3099,28 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[General Data]]></item>
 		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Personal Data]]></item>
-		<item name="wcf.user.condition.groupIDs"><![CDATA[in User Groups]]></item>
-		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Users have to be a member of all selected user groups.]]></item>
+		<item name="wcf.user.condition.groupIDs"><![CDATA[User in User Groups]]></item>
+		<item name="wcf.user.condition.groupIDs.description"><![CDATA[User is a member of all the selected user groups.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Languages]]></item>
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Likes Received]]></item>
-		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile browser]]></item>
+		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile Browser]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile browser]]></item>
-		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You may not simultaneously select “Uses mobile browser“ and “Uses no mobile browser“.]]></item>
-		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Uses no mobile browser]]></item>
-		<item name="wcf.user.condition.notGroupIDs"><![CDATA[not in User Groups]]></item>
-		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Users may not be a member of any selected user group.]]></item>
-		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user groups in “in User Groups“ and “not in User Groups“ are conflicting.]]></item>
+		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You cannot simultaneously select “Uses mobile browser” and “Don’t use mobile browser”.]]></item>
+		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Don’t use mobile browser]]></item>
+		<item name="wcf.user.condition.notGroupIDs"><![CDATA[User Not in User Groups]]></item>
+		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[User is not a member of the selected user groups.]]></item>
+		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user groups in “User in User Groups” and “User Not in User Groups” are conflicting.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registration Date]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
+		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[The end date is before the start date.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[The start date is not valid.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[The end date is not valid.]]></item>
-		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since registration]]></item>
+		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since Registration]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
-		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You may not simultaneously select “Banned“ and “Not Banned“.]]></item>
+		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You cannot simultaneously select “Banned” and “Not banned”.]]></item>
 		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting approval]]></item>
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
-		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You may not simultaneously select “Approved“ and “Awaiting approval“.]]></item>
+		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting approval”.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not banned]]></item>
 	</category>
 	
