@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\ArticleAction;
 use wcf\data\category\CategoryNodeTree;
@@ -84,7 +85,7 @@ class ArticleAddForm extends AbstractForm {
 	 * publication status
 	 * @var integer
 	 */
-	public $publicationStatus = 1;
+	public $publicationStatus = Article::PUBLISHED;
 	
 	/**
 	 * publication date (ISO 8601)
@@ -189,7 +190,7 @@ class ArticleAddForm extends AbstractForm {
 		}
 		if (!empty($_POST['enableComments'])) $this->enableComments = 1;
 		if (isset($_POST['publicationStatus'])) $this->publicationStatus = intval($_POST['publicationStatus']);
-		if ($this->publicationStatus == 2 && isset($_POST['publicationDate'])) {
+		if ($this->publicationStatus == Article::DELAYED_PUBLICATION && isset($_POST['publicationDate'])) {
 			$this->publicationDate = $_POST['publicationDate'];
 			$this->publicationDateObj = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $this->publicationDate);
 		}
@@ -256,10 +257,10 @@ class ArticleAddForm extends AbstractForm {
 		}
 		
 		// publication status
-		if ($this->publicationStatus < 0 || $this->publicationStatus > 2) {
+		if ($this->publicationStatus != Article::UNPUBLISHED && $this->publicationStatus != Article::PUBLISHED && $this->publicationStatus != Article::DELAYED_PUBLICATION) {
 			throw new UserInputException('publicationStatus');
 		}
-		if ($this->publicationStatus == 2) {
+		if ($this->publicationStatus == Article::DELAYED_PUBLICATION) {
 			if (empty($this->publicationDate)) {
 				throw new UserInputException('publicationDate');
 			}
@@ -334,7 +335,7 @@ class ArticleAddForm extends AbstractForm {
 			'time' => $this->timeObj->getTimestamp(),
 			'categoryID' => $this->categoryID,
 			'publicationStatus' => $this->publicationStatus,
-			'publicationDate' => ($this->publicationStatus == 2 ? $this->publicationDateObj->getTimestamp() : 0),
+			'publicationDate' => ($this->publicationStatus == Article::DELAYED_PUBLICATION ? $this->publicationDateObj->getTimestamp() : 0),
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
@@ -353,7 +354,8 @@ class ArticleAddForm extends AbstractForm {
 		// reset variables
 		$this->publicationDate = '';
 		$this->categoryID = 0;
-		$this->publicationStatus = $this->enableComments = 1;
+		$this->publicationStatus = Article::PUBLISHED;
+		$this->enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
 		$this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->tags = [];
 		
 		$this->setDefaultValues();

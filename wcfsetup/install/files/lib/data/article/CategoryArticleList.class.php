@@ -40,6 +40,6 @@ class CategoryArticleList extends AccessibleArticleList {
 		}
 		
 		$this->getConditionBuilder()->add('article.categoryID IN (?)', [$categoryIDs]);
-		$this->getConditionBuilder()->add('article.publicationStatus = ?', [1]);
+		$this->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);
 	}
 }

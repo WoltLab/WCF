@@ -27,7 +27,7 @@ class AccessibleArticleList extends ViewableArticleList {
 		}
 		else {
 			$this->getConditionBuilder()->add('article.categoryID IN (?)', [$accessibleCategoryIDs]);
-			$this->getConditionBuilder()->add('article.publicationStatus = ?', [1]);
+			$this->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);
 		}
 	}
 }

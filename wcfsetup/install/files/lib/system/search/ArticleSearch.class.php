@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search;
+use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\SearchResultArticleContent;
 use wcf\data\article\content\SearchResultArticleContentList;
@@ -110,7 +111,7 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('wcf'.WCF_N.'_article.categoryID IN (?) AND wcf'.WCF_N.'_article.publicationStatus = ?', [$this->articleCategoryIDs, 1]);
+		$conditionBuilder->add('wcf'.WCF_N.'_article.categoryID IN (?) AND wcf'.WCF_N.'_article.publicationStatus = ?', [$this->articleCategoryIDs, Article::PUBLISHED]);
 		
 		return $conditionBuilder;
 	}

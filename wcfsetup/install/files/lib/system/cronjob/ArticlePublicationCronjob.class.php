@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\article\Article;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleList;
 use wcf\data\cronjob\Cronjob;
@@ -23,7 +24,7 @@ class ArticlePublicationCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		$articleList = new ArticleList();
-		$articleList->getConditionBuilder()->add('article.publicationStatus = ?', [2]);
+		$articleList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::DELAYED_PUBLICATION]);
 		$articleList->getConditionBuilder()->add('article.publicationDate > ?', [0]);
 		$articleList->getConditionBuilder()->add('article.publicationDate <= ?', [TIME_NOW]);
 		$articleList->decoratorClassName = ArticleEditor::class;
@@ -33,7 +34,7 @@ class ArticlePublicationCronjob extends AbstractCronjob {
 			/** @var ArticleEditor $editor */
 			$editor->update([
 				'time' => $editor->publicationDate,
-				'publicationStatus' => 1,
+				'publicationStatus' => Article::PUBLISHED,
 				'publicationDate' => 0
 			]);
 		}

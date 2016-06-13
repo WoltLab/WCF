@@ -90,7 +90,7 @@ class ArticleEditForm extends ArticleAddForm {
 		$data = [
 			'categoryID' => $this->categoryID,
 			'publicationStatus' => $this->publicationStatus,
-			'publicationDate' => ($this->publicationStatus == 2 ? $this->publicationDateObj->getTimestamp() : 0),
+			'publicationDate' => ($this->publicationStatus == Article::DELAYED_PUBLICATION ? $this->publicationDateObj->getTimestamp() : 0),
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,

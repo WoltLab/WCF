@@ -43,6 +43,21 @@ class Article extends DatabaseObject implements ILinkableObject {
 	protected static $databaseTableIndexName = 'articleID';
 	
 	/**
+	 * indicates that article is unpublished
+	 */
+	const UNPUBLISHED = 0;
+	
+	/**
+	 * indicates that article is published
+	 */
+	const PUBLISHED = 1;
+	
+	/**
+	 * indicates that the publication of an article is delayed
+	 */
+	const DELAYED_PUBLICATION = 2;
+	
+	/**
 	 * article content grouped by language id
 	 * @var	ArticleContent[]
 	 */
