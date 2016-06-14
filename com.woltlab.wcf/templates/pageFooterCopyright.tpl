@@ -1,3 +1,3 @@
 {event name='copyright'}
 
-{if $__wcf->isActiveApplication()}<div class="copyright">{lang}wcf.index.copyright{/lang}</div>{/if}
+<div class="copyright">{lang}wcf.page.copyright{/lang}</div>

@@ -1,4 +1,4 @@
-WoltLab Community Framework 2.2
+WoltLab Suite Core 3.0
 ===============================
 
 WoltLab Community Framework is a free web-framework, designed and developed for complex community applications. The framework applies the latest and most modern technologies, it is structured completly object-oriented, constantly enhanced and forms the base for all WoltLab products.

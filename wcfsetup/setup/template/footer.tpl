@@ -5,7 +5,7 @@
 		<footer id="pageFooter" class="pageFooter">
 			<div id="pageFooterCopyright" class="pageFooterCopyright">
 				<div class="layoutBoundary">
-					<div class="copyright"><a href="https://www.woltlab.com">Copyright &copy; 2001-2016 WoltLab&reg; GmbH</a></div>
+					<div class="copyright"><a href="https://www.woltlab.com" rel="nofollow">Powered by <strong>WoltLab Suite&trade; {@WCF_VERSION}</strong></a></div>
 				</div>
 			</div>
 		</footer>

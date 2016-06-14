@@ -79,12 +79,6 @@ class WCFSetup extends WCF {
 	protected static $installedFiles = [];
 	
 	/**
-	 * name of installed primary application
-	 * @var	string
-	 */
-	protected static $setupPackageName = 'WoltLab Community Framework';
-	
-	/**
 	 * indicates if developer mode is used to install
 	 * @var	boolean
 	 */
@@ -104,7 +98,7 @@ class WCFSetup extends WCF {
 		$this->initTPL();
 		/** @noinspection PhpUndefinedMethodInspection */
 		self::getLanguage()->loadLanguage();
-		$this->getPackageName();
+		$this->getPackageNames();
 		
 		// start setup
 		$this->setup();
@@ -1230,31 +1224,30 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the package name of the first application in WCFSetup.tar.gz.
+	 * Gets the package names of the bundled applications in WCFSetup.tar.gz.
 	 */
-	protected static function getPackageName() {
+	protected static function getPackageNames() {
 		// get package name
+		$packageNames = [];
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
 			if ($file['type'] != 'folder' && mb_strpos($file['filename'], 'install/packages/') === 0) {
 				$packageFile = basename($file['filename']);
-				$packageName = preg_replace('!\.(tar\.gz|tgz|tar)$!', '', $packageFile);
 				
-				if ($packageName != 'com.woltlab.wcf') {
-					try {
-						$archive = new PackageArchive(TMP_DIR.'install/packages/'.$packageFile);
-						$archive->openArchive();
-						self::$setupPackageName = $archive->getLocalizedPackageInfo('packageName');
-						$archive->getTar()->close();
-						break;
-					}
-					catch (SystemException $e) {}
+				try {
+					$archive = new PackageArchive(TMP_DIR.'install/packages/'.$packageFile);
+					$archive->openArchive();
+					$packageNames[] = $archive->getLocalizedPackageInfo('packageName');
+					$archive->getTar()->close();
 				}
+				catch (SystemException $e) {}
 			}
 		}
 		$tar->close();
 		
+		sort($packageNames);
+		
 		// assign package name
-		WCF::getTPL()->assign(['setupPackageName' => self::$setupPackageName]);
+		WCF::getTPL()->assign(['setupPackageNames' => $packageNames]);
 	}
 }

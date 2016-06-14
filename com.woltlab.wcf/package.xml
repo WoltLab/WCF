@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
 	<packageinformation>
-		<packagename>WoltLab Community Framework</packagename>
+		<packagename>WoltLab Suite Core</packagename>
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.2.0 Alpha 2</version> <!-- codename: vortex -->
-		<date>2015-10-22</date>
+		<version>3.0.0 Alpha 2</version> <!-- codename: vortex -->
+		<date>2016-06-14</date>
 	</packageinformation>
 	
 	<authorinformation>

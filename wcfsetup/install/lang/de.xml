@@ -434,7 +434,7 @@
 	</category>
 	
 	<category name="wcf.acp.index">
-		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab&reg; Community Framework]]></item>
+		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
 		<item name="wcf.acp.index.credits.contributor"><![CDATA[Mitwirkende]]></item>
 		<item name="wcf.acp.index.credits.designer"><![CDATA[Design]]></item>
 		<item name="wcf.acp.index.credits.developedBy"><![CDATA[Software entwickelt von]]></item>
@@ -450,7 +450,7 @@
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
-		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade;-Version]]></item>
+		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[WoltLab Suite&trade;-Version]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Betriebssystem]]></item>
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
@@ -2541,6 +2541,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">Weitere Informationen</a>]]></item>
 		<item name="wcf.page.comments"><![CDATA[Kommentare]]></item>
+		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com/de/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Community-Software: <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
 	</category>

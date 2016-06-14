@@ -5,7 +5,9 @@
 			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
-			<div class="copyright"><a href="https://www.woltlab.com">Copyright &copy; 2001-2016 WoltLab&reg; GmbH</a>{event name='copyright'}</div>
+			{event name='copyright'}
+			
+			<div class="copyright">{lang}wcf.page.copyright{/lang}</div>
 		</div>
 	</div>
 </footer>

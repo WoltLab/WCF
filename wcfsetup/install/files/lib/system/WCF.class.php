@@ -46,8 +46,8 @@ if (!@ini_get('date.timezone')) {
 	@date_default_timezone_set('Europe/London');
 }
 
-// define current wcf version
-define('WCF_VERSION', '2.2.0 Alpha 1 (Vortex)');
+// define current woltlab suite version
+define('WCF_VERSION', '3.0.0 Alpha 2');
 
 // define current unix timestamp
 define('TIME_NOW', time());
