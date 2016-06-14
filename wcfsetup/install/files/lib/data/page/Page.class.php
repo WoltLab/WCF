@@ -298,6 +298,27 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	}
 	
 	/**
+	 * Returns the languages of this page.
+	 * 
+	 * @return PageLanguage[]
+	 */
+	public function getPageLanguages() {
+		$pageLanguages = [];
+		if ($this->isMultilingual) {
+			$sql = "SELECT  languageID
+				FROM    wcf" . WCF_N . "_page_content
+				WHERE   pageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->pageID]);
+			while ($languageID = $statement->fetchColumn()) {
+				$pageLanguages[] = new PageLanguage($this->pageID, $languageID);
+			}
+		}
+		
+		return $pageLanguages;
+	}
+	
+	/**
 	 * Returns the page with the given identifier.
 	 * 
 	 * @param	string		$identifier	unique page identifier
