@@ -476,7 +476,9 @@ class Email {
 		$this->getHeaders();
 		
 		// ensure the body is filled in
-		$this->getBodyString();
+		if ($this->body === null) {
+			throw new \LogicException('Cannot generate message body, you must specify a body');
+		}
 		
 		foreach ($this->recipients as $recipient) {
 			$mail = clone $this;
