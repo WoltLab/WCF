@@ -40,6 +40,14 @@
 	], function () {
 		require(['Language', 'WoltLab/WCF/Ui/Redactor/Metacode'], function(Language, UiRedactorMetacode) {
 			Language.addObject({
+				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
+				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',
+				'wcf.editor.code.file.description': '{lang}wcf.editor.code.file.description{/lang}',
+				'wcf.editor.code.highlighter': '{lang}wcf.editor.code.highlighter{/lang}',
+				'wcf.editor.code.highlighter.description': '{lang}wcf.editor.code.highlighter.description{/lang}',
+				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
+				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
+				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',
 				'wcf.editor.image.edit': '{lang}wcf.editor.image.edit{/lang}',
 				'wcf.editor.image.insert': '{lang}wcf.editor.image.insert{/lang}',
 				'wcf.editor.image.link': '{lang}wcf.editor.image.link{/lang}',
@@ -53,6 +61,8 @@
 			
 			var buttons = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
+			
+			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
 			
 			// TODO: Should the media stuff be here?
 			{include file='mediaJavaScript'}
@@ -90,7 +100,8 @@
 				woltlab: {
 					autosave: autosave,
 					buttons: buttonOptions,
-					customButtons: customButtons
+					customButtons: customButtons,
+					highlighters: highlighters
 				}
 			};
 			

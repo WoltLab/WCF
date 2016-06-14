@@ -27,6 +27,10 @@
 	-webkit-filter: grayscale(1);
 }
 
+.monospace {
+	font-family: Consolas, 'Courier New', monospace !important;
+}
+
 /* boxes with an image */
 .box16 { @include box(16px, 5px); }
 .box24 { @include box(24px, 8px); }

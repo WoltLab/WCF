@@ -1783,34 +1783,24 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	
 	<category name="wcf.bbcode">
-		<item name="wcf.bbcode.code"><![CDATA[Source Code]]></item>
+		<item name="wcf.bbcode.code"><![CDATA[Code]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
-		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>
-		<item name="wcf.bbcode.code.c.title"><![CDATA[C Source Code]]></item>
-		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS Source Code]]></item>
-		<item name="wcf.bbcode.code.diff.title"><![CDATA[Difference-File]]></item>
-		<item name="wcf.bbcode.code.edit"><![CDATA[Edit Source Code]]></item>
-		<item name="wcf.bbcode.code.filename"><![CDATA[Filename]]></item>
-		<item name="wcf.bbcode.code.filename.description"><![CDATA[Optional: Specify the displayed filename.]]></item>
-		<item name="wcf.bbcode.code.highlighter"><![CDATA[Syntax Highlighting]]></item>
-		<item name="wcf.bbcode.code.highlighter.description"><![CDATA[Highlighting is not displayed within the editor.]]></item>
-		<item name="wcf.bbcode.code.highlighter.none"><![CDATA[(No Highlighting)]]></item>
-		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML Source Code]]></item>
-		<item name="wcf.bbcode.code.insert"><![CDATA[Insert Source Code]]></item>
-		<item name="wcf.bbcode.code.java.title"><![CDATA[Java Source Code]]></item>
-		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript Source Code]]></item>
-		<item name="wcf.bbcode.code.lineNumber"><![CDATA[Start Line Number]]></item>
-		<item name="wcf.bbcode.code.lineNumber.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
-		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl Source Code]]></item>
-		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP Source Code]]></item>
-		<item name="wcf.bbcode.code.plain.title"><![CDATA[Source Code]]></item>
-		<item name="wcf.bbcode.code.python.title"><![CDATA[Python Source Code]]></item>
-		<item name="wcf.bbcode.code.settings"><![CDATA[Settings]]></item>
-		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL-Query]]></item>
-		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX Source Code]]></item>
+		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck]]></item>
+		<item name="wcf.bbcode.code.c.title"><![CDATA[C]]></item>
+		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS]]></item>
+		<item name="wcf.bbcode.code.diff.title"><![CDATA[Diff]]></item>
+		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML]]></item>
+		<item name="wcf.bbcode.code.java.title"><![CDATA[Java]]></item>
+		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript]]></item>
+		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl]]></item>
+		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP]]></item>
+		<item name="wcf.bbcode.code.plain.title"><![CDATA[Code]]></item>
+		<item name="wcf.bbcode.code.python.title"><![CDATA[Python]]></item>
+		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL]]></item>
+		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX]]></item>
 		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
-		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
-		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML Source Code]]></item>
+		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty]]></item>
+		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
 		<item name="wcf.bbcode.quote.delete"><![CDATA[Delete Quote]]></item>
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Edit Quote]]></item>
@@ -2138,6 +2128,7 @@ Errors are:
 	<category name="wcf.editor">
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
+		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Image]]></item>
@@ -2152,6 +2143,15 @@ Errors are:
 		<item name="wcf.editor.button.superscript"><![CDATA[Superscript]]></item>
 		<item name="wcf.editor.button.table"><![CDATA[Table]]></item>
 		<item name="wcf.editor.button.underline"><![CDATA[Underline]]></item>
+		
+		<item name="wcf.editor.code.edit"><![CDATA[Edit Code]]></item>
+		<item name="wcf.editor.code.file"><![CDATA[Filename]]></item>
+		<item name="wcf.editor.code.file.description"><![CDATA[Optional: Specify the displayed filename.]]></item>
+		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax Highlighting]]></item>
+		<item name="wcf.editor.code.highlighter.description"><![CDATA[Highlighting is not displayed within the editor.]]></item>
+		<item name="wcf.editor.code.line"><![CDATA[Start Line Number]]></item>
+		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
+		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Code{/if}{if $file} - {$file}{/if}]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Insert Image]]></item>

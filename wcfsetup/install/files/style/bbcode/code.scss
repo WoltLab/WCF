@@ -11,6 +11,7 @@
 	
 	&::before {
 		content: attr(data-display-value);
+		cursor: pointer;
 		display: block;
 		font-family: $wcfFontFamily;
 		margin-bottom: 20px;

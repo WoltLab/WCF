@@ -80,6 +80,16 @@ define([], function() {
 		 */
 		Escape: function(event) {
 			return _isKey(event, 'Escape', 27);
+		},
+		
+		/**
+		 * Returns true if pressed key equals 'Tab'.
+		 * 
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		Tab: function(event) {
+			return _isKey(event, 'Tab', 9);
 		}
 	};
 });
