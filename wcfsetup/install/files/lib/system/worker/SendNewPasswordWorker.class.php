@@ -78,16 +78,15 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 * @param	\wcf\data\user\UserEditor	$userEditor
 	 */
 	protected function sendNewPassword(UserEditor $userEditor) {
-		$newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
-		
 		$userAction = new UserAction([$userEditor], 'update', [
 			'data' => [
-				'password' => $newPassword
+				'password' => null
 			]
 		]);
 		$userAction->executeAction();
 		
 		// send mail
+		// TODO: Send link
 		$mail = new Mail([$userEditor->username => $userEditor->email], $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail', [
 			'password' => $newPassword,
 			'username' => $userEditor->username
