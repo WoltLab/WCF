@@ -19,6 +19,6 @@ class NewlineToBreakUserOptionOutput implements IUserOptionOutput {
 	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
-		return nl2br(StringUtil::encodeHTML($value));
+		return nl2br(StringUtil::encodeHTML($value), false);
 	}
 }
