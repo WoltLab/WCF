@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email\transport;
+use wcf\system\email\transport\exception\TransientFailure;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\util\StringUtil;
@@ -41,10 +42,14 @@ class PhpEmailTransport implements EmailTransport {
 		}, $headers));
 		
 		if (MAIL_USE_F_PARAM) {
-			mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$email->getSender()->getAddress());
+			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$email->getSender()->getAddress());
 		}
 		else {
-			mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers);
+			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers);
+		}
+		
+		if (!$return) {
+			throw new TransientFailure("mail() returned false");
 		}
 	}
 }
