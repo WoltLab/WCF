@@ -9,9 +9,7 @@ use wcf\system\Regex;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class PasswordUtil {
 	/**
@@ -43,7 +41,7 @@ final class PasswordUtil {
 		'vb5',		// vBulletin 5.x
 		'wbb2',		// WoltLab Burning Board 2.x
 		'wcf1',		// WoltLab Community Framework 1.x
-		'wcf2',		// WoltLab Community Framework 2.x
+		'wcf2',		// WoltLab Suite 3.x / WoltLab Community Framework 2.x
 		'xf1',		// XenForo 1.0 / 1.1
 		'xf12',		// XenForo 1.2+
 		'joomla1',	// Joomla 1.x
@@ -580,7 +578,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for WoltLab Community Framework 2.x (wcf2).
+	 * Validates the password hash for Woltlab Suite 3.x / WoltLab Community Framework 2.x (wcf2).
 	 * 
 	 * @param	string		$username
 	 * @param	string		$password
