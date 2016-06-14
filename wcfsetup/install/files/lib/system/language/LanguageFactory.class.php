@@ -14,9 +14,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.language
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Language
  */
 class LanguageFactory extends SingletonFactory {
 	/**
@@ -242,7 +240,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Returns the default language object.
 	 * 
 	 * @return	Language
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getDefaultLanguage() {
 		return $this->getLanguage($this->cache['default']);

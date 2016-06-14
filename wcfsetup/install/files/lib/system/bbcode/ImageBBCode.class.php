@@ -12,9 +12,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class ImageBBCode extends AbstractBBCode {
 	/**
@@ -66,7 +64,7 @@ class ImageBBCode extends AbstractBBCode {
 	 * 
 	 * @param	string		$link
 	 * @return	string
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function getProxyLink($link) {
 		try {

@@ -32,9 +32,7 @@ use wcf\util\UserUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.session
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Session
  * 
  * @property-read	string		$sessionID
  * @property-read	integer|null	$userID
@@ -207,7 +205,7 @@ class SessionHandler extends SingletonFactory {
 	 * Sets a boolean value to determine if the client provided a valid session cookie.
 	 * 
 	 * @param	boolean		$hasValidCookie
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function setHasValidCookie($hasValidCookie) {
 		$this->hasValidCookie = $hasValidCookie;
@@ -217,7 +215,7 @@ class SessionHandler extends SingletonFactory {
 	 * Returns true if client provided a valid session cookie.
 	 * 
 	 * @return	boolean
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function hasValidCookie() {
 		return $this->hasValidCookie;
@@ -323,7 +321,7 @@ class SessionHandler extends SingletonFactory {
 	 * Defines global wcf constants related to session.
 	 */
 	protected function defineConstants() {
-		/* the SID*-constants below are deprecated since 2.2 */
+		/* the SID*-constants below are deprecated since 3.0 */
 		if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '');
 		if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '');
 		if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '');

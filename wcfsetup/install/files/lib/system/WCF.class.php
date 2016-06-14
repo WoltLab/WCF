@@ -59,15 +59,13 @@ if (!defined('NO_IMPORTS')) {
 }
 
 /**
- * WCF is the central class for the community framework.
+ * WCF is the central class for the WoltLab Suite Core.
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class WCF {
 	/**
@@ -627,7 +625,7 @@ class WCF {
 		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang']);
 		self::getTPL()->assign([
 			'__wcf' => $this,
-			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated since 2.1, use LAST_UPDATE_TIME directly
+			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
 		]);
 		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
 		EmailTemplateEngine::getInstance()->assign([
@@ -905,7 +903,7 @@ class WCF {
 	 * Returns box handler.
 	 *
 	 * @return	BoxHandler
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getBoxHandler() {
 		return BoxHandler::getInstance();

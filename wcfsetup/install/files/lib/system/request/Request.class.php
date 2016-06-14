@@ -8,9 +8,7 @@ use wcf\data\page\PageCache;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Request
  */
 class Request {
 	/**
@@ -117,7 +115,7 @@ class Request {
 	 * Returns request meta data.
 	 * 
 	 * @return	string[]
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getMetaData() {
 		return $this->metaData;

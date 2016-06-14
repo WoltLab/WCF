@@ -8,9 +8,7 @@ use wcf\data\DatabaseObjectList;
  * @author	Tim Duesterhus
  * @copyright	2011-2016 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.bbcode.media.provider
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
  * @method	BBCodeMediaProvider		current()
  * @method	BBCodeMediaProvider[]		getObjects()

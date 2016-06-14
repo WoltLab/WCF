@@ -18,9 +18,7 @@ use wcf\system\visitTracker\VisitTracker;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.moderation.queue
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Moderation\Queue
  * 
  * @method	ModerationQueue		getDecoratedObject()
  * @mixin	ModerationQueue
@@ -85,7 +83,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	 * Sets associated user profile object.
 	 * 
 	 * @param	UserProfile	$userProfile
-	 * @deprecated	since 2.2
+	 * @deprecated	3.0
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		if ($this->affectedObject !== null && ($userProfile->userID == $this->affectedObject->getUserID())) {

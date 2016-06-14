@@ -720,7 +720,7 @@ WCF.Message.Smilies = Class.extend({
 /**
  * Provides an inline message editor.
  * 
- * @deprecated	2.2 - please use `WoltLab/WCF/Ui/Message/InlineEditor` instead
+ * @deprecated	3.0 - please use `WoltLab/WCF/Ui/Message/InlineEditor` instead
  * 
  * @param	integer		containerID
  */
@@ -2212,7 +2212,7 @@ WCF.Message.Share.Content = Class.extend({
 /**
  * Provides buttons to share a page through multiple social community sites.
  * 
- * @deprecated  2.2 - please use `WoltLab/WCF/Ui/Message/Share` instead
+ * @deprecated  3.0 - please use `WoltLab/WCF/Ui/Message/Share` instead
  */
 WCF.Message.Share.Page = Class.extend({
 	init: function() {
@@ -2223,7 +2223,7 @@ WCF.Message.Share.Page = Class.extend({
 });
 
 /**
- * @deprecated 2.2
+ * @deprecated 3.0
  */
 WCF.Message.UserMention = Class.extend({
 	init: function() {

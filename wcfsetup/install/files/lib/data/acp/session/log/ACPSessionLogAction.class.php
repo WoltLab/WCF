@@ -8,9 +8,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.acp.session.log
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Acp\Session\Log
  * 
  * @method	ACPSessionLog		create()
  * @method	ACPSessionLogEditor[]	getObjects()

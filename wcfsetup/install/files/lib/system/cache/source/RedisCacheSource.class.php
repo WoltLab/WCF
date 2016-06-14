@@ -10,10 +10,8 @@ use wcf\util\StringUtil;
  * @author	Maximilian Mader
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.source
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\Cache\Source
+ * @since	3.0
  */
 class RedisCacheSource implements ICacheSource {
 	/**

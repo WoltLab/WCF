@@ -8,9 +8,7 @@ use wcf\system\application\ApplicationHandler;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template
  */
 class ACPTemplateEngine extends TemplateEngine {
 	/**

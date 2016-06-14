@@ -13,9 +13,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.tag
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Tag
  * 
  * @method	Tag		create()
  * @method	TagEditor[]	getObjects()
@@ -110,7 +108,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * Validates the 'setAsSynonyms' action.
 	 * 
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function validateSetAsSynonyms() {
 		WCF::getSession()->checkPermissions(['admin.content.tag.canManageTag']);
@@ -132,7 +130,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * Sets a number of tags as a synonyms of another tag.
 	 *
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function setAsSynonyms() {
 		// the "main" tag may not be a synonym itself
@@ -153,7 +151,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	 * Unmarks tags.
 	 * 
 	 * @param	integer[]		$tagIDs
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function unmarkItems(array $tagIDs = []) {
 		if (empty($tagIDs)) {

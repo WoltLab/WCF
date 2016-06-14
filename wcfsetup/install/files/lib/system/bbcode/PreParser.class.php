@@ -17,9 +17,7 @@ use wcf\util\StringStack;
  * @author	Tim Duesterhus, Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class PreParser extends SingletonFactory {
 	/**
@@ -171,7 +169,7 @@ class PreParser extends SingletonFactory {
 	/**
 	 * Parses user mentions.
 	 * 
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function parseUserMentions() {
 		static $userRegex = null;
@@ -362,7 +360,7 @@ class PreParser extends SingletonFactory {
 	 * 
 	 * @param	string		$match
 	 * @return	string
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function getUsername($match) {
 		// remove escaped single quotation mark

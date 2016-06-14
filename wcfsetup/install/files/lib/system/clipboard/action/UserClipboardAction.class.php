@@ -13,9 +13,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.clipboard.action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Clipboard\Action
  */
 class UserClipboardAction extends AbstractClipboardAction {
 	/**
@@ -180,7 +178,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	 * Returns the ids of the users which can be enabled.
 	 * 
 	 * @return	integer[]
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function validateEnable() {
 		// check permissions
@@ -200,7 +198,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	 * Returns the ids of the users which can be merge.
 	 * 
 	 * @return	integer[]
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function validateMerge() {
 		// check permissions

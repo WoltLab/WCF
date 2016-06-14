@@ -9,9 +9,7 @@ use wcf\data\label\Label;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.label.object
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Label\Object
  */
 interface ILabelObjectHandler {
 	/**

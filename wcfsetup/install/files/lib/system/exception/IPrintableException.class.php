@@ -7,10 +7,8 @@ namespace wcf\system\exception;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.exception
- * @category	Community Framework
- * @deprecated	2.2 - Fatal Exceptions are printed automatically, if you need a well styled page use: NamedUserException
+ * @package	WoltLabSuite\Core\System\Exception
+ * @deprecated	3.0 - Fatal Exceptions are printed automatically, if you need a well styled page use: NamedUserException
  */
 interface IPrintableException {
 	/**

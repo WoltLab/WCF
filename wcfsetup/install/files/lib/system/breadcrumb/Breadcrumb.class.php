@@ -7,9 +7,7 @@ namespace wcf\system\breadcrumb;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.breadcrumb
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Breadcrumb
  */
 class Breadcrumb {
 	/**
@@ -49,7 +47,7 @@ class Breadcrumb {
 	 * May be left empty to disable url functionality.
 	 * 
 	 * @param	string		$url
-	 * @param	boolean		$appendSession	This parameter is unused as of WCF 2.2
+	 * @param	boolean		$appendSession	This parameter is unused as of version 3.0
 	 */
 	public function setURL($url, $appendSession = false) {
 		$this->url = $url;

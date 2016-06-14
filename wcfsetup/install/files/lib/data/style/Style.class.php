@@ -9,9 +9,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.style
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Style
  *
  * @property-read	integer		$styleID
  * @property-read	integer		$packageID
@@ -131,7 +129,7 @@ class Style extends DatabaseObject {
 	 * 
 	 * @param	string		$variables
 	 * @return	array
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function splitLessVariables($variables) {
 		$tmp = explode("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", $variables, 2);
@@ -148,7 +146,7 @@ class Style extends DatabaseObject {
 	 * @param	string		$preset
 	 * @param	string		$custom
 	 * @return	string
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function joinLessVariables($preset, $custom) {
 		if (empty($custom)) {

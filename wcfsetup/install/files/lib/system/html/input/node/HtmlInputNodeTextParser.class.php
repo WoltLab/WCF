@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class HtmlInputNodeTextParser {
 	protected $elementStack = [];
@@ -426,7 +426,7 @@ class HtmlInputNodeTextParser {
 	 *
 	 * @param	string		$match
 	 * @return	string
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getUsername($match) {
 		// remove escaped single quotation mark

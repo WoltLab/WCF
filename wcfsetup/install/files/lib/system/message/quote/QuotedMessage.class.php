@@ -8,9 +8,7 @@ use wcf\data\IMessage;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.message.quote
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Message\Quote
  * 
  * Note: We cannot use mixin here as that causes errors about methods not being implemented.
  * @method	string		getExcerpt($maxLength = 255)

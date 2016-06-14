@@ -7,7 +7,7 @@ use wcf\util\DOMUtil;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 	/**

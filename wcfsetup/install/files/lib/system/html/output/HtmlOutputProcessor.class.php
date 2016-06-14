@@ -4,7 +4,7 @@ use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class HtmlOutputProcessor {
 	/**

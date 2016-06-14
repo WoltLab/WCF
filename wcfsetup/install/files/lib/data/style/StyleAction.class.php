@@ -24,9 +24,7 @@ use wcf\util\FileUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.style
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Style
  * 
  * @method	StyleEditor[]	getObjects()
  * @method	StyleEditor	getSingleObject()
@@ -660,7 +658,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	
 	/**
 	 * TODO: add documentation
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function validateMarkAsTainted() {
 		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
@@ -672,7 +670,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	
 	/**
 	 * TODO: add documentation
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function markAsTainted() {
 		// merge definitions

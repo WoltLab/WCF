@@ -8,10 +8,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.
- * @category	Community Framework
- * 
+ * @package	WoltLabSuite\Core\Data$2 * 
  * @method	Option		create()
  * @method	OptionEditor[]	getObjects()
  * @method	OptionEditor	getSingleObject()

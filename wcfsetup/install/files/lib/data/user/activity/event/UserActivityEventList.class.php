@@ -8,9 +8,7 @@ use wcf\data\DatabaseObjectList;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.activity.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Activity\Event
  *
  * @method	UserActivityEvent		current()
  * @method	UserActivityEvent[]		getObjects()

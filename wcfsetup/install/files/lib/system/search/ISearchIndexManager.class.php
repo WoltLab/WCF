@@ -7,9 +7,7 @@ namespace wcf\system\search;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search
  */
 interface ISearchIndexManager {
 	/**
@@ -39,7 +37,7 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
-	 * @deprecated  2.2 - please use `set()` instead
+	 * @deprecated  3.0 - please use `set()` instead
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	
@@ -55,7 +53,7 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
-	 * @deprecated  2.2 - please use `set() instead`
+	 * @deprecated  3.0 - please use `set() instead`
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	

@@ -8,9 +8,7 @@ use wcf\data\DatabaseObjectEditor;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.paid.subscription.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Paid\Subscription\User
  * 
  * @method	PaidSubscriptionUser		getDecoratedObject()
  * @mixin	PaidSubscriptionUser

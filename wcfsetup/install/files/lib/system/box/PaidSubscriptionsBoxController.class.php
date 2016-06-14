@@ -11,10 +11,8 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.box
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\Box
+ * @since	3.0
  */
 class PaidSubscriptionsBoxController extends AbstractBoxController {
 	/**

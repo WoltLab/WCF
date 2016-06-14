@@ -113,7 +113,7 @@ define([], function() {
 		 * 
 		 * Warning: Detecting touch is unreliable and should be avoided at all cost.
 		 * 
-		 * @deprecated	2.2 - exists for backward-compatibility only, will be removed in the future
+		 * @deprecated	3.0 - exists for backward-compatibility only, will be removed in the future
 		 * 
 		 * @return	{boolean}	true if a touchscreen is present
 		 */

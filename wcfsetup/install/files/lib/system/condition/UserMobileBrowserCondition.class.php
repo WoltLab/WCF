@@ -11,9 +11,7 @@ use wcf\util\UserUtil;
  * @author	Joshua Ruesweg, Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
 class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements IContentCondition {
 	/**

@@ -7,9 +7,7 @@ namespace wcf\system\database\exception;
  * @author	Tim Duesterhus
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database.exception
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\Database\Exception
+ * @since	3.0
  */
 class DatabaseTransactionException extends DatabaseException { }

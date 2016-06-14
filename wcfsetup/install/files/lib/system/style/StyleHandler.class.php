@@ -14,9 +14,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.style
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Style
  */
 class StyleHandler extends SingletonFactory {
 	/**
@@ -189,7 +187,7 @@ class StyleHandler extends SingletonFactory {
 	 * @param	string		$packageName	style package name
 	 * @param	boolean		$skipTainted	ignore tainted styles
 	 * @return	\wcf\data\style\StyleEditor
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getStyleByName($packageName, $skipTainted = false) {
 		foreach ($this->cache['styles'] as $style) {

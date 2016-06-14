@@ -8,9 +8,7 @@ use wcf\data\DatabaseObject;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.object.type.definition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Object\Type\Definition
  *
  * @property-read	integer		$definitionID
  * @property-read	string		$definitionName

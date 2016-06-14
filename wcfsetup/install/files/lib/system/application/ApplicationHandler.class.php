@@ -14,9 +14,7 @@ use wcf\system\SingletonFactory;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.application
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Application
  */
 class ApplicationHandler extends SingletonFactory {
 	/**
@@ -62,7 +60,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$packageID	package id
 	 * @return	Application	application object
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getApplicationByID($packageID) {
 		if (isset($this->cache['application'][$packageID])) {
@@ -77,7 +75,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
 	 * @return	Application
-	 * @deprecated  2.2 please use `getApplication()` instead
+	 * @deprecated  3.0 please use `getApplication()` instead
 	 */
 	public function getWCF() {
 		return $this->getApplicationByID(1);

@@ -8,9 +8,7 @@ use wcf\data\object\type\AbstractObjectTypeProcessor;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.tagging
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Tagging
  */
 abstract class AbstractTaggable extends AbstractObjectTypeProcessor implements ITaggable {
 	/**

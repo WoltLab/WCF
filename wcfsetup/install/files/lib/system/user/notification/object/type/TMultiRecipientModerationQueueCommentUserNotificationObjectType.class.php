@@ -15,10 +15,8 @@ use wcf\system\WCF;
  * @author	Mathias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.object.type
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
+ * @since	3.0
  */
 trait TMultiRecipientModerationQueueCommentUserNotificationObjectType {
 	/**

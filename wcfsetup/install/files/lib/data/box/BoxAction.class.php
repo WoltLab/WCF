@@ -14,10 +14,8 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.box
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\Data\Box
+ * @since	3.0
  * 
  * @method	BoxEditor[]	getObjects()
  * @method	BoxEditor	getSingleObject()

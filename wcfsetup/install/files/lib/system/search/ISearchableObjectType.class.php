@@ -10,9 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search
  */
 interface ISearchableObjectType {
 	/**
@@ -130,7 +128,7 @@ interface ISearchableObjectType {
 	/**
 	 * Sets the location in menu/breadcrumbs.
 	 * 
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function setLocation();
 	
@@ -138,7 +136,7 @@ interface ISearchableObjectType {
 	 * Returns the name of the active main menu item.
 	 * 
 	 * @return	string
-	 * @deprecated  since 2.2
+	 * @deprecated  3.0
 	 */
 	public function getActiveMenuItem();
 }

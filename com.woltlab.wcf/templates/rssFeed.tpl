@@ -14,7 +14,7 @@
 {assign var='dummy' value=$items->rewind()}
 		<lastBuildDate>{if $items->valid()}{'r'|gmdate:$items->current()->getTime()}{else}{'r'|gmdate:TIME_NOW}{/if}</lastBuildDate>
 		<ttl>60</ttl>
-		<generator><![CDATA[WoltLab Community Framework{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}]]></generator>
+		<generator><![CDATA[WoltLab Suite{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}]]></generator>
 		<atom:link href="{$__wcf->getRequestURI()}" rel="self" type="application/rss+xml" />{*
 		*}{event name='channelFields'}
 {*		*}{foreach from=$items item='item'}

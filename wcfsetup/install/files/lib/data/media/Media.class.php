@@ -14,10 +14,8 @@ use wcf\system\WCF;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.media
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\Data\Media
+ * @since	3.0
  *
  * @property-read	integer		$mediaID
  * @property-read	string		$filename

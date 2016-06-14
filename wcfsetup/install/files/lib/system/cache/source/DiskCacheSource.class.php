@@ -14,9 +14,7 @@ use wcf\util\FileUtil;
  * @author	Alexander Ebert, Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.source
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Source
  */
 class DiskCacheSource implements ICacheSource {
 	/**

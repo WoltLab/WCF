@@ -9,9 +9,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.poll
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Poll
  *
  * @method	Poll	getDecoratedObject()
  * @mixin	Poll

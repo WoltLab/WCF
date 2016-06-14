@@ -7,11 +7,9 @@ namespace wcf\data;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user
- * @category	Community Framework
- * @since	2.2
- * @deprecated	since 2.2
+ * @package	WoltLabSuite\Core\Data\User
+ * @since	3.0
+ * @deprecated	3.0
  */
 trait TLegacyUserPropertyAccess {
 	/**

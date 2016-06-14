@@ -3,7 +3,7 @@ namespace wcf\system\html\input\filter;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class MessageHtmlInputFilter implements IHtmlInputFilter {
 	/**

@@ -11,9 +11,7 @@ use wcf\util\FileUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Package
  *
  * @property-read	integer		$packageID
  * @property-read	string		$package

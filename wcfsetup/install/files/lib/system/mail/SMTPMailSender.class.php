@@ -10,9 +10,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.mail
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Mail
  * @deprecated	The Community Framework < 2.2 mail API is deprecated in favor of \wcf\system\email\*.
  */
 class SMTPMailSender extends MailSender {

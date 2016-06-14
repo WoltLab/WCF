@@ -10,9 +10,7 @@ use wcf\system\option\IntegerOptionType;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User\Group
  */
 class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUserGroupOptionType {
 	/**

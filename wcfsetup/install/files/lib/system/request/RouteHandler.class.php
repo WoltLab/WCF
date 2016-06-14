@@ -18,9 +18,7 @@ use wcf\util\FileUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Request
  */
 class RouteHandler extends SingletonFactory {
 	/**
@@ -208,7 +206,7 @@ class RouteHandler extends SingletonFactory {
 	 * 
 	 * @param	string	$customUrl	url to perform sanitiy checks on
 	 * @return	bool	true if `$customUrl` passes the sanity check
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function isValidCustomUrl($customUrl) {
 		return preg_match('~^[a-zA-Z0-9\-_/]+$~', $customUrl) === 1;

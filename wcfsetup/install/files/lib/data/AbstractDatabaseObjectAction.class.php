@@ -16,9 +16,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, IDeleteAction {
 	/**
@@ -439,7 +437,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function readIntegerArray($variableName, $allowEmpty = false, $arrayIndex = '') {
 		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER, self::STRUCT_ARRAY);
@@ -462,7 +460,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function readStringArray($variableName, $allowEmpty = false, $arrayIndex = '') {
 		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING, self::STRUCT_ARRAY);

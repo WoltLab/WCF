@@ -12,9 +12,7 @@ use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.group.assignment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Group\Assignment
  * 
  * @method	UserGroupAssignment	getDecoratedObject()
  * @mixin	UserGroupAssignment

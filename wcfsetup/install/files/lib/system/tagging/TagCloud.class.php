@@ -10,22 +10,20 @@ use wcf\system\language\LanguageFactory;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.tagging
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Tagging
  */
 class TagCloud {
 	/**
 	 * max font size
 	 * @var	integer
-	 * @deprecated 2.2
+	 * @deprecated 3.0
 	 */
 	const MAX_FONT_SIZE = 170;
 	
 	/**
 	 * min font size
 	 * @var	integer
-	 * @deprecated 2.2
+	 * @deprecated 3.0
 	 */
 	const MIN_FONT_SIZE = 85;
 	

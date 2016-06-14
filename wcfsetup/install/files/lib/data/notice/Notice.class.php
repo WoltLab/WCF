@@ -13,9 +13,7 @@ use wcf\system\WCF;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.notice
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Notice
  *
  * @property-read	integer		$noticeID
  * @property-read	string		$noticeName
@@ -47,7 +45,7 @@ class Notice extends DatabaseObject implements IRouteController {
 	 * Returns the textual representation of the notice.
 	 * 
 	 * @return	string
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function __toString() {
 		// replace `{$username}` with the active user's name and `{$email}`

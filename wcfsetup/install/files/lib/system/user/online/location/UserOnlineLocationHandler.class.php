@@ -9,10 +9,8 @@ use wcf\system\SingletonFactory;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.online.location
- * @category	Community Framework
- * @deprecated	since 2.2
+ * @package	WoltLabSuite\Core\System\User\Online\Location
+ * @deprecated	3.0
  */
 class UserOnlineLocationHandler extends SingletonFactory {
 	/**

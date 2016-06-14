@@ -30,9 +30,7 @@ set_exception_handler([CLIWCF::class, 'handleCLIException']);
  * @author	Tim Duesterhus
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class CLIWCF extends WCF {
 	/**
@@ -194,13 +192,13 @@ class CLIWCF extends WCF {
 	 */
 	protected function initPHPLine() {
 		$terminal = TerminalFactory::get();
-		self::$consoleReader = new ConsoleReader("WoltLab Community Framework", null, null, $terminal);
+		self::$consoleReader = new ConsoleReader("WoltLab Suite", null, null, $terminal);
 		
 		// don't expand events, as the username and password will follow
 		self::getReader()->setExpandEvents(false);
 		
 		if (VERBOSITY >= 0) {
-			$headline = str_pad("WoltLab (r) Community Framework (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
+			$headline = str_pad("WoltLab Suite (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
 			self::getReader()->println($headline);
 		}
 	}

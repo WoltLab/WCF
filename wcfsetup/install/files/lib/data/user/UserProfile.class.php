@@ -25,9 +25,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User
  * 
  * @method	User	getDecoratedObject()
  * @mixin	User
@@ -338,7 +336,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * 
 	 * @param	integer				$userID
 	 * @return	UserProfile
-	 * @deprecated	since 2.2, use UserProfileRuntimeCache::getObject()
+	 * @deprecated	3.0, use UserProfileRuntimeCache::getObject()
 	 */
 	public static function getUserProfile($userID) {
 		return UserProfileRuntimeCache::getInstance()->getObject($userID);
@@ -349,7 +347,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * 
 	 * @param	integer[]		$userIDs
 	 * @return	UserProfile[]
-	 * @deprecated	since 2.2, use UserProfileRuntimeCache::getObjects()
+	 * @deprecated	3.0, use UserProfileRuntimeCache::getObjects()
 	 */
 	public static function getUserProfiles(array $userIDs) {
 		$users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
@@ -800,7 +798,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * 
 	 * @param	string		$username
 	 * @return	UserProfile
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function getGuestUserProfile($username) {
 		return new UserProfile(new User(null, ['username' => $username]));

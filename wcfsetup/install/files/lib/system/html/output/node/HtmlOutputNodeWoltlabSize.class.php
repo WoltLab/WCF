@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class HtmlOutputNodeWoltlabSize extends AbstractHtmlNode {
 	protected $tagName = 'woltlab-size';

@@ -7,10 +7,8 @@ namespace wcf\system\upload;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.upload
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\Upload
+ * @since	3.0
  */
 class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy {
 	/**

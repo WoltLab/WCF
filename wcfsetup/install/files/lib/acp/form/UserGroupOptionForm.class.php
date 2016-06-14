@@ -20,9 +20,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class UserGroupOptionForm extends AbstractForm {
 	/**
@@ -257,7 +255,7 @@ class UserGroupOptionForm extends AbstractForm {
 	 * @param	\wcf\data\DatabaseObject		$object
 	 * @return	boolean
 	 * 
-	 * @deprecated	since 2.2
+	 * @deprecated	3.0
 	 */
 	protected function verifyPermissions(DatabaseObject $object) {
 		// check the options of this item

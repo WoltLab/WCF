@@ -22,9 +22,7 @@ use wcf\util\UserRegistrationUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User
  * 
  * @method	UserEditor[]	getObjects()
  * @method	UserEditor	getSingleObject()

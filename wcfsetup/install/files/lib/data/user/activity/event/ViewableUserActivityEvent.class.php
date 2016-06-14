@@ -11,9 +11,7 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.activity.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Activity\Event
  * 
  * @method	UserActivityEvent	getDecoratedObject()
  * @mixin	UserActivityEvent
@@ -90,7 +88,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 * Sets user profile.
 	 * 
 	 * @param	UserProfile	$userProfile
-	 * @deprecated	since 2.2
+	 * @deprecated	3.0
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;

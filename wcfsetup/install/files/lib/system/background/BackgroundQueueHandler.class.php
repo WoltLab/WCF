@@ -14,10 +14,8 @@ use wcf\system\WCF;
  * @author	Tim Duesterhus
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.background.job
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\Background\Job
+ * @since	3.0
  */
 class BackgroundQueueHandler extends SingletonFactory {
 	/**

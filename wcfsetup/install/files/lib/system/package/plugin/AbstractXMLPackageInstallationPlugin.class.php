@@ -15,9 +15,7 @@ use wcf\util\XML;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -194,7 +192,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	string[]	$values			list of values by language code
 	 * @param	boolean		$singleValueOnly	true to return only the best matching value
 	 * @return	string[]|string	matching i18n values controller by `$singleValueOnly`
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function getI18nValues(array $values, $singleValueOnly = false) {
 		if (empty($values)) {
@@ -404,7 +402,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function getDefaultFilename() {
 		$classParts = explode('\\', get_called_class());

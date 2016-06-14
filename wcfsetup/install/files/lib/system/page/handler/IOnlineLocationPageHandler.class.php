@@ -9,10 +9,8 @@ use wcf\data\user\online\UserOnline;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.page.handler
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\System\Page\Handler
+ * @since	3.0
  */
 interface IOnlineLocationPageHandler {
 	/**

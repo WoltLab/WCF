@@ -9,9 +9,7 @@ use wcf\data\DatabaseObjectList;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
  */
 class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor implements IUserNotificationObjectType {
 	/**

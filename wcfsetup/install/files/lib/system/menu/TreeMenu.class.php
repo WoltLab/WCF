@@ -10,9 +10,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.menu
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Menu
  */
 abstract class TreeMenu extends SingletonFactory {
 	/**

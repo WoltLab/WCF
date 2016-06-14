@@ -13,9 +13,7 @@ use wcf\util\UserUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.recaptcha
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Recaptcha
  */
 class RecaptchaHandlerV2 extends SingletonFactory {
 	/**

@@ -10,9 +10,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment.response
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment\Response
  * 
  * @method	CommentResponse		getDecoratedObject()
  * @mixin	CommentResponse
@@ -45,7 +43,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	 * Sets the user's profile.
 	 * 
 	 * @param	UserProfile	$userProfile
-	 * @deprecated	since 2.2
+	 * @deprecated	3.0
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;

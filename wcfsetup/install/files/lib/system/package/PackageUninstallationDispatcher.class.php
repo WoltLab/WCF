@@ -23,9 +23,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
@@ -125,7 +123,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * Executes the package's uninstall script (if existing).
 	 * 
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function executeUninstallScript() {
 		// check if uninstall script file for the uninstalled package exists

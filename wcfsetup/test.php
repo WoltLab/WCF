@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
-	<title>WoltLab Community Framework 2.2 System Requirements</title>
+	<title>WoltLab Suite 3.0 System Requirements</title>
 </head>
 <body>
 <?php

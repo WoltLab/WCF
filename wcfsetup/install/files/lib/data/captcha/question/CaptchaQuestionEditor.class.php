@@ -10,9 +10,7 @@ use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.captcha.question
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Captcha\Question
  * 
  * @method	CaptchaQuestion		getDecoratedObject()
  * @mixin	CaptchaQuestion

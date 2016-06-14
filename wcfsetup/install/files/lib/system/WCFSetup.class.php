@@ -43,9 +43,7 @@ define('ENABLE_BENCHMARK', 0);
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class WCFSetup extends WCF {
 	/**
@@ -133,7 +131,7 @@ class WCFSetup extends WCF {
 	/**
 	 * Gets the selected wcf dir from request.
 	 * 
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected static function getInstallationDirectories() {
 		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
@@ -432,7 +430,7 @@ class WCFSetup extends WCF {
 	/**
 	 * Searches the wcf dir.
 	 * 
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function configureDirectories() {
 		// get available packages
@@ -1110,7 +1108,7 @@ class WCFSetup extends WCF {
 				'processNo' => $processNo,
 				'userID' => $admin->userID,
 				'package' => 'com.woltlab.wcf',
-				'packageName' => 'WoltLab Community Framework',
+				'packageName' => 'WoltLab Suite Core',
 				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile,
 				'isApplication' => 1
 			]);

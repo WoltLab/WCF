@@ -8,9 +8,7 @@ use wcf\data\acp\session\ACPSessionEditor;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.session
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Session
  * 
  * @method	Session		getDecoratedObject()
  * @mixin	Session

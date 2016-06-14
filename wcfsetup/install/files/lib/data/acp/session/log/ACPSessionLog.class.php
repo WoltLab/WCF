@@ -10,9 +10,7 @@ use wcf\util\UserUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.acp.session.log
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Acp\Session\Log
  *
  * @property-read	integer		$sessionLogID
  * @property-read	string		$sessionID

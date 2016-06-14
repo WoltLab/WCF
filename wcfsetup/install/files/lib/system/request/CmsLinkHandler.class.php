@@ -4,7 +4,7 @@ use wcf\system\SingletonFactory;
 
 /**
  * TODO: documentation
- * @since	2.2
+ * @since	3.0
  */
 class CmsLinkHandler extends SingletonFactory {
 	public function getLink($pageID, $languageID = -1) {

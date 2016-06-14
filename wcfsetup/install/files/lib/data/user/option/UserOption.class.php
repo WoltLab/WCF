@@ -10,9 +10,7 @@ use wcf\system\WCF;
  * @author	Joshua Ruesweg, Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Option
  * 
  * @property-read	integer		$required
  * @property-read	integer		$askDuringRegistration

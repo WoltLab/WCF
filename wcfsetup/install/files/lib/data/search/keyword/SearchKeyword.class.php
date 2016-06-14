@@ -8,9 +8,7 @@ use wcf\data\DatabaseObject;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.search.keyword
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Search\Keyword
  *
  * @property-read	integer		$keywordID
  * @property-read	string		$keyword

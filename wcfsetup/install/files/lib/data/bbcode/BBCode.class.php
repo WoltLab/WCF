@@ -12,9 +12,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Bbcode
  * 
  * @property-read	integer		$bbcodeID
  * @property-read	string		$bbcodeTag

@@ -8,9 +8,7 @@ use wcf\data\DatabaseObjectEditor;
  * @author	Tim Duesterhus
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.edit.history.entry
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Edit\History\Entry
  * 
  * @method	EditHistoryEntry	getDecoratedObject()
  * @mixin	EditHistoryEntry

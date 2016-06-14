@@ -6,14 +6,12 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
- * Abstract implementation of a community framework application.
+ * Abstract implementation of a WoltLab Suite application.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.application
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Application
  */
 abstract class AbstractApplication extends SingletonFactory implements IApplication {
 	/**

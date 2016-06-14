@@ -10,9 +10,7 @@ use wcf\system\Regex;
  * @author	Tim Duesterhus
  * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class DirectoryUtil {
 	/**

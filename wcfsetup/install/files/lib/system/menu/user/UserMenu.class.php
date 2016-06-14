@@ -11,9 +11,7 @@ use wcf\system\menu\TreeMenu;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.menu.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Menu\User
  */
 class UserMenu extends TreeMenu {
 	/**

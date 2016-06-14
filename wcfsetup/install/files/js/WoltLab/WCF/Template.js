@@ -1,6 +1,6 @@
 /**
  * WoltLab/WCF/Template provides a template scripting compiler similar
- * to the PHP one of Community Framework. It supports a limited
+ * to the PHP one of WoltLab Suite Core. It supports a limited
  * set of useful commands and compiles templates down to a pure
  * JavaScript Function.
  * 

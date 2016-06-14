@@ -1,7 +1,7 @@
 CONTRIBUTING
 ============
 
-First of all: Thanks for your interest in contributing to WoltLab Community Framework! However, you have to meet some requirements in order to get your changes accepted.
+First of all: Thanks for your interest in contributing to WoltLab Suite Core! However, you have to meet some requirements in order to get your changes accepted.
 
 **Notice:** This is the stable tree of WCF 2.1.x, if you wish to submit pull requests for WCF 2.0.x, please select the branch "2.0". 
 
@@ -32,7 +32,7 @@ Automated tests
 We are running [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to ensure most of our formatting rules. You SHOULD test your changes before submitting them with it.
 
 1. Install PHP Codesniffer, either via PEAR or via cloning it
-2. Execute the following command in the root of your clone of Community Framework:
+2. Execute the following command in the root of your clone of WoltLab Suite Core:
 
    ```sh
     $ phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .

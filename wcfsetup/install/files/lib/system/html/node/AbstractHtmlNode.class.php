@@ -3,7 +3,7 @@ namespace wcf\system\html\node;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 abstract class AbstractHtmlNode implements IHtmlNode {
 	protected $tagName = '';

@@ -10,9 +10,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.label
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Label
  *
  * @property-read	integer		$labelID
  * @property-read	integer		$groupID

@@ -9,10 +9,8 @@ use wcf\system\exception\SystemException;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database
- * @category	Community Framework
- * @deprecated	2.2 - Use \wcf\system\database\exception\DatabaseException
+ * @package	WoltLabSuite\Core\System\Database
+ * @deprecated	3.0 - Use \wcf\system\database\exception\DatabaseException
  */
 class DatabaseException extends SystemException {
 	/**

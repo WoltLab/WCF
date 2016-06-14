@@ -17,10 +17,8 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.page
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\Data\Page
+ * @since	3.0
  *
  * @property-read	integer		$pageID
  * @property-read	integer|null	$parentPageID

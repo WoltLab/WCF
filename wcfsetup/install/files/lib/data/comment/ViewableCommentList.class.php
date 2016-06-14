@@ -8,9 +8,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment
  *
  * @method	ViewableComment		current()
  * @method	ViewableComment[]	getObjects()

@@ -10,9 +10,7 @@ use wcf\data\TDatabaseObjectPermissions;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.event.listener
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Event\Listener
  *
  * @property-read	integer		$listenerID
  * @property-read	integer		$packageID
@@ -51,7 +49,7 @@ class EventListener extends DatabaseObject {
 	 * Returns the names of all events listened to.
 	 * 
 	 * @return	string[]
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getEventNames() {
 		return explode(',', $this->eventName);

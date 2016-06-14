@@ -9,9 +9,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.notification.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Notification\Event
  * 
  * @method	UserNotificationEventEditor[]	getObjects()
  * @method	UserNotificationEventEditor	getSingleObject()

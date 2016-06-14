@@ -1,8 +1,8 @@
 # Changelog
 
-## 2.2 (Vortex)
+## 3.0 (Vortex)
 
-### 2.2.0 Alpha 1 (XXXX-YY-ZZ)
+### 3.0.0 Alpha 1 (XXXX-YY-ZZ)
 
 * Clipboard support for tags in ACP ("delete" and "set as synonyms").
 * `wcf\data\user\UserProfileCache` for caching user profiles during runtime.

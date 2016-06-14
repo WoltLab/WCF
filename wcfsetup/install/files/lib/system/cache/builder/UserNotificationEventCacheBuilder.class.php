@@ -9,9 +9,7 @@ use wcf\system\WCF;
  * @author	Marcell Werk, Oliver Kliebisch
  * @copyright	2001-2016 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class UserNotificationEventCacheBuilder extends AbstractCacheBuilder {
 	/**

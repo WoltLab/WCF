@@ -11,10 +11,8 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
- * @deprecated	since 2.1
+ * @package	WoltLabSuite\Core\Form
+ * @deprecated	2.1
  */
 abstract class RecaptchaForm extends AbstractForm {
 	/**

@@ -32,15 +32,13 @@ use wcf\util\XMLWriter;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.style
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Style
  * 
  * @method	Style	getDecoratedObject()
  * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
-	const EXCLUDE_WCF_VERSION = '2.2.0 Alpha 1';
+	const EXCLUDE_WCF_VERSION = '3.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
 	
 	/**

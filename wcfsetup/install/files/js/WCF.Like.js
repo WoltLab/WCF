@@ -7,7 +7,7 @@
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * 
- * @deprecated	2.2 - please use `WoltLab/WCF/Ui/Like/Handler` instead
+ * @deprecated	3.0 - please use `WoltLab/WCF/Ui/Like/Handler` instead
  */
 WCF.Like = Class.extend({
 	/**

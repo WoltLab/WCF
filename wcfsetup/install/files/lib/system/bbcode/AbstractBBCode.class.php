@@ -9,9 +9,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  * 
  * @method	BBCode	getDecoratedObject()
  * @mixin	BBCode

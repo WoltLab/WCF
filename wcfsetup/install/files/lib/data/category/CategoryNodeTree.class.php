@@ -9,9 +9,7 @@ use wcf\system\exception\SystemException;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Category
  */
 class CategoryNodeTree implements \IteratorAggregate {
 	/**

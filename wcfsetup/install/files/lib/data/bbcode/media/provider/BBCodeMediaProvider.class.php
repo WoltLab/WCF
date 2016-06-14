@@ -12,9 +12,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.bbcode.media.provider
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
  * @property-read	integer		$providerID
  * @property-read	string		$title

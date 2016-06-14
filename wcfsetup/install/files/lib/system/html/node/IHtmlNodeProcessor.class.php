@@ -2,7 +2,7 @@
 namespace wcf\system\html\node;
 
 /**
- * @since 2.2
+ * @since 3.0
  */
 interface IHtmlNodeProcessor {
 	public function getDocument();

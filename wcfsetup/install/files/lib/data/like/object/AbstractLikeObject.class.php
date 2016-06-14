@@ -10,9 +10,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.like.object
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Like\Object
  *
  * @method	LikeObject	getDecoratedObject()
  * @mixin	LikeObject

@@ -18,9 +18,7 @@ use wcf\util\UserUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.recaptcha
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Recaptcha
  */
 class RecaptchaHandler extends SingletonFactory {
 	/**
@@ -156,7 +154,7 @@ class RecaptchaHandler extends SingletonFactory {
 		WCF::getTPL()->assign([
 			'recaptchaLanguageCode' => $this->languageCode,
 			'recaptchaPublicKey' => $this->publicKey,
-			'recaptchaUseSSL' => RouteHandler::secureConnection(), // @deprecated since 2.1
+			'recaptchaUseSSL' => RouteHandler::secureConnection(), // @deprecated 2.1
 			'recaptchaLegacyMode' => true
 		]);
 	}

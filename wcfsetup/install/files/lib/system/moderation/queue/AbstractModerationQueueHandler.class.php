@@ -17,9 +17,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.moderation.queue
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Moderation\Queue
  */
 abstract class AbstractModerationQueueHandler implements IModerationQueueHandler {
 	/**
@@ -115,7 +113,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	
 	/**
 	 * @inheritDoc
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getCommentNotificationLanguageItemPrefix() {
 		// this implementation exists to provide backwards compatibility;

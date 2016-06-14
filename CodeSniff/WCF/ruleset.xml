@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="WCF">
-	<description>WoltLab Community Framework Coding Standard</description>
+	<description>WoltLab Suite Coding Standard</description>
 	<exclude-pattern>*/zend/*</exclude-pattern>
 	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
 	<exclude-pattern>*/parsedown/*</exclude-pattern>

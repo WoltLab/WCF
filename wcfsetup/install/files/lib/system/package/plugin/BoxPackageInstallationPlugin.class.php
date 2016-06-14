@@ -13,10 +13,8 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.package.plugin
- * @category	Community Framework
- * @since	2.2
+ * @package	WoltLabSuite\Core\Acp\Package\Plugin
+ * @since	3.0
  */
 class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**

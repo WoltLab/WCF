@@ -8,9 +8,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.event.listener
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Event\Listener
  * 
  * @method	EventListener		create()
  * @method	EventListenerEditor[]	getObjects()

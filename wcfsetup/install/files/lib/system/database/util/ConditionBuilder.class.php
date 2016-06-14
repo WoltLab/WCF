@@ -7,9 +7,7 @@ namespace wcf\system\database\util;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database.util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Database\Util
  */
 class ConditionBuilder {
 	/**

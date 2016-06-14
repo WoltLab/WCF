@@ -7,10 +7,8 @@ namespace wcf\system\request;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
- * @deprecated  2.2:2.3 Consider using \wcf\system\request\route\StaticRequestRoute
+ * @package	WoltLabSuite\Core\System\Request
+ * @deprecated  3.0 Consider using \wcf\system\request\route\StaticRequestRoute
  */
 class StaticRoute extends FlexibleRoute {
 	/**

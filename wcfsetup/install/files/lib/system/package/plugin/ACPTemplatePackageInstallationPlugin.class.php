@@ -12,9 +12,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -83,7 +81,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function getDefaultFilename() {
 		return 'acptemplates.tar';

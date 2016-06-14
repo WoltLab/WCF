@@ -14,9 +14,7 @@ use wcf\util\XML;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
@@ -256,7 +254,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public static function getDefaultFilename() {
 		return 'language/*.xml';

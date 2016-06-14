@@ -10,9 +10,7 @@ use wcf\system\moderation\queue\IModerationQueueHandler;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.moderation.queue.activiation
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Moderation\Queue\Activiation
  */
 interface IModerationQueueActivationHandler extends IModerationQueueHandler {
 	/**

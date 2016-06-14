@@ -11,9 +11,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.breadcrumb
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Breadcrumb
  */
 class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
@@ -36,7 +34,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
 	 * @param	Breadcrumb	$item
-	 * @deprecated  2.2
+	 * @deprecated  3.0
 	 */
 	public function add(Breadcrumb $item) {
 		throw new \BadMethodCallException("Breadcrumbs::add() is no longer supported, please use " . PageLocationManager::class . " instead.");
@@ -61,7 +59,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * @param	Breadcrumb	$item
 	 * @param	integer		$index
 	 * @return	boolean
-	 * @deprecated  2.2
+	 * @deprecated  3.0
 	 */
 	public function replace(Breadcrumb $item, $index) {
 		throw new \BadMethodCallException("Breadcrumbs::replace() is no longer supported, please use " . PageLocationManager::class . " instead.");
@@ -72,7 +70,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * 
 	 * @param	integer		$index
 	 * @return	boolean
-	 * @deprecated  2.2
+	 * @deprecated  3.0
 	 */
 	public function remove($index) {
 		throw new \BadMethodCallException("Breadcrumbs::remove() is no longer supported, please use " . PageLocationManager::class . " instead.");

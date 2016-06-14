@@ -11,9 +11,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.mail
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Mail
  * @deprecated	The Community Framework < 2.2 mail API is deprecated in favor of \wcf\system\email\*.
  */
 class Mail {
@@ -145,7 +143,7 @@ class Mail {
 		
 		$this->header .=
 			'X-Priority: 3'.self::$lineEnding
-			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding
+			.'X-Mailer: WoltLab Suite Mail Package'.self::$lineEnding
 			.'From: '.$this->getFrom().self::$lineEnding
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
 			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');

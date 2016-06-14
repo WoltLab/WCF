@@ -3,7 +3,7 @@ namespace wcf\system\html\metacode\converter;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class SizeMetacodeConverter extends AbstractMetacodeConverter {
 	protected $sizes = [8, 10, 12, 14, 18, 24, 36];

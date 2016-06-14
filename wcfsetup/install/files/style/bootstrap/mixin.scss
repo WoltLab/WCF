@@ -40,7 +40,7 @@
 	}
 }
 
-/** @deprecated 2.2 - please use the native properties directly */
+/** @deprecated 3.0 - please use the native properties directly */
 @mixin linearGradient($backgroundColor, $gradientColor1, $gradientColor2) {
 	background-image: linear-gradient($gradientColor1, $gradientColor2);
 }

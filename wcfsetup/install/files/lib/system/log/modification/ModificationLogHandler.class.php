@@ -15,10 +15,8 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.log.modification
- * @category	Community Framework
- * @deprecated	since 2.2, use AbstractModificationLogHandler
+ * @package	WoltLabSuite\Core\System\Log\Modification
+ * @deprecated	3.0, use AbstractModificationLogHandler
  */
 class ModificationLogHandler extends SingletonFactory {
 	/**

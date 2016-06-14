@@ -15,9 +15,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Request
  */
 class LinkHandler extends SingletonFactory {
 	/**
@@ -72,7 +70,7 @@ class LinkHandler extends SingletonFactory {
 		$encodeTitle = true;
 		
 		/**
-		 * @deprecated 2.2 - no longer required
+		 * @deprecated 3.0 - no longer required
 		 */
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$appendSession = false;
@@ -104,7 +102,7 @@ class LinkHandler extends SingletonFactory {
 			unset($parameters['forceFrontend']);
 		}
 		if (isset($parameters['forceWCF'])) {
-			/** @deprecated 2.2 */
+			/** @deprecated 3.0 */
 			unset($parameters['forceWCF']);
 		}
 		
@@ -204,7 +202,7 @@ class LinkHandler extends SingletonFactory {
 	 * @param	integer		$pageID		page id
 	 * @param	integer		$languageID	language id, optional
 	 * @return	string		full URL of empty string if `$pageID` is invalid
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getCmsLink($pageID, $languageID = -1) {
 		// use current language

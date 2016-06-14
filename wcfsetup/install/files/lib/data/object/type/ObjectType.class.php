@@ -14,9 +14,7 @@ use wcf\system\SingletonFactory;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Object\Type
  * 
  * @property-read	integer		$objectTypeID
  * @property-read	integer		$definitionID
@@ -107,7 +105,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	 * Returns the object type definition of the object type.
 	 * 
 	 * @return	ObjectTypeDefinition
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function getDefinition() {
 		return ObjectTypeCache::getInstance()->getDefinition($this->definitionID);

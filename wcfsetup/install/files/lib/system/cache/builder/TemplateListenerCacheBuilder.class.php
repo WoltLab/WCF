@@ -8,10 +8,8 @@ use wcf\data\template\listener\TemplateListenerList;
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
- * @deprecated	since 2.1
+ * @package	WoltLabSuite\Core\System\Cache\Builder
+ * @deprecated	2.1
  */
 class TemplateListenerCacheBuilder extends AbstractCacheBuilder {
 	/**

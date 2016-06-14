@@ -19,10 +19,8 @@ use wcf\util\ArrayUtil;
  * @author      Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search
- * @category	Community Framework
- * @since       2.2
+ * @package	WoltLabSuite\Core\System\Search
+ * @since	3.0
  */
 class ArticleSearch extends AbstractSearchableObjectType {
 	/**
@@ -171,7 +169,7 @@ class ArticleSearch extends AbstractSearchableObjectType {
 	
 	/**
 	 * @inheritDoc
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	public function setLocation() {
 		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ArticleList');

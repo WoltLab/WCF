@@ -14,9 +14,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.cronjob
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Cronjob
  * 
  * @method	Cronjob		getDecoratedObject()
  * @mixin	Cronjob
@@ -58,7 +56,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	 * 
 	 * @param	string[]		$descriptions
 	 * @param	boolean			$deleteOldDescriptions
-	 * @since	2.2
+	 * @since	3.0
 	 */
 	protected function saveDescriptions(array $descriptions, $deleteOldDescriptions = true) {
 		// set default value

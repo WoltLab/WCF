@@ -14,9 +14,7 @@ use wcf\util\DirectoryUtil;
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.template.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Template\Group
  * 
  * @method	TemplateGroup	getDecoratedObject()
  * @mixin	TemplateGroup

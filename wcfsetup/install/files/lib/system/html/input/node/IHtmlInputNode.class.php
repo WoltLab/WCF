@@ -4,6 +4,6 @@ use wcf\system\html\node\IHtmlNode;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 interface IHtmlInputNode extends IHtmlNode {}

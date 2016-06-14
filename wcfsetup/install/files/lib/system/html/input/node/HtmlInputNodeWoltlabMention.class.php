@@ -5,7 +5,7 @@ use wcf\system\html\node\HtmlNodeProcessor;
 
 /**
  * TOOD documentation
- * @since	2.2
+ * @since	3.0
  */
 class HtmlInputNodeWoltlabMention extends AbstractHtmlNode {
 	protected $tagName = 'woltlab-mention';

@@ -8,9 +8,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class PlainHighlighter extends Highlighter {
 	/**
