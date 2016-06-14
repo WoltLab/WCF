@@ -71,7 +71,7 @@
 				<dl{if $errorField == 'name'} class="formError"{/if}>
 					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long">
+						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
 						{if $errorField == 'name'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -150,14 +150,14 @@
 				<dl>
 					<dt><label for="showOrder">{lang}wcf.acp.box.showOrder{/lang}</label></dt>
 					<dd>
-						<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
+						<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0" />
 					</dd>
 				</dl>
 				
 				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 					<dt><label for="cssClassName">{lang}wcf.acp.box.cssClassName{/lang}</label></dt>
 					<dd>
-						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long">
+						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" />
 						{if $errorField == 'cssClassName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -173,7 +173,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked="checked"{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
+						<label><input type="checkbox" id="showHeader" name="showHeader" value="1" {if $showHeader}checked="checked" {/if}/> {lang}wcf.acp.box.showHeader{/lang}</label>
 					</dd>
 				</dl>
 			</div>
@@ -184,9 +184,9 @@
 				<dl>
 					<dt></dt>
 					<dd class="floated">
-						<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked="checked"{/if}> {lang}wcf.acp.box.linkType.none{/lang}</label>
-						<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked="checked"{/if}> {lang}wcf.acp.box.linkType.internal{/lang}</label>
-						<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked="checked"{/if}> {lang}wcf.acp.box.linkType.external{/lang}</label>
+						<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked="checked"{/if} /> {lang}wcf.acp.box.linkType.none{/lang}</label>
+						<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked="checked"{/if} /> {lang}wcf.acp.box.linkType.internal{/lang}</label>
+						<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked="checked"{/if} /> {lang}wcf.acp.box.linkType.external{/lang}</label>
 					</dd>
 				</dl>
 				
@@ -234,7 +234,7 @@
 				<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
 					<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
 					<dd>
-						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long">
+						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" />
 						{if $errorField == 'externalURL'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -270,7 +270,7 @@
 									{/if}
 								</div>
 								<p class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.acp.box.image.button.chooseImage{/lang}</p>
-								<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if}>
+								<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if} />
 								{if $errorField == 'image'}
 									<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
 								{/if}
@@ -288,7 +288,7 @@
 					<dl{if $errorField == 'title'} class="formError"{/if}>
 						<dt><label for="title0">{lang}wcf.acp.box.title{/lang}</label></dt>
 						<dd>
-							<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
+							<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
 							{if $errorField == 'title'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -342,7 +342,7 @@
 													{/if}
 												</div>
 												<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.acp.box.image.button.chooseImage{/lang}</p>
-												<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if}>
+												<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if} />
 												{if $errorField == 'image'|concat:$availableLanguage->languageID}
 													<small class="innerError">{lang}wcf.acp.box.image.error.{@$errorType}{/lang}</small>
 												{/if}
@@ -361,7 +361,7 @@
 								<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.box.title{/lang}</label></dt>
 									<dd>
-										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
+										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" />
 										{if $errorField == 'title'|concat:$availableLanguage->languageID}
 											<small class="innerError">
 												{if $errorType == 'empty'}
@@ -403,7 +403,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked="checked"{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1" {if $visibleEverywhere}checked="checked" {/if}/> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 					</dd>
 				</dl>
 				
@@ -413,7 +413,7 @@
 						<ul class="scrollableCheckboxList">
 							{foreach from=$pageNodeList item=pageNode}
 								<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-									<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked="checked"{/if}> {$pageNode->name}</label>
+									<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked="checked"{/if} /> {$pageNode->name}</label>
 								</li>
 							{/foreach}
 						</ul>
@@ -424,8 +424,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

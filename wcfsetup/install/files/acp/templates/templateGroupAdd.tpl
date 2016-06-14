@@ -46,7 +46,7 @@
 		<dl{if $errorField == 'templateGroupName'} class="formError"{/if}>
 			<dt><label for="templateGroupName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="templateGroupName" name="templateGroupName" value="{$templateGroupName}" required="required" class="long">
+				<input type="text" id="templateGroupName" name="templateGroupName" value="{$templateGroupName}" required="required" class="long" />
 				{if $errorField == 'templateGroupName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -62,7 +62,7 @@
 		<dl{if $errorField == 'templateGroupFolderName'} class="formError"{/if}>
 			<dt><label for="templateGroupFolderName">{lang}wcf.acp.template.group.folderName{/lang}</label></dt>
 			<dd>
-				<input type="text" id="templateGroupFolderName" name="templateGroupFolderName" value="{$templateGroupFolderName}" required="required" class="long">
+				<input type="text" id="templateGroupFolderName" name="templateGroupFolderName" value="{$templateGroupFolderName}" required="required" class="long" />
 				{if $errorField == 'templateGroupFolderName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -81,7 +81,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

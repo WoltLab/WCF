@@ -17,7 +17,7 @@ class SingleSelectionFormElement extends AbstractNamedFormElement {
 	 */
 	public function getHTML($formName) {
 		return <<<HTML
-<label><input type="radio" name="{$formName}{$this->getParent()->getName()}" value="{$this->getValue()}"> {$this->getLabel()}</label>
+<label><input type="radio" name="{$formName}{$this->getParent()->getName()}" value="{$this->getValue()}" /> {$this->getLabel()}</label>
 HTML;
 	}
 }

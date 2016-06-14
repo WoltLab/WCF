@@ -4,13 +4,13 @@
 		<dd>
 			<ul>
 				{if $assignedUser && $assignedUser->userID != $__wcf->getUser()->userID}
-					<li><label><input type="radio" name="assignedUserID" value="{@$assignedUser->userID}" checked="checked"> {$assignedUser->username}</label></li>
+					<li><label><input type="radio" name="assignedUserID" value="{@$assignedUser->userID}" checked="checked" /> {$assignedUser->username}</label></li>
 				{/if}
-				<li><label><input type="radio" name="assignedUserID" value="{@$__wcf->getUser()->userID}"{if $assignedUser && $assignedUser->userID == $__wcf->getUser()->userID} checked="checked"{/if}> {$__wcf->getUser()->username}</label></li>
-				<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUser} checked="checked"{/if}> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
+				<li><label><input type="radio" name="assignedUserID" value="{@$__wcf->getUser()->userID}"{if $assignedUser && $assignedUser->userID == $__wcf->getUser()->userID} checked="checked"{/if} /> {$__wcf->getUser()->username}</label></li>
+				<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUser} checked="checked"{/if} /> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
 				<li>
-					<input type="radio" name="assignedUserID" value="-1"{if !$assignedUser} checked="checked"{/if}>
-					<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser}{$assignedUser->username}{/if}">
+					<input type="radio" name="assignedUserID" value="-1"{if !$assignedUser} checked="checked"{/if} />
+					<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser}{$assignedUser->username}{/if}" />
 					{*if $errorField == 'assignedUsername'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

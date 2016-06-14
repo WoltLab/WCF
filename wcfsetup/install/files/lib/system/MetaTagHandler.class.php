@@ -92,7 +92,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	public function current() {
 		$tag = $this->objects[$this->indexToObject[$this->index]];
 		
-		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . StringUtil::encodeHTML($tag['value']) . '">';
+		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . StringUtil::encodeHTML($tag['value']) . '" />';
 	}
 	
 	/**

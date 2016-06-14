@@ -41,7 +41,7 @@ abstract class AbstractTextCondition extends AbstractSingleFieldCondition {
 	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
-		return '<input type="text" name="'.$this->fieldName.'" value="'.StringUtil::encodeHTML($this->fieldValue).'" class="long">';
+		return '<input type="text" name="'.$this->fieldName.'" value="'.StringUtil::encodeHTML($this->fieldValue).'" class="long" />';
 	}
 	
 	/**

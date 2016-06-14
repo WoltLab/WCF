@@ -3,7 +3,7 @@
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
 			<li class="box64" data-object-id="{@$attachment->attachmentID}" data-height="{@$attachment->height}" data-width="{@$attachment->width}">
 				{if $attachment->tinyThumbnailType}
-					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail">
+					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail" />
 				{else}
 					<span class="icon icon48 fa-paperclip"></span>
 				{/if}
@@ -70,4 +70,4 @@
 	//]]>
 </script>
 
-<input type="hidden" name="tmpHash" value="{$tmpHash}">
+<input type="hidden" name="tmpHash" value="{$tmpHash}" />

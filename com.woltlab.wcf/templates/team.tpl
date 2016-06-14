@@ -1,5 +1,5 @@
 {capture assign='headContent'}
-	<link rel="canonical" href="{link controller='Team'}{/link}">
+	<link rel="canonical" href="{link controller='Team'}{/link}" />
 {/capture}
 
 {include file='header'}

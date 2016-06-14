@@ -72,7 +72,7 @@
 		<dl{if $errorType.groupName|isset} class="formError"{/if}>
 			<dt><label for="groupName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium">
+				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium" />
 				{if $errorType.groupName|isset}
 					<small class="innerError">
 						{if $errorType.groupName == 'empty'}
@@ -106,7 +106,7 @@
 		<dl{if $errorType.priority|isset} class="formError"{/if}>
 			<dt><label for="priority">{lang}wcf.acp.group.priority{/lang}</label></dt>
 			<dd>
-				<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" max="8388607">
+				<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" max="8388607" />
 				{if $errorType.priority|isset}
 					<small class="innerError">
 						{lang}wcf.acp.group.priority.error.{@$errorType.priority}{/lang}
@@ -120,7 +120,7 @@
 			<dl{if $errorType.userOnlineMarking|isset} class="formError"{/if}>
 				<dt><label for="userOnlineMarking">{lang}wcf.acp.group.userOnlineMarking{/lang}</label></dt>
 				<dd>
-					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" class="long">
+					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" class="long" />
 					{if $errorType.userOnlineMarking|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.userOnlineMarking.error.{@$errorType.userOnlineMarking}{/lang}
@@ -135,7 +135,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="showOnTeamPage" name="showOnTeamPage" value="1"{if $showOnTeamPage} checked="checked"{/if}> {lang}wcf.acp.group.showOnTeamPage{/lang}</label>
+					<label><input type="checkbox" id="showOnTeamPage" name="showOnTeamPage" value="1" {if $showOnTeamPage}checked="checked" {/if}/> {lang}wcf.acp.group.showOnTeamPage{/lang}</label>
 				</dd>
 			</dl>
 		{/if}
@@ -192,8 +192,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="action" value="{@$action}">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="hidden" name="action" value="{@$action}" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

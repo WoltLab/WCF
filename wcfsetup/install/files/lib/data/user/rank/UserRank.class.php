@@ -41,7 +41,7 @@ class UserRank extends DatabaseObject {
 	 */
 	public function getImage() {
 		if ($this->rankImage) {
-			$image = '<img src="'.(!preg_match('~^(/|https?://)~i', $this->rankImage) ? WCF::getPath() : '').StringUtil::encodeHTML($this->rankImage).'" alt="">';
+			$image = '<img src="'.(!preg_match('~^(/|https?://)~i', $this->rankImage) ? WCF::getPath() : '').StringUtil::encodeHTML($this->rankImage).'" alt="" />';
 			if ($this->repeatImage > 1) $image = str_repeat($image, $this->repeatImage);
 			return $image;
 		}

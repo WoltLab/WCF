@@ -21,7 +21,7 @@
 				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required="required" class="medium">
+				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required="required" class="medium" />
 				{if $errorType.username|isset}
 					<small class="innerError">
 						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -47,7 +47,7 @@
 				<label for="username">{lang}wcf.user.username{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998">
+				<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998" />
 			</dd>
 		</dl>
 		
@@ -56,7 +56,7 @@
 				<label for="email">{lang}wcf.user.email{/lang}</label>
 			</dt>
 			<dd>
-				<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999">
+				<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999" />
 			</dd>
 		</dl>
 		
@@ -71,7 +71,7 @@
 				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label>
 			</dt>
 			<dd>
-				<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required="required" class="medium">
+				<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required="required" class="medium" />
 				{if $errorType.email|isset}
 					<small class="innerError">
 						{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -87,7 +87,7 @@
 				<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label>
 			</dt>
 			<dd>
-				<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required="required" class="medium">
+				<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required="required" class="medium" />
 				{if $errorType.confirmEmail|isset}
 					<small class="innerError">
 						{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.confirmEmail.error.notEqual{/lang}{/if}
@@ -108,7 +108,7 @@
 					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label>
 				</dt>
 				<dd>
-					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required="required" class="medium">
+					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required="required" class="medium" />
 					{if $errorType.password|isset}
 						<small class="innerError">
 							{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -124,7 +124,7 @@
 					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label>
 				</dt>
 				<dd>
-					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required="required" class="medium">
+					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required="required" class="medium" />
 					{if $errorType.confirmPassword|isset}
 						<small class="innerError">
 							{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}
@@ -159,7 +159,7 @@
 					<dd class="floated">
 					{content}
 						{foreach from=$availableContentLanguages item=language}
-							<label><input name="visibleLanguages[]" type="checkbox" value="{@$language->languageID}"{if $language->languageID|in_array:$visibleLanguages} checked="checked"{/if}> {$language}</label>
+							<label><input name="visibleLanguages[]" type="checkbox" value="{@$language->languageID}"{if $language->languageID|in_array:$visibleLanguages} checked="checked"{/if} /> {$language}</label>
 						{/foreach}
 					{/content}
 					<small>{lang}wcf.user.visibleLanguages.description{/lang}</small></dd>
@@ -183,7 +183,7 @@
 	{include file='captcha'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

@@ -53,7 +53,7 @@
 						<dd class="floated">
 						{content}
 							{foreach from=$availableContentLanguages item=language}
-								<label><input name="contentLanguageIDs[]" type="checkbox" value="{@$language->languageID}"{if $language->languageID|in_array:$contentLanguageIDs} checked="checked"{/if}> {$language}</label>
+								<label><input name="contentLanguageIDs[]" type="checkbox" value="{@$language->languageID}"{if $language->languageID|in_array:$contentLanguageIDs} checked="checked"{/if} /> {$language}</label>
 							{/foreach}
 						{/content}
 						<small>{lang}wcf.user.visibleLanguages.description{/lang}</small></dd>
@@ -99,8 +99,8 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		{if $category != 'general'}<input type="hidden" name="category" value="{$category}">{/if}
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{if $category != 'general'}<input type="hidden" name="category" value="{$category}" />{/if}
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

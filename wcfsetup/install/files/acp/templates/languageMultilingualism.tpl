@@ -32,7 +32,7 @@
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageMultilingualism'}{/link}">
 	<section class="section">
 		<header class="sectionHeader">
-			<h2 class="sectionTitle"><label><input type="checkbox" id="enable" name="enable" value="1"{if $enable} checked="checked"{/if}> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></h2>
+			<h2 class="sectionTitle"><label><input type="checkbox" id="enable" name="enable" value="1" {if $enable}checked="checked" {/if}/> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></h2>
 			<small class="sectionDescription">{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
 		</header>
 		
@@ -40,7 +40,7 @@
 			<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
 			<dd class="floated">
 				{foreach from=$languages item='language'}
-					<label><input type="checkbox" name="languageIDs[]" value="{@$language->languageID}"{if $language->languageID == $defaultLanguageID} checked="checked" disabled="disabled"{elseif $language->languageID|in_array:$languageIDs} checked="checked"{/if}> {$language}</label>
+					<label><input type="checkbox" name="languageIDs[]" value="{@$language->languageID}"{if $language->languageID == $defaultLanguageID} checked="checked" disabled="disabled"{elseif $language->languageID|in_array:$languageIDs} checked="checked"{/if} /> {$language}</label>
 				{/foreach}
 				
 				{if $errorField == 'languageIDs'}
@@ -57,7 +57,7 @@
 	{event name='sections'}
 		
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}">
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

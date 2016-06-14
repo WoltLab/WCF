@@ -88,7 +88,7 @@ class AttachmentBBCode extends AbstractBBCode {
 					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
-					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" alt=""></a>';
+					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" alt="" /></a>';
 				}
 				else {
 					$linkParameters = [
@@ -110,7 +110,7 @@ class AttachmentBBCode extends AbstractBBCode {
 						$imageClasses .= ' '.$class;
 					}
 					
-					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="">';
+					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="" />';
 					if ($attachment->hasThumbnail() && $attachment->canDownload()) {
 						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
 					}

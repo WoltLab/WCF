@@ -46,7 +46,7 @@
 			<dt></dt>
 			<dd>
 				{foreach from=$actions item=actionObjectType}
-					<label><input type="radio" name="action" value="{@$actionObjectType->action}"{if $actionObjectType->action == $action} checked="checked"{/if}> {lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{@$actionObjectType->action}{/lang}</label>
+					<label><input type="radio" name="action" value="{@$actionObjectType->action}" {if $actionObjectType->action == $action}checked="checked" {/if}/> {lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{@$actionObjectType->action}{/lang}</label>
 				{/foreach}
 				
 				{if $errorField == 'action'}
@@ -78,7 +78,7 @@
 	</section>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

@@ -20,10 +20,10 @@
 		</dl>
 		
 		<div class="formSubmit">
-			<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}">
-			<input type="hidden" name="step" value="{@$nextStep}">
-			<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}">
-			<input type="hidden" name="dev" value="{@$developerMode}">
+			<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}" />
+			<input type="hidden" name="step" value="{@$nextStep}" />
+			<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
+			<input type="hidden" name="dev" value="{@$developerMode}" />
 		</div>
 	</section>
 </form>

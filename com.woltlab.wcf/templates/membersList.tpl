@@ -6,12 +6,12 @@
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='MembersList'}pageNo={@$pageNo+1}&{@$canonicalURLParameters}{/link}">
+		<link rel="next" href="{link controller='MembersList'}pageNo={@$pageNo+1}&{@$canonicalURLParameters}{/link}" />
 	{/if}
 	{if $pageNo > 1}
-		<link rel="prev" href="{link controller='MembersList'}{if $pageNo > 2}pageNo={@$pageNo-1}&{/if}{@$canonicalURLParameters}{/link}">
+		<link rel="prev" href="{link controller='MembersList'}{if $pageNo > 2}pageNo={@$pageNo-1}&{/if}{@$canonicalURLParameters}{/link}" />
 	{/if}
-	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}{@$canonicalURLParameters}{/link}">
+	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}{@$canonicalURLParameters}{/link}" />
 {/capture}
 
 {capture assign='sidebarRight'}
@@ -24,7 +24,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<input type="text" id="searchUsername" name="username" class="long" placeholder="{lang}wcf.user.username{/lang}">
+						<input type="text" id="searchUsername" name="username" class="long" placeholder="{lang}wcf.user.username{/lang}" />
 						{@SECURITY_TOKEN_INPUT_TAG}
 					</dd>
 				</dl>
@@ -69,8 +69,8 @@
 				</dl>
 				
 				<div class="formSubmit">
-					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-					<input type="hidden" name="letter" value="{$letter}">
+					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+					<input type="hidden" name="letter" value="{$letter}" />
 					{@SID_INPUT_TAG}
 				</div>
 			</div>

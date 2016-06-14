@@ -35,7 +35,7 @@
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" autofocus="autofocus" class="medium">
+				<input type="text" id="username" name="username" value="{$username}" autofocus="autofocus" class="medium" />
 				{if $errorField == 'username'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -52,7 +52,7 @@
 			<dl{if $errorField == 'endDate'} class="formError"{/if}>
 				<dt><label for="endDate">{lang}wcf.acp.paidSubscription.user.endDate{/lang}</label></dt>
 				<dd>
-					<input type="date" id="endDate" name="endDate" value="{$endDate}" class="medium" data-ignore-timezone="true">
+					<input type="date" id="endDate" name="endDate" value="{$endDate}" class="medium" data-ignore-timezone="true" />
 					{if $errorField == 'endDate'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -70,7 +70,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

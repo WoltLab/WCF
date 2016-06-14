@@ -27,7 +27,7 @@
 		<dl{if $errorField == 'server'} class="formError"{/if}>
 			<dt><label for="server">{lang}wcf.acp.languageServer.server{/lang}</label></dt>
 			<dd>
-				<input type="text" name="server" id="server" value="{$server}" autofocus="autofocus" class="long">
+				<input type="text" name="server" id="server" value="{$server}" autofocus="autofocus" class="long" />
 				{if $errorField == 'server'}
 					<small class="innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -44,7 +44,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

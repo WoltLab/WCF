@@ -33,7 +33,7 @@
 		<dl{if $errorField == 'rankTitle'} class="formError"{/if}>
 			<dt><label for="rankTitle">{lang}wcf.acp.user.rank.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="rankTitle" name="rankTitle" value="{$i18nPlainValues['rankTitle']}" required="required" autofocus="autofocus" class="long">
+				<input type="text" id="rankTitle" name="rankTitle" value="{$i18nPlainValues['rankTitle']}" required="required" autofocus="autofocus" class="long" />
 				{if $errorField == 'rankTitle'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -55,9 +55,9 @@
 				<ul id="labelList">
 					{foreach from=$availableCssClassNames item=className}
 						{if $className == 'custom'}
-							<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
+							<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long" /></span></li>
 						{else}
-							<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">{lang}wcf.acp.user.rank.title{/lang}</span></label></li>
+							<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if} /> <span class="badge label{if $className != 'none'} {$className}{/if}">{lang}wcf.acp.user.rank.title{/lang}</span></label></li>
 						{/if}
 					{/foreach}
 				</ul>
@@ -84,7 +84,7 @@
 		<dl{if $errorField == 'rankImage'} class="formError"{/if}>
 			<dt><label for="rankImage">{lang}wcf.acp.user.rank.image{/lang}</label></dt>
 			<dd>
-				<input type="text" id="rankImage" name="rankImage" value="{$rankImage}" class="long">
+				<input type="text" id="rankImage" name="rankImage" value="{$rankImage}" class="long" />
 				{if $errorField == 'rankImage'}
 					<small class="innerError">
 						{lang}wcf.acp.user.rank.image.error.{@$errorType}{/lang}
@@ -97,7 +97,7 @@
 		<dl{if $errorField == 'repeatImage'} class="formError"{/if}>
 			<dt><label for="repeatImage">{lang}wcf.acp.user.rank.repeatImage{/lang}</label></dt>
 			<dd>
-				<input type="number" id="repeatImage" name="repeatImage" value="{@$repeatImage}" min="1" class="tiny">
+				<input type="number" id="repeatImage" name="repeatImage" value="{@$repeatImage}" min="1" class="tiny" />
 				{if $errorField == 'rankImage'}
 					<small class="innerError">
 						{lang}wcf.acp.user.rank.repeatImage.error.{@$errorType}{/lang}
@@ -161,7 +161,7 @@
 		<dl{if $errorField == 'requiredPoints'} class="formError"{/if}>
 			<dt><label for="requiredPoints">{lang}wcf.acp.user.rank.requiredPoints{/lang}</label></dt>
 			<dd>
-				<input type="number" id="requiredPoints" name="requiredPoints" value="{@$requiredPoints}" min="0" class="tiny">
+				<input type="number" id="requiredPoints" name="requiredPoints" value="{@$requiredPoints}" min="0" class="tiny" />
 				{if $errorField == 'requiredPoints'}
 					<small class="innerError">
 						{lang}wcf.acp.user.rank.requiredPoints.error.{@$errorType}{/lang}
@@ -177,7 +177,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

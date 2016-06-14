@@ -61,7 +61,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{@$objectType->getProcessor()->getLanguageVariable('title')}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" class="long">
+				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" class="long" />
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'empty' || $errorType == 'multilingual'}
@@ -99,7 +99,7 @@
 		<dl{if $errorField == 'isDisabled'} class="formError"{/if}>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked="checked"{/if}> {@$objectType->getProcessor()->getLanguageVariable('isDisabled')}</label>
+				<label><input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked="checked"{/if} /> {@$objectType->getProcessor()->getLanguageVariable('isDisabled')}</label>
 				{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('isDisabled.description', true)}{/content}</small>{/hascontent}
 			</dd>
 		</dl>
@@ -132,7 +132,7 @@
 		<dl{if $errorField == 'showOrder'} class="formError"{/if}>
 			<dt><label for="showOrder">{@$objectType->getProcessor()->getLanguageVariable('showOrder')}</label></dt>
 			<dd>
-				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short">
+				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short" />
 				{if $errorField == 'showOrder'}
 					<small class="innerError">
 						{assign var=__languageVariable value='showOrder.error.'|concat:$errorType}
@@ -162,7 +162,7 @@
 	{event name='afterSections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

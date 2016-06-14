@@ -20,7 +20,7 @@ class PasswordInputFormElement extends AbstractNamedFormElement {
 <dl{$this->getErrorClass()}>
 	<dt><label for="{$this->getName()}">{$this->getLabel()}</label></dt>
 	<dd>
-		<input type="password" id="{$this->getName()}" name="{$formName}{$this->getName()}" value="{$this->getValue()}" class="medium">
+		<input type="password" id="{$this->getName()}" name="{$formName}{$this->getName()}" value="{$this->getValue()}" class="medium" />
 		<small>{$this->getDescription()}</small>
 		{$this->getErrorField()}
 	</dd>

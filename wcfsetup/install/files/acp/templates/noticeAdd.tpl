@@ -47,7 +47,7 @@
 		<dl{if $errorField == 'noticeName'} class="formError"{/if}>
 			<dt><label for="noticeName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="noticeName" name="noticeName" value="{$noticeName}" required="required" autofocus="autofocus" class="long">
+				<input type="text" id="noticeName" name="noticeName" value="{$noticeName}" required="required" autofocus="autofocus" class="long" />
 				{if $errorField == 'noticeName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -82,14 +82,14 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" id="noticeUseHtml" name="noticeUseHtml" value="1"{if $noticeUseHtml} checked="checked"{/if}> {lang}wcf.acp.notice.noticeUseHtml{/lang}</label>
+				<label><input type="checkbox" id="noticeUseHtml" name="noticeUseHtml" value="1"{if $noticeUseHtml} checked="checked"{/if} /> {lang}wcf.acp.notice.noticeUseHtml{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.acp.notice.showOrder{/lang}</label></dt>
 			<dd>
-				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
+				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0" />
 				<small>{lang}wcf.acp.notice.showOrder.description{/lang}</small>
 			</dd>
 		</dl>
@@ -105,9 +105,9 @@
 			<dd>
 				{foreach from=$availableCssClassNames item=className}
 					{if $className == 'custom'}
-						<label><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="medium"></span></label>
+						<label><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="medium" /></span></label>
 					{else}
-						<label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if}> <span>{lang}wcf.acp.notice.cssClassName.{$className}{/lang}</span></label>
+						<label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if} /> <span>{lang}wcf.acp.notice.cssClassName.{$className}{/lang}</span></label>
 					{/if}
 				{/foreach}
 				{if $errorField == 'cssClassName'}
@@ -128,14 +128,14 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.notice.isDisabled{/lang}</label>
+				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> {lang}wcf.acp.notice.isDisabled{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isDismissible" value="1"{if $isDismissible} checked="checked"{/if}> {lang}wcf.acp.notice.isDismissible{/lang}</label>
+				<label><input type="checkbox" name="isDismissible" value="1"{if $isDismissible} checked="checked"{/if} /> {lang}wcf.acp.notice.isDismissible{/lang}</label>
 				<small>{lang}wcf.acp.notice.isDismissible.description{/lang}</small>
 			</dd>
 		</dl>
@@ -144,7 +144,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="resetIsDismissed" value="1"{if $resetIsDismissed} checked="checked"{/if}> {lang}wcf.acp.notice.resetIsDismissed{/lang}</label>
+					<label><input type="checkbox" name="resetIsDismissed" value="1"{if $resetIsDismissed} checked="checked"{/if} /> {lang}wcf.acp.notice.resetIsDismissed{/lang}</label>
 					<small>{lang}wcf.acp.notice.resetIsDismissed.description{/lang}</small>
 				</dd>
 			</dl>
@@ -198,7 +198,7 @@
 	{event name='conditionContainers'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

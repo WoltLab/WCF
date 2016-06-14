@@ -17,7 +17,7 @@
 		<dl class="avatarType">
 			<dt></dt>
 			<dd>
-				<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
+				<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
 				<small>{lang}wcf.user.avatar.type.none.description{/lang}</small>
 			</dd>
 		</dl>
@@ -32,11 +32,11 @@
 							{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 						{/if}
 					{else}
-						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 96px; height: 96px">
+						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 96px; height: 96px" />
 					{/if}
 				</dt>
 				<dd>
-					<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked="checked"{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
+					<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
 					<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
 					
 					{* placeholder for upload button: *}
@@ -53,9 +53,9 @@
 		
 		{if MODULE_GRAVATAR}
 			<dl class="avatarType{if $errorField == 'gravatar'} formError{/if}">
-				<dt><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
+				<dt><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96" /></dt>
 				<dd>
-					<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked="checked"{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
+					<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 					{if $errorField == 'gravatar'}
 						<small class="innerError">
 							{if $errorType == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}
@@ -73,7 +73,7 @@
 	
 	{if !$__wcf->user->disableAvatar}
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	{/if}

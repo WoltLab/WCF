@@ -65,8 +65,8 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
 		}
 		
 		return <<<HTML
-<label><input type="checkbox" name="usesMobileBrowser" id="usesMobileBrowser"{$usesMobileBrowserChecked}> {$usesMobileBrowserLabel}</label>
-<label><input type="checkbox" name="usesNoMobileBrowser" id="usesNoMobileBrowser"{$usesNoMobileBrowserChecked}> {$usesNoMobileBrowserLabel}</label>
+<label><input type="checkbox" name="usesMobileBrowser" id="usesMobileBrowser"{$usesMobileBrowserChecked} /> {$usesMobileBrowserLabel}</label>
+<label><input type="checkbox" name="usesNoMobileBrowser" id="usesNoMobileBrowser"{$usesNoMobileBrowserChecked} /> {$usesNoMobileBrowserLabel}</label>
 HTML;
 	}
 	

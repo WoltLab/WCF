@@ -8,7 +8,7 @@
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% complete]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Thank you for choosing {$setupPackageName}!]]></item>
-		<item name="wcf.global.welcome.description"><![CDATA[This installer will help you to install <br><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} and <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[This installer will help you to install <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} and <b>{$setupPackageName}</b>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Language]]></item>
 		<item name="wcf.global.welcome.language.description"><![CDATA[The installer language is currently set to {@$languageChooser}]]></item>
 		<item name="wcf.global.welcome.language.change"><![CDATA[Change Language]]></item>
@@ -51,8 +51,8 @@
 		<item name="wcf.global.configureDB.number"><![CDATA[Installation Number]]></item>
 		<item name="wcf.global.configureDB.number.description"><![CDATA[The installation number allows you to install multiple installations of this software into the same database. If this is your first installation in this database, you should enter <em>1</em>.]]></item>	
 		<item name="wcf.global.configureDB.error"><![CDATA[An error has occurred while trying to connect to your database:
-		<br><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br>{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
-		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your “{$dbName}” Database:<br>{implode from=$conflictedTables item="table"}{$table}{/implode}.<br><br>To solve this problem, please do one of the following:<br>1. Remove the table{if $conflictedTables|count > 1}s{/if} manually and continue the installation with the “Next” button or<br>2. You re-enter the database access information, but to a different database and continue the installation with the “Next” button or<br>3. Enter a new installation number, not forgetting to continue the installation with the “Next” Button.]]></item>
+		<br /><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br />{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your “{$dbName}” Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Remove the table{if $conflictedTables|count > 1}s{/if} manually and continue the installation with the “Next” button or<br />2. You re-enter the database access information, but to a different database and continue the installation with the “Next” button or<br />3. Enter a new installation number, not forgetting to continue the installation with the “Next” Button.]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Create an Administrator]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[The installation will now generate an administrator account for you. Please provide username, email address and password.]]></item>
 		<item name="wcf.global.createUser.username"><![CDATA[Username]]></item>
@@ -67,7 +67,7 @@
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[The email addresses you have given are not identical. For security reasons, please make sure that both email address fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[The passwords you have given are not identical. For security reasons, please make sure that both password fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[An Error has accured while extracting the required files:
-		<br><strong>{$exception->getMessage()}</strong><br>
+		<br /><strong>{$exception->getMessage()}</strong><br />
 		Please make sure that the destination folder exists and can be written to.]]></item>
 		<item name="wcf.global.applicationDirectory"><![CDATA[Configure Directories]]></item>
 		<item name="wcf.global.applicationDirectory.description"><![CDATA[Set up the installation directories for each application. Directories are evaluated relative to the website’s document root (“{$documentRoot}”).]]></item>

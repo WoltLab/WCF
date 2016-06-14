@@ -28,7 +28,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="long">
+				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="long" />
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'title' || $errorType == 'multilingual'}
@@ -68,14 +68,14 @@
 			<dl>
 				<dt><label for="showOrder">{lang}wcf.acp.box.showOrder{/lang}</label></dt>
 				<dd>
-					<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
+					<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0" />
 				</dd>
 			</dl>
 			
 			<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 				<dt><label for="cssClassName">{lang}wcf.acp.box.cssClassName{/lang}</label></dt>
 				<dd>
-					<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long">
+					<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" />
 					{if $errorField == 'cssClassName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -91,14 +91,14 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked="checked"{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
+					<label><input type="checkbox" id="showHeader" name="showHeader" value="1" {if $showHeader}checked="checked" {/if}/> {lang}wcf.acp.box.showHeader{/lang}</label>
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked="checked"{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1" {if $visibleEverywhere}checked="checked" {/if}/> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -120,7 +120,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

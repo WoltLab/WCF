@@ -89,7 +89,7 @@
 				<dl{if $errorField == 'styleName'} class="formError"{/if}>
 					<dt><label for="styleName">{lang}wcf.acp.style.styleName{/lang}</label></dt>
 					<dd>
-						<input type="text" name="styleName" id="styleName" value="{$styleName}" class="long">
+						<input type="text" name="styleName" id="styleName" value="{$styleName}" class="long" />
 						{if $errorField == 'styleName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -104,7 +104,7 @@
 				<dl{if $errorField == 'authorName'} class="formError"{/if}>
 					<dt><label for="authorName">{lang}wcf.acp.style.authorName{/lang}</label></dt>
 					<dd>
-						<input type="text" name="authorName" id="authorName" value="{$authorName}" class="long"{if !$isTainted} readonly{/if}>
+						<input type="text" name="authorName" id="authorName" value="{$authorName}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'authorName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -119,7 +119,7 @@
 				<dl{if $errorField == 'copyright'} class="formError"{/if}>
 					<dt><label for="copyright">{lang}wcf.acp.style.copyright{/lang}</label></dt>
 					<dd>
-						<input type="text" name="copyright" id="copyright" value="{$copyright}" class="long"{if !$isTainted} readonly{/if}>
+						<input type="text" name="copyright" id="copyright" value="{$copyright}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'copyright'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -134,7 +134,7 @@
 				<dl{if $errorField == 'styleVersion'} class="formError"{/if}>
 					<dt><label for="styleVersion">{lang}wcf.acp.style.styleVersion{/lang}</label></dt>
 					<dd>
-						<input type="text" name="styleVersion" id="styleVersion" value="{$styleVersion}" class="small"{if !$isTainted} readonly{/if}>
+						<input type="text" name="styleVersion" id="styleVersion" value="{$styleVersion}" class="small"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'styleVersion'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -149,7 +149,7 @@
 				<dl{if $errorField == 'styleDate'} class="formError"{/if}>
 					<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
 					<dd>
-						<input type="date" name="styleDate" id="styleDate" value="{$styleDate}" class="small"{if !$isTainted} readonly{/if}>
+						<input type="date" name="styleDate" id="styleDate" value="{$styleDate}" class="small"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'styleDate'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -164,7 +164,7 @@
 				<dl{if $errorField == 'license'} class="formError"{/if}>
 					<dt><label for="license">{lang}wcf.acp.style.license{/lang}</label></dt>
 					<dd>
-						<input type="text" name="license" id="license" value="{$license}" class="long"{if !$isTainted} readonly{/if}>
+						<input type="text" name="license" id="license" value="{$license}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'license'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -179,7 +179,7 @@
 				<dl{if $errorField == 'authorURL'} class="formError"{/if}>
 					<dt><label for="authorURL">{lang}wcf.acp.style.authorURL{/lang}</label></dt>
 					<dd>
-						<input type="text" name="authorURL" id="authorURL" value="{$authorURL}" class="long"{if !$isTainted} readonly{/if}>
+						<input type="text" name="authorURL" id="authorURL" value="{$authorURL}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'authorURL'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -194,7 +194,7 @@
 				<dl{if $errorField == 'packageName'} class="formError"{/if}>
 					<dt><label for="packageName">{lang}wcf.acp.style.packageName{/lang}</label></dt>
 					<dd>
-						<input type="text" name="packageName" id="packageName" value="{$packageName}" class="long"{if !$isTainted} readonly{/if}>
+						<input type="text" name="packageName" id="packageName" value="{$packageName}" class="long"{if !$isTainted} readonly{/if} />
 						{if $errorField == 'packageName'}
 							<small class="innerError">{lang}wcf.acp.style.packageName.error.{$errorType}{/lang}</small>
 						{/if}
@@ -227,7 +227,7 @@
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
 					<dd>
-						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage">
+						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage" />
 						<div id="uploadImage"></div>
 						{if $errorField == 'image'}
 							<small class="innerError">
@@ -266,7 +266,7 @@
 				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
 					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
 					<dd>
-						<input type="text" name="imagePath" id="imagePath" value="{$imagePath}" class="long">
+						<input type="text" name="imagePath" id="imagePath" value="{$imagePath}" class="long" />
 						{if $errorField == 'imagePath'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -295,7 +295,7 @@
 				<dl>
 					<dt></dt>
 					<dd><label>
-						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked="checked"{/if}>
+						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked="checked"{/if} />
 						<span>{lang}wcf.acp.style.globals.useFluidLayout{/lang}</span>
 					</label></dd>
 				</dl>
@@ -303,7 +303,7 @@
 				<dl id="fluidLayoutMinWidth">
 					<dt><label for="wcfLayoutMinWidth">{lang}wcf.acp.style.globals.fluidLayoutMinWidth{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfLayoutMinWidth" name="wcfLayoutMinWidth" value="{@$variables[wcfLayoutMinWidth]}" class="tiny">
+						<input type="number" id="wcfLayoutMinWidth" name="wcfLayoutMinWidth" value="{@$variables[wcfLayoutMinWidth]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfLayoutMinWidth_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -316,7 +316,7 @@
 				<dl id="fluidLayoutMaxWidth">
 					<dt><label for="wcfLayoutMaxWidth">{lang}wcf.acp.style.globals.fluidLayoutMaxWidth{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfLayoutMaxWidth" name="wcfLayoutMaxWidth" value="{@$variables[wcfLayoutMaxWidth]}" class="tiny">
+						<input type="number" id="wcfLayoutMaxWidth" name="wcfLayoutMaxWidth" value="{@$variables[wcfLayoutMaxWidth]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfLayoutMaxWidth_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -330,7 +330,7 @@
 				<dl id="fixedLayoutVariables">
 					<dt><label for="wcfLayoutFixedWidth">{lang}wcf.acp.style.globals.fixedLayoutWidth{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{@$variables[wcfLayoutFixedWidth]}" class="tiny">
+						<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{@$variables[wcfLayoutFixedWidth]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfLayoutFixedWidth_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -351,7 +351,7 @@
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
-						<img src="" alt="" id="styleLogo" style="max-width: 100%">
+						<img src="" alt="" id="styleLogo" style="max-width: 100%" />
 						<div id="uploadLogo"></div>
 						{if $errorField == 'image'}
 							<small class="innerError">
@@ -364,7 +364,7 @@
 						{/if}
 					</dd>
 					<dd>
-						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long">
+						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long" />
 						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
 					</dd>
 				</dl>
@@ -379,7 +379,7 @@
 				<dl>
 					<dt><label for="wcfFontSizeDefault">{lang}wcf.acp.style.globals.fontSizeDefault{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfFontSizeDefault" name="wcfFontSizeDefault" value="{@$variables[wcfFontSizeDefault]}" class="tiny">
+						<input type="number" id="wcfFontSizeDefault" name="wcfFontSizeDefault" value="{@$variables[wcfFontSizeDefault]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfFontSizeDefault_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -392,7 +392,7 @@
 				<dl>
 					<dt><label for="wcfFontSizeSmall">{lang}wcf.acp.style.globals.fontSizeSmall{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfFontSizeSmall" name="wcfFontSizeSmall" value="{@$variables[wcfFontSizeSmall]}" class="tiny">
+						<input type="number" id="wcfFontSizeSmall" name="wcfFontSizeSmall" value="{@$variables[wcfFontSizeSmall]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfFontSizeSmall_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -405,7 +405,7 @@
 				<dl>
 					<dt><label for="wcfFontSizeHeadline">{lang}wcf.acp.style.globals.fontSizeHeadline{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfFontSizeHeadline" name="wcfFontSizeHeadline" value="{@$variables[wcfFontSizeHeadline]}" class="tiny">
+						<input type="number" id="wcfFontSizeHeadline" name="wcfFontSizeHeadline" value="{@$variables[wcfFontSizeHeadline]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfFontSizeHeadline_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -418,7 +418,7 @@
 				<dl>
 					<dt><label for="wcfFontSizeSection">{lang}wcf.acp.style.globals.fontSizeSection{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfFontSizeSection" name="wcfFontSizeSection" value="{@$variables[wcfFontSizeSection]}" class="tiny">
+						<input type="number" id="wcfFontSizeSection" name="wcfFontSizeSection" value="{@$variables[wcfFontSizeSection]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfFontSizeSection_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -431,7 +431,7 @@
 				<dl>
 					<dt><label for="wcfFontSizeTitle">{lang}wcf.acp.style.globals.fontSizeTitle{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfFontSizeTitle" name="wcfFontSizeTitle" value="{@$variables[wcfFontSizeTitle]}" class="tiny">
+						<input type="number" id="wcfFontSizeTitle" name="wcfFontSizeTitle" value="{@$variables[wcfFontSizeTitle]}" class="tiny" />
 						<label class="selectDropdown">
 							<select name="wcfFontSizeTitle_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
@@ -445,7 +445,7 @@
 				<dl>
 					<dt></dt>
 					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked="checked"{/if}>
+						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked="checked"{/if} />
 						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
 					</label></dd>
 				</dl>
@@ -691,7 +691,7 @@
 											<li class="box24 spColor">
 												<div class="spColorBox">
 													<span class="styleVariableColor jsColorPicker" style="background-color: {$variables[$spColor]};" data-color="{$variables[$spColor]}" data-store="{$spColor}_value"></span>
-													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
+													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}" />
 												</div>
 												<div>
 													<span class="spVariable">${$spColor}</span>
@@ -919,8 +919,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		<input type="hidden" name="tmpHash" value="{$tmpHash}">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="hidden" name="tmpHash" value="{$tmpHash}" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

@@ -161,7 +161,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			break;
 		}
 		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$width.'px; height: '.$height.'px" alt="" class="userAvatarImage">';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$width.'px; height: '.$height.'px" alt="" class="userAvatarImage" />';
 	}
 	
 	/**

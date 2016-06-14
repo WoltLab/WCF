@@ -95,8 +95,8 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 		$end = WCF::getLanguage()->get('wcf.date.period.end');
 		
 		return <<<HTML
-<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$this->registrationDateStart}" placeholder="{$start}">
-<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$this->registrationDateEnd}" placeholder="{$end}">
+<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$this->registrationDateStart}" placeholder="{$start}" />
+<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$this->registrationDateEnd}" placeholder="{$end}" />
 HTML;
 	}
 	

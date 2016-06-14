@@ -78,8 +78,8 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 <dl>
 	<dt>{$this->getLabel('time')}</dt>
 	<dd>
-		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="startTime" name="startTime" value="{$this->startTime}" placeholder="{$start}">
-		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="endTime" name="endTime" value="{$this->endTime}" placeholder="{$end}">
+		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="startTime" name="startTime" value="{$this->startTime}" placeholder="{$start}" />
+		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="endTime" name="endTime" value="{$this->endTime}" placeholder="{$end}" />
 		{$this->getDescriptionElement('time')}
 		{$this->getErrorMessageElement('time')}
 	</dd>

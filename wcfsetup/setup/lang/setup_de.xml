@@ -8,7 +8,7 @@
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% fertiggestellt]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für {$setupPackageName} entschieden haben!]]></item>
-		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft Ihnen bei der Einrichtung von <br><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} und von <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft Ihnen bei der Einrichtung von <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} und von <b>{$setupPackageName}</b>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zurzeit {@$languageChooser}]]></item>
 		<item name="wcf.global.welcome.language.change"><![CDATA[Sprache wechseln]]></item>
@@ -51,8 +51,8 @@
 		<item name="wcf.global.configureDB.number"><![CDATA[Installationsnummer]]></item>
 		<item name="wcf.global.configureDB.number.description"><![CDATA[Die Installationsnummer erlaubt Ihnen mehrere Installationen der Software in der gleichen Datenbank zu speichern. Wenn dies Ihre erste Installation der Software in dieser Datenbank ist, sollten Sie hier den Wert <em>1</em> wählen.]]></item>
 		<item name="wcf.global.configureDB.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br>{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
-		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank „{$dbName}“:<br>{implode from=$conflictedTables item="table"}{$table}{/implode}.<br><br>Um dieses Problem zu beheben, können Sie:<br>1. diese Tabelle{if $conflictedTables|count > 1}n{/if} manuell löschen und die „Weiter“ Schaltfläche betätigen, oder<br>2. Sie geben die Daten einer anderen Datenbank ein und betätigen die „Weiter“ Schaltfläche, oder<br>3. Sie geben eine von „{$dbNumber}“ unterschiedliche Installationsnummer an und betätigen die „Weiter“ Schaltfläche.]]></item>
+		<br /><strong>{$exception->getMessage()}{if $exception->getPrevious()}<br />{$exception->getPrevious()->getMessage()}{/if}</strong>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank „{$dbName}“:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Um dieses Problem zu beheben, können Sie:<br />1. diese Tabelle{if $conflictedTables|count > 1}n{/if} manuell löschen und die „Weiter“ Schaltfläche betätigen, oder<br />2. Sie geben die Daten einer anderen Datenbank ein und betätigen die „Weiter“ Schaltfläche, oder<br />3. Sie geben eine von „{$dbNumber}“ unterschiedliche Installationsnummer an und betätigen die „Weiter“ Schaltfläche.]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Administrator erstellen]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[Der Installationsassistent erstellt nun ein Administrator-Konto für Sie. Bitte geben Sie dazu einen Benutzernamen, eine E-Mail-Adresse und ein Kennwort ein.]]></item>
 		<item name="wcf.global.createUser.username"><![CDATA[Benutzername]]></item>
@@ -67,7 +67,7 @@
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch. Bitte tragen Sie zur Sicherheit in beide Eingabefelder die selbe E-Mail-Adresse ein.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch. Bitte tragen Sie zur Sicherheit in beide Eingabefelder das selbe Kennwort ein.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[Beim Versuch die Dateien zu entpacken, ist folgender Fehler aufgetreten:
-		<br><strong>{$exception->getMessage()}</strong><br>
+		<br /><strong>{$exception->getMessage()}</strong><br />
 		Bitte kontrollieren Sie, ob das Zielverzeichnis existiert und beschreibbar ist.]]></item>
 		<item name="wcf.global.applicationDirectory"><![CDATA[Installationsverzeichnisse]]></item>
 		<item name="wcf.global.applicationDirectory.description"><![CDATA[Geben Sie die Verzeichnisse an, die für die Installation der aufgeführten Anwendungen verwendet werden sollen. Die Eingabe der Verzeichnisse erfolgt relativ zum Hauptverzeichnis der Website („{$documentRoot}“).]]></item>

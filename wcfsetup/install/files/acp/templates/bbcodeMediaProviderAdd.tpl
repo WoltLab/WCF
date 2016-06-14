@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.acp.bbcode.mediaProvider.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$title}" required="required" autofocus="autofocus" class="long">
+				<input type="text" id="title" name="title" value="{$title}" required="required" autofocus="autofocus" class="long" />
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -78,7 +78,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

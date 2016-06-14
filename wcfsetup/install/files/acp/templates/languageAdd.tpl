@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'languageName'} class="formError"{/if}>
 			<dt><label for="languageName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="languageName" name="languageName" value="{$languageName}" class="long" required="required">
+				<input type="text" id="languageName" name="languageName" value="{$languageName}" class="long" required="required" />
 				{if $errorField == 'languageName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -42,7 +42,7 @@
 		<dl{if $errorField == 'languageCode'} class="formError"{/if}>
 			<dt><label for="languageCode">{lang}wcf.acp.language.code{/lang}</label></dt>
 			<dd>
-				<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="medium" required="required">
+				<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="medium" required="required" />
 				{if $errorField == 'languageCode'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -59,7 +59,7 @@
 		<dl{if $errorField == 'countryCode'} class="formError"{/if}>
 			<dt><label for="countryCode">{lang}wcf.acp.language.countryCode{/lang}</label></dt>
 			<dd>
-				<input type="text" id="countryCode" name="countryCode" value="{$countryCode}" class="medium" required="required">
+				<input type="text" id="countryCode" name="countryCode" value="{$countryCode}" class="medium" required="required" />
 				{if $errorField == 'countryCode'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -102,7 +102,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

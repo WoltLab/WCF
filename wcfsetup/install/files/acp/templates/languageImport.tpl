@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'languageUpload'} class="formError"{/if}>
 			<dt><label for="languageUpload">{lang}wcf.acp.language.import.source.upload{/lang}</label></dt>
 			<dd>
-				<input type="file" id="languageUpload" name="languageUpload">
+				<input type="file" id="languageUpload" name="languageUpload" />
 				{if $errorField == 'languageUpload'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -65,7 +65,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

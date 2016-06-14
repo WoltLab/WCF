@@ -45,7 +45,7 @@
 				<dl class="col-xs-12 col-md-4">
 					<dt></dt>
 					<dd>
-						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" placeholder="{lang}wcf.acp.exceptionLog.search.exceptionID{/lang}" autofocus="autofocus" class="long">
+						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" placeholder="{lang}wcf.acp.exceptionLog.search.exceptionID{/lang}" autofocus="autofocus" class="long" />
 					</dd>
 				</dl>
 				
@@ -62,7 +62,7 @@
 		</section>
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		</div>
 	</form>
 {/if}

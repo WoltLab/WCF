@@ -11,7 +11,7 @@
 		<dl{if $errorField == 'q'} class="formError"{/if}>
 			<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
 			<dd>
-				<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus">
+				<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus" />
 				{if $errorField == 'q'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -21,7 +21,7 @@
 						{/if}
 					</small>
 				{/if}
-				<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if}> {lang}wcf.search.subjectOnly{/lang}</label>
+				<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if} /> {lang}wcf.search.subjectOnly{/lang}</label>
 				{event name='queryOptions'}
 				
 				<small>{lang}wcf.search.query.description{/lang}</small>
@@ -31,8 +31,8 @@
 		<dl>
 			<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
 			<dd>
-				<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" autocomplete="off">
-				<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked="checked"{/if}> {lang}wcf.search.matchExactly{/lang}</label>
+				<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" autocomplete="off" />
+				<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked="checked"{/if} /> {lang}wcf.search.matchExactly{/lang}</label>
 				{event name='authorOptions'}
 			</dd>
 		</dl>
@@ -40,8 +40,8 @@
 		<dl>
 			<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
 			<dd>
-				<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}">
-				<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}">
+				<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}" />
+				<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}" />
 				{event name='periodOptions'}
 			</dd>
 		</dl>
@@ -75,7 +75,7 @@
 			<dd class="floated">
 				{foreach from=$objectTypes key=objectTypeName item=objectType}
 					{if $objectType->isAccessible()}
-						<label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if}> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label>
+						<label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if} /> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label>
 					{/if}
 				{/foreach}
 			</dd>
@@ -110,7 +110,7 @@
 	{/foreach}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

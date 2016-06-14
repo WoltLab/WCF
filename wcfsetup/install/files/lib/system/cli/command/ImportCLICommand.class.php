@@ -228,7 +228,7 @@ class ImportCLICommand implements ICLICommand {
 				$errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.configure.database.error', [
 					'exception' => $e
 				]);
-				$errorMessageLines = explode('<br>', $errorMessage);
+				$errorMessageLines = explode('<br />', $errorMessage);
 				foreach ($errorMessageLines as &$line) {
 					$line = StringUtil::stripHTML($line);
 				}

@@ -22,12 +22,12 @@
 		
 		<dl class="wide">
 			<dt></dt>
-			<dd><label><input type="checkbox" name="languageUseCustomValue" id="overlayLanguageUseCustomValue" value="1"{if $item->languageUseCustomValue} checked="checked"{/if}> {lang}wcf.acp.language.item.useCustomValue{/lang}</label></dd>
+			<dd><label><input type="checkbox" name="languageUseCustomValue" id="overlayLanguageUseCustomValue" value="1" {if $item->languageUseCustomValue}checked="checked" {/if}/> {lang}wcf.acp.language.item.useCustomValue{/lang}</label></dd>
 		</dl>
 	</section>
 {/if}
 
-<input type="hidden" name="languageItemID" id="overlayLanguageItemID" value="{@$item->languageItemID}">
+<input type="hidden" name="languageItemID" id="overlayLanguageItemID" value="{@$item->languageItemID}" />
 
 <div class="formSubmit">
 	<button class="jsSubmitLanguageItem buttonPrimary" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>

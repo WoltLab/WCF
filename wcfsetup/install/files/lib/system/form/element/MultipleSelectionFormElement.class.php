@@ -61,7 +61,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 		}
 		
 		return <<<HTML
-<label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}"{$disabled}> {$this->getLabel()}</label>
+<label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}"{$disabled} /> {$this->getLabel()}</label>
 <small>{$this->getDescription()}</small>
 HTML;
 	}

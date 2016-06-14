@@ -52,7 +52,7 @@
 				<dl class="col-xs-12 col-md-4">
 					<dt><label for="label">{lang}wcf.acp.label.label{/lang}</label></dt>
 					<dd>
-						<input type="text" id="label" name="label" value="{$labelSearch}" class="long">
+						<input type="text" id="label" name="label" value="{$labelSearch}" class="long" />
 					</dd>
 				</dl>
 				
@@ -71,14 +71,14 @@
 				<dl class="col-xs-12 col-md-4">
 					<dt><label for="cssClassName">{lang}wcf.acp.label.cssClassName{/lang}</label></dt>
 					<dd>
-						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long">
+						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" />
 					</dd>
 				</dl>
 			</div>
 		</section>
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>

@@ -27,7 +27,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 		else if (is_array($result)) {
 			$output = '';
 			foreach ($result as $resultValue) {
-				if (!empty($output)) $output .= "<br>\n";
+				if (!empty($output)) $output .= "<br />\n";
 				$output .= WCF::getLanguage()->get($resultValue);
 			}
 			

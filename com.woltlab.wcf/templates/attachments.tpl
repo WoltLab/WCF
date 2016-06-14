@@ -15,9 +15,9 @@
 								<div class="attachmentThumbnailContainer">		
 									<span class="attachmentThumbnailImage">
 										{if $attachment->hasThumbnail()}
-											<img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" {if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}>
+											<img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" {if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}/>
 										{else}
-											<img src="{link controller='Attachment' object=$attachment}{/link}" alt="" {if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}>
+											<img src="{link controller='Attachment' object=$attachment}{/link}" alt="" {if $attachment->width >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->height >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}/>
 										{/if}
 									</span>
 								

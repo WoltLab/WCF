@@ -17,23 +17,23 @@
 	
 		<dl>
 			<dt><label for="dbHost">{lang}wcf.global.configureDB.host{/lang}</label></dt>
-			<dd><input type="text" id="dbHost" name="dbHost" value="{$dbHost}" required="required" class="long"></dd>
+			<dd><input type="text" id="dbHost" name="dbHost" value="{$dbHost}" required="required" class="long" /></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbUser">{lang}wcf.global.configureDB.user{/lang}</label></dt>
-			<dd><input type="text" id="dbUser" name="dbUser" value="{$dbUser}" required="required" class="medium"></dd>
+			<dd><input type="text" id="dbUser" name="dbUser" value="{$dbUser}" required="required" class="medium" /></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbPassword">{lang}wcf.global.configureDB.password{/lang}</label></dt>
-			<dd><input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium"></dd>
+			<dd><input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium" /></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbName">{lang}wcf.global.configureDB.database{/lang}</label></dt>
 			<dd>
-				<input type="text" id="dbName" name="dbName" value="{$dbName}" required="required" class="medium">
+				<input type="text" id="dbName" name="dbName" value="{$dbName}" required="required" class="medium" />
 				<small>{lang}wcf.global.configureDB.database.description{/lang}</small>
 			</dd>
 		</dl>
@@ -41,24 +41,24 @@
 		<dl>
 			<dt><label for="dbNumber">{lang}wcf.global.configureDB.number{/lang}</label></dt>
 			<dd>
-				<input type="number" id="dbNumber" name="dbNumber" value="{$dbNumber}" required="required" min="1" class="short">
+				<input type="number" id="dbNumber" name="dbNumber" value="{$dbNumber}" required="required" min="1" class="short" />
 				<small>{lang}wcf.global.configureDB.number.description{/lang}</small>
 			</dd>
 		</dl>
 	</section>
 		
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s">
-		<input type="hidden" name="send" value="1">
-		<input type="hidden" name="step" value="{@$nextStep}">
-		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}">
-		<input type="hidden" name="languageCode" value="{@$languageCode}">
-		<input type="hidden" name="dev" value="{@$developerMode}">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
+		<input type="hidden" name="send" value="1" />
+		<input type="hidden" name="step" value="{@$nextStep}" />
+		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
+		<input type="hidden" name="languageCode" value="{@$languageCode}" />
+		<input type="hidden" name="dev" value="{@$developerMode}" />
 		{foreach from=$directories key=application item=directory}
 			<input type="hidden" name="directories[{$application}]" value="{$directory}">
 		{/foreach}
 		{foreach from=$selectedLanguages item=language}
-			<input type="hidden" name="selectedLanguages[]" value="{$language}">
+			<input type="hidden" name="selectedLanguages[]" value="{$language}" />
 		{/foreach}
 	</div>
 </form>

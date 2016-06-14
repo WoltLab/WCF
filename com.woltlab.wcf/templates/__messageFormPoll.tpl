@@ -18,7 +18,7 @@
 				<label for="pollQuestion">{lang}wcf.poll.question{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" maxlength="255">
+				<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" maxlength="255" />
 				{if $errorField == 'pollQuestion'}
 					<small class="innerError">
 						{lang}wcf.global.form.error.empty{/lang}
@@ -43,7 +43,7 @@
 				<label for="pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 			</dt>
 			<dd>
-				<input type="datetime" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium" data-ignore-timezone="true">
+				<input type="datetime" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium" data-ignore-timezone="true" />
 				{if $errorField == 'pollEndTime'}
 					<small class="innerError">
 						{lang}wcf.poll.endTime.error.{@$errorType}{/lang}
@@ -56,7 +56,7 @@
 				<label for="pollMaxVotes">{lang}wcf.poll.maxVotes{/lang}</label>
 			</dt>
 			<dd>
-				<input type="number" name="pollMaxVotes" id="pollMaxVotes" value="{@$pollMaxVotes}" min="1" class="tiny">
+				<input type="number" name="pollMaxVotes" id="pollMaxVotes" value="{@$pollMaxVotes}" min="1" class="tiny" />
 				{if $errorField == 'pollMaxVotes'}
 					<small class="innerError">
 						{lang}wcf.poll.maxVotes.error.{@$errorType}{/lang}
@@ -67,19 +67,19 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked="checked"{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
+				<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked="checked"{/if} /> {lang}wcf.poll.isChangeable{/lang}</label>
 			</dd>
 			{if !$pollID && $__wcf->getPollManager()->canStartPublicPoll()}
 				<dd>
-					<label><input type="checkbox" name="pollIsPublic" value="1"{if $pollIsPublic} checked="checked"{/if}> {lang}wcf.poll.isPublic{/lang}</label>
+					<label><input type="checkbox" name="pollIsPublic" value="1"{if $pollIsPublic} checked="checked"{/if} /> {lang}wcf.poll.isPublic{/lang}</label>
 				</dd>
 			{/if}
 			<dd>
-				<label><input type="checkbox" name="pollResultsRequireVote" value="1"{if $pollResultsRequireVote} checked="checked"{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
+				<label><input type="checkbox" name="pollResultsRequireVote" value="1"{if $pollResultsRequireVote} checked="checked"{/if} /> {lang}wcf.poll.resultsRequireVote{/lang}</label>
 				<small>{lang}wcf.poll.resultsRequireVote.description{/lang}</small>
 			</dd>
 			<dd>
-				<label><input type="checkbox" name="pollSortByVotes" value="1"{if $pollSortByVotes} checked="checked"{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
+				<label><input type="checkbox" name="pollSortByVotes" value="1"{if $pollSortByVotes} checked="checked"{/if} /> {lang}wcf.poll.sortByVotes{/lang}</label>
 			</dd>
 		</dl>
 		

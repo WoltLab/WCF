@@ -69,7 +69,7 @@
 				<dt></dt>
 				<dd>
 					<label>
-						<input type="checkbox" id="isMultilingual" name="isMultilingual" value="1"{if $isMultilingual} checked="checked"{/if}>
+						<input type="checkbox" id="isMultilingual" name="isMultilingual" value="1"{if $isMultilingual} checked="checked"{/if} />
 						<span>{lang}wcf.media.isMultilingual{/lang}</span>
 					</label>
 				</dd>
@@ -80,7 +80,7 @@
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt>{lang}wcf.global.title{/lang}</dt>
 				<dd>
-					<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" class="long">
+					<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" class="long" />
 					{if $errorField == 'title'}
 						<small class="innerError">
 							{if $errorType == 'title' || $errorType == 'multilingual'}
@@ -114,7 +114,7 @@
 			<dl{if $errorField == 'altText'} class="formError"{/if}>
 				<dt>{lang}wcf.media.altText{/lang}</dt>
 				<dd>
-					<input type="text" id="altText" name="altText" value="{$i18nPlainValues['altText']}" class="long">
+					<input type="text" id="altText" name="altText" value="{$i18nPlainValues['altText']}" class="long" />
 					{if $errorField == 'altText'}
 						<small class="innerError">
 							{if $errorType == 'title' || $errorType == 'multilingual'}
@@ -134,7 +134,7 @@
 		{event name='sections'}
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>
