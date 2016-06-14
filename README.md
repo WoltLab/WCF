@@ -1,12 +1,12 @@
 WoltLab Suite Core 3.0
 ======================
 
-WoltLab Community Framework is a free web-framework, designed and developed for complex community applications. The framework applies the latest and most modern technologies, it is structured completly object-oriented, constantly enhanced and forms the base for all WoltLab products.
+WoltLab Suite Core is a free web-framework, designed and developed for complex community applications. The framework applies the latest and most modern technologies, it is structured completly object-oriented, constantly enhanced and forms the base for all WoltLab products.
 
 Version notes
 -------------
 
-This is the **EXPERIMENTAL/crash-for-sure** tree of WCF, it contains work in progress subject to change. At no point it is guaranteed to yield a successful build.
+This is the **EXPERIMENTAL/crash-for-sure** tree of WoltLab Suite Core, it contains work in progress subject to change. At no point it is guaranteed to yield a successful build.
 
 Other versions:
 - **stable** branch: [WCF 2.1.x](https://github.com/WoltLab/WCF/tree/master)
@@ -24,7 +24,7 @@ Redactor is **NOT** free software!
 Contribution
 ------------
 
-For information on contributing to Community Framework refer to CONTRIBUTING.md in this folder.
+For information on contributing to WoltLab Suite Core refer to CONTRIBUTING.md in this folder.
 
 License
 -------
