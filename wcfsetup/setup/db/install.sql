@@ -1273,7 +1273,7 @@ CREATE TABLE wcf1_user (
 	banExpires INT(10) NOT NULL DEFAULT 0,
 	activationCode INT(10) NOT NULL DEFAULT 0,
 	lastLostPasswordRequestTime INT(10) NOT NULL DEFAULT 0,
-	lostPasswordKey VARCHAR(40) NOT NULL DEFAULT '',
+	lostPasswordKey CHAR(40) DEFAULT NULL,
 	lastUsernameChange INT(10) NOT NULL DEFAULT 0,
 	newEmail VARCHAR(255) NOT NULL DEFAULT '',
 	oldUsername VARCHAR(255) NOT NULL DEFAULT '',

@@ -2888,20 +2888,13 @@ If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Security Key is invalid.]]></item>
+		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
+		<item name="wcf.user.newPassword.info"><![CDATA[You are setting a new password for the user “{$user->username}”.]]></item>
+		<item name="wcf.user.newPassword.success"><![CDATA[The password of the user “{$user->username}” has been changed successfully. You may now login with your new password.]]></item>
 		<item name="wcf.user.userID.error.notValid"><![CDATA[User ID is invalid.]]></item>
-		<item name="wcf.user.newPassword.mail"><![CDATA[Dear {@$username},
-
-your new password for "{@PAGE_TITLE|language}" is:
-{@$newPassword}
-
-
-You can change your password any time at:
-{link controller='AccountManagement' isEmail=true}{/link} ]]></item>
-		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
+		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[Heads up! You’re editing your own user account, careless changes might lock you out!]]></item>
 		<item name="wcf.user.accountManagement.password.description"><![CDATA[Please confirm changes with your <u>current</u> password!]]></item>
-		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
 		<item name="wcf.user.changeUsername"><![CDATA[Change Username]]></item>
 		<item name="wcf.user.changeUsername.description"><![CDATA[You may change your username every {$renamePeriod} days. Changes between uppercase or lowercase are always allowed.
 		{if $__wcf->getUser()->lastUsernameChange}Last change was {@$__wcf->getUser()->lastUsernameChange|date}.{/if}]]></item>

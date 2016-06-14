@@ -7,8 +7,8 @@ use wcf\system\exception\UserInputException;
 use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the lost password form.
@@ -95,7 +95,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		// generate a new lost password key
-		$lostPasswordKey = StringUtil::getRandomID();
+		$lostPasswordKey = bin2hex(CryptoUtil::randomBytes(20));
 		
 		// save key and request time in database
 		$this->objectAction = new UserAction([$this->user], 'update', [
