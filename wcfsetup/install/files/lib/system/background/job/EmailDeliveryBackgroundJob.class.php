@@ -23,10 +23,16 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	protected $email;
 	
 	/**
+	 * sender mailbox
+	 * @var	\wcf\system\email\Mailbox
+	 */
+	protected $envelopeFrom;
+	
+	/**
 	 * recipient mailbox
 	 * @var	\wcf\system\email\Mailbox
 	 */
-	protected $mailbox;
+	protected $envelopeTo;
 	
 	/**
 	 * instance of the default transport
@@ -38,12 +44,14 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	 * Creates the job using the given the email and the destination mailbox.
 	 * 
 	 * @param	\wcf\system\email\Email		$email
-	 * @param	\wcf\system\email\Mailbox	$mailbox
+	 * @param	\wcf\system\email\Mailbox	$envelopeFrom
+	 * @param	\wcf\system\email\Mailbox	$envelopeTo
 	 * @see		\wcf\system\email\transport\EmailTransport
 	 */
-	public function __construct(Email $email, Mailbox $mailbox) {
+	public function __construct(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		$this->email = $email;
-		$this->mailbox = $mailbox;
+		$this->envelopeFrom = $envelopeFrom;
+		$this->envelopeTo = $envelopeTo;
 	}
 	
 	/**
@@ -72,7 +80,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 		}
 		
 		try {
-			self::$transport->deliver($this->email, $this->mailbox);
+			self::$transport->deliver($this->email, $this->envelopeFrom, $this->envelopeTo);
 		}
 		catch (PermanentFailure $e) {
 			// no need for retrying. Eat Exception and log the error.

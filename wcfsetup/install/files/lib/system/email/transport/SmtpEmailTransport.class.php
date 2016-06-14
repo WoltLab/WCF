@@ -314,13 +314,14 @@ class SmtpEmailTransport implements EmailTransport {
 	 * Delivers the given email using SMTP.
 	 * 
 	 * @param	Email		$email
+	 * @param	Mailbox		$envelopeFrom
 	 * @param	Mailbox		$envelopeTo
 	 * @throws	\Exception
 	 * @throws	PermanentFailure
 	 * @throws	TransientFailure
 	 * @throws	SystemException
 	 */
-	public function deliver(Email $email, Mailbox $envelopeTo) {
+	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		// delivery is locked
 		if ($this->locked instanceof \Exception) {
 			throw $this->locked;

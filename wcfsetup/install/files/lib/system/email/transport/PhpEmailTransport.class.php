@@ -21,9 +21,10 @@ class PhpEmailTransport implements EmailTransport {
 	 * Delivers the given email via mail().
 	 * 
 	 * @param	\wcf\system\email\Email		$email
+	 * @param	\wcf\system\email\Mailbox	$envelopeFrom
 	 * @param	\wcf\system\email\Mailbox	$envelopeTo
 	 */
-	public function deliver(Email $email, Mailbox $envelopeTo) {
+	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		$headers = array_filter($email->getHeaders(), function ($item) {
 			// filter out headers that are either
 			//   a) automatically added by PHP
@@ -42,7 +43,7 @@ class PhpEmailTransport implements EmailTransport {
 		}, $headers));
 		
 		if (MAIL_USE_F_PARAM) {
-			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$email->getSender()->getAddress());
+			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$envelopeFrom->getAddress());
 		}
 		else {
 			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers);

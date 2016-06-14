@@ -492,6 +492,7 @@ class Email {
 			$data = [
 				'mail' => $mail,
 				'recipient' => $recipient,
+				'sender' => $mail->getSender(),
 				'skip' => false
 			];
 			EventHandler::getInstance()->fireAction($this, 'getJobs', $data);
@@ -499,7 +500,7 @@ class Email {
 			// an event decided that this email should be skipped
 			if ($data['skip']) continue;
 			
-			$jobs[] = new EmailDeliveryBackgroundJob($mail, $recipient['mailbox']);
+			$jobs[] = new EmailDeliveryBackgroundJob($mail, $data['sender'], $data['recipient']['mailbox']);
 		}
 		
 		return $jobs;

@@ -39,10 +39,11 @@ class DebugEmailTransport implements EmailTransport {
 	 * Writes the given $email into the mbox.
 	 * 
 	 * @param	\wcf\system\email\Email		$email
+	 * @param	\wcf\system\email\Mailbox	$envelopeFrom
 	 * @param	\wcf\system\email\Mailbox	$envelopeTo
 	 */
-	public function deliver(Email $email, Mailbox $envelopeTo) {
-		$this->mbox->write("From ".$email->getSender()->getAddress()." ".DateUtil::getDateTimeByTimestamp(TIME_NOW)->format('D M d H:i:s Y')."\r\n");
+	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
+		$this->mbox->write("From ".$envelopeFrom->getAddress()." ".DateUtil::getDateTimeByTimestamp(TIME_NOW)->format('D M d H:i:s Y')."\r\n");
 		$this->mbox->write("Delivered-To: ".$envelopeTo->getAddress()."\r\n");
 		$this->mbox->write($email->getEmail());
 		$this->mbox->write("\r\n");
