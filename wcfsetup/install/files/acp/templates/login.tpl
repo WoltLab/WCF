@@ -10,7 +10,7 @@
 		
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-			<dd><input type="text" id="username" name="username" value="{$username}" class="long" />
+			<dd><input type="text" id="username" name="username" value="{$username}" class="long">
 				{if $errorField == 'username'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -25,7 +25,7 @@
 		
 		<dl{if $errorField == 'password'} class="formError"{/if}>
 			<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
-			<dd><input type="password" id="password" name="password" value="" class="long" />
+			<dd><input type="password" id="password" name="password" value="" class="long">
 				{if $errorField == 'password'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -41,8 +41,8 @@
 		{include file='captcha'}
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-			<input type="hidden" name="url" value="{$url}" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			<input type="hidden" name="url" value="{$url}">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>

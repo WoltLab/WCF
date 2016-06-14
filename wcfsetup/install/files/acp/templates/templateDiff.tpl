@@ -46,8 +46,8 @@
 	</section>
 	
 	<div class="formSubmit">
-		<input type="hidden" name="id" value="{$templateID}" />
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="hidden" name="id" value="{$templateID}">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 	</div>
 </form>
 

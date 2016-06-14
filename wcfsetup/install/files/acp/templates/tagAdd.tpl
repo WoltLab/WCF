@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'name'} class="formError"{/if}>
 			<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
+				<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long">
 				{if $errorField == 'name'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -63,7 +63,7 @@
 				<dt><label for="synonyms">{lang}wcf.acp.tag.synonyms{/lang}</label></dt>
 				<dd>
 					<div id="synonymList" class="editableItemList"></div>
-					<input id="synonyms" type="text" value="" class="long" />
+					<input id="synonyms" type="text" value="" class="long">
 				</dd>
 			</dl>
 			
@@ -94,7 +94,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

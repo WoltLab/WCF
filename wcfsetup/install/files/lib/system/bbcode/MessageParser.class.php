@@ -51,7 +51,7 @@ class MessageParser extends BBCodeParser {
 				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
 					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'" />';
+						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'">';
 					}
 				}
 			}
@@ -85,9 +85,9 @@ class MessageParser extends BBCodeParser {
 			// encode html
 			$this->message = StringUtil::encodeHTML($this->message);
 			
-			// converts newlines to <br />'s
+			// converts newlines to <br>'s
 			if ($this->getOutputType() == 'text/html') {
-				$this->message = nl2br($this->message);
+				$this->message = nl2br($this->message, false);
 			}
 		}
 		else {
@@ -137,7 +137,7 @@ class MessageParser extends BBCodeParser {
 	protected function parseSmilies($text, $enableHtml = false) {
 		foreach ($this->smilies as $code => $html) {
 			//$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
-			$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />' : '').')~', $html, $text);
+			$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />|<br>' : '').')~', $html, $text);
 		}
 		
 		return $text;
@@ -228,7 +228,7 @@ class MessageParser extends BBCodeParser {
 	 */
 	public function stripHTML($message) {
 		// remove img tags (smilies)
-		$message = preg_replace('~<img src="[^"]+" alt="([^"]+)" />~', '\\1', $message);
+		$message = preg_replace('~<img src="[^"]+" alt="([^"]+)"(?: /)?>~', '\\1', $message);
 		
 		// strip other HTML tags
 		$message = StringUtil::stripHTML($message);

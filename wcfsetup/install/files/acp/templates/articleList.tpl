@@ -50,21 +50,21 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.article.title{/lang}" class="long" />
+					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.article.title{/lang}" class="long">
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="pageContent" name="content" value="{$content}" placeholder="{lang}wcf.acp.article.content{/lang}" class="long" />
+					<input type="text" id="pageContent" name="content" value="{$content}" placeholder="{lang}wcf.acp.article.content{/lang}" class="long">
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.acp.article.author{/lang}" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.acp.article.author{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -72,7 +72,7 @@
 		</div>
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</section>
@@ -129,7 +129,7 @@
 									{if $article->getImage()}
 										{@$article->getImage()->getElementTag(48)}
 									{else}
-										<img src="{@$__wcf->getPath()}images/placeholderTiny.png" style="width: 48px; height: 48px" alt="" />
+										<img src="{@$__wcf->getPath()}images/placeholderTiny.png" style="width: 48px; height: 48px" alt="">
 									{/if}
 								</span>
 								

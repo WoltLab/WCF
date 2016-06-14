@@ -52,16 +52,16 @@
 		<div class="section">
 			<dl>
 				<dt><label for="packageName">{lang}wcf.acp.package.search.packageName{/lang}</label></dt>
-				<dd><input type="text" id="packageName" value="" class="long" data-search-name="packageName" /></dd>
+				<dd><input type="text" id="packageName" value="" class="long" data-search-name="packageName"></dd>
 			</dl>
 			<dl>
 				<dt><label for="packageDescription">{lang}wcf.acp.package.search.packageDescription{/lang}</label></dt>
-				<dd><input type="text" id="packageDescription" value="" class="long" data-search-name="packageDescription" /></dd>
+				<dd><input type="text" id="packageDescription" value="" class="long" data-search-name="packageDescription"></dd>
 			</dl>
 			<dl>
 				<dt><label for="package">{lang}wcf.acp.package.search.package{/lang}</label></dt>
 				<dd>
-					<input type="text" id="package" value="" class="medium" data-search-name="package" />
+					<input type="text" id="package" value="" class="medium" data-search-name="package">
 					<small>{lang}wcf.acp.package.search.package.description{/lang}</small>
 				</dd>
 			</dl>
@@ -84,7 +84,7 @@
 				<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
 					<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
 					<dd>
-						<input type="file" id="uploadPackage" name="uploadPackage" value="" />
+						<input type="file" id="uploadPackage" name="uploadPackage" value="">
 						{if $errorField == 'uploadPackage'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -103,8 +103,8 @@
 			</div>
 			
 			<div class="formSubmit">
-				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				<input type="hidden" name="action" value="{$action}" />
+				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+				<input type="hidden" name="action" value="{$action}">
 				{@SECURITY_TOKEN_INPUT_TAG}
 			</div>
 		</form>

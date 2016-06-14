@@ -3,7 +3,7 @@
 		<li data-style-id="{@$style->styleID}">
 			<div class="box64">
 				<span>
-					<img src="{@$style->getPreviewImage()}" alt="" />
+					<img src="{@$style->getPreviewImage()}" alt="">
 				</span>
 				<div class="details">
 					<div class="containerHeadline">

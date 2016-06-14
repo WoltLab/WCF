@@ -27,7 +27,7 @@
 		<dl{if $errorField == 'domainName'} class="formError"{/if}>
 			<dt><label for="domainName">{lang}wcf.acp.application.domainName{/lang}</label></dt>
 			<dd>
-				<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long" />
+				<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long">
 				{if $errorField == 'domainName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -44,7 +44,7 @@
 		<dl{if $errorField == 'domainPath'} class="formError"{/if}>
 			<dt><label for="domainPath">{lang}wcf.acp.application.domainPath{/lang}</label></dt>
 			<dd>
-				<input type="text" name="domainPath" id="domainPath" value="{$domainPath}" class="long" />
+				<input type="text" name="domainPath" id="domainPath" value="{$domainPath}" class="long">
 				<small>{lang}wcf.acp.application.domainPath.description{/lang}</small>
 				{if $errorField == 'domainPath'}
 					<small class="innerError">
@@ -70,7 +70,7 @@
 		<dl{if $errorField == 'cookieDomain'} class="formError{/if}">
 			<dt><label for="cookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</label></dt>
 			<dd>
-				<input type="text" name="cookieDomain" id="cookieDomain" value="{$cookieDomain}" class="long" />
+				<input type="text" name="cookieDomain" id="cookieDomain" value="{$cookieDomain}" class="long">
 				{if $errorField == 'cookieDomain'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -89,7 +89,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

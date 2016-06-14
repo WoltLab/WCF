@@ -20,7 +20,7 @@ class TextInputFormElement extends AbstractNamedFormElement {
 <dl{$this->getErrorClass()}>
 	<dt><label for="{$this->getName()}">{$this->getLabel()}</label></dt>
 	<dd>
-		<input type="text" id="{$this->getName()}" name="{$formName}{$this->getName()}" value="{$this->getValue()}" class="long" />
+		<input type="text" id="{$this->getName()}" name="{$formName}{$this->getName()}" value="{$this->getValue()}" class="long">
 		<small>{$this->getDescription()}</small>
 		{$this->getErrorField()}
 	</dd>

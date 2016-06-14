@@ -7,7 +7,7 @@
 		<dl{if $errorField === 'limit'} class="formError"{/if}>
 			<dt>{lang}wcf.acp.box.settings.limit{/lang}</dt>
 			<dd>
-				<input type="number" name="limit" id="limit" value="{$limit}" min="{$minimumLimit}"{if $maximumLimit !== null} max="{$maximumLimit}"{/if} class="tiny" />
+				<input type="number" name="limit" id="limit" value="{$limit}" min="{$minimumLimit}"{if $maximumLimit !== null} max="{$maximumLimit}"{/if} class="tiny">
 				{if $errorField === 'limit'}
 					<small class="innerError">
 						{if $errorType === 'lessThan'}

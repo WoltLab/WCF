@@ -44,11 +44,11 @@
 	</section>
 
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
-		<input type="hidden" name="step" value="{@$nextStep}" />
-		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
-		<input type="hidden" name="languageCode" value="{@$languageCode}" />
-		<input type="hidden" name="dev" value="{@$developerMode}" />
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s">
+		<input type="hidden" name="step" value="{@$nextStep}">
+		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}">
+		<input type="hidden" name="languageCode" value="{@$languageCode}">
+		<input type="hidden" name="dev" value="{@$developerMode}">
 	</div>
 </form>
 

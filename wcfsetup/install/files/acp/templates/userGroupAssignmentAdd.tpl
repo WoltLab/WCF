@@ -33,7 +33,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$title}" class="long" />
+				<input type="text" id="title" name="title" value="{$title}" class="long">
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -63,7 +63,7 @@
 		<dl class="formError">
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked="checked"{/if} /> {lang}wcf.acp.group.assignment.isDisabled{/lang}</label>
+				<label><input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.group.assignment.isDisabled{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -86,8 +86,8 @@
 	</section>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		<input type="hidden" name="action" value="{@$action}" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="hidden" name="action" value="{@$action}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

@@ -42,7 +42,7 @@
 					<tr>
 						<td class="columnID columnSessionLogID">{@$sessionLog->sessionLogID}</td>
 						<td class="columnTitle columnUsername"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></td>
-						<td class="columnSmallText columnIpAddress"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</td>
+						<td class="columnSmallText columnIpAddress"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</td>
 						<td class="columnSmallText columnUserAgent" title="{$sessionLog->userAgent}"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->userAgent|truncate:75|tableWordwrap}</a></td>
 						<td class="columnDate columnTime">{@$sessionLog->time|time}</td>
 						<td class="columnDate columnLastActivityTime">{@$sessionLog->lastActivityTime|time}</td>

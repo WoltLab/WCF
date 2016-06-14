@@ -136,7 +136,7 @@ class StyleHandler extends SingletonFactory {
 			}
 		}
 		
-		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'?m='.filemtime(WCF_DIR.$filename).'" />';
+		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'?m='.filemtime(WCF_DIR.$filename).'">';
 	}
 	
 	/**

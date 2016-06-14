@@ -7,7 +7,7 @@
 				<dl>
 					<dt><label for="__userTitle">{lang}wcf.user.userTitle{/lang}</label></dt>
 					<dd>
-						<input type="text" id="__userTitle" name="values[__userTitle]" value="{$__userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}" />
+						<input type="text" id="__userTitle" name="values[__userTitle]" value="{$__userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}">
 						{if $errorType[__userTitle]|isset}
 							<small class="innerError">
 								{lang}wcf.user.userTitle.error.{@$errorType[__userTitle]}{/lang}

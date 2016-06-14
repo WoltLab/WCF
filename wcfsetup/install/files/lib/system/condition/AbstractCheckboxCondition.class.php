@@ -56,7 +56,7 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition {
 	 * @inheritDoc
 	 */
 	public function getFieldElement() {
-		return '<label><input type="checkbox" name="' . $this->fieldName . '" id="' . $this->fieldName . '"'.($this->fieldValue ? ' checked="checked"' : '').' /> '.WCF::getLanguage()->get($this->label).'</label>';
+		return '<label><input type="checkbox" name="' . $this->fieldName . '" id="' . $this->fieldName . '"'.($this->fieldValue ? ' checked="checked"' : '').'> '.WCF::getLanguage()->get($this->label).'</label>';
 	}
 	
 	/**

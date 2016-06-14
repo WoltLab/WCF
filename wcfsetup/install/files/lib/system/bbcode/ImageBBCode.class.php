@@ -47,7 +47,7 @@ class ImageBBCode extends AbstractBBCode {
 				$style .= 'width: ' . $openingTag['attributes'][2] . 'px;';
 			}
 			
-			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($style ? ' style="' . $style . '"' : '').($dataSource ? ' data-source="'.StringUtil::encodeJS($dataSource).'"' : '').' />';
+			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($style ? ' style="' . $style . '"' : '').($dataSource ? ' data-source="'.StringUtil::encodeJS($dataSource).'"' : '').'>';
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
 			$src = StringUtil::decodeHTML($src);

@@ -14,7 +14,7 @@
 		<ul id="benchmarkDetails" style="display: none;">
 			{foreach from=$__wcf->getBenchmark()->getItems() key=benchmarkIndex item=item}
 				<li id="benchmarkItem{@$benchmarkIndex}" style="margin-bottom: 8px;"{if $item.use >= 0.01} class="hot"{/if}>
-					<span>{if $item.type == 1}(SQL Query) {/if}{$item.text}</span><br />
+					<span>{if $item.type == 1}(SQL Query) {/if}{$item.text}</span><br>
 					<small style="font-size: .85em">Execution time: {@$item.use}s</small>
 				
 				<pre style="display: none">{foreach from=$item.trace key=traceNo item=traceItem}#{#$traceNo} {if !$traceItem.class|empty}{$traceItem.class}{$traceItem.type}{else}{if !$traceItem.file|empty}{$traceItem.file}: {/if}{/if}{$traceItem.function}() {if !$traceItem.line|empty}(line {#$traceItem.line}){/if} 

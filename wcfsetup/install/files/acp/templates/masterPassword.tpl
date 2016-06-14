@@ -19,7 +19,7 @@
 		<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
 			<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
+				<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium">
 				{if $errorField == 'masterPassword'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -39,8 +39,8 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		<input type="hidden" name="url" value="{$url}" />
+		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="hidden" name="url" value="{$url}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

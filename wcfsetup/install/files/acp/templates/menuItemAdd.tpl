@@ -66,7 +66,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" name="title" id="title" value="{$title}" class="long" required="required" />
+				<input type="text" name="title" id="title" value="{$title}" class="long" required="required">
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'multilingual'}
@@ -90,8 +90,8 @@
 		<dl>
 			<dt></dt>
 			<dd class="floated">
-				<label><input type="radio" name="isInternalLink" value="1"{if $isInternalLink} checked="checked"{/if} /> {lang}wcf.acp.menu.item.link.internal{/lang}</label>
-				<label><input type="radio" name="isInternalLink" value="0"{if !$isInternalLink} checked="checked"{/if} /> {lang}wcf.acp.menu.item.link.external{/lang}</label>
+				<label><input type="radio" name="isInternalLink" value="1"{if $isInternalLink} checked="checked"{/if}> {lang}wcf.acp.menu.item.link.internal{/lang}</label>
+				<label><input type="radio" name="isInternalLink" value="0"{if !$isInternalLink} checked="checked"{/if}> {lang}wcf.acp.menu.item.link.external{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -139,7 +139,7 @@
 		<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $isInternalLink} style="display: none;"{/if}>
 			<dt><label for="externalURL">{lang}wcf.acp.menu.item.externalURL{/lang}</label></dt>
 			<dd>
-				<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" />
+				<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long">
 				{if $errorField == 'externalURL'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -163,7 +163,7 @@
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.acp.menu.item.showOrder{/lang}</label></dt>
 			<dd>
-				<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0" />
+				<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0">
 			</dd>
 		</dl>
 		
@@ -171,7 +171,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
+					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
 				</dd>
 			</dl>
 		{/if}
@@ -182,8 +182,8 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
-		{if $action == 'add'}<input type="hidden" name="menuID" value="{@$menuID}" />{/if}
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}">
+		{if $action == 'add'}<input type="hidden" name="menuID" value="{@$menuID}">{/if}
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

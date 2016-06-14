@@ -117,8 +117,8 @@
 			</section>
 			
 			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				<input type="hidden" name="sourceSelection" value="1" />
+				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+				<input type="hidden" name="sourceSelection" value="1">
 				{@SECURITY_TOKEN_INPUT_TAG}
 			</div>
 		</form>
@@ -135,10 +135,10 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd class="jsImportCollection">
-						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if} /> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 						<p>
 							{foreach from=$objectTypes item=objectTypeName}
-								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if} /> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 							{/foreach}
 						</p>
 					</dd>
@@ -154,8 +154,8 @@
 			<dl>
 				<dt><label for="userMergeMode">{lang}wcf.acp.dataImport.configure.settings.userMergeMode{/lang}</label></dt>
 				<dd>
-					<label><input type="radio" id="userMergeMode" name="userMergeMode" value="4" {if $userMergeMode == 4}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.4{/lang}</label>
-					<label><input type="radio" name="userMergeMode" value="5" {if $userMergeMode == 5}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.5{/lang}</label>
+					<label><input type="radio" id="userMergeMode" name="userMergeMode" value="4"{if $userMergeMode == 4} checked="checked"{/if}> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.4{/lang}</label>
+					<label><input type="radio" name="userMergeMode" value="5"{if $userMergeMode == 5} checked="checked"{/if}> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.5{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -168,35 +168,35 @@
 			<dl>
 				<dt><label for="dbHost">{lang}wcf.acp.dataImport.configure.database.host{/lang}</label></dt>
 				<dd>
-					<input type="text" id="dbHost" name="dbHost" value="{$dbHost}" class="long" />
+					<input type="text" id="dbHost" name="dbHost" value="{$dbHost}" class="long">
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt><label for="dbUser">{lang}wcf.acp.dataImport.configure.database.user{/lang}</label></dt>
 				<dd>
-					<input type="text" id="dbUser" name="dbUser" value="{$dbUser}" class="medium" />
+					<input type="text" id="dbUser" name="dbUser" value="{$dbUser}" class="medium">
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt><label for="dbPassword">{lang}wcf.acp.dataImport.configure.database.password{/lang}</label></dt>
 				<dd>
-					<input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium" autocomplete="off" />
+					<input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium" autocomplete="off">
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt><label for="dbName">{lang}wcf.acp.dataImport.configure.database.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium" />
+					<input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium">
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt><label for="dbPrefix">{lang}wcf.acp.dataImport.configure.database.prefix{/lang}</label></dt>
 				<dd>
-					<input type="text" id="dbPrefix" name="dbPrefix" value="{$dbPrefix}" class="short" />
+					<input type="text" id="dbPrefix" name="dbPrefix" value="{$dbPrefix}" class="short">
 					{if $errorField == 'database'}
 						<small class="innerError">{lang}wcf.acp.dataImport.configure.database.error{/lang}</small>
 					{/if}
@@ -212,7 +212,7 @@
 			<dl{if $errorField == 'fileSystemPath'} class="formError"{/if}>
 				<dt><label for="fileSystemPath">{lang}wcf.acp.dataImport.configure.fileSystem.path{/lang}</label></dt>
 				<dd>
-					<input type="text" id="fileSystemPath" name="fileSystemPath" value="{$fileSystemPath}" class="long" />
+					<input type="text" id="fileSystemPath" name="fileSystemPath" value="{$fileSystemPath}" class="long">
 					{if $errorField == 'fileSystemPath'}
 						<small class="innerError">{lang}wcf.acp.dataImport.configure.fileSystem.path.error{/lang}</small>
 					{/if}
@@ -226,8 +226,8 @@
 		{event name='sections'}
 		
 		<div class="formSubmit">
-			<input type="hidden" name="exporterName" value="{$exporterName}" />
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="hidden" name="exporterName" value="{$exporterName}">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>

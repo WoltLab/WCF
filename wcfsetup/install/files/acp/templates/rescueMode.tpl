@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
-	<meta charset="utf-8" />
-	<meta name="robots" content="noindex" />
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex">
 	<title>{lang}wcf.acp.rescueMode{/lang} - {lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600">
@@ -51,7 +51,7 @@
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="long" />
+				<input type="text" id="username" name="username" value="{$username}" class="long">
 				{if $errorField == 'username'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -69,7 +69,7 @@
 		<dl{if $errorField == 'password'} class="formError"{/if}>
 			<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 			<dd>
-				<input type="password" id="password" name="password" value="" class="long" />
+				<input type="password" id="password" name="password" value="" class="long">
 				{if $errorField == 'password'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

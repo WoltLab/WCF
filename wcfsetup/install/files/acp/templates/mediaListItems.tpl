@@ -11,7 +11,7 @@
 		<nav class="buttonGroupNavigation">
 			<ul class="smallButtons buttonGroup">
 				<li>
-					<input type="checkbox" class="jsClipboardItem jsMediaCheckbox" data-object-id="{@$media->mediaID}" />
+					<input type="checkbox" class="jsClipboardItem jsMediaCheckbox" data-object-id="{@$media->mediaID}">
 				</li>
 				{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
 					<li>

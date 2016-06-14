@@ -92,7 +92,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

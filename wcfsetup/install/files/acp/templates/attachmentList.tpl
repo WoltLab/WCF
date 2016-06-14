@@ -36,14 +36,14 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.user.username{/lang}" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" placeholder="{lang}wcf.user.username{/lang}" class="long">
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.attachment.filename{/lang}" class="long" />
+					<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.attachment.filename{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -63,7 +63,7 @@
 		</div>
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</section>
@@ -111,7 +111,7 @@
 							<div class="box48">
 								<a href="{link controller='Attachment' id=$attachment->attachmentID}{/link}"{if $attachment->isImage} class="jsImageViewer" title="{$attachment->filename}"{/if}>
 									{if $attachment->tinyThumbnailType}
-										<img src="{link controller='Attachment' id=$attachment->attachmentID}tiny=1{/link}" class="attachmentTinyThumbnail" alt="" />
+										<img src="{link controller='Attachment' id=$attachment->attachmentID}tiny=1{/link}" class="attachmentTinyThumbnail" alt="">
 									{else}
 										<span class="icon icon48 fa-paperclip"></span>
 									{/if}

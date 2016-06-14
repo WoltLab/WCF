@@ -17,7 +17,7 @@
 {include file='formError'}
 
 {if $packageUpdateServer|isset && $packageUpdateServer->errorMessage}
-	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br />{$packageUpdateServer->errorMessage}</p>
+	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$packageUpdateServer->errorMessage}</p>
 {/if}
 
 {if $success|isset}
@@ -29,7 +29,7 @@
 		<dl{if $errorField == 'serverURL'} class="formError"{/if}>
 			<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 			<dd>
-				<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" autofocus="autofocus" class="long" />
+				<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" autofocus="autofocus" class="long">
 				{if $errorField == 'serverURL'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -45,7 +45,7 @@
 		<dl>
 			<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
 			<dd>
-				<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="medium" />
+				<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="medium">
 				<small>{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
 			</dd>
 		</dl>
@@ -53,7 +53,7 @@
 		<dl>
 			<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" autocomplete="off" />
+				<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" autocomplete="off">
 				<small>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</small>
 			</dd>
 		</dl>
@@ -64,7 +64,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

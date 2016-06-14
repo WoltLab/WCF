@@ -25,7 +25,7 @@
 			</dt>
 			<dd class="jsOnly">
 				<div id="recaptcha_image"></div>
-				<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" class="medium" />
+				<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" class="medium">
 				{if (($errorType|isset && $errorType|is_array && $errorType[recaptchaString]|isset) || ($errorField|isset && $errorField == 'recaptchaString'))}
 					{if $errorType|is_array && $errorType[recaptchaString]|isset}
 						{assign var='__errorType' value=$errorType[recaptchaString]}
@@ -58,9 +58,9 @@
 				<script data-relocate="true" src="//www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
 				<noscript>
 					<dd>
-						<iframe src="//www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br />
+						<iframe src="//www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br>
 						<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-						<input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+						<input type="hidden" name="recaptcha_response_field" value="manual_challenge">
 					</dd>
 					{if (($errorType|isset && $errorType|is_array && $errorType[recaptchaString]|isset) || ($errorField|isset && $errorField == 'recaptchaString'))}
 						{if $errorType|is_array && $errorType[recaptchaString]|isset}

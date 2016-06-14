@@ -87,7 +87,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" name="__submit" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" name="__submit" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

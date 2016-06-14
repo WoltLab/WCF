@@ -40,13 +40,13 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<input type="text" id="tagSearch" name="search" value="{$search}" placeholder="{lang}wcf.acp.tag.list.search.query{/lang}" autofocus="autofocus" class="medium" />
+					<input type="text" id="tagSearch" name="search" value="{$search}" placeholder="{lang}wcf.acp.tag.list.search.query{/lang}" autofocus="autofocus" class="medium">
 				</dd>
 			</dl>
 		</section>
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>
@@ -63,7 +63,7 @@
 		<table data-type="com.woltlab.wcf.tag" class="table jsClipboardContainer">
 			<thead>
 				<tr>
-					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>
+					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
 					<th class="columnID columnTagID{if $sortField == 'tagID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=tagID&sortOrder={if $sortField == 'tagID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.name{/lang}</a></th>
 					<th class="columnDigits columnUsageCount{if $sortField == 'usageCount'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=usageCount&sortOrder={if $sortField == 'usageCount' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.usageCount{/lang}</a></th>
@@ -77,7 +77,7 @@
 			<tbody>
 				{foreach from=$objects item=tag}
 					<tr class="jsTagRow jsClipboardObject">
-						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}" /></td>
+						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}"></td>
 						<td class="columnIcon">
 							<a href="{link controller='TagEdit' object=$tag}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$tag->tagID}" data-confirm-message-html="{lang __encode=true}wcf.acp.tag.delete.sure{/lang}"></span>

@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{lang}wcf.global.redirect.title{/lang}{/capture}
 
 {capture assign='headContent'}
-	<meta http-equiv="refresh" content="{if $wait|isset}{@$wait}{else}10{/if};URL={$url}" />
+	<meta http-equiv="refresh" content="{if $wait|isset}{@$wait}{else}10{/if};URL={$url}">
 {/capture}
 
 {include file='header' __disableAds=true}

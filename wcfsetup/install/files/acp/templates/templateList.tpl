@@ -70,7 +70,7 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" placeholder="{lang}wcf.global.name{/lang}" class="long" />
+					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" placeholder="{lang}wcf.global.name{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -78,7 +78,7 @@
 		</div>
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</section>

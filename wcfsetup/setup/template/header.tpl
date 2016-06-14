@@ -3,9 +3,9 @@
 <head>
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.title{/lang}</title>
 	
-	<meta charset="utf-8" />
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css">
 	
 	{if !$lastStep|isset}
 		<style type="text/css">
@@ -32,7 +32,7 @@
 				<div>
 					<div class="layoutBoundary">
 						<div id="pageHeaderLogo" class="pageHeaderLogo">
-							<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo.png" alt="" style="height: 40px; width: 288px;" />
+							<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo.png" alt="" style="height: 40px; width: 288px;">
 						</div>
 					</div>
 				</div>

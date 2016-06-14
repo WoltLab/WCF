@@ -64,7 +64,7 @@
 			<dl{if $errorField == 'label'} class="formError"{/if}>
 				<dt><label for="label">{lang}wcf.acp.label.label{/lang}</label></dt>
 				<dd>
-					<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus="autofocus" class="long" />
+					<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus="autofocus" class="long">
 					{if $errorField == 'label'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -83,7 +83,7 @@
 			<dl>
 				<dt><label for="showOrder">{lang}wcf.acp.label.showOrder{/lang}</label></dt>
 				<dd>
-					<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}" />
+					<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}">
 					<small>{lang}wcf.acp.label.showOrder.description{/lang}</small>
 				</dd>
 			</dl>
@@ -94,9 +94,9 @@
 					<ul id="labelList" class="inlineList">
 						{foreach from=$availableCssClassNames item=className}
 							{if $className == 'custom'}
-								<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long" /></span></li>
+								<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
 							{else}
-								<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if} /> <span class="badge label{if $className != 'none'} {$className}{/if}">Label</span></label></li>
+								<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">Label</span></label></li>
 							{/if}
 						{/foreach}
 					</ul>
@@ -119,7 +119,7 @@
 		{event name='sections'}
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>
