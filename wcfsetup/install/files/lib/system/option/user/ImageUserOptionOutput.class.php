@@ -21,6 +21,6 @@ class ImageUserOptionOutput implements IUserOptionOutput {
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value)) return '';
 		
-		return '<img src="'.StringUtil::encodeHTML($value).'" alt="" />';
+		return '<img src="'.StringUtil::encodeHTML($value).'" alt="">';
 	}
 }

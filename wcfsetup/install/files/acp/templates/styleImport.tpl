@@ -27,7 +27,7 @@
 		<dl{if $errorField == 'source'} class="formError"{/if}>
 			<dt><label for="source">{lang}wcf.acp.style.import.source.upload{/lang}</label></dt>
 			<dd>
-				<input type="file" id="source" name="source" value="" />
+				<input type="file" id="source" name="source" value="">
 				{if $errorField == 'source'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -47,7 +47,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

@@ -46,7 +46,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
 <dl>
 	<dt></dt>
 	<dd>
-		<label><input type="checkbox" name="birthdayToday" id="birthdayToday"{$checked} /> {$label}</label>
+		<label><input type="checkbox" name="birthdayToday" id="birthdayToday"{$checked}> {$label}</label>
 	</dd>
 </dl>
 HTML;

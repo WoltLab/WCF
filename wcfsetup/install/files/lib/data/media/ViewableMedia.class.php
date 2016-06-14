@@ -51,7 +51,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 		if ($this->isImage && $this->tinyThumbnailType) {
 			$tinyThumbnail = Media::getThumbnailSizes()['tiny'];
 			if ($size <= $tinyThumbnail['width'] && $size <= $tinyThumbnail['height']) {
-				return '<img src="' . $this->getThumbnailLink('tiny') . '" alt="' . StringUtil::encodeHTML($this->altText) . '" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $size . 'px; height: ' . $size . 'px;" />';
+				return '<img src="' . $this->getThumbnailLink('tiny') . '" alt="' . StringUtil::encodeHTML($this->altText) . '" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $size . 'px; height: ' . $size . 'px;">';
 			}
 		}
 		

@@ -24,7 +24,7 @@
 			<dl{if $errorField == 'password'} class="formError"{/if}>
 				<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 				<dd>
-					<input type="password" id="password" name="password" value="" required="required" class="medium" />
+					<input type="password" id="password" name="password" value="" required="required" class="medium">
 					{if $errorField == 'password'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -47,7 +47,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.newUsername{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required="required" pattern="^[^,]{ldelim}{REGISTER_USERNAME_MIN_LENGTH},{REGISTER_USERNAME_MAX_LENGTH}}$" class="medium" />
+					<input type="text" id="username" name="username" value="{$username}" required="required" pattern="^[^,]{ldelim}{REGISTER_USERNAME_MIN_LENGTH},{REGISTER_USERNAME_MAX_LENGTH}}$" class="medium">
 						
 					{if $errorField == 'username'}
 						<small class="innerError">
@@ -74,7 +74,7 @@
 			<dl{if $errorField == 'newPassword'} class="formError"{/if}>
 				<dt><label for="newPassword">{lang}wcf.user.newPassword{/lang}</label></dt>
 				<dd>
-					<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium" />
+					<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium">
 						
 					{if $errorField == 'newPassword'}
 						<small class="innerError">
@@ -88,7 +88,7 @@
 			<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
 				<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 				<dd>
-					<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium" />
+					<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium">
 						
 					{if $errorField == 'confirmNewPassword'}
 						<small class="innerError">
@@ -110,7 +110,7 @@
 			<dl{if $errorField == 'email'} class="formError"{/if}>
 				<dt><label for="email">{lang}wcf.user.newEmail{/lang}</label></dt>
 				<dd>
-					<input type="email" id="email" name="email" value="{$email}" class="medium" />
+					<input type="email" id="email" name="email" value="{$email}" class="medium">
 						
 					{if $errorField == 'email'}
 						<small class="innerError">
@@ -125,7 +125,7 @@
 			<dl{if $errorField == 'confirmEmail'} class="formError"{/if}>
 				<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
 				<dd>
-					<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
+					<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium">
 						
 					{if $errorField == 'confirmEmail'}
 						<small class="innerError">
@@ -159,14 +159,14 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" name="cancelQuit" value="1" {if $cancelQuit == 1}checked="checked" {/if}/> {lang}wcf.user.quit.cancel{/lang}</label>
+						<label><input type="checkbox" name="cancelQuit" value="1"{if $cancelQuit == 1} checked="checked"{/if}> {lang}wcf.user.quit.cancel{/lang}</label>
 					</dd>
 				</dl>
 			{else}
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" name="quit" value="1" {if $quit == 1}checked="checked" {/if}/> {lang}wcf.user.quit.sure{/lang}</label>
+						<label><input type="checkbox" name="quit" value="1"{if $quit == 1} checked="checked"{/if}> {lang}wcf.user.quit.sure{/lang}</label>
 						<small>{lang}wcf.user.quit.description{/lang}</small>
 					</dd>
 				</dl>
@@ -185,7 +185,7 @@
 					<dl>
 						<dt>{lang}wcf.user.3rdparty.{@$__authProvider}{/lang}</dt>
 						<dd>
-							<label><input type="checkbox" name="{@$__authProvider}Disconnect" value="1" /> {lang}wcf.user.3rdparty.{@$__authProvider}.disconnect{/lang}</label>
+							<label><input type="checkbox" name="{@$__authProvider}Disconnect" value="1"> {lang}wcf.user.3rdparty.{@$__authProvider}.disconnect{/lang}</label>
 						</dd>
 					</dl>
 				{elseif !$__wcf->getUser()->hasAdministrativeAccess()}
@@ -194,7 +194,7 @@
 							<dt>{lang}wcf.user.3rdparty.github{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__githubToken')}
-									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
+									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
 								{else}
 									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
 								{/if}
@@ -207,7 +207,7 @@
 							<dt>{lang}wcf.user.3rdparty.twitter{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__twitterData')}
-									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
+									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
 								{else}
 									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
 								{/if}
@@ -220,7 +220,7 @@
 							<dt>{lang}wcf.user.3rdparty.facebook{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__facebookData')}
-									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
+									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
 								{else}
 									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
 								{/if}
@@ -233,7 +233,7 @@
 							<dt>{lang}wcf.user.3rdparty.google{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__googleData')}
-									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
+									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 								{else}
 									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
 								{/if}
@@ -250,7 +250,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

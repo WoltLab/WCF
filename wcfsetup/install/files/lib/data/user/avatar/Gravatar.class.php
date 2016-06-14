@@ -146,7 +146,7 @@ class Gravatar extends DefaultAvatar {
 				break;
 		}
 		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage" />';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage">';
 	}
 	
 	/**

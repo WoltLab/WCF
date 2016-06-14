@@ -44,7 +44,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="medium" />
+				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="medium">
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -78,7 +78,7 @@
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.acp.paidSubscription.showOrder{/lang}</label></dt>
 			<dd>
-				<input type="number" id="showOrder" name="showOrder" value="{if $showOrder}{@$showOrder}{/if}" class="tiny" min="0" />
+				<input type="number" id="showOrder" name="showOrder" value="{if $showOrder}{@$showOrder}{/if}" class="tiny" min="0">
 				<small>{lang}wcf.acp.paidSubscription.showOrder.description{/lang}</small>
 			</dd>
 		</dl>
@@ -86,7 +86,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isDisabled" value="1" {if $isDisabled}checked="checked" {/if}/> {lang}wcf.acp.paidSubscription.isDisabled{/lang}</label>
+				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.paidSubscription.isDisabled{/lang}</label>
 				<small>{lang}wcf.acp.paidSubscription.isDisabled.description{/lang}</small>
 			</dd>
 		</dl>
@@ -96,7 +96,7 @@
 				<dt>{lang}wcf.acp.paidSubscription.excludedSubscriptions{/lang}</dt>
 				<dd>
 					{foreach from=$availableSubscriptions item=availableSubscription}
-						<label><input type="checkbox" name="excludedSubscriptionIDs[]" value="{@$availableSubscription->subscriptionID}" {if $availableSubscription->subscriptionID|in_array:$excludedSubscriptionIDs}checked="checked" {/if}/> {$availableSubscription->title|language}</label>
+						<label><input type="checkbox" name="excludedSubscriptionIDs[]" value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID|in_array:$excludedSubscriptionIDs} checked="checked"{/if}> {$availableSubscription->title|language}</label>
 					{/foreach}
 					<small>{lang}wcf.acp.paidSubscription.excludedSubscriptions.description{/lang}</small>
 				</dd>
@@ -112,7 +112,7 @@
 		<dl{if $errorField == 'cost'} class="formError"{/if}>
 			<dt><label for="cost">{lang}wcf.acp.paidSubscription.cost{/lang}</label></dt>
 			<dd>
-				<input type="number" id="cost" name="cost" value="{$cost}" class="tiny" step="0.01" min="0" />
+				<input type="number" id="cost" name="cost" value="{$cost}" class="tiny" step="0.01" min="0">
 				<select name="currency" id="currency">
 					{htmlOptions values=$availableCurrencies output=$availableCurrencies selected=$currency}
 				</select>
@@ -131,14 +131,14 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" id="subscriptionLengthPermanent" name="subscriptionLengthPermanent" value="1" {if !$subscriptionLength}checked="checked" {/if}/> {lang}wcf.acp.paidSubscription.subscriptionLength.permanent{/lang}</label>
+				<label><input type="checkbox" id="subscriptionLengthPermanent" name="subscriptionLengthPermanent" value="1"{if !$subscriptionLength} checked="checked"{/if}> {lang}wcf.acp.paidSubscription.subscriptionLength.permanent{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl id="subscriptionLengthDL"{if $errorField == 'subscriptionLength'} class="formError"{/if}>
 			<dt><label for="subscriptionLength">{lang}wcf.acp.paidSubscription.subscriptionLength{/lang}</label></dt>
 			<dd>
-				<input type="number" id="subscriptionLength" name="subscriptionLength" value="{@$subscriptionLength}" class="tiny" />
+				<input type="number" id="subscriptionLength" name="subscriptionLength" value="{@$subscriptionLength}" class="tiny">
 				<select name="subscriptionLengthUnit" id="subscriptionLengthUnit">
 					<option value="D"{if $subscriptionLengthUnit == 'D'} selected="selected"{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.D{/lang}</option>
 					<option value="M"{if $subscriptionLengthUnit == 'M'} selected="selected"{/if}>{lang}wcf.acp.paidSubscription.subscriptionLengthUnit.M{/lang}</option>
@@ -159,7 +159,7 @@
 		<dl id="isRecurringDL">
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isRecurring" value="1" {if $isRecurring}checked="checked" {/if}/> {lang}wcf.acp.paidSubscription.isRecurring{/lang}</label>
+				<label><input type="checkbox" name="isRecurring" value="1"{if $isRecurring} checked="checked"{/if}> {lang}wcf.acp.paidSubscription.isRecurring{/lang}</label>
 				<small>{lang}wcf.acp.paidSubscription.isRecurring.description{/lang}</small>
 			</dd>
 		</dl>
@@ -168,7 +168,7 @@
 			<dt><label>{lang}wcf.acp.paidSubscription.userGroups{/lang}</label></dt>
 			<dd>
 				{foreach from=$availableUserGroups item=userGroup}
-					<label><input type="checkbox" name="groupIDs[]" value="{@$userGroup->groupID}" {if $userGroup->groupID|in_array:$groupIDs}checked="checked" {/if}/> {$userGroup->groupName|language}</label>
+					<label><input type="checkbox" name="groupIDs[]" value="{@$userGroup->groupID}"{if $userGroup->groupID|in_array:$groupIDs} checked="checked"{/if}> {$userGroup->groupName|language}</label>
 				{/foreach}
 				{if $errorField == 'groupIDs'}
 					<small class="innerError">
@@ -188,7 +188,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

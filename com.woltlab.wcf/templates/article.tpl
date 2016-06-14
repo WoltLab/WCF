@@ -40,7 +40,7 @@
 						{if $article->isMultilingual}
 							<li class="dropdown">
 								<a class="dropdownToggle boxFlag box24 button">
-									<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag" /></span>
+									<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
 									<span>{$articleContent->getLanguage()->languageName}</span>
 								</a>
 								<ul class="dropdownMenu">
@@ -48,7 +48,7 @@
 										{if $langArticleContent->getLanguage()}
 											<li class="boxFlag">
 												<a class="box24" href="{$langArticleContent->getLink()}">
-													<span><img src="{$langArticleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag" /></span>
+													<span><img src="{$langArticleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
 													<span>{$langArticleContent->getLanguage()->languageName}</span>
 												</a>
 											</li>
@@ -71,7 +71,7 @@
 	{if $article->isMultilingual}
 		{foreach from=$article->getLanguageLinks() item='langArticleContent'}
 			{if $langArticleContent->getLanguage()}
-				<link rel="alternate" hreflang="{$langArticleContent->getLanguage()->languageCode}" href="{$langArticleContent->getLink()}" />
+				<link rel="alternate" hreflang="{$langArticleContent->getLanguage()->languageCode}" href="{$langArticleContent->getLink()}">
 			{/if}
 		{/foreach}
 	{/if}

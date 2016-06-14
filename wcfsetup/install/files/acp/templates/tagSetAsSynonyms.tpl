@@ -3,7 +3,7 @@
 <ul class="containerBoxList">
 	{foreach from=$tags item=tag}
 		<li>
-			<label><input type="radio" name="tagID" value="{@$tag->tagID}" /> <span class="badge tag">{$tag->name}</span></label>
+			<label><input type="radio" name="tagID" value="{@$tag->tagID}"> <span class="badge tag">{$tag->name}</span></label>
 		</li>
 	{/foreach}
 </ul>

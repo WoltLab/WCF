@@ -8,7 +8,7 @@
 
 <form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
 	<div class="formSubmit">
-		<input type="hidden" name="action" value="WCFSetup" />
+		<input type="hidden" name="action" value="WCFSetup">
 	</div>
 </form>
 

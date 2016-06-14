@@ -1,10 +1,10 @@
 {capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
 {capture assign='headContent'}
-	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
+	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}">
 	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
-		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}" />
+		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">
 	{/if}
 {/capture}
 
@@ -35,7 +35,7 @@
 				</dl>
 			
 				<div class="formSubmit">
-					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 					{@SID_INPUT_TAG}
 				</div>
 			</div>
@@ -141,7 +141,7 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					<div><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="userAvatarImage icon48" /></div>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="userAvatarImage icon48"></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
@@ -161,7 +161,7 @@
 		{capture append=guestsOnlineList}
 			<li>
 				<div class="box48">
-					<div><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon48" /></div>
+					<div><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon48"></div>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">

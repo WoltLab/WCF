@@ -27,7 +27,7 @@
 			<dl{if $errorField == 'optionName'} class="formError"{/if}>
 				<dt><label for="optionName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="optionName" name="optionName" value="{$i18nPlainValues['optionName']}" required="required" autofocus="autofocus" class="long" />
+					<input type="text" id="optionName" name="optionName" value="{$i18nPlainValues['optionName']}" required="required" autofocus="autofocus" class="long">
 					{if $errorField == 'optionName'}
 						<small class="innerError">
 							{if $errorType == 'multilingual'}
@@ -86,7 +86,7 @@
 			<dl>
 				<dt><label for="showOrder">{lang}wcf.acp.user.option.showOrder{/lang}</label></dt>
 				<dd>
-					<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="short" />
+					<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="short">
 				</dd>
 			</dl>
 			
@@ -120,7 +120,7 @@
 			<dl>
 				<dt><label for="defaultValue">{lang}wcf.acp.user.option.defaultValue{/lang}</label></dt>
 				<dd>
-					<input type="text" id="defaultValue" name="defaultValue" value="{$defaultValue}" class="long" />
+					<input type="text" id="defaultValue" name="defaultValue" value="{$defaultValue}" class="long">
 					<small>{lang}wcf.acp.user.option.defaultValue.description{/lang}</small>
 				</dd>
 			</dl>
@@ -145,7 +145,7 @@
 			<dl{if $errorField == 'outputClass'} class="formError"{/if}>
 				<dt><label for="outputClass">{lang}wcf.acp.user.option.outputClass{/lang}</label></dt>
 				<dd>
-					<input type="text" id="outputClass" name="outputClass" value="{$outputClass}" class="long" />
+					<input type="text" id="outputClass" name="outputClass" value="{$outputClass}" class="long">
 					{if $errorField == 'outputClass'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -194,7 +194,7 @@
 			<dl{if $errorField == 'validationPattern'} class="formError"{/if}>
 				<dt><label for="validationPattern">{lang}wcf.acp.user.option.validationPattern{/lang}</label></dt>
 				<dd>
-					<input type="text" id="validationPattern" name="validationPattern" value="{$validationPattern}" class="long" />
+					<input type="text" id="validationPattern" name="validationPattern" value="{$validationPattern}" class="long">
 					{if $errorField == 'validationPattern'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -211,9 +211,9 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="required" id="required" value="1" {if $required == 1}checked="checked" {/if}/> {lang}wcf.acp.user.option.required{/lang}</label>
-					<label><input type="checkbox" name="askDuringRegistration" id="askDuringRegistration" value="1" {if $askDuringRegistration == 1}checked="checked" {/if}/> {lang}wcf.acp.user.option.askDuringRegistration{/lang}</label>
-					<label><input type="checkbox" name="searchable" id="searchable" value="1" {if $searchable == 1}checked="checked" {/if}/> {lang}wcf.acp.user.option.searchable{/lang}</label>
+					<label><input type="checkbox" name="required" id="required" value="1"{if $required == 1} checked="checked"{/if}> {lang}wcf.acp.user.option.required{/lang}</label>
+					<label><input type="checkbox" name="askDuringRegistration" id="askDuringRegistration" value="1"{if $askDuringRegistration == 1} checked="checked"{/if}> {lang}wcf.acp.user.option.askDuringRegistration{/lang}</label>
+					<label><input type="checkbox" name="searchable" id="searchable" value="1"{if $searchable == 1} checked="checked"{/if}> {lang}wcf.acp.user.option.searchable{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -223,7 +223,7 @@
 		{event name='sections'}
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>

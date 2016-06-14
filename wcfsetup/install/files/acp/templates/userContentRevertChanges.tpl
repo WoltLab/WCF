@@ -33,7 +33,7 @@
 		<dl{if $errorField == 'timeframe'} class="formError"{/if}>
 			<dt><label for="timeframe">{lang}wcf.acp.user.revertChanges.timeframe{/lang}</label></dt>
 			<dd>
-				<input name="timeframe" type="number" min="0" value="{$timeframe}" />
+				<input name="timeframe" type="number" min="0" value="{$timeframe}">
 				
 				{if $errorField == 'timeframe'}
 					<small class="innerError">
@@ -50,7 +50,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

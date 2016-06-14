@@ -115,8 +115,8 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 		$end = WCF::getLanguage()->get('wcf.date.period.end');
 		
 		return <<<HTML
-<input type="date" id="{$this->getPropertyName()}StartTime" name="{$this->getPropertyName()}StartTime" value="{$this->startTime}" placeholder="{$start}" />
-<input type="date" id="{$this->getPropertyName()}EndTime" name="{$this->getPropertyName()}EndTime" value="{$this->endTime}" placeholder="{$end}" />
+<input type="date" id="{$this->getPropertyName()}StartTime" name="{$this->getPropertyName()}StartTime" value="{$this->startTime}" placeholder="{$start}">
+<input type="date" id="{$this->getPropertyName()}EndTime" name="{$this->getPropertyName()}EndTime" value="{$this->endTime}" placeholder="{$end}">
 HTML;
 	}
 	

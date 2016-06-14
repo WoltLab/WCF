@@ -51,7 +51,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label for="exportCustomValues"><input type="checkbox" name="exportCustomValues" id="exportCustomValues" value="1" /> {lang}wcf.acp.language.export.customValues{/lang}</label>
+				<label for="exportCustomValues"><input type="checkbox" name="exportCustomValues" id="exportCustomValues" value="1"> {lang}wcf.acp.language.export.customValues{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -61,7 +61,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

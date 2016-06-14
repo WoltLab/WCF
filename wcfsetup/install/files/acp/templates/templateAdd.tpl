@@ -37,7 +37,7 @@
 			<dl{if $errorField == 'tplName'} class="formError"{/if}>
 				<dt><label for="tplName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="tplName" name="tplName" value="{$tplName}" required="required" class="long" />
+					<input type="text" id="tplName" name="tplName" value="{$tplName}" required="required" class="long">
 					{if $errorField == 'tplName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -68,8 +68,8 @@
 		{event name='sections'}
 		
 		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-			{if $copy}<input type="hidden" name="copy" value="{@$copy}" />{/if}
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			{if $copy}<input type="hidden" name="copy" value="{@$copy}">{/if}
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>

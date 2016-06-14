@@ -2,7 +2,7 @@
 	<dl class="jsOnly">
 		<dt><label for="tagSearchInput{if $tagInputSuffix|isset}{@$tagInputSuffix}{/if}">{lang}wcf.tagging.tags{/lang}</label></dt>
 		<dd>
-			<input id="tagSearchInput{if $tagInputSuffix|isset}{@$tagInputSuffix}{/if}" type="text" value="" class="long" />
+			<input id="tagSearchInput{if $tagInputSuffix|isset}{@$tagInputSuffix}{/if}" type="text" value="" class="long">
 			<small>{lang}wcf.tagging.tags.description{/lang}</small>
 		</dd>
 	</dl>

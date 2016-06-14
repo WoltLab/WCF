@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'question'} class="formError"{/if}>
 			<dt><label for="question">{lang}wcf.acp.captcha.question.question{/lang}</label></dt>
 			<dd>
-				<input type="text" id="question" name="question" value="{$i18nPlainValues[question]}" required="required" autofocus="autofocus" class="long" />
+				<input type="text" id="question" name="question" value="{$i18nPlainValues[question]}" required="required" autofocus="autofocus" class="long">
 				{if $errorField == 'question'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -64,7 +64,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> {lang}wcf.acp.captcha.question.isDisabled{/lang}</label>
+				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.captcha.question.isDisabled{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -74,7 +74,7 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

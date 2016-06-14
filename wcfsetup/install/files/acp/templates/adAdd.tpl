@@ -35,7 +35,7 @@
 		<dl{if $errorField == 'adName'} class="formError"{/if}>
 			<dt><label for="adName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="adName" name="adName" value="{$adName}" required="required" autofocus="autofocus" class="long" />
+				<input type="text" id="adName" name="adName" value="{$adName}" required="required" autofocus="autofocus" class="long">
 				{if $errorField == 'adName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -68,7 +68,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> {lang}wcf.acp.ad.isDisabled{/lang}</label>
+				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.ad.isDisabled{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -102,7 +102,7 @@
 		<dl>
 			<dt><label for="showOrder">{lang}wcf.acp.ad.showOrder{/lang}</label></dt>
 			<dd>
-				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0" />
+				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
 				<small>{lang}wcf.acp.ad.showOrder.description{/lang}</small>
 			</dd>
 		</dl>
@@ -153,7 +153,7 @@
 	</section>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

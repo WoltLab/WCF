@@ -87,7 +87,7 @@
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.acp.article.author{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="medium" />
+				<input type="text" id="username" name="username" value="{$username}" class="medium">
 				{if $errorField == 'username'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -103,7 +103,7 @@
 		<dl{if $errorField == 'time'} class="formError"{/if}>
 			<dt><label for="time">{lang}wcf.article.time{/lang}</label></dt>
 			<dd>
-				<input type="datetime" id="time" name="time" value="{$time}" class="medium" />
+				<input type="datetime" id="time" name="time" value="{$time}" class="medium">
 				{if $errorField == 'time'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -119,16 +119,16 @@
 		<dl>
 			<dt><label for="categoryID">{lang}wcf.acp.article.publicationStatus{/lang}</label></dt>
 			<dd>
-				<label><input type="radio" name="publicationStatus" value="0" {if $publicationStatus == 0}checked="checked" {/if}/> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
-				<label><input type="radio" name="publicationStatus" value="1" {if $publicationStatus == 1}checked="checked" {/if}/> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
-				<label><input type="radio" name="publicationStatus" value="2" {if $publicationStatus == 2}checked="checked" {/if}/> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
+				<label><input type="radio" name="publicationStatus" value="0"{if $publicationStatus == 0} checked="checked"{/if}> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
+				<label><input type="radio" name="publicationStatus" value="1"{if $publicationStatus == 1} checked="checked"{/if}> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
+				<label><input type="radio" name="publicationStatus" value="2"{if $publicationStatus == 2} checked="checked"{/if}> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl id="publicationDateDl"{if $errorField == 'publicationDate'} class="formError"{/if}{if $publicationStatus != 2} style="display: none"{/if}>
 			<dt><label for="publicationDate">{lang}wcf.acp.article.publicationDate{/lang}</label></dt>
 			<dd>
-				<input type="datetime" id="publicationDate" name="publicationDate" value="{$publicationDate}" class="medium" />
+				<input type="datetime" id="publicationDate" name="publicationDate" value="{$publicationDate}" class="medium">
 				{if $errorField == 'publicationDate'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -144,7 +144,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input name="enableComments" type="checkbox" value="1"{if $enableComments} checked="checked"{/if} /> {lang}wcf.acp.article.enableComments{/lang}</label>
+				<label><input name="enableComments" type="checkbox" value="1"{if $enableComments} checked="checked"{/if}> {lang}wcf.acp.article.enableComments{/lang}</label>
 			</dd>
 		</dl>
 	</div>
@@ -161,7 +161,7 @@
 							{/if}
 						</div>
 						<p class="button jsMediaSelectButton" data-store="imageID0" data-display="imageDisplay">{lang}wcf.acp.article.image.button.chooseImage{/lang}</p>
-						<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if} />
+						<input type="hidden" name="imageID[0]" id="imageID0"{if $imageID[0]|isset} value="{@$imageID[0]}"{/if}>
 						{if $errorField == 'image'}
 							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
 						{/if}
@@ -179,7 +179,7 @@
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title0">{lang}wcf.acp.article.title{/lang}</label></dt>
 				<dd>
-					<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
+					<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
 					{if $errorField == 'title'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -196,7 +196,7 @@
 				<dl class="jsOnly">
 					<dt><label for="tagSearchInput">{lang}wcf.tagging.tags{/lang}</label></dt>
 					<dd>
-						<input id="tagSearchInput" type="text" value="" class="long" />
+						<input id="tagSearchInput" type="text" value="" class="long">
 						<small>{lang}wcf.tagging.tags.description{/lang}</small>
 					</dd>
 				</dl>
@@ -275,7 +275,7 @@
 										{/if}
 									</div>
 									<p class="button jsMediaSelectButton" data-store="imageID{@$availableLanguage->languageID}" data-display="imageDisplay{@$availableLanguage->languageID}">{lang}wcf.acp.article.image.button.chooseImage{/lang}</p>
-									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if} />
+									<input type="hidden" name="imageID[{@$availableLanguage->languageID}]" id="imageID{@$availableLanguage->languageID}"{if $imageID[$availableLanguage->languageID]|isset} value="{@$imageID[$availableLanguage->languageID]}"{/if}>
 									{if $errorField == 'image'|concat:$availableLanguage->languageID}
 										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
 									{/if}
@@ -293,7 +293,7 @@
 						<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.article.title{/lang}</label></dt>
 							<dd>
-								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" />
+								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
 								{if $errorField == 'title'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
@@ -310,7 +310,7 @@
 							<dl class="jsOnly">
 								<dt><label for="tagSearchInput{@$availableLanguage->languageID}">{lang}wcf.tagging.tags{/lang}</label></dt>
 								<dd>
-									<input id="tagSearchInput{@$availableLanguage->languageID}" type="text" value="" class="long" />
+									<input id="tagSearchInput{@$availableLanguage->languageID}" type="text" value="" class="long">
 									<small>{lang}wcf.tagging.tags.description{/lang}</small>
 								</dd>
 							</dl>

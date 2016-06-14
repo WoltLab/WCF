@@ -23,7 +23,7 @@
 		<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
 			<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
+				<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium">
 				{if $errorField == 'masterPassword'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -40,7 +40,7 @@
 		<dl{if $errorField == 'confirmMasterPassword'} class="formError"{/if}>
 			<dt><label for="confirmMasterPassword">{lang}wcf.acp.masterPassword.confirm{/lang}</label></dt>
 			<dd>
-				<input type="password" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" class="medium" />
+				<input type="password" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" class="medium">
 				{if $errorField == 'confirmMasterPassword'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -57,7 +57,7 @@
 			<dt><label for="exampleMasterPassword">{lang}wcf.acp.masterPassword.example{/lang}</label></dt>
 			<dd>
 				<p><a class="jsTooltip" id="setPassword" title="{lang}wcf.acp.masterPassword.example.set{/lang}">{@$exampleMasterPassword}</a></p>
-				<input type="hidden" id="exampleMasterPassword" name="exampleMasterPassword" value="{@$exampleMasterPassword}" />
+				<input type="hidden" id="exampleMasterPassword" name="exampleMasterPassword" value="{@$exampleMasterPassword}">
 			</dd>
 		</dl>
 		
@@ -67,8 +67,8 @@
 	{event name='sections'}
 	
 	<div class="formSubmit">
-		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		<input type="hidden" name="url" value="{$url}" />
+		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		<input type="hidden" name="url" value="{$url}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

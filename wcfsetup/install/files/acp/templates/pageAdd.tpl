@@ -67,7 +67,7 @@
 				<dl{if $errorField == 'name'} class="formError"{/if}>
 					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long" />
+						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long">
 						{if $errorField == 'name'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -126,7 +126,7 @@
 					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
 						<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
 						<dd>
-							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" />
+							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long">
 							{if $errorField == 'customURL_0'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -144,7 +144,7 @@
 						<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 							<dt><label for="customURL{@$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang} ({$availableLanguage->languageName})</label></dt>
 							<dd>
-								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" />
+								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long">
 								{if $errorField == $__errorFieldName}
 									<small class="innerError">
 										{if $errorType == 'empty'}
@@ -163,7 +163,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1" {if $isLandingPage}checked="checked" {/if}{if $action == 'edit' && $page->isLandingPage}disabled="disabled" {/if}/> {lang}wcf.acp.page.isLandingPage{/lang}</label>
+							<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1"{if $isLandingPage} checked="checked"{/if}{if $action == 'edit' && $page->isLandingPage} disabled="disabled"{/if}> {lang}wcf.acp.page.isLandingPage{/lang}</label>
 						</dd>
 					</dl>
 				{/if}
@@ -172,7 +172,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1" {if $isDisabled}checked="checked" {/if}/> {lang}wcf.acp.page.isDisabled{/lang}</label>
+							<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.page.isDisabled{/lang}</label>
 						</dd>
 					</dl>
 				{/if}
@@ -187,7 +187,7 @@
 					<dl{if $errorField == 'title'} class="formError"{/if}>
 						<dt><label for="title">{lang}wcf.acp.page.title{/lang}</label></dt>
 						<dd>
-							<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" />
+							<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
 							{if $errorField == 'title'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -266,7 +266,7 @@
 								<dl{if $errorField == 'title'} class="formError"{/if}>
 									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.page.title{/lang}</label></dt>
 									<dd>
-										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" />
+										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
 										{if $errorField == 'title'}
 											<small class="innerError">
 												{if $errorType == 'empty'}
@@ -344,7 +344,7 @@
 						<ul class="scrollableCheckboxList">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
-									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if} /> {$availableBox->name}</label>
+									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if}> {$availableBox->name}</label>
 								</li>
 							{/foreach}
 						</ul>

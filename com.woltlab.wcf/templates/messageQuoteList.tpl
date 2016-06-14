@@ -7,7 +7,7 @@
 					{if $userProfiles[$message->getUserID()]|isset}
 						<a href="{link controller='User' object=$userProfiles[$message->getUserID()]}{/link}">{@$userProfiles[$message->getUserID()]->getAvatar()->getImageTag(32)}</a>
 					{else}
-						<span><img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 32px; height: 32px" /></span>
+						<span><img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 32px; height: 32px"></span>
 					{/if}
 					
 					<div class="messageHeaderBox">
@@ -35,7 +35,7 @@
 						{foreach from=$message key=quoteID item=quote}
 							<li data-quote-id="{@$quoteID}">
 								<span>
-									<input type="checkbox" value="1" id="quote_{@$quoteID}" class="jsCheckbox" />
+									<input type="checkbox" value="1" id="quote_{@$quoteID}" class="jsCheckbox">
 									{if $supportPaste}<span class="icon icon16 fa-plus jsTooltip jsInsertQuote" title="{lang}wcf.message.quote.insertQuote{/lang}"></span>{/if}
 								</span>
 								

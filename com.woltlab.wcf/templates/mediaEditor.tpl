@@ -25,7 +25,7 @@
 		<dt></dt>
 		<dd>
 			<label>
-				<input type="checkbox" id="isMultilingual" name="isMultilingual" value="1" />
+				<input type="checkbox" id="isMultilingual" name="isMultilingual" value="1">
 				<span>{lang}wcf.media.isMultilingual{/lang}</span>
 			</label>
 		</dd>
@@ -36,7 +36,7 @@
 	<dl>
 		<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 		<dd>
-			<input type="text" id="title" name="title" class="long" />
+			<input type="text" id="title" name="title" class="long">
 		</dd>
 	</dl>
 	{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=true}
@@ -52,7 +52,7 @@
 	<dl>
 		<dt><label for="altText">{lang}wcf.media.altText{/lang}</label></dt>
 		<dd>
-			<input type="text" id="altText" name="altText" class="long" />
+			<input type="text" id="altText" name="altText" class="long">
 		</dd>
 	</dl>
 	{include file='multipleLanguageInputJavascript' elementIdentifier='altText' forceSelection=true}

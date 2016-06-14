@@ -60,7 +60,7 @@
 				<dl{if $errorType.username|isset} class="formError"{/if}>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 					<dd>
-						<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
+						<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium">
 						{if $errorType.username|isset}
 							<small class="innerError">
 								{if $errorType.username == 'empty'}
@@ -94,7 +94,7 @@
 					<dl{if $errorType.email|isset} class="formError"{/if}>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 						<dd>
-							<input type="email" id="email" name="email" value="{$email}" class="medium" />
+							<input type="email" id="email" name="email" value="{$email}" class="medium">
 							{if $errorType.email|isset}
 								<small class="innerError">
 									{if $errorType.email == 'empty'}
@@ -110,7 +110,7 @@
 					<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
 						<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
 						<dd>
-							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
+							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium">
 							{if $errorType.confirmEmail|isset}
 								<small class="innerError">
 									{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
@@ -130,7 +130,7 @@
 					<dl{if $errorType.password|isset} class="formError"{/if}>
 						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 						<dd>
-							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off" />
+							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off">
 							{if $errorType.password|isset}
 								<small class="innerError">
 									{if $errorType.password == 'empty'}
@@ -146,7 +146,7 @@
 					<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 						<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 						<dd>
-							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off" />
+							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off">
 							{if $errorType.confirmPassword|isset}
 								<small class="innerError">
 									{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
@@ -166,7 +166,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="checkbox" id="banned" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.banUser{/lang}</label>
+							<label><input type="checkbox" id="banned" name="banned" value="1"{if $banned == 1} checked="checked"{/if}> {lang}wcf.acp.user.banUser{/lang}</label>
 							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>	
 						</dd>
 					</dl>
@@ -181,13 +181,13 @@
 					
 					<dl>
 						<dt></dt>
-						<dd><label><input type="checkbox" id="banNeverExpires" name="banNeverExpires" value="1" {if !$banExpires}checked="checked" {/if}/> {lang}wcf.acp.user.ban.neverExpires{/lang}</label></dd>
+						<dd><label><input type="checkbox" id="banNeverExpires" name="banNeverExpires" value="1"{if !$banExpires} checked="checked"{/if}> {lang}wcf.acp.user.ban.neverExpires{/lang}</label></dd>
 					</dl>
 					
 					<dl id="banExpiresSetting">
 						<dt><label for="banExpires">{lang}wcf.acp.user.ban.expires{/lang}</label></dt>
 						<dd>
-							<input type="date" name="banExpires" id="banExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $banExpires} value="{$banExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true" />
+							<input type="date" name="banExpires" id="banExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $banExpires} value="{$banExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true">
 							<small>{lang}wcf.acp.user.ban.expires.description{/lang}</small>
 						</dd>
 					</dl>
@@ -250,7 +250,7 @@
 									</dt>
 									<dd>
 										{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-											<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
+											<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if}> {@$availableLanguage}</label>
 										{/foreach}
 									</dd>
 								</dl>
@@ -261,7 +261,7 @@
 							<dl>
 								<dt><label for="userTitle">{lang}wcf.user.userTitle{/lang}</label></dt>
 								<dd>
-									<input type="text" id="userTitle" name="userTitle" value="{$userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}" />
+									<input type="text" id="userTitle" name="userTitle" value="{$userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}">
 									{if $errorType[userTitle]|isset}
 										<small class="innerError">
 											{lang}wcf.user.userTitle.error.{@$errorType[userTitle]}{/lang}
@@ -301,9 +301,9 @@
 					<dl>
 						<dt>{lang}wcf.message.settings{/lang}</dt>
 						<dd>
-							<label><input id="signatureEnableSmilies" name="signatureEnableSmilies" type="checkbox" value="1"{if $signatureEnableSmilies} checked="checked"{/if} /> {lang}wcf.message.settings.enableSmilies{/lang}</label>
-							<label><input id="signatureEnableBBCodes" name="signatureEnableBBCodes" type="checkbox" value="1"{if $signatureEnableBBCodes} checked="checked"{/if} /> {lang}wcf.message.settings.enableBBCodes{/lang}</label>
-							<label><input id="signatureEnableHtml" name="signatureEnableHtml" type="checkbox" value="1"{if $signatureEnableHtml} checked="checked"{/if} /> {lang}wcf.message.settings.enableHtml{/lang}</label>
+							<label><input id="signatureEnableSmilies" name="signatureEnableSmilies" type="checkbox" value="1"{if $signatureEnableSmilies} checked="checked"{/if}> {lang}wcf.message.settings.enableSmilies{/lang}</label>
+							<label><input id="signatureEnableBBCodes" name="signatureEnableBBCodes" type="checkbox" value="1"{if $signatureEnableBBCodes} checked="checked"{/if}> {lang}wcf.message.settings.enableBBCodes{/lang}</label>
+							<label><input id="signatureEnableHtml" name="signatureEnableHtml" type="checkbox" value="1"{if $signatureEnableHtml} checked="checked"{/if}> {lang}wcf.message.settings.enableHtml{/lang}</label>
 						</dd>
 					</dl>
 					
@@ -317,7 +317,7 @@
 						<dl>
 							<dt></dt>
 							<dd>
-								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1" {if $disableSignature == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature{/lang}</label>
+								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1"{if $disableSignature == 1} checked="checked"{/if}> {lang}wcf.acp.user.disableSignature{/lang}</label>
 							</dd>
 						</dl>
 						
@@ -330,13 +330,13 @@
 						
 						<dl>
 							<dt></dt>
-							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1" {if !$disableSignatureExpires}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
+							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1"{if !$disableSignatureExpires} checked="checked"{/if}> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
 						</dl>
 						
 						<dl id="disableSignatureExpiresSetting">
 							<dt><label for="disableSignatureExpiresExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
 							<dd>
-								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true" />
+								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true">
 								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
 							</dd>
 						</dl>
@@ -387,7 +387,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
+							<label><input type="radio" name="avatarType" value="none"{if $avatarType == 'none'} checked="checked"{/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
 						</dd>
 					</dl>
 					
@@ -398,16 +398,16 @@
 								{if $userAvatar->canCrop()}
 									{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
 									{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
-									{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'" />'}
+									{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'">'}
 								{/if}
 								
 								{@$__customAvatar}
 							{else}
-								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96" />
+								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96">
 							{/if}
 						</dt>
 						<dd>
-							<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
+							<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked="checked"{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
 							
 							{* placeholder for upload button: *}
 							<div></div>
@@ -422,9 +422,9 @@
 					
 					{if MODULE_GRAVATAR}
 						<dl{if $errorType[gravatar]|isset} class="formError"{/if}>
-							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96" /></dt>
+							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
 							<dd>
-								<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
+								<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked="checked"{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 								
 								{if $errorType[gravatar]|isset}
 									<small class="innerError">
@@ -445,7 +445,7 @@
 						<dl>
 							<dt></dt>
 							<dd>
-								<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1" {if $disableAvatar == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar{/lang}</label>
+								<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1"{if $disableAvatar == 1} checked="checked"{/if}> {lang}wcf.acp.user.disableAvatar{/lang}</label>
 							</dd>
 						</dl>
 						
@@ -458,13 +458,13 @@
 						
 						<dl>
 							<dt></dt>
-							<dd><label><input type="checkbox" id="disableAvatarNeverExpires" name="disableAvatarNeverExpires" value="1" {if !$disableAvatarExpires}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar.neverExpires{/lang}</label></dd>
+							<dd><label><input type="checkbox" id="disableAvatarNeverExpires" name="disableAvatarNeverExpires" value="1"{if !$disableAvatarExpires} checked="checked"{/if}> {lang}wcf.acp.user.disableAvatar.neverExpires{/lang}</label></dd>
 						</dl>
 						
 						<dl id="disableAvatarExpiresSetting">
 							<dt><label for="disableAvatarExpiresExpires">{lang}wcf.acp.user.disableAvatar.expires{/lang}</label></dt>
 							<dd>
-								<input type="date" name="disableAvatarExpires" id="disableAvatarExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableAvatarExpires} value="{$disableAvatarExpires|date:'Y-m-d'}"{/if} class="medium" />
+								<input type="date" name="disableAvatarExpires" id="disableAvatarExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableAvatarExpires} value="{$disableAvatarExpires|date:'Y-m-d'}"{/if} class="medium">
 								<small>{lang}wcf.acp.user.disableAvatar.expires.description{/lang}</small>
 							</dd>
 						</dl>
@@ -535,7 +535,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

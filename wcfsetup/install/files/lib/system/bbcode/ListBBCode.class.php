@@ -24,7 +24,7 @@ class ListBBCode extends AbstractBBCode {
 			// remove empty elements
 			foreach ($listElements as $key => $val) {
 				$listElements[$key] = StringUtil::trim($val);
-				if (empty($listElements[$key]) || $listElements[$key] == '<br />') {
+				if (empty($listElements[$key]) || $listElements[$key] == '<br />' || $listElements[$key] == '<br>') {
 					unset($listElements[$key]);
 				}
 			}

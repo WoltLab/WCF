@@ -63,7 +63,7 @@ class SimpleMessageParser extends SingletonFactory {
 				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
 					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'" />';
+						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'">';
 					}
 				}
 			}
@@ -94,8 +94,8 @@ class SimpleMessageParser extends SingletonFactory {
 		// encode html
 		$this->message = StringUtil::encodeHTML($this->message);
 		
-		// converts newlines to <br />'s
-		$this->message = nl2br($this->message);
+		// converts newlines to <br>'s
+		$this->message = nl2br($this->message, false);
 		
 		// parse urls
 		if ($parseURLs) {
@@ -224,7 +224,7 @@ class SimpleMessageParser extends SingletonFactory {
 	public function parseSmilies($text) {
 		foreach ($this->smilies as $code => $html) {
 			//$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote(StringUtil::encodeHTML($code), '~').'(?![^<]*>)~', $html, $text);
-			$text = preg_replace('~(?<=^|\s)'.preg_quote(StringUtil::encodeHTML($code), '~').'(?=$|\s|<br />)~', $html, $text);
+			$text = preg_replace('~(?<=^|\s)'.preg_quote(StringUtil::encodeHTML($code), '~').'(?=$|\s|<br />|<br>)~', $html, $text);
 		}
 		
 		return $text;

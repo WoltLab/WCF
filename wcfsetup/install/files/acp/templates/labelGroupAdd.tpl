@@ -54,7 +54,7 @@
 				<dl{if $errorField == 'groupName'} class="formError"{/if}>
 					<dt><label for="groupName">{lang}wcf.global.title{/lang}</label></dt>
 					<dd>
-						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="long" />
+						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="long">
 						{if $errorField == 'groupName'}
 							<small class="innerError">
 								{if $errorType == 'empty' || $errorType == 'multilingual'}
@@ -72,7 +72,7 @@
 				<dl>
 					<dt><label for="groupDescription">{lang}wcf.global.description{/lang}</label></dt>
 					<dd>
-						<input type="text" id="groupDescription" name="groupDescription" class="long" value="{$groupDescription}" maxlength="255" />
+						<input type="text" id="groupDescription" name="groupDescription" class="long" value="{$groupDescription}" maxlength="255">
 						<small>{lang}wcf.acp.label.group.groupDescription.description{/lang}</small>
 					</dd>
 				</dl>
@@ -80,13 +80,13 @@
 				<dl>
 					<dt><label for="showOrder">{lang}wcf.acp.label.group.showOrder{/lang}</label></dt>
 					<dd>
-						<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}" />
+						<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}">
 					</dd>
 				</dl>
 				
 				<dl>
 					<dt></dt>
-					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked="checked"{/if} /> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
+					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked="checked"{/if}> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
 				</dl>
 				
 				<dl id="groupPermissions">
@@ -113,7 +113,7 @@
 									{foreach from=$container item=objectType}
 										<li class="{if $objectType->isCategory()} category{/if}"{if $objectType->getDepth()} style="padding-left: {21 * $objectType->getDepth()}px"{/if} data-depth="{@$objectType->getDepth()}">
 											<span>{$objectType->getLabel()}</span>
-											<label><input id="checkbox_{@$container->getObjectTypeID()}_{@$objectType->getObjectID()}" type="checkbox" name="objectTypes[{@$container->getObjectTypeID()}][]" value="{@$objectType->getObjectID()}"{if $objectType->getOptionValue()} checked="checked"{/if} /></label>
+											<label><input id="checkbox_{@$container->getObjectTypeID()}_{@$objectType->getObjectID()}" type="checkbox" name="objectTypes[{@$container->getObjectTypeID()}][]" value="{@$objectType->getObjectID()}"{if $objectType->getOptionValue()} checked="checked"{/if}></label>
 										</li>
 									{/foreach}
 								</ul>
@@ -128,7 +128,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

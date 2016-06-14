@@ -74,7 +74,7 @@
 			<dl>
 				<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
 				<dd>
-					<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny" />
+					<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny">
 				</dd>
 			</dl>
 			
@@ -92,7 +92,7 @@
 					<dd>
 						{foreach from=$columnOptions item=optionData}
 							{assign var='option' value=$optionData.object}
-							<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+							<label><input type="checkbox" name="columns[]" value="{$option->optionName}"{if $option->optionName|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
 						{/foreach}
 					</dd>
 				</dl>
@@ -102,14 +102,14 @@
 				<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
 				<dd>
 					{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-						<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="email"{if "email"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.email{/lang}</label>
 					{/if}
-					<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
-					<label><input type="checkbox" name="columns[]" value="lastActivityTime" {if "lastActivityTime"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.lastActivityTime{/lang}</label>
-					<label><input type="checkbox" name="columns[]" value="profileHits" {if "profileHits"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.profileHits{/lang}</label>
-					<label><input type="checkbox" name="columns[]" value="activityPoints" {if "activityPoints"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.activityPoint{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="registrationDate"{if "registrationDate"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.registrationDate{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="lastActivityTime"{if "lastActivityTime"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.lastActivityTime{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="profileHits"{if "profileHits"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.profileHits{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="activityPoints"{if "activityPoints"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.activityPoint{/lang}</label>
 					{if MODULE_LIKE}
-						<label><input type="checkbox" name="columns[]" value="likesReceived" {if "likesReceived"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.like.likesReceived{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="likesReceived"{if "likesReceived"|in_array:$columns} checked="checked"{/if}> {lang}wcf.like.likesReceived{/lang}</label>
 					{/if}
 					{event name='searchDisplayColumns'}
 				</dd>
@@ -122,7 +122,7 @@
 	</section>	
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

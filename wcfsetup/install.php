@@ -133,15 +133,15 @@ class SystemException extends \Exception implements IPrintableException {
 			
 			<h2>Information:</h2>
 			<p>
-				<b>error message:</b> <?php echo htmlspecialchars($this->getMessage()); ?><br />
-				<b>error code:</b> <?php echo intval($this->getCode()); ?><br />
+				<b>error message:</b> <?php echo htmlspecialchars($this->getMessage()); ?><br>
+				<b>error code:</b> <?php echo intval($this->getCode()); ?><br>
 				<?php echo $this->information; ?>
-				<b>file:</b> <?php echo htmlspecialchars($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
-				<b>php version:</b> <?php echo htmlspecialchars(phpversion()); ?><br />
-				<b>wcf version:</b> <?php if (defined('WCF_VERSION')) echo WCF_VERSION; ?><br />
-				<b>date:</b> <?php echo gmdate('r'); ?><br />
-				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo htmlspecialchars($_SERVER['REQUEST_URI']); ?><br />
-				<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo htmlspecialchars($_SERVER['HTTP_REFERER']); ?><br />
+				<b>file:</b> <?php echo htmlspecialchars($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br>
+				<b>php version:</b> <?php echo htmlspecialchars(phpversion()); ?><br>
+				<b>wcf version:</b> <?php if (defined('WCF_VERSION')) echo WCF_VERSION; ?><br>
+				<b>date:</b> <?php echo gmdate('r'); ?><br>
+				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo htmlspecialchars($_SERVER['REQUEST_URI']); ?><br>
+				<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo htmlspecialchars($_SERVER['HTTP_REFERER']); ?><br>
 			</p>
 			
 			<h2>Stacktrace:</h2>

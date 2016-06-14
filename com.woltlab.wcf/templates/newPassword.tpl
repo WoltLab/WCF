@@ -9,7 +9,7 @@
 				<label for="userID">{lang}wcf.user.userID{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" id="userID" name="u" value="{@$userID}" required="required" class="medium" />
+				<input type="text" id="userID" name="u" value="{@$userID}" required="required" class="medium">
 				{if $errorField == 'userID'}
 					<small class="innerError">
 						{lang}wcf.user.userID.error.{$errorType}{/lang}
@@ -23,7 +23,7 @@
 				<label for="lostPasswordKey">{lang}wcf.user.lostPasswordKey{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" id="lostPasswordKey" name="k" value="{$lostPasswordKey}" required="required" class="medium" />
+				<input type="text" id="lostPasswordKey" name="k" value="{$lostPasswordKey}" required="required" class="medium">
 				{if $errorField == 'lostPasswordKey'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -42,7 +42,7 @@
 	{event name='sections'}
 		
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
