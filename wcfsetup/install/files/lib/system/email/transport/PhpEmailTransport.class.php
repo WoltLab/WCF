@@ -40,6 +40,11 @@ class PhpEmailTransport implements EmailTransport {
 			return implode(': ', $item);
 		}, $headers));
 		
-		mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$email->getSender()->getAddress());
+		if (MAIL_USE_F_PARAM) {
+			mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$email->getSender()->getAddress());
+		}
+		else {
+			mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers);
+		}
 	}
 }
