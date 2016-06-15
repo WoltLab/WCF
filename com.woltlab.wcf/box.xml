@@ -299,5 +299,27 @@
 				<title>Comments</title>
 			</content>
 		</box>
+		
+		<box identifier="com.woltlab.wcf.ArticleCategories">
+			<name language="de">Kategorien (Artikel)</name>
+			<name language="en">Categories (Articles)</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.articleCategories</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.ArticleList</page>
+				<page>com.woltlab.wcf.CategoryArticleList</page>
+				<page>com.woltlab.wcf.Article</page>
+			</visibilityExceptions>
+			
+			<content language="de">
+				<title>Kategorien</title>
+			</content>
+			<content language="en">
+				<title>Categories</title>
+			</content>
+		</box>
 	</import>
 </data>

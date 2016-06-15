@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\ArticleEditor;
@@ -103,6 +104,12 @@ class ArticlePage extends AbstractPage {
 	public $articleLikeData = [];
 	
 	/**
+	 * category object
+	 * @var ArticleCategory
+	 */
+	public $category;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -115,6 +122,7 @@ class ArticlePage extends AbstractPage {
 		}
 		$this->article = ViewableArticle::getArticle($this->articleContent->articleID);
 		$this->canonicalURL = $this->articleContent->getLink();
+		$this->category = $this->article->getCategory();
 	}
 	
 	/**

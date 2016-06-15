@@ -14,7 +14,7 @@
 		{foreach from=$showOrder item=$application}
 			<dl{if $errors[$application]|isset} class="formError"{/if}>
 				<dt>
-					<label for="application_{$application}">{'/^WoltLab Suite /'|preg_replace:'':$packages[$application][packageName]}</label>
+					<label for="application_{$application}">{$packages[$application][packageName]}</label>
 				</dt>
 				<dd>
 					<input type="text" id="application_{$application}" class="long jsApplicationDirectory" name="directories[{$application}]" value="{$directories[$application]}">

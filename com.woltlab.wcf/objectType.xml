@@ -1019,6 +1019,11 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\PageCommentListBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.articleCategories</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\ArticleCategoriesBoxController</classname>
+		</type>
 		<!-- /box controllers -->
 		
 		<!-- deprecated -->
