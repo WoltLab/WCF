@@ -59,7 +59,6 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 				
 				this._setTitle(pre);
 				
-				pre.removeEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 				
 				// there must be some kind of element after the <pre>
@@ -80,10 +79,14 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		 * @protected
 		 */
 		_observeLoad: function() {
+			this._editor.events.stopDetectChanges();
+			
 			elBySelAll('pre', this._editor.$editor[0], (function(pre) {
 				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 				this._setTitle(pre);
 			}).bind(this));
+			
+			this._editor.events.startDetectChanges();
 		},
 		
 		/**
@@ -124,6 +127,8 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		_save: function(event) {
 			event.preventDefault();
 			
+			this._editor.events.stopDetectChanges();
+			
 			var id = 'redactor-code-' + this._elementId;
 			
 			['file', 'highlighter', 'line'].forEach((function (attr) {
@@ -132,6 +137,8 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			
 			this._setTitle(this._pre);
 			this._editor.caret.after(this._pre);
+			
+			this._editor.events.startDetectChanges();
 			
 			UiDialog.close(this);
 		},
@@ -149,10 +156,14 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			//noinspection JSUnresolvedVariable
 			highlighter = (this._editor.opts.woltlab.highlighters.hasOwnProperty(highlighter)) ? this._editor.opts.woltlab.highlighters[highlighter] : '';
 			
-			elData(pre, 'display-value', Language.get('wcf.editor.code.title', {
+			var title = Language.get('wcf.editor.code.title', {
 				file: file,
 				highlighter: highlighter
-			}));
+			});
+			
+			if (elData(pre, 'title') !== title) {
+				elData(pre, 'title', title);
+			}
 		},
 		
 		_dialogSetup: function() {
@@ -169,7 +180,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 						
 						// set highlighters
-						var highlighters = '<option value="">' + Language.get('wcf.global.noSelection') + '</option>';
+						var highlighters = '<option value="">' + Language.get('wcf.editor.code.highlighter.detect') + '</option>';
 						
 						var value, values = [];
 						//noinspection JSUnresolvedVariable

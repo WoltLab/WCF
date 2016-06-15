@@ -45,6 +45,7 @@
 				'wcf.editor.code.file.description': '{lang}wcf.editor.code.file.description{/lang}',
 				'wcf.editor.code.highlighter': '{lang}wcf.editor.code.highlighter{/lang}',
 				'wcf.editor.code.highlighter.description': '{lang}wcf.editor.code.highlighter.description{/lang}',
+				'wcf.editor.code.highlighter.detect': '{lang}wcf.editor.code.highlighter.detect{/lang}',
 				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
 				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
 				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',

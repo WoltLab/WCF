@@ -10,7 +10,7 @@
 	white-space: pre;
 	
 	&::before {
-		content: attr(data-display-value);
+		content: attr(data-title);
 		cursor: pointer;
 		display: block;
 		font-family: $wcfFontFamily;

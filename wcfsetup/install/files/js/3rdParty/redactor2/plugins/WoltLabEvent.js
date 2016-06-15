@@ -16,7 +16,7 @@ $.Redactor.prototype.WoltLabEvent = function() {
 			this.observe.load = (function() {
 				observeLoad.call(this);
 				
-				EventHandler.fire('com.woltlab.wcf.redactor', 'observe_load_' + elementId, {
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'observe_load_' + elementId, {
 					editor: this.$editor[0]
 				});
 			}).bind(this);

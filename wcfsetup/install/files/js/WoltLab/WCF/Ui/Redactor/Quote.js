@@ -26,7 +26,7 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 		 * @param       {object}        editor          editor element
 		 */
 		initEditor: function(editorId, editor) {
-			EventHandler.add('com.woltlab.wcf.redactor', 'observe_load_' + editorId, (function(data) {
+			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + editorId, (function(data) {
 				this.observeAll(data.editor);
 			}).bind(this));
 			
@@ -109,7 +109,6 @@ define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHand
 		_observe: function(element, updateHeader) {
 			if (_callbackEdit === null) _callbackEdit = this.edit.bind(this);
 			
-			element.removeEventListener(WCF_CLICK_EVENT, _callbackEdit);
 			element.addEventListener(WCF_CLICK_EVENT, _callbackEdit);
 			
 			if (updateHeader) this._updateHeader(element);
