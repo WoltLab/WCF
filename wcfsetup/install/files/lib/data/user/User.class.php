@@ -62,7 +62,6 @@ use wcf\util\PasswordUtil;
  * @property-read	string		$notificationMailToken
  * @property-read	string		$authData
  * @property-read	integer		$likesReceived
- * @property-read	string		$socialNetworkPrivacySettings
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
@@ -522,24 +521,16 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	
 	/**
 	 * Returns the social network privacy settings of the user.
+	 * @deprecated 3.0
 	 * 
 	 * @return	boolean[]
 	 */
 	public function getSocialNetworkPrivacySettings() {
-		$settings = false;
-		if ($this->userID && WCF::getUser()->socialNetworkPrivacySettings) {
-			$settings = @unserialize(WCF::getUser()->socialNetworkPrivacySettings);
-		}
-		
-		if ($settings === false) {
-			$settings = [
-				'facebook' => false,
-				'google' => false,
-				'reddit' => false,
-				'twitter' => false
-			];
-		}
-		
-		return $settings;
+		return [
+			'facebook' => false,
+			'google' => false,
+			'reddit' => false,
+			'twitter' => false
+		];
 	}
 }

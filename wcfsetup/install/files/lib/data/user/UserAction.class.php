@@ -251,10 +251,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @return	User
 	 */
 	public function create() {
-		if (!isset($this->parameters['data']['socialNetworkPrivacySettings'])) {
-			$this->parameters['data']['socialNetworkPrivacySettings'] = '';
-		}
-		
 		/** @var User $user */
 		$user = parent::create();
 		$userEditor = new UserEditor($user);
@@ -781,6 +777,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Validates parameters to retrieve the social network privacy settings.
+	 * @deprecated 3.0
 	 */
 	public function validateGetSocialNetworkPrivacySettings() {
 		// does nothing
@@ -788,59 +785,25 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Returns the social network privacy settings.
-	 * 
-	 * @return	string[]
+	 * @deprecated 3.0
 	 */
 	public function getSocialNetworkPrivacySettings() {
-		$settings = @unserialize(WCF::getUser()->socialNetworkPrivacySettings);
-		if (!is_array($settings)) {
-			$settings = [
-				'facebook' => false,
-				'google' => false,
-				'reddit' => false,
-				'twitter' => false
-			];
-		}
-		
-		WCF::getTPL()->assign([
-			'settings' => $settings
-		]);
-		
-		return [
-			'template' => WCF::getTPL()->fetch('shareButtonsPrivacySettings')
-		];
+		// does nothing
 	}
 	
 	/**
 	 * Validates the 'saveSocialNetworkPrivacySettings' action.
+	 * @deprecated 3.0
 	 */
 	public function validateSaveSocialNetworkPrivacySettings() {
-		$this->readBoolean('facebook', true);
-		$this->readBoolean('google', true);
-		$this->readBoolean('reddit', true);
-		$this->readBoolean('twitter', true);
+		// does nothing
 	}
 	
 	/**
 	 * Saves the social network privacy settings.
-	 * 
-	 * @return	boolean[]
+	 * @deprecated 3.0
 	 */
 	public function saveSocialNetworkPrivacySettings() {
-		$settings = [
-			'facebook' => $this->parameters['facebook'],
-			'google' => $this->parameters['google'],
-			'reddit' => $this->parameters['reddit'],
-			'twitter' => $this->parameters['twitter']
-		];
-		
-		$userEditor = new UserEditor(WCF::getUser());
-		$userEditor->update([
-			'socialNetworkPrivacySettings' => serialize($settings)
-		]);
-		
-		return [
-			'settings' => $settings
-		];
+		// does nothing
 	}
 }

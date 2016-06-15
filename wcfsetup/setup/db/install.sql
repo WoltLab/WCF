@@ -1281,7 +1281,6 @@ CREATE TABLE wcf1_user (
 	notificationMailToken VARCHAR(20) NOT NULL DEFAULT '',
 	authData VARCHAR(255) NOT NULL DEFAULT '',
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
-	socialNetworkPrivacySettings TEXT,
 	
 	KEY username (username),
 	KEY registrationDate (registrationDate),

@@ -2363,8 +2363,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.share.linkedIn"><![CDATA[LinkedIn]]></item>
 		<item name="wcf.message.share.pinterest"><![CDATA[Pinterest]]></item>
 		<item name="wcf.message.share.xing"><![CDATA[XING]]></item>
-		<item name="wcf.message.share.privacy"><![CDATA[Einstellungen zum Teilen]]></item>
-		<item name="wcf.message.share.privacy.description"><![CDATA[Die Anzahl der Teilungen auf der jeweiligen Plattform werden nur bei aktivierten Anbietern ermittelt, diese Angaben werden durch Ihren Browser direkt vom Anbieter abgefragt.]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[Erweiterte Antwort]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>
