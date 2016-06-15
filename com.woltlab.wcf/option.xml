@@ -403,6 +403,7 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
+				<defaultvalue><![CDATA[WoltLab Suite]]></defaultvalue>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
