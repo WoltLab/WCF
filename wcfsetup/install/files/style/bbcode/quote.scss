@@ -1,3 +1,4 @@
+.redactor-editor blockquote,
 .quoteBox {
 	border: 1px solid $wcfContentBorderInner;
 	font-style: italic;
@@ -13,6 +14,16 @@
 			display: none;
 		}
 	}
+}
+
+.redactor-editor blockquote::before {
+	content: attr(data-title);
+	cursor: pointer;
+	display: block;
+	font-style: normal;
+	margin-bottom: 20px;
+	
+	@include wcfFontHeadline;
 }
 
 .quoteBoxHeader {

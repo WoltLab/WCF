@@ -1,202 +1,193 @@
 /**
- * Manages insertation and editing of quotes.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/Ui/Redactor/Quote
+ * Manages quotes.
+ *
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLab/WCF/Ui/Redactor/Quote
  */
-define(['EventHandler', 'Language', 'Dom/Util', 'Ui/Dialog'], function(EventHandler, Language, DomUtil, UiDialog) {
+define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog) {
 	"use strict";
 	
-	var _callbackEdit = null;
-	var _element = null;
-	var _insertCallback = null;
-	var _quotePaddingTop = 0;
-	var _titleHeight = 0;
-	var _wysiwygQuoteButton = null;
-	var _wysiwygQuoteTitle = null;
-	var _wysiwygQuoteUrl = null;
+	var _headerHeight = 0;
 	
-	return {
+	/**
+	 * @param       {Object}        editor  editor instance
+	 * @param       {jQuery}        button  toolbar button
+	 * @constructor
+	 */
+	function UiRedactorQuote(editor, button) { this.init(editor, button); }
+	UiRedactorQuote.prototype = {
 		/**
-		 * Registers an editor instance.
+		 * Initializes the quote management.
 		 * 
-		 * @param       {string}        editorId        textarea identifier
-		 * @param       {object}        editor          editor element
+		 * @param       {Object}        editor  editor instance
+		 * @param       {jQuery}        button  toolbar button
 		 */
-		initEditor: function(editorId, editor) {
-			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + editorId, (function(data) {
-				this.observeAll(data.editor);
+		init: function(editor, button) {
+			this._blockquote = null;
+			this._editor = editor;
+			this._elementId = this._editor.$element[0].id;
+			
+			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + this._elementId, this._observeLoad.bind(this));
+			
+			this._editor.button.addCallback(button, this._click.bind(this));
+			
+			// support for active button marking
+			this._editor.opts.activeButtonsStates.blockquote = 'woltlabQuote';
+			
+			// static bind to ensure that removing works
+			this._callbackEdit = this._edit.bind(this);
+			
+			// bind listeners on init
+			this._observeLoad();
+		},
+		
+		/**
+		 * Toggles the quote block on button click.
+		 * 
+		 * @protected
+		 */
+		_click: function() {
+			this._editor.button.toggle({}, 'blockquote', 'func', 'block.format');
+			
+			var blockquote = this._editor.selection.block();
+			if (blockquote && blockquote.nodeName === 'BLOCKQUOTE') {
+				this._setTitle(blockquote);
+				
+				blockquote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+			}
+		},
+		
+		/**
+		 * Binds event listeners and sets quote title on both editor
+		 * initialization and when switching back from code view.
+		 * 
+		 * @protected
+		 */
+		_observeLoad: function() {
+			this._editor.events.stopDetectChanges();
+			
+			elBySelAll('blockquote', this._editor.$editor[0], (function(blockquote) {
+				blockquote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				this._setTitle(blockquote);
 			}).bind(this));
 			
-			this.observeAll(editor);
+			this._editor.events.startDetectChanges();
 		},
 		
 		/**
-		 * Opens a dialog to insert a quote at caret position.
+		 * Opens the dialog overlay to edit the quote's properties.
 		 * 
-		 * @param       {function}      callback        callback invoked with the <blockquote> element as parameter
+		 * @param       {Event}         event           event object
+		 * @protected
 		 */
-		insert: function(callback) {
-			_insertCallback = callback;
+		_edit: function(event) {
+			var blockquote = event.currentTarget;
 			
-			UiDialog.open(this);
-			UiDialog.setTitle(this, Language.get('wcf.wysiwyg.quote.insert'));
-			
-			_wysiwygQuoteButton.textContent = Language.get('wcf.global.button.submit');
-			_wysiwygQuoteTitle.value = '';
-			_wysiwygQuoteUrl.value = '';
-		},
-		
-		/**
-		 * Edits a <blockquote> element.
-		 * 
-		 * @param       {Event?}        event           event object
-		 * @param       {Element=}      element         <blockquote> element
-		 */
-		edit: function(event, element) {
-			if (event instanceof Event) {
-				element = event.currentTarget;
+			if (_headerHeight === 0) {
+				_headerHeight = ~~window.getComputedStyle(blockquote).paddingTop.replace(/px$/, '');
+				
+				var styles = window.getComputedStyle(blockquote, '::before');
+				_headerHeight += ~~styles.paddingTop.replace(/px$/, '');
+				_headerHeight += ~~styles.height.replace(/px$/, '');
+				_headerHeight += ~~styles.paddingBottom.replace(/px$/, '');
 			}
 			
-			if (_titleHeight === 0) {
-				var styles = window.getComputedStyle(element, '::before');
-				_titleHeight = DomUtil.styleAsInt(styles, 'height');
-				
-				styles = window.getComputedStyle(element);
-				_quotePaddingTop = DomUtil.styleAsInt(styles, 'padding-top');
-			}
-			
-			if (event instanceof Event) {
-				// check if click occured within the ::before pseudo element
-				var rect = DomUtil.offset(element);
-				if ((event.clientY + window.scrollY) > (rect.top + _quotePaddingTop + _titleHeight)) {
-					return;
-				}
-				
+			// check if the click hit the header
+			var offset = DomUtil.offset(blockquote);
+			if (event.pageY > offset.top && event.pageY < (offset.top + _headerHeight)) {
 				event.preventDefault();
-			}
-			
-			_element = element;
-			
-			UiDialog.open(this);
-			UiDialog.setTitle(this, Language.get('wcf.wysiwyg.quote.edit'));
-			
-			// set values
-			_wysiwygQuoteButton.textContent = Language.get('wcf.global.button.save');
-			_wysiwygQuoteTitle.value = elData(_element, 'quote-title');
-			_wysiwygQuoteUrl.value = elData(_element, 'quote-url');
-		},
-		
-		/**
-		 * Observes all <blockquote> elements for clicks on the editable headline
-		 * @param       {Element}       editorElement           editor element
-		 */
-		observeAll: function(editorElement) {
-			var elements = elByTag('BLOCKQUOTE', editorElement);
-			for (var i = 0, length = elements.length; i < length; i++) {
-				this._observe(elements[i], true);
+				
+				this._blockquote = blockquote;
+				
+				UiDialog.open(this);
 			}
 		},
 		
 		/**
-		 * Observes clicks on a <blockquote> element and updates the headline.
+		 * Saves the changes to the quote's properties.
 		 * 
-		 * @param       {Element}       element         <blockquote> element
-		 * @param       {boolean}       updateHeader    update quote header
+		 * @param       {Event}         event           event object
+		 * @protected
 		 */
-		_observe: function(element, updateHeader) {
-			if (_callbackEdit === null) _callbackEdit = this.edit.bind(this);
+		_save: function(event) {
+			event.preventDefault();
 			
-			element.addEventListener(WCF_CLICK_EVENT, _callbackEdit);
+			this._editor.events.stopDetectChanges();
 			
-			if (updateHeader) this._updateHeader(element);
-		},
-		
-		/**
-		 * Updates the headline of target <blockquote> element.
-		 * 
-		 * @param       {Element}       element         <blockquote> element
-		 */
-		_updateHeader: function(element) {
-			var value = Language.get('wcf.wysiwyg.quote.header', {
-				title: elData(element, 'quote-title') || elData(element, 'quote-url') || ''
-			});
+			var id = 'redactor-quote-' + this._elementId;
 			
-			if (elData(element, 'quote-header') !== value) {
-				elData(element, 'quote-header', value);
-			}
-		},
-		
-		/**
-		 * Adds or edits a <blockquote> element on dialog submit.
-		 */
-		_dialogSubmit: function() {
-			if (_insertCallback !== null) {
-				// insert a new <blockquote> element
-				var element = elCreate('blockquote');
-				element.className = 'quoteBox';
-				element.id = 'quote-' + DomUtil.getUniqueId();
-				
-				_insertCallback(element);
-				
-				_element = elById(element.id);
-				_element.id = '';
-				
-				this._observe(_element, false);
-			}
+			['author', 'url'].forEach((function (attr) {
+				elData(this._blockquote, attr, elById(id + '-' + attr).value);
+			}).bind(this));
 			
-			// edit an existing <blockquote> element
-			elData(_element, 'quote-title', _wysiwygQuoteTitle.value.trim());
-			elData(_element, 'quote-url', _wysiwygQuoteUrl.value.trim());
+			this._setTitle(this._blockquote);
+			this._editor.caret.after(this._blockquote);
 			
-			this._updateHeader(_element);
+			this._editor.events.startDetectChanges();
 			
 			UiDialog.close(this);
 		},
 		
-		_dialogOnSetup: function() {
-			_wysiwygQuoteTitle = elById('wysiwygQuoteTitle');
-			_wysiwygQuoteUrl = elById('wysiwygQuoteUrl');
+		/**
+		 * Sets or updates the quote's header title.
+		 * 
+		 * @param       {Element}       blockquote     quote element
+		 * @protected
+		 */
+		_setTitle: function(blockquote) {
+			var title = Language.get('wcf.editor.quote.title', {
+				author: elData(blockquote, 'author'),
+				url: elData(blockquote, 'url')
+			});
 			
-			var _keyupCallback = (function(event) {
-				if (event.which === 13) {
-					this._dialogSubmit(event);
-				}
-			}).bind(this);
-			
-			_wysiwygQuoteTitle.addEventListener('keyup', _keyupCallback);
-			_wysiwygQuoteUrl.addEventListener('keyup', _keyupCallback);
-			
-			_wysiwygQuoteButton = elById('wysiwygQuoteSubmit');
-			_wysiwygQuoteButton.addEventListener(WCF_CLICK_EVENT, this._dialogSubmit.bind(this));
-		},
-		
-		_dialogOnClose: function() {
-			_element = null;
-			_insertCallback = null;
+			if (elData(blockquote, 'title') !== title) {
+				elData(blockquote, 'title', title);
+			}
 		},
 		
 		_dialogSetup: function() {
+			var id = 'redactor-quote-' + this._elementId,
+			    idAuthor = id + '-author',
+			    idButtonSave = id + '-button-save',
+			    idUrl = id + '-url';
+			
 			return {
-				id: 'wysiwygQuoteDialog',
+				id: id,
 				options: {
-					onClose: this._dialogOnClose.bind(this),
-					onSetup: this._dialogOnSetup.bind(this)
+					onSetup: (function() {
+						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
+					}).bind(this),
+					
+					onShow: (function() {
+						elById(idAuthor).value = elData(this._blockquote, 'author');
+						elById(idUrl).value = elData(this._blockquote, 'url');
+					}).bind(this),
+					
+					title: Language.get('wcf.editor.quote.edit')
 				},
-				source: '<dl>'
-						+ '<dt><label for="wysiwygQuoteTitle">' + Language.get('wcf.wysiwyg.quote.title') + '</label></dt>'
-						+ '<dd><input type="text" id="wysiwygQuoteTitle" class="long"></dd>'
+				source: '<div class="section">'
+					+ '<dl>'
+						+ '<dt><label for="' + idAuthor + '">' + Language.get('wcf.editor.quote.author') + '</label></dt>'
+						+ '<dd>'
+							+ '<input type="text" id="' + idAuthor + '" class="long">'
+						+ '</dd>'
 					+ '</dl>'
 					+ '<dl>'
-						+ '<dt><label for="wysiwygQuoteUrl">' + Language.get('wcf.wysiwyg.quote.url') + '</label></dt>'
-						+ '<dd><input type="text" id="wysiwygQuoteUrl" class="long"></dd>'
+						+ '<dt><label for="' + idUrl + '">' + Language.get('wcf.editor.quote.url') + '</label></dt>'
+						+ '<dd>'
+							+ '<input type="text" id="' + idUrl + '" class="long">'
+							+ '<small>' + Language.get('wcf.editor.quote.url.description') + '</small>'
+						+ '</dd>'
 					+ '</dl>'
-					+ '<div class="formSubmit">'
-						+ '<button class="buttonPrimary" id="wysiwygQuoteSubmit"></button>'
-					+ '</div>'
+				+ '</div>'
+				+ '<div class="formSubmit">'
+					+ '<button id="' + idButtonSave + '" class="buttonPrimary">' + Language.get('wcf.global.button.save') + '</button>'
+				+ '</div>'
 			};
 		}
 	};
+	
+	return UiRedactorQuote;
 });

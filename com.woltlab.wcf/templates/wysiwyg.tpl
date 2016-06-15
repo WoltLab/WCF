@@ -49,6 +49,7 @@
 				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
 				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
 				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',
+				
 				'wcf.editor.image.edit': '{lang}wcf.editor.image.edit{/lang}',
 				'wcf.editor.image.insert': '{lang}wcf.editor.image.insert{/lang}',
 				'wcf.editor.image.link': '{lang}wcf.editor.image.link{/lang}',
@@ -57,7 +58,13 @@
 				'wcf.editor.image.float.left': '{lang}wcf.editor.image.float.left{/lang}',
 				'wcf.editor.image.float.right': '{lang}wcf.editor.image.float.right{/lang}',
 				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
-				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}'
+				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
+				
+				'wcf.editor.quote.author': '{lang}wcf.editor.quote.author{/lang}',
+				'wcf.editor.quote.edit': '{lang}wcf.editor.quote.edit{/lang}',
+				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',
+				'wcf.editor.quote.url': '{lang}wcf.editor.quote.url{/lang}',
+				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}'
 			});
 			
 			var buttons = [], buttonOptions = [], customButtons = [];

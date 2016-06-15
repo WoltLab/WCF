@@ -1,5 +1,5 @@
 /**
- * Provides helper functions to work with DOM nodes.
+ * Manages code blocks.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -53,22 +53,9 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			
 			var pre = this._editor.selection.block();
 			if (pre && pre.nodeName === 'PRE') {
-				if (pre.textContent === '') {
-					pre.textContent = '\u200B';
-				}
-				
 				this._setTitle(pre);
 				
 				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
-				
-				// there must be some kind of element after the <pre>
-				if (pre.nextElementSibling === null) {
-					var p = elCreate('p');
-					p.textContent = '\u200B';
-					pre.parentNode.appendChild(p);
-				}
-				
-				this._editor.caret.after(pre);
 			}
 		},
 		
