@@ -1007,14 +1007,8 @@ WhatsApp
 LinkedIn
 Pinterest
 XING</defaultvalue>
-			</option>
-				
-				
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
 				<enableoptions><![CDATA[share_buttons_show_count]]></enableoptions>
 			</option>
-			providers
 			
 			<!-- /message.general.share -->
 			
