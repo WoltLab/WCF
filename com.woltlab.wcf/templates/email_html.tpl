@@ -51,9 +51,11 @@
 		</style>
 	</head>
 	<body>
+	{if $beforeContent|isset}{@$beforeContent}{/if}
 	<div class="content">
 		{@$content}
 	</div>
+	{if $afterContent|isset}{@$afterContent}{/if}
 	{capture assign='footer'}
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>

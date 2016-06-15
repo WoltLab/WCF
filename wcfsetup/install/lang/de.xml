@@ -3241,15 +3241,17 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.notification.follow.mail"><![CDATA[{@$author->username} folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{else}{@$authors[0]->username} und {#$others} weiteren{/if} folgen {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Die E-Mail-Benachrichtigung wurde erfolgreich abgeschaltet.]]></item>
-		<item name="wcf.user.notification.mail.footer"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
+		
+		<!-- Emails -->
+		<item name="wcf.user.notification.mail.subject"><![CDATA[Neue Benachrichtigung: {@$title}]]></item>
+		<item name="wcf.user.notification.mail.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.notification.mail.plaintext.outro"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
 		
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Einstellungen für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Benachrichtigungen auf {@PAGE_TITLE|language} unter folgender URL detailliert konfigurieren:
 {link controller='NotificationSettings' isEmail=true}{/link} 
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} folgenden Link aufrufen, um die Benachrichtigung abzuschalten:
-{link controller='NotificationDisable' isEmail=true}eventID={@$notification->eventID}&userID={@$user->userID}&token={@$token}{/link}]]></item>
-		<item name="wcf.user.notification.mail.header"><![CDATA[Hallo {@$user->username},]]></item>
-		<item name="wcf.user.notification.mail.subject"><![CDATA[Neue Benachrichtigung: {@$title}]]></item>
+{link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}Neue Benachrichtigung{else}{#$count} neue Benachrichtigungen{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
 		
@@ -3258,6 +3260,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} folgenden Link aufrufen, um die Benachrichtigung abzuschalten:
 {link controller='NotificationDisable' isEmail=true}userID={@$user->userID}&token={@$token}{/link}]]></item>
+	
 		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[Keine E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Sofortige E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Tägliche E-Mail-Benachrichtigung]]></item>
