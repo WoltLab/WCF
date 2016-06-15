@@ -152,6 +152,7 @@
 * Removed obsolete `$activeMenuItem` in frontend forms/pages
 * Obsolete interface `wcf\page\ITrackablePage` deprecated.
 * PIP `wcf\system\package\plugin\SitemapPackageInstallationPlugin` removed.
+* Option `share_buttons_show_count` removed.
 
 #### Documentation
 

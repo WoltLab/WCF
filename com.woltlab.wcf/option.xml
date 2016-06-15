@@ -988,11 +988,34 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 				<enableoptions><![CDATA[share_buttons_show_count]]></enableoptions>
 			</option>
-			<option name="share_buttons_show_count">
+			<option name="share_buttons_providers">
 				<categoryname>message.general.share</categoryname>
+				<optiontype>checkboxes</optiontype>
+				<selectoptions>Facebook
+Twitter
+Google
+Reddit
+WhatsApp
+LinkedIn
+Pinterest
+XING</selectoptions>
+				<defaultvalue>Facebook
+Twitter
+Google
+Reddit
+WhatsApp
+LinkedIn
+Pinterest
+XING</defaultvalue>
+			</option>
+				
+				
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<enableoptions><![CDATA[share_buttons_show_count]]></enableoptions>
 			</option>
+			providers
+			
 			<!-- /message.general.share -->
 			
 			<!-- message.general.image -->

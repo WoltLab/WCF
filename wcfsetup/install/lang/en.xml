@@ -860,7 +860,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.pre_parse_default_value"><![CDATA[Detect URLs (default value)]]></item>
 		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Display signatures (default value)]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Display content share button]]></item>
-		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Display number of shares]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edit History]]></item>
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores older versions of user-created content.]]></item>
