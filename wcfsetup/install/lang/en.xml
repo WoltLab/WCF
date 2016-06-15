@@ -492,7 +492,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[The title is visible for every user who can interact with the label group.]]></item>
-		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[This optional description is visible in the Administration Control Panel only and is intended to help telling groups with the same title apart.]]></item>
+		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[This description is optional and only visible in the Administration Control Panel. It’s intended to help differentiate groups with the same title.]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -802,7 +802,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause issues for users with a rotating IP address.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (PC, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all other device sessions to terminate. It is not recommended to disable this option.]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all other device sessions to terminate. It is not recommended to disable this option.]]></item>
 		<item name="wcf.acp.option.show_clock"><![CDATA[Display current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
@@ -1575,7 +1575,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Separator]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Text Separator]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[User Group(s)]]></item>
-		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users which are not part of the selected user groups]]></item>
+		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users which are not part of the selected user group(s)]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Users]]></item>
@@ -1648,7 +1648,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[One select option per line, e.g. for use with a select-box. Note: The left hand side of a colon is used as an internal identifier. It allows you to change the text of the option without invalidating former selections.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
-		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default values for user profile settings will be applied to existing users. This overrides all affected settings previously changed by the respective user themself.]]></item>
+		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default user profile settings will be applied to existing users. This will override any settings changed by the users themselves.]]></item>
 		<item name="wcf.acp.user.option.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
 		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
@@ -1683,14 +1683,14 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Path must be either relative to WCF’s directory or absolute.]]></item>
-		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Rank might optionally be restricted to a specific gender.]]></item>
+		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Rank can be restricted to a specific gender.]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Points]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[The required number of activity points to obtain this rank.]]></item>
 		<item name="wcf.acp.user.rank.requirement"><![CDATA[Restrictions]]></item>
 		<item name="wcf.acp.user.rank.repeatImage"><![CDATA[Repeat User Image]]></item>
 		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[The number of times the rank image will be repeated.]]></item>
 		<item name="wcf.acp.user.rank.title"><![CDATA[Title]]></item>
-		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Rank is restricted to members of the selected user groups.]]></item>
+		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Rank is restricted to members of the selected user group.]]></item>
 		<item name="wcf.acp.user.disableSignature"><![CDATA[Block Signature]]></item>
 		<item name="wcf.acp.user.disableSignatureReason"><![CDATA[Reason]]></item>
 		<item name="wcf.acp.user.disableAvatar"><![CDATA[Block Avatar]]></item>
@@ -1730,7 +1730,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[You can set the default notification settings for new users, any changes made here do not affect existing users. Users may customize their settings at any time.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
-		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Any changes to default notification settings will be applied to existing users. This overrides all affected settings previously changed by the respective user itself.]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Any changes to default notification settings will be applied to existing users. This will override any settings changed by the users themselves.]]></item>
 		
 	</category>
 	
@@ -2134,7 +2134,7 @@ Errors are:
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
 		<item name="wcf.date.period.end"><![CDATA[to]]></item>
 		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[0]]></item>
-		<item name="wcf.date.daysOfWeek"><![CDATA[Days of Week]]></item>
+		<item name="wcf.date.daysOfWeek"><![CDATA[Day(s) of Week]]></item>
 		<item name="wcf.date.time"><![CDATA[Time]]></item>
 		<item name="wcf.date.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.date.timezone.user"><![CDATA[Timezone of the user]]></item>
@@ -3099,17 +3099,17 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[General Data]]></item>
 		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Personal Data]]></item>
-		<item name="wcf.user.condition.groupIDs"><![CDATA[User in User Groups]]></item>
-		<item name="wcf.user.condition.groupIDs.description"><![CDATA[User is a member of all the selected user groups.]]></item>
-		<item name="wcf.user.condition.languages"><![CDATA[Languages]]></item>
+		<item name="wcf.user.condition.groupIDs"><![CDATA[User in User Group(s)]]></item>
+		<item name="wcf.user.condition.groupIDs.description"><![CDATA[User is a member of the selected user group(s).]]></item>
+		<item name="wcf.user.condition.languages"><![CDATA[Language(s)]]></item>
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Likes Received]]></item>
-		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile Browser]]></item>
-		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile browser]]></item>
-		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You cannot simultaneously select “Uses mobile browser” and “Don’t use mobile browser”.]]></item>
-		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Don’t use mobile browser]]></item>
-		<item name="wcf.user.condition.notGroupIDs"><![CDATA[User Not in User Groups]]></item>
-		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[User is not a member of the selected user groups.]]></item>
-		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user groups in “User in User Groups” and “User Not in User Groups” are conflicting.]]></item>
+		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile Device or Desktop]]></item>
+		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile device]]></item>
+		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You cannot simultaneously select “Uses mobile device” and “Uses desktop”.]]></item>
+		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Uses desktop]]></item>
+		<item name="wcf.user.condition.notGroupIDs"><![CDATA[User Not in User Group(s)]]></item>
+		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[User is not a member of the selected user group(s).]]></item>
+		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user group(s) in “User in User Group(s)” and “User Not in User Group(s)” are conflicting.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[The end date is before the start date.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[The start date is not valid.]]></item>
@@ -3246,7 +3246,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.adminComment"><![CDATA[Comment (internal)]]></item>
 		<item name="wcf.user.option.birthday"><![CDATA[Birthday]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Display year of birth]]></item>
-		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Allows members to view your age.]]></item>
+		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Allows users to view your age.]]></item>
 		<item name="wcf.user.option.canMail"><![CDATA[Can Send Me Emails]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Can View My Email Address]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
