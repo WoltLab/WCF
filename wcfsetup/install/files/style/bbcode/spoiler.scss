@@ -1,3 +1,24 @@
+.redactor-editor woltlab-spoiler {
+	background-color: rgb(255, 255, 255) !important;
+	border: 1px solid rgb(196, 196, 196) !important;
+	border-radius: 2px;
+	display: block;
+	margin: 1em 0;
+	padding: 10px 20px;
+	position: relative;
+	white-space: pre;
+	
+	&::before {
+		content: attr(data-title);
+		cursor: pointer;
+		display: block;
+		margin-bottom: 20px;
+		
+		@include wcfFontHeadline;
+	}
+}
+
+
 .spoilerBox > div {
 	border-left: 5px solid $wcfContentBorderInner;
 	margin-top: 10px;
