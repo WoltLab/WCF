@@ -59,6 +59,7 @@ class ViewableLikeList extends LikeList {
 			
 			$likeGroups[$like->objectTypeID]['objects'][] = $like;
 		}
+		unset($like);
 		
 		// set user profiles
 		if (!empty($userIDs)) {
