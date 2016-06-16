@@ -12,6 +12,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	display: inline-block;
 	outline: none;
 	padding: 6px 12px;
+	text-decoration: none;
 	
 	// input elements do not inherit font family, size and line-height from body
 	font-family: $wcfFontFamily;
@@ -29,6 +30,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	&:hover {
 		background-color: $wcfButtonBackgroundActive;
 		color: $wcfButtonTextActive;
+		text-decoration: none;
 	}
 	
 	&.small {
