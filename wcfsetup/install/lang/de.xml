@@ -1777,7 +1777,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.code"><![CDATA[Code]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
-		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck]]></item>
 		<item name="wcf.bbcode.code.c.title"><![CDATA[C]]></item>
 		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS]]></item>
 		<item name="wcf.bbcode.code.diff.title"><![CDATA[Diff]]></item>

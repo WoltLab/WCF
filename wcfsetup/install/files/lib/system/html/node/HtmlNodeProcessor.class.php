@@ -21,34 +21,33 @@ class HtmlNodeProcessor implements IHtmlNodeProcessor {
 	protected $xpath;
 	
 	public function load($html) {
-		$this->document = new \DOMDocument();
+		$this->document = new \DOMDocument('1.0', 'UTF-8');
 		$this->xpath = null;
-		
-		// convert entities as DOMDocument screws them up
-		$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 		
 		// ignore all errors when loading the HTML string, because DOMDocument does not
 		// provide a proper way to add custom HTML elements (even though explicitly allowed
 		// in HTML5) and the input HTML has already been sanitized by HTMLPurifier
-		@$this->document->loadHTML($html);
+		// 
+		// we're also injecting a bogus meta tag that magically enables DOMDocument
+		// to handle UTF-8 properly, this avoids encoding non-ASCII characters as it
+		// would conflict with already existing entities when reverting them
+		@$this->document->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . $html);
 		
 		$this->nodeData = [];
 	}
 	
 	public function getHtml() {
-		$html = $this->document->saveHTML();
+		$html = $this->document->saveHTML($this->document->getElementsByTagName('body')->item(0));
 		
 		// remove nuisance added by PHP
-		$html = preg_replace('~^<!DOCTYPE[^>]+>\s<html><body>~', '', $html);
-		$html = preg_replace('~</body></html>$~', '', $html);
-		
-		$html = mb_convert_encoding($html, 'UTF-8', 'HTML-ENTITIES');
+		$html = preg_replace('~^<body>~', '', $html);
+		$html = preg_replace('~</body>$~', '', $html);
 		
 		/** @var IHtmlNode $obj */
 		foreach ($this->nodeData as $data) {
 			$obj = $data['object'];
 			$string = $obj->replaceTag($data['data']);
-			$html = preg_replace_callback('~<wcfNode-' . $data['identifier'] . '>(?P<content>.*)</wcfNode-' . $data['identifier'] . '>~', function($matches) use ($string) {
+			$html = preg_replace_callback('~<wcfNode-' . $data['identifier'] . '>(?P<content>[\s\S]*)</wcfNode-' . $data['identifier'] . '>~', function($matches) use ($string) {
 				$string = str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
 				
 				return $string;

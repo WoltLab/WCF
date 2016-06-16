@@ -18,19 +18,15 @@ class HtmlOutputNodeBlockquote extends AbstractHtmlNode {
 	 * @inheritDoc
 	 */
 	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
-			if ($element->getAttribute('class') === 'quoteBox') {
-				$nodeIdentifier = StringUtil::getRandomID();
-				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
-					'title' => ($element->hasAttribute('data-quote-title')) ? $element->getAttribute('data-quote-title') : '',
-					'url' => ($element->hasAttribute('data-quote-url')) ? $element->getAttribute('data-quote-url') : ''
-				]);
-				
-				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
-			}
-			else {
-				$htmlNodeProcessor->unwrapContent($element);
-			}
+			$nodeIdentifier = StringUtil::getRandomID();
+			$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
+				'title' => ($element->hasAttribute('data-quote-title')) ? $element->getAttribute('data-quote-title') : '',
+				'url' => ($element->hasAttribute('data-quote-url')) ? $element->getAttribute('data-quote-url') : ''
+			]);
+			
+			$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
 		}
 	}
 	

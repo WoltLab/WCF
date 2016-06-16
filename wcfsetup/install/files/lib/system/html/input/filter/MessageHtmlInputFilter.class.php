@@ -31,22 +31,40 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	protected function setAttributeDefinitions(\HTMLPurifier_Config $config) {
 		// TODO: move this into own PHP classes
 		$definition = $config->getHTMLDefinition(true);
-		$definition->addAttribute('blockquote', 'data-quote-title', 'Text');
-		$definition->addAttribute('blockquote', 'data-quote-url', 'URI');
 		
+		// quotes
+		$definition->addAttribute('blockquote', 'data-author', 'Text');
+		$definition->addAttribute('blockquote', 'data-url', 'URI');
+		
+		// code
+		$definition->addAttribute('pre', 'data-file', 'Text');
+		$definition->addAttribute('pre', 'data-line', 'Number');
+		$definition->addAttribute('pre', 'data-highlighter', 'Text');
+		
+		// color
 		$definition->addElement('woltlab-color', 'Inline', 'Inline', '', ['class' => 'Text']);
+		
+		// size
 		$definition->addElement('woltlab-size', 'Inline', 'Inline', '', ['class' => 'Text']);
 		
+		// mention
 		$definition->addElement('woltlab-mention', 'Inline', 'Inline', '', [
 			'data-user-id' => 'Number',
 			'data-username' => 'Text'
 		]);
 		
+		// spoiler
+		$definition->addElement('woltlab-spoiler', 'Block', 'Flow', '', [
+			'data-label' => 'Text'
+		]);
+		
+		// generic metacode
 		$definition->addElement('woltlab-metacode', 'Inline', 'Inline', '', [
 			'data-attributes' => 'Text',
 			'data-name' => 'Text'
 		]);
 		
+		// metacode markers
 		$definition->addElement('woltlab-metacode-marker', 'Inline', 'Empty', '', [
 			'data-attributes' => 'Text',
 			'data-name' => 'Text',

@@ -66,14 +66,10 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		 * @protected
 		 */
 		_observeLoad: function() {
-			this._editor.events.stopDetectChanges();
-			
 			elBySelAll('pre', this._editor.$editor[0], (function(pre) {
 				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 				this._setTitle(pre);
 			}).bind(this));
-			
-			this._editor.events.startDetectChanges();
 		},
 		
 		/**
@@ -114,8 +110,6 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		_save: function(event) {
 			event.preventDefault();
 			
-			this._editor.events.stopDetectChanges();
-			
 			var id = 'redactor-code-' + this._elementId;
 			
 			['file', 'highlighter', 'line'].forEach((function (attr) {
@@ -124,8 +118,6 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			
 			this._setTitle(this._pre);
 			this._editor.caret.after(this._pre);
-			
-			this._editor.events.startDetectChanges();
 			
 			UiDialog.close(this);
 		},

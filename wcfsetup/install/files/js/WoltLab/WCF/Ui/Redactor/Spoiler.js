@@ -71,14 +71,10 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		 * @protected
 		 */
 		_observeLoad: function() {
-			this._editor.events.stopDetectChanges();
-			
 			elBySelAll('woltlab-spoiler', this._editor.$editor[0], (function(spoiler) {
 				spoiler.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 				this._setTitle(spoiler);
 			}).bind(this));
-			
-			this._editor.events.startDetectChanges();
 		},
 		
 		/**
@@ -119,14 +115,10 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		_save: function(event) {
 			event.preventDefault();
 			
-			this._editor.events.stopDetectChanges();
-			
 			elData(this._spoiler, 'label', elById('redactor-spoiler-' + this._elementId + '-label').value);
 			
 			this._setTitle(this._spoiler);
 			this._editor.caret.after(this._spoiler);
-			
-			this._editor.events.startDetectChanges();
 			
 			UiDialog.close(this);
 		},

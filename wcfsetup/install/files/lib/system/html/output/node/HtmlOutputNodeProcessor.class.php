@@ -15,5 +15,7 @@ class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMention());
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabColor());
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabSize());
+		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabSpoiler());
+		$this->invokeHtmlNode(new HtmlOutputNodePre());
 	}
 }
