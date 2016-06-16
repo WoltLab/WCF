@@ -9,7 +9,10 @@ use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -39,7 +42,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			0,
-			TIME_NOW - 3600 * 23,
+			TIME_NOW/*TODO - 3600 * 23*/,
 			0
 		]);
 		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -138,7 +141,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$eventList->readObjects();
 		$eventObjects = $eventList->getObjects();
 		
-		foreach ($eventsToUser as $userID => $events) {
+		foreach ($eventsToUser as $userID => $notificationIDs) {
 			if (!isset($users[$userID])) continue;
 			$user = $users[$userID];
 			
@@ -146,12 +149,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			if ($user->activationCode) continue;
 			if ($user->banned) continue;
 			
-			// add mail header
-			$message = $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.header', [
-				'user' => $user
-			]);
-			
-			foreach ($events as $notificationID) {
+			$notifications = array_map(function ($notificationID) use ($notificationObjects, $eventObjects, $user, $objectTypes, $authors, $authorToNotification) {
 				$notification = $notificationObjects[$notificationID];
 				
 				$className = $eventObjects[$notification->eventID]->className;
@@ -182,29 +180,47 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 					}
 				}
 				
-				$message .= "\n\n";
-				$message .= $class->getEmailMessage('daily');
-			}
+				$message = $class->getEmailMessage('daily');
+				if (is_array($message)) {
+					$variables = [
+						'notificationContent' => $message,
+						'event' => $class,
+						'notificationType' => 'daily'
+					];
+					if (isset($message['variables'])) {
+						$variables['variables'] = $message['variables'];
+					}
+					
+					return $variables;
+				}
+				else {
+					return [
+						'notificationContent' => $message,
+						'event' => $class,
+						'notificationType' => 'daily'
+					];
+				}
+			}, $notificationIDs);
 			
-			// append notification mail footer
-			$token = $user->notificationMailToken;
-			if (!$token) {
-				// generate token if not present
-				$token = mb_substr(StringUtil::getHash(serialize([$user->userID, StringUtil::getRandomID()])), 0, 20);
+			// generate token if not present
+			if (!$user->notificationMailToken) {
+				$token = bin2hex(CryptoUtil::randomBytes(10));
 				$editor = new UserEditor($user);
 				$editor->update(['notificationMailToken' => $token]);
+				
+				// reload user
+				$user = new User($user->userID);
 			}
 			
-			$message .= "\n\n";
-			$message .= $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.footer', [
-				'user' => $user,
-				'token' => $token
-			]);
+			$email = new Email();
+			$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.subject', ['count' => count($notifications)]));
+			$email->addRecipient(new UserMailbox($user));
 			
-			// build mail
-			$mail = new Mail([$user->username => $user->email], $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.subject', ['count' => count($events)]), $message);
-			$mail->setLanguage($user->getLanguage());
-			$mail->send();
+			$html = new RecipientAwareTextMimePart('text/html', 'email_dailyNotification', 'wcf', ['notifications' => $notifications]);
+			$plainText = new RecipientAwareTextMimePart('text/plain', 'email_dailyNotification', 'wcf', ['notifications' => $notifications]);
+			$email->setBody(new MimePartFacade([$html, $plainText]));
+			
+			$email->send();
 		}
 	}
 }
