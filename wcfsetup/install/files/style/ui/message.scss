@@ -414,16 +414,9 @@
 	}
 	
 	> .likesSummary {
-		color: $wcfContentDimmedText;
-		cursor: pointer;
 		flex: 0 0 auto;
 		
 		@include wcfFontSmall;
-		
-		> .icon {
-			color: $wcfContentDimmedText;
-			margin-right: 5px;
-		}
 	}
 	
 	> .messageFooterButtons {
@@ -434,6 +427,17 @@
 		@include screen-sm-down {
 			display: none;
 		}
+	}
+}
+
+.likesSummary {
+	color: $wcfContentDimmedText;
+	cursor: pointer;
+	flex: 0 0 auto;
+	
+	> .icon {
+		color: $wcfContentDimmedText;
+		margin-right: 5px;
 	}
 }
 

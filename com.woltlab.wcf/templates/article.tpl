@@ -110,9 +110,14 @@
 		</ul>
 	{/if}
 	
-	<div class="articleLikesSummery"></div>
-	
-	<ul class="articleLikeButtons buttonGroup"></ul>
+	<div class="section row articleLikeSection">
+		<div class="col-xs-12 col-md-8">
+			<div class="articleLikesSummery"></div>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<ul class="articleLikeButtons buttonGroup"></ul>
+		</div>
+	</div>
 </section>
 
 {if ENABLE_SHARE_BUTTONS}

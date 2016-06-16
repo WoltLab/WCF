@@ -24,12 +24,21 @@
 		@include wcfFontBold;
 	}
 	
-	.articleLikesSummery:not(:empty) {
+	.articleTagList,
+	.articleLikeSection {
 		margin-top: 20px;
 	}
 	
-	.articleLikeButtons:not(:empty) {
-		margin-top: 20px;
+	.articleLikeSection {
+		align-items: center;
+	}
+	
+	.articleLikeButtons {
+		justify-content: flex-end;
+		
+		.invisible {
+			display: inline;
+		}
 	}
 }
 
