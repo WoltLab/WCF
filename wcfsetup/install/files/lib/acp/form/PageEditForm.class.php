@@ -101,7 +101,7 @@ class PageEditForm extends PageAddForm {
 			}
 		}
 		else {
-			if ($customURL != $this->page->getPageContent()[$languageID]) {
+			if (mb_strtolower($customURL) != mb_strtolower($this->page->getPageContent()[$languageID]['customURL'])) {
 				parent::validateCustomUrl($languageID, $customURL);
 			}
 		}
