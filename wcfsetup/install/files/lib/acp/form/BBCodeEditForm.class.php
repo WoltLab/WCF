@@ -79,13 +79,13 @@ class BBCodeEditForm extends BBCodeAddForm {
 		AbstractForm::save();
 		
 		if ($this->showButton) {
-			$this->buttonLabel = 'wcf.bbcode.buttonLabel'.$this->bbcode->bbcodeID;
+			$this->buttonLabel = 'wcf.editor.button.button'.$this->bbcode->bbcodeID;
 			if (I18nHandler::getInstance()->isPlainValue('buttonLabel')) {
 				I18nHandler::getInstance()->remove($this->buttonLabel);
 				$this->buttonLabel = I18nHandler::getInstance()->getValue('buttonLabel');
 			}
 			else {
-				I18nHandler::getInstance()->save('buttonLabel', $this->buttonLabel, 'wcf.bbcode', 1);
+				I18nHandler::getInstance()->save('buttonLabel', $this->buttonLabel, 'wcf.editor', 1);
 			}
 		}
 		
@@ -136,7 +136,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel, 'wcf.bbcode.buttonLabel\d+');
+			I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel, 'wcf.editor.button.button\d+');
 			$this->buttonLabel = $this->bbcode->buttonLabel;
 			
 			$this->attributes = BBCodeAttribute::getAttributesByBBCode($this->bbcode);
