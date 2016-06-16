@@ -2165,6 +2165,11 @@ Errors are:
 		<item name="wcf.editor.image.source"><![CDATA[Source]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		
+		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>
+		<item name="wcf.editor.link.edit"><![CDATA[Edit Link]]></item>
+		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
+		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
+		
 		<item name="wcf.editor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Edit Quote]]></item>
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>

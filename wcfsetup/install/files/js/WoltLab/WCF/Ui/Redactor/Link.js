@@ -8,7 +8,7 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 		showDialog: function(options) {
 			UiDialog.open(this);
 			
-			UiDialog.setTitle(this, Language.get('wcf.redactor.link.' + (options.insert ? 'add' : 'edit')));
+			UiDialog.setTitle(this, Language.get('wcf.editor.link.' + (options.insert ? 'add' : 'edit')));
 			
 			var submitButton = elById('redactor-modal-button-action');
 			submitButton.textContent = Language.get('wcf.global.button.' + (options.insert ? 'insert' : 'save'));
@@ -52,11 +52,11 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 					}
 				},
 				source: '<dl>'
-						+ '<dt><label for="redactor-link-url">' + Language.get('wcf.redactor.link.url') + '</label></dt>'
+						+ '<dt><label for="redactor-link-url">' + Language.get('wcf.editor.link.url') + '</label></dt>'
 						+ '<dd><input type="url" id="redactor-link-url" class="long"></dd>'
 					+ '</dl>'
 					+ '<dl>'
-						+ '<dt><label for="redactor-link-url-text">' + Language.get('wcf.redactor.link.text') + '</label></dt>'
+						+ '<dt><label for="redactor-link-url-text">' + Language.get('wcf.editor.link.text') + '</label></dt>'
 						+ '<dd><input type="text" id="redactor-link-url-text" class="long"></dd>'
 					+ '</dl>'
 					+ '<div class="formSubmit">'

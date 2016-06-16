@@ -2154,6 +2154,11 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.image.source"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
 		
+		<item name="wcf.editor.link.add"><![CDATA[Link einfügen]]></item>
+		<item name="wcf.editor.link.edit"><![CDATA[Link bearbeiten]]></item>
+		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
+		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
+		
 		<item name="wcf.editor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {$author}{else}Zitat{/if}]]></item>

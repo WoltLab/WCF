@@ -62,6 +62,11 @@
 				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
 				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
 				
+				'wcf.editor.link.add': '{lang}wcf.editor.link.add{/lang}',
+				'wcf.editor.link.edit': '{lang}wcf.editor.link.edit{/lang}',
+				'wcf.editor.link.url': '{lang}wcf.editor.link.url{/lang}',
+				'wcf.editor.link.text': '{lang}wcf.editor.link.text{/lang}',
+				
 				'wcf.editor.quote.author': '{lang}wcf.editor.quote.author{/lang}',
 				'wcf.editor.quote.edit': '{lang}wcf.editor.quote.edit{/lang}',
 				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',
