@@ -1,7 +1,7 @@
 WoltLab Suite Core 3.0
 ======================
 
-WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities. Cuting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
+WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities. Cutting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
 
 _Formerly known as [WoltLab Community Framework](https://community.woltlab.com/thread/249026-introducing-woltlab-suite-3-0/)_
 
