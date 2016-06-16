@@ -49,8 +49,18 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the message for this notification event.
 	 * 
+	 * If $notificationType is 'instant' this method should either:
+	 * - Return a string to be inserted into a text/plain email (deprecated)
+	 * - Return a ['template' => ..., 'application' => ..., 'variables' => ...] array
+	 *   to be included into the summary email.
+	 * 
+	 * If $notificationType is 'daily' this method should either:
+	 * - Return a string to be inserted into the summary email (deprecated)
+	 * - Return a ['template' => ..., 'application' => ..., 'variables' => ...] array
+	 *   to be included into the summary email.
+	 * 
 	 * @param	string		$notificationType
-	 * @return	string
+	 * @return	mixed
 	 */
 	public function getEmailMessage($notificationType = 'instant');
 	

@@ -14,7 +14,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\email\mime\AbstractMimePart;
+use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
@@ -664,15 +664,28 @@ class UserNotificationHandler extends SingletonFactory {
 			'title' => $event->getEmailTitle()
 		]));
 		$email->addRecipient(new UserMailbox($user));
+		// TODO: MessageID, References, In-Reply-To
 		
 		$message = $event->getEmailMessage('instant');
-		if ($message instanceof AbstractMimePart) {
-			$email->setBody($message);
+		if (is_array($message)) {
+			$variables = [
+				'notificationContent' => $message,
+				'event' => $event,
+				'notificationType' => 'instant'
+			];
+			if (isset($message['variables'])) {
+				$variables['variables'] = $message['variables'];
+			}
+			
+			$html = new RecipientAwareTextMimePart('text/html', 'email_notification', 'wcf', $variables);
+			$plainText = new RecipientAwareTextMimePart('text/plain', 'email_notification', 'wcf', $variables);
+			$email->setBody(new MimePartFacade([$html, $plainText]));
 		}
 		else {
 			$email->setBody(new RecipientAwareTextMimePart('text/plain', 'email_notification', 'wcf', [
 				'notificationContent' => $message,
-				'event' => $event
+				'event' => $event,
+				'notificationType' => 'instant'
 			]));
 		}
 		

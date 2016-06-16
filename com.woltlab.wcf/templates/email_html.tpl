@@ -19,6 +19,10 @@
 			text-decoration: none;
 		}
 		
+		td {
+			vertical-align: top;
+		}
+		
 		{* see email_paddingHelper.tpl *}
 		table.paddingHelper.block {
 			width: 100%;
@@ -47,6 +51,17 @@
 		}
 		td.button a {
 			color: {$style->getVariable('wcfButtonPrimaryText', true)};
+		}
+		
+		.box128 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 20px;
+		}
+		
+		.containerHeadline h3 {
+			margin: 0;
+			padding: 0;
 		}
 		</style>
 	</head>

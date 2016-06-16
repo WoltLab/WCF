@@ -3270,34 +3270,6 @@ Open the link below to access the user profile:
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
 		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "No Notifications" } else if (data.returnValues.count == 1) { "1 Notification" } else { data.returnValues.count + " Notifications" }]]></item>
-		<item name="wcf.user.notification.follow.message"><![CDATA[{@$author->getAnchorTag()} follows you.]]></item>
-		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} follow you.]]></item>
-		<item name="wcf.user.notification.follow.mail"><![CDATA[{@$author->username} follows you.]]></item>
-		<item name="wcf.user.notification.follow.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{else}{@$authors[0]->username} and {#$others} others{/if} follow you.]]></item>
-		<item name="wcf.user.notification.follow.title"><![CDATA[New Follower]]></item>
-		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} new followers]]></item>
-		<item name="wcf.user.notification.mail.disabled"><![CDATA[Email notification has been disabled.]]></item>
-		<item name="wcf.user.notification.mail.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
-		
-You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
-{link controller='NotificationSettings' isEmail=true}{/link} 
-
-If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
-{link controller='NotificationDisable' isEmail=true}eventID={@$notification->eventID}&userID={@$user->userID}&token={@$token}{/link}]]></item>
-		<item name="wcf.user.notification.mail.header"><![CDATA[Dear {@$user->username},]]></item>
-		<item name="wcf.user.notification.mail.subject"><![CDATA[New Notification: {@$title}]]></item>
-		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
-		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
-		
-You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
-{link controller='NotificationSettings' isEmail=true}{/link} 
-
-If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
-{link controller='NotificationDisable' isEmail=true}userID={@$user->userID}&token={@$token}{/link}]]></item>
-		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[No Email Notification]]></item>
-		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
-		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
-		<item name="wcf.user.notification.mailNotificationType.notSupported"><![CDATA[Email Notifications are not supported.]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Mark All as Read]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Do you really want to mark all notifications as read?]]></item>
 		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Mark as Read]]></item>
@@ -3308,8 +3280,47 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Disabled]]></item>
 		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Enabled]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Display All Notifications]]></item>
+		<item name="wcf.user.notification.mail.disabled"><![CDATA[Email notification has been disabled.]]></item>
+		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[No Email Notification]]></item>
+		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
+		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
+		<item name="wcf.user.notification.mailNotificationType.notSupported"><![CDATA[Email Notifications are not supported.]]></item>
+		
+		<!-- Email Wrapper -->
+		<item name="wcf.user.notification.mail.subject"><![CDATA[New Notification: {@$title}]]></item>
+		<item name="wcf.user.notification.mail.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.notification.mail.plaintext.outro"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
+
+Visit your notification settings [URL:{link controller='NotificationSettings' isEmail=true}{/link}] to configure
+your notifications on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] as you wish.
+
+If you only wish to disable this type of notification you can do so by visiting:
+{link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
+		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h1>Dear {$mailbox->getUser()->username},</h1>]]></item>
+		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
+
+<p>Visit your <a href="{link controller='NotificationSettings' isEmail=true}{/link}">notification settings</a> to configure
+your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> as you wish.</p>
+
+<p>You can <a href="{link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable only this type of notification</a> as well.</p>]]></item>
+		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
+		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
+		
+You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
+{link controller='NotificationSettings' isEmail=true}{/link} 
+
+If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
+{link controller='NotificationDisable' isEmail=true}userID={@$user->userID}&token={@$token}{/link}]]></item>
+
+		<!-- Notifications -->
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Notify when I receive a new follower]]></item>
+		<item name="wcf.user.notification.follow.title"><![CDATA[New Follower]]></item>
+		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} new followers]]></item>
+		<item name="wcf.user.notification.follow.message"><![CDATA[{@$author->getAnchorTag()} follows you.]]></item>
+		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} follow you.]]></item>
+		<item name="wcf.user.notification.follow.mail.plaintext"><![CDATA[{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}] is following you.]]></item>
+		<item name="wcf.user.notification.follow.mail.html"><![CDATA[<a href="{link controller='User' object=$event->getAuthor() isEmail=true}{/link}">{$event->getAuthor()->username}</a> is following you.]]></item>
 		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Wall)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">your wall</a>.]]></item>

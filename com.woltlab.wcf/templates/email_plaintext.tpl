@@ -1,8 +1,8 @@
-{if $beforeContent|isset}{@$beforeContent}{/if}
+{if $beforeContent|isset}{@$beforeContent}
 
-{@$content}
+{/if}{@$content}{if $afterContent|isset}
 
-{if $afterContent|isset}{@$afterContent}{/if}
+{@$afterContent}{/if}
 {hascontent} {* this line ends with a space *}
 
 -- {* this line ends with a space *}
