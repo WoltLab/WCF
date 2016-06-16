@@ -88,7 +88,7 @@
 				<attribute name="1"></attribute>
 			</attributes>
 			<wysiwygicon>fa-quote-left</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.quote</buttonlabel>
+			<buttonlabel>wcf.editor.button.quote</buttonlabel>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="code">
@@ -100,7 +100,7 @@
 			</attributes>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-code</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.code</buttonlabel>
+			<buttonlabel>wcf.editor.button.code</buttonlabel>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="img">
@@ -152,7 +152,7 @@
 				<attribute name="0"></attribute>
 			</attributes>
 			<wysiwygicon>fa-eye-slash</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.spoiler</buttonlabel>
+			<buttonlabel>wcf.editor.button.spoiler</buttonlabel>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="tt">
@@ -160,7 +160,7 @@
 			<htmlclose>kbd</htmlclose>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-terminal</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.inlineCode</buttonlabel>
+			<buttonlabel>wcf.editor.button.inlineCode</buttonlabel>
 		</bbcode>
 		
 		<bbcode name="attach">
