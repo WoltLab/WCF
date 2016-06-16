@@ -1806,11 +1806,9 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter <em>System -&gt; O
 freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos nun in vollem Umfang nutzen.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Ihr{else}Dein{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [1] wurde von
+{if LANGUAGE_USE_INFORMAL_VARIANT}Ihr{else}Dein{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [URL:{link}{/link}] wurde von
 einem Administrator freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if}
-Benutzerkontos nun in vollem Umfang nutzen.
-
-[1] {link}{/link}]]></item>
+Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
@@ -3048,7 +3046,7 @@ unter: <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if 
 dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Hallo {$mailbox->getUser()->username},
 
-vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language} [1].
+vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language} [URL:{link}{/link}].
 Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if} ist es notwendig,
 dass Sie einmalig durch Klicken des Folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if}
 E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:
@@ -3061,9 +3059,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivie
 dich{else}wenden
 Sie sich{/if} bitte an den Administrator unter: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
 dich{else}Sie
-sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.
-
-[1] {link}{/link}]]></item>
+sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.]]></item>
 		
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. Ihre Registrierung ist hiermit vollständig abgeschlossen.]]></item>

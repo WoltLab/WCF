@@ -79,6 +79,24 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 				
 				$result = $emogrifier->emogrify();
 			}
+			else if ($this->mimeType === 'text/plain') {
+				$counter = 1;
+				$urls = [];
+				$result = preg_replace_callback('~\[URL:(https?://[^\]\s]*)\]~', function ($matches) use (&$counter, &$urls) {
+					if (!isset($urls[$matches[1]])) {
+						$urls[$matches[1]] = $counter++;
+					}
+					
+					return '['.$urls[$matches[1]].']';
+				}, $result);
+				$result = preg_replace_callback('/(\r?\n-- \r?\n|$)/', function ($matches) use ($urls) {
+					$list = '';
+					foreach ($urls as $url => $number) {
+						$list .= "\r\n[".$number."] ".$url;
+					}
+					return $list."\r\n".$matches[0];
+				}, $result, 1);
+			}
 			
 			return $result;
 		}

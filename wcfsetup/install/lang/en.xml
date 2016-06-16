@@ -1779,11 +1779,9 @@ Login with your new password: {link controller='Login' isEmail=true}{/link}]]></
 by an administrator. You are now able to use your user account to it’s full extend.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-your account on the website: {@PAGE_TITLE|language} [1] has been approved
+your account on the website: {@PAGE_TITLE|language} [URL:{link}{/link}] has been approved
 by an administrator. You are now able to use your user account to it’s
-full extend.
-
-[1] {link}{/link}]]></item>
+full extend.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[You can set the default notification settings for new users, any changes made here do not affect existing users. Users may customize their settings at any time.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
@@ -3086,7 +3084,7 @@ user account to it’s full extent it is required that you confirm validity of y
 you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
 
-thank your for registering at: {@PAGE_TITLE|language} [1]. Before you are
+thank your for registering at: {@PAGE_TITLE|language} [URL:{link}{/link}]. Before you are
 able to user your user account to it's full extent it is required that you
 confirm the validity of your email address once:
 
@@ -3096,9 +3094,7 @@ Your activation code is: {@$mailbox->getUser()->activationCode} {* this line end
 
 If you have troubles confirming your email address, please contect the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
-not register with us.
-
-[1] {link}{/link}]]></item>
+not register with us.]]></item>
 		
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
