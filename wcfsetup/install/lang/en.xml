@@ -1775,11 +1775,11 @@ Login with your new password: {link controller='Login' isEmail=true}{/link}]]></
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
-<p>your account on the website: <a href="{link}{/link}">{PAGE_TITLE|language}</a> has been approved
+<p>your account on the website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> has been approved
 by an administrator. You are now able to use your user account to it’s full extend.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-your account on the website: {@PAGE_TITLE|language} [URL:{link}{/link}] has been approved
+your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved
 by an administrator. You are now able to use your user account to it’s
 full extend.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
@@ -3074,7 +3074,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>thank you for registering at: <a href="{link}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
+<p>thank you for registering at: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address!]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
@@ -3084,7 +3084,7 @@ user account to it’s full extent it is required that you confirm validity of y
 you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
 
-thank your for registering at: {@PAGE_TITLE|language} [URL:{link}{/link}]. Before you are
+thank your for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. Before you are
 able to user your user account to it's full extent it is required that you
 confirm the validity of your email address once:
 
