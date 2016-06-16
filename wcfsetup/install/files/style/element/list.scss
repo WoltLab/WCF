@@ -24,6 +24,45 @@ ol.nativeList {
 	
 	align-items: baseline;
 	
+	> li:not(:last-child) {
+		margin-right: 8px;
+	}
+	
+	.tag {
+		background-color: $wcfButtonBackground;
+		color: $wcfButtonText;
+		display: inline-block;
+		margin-left: 11px;
+		padding: 3px 6px 2px 2px;
+		position: relative;
+		text-decoration: none;
+		text-transform: uppercase;
+		
+		@include wcfFontSmall;
+		@include wcfFontBold;
+		
+		&::before {
+			border: 11px solid transparent;
+			border-left-width: 0;
+			border-right-color: $wcfButtonBackground;
+			content: "";
+			display: block;
+			left: -11px;
+			position: absolute;
+			top: 0;
+		}
+		
+		&:hover {
+			background-color: $wcfButtonPrimaryBackgroundActive;
+			color: $wcfButtonPrimaryTextActive;
+			text-decoration: none;
+			
+			&::before {
+				border-right-color: $wcfButtonPrimaryBackgroundActive;
+			}
+		}
+	}
+	
 	.tagWeight1 {
 		font-size: 12px;
 	}
