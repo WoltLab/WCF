@@ -138,7 +138,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		$articleIDs = $articleContentIDs = [];
 		foreach ($this->getObjects() as $article) {
 			$articleIDs[] = $article->articleID;
-			foreach ($article->getArticleContent() as $articleContent) {
+			foreach ($article->getArticleContents() as $articleContent) {
 				$articleContentIDs[] = $articleContent->articleContentID;
 			}
 		}

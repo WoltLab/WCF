@@ -71,10 +71,23 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * @param       ViewableArticleContent  $articleContent
 	 */
 	public function setArticleContent(ViewableArticleContent $articleContent) {
-		if ($this->getDecoratedObject()->articleContent === null) {
-			$this->getDecoratedObject()->articleContent = [];
+		if ($this->getDecoratedObject()->articleContents === null) {
+			$this->getDecoratedObject()->articleContents = [];
 		}
 		
-		$this->getDecoratedObject()->articleContent[($articleContent->languageID ?: 0)] = $articleContent;
+		$this->getDecoratedObject()->articleContents[($articleContent->languageID ?: 0)] = $articleContent;
+	}
+	
+	/**
+	 * Returns the article's image.
+	 *
+	 * @return      ViewableMedia|null
+	 */
+	public function getImage() {
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getImage();
+		}
+		
+		return null;
 	}
 }

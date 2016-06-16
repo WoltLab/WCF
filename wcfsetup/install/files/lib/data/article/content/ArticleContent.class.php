@@ -10,6 +10,8 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\MessageUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents an article content.
@@ -63,9 +65,32 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	}
 	
 	/**
+	 * Returns the article's unformatted content.
+	 *
+	 * @return      string
+	 */
+	public function getTeaser() {
+		return $this->teaser;
+	}
+	
+	/**
 	 * Returns the article's formatted content.
 	 *
-	 * @return string
+	 * @return      string
+	 */
+	public function getFormattedTeaser() {
+		if ($this->teaser) {
+			return StringUtil::encodeHTML($this->teaser);
+		}
+		else {
+			return StringUtil::truncateHTML(StringUtil::stripHTML($this->getFormattedContent()));
+		}
+	}
+	
+	/**
+	 * Returns the article's formatted content.
+	 *
+	 * @return      string
 	 */
 	public function getFormattedContent() {
 		// assign embedded objects

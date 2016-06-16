@@ -59,7 +59,7 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 * article content grouped by language id
 	 * @var	ArticleContent[]
 	 */
-	public $articleContent;
+	public $articleContents;
 	
 	/**
 	 * language links
@@ -103,16 +103,8 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		$this->getArticleContent();
-		if ($this->isMultilingual) {
-			if (isset($this->articleContent[WCF::getLanguage()->languageID])) {
-				return $this->articleContent[WCF::getLanguage()->languageID]->getLink();
-			}
-		}
-		else {
-			if (isset($this->articleContent[0])) {
-				return $this->articleContent[0]->getLink();
-			}
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getLink();
 		}
 		
 		return '';
@@ -121,40 +113,37 @@ class Article extends DatabaseObject implements ILinkableObject {
 	/**
 	 * Returns the article's title.
 	 *
-	 * @return string
+	 * @return      string
 	 */
 	public function getTitle() {
-		$this->getArticleContent();
-		if ($this->isMultilingual) {
-			if (isset($this->articleContent[WCF::getLanguage()->languageID])) {
-				return $this->articleContent[WCF::getLanguage()->languageID]->getTitle();
-			}
-		}
-		else {
-			if (isset($this->articleContent[0])) {
-				return $this->articleContent[0]->getTitle();
-			}
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getTitle();
 		}
 		
 		return '';
 	}
 	
 	/**
-	 * Returns the article's teaser.
+	 * Returns the article's unformatted teaser.
 	 *
-	 * @return string
+	 * @return      string
 	 */
 	public function getTeaser() {
-		$this->getArticleContent();
-		if ($this->isMultilingual) {
-			if (isset($this->articleContent[WCF::getLanguage()->languageID])) {
-				return $this->articleContent[WCF::getLanguage()->languageID]->teaser;
-			}
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getTeaser();
 		}
-		else {
-			if (isset($this->articleContent[0])) {
-				return $this->articleContent[0]->teaser;
-			}
+		
+		return '';
+	}
+	
+	/**
+	 * Returns the article's formatted teaser.
+	 *
+	 * @return      string
+	 */
+	public function getFormattedTeaser() {
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getFormattedTeaser();
 		}
 		
 		return '';
@@ -163,39 +152,32 @@ class Article extends DatabaseObject implements ILinkableObject {
 	/**
 	 * Returns the article's formatted content.
 	 *
-	 * @return string
+	 * @return      string
 	 */
 	public function getFormattedContent() {
-		$this->getArticleContent();
-		if ($this->isMultilingual) {
-			if (isset($this->articleContent[WCF::getLanguage()->languageID])) {
-				return $this->articleContent[WCF::getLanguage()->languageID]->getFormattedContent();
-			}
-		}
-		else {
-			if (isset($this->articleContent[0])) {
-				return $this->articleContent[0]->getFormattedContent();
-			}
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getFormattedContent();
 		}
 		
 		return '';
 	}
 	
 	/**
-	 * Returns the article's image.
+	 * Returns the active content version.
 	 *
-	 * @return ViewableMedia
+	 * @return	ArticleContent|null
 	 */
-	public function getImage() {
-		$this->getArticleContent();
+	public function getArticleContent() {
+		$this->getArticleContents();
+		
 		if ($this->isMultilingual) {
-			if (isset($this->articleContent[WCF::getLanguage()->languageID])) {
-				return $this->articleContent[WCF::getLanguage()->languageID]->getImage();
+			if (isset($this->articleContents[WCF::getLanguage()->languageID])) {
+				return $this->articleContents[WCF::getLanguage()->languageID];
 			}
 		}
 		else {
-			if (!empty($this->articleContent[0])) {
-				return $this->articleContent[0]->getImage();
+			if (!empty($this->articleContents[0])) {
+				return $this->articleContents[0];
 			}
 		}
 		
@@ -207,9 +189,9 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 *
 	 * @return	ArticleContent[]
 	 */
-	public function getArticleContent() {
-		if ($this->articleContent === null) {
-			$this->articleContent = [];
+	public function getArticleContents() {
+		if ($this->articleContents === null) {
+			$this->articleContents = [];
 			
 			$sql = "SELECT	*
 				FROM	wcf" . WCF_N . "_article_content
@@ -217,11 +199,11 @@ class Article extends DatabaseObject implements ILinkableObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->articleID]);
 			while ($row = $statement->fetchArray()) {
-				$this->articleContent[($row['languageID'] ?: 0)] = new ArticleContent(null, $row);
+				$this->articleContents[($row['languageID'] ?: 0)] = new ArticleContent(null, $row);
 			}
 		}
 		
-		return $this->articleContent;
+		return $this->articleContents;
 	}
 	
 	/**

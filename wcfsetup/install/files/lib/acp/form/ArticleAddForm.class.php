@@ -274,10 +274,6 @@ class ArticleAddForm extends AbstractForm {
 				if (empty($this->title[$language->languageID])) {
 					throw new UserInputException('title'.$language->languageID);
 				}
-				// teaser
-				if (empty($this->teaser[$language->languageID])) {
-					throw new UserInputException('teaser'.$language->languageID);
-				}
 				// content
 				if (empty($this->content[$language->languageID])) {
 					throw new UserInputException('content'.$language->languageID);
@@ -288,10 +284,6 @@ class ArticleAddForm extends AbstractForm {
 			// title
 			if (empty($this->title[0])) {
 				throw new UserInputException('title');
-			}
-			// teaser
-			if (empty($this->teaser[0])) {
-				throw new UserInputException('teaser');
 			}
 			// content
 			if (empty($this->content[0])) {

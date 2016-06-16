@@ -110,7 +110,7 @@ class ArticleEditForm extends ArticleAddForm {
 	 */
 	public function readData() {
 		if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
-			foreach ($this->article->getArticleContent() as $languageID => $content) {
+			foreach ($this->article->getArticleContents() as $languageID => $content) {
 				$this->imageID[$languageID] = $content['imageID'];
 			}
 			
@@ -133,7 +133,7 @@ class ArticleEditForm extends ArticleAddForm {
 				$this->publicationDate = $dateTime->format('c');
 			}
 			
-			foreach ($this->article->getArticleContent() as $languageID => $content) {
+			foreach ($this->article->getArticleContents() as $languageID => $content) {
 				$this->title[$languageID] = $content->title;
 				$this->teaser[$languageID] = $content->teaser;
 				$this->content[$languageID] = $content->content;

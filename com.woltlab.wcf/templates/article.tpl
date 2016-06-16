@@ -96,7 +96,7 @@
 >
 	<div class="htmlContent">
 		{if $articleContent->teaser}
-			<p class="articleTeaser">{$articleContent->teaser}</p>
+			<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
 		{/if}
 	
 		{@$articleContent->getFormattedContent()}
@@ -245,10 +245,9 @@
 									</li>
 									
 									{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-										<li>
+										<li class="wcfLikeCounter{if $relatedArticle->cumulativeLikes > 0} likeCounterLiked{elseif $relatedArticle->cumulativeLikes < 0}likeCounterDisliked{/if}">
 											{if $relatedArticle->likes || $relatedArticle->dislikes}
-												<span class="icon icon16 fa-thumbs-o-{if $relatedArticle->cumulativeLikes < 0}down{else}up{/if} jsTooltip" title="{lang likes=$relatedArticle->likes dislikes=$relatedArticle->dislikes}wcf.like.tooltip{/lang}"></span>
-												{if $relatedArticle->cumulativeLikes > 0}+{elseif $relatedArticle->cumulativeLikes == 0}&plusmn;{/if}{#$relatedArticle->cumulativeLikes}
+												<span class="icon icon16 fa-thumbs-o-{if $relatedArticle->cumulativeLikes < 0}down{else}up{/if} jsTooltip" title="{lang likes=$relatedArticle->likes dislikes=$relatedArticle->dislikes}wcf.like.tooltip{/lang}"></span>{if $relatedArticle->cumulativeLikes > 0}+{elseif $relatedArticle->cumulativeLikes == 0}&plusmn;{/if}{#$relatedArticle->cumulativeLikes}
 											{/if}
 										</li>
 									{/if}
@@ -256,7 +255,7 @@
 							</div>
 							
 							<div class="containerContent articleListTeaser">
-								{$relatedArticle->getTeaser()}
+								{@$relatedArticle->getFormattedTeaser()}
 							</div>
 						</div>
 						

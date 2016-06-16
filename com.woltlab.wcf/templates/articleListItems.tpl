@@ -3,9 +3,9 @@
 		<li>
 			<a href="{$article->getLink()}">
 				{if $article->getImage()}
-				<div class="box128">
-					<div class="articleListImage">{@$article->getImage()->getThumbnailTag('tiny')}</div>
-					{/if}
+					<div class="box128">
+						<div class="articleListImage">{@$article->getImage()->getThumbnailTag('tiny')}</div>
+				{/if}
 					
 					<div>
 						<div class="containerHeadline">
@@ -32,12 +32,12 @@
 						</div>
 						
 						<div class="containerContent articleListTeaser">
-							{$article->getTeaser()}
+							{@$article->getFormattedTeaser()}
 						</div>
 					</div>
 					
-					{if $article->getImage()}
-				</div>
+				{if $article->getImage()}
+					</div>
 				{/if}
 			</a>
 		</li>

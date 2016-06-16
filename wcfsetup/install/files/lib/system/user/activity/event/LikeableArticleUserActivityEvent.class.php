@@ -45,7 +45,7 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
 				$event->setTitle($text);
 				
 				// output
-				$event->setDescription($article->getTeaser());
+				$event->setDescription($article->getFormattedTeaser());
 			}
 			else {
 				$event->setIsOrphaned();
