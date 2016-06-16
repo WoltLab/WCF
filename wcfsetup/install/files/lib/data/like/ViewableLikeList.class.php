@@ -46,7 +46,7 @@ class ViewableLikeList extends LikeList {
 		
 		$userIDs = [];
 		$likeGroups = [];
-		foreach ($this->objects as &$like) {
+		foreach ($this->objects as $like) {
 			$userIDs[] = $like->userID;
 			
 			if (!isset($likeGroups[$like->objectTypeID])) {
@@ -59,7 +59,6 @@ class ViewableLikeList extends LikeList {
 			
 			$likeGroups[$like->objectTypeID]['objects'][] = $like;
 		}
-		unset($like);
 		
 		// set user profiles
 		if (!empty($userIDs)) {

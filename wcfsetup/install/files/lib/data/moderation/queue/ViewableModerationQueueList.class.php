@@ -62,7 +62,7 @@ class ViewableModerationQueueList extends ModerationQueueList {
 		
 		if (!empty($this->objects)) {
 			$objects = [];
-			foreach ($this->objects as &$object) {
+			foreach ($this->objects as $object) {
 				if (!isset($objects[$object->objectTypeID])) {
 					$objects[$object->objectTypeID] = [];
 				}
