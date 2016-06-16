@@ -1,7 +1,13 @@
 <?php
 namespace wcf\system\comment\manager;
+use wcf\data\article\ArticleList;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\ArticleEditor;
+use wcf\data\comment\CommentList;
+use wcf\data\comment\response\CommentResponseList;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\like\IViewableLikeProvider;
 use wcf\system\WCF;
 
 /**
@@ -12,7 +18,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
-class ArticleCommentManager extends AbstractCommentManager {
+class ArticleCommentManager extends AbstractCommentManager implements IViewableLikeProvider {
 	/**
 	 * @inheritDoc
 	 */
@@ -81,9 +87,110 @@ class ArticleCommentManager extends AbstractCommentManager {
 	/**
 	 * @inheritDoc
 	 */
-	public function supportsLike() {
-		// @todo
-		return false;
+	public function prepare(array $likes) {
+		$commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
+		
+		$commentIDs = $responseIDs = [];
+		foreach ($likes as $like) {
+			if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+				$commentIDs[] = $like->objectID;
+			}
+			else {
+				$responseIDs[] = $like->objectID;
+			}
+		}
+		
+		// fetch response
+		$userIDs = $responses = [];
+		if (!empty($responseIDs)) {
+			$responseList = new CommentResponseList();
+			$responseList->setObjectIDs($responseIDs);
+			$responseList->readObjects();
+			$responses = $responseList->getObjects();
+			
+			foreach ($responses as $response) {
+				$commentIDs[] = $response->commentID;
+				if ($response->userID) {
+					$userIDs[] = $response->userID;
+				}
+			}
+		}
+		
+		// fetch comments
+		$commentList = new CommentList();
+		$commentList->setObjectIDs($commentIDs);
+		$commentList->readObjects();
+		$comments = $commentList->getObjects();
+		
+		// fetch users
+		$users = [];
+		$articleIDs = [];
+		foreach ($comments as $comment) {
+			$articleIDs[] = $comment->objectID;
+			if ($comment->userID) {
+				$userIDs[] = $comment->userID;
+			}
+		}
+		if (!empty($userIDs)) {
+			$users = UserProfileRuntimeCache::getInstance()->getObjects(array_unique($userIDs));
+		}
+		
+		// fetch articles
+		$articles = [];
+		if (!empty($articleIDs)) {
+			$articleList = new ArticleList();
+			$articleList->setObjectIDs($articleIDs);
+			$articleList->readObjects();
+			$articles = $articleList->getObjects();
+		}
+		
+		// set message
+		foreach ($likes as $like) {
+			if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+				// comment like
+				if (isset($comments[$like->objectID])) {
+					$comment = $comments[$like->objectID];
+					
+					if (isset($articles[$comment->objectID]) && $articles[$comment->objectID]->canRead()) {
+						$like->setIsAccessible();
+						
+						// short output
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment', [
+							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+							'article' => $articles[$comment->objectID],
+							'like' => $like
+						]);
+						$like->setTitle($text);
+						
+						// output
+						$like->setDescription($comment->getExcerpt());
+					}
+				}
+			}
+			else {
+				// response like
+				if (isset($responses[$like->objectID])) {
+					$response = $responses[$like->objectID];
+					$comment = $comments[$response->commentID];
+					
+					if (isset($articles[$comment->objectID]) && $articles[$comment->objectID]->canRead()) {
+						$like->setIsAccessible();
+						
+						// short output
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment.response', [
+							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
+							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+							'article' => $articles[$comment->objectID],
+							'like' => $like
+						]);
+						$like->setTitle($text);
+						
+						// output
+						$like->setDescription($response->getExcerpt());
+					}
+				}
+			}
+		}
 	}
 	
 	/**
