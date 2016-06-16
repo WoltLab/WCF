@@ -220,6 +220,16 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	}
 	
 	/**
+	 * Returns true if this page is accessible by current user.
+	 *
+	 * @return	boolean
+	 */
+	public function isAccessible() {
+		// @todo
+		return true;
+	}
+	
+	/**
 	 * Sets the current page as landing page.
 	 * 
 	 * @throws	SystemException

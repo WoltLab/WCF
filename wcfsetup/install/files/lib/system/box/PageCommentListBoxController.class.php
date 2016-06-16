@@ -38,7 +38,8 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
 			'commentList' => $this->objectList,
 			'commentObjectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.page'),
 			'lastCommentTime' => $this->objectList->getMinCommentTime(),
-			'pageID' => RequestHandler::getInstance()->getActiveRequest()->getPageID()
+			'pageID' => RequestHandler::getInstance()->getActiveRequest()->getPageID(),
+			'likeData' => ((MODULE_LIKE && $this->objectList) ? $this->objectList->getLikeData() : []),
 		]);
 	}
 	

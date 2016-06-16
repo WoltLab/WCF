@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\comment\manager;
-use wcf\data\article\ArticleList;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\ArticleEditor;
+use wcf\data\article\content\ArticleContentList;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectTypeCache;
@@ -43,6 +43,11 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 	 * @inheritDoc
 	 */
 	protected $permissionModEdit = 'mod.article.canEditComment';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $permissionCanModerate = 'mod.article.canModerateComment';
 	
 	/**
 	 * @inheritDoc
@@ -124,9 +129,9 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 		
 		// fetch users
 		$users = [];
-		$articleIDs = [];
+		$articleContentIDs = [];
 		foreach ($comments as $comment) {
-			$articleIDs[] = $comment->objectID;
+			$articleContentIDs[] = $comment->objectID;
 			if ($comment->userID) {
 				$userIDs[] = $comment->userID;
 			}
@@ -136,12 +141,12 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 		}
 		
 		// fetch articles
-		$articles = [];
-		if (!empty($articleIDs)) {
-			$articleList = new ArticleList();
-			$articleList->setObjectIDs($articleIDs);
-			$articleList->readObjects();
-			$articles = $articleList->getObjects();
+		$articleContents = [];
+		if (!empty($articleContentIDs)) {
+			$articleContentList = new ArticleContentList();
+			$articleContentList->setObjectIDs($articleContentIDs);
+			$articleContentList->readObjects();
+			$articleContents = $articleContentList->getObjects();
 		}
 		
 		// set message
@@ -151,13 +156,13 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 				if (isset($comments[$like->objectID])) {
 					$comment = $comments[$like->objectID];
 					
-					if (isset($articles[$comment->objectID]) && $articles[$comment->objectID]->canRead()) {
+					if (isset($articleContents[$comment->objectID]) && $articleContents[$comment->objectID]->getArticle()->canRead()) {
 						$like->setIsAccessible();
 						
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-							'article' => $articles[$comment->objectID],
+							'articleContent' => $articleContents[$comment->objectID],
 							'like' => $like
 						]);
 						$like->setTitle($text);
@@ -173,14 +178,14 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 					$response = $responses[$like->objectID];
 					$comment = $comments[$response->commentID];
 					
-					if (isset($articles[$comment->objectID]) && $articles[$comment->objectID]->canRead()) {
+					if (isset($articleContents[$comment->objectID]) && $articleContents[$comment->objectID]->getArticle()->canRead()) {
 						$like->setIsAccessible();
 						
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment.response', [
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-							'article' => $articles[$comment->objectID],
+							'articleContent' => $articleContents[$comment->objectID],
 							'like' => $like
 						]);
 						$like->setTitle($text);
@@ -191,13 +196,5 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 				}
 			}
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function supportsReport() {
-		// @todo
-		return false;
 	}
 }
