@@ -2157,6 +2157,11 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {$author}{else}Zitat{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Geben Sie einen Link zu der Quelle an.]]></item>
+		
+		<item name="wcf.editor.spoiler.label"><![CDATA[Beschriftung]]></item>
+		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Geben Sie eine Beschriftung für den Spoiler-Button ein.]]></item>
+		<item name="wcf.editor.spoiler.edit"><![CDATA[Spoiler bearbeiten]]></item>
+		<item name="wcf.editor.spoiler.title"><![CDATA[Spoiler{if $label}: {$label}{/if}]]></item>
 	</category>
 	
 	<category name="wcf.global">

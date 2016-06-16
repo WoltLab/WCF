@@ -19,6 +19,7 @@
 			
 			{* WoltLab *}
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAttachment.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabBlock.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
@@ -32,7 +33,8 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabModal.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSize.js?v={@LAST_UPDATE_TIME}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}'
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSpoiler.js?v={@LAST_UPDATE_TIME}'
 		{else}
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.min.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/combined.min.js?v={@LAST_UPDATE_TIME}'
@@ -64,7 +66,12 @@
 				'wcf.editor.quote.edit': '{lang}wcf.editor.quote.edit{/lang}',
 				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',
 				'wcf.editor.quote.url': '{lang}wcf.editor.quote.url{/lang}',
-				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}'
+				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}',
+				
+				'wcf.editor.spoiler.label': '{lang}wcf.editor.spoiler.label{/lang}',
+				'wcf.editor.spoiler.label.description': '{lang}wcf.editor.spoiler.label.description{/lang}',
+				'wcf.editor.spoiler.edit': '{lang}wcf.editor.spoiler.edit{/lang}',
+				'wcf.editor.spoiler.title': '{lang __literal=true}wcf.editor.spoiler.title{/lang}'
 			});
 			
 			var buttons = [], buttonOptions = [], customButtons = [];
@@ -92,6 +99,7 @@
 					'source',
 					'table',
 					'WoltLabAttachment',
+					'WoltLabBlock',
 					'WoltLabCode',
 					'WoltLabColor',
 					'WoltLabDropdown',
@@ -102,7 +110,8 @@
 					'WoltLabModal',
 					'WoltLabQuote',
 					'WoltLabSize',
-					'WoltLabSmiley'
+					'WoltLabSmiley',
+					'WoltLabSpoiler'
 				],
 				toolbarFixed: false,
 				woltlab: {

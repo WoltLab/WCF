@@ -2168,6 +2168,11 @@ Errors are:
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
+		
+		<item name="wcf.editor.spoiler.label"><![CDATA[Label]]></item>
+		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
+		<item name="wcf.editor.spoiler.edit"><![CDATA[Edit Spoiler]]></item>
+		<item name="wcf.editor.spoiler.title"><![CDATA[Spoiler{if $label}: {$label}{/if}]]></item>
 	</category>
 	
 	<category name="wcf.global">
