@@ -266,10 +266,12 @@ define(
 				var content = '<span class="icon icon16 fa-thumbs-o-' + (cumulativeLikes < 0 ? 'down' : 'up' ) + '"></span><span class="wcfLikeValue">';
 				if (cumulativeLikes > 0) {
 					content += '+' + StringUtil.addThousandsSeparator(cumulativeLikes);
+					data.badge.classList.add('likeCounterLiked');
 				}
 				else if (cumulativeLikes < 0) {
 					// U+2212 = minus sign
 					content += '\u2212' + StringUtil.addThousandsSeparator(Math.abs(cumulativeLikes));
+					data.badge.classList.add('likeCounterDisliked');
 				}
 				else {
 					// U+00B1 = plus-minus sign

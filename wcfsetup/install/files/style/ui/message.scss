@@ -319,10 +319,6 @@
 	
 	@include inlineList;
 	@include wcfFontSmall;
-	
-	.wcfLikeCounter {
-		color: $wcfContentDimmedText;
-	}
 }
 
 .messageQuickOptions {
@@ -427,17 +423,6 @@
 		@include screen-sm-down {
 			display: none;
 		}
-	}
-}
-
-.likesSummary {
-	color: $wcfContentDimmedText;
-	cursor: pointer;
-	flex: 0 0 auto;
-	
-	> .icon {
-		color: $wcfContentDimmedText;
-		margin-right: 5px;
 	}
 }
 
