@@ -55,11 +55,12 @@
 			flex: 0 0 auto;
 			
 			> a {
+				background: $wcfHeaderMenuLinkBackground;
 				align-items: center;
 				color: $wcfHeaderMenuLink;
 				display: flex;
 				height: 50px;
-				padding: 0 10px;
+				padding: 0 15px;
 				
 				> span {
 					flex: 0 0 auto;
@@ -76,13 +77,9 @@
 				cursor: default;
 			}
 			
-			&.active > a {
-				background: linear-gradient(to top, $wcfHeaderMenuBackground 0%, $wcfHeaderMenuBackgroundActive 50%);
-				color: $wcfHeaderMenuLinkActive;
-			}
-			
+			&.active > a,
 			&:hover > a {
-				background: $wcfHeaderMenuBackgroundActive;
+				background: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
 		}
@@ -92,6 +89,19 @@
 			
 			&:hover .boxMenuDepth1 {
 				visibility: visible;
+			}
+			
+			> a {
+				&::after {
+					content: $fa-var-angle-down;
+					display: block;
+					font-family: 'FontAwesome';
+					font-size: 14px;
+					height: 24px;
+					line-height: 24px;
+					margin-left: 5px;
+					width: 10px;
+				}
 			}
 		}
 		
@@ -194,11 +204,12 @@
 			
 			> a {
 				align-items: center;
+				background: $wcfHeaderMenuLinkBackground;
 				color: $wcfHeaderMenuLink;
 				display: flex;
 				flex: 0 0 auto;
 				height: 50px;
-				padding: 0 10px;
+				padding: 0 15px;
 				position: relative;
 				
 				/* set icon color */
@@ -223,13 +234,9 @@
 			}
 			
 			&.dropdownOpen > a,
-			&.open > a {
-				background: linear-gradient(to top, $wcfHeaderMenuBackground 0%, $wcfHeaderMenuBackgroundActive 50%);
-				color: $wcfHeaderMenuLinkActive;
-			}
-			
+			&.open > a,
 			&:hover > a {
-				background: $wcfHeaderMenuBackgroundActive;
+				background: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
 			
@@ -386,7 +393,7 @@
 		}
 		
 		&:hover::before {
-			background-color: $wcfHeaderMenuBackgroundActive;
+			background-color: $wcfHeaderMenuLinkBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
 		}
 	}

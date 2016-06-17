@@ -83,24 +83,22 @@
 		}
 		
 		.pageHeaderSearch {
-			align-self: stretch;
-			flex: 0 0 50px;
+			flex: 0 0 62px;
 			margin-bottom: 0;
 			margin-left: 10px;
 			order: 3;
 			
 			.pageHeaderSearchLabel {
-				background-color: $wcfHeaderMenuBackground;
-				bottom: 0;
+				background: $wcfHeaderMenuLinkBackground;
 				color: $wcfHeaderMenuLink;
 				cursor: pointer;
 				display: block;
-				position: absolute;
-				top: 0;
-				width: 50px;
+				height: 50px;
+				position: relative;
+				width: 62px;
 				
 				&:hover {
-					background: $wcfHeaderMenuBackgroundActive;
+					background: $wcfHeaderMenuLinkBackgroundActive;
 					color: $wcfHeaderMenuLinkActive;
 				}
 				
@@ -112,7 +110,7 @@
 					font-size: 28px;
 					line-height: 32px;
 					position: absolute;
-					right: 11px;
+					right: 18px;
 					top: 50%;
 					transform: translateY(-50%);
 				}
@@ -135,7 +133,7 @@
 			}
 			
 			.pageHeaderSearchLabel {
-				background: $wcfHeaderMenuBackgroundActive;
+				background: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
 		}
