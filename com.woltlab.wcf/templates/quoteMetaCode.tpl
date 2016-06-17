@@ -1,12 +1,13 @@
 <blockquote class="quoteBox{if !$quoteAuthorObject} quoteBoxSimple{/if}"{if $quoteLink} cite="{$quoteLink}"{/if}>
-	<header class="quoteBoxHeader">
-		<span class="quoteBoxIcon">
-			{if $quoteAuthorObject}
-				<a href="{link controller='User' object=$quoteAuthorObject}{/link}" class="userLink" data-user-id="{@$quoteAuthorObject->userID}">{@$quoteAuthorObject->getAvatar()->getImageTag(32)}</a>
-			{else}
-				<span class="icon icon24 fa-quote-left"></span>
-			{/if}
-		</span>
+	<div class="quoteBoxIcon">
+		{if $quoteAuthorObject}
+			<a href="{link controller='User' object=$quoteAuthorObject}{/link}" class="userLink" data-user-id="{@$quoteAuthorObject->userID}">{@$quoteAuthorObject->getAvatar()->getImageTag(64)}</a>
+		{else}
+			<span class="quoteBoxQuoteSymbol"></span>
+		{/if}
+	</div>
+	
+	<div class="quoteBoxTitle">
 		<span class="quoteBoxTitle">
 			{if $quoteAuthor}
 				{if $quoteLink}
@@ -18,7 +19,7 @@
 				{lang}wcf.bbcode.quote{/lang}
 			{/if}
 		</span>
-	</header>
+	</div>
 	
 	<div>
 		<!-- META_CODE_INNER_CONTENT -->
