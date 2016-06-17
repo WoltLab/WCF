@@ -943,7 +943,7 @@ class WCFSetup extends WCF {
 			}
 			else {
 				$username = $password = $confirmPassword = 'root';
-				$email = $confirmEmail = 'woltlab@woltlab.com';
+				$email = $confirmEmail = 'wsc-developer-mode@example.com';
 			}
 			
 			// error handling
