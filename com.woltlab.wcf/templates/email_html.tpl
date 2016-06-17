@@ -42,6 +42,10 @@
 			font-size: {$style->getVariable('wcfFontSizeTitle')};
 			color: {$style->getVariable('wcfContentHeadlineText')};
 		}
+		small {
+			font-size: {$style->getVariable('wcfFontSizeSmall')};
+			font-weight: 300;
+		}
 		
 		{* Buttons *}
 		td.button {
@@ -59,9 +63,14 @@
 			padding: 20px;
 		}
 		
+		.box128 td.boxContent {
+			padding-left: 20px;
+		}
+		
 		.containerHeadline h3 {
 			margin: 0;
 			padding: 0;
+			font-weight: 400;
 		}
 		</style>
 	</head>

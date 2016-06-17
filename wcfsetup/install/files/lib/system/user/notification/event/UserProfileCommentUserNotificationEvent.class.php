@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
@@ -71,32 +72,13 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$user = UserProfileRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID);
-		
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail.stacked', [
-				'author' => $this->author,
-				'authors' => array_values($authors),
-				'count' => $count,
-				'others' => $count - 1,
-				'owner' => $user,
-				'notificationType' => $notificationType,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			]);
-		}
-		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail', [
-			'comment' => $this->userNotificationObject,
-			'author' => $this->author,
-			'owner' => $user,
-			'notificationType' => $notificationType
-		]);
+		return [
+			'template' => 'email_notification_userProfileComment',
+			'application' => 'wcf',
+			'variables' => [
+				'owner' => new User($this->getUserNotificationObject()->objectID)
+			]
+		];
 	}
 	
 	/**
