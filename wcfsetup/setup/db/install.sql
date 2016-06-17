@@ -206,7 +206,7 @@ CREATE TABLE wcf1_attachment (
 DROP TABLE IF EXISTS wcf1_background_job;
 CREATE TABLE wcf1_background_job (
 	jobID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	job MEDIUMTEXT NOT NULL,
+	job MEDIUMBLOB NOT NULL,
 	status ENUM('ready', 'processing') NOT NULL DEFAULT 'ready',
 	time INT(10) NOT NULL,
 	KEY (status, time)
