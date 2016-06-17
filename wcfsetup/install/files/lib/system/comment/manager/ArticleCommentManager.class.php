@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\comment\manager;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\ArticleEditor;
 use wcf\data\article\content\ArticleContentList;
-use wcf\data\comment\CommentList;
+use wcf\data\article\ArticleEditor;
 use wcf\data\comment\response\CommentResponseList;
+use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\comment\manager;
-use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponseList;
+use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageList;
