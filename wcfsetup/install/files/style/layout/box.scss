@@ -457,14 +457,7 @@
 	background-color: $wcfFooterBackground;
 	color: $wcfFooterText;
 	flex: 0 0 auto;
-	
-	@include screen-md-up {
-		padding: 40px 0;
-	}
-	
-	@include screen-sm-down {
-		padding: 20px 0;
-	}
+	padding: 20px 0;
 	
 	.icon {
 		color: $wcfFooterText;
