@@ -43,7 +43,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		$('.codeBox:not(.jsCodeViewer)').each($.proxy(function(index, codeBox) {
 			var $codeBox = $(codeBox).addClass('jsCodeViewer');
 			
-			$('<span class="icon icon16 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('div > h3')).click($.proxy(this._click, this));
+			$('<span class="codeBoxPlainSource icon icon16 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('.codeBoxHeader')).click($.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -64,7 +64,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		});
 		
 		if (this._dialog === null) {
-			this._dialog = $('<div><textarea cols="60" rows="12" readonly="readonly" /></div>').hide().appendTo(document.body);
+			this._dialog = $('<div><textarea cols="60" rows="12" readonly></textarea></div>').hide().appendTo(document.body);
 			this._dialog.children('textarea').val($content);
 			this._dialog.wcfDialog({
 				title: WCF.Language.get('wcf.message.bbcode.code.copy')
