@@ -22,6 +22,8 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	// removes UA styling enforced by Safari on iOS
 	-webkit-appearance: none;
 	
+	@include userSelectNone;
+	
 	.icon {
 		color: inherit;
 	}
