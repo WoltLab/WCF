@@ -50,7 +50,12 @@ class HtmlInputNodeProcessor extends HtmlNodeProcessor implements IHtmlInputNode
 	}
 	
 	public function addEmbeddedContent($type, array $data) {
-		$this->embeddedContent[$type] = $data;
+		if (isset($this->embeddedContent[$type])) {
+			$this->embeddedContent[$type] = array_merge($this->embeddedContent[$type], $data);
+		}
+		else {
+			$this->embeddedContent[$type] = $data;
+		}
 	}
 	
 	protected function parseEmbeddedContent() {

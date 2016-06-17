@@ -2,6 +2,8 @@
 namespace wcf\system\message\embedded\object;
 use wcf\data\user\UserList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\util\StringUtil;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for quotes.
@@ -15,8 +17,17 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
 	/**
 	 * @inheritDoc
 	 */
-	public function parseMessage($message) {
-		$usernames = self::getFirstParameters($message, 'quote');
+	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData) {
+		$usernames = [];
+		
+		/** @var \DOMElement $element */
+		foreach ($htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('blockquote') as $element) {
+			$username = StringUtil::trim($element->getAttribute('data-author'));
+			if (!empty($username) && !in_array($username, $usernames)) {
+				$usernames[] = $username;
+			}
+		}
+		
 		if (!empty($usernames)) {
 			$userList = new UserList();
 			$userList->getConditionBuilder()->add("user_table.username IN (?)", [$usernames]);
@@ -24,7 +35,7 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
 			return $userList->getObjectIDs();
 		}
 		
-		return false;
+		return [];
 	}
 	
 	/**
