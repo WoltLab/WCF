@@ -631,7 +631,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				image = image.detach();
 				image.prependTo($parent);
 				
-				this.caret.setAfter(image);
+				
 			}).bind(this);
 			
 			this.image.update = (function(image) {
@@ -640,7 +640,13 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				image.attr('src', $('#redactor-image-link-source').val());
 				this.image.setFloating(image);
-				$moveImage(image);
+				
+				var float = image.css('float');
+				if (float === 'left' || float === 'right') {
+					$moveImage(image);
+				}
+				
+				this.caret.setAfter(image);
 				
 				var link = $('#redactor-image-link-href').val().trim();
 				var anchor = image.closest('a', this.$editor[0]);
