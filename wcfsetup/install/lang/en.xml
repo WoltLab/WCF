@@ -2173,7 +2173,7 @@ Errors are:
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.fullscreen"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.global.button.hide"><![CDATA[Hide]]></item>
-		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Refresh]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
