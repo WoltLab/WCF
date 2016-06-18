@@ -895,8 +895,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
-		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
-		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
+		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Pixel Height]]></item>
+		<item name="wcf.acp.option.max_avatar_height.description"><![CDATA[The maximum height for avatars.]]></item>
+		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Pixel Width]]></item>
+		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width for avatars.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
@@ -932,7 +934,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
-		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height in Signatures]]></item>
+		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Pixel Height]]></item>
+		<item name="wcf.acp.option.signature_max_image_height.description"><![CDATA[The maximum height for images in signatures.]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
@@ -2693,7 +2696,7 @@ Errors are:
 		<item name="wcf.user.email"><![CDATA[Email]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Email is already in use.]]></item>
 		<item name="wcf.user.email.error.notValid"><![CDATA[Email is invalid.]]></item>
-		<item name="wcf.user.ipAddress"><![CDATA[IP address]]></item>
+		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.data"><![CDATA[Credentials]]></item>
