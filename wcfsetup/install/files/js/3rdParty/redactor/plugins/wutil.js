@@ -749,17 +749,25 @@ RedactorPlugins.wutil = function() {
 				this.wutil.restoreSelection();
 			}
 			
+			// check if selection is actually within editor
+			var startContainer = getSelection().getRangeAt(0).startContainer;
+			if (startContainer !== this.$editor[0] && !this.utils.isRedactorParent(startContainer)) {
+				// selection is somewhere else
+				this.wutil.selectionEndOfEditor();
+			}
+			
+			
 			if (getSelection().getRangeAt(0).collapsed) {
-				var $startContainer = getSelection().getRangeAt(0).startContainer;
-				if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b' && $startContainer.parentElement && $startContainer.parentElement.tagName === 'P' && $startContainer.parentElement.parentElement === this.$editor[0]) {
+				startContainer = getSelection().getRangeAt(0).startContainer;
+				if (startContainer.nodeType === Node.TEXT_NODE && startContainer.textContent === '\u200b' && startContainer.parentElement && startContainer.parentElement.tagName === 'P' && startContainer.parentElement.parentElement === this.$editor[0]) {
 					// caret position is fine
 					return;
 				}
 				else {
 					// walk tree up until we find a direct children of the editor and place the caret afterwards
-					var $insertAfter = $startContainer;
+					var $insertAfter = startContainer;
 					if ($insertAfter !== this.$editor[0]) {
-						$startContainer = $($startContainer).parentsUntil(this.$editor[0]).last();
+						$insertAfter = $(startContainer).parentsUntil(this.$editor[0]).last();
 					}
 					
 					if ($insertAfter[0] === document.body.parentElement) {
