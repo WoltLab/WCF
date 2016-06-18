@@ -326,7 +326,9 @@ RedactorPlugins.wbbcode = function() {
 		convertFromHtml: function(html) {
 			var $searchFor = [ ];
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
+			var parameters = { html: html };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', parameters);
+			html = parameters.html;
 			
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
@@ -860,7 +862,9 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/%28/g, '(');
 			html = html.replace(/%29/g, ')');
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
+			parameters = { html: html };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', parameters);
+			html = parameters.html;
 			
 			// remove all leading and trailing whitespaces, but add one empty line at the end
 			html = $.trim(html);
@@ -877,7 +881,9 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		data
 		 */
 		convertToHtml: function(data) {
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', { data: data });
+			var parameters = { data: data };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', parameters);
+			data = parameters.data;
 			
 			// remove 0x200B (unicode zero width space)
 			data = this.wutil.removeZeroWidthSpace(data);
@@ -1502,10 +1508,12 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
-			
 			// double-encode the ampersand, otherwise Redactor removes it
 			data = data.replace(/&amp;nbsp;/g, '&amp;amp;nbsp;');
+			
+			parameters = { data: data };
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', parameters);
+			data = parameters.data;
 			
 			return data;
 		},
