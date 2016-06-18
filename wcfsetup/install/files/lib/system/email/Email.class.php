@@ -160,8 +160,8 @@ class Email {
 		if (!preg_match('(^'.EmailGrammar::getGrammar('id-left').'$)', $messageID)) {
 			throw new \DomainException("The given message id '".$messageID."' is invalid. Note: You must not specify the part right of the at sign (@).");
 		}
-		if (strlen($messageID) > 50) {
-			throw new \DomainException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 50 bytes.");
+		if (strlen($messageID) > 200) {
+			throw new \DomainException("The given message id '".$messageID."' is not allowed. The maximum allowed length is 200 bytes.");
 		}
 		
 		$this->messageID = $messageID;
