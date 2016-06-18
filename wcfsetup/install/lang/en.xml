@@ -2162,7 +2162,7 @@ Errors are:
 	<category name="wcf.global">
 		<item name="wcf.global.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
-		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
+		<item name="wcf.global.button.back"><![CDATA[« Back]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.button.close"><![CDATA[Close]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and Collapse]]></item>
