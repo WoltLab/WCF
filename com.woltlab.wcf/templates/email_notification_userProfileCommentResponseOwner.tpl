@@ -1,8 +1,8 @@
 {if $mimeType === 'text/plain'}
-{lang}wcf.user.notification.comment.mail.plaintext{/lang}
+{lang}wcf.user.notification.commentResponseOwner.mail.plaintext{/lang}
 {$event->getUserNotificationObject()->message}
 {else}
-	{lang}wcf.user.notification.comment.mail.html{/lang}
+	{lang}wcf.user.notification.commentResponseOwner.mail.html{/lang}
 	{assign var='user' value=$event->getAuthor()}
 	{assign var='comment' value=$event->getUserNotificationObject()}
 	{capture assign='commentContent'}

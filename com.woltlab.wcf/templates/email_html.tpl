@@ -29,7 +29,12 @@
 		}
 		
 		.content {
-			padding: 0 20px;
+			padding: 40px 40px 60px;
+		}
+		.header {
+			background-color: {$style->getVariable('wcfHeaderBackground', true)};
+			color: {$style->getVariable('wcfHeaderText', true)};
+			padding: 20px 10px;
 		}
 		.footer {
 			background-color: {$style->getVariable('wcfFooterBackground', true)};
@@ -75,11 +80,16 @@
 		</style>
 	</head>
 	<body>
+	{capture assign='header'}
+	{/capture}
+	{include file='email_paddingHelper' block=true class='header' content=$header sandbox=true}
+	
 	{if $beforeContent|isset}{@$beforeContent}{/if}
-	<div class="content">
-		{@$content}
-	</div>
+	
+	{include file='email_paddingHelper' block=true class='content' content=$content sandbox=true}
+	
 	{if $afterContent|isset}{@$afterContent}{/if}
+	
 	{capture assign='footer'}
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>

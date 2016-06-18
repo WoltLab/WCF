@@ -97,33 +97,14 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 			]);
 		}
 		
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.mail.stacked', [
-				'author' => $this->author,
-				'authors' => array_values($authors),
+		return [
+			'template' => 'email_notification_userProfileCommentResponseOwner',
+			'application' => 'wcf',
+			'variables' => [
 				'commentAuthor' => $commentAuthor,
-				'count' => $count,
-				'notificationType' => $notificationType,
-				'others' => $count - 1,
-				'owner' => $owner,
-				'response' => $this->userNotificationObject,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			]);
-		}
-		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.mail', [
-			'response' => $this->userNotificationObject,
-			'author' => $this->author,
-			'commentAuthor' => $commentAuthor,
-			'owner' => $owner,
-			'notificationType' => $notificationType
-		]);
+				'owner' => $owner
+			]
+		];
 	}
 	
 	/**
