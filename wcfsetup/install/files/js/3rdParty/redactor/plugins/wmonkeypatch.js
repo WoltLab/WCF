@@ -1310,6 +1310,9 @@ RedactorPlugins.wmonkeypatch = function() {
 					this.selection.implicitRange = document.createRange();
 					this.selection.implicitRange.setStart($node, $node.length);
 					this.selection.implicitRange.setEnd($node, $node.length);
+					
+					getSelection().removeAllRanges();
+					getSelection().addRange(this.selection.implicitRange);
 				}
 				else {
 					this.selection.implicitRange = null;
