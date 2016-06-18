@@ -51,16 +51,25 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * 
 	 * If $notificationType is 'instant' this method should either:
 	 * - Return a string to be inserted into a text/plain email (deprecated)
-	 * - Return a ['template' => ..., 'application' => ..., 'variables' => ...] array
-	 *   to be included into the summary email.
+	 * - Return an ['template' => ...,
+	 *             'application' => ...,
+	 *             'variables' => ...,
+	 *             'message-id' => ...,
+	 *             'in-reply-to' => [...],
+	 *             'references' => [...]]
+	 *   array to be included into the notification email.
+	 *   message-id, in-reply-to and references refer to the respective headers
+	 *   of an email and are optional. You MUST NOT generate a message-id if you
+	 *   cannot ensure that it will *never* repeat.
 	 * 
 	 * If $notificationType is 'daily' this method should either:
 	 * - Return a string to be inserted into the summary email (deprecated)
-	 * - Return a ['template' => ..., 'application' => ..., 'variables' => ...] array
+	 * - Return an ['template' => ..., 'application' => ..., 'variables' => ...] array
 	 *   to be included into the summary email.
 	 * 
 	 * @param	string		$notificationType
 	 * @return	mixed
+	 * @see		\wcf\system\email\Email
 	 */
 	public function getEmailMessage($notificationType = 'instant');
 	

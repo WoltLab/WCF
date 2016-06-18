@@ -664,7 +664,6 @@ class UserNotificationHandler extends SingletonFactory {
 			'title' => $event->getEmailTitle()
 		]));
 		$email->addRecipient(new UserMailbox($user));
-		// TODO: MessageID, References, In-Reply-To
 		
 		$message = $event->getEmailMessage('instant');
 		if (is_array($message)) {
@@ -675,6 +674,15 @@ class UserNotificationHandler extends SingletonFactory {
 			];
 			if (isset($message['variables'])) {
 				$variables['variables'] = $message['variables'];
+			}
+			if (isset($message['message-id'])) {
+				$email->setMessageID($message['message-id']);
+			}
+			if (isset($message['in-reply-to'])) {
+				foreach ($message['in-reply-to'] as $inReplyTo) $email->addInReplyTo($inReplyTo);
+			}
+			if (isset($message['references'])) {
+				foreach ($message['references'] as $references) $email->addReferences($references);
 			}
 			
 			$html = new RecipientAwareTextMimePart('text/html', 'email_notification', 'wcf', $variables);
