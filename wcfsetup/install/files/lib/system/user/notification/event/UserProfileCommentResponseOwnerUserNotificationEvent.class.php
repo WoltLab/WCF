@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\email\Email;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\WCF;
@@ -97,9 +98,13 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 			]);
 		}
 		
+		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
+		
 		return [
 			'template' => 'email_notification_userProfileCommentResponseOwner',
 			'application' => 'wcf',
+			'in-reply-to' => [$messageID],
+			'references' => [$messageID],
 			'variables' => [
 				'commentAuthor' => $commentAuthor,
 				'owner' => $owner
