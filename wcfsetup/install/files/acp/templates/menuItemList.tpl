@@ -41,7 +41,7 @@
 								{/if}
 								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
 								{if $menuItemNode->canDelete()}
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItemNode->itemID}" data-confirm-message="{lang menuItem=$menuItemNode->getMenuItem()}wcf.acp.menu.item.delete.confirmMessage{/lang}"></span>
+									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItemNode->itemID}" data-confirm-message="{lang menuItem=$menuItemNode->getDecoratedObject()}wcf.acp.menu.item.delete.confirmMessage{/lang}"></span>
 								{else}
 									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{/if}
