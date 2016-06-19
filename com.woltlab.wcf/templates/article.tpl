@@ -75,6 +75,7 @@
 			{/if}
 		{/foreach}
 	{/if}
+	<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
 {/capture}
 
 {include file='header'}
