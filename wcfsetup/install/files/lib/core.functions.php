@@ -403,7 +403,7 @@ EXPLANATION;
 								<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(phpversion()); ?></p>
 							</li>
 							<li class="exceptionSystemInformation3">
-								<p class="exceptionFieldTitle">WCF Version<span class="exceptionColon">:</span></p>
+								<p class="exceptionFieldTitle">WoltLab Suite Core<span class="exceptionColon">:</span></p>
 								<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML(WCF_VERSION); ?></p>
 							</li>
 							<li class="exceptionSystemInformation5">
