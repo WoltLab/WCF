@@ -1331,6 +1331,11 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this);
 			
+			// selection.selectElement
+			this.selection.selectElement = (function(node) {
+				this.caret.set(node, 0, node, 1);
+			}).bind(this);
+			
 			// selection.removeMarkers
 			this.selection.removeMarkers = (function() {
 				this.$editor.find('span.redactor-selection-marker').each($removeEmptyTextNodes);
