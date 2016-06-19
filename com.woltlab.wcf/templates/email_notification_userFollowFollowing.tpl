@@ -1,6 +1,9 @@
+{assign var='count' value=$event->getAuthors()|count}{assign var='guestTimesTriggered' value=$event->getNotification()->guestTimesTriggered}{assign var='authors' value=$event->getAuthors()|array_values}
 {if $mimeType === 'text/plain'}
+{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
 {lang}wcf.user.notification.follow.mail.plaintext{/lang}
 {else}
+	{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.html{/lang}{/capture}
 	{lang}wcf.user.notification.follow.mail.html{/lang}
 	{assign var='user' value=$event->getAuthor()}
 	

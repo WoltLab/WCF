@@ -9,7 +9,7 @@
 {assign var='notificationContent' value=$notification[notificationContent]}
 {assign var='notificationType' value=$notification[notificationType]}
 {if $notificationContent|is_array}{include file=$notificationContent[template] application=$notificationContent[application] variables=$notificationContent[variables]}{*
-*}{else}{@$notificationContent|trim}{/if}
+*}{else}{@$notificationContent}{/if}
 {/implode}
 
 ---------------

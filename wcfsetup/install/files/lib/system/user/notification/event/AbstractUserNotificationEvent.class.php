@@ -81,6 +81,15 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 */
 	public function setAuthors(array $authors) {
 		$this->authors = $authors;
+		
+		// Ensure that the original author is the first in the list.
+		uasort($this->authors, function ($a, $b) {
+			if ($a->userID == $b->userID) return 0;
+			if ($a->userID == $this->getAuthorID()) return -1;
+			if ($b->userID == $this->getAuthorID()) return 1;
+			
+			return 0;
+		});
 	}
 	
 	/**
