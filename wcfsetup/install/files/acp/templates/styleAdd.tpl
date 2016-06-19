@@ -62,7 +62,9 @@
 	</nav>
 </header>
 
-<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
+{if !$isTainted}
+	<p class="info">{lang}wcf.acp.style.protected{/lang}</p>
+{/if}
 
 {include file='formError'}
 
@@ -934,7 +936,7 @@
 	</dl>
 	
 	<div class="formSubmit">
-		<button id="styleDisableProtectionSubmit" disabled>{lang}wcf.global.button.submit{/lang}</button>
+		<button id="styleDisableProtectionSubmit" class="buttonPrimary" disabled>{lang}wcf.global.button.submit{/lang}</button>
 	</div>
 </div>
 

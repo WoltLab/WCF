@@ -1,10 +1,10 @@
 /**
- * Provides the basic core functionality.
+ * Provides the style editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLab/WCF/Core
+ * @module	WoltLab/WCF/Acp/Ui/Style/Editor
  */
 define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictionary, DomUtil, EventHandler) {
 	"use strict";
@@ -21,7 +21,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 		 */
 		setup: function(options) {
 			this._handleLayoutWidth();
-			this._handleLess(options.isTainted);
+			this._handleScss(options.isTainted);
 			
 			if (!options.isTainted) {
 				this._handleProtection(options.styleId);
@@ -53,11 +53,11 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 		},
 		
 		/**
-		 * Handles LESS input fields.
+		 * Handles SCSS input fields.
 		 * 
 		 * @param	{boolean}	isTainted	false if style is in protected mode
 		 */
-		_handleLess: function(isTainted) {
+		_handleScss: function(isTainted) {
 			var individualScss = elById('individualScss');
 			var overrideScss = elById('overrideScss');
 			
