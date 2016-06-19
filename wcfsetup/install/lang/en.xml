@@ -3307,16 +3307,27 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
 you currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
-		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h1>Hallo {@$mailbox->getUser()->username},</h1>
+		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
+
+{/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
+
+Visit your notification settings [URL:{link controller='NotificationSettings' isEmail=true}{/link}] to configure
+your notifications on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] as you wish.
+
+If you wish to disable all email notifications you can do so by visiting:
+{link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
+		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h1>Dear {@$mailbox->getUser()->username},</h1>
 
 <p>you currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
-		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
-		
-You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
-{link controller='NotificationSettings' isEmail=true}{/link} 
+		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
-If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
-{link controller='NotificationDisable' isEmail=true}userID={@$user->userID}&token={@$token}{/link}]]></item>
+<p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
+
+<p>Visit your <a href="{link controller='NotificationSettings' isEmail=true}{/link}">notification settings</a> to configure
+your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> as you wish.</p>
+
+<p>You can <a href="{link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable all email notifications</a> as well.</p>]]></item>
+		
 		<item name="wcf.user.notification.mail.authorList.plaintext"><![CDATA[{if !$event->getAuthor()->userID}A guest{else}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username} [URL:{link controller='User' object=$authors[1] isEmail=true}{/link}]{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}{@$authors[2]->username} [URL:{link controller='User' object=$authors[2] isEmail=true}{/link}]{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} weitere Benutzer{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
 		<item name="wcf.user.notification.mail.authorList.html"><![CDATA[{if !$event->getAuthor()->userID}A guest{else}<a href="{link controller='User' object=$event->getAuthor() isEmail=true}{/link}">{@$event->getAuthor()->username}</a>{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[1] isEmail=true}{/link}">{@$authors[1]->username}</a>{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[2] isEmail=true}{/link}">{@$authors[2]->username}</a>{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
 
