@@ -56,7 +56,7 @@
 	</div>
 	{capture assign='footer'}
 	{hascontent}
-	-- <br>
+	<span style="font-size: 0;">-- <br></span>
 	{content}
 	{@MAIL_SIGNATURE|language|nl2br}
 	{if $mailbox|is_a:'wcf\system\email\UserMailbox'}
