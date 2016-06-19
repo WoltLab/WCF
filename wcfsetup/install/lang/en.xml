@@ -3304,6 +3304,12 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 
 <p>You can <a href="{link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable only this type of notification</a> as well.</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
+		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
+
+you currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
+		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h1>Hallo {@$mailbox->getUser()->username},</h1>
+
+<p>you currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
 		
 You can manage your notification settings for {@PAGE_TITLE|language} on the page below:

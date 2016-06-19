@@ -52,6 +52,10 @@
 			font-weight: 300;
 		}
 		
+		.largeMarginTop {
+			margin-top: 40px;
+		}
+		
 		{* Buttons *}
 		td.button {
 			background-color: {$style->getVariable('wcfButtonPrimaryBackground', true)};
@@ -70,6 +74,16 @@
 		
 		.box128 td.boxContent {
 			padding-left: 20px;
+		}
+		
+		.box64 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 15px;
+		}
+		
+		.box64 td.boxContent {
+			padding-left: 15px;
 		}
 		
 		.containerHeadline h3 {

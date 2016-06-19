@@ -3267,6 +3267,12 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 
 <p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt <a href="{link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">abbestellen</a>.</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}Neue Benachrichtigung{else}{#$count} neue Benachrichtigungen{/if}]]></item>
+		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:]]></item>
+		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h1>Hallo {@$mailbox->getUser()->username},</h1>
+
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du hast{else}Sie haben{/if} haben derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
 		
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Einstellungen für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Benachrichtigungen auf {@PAGE_TITLE|language} unter folgender URL detailliert konfigurieren:

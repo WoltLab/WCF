@@ -182,14 +182,13 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				
 				$message = $class->getEmailMessage('daily');
 				if (is_array($message)) {
+					if (!isset($message['variables'])) $message['variables'] = [];
 					$variables = [
 						'notificationContent' => $message,
 						'event' => $class,
-						'notificationType' => 'daily'
+						'notificationType' => 'daily',
+						'variables' => $message['variables']
 					];
-					if (isset($message['variables'])) {
-						$variables['variables'] = $message['variables'];
-					}
 					
 					return $variables;
 				}
