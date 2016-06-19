@@ -746,7 +746,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[You must provide aliases using “real-name=custom-name”, the line “{$urlControllerReplacementError}” violates it.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
-		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
+		<item name="wcf.acp.option.error.tooLow"><![CDATA[Under the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
@@ -840,8 +840,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>
-		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height in Pixel]]></item>
-		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width in Pixel]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_height.description"><![CDATA[The height in pixels allowed for thumbnails.]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_width.description"><![CDATA[The width in pixels allowed for thumbnails.]]></item>
 		<item name="wcf.acp.option.attachment_storage"><![CDATA[Storage Location]]></item>
 		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Changes storage location for attachments. Heads up! You are responsible to move already existing attachments to the new location.]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
@@ -896,7 +898,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
 		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
+		<item name="wcf.acp.option.max_avatar_height.description"><![CDATA[The maximum height in pixels allowed for avatars.]]></item>
 		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
+		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width in pixels allowed for avatars.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
@@ -932,7 +936,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
-		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height in Signatures]]></item>
+		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height]]></item>
+		<item name="wcf.acp.option.signature_max_image_height.description"><![CDATA[The maximum height in pixels allowed for signature images.]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
@@ -976,7 +981,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Display Selected Author Profile Fields]]></item>
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the use of tags for content.]]></item>
-		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
+		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Tag Length]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort by]]></item>
@@ -985,7 +990,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.search_default_sort_order.description"><![CDATA[The default sort order for the search results.]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
-		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Number of Options]]></item>
+		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Poll Options]]></item>
+		<item name="wcf.acp.option.poll_max_options.description"><![CDATA[The maximum number of poll options allowed per post.]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
@@ -1466,8 +1472,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Width]]></item>
-		<item name="wcf.acp.style.globals.fluidLayoutMinWidth"><![CDATA[Minimum Width]]></item>
-		<item name="wcf.acp.style.globals.fluidLayoutMaxWidth"><![CDATA[Maximum Width]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutMinWidth"><![CDATA[Minimum Layout Width]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutMaxWidth"><![CDATA[Maximum Layout Width]]></item>
 		<item name="wcf.acp.style.globals.font"><![CDATA[Type Face]]></item>
 		<item name="wcf.acp.style.globals.fontFamily"><![CDATA[Font]]></item>
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Font Size]]></item>
@@ -2159,7 +2165,7 @@ Errors are:
 	<category name="wcf.global">
 		<item name="wcf.global.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
-		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
+		<item name="wcf.global.button.back"><![CDATA[« Back]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.button.close"><![CDATA[Close]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and Collapse]]></item>
@@ -2621,7 +2627,7 @@ Errors are:
 		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Number of Allowed Votes]]></item>
-		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[The maximum number of allowed votes exceeds number of available options.]]></item>
+		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[The maximum number of allowed votes exceeds the number of available options.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[You may select up to {#$poll->maxVotes} options.]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
 		<item name="wcf.poll.options"><![CDATA[Options]]></item>
@@ -2693,7 +2699,7 @@ Errors are:
 		<item name="wcf.user.email"><![CDATA[Email]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Email is already in use.]]></item>
 		<item name="wcf.user.email.error.notValid"><![CDATA[Email is invalid.]]></item>
-		<item name="wcf.user.ipAddress"><![CDATA[IP address]]></item>
+		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.data"><![CDATA[Credentials]]></item>
@@ -2862,7 +2868,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.following.noUsers"><![CDATA[You’re not following anyone.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Custom User Title]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[You may enter a custom user title.]]></item>
-		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Title exceeded the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
+		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[The title exceeds the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[User Title is invalid.]]></item>
 		<item name="wcf.user.team"><![CDATA[Staff Members]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Age]]></item>
@@ -3081,13 +3087,13 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Don’t Use Avatar]]></item>
-		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your currently used avatar will be deleted.]]></item>
-		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Uploaded image is invalid.]]></item>
-		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[Image does not match the allowed file extensions.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[Image exceeds maximum file size.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Image dimensions are below the minimum sizes.]]></item>
+		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
+		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[The uploaded avatar is invalid.]]></item>
+		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[The avatar does not match the allowed file extensions.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[The avatar exceeds the allowed maximum file size.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[The avatar dimensions are under the allowed minimum dimensions.]]></item>
 		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred.]]></item>
-		<item name="wcf.user.avatar.upload.success"><![CDATA[Avatar has been saved.]]></item>
+		<item name="wcf.user.avatar.upload.success"><![CDATA[The avatar has been saved.]]></item>
 	</category>
 	
 	<category name="wcf.user.condition">
