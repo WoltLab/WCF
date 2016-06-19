@@ -68,7 +68,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 			throw new SystemException("Unknown thumbnail size '".$size."'");
 		}
 		
-		return '<img src="'.$this->getThumbnailLink($size).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'/>';
+		return '<img src="'.$this->getThumbnailLink($size).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $this->getThumbnailWidth($size) . 'px; height: ' . $this->getThumbnailHeight($size) . 'px;">';
 	}
 	
 	/**

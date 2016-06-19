@@ -116,11 +116,53 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 			throw new SystemException("Unknown thumbnail size '".$size."'");
 		}
 		
+		if (!$this->{$size.'ThumbnailType'}) {
+			return $this->getLink();
+		}
+		
 		return LinkHandler::getInstance()->getLink('Media', [
 			'forceFrontend' => true,
 			'object' => $this,
 			'thumbnail' => $size
 		]);
+	}
+	
+	/**
+	 * Returns the width of the thumbnail file with the given size.
+	 *
+	 * @param	string		$size
+	 * @return	integer
+	 * @throws      SystemException
+	 */
+	public function getThumbnailWidth($size) {
+		if (!isset(self::$thumbnailSizes[$size])) {
+			throw new SystemException("Unknown thumbnail size '".$size."'");
+		}
+		
+		if ($this->{$size.'ThumbnailType'}) {
+			return $this->{$size.'ThumbnailWidth'};
+		}
+		
+		return $this->width;
+	}
+	
+	/**
+	 * Returns the height of the thumbnail file with the given size.
+	 *
+	 * @param	string		$size
+	 * @return	integer
+	 * @throws      SystemException
+	 */
+	public function getThumbnailHeight($size) {
+		if (!isset(self::$thumbnailSizes[$size])) {
+			throw new SystemException("Unknown thumbnail size '".$size."'");
+		}
+		
+		if ($this->{$size.'ThumbnailType'}) {
+			return $this->{$size.'ThumbnailHeight'};
+		}
+		
+		return $this->height;
 	}
 	
 	/**
