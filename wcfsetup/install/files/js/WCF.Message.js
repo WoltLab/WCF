@@ -3637,7 +3637,15 @@ WCF.Message.UserMention = Class.extend({
 		this._redactor.buffer.set();
 		
 		var $startContainer = $orgRange.startContainer;
-		var $startOffset = $orgRange.startOffset - (this._mentionStart.length + 1);
+		var $startOffset = $orgRange.startOffset;
+		
+		// start container might be the parent when inside a list item
+		if ($startContainer.nodeName === 'LI' && $startOffset === 1) {
+			$startContainer = $startContainer.lastChild;
+			$startOffset = $startContainer.textContent.length - 1;
+		}
+		
+		$startOffset -= (this._mentionStart.length + 1);
 		
 		// navigating with the keyboard before hitting enter will cause the text node to be split
 		if ($startOffset < 0) {
@@ -3665,7 +3673,7 @@ WCF.Message.UserMention = Class.extend({
 		var $text = document.createTextNode('@' + username);
 		$range.insertNode($text);
 		
-		var $newRange = document.createRange();
+		$newRange = document.createRange();
 		$newRange.setStart($text, username.length + 1);
 		$newRange.setEnd($text, username.length + 1);
 		
