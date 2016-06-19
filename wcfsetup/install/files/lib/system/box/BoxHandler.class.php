@@ -25,6 +25,12 @@ class BoxHandler extends SingletonFactory {
 	protected $boxes = [];
 	
 	/**
+	 * identifier to boxes
+	 * @var	Box[]
+	 */
+	protected $boxesByIdentifier = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
@@ -43,6 +49,7 @@ class BoxHandler extends SingletonFactory {
 		foreach ($boxList as $box) {
 			if (!isset($this->boxes[$box->position])) $this->boxes[$box->position] = [];
 			$this->boxes[$box->position][] = $box;
+			$this->boxesByIdentifier[$box->identifier] = $box;
 		}
 	}
 	
@@ -99,5 +106,19 @@ class BoxHandler extends SingletonFactory {
 		}
 		
 		return [];
+	}
+	
+	/**
+	 * Returns the box with given identifier.
+	 *
+	 * @param	string		$identifier
+	 * @return	Box|null
+	 */
+	public function getBoxByIdentifier($identifier) {
+		if (isset($this->boxesByIdentifier[$identifier])) {
+			return $this->boxesByIdentifier[$identifier];
+		}
+		
+		return null;
 	}
 }
