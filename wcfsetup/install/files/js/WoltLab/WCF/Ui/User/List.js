@@ -42,7 +42,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLab/WCF/Ui/P
 		/**
 		 * Shows the current or given page.
 		 * 
-		 * @param	{integer=}	pageNo		page number
+		 * @param	{int=}		pageNo		page number
 		 */
 		_showPage: function(pageNo) {
 			if (typeof pageNo === 'number') {

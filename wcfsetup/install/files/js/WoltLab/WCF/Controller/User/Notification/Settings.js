@@ -96,7 +96,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 		/**
 		 * Creates the email type dropdown.
 		 * 
-		 * @param	{integer}	objectId	notification event id
+		 * @param	{int}		objectId	notification event id
 		 * @param	{string}	initialValue	initial email type
 		 * @returns	{Element}	dropdown menu object
 		 */
