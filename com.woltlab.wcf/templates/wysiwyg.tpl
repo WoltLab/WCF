@@ -106,7 +106,19 @@
 						heading2: '{lang}wcf.editor.format.heading2{/lang}',
 						heading3: '{lang}wcf.editor.format.heading3{/lang}',
 						heading4: '{lang}wcf.editor.format.heading4{/lang}',
-						paragraph: '{lang}wcf.editor.format.paragraph{/lang}'
+						paragraph: '{lang}wcf.editor.format.paragraph{/lang}',
+						
+						// table plugin
+						'add-head': '{lang}wcf.editor.table.addHead{/lang}',
+						'delete-column': '{lang}wcf.editor.table.deleteColumn{/lang}',
+						'delete-head': '{lang}wcf.editor.table.deleteHead{/lang}',
+						'delete-row': '{lang}wcf.editor.table.deleteRow{/lang}',
+						'delete-table': '{lang}wcf.editor.table.deleteTable{/lang}',
+						'insert-table': '{lang}wcf.editor.table.insertTable{/lang}',
+						'insert-column-left': '{lang}wcf.editor.table.insertColumnLeft{/lang}',
+						'insert-column-right': '{lang}wcf.editor.table.insertColumnRight{/lang}',
+						'insert-row-above': '{lang}wcf.editor.table.insertRowAbove{/lang}',
+						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}'
 					}
 				},
 				minHeight: 200,
