@@ -2131,6 +2131,7 @@ Errors are:
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
+		<item name="wcf.editor.button.format"><![CDATA[Headline]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Image]]></item>
 		<item name="wcf.editor.button.inlineCode"><![CDATA[Inline-Code]]></item>
@@ -2156,6 +2157,11 @@ Errors are:
 		<item name="wcf.editor.code.line"><![CDATA[Start Line Number]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Code{/if}{if $file} - {$file}{/if}]]></item>
+		
+		<item name="wcf.editor.format.heading2"><![CDATA[Headline]]></item>
+		<item name="wcf.editor.format.heading3"><![CDATA[Section]]></item>
+		<item name="wcf.editor.format.heading4"><![CDATA[Subsection]]></item>
+		<item name="wcf.editor.format.paragraph"><![CDATA[Normal text]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Insert Image]]></item>

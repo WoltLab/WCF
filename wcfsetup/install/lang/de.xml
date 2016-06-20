@@ -2120,6 +2120,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
+		<item name="wcf.editor.button.format"><![CDATA[Überschrift]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Bild]]></item>
 		<item name="wcf.editor.button.inlineCode"><![CDATA[Inline-Code]]></item>
@@ -2145,6 +2146,11 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.code.line"><![CDATA[Start-Zeilennummer]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Legen Sie den Wert fest, ab dem die Zeilennummierung startet.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Quellcode{/if}{if $file} - {$file}{/if}]]></item>
+		
+		<item name="wcf.editor.format.heading2"><![CDATA[Überschrift]]></item>
+		<item name="wcf.editor.format.heading3"><![CDATA[Abschnitt]]></item>
+		<item name="wcf.editor.format.heading4"><![CDATA[Unterabschnitt]]></item>
+		<item name="wcf.editor.format.paragraph"><![CDATA[Normaler Text]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Bild bearbeiten]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Bild einfügen]]></item>

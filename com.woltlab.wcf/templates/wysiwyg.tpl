@@ -97,7 +97,18 @@
 			
 			var config = {
 				buttons: buttons,
+				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
+				lang: 'wsc', // fake language to offload phrases
+				langs: {
+					wsc: {
+						// formatting dropdown
+						heading2: '{lang}wcf.editor.format.heading2{/lang}',
+						heading3: '{lang}wcf.editor.format.heading3{/lang}',
+						heading4: '{lang}wcf.editor.format.heading4{/lang}',
+						paragraph: '{lang}wcf.editor.format.paragraph{/lang}'
+					}
+				},
 				minHeight: 200,
 				plugins: [
 					'alignment',

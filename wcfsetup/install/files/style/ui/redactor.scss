@@ -366,6 +366,19 @@
 	display: none;
 }
 
+/* format */
+.redactor-dropdown-h2 {
+	@include wcfFontSection;
+}
+
+.redactor-dropdown-h3 {
+	@include wcfFontHeadline;
+}
+
+.redactor-dropdown-h4 {
+	// TODO: add styling
+}
+
 /* alignment plugin */
 .text-center {
 	text-align: center;
