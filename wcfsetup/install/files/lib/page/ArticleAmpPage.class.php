@@ -1,11 +1,8 @@
 <?php
 namespace wcf\page;
-use wcf\data\article\content\ViewableArticleContent;
-use wcf\data\article\ArticleEditor;
+use wcf\data\article\CategoryArticleList;
 use wcf\data\article\ViewableArticle;
-use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\page\PageLocationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -17,34 +14,17 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
  */
-class ArticleAmpPage extends AbstractPage {
+class ArticleAmpPage extends AbstractArticlePage {
 	/**
 	 * @inheritDoc
 	 */
 	public $templateName = 'ampArticle';
 	
 	/**
-	 * @inheritDoc
+	 * list of additional articles
+	 * @var ViewableArticle[]
 	 */
-	public $neededModules = ['MODULE_ARTICLE'];
-	
-	/**
-	 * article content id
-	 * @var	integer
-	 */
-	public $articleContentID = 0;
-	
-	/**
-	 * article content object
-	 * @var	ViewableArticleContent
-	 */
-	public $articleContent;
-	
-	/**
-	 * article object
-	 * @var	ViewableArticle
-	 */
-	public $article;
+	public $additionalArticles;
 	
 	/**
 	 * @inheritDoc
@@ -52,23 +32,7 @@ class ArticleAmpPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['id'])) $this->articleContentID = intval($_REQUEST['id']);
-		$this->articleContent = ViewableArticleContent::getArticleContent($this->articleContentID);
-		if ($this->articleContent === null) {
-			throw new IllegalLinkException();
-		}
-		$this->article = ViewableArticle::getArticle($this->articleContent->articleID);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function checkPermissions() {
-		parent::checkPermissions();
-		
-		if (!$this->article->canRead()) {
-			throw new PermissionDeniedException();
-		}
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleAmp', ['object' => $this->articleContent]);
 	}
 	
 	/**
@@ -77,18 +41,18 @@ class ArticleAmpPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		// update view count
-		$articleEditor = new ArticleEditor($this->article->getDecoratedObject());
-		$articleEditor->updateCounters([
-			'views' => 1
-		]);
-		
-		// set location
-		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $this->article->categoryID, $this->article->getCategory());
-		foreach ($this->article->getCategory()->getParentCategories() as $parentCategory) {
-			PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $parentCategory->categoryID, $parentCategory);
-		}
-		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ArticleList');
+		// get next/previous articles
+		$nextArticleList = new CategoryArticleList($this->article->categoryID);
+		$nextArticleList->getConditionBuilder()->add('article.time > ?', [$this->article->time]);
+		$nextArticleList->sqlOrderBy = 'article.time';
+		$nextArticleList->sqlLimit = 3;
+		$nextArticleList->readObjects();
+		$previousArticleList = new CategoryArticleList($this->article->categoryID);
+		$previousArticleList->getConditionBuilder()->add('article.time < ?', [$this->article->time]);
+		$previousArticleList->sqlOrderBy = 'article.time DESC';
+		$previousArticleList->sqlLimit = 3;
+		$previousArticleList->readObjects();
+		$this->additionalArticles = array_merge($nextArticleList->getObjects(), $previousArticleList->getObjects());
 	}
 	
 	/**
@@ -98,11 +62,8 @@ class ArticleAmpPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'articleContentID' => $this->articleContentID,
-			'articleContent' => $this->articleContent,
-			'article' => $this->article,
-			'category' => $this->article->getCategory(),
-			'regularCanonicalURL' => $this->articleContent->getLink()
+			'regularCanonicalURL' => $this->articleContent->getLink(),
+			'additionalArticles' => $this->additionalArticles
 		]);
 	}
 }

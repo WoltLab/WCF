@@ -64,5 +64,49 @@
 		{@$articleContent->getFormattedContent()}
 	</div>
 </article>
-	
+
+{hascontent}
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.article.moreArticles{/lang}</h2>
+		
+		<amp-carousel width="400" height="300" layout="responsive" type="slides" autoplay delay="5000">
+			{content}
+				{foreach from=$additionalArticles item='additionalArticle'}
+					{if $additionalArticle->getImage()}
+						<a href="{link controller='ArticleAmp' object=$additionalArticle->getArticleContent()}{/link}">
+							<figure>
+								<amp-img src="{$additionalArticle->getImage()->getThumbnailLink('large')}" layout="fill"></amp-img>
+								<figcaption>{$additionalArticle->getTitle()}</figcaption>
+							</figure>
+						</a>
+					{/if}
+				{/foreach}
+			{/content}
+		</amp-carousel>
+	</section>
+{/hascontent}
+
+{if $relatedArticles|count}
+	{hascontent}
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
+			
+			<amp-carousel width="400" height="300" layout="responsive" type="slides" autoplay delay="5000">
+				{content}
+					{foreach from=$relatedArticles item='relatedArticle'}
+						{if $relatedArticle->getImage()}
+							<a href="{link controller='ArticleAmp' object=$relatedArticle->getArticleContent()}{/link}">
+								<figure>
+									<amp-img src="{$relatedArticle->getImage()->getThumbnailLink('large')}" layout="fill"></amp-img>
+									<figcaption>{$relatedArticle->getTitle()}</figcaption>
+								</figure>
+							</a>
+						{/if}
+					{/foreach}
+				{/content}
+			</amp-carousel>
+		</section>
+	{/hascontent}
+{/if}
+
 {include file='ampFooter'}

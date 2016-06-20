@@ -1744,6 +1744,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.article.nextArticle"><![CDATA[Next Article]]></item>
 		<item name="wcf.article.previousArticle"><![CDATA[Previous Article]]></item>
 		<item name="wcf.article.relatedArticles"><![CDATA[Related Articles]]></item>
+		<item name="wcf.article.moreArticles"><![CDATA[More Articles]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[About the Author]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Comment{if $article->comments != 1}s{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>

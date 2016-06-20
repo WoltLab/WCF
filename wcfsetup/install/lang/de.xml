@@ -1737,6 +1737,7 @@ Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.article.nextArticle"><![CDATA[Nächster Artikel]]></item>
 		<item name="wcf.article.previousArticle"><![CDATA[Vorheriger Artikel]]></item>
 		<item name="wcf.article.relatedArticles"><![CDATA[Verwandte Artikel]]></item>
+		<item name="wcf.article.moreArticles"><![CDATA[Weitere Artikel]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[Über den Autor]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Kommentar{if $article->comments != 1}e{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} mal gelesen]]></item>
