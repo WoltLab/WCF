@@ -1,6 +1,9 @@
+{if !$__wcf->isLandingPage()}
+	{capture assign='pageTitle'}{$content[title]}{/capture}
+	{capture assign='contentTitle'}{$content[title]}{/capture}
+{/if}
+
 {capture assign='headContent'}
-	<link rel="canonical" href="{$canonicalURL}">
-	
 	{if $page->isMultilingual}
 		{foreach from=$page->getPageLanguages() item='pageLanguage'}
 			{if $pageLanguage->getLanguage()}
