@@ -70,14 +70,15 @@
 		<br><strong>{$exception->getMessage()}</strong><br>
 		Please make sure that the destination folder exists and can be written to.]]></item>
 		<item name="wcf.global.applicationDirectory"><![CDATA[Configure Directories]]></item>
-		<item name="wcf.global.applicationDirectory.description"><![CDATA[Set up the installation directories for each application. Directories are evaluated relative to the website’s document root (“{$documentRoot}”).]]></item>
+		<item name="wcf.global.applicationDirectory.description"><![CDATA[Set up the installation directories for each app. Directories are evaluated relative to the website’s document root (“{$documentRoot}”).]]></item>
 		<item name="wcf.global.applicationDirectory.error"><![CDATA[The provided directories are invalid, please checked the marked fields for errors.]]></item>
-		<item name="wcf.global.applicationDirectory.error.duplicate"><![CDATA[This directory has already been provided for a different application.]]></item>
+		<item name="wcf.global.applicationDirectory.error.duplicate"><![CDATA[This directory has already been provided for a different app.]]></item>
 		<item name="wcf.global.applicationDirectory.error.makePath"><![CDATA[This directory cannot be created due to insufficient permissions.]]></item>
 		<item name="wcf.global.applicationDirectory.error.makeWritable"><![CDATA[The directory is not writable by PHP, please review the permissions.]]></item>
-		<item name="wcf.global.applicationDirectory.error.notEmpty"><![CDATA[There is already an application inside this directory.]]></item>
+		<item name="wcf.global.applicationDirectory.error.notEmpty"><![CDATA[There is already an app inside this directory.]]></item>
 		<item name="wcf.global.applicationDirectory.error.outsideDocumentRoot"><![CDATA[The directory is outside the website’s document root.]]></item>
-		<item name="wcf.global.applicationDirectory.url"><![CDATA[Application URLs]]></item>
-		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Applications will be accessible through these URLs after setup has completed.]]></item>
+		<item name="wcf.global.applicationDirectory.url"><![CDATA[App URLs]]></item>
+		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Apps will be accessible through these URLs after setup has completed.]]></item>
+		<item name="wcf.global.title.apps"><![CDATA[Apps:]]></item>
 	</category>
 </language>

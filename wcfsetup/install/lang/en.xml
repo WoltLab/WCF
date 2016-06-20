@@ -51,14 +51,14 @@
 		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Cookie domain does not match the domain entered above (sub-domains like “www” may be omitted).]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain Settings]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this app through “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Domain may not contain path components]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
-		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
-		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
-		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
+		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by app “{$conflictApplication->getName()}”]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this app through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
+		<item name="wcf.acp.application.edit"><![CDATA[Edit App]]></item>
+		<item name="wcf.acp.application.edit.title"><![CDATA[Edit App: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
+		<item name="wcf.acp.application.list"><![CDATA[Installed Apps]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -196,7 +196,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[You did not specify any data for importing, import has been aborted.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[The selected data type is invalid.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[All data]]></item>
-		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[You did not load any application through --packageID={PACKAGE_ID}. If you wish to import application-specific data, you must call this script along with the desired package id. Do you wish to continue the import? [YN]]]></item>
+		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[You did not load any app through --packageID={PACKAGE_ID}. If you wish to import app-specific data, you must call this script along with the desired package id. Do you wish to continue the import? [YN]]]></item>
 		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Selection? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
 		<item name="wcf.acp.dataImport.completed"><![CDATA[Import completed.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Data]]></item>
@@ -275,7 +275,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.configuration.canEditOption"><![CDATA[Can edit system options]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
 		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Can view log files]]></item>
-		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Can manage applications]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Can manage apps]]></item>
 		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Can edit update servers]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Can install packages]]></item>
@@ -320,7 +320,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Can manage styles]]></item>
 		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Can bulk revert content changes]]></item>
-		<item name="wcf.acp.group.option.category.admin.application"><![CDATA[Applications]]></item>
+		<item name="wcf.acp.group.option.category.admin.application"><![CDATA[Apps]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
@@ -443,7 +443,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.index.innoDBWarning"><![CDATA[The MySQL configuration option “innodb_flush_log_at_trx_commit” is set to “1”, slowing down certain database queries. It is highly recommended to set its value to “2”.]]></item>
-		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Applications</a>.]]></item>
+		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Apps</a>.]]></item>
 		<item name="wcf.acp.index.tmpBroken"><![CDATA[For proper operation the folder “{WCF_DIR|concat:'tmp/'}” must exist and it must be writable. Please also check the permissions of the “{'WCF_DIR'|constant}” folder.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
@@ -548,8 +548,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
 		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.menu.link.application.management"><![CDATA[Manage Applications]]></item>
-		<item name="wcf.acp.menu.link.application"><![CDATA[Applications]]></item>
+		<item name="wcf.acp.menu.link.application.management"><![CDATA[Manage Apps]]></item>
+		<item name="wcf.acp.menu.link.application"><![CDATA[Apps]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add Cronjob]]></item>
@@ -809,7 +809,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[“Users Online” Timeout]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Inactive users will not appear in “Users Online” after the following seconds.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Enable “Maintenance Mode”]]></item>
-		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all applications and prevents access from unprivileged users.]]></item>
+		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all apps and prevents access from unprivileged users.]]></item>
 		<item name="wcf.acp.option.offline_message"><![CDATA[“Maintenance Mode” Notice]]></item>
 		<item name="wcf.acp.option.offline_message.description"><![CDATA[The notice that is displayed to visitors while “Maintenance Mode” is enabled.]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Enable HTML code in “Maintenance Mode” notice]]></item>
@@ -1075,8 +1075,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Applications]]></item>
-		<item name="wcf.acp.package.application.title"><![CDATA[Applications]]></item>
+		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Apps]]></item>
+		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Developer]]></item>
 		<item name="wcf.acp.package.availableVersions"><![CDATA[Available Versions]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Details]]></item>
@@ -1089,8 +1089,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required by this package]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
-		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Applications cannot be installed via CLI.]]></item>
-		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an application installed which has the same abbreviation.]]></item>
+		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Apps cannot be installed via CLI.]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an app installed which has the same abbreviation.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above already exist and will be replaced during the installation. Any contained data will be lost.]]></item>
@@ -1130,7 +1130,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.package.packageDate"><![CDATA[Package Date]]></item>
-		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Target directory already contains an application.]]></item>
+		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Target directory already contains an app.]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installed Packages]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Plugins]]></item>
 		<item name="wcf.acp.package.search"><![CDATA[Search Package]]></item>
@@ -1149,7 +1149,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Update Package “{@$package->getName()}”]]></item>
-		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
+		<item name="wcf.acp.package.type.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package <span class="confirmationObject">{@$package->getName()}</span>?]]></item>
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
@@ -1287,12 +1287,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
-		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Applications]]></item>
-		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust both domain and path for each application listed below to match the changed settings. The domain must be provided without an explicit protocol such as “http://” or “https://”.]]></item>
+		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Apps]]></item>
+		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Please adjust both domain and path for each app listed below to match the changed settings. The domain must be provided without an explicit protocol such as “http://” or “https://”.]]></item>
 		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Credentials]]></item>
-		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Changes to the configuration require valid credentials of an administrator with the permissions to manage installed applications.]]></item>
+		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Changes to the configuration require valid credentials of an administrator with the permissions to manage installed apps.]]></item>
 		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
-		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed applications.]]></item>
+		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed apps.]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1511,7 +1511,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.template.group.default"><![CDATA[Default Templates]]></item>
 		<item name="wcf.acp.template.group.email"><![CDATA[Email Templates]]></item>
-		<item name="wcf.acp.template.application"><![CDATA[Application]]></item>
+		<item name="wcf.acp.template.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Copy Template]]></item>

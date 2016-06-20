@@ -70,14 +70,15 @@
 		<br><strong>{$exception->getMessage()}</strong><br>
 		Bitte kontrollieren Sie, ob das Zielverzeichnis existiert und beschreibbar ist.]]></item>
 		<item name="wcf.global.applicationDirectory"><![CDATA[Installationsverzeichnisse]]></item>
-		<item name="wcf.global.applicationDirectory.description"><![CDATA[Geben Sie die Verzeichnisse an, die für die Installation der aufgeführten Anwendungen verwendet werden sollen. Die Eingabe der Verzeichnisse erfolgt relativ zum Hauptverzeichnis der Website („{$documentRoot}“).]]></item>
+		<item name="wcf.global.applicationDirectory.description"><![CDATA[Geben Sie die Verzeichnisse an, die für die Installation der aufgeführten Apps verwendet werden sollen. Die Eingabe der Verzeichnisse erfolgt relativ zum Hauptverzeichnis der Website („{$documentRoot}“).]]></item>
 		<item name="wcf.global.applicationDirectory.error"><![CDATA[Die Eingaben für die Installationsverzeichnisse sind ungültig. Bitte überprüfen Sie die markierten Felder.]]></item>
-		<item name="wcf.global.applicationDirectory.error.duplicate"><![CDATA[Dieses Verzeichnis wurde bereits für eine andere Anwendung angegeben.]]></item>
+		<item name="wcf.global.applicationDirectory.error.duplicate"><![CDATA[Dieses Verzeichnis wurde bereits für eine andere App angegeben.]]></item>
 		<item name="wcf.global.applicationDirectory.error.makePath"><![CDATA[Das angegebene Verzeichnis kann auf Grund unzureichender Berechtigungen nicht erstellt werden.]]></item>
 		<item name="wcf.global.applicationDirectory.error.makeWritable"><![CDATA[Das angegebene Verzeichnis ist für PHP nicht beschreibbar, bitte überprüfen Sie die Berechtigungen.]]></item>
-		<item name="wcf.global.applicationDirectory.error.notEmpty"><![CDATA[In diesem Verzeichnis befindet sich bereits eine Anwendung.]]></item>
+		<item name="wcf.global.applicationDirectory.error.notEmpty"><![CDATA[In diesem Verzeichnis befindet sich bereits eine App.]]></item>
 		<item name="wcf.global.applicationDirectory.error.outsideDocumentRoot"><![CDATA[Das Verzeichnis befindet sich außerhalb des Hauptverzeichnis der Website.]]></item>
-		<item name="wcf.global.applicationDirectory.url"><![CDATA[Endgültige URL für Anwendungen]]></item>
-		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Nach der Installation werden die Anwendungen unter den folgenden URLs erreichbar sein.]]></item>
+		<item name="wcf.global.applicationDirectory.url"><![CDATA[Endgültige URL für Apps]]></item>
+		<item name="wcf.global.applicationDirectory.url.description"><![CDATA[Nach der Installation werden die Apps unter den folgenden URLs erreichbar sein.]]></item>
+		<item name="wcf.global.title.apps"><![CDATA[Apps:]]></item>
 	</category>
 </language>
