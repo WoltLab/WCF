@@ -16,7 +16,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 	UiPagination.prototype = {
 		/**
 		 * maximum number of displayed page links, should match the PHP implementation
-		 * @var	{integer}
+		 * @var	{int}
 		 */
 		SHOW_LINKS: 11,
 		
@@ -185,7 +185,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 		/**
 		 * Creates a link to a specific page.
 		 * 
-		 * @param	{integer}	pageNo		page number
+		 * @param	{int}		pageNo		page number
 		 * @return	{Element}	link element
 		 */
 		_createLink: function(pageNo) {
@@ -207,7 +207,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 		/**
 		 * Switches to given page number.
 		 * 
-		 * @param	{integer}	pageNo		page number
+		 * @param	{int}		pageNo		page number
 		 * @param	{object}	event		event object
 		 */
 		switchPage: function(pageNo, event) {

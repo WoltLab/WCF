@@ -141,7 +141,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		/**
 		 * Handles a failed file upload.
 		 * 
-		 * @param	{integer}		uploadId	identifier of a file upload
+		 * @param	{int}			uploadId	identifier of a file upload
 		 * @param	{object<string, *>}	data		response data
 		 * @param	{string}		responseText	response
 		 * @param	{XMLHttpRequest}	xhr		request object
@@ -172,7 +172,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		/**
 		 * Updates the progress of an upload.
 		 * 
-		 * @param	{integer}			uploadId	internal upload identifier
+		 * @param	{int}				uploadId	internal upload identifier
 		 * @param	{XMLHttpRequestProgressEvent}	event		progress event object
 		 */
 		_progress: function(uploadId, event) {
@@ -198,7 +198,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		/**
 		 * Handles a successful file upload.
 		 * 
-		 * @param	{integer}		uploadId	identifier of a file upload
+		 * @param	{int}			uploadId	identifier of a file upload
 		 * @param	{object<string, *>}	data		response data
 		 * @param	{string}		responseText	response
 		 * @param	{XMLHttpRequest}	xhr		request object
@@ -214,7 +214,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 * @param	{Event}		event		input change event object
 		 * @param	{File}		file		uploaded file
 		 * @param	{Blob}		blob		file blob
-		 * @return	{(integer|Array.<integer>|null)}	identifier(s) for the uploaded files
+		 * @return	{(int|Array.<int>|null)}	identifier(s) for the uploaded files
 		 */
 		_upload: function(event, file, blob) {
 			// remove failed upload elements first
@@ -278,7 +278,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 * 
 		 * @param	{(FileList|Array.<File>)}	files		uploaded files
 		 * @param	{Blob}				blob		file blob
-		 * @return	{(integer|null)}	identifier for the uploaded files
+		 * @return	{(int|null)}	identifier for the uploaded files
 		 */
 		_uploadFiles: function(files, blob) {
 			var uploadId = this._createFileElements(files);

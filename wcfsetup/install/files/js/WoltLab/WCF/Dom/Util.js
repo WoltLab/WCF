@@ -118,7 +118,7 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * 
 		 * @param	{Element}		el		element
 		 * @param	{CSSStyleDeclaration=}	styles		result of window.getComputedStyle()
-		 * @return	{integer}	outer width in px
+		 * @return	{int}	outer width in px
 		 */
 		outerWidth: function(el, styles) {
 			styles = styles || window.getComputedStyle(el);
