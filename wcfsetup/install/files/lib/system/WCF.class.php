@@ -812,6 +812,10 @@ class WCF {
 	 * @return Page|null
 	 */
 	public static function getActivePage() {
+		if (self::getActiveRequest() === null) {
+			return null;
+		}
+		
 		if (self::getActiveRequest()->getClassName() === CmsPage::class) {
 			$metaData = self::getActiveRequest()->getMetaData();
 			return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
@@ -954,7 +958,11 @@ class WCF {
 	 * @return	boolean
 	 */
 	public static function isLandingPage() {
-		return RequestHandler::getInstance()->getActiveRequest()->isLandingPage();
+		if (self::getActiveRequest() === null) {
+			return false;
+		}
+		
+		return self::getActiveRequest()->isLandingPage();
 	}
 	
 	/**
