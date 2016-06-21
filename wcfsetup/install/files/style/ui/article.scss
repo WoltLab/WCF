@@ -191,9 +191,11 @@
 	}
 	
 	a {
-		color: $wcfContentText;
+		color: inherit;
 		
 		&:hover {
+			color: inherit;
+			
 			.articleListImage > img {
 				opacity: 1;
 			}
