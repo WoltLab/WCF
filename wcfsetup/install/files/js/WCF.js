@@ -7804,7 +7804,7 @@ $.widget('ui.wcfPages', {
 	 */
 	_create: function() {
 		require(['WoltLab/WCF/Ui/Pagination'], (function(UiPagination) {
-			this._api = new UiPagination(this.element, {
+			this._api = new UiPagination(this.element[0], {
 				activePage: this.options.activePage,
 				maxPage: this.options.maxPage,
 				

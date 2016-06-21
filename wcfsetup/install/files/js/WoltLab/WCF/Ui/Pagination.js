@@ -2,7 +2,7 @@
  * Callback-based pagination.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Pagination
  */
@@ -12,7 +12,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 	/**
 	 * @constructor
 	 */
-	function UiPagination(element, options) { this.init(element, options); };
+	function UiPagination(element, options) { this.init(element, options); }
 	UiPagination.prototype = {
 		/**
 		 * maximum number of displayed page links, should match the PHP implementation
@@ -76,7 +76,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			}
 			
 			// add first page
-			list.appendChild(this._createLink(1, this._options));
+			list.appendChild(this._createLink(1));
 			
 			// calculate page links
 			var maxLinks = this.SHOW_LINKS - 4;
@@ -118,10 +118,10 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			var jumpToHtml = '<a class="jsTooltip" title="' + Language.get('wcf.global.page.jumpTo') + '">&hellip;</a>';
 			if (left > 1) {
 				if (left - 1 < 2) {
-					list.appendChild(this._createLink(2, this._options));
+					list.appendChild(this._createLink(2));
 				}
 				else {
-					var listItem = elCreate('li');
+					listItem = elCreate('li');
 					listItem.className = 'jumpTo';
 					listItem.innerHTML = jumpToHtml;
 					list.appendChild(listItem);
@@ -132,16 +132,16 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			
 			// visible links
 			for (var i = left + 1; i < right; i++) {
-				list.appendChild(this._createLink(i, this._options));
+				list.appendChild(this._createLink(i));
 			}
 			
 			// right ... links
 			if (right < this._options.maxPage) {
 				if (this._options.maxPage - right < 2) {
-					list.appendChild(this._createLink(this._options.maxPage - 1, this._options));
+					list.appendChild(this._createLink(this._options.maxPage - 1));
 				}
 				else {
-					var listItem = elCreate('li');
+					listItem = elCreate('li');
 					listItem.className = 'jumpTo';
 					listItem.innerHTML = jumpToHtml;
 					list.appendChild(listItem);
@@ -151,7 +151,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			}
 			
 			// add last page
-			list.appendChild(this._createLink(this._options.maxPage, this._options));
+			list.appendChild(this._createLink(this._options.maxPage));
 			
 			// add next button
 			listItem = elCreate('li');
