@@ -37,7 +37,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
-						{if $article->isMultilingual}
+						{if $article->isMultilingual && $__wcf->user->userID}
 							<li class="dropdown">
 								<a class="dropdownToggle boxFlag box24 button">
 									<span><img src="{$articleContent->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>

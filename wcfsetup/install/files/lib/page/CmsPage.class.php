@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
@@ -68,6 +69,11 @@ class CmsPage extends AbstractPage {
 		}
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
+		
+		// update interface language
+		if (!WCF::getUser()->userID && $this->page->isMultilingual && $this->languageID != WCF::getLanguage()->languageID) {
+			WCF::setLanguage($this->languageID);
+		}
 	}
 	
 	/**
@@ -81,7 +87,8 @@ class CmsPage extends AbstractPage {
 			'content' => $this->content,
 			'contentLanguageID' => $this->languageID,
 			'page' => $this->page,
-			'pageID' => $this->pageID
+			'pageID' => $this->pageID,
+			'activePageLanguage' => ($this->languageID ? LanguageFactory::getInstance()->getLanguage($this->languageID) : null)
 		]);
 	}
 }

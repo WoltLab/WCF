@@ -106,15 +106,24 @@
 								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
 									'{@$__language->languageID}': {
 										iconPath: '{@$__language->getIconPath()|encodeJS}',
-										languageName: '{@$__language|encodeJS}'
+										languageName: '{@$__language|encodeJS}',
+										languageCode: '{@$__language->languageCode|encodeJS}'
 									}
 								{/implode}
 							};
-							
-							var callback = function(listItem) {
-								var location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
-								var delimiter = (location.indexOf('?') == -1) ? '?' : '&';
 								
+							var callback = function(listItem) {
+								var location;
+								var languageCode = elData(listItem, 'language-code');
+								var link = elBySel('link[hreflang="' + languageCode + '"]');
+								if (link !== null) {
+									location = link.href;
+								}
+								else {
+									location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
+								}
+								
+								var delimiter = (location.indexOf('?') == -1) ? '?' : '&';
 								window.location = location + delimiter + 'l=' + elData(listItem, 'language-id') + window.location.hash;
 							};
 							

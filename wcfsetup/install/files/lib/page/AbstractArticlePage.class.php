@@ -1,10 +1,11 @@
 <?php
 namespace wcf\page;
 use wcf\data\article\AccessibleArticleList;
-use wcf\data\article\CategoryArticleList;
+use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ViewableArticle;
+use wcf\data\tag\Tag;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -77,6 +78,11 @@ abstract class AbstractArticlePage extends AbstractPage {
 		}
 		$this->article = ViewableArticle::getArticle($this->articleContent->articleID);
 		$this->category = $this->article->getCategory();
+		
+		// update interface language
+		if (!WCF::getUser()->userID && $this->article->isMultilingual && $this->articleContent->languageID != WCF::getLanguage()->languageID) {
+			WCF::setLanguage($this->articleContent->languageID);
+		}
 	}
 	
 	/**

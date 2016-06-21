@@ -117,6 +117,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					listItem.className = 'boxFlag';
 					listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
 					elData(listItem, 'language-id', availableLanguageId);
+					if (language.languageCode !== undefined) elData(listItem, 'language-code', language.languageCode);
 					dropdownMenu.appendChild(listItem);
 					
 					a = elCreate('a');

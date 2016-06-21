@@ -13,6 +13,31 @@
 	{/if}
 {/capture}
 
+{capture assign='contentHeaderNavigation'}
+	{if $page->isMultilingual && $__wcf->user->userID}
+		<li class="dropdown">
+			<a class="dropdownToggle boxFlag box24 button">
+				<span><img src="{$activePageLanguage->getIconPath()}" alt="" class="iconFlag"></span>
+				<span>{$activePageLanguage->languageName}</span>
+			</a>
+			<ul class="dropdownMenu">
+				{foreach from=$page->getPageLanguages() item='pageLanguage'}
+					{if $pageLanguage->getLanguage()}
+						<li class="boxFlag">
+							<a class="box24" href="{$pageLanguage->getLink()}">
+								<span><img src="{$pageLanguage->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
+								<span>{$pageLanguage->getLanguage()->languageName}</span>
+							</a>
+						</li>
+					{/if}
+				{/foreach}
+			</ul>
+		</li>
+	{/if}
+	
+	{if $__wcf->getSession()->getPermission('admin.content.cms.canManagePage')}<li><a href="{link controller='PageEdit' id=$page->pageID isACP=true}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.page.edit{/lang}</span></a></li>{/if}
+{/capture}
+
 {include file='header'}
 
 {if $content[content]}
