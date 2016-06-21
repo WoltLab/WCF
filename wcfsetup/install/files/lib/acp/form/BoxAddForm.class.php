@@ -371,7 +371,7 @@ class BoxAddForm extends AbstractForm {
 		parent::save();
 		
 		$content = [];
-		if ($this->isMultilingual) {
+		if ($this->boxType == 'system' || $this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
 					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),

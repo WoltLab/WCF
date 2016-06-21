@@ -987,7 +987,7 @@
 		<type>
 			<name>com.woltlab.wcf.userList</name>
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
-			<classname>wcf\system\box\userListBoxController</classname>
+			<classname>wcf\system\box\UserListBoxController</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOnlineList</name>
@@ -1023,6 +1023,11 @@
 			<name>com.woltlab.wcf.articleCategories</name>
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\ArticleCategoriesBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.articleList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\ArticleListBoxController</classname>
 		</type>
 		<!-- /box controllers -->
 		

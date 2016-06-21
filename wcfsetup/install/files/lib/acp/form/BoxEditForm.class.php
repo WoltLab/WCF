@@ -77,7 +77,7 @@ class BoxEditForm extends BoxAddForm {
 		AbstractForm::save();
 		
 		$content = [];
-		if ($this->isMultilingual) {
+		if ($this->boxType == 'system' || $this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
 					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
