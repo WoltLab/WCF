@@ -47,14 +47,14 @@
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[The setting below is used to establish a persistent login for your website; Keep in mind to update this value whenever the domain name changes. If you are unsure which value you need to provide, you can safely copy the value of “Domain”.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie Domain]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Cookie domain may not contain path components]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Cookie domain may not contain path components.]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Cookie domain does not match the domain entered above (sub-domains like “www” may be omitted).]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain Settings]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
-		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Domain may not contain path components]]></item>
+		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Domain may not contain path components.]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
-		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”]]></item>
+		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”.]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
@@ -381,7 +381,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and “Users Online” marking based on highest priority.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[“Users Online” Marking]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this group in the “Users Online” list. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking.error.notValid"><![CDATA[There must be an occurrence of “%s”]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.error.notValid"><![CDATA[There must be an occurrence of “%s”.]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Display members on team page]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Change Username]]></item>
@@ -417,7 +417,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Add Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Users need to fulfill the following conditions to be automatically added to the user group]]></item>
+		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Users need to fulfill the following conditions to automatically be added to the user group]]></item>
 		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Do you really want to delete the automatic user group assignment “{$assignment->title}”?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not chosen any condition.]]></item>
@@ -435,7 +435,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Copy Object Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Permissions set for certain objects like for label groups will also be set for the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Copy Members]]></item>
-		<item name="wcf.acp.group.copy.copyMembers.description"><![CDATA[Members of the copied user group will automatically be members of the new user group.]]></item>
+		<item name="wcf.acp.group.copy.copyMembers.description"><![CDATA[Members of the copied user group will automatically become members of the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyUserGroupOptions"><![CDATA[Copy Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[The new user group will have the same permissions as the copied user group.]]></item>
 		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[Can manage paid subscriptions]]></item>
@@ -542,7 +542,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be remembered for your current session. In case you forgot the password, please reset it by removing the file <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Passwords do not match.]]></item>
-		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded unsafe. It should be at least 8 characters, containing upper and lower Latin letters, as well as numbers and special symbols.]]></item>
+		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is considered unsafe. It should be at least 8 characters, containing upper and lower Latin letters, as well as numbers and special symbols.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
@@ -762,7 +762,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
 		<item name="wcf.acp.option.import"><![CDATA[Restore Options]]></item>
 		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Unable to restore options.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[Options have been restored.]]></item>
+		<item name="wcf.acp.option.import.success"><![CDATA[The options have been restored.]]></item>
 		<item name="wcf.acp.option.import.upload"><![CDATA[Upload Options]]></item>
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload previously downloaded options file.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Save &amp; Restore Options]]></item>
@@ -802,7 +802,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause issues for users with a rotating IP address.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all other device sessions to terminate. It is not recommended to disable this option.]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>
 		<item name="wcf.acp.option.show_clock"><![CDATA[Display current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
@@ -841,20 +841,20 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
-		<item name="wcf.acp.option.attachment_thumbnail_height.description"><![CDATA[The height in pixels allowed for thumbnails.]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_height.description"><![CDATA[The height in pixels for thumbnails.]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
-		<item name="wcf.acp.option.attachment_thumbnail_width.description"><![CDATA[The width in pixels allowed for thumbnails.]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_width.description"><![CDATA[The width in pixels for thumbnails.]]></item>
 		<item name="wcf.acp.option.attachment_storage"><![CDATA[Storage Location]]></item>
 		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Changes storage location for attachments. Heads up! You are responsible to move already existing attachments to the new location.]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.censored_words"><![CDATA[Censored Words]]></item>
-		<item name="wcf.acp.option.censored_words.description"><![CDATA[One word per Line. Using at least one of these words within a message causes an immediate rejection.<br />
+		<item name="wcf.acp.option.censored_words.description"><![CDATA[One word per line. Using at least one of these words within a message causes an immediate rejection.<br />
 <em>Use “*” to match parts: “wolt*” matches “woltlab”</em><br />
 <em>Use “~” to find splitted parts: “wolt~” matches “wolt-lab”</em>]]></item>
 		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable censorship]]></item>
-		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for all messages containing the words below.]]></item>
+		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for every message containing the words below.]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Content Share]]></item>
 		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Enable BBCodes (default value)]]></item>
 		<item name="wcf.acp.option.enable_html_default_value"><![CDATA[Enable HTML (default value)]]></item>
@@ -898,9 +898,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
 		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
-		<item name="wcf.acp.option.max_avatar_height.description"><![CDATA[The maximum height in pixels allowed for avatars.]]></item>
+		<item name="wcf.acp.option.max_avatar_height.description"><![CDATA[The maximum height in pixels for avatars.]]></item>
 		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
-		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width in pixels allowed for avatars.]]></item>
+		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width in pixels for avatars.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
@@ -937,7 +937,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height]]></item>
-		<item name="wcf.acp.option.signature_max_image_height.description"><![CDATA[The maximum height in pixels allowed for signature images.]]></item>
+		<item name="wcf.acp.option.signature_max_image_height.description"><![CDATA[The maximum height in pixels for signature images.]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of unavailable user titles for members, one title per line.]]></item>
@@ -991,7 +991,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Poll Options]]></item>
-		<item name="wcf.acp.option.poll_max_options.description"><![CDATA[The maximum number of poll options allowed per post.]]></item>
+		<item name="wcf.acp.option.poll_max_options.description"><![CDATA[The maximum number of poll options per post.]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
@@ -1126,11 +1126,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Update completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
 		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package “{@$package->getName()}”?]]></item>
-		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can’t be installed because of the following already installed packages:]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can’t be installed because the following packages are already installed:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}]]></item>
-		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
-		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
-		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve requirements of this package.]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following packages already installed prohibit installing this package:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}.]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve the requirements of this package.]]></item>
 		<item name="wcf.acp.package.install.installingImportedStyle"><![CDATA[The uploaded file is a package containg a style.]]></item>
 		<item name="wcf.acp.package.install.optionalPackage.missingRequirements"><![CDATA[Unable to install, some or all required packages are not installed.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
@@ -1204,8 +1204,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation"><![CDATA[Validation Result]]></item>
 		<item name="wcf.acp.package.validation.errorCode.1"><![CDATA[The file “{$archive}”{if !$targetArchive|empty} within the archive “{$targetArchive}”{/if} is missing.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[The package “{$archive}” is missing the required “package.xml” file.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not met the expectations and was rejected.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not met the expectations and was rejected.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not meet the expectations and was rejected.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not meet the expectations and was rejected.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[The package “{lang}{$packageName}{/lang}” does not contain valid install instructions.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[The package “{lang}{$packageName}{/lang}” (installed version: “{$packageVersion}”) should be updated to version “{$deliveredPackageVersion}”, but an update is not supported.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[The following installed packages exclude the current package due to known incompatibilities: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
@@ -1221,7 +1221,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.add"><![CDATA[Add Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.edit"><![CDATA[Edit Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.userGroups"><![CDATA[User Groups]]></item>
-		<item name="wcf.acp.paidSubscription.userGroups.description"><![CDATA[Buyers will be automatically added to the chosen user groups.]]></item>
+		<item name="wcf.acp.paidSubscription.userGroups.description"><![CDATA[Buyers will automatically be added to the chosen user groups.]]></item>
 		<item name="wcf.acp.paidSubscription.cost"><![CDATA[Cost]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLength.permanent"><![CDATA[Permanent]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLength"><![CDATA[Length]]></item>
@@ -1270,7 +1270,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pageMenu.list"><![CDATA[List Menu Items]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[If a page is not available in the selection above, you can enter the related controller manually. Enter the PHP class name including namespace, e.g. “wcf\page\DashboardPage”.]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController.error.notValid"><![CDATA[Unable to find the provided class name]]></item>
+		<item name="wcf.acp.pageMenu.menuItemController.error.notValid"><![CDATA[Unable to find the provided class name.]]></item>
 		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Footer]]></item>
@@ -1404,17 +1404,17 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Chosen category is invalid.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
-		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already in use by an other smiley]]></item>
+		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already in use by another smiley.]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
-		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by an other smiley]]></item>
+		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by another smiley.]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative to “{$__wcf->getPath()}”.]]></item>
-		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path]]></item>
+		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path.]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley File]]></item>
 		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Upload Smiley]]></item>
 		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Upload the image file for the smiley.]]></item>
-		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is no image file.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is not an image file.]]></item>
 		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[An unknown error occurred during upload.]]></item>
 	</category>
 	
@@ -1426,9 +1426,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[LESS Variables Override]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Allows you to override LESS variables not available through the style editor itself. Syntax: “@variableName: variableValue;”, referred variables must be declared before any attempt to read their value.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error"><![CDATA[Provided value was invalid, please verify these items:]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Input for “{$error[text]}” invalid]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable “{$error[text]}” is already defined by the style editor]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable “{$error[text]}” is not recognized]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Input for “{$error[text]}” invalid.]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable “{$error[text]}” is already defined by the style editor.]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable “{$error[text]}” is not recognized.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Author]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Start Export]]></item>
@@ -1487,13 +1487,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.import.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
-		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, uploaded file is not a valid style.]]></item>
+		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, the uploaded file is not a valid style.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
 		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For example if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
 		<item name="wcf.acp.style.packageName.error.notValid"><![CDATA[Package Identifier is invalid.]]></item>
-		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Package Identifiers cannot begin with “com.woltlab.”]]></item>
+		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Package Identifiers cannot begin with “com.woltlab.”.]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Date]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Description]]></item>
 		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
@@ -1512,7 +1512,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
 		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag “{$tag}”?]]></item>
-		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid]]></item>
+		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid.]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.tag.list.search"><![CDATA[Search Tags]]></item>
@@ -1545,12 +1545,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by an other template group.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by another template group.]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroupID.error.notValid"><![CDATA[The specified Parent Template Group is invalid.]]></item>
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
-		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template]]></item>
-		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
+		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template.]]></item>
+		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid.]]></item>
 		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template “{$template->templateName}”?]]></item>
 	</category>
 	
@@ -1762,7 +1762,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.attachment.delete.sure"><![CDATA[Do you really want to delete this attachment?]]></item>
 		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[File extension is invalid.]]></item>
 		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[File is too big.]]></item>
-		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments.]]></item>
+		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments allowed.]]></item>
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have chosen too many attachments, remaining: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occurred during upload.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
@@ -1774,7 +1774,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.attachment.insertThumbnail"><![CDATA[Thumbnail]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
-		<item name="wcf.attachment.filesize"><![CDATA[Size]]></item>
+		<item name="wcf.attachment.filesize"><![CDATA[File Size]]></item>
 		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Last Download]]></item>
 		<item name="wcf.attachment.fileType"><![CDATA[Type]]></item>
@@ -1854,7 +1854,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	
 	<category name="wcf.captcha.recaptchaV2">
-		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Please confirm that you aren’t a robot.]]></item>
+		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Please confirm that you’re not a robot.]]></item>
 	</category>
 	
 	<category name="wcf.category">
@@ -2197,7 +2197,7 @@ Errors are:
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
-		<item name="wcf.global.success"><![CDATA[The action has been successfully completed.]]></item>
+		<item name="wcf.global.success"><![CDATA[The action has been completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
@@ -2229,8 +2229,8 @@ Errors are:
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>
 		<item name="wcf.global.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
-		<item name="wcf.global.error.illegalLink"><![CDATA[The link you are trying to reach is no longer available or invalid.]]></item>
-		<item name="wcf.global.error.backward"><![CDATA[Back to previous page]]></item>
+		<item name="wcf.global.error.illegalLink"><![CDATA[The link you’re trying to reach is no longer available or invalid.]]></item>
+		<item name="wcf.global.error.backward"><![CDATA[Back to previous page.]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Unspecified]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.global.noSelection"><![CDATA[(No Selection)]]></item>
@@ -2276,7 +2276,7 @@ Errors are:
 	
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[All]]></item>
-		<item name="wcf.label.error.missing"><![CDATA[You are required to select a label.]]></item>
+		<item name="wcf.label.error.missing"><![CDATA[You’re required to select a label.]]></item>
 		<item name="wcf.label.error.notValid"><![CDATA[The label selection is invalid.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
@@ -2359,8 +2359,8 @@ Errors are:
 		<item name="wcf.message.button.extendedReply"><![CDATA[More Options]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[More Options]]></item>
 		<item name="wcf.message.new"><![CDATA[New]]></item>
-		<item name="wcf.message.error.censoredWordsFound"><![CDATA[Message contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
-		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
+		<item name="wcf.message.error.censoredWordsFound"><![CDATA[Message contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
+		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}.]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Editor is already in use, please finish editing before continuing.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[Message is too long, must be below {#$maxTextLength} characters.]]></item>
 	</category>
@@ -2368,7 +2368,7 @@ Errors are:
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[(Change)]]></item>
-		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[This user does not have sufficient privileges]]></item>
+		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[This user does not have sufficient privileges.]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Type]]></item>
 		<item name="wcf.moderation.filterByUser"><![CDATA[Assigned User]]></item>
@@ -2432,7 +2432,7 @@ Errors are:
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
-		<item name="wcf.moderation.report.success"><![CDATA[Content has been reported.]]></item>
+		<item name="wcf.moderation.report.success"><![CDATA[The content has been reported.]]></item>
 	</category>
 	
 	<category name="wcf.notice">
@@ -2493,7 +2493,7 @@ Errors are:
 
 <h3>Members-Only Web Sites</h3>
 
-<p>Information you provide on Operators’s membership applications is used to create a member profile, and some information may be shared with other of the Operators’s individual member representatives and organizations. Member contact information may be provided to other members on a secure web site to encourage and facilitate collaboration, research, and the free exchange of information among the Operators’s members, but we expressly prohibit members from using member contact information to send unsolicited commercial correspondence. The Operators’s members may be automatically added to the Operators’s mailing lists. From time to time, member information may be shared with event organizers and/or other organizations that provide additional benefits to the Operators’s members. By providing us with your personal information on the membership application, you expressly consent to our storing, processing, and distributing your information for these purposes.</p>
+<p>Information you provide on Operators’s membership applications is used to create a member profile, and some information may be shared with other of the Operators’s individual member representatives and organizations. Member contact information may be provided to other members on a secure web site to encourage and facilitate collaboration, research, and the free exchange of information among the Operators’s members, but we expressly prohibit members from using member contact information to send unsolicited commercial correspondence. The Operators’s members may automatically be added to the Operators’s mailing lists. From time to time, member information may be shared with event organizers and/or other organizations that provide additional benefits to the Operators’s members. By providing us with your personal information on the membership application, you expressly consent to our storing, processing, and distributing your information for these purposes.</p>
 
 <h2>How We Use Your Information</h2>
 
@@ -2697,8 +2697,8 @@ Errors are:
 		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[The entered passwords do not match.]]></item>
 		<item name="wcf.user.controlPanel"><![CDATA[Control Panel]]></item>
 		<item name="wcf.user.email"><![CDATA[Email]]></item>
-		<item name="wcf.user.email.error.notUnique"><![CDATA[Email is already in use.]]></item>
-		<item name="wcf.user.email.error.notValid"><![CDATA[Email is invalid.]]></item>
+		<item name="wcf.user.email.error.notUnique"><![CDATA[The email is already in use.]]></item>
+		<item name="wcf.user.email.error.notValid"><![CDATA[The email is invalid.]]></item>
 		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
@@ -2721,11 +2721,11 @@ Errors are:
 		<item name="wcf.user.username.error.notValid"><![CDATA[Username is invalid.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 		<item name="wcf.user.group"><![CDATA[User Group]]></item>
-		<item name="wcf.user.option.error.tooLong"><![CDATA[Entered text is too long.]]></item>
-		<item name="wcf.user.option.error.tooShort"><![CDATA[Entered text is too short.]]></item>
-		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
+		<item name="wcf.user.option.error.tooLong"><![CDATA[The entered text is too long.]]></item>
+		<item name="wcf.user.option.error.tooShort"><![CDATA[The entered text is too short.]]></item>
+		<item name="wcf.user.option.error.validationFailed"><![CDATA[The entered text is invalid.]]></item>
 		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[You’re not old enough. To register with this website you must be at least {#REGISTER_MIN_USER_AGE} years old.]]></item>
-		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[Text contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
+		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[Text contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banExpires != 0} until {@$__wcf->user->banExpires|plainTime}{/if}{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Users I’m following]]></item>
