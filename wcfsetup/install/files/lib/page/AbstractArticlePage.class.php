@@ -1,8 +1,8 @@
 <?php
 namespace wcf\page;
-use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ViewableArticle;
 use wcf\data\tag\Tag;

@@ -2155,6 +2155,11 @@ Errors are:
 	</category>
 	
 	<category name="wcf.editor">
+		<item name="wcf.editor.alignment.center"><![CDATA[Align center]]></item>
+		<item name="wcf.editor.alignment.justify"><![CDATA[Align justify]]></item>
+		<item name="wcf.editor.alignment.left"><![CDATA[Align left]]></item>
+		<item name="wcf.editor.alignment.right"><![CDATA[Align right]]></item>
+		
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
@@ -2216,6 +2221,17 @@ Errors are:
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
 		<item name="wcf.editor.spoiler.edit"><![CDATA[Edit Spoiler]]></item>
 		<item name="wcf.editor.spoiler.title"><![CDATA[Spoiler{if $label}: {$label}{/if}]]></item>
+		
+		<item name="wcf.editor.table.addHead"><![CDATA[Add head]]></item>
+		<item name="wcf.editor.table.deleteColumn"><![CDATA[Delete column]]></item>
+		<item name="wcf.editor.table.deleteHead"><![CDATA[Delete column]]></item>
+		<item name="wcf.editor.table.deleteRow"><![CDATA[Delete row]]></item>
+		<item name="wcf.editor.table.deleteTable"><![CDATA[Delete table]]></item>
+		<item name="wcf.editor.table.insertTable"><![CDATA[Insert table]]></item>
+		<item name="wcf.editor.table.insertColumnLeft"><![CDATA[Insert column left]]></item>
+		<item name="wcf.editor.table.insertColumnRight"><![CDATA[Insert column right]]></item>
+		<item name="wcf.editor.table.insertRowAbove"><![CDATA[Insert row above]]></item>
+		<item name="wcf.editor.table.insertRowBelow"><![CDATA[Insert row below]]></item>
 	</category>
 	
 	<category name="wcf.global">

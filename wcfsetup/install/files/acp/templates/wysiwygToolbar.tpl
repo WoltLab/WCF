@@ -2,6 +2,7 @@ buttonOptions = {
 	alignment: { icon: 'fa-align-left', title: '{lang}wcf.editor.button.alignment{/lang}' },
 	bold: { icon: 'fa-bold', title: '{lang}wcf.editor.button.bold{/lang}' },
 	deleted: { icon: 'fa-strikethrough', title: '{lang}wcf.editor.button.strikethrough{/lang}' },
+	format: { icon: 'fa-paragraph', title: '{lang}wcf.editor.button.format{/lang}' },
 	html: { icon: 'fa-code', title: '{lang}wcf.editor.button.html{/lang}' },
 	italic: { icon: 'fa-italic', title: '{lang}wcf.editor.button.italic{/lang}' },
 	link: { icon: 'fa-link', title: '{lang}wcf.editor.button.link{/lang}' },
@@ -18,6 +19,10 @@ buttonOptions = {
 };
 
 buttons.push('html');
+
+buttons.push('wcfSeparator');
+
+buttons.push('format');
 
 buttons.push('wcfSeparator');
 

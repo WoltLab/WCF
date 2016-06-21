@@ -162,7 +162,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}		stack		linear list of BBCode tags and regular strings
 		 * @param	{object}		item		current BBCode tag object
-		 * @param	{integer}		index		current stack index representing `item`
+		 * @param	{int}			index		current stack index representing `item`
 		 * @return	{(string|array)}	string if only the current item should be replaced or an array with
 		 * 					the first item used for the opening tag and the second item for the closing tag
 		 */
@@ -218,7 +218,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertAlignment: function(stack, item, index) {
@@ -235,7 +235,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertAttachment: function(stack, item, index) {
@@ -287,7 +287,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertCode: function(stack, item, index) {
@@ -378,7 +378,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertColor: function(stack, item, index) {
@@ -394,7 +394,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertEmail: function(stack, item, index) {
@@ -430,7 +430,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertImage: function(stack, item, index) {
@@ -484,7 +484,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertList: function(stack, item, index) {
@@ -513,7 +513,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertQuote: function(stack, item, index) {
@@ -590,7 +590,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertSize: function(stack, item, index) {
@@ -606,7 +606,7 @@ define(['Core', 'EventHandler', 'Language', 'StringUtil', 'WoltLab/WCF/Bbcode/Pa
 		 * 
 		 * @param	{array<mixed>}	stack	linear list of BBCode tags and regular strings
 		 * @param	{object}	item	current BBCode tag object
-		 * @param	{integer}	index	current stack index representing `item`
+		 * @param	{int}		index	current stack index representing `item`
 		 * @returns	{array}		first item represents the opening tag, the second the closing one
 		 */
 		_convertUrl: function(stack, item, index) {

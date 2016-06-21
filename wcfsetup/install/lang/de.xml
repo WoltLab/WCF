@@ -2144,6 +2144,11 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.editor">
+		<item name="wcf.editor.alignment.center"><![CDATA[Zentrieren]]></item>
+		<item name="wcf.editor.alignment.justify"><![CDATA[Blocksatz]]></item>
+		<item name="wcf.editor.alignment.left"><![CDATA[Linksbündig ausrichten]]></item>
+		<item name="wcf.editor.alignment.right"><![CDATA[Rechtsbündig ausrichten]]></item>
+		
 		<item name="wcf.editor.button.alignment"><![CDATA[Ausrichtung]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
@@ -2205,6 +2210,17 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Geben Sie eine Beschriftung für den Spoiler-Button ein.]]></item>
 		<item name="wcf.editor.spoiler.edit"><![CDATA[Spoiler bearbeiten]]></item>
 		<item name="wcf.editor.spoiler.title"><![CDATA[Spoiler{if $label}: {$label}{/if}]]></item>
+		
+		<item name="wcf.editor.table.addHead"><![CDATA[Kopfzeile einfügen]]></item>
+		<item name="wcf.editor.table.deleteColumn"><![CDATA[Spalte löschen]]></item>
+		<item name="wcf.editor.table.deleteHead"><![CDATA[Kopfzeile löschen]]></item>
+		<item name="wcf.editor.table.deleteRow"><![CDATA[Zeile löschen]]></item>
+		<item name="wcf.editor.table.deleteTable"><![CDATA[Tabelle löschen]]></item>
+		<item name="wcf.editor.table.insertTable"><![CDATA[Tabelle einfügen]]></item>
+		<item name="wcf.editor.table.insertColumnLeft"><![CDATA[Spalte links einfügen]]></item>
+		<item name="wcf.editor.table.insertColumnRight"><![CDATA[Spalte rechts einfügen]]></item>
+		<item name="wcf.editor.table.insertRowAbove"><![CDATA[Zeile darüber einfügen]]></item>
+		<item name="wcf.editor.table.insertRowBelow"><![CDATA[Zeile darunter einfügen]]></item>
 	</category>
 	
 	<category name="wcf.global">
