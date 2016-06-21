@@ -51,7 +51,7 @@ WCF.ACP.Language.ItemList = Class.extend({
 			$button.click(function() { self._click($languageItemID); });
 		}, this));
 		
-		count = parseInt(count) || 0;
+		count = ~~count;
 		if (count > 100) {
 			this._createPagination(count, pageNo);
 		}
@@ -64,11 +64,18 @@ WCF.ACP.Language.ItemList = Class.extend({
 	 * @param	integer		pageNo
 	 */
 	_createPagination: function(count, pageNo) {
-		$('.contentNavigation').each(function(index, contentNavigation) {
-			var $contentNavigation = $(contentNavigation);
-			var $nav = $('<nav />').prependTo($contentNavigation);
-			
-			$nav.wcfPages({
+		var navs = [];
+		
+		// pagination top
+		var contentNavigation = $('<div class="paginationTop"><nav class="pagination" /></div>').insertBefore($('.section.sectionContainerList'));
+		navs.push(contentNavigation[0].children[0]);
+		
+		// pagination bottom
+		contentNavigation = $('<div class="paginationBottom"><nav class="pagination" /></div>').prependTo($('.contentFooter'));
+		navs.push(contentNavigation[0].children[0]);
+		
+		navs.forEach(function(nav) {
+			$(nav).wcfPages({
 				activePage: parseInt(pageNo) || 1,
 				maxPage: Math.ceil(count / 100)
 			}).on('wcfpagesswitched', function(event, data) {
