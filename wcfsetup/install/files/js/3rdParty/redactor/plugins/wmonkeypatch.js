@@ -1298,7 +1298,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				var $node = null;
 				if ((marker.id === 'selection-marker-1' && !this.$editor.find('#selection-marker-2').length) || marker.id === 'nodes-marker-1' && !this.$editor.find('#nodes-marker-2').length) {
-					$node = marker.previousSibling;
+					$node = (marker.previousSibling) ? marker.previousSibling : null;
 				}
 				
 				// iOS sometimes pastes right into the marker, this work-around will unwrap the pasted content
@@ -1314,8 +1314,8 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				if ($node !== null) {
 					this.selection.implicitRange = document.createRange();
-					this.selection.implicitRange.setStart($node, $node.length);
-					this.selection.implicitRange.setEnd($node, $node.length);
+					this.selection.implicitRange.setStartAfter($node);
+					this.selection.implicitRange.setEndAfter($node);
 					
 					getSelection().removeAllRanges();
 					getSelection().addRange(this.selection.implicitRange);
