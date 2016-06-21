@@ -239,7 +239,16 @@ class TemplateScriptingCompiler {
 		$compiledTags = [];
 		for ($i = 0, $j = count($templateTags); $i < $j; $i++) {
 			$this->currentLineNo += mb_substr_count($textBlocks[$i], "\n");
-			$compiledTags[] = $this->compileTag($templateTags[$i], $identifier, $metaData);
+			
+			if ($templateTags[$i] === '') {
+				// avoid empty JavaScript object literals being recognized
+				// as template scripting tags
+				$compiledTags[] = '{}';
+			}
+			else {
+				$compiledTags[] = $this->compileTag($templateTags[$i], $identifier, $metaData);
+			}
+			
 			$this->currentLineNo += mb_substr_count($templateTags[$i], "\n");
 		}
 		
