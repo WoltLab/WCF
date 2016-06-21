@@ -66,7 +66,7 @@
 
 <section id="comments" class="section sectionContainerList moderationComments">
 	<header class="sectionHeader">
-		<h2 class="sectionTitle">{lang}wcf.moderation.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
+		<h2 class="sectionTitle">{lang}wcf.global.comments{/lang} <span class="badge">{#$queue->comments}</span></h2>
 		<p class="sectionDescription">{lang}wcf.moderation.comments.description{/lang}</p>
 	</header>
 	

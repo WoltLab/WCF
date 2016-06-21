@@ -101,7 +101,7 @@
 		</dl>
 		
 		<dl{if $errorField == 'time'} class="formError"{/if}>
-			<dt><label for="time">{lang}wcf.article.time{/lang}</label></dt>
+			<dt><label for="time">{lang}wcf.global.date{/lang}</label></dt>
 			<dd>
 				<input type="datetime" id="time" name="time" value="{$time}" class="medium">
 				{if $errorField == 'time'}
@@ -177,7 +177,7 @@
 			{/if}
 			
 			<dl{if $errorField == 'title'} class="formError"{/if}>
-				<dt><label for="title0">{lang}wcf.acp.article.title{/lang}</label></dt>
+				<dt><label for="title0">{lang}wcf.global.title{/lang}</label></dt>
 				<dd>
 					<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
 					{if $errorField == 'title'}
@@ -291,7 +291,7 @@
 						{/if}
 						
 						<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
-							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.article.title{/lang}</label></dt>
+							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 							<dd>
 								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
 								{if $errorField == 'title'|concat:$availableLanguage->languageID}

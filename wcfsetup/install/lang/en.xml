@@ -61,6 +61,26 @@
 		<item name="wcf.acp.application.list"><![CDATA[Installed Apps]]></item>
 	</category>
 	
+	<category name="wcf.acp.article">
+		<item name="wcf.acp.article.add"><![CDATA[Add Article]]></item>
+		<item name="wcf.acp.article.edit"><![CDATA[Edit Article]]></item>
+		<item name="wcf.acp.article.list"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
+		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
+		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete the article <span class="confirmationObject">{$article->getTitle()}</span>?]]></item>
+		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
+		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
+		<item name="wcf.acp.article.i18n.none"><![CDATA[Monolingual article]]></item>
+		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Multilingual article]]></item>
+		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
+		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>
+		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
+		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
+		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
+		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
+	</category>
+	
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[<ul class="inlineList dotSeparated"><li>{#$stats.count} Attachment{if $stats.count != 1}s{/if}</li><li>{@$stats.size|filesize}</li><li>{#$stats.downloads} Download{if $stats.downloads != 1}s{/if}</li></ul>]]></item>
@@ -597,7 +617,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[Template Groups]]></item>
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Add Template Group]]></item>
 		<item name="wcf.acp.menu.link.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Browse Attachments]]></item>
+		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.menu.link.bbcode"><![CDATA[BBCodes]]></item>
 		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[Add BBCode]]></item>
 		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes]]></item>
@@ -642,8 +662,17 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Notifications]]></item>
 		<item name="wcf.acp.menu.link.cms"><![CDATA[CMS]]></item>
 		<item name="wcf.acp.menu.link.cms.page.list"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.menu.link.cms.page.add"><![CDATA[Add Page]]></item>
 		<item name="wcf.acp.menu.link.cms.menu.list"><![CDATA[Menus]]></item>
+		<item name="wcf.acp.menu.link.cms.menu.add"><![CDATA[Add Menu]]></item>
 		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxes]]></item>
+		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Add Box]]></item>
+		<item name="wcf.acp.menu.link.cms.media.list"><![CDATA[Media]]></item>
+		<item name="wcf.acp.menu.link.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.menu.link.article.list"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
+		<item name="wcf.acp.menu.link.article.category.list"><![CDATA[Categories]]></item>
+		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Add Category]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1740,7 +1769,6 @@ You can now fully access the website.]]></item>
 	</category>
 	
 	<category name="wcf.article">
-		<item name="wcf.article.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.article.nextArticle"><![CDATA[Next Article]]></item>
 		<item name="wcf.article.previousArticle"><![CDATA[Previous Article]]></item>
 		<item name="wcf.article.relatedArticles"><![CDATA[Related Articles]]></item>
@@ -2216,9 +2244,11 @@ Errors are:
 		<item name="wcf.global.button.submit"><![CDATA[Submit]]></item>
 		<item name="wcf.global.button.upload"><![CDATA[Upload]]></item>
 		<item name="wcf.global.button.readMore"><![CDATA[Read More]]></item>
+		<item name="wcf.global.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation Required]]></item>
+		<item name="wcf.global.date"><![CDATA[Date]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
@@ -2507,7 +2537,6 @@ Errors are:
 		<item name="wcf.moderation.showAll"><![CDATA[Display All Items]]></item>
 		<item name="wcf.moderation.showDeletedContent"><![CDATA[Display Deleted Content]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Deleted Content]]></item>
-		<item name="wcf.moderation.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.moderation.comments.description"><![CDATA[All comments are internal and will not be exposed to non-moderators.]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Go to Related Content]]></item>
 		<item name="wcf.moderation.markAllAsRead"><![CDATA[Mark All Items Read]]></item>
@@ -2601,7 +2630,6 @@ Errors are:
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Requested Page]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">More details</a>]]></item>
-		<item name="wcf.page.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Powered by <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
@@ -2681,6 +2709,7 @@ Errors are:
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
 		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
+		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 	</category>
 	
 	<category name="wcf.style">

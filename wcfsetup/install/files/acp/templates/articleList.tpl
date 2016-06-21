@@ -50,7 +50,7 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.article.title{/lang}" class="long">
+					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.global.title{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -98,10 +98,10 @@
 			<thead>
 				<tr>
 					<th class="columnID columnArticleID{if $sortField == 'articleID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=articleID&sortOrder={if $sortField == 'articleID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnText columnArticleTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.article.title{/lang}</a></th>
-					<th class="columnDigits columnComments{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.article.comments{/lang}</a></th>
-					<th class="columnDigits columnViews{if $sortField == 'views'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=views&sortOrder={if $sortField == 'views' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.article.views{/lang}</a></th>
-					<th class="columnDate columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.article.time{/lang}</a></th>
+					<th class="columnText columnArticleTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.title{/lang}</a></th>
+					<th class="columnDigits columnComments{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.comments{/lang}</a></th>
+					<th class="columnDigits columnViews{if $sortField == 'views'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=views&sortOrder={if $sortField == 'views' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.article.views{/lang}</a></th>
+					<th class="columnDate columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.date{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -113,7 +113,7 @@
 						<td class="columnIcon">
 							<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
 							{if $article->canDelete()}
-								<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$article->articleID}" data-confirm-message="{lang}wcf.acp.article.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$article->articleID}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"></span>
 							{else}
 								<span class="icon icon24 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
