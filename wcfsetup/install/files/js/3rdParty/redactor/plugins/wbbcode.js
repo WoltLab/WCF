@@ -1723,7 +1723,7 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				this.wutil.insertDynamic(
-					'<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment' + (!insertFull ? ' redactorDisableResize' : '') + '" data-attachment-id="' + attachmentID + '"' + $style + ' />',
+					'&#8203;<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment' + (!insertFull ? ' redactorDisableResize' : '') + '" data-attachment-id="' + attachmentID + '"' + $style + ' />&#8203;',
 					'[attach=' + attachmentID + (insertFull ? ',none,' + $imageAttachments[attachmentID].width : '') + '][/attach]'
 				);
 			}
