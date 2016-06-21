@@ -2127,6 +2127,11 @@ Errors are:
 	</category>
 	
 	<category name="wcf.editor">
+		<item name="wcf.editor.alignment.center"><![CDATA[Align center]]></item>
+		<item name="wcf.editor.alignment.justify"><![CDATA[Align justify]]></item>
+		<item name="wcf.editor.alignment.left"><![CDATA[Align left]]></item>
+		<item name="wcf.editor.alignment.right"><![CDATA[Align right]]></item>
+		
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>

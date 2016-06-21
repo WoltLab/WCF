@@ -2116,6 +2116,11 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.editor">
+		<item name="wcf.editor.alignment.center"><![CDATA[Zentrieren]]></item>
+		<item name="wcf.editor.alignment.justify"><![CDATA[Blocksatz]]></item>
+		<item name="wcf.editor.alignment.left"><![CDATA[Linksbündig ausrichten]]></item>
+		<item name="wcf.editor.alignment.right"><![CDATA[Rechtsbündig ausrichten]]></item>
+		
 		<item name="wcf.editor.button.alignment"><![CDATA[Ausrichtung]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>

@@ -388,6 +388,16 @@
 	text-align: right;
 }
 
+/* alignment plugin / custom value */
+.text-justify {
+	text-align: justify;
+	
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+}
+
 /* text color */
 .woltlab-color-000000 { color: #000000 !important; }
 .woltlab-color-000080 { color: #000080 !important; }

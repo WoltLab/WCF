@@ -18,6 +18,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/table.js?v={@LAST_UPDATE_TIME}',
 			
 			{* WoltLab *}
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAlignment.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAttachment.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabBlock.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
@@ -108,6 +109,11 @@
 						heading4: '{lang}wcf.editor.format.heading4{/lang}',
 						paragraph: '{lang}wcf.editor.format.paragraph{/lang}',
 						
+						'align-center': '{lang}wcf.editor.alignment.center{/lang}',
+						'align-justify': '{lang}wcf.editor.alignment.justify{/lang}',
+						'align-left': '{lang}wcf.editor.alignment.left{/lang}',
+						'align-right': '{lang}wcf.editor.alignment.right{/lang}',
+						
 						// table plugin
 						'add-head': '{lang}wcf.editor.table.addHead{/lang}',
 						'delete-column': '{lang}wcf.editor.table.deleteColumn{/lang}',
@@ -126,6 +132,7 @@
 					'alignment',
 					'source',
 					'table',
+					'WoltLabAlignment',
 					'WoltLabAttachment',
 					'WoltLabBlock',
 					'WoltLabCode',
