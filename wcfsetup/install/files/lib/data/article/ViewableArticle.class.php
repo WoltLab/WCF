@@ -34,10 +34,12 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * Gets a specific article decorated as viewable article.
 	 *
 	 * @param	integer		$articleID
+	 * @param       boolean         $enableContentLoading   Enables/disables the loading of article content objects
 	 * @return	ViewableArticle
 	 */
-	public static function getArticle($articleID) {
+	public static function getArticle($articleID, $enableContentLoading = true) {
 		$list = new ViewableArticleList();
+		$list->enableContentLoading($enableContentLoading);
 		$list->setObjectIDs([$articleID]);
 		$list->readObjects();
 		$objects = $list->getObjects();
