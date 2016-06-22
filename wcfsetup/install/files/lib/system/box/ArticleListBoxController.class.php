@@ -16,12 +16,17 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'top', 'bottom'];
+	protected $supportedPositions = ['sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'top', 'bottom', 'footerBoxes'];
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected $sortFieldLanguageItemPrefix = 'wcf.article';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultLimit = 3;
 	
 	/**
 	 * @inheritDoc
@@ -47,21 +52,31 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController {
 	 * @inheritDoc
 	 */
 	protected function getObjectList() {
-		return new AccessibleArticleList();
+		$objectList = new AccessibleArticleList();
+		
+		switch ($this->sortField) {
+			case 'comments':
+				$objectList->getConditionBuilder()->add('article.comments > ?', [0]);
+				break;
+			case 'views':
+				$objectList->getConditionBuilder()->add('article.views > ?', [0]);
+				break;
+			case 'cumulativeLikes':
+				$objectList->getConditionBuilder()->add('article.cumulativeLikes > ?', [0]);
+				break;
+		}
+		
+		return $objectList;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected function getTemplate() {
-		$templateName = 'boxArticleList';
-		if ($this->box->position === 'sidebarLeft' || $this->box->position === 'sidebarRight') {
-			$templateName = 'boxArticleListSidebar';
-		}
-		
-		return WCF::getTPL()->fetch($templateName, 'wcf', [
+		return WCF::getTPL()->fetch('boxArticleList', 'wcf', [
 			'boxArticleList' => $this->objectList,
-			'boxSortField' => $this->sortField
+			'boxSortField' => $this->sortField,
+			'boxPosition' => $this->box->position
 		]);
 	}
 }
