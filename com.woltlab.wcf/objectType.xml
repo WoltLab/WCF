@@ -1031,6 +1031,14 @@
 		</type>
 		<!-- /box controllers -->
 		
+		<!-- article list box condition -->
+		<type>
+			<name>com.woltlab.wcf.articleCategory</name>
+			<definitionname>com.woltlab.wcf.box.articleList.condition</definitionname>
+			<classname>wcf\system\condition\article\ArticleCategoryCondition</classname>
+		</type>
+		<!-- /thread list box condition -->
+		
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

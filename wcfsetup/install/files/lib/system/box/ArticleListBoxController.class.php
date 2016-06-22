@@ -31,6 +31,11 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.articleList.condition';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $validSortFields = [
 		'time',
 		'comments',
@@ -60,9 +65,6 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController {
 				break;
 			case 'views':
 				$objectList->getConditionBuilder()->add('article.views > ?', [0]);
-				break;
-			case 'cumulativeLikes':
-				$objectList->getConditionBuilder()->add('article.cumulativeLikes > ?', [0]);
 				break;
 		}
 		
