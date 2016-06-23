@@ -1094,9 +1094,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Uninstall]]></item>
 		<item name="wcf.acp.package.button.update"><![CDATA[Update]]></item>
 		<item name="wcf.acp.package.dependencies.dependent"><![CDATA[Dependent Packages]]></item>
-		<item name="wcf.acp.package.dependencies.dependent.description"><![CDATA[Packages requiring this package]]></item>
+		<item name="wcf.acp.package.dependencies.dependent.description"><![CDATA[Packages requiring this package.]]></item>
 		<item name="wcf.acp.package.dependencies.required"><![CDATA[Required Packages]]></item>
-		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required by this package]]></item>
+		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required by this package.]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Applications cannot be installed via CLI.]]></item>
@@ -1126,11 +1126,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Update completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
 		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package “{@$package->getName()}”?]]></item>
-		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can’t be installed because of the following already installed packages:]]></item>
-		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}]]></item>
-		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
-		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
-		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve requirements of this package.]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package cannot be installed because the following packages are already installed:]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}.]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following packages that are currently installed prohibit installing this package:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}.]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve the requirements of this package.]]></item>
 		<item name="wcf.acp.package.install.installingImportedStyle"><![CDATA[The uploaded file is a package containg a style.]]></item>
 		<item name="wcf.acp.package.install.optionalPackage.missingRequirements"><![CDATA[Unable to install, some or all required packages are not installed.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
@@ -1168,7 +1168,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Preparing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
-		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved]]></item>
+		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved.]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}License and serial number{else}Username and password{/if} have been accepted by the server, but they do not grant you the permission to download this commercial product.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[You are not allowed to access this package.]]></item>
@@ -1186,10 +1186,10 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.update.excludedPackages"><![CDATA[Conflict]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluded"><![CDATA[Installed Packages]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluded.description"><![CDATA[The following packages are not compatible with the packages you are trying to install.]]></item>
-		<item name="wcf.acp.package.update.excludedPackages.excluded.package"><![CDATA[“{$excludedPackage[existingPackageName]}” in version “{$excludedPackage[existingPackageVersion]}” prevents {if $excludedPackage[action] == 'update'}an update{else}the installation{/if} of “{$excludedPackage[packageName]}” {if $excludedPackage[action] == 'update'}to{else}in{/if} version “{$excludedPackage[packageVersion]}”]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluded.package"><![CDATA[“{$excludedPackage[existingPackageName]}” in version “{$excludedPackage[existingPackageVersion]}” prevents {if $excludedPackage[action] == 'update'}an update{else}the installation{/if} of “{$excludedPackage[packageName]}” {if $excludedPackage[action] == 'update'}to{else}in{/if} version “{$excludedPackage[packageVersion]}”.]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Packages to be installed]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[The following packages to be installed are not compatible with the currently installed packages.]]></item>
-		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[“{$excludedPackage[packageName]}” in version “{$excludedPackage[packageVersion]}” cannot be installed because it is incompatible with the installed package “{$excludedPackage[existingPackageName]}”]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[“{$excludedPackage[packageName]}” in version “{$excludedPackage[packageVersion]}” cannot be installed because it is incompatible with the installed package “{$excludedPackage[existingPackageName]}”.]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
@@ -1204,8 +1204,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation"><![CDATA[Validation Result]]></item>
 		<item name="wcf.acp.package.validation.errorCode.1"><![CDATA[The file “{$archive}”{if !$targetArchive|empty} within the archive “{$targetArchive}”{/if} is missing.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[The package “{$archive}” is missing the required “package.xml” file.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not met the expectations and was rejected.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not met the expectations and was rejected.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not meet the expectations and was rejected.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not meet the expectations and was rejected.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[The package “{lang}{$packageName}{/lang}” does not contain valid install instructions.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[The package “{lang}{$packageName}{/lang}” (installed version: “{$packageVersion}”) should be updated to version “{$deliveredPackageVersion}”, but an update is not supported.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[The following installed packages exclude the current package due to known incompatibilities: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
@@ -2769,7 +2769,7 @@ Errors are:
 		<item name="wcf.user.lostPassword"><![CDATA[Lost Password]]></item>
 		<item name="wcf.user.lostPassword.description"><![CDATA[You must provide your username or email address to request a new password. Contact the site’s administrator if you need assistance.]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
-		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
+		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[The password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail"><![CDATA[Dear {@$username},
 
