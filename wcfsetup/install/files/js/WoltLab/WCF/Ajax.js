@@ -77,6 +77,9 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 		 * @param	{object<string, *>}	options		request options
 		 */
 		apiOnce: function(options) {
+			// Fetch AjaxRequest, as it cannot be provided because of a circular dependency
+			if (AjaxRequest === undefined) AjaxRequest = require('AjaxRequest');
+			
 			options.pinData = false;
 			options.callbackObject = null;
 			if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN;
