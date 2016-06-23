@@ -3,6 +3,7 @@ namespace wcf\system\acl\simple;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -201,11 +202,23 @@ class SimpleAclHandler extends SingletonFactory {
 		
 		if (isset($rawValues['allowAll']) && $rawValues['allowAll'] == 0) {
 			if (!empty($rawValues['user'])) {
-				$aclValues['user'] = UserRuntimeCache::getInstance()->getObjects($rawValues['user']);
+				$first = current($rawValues['user']);
+				if ($first instanceof User) {
+					$aclValues['user'] = $rawValues['user'];
+				}
+				else {
+					$aclValues['user'] = UserRuntimeCache::getInstance()->getObjects($rawValues['user']);
+				}
 			}
 			
 			if (!empty($rawValues['group'])) {
-				$aclValues['group'] = UserGroup::getGroupsByIDs($rawValues['group']);
+				$first = current($rawValues['group']);
+				if ($first instanceof UserGroup) {
+					$aclValues['group'] = $rawValues['group'];
+				}
+				else {
+					$aclValues['group'] = UserGroup::getGroupsByIDs($rawValues['group']);
+				}
 			}
 			
 			if (!empty($aclValues['user']) || !empty($aclValues['group'])) {

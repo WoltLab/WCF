@@ -443,7 +443,7 @@ class PageAddForm extends AbstractForm {
 		}
 		
 		// save acl
-		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $page->pageID, $_POST);
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $page->pageID, $this->aclValues);
 		
 		// call saved event
 		$this->saved();
