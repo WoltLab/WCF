@@ -1336,6 +1336,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Permissions]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.box"><![CDATA[Boxes]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
 	</category>
 	

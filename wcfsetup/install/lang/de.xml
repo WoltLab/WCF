@@ -1324,11 +1324,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
-		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Administrationsmenü]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Berechtigungen]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.box"><![CDATA[Boxen]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
 	</category>
 	

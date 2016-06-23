@@ -21,5 +21,17 @@
 			<classname><![CDATA[wcf\system\search\acp\PackageACPSearchResultProvider]]></classname>
 			<showorder>5</showorder>
 		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.page">
+			<classname><![CDATA[wcf\system\search\acp\PageACPSearchResultProvider]]></classname>
+			<showorder>6</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.box">
+			<classname><![CDATA[wcf\system\search\acp\BoxACPSearchResultProvider]]></classname>
+			<showorder>7</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.article">
+			<classname><![CDATA[wcf\system\search\acp\ArticleACPSearchResultProvider]]></classname>
+			<showorder>8</showorder>
+		</acpsearchprovider>
 	</import>
 </data>
