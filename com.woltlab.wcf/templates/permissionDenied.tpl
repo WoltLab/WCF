@@ -1,6 +1,6 @@
 {capture assign='pageTitle'}{lang}wcf.global.error.permissionDenied.title{/lang}{/capture}
 
-{include file='header' __disableAds=true}
+{include file='header' __disableAds=true __disableContentHeader=true}
 
 <p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
 

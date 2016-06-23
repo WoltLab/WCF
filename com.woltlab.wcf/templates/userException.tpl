@@ -1,6 +1,6 @@
 {capture assign='pageTitle'}{lang}wcf.global.error.title{/lang}{/capture}
 
-{include file='header' __disableAds=true}
+{include file='header' __disableAds=true __disableContentHeader=true}
 	
 <p id="errorMessage" class="error">
 	{@$message}

@@ -100,37 +100,39 @@
 			<div id="content" class="content">
 				{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}
 				
-				{if !$contentHeader|empty}
-					{@$contentHeader}
-				{else}
-					{if $contentTitle|empty}
-						{if $__wcf->isLandingPage()}
-							{capture assign='contentTitle'}{PAGE_TITLE|language}{/capture}
-							{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
-						{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
-							{capture assign='contentTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
-						{/if}	
-					{/if}
-				
-					{if !$contentTitle|empty}
-						<header class="contentHeader">
-							<div class="contentHeaderTitle">
-								<h1 class="contentTitle">{@$contentTitle}</h1>
-								{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
-							</div>
-							
-							{hascontent}
-								<nav class="contentHeaderNavigation">
-									<ul>
-										{content}
-											{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
-											
-											{event name='contentHeaderNavigation'}
-										{/content}
-									</ul>
-								</nav>
-							{/hascontent}
-						</header>
+				{if $__disableContentHeader|empty}
+					{if !$contentHeader|empty}
+						{@$contentHeader}
+					{else}
+						{if $contentTitle|empty}
+							{if $__wcf->isLandingPage()}
+								{capture assign='contentTitle'}{PAGE_TITLE|language}{/capture}
+								{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
+							{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
+								{capture assign='contentTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
+							{/if}	
+						{/if}
+					
+						{if !$contentTitle|empty}
+							<header class="contentHeader">
+								<div class="contentHeaderTitle">
+									<h1 class="contentTitle">{@$contentTitle}</h1>
+									{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
+								</div>
+								
+								{hascontent}
+									<nav class="contentHeaderNavigation">
+										<ul>
+											{content}
+												{if !$contentHeaderNavigation|empty}{@$contentHeaderNavigation}{/if}
+												
+												{event name='contentHeaderNavigation'}
+											{/content}
+										</ul>
+									</nav>
+								{/hascontent}
+							</header>
+						{/if}
 					{/if}
 				{/if}
 				
