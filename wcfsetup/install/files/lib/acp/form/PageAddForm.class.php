@@ -492,7 +492,7 @@ class PageAddForm extends AbstractForm {
 			'availableLanguages' => $this->availableLanguages,
 			'availableBoxes' => $this->availableBoxes,
 			'pageNodeList' => (new PageNodeTree())->getNodeList(),
-			'aclValues' => (empty($_POST) ? $this->aclValues : SimpleAclHandler::getInstance()->getOutputValues($this->aclValues))
+			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues)
 		]);
 	}
 }

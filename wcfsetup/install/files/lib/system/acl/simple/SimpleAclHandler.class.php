@@ -199,7 +199,7 @@ class SimpleAclHandler extends SingletonFactory {
 			'group' => []
 		];
 		
-		if ($rawValues['allowAll'] == 0) {
+		if (isset($rawValues['allowAll']) && $rawValues['allowAll'] == 0) {
 			if (!empty($rawValues['user'])) {
 				$aclValues['user'] = UserRuntimeCache::getInstance()->getObjects($rawValues['user']);
 			}

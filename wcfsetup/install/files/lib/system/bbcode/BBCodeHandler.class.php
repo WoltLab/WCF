@@ -49,6 +49,9 @@ class BBCodeHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function isAvailableBBCode($bbCodeTag) {
+		// TODO
+		return true;
+		
 		$bbCode = BBCodeCache::getInstance()->getBBCodeByTag($bbCodeTag);
 		if ($bbCode === null || $bbCode->isDisabled) {
 			return false;
