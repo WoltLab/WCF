@@ -5,6 +5,7 @@ use wcf\data\ILinkableObject;
 use wcf\data\ITitledObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
+use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -225,8 +226,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return	boolean
 	 */
 	public function isAccessible() {
-		// @todo
-		return true;
+		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID);
 	}
 	
 	/**

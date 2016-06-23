@@ -63,6 +63,10 @@ class CmsPage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 		
+		if (!$this->page->isAccessible()) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->content = $this->page->getPageContentByLanguage($this->languageID);
 		if (empty($this->content)) {
 			throw new IllegalLinkException();

@@ -122,7 +122,7 @@ class MenuItem extends DatabaseObject {
 			return false;
 		}
 		
-		if ($this->getPage() !== null && !$this->getPage()->isVisible()) {
+		if ($this->getPage() !== null && (!$this->getPage()->isVisible() || !$this->getPage()->isAccessible())) {
 			return false;
 		}
 		
