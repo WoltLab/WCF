@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\user\TeamList;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -44,6 +45,15 @@ class TeamPage extends MultipleLinkPage {
 	 * @inheritDoc
 	 */
 	public $objectListClassName = TeamList::class;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('Team');
+	}
 	
 	/**
 	 * @inheritDoc

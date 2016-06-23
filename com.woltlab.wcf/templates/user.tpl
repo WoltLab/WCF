@@ -3,8 +3,6 @@
 {assign var='contentHeader' value=' '}{* necessary to hide default content header in heade.tpl *}
 
 {capture assign='headContent'}
-	<link rel="canonical" href="{link controller='User' object=$user}{/link}">
-	
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}

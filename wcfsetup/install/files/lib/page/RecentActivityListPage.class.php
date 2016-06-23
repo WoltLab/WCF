@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
 
@@ -19,6 +20,15 @@ class RecentActivityListPage extends AbstractPage {
 	 * @var	ViewableUserActivityEventList
 	 */
 	public $eventList = null;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('RecentActivityList');
+	}
 	
 	/**
 	 * @inheritDoc

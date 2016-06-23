@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
 {capture assign='headContent'}
-	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}">
+	<link rel="canonical" href="{link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}{/if}{/link}">
 	
 	{if USERS_ONLINE_PAGE_REFRESH > 0}
 		<meta http-equiv="refresh" content="{@USERS_ONLINE_PAGE_REFRESH}; url={link controller='UsersOnlineList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">

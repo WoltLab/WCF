@@ -1,7 +1,3 @@
-{capture assign='headContent'}
-	<link rel="canonical" href="{link controller='RecentActivityList'}{/link}">
-{/capture}
-
 {include file='header'}
 
 {if $eventList|count}
