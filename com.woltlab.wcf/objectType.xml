@@ -60,6 +60,10 @@
 			<classname>wcf\system\search\ArticleSearch</classname>
 			<searchindex>wcf1_article_search_index</searchindex>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article.content</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
 		<!-- /articles -->
 		
 		<type>

@@ -71,6 +71,7 @@ class ArticleEditForm extends ArticleAddForm {
 					'tags' => (!empty($this->tags[$language->languageID]) ? $this->tags[$language->languageID] : []),
 					'teaser' => (!empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : ''),
 					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
 					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
 				];
 			}
@@ -81,6 +82,7 @@ class ArticleEditForm extends ArticleAddForm {
 				'tags' => (!empty($this->tags[0]) ? $this->tags[0] : []),
 				'teaser' => (!empty($this->teaser[0]) ? $this->teaser[0] : ''),
 				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
+				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
 				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
 			];
 		}

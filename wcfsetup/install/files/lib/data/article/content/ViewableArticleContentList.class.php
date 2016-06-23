@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\article\content;
 use wcf\data\media\ViewableMediaList;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Represents a list of viewable article contents.
@@ -23,10 +24,13 @@ class ViewableArticleContentList extends ArticleContentList {
 	public function readObjects() {
 		parent::readObjects();
 		
-		$imageIDs = [];
+		$imageIDs = $embeddedObjectPostIDs = [];
 		foreach ($this->getObjects() as $articleContent) {
 			if ($articleContent->imageID) {
 				$imageIDs[] = $articleContent->imageID;
+			}
+			if ($articleContent->hasEmbeddedObjects) {
+				$embeddedObjectPostIDs[] = $articleContent->articleContentID;
 			}
 		}
 		
@@ -37,11 +41,17 @@ class ViewableArticleContentList extends ArticleContentList {
 			$mediaList->readObjects();
 			$images = $mediaList->getObjects();
 			
+			/** @var ViewableArticleContent $articleContent */
 			foreach ($this->getObjects() as $articleContent) {
 				if ($articleContent->imageID && isset($images[$articleContent->imageID])) {
 					$articleContent->setImage($images[$articleContent->imageID]);
 				}
 			}
+		}
+		
+		// load embedded objects
+		if (!empty($embeddedObjectPostIDs)) {
+			MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.article.content', $embeddedObjectPostIDs);
 		}
 	}
 }

@@ -10,6 +10,7 @@ use wcf\data\media\ViewableMediaList;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -126,6 +127,11 @@ class ArticleAddForm extends AbstractForm {
 	 * @var	string[]
 	 */
 	public $content = [];
+	
+	/**
+	 * @var HtmlInputProcessor[]
+	 */
+	public $htmlInputProcessors = [];
 	
 	/**
 	 * image ids
@@ -278,6 +284,9 @@ class ArticleAddForm extends AbstractForm {
 				if (empty($this->content[$language->languageID])) {
 					throw new UserInputException('content'.$language->languageID);
 				}
+				
+				$this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
+				$this->htmlInputProcessors[$language->languageID]->process($this->content[$language->languageID]);
 			}
 		}
 		else {
@@ -289,6 +298,9 @@ class ArticleAddForm extends AbstractForm {
 			if (empty($this->content[0])) {
 				throw new UserInputException('content');
 			}
+			
+			$this->htmlInputProcessors[0] = new HtmlInputProcessor();
+			$this->htmlInputProcessors[0]->process($this->content[0]);
 		}
 		
 	}
@@ -307,6 +319,7 @@ class ArticleAddForm extends AbstractForm {
 					'tags' => (!empty($this->tags[$language->languageID]) ? $this->tags[$language->languageID] : []),
 					'teaser' => (!empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : ''),
 					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
 					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
 				];
 			}
@@ -317,6 +330,7 @@ class ArticleAddForm extends AbstractForm {
 				'tags' => (!empty($this->tags[0]) ? $this->tags[0] : []),
 				'teaser' => (!empty($this->teaser[0]) ? $this->teaser[0] : ''),
 				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
+				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
 				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
 			];
 		}

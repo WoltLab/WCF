@@ -27,7 +27,7 @@ use wcf\system\WCF;
  * @property-read       integer         $enableComments
  * @property-read       integer         $comments
  * @property-read       integer         $views
- * @todo
+ * @property-read       integer         $cumulativeLikes
  */
 class Article extends DatabaseObject implements ILinkableObject {
 	/**

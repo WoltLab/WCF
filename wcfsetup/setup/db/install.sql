@@ -166,7 +166,6 @@ CREATE TABLE wcf1_article (
 	comments SMALLINT(5) NOT NULL DEFAULT 0,
 	views MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
-	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	
 	KEY (time)
 );
@@ -180,6 +179,7 @@ CREATE TABLE wcf1_article_content (
 	teaser TEXT,
 	content MEDIUMTEXT,
 	imageID INT(10),
+	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	
 	UNIQUE KEY (articleID, languageID)
 );

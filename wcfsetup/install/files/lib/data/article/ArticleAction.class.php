@@ -6,6 +6,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\comment\CommentHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\like\LikeHandler;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 
@@ -58,6 +59,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// save article content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->parameters['content'] as $languageID => $content) {
+				if (!empty($content['htmlInputProcessor'])) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$content['content'] = $content['htmlInputProcessor']->getHtml();
+				}
+				
 				/** @var ArticleContent $articleContent */
 				$articleContent = ArticleContentEditor::create([
 					'articleID' => $article->articleID,
@@ -67,6 +73,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					'content' => $content['content'],
 					'imageID' => $content['imageID']
 				]);
+				$articleContentEditor = new ArticleContentEditor($articleContent);
 				
 				// save tags
 				if (!empty($content['tags'])) {
@@ -75,6 +82,13 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				
 				// update search index
 				SearchIndexManager::getInstance()->add('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
+				
+				// save embedded objects
+				if (!empty($content['htmlInputProcessor'])) {
+					if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'], 'com.woltlab.wcf.article.content', $articleContent->articleContentID)) {
+						$articleContentEditor->update(['hasEmbeddedObjects' => 1]);
+					}
+				}
 			}
 		}
 		
@@ -91,11 +105,17 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->getObjects() as $article) {
 				foreach ($this->parameters['content'] as $languageID => $content) {
+					if (!empty($content['htmlInputProcessor'])) {
+						/** @noinspection PhpUndefinedMethodInspection */
+						$content['content'] = $content['htmlInputProcessor']->getHtml();
+					}
+					
 					$articleContent = ArticleContent::getArticleContent($article->articleID, ($languageID ?: null));
+					$articleContentEditor = null;
 					if ($articleContent !== null) {
 						// update
-						$editor = new ArticleContentEditor($articleContent);
-						$editor->update([
+						$articleContentEditor = new ArticleContentEditor($articleContent);
+						$articleContentEditor->update([
 							'title' => $content['title'],
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
@@ -109,6 +129,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 						}
 					}
 					else {
+						/** @var ArticleContent $articleContent */
 						$articleContent = ArticleContentEditor::create([
 							'articleID' => $article->articleID,
 							'languageID' => ($languageID ?: null),
@@ -117,6 +138,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'content' => $content['content'],
 							'imageID' => $content['imageID']
 						]);
+						$articleContentEditor = new ArticleContentEditor($articleContent);
 					}
 					
 					// save tags
@@ -126,6 +148,13 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					
 					// update search index
 					SearchIndexManager::getInstance()->add('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
+					
+					// save embedded objects
+					if (!empty($content['htmlInputProcessor'])) {
+						if ($articleContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'], 'com.woltlab.wcf.article.content', $articleContent->articleContentID)) {
+							$articleContentEditor->update(['hasEmbeddedObjects' => ($articleContent->hasEmbeddedObjects ? 0 : 1)]);
+						}
+					}
 				}
 			}
 		}

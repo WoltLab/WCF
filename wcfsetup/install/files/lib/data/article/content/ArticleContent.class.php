@@ -10,7 +10,6 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -29,6 +28,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$content
  * @property-read	string		$teaser
  * @property-read	integer		$imageID
+ * @property-read	integer		$hasEmbeddedObjects
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController {
 	/**
@@ -94,7 +94,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getFormattedContent() {
 		// assign embedded objects
-		MessageEmbeddedObjectManager::getInstance()->setActiveMessage('com.woltlab.wcf.article', $this->articleContentID);
+		MessageEmbeddedObjectManager::getInstance()->setActiveMessage('com.woltlab.wcf.article.content', $this->articleContentID);
 		
 		// TODO
 		return (new HtmlOutputProcessor())->process($this->content);
@@ -125,6 +125,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 		
 		return null;
 	}
+	
 	
 	public static function getArticleContent($articleID, $languageID) {
 		if ($languageID !== null) {
