@@ -76,7 +76,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 		if ($this->articleContent === null) {
 			throw new IllegalLinkException();
 		}
-		$this->article = ViewableArticle::getArticle($this->articleContent->articleID);
+		$this->article = ViewableArticle::getArticle($this->articleContent->articleID, false);
 		$this->category = $this->article->getCategory();
 		
 		// update interface language

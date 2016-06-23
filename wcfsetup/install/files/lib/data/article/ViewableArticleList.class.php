@@ -21,6 +21,12 @@ class ViewableArticleList extends ArticleList {
 	public $decoratorClassName = ViewableArticle::class;
 	
 	/**
+	 * enables/disables the loading of article content objects
+	 * @var	boolean
+	 */
+	protected $contentLoading = true;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __construct() {
@@ -51,7 +57,7 @@ class ViewableArticleList extends ArticleList {
 		}
 		
 		// get article content
-		if (!empty($this->objectIDs)) {
+		if ($this->contentLoading && !empty($this->objectIDs)) {
 			$contentList = new ViewableArticleContentList();
 			$contentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectIDs]);
 			$contentList->getConditionBuilder()->add('(article_content.languageID IS NULL OR article_content.languageID = ?)', [WCF::getLanguage()->languageID]);
@@ -60,5 +66,14 @@ class ViewableArticleList extends ArticleList {
 				$this->objects[$articleContent->articleID]->setArticleContent($articleContent);
 			}
 		}
+	}
+	
+	/**
+	 * Enables/disables the loading of article content objects.
+	 *
+	 * @param	boolean		$enable
+	 */
+	public function enableContentLoading($enable = true) {
+		$this->contentLoading = $enable;
 	}
 }

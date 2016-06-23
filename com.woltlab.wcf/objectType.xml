@@ -987,7 +987,7 @@
 		<type>
 			<name>com.woltlab.wcf.userList</name>
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
-			<classname>wcf\system\box\userListBoxController</classname>
+			<classname>wcf\system\box\UserListBoxController</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOnlineList</name>
@@ -1024,6 +1024,11 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\ArticleCategoriesBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.articleList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\ArticleListBoxController</classname>
+		</type>
 		<!-- /box controllers -->
 		
 		<!-- pages -->
@@ -1032,6 +1037,14 @@
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
 		<!-- /pages -->
+		
+		<!-- article list box condition -->
+		<type>
+			<name>com.woltlab.wcf.articleCategory</name>
+			<definitionname>com.woltlab.wcf.box.articleList.condition</definitionname>
+			<classname>wcf\system\condition\article\ArticleCategoryCondition</classname>
+		</type>
+		<!-- /article list box condition -->
 		
 		<!-- deprecated -->
 		<type>

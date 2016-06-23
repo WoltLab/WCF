@@ -12,7 +12,7 @@
 	}
 	
 	.icon {
-		color: inherit;
+		color: $wcfHeaderText;
 	}
 }
 
@@ -211,11 +211,6 @@
 				height: 50px;
 				padding: 0 15px;
 				position: relative;
-				
-				/* set icon color */
-				> .icon {
-					color: inherit;
-				}
 				
 				/* hide icon label */
 				> span:not(.icon):not(.badge) {

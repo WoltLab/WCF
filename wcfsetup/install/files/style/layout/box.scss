@@ -79,16 +79,11 @@
 		
 		&:hover {
 			color: $wcfFooterBoxLinkActive;
-			text-decoration: underline;
-			
-			.icon {
-				color: $wcfFooterBoxLinkActive;
-			}
 		}
 	}
 	
 	.icon {
-		color: inherit;
+		color: $wcfFooterBoxText;
 	}
 	
 	.boxContainer {
@@ -206,17 +201,14 @@
 	a {
 		color: $wcfSidebarLink;
 		
-		> .icon {
-			color: $wcfSidebarLink;
-		}
-		
 		&:hover {
 			color: $wcfSidebarLinkActive;
-			
-			> .icon {
-				color: $wcfSidebarLinkActive;
-			}
+		
 		}
+	}
+	
+	.icon {
+		color: $wcfSidebarText;
 	}
 	
 	small,
@@ -382,14 +374,12 @@
 	background-color: $wcfFooterBoxBackground;
 	color: $wcfFooterBoxText;
 	flex: 0 0 auto;
-	z-index: 40;
 	
 	a {
 		color: $wcfFooterBoxLink;
 		
 		&:hover {
 			color: $wcfFooterBoxLinkActive;
-			text-decoration: underline;
 		}
 	}
 	
@@ -468,7 +458,6 @@
 		
 		&:hover {
 			color: $wcfFooterLinkActive;
-			text-decoration: underline;
 		}
 	}
 	

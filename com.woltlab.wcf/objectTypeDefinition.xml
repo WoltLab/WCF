@@ -212,6 +212,13 @@
 			<interfacename>wcf\system\box\IBoxController</interfacename>
 		</definition>
 		
+		<!-- box conditions -->
+		<definition>
+			<name>com.woltlab.wcf.box.articleList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+		<!-- /box conditions -->
+		
 		<!-- deprecated -->
 		<definition>
 			<name>com.woltlab.wcf.page</name>

@@ -2,7 +2,7 @@
 	.articleImageWrapper {
 		align-items: center;
 		display: flex;
-		height: 300px;
+		max-height: 300px;
 		overflow: hidden;
 		
 		img {
@@ -191,9 +191,11 @@
 	}
 	
 	a {
-		color: $wcfContentText;
+		color: inherit;
 		
 		&:hover {
+			color: inherit;
+			
 			.articleListImage > img {
 				opacity: 1;
 			}
@@ -210,9 +212,81 @@
 		transition: .2s ease opacity;
 	}
 	
-	&:not(.rowColGap) {
-		> li:not(:first-child) {
-			margin-top: 30px;
+	> li:not(:first-child) {
+		margin-top: 30px;
+	}
+	
+	@include screen-xs {
+		.box128 > .articleListImage {
+			margin-right: 10px;
+		}
+		
+		.articleListImage > img {
+			height: 64px !important;
+			width: 64px !important;
+		}
+	}
+}
+
+.boxesFooterBoxes {
+	.articleList {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0 -5px -20px -5px;
+		
+		> li {
+			margin: 0 5px 20px 5px;
+		}
+		
+		.articleListImage > img {
+			height: auto !important;
+			max-width: 280px;
+			width: 100% !important;
+		}
+		
+		.articleListImage + .articleListTitle {
+			margin-top: 5px;
+		}
+		
+		.articleListMetaData {
+			display: none;
+		}
+	}
+	
+	@include screen-lg {
+		.articleList {
+			> li {
+				flex: 0 0 calc(100%/3 - 10px);
+				max-width: calc(100%/3 - 10px);
+			}
+		}
+
+		.boxFullWidth {
+			.articleList {
+				> li {
+					flex: 0 0 calc(100%/6 - 10px);
+					max-width: calc(100%/6 - 10px);
+				}
+			}	
+		}
+	}
+	
+	@include screen-sm-up {
+		.articleList {
+			> li {
+				flex: 0 0 calc(100%/3 - 10px);
+				max-width: calc(100%/3 - 10px);
+			}
+		}
+	}
+	
+	@include screen-xs {
+		.articleList {
+			justify-content: center;
+			
+			> li {
+				width: 280px;
+			}
 		}
 	}
 }
