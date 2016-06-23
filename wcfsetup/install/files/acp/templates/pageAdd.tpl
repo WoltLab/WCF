@@ -363,6 +363,7 @@
 		</div>
 		
 		<div id="acl" class="tabMenuContent">
+			{include file='aclSimple'}
 		</div>
 	</div>	
 	

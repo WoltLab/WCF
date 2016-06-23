@@ -10,6 +10,7 @@ use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -138,6 +139,12 @@ class PageAddForm extends AbstractForm {
 	public $boxIDs = [];
 	
 	/**
+	 * acl values
+	 * @var array
+	 */
+	public $aclValues = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -201,6 +208,8 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['metaDescription']) && is_array($_POST['metaDescription'])) $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);
 		if (isset($_POST['metaKeywords']) && is_array($_POST['metaKeywords'])) $this->metaKeywords = ArrayUtil::trim($_POST['metaKeywords']);
 		if (isset($_POST['boxIDs']) && is_array($_POST['boxIDs'])) $this->boxIDs = ArrayUtil::toIntegerArray($_POST['boxIDs']);
+		
+		if (isset($_POST['aclValues']) && is_array($_POST['aclValues'])) $this->aclValues = $_POST['aclValues'];
 	}
 	
 	/**
@@ -377,7 +386,8 @@ class PageAddForm extends AbstractForm {
 		$parseHTML = function($content) {
 			if ($this->pageType == 'text') {
 				$htmlInputProcessor = new HtmlInputProcessor();
-				$content = $htmlInputProcessor->process($content);
+				$htmlInputProcessor->process($content);
+				$content = $htmlInputProcessor->getHtml();
 			}
 			
 			return $content;
@@ -425,12 +435,15 @@ class PageAddForm extends AbstractForm {
 		// set generic page identifier
 		$pageEditor = new PageEditor($page);
 		$pageEditor->update([
-			'identifier' => 'com.woltlab.wcf.generic'.$pageEditor->pageID
+			'identifier' => 'com.woltlab.wcf.generic'.$page->pageID
 		]);
 		
 		if ($this->isLandingPage) {
 			$page->setAsLandingPage();
 		}
+		
+		// save acl
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $page->pageID, $_POST);
 		
 		// call saved event
 		$this->saved();
@@ -478,7 +491,8 @@ class PageAddForm extends AbstractForm {
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => $this->availableLanguages,
 			'availableBoxes' => $this->availableBoxes,
-			'pageNodeList' => (new PageNodeTree())->getNodeList()
+			'pageNodeList' => (new PageNodeTree())->getNodeList(),
+			'aclValues' => (empty($_POST) ? $this->aclValues : SimpleAclHandler::getInstance()->getOutputValues($this->aclValues))
 		]);
 	}
 }

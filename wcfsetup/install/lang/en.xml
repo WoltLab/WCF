@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en" languagename="English" countrycode="gb">
 	<category name="wcf.acl">
+		<item name="wcf.acl.access"><![CDATA[Restricted Access]]></item>
+		<item name="wcf.acl.access.grant"><![CDATA[Allow Access]]></item>
+		<item name="wcf.acl.access.granted"><![CDATA[Granted Access for Users and User-Groups]]></item>
+		<item name="wcf.acl.allowAll"><![CDATA[Content Can be Accessed by Everyone]]></item>
+		
 		<item name="wcf.acl.option.deny"><![CDATA[Deny]]></item>
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Full Access]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>

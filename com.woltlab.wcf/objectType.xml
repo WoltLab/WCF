@@ -1026,6 +1026,13 @@
 		</type>
 		<!-- /box controllers -->
 		
+		<!-- pages -->
+		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
+		</type>
+		<!-- /pages -->
+		
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

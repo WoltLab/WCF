@@ -138,7 +138,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * exists.
 	 * 
 	 * @param	integer		$groupID
-	 * @return	\wcf\data\user\group\UserGroup
+	 * @return	UserGroup|null
 	 */
 	public static function getGroupByID($groupID) {
 		self::getCache();
@@ -151,10 +151,26 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
+	 * Returns a list of groups by group id.
+	 * 
+	 * @param       integer[]       $groupIDs       list of group ids
+	 * @return      UserGroup[]
+	 */
+	public static function getGroupsByIDs(array $groupIDs) {
+		$groups = [];
+		foreach ($groupIDs as $groupID) {
+			$group = self::getGroupByID($groupID);
+			if ($group !== null) $groups[$groupID] = $group;
+		}
+		
+		return $groups;
+	}
+	
+	/**
 	 * Returns true if the given user is member of the group. If no user is
 	 * given, the active user is used.
 	 * 
-	 * @param	\wcf\data\user\User	$user
+	 * @param	User            $user   user object or current user if null
 	 * @return	boolean
 	 */
 	public function isMember(User $user = null) {

@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -176,6 +177,9 @@ class PageEditForm extends PageAddForm {
 			$this->page->setAsLandingPage();
 		}
 		
+		// save acl
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $this->page->pageID, $this->aclValues);
+		
 		// call saved event
 		$this->saved();
 		
@@ -219,6 +223,8 @@ class PageEditForm extends PageAddForm {
 					}
 				}
 			}
+			
+			$this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.page', $this->page->pageID);
 		}
 	}
 	

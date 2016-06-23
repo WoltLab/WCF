@@ -36,6 +36,7 @@ define(['Core', 'WoltLab/WCF/Ui/Search/Input'], function(Core, UiSearchInput) {
 		
 		_createListItem: function(item) {
 			var listItem = UiUserSearchInput._super.prototype._createListItem.call(this, item);
+			elData(listItem, 'type', item.type);
 			
 			var box = elCreate('div');
 			box.className = 'box16';

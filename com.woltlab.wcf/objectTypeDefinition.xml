@@ -6,6 +6,10 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.acl.simple</name>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.collapsibleContent</name>
 		</definition>
 		
