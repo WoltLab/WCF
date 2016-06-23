@@ -2720,7 +2720,6 @@ Errors are:
 		<item name="wcf.search.period"><![CDATA[Time Period]]></item>
 		<item name="wcf.search.query"><![CDATA[Search for Term]]></item>
 		<item name="wcf.search.query.description"><![CDATA[Type in one or more search terms, each must be at least 4 characters.]]></item>
-		<item name="wcf.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.search.results.change"><![CDATA[Change Search]]></item>
 		<item name="wcf.search.results.description"><![CDATA[Search results {#$startIndex}-{#$endIndex} of {#$items}{if $query} for “<strong>{$query}</strong>”{/if}.{if $items == 1000} There are more results available, please enhance your search parameters.{/if}{if $highlight}<br>These terms were highlighted: <span class="highlight">{$highlight}</span>{/if}]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sort by]]></item>
@@ -2728,7 +2727,6 @@ Errors are:
 		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Author]]></item>
 		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
-		<item name="wcf.search.title"><![CDATA[Search]]></item>
 		<item name="wcf.search.type"><![CDATA[Search in]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
@@ -2853,7 +2851,6 @@ You can change your password any time at:
 {link controller='AccountManagement' isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
-		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[Heads up! You’re editing your own user account, careless changes might lock you out!]]></item>
 		<item name="wcf.user.accountManagement.password.description"><![CDATA[Please confirm changes with your <u>current</u> password!]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
@@ -2912,7 +2909,6 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[Username was already changed within the last {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} day.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Guest]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signature]]></item>
-		<item name="wcf.user.signature.edit"><![CDATA[Edit Signature]]></item>
 		<item name="wcf.user.signature.current"><![CDATA[Current Signature]]></item>
 		<item name="wcf.user.signature.error.disabled"><![CDATA[Your signature has been disabled{if $__wcf->user->disableSignatureReason}: {$__wcf->user->disableSignatureReason}{else}.{/if}]]></item>
 		<item name="wcf.user.activityPoint"><![CDATA[Points]]></item>
@@ -2924,15 +2920,12 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.stats"><![CDATA[Statistics]]></item>
 		<item name="wcf.user.usercp"><![CDATA[User Account]]></item>
 		<item name="wcf.user.button.mail"><![CDATA[Send Email]]></item>
-		<item name="wcf.user.ignoredUsers"><![CDATA[You’re blocking the following users]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[You’re not blocking any users.]]></item>
-		<item name="wcf.user.following"><![CDATA[You’re following these users]]></item>
 		<item name="wcf.user.following.noUsers"><![CDATA[You’re not following anyone.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Custom User Title]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[You may enter a custom user title.]]></item>
 		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Title exceeded the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[User Title is invalid.]]></item>
-		<item name="wcf.user.team"><![CDATA[Staff Members]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Age]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[from]]></item>
 		<item name="wcf.user.birthday.age.to"><![CDATA[to]]></item>
@@ -3033,9 +3026,8 @@ Activation Code: 	{@$user->activationCode}
 If you cannot open the link or have troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS} 
 
 You can safely ignore this email if you did not register with the website: {@PAGE_TITLE|language}.]]></item>
-    <item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
-    <item name="wcf.user.register.disclaimer"><![CDATA[Disclaimer]]></item>
-		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
+		<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
+    		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Decline]]></item>
 		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h2>Limitation of liability for internal content</h2>
     <p>The content of our website has been compiled with meticulous care and to the best of our knowledge. However, we cannot assume any liability for the up-to-dateness, completeness or accuracy of any of the pages.</p>
@@ -3365,7 +3357,6 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.mail.sent"><![CDATA[Message has been sent to {$user->username}.]]></item>
 		<item name="wcf.user.mail.showAddress"><![CDATA[Use my email address as sender address, the recipient can directly reply to me.]]></item>
 		<item name="wcf.user.mail.subject"><![CDATA[Subject]]></item>
-		<item name="wcf.user.mail.title"><![CDATA[Send an Email to {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.user.rank">

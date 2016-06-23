@@ -2683,7 +2683,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.search.period"><![CDATA[Im Zeitraum]]></item>
 		<item name="wcf.search.query"><![CDATA[Suche nach Begriff]]></item>
 		<item name="wcf.search.query.description"><![CDATA[Geben Sie einen oder mehrere Begriffe ein. Ein Begriff muss mindestens vier Zeichen lang sein.]]></item>
-		<item name="wcf.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.search.results.change"><![CDATA[Suche ändern]]></item>
 		<item name="wcf.search.results.description"><![CDATA[Suchergebnisse {#$startIndex}-{#$endIndex} von insgesamt {#$items}{if $query} für „<strong>{$query}</strong>“{/if}.{if $items == 1000} Es gibt noch weitere Suchergebnisse, bitte verfeinern Sie Ihre Suche.{/if}{if $highlight}<br>Diese Suchbegriffe wurden hervorgehoben: <span class="highlight">{$highlight}</span>{/if}]]></item>
 		<item name="wcf.search.sortBy"><![CDATA[Sortierung]]></item>
@@ -2691,7 +2690,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.search.sortBy.time"><![CDATA[Datum]]></item>
 		<item name="wcf.search.sortBy.username"><![CDATA[Autor]]></item>
 		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
-		<item name="wcf.search.title"><![CDATA[Suche]]></item>
 		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
 		<item name="wcf.search.type.everywhere"><![CDATA[Alles]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[Es wurde kein{if !$query|empty} mit Ihrer Suchanfrage „{$query}“ übereinstimmender{/if} Eintrag gefunden.]]></item>
@@ -2816,7 +2814,6 @@ Sie können Ihr Kennwort unter folgender Adresse jederzeit ändern:
 {link controller='AccountManagement' isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.newPassword.mail.subject"><![CDATA[Neues Kennwort auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[Sie erhalten in Kürze eine E-Mail mit Ihrem neuen Kennwort.]]></item>
-		<item name="wcf.user.accountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[Sie bearbeiten Ihr eigenes Benutzerkonto. Unbedachte Änderungen können dazu führen, dass Sie sich nicht mehr anmelden können. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.user.accountManagement.password.description"><![CDATA[Bitte geben Sie zur Bestätigung Ihr <u>bisheriges</u> Kennwort ein!]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort]]></item>
@@ -2878,7 +2875,6 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[Der Benutzername wurde innerhalb der letzten {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} Tage bereits einmal verändert.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Gast]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signatur]]></item>
-		<item name="wcf.user.signature.edit"><![CDATA[Signatur bearbeiten]]></item>
 		<item name="wcf.user.signature.current"><![CDATA[Aktuelle Signatur]]></item>
 		<item name="wcf.user.signature.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->signature} Ihre derzeitige Signatur gesperrt und{/if} Ihnen die weitere Nutzungsberechtigung der Signatur-Funktion {if !$__wcf->user->disableSignatureReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableSignatureReason}{/if}]]></item>
 		<item name="wcf.user.activityPoint"><![CDATA[Punkte]]></item>
@@ -2890,15 +2886,12 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.stats"><![CDATA[Statistiken]]></item>
 		<item name="wcf.user.usercp"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.user.button.mail"><![CDATA[E-Mail senden]]></item>
-		<item name="wcf.user.ignoredUsers"><![CDATA[Sie blockieren folgende Benutzer]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[Sie blockieren derzeit keine Benutzer.]]></item>
-		<item name="wcf.user.following"><![CDATA[Sie folgen diesen Benutzern]]></item>
 		<item name="wcf.user.following.noUsers"><![CDATA[Sie folgen derzeit keinen Benutzern.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Individueller Benutzertitel]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[Sie können sich einen individuellen Benutzertitel geben.]]></item>
 		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Der eingegebene Titel ist zu lang. Die maximal zulässige Gesamtlänge beträgt {#USER_TITLE_MAX_LENGTH} Zeichen.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[Sie haben einen ungültigen Benutzertitel eingegeben.]]></item>
-		<item name="wcf.user.team"><![CDATA[Team-Mitglieder]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Alter]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[von]]></item>
 		<item name="wcf.user.birthday.age.to"><![CDATA[bis]]></item>
@@ -3000,8 +2993,7 @@ Ihr Aktivierungscode lautet: 	{@$user->activationCode}
 Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Administrator: {@MAIL_ADMIN_ADDRESS} 
 
 Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben, können Sie diese E-Mail ignorieren. ]]></item>
-<item name="wcf.user.register.needActivation"><![CDATA[Ihr Benutzerkonto ist noch nicht aktiviert. Sie müssen den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
-<item name="wcf.user.register.disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="wcf.user.register.needActivation"><![CDATA[Ihr Benutzerkonto ist noch nicht aktiviert. Sie müssen den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Akzeptieren]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Ablehnen]]></item>
 		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h2>Haftungsbeschränkung für eigene Inhalte</h2>
@@ -3333,7 +3325,6 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.mail.sent"><![CDATA[Ihre Nachricht an {$user->username} wurde erfolgreich versandt.]]></item>
 		<item name="wcf.user.mail.showAddress"><![CDATA[Meine E-Mail-Adresse als Absender-Adresse benutzen. Der Empfänger kann direkt auf die Nachricht antworten.]]></item>
 		<item name="wcf.user.mail.subject"><![CDATA[Betreff]]></item>
-		<item name="wcf.user.mail.title"><![CDATA[E-Mail an {$user->username} senden]]></item>
 	</category>
 	
 	<category name="wcf.user.rank">
