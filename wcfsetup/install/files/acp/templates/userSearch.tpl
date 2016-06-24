@@ -56,17 +56,17 @@
 				<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
 				<dd>
 					<select id="sortField" name="sortField">
-						<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
-						<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
-						<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
-						<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
+						<option value="userID"{if $sortField == 'userID'} selected{/if}>{lang}wcf.user.userID{/lang}</option>
+						<option value="username"{if $sortField == 'username'} selected{/if}>{lang}wcf.user.username{/lang}</option>
+						<option value="email"{if $sortField == 'email'} selected{/if}>{lang}wcf.user.email{/lang}</option>
+						<option value="registrationDate"{if $sortField == 'registrationDate'} selected{/if}>{lang}wcf.user.registrationDate{/lang}</option>
 						
 						{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
 					</select>
 					
 					<select id="sortOrder" name="sortOrder">
-						<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-						<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
+						<option value="ASC"{if $sortOrder == 'ASC'} selected{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
+						<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 					</select>
 				</dd>
 			</dl>
@@ -92,7 +92,7 @@
 					<dd>
 						{foreach from=$columnOptions item=optionData}
 							{assign var='option' value=$optionData.object}
-							<label><input type="checkbox" name="columns[]" value="{$option->optionName}"{if $option->optionName|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+							<label><input type="checkbox" name="columns[]" value="{$option->optionName}"{if $option->optionName|in_array:$columns} checked{/if}> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
 						{/foreach}
 					</dd>
 				</dl>
@@ -102,14 +102,14 @@
 				<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
 				<dd>
 					{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-						<label><input type="checkbox" name="columns[]" value="email"{if "email"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.email{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="email"{if "email"|in_array:$columns} checked{/if}> {lang}wcf.user.email{/lang}</label>
 					{/if}
-					<label><input type="checkbox" name="columns[]" value="registrationDate"{if "registrationDate"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.registrationDate{/lang}</label>
-					<label><input type="checkbox" name="columns[]" value="lastActivityTime"{if "lastActivityTime"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.lastActivityTime{/lang}</label>
-					<label><input type="checkbox" name="columns[]" value="profileHits"{if "profileHits"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.profileHits{/lang}</label>
-					<label><input type="checkbox" name="columns[]" value="activityPoints"{if "activityPoints"|in_array:$columns} checked="checked"{/if}> {lang}wcf.user.activityPoint{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="registrationDate"{if "registrationDate"|in_array:$columns} checked{/if}> {lang}wcf.user.registrationDate{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="lastActivityTime"{if "lastActivityTime"|in_array:$columns} checked{/if}> {lang}wcf.user.lastActivityTime{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="profileHits"{if "profileHits"|in_array:$columns} checked{/if}> {lang}wcf.user.profileHits{/lang}</label>
+					<label><input type="checkbox" name="columns[]" value="activityPoints"{if "activityPoints"|in_array:$columns} checked{/if}> {lang}wcf.user.activityPoint{/lang}</label>
 					{if MODULE_LIKE}
-						<label><input type="checkbox" name="columns[]" value="likesReceived"{if "likesReceived"|in_array:$columns} checked="checked"{/if}> {lang}wcf.like.likesReceived{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="likesReceived"{if "likesReceived"|in_array:$columns} checked{/if}> {lang}wcf.like.likesReceived{/lang}</label>
 					{/if}
 					{event name='searchDisplayColumns'}
 				</dd>

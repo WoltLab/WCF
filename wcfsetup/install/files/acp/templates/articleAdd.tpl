@@ -69,7 +69,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$categoryNodeList item=category}
-						<option value="{@$category->categoryID}"{if $category->categoryID == $categoryID} selected="selected"{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
+						<option value="{@$category->categoryID}"{if $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'categoryID'}
@@ -119,9 +119,9 @@
 		<dl>
 			<dt><label for="categoryID">{lang}wcf.acp.article.publicationStatus{/lang}</label></dt>
 			<dd>
-				<label><input type="radio" name="publicationStatus" value="0"{if $publicationStatus == 0} checked="checked"{/if}> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
-				<label><input type="radio" name="publicationStatus" value="1"{if $publicationStatus == 1} checked="checked"{/if}> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
-				<label><input type="radio" name="publicationStatus" value="2"{if $publicationStatus == 2} checked="checked"{/if}> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
+				<label><input type="radio" name="publicationStatus" value="0"{if $publicationStatus == 0} checked{/if}> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
+				<label><input type="radio" name="publicationStatus" value="1"{if $publicationStatus == 1} checked{/if}> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
+				<label><input type="radio" name="publicationStatus" value="2"{if $publicationStatus == 2} checked{/if}> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -144,7 +144,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input name="enableComments" type="checkbox" value="1"{if $enableComments} checked="checked"{/if}> {lang}wcf.acp.article.enableComments{/lang}</label>
+				<label><input name="enableComments" type="checkbox" value="1"{if $enableComments} checked{/if}> {lang}wcf.acp.article.enableComments{/lang}</label>
 			</dd>
 		</dl>
 	</div>

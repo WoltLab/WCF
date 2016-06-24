@@ -55,7 +55,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	public function getHTML($formName) {
 		$disabled = '';
 		if ($this->disabledMessage) {
-			$disabled = ' disabled="disabled"';
+			$disabled = ' disabled';
 		}
 		
 		return <<<HTML

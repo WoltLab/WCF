@@ -26,13 +26,13 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="exportImages" value="1"{if $exportImages} checked="checked"{/if}{if !$canExportImages} disabled="disabled"{/if}> <span>{lang}wcf.acp.style.exportImages{/lang}</span></label>
+				<label><input type="checkbox" name="exportImages" value="1"{if $exportImages} checked{/if}{if !$canExportImages} disabled{/if}> <span>{lang}wcf.acp.style.exportImages{/lang}</span></label>
 			</dd>
 		</dl>
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="exportTemplates" value="1"{if $exportTemplates} checked="checked"{/if}{if !$canExportTemplates} disabled="disabled"{/if}> <span>{lang}wcf.acp.style.exportTemplates{/lang}</span></label>
+				<label><input type="checkbox" name="exportTemplates" value="1"{if $exportTemplates} checked{/if}{if !$canExportTemplates} disabled{/if}> <span>{lang}wcf.acp.style.exportTemplates{/lang}</span></label>
 			</dd>
 		</dl>
 		
@@ -49,7 +49,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="exportAsPackage" name="exportAsPackage" value="1"{if $exportAsPackage} checked="checked"{/if}> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
+					<label><input type="checkbox" id="exportAsPackage" name="exportAsPackage" value="1"{if $exportAsPackage} checked{/if}> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
 				</dd>
 			</dl>
 			

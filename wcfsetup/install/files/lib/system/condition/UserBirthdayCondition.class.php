@@ -37,7 +37,7 @@ class UserBirthdayCondition extends AbstractCondition implements IContentConditi
 		$label = WCF::getLanguage()->get('wcf.user.birthdayToday');
 		$checked = '';
 		if ($this->birthdayToday) {
-			$checked = ' checked="checked"';
+			$checked = ' checked';
 		}
 		
 		return <<<HTML

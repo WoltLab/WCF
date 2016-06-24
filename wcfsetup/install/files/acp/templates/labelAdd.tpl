@@ -46,7 +46,7 @@
 					<select id="groupID" name="groupID">
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$labelGroupList item=group}
-							<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected="selected"{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
+							<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
 						{/foreach}
 					</select>
 					{if $errorField == 'groupID'}
@@ -64,7 +64,7 @@
 			<dl{if $errorField == 'label'} class="formError"{/if}>
 				<dt><label for="label">{lang}wcf.acp.label.label{/lang}</label></dt>
 				<dd>
-					<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus="autofocus" class="long">
+					<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus class="long">
 					{if $errorField == 'label'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -94,9 +94,9 @@
 					<ul id="labelList" class="inlineList">
 						{foreach from=$availableCssClassNames item=className}
 							{if $className == 'custom'}
-								<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
+								<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
 							{else}
-								<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">Label</span></label></li>
+								<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">Label</span></label></li>
 							{/if}
 						{/foreach}
 					</ul>

@@ -37,7 +37,7 @@
 			<dl{if $errorField == 'tplName'} class="formError"{/if}>
 				<dt><label for="tplName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="tplName" name="tplName" value="{$tplName}" required="required" class="long">
+					<input type="text" id="tplName" name="tplName" value="{$tplName}" required class="long">
 					{if $errorField == 'tplName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

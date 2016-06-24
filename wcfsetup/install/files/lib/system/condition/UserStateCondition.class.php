@@ -124,7 +124,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	protected function getCheckedAttribute($propertyName) {
 		/** @noinspection PhpVariableVariableInspection */
 		if ($this->$propertyName) {
-			return ' checked="checked"';
+			return ' checked';
 		}
 		
 		return '';

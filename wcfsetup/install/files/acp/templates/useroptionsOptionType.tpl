@@ -23,7 +23,7 @@
 			{foreach from=$availableOptions item=availableOption}
 				<li class="sortableNode">
 					<span class="sortableNodeLabel">
-						<label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked="checked"{/if}> {lang}wcf.user.option.{$availableOption}{/lang}</label>
+						<label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}> {lang}wcf.user.option.{$availableOption}{/lang}</label>
 					</span>
 				</li>
 			{/foreach}
@@ -31,6 +31,6 @@
 	</div>
 {else}
 	{foreach from=$availableOptions item=availableOption}
-		<label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked="checked"{/if}> {lang}wcf.user.option.{$availableOption}{/lang}</label>
+		<label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}> {lang}wcf.user.option.{$availableOption}{/lang}</label>
 	{/foreach}
 {/if}

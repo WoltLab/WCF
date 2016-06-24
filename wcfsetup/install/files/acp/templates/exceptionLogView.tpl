@@ -45,7 +45,7 @@
 				<dl class="col-xs-12 col-md-4">
 					<dt></dt>
 					<dd>
-						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" placeholder="{lang}wcf.acp.exceptionLog.search.exceptionID{/lang}" autofocus="autofocus" class="long">
+						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" placeholder="{lang}wcf.acp.exceptionLog.search.exceptionID{/lang}" autofocus class="long">
 					</dd>
 				</dl>
 				
@@ -126,7 +126,7 @@
 				{/foreach}
 				<dl>
 					<dt><label for="copyException{$exceptionKey}">{lang}wcf.acp.exceptionLog.exception.copy{/lang}</label></dt>
-					<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly="readonly">{$exception[0]}</textarea></dd>
+					<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
 				</dl>
 			</section>
 		{/foreach}

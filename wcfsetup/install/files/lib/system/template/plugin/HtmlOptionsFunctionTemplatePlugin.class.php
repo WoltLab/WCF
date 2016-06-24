@@ -137,6 +137,6 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 	 */
 	protected function makeOption($key, $value) {
 		$value = $this->encodeHTML($value);
-		return '<option label="'.$value.'" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->selected) ? ' selected="selected"' : '').'>'.$value."</option>\n";
+		return '<option label="'.$value.'" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->selected) ? ' selected' : '').'>'.$value."</option>\n";
 	}
 }

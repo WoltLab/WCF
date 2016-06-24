@@ -17,12 +17,12 @@
 	
 		<dl>
 			<dt><label for="dbHost">{lang}wcf.global.configureDB.host{/lang}</label></dt>
-			<dd><input type="text" id="dbHost" name="dbHost" value="{$dbHost}" required="required" class="long"></dd>
+			<dd><input type="text" id="dbHost" name="dbHost" value="{$dbHost}" required class="long"></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbUser">{lang}wcf.global.configureDB.user{/lang}</label></dt>
-			<dd><input type="text" id="dbUser" name="dbUser" value="{$dbUser}" required="required" class="medium"></dd>
+			<dd><input type="text" id="dbUser" name="dbUser" value="{$dbUser}" required class="medium"></dd>
 		</dl>
 		
 		<dl>
@@ -33,7 +33,7 @@
 		<dl>
 			<dt><label for="dbName">{lang}wcf.global.configureDB.database{/lang}</label></dt>
 			<dd>
-				<input type="text" id="dbName" name="dbName" value="{$dbName}" required="required" class="medium">
+				<input type="text" id="dbName" name="dbName" value="{$dbName}" required class="medium">
 				<small>{lang}wcf.global.configureDB.database.description{/lang}</small>
 			</dd>
 		</dl>
@@ -41,7 +41,7 @@
 		<dl>
 			<dt><label for="dbNumber">{lang}wcf.global.configureDB.number{/lang}</label></dt>
 			<dd>
-				<input type="number" id="dbNumber" name="dbNumber" value="{$dbNumber}" required="required" min="1" class="short">
+				<input type="number" id="dbNumber" name="dbNumber" value="{$dbNumber}" required min="1" class="short">
 				<small>{lang}wcf.global.configureDB.number.description{/lang}</small>
 			</dd>
 		</dl>

@@ -70,7 +70,7 @@
 				<dl{if $errorField == 'name'} class="formError"{/if}>
 					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long">
+						<input type="text" id="name" name="name" value="{$name}" required autofocus class="long">
 						{if $errorField == 'name'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -86,11 +86,11 @@
 				<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
 					<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
 					<dd>
-						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
 							<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
 							
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'parentPageID'}
@@ -108,9 +108,9 @@
 				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
 					<dt><label for="applicationPackageID">{lang}wcf.acp.page.applicationPackageID{/lang}</label></dt>
 					<dd>
-						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled="disabled"{/if}>
+						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
 							{foreach from=$availableApplications item=availableApplication}
-								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
+								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'applicationPackageID'}
@@ -166,7 +166,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1"{if $isLandingPage} checked="checked"{/if}{if $action == 'edit' && $page->isLandingPage} disabled="disabled"{/if}> {lang}wcf.acp.page.isLandingPage{/lang}</label>
+							<label><input type="checkbox" id="isLandingPage" name="isLandingPage" value="1"{if $isLandingPage} checked{/if}{if $action == 'edit' && $page->isLandingPage} disabled{/if}> {lang}wcf.acp.page.isLandingPage{/lang}</label>
 						</dd>
 					</dl>
 				{/if}
@@ -175,7 +175,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.page.isDisabled{/lang}</label>
+							<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.page.isDisabled{/lang}</label>
 						</dd>
 					</dl>
 				{/if}
@@ -347,7 +347,7 @@
 						<ul class="scrollableCheckboxList">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
-									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}</label>
+									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}</label>
 								</li>
 							{/foreach}
 						</ul>

@@ -26,14 +26,14 @@
 						<dd>
 							<ol class="flexibleButtonGroup" data-object-id="{@$event->eventID}">
 								<li>
-									<input type="radio" id="settings_{@$event->eventID}_disabled" name="settings[{@$event->eventID}][enabled]" value="0"{if $settings[$event->eventID][enabled]|empty} checked="checked"{/if}>
+									<input type="radio" id="settings_{@$event->eventID}_disabled" name="settings[{@$event->eventID}][enabled]" value="0"{if $settings[$event->eventID][enabled]|empty} checked{/if}>
 									<label for="settings_{@$event->eventID}_disabled" class="red">
 										<span class="icon icon16 fa-times"></span>
 										{lang}wcf.user.notification.notifications.disabled{/lang}
 									</label>
 								</li>
 								<li class="spaceAfter">
-									<input type="radio" id="settings_{@$event->eventID}_enabled" name="settings[{@$event->eventID}][enabled]" value="1"{if !$settings[$event->eventID][enabled]|empty} checked="checked"{/if}>
+									<input type="radio" id="settings_{@$event->eventID}_enabled" name="settings[{@$event->eventID}][enabled]" value="1"{if !$settings[$event->eventID][enabled]|empty} checked{/if}>
 									<label for="settings_{@$event->eventID}_enabled" class="green">
 										<span class="icon icon16 fa-bell"></span>
 										{lang}wcf.user.notification.notifications.enabled{/lang}

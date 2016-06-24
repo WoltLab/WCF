@@ -43,7 +43,7 @@
 			<dd>
 				<select id="sourceLanguageID" name="sourceLanguageID">
 					{foreach from=$languages item=language}
-						<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected="selected"{/if}>{$language->languageName} ({$language->languageCode})</option>
+						<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'sourceLanguageID'}

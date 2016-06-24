@@ -1,8 +1,8 @@
 <dl>
 	<dt><label>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</label></dt>
 	<dd>
-		<label><input type="radio" name="fileType" value="csv"{if $fileType == 'csv'} checked="checked"{/if}> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label>
-		<label><input type="radio" name="fileType" value="xml"{if $fileType == 'xml'} checked="checked"{/if}> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label>
+		<label><input type="radio" name="fileType" value="csv"{if $fileType == 'csv'} checked{/if}> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label>
+		<label><input type="radio" name="fileType" value="xml"{if $fileType == 'xml'} checked{/if}> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label>
 	</dd>
 </dl>
 

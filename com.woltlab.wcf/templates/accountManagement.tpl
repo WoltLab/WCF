@@ -24,7 +24,7 @@
 			<dl{if $errorField == 'password'} class="formError"{/if}>
 				<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 				<dd>
-					<input type="password" id="password" name="password" value="" required="required" class="medium">
+					<input type="password" id="password" name="password" value="" required class="medium">
 					{if $errorField == 'password'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -47,7 +47,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.newUsername{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required="required" pattern="^[^,]{ldelim}{REGISTER_USERNAME_MIN_LENGTH},{REGISTER_USERNAME_MAX_LENGTH}}$" class="medium">
+					<input type="text" id="username" name="username" value="{$username}" required pattern="^[^,]{ldelim}{REGISTER_USERNAME_MIN_LENGTH},{REGISTER_USERNAME_MAX_LENGTH}}$" class="medium">
 						
 					{if $errorField == 'username'}
 						<small class="innerError">
@@ -159,14 +159,14 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" name="cancelQuit" value="1"{if $cancelQuit == 1} checked="checked"{/if}> {lang}wcf.user.quit.cancel{/lang}</label>
+						<label><input type="checkbox" name="cancelQuit" value="1"{if $cancelQuit == 1} checked{/if}> {lang}wcf.user.quit.cancel{/lang}</label>
 					</dd>
 				</dl>
 			{else}
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" name="quit" value="1"{if $quit == 1} checked="checked"{/if}> {lang}wcf.user.quit.sure{/lang}</label>
+						<label><input type="checkbox" name="quit" value="1"{if $quit == 1} checked{/if}> {lang}wcf.user.quit.sure{/lang}</label>
 						<small>{lang}wcf.user.quit.description{/lang}</small>
 					</dd>
 				</dl>
@@ -194,7 +194,7 @@
 							<dt>{lang}wcf.user.3rdparty.github{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__githubToken')}
-									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
+									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
 								{else}
 									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
 								{/if}
@@ -207,7 +207,7 @@
 							<dt>{lang}wcf.user.3rdparty.twitter{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__twitterData')}
-									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
+									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked{/if}> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
 								{else}
 									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
 								{/if}
@@ -220,7 +220,7 @@
 							<dt>{lang}wcf.user.3rdparty.facebook{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__facebookData')}
-									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
+									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
 								{else}
 									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
 								{/if}
@@ -233,7 +233,7 @@
 							<dt>{lang}wcf.user.3rdparty.google{/lang}</dt>
 							<dd>
 								{if $__wcf->getSession()->getVar('__googleData')}
-									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked="checked"{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
+									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 								{else}
 									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
 								{/if}

@@ -34,10 +34,10 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
 		$categoryTree = (new $this->nodeTreeClassname($this->objectType))->getIterator();
 		$categoryCount = iterator_count($categoryTree);
 		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple="multiple" size="'.($categoryCount >= 10 ? 10 : $categoryCount).'">';
+		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.($categoryCount >= 10 ? 10 : $categoryCount).'">';
 		/** @var CategoryNode $categoryNode */
 		foreach ($categoryTree as $categoryNode) {
-			$fieldElement .= "<option value=\"{$categoryNode->categoryID}\"".(in_array($categoryNode->categoryID, $this->fieldValue) ? ' selected="selected"' : '').">".str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $categoryNode->getOpenParentNodes()).$categoryNode->getTitle()."</option>";
+			$fieldElement .= "<option value=\"{$categoryNode->categoryID}\"".(in_array($categoryNode->categoryID, $this->fieldValue) ? ' selected' : '').">".str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $categoryNode->getOpenParentNodes()).$categoryNode->getTitle()."</option>";
 		}
 		$fieldElement .= '</select>';
 		

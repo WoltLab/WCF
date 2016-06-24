@@ -69,7 +69,7 @@
 				<dt></dt>
 				<dd>
 					<label>
-						<input type="checkbox" id="isMultilingual" name="isMultilingual" value="1"{if $isMultilingual} checked="checked"{/if}>
+						<input type="checkbox" id="isMultilingual" name="isMultilingual" value="1"{if $isMultilingual} checked{/if}>
 						<span>{lang}wcf.media.isMultilingual{/lang}</span>
 					</label>
 				</dd>

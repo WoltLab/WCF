@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.acp.bbcode.mediaProvider.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$title}" required="required" autofocus="autofocus" class="long">
+				<input type="text" id="title" name="title" value="{$title}" required autofocus class="long">
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -41,7 +41,7 @@
 		<dl{if $errorField == 'regex'} class="formError"{/if}>
 			<dt><label for="regex">{lang}wcf.acp.bbcode.mediaProvider.regex{/lang}</label></dt>
 			<dd>
-				<textarea id="regex" name="regex" cols="40" rows="10" required="required">{$regex}</textarea>
+				<textarea id="regex" name="regex" cols="40" rows="10" required>{$regex}</textarea>
 				{if $errorField == 'regex'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -58,7 +58,7 @@
 		<dl{if $errorField == 'html'} class="formError"{/if}>
 			<dt><label for="html">{lang}wcf.acp.bbcode.mediaProvider.html{/lang}</label></dt>
 			<dd>
-				<textarea id="html" name="html" cols="40" rows="10" required="required">{$html}</textarea>
+				<textarea id="html" name="html" cols="40" rows="10" required>{$html}</textarea>
 				{if $errorField == 'html'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

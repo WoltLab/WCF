@@ -54,16 +54,16 @@
 					<dt></dt>
 					<dd>
 						<select id="sortField" name="sortField">
-							<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
-							<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
-							<option value="activityPoints"{if $sortField == 'activityPoints'} selected="selected"{/if}>{lang}wcf.user.activityPoint{/lang}</option>
-							{if MODULE_LIKE}<option value="likesReceived"{if $sortField == 'likesReceived'} selected="selected"{/if}>{lang}wcf.like.likesReceived{/lang}</option>{/if}
-							<option value="lastActivityTime"{if $sortField == 'lastActivityTime'} selected="selected"{/if}>{lang}wcf.user.usersOnline.lastActivity{/lang}</option>
+							<option value="username"{if $sortField == 'username'} selected{/if}>{lang}wcf.user.username{/lang}</option>
+							<option value="registrationDate"{if $sortField == 'registrationDate'} selected{/if}>{lang}wcf.user.registrationDate{/lang}</option>
+							<option value="activityPoints"{if $sortField == 'activityPoints'} selected{/if}>{lang}wcf.user.activityPoint{/lang}</option>
+							{if MODULE_LIKE}<option value="likesReceived"{if $sortField == 'likesReceived'} selected{/if}>{lang}wcf.like.likesReceived{/lang}</option>{/if}
+							<option value="lastActivityTime"{if $sortField == 'lastActivityTime'} selected{/if}>{lang}wcf.user.usersOnline.lastActivity{/lang}</option>
 							{event name='sortField'}
 						</select>
 						<select name="sortOrder">
-							<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-							<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
+							<option value="ASC"{if $sortOrder == 'ASC'} selected{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
+							<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 						</select>
 					</dd>
 				</dl>

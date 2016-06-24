@@ -72,7 +72,7 @@
 		<dl{if $errorType.groupName|isset} class="formError"{/if}>
 			<dt><label for="groupName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium">
+				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus class="medium">
 				{if $errorType.groupName|isset}
 					<small class="innerError">
 						{if $errorType.groupName == 'empty'}
@@ -135,7 +135,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="showOnTeamPage" name="showOnTeamPage" value="1"{if $showOnTeamPage} checked="checked"{/if}> {lang}wcf.acp.group.showOnTeamPage{/lang}</label>
+					<label><input type="checkbox" id="showOnTeamPage" name="showOnTeamPage" value="1"{if $showOnTeamPage} checked{/if}> {lang}wcf.acp.group.showOnTeamPage{/lang}</label>
 				</dd>
 			</dl>
 		{/if}

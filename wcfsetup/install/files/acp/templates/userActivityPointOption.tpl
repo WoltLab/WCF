@@ -39,7 +39,7 @@
 			<dl{if $errorField == $objectType->objectTypeID} class="formError"{/if}>
 				<dt><label for="{@$objectType->objectType}">{lang}wcf.user.activityPoint.objectType.{$objectType->objectType}{/lang}</label></dt>
 				<dd>
-					<input type="number" id="{@$objectType->objectType}" name="points[{@$objectType->objectTypeID}]" value="{$points[$objectType->objectTypeID]}" required="required" min="0" class="tiny">
+					<input type="number" id="{@$objectType->objectType}" name="points[{@$objectType->objectTypeID}]" value="{$points[$objectType->objectTypeID]}" required min="0" class="tiny">
 					{if $errorField == $objectType->objectTypeID}
 						<small class="innerError">
 							{lang greaterThan=-1}wcf.global.form.error.greaterThan{/lang}

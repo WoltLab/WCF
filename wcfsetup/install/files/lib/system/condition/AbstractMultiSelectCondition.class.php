@@ -36,7 +36,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	protected function getFieldElement() {
 		$options = $this->getOptions();
 		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple="multiple" size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options)).'">';
+		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options)).'">';
 		foreach ($options as $key => $value) {
 			if (is_array($value)) {
 				$fieldElement .= $this->getOptGroupCode($key, $value);
@@ -54,7 +54,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	 * @inheritDoc
 	 */
 	protected function getOptionCode($value, $label) {
-		return '<option value="'.$value.'"'.(in_array($value, $this->fieldValue) ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
+		return '<option value="'.$value.'"'.(in_array($value, $this->fieldValue) ? ' selected' : '').'>'.WCF::getLanguage()->get($label).'</option>';
 	}
 	
 	/**

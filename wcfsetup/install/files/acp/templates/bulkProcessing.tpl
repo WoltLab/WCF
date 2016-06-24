@@ -46,7 +46,7 @@
 			<dt></dt>
 			<dd>
 				{foreach from=$actions item=actionObjectType}
-					<label><input type="radio" name="action" value="{@$actionObjectType->action}"{if $actionObjectType->action == $action} checked="checked"{/if}> {lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{@$actionObjectType->action}{/lang}</label>
+					<label><input type="radio" name="action" value="{@$actionObjectType->action}"{if $actionObjectType->action == $action} checked{/if}> {lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.{@$actionObjectType->action}{/lang}</label>
 				{/foreach}
 				
 				{if $errorField == 'action'}

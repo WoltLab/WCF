@@ -33,7 +33,7 @@
 		<dl{if $errorField == 'rankTitle'} class="formError"{/if}>
 			<dt><label for="rankTitle">{lang}wcf.acp.user.rank.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="rankTitle" name="rankTitle" value="{$i18nPlainValues['rankTitle']}" required="required" autofocus="autofocus" class="long">
+				<input type="text" id="rankTitle" name="rankTitle" value="{$i18nPlainValues['rankTitle']}" required autofocus class="long">
 				{if $errorField == 'rankTitle'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -55,9 +55,9 @@
 				<ul id="labelList">
 					{foreach from=$availableCssClassNames item=className}
 						{if $className == 'custom'}
-							<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
+							<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
 						{else}
-							<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">{lang}wcf.acp.user.rank.title{/lang}</span></label></li>
+							<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">{lang}wcf.acp.user.rank.title{/lang}</span></label></li>
 						{/if}
 					{/foreach}
 				</ul>
@@ -125,7 +125,7 @@
 			<dd>
 				<select id="groupID" name="groupID">
 					{foreach from=$availableGroups item=group}
-						<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected="selected"{/if}>{$group->groupName|language}</option>
+						<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group->groupName|language}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'groupID'}
@@ -146,8 +146,8 @@
 			<dd>
 				<select id="requiredGender" name="requiredGender">
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-					<option value="1"{if $requiredGender == 1} selected="selected"{/if}>{lang}wcf.user.gender.male{/lang}</option>
-					<option value="2"{if $requiredGender == 2} selected="selected"{/if}>{lang}wcf.user.gender.female{/lang}</option>
+					<option value="1"{if $requiredGender == 1} selected{/if}>{lang}wcf.user.gender.male{/lang}</option>
+					<option value="2"{if $requiredGender == 2} selected{/if}>{lang}wcf.user.gender.female{/lang}</option>
 				</select>
 				{if $errorField == 'requiredGender'}
 					<small class="innerError">

@@ -9,7 +9,7 @@
 		<dl{if $errorField == 'subject'} class="formError"{/if}>
 			<dt><label for="subject">{lang}wcf.user.mail.subject{/lang}</label></dt>
 			<dd>
-				<input type="text" id="subject" name="subject" value="{$subject}" required="required" class="long">
+				<input type="text" id="subject" name="subject" value="{$subject}" required class="long">
 				{if $errorField == 'subject'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -25,13 +25,13 @@
 		{if $__wcf->user->userID}
 			<dl>
 				<dt></dt>
-				<dd><label><input type="checkbox" name="showAddress" value="1"{if $showAddress == 1} checked="checked"{/if}> {lang}wcf.user.mail.showAddress{/lang}</label></dd>
+				<dd><label><input type="checkbox" name="showAddress" value="1"{if $showAddress == 1} checked{/if}> {lang}wcf.user.mail.showAddress{/lang}</label></dd>
 			</dl>
 		{else}
 			<dl{if $errorField == 'email'} class="formError"{/if}>
 				<dt><label for="email">{lang}wcf.user.mail.senderEmail{/lang}</label></dt>
 				<dd>
-					<input type="email" id="email" name="email" value="{$email}" required="required" class="medium">
+					<input type="email" id="email" name="email" value="{$email}" required class="medium">
 					{if $errorField == 'email'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -55,7 +55,7 @@
 		
 		<dl class="wide{if $errorField == 'message'} formError{/if}">
 			<dd>
-				<textarea rows="15" cols="40" name="message" id="message" required="required">{$message}</textarea>
+				<textarea rows="15" cols="40" name="message" id="message" required>{$message}</textarea>
 				{if $errorField == 'message'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

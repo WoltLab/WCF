@@ -22,7 +22,7 @@
 	<section class="section" class="jsPackageUpdate" data-package="{$update[package]}">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle"><label>
-				<input type="checkbox" value="1" checked="checked">
+				<input type="checkbox" value="1" checked>
 				{$update[packageName]|language}
 			</label></h2>
 			{if $update[packageDescription]}<small class="sectionDescription">{$update[packageDescription]|language}</small>{/if}
@@ -43,7 +43,7 @@
 			<dd>
 				<select>
 					{foreach from=$update[versions] item=version}
-						<option value="{@$version[packageVersion]}"{if $version[packageVersion] == $update[version][packageVersion]} selected="selected"{/if}>{$version[packageVersion]}</option>
+						<option value="{@$version[packageVersion]}"{if $version[packageVersion] == $update[version][packageVersion]} selected{/if}>{$version[packageVersion]}</option>
 					{/foreach}
 				</select>
 			</dd>

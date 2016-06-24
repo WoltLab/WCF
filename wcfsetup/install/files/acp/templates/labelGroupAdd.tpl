@@ -54,7 +54,7 @@
 				<dl{if $errorField == 'groupName'} class="formError"{/if}>
 					<dt><label for="groupName">{lang}wcf.global.title{/lang}</label></dt>
 					<dd>
-						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="long">
+						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus class="long">
 						{if $errorField == 'groupName'}
 							<small class="innerError">
 								{if $errorType == 'empty' || $errorType == 'multilingual'}
@@ -86,7 +86,7 @@
 				
 				<dl>
 					<dt></dt>
-					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked="checked"{/if}> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
+					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked{/if}> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
 				</dl>
 				
 				<dl id="groupPermissions">
@@ -113,7 +113,7 @@
 									{foreach from=$container item=objectType}
 										<li class="{if $objectType->isCategory()} category{/if}"{if $objectType->getDepth()} style="padding-left: {21 * $objectType->getDepth()}px"{/if} data-depth="{@$objectType->getDepth()}">
 											<span>{$objectType->getLabel()}</span>
-											<label><input id="checkbox_{@$container->getObjectTypeID()}_{@$objectType->getObjectID()}" type="checkbox" name="objectTypes[{@$container->getObjectTypeID()}][]" value="{@$objectType->getObjectID()}"{if $objectType->getOptionValue()} checked="checked"{/if}></label>
+											<label><input id="checkbox_{@$container->getObjectTypeID()}_{@$objectType->getObjectID()}" type="checkbox" name="objectTypes[{@$container->getObjectTypeID()}][]" value="{@$objectType->getObjectID()}"{if $objectType->getOptionValue()} checked{/if}></label>
 										</li>
 									{/foreach}
 								</ul>

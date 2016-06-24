@@ -250,7 +250,7 @@
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
 								{foreach from=$availableTemplateGroups item=templateGroup}
-									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected="selected"{/if}>{$templateGroup->templateGroupName}</option>
+									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->templateGroupName}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'templateGroupID'}
@@ -297,7 +297,7 @@
 				<dl>
 					<dt></dt>
 					<dd><label>
-						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked="checked"{/if}>
+						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked{/if}>
 						<span>{lang}wcf.acp.style.globals.useFluidLayout{/lang}</span>
 					</label></dd>
 				</dl>
@@ -309,7 +309,7 @@
 						<label class="selectDropdown">
 							<select name="wcfLayoutMinWidth_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -322,7 +322,7 @@
 						<label class="selectDropdown">
 							<select name="wcfLayoutMaxWidth_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -336,7 +336,7 @@
 						<label class="selectDropdown">
 							<select name="wcfLayoutFixedWidth_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -385,7 +385,7 @@
 						<label class="selectDropdown">
 							<select name="wcfFontSizeDefault_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -398,7 +398,7 @@
 						<label class="selectDropdown">
 							<select name="wcfFontSizeSmall_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfFontSizeSmall_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfFontSizeSmall_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -411,7 +411,7 @@
 						<label class="selectDropdown">
 							<select name="wcfFontSizeHeadline_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfFontSizeHeadline_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfFontSizeHeadline_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -424,7 +424,7 @@
 						<label class="selectDropdown">
 							<select name="wcfFontSizeSection_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfFontSizeSection_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfFontSizeSection_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -437,7 +437,7 @@
 						<label class="selectDropdown">
 							<select name="wcfFontSizeTitle_unit" class="jsUnitSelect">
 								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfFontSizeTitle_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+									<option value="{@$unit}"{if $variables[wcfFontSizeTitle_unit] == $unit} selected{/if}>{@$unit}</option>
 								{/foreach}
 							</select>
 						</label>
@@ -447,7 +447,7 @@
 				<dl>
 					<dt></dt>
 					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked="checked"{/if}>
+						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked{/if}>
 						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
 					</label></dd>
 				</dl>
@@ -463,7 +463,7 @@
 						<label class="selectDropdown">
 							<select name="wcfFontFamilyFallback" id="wcfFontFamilyFallback">
 								{foreach from=$availableFontFamilies key=fontFamily item=primaryFont}
-									<option value='{@$fontFamily}'{if $variables[wcfFontFamilyFallback] == $fontFamily} selected="selected"{/if}>{@$primaryFont}</option>
+									<option value='{@$fontFamily}'{if $variables[wcfFontFamilyFallback] == $fontFamily} selected{/if}>{@$primaryFont}</option>
 								{/foreach}
 							</select>
 						</label>

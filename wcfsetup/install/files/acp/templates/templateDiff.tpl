@@ -37,7 +37,7 @@
 					<option value="0"></option>
 					{assign var=depth value=0}
 					{foreach from=$templateGroupHierarchy item='templateGroup' key='templateGroupID'}
-						<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected="selected"{/if}{else} disabled="disabled"{/if}>{@'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
+						<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected{/if}{else} disabled{/if}>{@'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
 						{assign var=depth value=$depth + 1}
 					{/foreach}
 				</select>

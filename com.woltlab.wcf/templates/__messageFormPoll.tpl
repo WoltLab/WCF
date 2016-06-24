@@ -67,19 +67,19 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked="checked"{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
+				<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked{/if}> {lang}wcf.poll.isChangeable{/lang}</label>
 			</dd>
 			{if !$pollID && $__wcf->getPollManager()->canStartPublicPoll()}
 				<dd>
-					<label><input type="checkbox" name="pollIsPublic" value="1"{if $pollIsPublic} checked="checked"{/if}> {lang}wcf.poll.isPublic{/lang}</label>
+					<label><input type="checkbox" name="pollIsPublic" value="1"{if $pollIsPublic} checked{/if}> {lang}wcf.poll.isPublic{/lang}</label>
 				</dd>
 			{/if}
 			<dd>
-				<label><input type="checkbox" name="pollResultsRequireVote" value="1"{if $pollResultsRequireVote} checked="checked"{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
+				<label><input type="checkbox" name="pollResultsRequireVote" value="1"{if $pollResultsRequireVote} checked{/if}> {lang}wcf.poll.resultsRequireVote{/lang}</label>
 				<small>{lang}wcf.poll.resultsRequireVote.description{/lang}</small>
 			</dd>
 			<dd>
-				<label><input type="checkbox" name="pollSortByVotes" value="1"{if $pollSortByVotes} checked="checked"{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
+				<label><input type="checkbox" name="pollSortByVotes" value="1"{if $pollSortByVotes} checked{/if}> {lang}wcf.poll.sortByVotes{/lang}</label>
 			</dd>
 		</dl>
 		

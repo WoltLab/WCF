@@ -149,7 +149,7 @@
 								<dl>
 									<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
 									<dd>
-										<input type="text" id="username" name="username" value="" required="required" class="long jsDialogAutoFocus">
+										<input type="text" id="username" name="username" value="" required class="long jsDialogAutoFocus">
 									</dd>
 								</dl>
 								
