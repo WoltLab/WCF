@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\article;
-use wcf\data\IFeedEntry;
+use wcf\data\IFeedEntryWithEnclosure;
 use wcf\data\TUserContent;
-use wcf\system\request\LinkHandler;
+use wcf\system\feed\enclosure\FeedEnclosure;
 use wcf\util\StringUtil;
 
 /**
@@ -14,8 +14,13 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
  */
-class FeedArticle extends ViewableArticle implements IFeedEntry {
+class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure {
 	use TUserContent;
+	
+	/**
+	 * @var FeedEnclosure
+	 */
+	protected $enclosure;
 	
 	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
@@ -89,5 +94,18 @@ class FeedArticle extends ViewableArticle implements IFeedEntry {
 	 */
 	public function isVisible() {
 		return $this->canRead();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getEnclosure() {
+		if ($this->enclosure === null) {
+			if ($this->getImage() !== null) {
+				$this->enclosure = new FeedEnclosure($this->getImage()->getThumbnailLink('small'), $this->getImage()->smallThumbnailType, $this->getImage()->smallThumbnailSize);
+			}
+		}
+		
+		return $this->enclosure;
 	}
 }
