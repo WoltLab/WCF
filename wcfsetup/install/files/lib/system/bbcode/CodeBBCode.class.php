@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\system\bbcode\highlighter\BashHighlighter;
-use wcf\system\bbcode\highlighter\BrainfuckHighlighter;
 use wcf\system\bbcode\highlighter\CHighlighter;
 use wcf\system\bbcode\highlighter\DiffHighlighter;
 use wcf\system\bbcode\highlighter\HtmlHighlighter;
@@ -127,10 +126,6 @@ class CodeBBCode extends AbstractBBCode {
 				}
 				else if (mb_strpos($content, '\\documentclass') !== false) {
 					$className = TexHighlighter::class;
-				}
-				else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
-					// 9 times a brainfuck char in a row -> seems to be brainfuck
-					$className = BrainfuckHighlighter::class;
 				}
 			}
 		}
