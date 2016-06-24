@@ -448,9 +448,11 @@ class PageAddForm extends AbstractForm {
 		// call saved event
 		$this->saved();
 		
-		// forward to page list
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('PageList'));
-		exit;
+		// reset variables
+		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
+		$this->applicationPackageID = 1;
+		$this->name = '';
+		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->boxIDs = $this->aclValues = [];
 	}
 	
 	/**
