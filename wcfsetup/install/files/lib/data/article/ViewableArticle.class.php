@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContent;
+use wcf\data\media\ViewableMedia;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
@@ -82,8 +83,8 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	
 	/**
 	 * Returns the article's image.
-	 *
-	 * @return      ViewableMedia|null
+	 * 
+	 * @return	ViewableMedia|null
 	 */
 	public function getImage() {
 		if ($this->getArticleContent() !== null) {
