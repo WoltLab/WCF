@@ -61,6 +61,7 @@
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.box.general{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.box.contents{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.box.pages{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.box.acl{/lang}</a></li>
 				
 				{event name='tabMenuTabs'}
 			</ul>
@@ -420,6 +421,10 @@
 					</dd>
 				</dl>
 			</div>
+		</div>
+		
+		<div id="acl" class="tabMenuContent">
+			{include file='aclSimple'}
 		</div>
 	</div>
 	

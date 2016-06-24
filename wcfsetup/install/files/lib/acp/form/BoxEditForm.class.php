@@ -4,6 +4,7 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
@@ -119,6 +120,8 @@ class BoxEditForm extends BoxAddForm {
 			$this->boxController->getProcessor()->saveConditions();
 		}
 		
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->box->boxID, $this->aclValues);
+		
 		// call saved event
 		$this->saved();
 		
@@ -170,6 +173,8 @@ class BoxEditForm extends BoxAddForm {
 					$this->boxController->getProcessor()->setBox($this->box);
 				}
 			}
+			
+			$this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box', $this->box->boxID);
 			
 			$this->readBoxImages();
 		}

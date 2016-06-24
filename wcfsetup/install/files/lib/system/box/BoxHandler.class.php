@@ -47,9 +47,11 @@ class BoxHandler extends SingletonFactory {
 		$boxList->sqlOrderBy = 'showOrder';
 		$boxList->readObjects();
 		foreach ($boxList as $box) {
-			if (!isset($this->boxes[$box->position])) $this->boxes[$box->position] = [];
-			$this->boxes[$box->position][] = $box;
-			$this->boxesByIdentifier[$box->identifier] = $box;
+			if ($box->isAccessible()) {
+				if (!isset($this->boxes[$box->position])) $this->boxes[$box->position] = [];
+				$this->boxes[$box->position][] = $box;
+				$this->boxesByIdentifier[$box->identifier] = $box;
+			}	
 		}
 	}
 	

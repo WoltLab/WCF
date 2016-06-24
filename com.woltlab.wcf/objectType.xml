@@ -1040,6 +1040,10 @@
 			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.box</name>
+			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
+		</type>
 		<!-- /pages -->
 		
 		<!-- article list box condition -->

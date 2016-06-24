@@ -10,6 +10,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -169,6 +170,12 @@ class BoxAddForm extends AbstractForm {
 	public $pageNodeList;
 	
 	/**
+	 * acl values
+	 * @var array
+	 */
+	public $aclValues = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -234,6 +241,7 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
 		if (isset($_POST['boxControllerID'])) $this->boxControllerID = intval($_POST['boxControllerID']);
+		if (isset($_POST['aclValues']) && is_array($_POST['aclValues'])) $this->aclValues = $_POST['aclValues'];
 		
 		if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			if (isset($_POST['imageID']) && is_array($_POST['imageID'])) $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
@@ -421,6 +429,9 @@ class BoxAddForm extends AbstractForm {
 			$this->boxController->getProcessor()->saveConditions();
 		}
 		
+		// save acl
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $box->boxID, $this->aclValues);
+		
 		// call saved event
 		$this->saved();
 		
@@ -431,7 +442,7 @@ class BoxAddForm extends AbstractForm {
 		$this->boxType = $this->position = $this->cssClassName = $this->name = '';
 		$this->showOrder = $this->boxControllerID = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
-		$this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = [];
+		$this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
 		$this->boxController = null;
 	}
 	
@@ -466,7 +477,8 @@ class BoxAddForm extends AbstractForm {
 			'availableBoxControllers' => ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController'),
 			'boxController' => $this->boxController,
 			'pageNodeList' => $this->pageNodeList,
-			'pageHandlers' => $this->pageHandlers
+			'pageHandlers' => $this->pageHandlers,
+			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues)
 		]);
 	}
 }

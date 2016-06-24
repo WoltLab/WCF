@@ -5,6 +5,7 @@ use wcf\data\media\ViewableMedia;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\condition\ConditionHandler;
@@ -478,6 +479,15 @@ class Box extends DatabaseObject {
 		}
 		
 		return [];
+	}
+	
+	/**
+	 * Returns true if this box is accessible by current user.
+	 *
+	 * @return	boolean
+	 */
+	public function isAccessible() {
+		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.box', $this->boxID);
 	}
 	
 	/**
