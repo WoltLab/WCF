@@ -9,10 +9,19 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * TOOD documentation
+ * Parses all text nodes searching for links, media, mentions or smilies.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2016 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Html\Input\Node
  * @since	3.0
  */
 class HtmlInputNodeTextParser {
+	/**
+	 * list of markers per element that will face a replacement
+	 * @var \DOMElement[][]
+	 */
 	protected $elementStack = [];
 	
 	/**
@@ -20,8 +29,16 @@ class HtmlInputNodeTextParser {
 	 */
 	protected $htmlInputNodeProcessor;
 	
+	/**
+	 * list of text nodes that will face a replacement
+	 * @var \DOMText[]
+	 */
 	protected $nodeStack = [];
 	
+	/**
+	 * list of smilies by smiley code
+	 * @var string[]
+	 */
 	protected $smilies = [];
 	
 	/**
@@ -35,6 +52,10 @@ class HtmlInputNodeTextParser {
 	 */
 	protected static $illegalChars = '[^\x0-\x2C\x2E\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+';
 	
+	/**
+	 * regex for user mentions
+	 * @var string
+	 */
 	protected static $userRegex = "~
 		\\B                                             # any non-word character, whitespace, string start is fine
 		@
@@ -47,6 +68,11 @@ class HtmlInputNodeTextParser {
 		)
 	~x";
 	
+	/**
+	 * HtmlInputNodeTextParser constructor.
+	 * 
+	 * @param HtmlInputNodeProcessor $htmlInputNodeProcessor
+	 */
 	public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor) {
 		$this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
 		$this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
@@ -83,6 +109,9 @@ class HtmlInputNodeTextParser {
 		}
 	}
 	
+	/**
+	 * Parses all text nodes searching for possible replacements.
+	 */
 	public function parse() {
 		// get all text nodes
 		$nodes = [];
@@ -114,7 +143,7 @@ class HtmlInputNodeTextParser {
 		
 		$users = [];
 		if (!empty($usernames)) {
-			$users = $this->findUsernames($usernames);
+			$users = $this->lookupUsernames($usernames);
 		}
 		
 		for ($i = 0, $length = count($nodes); $i < $length; $i++) {
@@ -141,6 +170,13 @@ class HtmlInputNodeTextParser {
 		}
 	}
 	
+	/**
+	 * Detects mentions in text nodes.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       string          $value          node value
+	 * @param       string[]        $usernames      list of already found usernames
+	 */
 	protected function detectMention(\DOMText $text, $value, array &$usernames) {
 		if (mb_strpos($value, '@') === false) {
 			return;
@@ -159,7 +195,13 @@ class HtmlInputNodeTextParser {
 		}
 	}
 	
-	protected function findUsernames(array $usernames) {
+	/**
+	 * Matches the found usernames agains the user table.
+	 * 
+	 * @param       string[]        $usernames      list of found usernames
+	 * @return      string[]        list of valid usernames
+	 */
+	protected function lookupUsernames(array $usernames) {
 		$exactValues = [];
 		$likeValues = [];
 		foreach ($usernames as $username) {
@@ -214,6 +256,14 @@ class HtmlInputNodeTextParser {
 		return $users;
 	}
 	
+	/**
+	 * Parses text nodes and searches for mentions.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       string          $value          node value
+	 * @param       string[]        $users          list of usernames by user id
+	 * @return      string          modified node value with replacement placeholders
+	 */
 	protected function parseMention(\DOMText $text, $value, array $users) {
 		if (mb_strpos($value, '@') === false) {
 			return $value;
@@ -249,6 +299,13 @@ class HtmlInputNodeTextParser {
 		return $value;
 	}
 	
+	/**
+	 * Parses regular links and media links contained in text nodes.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       string          $value          node value
+	 * @return      string          modified node value with replacement placeholders
+	 */
 	protected function parseURL(\DOMText $text, $value) {
 		static $urlPattern = '';
 		if ($urlPattern === '') {
@@ -288,6 +345,13 @@ class HtmlInputNodeTextParser {
 		}, $value);
 	}
 	
+	/**
+	 * Parses text nodes and replaces email addresses.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       string          $value          node value
+	 * @return      string          modified node value with replacement placeholders
+	 */
 	protected function parseEmail(\DOMText $text, $value) {
 		if (mb_strpos($this->text, '@') === false) {
 			return $value;
@@ -314,6 +378,13 @@ class HtmlInputNodeTextParser {
 		}, $value);
 	}
 	
+	/**
+	 * Parses text nodes and replaces smilies.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       string          $value          node value
+	 * @return      string          modified node value with replacement placeholders
+	 */
 	protected function parseSmiley(\DOMText $text, $value) {
 		static $smileyPattern = null;
 		if ($smileyPattern === null) {
@@ -343,6 +414,12 @@ class HtmlInputNodeTextParser {
 		}, $value);
 	}
 	
+	/**
+	 * Replaces all found occurences of special text with their new value.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       \DOMElement[]   $elements       elements to be inserted
+	 */
 	protected function replaceMatches(\DOMText $text, array $elements) {
 		$nodes = [$text];
 		
@@ -373,12 +450,19 @@ class HtmlInputNodeTextParser {
 		}
 	}
 	
+	/**
+	 * Returns true if text node is inside a code element, suppresing any
+	 * auto-detection of content.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @return      boolean         true if text node is inside a code element
+	 */
 	protected function hasCodeParent(\DOMText $text) {
 		$parent = $text;
 		/** @var \DOMElement $parent */
 		while ($parent = $parent->parentNode) {
 			$nodeName = $parent->nodeName;
-			if ($nodeName === 'code' || $nodeName === 'kbd') {
+			if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
 				return true;
 			}
 			else if ($nodeName === 'woltlab-metacode' && in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)) {
@@ -389,6 +473,13 @@ class HtmlInputNodeTextParser {
 		return false;
 	}
 	
+	/**
+	 * Returns true if text node is inside a link, preventing the link content
+	 * being recognized as a link again.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @return      boolean         true if text node is inside a link
+	 */
 	protected function hasLinkParent(\DOMText $text) {
 		$parent = $text;
 		/** @var \DOMElement $parent */
@@ -402,6 +493,17 @@ class HtmlInputNodeTextParser {
 		return false;
 	}
 	
+	/**
+	 * Uses string markers to replace the matched text. This process prevents multiple
+	 * detections being applied to the same target and enables us to delay replacement.
+	 * 
+	 * Immediately replacing matches would potentially cause a lot of DOM modifications
+	 * and moving of nodes especially if there are multiple matches per text node.
+	 * 
+	 * @param       \DOMText        $text           text node
+	 * @param       \DOMElement     $element        element queued for insertion
+	 * @return      string          replacement marker
+	 */
 	public function addReplacement(\DOMText $text, \DOMElement $element) {
 		$index = array_search($text, $this->nodeStack, true);
 		if ($index === false) {
@@ -417,16 +519,22 @@ class HtmlInputNodeTextParser {
 		return $marker;
 	}
 	
+	/**
+	 * Returns a random string marker for replacement.
+	 * 
+	 * @return      string          random string marker
+	 */
 	public function getNewMarker() {
 		return '@@@' . StringUtil::getUUID() . '@@@';
 	}
 	
 	/**
-	 * Returns the username for the given regular expression match.
-	 *
-	 * @param	string		$match
-	 * @return	string
-	 * @since	3.0
+	 * Returns the username for the given regular expression match and takes care
+	 * of any quotes outside the username and certain special characters, such as
+	 * colons, that have been incorrectly matched.
+	 * 
+	 * @param	string		$match          matched username
+	 * @return	string          sanitized username
 	 */
 	public function getUsername($match) {
 		// remove escaped single quotation mark

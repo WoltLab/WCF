@@ -2,12 +2,17 @@
 namespace wcf\system\html\input\node;
 use wcf\system\html\metacode\converter\IMetacodeConverter;
 use wcf\system\html\node\AbstractHtmlNode;
-use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Proccesses `<woltlab-metacode>` and converts them if appropriate.
+ *
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Input\Node
+ * @since       3.0
  */
 class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 	/**
@@ -23,9 +28,15 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 		'u' => 'u'
 	];
 	
+	/**
+	 * @inheritDoc
+	 */
 	protected $tagName = 'woltlab-metacode';
 	
-	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+	/**
+	 * @inheritDoc
+	 */
+	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var IMetacodeConverter[] $converters */
 		$converters = [];
 		
@@ -78,11 +89,10 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function replaceTag(array $data) {
 		return $data['parsedTag'];
-	}
-	
-	protected function getPlaceholderElement() {
-		return new \DOMElement('woltlab-placeholder');
 	}
 }

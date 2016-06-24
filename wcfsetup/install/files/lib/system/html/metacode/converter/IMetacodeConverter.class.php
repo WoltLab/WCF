@@ -2,8 +2,13 @@
 namespace wcf\system\html\metacode\converter;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Default interface for metacode converters.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Metacode\Converter
+ * @since       3.0
  */
 interface IMetacodeConverter {
 	/**

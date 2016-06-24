@@ -14,16 +14,24 @@ use wcf\system\bbcode\highlighter\SqlHighlighter;
 use wcf\system\bbcode\highlighter\TexHighlighter;
 use wcf\system\bbcode\highlighter\XmlHighlighter;
 use wcf\system\html\node\AbstractHtmlNode;
-use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Processes code listings.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Output\Node
+ * @since       3.0
  */
 class HtmlOutputNodePre extends AbstractHtmlNode {
+	/**
+	 * @inheritDoc
+	 */
 	protected $tagName = 'pre';
 	
 	/**
@@ -35,7 +43,7 @@ class HtmlOutputNodePre extends AbstractHtmlNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$nodeIdentifier = StringUtil::getRandomID();
@@ -50,6 +58,9 @@ class HtmlOutputNodePre extends AbstractHtmlNode {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function replaceTag(array $data) {
 		$content = preg_replace('/^\s*\n/', '', $data['content']);
 		$content = preg_replace('/\n\s*$/', '', $content);

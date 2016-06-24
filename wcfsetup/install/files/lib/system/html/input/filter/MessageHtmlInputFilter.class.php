@@ -1,9 +1,15 @@
 <?php
 namespace wcf\system\html\input\filter;
+use wcf\system\event\EventHandler;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * HTML input filter using HTMLPurifier.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Input\Filter
+ * @since       3.0
  */
 class MessageHtmlInputFilter implements IHtmlInputFilter {
 	/**
@@ -11,6 +17,12 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	 */
 	protected static $purifier;
 	
+	/**
+	 * Applies HTMLPurifier's filter on provided HTML.
+	 * 
+	 * @param       string  $html   unsafe HTML
+	 * @return      string  sanitized HTML
+	 */
 	public function apply($html) {
 		return $this->getPurifier()->purify($html);
 	}
@@ -28,8 +40,12 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		return self::$purifier;
 	}
 	
+	/**
+	 * Sets required configuration data for HTML filter.
+	 * 
+	 * @param       \HTMLPurifier_Config    $config         HTMLPurifier configuration
+	 */
 	protected function setAttributeDefinitions(\HTMLPurifier_Config $config) {
-		// TODO: move this into own PHP classes
 		$definition = $config->getHTMLDefinition(true);
 		
 		// quotes
@@ -73,5 +89,11 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		
 		// add data-attachment-id="" for <img>
 		$definition->addAttribute('img', 'data-attachment-id', 'Number');
+		
+		$parameters = [
+			'config' => $config,
+			'definition' => $definition
+		];
+		EventHandler::getInstance()->fireAction($this, 'setAttributeDefinitions', $parameters);
 	}
 }

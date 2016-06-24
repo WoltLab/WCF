@@ -1,22 +1,33 @@
 <?php
 namespace wcf\system\html\input\node;
 use wcf\system\html\node\AbstractHtmlNode;
-use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Proccesses `<img>` to handle embedded attachments.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Input\Node
+ * @since       3.0
  */
 class HtmlInputNodeImg extends AbstractHtmlNode {
+	/**
+	 * @inheritDoc
+	 */
 	protected $tagName = 'img';
 	
-	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+	/**
+	 * @inheritDoc
+	 */
+	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$class = $element->getAttribute('class');
-			if ($class !== 'woltlabAttachment') {
+			if (!preg_match('~\bwoltlabAttachment\b~', $class)) {
 				continue;
 			}
 			
@@ -25,17 +36,20 @@ class HtmlInputNodeImg extends AbstractHtmlNode {
 				continue;
 			}
 			
-			// TODO: add alignment detection
-			$alignment = 'none';
+			$float = 'none';
 			$thumbnail = false;
 			
 			if (strpos($element->getAttribute('src'), 'thumbnail=1') !== false) {
 				$thumbnail = true;
 			}
 			
+			if (preg_match('~\bmessageFloatObject(?P<float>Left|Right)\b~', $class, $matches)) {
+				$float = ($matches['float'] === 'Left') ? 'left' : 'right';
+			}
+			
 			$attributes = [
 				$attachmentID,
-				$alignment,
+				$float,
 				$thumbnail
 			];
 			

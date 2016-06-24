@@ -1,20 +1,28 @@
 <?php
 namespace wcf\system\html\output\node;
 use wcf\system\html\node\AbstractHtmlNode;
-use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\StringUtil;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Processes text size.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Output\Node
+ * @since       3.0
  */
 class HtmlOutputNodeWoltlabSize extends AbstractHtmlNode {
+	/**
+	 * @inheritDoc
+	 */
 	protected $tagName = 'woltlab-size';
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			// parse color
@@ -29,6 +37,9 @@ class HtmlOutputNodeWoltlabSize extends AbstractHtmlNode {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function replaceTag(array $data) {
 		return '<span style="font-size: ' . $data['size'] . 'px">' . self::PLACEHOLDER . '</span>';
 	}

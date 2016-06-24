@@ -2,7 +2,7 @@
 namespace wcf\system\html\input\node;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNode;
-use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 
 /**
@@ -44,7 +44,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(array $elements, HtmlNodeProcessor $htmlNodeProcessor) {
+	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		// collect pairs
 		$pairs = $this->buildPairs($elements);
 		
@@ -72,7 +72,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlNode {
 			while ($parent = $parent->parentNode) {
 				$nodeName = $parent->nodeName;
 				
-				if ($nodeName === 'code' || $nodeName === 'kbd') {
+				if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
 					return true;
 				}
 				else if ($nodeName === 'woltlab-metacode') {

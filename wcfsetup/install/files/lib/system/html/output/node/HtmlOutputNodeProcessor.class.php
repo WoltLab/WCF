@@ -1,21 +1,24 @@
 <?php
 namespace wcf\system\html\output\node;
-use wcf\system\html\node\HtmlNodeProcessor;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Processes a HTML string and renders the final output for display.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Output\Node
+ * @since       3.0
  */
-class HtmlOutputNodeProcessor extends HtmlNodeProcessor {
+class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
+	/**
+	 * @inheritDoc
+	 */
 	public function process() {
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
 		
-		// TODO: this should be dynamic to some extent
-		$this->invokeHtmlNode(new HtmlOutputNodeBlockquote());
-		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMention());
-		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabColor());
-		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabSize());
-		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabSpoiler());
-		$this->invokeHtmlNode(new HtmlOutputNodePre());
+		// dynamic node handlers
+		$this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
 	}
 }
