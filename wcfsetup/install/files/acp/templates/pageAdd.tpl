@@ -347,7 +347,7 @@
 						<ul class="scrollableCheckboxList">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
-									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if}> {$availableBox->name}</label>
+									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked="checked"{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}</label>
 								</li>
 							{/foreach}
 						</ul>
