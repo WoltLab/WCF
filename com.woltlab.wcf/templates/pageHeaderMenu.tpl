@@ -1,1 +1,1 @@
-{@$__wcf->getBoxHandler()->getBoxes('mainMenu')[0]->render()}
+{@$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->render()}
