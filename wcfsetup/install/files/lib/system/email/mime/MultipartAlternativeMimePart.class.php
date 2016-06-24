@@ -47,7 +47,7 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart {
 	 */
 	// @codingStandardsIgnoreStart
 	public function addMimePart(AbstractMimePart $part, $data = 1000) {
-		return parent::addMimePart($part, $data);
+		parent::addMimePart($part, $data);
 	}
 	// @codingStandardsIgnoreEnd
 }

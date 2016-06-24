@@ -31,7 +31,7 @@ class MultipartMixedMimePart extends AbstractMultipartMimePart {
 	 */
 	// @codingStandardsIgnoreStart
 	public function addMimePart(AbstractMimePart $part, $data = null) {
-		return parent::addMimePart($part, $data);
+		parent::addMimePart($part, $data);
 	}
 	// @codingStandardsIgnoreEnd
 }
