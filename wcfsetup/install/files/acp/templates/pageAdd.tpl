@@ -56,7 +56,10 @@
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.page.general{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.page.contents{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('boxes')}">{lang}wcf.acp.page.boxes{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.page.acl{/lang}</a></li>
+				
+				{if $action != 'edit' || $page->pageType != 'system'}
+					<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.page.acl{/lang}</a></li>
+				{/if}
 				
 				{event name='tabMenuTabs'}
 			</ul>
@@ -362,10 +365,12 @@
 			</div>
 		</div>
 		
-		<div id="acl" class="tabMenuContent">
-			{include file='aclSimple'}
-		</div>
-	</div>	
+		{if $action != 'edit' || $page->pageType != 'system'}
+			<div id="acl" class="tabMenuContent">
+				{include file='aclSimple'}
+			</div>
+		{/if}
+	</div>
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">

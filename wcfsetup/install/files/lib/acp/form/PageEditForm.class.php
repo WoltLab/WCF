@@ -178,7 +178,9 @@ class PageEditForm extends PageAddForm {
 		}
 		
 		// save acl
-		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $this->page->pageID, $this->aclValues);
+		if ($this->page->pageType != 'system') {
+			SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $this->page->pageID, $this->aclValues);
+		}
 		
 		// call saved event
 		$this->saved();
