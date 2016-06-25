@@ -44,12 +44,10 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 			}
 			
 			if (!_elements.has(element)) {
-				var jumpTo = elBySel('.jumpTo', element);
-				if (jumpTo !== null) {
+				elBySelAll('.jumpTo', element, (function(jumpTo) {
 					jumpTo.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, element));
-					
 					_elements.set(element, { callback: callback });
-				}
+				}).bind(this));
 			}
 		},
 		
