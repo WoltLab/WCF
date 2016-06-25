@@ -34,11 +34,8 @@ WCF.ACP.Language.ItemList = Class.extend({
 	
 	/**
 	 * Initializes the WCF.ACP.Style.List class.
-	 * 
-	 * @param	integer		count
-	 * @param	integer		pageNo
 	 */
-	init: function(count, pageNo) {
+	init: function() {
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -50,40 +47,6 @@ WCF.ACP.Language.ItemList = Class.extend({
 			var self = this;
 			$button.click(function() { self._click($languageItemID); });
 		}, this));
-		
-		count = ~~count;
-		if (count > 100) {
-			this._createPagination(count, pageNo);
-		}
-	},
-	
-	/**
-	 * Creates a pagination for current search result.
-	 * 
-	 * @param	integer		count
-	 * @param	integer		pageNo
-	 */
-	_createPagination: function(count, pageNo) {
-		var navs = [];
-		
-		// pagination top
-		var contentNavigation = $('<div class="paginationTop"><nav class="pagination" /></div>').insertBefore($('.section.sectionContainerList'));
-		navs.push(contentNavigation[0].children[0]);
-		
-		// pagination bottom
-		contentNavigation = $('<div class="paginationBottom"><nav class="pagination" /></div>').prependTo($('.contentFooter'));
-		navs.push(contentNavigation[0].children[0]);
-		
-		navs.forEach(function(nav) {
-			$(nav).wcfPages({
-				activePage: parseInt(pageNo) || 1,
-				maxPage: Math.ceil(count / 100)
-			}).on('wcfpagesswitched', function(event, data) {
-				var $form = $('#languageItemSearchForm');
-				$('<input type="hidden" name="pageNo" value="' + data.activePage + '" />').appendTo($form);
-				$form.submit();
-			});
-		});
 	},
 	
 	/**

@@ -550,8 +550,8 @@
 		<item name="wcf.acp.language.item.value"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[Eigener Inhalt]]></item>
 		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Eigene Version verwenden]]></item>
-		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[Inhalte mit eigener Version]]></item>
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
+		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Deaktivierte veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
 	</category>

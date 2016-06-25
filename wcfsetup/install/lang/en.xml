@@ -549,8 +549,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.item.value"><![CDATA[Content]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[Custom Value]]></item>
 		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Use custom value]]></item>
-		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[Phrases with custom values]]></item>
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
+		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Disabled customized values]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
 	</category>

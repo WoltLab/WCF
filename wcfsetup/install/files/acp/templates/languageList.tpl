@@ -81,8 +81,8 @@
 						<td class="columnID columnLanguageID">{@$language->languageID}</td>
 						<td class="columnTitle columnLanguageName"><a href="{link controller='LanguageEdit' id=$language->languageID}{/link}">{$language->languageName} ({@$language->languageCode})</a></td>
 						<td class="columnDigits columnUsers">{#$language->users}</td>
-						<td class="columnDigits columnVariables"><a href="{link controller='LanguageItemList' id=$language->languageID}{/link}">{#$language->variables}</a></td>
-						<td class="columnDigits columnCustomVariables">{if $language->customVariables > 0}<a href="{link controller='LanguageItemList' id=$language->languageID}hasCustomValue=1{/link}">{#$language->customVariables}</a>{else}{#$language->customVariables}{/if}</td>
+						<td class="columnDigits columnVariables"><a href="{link controller='LanguageItemList'}languageID={@$language->languageID}{/link}">{#$language->variables}</a></td>
+						<td class="columnDigits columnCustomVariables">{if $language->customVariables > 0}<a href="{link controller='LanguageItemList'}languageID={@$language->languageID}&hasCustomValue=1{/link}">{#$language->customVariables}</a>{else}{#$language->customVariables}{/if}</td>
 						
 						{event name='columns'}
 					</tr>

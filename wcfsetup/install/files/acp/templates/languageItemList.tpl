@@ -4,7 +4,7 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.ACP.Language.ItemList({@$count}, {@$pageNo});
+		new WCF.ACP.Language.ItemList();
 	});
 	//]]>
 </script>
@@ -33,7 +33,7 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<select name="id" id="languageID">
+					<select name="languageID" id="languageID">
 						<option value="0">{lang}wcf.user.language{/lang}</option>
 						{foreach from=$availableLanguages item=availableLanguage}
 							<option value="{@$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
@@ -66,6 +66,7 @@
 				<dd>
 					<input type="text" id="languageItemValue" name="languageItemValue" value="{$languageItemValue}" placeholder="{lang}wcf.acp.language.item.value{/lang}" class="long">
 					<label><input type="checkbox" name="hasCustomValue" value="1"{if $hasCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.customValues{/lang}</label>
+					<label><input type="checkbox" name="hasDisabledCustomValue" value="1"{if $hasDisabledCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.disabledCustomValues{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -79,33 +80,60 @@
 	</section>
 </form>
 
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $languageID}{capture append=linkParameters}&languageID={@$languageID}{/capture}{/if}
+			{if $languageCategoryID}{capture append=linkParameters}&languageCategoryID={@$languageCategoryID}{/capture}{/if}
+			{if $languageItem}{capture append=linkParameters}&languageItem={@$languageItem|rawurlencode}{/capture}{/if}
+			{if $languageItemValue}{capture append=linkParameters}&languageItemValue={@$languageItemValue|rawurlencode}{/capture}{/if}
+			{if $hasCustomValue}{capture append=linkParameters}&hasCustomValue=1{/capture}{/if}
+			
+			{pages print=true assign=pagesLinks controller="LanguageItemList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
+
 {if $objects|count}
-	<div class="section sectionContainerList">
-		<ol class="containerList">
-			{foreach from=$objects item=item}
-				<li>
-					<div>
-						<div class="details">
-							<div class="containerHeadline">
-								<h3><a class="jsLanguageItem" data-language-item-id="{@$item->languageItemID}">{$item->languageItem}</a>{if $item->languageCustomItemValue !== null} <span class="icon icon16 fa-bookmark jsTooltip" title="{lang}wcf.acp.language.item.hasCustomValue{/lang}"></span>{/if}</h3>
-							</div>
-							
-							<p class="containerContent">{if $item->languageUseCustomValue}{$item->languageCustomItemValue|truncate:255}{else}{$item->languageItemValue|truncate:255}{/if}</p>
-						</div>
-					</div>
-				</li>
-			{/foreach}
-		</ol>
+	<div class="section tabularBox">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="columnTitle columnLanguageItem{if $sortField == 'languageItem'} active {@$sortOrder}{/if}"><a href="{link controller='LanguageItemList'}pageNo={@$pageNo}&sortField=languageItem&sortOrder={if $sortField == 'languageItem' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnText columnLanguageItemValue">{lang}wcf.acp.language.item.value{/lang}</th>
+					<th class="columnText columnLanguageCustomItemValue">{lang}wcf.acp.language.item.customValue{/lang}</th>
+					
+					{event name='columnHeads'}
+				</tr>
+			</thead>
+			
+			<tbody>
+				{foreach from=$objects item=item}
+					<tr>
+						<td class="columnTitle columnLanguageItem"><a class="jsLanguageItem" data-language-item-id="{@$item->languageItemID}">{$item->languageItem}</a></td>
+						<td class="columnText columnLanguageItemValue">{$item->languageItemValue|truncate:255}</td>
+						<td class="columnText columnLanguageCustomItemValue">{if !$item->languageUseCustomValue}<s>{/if}{$item->languageCustomItemValue|truncate:255}{if !$item->languageUseCustomValue}</s>{/if}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
+			</tbody>
+		</table>
 	</div>
 	
 	<footer class="contentFooter">
 		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
+		
+		{hascontent}
 			<nav class="contentFooterNavigation">
 				<ul>
 					{content}
-					
-					
-					{event name='contentFooterNavigation'}
+						{event name='contentFooterNavigation'}
 					{/content}
 				</ul>
 			</nav>
