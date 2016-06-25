@@ -4,7 +4,6 @@ use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
-use wcf\system\html\input\node\IHtmlInputNodeProcessor;
 use wcf\util\StringUtil;
 
 /**
@@ -29,7 +28,7 @@ class HtmlInputProcessor {
 	protected $htmlInputFilter;
 	
 	/**
-	 * @var	IHtmlInputNodeProcessor
+	 * @var HtmlInputNodeProcessor
 	 */
 	protected $htmlInputNodeProcessor;
 	
@@ -78,6 +77,17 @@ class HtmlInputProcessor {
 	}
 	
 	/**
+	 * @return HtmlInputNodeProcessor
+	 */
+	public function getHtmlInputNodeProcessor() {
+		if ($this->htmlInputNodeProcessor === null) {
+			$this->htmlInputNodeProcessor = new HtmlInputNodeProcessor();
+		}
+		
+		return $this->htmlInputNodeProcessor;
+	}
+	
+	/**
 	 * @return	IHtmlInputFilter
 	 */
 	protected function getHtmlInputFilter() {
@@ -86,16 +96,5 @@ class HtmlInputProcessor {
 		}
 		
 		return $this->htmlInputFilter;
-	}
-	
-	/**
-	 * @return IHtmlInputNodeProcessor
-	 */
-	protected function getHtmlInputNodeProcessor() {
-		if ($this->htmlInputNodeProcessor === null) {
-			$this->htmlInputNodeProcessor = new HtmlInputNodeProcessor();
-		}
-		
-		return $this->htmlInputNodeProcessor;
 	}
 }
