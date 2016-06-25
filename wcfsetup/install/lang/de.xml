@@ -3317,7 +3317,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.mail.information"><![CDATA[Informationen]]></item>
 		<item name="wcf.user.mail.mail"><![CDATA[Hallo {@$recipient->username},
 
-"{@$username}" hat Ihnen auf der Website "{@PAGE_TITLE|language}" folgende Nachricht gesandt:
+"{@$username}" hat Ihnen über die Website "{@PAGE_TITLE|language}" folgende Nachricht gesandt:
 {@$message}]]></item>
 		<item name="wcf.user.mail.mail.subject"><![CDATA[Nachricht von {@$username}: {@$subject}]]></item>
 		<item name="wcf.user.mail.message"><![CDATA[Nachricht]]></item>
