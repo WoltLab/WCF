@@ -54,7 +54,8 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 		
 		WCF::getTPL()->assign([
 			'items' => $this->items,
-			'title' => $this->title
+			'title' => $this->title,
+			'supportsEnclosure' => false
 		]);
 	}
 	

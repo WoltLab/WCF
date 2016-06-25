@@ -11,7 +11,7 @@
 		<dl{if $errorField == 'q'} class="formError"{/if}>
 			<dt><label for="searchTerm">{lang}wcf.search.query{/lang}</label></dt>
 			<dd>
-				<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus="autofocus">
+				<input type="text" id="searchTerm" name="q" value="{$query}" class="long" maxlength="255" autofocus>
 				{if $errorField == 'q'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -21,7 +21,7 @@
 						{/if}
 					</small>
 				{/if}
-				<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked="checked"{/if}> {lang}wcf.search.subjectOnly{/lang}</label>
+				<label><input type="checkbox" name="subjectOnly" value="1"{if $subjectOnly == 1} checked{/if}> {lang}wcf.search.subjectOnly{/lang}</label>
 				{event name='queryOptions'}
 				
 				<small>{lang}wcf.search.query.description{/lang}</small>
@@ -32,7 +32,7 @@
 			<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
 			<dd>
 				<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" autocomplete="off">
-				<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked="checked"{/if}> {lang}wcf.search.matchExactly{/lang}</label>
+				<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked{/if}> {lang}wcf.search.matchExactly{/lang}</label>
 				{event name='authorOptions'}
 			</dd>
 		</dl>
@@ -51,17 +51,17 @@
 			<dd>
 				<label class="selectDropdown">
 					<select id="sortField" name="sortField">
-						<option value="relevance"{if $sortField == 'relevance'} selected="selected"{/if}>{lang}wcf.search.sortBy.relevance{/lang}</option>
-						<option value="subject"{if $sortField == 'subject'} selected="selected"{/if}>{lang}wcf.global.subject{/lang}</option>
-						<option value="time"{if $sortField == 'time'} selected="selected"{/if}>{lang}wcf.search.sortBy.time{/lang}</option>
-						<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.search.sortBy.username{/lang}</option>
+						<option value="relevance"{if $sortField == 'relevance'} selected{/if}>{lang}wcf.search.sortBy.relevance{/lang}</option>
+						<option value="subject"{if $sortField == 'subject'} selected{/if}>{lang}wcf.global.subject{/lang}</option>
+						<option value="time"{if $sortField == 'time'} selected{/if}>{lang}wcf.search.sortBy.time{/lang}</option>
+						<option value="username"{if $sortField == 'username'} selected{/if}>{lang}wcf.search.sortBy.username{/lang}</option>
 					</select>
 				</label>
 				
 				<label class="selectDropdown">
 					<select name="sortOrder">
-						<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-						<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
+						<option value="ASC"{if $sortOrder == 'ASC'} selected{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
+						<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 					</select>
 				</label>
 				{event name='displayOptions'}
@@ -75,7 +75,7 @@
 			<dd class="floated">
 				{foreach from=$objectTypes key=objectTypeName item=objectType}
 					{if $objectType->isAccessible()}
-						<label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked="checked"{/if}> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label>
+						<label><input id="{@'.'|str_replace:'_':$objectTypeName}" type="checkbox" name="types[]" value="{@$objectTypeName}"{if $objectTypeName|in_array:$selectedObjectTypes} checked{/if}> {lang}wcf.search.type.{@$objectTypeName}{/lang}</label>
 					{/if}
 				{/foreach}
 			</dd>

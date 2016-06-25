@@ -4,7 +4,7 @@
 	<dl class="wide">
 		<dt></dt>
 		<dd>
-			<textarea rows="5" cols="60" name="languageItemValue" id="overlayLanguageItemValue"{if $item->languageItemOriginIsSystem} readonly="readonly"{/if}>{$item->languageItemValue}</textarea>
+			<textarea rows="5" cols="60" name="languageItemValue" id="overlayLanguageItemValue"{if $item->languageItemOriginIsSystem} readonly{/if}>{$item->languageItemValue}</textarea>
 		</dd>
 	</dl>
 </section>
@@ -22,7 +22,7 @@
 		
 		<dl class="wide">
 			<dt></dt>
-			<dd><label><input type="checkbox" name="languageUseCustomValue" id="overlayLanguageUseCustomValue" value="1"{if $item->languageUseCustomValue} checked="checked"{/if}> {lang}wcf.acp.language.item.useCustomValue{/lang}</label></dd>
+			<dd><label><input type="checkbox" name="languageUseCustomValue" id="overlayLanguageUseCustomValue" value="1"{if $item->languageUseCustomValue} checked{/if}> {lang}wcf.acp.language.item.useCustomValue{/lang}</label></dd>
 		</dl>
 	</section>
 {/if}

@@ -72,7 +72,7 @@
 				<dl{if $errorField == 'name'} class="formError"{/if}>
 					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="name" name="name" value="{$name}" required="required" autofocus="autofocus" class="long">
+						<input type="text" id="name" name="name" value="{$name}" required autofocus class="long">
 						{if $errorField == 'name'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -88,9 +88,9 @@
 				<dl{if $errorField == 'boxType'} class="formError"{/if}>
 					<dt><label for="boxType">{lang}wcf.acp.box.boxType{/lang}</label></dt>
 					<dd>
-						<select name="boxType" id="boxType" readonly="readonly">
+						<select name="boxType" id="boxType" readonly>
 							{foreach from=$availableBoxTypes item=availableBoxType}
-								<option value="{@$availableBoxType}"{if $availableBoxType == $boxType} selected="selected"{/if}>{lang}wcf.acp.box.boxType.{@$availableBoxType}{/lang}</option>
+								<option value="{@$availableBoxType}"{if $availableBoxType == $boxType} selected{/if}>{lang}wcf.acp.box.boxType.{@$availableBoxType}{/lang}</option>
 							{/foreach}
 						</select>
 						
@@ -111,7 +111,7 @@
 					<dd>
 						<select name="boxControllerID" id="boxControllerID">
 							{foreach from=$availableBoxControllers item=availableBoxController}
-								<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected="selected"{/if}>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
+								<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if}>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
 							{/foreach}
 						</select>
 						
@@ -132,7 +132,7 @@
 					<dd>
 						<select name="position" id="position">
 							{foreach from=$availablePositions item=availablePosition}
-								<option value="{@$availablePosition}"{if $availablePosition == $position} selected="selected"{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 							{/foreach}
 						</select>
 						
@@ -174,7 +174,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked="checked"{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
+						<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
 					</dd>
 				</dl>
 			</div>
@@ -185,9 +185,9 @@
 				<dl>
 					<dt></dt>
 					<dd class="floated">
-						<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked="checked"{/if}> {lang}wcf.acp.box.linkType.none{/lang}</label>
-						<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked="checked"{/if}> {lang}wcf.acp.box.linkType.internal{/lang}</label>
-						<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked="checked"{/if}> {lang}wcf.acp.box.linkType.external{/lang}</label>
+						<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked{/if}> {lang}wcf.acp.box.linkType.none{/lang}</label>
+						<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked{/if}> {lang}wcf.acp.box.linkType.internal{/lang}</label>
+						<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked{/if}> {lang}wcf.acp.box.linkType.external{/lang}</label>
 					</dd>
 				</dl>
 				
@@ -198,7 +198,7 @@
 							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 							
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'linkPageID'}
@@ -404,7 +404,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked="checked"{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 					</dd>
 				</dl>
 				
@@ -414,7 +414,7 @@
 						<ul class="scrollableCheckboxList">
 							{foreach from=$pageNodeList item=pageNode}
 								<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-									<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked="checked"{/if}> {$pageNode->name}</label>
+									<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
 								</li>
 							{/foreach}
 						</ul>

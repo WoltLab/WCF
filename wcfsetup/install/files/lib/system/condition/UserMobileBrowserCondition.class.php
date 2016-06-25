@@ -54,12 +54,12 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
 		$usesNoMobileBrowserLabel = WCF::getLanguage()->get('wcf.user.condition.mobileBrowser.usesNoMobileBrowser');
 		$usesMobileBrowserChecked = '';
 		if ($this->usesMobileBrowser) {
-			$usesMobileBrowserChecked = ' checked="checked"';
+			$usesMobileBrowserChecked = ' checked';
 		}
 		
 		$usesNoMobileBrowserChecked = '';
 		if ($this->usesNoMobileBrowser) {
-			$usesNoMobileBrowserChecked = ' checked="checked"';
+			$usesNoMobileBrowserChecked = ' checked';
 		}
 		
 		return <<<HTML

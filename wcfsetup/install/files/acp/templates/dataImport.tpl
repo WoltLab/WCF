@@ -135,10 +135,10 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd class="jsImportCollection">
-						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+						<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportSection"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 						<p>
 							{foreach from=$objectTypes item=objectTypeName}
-								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked="checked"{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
+								<label><input type="checkbox" name="selectedData[]" value="{@$objectTypeName}" class="jsImportItem"{if $objectTypeName|in_array:$selectedData} checked{/if}> {lang}wcf.acp.dataImport.data.{@$objectTypeName}{/lang}</label>
 							{/foreach}
 						</p>
 					</dd>
@@ -154,8 +154,8 @@
 			<dl>
 				<dt><label for="userMergeMode">{lang}wcf.acp.dataImport.configure.settings.userMergeMode{/lang}</label></dt>
 				<dd>
-					<label><input type="radio" id="userMergeMode" name="userMergeMode" value="4"{if $userMergeMode == 4} checked="checked"{/if}> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.4{/lang}</label>
-					<label><input type="radio" name="userMergeMode" value="5"{if $userMergeMode == 5} checked="checked"{/if}> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.5{/lang}</label>
+					<label><input type="radio" id="userMergeMode" name="userMergeMode" value="4"{if $userMergeMode == 4} checked{/if}> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.4{/lang}</label>
+					<label><input type="radio" name="userMergeMode" value="5"{if $userMergeMode == 5} checked{/if}> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.5{/lang}</label>
 				</dd>
 			</dl>
 			

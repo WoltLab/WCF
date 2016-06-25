@@ -65,4 +65,15 @@ class ArticleFeedPage extends AbstractFeedPage {
 			$this->title = WCF::getLanguage()->get('wcf.article.articles');
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign([
+			'supportsEnclosure' => true
+		]);
+	}
 }

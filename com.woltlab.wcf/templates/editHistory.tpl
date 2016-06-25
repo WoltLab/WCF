@@ -76,7 +76,7 @@
 				<tr>
 					<td class="columnIcon">
 						<span class="icon icon16 fa-undo disabled"></span>
-						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked="checked"{/if}> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked="checked"{/if}>
+						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked{/if}> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked{/if}>
 						{event name='rowButtons'}
 					</td>
 					<td class="columnID"><strong>{lang}wcf.edit.currentVersion{/lang}</strong></td>
@@ -90,7 +90,7 @@
 					<tr class="jsEditRow">
 						<td class="columnIcon">
 							<span class="icon icon16 fa-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang __encode=true}wcf.edit.revert.sure{/lang}"></span>
-							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked="checked"{/if}> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked="checked"{/if}>
+							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked{/if}> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked{/if}>
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{#($tpl[foreach][edit][total] - $tpl[foreach][edit][iteration] + 1)}</td>

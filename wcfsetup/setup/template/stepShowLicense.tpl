@@ -10,7 +10,7 @@
 		<dl{if $missingAcception|isset} class="formError"{/if}>
 			<dt></dt>
 			<dd>
-				<textarea rows="20" cols="40" readonly="readonly" autofocus="autofocus" id="license">{$license}</textarea>
+				<textarea rows="20" cols="40" readonly autofocus id="license">{$license}</textarea>
 				<label><input type="checkbox" name="accepted" value="1"> {lang}wcf.global.license.accept.description{/lang}</label>
 				{if $missingAcception|isset}
 					<small class="innerError">

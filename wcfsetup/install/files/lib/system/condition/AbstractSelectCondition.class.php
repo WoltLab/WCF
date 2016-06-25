@@ -96,7 +96,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 	 * @return	string
 	 */
 	protected function getOptionCode($value, $label) {
-		return '<option value="'.$value.'"'.($this->fieldValue == $value ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
+		return '<option value="'.$value.'"'.($this->fieldValue == $value ? ' selected' : '').'>'.WCF::getLanguage()->get($label).'</option>';
 	}
 	
 	/**

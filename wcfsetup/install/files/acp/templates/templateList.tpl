@@ -60,7 +60,7 @@
 						<select name="application" id="application">
 							<option value="">{lang}wcf.acp.template.application{/lang}</option>
 							{foreach from=$availableApplications key=abbreviation item=availableApplication}
-								<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
+								<option value="{$abbreviation}"{if $abbreviation == $application} selected{/if}>{$availableApplication}</option>
 							{/foreach}
 						</select>
 					</dd>

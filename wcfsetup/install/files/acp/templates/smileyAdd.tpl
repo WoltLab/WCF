@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'smileyTitle'} class="formError"{/if}>
 			<dt><label for="smileyTitle">{lang}wcf.acp.smiley.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="smileyTitle" name="smileyTitle" value="{$i18nPlainValues['smileyTitle']}" autofocus="autofocus" class="long">
+				<input type="text" id="smileyTitle" name="smileyTitle" value="{$i18nPlainValues['smileyTitle']}" autofocus class="long">
 				
 				{if $errorField == 'smileyTitle'}
 					<small class="innerError">
@@ -44,7 +44,7 @@
 			<dt><label for="categoryID">{lang}wcf.acp.smiley.categoryID{/lang}</label></dt>
 			<dd>
 				<select id="categoryID" name="categoryID">
-					<option value="0"{if $categoryID === null} selected="selected"{/if}>{lang}wcf.acp.smiley.categoryID.default{/lang}</option>
+					<option value="0"{if $categoryID === null} selected{/if}>{lang}wcf.acp.smiley.categoryID.default{/lang}</option>
 					{include file='categoryOptionList'}
 				</select>
 				
@@ -63,7 +63,7 @@
 		<dl{if $errorField == 'smileyCode'} class="formError"{/if}>
 			<dt><label for="smileyCode">{lang}wcf.acp.smiley.smileyCode{/lang}</label></dt>
 			<dd>
-				<input type="text" id="smileyCode" name="smileyCode" value="{$smileyCode}" required="required" class="medium">
+				<input type="text" id="smileyCode" name="smileyCode" value="{$smileyCode}" required class="medium">
 				
 				{if $errorField == 'smileyCode'}
 					<small class="innerError">

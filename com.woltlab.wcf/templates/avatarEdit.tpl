@@ -17,7 +17,7 @@
 		<dl class="avatarType">
 			<dt></dt>
 			<dd>
-				<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
+				<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked {/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
 				<small>{lang}wcf.user.avatar.type.none.description{/lang}</small>
 			</dd>
 		</dl>
@@ -36,7 +36,7 @@
 					{/if}
 				</dt>
 				<dd>
-					<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked="checked"{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
+					<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
 					<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
 					
 					{* placeholder for upload button: *}
@@ -55,7 +55,7 @@
 			<dl class="avatarType{if $errorField == 'gravatar'} formError{/if}">
 				<dt><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
 				<dd>
-					<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked="checked"{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
+					<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 					{if $errorField == 'gravatar'}
 						<small class="innerError">
 							{if $errorType == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}

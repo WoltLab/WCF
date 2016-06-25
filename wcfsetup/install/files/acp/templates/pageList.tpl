@@ -56,7 +56,7 @@
 						<select name="applicationPackageID" id="applicationPackageID">
 							<option value="0">{lang}wcf.acp.page.applicationPackageID{/lang}</option>
 							{foreach from=$availableApplications item=availableApplication}
-								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected="selected"{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
+								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
 							{/foreach}
 						</select>
 					</label>
@@ -69,8 +69,8 @@
 					<label class="selectDropdown">
 						<select name="pageType" id="pageType">
 							<option value="">{lang}wcf.acp.page.pageType{/lang}</option>
-							<option value="static"{if $pageType == 'static'} selected="selected"{/if}>{lang}wcf.acp.page.pageType.static{/lang}</option>
-							<option value="system"{if $pageType == 'system'} selected="selected"{/if}>{lang}wcf.acp.page.pageType.system{/lang}</option>
+							<option value="static"{if $pageType == 'static'} selected{/if}>{lang}wcf.acp.page.pageType.static{/lang}</option>
+							<option value="system"{if $pageType == 'system'} selected{/if}>{lang}wcf.acp.page.pageType.system{/lang}</option>
 						</select>
 					</label>
 				</dd>

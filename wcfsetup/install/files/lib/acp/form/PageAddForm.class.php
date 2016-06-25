@@ -160,7 +160,7 @@ class PageAddForm extends AbstractForm {
 		// get available languages
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 		
-		// get boxes
+		// get available boxes
 		$boxList = new BoxList();
 		$boxList->sqlOrderBy = 'box.name';
 		$boxList->readObjects();
@@ -208,6 +208,8 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['metaDescription']) && is_array($_POST['metaDescription'])) $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);
 		if (isset($_POST['metaKeywords']) && is_array($_POST['metaKeywords'])) $this->metaKeywords = ArrayUtil::trim($_POST['metaKeywords']);
 		if (isset($_POST['boxIDs']) && is_array($_POST['boxIDs'])) $this->boxIDs = ArrayUtil::toIntegerArray($_POST['boxIDs']);
+		$box = Box::getBoxByIdentifier('com.woltlab.wcf.MainMenu');
+		if (!in_array($box->boxID, $this->boxIDs)) $this->boxIDs[] = $box->boxID;
 		
 		if (isset($_POST['aclValues']) && is_array($_POST['aclValues'])) $this->aclValues = $_POST['aclValues'];
 	}
@@ -447,6 +449,9 @@ class PageAddForm extends AbstractForm {
 		
 		// call saved event
 		$this->saved();
+		
+		// show success
+		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;

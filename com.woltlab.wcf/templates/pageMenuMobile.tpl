@@ -8,7 +8,7 @@
 				<span class="menuOverlayItemTitle"></span>
 			</a>
 			<ol class="menuOverlayItemList">*}
-				{foreach from=$__wcf->getBoxHandler()->getBoxes('mainMenu')[0]->getMenu()->getMenuItemNodeList() item=menuItemNode}
+				{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
 					<li class="menuOverlayItem">
 						{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
 						<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}">

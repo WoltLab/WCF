@@ -110,9 +110,10 @@ class SimpleAclHandler extends SingletonFactory {
 	/**
 	 * Sets the user and group values for provided object type and object id.
 	 * 
-	 * @param       string          $objectType     object type name
-	 * @param       integer         $objectID       object id
-	 * @param       array           $values         list of user and group ids
+	 * @param	string		$objectType	object type name
+	 * @param	integer		$objectID	object id
+	 * @param	array		$values		list of user and group ids
+	 * @throws	SystemException
 	 */
 	public function setValues($objectType, $objectID, array $values) {
 		$objectTypeID = $this->getObjectTypeID($objectType);

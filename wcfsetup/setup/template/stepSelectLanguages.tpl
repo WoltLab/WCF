@@ -15,7 +15,7 @@
 			<dt>{lang}wcf.global.languages.languages{/lang}</dt>
 			<dd>
 				{foreach from=$availableLanguages key=availableLanguageCode item=languageName}
-					<label><input type="checkbox" name="selectedLanguages[]" value="{@$availableLanguageCode}"{if $availableLanguageCode|in_array:$selectedLanguages} checked="checked"{/if}> {$languageName} ({$availableLanguageCode})</label>
+					<label><input type="checkbox" name="selectedLanguages[]" value="{@$availableLanguageCode}"{if $availableLanguageCode|in_array:$selectedLanguages} checked{/if}> {$languageName} ({$availableLanguageCode})</label>
 				{/foreach}
 			</dd>
 		</dl>

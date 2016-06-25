@@ -36,7 +36,7 @@
 					<select name="id" id="languageID">
 						<option value="0">{lang}wcf.user.language{/lang}</option>
 						{foreach from=$availableLanguages item=availableLanguage}
-							<option value="{@$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected="selected"{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
+							<option value="{@$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
 						{/foreach}
 					</select>
 				</dd>
@@ -48,7 +48,7 @@
 					<select name="languageCategoryID" id="languageCategoryID">
 						<option value="0">{lang}wcf.acp.language.category{/lang}</option>
 						{foreach from=$availableLanguageCategories item=availableLanguageCategory}
-							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected="selected"{/if}>{$availableLanguageCategory->languageCategory}</option>
+							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected{/if}>{$availableLanguageCategory->languageCategory}</option>
 						{/foreach}
 					</select>
 				</dd>
@@ -65,7 +65,7 @@
 				<dt></dt>
 				<dd>
 					<input type="text" id="languageItemValue" name="languageItemValue" value="{$languageItemValue}" placeholder="{lang}wcf.acp.language.item.value{/lang}" class="long">
-					<label><input type="checkbox" name="hasCustomValue" value="1"{if $hasCustomValue == 1} checked="checked"{/if}> {lang}wcf.acp.language.item.customValues{/lang}</label>
+					<label><input type="checkbox" name="hasCustomValue" value="1"{if $hasCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.customValues{/lang}</label>
 				</dd>
 			</dl>
 			

@@ -40,7 +40,7 @@
 	<dl>
 		<dt><label>{lang}wcf.acp.stat.dateGrouping{/lang}</label></dt>
 		<dd>
-			<label><input type="radio" name="dateGrouping" value="daily" checked="checked"> {lang}wcf.acp.stat.dateGrouping.daily{/lang}</label>
+			<label><input type="radio" name="dateGrouping" value="daily" checked> {lang}wcf.acp.stat.dateGrouping.daily{/lang}</label>
 			<label><input type="radio" name="dateGrouping" value="weekly"> {lang}wcf.acp.stat.dateGrouping.weekly{/lang}</label>
 			<label><input type="radio" name="dateGrouping" value="monthly"> {lang}wcf.acp.stat.dateGrouping.monthly{/lang}</label>
 			<label><input type="radio" name="dateGrouping" value="yearly"> {lang}wcf.acp.stat.dateGrouping.yearly{/lang}</label>
@@ -50,7 +50,7 @@
 	<dl>
 		<dt><label>{lang}wcf.acp.stat.value{/lang}</label></dt>
 		<dd>
-			<label><input type="radio" name="value" value="counter" checked="checked"> {lang}wcf.acp.stat.value.counter{/lang}</label>
+			<label><input type="radio" name="value" value="counter" checked> {lang}wcf.acp.stat.value.counter{/lang}</label>
 			<label><input type="radio" name="value" value="total"> {lang}wcf.acp.stat.value.total{/lang}</label>
 		</dd>
 	</dl>
@@ -64,7 +64,7 @@
 			<dt><label>{lang}wcf.acp.stat.category.{@$categoryName}{/lang}</label></dt>
 			<dd>
 				{foreach from=$objectTypes item=objectType}
-					<label><input type="checkbox" name="objectTypeID" value="{@$objectType->objectTypeID}"{if $objectType->default} checked="checked"{/if}> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
+					<label><input type="checkbox" name="objectTypeID" value="{@$objectType->objectTypeID}"{if $objectType->default} checked{/if}> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
 				{/foreach}
 			</dd>
 		</dl>

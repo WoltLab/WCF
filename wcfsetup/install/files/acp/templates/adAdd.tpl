@@ -35,7 +35,7 @@
 		<dl{if $errorField == 'adName'} class="formError"{/if}>
 			<dt><label for="adName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="adName" name="adName" value="{$adName}" required="required" autofocus="autofocus" class="long">
+				<input type="text" id="adName" name="adName" value="{$adName}" required autofocus class="long">
 				{if $errorField == 'adName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -68,7 +68,7 @@
 		<dl>
 			<dt></dt>
 			<dd>
-				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> {lang}wcf.acp.ad.isDisabled{/lang}</label>
+				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.ad.isDisabled{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -76,11 +76,11 @@
 			<dt><label for="objectTypeID">{lang}wcf.acp.ad.location{/lang}</label></dt>
 			<dd>
 				<select name="objectTypeID" id="objectTypeID">
-					<option value="0"{if !$objectTypeID} checked="checked"{/if}>{lang}wcf.global.noSelection{/lang}</option>
+					<option value="0"{if !$objectTypeID} checked{/if}>{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$locations key='locationGroupLabel' item='locationGroup'}
 						<optgroup label="{$locationGroupLabel}">
 							{foreach from=$locationGroup key='locationID' item='location'}
-								<option value="{@$locationID}"{if $locationObjectTypes[$locationID]->page} data-page="{$locationObjectTypes[$locationID]->page}"{/if}{if $objectTypeID == $locationID} selected="selected"{/if}>{$location}</option>
+								<option value="{@$locationID}"{if $locationObjectTypes[$locationID]->page} data-page="{$locationObjectTypes[$locationID]->page}"{/if}{if $objectTypeID == $locationID} selected{/if}>{$location}</option>
 							{/foreach}
 						</optgroup>
 					{/foreach}

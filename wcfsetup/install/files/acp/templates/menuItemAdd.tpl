@@ -48,7 +48,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$menuItemNodeList item=menuItemNode}
-						<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentItemID} selected="selected"{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{lang}{$menuItemNode->title}{/lang}</option>
+						<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{lang}{$menuItemNode->title}{/lang}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'parentItemID'}
@@ -66,7 +66,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" name="title" id="title" value="{$title}" class="long" required="required">
+				<input type="text" name="title" id="title" value="{$title}" class="long" required>
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'multilingual'}
@@ -90,8 +90,8 @@
 		<dl>
 			<dt></dt>
 			<dd class="floated">
-				<label><input type="radio" name="isInternalLink" value="1"{if $isInternalLink} checked="checked"{/if}> {lang}wcf.acp.menu.item.link.internal{/lang}</label>
-				<label><input type="radio" name="isInternalLink" value="0"{if !$isInternalLink} checked="checked"{/if}> {lang}wcf.acp.menu.item.link.external{/lang}</label>
+				<label><input type="radio" name="isInternalLink" value="1"{if $isInternalLink} checked{/if}> {lang}wcf.acp.menu.item.link.internal{/lang}</label>
+				<label><input type="radio" name="isInternalLink" value="0"{if !$isInternalLink} checked{/if}> {lang}wcf.acp.menu.item.link.external{/lang}</label>
 			</dd>
 		</dl>
 		
@@ -102,7 +102,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'pageID'}
@@ -171,7 +171,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
+					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
 				</dd>
 			</dl>
 		{/if}

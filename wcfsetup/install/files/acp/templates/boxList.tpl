@@ -55,7 +55,7 @@
 						<select name="position" id="boxPosition">
 							<option value="0">{lang}wcf.acp.box.position{/lang}</option>
 							{foreach from=$availablePositions item=availablePosition}
-								<option value="{@$availablePosition}"{if $availablePosition == $position} selected="selected"{/if}>{@$availablePosition}</option>
+								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
 							{/foreach}
 						</select>
 					</label>
@@ -68,8 +68,8 @@
 					<label class="selectDropdown">
 						<select name="boxType" id="boxType">
 							<option value="">{lang}wcf.acp.box.boxType{/lang}</option>
-							<option value="static"{if $boxType == 'static'} selected="selected"{/if}>{lang}wcf.acp.box.boxType.static{/lang}</option>
-							<option value="system"{if $boxType == 'system'} selected="selected"{/if}>{lang}wcf.acp.box.boxType.system{/lang}</option>
+							<option value="static"{if $boxType == 'static'} selected{/if}>{lang}wcf.acp.box.boxType.static{/lang}</option>
+							<option value="system"{if $boxType == 'system'} selected{/if}>{lang}wcf.acp.box.boxType.system{/lang}</option>
 						</select>
 					</label>
 				</dd>

@@ -12,7 +12,7 @@
 			<dd>
 				{capture assign=languageChooser}<select name="languageCode" id="languageCode">
 					{foreach from=$availableLanguages key=availableLanguageCode item=languageName}
-						<option value="{$availableLanguageCode}"{if $availableLanguageCode == $languageCode} selected="selected"{/if}>{$languageName} ({$availableLanguageCode})</option>
+						<option value="{$availableLanguageCode}"{if $availableLanguageCode == $languageCode} selected{/if}>{$languageName} ({$availableLanguageCode})</option>
 					{/foreach}
 					</select>{/capture}
 				<label for="languageCode">{lang}wcf.global.welcome.language.description{/lang}</label>

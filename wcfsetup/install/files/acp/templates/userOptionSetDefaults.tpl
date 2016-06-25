@@ -26,7 +26,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="applyChangesToExistingUsers" value="1"{if $applyChangesToExistingUsers} checked="checked"{/if}> {lang}wcf.acp.user.option.setDefaults.applyChangesToExistingUsers{/lang}</label>
+					<label><input type="checkbox" name="applyChangesToExistingUsers" value="1"{if $applyChangesToExistingUsers} checked{/if}> {lang}wcf.acp.user.option.setDefaults.applyChangesToExistingUsers{/lang}</label>
 					<small>{lang}wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description{/lang}</small>	
 				</dd>
 			</dl>

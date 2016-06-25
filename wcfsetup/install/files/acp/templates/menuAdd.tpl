@@ -28,7 +28,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 			<dd>
-				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus="autofocus" class="long">
+				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus class="long">
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'title' || $errorType == 'multilingual'}
@@ -49,7 +49,7 @@
 				<dd>
 					<select name="position" id="position">
 						{foreach from=$availablePositions item=availablePosition}
-							<option value="{@$availablePosition}"{if $availablePosition == $position} selected="selected"{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 						{/foreach}
 					</select>
 					
@@ -91,23 +91,23 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked="checked"{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
+					<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked="checked"{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt><label for="pageIDs">{lang}wcf.acp.box.pageIDs{/lang}</label></dt>
 				<dd>
-					<select name="pageIDs[]" id="pageIDs" multiple="multiple" size="20">
+					<select name="pageIDs[]" id="pageIDs" multiple size="20">
 						{foreach from=$pageNodeList item=pageNode}
-							<option value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} selected="selected"{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+							<option value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 						{/foreach}
 					</select>
 				</dd>

@@ -40,7 +40,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<input type="text" id="tagSearch" name="search" value="{$search}" placeholder="{lang}wcf.acp.tag.list.search.query{/lang}" autofocus="autofocus" class="medium">
+					<input type="text" id="tagSearch" name="search" value="{$search}" placeholder="{lang}wcf.acp.tag.list.search.query{/lang}" autofocus class="medium">
 				</dd>
 			</dl>
 		</section>

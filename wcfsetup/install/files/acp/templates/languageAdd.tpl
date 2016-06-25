@@ -25,7 +25,7 @@
 		<dl{if $errorField == 'languageName'} class="formError"{/if}>
 			<dt><label for="languageName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="languageName" name="languageName" value="{$languageName}" class="long" required="required">
+				<input type="text" id="languageName" name="languageName" value="{$languageName}" class="long" required>
 				{if $errorField == 'languageName'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -42,7 +42,7 @@
 		<dl{if $errorField == 'languageCode'} class="formError"{/if}>
 			<dt><label for="languageCode">{lang}wcf.acp.language.code{/lang}</label></dt>
 			<dd>
-				<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="medium" required="required">
+				<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="medium" required>
 				{if $errorField == 'languageCode'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -59,7 +59,7 @@
 		<dl{if $errorField == 'countryCode'} class="formError"{/if}>
 			<dt><label for="countryCode">{lang}wcf.acp.language.countryCode{/lang}</label></dt>
 			<dd>
-				<input type="text" id="countryCode" name="countryCode" value="{$countryCode}" class="medium" required="required">
+				<input type="text" id="countryCode" name="countryCode" value="{$countryCode}" class="medium" required>
 				{if $errorField == 'countryCode'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -79,7 +79,7 @@
 				<dd>
 					<select id="sourceLanguageID" name="sourceLanguageID">
 						{foreach from=$languages item=language}
-							<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected="selected"{/if}>{$language->languageName} ({$language->languageCode})</option>
+							<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>
 						{/foreach}
 					</select>
 					{if $errorField == 'sourceLanguageID'}

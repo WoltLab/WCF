@@ -27,13 +27,13 @@
 			<dd>
 				<select name="sortField" id="sortField">
 					{foreach from=$validSortFields item=validSortField}
-						<option value="{$validSortField}"{if $validSortField == $sortField} selected="selected"{/if}>{lang}{$sortFieldLanguageItemPrefix}.{$validSortField}{/lang}</option>
+						<option value="{$validSortField}"{if $validSortField == $sortField} selected{/if}>{lang}{$sortFieldLanguageItemPrefix}.{$validSortField}{/lang}</option>
 					{/foreach}
 				</select>
 				
 				<select name="sortOrder" id="sortOrder">
-					<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-					<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
+					<option value="ASC"{if $sortOrder == 'ASC'} selected{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
+					<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 				</select>
 				
 				{if $errorField === 'sorting'}

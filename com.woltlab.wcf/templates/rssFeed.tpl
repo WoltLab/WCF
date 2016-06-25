@@ -29,6 +29,7 @@
 				<category><![CDATA[{@$category|escapeCDATA}]]></category>
 			{/foreach}
 			{hascontent}<content:encoded><![CDATA[{content}{@$item->getFormattedMessage()|escapeCDATA}{/content}]]></content:encoded>{/hascontent}
+			{if $supportsEnclosure && $item->getEnclosure()}<enclosure length="{@$item->getEnclosure()->getLength()}" type="{$item->getEnclosure()->getType()}" url="{$item->getEnclosure()->getURL()}" />{/if}
 			<slash:comments><![CDATA[{@$item->getComments()|escapeCDATA}]]></slash:comments>{*
 			*}{event name='itemFields'}
 		</item>
