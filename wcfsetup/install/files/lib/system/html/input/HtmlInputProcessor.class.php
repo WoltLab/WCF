@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\html\input;
 use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
+use wcf\system\html\AbstractHtmlProcessor;
 use wcf\util\StringUtil;
 
 /**

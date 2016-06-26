@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\html\output;
-use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\output\node\HtmlOutputNodeProcessor;
+use wcf\system\html\AbstractHtmlProcessor;
 
 /**
  * Processes stored HTML for final display.
