@@ -12,6 +12,13 @@ namespace wcf\system\html\node;
  */
 interface IHtmlNodeProcessor {
 	/**
+	 * Returns an array containing `objectType` and `objectID`.
+	 * 
+	 * @return      array
+	 */
+	public function getContext();
+	
+	/**
 	 * Returns the currently loaded DOM document.
 	 * 
 	 * @return      \DOMDocument    active DOM document
@@ -36,4 +43,13 @@ interface IHtmlNodeProcessor {
 	 * Processes the HTML and transforms it depending on the output type.
 	 */
 	public function process();
+	
+	/**
+	 * Sets the context of provided HTML, `$objectID` should be
+	 * `0` for objects in creation.
+	 * 
+	 * @param       string          $objectType     object type identifier
+	 * @param       integer         $objectID       object id
+	 */
+	public function setContext($objectType, $objectID);
 }

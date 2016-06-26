@@ -286,7 +286,7 @@ class ArticleAddForm extends AbstractForm {
 				}
 				
 				$this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
-				$this->htmlInputProcessors[$language->languageID]->process($this->content[$language->languageID]);
+				$this->htmlInputProcessors[$language->languageID]->process($this->content[$language->languageID], 'com.woltlab.wcf.article.content', 0);
 			}
 		}
 		else {
@@ -300,7 +300,7 @@ class ArticleAddForm extends AbstractForm {
 			}
 			
 			$this->htmlInputProcessors[0] = new HtmlInputProcessor();
-			$this->htmlInputProcessors[0]->process($this->content[0]);
+			$this->htmlInputProcessors[0]->process($this->content[0], 'com.woltlab.wcf.article.content', 0);
 		}
 		
 	}

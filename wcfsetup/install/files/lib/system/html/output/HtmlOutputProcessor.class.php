@@ -1,24 +1,45 @@
 <?php
 namespace wcf\system\html\output;
+use wcf\system\html\IHtmlProcessor;
 use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 
 /**
- * TOOD documentation
- * @since	3.0
+ * Processes stored HTML for final display.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Output
+ * @since       3.0
  */
-class HtmlOutputProcessor {
+class HtmlOutputProcessor implements IHtmlProcessor {
 	/**
+	 * output node processor instance
 	 * @var	HtmlOutputNodeProcessor
 	 */
 	protected $htmlOutputNodeProcessor;
 	
-	public function process($html) {
+	/**
+	 * @inheritDoc
+	 */
+	public function process($html, $objectType, $objectID) {
+		$this->getHtmlOutputNodeProcessor()->setContext($objectType, $objectID);
 		$this->getHtmlOutputNodeProcessor()->load($html);
 		$this->getHtmlOutputNodeProcessor()->process();
-		
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtml() {
 		return $this->getHtmlOutputNodeProcessor()->getHtml();
 	}
 	
+	/**
+	 * Returns the output node processor instance.
+	 * 
+	 * @return      HtmlOutputNodeProcessor         output node processor instance
+	 */
 	protected function getHtmlOutputNodeProcessor() {
 		if ($this->htmlOutputNodeProcessor === null) {
 			$this->htmlOutputNodeProcessor = new HtmlOutputNodeProcessor();
