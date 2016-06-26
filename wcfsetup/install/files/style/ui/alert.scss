@@ -69,16 +69,23 @@
 	}
 }
 
-.javascriptDisabledWarning {
-	background-color: $wcfStatusErrorBackground;
-	border-top: 1px solid $wcfStatusErrorBorder;
+/* sticky footer notices */
+.pageFooterStickyNotice {
 	bottom: 0;
-	color: $wcfStatusErrorText;
 	left: 0;
-	padding: 10px 20px;
-	position: fixed;
 	right: 0;
+	position: fixed;
 	text-align: center;
+	
+	.error,
+	.info,
+	.success,
+	.warning {
+		border-left-width: 0;
+		border-top-width: 1px;
+		border-top-style: solid;
+		margin-top: 0;
+	}	
 }
 
 /* inline infos */
