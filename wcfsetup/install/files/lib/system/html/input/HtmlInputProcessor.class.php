@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\html\input;
 use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\html\IHtmlProcessor;
+use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\System\Html\Input
  * @since       3.0
  */
-class HtmlInputProcessor implements IHtmlProcessor {
+class HtmlInputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * list of embedded content grouped by type
 	 * @var array
@@ -37,6 +37,8 @@ class HtmlInputProcessor implements IHtmlProcessor {
 	 * @inheritDoc
 	 */
 	public function process($html, $objectType, $objectID) {
+		$this->setContext($objectType, $objectID);
+		
 		// enforce consistent newlines
 		$html = StringUtil::unifyNewlines($html);
 		
@@ -46,10 +48,8 @@ class HtmlInputProcessor implements IHtmlProcessor {
 		// filter HTML
 		$html = $this->getHtmlInputFilter()->apply($html);
 		
-		$this->getHtmlInputNodeProcessor()->setContext($objectType, $objectID);
-		
 		// pre-parse HTML
-		$this->getHtmlInputNodeProcessor()->load($html);
+		$this->getHtmlInputNodeProcessor()->load($this, $html);
 		$this->getHtmlInputNodeProcessor()->process();
 		$this->embeddedContent = $this->getHtmlInputNodeProcessor()->getEmbeddedContent();
 	}

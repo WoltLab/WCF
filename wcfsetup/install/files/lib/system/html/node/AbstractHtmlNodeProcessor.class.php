@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\node;
 use wcf\system\exception\SystemException;
+use wcf\system\html\IHtmlProcessor;
 use wcf\util\JSON;
 
 /**
@@ -14,19 +15,16 @@ use wcf\util\JSON;
  */
 abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	/**
-	 * context data
-	 * @var array
-	 */
-	protected $context = [
-		'objectType' => '',
-		'objectID' => 0
-	];
-	
-	/**
 	 * active DOM document
 	 * @var	\DOMDocument
 	 */
 	protected $document;
+	
+	/**
+	 * html processor instance
+	 * @var IHtmlProcessor
+	 */
+	protected $htmlProcessor;
 	
 	/**
 	 * storage for node replacements
@@ -43,10 +41,8 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	/**
 	 * @inheritDOc
 	 */
-	public function load($html) {
-		if (empty($this->context['objectType'])) {
-			throw new SystemException('Missing object type, please set the context before attempting to call `load()`.');
-		}
+	public function load(IHtmlProcessor $htmlProcessor, $html) {
+		$this->htmlProcessor = $htmlProcessor;
 		
 		$this->document = new \DOMDocument('1.0', 'UTF-8');
 		$this->xpath = null;
@@ -185,18 +181,8 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function setContext($objectType, $objectID) {
-		$this->context = [
-			'objectType' => $objectType,
-			'objectID' => $objectID
-		];
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getContext() {
-		return $this->context;
+	public function getHtmlProcessor() {
+		return $this->htmlProcessor;
 	}
 	
 	/**

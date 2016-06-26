@@ -32,34 +32,35 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * object type of the active message
 	 * @var	integer
 	 */
-	protected $activeMessageObjectTypeID = null;
+	protected $activeMessageObjectTypeID;
 	
 	/**
 	 * id of the active message
 	 * @var	integer
 	 */
-	protected $activeMessageID = null;
+	protected $activeMessageID;
 	
 	/**
 	 * list of embedded object handlers
 	 * @var	array
 	 */
-	protected $embeddedObjectHandlers = null;
+	protected $embeddedObjectHandlers;
 	
 	/**
 	 * Registers the embedded objects found in given message.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data
-	 * @param       string                  $messageObjectType      message object type
-	 * @param       integer                 $messageID              message id
 	 * @return      boolean                 true if at least one embedded object was found
 	 */
-	public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $messageObjectType, $messageID) {
+	public function registerObjects(HtmlInputProcessor $htmlInputProcessor) {
+		$context = $htmlInputProcessor->getContext();
+		
+		$messageObjectType = $context['objectType'];
+		$messageObjectTypeID = $context['objectTypeID'];
+		$messageID = $context['objectID'];
+		
 		// delete existing assignments
 		$this->removeObjects($messageObjectType, [$messageID]);
-		
-		// get object type id
-		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		
 		// prepare statement
 		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object

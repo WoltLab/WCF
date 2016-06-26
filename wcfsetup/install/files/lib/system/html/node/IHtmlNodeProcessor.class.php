@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\node;
+use wcf\system\html\IHtmlProcessor;
 
 /**
  * Default interface for html node processors.
@@ -11,13 +12,6 @@ namespace wcf\system\html\node;
  * @since       3.0
  */
 interface IHtmlNodeProcessor {
-	/**
-	 * Returns an array containing `objectType` and `objectID`.
-	 * 
-	 * @return      array
-	 */
-	public function getContext();
-	
 	/**
 	 * Returns the currently loaded DOM document.
 	 * 
@@ -33,23 +27,22 @@ interface IHtmlNodeProcessor {
 	public function getHtml();
 	
 	/**
+	 * Returns the html processor instance.
+	 *
+	 * @return      IHtmlProcessor          html processor instance
+	 */
+	public function getHtmlProcessor();
+	
+	/**
 	 * Loads a HTML string for processing.
 	 * 
-	 * @param       string  $html   HTML string
+	 * @param       IHtmlProcessor  $htmlProcessor  html processor
+	 * @param       string          $html           HTML string
 	 */
-	public function load($html);
+	public function load(IHtmlProcessor $htmlProcessor, $html);
 	
 	/**
 	 * Processes the HTML and transforms it depending on the output type.
 	 */
 	public function process();
-	
-	/**
-	 * Sets the context of provided HTML, `$objectID` should be
-	 * `0` for objects in creation.
-	 * 
-	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
-	 */
-	public function setContext($objectType, $objectID);
 }

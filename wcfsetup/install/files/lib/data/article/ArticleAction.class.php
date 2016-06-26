@@ -85,7 +85,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				
 				// save embedded objects
 				if (!empty($content['htmlInputProcessor'])) {
-					if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'], 'com.woltlab.wcf.article.content', $articleContent->articleContentID)) {
+					if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
 						$articleContentEditor->update(['hasEmbeddedObjects' => 1]);
 					}
 				}
@@ -151,7 +151,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					
 					// save embedded objects
 					if (!empty($content['htmlInputProcessor'])) {
-						if ($articleContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'], 'com.woltlab.wcf.article.content', $articleContent->articleContentID)) {
+						if ($articleContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
 							$articleContentEditor->update(['hasEmbeddedObjects' => ($articleContent->hasEmbeddedObjects ? 0 : 1)]);
 						}
 					}

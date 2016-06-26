@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\html\output;
-use wcf\system\html\IHtmlProcessor;
+use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 
 /**
@@ -12,7 +12,7 @@ use wcf\system\html\output\node\HtmlOutputNodeProcessor;
  * @package     WoltLabSuite\Core\System\Html\Output
  * @since       3.0
  */
-class HtmlOutputProcessor implements IHtmlProcessor {
+class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * output node processor instance
 	 * @var	HtmlOutputNodeProcessor
@@ -23,8 +23,9 @@ class HtmlOutputProcessor implements IHtmlProcessor {
 	 * @inheritDoc
 	 */
 	public function process($html, $objectType, $objectID) {
-		$this->getHtmlOutputNodeProcessor()->setContext($objectType, $objectID);
-		$this->getHtmlOutputNodeProcessor()->load($html);
+		$this->setContext($objectType, $objectID);
+		
+		$this->getHtmlOutputNodeProcessor()->load($this, $html);
 		$this->getHtmlOutputNodeProcessor()->process();
 	}
 	
