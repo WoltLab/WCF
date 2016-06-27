@@ -305,7 +305,8 @@
 					<dl{if $errorField == 'content'} class="formError"{/if}>
 						<dt><label for="content0">{lang}wcf.acp.box.content{/lang}</label></dt>
 						<dd>
-							<textarea name="content[0]" id="content0" rows="10">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+							{include file='__boxAddContent' languageID=0}
+							
 							{if $errorField == 'content'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -379,7 +380,8 @@
 									<dl{if $errorField == 'content'|concat:$availableLanguage->languageID} class="formError"{/if}>
 										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.box.content{/lang}</label></dt>
 										<dd>
-											<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
+											{include file='__boxAddContent' languageID=$availableLanguage->languageID}
+											
 											{if $errorField == 'content'|concat:$availableLanguage->languageID}
 												<small class="innerError">
 													{if $errorType == 'empty'}
