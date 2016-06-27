@@ -40,7 +40,9 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		 * @protected
 		 */
 		_initStickyPageHeader: function() {
-			_pageHeader.style.setProperty('min-height', _pageHeader.clientHeight + 'px');
+			if (_pageHeader.clientHeight) {
+				_pageHeader.style.setProperty('min-height', _pageHeader.clientHeight + 'px');
+			}
 			
 			_triggerHeight = _pageHeader.clientHeight - elBySel('.mainMenu', _pageHeader).clientHeight;
 			

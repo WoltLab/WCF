@@ -140,19 +140,11 @@
 	}
 }
 
-@include screen-xs {
-	.pageHeaderContainer {
-		height: 50px;
-		z-index: 300;
-	}
-}
-
 // force sticky header on tablets, there is no difference when scrolled
 // all the way up and it might flicker when scrolling due to the inconsistent
 // scroll event being fired
 @include screen-sm-md {
 	.pageHeaderContainer {
-		height: 50px;
 		z-index: 300;
 		
 		// touch browser allow to scroll past the page top before they bounce back,
@@ -173,5 +165,9 @@
 			right: 0;
 			z-index: 301;
 		}
+	}
+	
+	.boxesHero {
+		background-color: $wcfHeaderBackground;
 	}
 }

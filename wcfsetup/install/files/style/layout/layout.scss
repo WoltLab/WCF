@@ -44,7 +44,13 @@ a {
 }
 
 /* COLUMN LAYOUT */
-.pageHeaderContainer {
+.pageHeaderContainer,
+.boxesHeaderBoxes,
+.pageNavigation,
+.pageFooter,
+.boxesTop,
+.boxesBottom,
+.boxesFooterBoxes {
 	flex: 0 0 auto;
 }
 
@@ -52,7 +58,7 @@ a {
 	flex: 1 0 auto;
 	
 	@include screen-md-down {
-		padding: 30px 0;
+		padding: 40px 0;
 		width: 100%;
 	}
 	
@@ -62,7 +68,7 @@ a {
 }
 
 /* use flex-box to enforce a proper side-by-side layout on desktop */
-@include screen-md-up {
+@include screen-lg {
 	.main > div {
 		display: flex;
 	}
@@ -112,7 +118,7 @@ a {
    <content>
    <rightSidebar>
 */
-@include screen-sm-down {
+@include screen-md-down {
 	.sidebar {
 		margin: 0 -10px;
 	}

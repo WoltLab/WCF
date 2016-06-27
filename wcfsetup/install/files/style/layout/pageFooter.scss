@@ -1,7 +1,6 @@
 .pageFooterCopyright {
 	background-color: $wcfFooterCopyrightBackground;
 	color: $wcfFooterCopyrightText;
-	flex: 0 0 auto;
 	text-align: center;
 	
 	@include screen-md-up {
