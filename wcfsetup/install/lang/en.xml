@@ -140,6 +140,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.io%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
 	</category>
 	
+	<category name="wcf.acp.box">
+		<item name="wcf.acp.box.list"><![CDATA[Boxes]]></item>
+	</category>
+	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Clear Cache]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Do you really want to clear the cache?]]></item>
@@ -2664,6 +2668,38 @@ Errors are:
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">More details</a>]]></item>
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Powered by <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+	</category>
+	
+	<category name="wcf.acp.page">
+		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
+		<item name="wcf.acp.page.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.page.boxes"><![CDATA[Display the Selected Boxes on This Page]]></item>
+		<item name="wcf.acp.page.button.viewPage"><![CDATA[Show Preview]]></item>
+		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>
+		<item name="wcf.acp.page.contents"><![CDATA[Contents]]></item>
+		<item name="wcf.acp.page.customURL"><![CDATA[Custom URL]]></item>
+		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[URL is invalid. TODO: add description]]></item>
+		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[URL is already in use.]]></item>
+		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[Do you really want to delete the page <span class="confirmationObject">{$page->name}</span>?]]></item>
+		<item name="wcf.acp.page.edit"><![CDATA[Edit Page]]></item>
+		<item name="wcf.acp.page.i18n"><![CDATA[Multilingualism]]></item>
+		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Monolingual page]]></item>
+		<item name="wcf.acp.page.i18n.none"><![CDATA[Multilingual page]]></item>
+		<item name="wcf.acp.page.isLandingPage"><![CDATA[Landing page]]></item>
+		<item name="wcf.acp.page.isDisabled"><![CDATA[Disable page]]></item>
+		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
+		<item name="wcf.acp.page.list"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
+		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
+		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
+		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>
+		<item name="wcf.acp.page.parentPage.none"><![CDATA[None]]></item>
+		<item name="wcf.acp.page.type"><![CDATA[Page Type]]></item>
+		<item name="wcf.acp.page.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.page.type.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.page.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.page.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

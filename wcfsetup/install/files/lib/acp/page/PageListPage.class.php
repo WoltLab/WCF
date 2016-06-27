@@ -42,7 +42,7 @@ class PageListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['pageID', 'name', 'lastUpdateTime'];
+	public $validSortFields = ['pageID', 'name', 'lastUpdateTime', 'pageType'];
 	
 	/**
 	 * name
@@ -72,7 +72,7 @@ class PageListPage extends SortablePage {
 	 * page type
 	 * @var string
 	 */
-	public $pageType = 'static';
+	public $pageType = '';
 	
 	/**
 	 * list of available applications
@@ -123,11 +123,8 @@ class PageListPage extends SortablePage {
 		if (!empty($this->applicationPackageID)) {
 			$this->objectList->getConditionBuilder()->add('page.applicationPackageID = ?', [$this->applicationPackageID]);
 		}
-		if ($this->pageType == 'static') {
-			$this->objectList->getConditionBuilder()->add('page.pageType IN (?, ?, ?)', ['text', 'html', 'tpl']);
-		}
-		else if ($this->pageType == 'system') {
-			$this->objectList->getConditionBuilder()->add('page.pageType IN (?)', ['system']);
+		if (!empty($this->pageType)) {
+			$this->objectList->getConditionBuilder()->add('page.pageType = (?)', [$this->pageType]);
 		}
 	}
 	

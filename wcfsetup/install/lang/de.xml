@@ -73,7 +73,7 @@
 		<item name="wcf.acp.article.author"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Vorschau anzeigen]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Kategorie]]></item>
-		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Wollen Sie die den Artikel <span class="confirmationObject">{$article->getTitle()}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Wollen Sie den Artikel <span class="confirmationObject">{$article->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Einsprachiger Artikel]]></item>
@@ -139,6 +139,10 @@
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.io%2Ficons%2F">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
+	</category>
+	
+	<category name="wcf.acp.box">
+		<item name="wcf.acp.box.list"><![CDATA[Boxen]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -1233,6 +1237,38 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket {if $package === null}„{$packageName}“{else}„{$package}“{/if} in Version „{$packageVersion}“ oder höher, {if $package === null}dies ist aber weder installiert noch wird es mitgeliefert.{else}es ist aber nur Version „{$package->packageVersion}“ installiert.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[Die {if $type == 'install'}Installations{else}Update{/if}-Anweisungen geben für das Package Installation Plugin „{$pip}“ die Datei „{$value}“ an, diese ist jedoch nicht im Archiv enthalten. Mögliche Ursachen:<ul class="nativeList"><li>Die Datei wurde dem Archiv nicht hinzugefügt</li><li>Die Datei existiert, jedoch sind der Dateiname und die Angabe in den Anweisungen abweichend (Tippfehler)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte beachten Sie das unten stehende Prüfungsergebnis.]]></item>
+	</category>
+	
+	<category name="wcf.acp.page">
+		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>
+		<item name="wcf.acp.page.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.page.boxes"><![CDATA[Ausgewählte Boxen auf dieser Seite anzeigen]]></item>
+		<item name="wcf.acp.page.button.viewPage"><![CDATA[Vorschau anzeigen]]></item>
+		<item name="wcf.acp.page.content"><![CDATA[Inhalt]]></item>
+		<item name="wcf.acp.page.contents"><![CDATA[Inhalte]]></item>
+		<item name="wcf.acp.page.customURL"><![CDATA[Individuelle URL]]></item>
+		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[Sie haben eine ungültige URL eingegeben. TODO: add description]]></item>
+		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[Diese URL wird bereits von einer anderen Seite verwendet.]]></item>
+		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[Wollen Sie die Seite <span class="confirmationObject">{$page->name}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.page.edit"><![CDATA[Seite bearbeiten]]></item>
+		<item name="wcf.acp.page.i18n"><![CDATA[Mehrsprachigkeit]]></item>
+		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Mehrsprachige Seite]]></item>
+		<item name="wcf.acp.page.i18n.none"><![CDATA[Einsprachige Seite]]></item>
+		<item name="wcf.acp.page.isLandingPage"><![CDATA[Seite ist Startseite]]></item>
+		<item name="wcf.acp.page.isDisabled"><![CDATA[Seite deaktivieren]]></item>
+		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Letzte Aktualisierung]]></item>
+		<item name="wcf.acp.page.list"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
+		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
+		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Seite verwendet.]]></item>
+		<item name="wcf.acp.page.parentPage"><![CDATA[Übergeordnete Seite]]></item>
+		<item name="wcf.acp.page.parentPage.none"><![CDATA[Keine]]></item>
+		<item name="wcf.acp.page.type"><![CDATA[Seiten-Typ]]></item>
+		<item name="wcf.acp.page.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.page.type.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.page.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.page.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">

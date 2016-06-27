@@ -28,7 +28,11 @@
 	</div>
 </div>
 <script data-relocate="true">
-	require(['WoltLab/WCF/Acp/Ui/Page/Add'], function(AcpUiPageAdd) {
+	require(['Language', 'WoltLab/WCF/Acp/Ui/Page/Add'], function(Language, AcpUiPageAdd) {
+		Language.addObject({
+			'wcf.acp.page.add': '{lang}wcf.acp.page.add{/lang}'
+		});
+		
 		AcpUiPageAdd.init('{link controller='PageAdd' encode=false}{literal}pageType={$pageType}&isMultilingual={$isMultilingual}{/literal}{/link}');
 		
 		{if $showPageAddDialog}

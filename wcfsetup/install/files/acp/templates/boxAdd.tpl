@@ -36,7 +36,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.box.addMultilingual{/lang}{else}{lang}wcf.acp.box.add{/lang}{/if}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
+		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.box.add{/lang}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -58,7 +58,7 @@
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.box.general{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.box.contents{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.box.pages{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.box.acl{/lang}</a></li>
@@ -72,7 +72,7 @@
 				<dl{if $errorField == 'name'} class="formError"{/if}>
 					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="name" name="name" value="{$name}" required autofocus class="long">
+						<input type="text" id="name" name="name" value="{$name}" required autofocus class="long" maxlength="255">
 						{if $errorField == 'name'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -158,7 +158,7 @@
 				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
 					<dt><label for="cssClassName">{lang}wcf.acp.box.cssClassName{/lang}</label></dt>
 					<dd>
-						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long">
+						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" maxlength="255">
 						{if $errorField == 'cssClassName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -235,7 +235,7 @@
 				<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
 					<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
 					<dd>
-						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long">
+						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" maxlength="255">
 						{if $errorField == 'externalURL'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -289,7 +289,7 @@
 					<dl{if $errorField == 'title'} class="formError"{/if}>
 						<dt><label for="title0">{lang}wcf.acp.box.title{/lang}</label></dt>
 						<dd>
-							<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
+							<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" maxlength="255">
 							{if $errorField == 'title'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -363,7 +363,7 @@
 								<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.box.title{/lang}</label></dt>
 									<dd>
-										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
+										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 										{if $errorField == 'title'|concat:$availableLanguage->languageID}
 											<small class="innerError">
 												{if $errorType == 'empty'}

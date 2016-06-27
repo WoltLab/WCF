@@ -38,7 +38,7 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.page.title{/lang}" class="long">
+					<input type="text" id="pageTitle" name="title" value="{$title}" placeholder="{lang}wcf.global.title{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -54,7 +54,7 @@
 				<dd>
 					<label class="selectDropdown">
 						<select name="applicationPackageID" id="applicationPackageID">
-							<option value="0">{lang}wcf.acp.page.applicationPackageID{/lang}</option>
+							<option value="0">{lang}wcf.acp.page.application{/lang}</option>
 							{foreach from=$availableApplications item=availableApplication}
 								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->getAbbreviation()}: {$availableApplication->domainName}{$availableApplication->domainPath}</option>
 							{/foreach}
@@ -68,9 +68,11 @@
 				<dd>
 					<label class="selectDropdown">
 						<select name="pageType" id="pageType">
-							<option value="">{lang}wcf.acp.page.pageType{/lang}</option>
-							<option value="static"{if $pageType == 'static'} selected{/if}>{lang}wcf.acp.page.pageType.static{/lang}</option>
-							<option value="system"{if $pageType == 'system'} selected{/if}>{lang}wcf.acp.page.pageType.system{/lang}</option>
+							<option value="">{lang}wcf.acp.page.type{/lang}</option>
+							<option value="text"{if $pageType == 'text'} selected{/if}>{lang}wcf.acp.page.type.text{/lang}</option>
+							<option value="html"{if $pageType == 'html'} selected{/if}>{lang}wcf.acp.page.type.html{/lang}</option>
+							<option value="tpl"{if $pageType == 'tpl'} selected{/if}>{lang}wcf.acp.page.type.tpl{/lang}</option>
+							<option value="system"{if $pageType == 'system'} selected{/if}>{lang}wcf.acp.page.type.system{/lang}</option>
 						</select>
 					</label>
 				</dd>
@@ -109,6 +111,7 @@
 					<th class="columnPageID{if $sortField == 'pageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageID&sortOrder={if $sortField == 'pageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnText columnURL" colspan="2">{lang}wcf.acp.page.url{/lang}</th>
+					<th class="columnText columnPageType{if $sortField == 'pageType'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageType&sortOrder={if $sortField == 'pageType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.page.type{/lang}</a></th>
 					<th class="columnDate columnLastUpdateTime{if $sortField == 'lastUpdateTime'} active {@$sortOrder}{/if}"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.page.lastUpdateTime{/lang}</a></th>
 					
 					{event name='columnHeads'}
@@ -126,7 +129,7 @@
 							{/if}
 							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $page->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$page->pageID}" data-confirm-message="{lang}wcf.acp.page.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$page->pageID}" data-confirm-message-html="{lang __encode=true}wcf.acp.page.delete.confirmMessage{/lang}"></span>
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
@@ -144,6 +147,7 @@
 						<td class="columnText columnURL">
 							{$page->getDisplayLink()}
 						</td>
+						<td class="columnText columnPageType">{lang}wcf.acp.page.type.{@$page->pageType}{/lang}</td>
 						<td class="columnDate columnLastUpdateTime">{@$page->lastUpdateTime|time}</td>
 						
 						{event name='columns'}

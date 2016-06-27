@@ -302,7 +302,6 @@ class ArticleAddForm extends AbstractForm {
 			$this->htmlInputProcessors[0] = new HtmlInputProcessor();
 			$this->htmlInputProcessors[0]->process($this->content[0], 'com.woltlab.wcf.article.content', 0);
 		}
-		
 	}
 	
 	/**

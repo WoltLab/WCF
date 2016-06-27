@@ -28,7 +28,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $action == 'add'}{if $isMultilingual}{lang}wcf.acp.page.addMultilingual{/lang}{else}{lang}wcf.acp.page.add{/lang}{/if}{else}{lang}wcf.acp.page.edit{/lang}{/if}</h1>
+		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.page.add{/lang}{else}{lang}wcf.acp.page.edit{/lang}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -53,12 +53,12 @@
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.page.general{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.page.contents{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('boxes')}">{lang}wcf.acp.page.boxes{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('boxes')}">{lang}wcf.acp.box.list{/lang}</a></li>
 				
 				{if $action != 'edit' || $page->pageType != 'system'}
-					<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.page.acl{/lang}</a></li>
+					<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
 				{/if}
 				
 				{event name='tabMenuTabs'}
@@ -70,7 +70,7 @@
 				<dl{if $errorField == 'name'} class="formError"{/if}>
 					<dt><label for="name">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="name" name="name" value="{$name}" required autofocus class="long">
+						<input type="text" id="name" name="name" value="{$name}" required autofocus class="long" maxlength="255">
 						{if $errorField == 'name'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -84,10 +84,10 @@
 				</dl>
 				
 				<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
-					<dt><label for="parentPageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
+					<dt><label for="parentPageID">{lang}wcf.acp.page.parentPage{/lang}</label></dt>
 					<dd>
 						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
-							<option value="0">{lang}wcf.acp.page.parentPageID.noParentPage{/lang}</option>
+							<option value="0">{lang}wcf.acp.page.parentPage.none{/lang}</option>
 							
 							{foreach from=$pageNodeList item=pageNode}
 								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
@@ -98,7 +98,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.parentPageID.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.parentPage.error.{@$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -106,7 +106,7 @@
 				</dl>
 				
 				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
-					<dt><label for="applicationPackageID">{lang}wcf.acp.page.applicationPackageID{/lang}</label></dt>
+					<dt><label for="applicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
 					<dd>
 						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
 							{foreach from=$availableApplications item=availableApplication}
@@ -118,7 +118,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.page.applicationPackageID.error.{@$errorType}{/lang}
+									{lang}wcf.acp.page.application.error.{@$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -129,7 +129,7 @@
 					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
 						<dt><label for="customURL">{lang}wcf.acp.page.customURL{/lang}</label></dt>
 						<dd>
-							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long">
+							<input type="text" id="customURL" name="customURL[0]" value="{if !$customURL[0]|empty}{$customURL[0]}{/if}" class="long" maxlength="255">
 							{if $errorField == 'customURL_0'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -147,7 +147,7 @@
 						<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 							<dt><label for="customURL{@$availableLanguage->languageID}">{lang}wcf.acp.page.customURL{/lang} ({$availableLanguage->languageName})</label></dt>
 							<dd>
-								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long">
+								<input type="text" id="customURL{@$availableLanguage->languageID}" name="customURL[{@$availableLanguage->languageID}]" value="{if !$customURL[$availableLanguage->languageID]|empty}{$customURL[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 								{if $errorField == $__errorFieldName}
 									<small class="innerError">
 										{if $errorType == 'empty'}
@@ -188,9 +188,9 @@
 			{if !$isMultilingual && $pageType != 'system'}
 				<div class="section">
 					<dl{if $errorField == 'title'} class="formError"{/if}>
-						<dt><label for="title">{lang}wcf.acp.page.title{/lang}</label></dt>
+						<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 						<dd>
-							<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
+							<input type="text" id="title" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" maxlength="255">
 							{if $errorField == 'title'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
@@ -220,32 +220,32 @@
 						</dd>
 					</dl>
 					
-					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
-						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-						<dd>
-							<textarea name="metaKeywords[0]" id="metaKeywords">{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}</textarea>
-							{if $errorField == 'metaKeywords'}
-								<small class="innerError">
-									{if $errorType == 'empty'}
-										{lang}wcf.global.form.error.empty{/lang}
-									{else}
-										{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
-									{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-					
 					<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
 						<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 						<dd>
-							<textarea name="metaDescription[0]" id="metaDescription">{if !$metaDescription[0]|empty}{$metaDescription[0]}{/if}</textarea>
+							<input type="text" class="long" name="metaDescription[0]" id="metaDescription" value="{if !$metaDescription[0]|empty}{$metaDescription[0]}{/if}">
 							{if $errorField == 'metaDescription'}
 								<small class="innerError">
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
 										{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
+						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
+						<dd>
+							<input type="text" class="long" name="metaKeywords[0]" id="metaKeywords" value="{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}">
+							{if $errorField == 'metaKeywords'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -267,9 +267,9 @@
 						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
 							<div class="section">
 								<dl{if $errorField == 'title'} class="formError"{/if}>
-									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.page.title{/lang}</label></dt>
+									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 									<dd>
-										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
+										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 										{if $errorField == 'title'}
 											<small class="innerError">
 												{if $errorType == 'empty'}
@@ -300,32 +300,32 @@
 										</dd>
 									</dl>
 									
-									<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
-										<dt><label for="metaKeywords{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-										<dd>
-											<textarea name="metaKeywords[{@$availableLanguage->languageID}]" id="metaKeywords{@$availableLanguage->languageID}">{if !$metaKeywords[$availableLanguage->languageID]|empty}{$metaKeywords[$availableLanguage->languageID]}{/if}</textarea>
-											{if $errorField == 'metaKeywords'}
-												<small class="innerError">
-													{if $errorType == 'empty'}
-														{lang}wcf.global.form.error.empty{/lang}
-													{else}
-														{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
-													{/if}
-												</small>
-											{/if}
-										</dd>
-									</dl>
-									
 									<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
 										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 										<dd>
-											<textarea name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}">{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}</textarea>
+											<input type="text" class="long" name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
 											{if $errorField == 'metaDescription'}
 												<small class="innerError">
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
 													{else}
 														{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
+													{/if}
+												</small>
+											{/if}
+										</dd>
+									</dl>
+									
+									<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
+										<dt><label for="metaKeywords{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
+										<dd>
+											<input type="text" class="long" name="metaKeywords[{@$availableLanguage->languageID}]" id="metaKeywords{@$availableLanguage->languageID}" value="{if !$metaKeywords[$availableLanguage->languageID]|empty}{$metaKeywords[$availableLanguage->languageID]}{/if}">
+											{if $errorField == 'metaKeywords'}
+												<small class="innerError">
+													{if $errorType == 'empty'}
+														{lang}wcf.global.form.error.empty{/lang}
+													{else}
+														{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
 													{/if}
 												</small>
 											{/if}
@@ -342,7 +342,7 @@
 		<div id="boxes" class="tabMenuContent">
 			<div class="section">
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
-					<dt>{lang}wcf.acp.page.boxIDs{/lang}</dt>
+					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
 					<dd>
 						<ul class="scrollableCheckboxList">
 							{foreach from=$availableBoxes item=availableBox}

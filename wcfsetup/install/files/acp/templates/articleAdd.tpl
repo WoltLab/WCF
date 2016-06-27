@@ -87,7 +87,7 @@
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.acp.article.author{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="medium">
+				<input type="text" id="username" name="username" value="{$username}" class="medium" maxlength="255">
 				{if $errorField == 'username'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -179,7 +179,7 @@
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title0">{lang}wcf.global.title{/lang}</label></dt>
 				<dd>
-					<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long">
+					<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" maxlength="255">
 					{if $errorField == 'title'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -293,7 +293,7 @@
 						<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 							<dd>
-								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long">
+								<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 								{if $errorField == 'title'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
