@@ -20,13 +20,34 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	protected $htmlOutputNodeProcessor;
 	
 	/**
+	 * desired output type
+	 * @var string
+	 */
+	protected $outputType = 'text/html';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function process($html, $objectType, $objectID) {
 		$this->setContext($objectType, $objectID);
 		
+		$this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);
 		$this->getHtmlOutputNodeProcessor()->load($this, $html);
 		$this->getHtmlOutputNodeProcessor()->process();
+	}
+	
+	/**
+	 * Sets the desired output type.
+	 * 
+	 * @param       string          $outputType     desired output type
+	 * @throws      \InvalidArgumentException
+	 */
+	public function setOutputType($outputType) {
+		if (!in_array($outputType, ['text/html', 'text/simplified-html', 'text/plain'])) {
+			throw new \InvalidArgumentException("Expected 'text/html', 'text/simplified-html' or 'text/plain', but received '" . $outputType . "'");
+		}
+		
+		$this->outputType = $outputType;
 	}
 	
 	/**

@@ -11,4 +11,11 @@ use wcf\system\html\node\IHtmlNode;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
-interface IHtmlOutputNode extends IHtmlNode {}
+interface IHtmlOutputNode extends IHtmlNode {
+	/**
+	 * Sets the desired output type.
+	 * 
+	 * @param       string          $outputType     desired output type
+	 */
+	public function setOutputType($outputType);
+}

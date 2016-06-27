@@ -22,6 +22,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	/**
 	 * @inheritDoc
 	 */
+	protected $nodeInterface = IHtmlInputNode::class;
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function process() {
 		EventHandler::getInstance()->fireAction($this, 'beforeProcess');
 		

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
 use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 
@@ -15,7 +14,7 @@ use wcf\util\DOMUtil;
  * @package	WoltLabSuite\Core\System\Html\Input\Node
  * @since	3.0
  */
-class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlNode {
+class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	/**
 	 * list of bbcodes that represent block elements
 	 * @var	string[]

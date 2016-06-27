@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\html\output\node;
 use wcf\system\bbcode\HtmlBBCodeParser;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\StringUtil;
 
@@ -14,7 +13,7 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
-class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlNode {
+class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode {
 	/**
 	 * @inheritDoc
 	 */
@@ -43,6 +42,8 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlNode {
 	 * @inheritDoc
 	 */
 	public function replaceTag(array $data) {
+		HtmlBBCodeParser::getInstance()->setOutputType($this->outputType);
+		
 		return HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes']);
 	}
 }

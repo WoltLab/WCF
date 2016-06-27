@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\html\output\node;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\StringUtil;
 
@@ -13,7 +12,7 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
-class HtmlOutputNodeWoltlabSize extends AbstractHtmlNode {
+class HtmlOutputNodeWoltlabSize extends AbstractHtmlOutputNode {
 	/**
 	 * @inheritDoc
 	 */
@@ -23,16 +22,16 @@ class HtmlOutputNodeWoltlabSize extends AbstractHtmlNode {
 	 * @inheritDoc
 	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		/** @var \DOMElement $element */
-		foreach ($elements as $element) {
-			// parse color
-			if (preg_match('~^woltlab-size-(?P<size>[0-9]{1,2})$~', $element->getAttribute('class'), $matches)) {
-				$nodeIdentifier = StringUtil::getRandomID();
-				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
-					'size' => $matches['size']
-				]);
-				
-				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+		if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
+			/** @var \DOMElement $element */
+			foreach ($elements as $element) {
+				// parse color
+				if (preg_match('~^woltlab-size-(?P<size>[0-9]{1,2})$~', $element->getAttribute('class'), $matches)) {
+					$nodeIdentifier = StringUtil::getRandomID();
+					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['size' => $matches['size']]);
+					
+					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+				}
 			}
 		}
 	}

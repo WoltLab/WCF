@@ -177,6 +177,23 @@ final class DOMUtil {
 	}
 	
 	/**
+	 * Returns true if there is at least one parent with the provided tag name.
+	 * 
+	 * @param       \DOMElement     $element        start element
+	 * @param       string          $tagName        tag name to match
+	 * @return      boolean         true if there is at least one parent with the provided tag name
+	 */
+	public static function hasParent(\DOMElement $element, $tagName) {
+		while ($element = $element->parentNode) {
+			if ($element->nodeName === $tagName) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Inserts given DOM node after the reference node.
 	 * 
 	 * @param	\DOMNode 	$node		node

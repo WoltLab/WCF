@@ -1,12 +1,11 @@
 <?php
 namespace wcf\system\html\input\node;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
 
 /**
- * Proccesses `<img>` to handle embedded attachments.
+ * Processes `<img>` to handle embedded attachments.
  * 
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -14,7 +13,7 @@ use wcf\util\JSON;
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
  */
-class HtmlInputNodeImg extends AbstractHtmlNode {
+class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	/**
 	 * @inheritDoc
 	 */

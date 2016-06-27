@@ -1,10 +1,9 @@
 <?php
 namespace wcf\system\html\input\node;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 
 /**
- * Proccesses `<woltlab-mention>`.
+ * Processes `<woltlab-mention>`.
  * 
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -12,7 +11,7 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
  */
-class HtmlInputNodeWoltlabMention extends AbstractHtmlNode {
+class HtmlInputNodeWoltlabMention extends AbstractHtmlInputNode {
 	/**
 	 * @inheritDoc
 	 */

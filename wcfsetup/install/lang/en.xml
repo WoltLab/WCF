@@ -1835,9 +1835,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.code.python.title"><![CDATA[Python]]></item>
 		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL]]></item>
 		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX]]></item>
-		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty]]></item>
 		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
+		<item name="wcf.bbcode.code.simplified"><![CDATA[(Code, {#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
 		<item name="wcf.bbcode.quote.delete"><![CDATA[Delete Quote]]></item>
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Edit Quote]]></item>
@@ -1847,7 +1847,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} wrote:]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Click to set source)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} wrote:{/literal}]]></item>
-		<item name="wcf.bbcode.quote.text"><![CDATA[Quote{if $cite} from {@$cite}{/if}: “{@$content}”]]></item>
+		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Quote{if $cite} from {$cite}{/if})]]></item>
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Hide Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Display Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>

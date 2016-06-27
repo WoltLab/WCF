@@ -27,6 +27,12 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	protected $htmlProcessor;
 	
 	/**
+	 * required interface for html nodes
+	 * @var string
+	 */
+	protected $nodeInterface = '';
+	
+	/**
 	 * storage for node replacements
 	 * @var array
 	 */
@@ -125,6 +131,18 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	}
 	
 	/**
+	 * Replaces an element with plain text.
+	 * 
+	 * @param       \DOMElement     $element        target element
+	 * @param       string          $text           text used to replace target element
+	 */
+	public function replaceElementWithText(\DOMElement $element, $text) {
+		$textNode = $element->ownerDocument->createTextNode($text);
+		$element->parentNode->insertBefore($textNode, $element);
+		$element->parentNode->removeChild($element);
+	}
+	
+	/**
 	 * Removes an element but preserves child nodes by moving them into
 	 * its original position.
 	 * 
@@ -191,6 +209,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	 * @param       IHtmlNode       $htmlNode       html node processor
 	 */
 	protected function invokeHtmlNode(IHtmlNode $htmlNode) {
+		if (!($htmlNode instanceof $this->nodeInterface)) {
+			throw new \InvalidArgumentException("Node '" . get_class($htmlNode) . "' does not implement the interface '" . $this->nodeInterface . "'.");
+		}
+		
 		$tagName = $htmlNode->getTagName();
 		if (empty($tagName)) {
 			throw new \UnexpectedValueException("Missing tag name for " . get_class($htmlNode));

@@ -2,7 +2,6 @@
 namespace wcf\system\html\output\node;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
@@ -17,7 +16,7 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
-class HtmlOutputNodeWoltlabMention extends AbstractHtmlNode {
+class HtmlOutputNodeWoltlabMention extends AbstractHtmlOutputNode {
 	/**
 	 * @inheritDoc
 	 */
@@ -32,31 +31,36 @@ class HtmlOutputNodeWoltlabMention extends AbstractHtmlNode {
 	 * @inheritDoc
 	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		$this->userProfiles = [];
-		
-		$userIds = [];
-		/** @var \DOMElement $element */
-		foreach ($elements as $element) {
-			$userId = ($element->hasAttribute('data-user-id')) ? intval($element->getAttribute('data-user-id')) : 0;
-			$username = ($element->hasAttribute('data-username')) ? StringUtil::trim($element->getAttribute('data-username')) : '';
+		if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
+			$this->userProfiles = [];
 			
-			if ($userId === 0 || $username === '') {
-				DOMUtil::removeNode($element);
-				continue;
+			$userIds = [];
+			/** @var \DOMElement $element */
+			foreach ($elements as $element) {
+				$userId = intval($element->getAttribute('data-user-id'));
+				$username = StringUtil::trim($element->getAttribute('data-username'));
+				
+				if ($userId === 0 || $username === '') {
+					DOMUtil::removeNode($element);
+					continue;
+				}
+				
+				$userIds[] = $userId;
+				$nodeIdentifier = StringUtil::getRandomID();
+				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['userId' => $userId, 'username' => $username]);
+				
+				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
 			}
 			
-			$userIds[] = $userId;
-			$nodeIdentifier = StringUtil::getRandomID();
-			$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
-				'userId' => $userId,
-				'username' => $username
-			]);
-			
-			$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+			if (!empty($userIds)) {
+				$this->userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIds);
+			}
 		}
-		
-		if (!empty($userIds)) {
-			$this->userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIds);
+		else if ($this->outputType === 'text/plain') {
+			/** @var \DOMElement $element */
+			foreach ($elements as $element) {
+				$htmlNodeProcessor->replaceElementWithText($element, '@' . $element->getAttribute('data-username'));
+			}
 		}
 	}
 	

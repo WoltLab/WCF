@@ -13,7 +13,6 @@ use wcf\system\bbcode\highlighter\PythonHighlighter;
 use wcf\system\bbcode\highlighter\SqlHighlighter;
 use wcf\system\bbcode\highlighter\TexHighlighter;
 use wcf\system\bbcode\highlighter\XmlHighlighter;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -28,7 +27,7 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
-class HtmlOutputNodePre extends AbstractHtmlNode {
+class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	/**
 	 * @inheritDoc
 	 */
@@ -46,15 +45,24 @@ class HtmlOutputNodePre extends AbstractHtmlNode {
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
-			$nodeIdentifier = StringUtil::getRandomID();
-			$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
-				'content' => $element->textContent,
-				'file' => ($element->hasAttribute('data-file')) ? $element->getAttribute('data-file') : '',
-				'highlighter' => ($element->hasAttribute('data-highlighter')) ? $element->getAttribute('data-highlighter') : '',
-				'line' => ($element->hasAttribute('data-line')) ? $element->getAttribute('data-line') : 1
-			]);
-			
-			$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+			switch ($this->outputType) {
+				case 'text/html':
+					$nodeIdentifier = StringUtil::getRandomID();
+					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
+						'content' => $element->textContent,
+						'file' => ($element->hasAttribute('data-file')) ? $element->getAttribute('data-file') : '',
+						'highlighter' => ($element->hasAttribute('data-highlighter')) ? $element->getAttribute('data-highlighter') : '',
+						'line' => ($element->hasAttribute('data-line')) ? $element->getAttribute('data-line') : 1
+					]);
+					
+					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+					break;
+				
+				case 'text/simplified-html':
+				case 'text/plain':
+					return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.simplified', ['lines' => substr_count($element->nodeValue, "\n") + 1]);
+					break;
+			}
 		}
 	}
 	

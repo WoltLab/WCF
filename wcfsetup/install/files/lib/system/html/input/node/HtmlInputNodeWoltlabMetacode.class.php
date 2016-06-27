@@ -1,12 +1,11 @@
 <?php
 namespace wcf\system\html\input\node;
 use wcf\system\html\metacode\converter\IMetacodeConverter;
-use wcf\system\html\node\AbstractHtmlNode;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 
 /**
- * Proccesses `<woltlab-metacode>` and converts them if appropriate.
+ * Processes `<woltlab-metacode>` and converts them if appropriate.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -14,7 +13,7 @@ use wcf\util\DOMUtil;
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
  */
-class HtmlInputNodeWoltlabMetacode extends AbstractHtmlNode {
+class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 	/**
 	 * static mapping of attribute-less metacodes that map to
 	 * an exact HTML tag without the need of further processing
