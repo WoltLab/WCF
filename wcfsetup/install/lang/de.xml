@@ -1091,6 +1091,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.paid_subscription_enable_tos_confirmation"><![CDATA[Benutzer müssen vor dem Kauf Nutzungsbedingungen akzeptieren]]></item>
 		<item name="wcf.acp.option.paid_subscription_tos_url"><![CDATA[URL zu Nutzungsbedingungen]]></item>
 		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.option.google_maps_api_key"><![CDATA[Browser-API-Schlüssel]]></item>
+		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google stellt <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.google.com/maps/documentation/javascript/get-api-key'|rawurlencode}" class="externalURL">hier</a> eine ausführliche Anleitung bereit, wie Sie einen API-Schlüssel erstellen können.]]></item>
 		<item name="wcf.acp.option.suffix.days"><![CDATA[Tage]]></item>
 		<item name="wcf.acp.option.suffix.minutes"><![CDATA[Minuten]]></item>
 		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixel]]></item>

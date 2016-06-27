@@ -135,7 +135,7 @@ class UserMailForm extends AbstractForm {
 		$userMailData[$mailID] = [
 			'action' => $this->action,
 			'userIDs' => $this->userIDs,
-			'groupIDs' => implode(',', $this->groupIDs),
+			'groupIDs' => $this->groupIDs,
 			'subject' => $this->subject,
 			'text' => $this->text,
 			'from' => $this->from,
