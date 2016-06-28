@@ -464,23 +464,14 @@ final class HTTPRequest {
 				
 				try {
 					$newRequest->execute();
-					
-					// update data with data from the inner request
-					$this->url = $newRequest->url;
-					$this->statusCode = $newRequest->statusCode;
-					$this->replyHeaders = $newRequest->replyHeaders;
-					$this->legacyHeaders = $newRequest->legacyHeaders;
-					$this->replyBody = $newRequest->replyBody;
 				}
-				catch (SystemException $e) {
+				finally {
 					// update data with data from the inner request
 					$this->url = $newRequest->url;
 					$this->statusCode = $newRequest->statusCode;
 					$this->replyHeaders = $newRequest->replyHeaders;
 					$this->legacyHeaders = $newRequest->legacyHeaders;
 					$this->replyBody = $newRequest->replyBody;
-					
-					throw $e;
 				}
 				
 				return;
