@@ -181,7 +181,7 @@ final class DOMUtil {
 	 * 
 	 * @param       \DOMElement     $element        start element
 	 * @param       string          $tagName        tag name to match
-	 * @return      boolean         true if there is at least one parent with the provided tag name
+	 * @return      boolean         
 	 */
 	public static function hasParent(\DOMElement $element, $tagName) {
 		while ($element = $element->parentNode) {

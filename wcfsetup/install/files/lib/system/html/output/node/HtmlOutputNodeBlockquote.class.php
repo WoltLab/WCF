@@ -49,7 +49,8 @@ class HtmlOutputNodeBlockquote extends AbstractHtmlOutputNode {
 					else {
 						$htmlNodeProcessor->replaceElementWithText(
 							$element,
-							WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.simplified', ['cite' => $element->getAttribute('data-author')])."\n"
+							WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.simplified', ['cite' => $element->getAttribute('data-author')]),
+							true
 						);
 					}
 					break;

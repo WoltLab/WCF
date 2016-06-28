@@ -24,19 +24,20 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode {
 	 * @inheritDoc
 	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
-			/** @var \DOMElement $element */
-			foreach ($elements as $element) {
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			if ($this->outputType === 'text/html') {
 				$nodeIdentifier = StringUtil::getRandomID();
 				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['label' => $element->getAttribute('data-label')]);
 				
 				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
 			}
-		}
-		else if ($this->outputType === 'text/plain') {
-			/** @var \DOMElement $element */
-			foreach ($elements as $element) {
-				DOMUtil::removeNode($element);
+			else if ($this->outputType === 'text/simplified-html' || $this->outputType === 'text/plain') {
+				$htmlNodeProcessor->replaceElementWithText(
+					$element,
+					WCF::getLanguage()->getDynamicVariable('wcf.bbcode.spoiler.simplified', ['label' => $element->getAttribute('data-label')]),
+					true
+				);
 			}
 		}
 	}

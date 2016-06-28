@@ -1863,6 +1863,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Hide Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Display Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>
+		<item name="wcf.bbcode.spoiler.simplified"><![CDATA[(Hidden Content)]]></item>
 	</category>
 	
 	<category name="wcf.captcha">

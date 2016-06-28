@@ -24,12 +24,12 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		this._xhr = null;
 		
 		this._init(options);
-	};
+	}
 	AjaxRequest.prototype = {
 		/**
 		 * Initializes the request options.
 		 * 
-		 * @param	{object<string, *>}	options		request options
+		 * @param	{Object}	options		request options
 		 */
 		_init: function(options) {
 			this._options = Core.extend({
@@ -168,7 +168,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		 * Sets a specific option.
 		 * 
 		 * @param	{string}	key	option name
-		 * @param	{*}		value	option value
+		 * @param	{?}		value	option value
 		 */
 		setOption: function(key, value) {
 			this._options[key] = value;
@@ -191,7 +191,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		/**
 		 * Sets request data while honoring pinned data from setup callback.
 		 * 
-		 * @param	{object<string, *>}	data	request data
+		 * @param	{Object}	data	request data
 		 */
 		setData: function(data) {
 			if (this._data !== null && Core.getType(data) !== 'FormData') {
@@ -205,7 +205,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		 * Handles a successful request.
 		 * 
 		 * @param	{XMLHttpRequest}	xhr		request object
-		 * @param	{object<string, *>}	options		request options
+		 * @param	{Object}        	options		request options
 		 */
 		_success: function(xhr, options) {
 			if (!options.silent) {
@@ -242,7 +242,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		 * a non-success status code or an entirely failed request.
 		 * 
 		 * @param	{XMLHttpRequest}	xhr		request object
-		 * @param	{object<string, *>}	options		request options
+		 * @param	{Object}        	options		request options
 		 */
 		_failure: function (xhr, options) {
 			if (_ignoreAllErrors) {
@@ -260,7 +260,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			catch (e) {}
 			
 			var showError = true;
-			if (typeof options.failure === 'function') {
+			if (data !== null && typeof options.failure === 'function') {
 				showError = options.failure(data, xhr.responseText, xhr, options.data);
 			}
 			
@@ -296,7 +296,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 		/**
 		 * Finalizes a request.
 		 * 
-		 * @param	{object<string, *>}	options		request options
+		 * @param	{Object}	options		request options
 		 */
 		_finalize: function(options) {
 			if (typeof options.finalize === 'function') {

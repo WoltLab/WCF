@@ -2,6 +2,7 @@
 namespace wcf\system\html\node;
 use wcf\system\exception\SystemException;
 use wcf\system\html\IHtmlProcessor;
+use wcf\util\DOMUtil;
 use wcf\util\JSON;
 
 /**
@@ -134,11 +135,20 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	 * Replaces an element with plain text.
 	 * 
 	 * @param       \DOMElement     $element        target element
-	 * @param       string          $text           text used to replace target element
+	 * @param       string          $text           text used to replace target 
+	 * @param       boolean         $isBlockElement true if element is a block element
 	 */
-	public function replaceElementWithText(\DOMElement $element, $text) {
+	public function replaceElementWithText(\DOMElement $element, $text, $isBlockElement) {
 		$textNode = $element->ownerDocument->createTextNode($text);
 		$element->parentNode->insertBefore($textNode, $element);
+		
+		if ($isBlockElement) {
+			for ($i = 0; $i < 2; $i++) {
+				$br = $element->ownerDocument->createElement('br');
+				$element->parentNode->insertBefore($br, $element);
+			}
+		}
+		
 		$element->parentNode->removeChild($element);
 	}
 	

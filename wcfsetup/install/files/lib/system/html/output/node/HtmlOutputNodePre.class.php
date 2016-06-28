@@ -50,8 +50,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 					$nodeIdentifier = StringUtil::getRandomID();
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'content' => $element->textContent,
-						'file' => ($element->hasAttribute('data-file')) ? $element->getAttribute('data-file') : '',
-						'highlighter' => ($element->hasAttribute('data-highlighter')) ? $element->getAttribute('data-highlighter') : '',
+						'file' => $element->getAttribute('data-file'),
+						'highlighter' => $element->getAttribute('data-highlighter'),
 						'line' => ($element->hasAttribute('data-line')) ? $element->getAttribute('data-line') : 1
 					]);
 					
@@ -60,7 +60,11 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 				
 				case 'text/simplified-html':
 				case 'text/plain':
-					return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.simplified', ['lines' => substr_count($element->nodeValue, "\n") + 1]);
+					$htmlNodeProcessor->replaceElementWithText(
+						$element,
+						WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.simplified', ['lines' => substr_count($element->nodeValue, "\n") + 1]),
+						true
+					);
 					break;
 			}
 		}

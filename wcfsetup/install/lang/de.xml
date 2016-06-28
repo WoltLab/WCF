@@ -1882,6 +1882,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Spoiler ausblenden]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Spoiler anzeigen]]></item>
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Versteckter Text)]]></item>
+		<item name="wcf.bbcode.spoiler.simplified"><![CDATA[(Versteckter Text)]]></item>
 	</category>
 	
 	<category name="wcf.captcha">

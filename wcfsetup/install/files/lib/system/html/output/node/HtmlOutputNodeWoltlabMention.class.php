@@ -59,7 +59,7 @@ class HtmlOutputNodeWoltlabMention extends AbstractHtmlOutputNode {
 		else if ($this->outputType === 'text/plain') {
 			/** @var \DOMElement $element */
 			foreach ($elements as $element) {
-				$htmlNodeProcessor->replaceElementWithText($element, '@' . $element->getAttribute('data-username'));
+				$htmlNodeProcessor->replaceElementWithText($element, '@' . $element->getAttribute('data-username'), false);
 			}
 		}
 	}
