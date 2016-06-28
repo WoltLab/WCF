@@ -26,6 +26,28 @@
 	});
 </script>
 
+{if $action == 'add'}
+	<script data-relocate="true">
+		elBySel('#name').addEventListener('blur', function() {
+			var name = elBySel('#name').value;
+			name = name.replace(/ /g, '-');
+			name = name.replace(/[^a-z0-9-]/gi, '');
+			
+			{if !$isMultilingual}
+				if (elBySel('#customURL').value === '') {
+					elBySel('#customURL').value = name;
+				}
+			{else}
+				{foreach from=$availableLanguages item=availableLanguage}
+					if (elBySel('#customURL{@$availableLanguage->languageID}').value === '') {
+						elBySel('#customURL{@$availableLanguage->languageID}').value = name + '-{@$availableLanguage->languageCode}';
+					}
+				{/foreach}
+			{/if}
+		});
+	</script>
+{/if}
+
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.page.add{/lang}{else}{lang}wcf.acp.page.edit{/lang}{/if}</h1>
