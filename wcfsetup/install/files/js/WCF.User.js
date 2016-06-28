@@ -183,6 +183,22 @@ WCF.User.Panel.Abstract = Class.extend({
 		});
 		
 		this._triggerElement.click($.proxy(this.toggle, this));
+		
+		var timer = null;
+		this._triggerElement.hover(
+			(function() {
+				if (this._dropdown === null || !this._dropdown.isOpen()) {
+					timer = window.setTimeout((function() {
+						this.toggle(undefined, true);
+					}).bind(this), 300); 
+				}
+			}).bind(this),
+			function() {
+				window.clearTimeout(timer);
+				timer = null;
+			}
+		);
+		
 		if (this._options.showAllLink) {
 			this._triggerElement.dblclick($.proxy(this._dblClick, this));
 		}
@@ -201,16 +217,21 @@ WCF.User.Panel.Abstract = Class.extend({
 	/**
 	 * Toggles the interactive dropdown.
 	 * 
-	 * @param	{Event=}		event
+	 * @param	{Event?}	event
+	 * @param       {boolean?}      openOnly
 	 * @return	{boolean}
 	 */
-	toggle: function(event) {
+	toggle: function(event, openOnly) {
 		if (event instanceof Event) {
 			event.preventDefault();
 		}
 		
 		if (this._dropdown === null) {
 			this._dropdown = this._initDropdown();
+		}
+		
+		if (openOnly === true && this._dropdown.isOpen()) {
+			return false;
 		}
 		
 		if (this._dropdown.toggle()) {

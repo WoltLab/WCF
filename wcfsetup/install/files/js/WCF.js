@@ -1197,6 +1197,15 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	},
 	
 	/**
+	 * Returns true if dropdown instance is visible.
+	 * 
+	 * @returns     {boolean}
+	 */
+	isOpen: function() {
+		return this._triggerElement.hasClass('open');
+	},
+	
+	/**
 	 * Toggles the dropdown state, returns true if dropdown is open afterwards, else false.
 	 * 
 	 * @return	boolean
