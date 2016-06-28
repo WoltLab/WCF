@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/cronjob.xsd">
 	<import>
-		<cronjob name="refreshPackageUpdates">
+		<cronjob name="com.woltlab.wcf.refreshPackageUpdates">
 			<classname><![CDATA[wcf\system\cronjob\GetUpdateInfoCronjob]]></classname>
 			<description><![CDATA[Updates package information]]></description>
 			<description language="de"><![CDATA[Aktualisiert Paket-Informationen]]></description>
@@ -14,7 +14,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="refreshSearchRobots">
+		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
 			<classname><![CDATA[wcf\system\cronjob\RefreshSearchRobotsCronjob]]></classname>
 			<description><![CDATA[Refreshes list of search robots]]></description>
 			<description language="de"><![CDATA[Aktualisiert die Liste der Suchroboter]]></description>
@@ -27,7 +27,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="dailyCleanUp">
+		<cronjob name="com.woltlab.wcf.dailyCleanUp">
 			<classname><![CDATA[wcf\system\cronjob\DailyCleanUpCronjob]]></classname>
 			<description><![CDATA[Executes daily Cleanup]]></description>
 			<description language="de"><![CDATA[Führt tägliche Aufräumarbeiten aus]]></description>
@@ -40,7 +40,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="hourlyCleanUp">
+		<cronjob name="com.woltlab.wcf.hourlyCleanUp">
 			<classname><![CDATA[wcf\system\cronjob\HourlyCleanUpCronjob]]></classname>
 			<description><![CDATA[Executes hourly Cleanup]]></description>
 			<description language="de"><![CDATA[Führt stündliche Aufräumarbeiten aus]]></description>
@@ -53,7 +53,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="sessionCleanUp">
+		<cronjob name="com.woltlab.wcf.sessionCleanUp">
 			<classname><![CDATA[wcf\system\cronjob\SessionCleanUpCronjob]]></classname>
 			<description><![CDATA[Deletes expired sessions]]></description>
 			<description language="de"><![CDATA[Löscht abgelaufene Sessions]]></description>
@@ -66,7 +66,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="attachmentCleanUp">
+		<cronjob name="com.woltlab.wcf.attachmentCleanUp">
 			<classname><![CDATA[wcf\system\cronjob\AttachmentCleanUpCronjob]]></classname>
 			<description><![CDATA[Deletes orphaned attachments]]></description>
 			<description language="de"><![CDATA[Löscht verwaiste Dateianhänge]]></description>
@@ -79,7 +79,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="backgroundQueueCleanUp">
+		<cronjob name="com.woltlab.wcf.backgroundQueueCleanUp">
 			<classname><![CDATA[wcf\system\cronjob\BackgroundQueueCleanUpCronjob]]></classname>
 			<description><![CDATA[Requeues stuck queue items]]></description>
 			<description language="de"><![CDATA[Start hängen gebliebene Hintergrundaufgaben neu]]></description>
@@ -92,7 +92,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="lastActivityUpdate">
+		<cronjob name="com.woltlab.wcf.lastActivityUpdate">
 			<classname><![CDATA[wcf\system\cronjob\LastActivityCronjob]]></classname>
 			<description><![CDATA[Updates last activity timestamp]]></description>
 			<description language="de"><![CDATA[Aktualisiert Zeitpunkt der letzten Aktivität]]></description>
@@ -106,7 +106,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="userQuit">
+		<cronjob name="com.woltlab.wcf.userQuit">
 			<classname><![CDATA[wcf\system\cronjob\UserQuitCronjob]]></classname>
 			<description><![CDATA[Deletes canceled user accounts]]></description>
 			<description language="de"><![CDATA[Löscht gekündigte Benutzer-Accounts]]></description>
@@ -120,7 +120,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="dailyMailNotification">
+		<cronjob name="com.woltlab.wcf.dailyMailNotification">
 			<classname><![CDATA[wcf\system\cronjob\DailyMailNotificationCronjob]]></classname>
 			<description><![CDATA[Sends daily mail notifications]]></description>
 			<description language="de"><![CDATA[Versendet tägliche E-Mail-Benachrichtigungen]]></description>
@@ -134,7 +134,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="moderationQueueCleanup">
+		<cronjob name="com.woltlab.wcf.moderationQueueCleanup">
 			<classname><![CDATA[wcf\system\cronjob\ModerationQueueCronjob]]></classname>
 			<description><![CDATA[Moderation queue cleanup]]></description>
 			<description language="de"><![CDATA[Löscht veraltete Einträge in der Moderation]]></description>
@@ -148,7 +148,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="statDailyBuilder">
+		<cronjob name="com.woltlab.wcf.statDailyBuilder">
 			<classname><![CDATA[wcf\system\cronjob\StatDailyBuilderCronjob]]></classname>
 			<description><![CDATA[Builds the daily statistics]]></description>
 			<description language="de"><![CDATA[Generiert die täglichen Statistiken]]></description>
@@ -162,7 +162,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="userGroupAssignment">
+		<cronjob name="com.woltlab.wcf.userGroupAssignment">
 			<classname><![CDATA[wcf\system\cronjob\UserGroupAssignmentCronjob]]></classname>
 			<description><![CDATA[Automatically assigns users to user groups]]></description>
 			<description language="de"><![CDATA[Ordnet Benutzer automatisch Benutzergruppen zu]]></description>
@@ -176,7 +176,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="userBan">
+		<cronjob name="com.woltlab.wcf.userBan">
 			<classname><![CDATA[wcf\system\cronjob\UserBanCronjob]]></classname>
 			<description><![CDATA[Unbans users and enables disabled avatars and disabled signatures]]></description>
 			<description language="de"><![CDATA[Entsperrt gesperrte Benutzer, Avatare und Signaturen]]></description>
@@ -190,7 +190,7 @@
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
 		
-		<cronjob name="articlePublication">
+		<cronjob name="com.woltlab.wcf.articlePublication">
 			<classname>wcf\system\cronjob\ArticlePublicationCronjob</classname>
 			<description><![CDATA[Publishes delayed articles]]></description>
 			<description language="de"><![CDATA[Veröffentlicht Artikel]]></description>
