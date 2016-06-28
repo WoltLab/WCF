@@ -459,7 +459,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_datePicker.appendChild(header);
 			
 			_dateMonthPrevious = elCreate('a');
-			_dateMonthPrevious.className = 'icon icon16 fa-arrow-left previous';
+			_dateMonthPrevious.className = 'previous';
+			_dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
 			_dateMonthPrevious.addEventListener(WCF_CLICK_EVENT, this.previousMonth.bind(this));
 			header.appendChild(_dateMonthPrevious);
 			
@@ -491,7 +492,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			monthYearContainer.appendChild(selectWrapper);
 			
 			_dateMonthNext = elCreate('a');
-			_dateMonthNext.className = 'icon icon16 fa-arrow-right next';
+			_dateMonthNext.className = 'next';
+			_dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
 			_dateMonthNext.addEventListener(WCF_CLICK_EVENT, this.nextMonth.bind(this));
 			header.appendChild(_dateMonthNext);
 			

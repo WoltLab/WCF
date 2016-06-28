@@ -1,7 +1,7 @@
 .inputAddon > .inputDatePicker {
 	cursor: pointer;
-	flex: 0 1 150px;
-	min-width: 150px;
+	flex: 0 1 200px;
+	min-width: 200px;
 }
 
 .datePicker {
@@ -22,29 +22,25 @@
 		display: block;
 	}
 	
-	> header,
-	> footer {
-		padding: 10px;
-		position: relative;
-		text-align: center;
-	}
-	
-	> header > a {
-		display: none;
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
+	> header {
+		align-items: center;
+		display: flex;
 		
-		&.active {
+		> a {
 			display: block;
+			flex: 0 0 auto;
+			padding: 10px;
+			
+			&:not(.active) {
+				visibility: hidden;
+			}
 		}
 		
-		&.previous {
-			left: 10px;
-		}
-		
-		&.next {
-			right: 10px;
+		> span {
+			display: block;
+			flex: 1 1 auto;
+			padding: 10px 0;
+			text-align: center;
 		}
 	}
 	
@@ -103,5 +99,8 @@
 	> footer {
 		border-top: 1px solid $wcfDropdownBorder;
 		display: none;
+		padding: 10px;
+		position: relative;
+		text-align: center;
 	}
 }
