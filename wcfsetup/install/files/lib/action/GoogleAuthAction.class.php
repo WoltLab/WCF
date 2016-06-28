@@ -53,8 +53,7 @@ class GoogleAuthAction extends AbstractAction {
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
-				// force logging
-				$e->getExceptionID();
+				\wcf\functions\exception\logThrowable($e);
 				throw new IllegalLinkException();
 			}
 			
@@ -74,8 +73,7 @@ class GoogleAuthAction extends AbstractAction {
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
-				// force logging
-				$e->getExceptionID();
+				\wcf\functions\exception\logThrowable($e);
 				throw new IllegalLinkException();
 			}
 			
