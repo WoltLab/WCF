@@ -38,7 +38,6 @@
 						{/if}
 					</small>
 				{/if}
-				<small>{lang}wcf.acp.menu.title.description{/lang}</small>
 				{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 			</dd>
 		</dl>
@@ -49,7 +48,7 @@
 				<dd>
 					<select name="position" id="position">
 						{foreach from=$availablePositions item=availablePosition}
-							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
 						{/foreach}
 					</select>
 					
@@ -99,17 +98,34 @@
 				<dt></dt>
 				<dd>
 					<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+					<script data-relocate="true">
+						elById('visibleEverywhere').addEventListener('change', function() {
+							if (this.checked) {
+								elShow(elById('visibilityExceptionHidden'));
+								elHide(elById('visibilityExceptionVisible'));
+							}
+							else {
+								elHide(elById('visibilityExceptionHidden'));
+								elShow(elById('visibilityExceptionVisible'));
+							}
+						});
+					</script>
 				</dd>
 			</dl>
 			
 			<dl>
-				<dt><label for="pageIDs">{lang}wcf.acp.box.pageIDs{/lang}</label></dt>
+				<dt>
+					<span id="visibilityExceptionVisible"{if $visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.visible{/lang}</span>
+					<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
+				</dt>
 				<dd>
-					<select name="pageIDs[]" id="pageIDs" multiple size="20">
+					<ul class="scrollableCheckboxList">
 						{foreach from=$pageNodeList item=pageNode}
-							<option value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+							<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
+								<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
+							</li>
 						{/foreach}
-					</select>
+					</ul>
 				</dd>
 			</dl>
 		{/if}

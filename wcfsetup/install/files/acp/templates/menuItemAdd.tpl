@@ -81,6 +81,22 @@
 			</dd>
 		</dl>
 		
+		<dl>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
+			<dd>
+				<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0">
+			</dd>
+		</dl>
+		
+		{if $action == 'add' || !$menuItem->isLandingPage}
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
+				</dd>
+			</dl>
+		{/if}
+		
 		{event name='dataFields'}
 	</div>
 	
@@ -96,7 +112,7 @@
 		</dl>
 		
 		<dl id="pageIDContainer"{if $errorField == 'pageID'} class="formError"{/if}{if !$isInternalLink} style="display: none;"{/if}>
-			<dt><label for="pageID">{lang}wcf.acp.page.parentPageID{/lang}</label></dt>
+			<dt><label for="pageID">{lang}wcf.acp.page.page{/lang}</label></dt>
 			<dd>
 				<select name="pageID" id="pageID">
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
@@ -118,7 +134,7 @@
 		</dl>
 		
 		<dl id="pageObjectIDContainer"{if $errorField == 'pageObjectID'} class="formError"{/if}{if !$pageID || !$pageHandler[$pageID]|isset} style="display: none;"{/if}>
-			<dt><label for="pageObjectID">{lang}wcf.acp.page.pageObjectID{/lang}</label></dt>
+			<dt><label for="pageObjectID">{lang}wcf.acp.page.objectID{/lang}</label></dt>
 			<dd>
 				<div class="inputAddon">
 					<input type="text" id="pageObjectID" name="pageObjectID" value="{$pageObjectID}" class="short">
@@ -157,28 +173,6 @@
 		{event name='linkFields'}
 	</section>
 	
-	<section class="section">
-		<h2 class="sectionTitle">{lang}wcf.acp.menu.item.advanced{/lang}</h2>
-		
-		<dl>
-			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
-			<dd>
-				<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0">
-			</dd>
-		</dl>
-		
-		{if $action == 'add' || !$menuItem->isLandingPage}
-			<dl>
-				<dt></dt>
-				<dd>
-					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked{/if}> <span>{lang}wcf.acp.menu.item.isDisabled{/lang}</span></label>
-				</dd>
-			</dl>
-		{/if}
-		
-		{event name='advancedFields'}
-	</section>
-		
 	{event name='sections'}
 	
 	<div class="formSubmit">

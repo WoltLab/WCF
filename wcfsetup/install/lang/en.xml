@@ -156,6 +156,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.linkType.external"><![CDATA[External link]]></item>
 		<item name="wcf.acp.box.link.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.box.list"><![CDATA[Boxes]]></item>
+		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Show box title]]></item>
 		<item name="wcf.acp.box.type"><![CDATA[Page Type]]></item>
@@ -704,6 +705,20 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
 		<item name="wcf.acp.menu.link.article.category.list"><![CDATA[Categories]]></item>
 		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Add Category]]></item>
+		<item name="wcf.acp.menu.add"><![CDATA[Add Menu]]></item>
+		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[Do you really want to delete the menu <span class="confirmationObject">{lang}{$menu->title}{/lang}</span>?]]></item>
+		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
+		<item name="wcf.acp.menu.list"><![CDATA[Menus]]></item>
+		<item name="wcf.acp.menu.item.add"><![CDATA[Add Menu Item]]></item>
+		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{lang}{$menuItemNode->title}{/lang}</span>?]]></item>
+		<item name="wcf.acp.menu.item.edit"><![CDATA[Edit Menu Item]]></item>
+		<item name="wcf.acp.menu.item.externalURL"><![CDATA[External URL]]></item>
+		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Disable menu item]]></item>
+		<item name="wcf.acp.menu.item.link"><![CDATA[Link]]></item>
+		<item name="wcf.acp.menu.item.link.external"><![CDATA[External link]]></item>
+		<item name="wcf.acp.menu.item.link.internal"><![CDATA[Internal link]]></item>
+		<item name="wcf.acp.menu.item.list"><![CDATA[Menu Items]]></item>
+		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Parent Menu Item]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
