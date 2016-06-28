@@ -92,6 +92,12 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	public $maxTextLength = 0;
 	
 	/**
+	 * message object type for html processing
+	 * @var string
+	 */
+	public $messageObjectType = '';
+	
+	/**
 	 * list of smiley categories
 	 * @var	SmileyCategory[]
 	 */
@@ -199,6 +205,10 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	 * Validates the message text.
 	 */
 	protected function validateText() {
+		if (empty($this->messageObjectType)) {
+			throw new \RuntimeException("Expected non-empty message object type for '".get_class($this)."'");
+		}
+		
 		if (empty($this->text)) {
 			throw new UserInputException('text');
 		}
@@ -209,7 +219,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		}
 		
 		$this->htmlInputProcessor = new HtmlInputProcessor();
-		$this->htmlInputProcessor->process($this->text);
+		$this->htmlInputProcessor->process($this->text, $this->messageObjectType, 0);
 		
 		// TODO: add checks for disallowed bbcodes and stuff
 		$this->htmlInputProcessor->validate();
