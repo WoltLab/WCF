@@ -36,13 +36,6 @@ final class Regex {
 	const UNGREEDY = 2;
 	
 	/**
-	 * indicates eval() replacement of Regex::replace()
-	 * @var	integer
-	 * @deprecated	The feature will be removed in future versions of PHP
-	 */
-	const EVAL_REPLACEMENT = 4;
-	
-	/**
 	 * indicates that no extra time is spent on analysing
 	 * @var	integer
 	 */
@@ -143,9 +136,6 @@ final class Regex {
 		// add modifiers
 		if ($modifier & self::CASE_INSENSITIVE) $this->regex .= 'i';
 		if ($modifier & self::UNGREEDY) $this->regex .= 'U';
-		if ($modifier & self::EVAL_REPLACEMENT) {
-			throw new SystemException("Using the 'e' modifier for Regex::replace() is discouraged. Please use a callback.");
-		}
 		if (!($modifier & self::NO_ANALYSE)) $this->regex .= 'S';
 		if ($modifier & self::IGNORE_WHITESPACE) $this->regex .= 'x';
 		if ($modifier & self::DOT_ALL) $this->regex .= 's';
