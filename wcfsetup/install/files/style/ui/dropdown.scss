@@ -312,3 +312,11 @@
 		display: inline-flex !important;
 	}
 }
+
+.boxFlag.box24 {
+	&::after {
+		content: $fa-var-caret-down;
+		font-family: FontAwesome;
+		margin-left: 5px;
+	}
+}
