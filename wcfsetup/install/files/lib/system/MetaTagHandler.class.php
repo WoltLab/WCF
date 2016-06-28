@@ -21,7 +21,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	 * list of index to object relation
 	 * @var	integer[]
 	 */
-	protected $indexToObject = null;
+	protected $indexToObject = [];
 	
 	/**
 	 * list of meta tags
@@ -34,9 +34,15 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	 */
 	protected function init() {
 		// set default tags
-		$this->addTag('description', 'description', WCF::getLanguage()->get(META_DESCRIPTION));
-		$this->addTag('keywords', 'keywords', WCF::getLanguage()->get(META_KEYWORDS));
-		$this->addTag('og:site_name', 'og:site_name', WCF::getLanguage()->get(PAGE_TITLE), true);
+		if ($value = WCF::getLanguage()->get(META_DESCRIPTION)) {
+			$this->addTag('description', 'description', $value);
+		}
+		if ($value = WCF::getLanguage()->get(META_KEYWORDS)) {
+			$this->addTag('keywords', 'keywords', $value);
+		}
+		if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
+			$this->addTag('og:site_name', 'og:site_name', $value, true);
+		}	
 	}
 	
 	/**
