@@ -300,8 +300,13 @@
 }
 
 .boxFlag > .box24, .boxFlag.box24 {
+	align-items: center;
 	display: flex !important;
 	min-height: 20px;
+	
+	> img:first-child {
+		height: 100%;
+	}
 	
 	&.dropdownToggle {
 		display: inline-flex !important;

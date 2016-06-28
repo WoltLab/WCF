@@ -108,9 +108,9 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			}).bind(this);
 			
 			// add language dropdown items
-			var a, div, h3, img, listItem;
+			var link, img, listItem, span;
 			for (var availableLanguageId in languages) {
-				if (objOwns(languages, availableLanguageId)) {
+				if (languages.hasOwnProperty(availableLanguageId)) {
 					var language = languages[availableLanguageId];
 					
 					listItem = elCreate('li');
@@ -120,26 +120,19 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					if (language.languageCode !== undefined) elData(listItem, 'language-code', language.languageCode);
 					dropdownMenu.appendChild(listItem);
 					
-					a = elCreate('a');
-					a.className = 'box24';
-					listItem.appendChild(a);
-					
-					div = elCreate('div');
-					//div.className = 'framed';
-					a.appendChild(div);
+					link = elCreate('a');
+					link.className = 'box24';
+					listItem.appendChild(link);
 					
 					img = elCreate('img');
 					elAttr(img, 'src', language.iconPath);
 					elAttr(img, 'alt', '');
 					img.className = 'iconFlag';
-					div.appendChild(img);
+					link.appendChild(img);
 					
-					div = elCreate('div');
-					a.appendChild(div);
-					
-					h3 = elCreate('h3');
-					h3.textContent = language.languageName;
-					div.appendChild(h3);
+					span = elCreate('span');
+					span.textContent = language.languageName;
+					link.appendChild(span);
 					
 					if (availableLanguageId == languageId) {
 						dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
@@ -171,19 +164,16 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			else if (languageId === 0) {
 				dropdownToggle.innerHTML = null;
 				
-				div = elCreate('div');
+				var div = elCreate('div');
 				dropdownToggle.appendChild(div);
 				
-				var span = elCreate('span');
+				span = elCreate('span');
 				span.className = 'icon icon24 fa-question';
 				div.appendChild(span);
 				
-				div = elCreate('div');
-				dropdownToggle.appendChild(div);
-				
-				h3 = elCreate('h3');
-				h3.textContent = Language.get('wcf.global.language.noSelection');
-				div.appendChild(h3);
+				span = elCreate('span');
+				span.textContent = Language.get('wcf.global.language.noSelection');
+				div.appendChild(span);
 			}
 			
 			UiSimpleDropdown.init(dropdownToggle);
