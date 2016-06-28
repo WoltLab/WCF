@@ -21,21 +21,21 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 	/**
 	 * @exports	WoltLab/WCF/Ui/ItemList
 	 */
-	var UiItemList = {
+	return {
 		/**
 		 * Initializes an item list.
 		 * 
 		 * The `values` argument must be empty or contain a list of strings or object, e.g.
 		 * `['foo', 'bar']` or `[{ objectId: 1337, value: 'baz'}, {...}]`
 		 * 
-		 * @param	{string}		elementId	input element id
-		 * @param	{array<mixed>}		values		list of existing values
-		 * @param	{object<string>}	options		option list
+		 * @param	{string}	elementId	input element id
+		 * @param	{Array}		values		list of existing values
+		 * @param	{Object}	options		option list
 		 */
 		init: function(elementId, values, options) {
 			var element = elById(elementId);
 			if (element === null) {
-				throw new Error("Expected a valid element id.");
+				throw new Error("Expected a valid element id, '" + elementId + "' is invalid.");
 			}
 			
 			options = Core.extend({
@@ -95,7 +95,8 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			
 			this._setup();
 			
-			var data = this._createUI(element, options, values);
+			var data = this._createUI(element, options);
+			//noinspection JSUnresolvedVariable
 			var suggestion = new UiSuggestion(elementId, {
 				ajax: options.ajax,
 				callbackSelect: this._addItem.bind(this),
@@ -129,8 +130,8 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		/**
 		 * Returns the list of current values.
 		 * 
-		 * @param	{string}		elementId	input element id
-		 * @return	{array<object>}		list of objects containing object id and value
+		 * @param	{string}	elementId	input element id
+		 * @return	{Array}		list of objects containing object id and value
 		 */
 		getValues: function(elementId) {
 			if (!_data.has(elementId)) {
@@ -156,8 +157,8 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		/**
 		 * Sets the list of current values.
 		 * 
-		 * @param	{string}		elementId	input element id
-		 * @param	{array<object>}		values		list of objects containing object id and value
+		 * @param	{string}	elementId	input element id
+		 * @param	{Array}		values		list of objects containing object id and value
 		 */
 		setValues: function(elementId, values) {
 			if (!_data.has(elementId)) {
@@ -167,13 +168,14 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			var data = _data.get(elementId);
 			
 			// remove all existing items first
+			var i, length;
 			var items = DomTraverse.childrenByClass(data.list, 'item');
-			for (var i = 0, length = items.length; i < length; i++) {
+			for (i = 0, length = items.length; i < length; i++) {
 				this._removeItem(null, items[i], true);
 			}
 			
 			// add new items
-			for (var i = 0, length = values.length; i < length; i++) {
+			for (i = 0, length = values.length; i < length; i++) {
 				this._addItem(elementId, values[i]);
 			}
 		},
@@ -198,15 +200,18 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 * Creates the DOM structure for target element. If `element` is a `<textarea>`
 		 * it will be automatically replaced with an `<input>` element.
 		 * 
-		 * @param	{Element}		element		input element
-		 * @param	{object<string>}	options		option list
+		 * @param	{Element}	element		input element
+		 * @param	{Object}	options		option list
 		 */
 		_createUI: function(element, options) {
 			var list = elCreate('ol');
 			list.className = 'inputItemList';
 			elData(list, 'element-id', element.id);
 			list.addEventListener(WCF_CLICK_EVENT, function(event) {
-				if (event.target === list) element.focus();
+				if (event.target === list) {
+					//noinspection JSUnresolvedFunction
+					element.focus();
+				}
 			});
 			
 			var listItem = elCreate('li');
@@ -229,12 +234,14 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 				shadow = elCreate('input');
 				shadow.className = 'itemListInputShadow';
 				shadow.type = 'hidden';
+				//noinspection JSUnresolvedVariable
 				shadow.name = element.name;
 				element.removeAttribute('name');
 				
 				list.parentNode.insertBefore(shadow, list);
 				
 				if (element.nodeName === 'TEXTAREA') {
+					//noinspection JSUnresolvedVariable
 					var value, tmp = element.value.split(',');
 					for (var i = 0, length = tmp.length; i < length; i++) {
 						value = tmp[i].trim();
@@ -322,7 +329,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 */
 		_keyPress: function(event) {
 			// 13 = [ENTER], 44 = [,]
-			if (event.charCode === 13 || event.charCode === 44) {
+			if (event.charCode == 13 || event.charCode == 44) {
 				event.preventDefault();
 				
 				if (_data.get(event.currentTarget.id).options.restricted) {
@@ -393,13 +400,14 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 		 * Removes an item from the list.
 		 * 
 		 * @param	{?object}	event		event object
-		 * @param	{Element=}	item		list item
+		 * @param	{Element?}	item		list item
 		 * @param	{boolean?}	noFocus		input element will not be focused if true
 		 */
 		_removeItem: function(event, item, noFocus) {
 			item = (event === null) ? item : event.currentTarget.parentNode;
 			
 			var parent = item.parentNode;
+			//noinspection JSCheckFunctionSignatures
 			var elementId = elData(parent, 'element-id');
 			var data = _data.get(elementId);
 			
@@ -434,6 +442,4 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLab/WCF/Ui/Sugges
 			return values;
 		}
 	};
-	
-	return UiItemList;
 });
