@@ -28,19 +28,19 @@
 
 {if $action == 'add'}
 	<script data-relocate="true">
-		elBySel('#name').addEventListener('blur', function() {
-			var name = elBySel('#name').value;
+		elById('name').addEventListener('blur', function() {
+			var name = this.value;
 			name = name.replace(/ /g, '-');
 			name = name.replace(/[^a-z0-9-]/gi, '');
 			
 			{if !$isMultilingual}
-				if (elBySel('#customURL').value === '') {
-					elBySel('#customURL').value = name;
+				if (elById('customURL').value === '') {
+					elById('customURL').value = name;
 				}
 			{else}
 				{foreach from=$availableLanguages item=availableLanguage}
-					if (elBySel('#customURL{@$availableLanguage->languageID}').value === '') {
-						elBySel('#customURL{@$availableLanguage->languageID}').value = name + '-{@$availableLanguage->languageCode}';
+					if (elById('customURL{@$availableLanguage->languageID}').value === '') {
+						elById('customURL{@$availableLanguage->languageID}').value = name + '-{@$availableLanguage->languageCode}';
 					}
 				{/foreach}
 			{/if}
