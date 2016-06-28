@@ -299,6 +299,13 @@
 	}
 }
 
+.dropdownIndicator::after {
+	content: $fa-var-caret-down;
+	font-family: FontAwesome;
+	margin-left: 5px;
+}
+
+
 .boxFlag > .box24, .boxFlag.box24 {
 	align-items: center;
 	display: flex !important;
@@ -310,13 +317,5 @@
 	
 	&.dropdownToggle {
 		display: inline-flex !important;
-	}
-}
-
-.boxFlag.box24 {
-	&::after {
-		content: $fa-var-caret-down;
-		font-family: FontAwesome;
-		margin-left: 5px;
 	}
 }

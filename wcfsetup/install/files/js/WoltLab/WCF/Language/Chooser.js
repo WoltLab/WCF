@@ -89,7 +89,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			elHide(element);
 			
 			var dropdownToggle = elCreate('a');
-			dropdownToggle.className = 'dropdownToggle boxFlag box24 inputPrefix' + (element.parentNode.nodeName === 'DD' ? ' button' : '');
+			dropdownToggle.className = 'dropdownToggle dropdownIndicator boxFlag box24 inputPrefix' + (element.parentNode.nodeName === 'DD' ? ' button' : '');
 			container.appendChild(dropdownToggle);
 			
 			var dropdownMenu = elCreate('ul');
