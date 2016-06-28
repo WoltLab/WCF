@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\form\AbstractForm;
@@ -152,6 +153,7 @@ class CronjobAddForm extends AbstractForm {
 		$data = array_merge($this->additionalFields, [
 			'className' => $this->className,
 			'packageID' => $this->packageID,
+			'cronjobName' => 'com.woltlab.wcf.cronjob',
 			'description' => $this->description,
 			'startMinute' => $this->startMinute,
 			'startHour' => $this->startHour,
@@ -161,19 +163,22 @@ class CronjobAddForm extends AbstractForm {
 		]);
 		
 		$this->objectAction = new CronjobAction([], 'create', ['data' => $data]);
-		$this->objectAction->executeAction();
+		/** @var Cronjob $cronjob */
+		$cronjob = $this->objectAction->executeAction()['returnValues'];
+		$cronjobID = $cronjob->cronjobID;
+		
+		// update `cronjobName`
+		$data = ['cronjobName' => 'com.woltlab.wcf.cronjob' . $cronjobID];
 		
 		if (!I18nHandler::getInstance()->isPlainValue('description')) {
-			$returnValues = $this->objectAction->getReturnValues();
-			$cronjobID = $returnValues['returnValues']->cronjobID;
 			I18nHandler::getInstance()->save('description', 'wcf.acp.cronjob.description.cronjob'.$cronjobID, 'wcf.acp.cronjob', $this->packageID);
 			
 			// update group name
-			$cronjobEditor = new CronjobEditor($returnValues['returnValues']);
-			$cronjobEditor->update([
-				'description' => 'wcf.acp.cronjob.description.cronjob'.$cronjobID
-			]);
+			$data['description'] = 'wcf.acp.cronjob.description.cronjob' . $cronjobID;
 		}
+		
+		$cronjobEditor = new CronjobEditor($cronjob);
+		$cronjobEditor->update($data);
 		
 		$this->saved();
 		
