@@ -26,7 +26,7 @@ dl {
 			> small:not(.innerError) {
 				color: $wcfContentDimmedText;
 				display: block;
-				margin-top: 5px;
+				margin-top: 3px;
 			}
 			
 			> label {
@@ -39,7 +39,7 @@ dl {
 			}
 			
 			> label:not(:first-child) {
-				margin-top: 3px;
+				margin-top: 5px;
 			}
 			
 			&.floated {
