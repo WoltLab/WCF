@@ -66,7 +66,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		
 		// replace description if Open Graph Protocol tag was given
 		if ($name == 'og:description') {
-			$this->objects['description']['value'] = $value;
+			$this->addTag('description', 'description', $value);
 		}
 	}
 	
