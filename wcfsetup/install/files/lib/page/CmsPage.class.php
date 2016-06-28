@@ -3,6 +3,7 @@ namespace wcf\page;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\MetaTagHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
@@ -77,6 +78,24 @@ class CmsPage extends AbstractPage {
 		// update interface language
 		if (!WCF::getUser()->userID && $this->page->isMultilingual && $this->languageID != WCF::getLanguage()->languageID) {
 			WCF::setLanguage($this->languageID);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readData() {
+		parent::readData();
+		
+		// add meta/og tags
+		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->content['title'] . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
+		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->canonicalURL, true);
+		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'website', true);
+		if ($this->content['metaDescription']) {
+			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->content['metaDescription'], true);
+		}
+		if ($this->content['metaKeywords']) {
+			MetaTagHandler::getInstance()->addTag('keywords', 'keywords', $this->content['metaKeywords']);
 		}
 	}
 	
