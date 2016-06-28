@@ -3,9 +3,9 @@ namespace wcf\page;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\MetaTagHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
+use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
 
 /**
