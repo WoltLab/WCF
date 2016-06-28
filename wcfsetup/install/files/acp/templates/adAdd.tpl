@@ -100,7 +100,7 @@
 		</dl>
 		
 		<dl>
-			<dt><label for="showOrder">{lang}wcf.acp.ad.showOrder{/lang}</label></dt>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
 				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
 				<small>{lang}wcf.acp.ad.showOrder.description{/lang}</small>

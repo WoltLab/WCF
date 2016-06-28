@@ -4,18 +4,13 @@
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
 		
-		require(['WoltLab/WCF/Acp/Ui/Box/Controller/Handler', 'WoltLab/WCF/Media/Manager/Select'], function(AcpUiBoxControllerHandler, MediaManagerSelect) {
-			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
-			
-			new MediaManagerSelect({
-				dialogTitle: '{lang}wcf.acp.box.image.dialog.title{/lang}',
-				fileTypeFilters: {
-					isImage: 1
-				}
+		{if $boxType == 'system'}
+			require(['WoltLab/WCF/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
+				AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
 			});
-		});
+		{/if}
 		
-		require(['Dictionary', 'Language', 'WoltLab/WCF/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
+		require(['Dictionary', 'Language', 'WoltLab/WCF/Acp/Ui/Box/Handler', 'WoltLab/WCF/Media/Manager/Select'], function(Dictionary, Language, AcpUiBoxHandler, MediaManagerSelect) {
 			Language.addObject({
 				'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
 				'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
@@ -30,6 +25,13 @@
 			{/foreach}
 			
 			AcpUiBoxHandler.init(handlers);
+			
+			new MediaManagerSelect({
+				dialogTitle: '{lang}wcf.acp.box.image.dialog.title{/lang}',
+				fileTypeFilters: {
+					isImage: 1
+				}
+			});
 		});
 	</script>
 {/if}
@@ -60,8 +62,8 @@
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.global.form.data{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('contents')}">{lang}wcf.acp.box.contents{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.box.pages{/lang}</a></li>
-				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acp.box.acl{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('pages')}">{lang}wcf.acp.page.list{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('acl')}">{lang}wcf.acl.access{/lang}</a></li>
 				
 				{event name='tabMenuTabs'}
 			</ul>
@@ -79,27 +81,6 @@
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
 									{lang}wcf.acp.box.name.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				
-				<dl{if $errorField == 'boxType'} class="formError"{/if}>
-					<dt><label for="boxType">{lang}wcf.acp.box.boxType{/lang}</label></dt>
-					<dd>
-						<select name="boxType" id="boxType" readonly>
-							{foreach from=$availableBoxTypes item=availableBoxType}
-								<option value="{@$availableBoxType}"{if $availableBoxType == $boxType} selected{/if}>{lang}wcf.acp.box.boxType.{@$availableBoxType}{/lang}</option>
-							{/foreach}
-						</select>
-						
-						{if $errorField == 'boxType'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.box.boxType.error.{@$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -132,7 +113,7 @@
 					<dd>
 						<select name="position" id="position">
 							{foreach from=$availablePositions item=availablePosition}
-								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
+								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
 							{/foreach}
 						</select>
 						
@@ -149,7 +130,7 @@
 				</dl>
 				
 				<dl>
-					<dt><label for="showOrder">{lang}wcf.acp.box.showOrder{/lang}</label></dt>
+					<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 					<dd>
 						<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
 					</dd>
@@ -192,7 +173,7 @@
 				</dl>
 				
 				<dl id="linkPageIDContainer"{if $errorField == 'linkPageID'} class="formError"{/if}{if $linkType != 'internal'} style="display: none;"{/if}>
-					<dt><label for="linkPageID">{lang}wcf.acp.box.linkPageID{/lang}</label></dt>
+					<dt><label for="linkPageID">{lang}wcf.acp.page.page{/lang}</label></dt>
 					<dd>
 						<select name="linkPageID" id="linkPageID">
 							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
@@ -214,7 +195,7 @@
 				</dl>
 				
 				<dl id="linkPageObjectIDContainer"{if $errorField == 'linkPageObjectID'} class="formError"{/if}{if !$linkPageID || !$pageHandler[$linkPageID]|isset} style="display: none;"{/if}>
-					<dt><label for="linkPageObjectID">{lang}wcf.acp.box.linkPageObjectID{/lang}</label></dt>
+					<dt><label for="linkPageObjectID">{lang}wcf.acp.page.objectID{/lang}</label></dt>
 					<dd>
 						<div class="inputAddon">
 							<input type="text" id="linkPageObjectID" name="linkPageObjectID" value="{$linkPageObjectID}" class="short">
@@ -235,7 +216,7 @@
 				<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
 					<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
 					<dd>
-						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" maxlength="255">
+						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" maxlength="255" placeholder="http://">
 						{if $errorField == 'externalURL'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -287,7 +268,7 @@
 					{/if}
 					
 					<dl{if $errorField == 'title'} class="formError"{/if}>
-						<dt><label for="title0">{lang}wcf.acp.box.title{/lang}</label></dt>
+						<dt><label for="title0">{lang}wcf.global.title{/lang}</label></dt>
 						<dd>
 							<input type="text" id="title0" name="title[0]" value="{if !$title[0]|empty}{$title[0]}{/if}" class="long" maxlength="255">
 							{if $errorField == 'title'}
@@ -407,11 +388,26 @@
 					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
+						<script data-relocate="true">
+							elById('visibleEverywhere').addEventListener('change', function() {
+								if (this.checked) {
+									elShow(elById('visibilityExceptionHidden'));
+									elHide(elById('visibilityExceptionVisible'));
+								}
+								else {
+									elHide(elById('visibilityExceptionHidden'));
+									elShow(elById('visibilityExceptionVisible'));
+								} 
+							});
+						</script>
 					</dd>
 				</dl>
 				
 				<dl>
-					<dt>{lang}wcf.acp.box.pageIDs{/lang}</dt>
+					<dt>
+						<span id="visibilityExceptionVisible"{if $visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.visible{/lang}</span>
+						<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
+					</dt>
 					<dd>
 						<ul class="scrollableCheckboxList">
 							{foreach from=$pageNodeList item=pageNode}
@@ -433,6 +429,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="boxType" value="{$boxType}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

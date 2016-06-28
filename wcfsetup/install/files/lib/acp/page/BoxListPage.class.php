@@ -65,7 +65,7 @@ class BoxListPage extends SortablePage {
 	 * box type
 	 * @var string
 	 */
-	public $boxType = 'static';
+	public $boxType = '';
 	
 	/**
 	 * box position
@@ -114,11 +114,8 @@ class BoxListPage extends SortablePage {
 		if (!empty($this->position)) {
 			$this->objectList->getConditionBuilder()->add('box.position = ?', [$this->position]);
 		}
-		if ($this->boxType == 'static') {
-			$this->objectList->getConditionBuilder()->add('box.boxType IN (?, ?, ?)', ['text', 'html', 'tpl']);
-		}
-		else if ($this->boxType == 'system') {
-			$this->objectList->getConditionBuilder()->add('box.boxType IN (?)', ['system']);
+		if (!empty($this->boxType)) {
+			$this->objectList->getConditionBuilder()->add('box.boxType = ?', [$this->boxType]);
 		}
 	}
 	

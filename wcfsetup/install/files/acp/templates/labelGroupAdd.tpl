@@ -78,7 +78,7 @@
 				</dl>
 				
 				<dl>
-					<dt><label for="showOrder">{lang}wcf.acp.label.group.showOrder{/lang}</label></dt>
+					<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 					<dd>
 						<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}">
 					</dd>

@@ -139,7 +139,7 @@
 		<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $isInternalLink} style="display: none;"{/if}>
 			<dt><label for="externalURL">{lang}wcf.acp.menu.item.externalURL{/lang}</label></dt>
 			<dd>
-				<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long">
+				<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" maxlength="255" placeholder="http://">
 				{if $errorField == 'externalURL'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -161,7 +161,7 @@
 		<h2 class="sectionTitle">{lang}wcf.acp.menu.item.advanced{/lang}</h2>
 		
 		<dl>
-			<dt><label for="showOrder">{lang}wcf.acp.menu.item.showOrder{/lang}</label></dt>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
 				<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0">
 			</dd>

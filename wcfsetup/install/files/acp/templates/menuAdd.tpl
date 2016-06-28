@@ -66,7 +66,7 @@
 			</dl>
 			
 			<dl>
-				<dt><label for="showOrder">{lang}wcf.acp.box.showOrder{/lang}</label></dt>
+				<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 				<dd>
 					<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="tiny" min="0">
 				</dd>

@@ -91,7 +91,7 @@
 		</dl>
 		
 		<dl{if $errorField == 'showOrder'} class="formError"{/if}>
-			<dt><label for="showOrder">{lang}wcf.acp.smiley.showOrder{/lang}</label></dt>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
 				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short">
 				

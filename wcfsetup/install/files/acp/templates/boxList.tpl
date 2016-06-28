@@ -37,7 +37,7 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<input type="text" id="boxTitle" name="title" value="{$title}" placeholder="{lang}wcf.acp.box.title{/lang}" class="long">
+					<input type="text" id="boxTitle" name="title" value="{$title}" placeholder="{lang}wcf.global.title{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -67,9 +67,11 @@
 				<dd>
 					<label class="selectDropdown">
 						<select name="boxType" id="boxType">
-							<option value="">{lang}wcf.acp.box.boxType{/lang}</option>
-							<option value="static"{if $boxType == 'static'} selected{/if}>{lang}wcf.acp.box.boxType.static{/lang}</option>
-							<option value="system"{if $boxType == 'system'} selected{/if}>{lang}wcf.acp.box.boxType.system{/lang}</option>
+							<option value="">{lang}wcf.acp.box.type{/lang}</option>
+							<option value="text"{if $boxType == 'text'} selected{/if}>{lang}wcf.acp.box.type.text{/lang}</option>
+							<option value="html"{if $boxType == 'html'} selected{/if}>{lang}wcf.acp.box.type.html{/lang}</option>
+							<option value="tpl"{if $boxType == 'tpl'} selected{/if}>{lang}wcf.acp.box.type.tpl{/lang}</option>
+							<option value="system"{if $boxType == 'system'} selected{/if}>{lang}wcf.acp.box.type.system{/lang}</option>
 						</select>
 					</label>
 				</dd>
@@ -107,7 +109,7 @@
 				<tr>
 					<th class="columnPageID{if $sortField == 'boxID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxID&sortOrder={if $sortField == 'boxID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
-					<th class="columnText columnBoxType{if $sortField == 'boxType'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxType&sortOrder={if $sortField == 'boxType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.boxType{/lang}</a></th>
+					<th class="columnText columnBoxType{if $sortField == 'boxType'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxType&sortOrder={if $sortField == 'boxType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.type{/lang}</a></th>
 					<th class="columnText columnPosition{if $sortField == 'position'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=position&sortOrder={if $sortField == 'position' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.position{/lang}</a></th>
 					
 					{event name='columnHeads'}
@@ -120,7 +122,7 @@
 						<td class="columnIcon">
 							<a href="{link controller='BoxEdit' id=$box->boxID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $box->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$box->boxID}" data-confirm-message="{lang}wcf.acp.box.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$box->boxID}" data-confirm-message-html="{lang __encode=true}wcf.acp.box.delete.confirmMessage{/lang}"></span>
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}

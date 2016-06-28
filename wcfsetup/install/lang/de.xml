@@ -44,7 +44,6 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.top"><![CDATA[Sidebar (oben)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (unten)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[Seitenende]]></item>
-		<item name="wcf.acp.ad.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbung angezeigt werden.]]></item>
 	</category>
 	
@@ -142,7 +141,32 @@
 	</category>
 	
 	<category name="wcf.acp.box">
+		<item name="wcf.acp.box.add"><![CDATA[Box hinzufügen]]></item>
+		<item name="wcf.acp.box.content"><![CDATA[Inhalt]]></item>
+		<item name="wcf.acp.box.contents"><![CDATA[Inhalte]]></item>
+		<item name="wcf.acp.box.cssClassName"><![CDATA[CSS-Klassen]]></item>
+		<item name="wcf.acp.box.delete.confirmMessage"><![CDATA[Wollen Sie die Box <span class="confirmationObject">{$box->name}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.box.edit"><![CDATA[Box bearbeiten]]></item>
+		<item name="wcf.acp.box.image"><![CDATA[Box-Bild]]></item>
+		<item name="wcf.acp.box.i18n"><![CDATA[Mehrsprachigkeit]]></item>
+		<item name="wcf.acp.box.i18n.i18n"><![CDATA[Mehrsprachige Box]]></item>
+		<item name="wcf.acp.box.i18n.none"><![CDATA[Einsprachige Box]]></item>
+		<item name="wcf.acp.box.link"><![CDATA[Verlinkung]]></item>
+		<item name="wcf.acp.box.linkType.none"><![CDATA[Keine]]></item>
+		<item name="wcf.acp.box.linkType.internal"><![CDATA[Interner Link]]></item>
+		<item name="wcf.acp.box.linkType.external"><![CDATA[Externer Link]]></item>
+		<item name="wcf.acp.box.link.externalURL"><![CDATA[Externe URL]]></item>
 		<item name="wcf.acp.box.list"><![CDATA[Boxen]]></item>
+		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
+		<item name="wcf.acp.box.showHeader"><![CDATA[Box-Titel anzeigen]]></item>
+		<item name="wcf.acp.box.type"><![CDATA[Box-Typ]]></item>
+		<item name="wcf.acp.box.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.box.type.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.box.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.box.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.box.visibleEverywhere"><![CDATA[Box überall sichtbar]]></item>
+		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Box auf ausgewählten Seiten <strong>explizit anzeigen</strong>]]></item>
+		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Box auf ausgewählten Seiten <strong>nicht anzeigen</strong>]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -509,12 +533,10 @@
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
-		<item name="wcf.acp.label.group.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[Der Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
 		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[Die optionale Beschreibung wird nur in der Administrationsoberfläche angezeigt.]]></item>
-		<item name="wcf.acp.label.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn Sie das Feld leer lassen, wird das Label an letzter Position einsortiert.]]></item>
 		<item name="wcf.acp.label.sortAfterGroupFiltering"><![CDATA[Wenn Sie die Label-Liste nur nach einer bestimmten Labelgruppe filtern, können Sie die Labels innerhalb dieser Gruppe durch Ziehen und Loslassen sortieren.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
@@ -715,7 +737,6 @@
 		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[HTML im Hinweis verwenden]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Ausgeblendete Hinweise erneut anzeigen]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[Der Hinweis wird jenen Benutzern wieder angezeigt, die die ursprüngliche Version bereits ausgeblendet haben. Gästen, die den Hinweis bereits ausgeblendet haben, wird dieser nur in einer neuen Session erneut angezeigt.]]></item>
-		<item name="wcf.acp.notice.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Hinweise angezeigt werden.]]></item>
 	</category>
 	
@@ -1261,6 +1282,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Seite verwendet.]]></item>
+		<item name="wcf.acp.page.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Übergeordnete Seite]]></item>
 		<item name="wcf.acp.page.parentPage.none"><![CDATA[Keine]]></item>
 		<item name="wcf.acp.page.type"><![CDATA[Seiten-Typ]]></item>
@@ -1284,7 +1306,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.M"><![CDATA[Monat(e)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[Jahr(e)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[Sie haben eine ungültige Laufzeit eingegeben. Für die Auswahl „Tage“ liegt der zulässige Maximalwert bei 90, für „Monate“ bei 24 und für „Jahre“ bei fünf.]]></item>
-		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die bezahlten Mitgliedschaften angezeigt werden.]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[Mitgliedschaft deaktivieren]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled.description"><![CDATA[Entfernt diese bezahlte Mitgliedschaft aus dem Angebot.]]></item>
@@ -1451,7 +1472,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley-Pfad]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Der Smiley-Pfad wird relativ zu „{$__wcf->getPath()}“ interpretiert.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Es wurde keine Datei unter dem angegebenen Pfad gefunden]]></item>
-		<item name="wcf.acp.smiley.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley-Datei]]></item>
 		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Smiley hochladen]]></item>
 		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Laden Sie hier die Bilddatei des Smileys hoch.]]></item>
@@ -1675,7 +1695,6 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Wollen Sie die Benutzerprofilfeld-Kategorie <span class="confirmationObject">{lang}wcf.user.option.category.{$category->categoryName}{/lang}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Benutzerprofilfeld-Kategorie bearbeiten]]></item>
-		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Kategorie]]></item>
@@ -1699,7 +1718,6 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
-		<item name="wcf.acp.user.option.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
 		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Tragen Sie hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Benutzerprofilfelder]]></item>
@@ -1912,7 +1930,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
 		<item name="wcf.category.parentCategoryID.error.notValid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
 		<item name="wcf.category.position"><![CDATA[Position]]></item>
-		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
@@ -2334,10 +2351,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Suchbegriff eingeben]]></item>
-		<item name="wcf.global.sidebar.showLeftSidebar"><![CDATA[]]></item>
-		<item name="wcf.global.sidebar.showRightSidebar"><![CDATA[]]></item>
-		<item name="wcf.global.sidebar.hideLeftSidebar"><![CDATA[]]></item>
-		<item name="wcf.global.sidebar.hideRightSidebar"><![CDATA[]]></item>
+		<item name="wcf.global.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[aufsteigend]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[absteigend]]></item>
 		<item name="wcf.global.state.closed"><![CDATA[Geschlossen]]></item>

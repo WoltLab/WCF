@@ -9,7 +9,6 @@
 define(['Ajax', 'Dictionary'], function(Ajax, Dictionary) {
 	"use strict";
 	
-	var _boxType = elById('boxType');
 	var _boxControllerContainer = elById('boxControllerContainer');
 	var _boxController = elById('boxControllerID');
 	var _boxConditions = elById('boxConditions');
@@ -20,14 +19,15 @@ define(['Ajax', 'Dictionary'], function(Ajax, Dictionary) {
 	 */
 	return {
 		init: function(initialObjectTypeId) {
-			_boxType.addEventListener('change', this._updateControllers.bind(this));
 			_boxController.addEventListener('change', this._updateConditions.bind(this));
 			
 			if (initialObjectTypeId) {
 				_templates.set(~~initialObjectTypeId, _boxConditions.innerHTML);
 			}
 			
-			this._updateControllers();
+			elShow(_boxControllerContainer);
+			
+			this._updateConditions();
 		},
 		
 		/**
@@ -76,24 +76,6 @@ define(['Ajax', 'Dictionary'], function(Ajax, Dictionary) {
 						objectTypeID: objectTypeId
 					}
 				});
-			}
-		},
-		
-		/**
-		 * Shows or hides the list of dynamic box controllers based on the selected box type.
-		 * 
-		 * @protected
-		 */
-		_updateControllers: function() {
-			if (_boxType.value === 'system') {
-				elShow(_boxControllerContainer);
-				
-				this._updateConditions();
-			}
-			else {
-				elHide(_boxControllerContainer);
-				
-				_boxConditions.innerHTML = '';
 			}
 		}
 	};

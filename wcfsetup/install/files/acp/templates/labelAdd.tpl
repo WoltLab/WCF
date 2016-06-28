@@ -81,7 +81,7 @@
 			{include file='multipleLanguageInputJavascript' elementIdentifier='label' forceSelection=false}
 			
 			<dl>
-				<dt><label for="showOrder">{lang}wcf.acp.label.showOrder{/lang}</label></dt>
+				<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 				<dd>
 					<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}">
 					<small>{lang}wcf.acp.label.showOrder.description{/lang}</small>

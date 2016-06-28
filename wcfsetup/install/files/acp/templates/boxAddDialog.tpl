@@ -30,7 +30,11 @@
 	</div>
 </div>
 <script data-relocate="true">
-	require(['WoltLab/WCF/Acp/Ui/Box/Add'], function(AcpUiBoxAdd) {
+	require(['Language', 'WoltLab/WCF/Acp/Ui/Box/Add'], function(Language, AcpUiBoxAdd) {
+		Language.addObject({
+			'wcf.acp.box.add': '{lang}wcf.acp.box.add{/lang}'
+		});
+		
 		AcpUiBoxAdd.init('{link controller='BoxAdd' encode=false}{literal}boxType={$boxType}&isMultilingual={$isMultilingual}{/literal}{/link}');
 		
 		{if $showBoxAddDialog}

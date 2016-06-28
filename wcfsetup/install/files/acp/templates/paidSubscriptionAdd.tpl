@@ -76,7 +76,7 @@
 		</dl>
 		
 		<dl>
-			<dt><label for="showOrder">{lang}wcf.acp.paidSubscription.showOrder{/lang}</label></dt>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
 				<input type="number" id="showOrder" name="showOrder" value="{if $showOrder}{@$showOrder}{/if}" class="tiny" min="0">
 				<small>{lang}wcf.acp.paidSubscription.showOrder.description{/lang}</small>

@@ -41,7 +41,7 @@
 		{include file='multipleLanguageInputJavascript' elementIdentifier='categoryName' forceSelection=true}
 		
 		<dl>
-			<dt><label for="showOrder">{lang}wcf.acp.user.option.category.showOrder{/lang}</label></dt>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
 				<input type="number" id="showOrder" name="showOrder" value="{@$showOrder}" class="short">
 			</dd>
