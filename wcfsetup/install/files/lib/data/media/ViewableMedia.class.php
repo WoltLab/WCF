@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\media;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -33,10 +32,10 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 */
 	public function __toString() {
 		if ($this->isImage) {
-			return '<img src="'.$this->getLink().'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'/>';
+			return '<img src="'.StringUtil::encodeHTML($this->getLink()).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'/>';
 		}
 		
-		return '<a href="'.$this->getLink().'">'.StringUtil::encodeHTML($this->getTitle()).'</a>';
+		return '<a href="'.StringUtil::encodeHTML($this->getLink()).'">'.StringUtil::encodeHTML($this->getTitle()).'</a>';
 	}
 	
 	/**
@@ -49,7 +48,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 		if ($this->isImage && $this->tinyThumbnailType) {
 			$tinyThumbnail = Media::getThumbnailSizes()['tiny'];
 			if ($size <= $tinyThumbnail['width'] && $size <= $tinyThumbnail['height']) {
-				return '<img src="' . $this->getThumbnailLink('tiny') . '" alt="' . StringUtil::encodeHTML($this->altText) . '" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $size . 'px; height: ' . $size . 'px;">';
+				return '<img src="' . StringUtil::encodeHTML($this->getThumbnailLink('tiny')) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $size . 'px; height: ' . $size . 'px;">';
 			}
 		}
 		
@@ -61,21 +60,21 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * 
 	 * @param	string		$size		thumbnail size
 	 * @return	string
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function getThumbnailTag($size = 'tiny') {
 		if (!isset(Media::getThumbnailSizes()[$size])) {
-			throw new SystemException("Unknown thumbnail size '".$size."'");
+			throw new \InvalidArgumentException("Unknown thumbnail size '".$size."'");
 		}
 		
-		return '<img src="'.$this->getThumbnailLink($size).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $this->getThumbnailWidth($size) . 'px; height: ' . $this->getThumbnailHeight($size) . 'px;">';
+		return '<img src="'.StringUtil::encodeHTML($this->getThumbnailLink($size)).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $this->getThumbnailWidth($size) . 'px; height: ' . $this->getThumbnailHeight($size) . 'px;">';
 	}
 	
 	/**
 	 * Returns the viewable media file with the given id.
 	 * 
 	 * @param	integer		$mediaID
-	 * @return	Media|null
+	 * @return	ViewableMedia|null
 	 */
 	public static function getMedia($mediaID) {
 		$mediaList = new ViewableMediaList();
