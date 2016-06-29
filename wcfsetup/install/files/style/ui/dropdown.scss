@@ -312,7 +312,12 @@
 	min-height: 20px;
 	
 	> img:first-child {
-		height: 100%;
+		height: auto;
+	}
+	
+	// prevents text being hidden when displayed in user panel
+	> span {
+		display: inline !important;
 	}
 	
 	&.dropdownToggle {
