@@ -1,8 +1,15 @@
 <?php
 namespace wcf\page;
+use wcf\data\article\Article;
+use wcf\data\box\Box;
 use wcf\data\media\Media;
+use wcf\data\IMessage;
+use wcf\system\box\BoxHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\request\LinkHandler;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\WCF;
 use wcf\util\FileReader;
 use wcf\util\StringUtil;
 
@@ -17,22 +24,64 @@ use wcf\util\StringUtil;
  */
 class MediaPage extends AbstractPage {
 	/**
+	 * article which uses the media file as the main article image
+	 * @var	Article|null
+	 */
+	public $article;
+	
+	/**
+	 * id of the article which uses the media file as the main article image
+	 * @var	integer
+	 */
+	public $articleID = 0;
+	
+	/**
+	 * box which uses the media file as box image
+	 * @var	Box
+	 */
+	public $box;
+	
+	/**
+	 * id of the box which uses the media file as box image
+	 * @var	integer
+	 */
+	public $boxID = 0;
+	
+	/**
 	 * etag for the media file
 	 * @var	string
 	 */
-	public $eTag = null;
+	public $eTag;
 	
 	/**
 	 * file reader object
 	 * @var	FileReader
 	 */
-	public $fileReader = null;
+	public $fileReader;
 	
 	/**
 	 * requested media file
 	 * @var	Media
 	 */
-	public $media = null;
+	public $media;
+	
+	/**
+	 * message in which the media is embedded
+	 * @var	IMessage
+	 */
+	public $message;
+	
+	/**
+	 * id of the message in which the media is embedded
+	 * @var	integer
+	 */
+	public $messageID = 0;
+	
+	/**
+	 * name of the object type of the message in which the media is embedded
+	 * @var	string
+	 */
+	public $messageObjectType = '';
 	
 	/**
 	 * id of the requested media file
@@ -64,18 +113,45 @@ class MediaPage extends AbstractPage {
 		'image/pjpeg'
 	];
 	
-	// TODO: remove the following line once method is implemented
-	// @codingStandardsIgnoreStart
 	/**
 	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		parent::checkPermissions();
 		
-		// TODO
+		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+			if ($this->articleID) {
+				$this->article = new Article($this->articleID);
+				
+				if (!$this->article->articleID || !$this->article->canRead()) {
+					throw new PermissionDeniedException();
+				}
+			}
+			else if ($this->boxID) {
+				$this->box = BoxHandler::getInstance()->getBox($this->boxID);
+				
+				if ($this->box === null || !$this->box->isAccessible()) {
+					throw new PermissionDeniedException();
+				}
+			}
+			else if ($this->messageID) {
+				MessageEmbeddedObjectManager::getInstance()->loadObjects($this->messageObjectType, [$this->messageID]);
+				$this->message = MessageEmbeddedObjectManager::getInstance()->getObject($this->messageObjectType, $this->messageID);
+				if ($this->message === null || !($this->message instanceof IMessage) || !$this->message->isVisible()) {
+					throw new PermissionDeniedException();
+				}
+			}
+			else {
+				$parameters = ['canAccess' => false];
+				
+				EventHandler::getInstance()->fireAction($this, 'checkMediaAccess', $parameters);
+				
+				if (empty($parameters['canAccess'])) {
+					throw new PermissionDeniedException();
+				}
+			}
+		}
 	}
-	// TODO: remove the following line once method is implemented
-	// @codingStandardsIgnoreEnd
 	
 	/**
 	 * @inheritDoc
@@ -131,17 +207,21 @@ class MediaPage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 		
-		$parameters = [
-			'object' => $this->media
-		];
-		if ($this->thumbnail && $this->media->{$this->thumbnail.'ThumbnailType'}) {
-			$parameters['thumbnail'] = $this->thumbnail;
-		}
-		else {
+		if ($this->thumbnail && !$this->media->{$this->thumbnail.'ThumbnailType'}) {
 			$this->thumbnail = '';
 		}
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('Media', $parameters);
+		// read context parameters
+		if (isset($_REQUEST['articleID'])) {
+			$this->articleID = intval($_REQUEST['articleID']);
+		}
+		else if (isset($_REQUEST['boxID'])) {
+			$this->boxID = intval($_REQUEST['boxID']);
+		}
+		else if (isset($_REQUEST['messageObjectType']) && isset($_REQUEST['messageID'])) {
+			$this->messageObjectType = StringUtil::trim($_REQUEST['messageObjectType']);
+			$this->messageID = intval($_REQUEST['messageID']);
+		}
 	}
 	
 	/**

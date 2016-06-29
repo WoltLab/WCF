@@ -341,6 +341,8 @@ class Box extends DatabaseObject {
 			$this->image = ViewableMedia::getMedia($boxContent[0]['imageID']);
 		}
 		
+		$this->image->setLinkParameters(['boxID' => $this->boxID]);
+		
 		return $this->image;
 	}
 	

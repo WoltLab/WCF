@@ -19,8 +19,8 @@ use wcf\system\WCF;
  */
 class BoxHandler extends SingletonFactory {
 	/**
-	 * boxes grouped by position
-	 * @var	Box[][]
+	 * boxes with box id as key
+	 * @var	Box[]
 	 */
 	protected $boxes = [];
 	
@@ -29,6 +29,12 @@ class BoxHandler extends SingletonFactory {
 	 * @var	Box[]
 	 */
 	protected $boxesByIdentifier = [];
+	
+	/**
+	 * boxes grouped by position
+	 * @var	Box[][]
+	 */
+	protected $boxesByPosition = [];
 	
 	/**
 	 * @inheritDoc
@@ -46,12 +52,15 @@ class BoxHandler extends SingletonFactory {
 		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
 		$boxList->sqlOrderBy = 'showOrder';
 		$boxList->readObjects();
+		
+		$this->boxes = $boxList->getObjects();
 		foreach ($boxList as $box) {
 			if ($box->isAccessible()) {
-				if (!isset($this->boxes[$box->position])) $this->boxes[$box->position] = [];
-				$this->boxes[$box->position][] = $box;
+				if (!isset($this->boxesByPosition[$box->position])) $this->boxesByPosition[$box->position] = [];
+				$this->boxesByPosition[$box->position][] = $box;
+				
 				$this->boxesByIdentifier[$box->identifier] = $box;
-			}	
+			}
 		}
 	}
 	
@@ -97,14 +106,28 @@ class BoxHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the box with the given id or null.
+	 * 
+	 * @param	integer		$boxID
+	 * @return	Box|null
+	 */
+	public function getBox($boxID) {
+		if (isset($this->boxes[$boxID])) {
+			return $this->boxes[$boxID];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns boxes for the given position.
 	 * 
 	 * @param	string		$position
 	 * @return	Box[]
 	 */
 	public function getBoxes($position) {
-		if (isset($this->boxes[$position])) {
-			return $this->boxes[$position];
+		if (isset($this->boxesByPosition[$position])) {
+			return $this->boxesByPosition[$position];
 		}
 		
 		return [];

@@ -2459,10 +2459,10 @@ Errors are:
 		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$width}×{#$height}]]></item>
 		<item name="wcf.media.insert"><![CDATA[Insert File]]></item>
 		<item name="wcf.media.insert.imageSize"><![CDATA[Image Size]]></item>
-		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail ({#$width}×{#$height})]]></item>
-		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Medium Thumbnail ({#$width}×{#$height})]]></item>
-		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original Image ({#$width}×{#$height})]]></item>
-		<item name="wcf.media.insert.imageSize.small"><![CDATA[Small Thumbnail ({#$width}×{#$height})]]></item>
+		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail]]></item>
+		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Medium Thumbnail]]></item>
+		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original Image]]></item>
+		<item name="wcf.media.insert.imageSize.small"><![CDATA[Small Thumbnail]]></item>
 		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>

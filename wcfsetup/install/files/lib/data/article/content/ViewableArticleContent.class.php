@@ -80,6 +80,8 @@ class ViewableArticleContent extends DatabaseObjectDecorator {
 		if ($this->image === null) {
 			if ($this->imageID) {
 				$this->image = ViewableMedia::getMedia($this->imageID);
+				
+				$this->image->setLinkParameters(['articleID' => $this->articleID]);
 			}
 		}
 		
@@ -89,9 +91,10 @@ class ViewableArticleContent extends DatabaseObjectDecorator {
 	/**
 	 * Sets the article's image.
 	 * 
-	 * @param ViewableMedia $image
+	 * @param	ViewableMedia	$image
 	 */
 	public function setImage(ViewableMedia $image) {
 		$this->image = $image;
+		$this->image->setLinkParameters(['articleID' => $this->articleID]);
 	}
 }

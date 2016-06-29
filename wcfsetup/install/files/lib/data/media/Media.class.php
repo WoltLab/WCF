@@ -3,7 +3,6 @@ namespace wcf\data\media;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
-use wcf\system\exception\SystemException;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -16,7 +15,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
- *
+ * 
  * @property-read	integer		$mediaID
  * @property-read	string		$filename
  * @property-read	integer		$filesize
@@ -52,7 +51,13 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 * i18n media data grouped by language id for all language
 	 * @var	string[][]
 	 */
-	protected $i18nData = null;
+	protected $i18nData;
+	
+	/**
+	 * parameters used to build the link to the media file
+	 * @var	array
+	 */
+	protected $linkParameters = [];
 	
 	/**
 	 * @inheritDoc
@@ -94,11 +99,20 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	/**
 	 * @inheritDoc
 	 */
-	public function getLink() {
-		return LinkHandler::getInstance()->getLink('Media', [
+	public function getLink($articleID = null, $boxID = null, $messageObjectType = null, $messageID = null) {
+		return LinkHandler::getInstance()->getLink('Media', array_merge($this->linkParameters, [
 			'forceFrontend' => true,
 			'object' => $this
-		]);
+		]));
+	}
+	
+	/**
+	 * Sets additional parameters used to build the link to the media file.
+	 * 
+	 * @param	array		$parameters
+	 */
+	public function setLinkParameters(array $parameters) {
+		$this->linkParameters = $parameters;
 	}
 	
 	/**
@@ -113,18 +127,18 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 */
 	public function getThumbnailLink($size) {
 		if (!isset(self::$thumbnailSizes[$size])) {
-			throw new SystemException("Unknown thumbnail size '".$size."'");
+			throw new \InvalidArgumentException("Unknown thumbnail size '".$size."'");
 		}
 		
 		if (!$this->{$size.'ThumbnailType'}) {
 			return $this->getLink();
 		}
 		
-		return LinkHandler::getInstance()->getLink('Media', [
+		return LinkHandler::getInstance()->getLink('Media', array_merge($this->linkParameters, [
 			'forceFrontend' => true,
 			'object' => $this,
 			'thumbnail' => $size
-		]);
+		]));
 	}
 	
 	/**
@@ -132,11 +146,11 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 *
 	 * @param	string		$size
 	 * @return	integer
-	 * @throws      SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function getThumbnailWidth($size) {
 		if (!isset(self::$thumbnailSizes[$size])) {
-			throw new SystemException("Unknown thumbnail size '".$size."'");
+			throw new \InvalidArgumentException("Unknown thumbnail size '".$size."'");
 		}
 		
 		if ($this->{$size.'ThumbnailType'}) {
@@ -151,11 +165,11 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 *
 	 * @param	string		$size
 	 * @return	integer
-	 * @throws      SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function getThumbnailHeight($size) {
 		if (!isset(self::$thumbnailSizes[$size])) {
-			throw new SystemException("Unknown thumbnail size '".$size."'");
+			throw new \InvalidArgumentException("Unknown thumbnail size '".$size."'");
 		}
 		
 		if ($this->{$size.'ThumbnailType'}) {
@@ -170,7 +184,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 */
 	public function getThumbnailLocation($size) {
 		if (!isset(self::$thumbnailSizes[$size])) {
-			throw new SystemException("Unknown thumbnail size '".$size."'");
+			throw new \InvalidArgumentException("Unknown thumbnail size '".$size."'");
 		}
 		
 		return self::getStorage().substr($this->fileHash, 0, 2).'/'.$this->mediaID.'-'.$size.'-'.$this->fileHash;

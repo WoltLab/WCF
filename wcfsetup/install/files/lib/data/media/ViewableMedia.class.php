@@ -36,7 +36,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 			return '<img src="'.$this->getLink().'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'/>';
 		}
 		
-		return '<a href="'.$this->getLink().'>'.$this->getTitle().'</a>';
+		return '<a href="'.$this->getLink().'">'.StringUtil::encodeHTML($this->getTitle()).'</a>';
 	}
 	
 	/**

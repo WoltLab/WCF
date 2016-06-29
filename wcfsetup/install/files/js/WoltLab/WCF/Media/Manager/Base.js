@@ -82,19 +82,13 @@ define(
 		 */
 		_clipboardAction: function(actionData) {
 			// only consider events if the action has been executed
-			if (actionData.responseData === null) {
-				return;
-			}
-			
-			switch (actionData.data.actionName) {
-				case 'com.woltlab.wcf.media.delete':
-					var mediaIds = actionData.responseData.objectIDs;
-					for (var i = 0, length = mediaIds.length; i < length; i++) {
-						this.removeMedia(~~mediaIds[i], true);
-					}
-					
-					UiNotification.show();
-					break;
+			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete' && actionData.responseData === null) {
+				var mediaIds = actionData.responseData.objectIDs;
+				for (var i = 0, length = mediaIds.length; i < length; i++) {
+					this.removeMedia(~~mediaIds[i], true);
+				}
+				
+				UiNotification.show();
 			}
 		},
 		
