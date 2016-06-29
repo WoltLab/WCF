@@ -36,8 +36,10 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function process($html, $objectType, $objectID) {
-		$this->setContext($objectType, $objectID);
+	public function process($html, $objectType, $objectID = 0) {
+		// object id is always `0` during input processing but is set
+		// before saving embedded objects
+		$this->setContext($objectType, 0);
 		
 		// enforce consistent newlines
 		$html = StringUtil::unifyNewlines($html);
@@ -85,6 +87,15 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		}
 		
 		return $this->htmlInputNodeProcessor;
+	}
+	
+	/**
+	 * Sets the new object id.
+	 * 
+	 * @param       integer         $objectID       object id
+	 */
+	public function setObjectID($objectID) {
+		$this->context['objectID'] = $objectID;
 	}
 	
 	/**

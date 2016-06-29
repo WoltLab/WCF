@@ -28,7 +28,11 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function process($html, $objectType, $objectID) {
+	public function process($html, $objectType, $objectID = 0) {
+		if ($objectID === 0) {
+			throw new \UnexpectedValueException('Object id cannot be 0 for output processing.');
+		}
+		
 		$this->setContext($objectType, $objectID);
 		
 		$this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);

@@ -18,7 +18,7 @@ interface IHtmlProcessor {
 	 * @param       string          $objectType     object type identifier
 	 * @param       integer         $objectID       object id
 	 */
-	public function process($html, $objectType, $objectID);
+	public function process($html, $objectType, $objectID = 0);
 	
 	/**
 	 * Returns the parsed html.
