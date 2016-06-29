@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\page\content\PageContent;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
@@ -19,7 +20,7 @@ use wcf\system\WCF;
  */
 class CmsPage extends AbstractPage {
 	/**
-	 * @var	string[]
+	 * @var	PageContent
 	 */
 	public $content;
 	
@@ -69,7 +70,7 @@ class CmsPage extends AbstractPage {
 		}
 		
 		$this->content = $this->page->getPageContentByLanguage($this->languageID);
-		if (empty($this->content)) {
+		if ($this->content === null) {
 			throw new IllegalLinkException();
 		}
 		
@@ -88,13 +89,13 @@ class CmsPage extends AbstractPage {
 		parent::readData();
 		
 		// add meta/og tags
-		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->content['title'] . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
+		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->content->title . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
 		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->canonicalURL, true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'website', true);
-		if ($this->content['metaDescription']) {
-			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->content['metaDescription'], true);
+		if ($this->content->metaDescription) {
+			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->content->metaDescription, true);
 		}
-		if ($this->content['metaKeywords']) {
+		if ($this->content->metaKeywords) {
 			MetaTagHandler::getInstance()->addTag('keywords', 'keywords', $this->content['metaKeywords']);
 		}
 	}

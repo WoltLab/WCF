@@ -15,6 +15,7 @@ use wcf\system\box\IConditionBoxController;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\request\LinkHandler;
@@ -174,6 +175,11 @@ class BoxAddForm extends AbstractForm {
 	 * @var array
 	 */
 	public $aclValues = [];
+	
+	/**
+	 * @var HtmlInputProcessor[]
+	 */
+	public $htmlInputProcessors = [];
 	
 	/**
 	 * @inheritDoc
@@ -358,6 +364,19 @@ class BoxAddForm extends AbstractForm {
 		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
 			$this->boxController->getProcessor()->validateConditions();
 		}
+		
+		if ($this->boxType == 'text') {
+			if ($this->isMultilingual) {
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
+					$this->htmlInputProcessors[$language->languageID]->process((!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''), 'com.woltlab.wcf.box.content');
+				}
+			}
+			else {
+				$this->htmlInputProcessors[0] = new HtmlInputProcessor();
+				$this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''), 'com.woltlab.wcf.box.content');
+			}
+		}
 	}
 	
 	/**
@@ -384,6 +403,7 @@ class BoxAddForm extends AbstractForm {
 				$content[$language->languageID] = [
 					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
 					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
 					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
 				];
 			}
@@ -392,6 +412,7 @@ class BoxAddForm extends AbstractForm {
 			$content[0] = [
 				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
 				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
+				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
 				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
 			];
 		}

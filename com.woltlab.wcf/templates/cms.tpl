@@ -1,6 +1,6 @@
 {if !$__wcf->isLandingPage()}
-	{capture assign='pageTitle'}{$content[title]}{/capture}
-	{capture assign='contentTitle'}{$content[title]}{/capture}
+	{capture assign='pageTitle'}{$content->title}{/capture}
+	{capture assign='contentTitle'}{$content->title}{/capture}
 {/if}
 
 {capture assign='headContent'}
@@ -40,13 +40,13 @@
 
 {include file='header'}
 
-{if $content[content]}
+{if $content->content}
 	{if $page->pageType == 'text'}
 		<section class="section cmsContent htmlContent">
-			{@$content[content]}
+			{@$content->getFormattedContent()}
 		</section>
 	{elseif $page->pageType == 'html'}
-		{@$content[content]}
+		{@$content->content}
 	{elseif $page->pageType == 'tpl'}
 		{include file=$page->getTplName($contentLanguageID)}
 	{/if}

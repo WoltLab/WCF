@@ -85,6 +85,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				
 				// save embedded objects
 				if (!empty($content['htmlInputProcessor'])) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$content['htmlInputProcessor']->setObjectID($articleContent->articleContentID);
 					if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
 						$articleContentEditor->update(['hasEmbeddedObjects' => 1]);
 					}
@@ -151,6 +153,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					
 					// save embedded objects
 					if (!empty($content['htmlInputProcessor'])) {
+						/** @noinspection PhpUndefinedMethodInspection */
+						$content['htmlInputProcessor']->setObjectID($articleContent->articleContentID);
 						if ($articleContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
 							$articleContentEditor->update(['hasEmbeddedObjects' => ($articleContent->hasEmbeddedObjects ? 0 : 1)]);
 						}

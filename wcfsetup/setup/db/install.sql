@@ -290,13 +290,15 @@ CREATE TABLE wcf1_box (
 
 DROP TABLE IF EXISTS wcf1_box_content;
 CREATE TABLE wcf1_box_content (
+	boxContentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	boxID INT(10) NOT NULL,
 	languageID INT(10),
 	title VARCHAR(255) NOT NULL,
 	content MEDIUMTEXT,
 	imageID INT(10),
+	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	
-	KEY (boxID, languageID)
+	UNIQUE KEY (boxID, languageID)
 );
 
 DROP TABLE IF EXISTS wcf1_box_to_page;
@@ -968,6 +970,7 @@ CREATE TABLE wcf1_page (
 
 DROP TABLE IF EXISTS wcf1_page_content;
 CREATE TABLE wcf1_page_content (
+	pageContentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	pageID INT(10) NOT NULL,
 	languageID INT(10),
 	title VARCHAR(255) NOT NULL,
@@ -975,7 +978,8 @@ CREATE TABLE wcf1_page_content (
 	metaDescription TEXT,
 	metaKeywords TEXT,
 	customURL VARCHAR(255) NOT NULL,
-
+	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
+	
 	UNIQUE KEY (pageID, languageID)
 );
 

@@ -342,7 +342,7 @@
 								{/if}
 								
 								<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
-									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.acp.box.title{/lang}</label></dt>
+									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 									<dd>
 										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
 										{if $errorField == 'title'|concat:$availableLanguage->languageID}

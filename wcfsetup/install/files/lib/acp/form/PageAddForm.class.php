@@ -145,6 +145,11 @@ class PageAddForm extends AbstractForm {
 	public $aclValues = [];
 	
 	/**
+	 * @var HtmlInputProcessor[]
+	 */
+	public $htmlInputProcessors = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -231,6 +236,19 @@ class PageAddForm extends AbstractForm {
 		$this->validateCustomUrls();
 		
 		$this->validateBoxIDs();
+		
+		if ($this->pageType == 'text') {
+			if ($this->isMultilingual) {
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
+					$this->htmlInputProcessors[$language->languageID]->process((!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''), 'com.woltlab.wcf.page.content');
+				}
+			}
+			else {
+				$this->htmlInputProcessors[0] = new HtmlInputProcessor();
+				$this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''), 'com.woltlab.wcf.page.content');
+			}
+		}
 	}
 	
 	/**
@@ -330,7 +348,7 @@ class PageAddForm extends AbstractForm {
 			}
 			
 			foreach ($this->customURL as $languageID2 => $customURL2) {
-				if ($languageID != $languageID2 && $customURL = $customURL2) {
+				if ($languageID != $languageID2 && $customURL == $customURL2) {
 					throw new UserInputException('customURL_' . $languageID, 'notUnique');
 				}
 			}
@@ -385,36 +403,28 @@ class PageAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$parseHTML = function($content) {
-			if ($this->pageType == 'text') {
-				$htmlInputProcessor = new HtmlInputProcessor();
-				$htmlInputProcessor->process($content);
-				$content = $htmlInputProcessor->getHtml();
-			}
-			
-			return $content;
-		};
-		
 		// prepare page content
 		$content = [];
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
-					'customURL' => (!empty($_POST['customURL'][$language->languageID]) ? $_POST['customURL'][$language->languageID] : ''),
-					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
-					'content' => (!empty($_POST['content'][$language->languageID]) ? $parseHTML($_POST['content'][$language->languageID]) : ''),
-					'metaDescription' => (!empty($_POST['metaDescription'][$language->languageID]) ? $_POST['metaDescription'][$language->languageID] : ''),
-					'metaKeywords' => (!empty($_POST['metaKeywords'][$language->languageID]) ? $_POST['metaKeywords'][$language->languageID] : '')
+					'customURL' => (!empty($this->customURL[$language->languageID]) ? $this->customURL[$language->languageID] : ''),
+					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
+					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
+					'metaDescription' => (!empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : ''),
+					'metaKeywords' => (!empty($this->metaKeywords[$language->languageID]) ? $this->metaKeywords[$language->languageID] : '')
 				];
 			}
 		}
 		else {
 			$content[0] = [
-				'customURL' => (!empty($_POST['customURL'][0]) ? $_POST['customURL'][0] : ''),
-				'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
-				'content' => (!empty($_POST['content'][0]) ? $parseHTML($_POST['content'][0]) : ''),
-				'metaDescription' => (!empty($_POST['metaDescription'][0]) ? $_POST['metaDescription'][0] : ''),
-				'metaKeywords' => (!empty($_POST['metaKeywords'][0]) ? $_POST['metaKeywords'][0] : '')
+				'customURL' => (!empty($this->customURL[0]) ? $this->customURL[0] : ''),
+				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
+				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
+				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
+				'metaDescription' => (!empty($this->metaDescription[0]) ? $this->metaDescription[0] : ''),
+				'metaKeywords' => (!empty($this->metaKeywords[0]) ? $this->metaKeywords[0] : '')
 			];
 		}
 		

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\box;
+use wcf\data\box\content\BoxContent;
 use wcf\data\condition\Condition;
 use wcf\data\media\ViewableMedia;
 use wcf\data\menu\Menu;
@@ -13,6 +14,8 @@ use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
 use wcf\system\exception\SystemException;
+use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
@@ -47,12 +50,6 @@ use wcf\util\StringUtil;
  * @property-read	mixed[]		$additionalData
  */
 class Box extends DatabaseObject {
-	/**
-	 * box content grouped by language id
-	 * @var	string[][]
-	 */
-	protected $boxContent;
-	
 	/**
 	 * image media object
 	 * @var	ViewableMedia
@@ -106,6 +103,12 @@ class Box extends DatabaseObject {
 	protected $controller;
 	
 	/**
+	 * box content grouped by language id
+	 * @var	BoxContent[]
+	 */
+	public $boxContents;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __get($name) {
@@ -156,13 +159,13 @@ class Box extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the box content.
-	 * 
-	 * @return	string[][]
+	 * Returns the box's content.
+	 *
+	 * @return	BoxContent[]
 	 */
-	public function getBoxContent() {
-		if ($this->boxContent === null) {
-			$this->boxContent = [];
+	public function getBoxContents() {
+		if ($this->boxContents === null) {
+			$this->boxContents = [];
 			
 			$sql = "SELECT	*
 				FROM	wcf" . WCF_N . "_box_content
@@ -170,15 +173,11 @@ class Box extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->boxID]);
 			while ($row = $statement->fetchArray()) {
-				$this->boxContent[($row['languageID'] ?: 0)] = [
-					'title' => $row['title'],
-					'content' => $row['content'],
-					'imageID' => $row['imageID']
-				];
+				$this->boxContents[($row['languageID'] ?: 0)] = new BoxContent(null, $row);
 			}
 		}
 		
-		return $this->boxContent;
+		return $this->boxContents;
 	}
 	
 	/**
@@ -187,14 +186,14 @@ class Box extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getBoxContentTitle() {
-		$boxContent = $this->getBoxContent();
+		$this->getBoxContents();
 		if ($this->isMultilingual || $this->boxType == 'system') {
-			if (isset($boxContent[WCF::getLanguage()->languageID])) {
-				return $boxContent[WCF::getLanguage()->languageID]['title'];
+			if (isset($this->boxContents[WCF::getLanguage()->languageID])) {
+				return $this->boxContents[WCF::getLanguage()->languageID]->title;
 			}
 		}
-		else if (isset($boxContent[0])) {
-			return $boxContent[0]['title'];
+		else if (isset($this->boxContents[0])) {
+			return $this->boxContents[0]->title;
 		}
 		
 		return '';
@@ -229,21 +228,29 @@ class Box extends DatabaseObject {
 			return WCF::getTPL()->fetch($this->getTplName(WCF::getLanguage()->languageID), 'wcf', [], true);
 		}
 		
-		$boxContent = $this->getBoxContent();
-		$content = '';
+		$this->getBoxContents();
+		$boxContent = null;
 		if ($this->isMultilingual) {
-			if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
+			if (isset($this->boxContents[WCF::getLanguage()->languageID])) $boxContent = $this->boxContents[WCF::getLanguage()->languageID];
 		}
 		else {
-			if (isset($boxContent[0])) $content = $boxContent[0]['content'];
+			if (isset($this->boxContents[0])) $boxContent = $this->boxContents[0];
 		}
 		
-		if ($this->boxType == 'text') {
-			// @todo parse text
-			$content = StringUtil::encodeHTML($content);
+		if ($boxContent !== null) {
+			if ($this->boxType == 'text') {
+				// assign embedded objects
+				MessageEmbeddedObjectManager::getInstance()->setActiveMessage('com.woltlab.wcf.box.content', $boxContent->boxContentID);
+				
+				$processor = new HtmlOutputProcessor();
+				$processor->process($boxContent->content, 'com.woltlab.wcf.box.content', $boxContent->boxContentID);
+				
+				return $processor->getHtml();
+			}
+			
+			return $boxContent->content;
 		}
-		
-		return $content;
+		return '';
 	}
 	
 	/**
@@ -273,13 +280,13 @@ class Box extends DatabaseObject {
 			return $this->getMenu()->hasContent();
 		}
 		
-		$boxContent = $this->getBoxContent();
+		$this->getBoxContents();
 		$content = '';
 		if ($this->isMultilingual) {
-			if (isset($boxContent[WCF::getLanguage()->languageID])) $content = $boxContent[WCF::getLanguage()->languageID]['content'];
+			if (isset($this->boxContents[WCF::getLanguage()->languageID])) $content = $this->boxContents[WCF::getLanguage()->languageID]->content;
 		}
 		else {
-			if (isset($boxContent[0])) $content = $boxContent[0]['content'];
+			if (isset($this->boxContents[0])) $content = $this->boxContents[0]->content;
 		}
 		
 		return !empty($content);
@@ -331,14 +338,14 @@ class Box extends DatabaseObject {
 			return $this->image;
 		}
 		
-		$boxContent = $this->getBoxContent();
+		$this->getBoxContents();
 		if ($this->isMultilingual) {
-			if (isset($boxContent[WCF::getLanguage()->languageID]) && $boxContent[WCF::getLanguage()->languageID]['imageID']) {
-				$this->image = ViewableMedia::getMedia($boxContent[WCF::getLanguage()->languageID]['imageID']);
+			if (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID) {
+				$this->image = ViewableMedia::getMedia($this->boxContents[WCF::getLanguage()->languageID]->imageID);
 			}
 		}
-		else if (isset($boxContent[0]) && $boxContent[0]['imageID']) {
-			$this->image = ViewableMedia::getMedia($boxContent[0]['imageID']);
+		else if (isset($this->boxContents[0]) && $this->boxContents[0]->imageID) {
+			$this->image = ViewableMedia::getMedia($this->boxContents[0]->imageID);
 		}
 		
 		$this->image->setLinkParameters(['boxID' => $this->boxID]);
@@ -359,12 +366,12 @@ class Box extends DatabaseObject {
 			return false;
 		}
 		
-		$boxContent = $this->getBoxContent();
+		$this->getBoxContents();
 		if ($this->isMultilingual) {
-			return (isset($boxContent[WCF::getLanguage()->languageID]) && $boxContent[WCF::getLanguage()->languageID]['imageID']);
+			return (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID);
 		}
 		
-		return (isset($boxContent[0]) && $boxContent[0]['imageID']);
+		return (isset($this->boxContents[0]) && $this->boxContents[0]->imageID);
 	}
 	
 	/**

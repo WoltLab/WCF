@@ -81,16 +81,18 @@ class BoxEditForm extends BoxAddForm {
 		if ($this->boxType == 'system' || $this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
-					'title' => (!empty($_POST['title'][$language->languageID]) ? $_POST['title'][$language->languageID] : ''),
-					'content' => (!empty($_POST['content'][$language->languageID]) ? $_POST['content'][$language->languageID] : ''),
+					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
+					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
 					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
 				];
 			}
 		}
 		else {
 			$content[0] = [
-				'title' => (!empty($_POST['title'][0]) ? $_POST['title'][0] : ''),
-				'content' => (!empty($_POST['content'][0]) ? $_POST['content'][0] : ''),
+				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
+				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
+				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
 				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
 			];
 		}
@@ -134,8 +136,8 @@ class BoxEditForm extends BoxAddForm {
 	 */
 	public function readData() {
 		if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
-			foreach ($this->box->getBoxContent() as $languageID => $content) {
-				$this->imageID[$languageID] = $content['imageID'];
+			foreach ($this->box->getBoxContents() as $languageID => $content) {
+				$this->imageID[$languageID] = $content->imageID;
 			}
 			
 			$this->readBoxImages();
@@ -161,10 +163,10 @@ class BoxEditForm extends BoxAddForm {
 			if ($this->linkPageID) $this->linkType = 'internal';
 			if ($this->externalURL) $this->linkType = 'external';
 			
-			foreach ($this->box->getBoxContent() as $languageID => $content) {
-				$this->title[$languageID] = $content['title'];
-				$this->content[$languageID] = $content['content'];
-				$this->imageID[$languageID] = $content['imageID'];
+			foreach ($this->box->getBoxContents() as $languageID => $content) {
+				$this->title[$languageID] = $content->title;
+				$this->content[$languageID] = $content->content;
+				$this->imageID[$languageID] = $content->imageID;
 			}
 			
 			if ($this->boxControllerID) {

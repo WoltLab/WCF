@@ -3,6 +3,7 @@ namespace wcf\data\page;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\ITitledObject;
+use wcf\data\page\content\PageContent;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\acl\simple\SimpleAclResolver;
@@ -72,6 +73,12 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	protected $boxIDs;
 	
 	/**
+	 * page content grouped by language id
+	 * @var	PageContent[]
+	 */
+	public $pageContents;
+	
+	/**
 	 * Returns true if the active user can delete this page.
 	 * 
 	 * @return	boolean
@@ -98,29 +105,25 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	}
 	
 	/**
-	 * Returns the page content.
-	 * 
-	 * @return	array		content data
+	 * Returns the page's content.
+	 *
+	 * @return	PageContent[]
 	 */
-	public function getPageContent() {
-		$content = [];
-		
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_page_content
-			WHERE	pageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->pageID]);
-		while ($row = $statement->fetchArray()) {
-			$content[($row['languageID'] ?: 0)] = [
-				'title' => $row['title'],
-				'content' => $row['content'],
-				'metaDescription' => $row['metaDescription'],
-				'metaKeywords' => $row['metaKeywords'],
-				'customURL' => $row['customURL']
-			];
+	public function getPageContents() {
+		if ($this->pageContents === null) {
+			$this->pageContents = [];
+			
+			$sql = "SELECT	*
+				FROM	wcf" . WCF_N . "_page_content
+				WHERE	pageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->pageID]);
+			while ($row = $statement->fetchArray()) {
+				$this->pageContents[($row['languageID'] ?: 0)] = new PageContent(null, $row);
+			}
 		}
 		
-		return $content;
+		return $this->pageContents;
 	}
 	
 	/**
@@ -128,7 +131,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * for multilingual pages.
 	 * 
 	 * @param	integer		$languageID	language id or `null` if there are no localized versions
-	 * @return	string[]	page content data
+	 * @return	PageContent|null        	page content data
 	 */
 	public function getPageContentByLanguage($languageID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -142,8 +145,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute($conditions->getParameters());
 		$row = $statement->fetchSingleRow();
+		if ($row !== false) return new PageContent(null, $row);
 		
-		return $row ?: [];
+		return null;
 	}
 	
 	/**

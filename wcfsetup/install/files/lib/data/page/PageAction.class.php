@@ -3,8 +3,11 @@ namespace wcf\data\page;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\IToggleAction;
+use wcf\data\page\content\PageContent;
+use wcf\data\page\content\PageContentEditor;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
 
@@ -61,21 +64,32 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 		
 		// save page content
 		if (!empty($this->parameters['content'])) {
-			$sql = "INSERT INTO	wcf".WCF_N."_page_content
-						(pageID, languageID, title, content, metaDescription, metaKeywords, customURL)
-				VALUES		(?, ?, ?, ?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
 			foreach ($this->parameters['content'] as $languageID => $content) {
-				$statement->execute([
-					$page->pageID,
-					($languageID ?: null),
-					$content['title'],
-					$content['content'],
-					$content['metaDescription'],
-					$content['metaKeywords'],
-					$content['customURL']
+				if (!empty($content['htmlInputProcessor'])) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$content['content'] = $content['htmlInputProcessor']->getHtml();
+				}
+				
+				/** @var PageContent $pageContent */
+				$pageContent = PageContentEditor::create([
+					'pageID' => $page->pageID,
+					'languageID' => ($languageID ?: null),
+					'title' => $content['title'],
+					'content' => $content['content'],
+					'metaDescription' => $content['metaDescription'],
+					'metaKeywords' => $content['metaKeywords'],
+					'customURL' => $content['customURL']
 				]);
+				$pageContentEditor = new PageContentEditor($pageContent);
+				
+				// save embedded objects
+				if (!empty($content['htmlInputProcessor'])) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
+					if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+						$pageContentEditor->update(['hasEmbeddedObjects' => 1]);
+					}
+				}
 			}
 		}
 		
@@ -115,28 +129,48 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	
 		// update page content
 		if (!empty($this->parameters['content'])) {
-			$sql = "DELETE FROM	wcf".WCF_N."_page_content
-				WHERE		pageID = ?";
-			$deleteStatement = WCF::getDB()->prepareStatement($sql);
-			
-			$sql = "INSERT INTO	wcf".WCF_N."_page_content
-						(pageID, languageID, title, content, metaDescription, metaKeywords, customURL)
-				VALUES		(?, ?, ?, ?, ?, ?, ?)";
-			$insertStatement = WCF::getDB()->prepareStatement($sql);
-			
 			foreach ($this->getObjects() as $page) {
-				$deleteStatement->execute([$page->pageID]);
-				
 				foreach ($this->parameters['content'] as $languageID => $content) {
-					$insertStatement->execute([
-						$page->pageID,
-						($languageID ?: null),
-						$content['title'],
-						$content['content'],
-						$content['metaDescription'],
-						$content['metaKeywords'],
-						$content['customURL']
-					]);
+					if (!empty($content['htmlInputProcessor'])) {
+						/** @noinspection PhpUndefinedMethodInspection */
+						$content['content'] = $content['htmlInputProcessor']->getHtml();
+					}
+					
+					$pageContent = PageContent::getPageContent($page->pageID, ($languageID ?: null));
+					$pageContentEditor = null;
+					if ($pageContent !== null) {
+						// update
+						$pageContentEditor = new PageContentEditor($pageContent);
+						$pageContentEditor->update([
+							'title' => $content['title'],
+							'content' => $content['content'],
+							'metaDescription' => $content['metaDescription'],
+							'metaKeywords' => $content['metaKeywords'],
+							'customURL' => $content['customURL']
+						]);
+					}
+					else {
+						/** @var PageContent $pageContent */
+						$pageContent = PageContentEditor::create([
+							'pageID' => $page->pageID,
+							'languageID' => ($languageID ?: null),
+							'title' => $content['title'],
+							'content' => $content['content'],
+							'metaDescription' => $content['metaDescription'],
+							'metaKeywords' => $content['metaKeywords'],
+							'customURL' => $content['customURL']
+						]);
+						$pageContentEditor = new PageContentEditor($pageContent);
+					}
+					
+					// save embedded objects
+					if (!empty($content['htmlInputProcessor'])) {
+						/** @noinspection PhpUndefinedMethodInspection */
+						$content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
+						if ($pageContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+							$pageContentEditor->update(['hasEmbeddedObjects' => ($pageContent->hasEmbeddedObjects ? 0 : 1)]);
+						}
+					}
 				}
 				
 				// save template
@@ -234,7 +268,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	public function delete() {
 		foreach ($this->getObjects() as $page) {
 			if ($page->pageType == 'tpl') {
-				foreach ($page->getPageContent() as $languageID => $content) {
+				foreach ($page->getPageContents() as $languageID => $content) {
 					$file = WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl';
 					if (file_exists($file)) {
 						@unlink($file);

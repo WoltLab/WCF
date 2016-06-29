@@ -67,6 +67,15 @@
 		<!-- /articles -->
 		
 		<type>
+			<name>com.woltlab.wcf.page.content</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.box.content</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		
+		<type>
 			<name>com.woltlab.wcf.bbcode.smiley</name>
 			<definitionname>com.woltlab.wcf.category</definitionname>
 			<classname><![CDATA[wcf\system\category\SmileyCategoryType]]></classname>

@@ -128,7 +128,13 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 		return null;
 	}
 	
-	
+	/**
+	 * Returns a certain article content.
+	 * 
+	 * @param       integer         $articleID
+	 * @param       integer         $languageID
+	 * @return      ArticleContent|null
+	 */
 	public static function getArticleContent($articleID, $languageID) {
 		if ($languageID !== null) {
 			$sql = "SELECT  *

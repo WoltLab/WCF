@@ -1,11 +1,14 @@
 <?php
 namespace wcf\data\box;
+use wcf\data\box\content\BoxContent;
+use wcf\data\box\content\BoxContentEditor;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 
 /**
@@ -62,19 +65,30 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	
 		// save box content
 		if (!empty($this->parameters['content'])) {
-			$sql = "INSERT INTO	wcf".WCF_N."_box_content
-						(boxID, languageID, title, content, imageID)
-				VALUES		(?, ?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
 			foreach ($this->parameters['content'] as $languageID => $content) {
-				$statement->execute([
-					$box->boxID,
-					($languageID ?: null),
-					$content['title'],
-					$content['content'],
-					$content['imageID']
+				if (!empty($content['htmlInputProcessor'])) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$content['content'] = $content['htmlInputProcessor']->getHtml();
+				}
+				
+				/** @var BoxContent $boxContent */
+				$boxContent = BoxContentEditor::create([
+					'boxID' => $box->boxID,
+					'languageID' => ($languageID ?: null),
+					'title' => $content['title'],
+					'content' => $content['content'],
+					'imageID' => $content['imageID']
 				]);
+				$boxContentEditor = new BoxContentEditor($boxContent);
+				
+				// save embedded objects
+				if (!empty($content['htmlInputProcessor'])) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
+					if (MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+						$boxContentEditor->update(['hasEmbeddedObjects' => 1]);
+					}
+				}
 			}
 		}
 		
@@ -114,26 +128,44 @@ class BoxAction extends AbstractDatabaseObjectAction {
 		
 		// update box content
 		if (!empty($this->parameters['content'])) {
-			$sql = "DELETE FROM	wcf".WCF_N."_box_content
-				WHERE		boxID = ?";
-			$deleteStatement = WCF::getDB()->prepareStatement($sql);
-			
-			$sql = "INSERT INTO	wcf".WCF_N."_box_content
-						(boxID, languageID, title, content, imageID)
-				VALUES		(?, ?, ?, ?, ?)";
-			$insertStatement = WCF::getDB()->prepareStatement($sql);
-			
 			foreach ($this->getObjects() as $box) {
-				$deleteStatement->execute([$box->boxID]);
-				
 				foreach ($this->parameters['content'] as $languageID => $content) {
-					$insertStatement->execute([
-						$box->boxID,
-						($languageID ?: null),
-						$content['title'],
-						$content['content'],
-						$content['imageID']
-					]);
+					if (!empty($content['htmlInputProcessor'])) {
+						/** @noinspection PhpUndefinedMethodInspection */
+						$content['content'] = $content['htmlInputProcessor']->getHtml();
+					}
+					
+					$boxContent = BoxContent::getBoxContent($box->boxID, ($languageID ?: null));
+					$boxContentEditor = null;
+					if ($boxContent !== null) {
+						// update
+						$boxContentEditor = new BoxContentEditor($boxContent);
+						$boxContentEditor->update([
+							'title' => $content['title'],
+							'content' => $content['content'],
+							'imageID' => $content['imageID']
+						]);
+					}
+					else {
+						/** @var BoxContent $boxContent */
+						$boxContent = BoxContentEditor::create([
+							'boxID' => $box->boxID,
+							'languageID' => ($languageID ?: null),
+							'title' => $content['title'],
+							'content' => $content['content'],
+							'imageID' => $content['imageID']
+						]);
+						$boxContentEditor = new BoxContentEditor($boxContent);
+					}
+					
+					// save embedded objects
+					if (!empty($content['htmlInputProcessor'])) {
+						/** @noinspection PhpUndefinedMethodInspection */
+						$content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
+						if ($boxContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
+							$boxContentEditor->update(['hasEmbeddedObjects' => ($boxContent->hasEmbeddedObjects ? 0 : 1)]);
+						}
+					}
 				}
 				
 				// save template
