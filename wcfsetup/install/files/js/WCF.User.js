@@ -188,9 +188,7 @@ WCF.User.Panel.Abstract = Class.extend({
 		this._triggerElement.hover(
 			(function() {
 				if (this._dropdown === null || !this._dropdown.isOpen()) {
-					timer = window.setTimeout((function() {
-						this.toggle(undefined, true);
-					}).bind(this), 300); 
+					timer = window.setTimeout(this.toggle.bind(this, undefined, true), 300);
 				}
 			}).bind(this),
 			function() {
