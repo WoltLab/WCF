@@ -12,15 +12,6 @@ namespace wcf\system\html;
  */
 interface IHtmlProcessor {
 	/**
-	 * Processes the input html string.
-	 * 
-	 * @param       string          $html           html string
-	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
-	 */
-	public function process($html, $objectType, $objectID = 0);
-	
-	/**
 	 * Returns the parsed html.
 	 * 
 	 * @return      string          parsed html

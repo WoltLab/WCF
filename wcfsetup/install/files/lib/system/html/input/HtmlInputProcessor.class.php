@@ -34,12 +34,14 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	protected $htmlInputNodeProcessor;
 	
 	/**
-	 * @inheritDoc
+	 * Processes the input html string.
+	 *
+	 * @param       string          $html           html string
+	 * @param       string          $objectType     object type identifier
+	 * @param       integer         $objectID       object id
 	 */
 	public function process($html, $objectType, $objectID = 0) {
-		// object id is always `0` during input processing but is set
-		// before saving embedded objects
-		$this->setContext($objectType, 0);
+		$this->setContext($objectType, $objectID);
 		
 		// enforce consistent newlines
 		$html = StringUtil::unifyNewlines($html);

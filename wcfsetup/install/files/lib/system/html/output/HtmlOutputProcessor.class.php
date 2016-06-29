@@ -26,13 +26,13 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	protected $outputType = 'text/html';
 	
 	/**
-	 * @inheritDoc
+	 * Processes the input html string.
+	 *
+	 * @param       string          $html           html string
+	 * @param       string          $objectType     object type identifier
+	 * @param       integer         $objectID       object id
 	 */
-	public function process($html, $objectType, $objectID = 0) {
-		if ($objectID === 0) {
-			throw new \UnexpectedValueException('Object id cannot be 0 for output processing.');
-		}
-		
+	public function process($html, $objectType, $objectID) {
 		$this->setContext($objectType, $objectID);
 		
 		$this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);
@@ -59,6 +59,18 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 */
 	public function getHtml() {
 		return $this->getHtmlOutputNodeProcessor()->getHtml();
+	}
+	
+	/**
+	 * @inheritdoc
+	 * @throws \InvalidArgumentException
+	 */
+	public function setContext($objectType, $objectID) {
+		if (!$objectID) {
+			throw new \InvalidArgumentException("Output processor requires a valid objectID.");
+		}
+		
+		parent::setContext($objectType, $objectID);
 	}
 	
 	/**
