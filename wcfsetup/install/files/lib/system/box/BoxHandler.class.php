@@ -3,6 +3,7 @@ namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\data\condition\ConditionAction;
+use wcf\data\page\Page;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
@@ -145,5 +146,50 @@ class BoxHandler extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Assigns pages to a certain box.
+	 *
+	 * Note: The primary use of this method is to be used during package installation.
+	 *
+	 * @param	string		$boxIdentifier
+	 * @param	string[]	$pageIdentifiers
+	 * @param	boolean		$visible
+	 * @throws	\InvalidArgumentException
+	 */
+	public function addBoxToPageAssignments($boxIdentifier, array $pageIdentifiers, $visible = true) {
+		$box = Box::getBoxByIdentifier($boxIdentifier);
+		if ($box === null) {
+			throw new \InvalidArgumentException("Unknown box with identifier '{$boxIdentifier}'");
+		}
+		
+		$pages = [];
+		foreach ($pageIdentifiers as $pageIdentifier) {
+			$page = Page::getPageByIdentifier($pageIdentifier);
+			if ($page === null) {
+				throw new \InvalidArgumentException("Unknown page with identifier '{$pageIdentifier}'");
+			}
+			$pages[] = $page;
+		}
+		
+		if (($visible && $box->visibleEverywhere) || (!$visible && !$box->visibleEverywhere)) {
+			$sql = "DELETE FROM     wcf".WCF_N."_box_to_page
+					WHERE           boxID = ?
+							AND pageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($pages as $page) {
+				$statement->execute([$box->boxID, $page->pageID]);
+			}
+		}
+		else {
+			$sql = "REPLACE INTO    wcf".WCF_N."_box_to_page
+							(boxID, pageID, visible)
+					VALUES          (?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($pages as $page) {
+				$statement->execute([$box->boxID, $page->pageID, ($visible ? 1 : 0)]);
+			}
+		}
 	}
 }
