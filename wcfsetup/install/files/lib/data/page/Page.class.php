@@ -185,7 +185,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return	string
 	 */
 	public function getDisplayLink() {
-		return str_replace($this->getApplication()->getPageURL(), '', $this->getLink());
+		return preg_replace('~^https?://~', '', $this->getLink());
 	}
 	
 	/**

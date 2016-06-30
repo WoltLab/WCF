@@ -56,6 +56,11 @@ class ArticleListPage extends SortablePage {
 	public $validSortFields = ['articleID', 'title', 'time', 'views', 'comments'];
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $itemsPerPage = 50;
+	
+	/**
 	 * category id
 	 * @var integer
 	 */

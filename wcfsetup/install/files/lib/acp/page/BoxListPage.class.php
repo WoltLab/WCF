@@ -44,6 +44,11 @@ class BoxListPage extends SortablePage {
 	public $validSortFields = ['boxID', 'name', 'boxType', 'position', 'showOrder'];
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $itemsPerPage = 50;
+	
+	/**
 	 * name
 	 * @var	string
 	 */

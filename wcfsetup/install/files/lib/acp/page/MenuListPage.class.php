@@ -43,6 +43,11 @@ class MenuListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
+	public $itemsPerPage = 50;
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		

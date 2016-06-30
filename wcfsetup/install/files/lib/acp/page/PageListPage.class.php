@@ -45,6 +45,11 @@ class PageListPage extends SortablePage {
 	public $validSortFields = ['pageID', 'name', 'lastUpdateTime', 'pageType'];
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $itemsPerPage = 50;
+	
+	/**
 	 * name
 	 * @var	string
 	 */
