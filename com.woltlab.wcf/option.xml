@@ -524,6 +524,11 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 			<!-- /general.system.jquery -->
 			
 			<!-- general.system.googleMaps -->
+			<option name="google_maps_api_key">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>text</optiontype>
+				<showorder>1</showorder>
+			</option>
 			<option name="google_maps_zoom">
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>select</optiontype>

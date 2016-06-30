@@ -876,6 +876,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Zoom durch Doppelklick zulassen]]></item>
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Standard-Kartenposition (Breitengrad)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Standard-Kartenposition (Längengrad)]]></item>
+		<item name="wcf.acp.option.google_maps_api_key"><![CDATA[Browser-API-Schlüssel]]></item>
+		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google stellt <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.google.com/maps/documentation/javascript/get-api-key'|rawurlencode}" class="externalURL">hier</a> eine ausführliche Anleitung bereit, wie Sie einen API-Schlüssel erstellen können.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
