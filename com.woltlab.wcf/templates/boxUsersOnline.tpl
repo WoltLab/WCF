@@ -1,6 +1,6 @@
 <ul class="inlineList dotSeparated">
 	<li>{lang}wcf.user.usersOnline.detail{/lang}</li>
-	{if USERS_ONLINE_RECORD}<li>{lang}wcf.user.usersOnline.record{/lang}</li>{/if}
+	{if USERS_ONLINE_RECORD && $__showRecord}<li>{lang}wcf.user.usersOnline.record{/lang}</li>{/if}
 </ul>
 
 {if $usersOnlineList|count}

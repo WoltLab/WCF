@@ -20,6 +20,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	protected $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
 	
 	/**
+	 * enables the display of the user online record
+	 * @var boolean
+	 */
+	public $showRecord = true;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getLink() {
@@ -47,7 +53,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 			$templateName = 'boxUsersOnline';
 		}
 		
-		return WCF::getTPL()->fetch($templateName, 'wcf', ['usersOnlineList' => $this->objectList]);
+		return WCF::getTPL()->fetch($templateName, 'wcf', ['usersOnlineList' => $this->objectList, '__showRecord' => $this->showRecord]);
 	}
 	
 	/**
