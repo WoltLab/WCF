@@ -361,7 +361,7 @@ class WCFSetup extends WCF {
 		$system['sql']['result'] = MySQLDatabase::isSupported();
 		
 		// upload_max_filesize
-		$system['uploadMaxFilesize']['value'] = ini_get('upload_max_filesize');
+		$system['uploadMaxFilesize']['value'] = min(ini_get('upload_max_filesize'), ini_get('post_max_size'));
 		$system['uploadMaxFilesize']['result'] = (intval($system['uploadMaxFilesize']['value']) > 0);
 		
 		// gdlib version
