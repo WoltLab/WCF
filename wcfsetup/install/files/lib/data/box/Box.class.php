@@ -380,6 +380,13 @@ class Box extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getLink() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->getLink();
+		}
+		else if ($this->boxType == 'menu') {
+			return '';
+		}
+		
 		if ($this->linkPageObjectID) {
 			$handler = $this->getLinkPageHandler();
 			if ($handler && $handler instanceof ILookupPageHandler) {
@@ -401,6 +408,13 @@ class Box extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function hasLink() {
+		if ($this->boxType == 'system') {
+			return $this->getController()->hasLink();
+		}
+		else if ($this->boxType == 'menu') {
+			return false;
+		}
+		
 		return ($this->linkPageID || !empty($this->externalURL));
 	}
 	
