@@ -94,12 +94,13 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				
 				// compile dynamic language variables
 				if ($category->languageCategory != 'wcf.global' && strpos($languageItemValue, '{') !== false) {
-					$writer->write("\$this->dynamicItems['".$languageItem."'] = '");
-					
-					$output = LanguageFactory::getInstance()->getScriptingCompiler()->compileString($languageItem, $languageItemValue);
-					$writer->write(str_replace("'", "\'", $output['template']));
-					
-					$writer->write("';\n");
+					try {
+						$output = LanguageFactory::getInstance()->getScriptingCompiler()->compileString($languageItem, $languageItemValue);
+						$writer->write("\$this->dynamicItems['".$languageItem."'] = '");
+						$writer->write(str_replace("'", "\'", $output['template']));
+						$writer->write("';\n");
+					}
+					catch (SystemException $e) {} // ignore compiler errors
 				}
 			}
 			
