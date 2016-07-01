@@ -6,7 +6,7 @@
 		</div>
 	{/if}
 	
-	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates() && SHOW_UPDATE_NOTICE_FRONTEND}
 		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 	{/if}
 	
