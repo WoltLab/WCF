@@ -1,21 +1,28 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\user\User;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
 
 /**
- * User notification event for profile commments.
+ * User notification event for profile comments.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  */
-class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEvent {
+class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
 	protected $stackable = true;
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function prepare() {
+		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->userNotificationObject->objectID);
+	}
 	
 	/**
 	 * @inheritDoc
@@ -61,7 +68,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$user = new User($this->userNotificationObject->objectID);
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->userNotificationObject->objectID);
 		
 		$authors = $this->getAuthors();
 		if (count($authors) > 1) {
@@ -93,7 +100,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', ['id' => $this->userNotificationObject->objectID], '#wall');
+		return LinkHandler::getInstance()->getLink('User', ['object' => UserProfileRuntimeCache::getInstance()->getObject($this->userNotificationObject->objectID)], '#wall');
 	}
 	
 	/**
