@@ -793,7 +793,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
 		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[Changing the backend requires a rebuild of the search indices available on the page “Rebuild Data”.]]></item>
-		<item name="wcf.acp.option.category.general.system.update"><![CDATA[Updates]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
