@@ -2940,7 +2940,7 @@ Sie erreichen das Benutzerprofil des neuen Benutzers, indem Sie folgenden Link a
 		<item name="wcf.user.register.needActivation.mail"><![CDATA[Hallo {@$user->username},
 
 vielen Dank für Ihre Registrierung auf der Website: {@PAGE_TITLE|language}. 
-Bevor wir Ihre Registrierung aktivieren können, müssen Sie einmalig die Gültigkeit Ihrer E-Mail-Adresse bestätigen.
+Bevor wir Ihr Benutzerkonto aktivieren können, müssen Sie einmalig die Gültigkeit Ihrer E-Mail-Adresse bestätigen.
 
 Bitte bestätigen Sie die Gültigkeit Ihrer E-Mail-Adresse, indem Sie folgenden Link aufrufen:
 {link controller='RegisterActivation' isEmail=true}u={@$user->userID}&a={@$user->activationCode}{/link} 
