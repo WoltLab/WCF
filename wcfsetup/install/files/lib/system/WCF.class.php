@@ -281,10 +281,10 @@ class WCF {
 			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
 		}
 		catch (\Throwable $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $exception->getTraceAsString()));
 		}
 		catch (\Exception $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $exception->getTraceAsString()));
 		}
 	}
 	
