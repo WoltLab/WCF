@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\page\content\PageContent;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\ITitledObject;
-use wcf\data\page\content\PageContent;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\acl\simple\SimpleAclResolver;

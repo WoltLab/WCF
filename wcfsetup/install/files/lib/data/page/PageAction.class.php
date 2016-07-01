@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\page\content\PageContent;
+use wcf\data\page\content\PageContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\IToggleAction;
-use wcf\data\page\content\PageContent;
-use wcf\data\page\content\PageContentEditor;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
