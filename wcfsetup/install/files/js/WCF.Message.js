@@ -862,11 +862,6 @@ WCF.Message.Quote = { };
 
 /**
  * Handles message quotes.
- * 
- * @param	string		className
- * @param	string		objectType
- * @param	string		containerSelector
- * @param	string		messageBodySelector
  */
 WCF.Message.Quote.Handler = Class.extend({
 	/**
@@ -938,13 +933,13 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Initializes the quote handler for given object type.
 	 * 
-	 * @param	WCF.Message.Quote.Manager	quoteManager
-	 * @param	string				className
-	 * @param	string				objectType
-	 * @param	string				containerSelector
-	 * @param	string				messageBodySelector
-	 * @param	string				messageContentSelector
-	 * @param	boolean				supportDirectInsert
+	 * @param	{WCF.Message.Quote.Manager}	quoteManager
+	 * @param	{string}			className
+	 * @param	{string}			objectType
+	 * @param	{string}			containerSelector
+	 * @param	{string}			messageBodySelector
+	 * @param	{string}			messageContentSelector
+	 * @param	{boolean}			supportDirectInsert
 	 */
 	init: function(quoteManager, className, objectType, containerSelector, messageBodySelector, messageContentSelector, supportDirectInsert) {
 		this._className = className;
@@ -998,7 +993,7 @@ WCF.Message.Quote.Handler = Class.extend({
 					return true;
 				}
 				
-				if (self._messageBodySelector !== null) {
+				if (self._messageBodySelector) {
 					$container = $container.find(self._messageBodySelector).data('containerID', $containerID);
 				}
 				
@@ -1013,11 +1008,11 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Handles mouse down event.
 	 * 
-	 * @param	object		event
+	 * @param	{Event}		event
 	 */
 	_mouseDown: function(event) {
 		// hide copy quote
-		this._copyQuote.hide();
+		this._copyQuote.removeClass('active');
 		
 		// store container ID
 		var $container = $(event.currentTarget);
@@ -1032,7 +1027,7 @@ WCF.Message.Quote.Handler = Class.extend({
 			return;
 		}
 		else {
-			// check if mousedown occured inside a <blockquote>
+			// check if mousedown occurred inside a <blockquote>
 			var $element = event.target;
 			while ($element !== $container[0]) {
 				if ($element.tagName === 'BLOCKQUOTE') {
@@ -1046,29 +1041,20 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		
 		this._activeContainerID = $container.wcfIdentify();
-		
-		// remove alt-tag from all images, fixes quoting in Firefox
-		if ($.browser.mozilla) {
-			// TODO: is this still required?
-			$container.find('img').each(function() {
-				var $image = $(this);
-				$image.data('__alt', $image.attr('alt')).removeAttr('alt');
-			});
-		}
 	},
 	
 	/**
 	 * Returns the text of a node and its children.
 	 * 
-	 * @param	object		node
-	 * @return	string
+	 * @param	{Node}		node
+	 * @return	{string}
 	 */
 	_getNodeText: function(node) {
 		// work-around for IE, see http://stackoverflow.com/a/5983176
 		var $nodeFilter = function(node) {
 			switch (node.tagName) {
 				case 'BLOCKQUOTE':
-				case 'H3':
+				case 'IMG':
 				case 'SCRIPT':
 					return NodeFilter.FILTER_REJECT;
 				break;
@@ -1097,13 +1083,17 @@ WCF.Message.Quote.Handler = Class.extend({
 					case 'LI':
 					case 'UL':
 						$text += "\n";
-					break;
+						break;
 					
 					case 'TD':
 						if (!$.browser.msie) {
 							$text += "\n";
 						}
-					break;
+						break;
+					
+					case 'P':
+						$text += "\n\n";
+						break;
 				}
 			}
 			else {
@@ -1118,12 +1108,12 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Handles the mouse up event.
 	 * 
-	 * @param	object		event
+	 * @param	{Event}		event
 	 */
 	_mouseUp: function(event) {
 		// ignore event
 		if (this._activeContainerID == '') {
-			this._copyQuote.hide();
+			this._copyQuote.removeClass('active');
 			
 			return;
 		}
@@ -1132,18 +1122,18 @@ WCF.Message.Quote.Handler = Class.extend({
 		var $selection = this._getSelectedText();
 		var $text = $.trim($selection);
 		if ($text == '') {
-			this._copyQuote.hide();
+			this._copyQuote.removeClass('active');
 			
 			return;
 		}
 		
 		var $messageBody = (this._messageBodySelector) ? $container.find(this._messageContentSelector)[0] : $container[0];
 		
-		// check if mouseup occured within a <blockquote>
+		// check if mouseup occurred within a <blockquote>
 		var $element = event.target;
 		while ($element !== $container[0]) {
 			if ($element === null || $element.tagName === 'BLOCKQUOTE') {
-				this._copyQuote.hide();
+				this._copyQuote.removeClass('active');
 				
 				return;
 			}
@@ -1154,7 +1144,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		// check if selection starts and ends within the $messageBody element
 		var $range = window.getSelection().getRangeAt(0);
 		if (!this._elementInsideContainer($range.startContainer, $messageBody) || !this._elementInsideContainer($range.endContainer, $messageBody)) {
-			this._copyQuote.hide();
+			this._copyQuote.removeClass('active');
 			
 			return;
 		}
@@ -1166,7 +1156,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		if (this._normalize($messageText).indexOf(this._normalize($text)) === -1) {
 			return;
 		}
-		this._copyQuote.show();
+		this._copyQuote.addClass('active');
 		
 		var $coordinates = this._getBoundingRectangle($container, window.getSelection());
 		var $dimensions = this._copyQuote.getDimensions('outer');
@@ -1176,30 +1166,19 @@ WCF.Message.Quote.Handler = Class.extend({
 			top: $coordinates.top - $dimensions.height - 7 + 'px',
 			left: $left + 'px'
 		});
-		this._copyQuote.hide();
+		this._copyQuote.removeClass('active');
 		
 		// reset containerID
 		this._activeContainerID = '';
 		
 		// show element after a delay, to prevent display if text was unmarked again (clicking into marked text)
 		var self = this;
-		new WCF.PeriodicalExecuter(function(pe) {
-			pe.stop();
-			
+		window.setTimeout(function() {
 			var $text = $.trim(self._getSelectedText());
 			if ($text != '') {
-				self._copyQuote.show();
+				self._copyQuote.addClass('active');
 				self._message = $text;
 				self._objectID = $container.data('objectID');
-				
-				// revert alt tags, fixes quoting in Firefox
-				if ($.browser.mozilla) {
-					// TODO: is this still required?
-					$container.find('img').each(function() {
-						var $image = $(this);
-						$image.attr('alt', $image.data('__alt'));
-					});
-				}
 			}
 		}, 10);
 	},
@@ -1207,9 +1186,9 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Returns true if given element is a child element of given container element.
 	 * 
-	 * @param	Node		element
-	 * @param	Element		container
-	 * @return	boolean
+	 * @param	{Node}  	element
+	 * @param	{Element}	container
+	 * @return	{boolean}
 	 */
 	_elementInsideContainer: function(element, container) {
 		if (element.nodeType === Node.TEXT_NODE) element = element.parentNode;
@@ -1228,8 +1207,8 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Normalizes a text for comparison.
 	 * 
-	 * @param	string		text
-	 * @return	string
+	 * @param	{string}	text
+	 * @return	{string}
 	 */
 	_normalize: function(text) {
 		return text.replace(/\r?\n|\r/g, "\n").replace(/\s/g, ' ').replace(/\s{2,}/g, ' ');
@@ -1238,9 +1217,9 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Returns the left or right offset of the current text selection.
 	 * 
-	 * @param	object		range
-	 * @param	boolean		before
-	 * @return	object
+	 * @param	{Range}		range
+	 * @param	{boolean}	before
+	 * @return	{Object}
 	 */
 	_getOffset: function(range, before) {
 		range.collapse(before);
@@ -1265,30 +1244,19 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Returns the offsets of the selection's bounding rectangle.
 	 * 
-	 * @return	object
+	 * @return	{Object}
 	 */
 	_getBoundingRectangle: function(container, selection) {
 		var $coordinates = null;
 		
-		if (document.createRange && typeof document.createRange().getBoundingClientRect != "undefined") { // Opera, Firefox, Safari, Chrome
-			if (selection.rangeCount > 0) {
-				// the coordinates returned by getBoundingClientRect() is relative to the window, not the document!
-				var $rect = selection.getRangeAt(0).getBoundingClientRect();
-				
-				$coordinates = {
-					left: $rect.left,
-					right: $rect.right,
-					top: $rect.top + $(document).scrollTop()
-				};
-			}
-		}
-		else if (document.selection && document.selection.type != "Control") { // IE
-			var $range = document.selection.createRange();
+		if (selection.rangeCount > 0) {
+			// the coordinates returned by getBoundingClientRect() are relative to the viewport, not the document!
+			var $rect = selection.getRangeAt(0).getBoundingClientRect();
 			
 			$coordinates = {
-				left: $range.boundingLeft,
-				right: $range.boundingRight,
-				top: $range.boundingTop
+				left: $rect.left,
+				right: $rect.right,
+				top: $rect.top + $(document).scrollTop()
 			};
 		}
 		
@@ -1300,34 +1268,20 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * 
 	 * @see		http://stackoverflow.com/a/13950376
 	 * 
-	 * @param	object		containerEl
-	 * @return	object
+	 * @param	{Element}	containerEl
+	 * @return	{Object}
 	 */
 	_saveSelection: function(containerEl) {
-		if (window.getSelection && document.createRange) {
-			var range = window.getSelection().getRangeAt(0);
-			var preSelectionRange = range.cloneRange();
-			preSelectionRange.selectNodeContents(containerEl);
-			preSelectionRange.setEnd(range.startContainer, range.startOffset);
-			var start = preSelectionRange.toString().length;
-			
-			return {
-				start: start,
-				end: start + range.toString().length
-			};
-		}
-		else {
-			var selectedTextRange = document.selection.createRange();
-			var preSelectionTextRange = document.body.createTextRange();
-			preSelectionTextRange.moveToElementText(containerEl);
-			preSelectionTextRange.setEndPoint("EndToStart", selectedTextRange);
-			var start = preSelectionTextRange.text.length;
-			
-			return {
-				start: start,
-				end: start + selectedTextRange.text.length
-			};
-		}
+		var range = window.getSelection().getRangeAt(0);
+		var preSelectionRange = range.cloneRange();
+		preSelectionRange.selectNodeContents(containerEl);
+		preSelectionRange.setEnd(range.startContainer, range.startOffset);
+		var start = preSelectionRange.toString().length;
+		
+		return {
+			start: start,
+			end: start + range.toString().length
+		};
 	},
 	
 	/**
@@ -1335,59 +1289,49 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * 
 	 * @see		http://stackoverflow.com/a/13950376
 	 * 
-	 * @param	object		containerEl
-	 * @param	object		savedSel
+	 * @param	{Element}	containerEl
+	 * @param	{Object}	savedSel
 	 */
 	_restoreSelection: function(containerEl, savedSel) {
-		if (window.getSelection && document.createRange) {
-			var charIndex = 0, range = document.createRange();
-			range.setStart(containerEl, 0);
-			range.collapse(true);
-			var nodeStack = [containerEl], node, foundStart = false, stop = false;
-			
-			while (!stop && (node = nodeStack.pop())) {
-				if (node.nodeType == Node.TEXT_NODE) {
-					var nextCharIndex = charIndex + node.length;
-					if (!foundStart && savedSel.start >= charIndex && savedSel.start <= nextCharIndex) {
-						range.setStart(node, savedSel.start - charIndex);
-						foundStart = true;
-					}
-					if (foundStart && savedSel.end >= charIndex && savedSel.end <= nextCharIndex) {
-						range.setEnd(node, savedSel.end - charIndex);
-						stop = true;
-					}
-					charIndex = nextCharIndex;
-				} else {
-					var i = node.childNodes.length;
-					while (i--) {
-						nodeStack.push(node.childNodes[i]);
-					};
-				};
+		var charIndex = 0, range = document.createRange();
+		range.setStart(containerEl, 0);
+		range.collapse(true);
+		var nodeStack = [containerEl], node, foundStart = false, stop = false;
+		
+		while (!stop && (node = nodeStack.pop())) {
+			if (node.nodeType == Node.TEXT_NODE) {
+				var nextCharIndex = charIndex + node.length;
+				if (!foundStart && savedSel.start >= charIndex && savedSel.start <= nextCharIndex) {
+					range.setStart(node, savedSel.start - charIndex);
+					foundStart = true;
+				}
+				if (foundStart && savedSel.end >= charIndex && savedSel.end <= nextCharIndex) {
+					range.setEnd(node, savedSel.end - charIndex);
+					stop = true;
+				}
+				charIndex = nextCharIndex;
+			} else {
+				var i = node.childNodes.length;
+				while (i--) {
+					nodeStack.push(node.childNodes[i]);
+				}
 			}
-			
-			var sel = window.getSelection();
-			sel.removeAllRanges();
-			sel.addRange(range);
 		}
-		else {
-			var textRange = document.body.createTextRange();
-			textRange.moveToElementText(containerEl);
-			textRange.collapse(true);
-			textRange.moveEnd("character", savedSel.end);
-			textRange.moveStart("character", savedSel.start);
-			textRange.select();
-		}
+		
+		var sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
 	},
 	
 	/**
 	 * Initializes the 'copy quote' element.
 	 * 
-	 * @param	boolean		supportDirectInsert
+	 * @param	{boolean}	supportDirectInsert
 	 */
 	_initCopyQuote: function(supportDirectInsert) {
 		this._copyQuote = $('#quoteManagerCopy');
 		if (!this._copyQuote.length) {
-			this._copyQuote = $('<div id="quoteManagerCopy" class="balloonTooltip"><span class="jsQuoteManagerStore">' + WCF.Language.get('wcf.message.quote.quoteSelected') + '</span><span class="pointer"><span></span></span></div>').hide().appendTo(document.body);
+			this._copyQuote = $('<div id="quoteManagerCopy" class="balloonTooltip interactive"><span class="jsQuoteManagerStore">' + WCF.Language.get('wcf.message.quote.quoteSelected') + '</span></div>').appendTo(document.body);
 			var $storeQuote = this._copyQuote.children('span.jsQuoteManagerStore').click($.proxy(this._saveQuote, this));
 			if (supportDirectInsert) {
 				$('<span class="jsQuoteManagerQuoteAndInsert">' + WCF.Language.get('wcf.message.quote.quoteAndReply') + '</span>').click($.proxy(this._saveAndInsertQuote, this)).insertAfter($storeQuote);
@@ -1412,7 +1356,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Saves a full quote.
 	 * 
-	 * @param	object		event
+	 * @param	{Event}		event
 	 */
 	_saveFullQuote: function(event) {
 		var $listItem = $(event.currentTarget);
@@ -1447,11 +1391,9 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Saves a quote.
 	 * 
-	 * @param	boolean		renderQuote
+	 * @param	{boolean}	renderQuote
 	 */
 	_saveQuote: function(renderQuote) {
-		renderQuote = (renderQuote === true) ? true : false;
-		
 		this._proxy.setOption('data', {
 			actionName: 'saveQuote',
 			className: this._className,
@@ -1459,7 +1401,7 @@ WCF.Message.Quote.Handler = Class.extend({
 			objectIDs: [ this._objectID ],
 			parameters: {
 				message: this._message,
-				renderQuote: renderQuote
+				renderQuote: (renderQuote === true)
 			}
 		});
 		this._proxy.sendRequest();
@@ -1475,11 +1417,9 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Handles successful AJAX requests.
 	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
+	 * @param	{Object}	data
 	 */
-	_success: function(data, textStatus, jqXHR) {
+	_success: function(data) {
 		if (data.returnValues.count !== undefined) {
 			if (data.returnValues.fullQuoteMessageIDs !== undefined) {
 				data.returnValues.fullQuoteObjectIDs = data.returnValues.fullQuoteMessageIDs;
@@ -1494,7 +1434,7 @@ WCF.Message.Quote.Handler = Class.extend({
 			case 'saveFullQuote':
 				if (data.returnValues.renderedQuote) {
 					WCF.System.Event.fireEvent('com.woltlab.wcf.message.quote', 'insert', {
-						forceInsert: (data.actionName === 'saveQuote' ? true : false),
+						forceInsert: (data.actionName === 'saveQuote'),
 						quote: data.returnValues.renderedQuote
 					});
 				}
@@ -1531,89 +1471,83 @@ WCF.Message.Quote.Handler = Class.extend({
 WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * list of form buttons
-	 * @var	object
+	 * @var	{Object}
 	 */
-	_buttons: { },
+	_buttons: {},
 	
 	/**
 	 * number of stored quotes
-	 * @var	integer
+	 * @var	{int}
 	 */
 	_count: 0,
 	
 	/**
 	 * dialog overlay
-	 * @var	jQuery
+	 * @var	{jQuery}
 	 */
 	_dialog: null,
 	
 	/**
-	 * Redactor element
-	 * @var	jQuery
+	 * editor element id
+	 * @var	{string}
 	 */
-	_editorElement: null,
+	_editorId: '',
 	
 	/**
-	 * alternative Redactor element
-	 * @var	jQuery
+	 * alternative editor element id
+	 * @var	{string}
 	 */
-	_editorElementAlternative: null,
+	_editorIdAlternative: '',
 	
 	/**
 	 * form element
-	 * @var	jQuery
+	 * @var	{jQuery}
 	 */
 	_form: null,
 	
 	/**
 	 * list of quote handlers
-	 * @var	object
+	 * @var	{Object}
 	 */
-	_handlers: { },
+	_handlers: {},
 	
 	/**
 	 * true, if an up-to-date template exists
-	 * @var	boolean
+	 * @var	{boolean}
 	 */
 	_hasTemplate: false,
 	
 	/**
 	 * true, if related quotes should be inserted
-	 * @var	boolean
+	 * @var	{boolean}
 	 */
 	_insertQuotes: true,
 	
 	/**
 	 * action proxy
-	 * @var	WCF.Action.Proxy
+	 * @var	{WCF.Action.Proxy}
 	 */
 	_proxy: null,
 	
 	/**
 	 * list of quotes to remove upon submit
-	 * @var	array<string>
+	 * @var	{Array}
 	 */
 	_removeOnSubmit: [ ],
 	
 	/**
-	 * show quotes element
-	 * @var	jQuery
-	 */
-	_showQuotes: null,
-	
-	/**
 	 * allow pasting
-	 * @var	boolean
+	 * @var	{boolean}
 	 */
 	_supportPaste: false,
 	
 	/**
 	 * Initializes the quote manager.
 	 * 
-	 * @param	integer		count
-	 * @param	string		elementID
-	 * @param	boolean		supportPaste
-	 * @param	array<string>	removeOnSubmit
+	 * @param	{int}		count
+	 * @param	{string}	elementID
+	 * @param	{boolean}	supportPaste
+	 * @param	{Array} 	removeOnSubmit
 	 */
 	init: function(count, elementID, supportPaste, removeOnSubmit) {
 		this._buttons = {
@@ -1622,32 +1556,32 @@ WCF.Message.Quote.Manager = Class.extend({
 		};
 		this._count = parseInt(count) || 0;
 		this._dialog = null;
-		this._editorElement = null;
-		this._editorElementAlternative = null;
+		this._editorId = '';
+		this._editorIdAlternative = '';
 		this._form = null;
 		this._handlers = { };
 		this._hasTemplate = false;
 		this._insertQuotes = true;
-		this._removeOnSubmit = [ ];
-		this._showQuotes = null;
+		this._removeOnSubmit = [];
 		this._supportPaste = false;
 		
 		if (elementID) {
-			this._editorElement = $('#' + elementID);
-			if (this._editorElement.length) {
+			var element = $('#' + elementID);
+			if (element.length) {
+				this._editorId = elementID;
 				this._supportPaste = true;
 				
 				// get surrounding form-tag
-				this._form = this._editorElement.parents('form:eq(0)');
+				this._form = element.parents('form:eq(0)');
 				if (this._form.length) {
-					this._form.submit($.proxy(this._submit, this));
-					this._removeOnSubmit = removeOnSubmit || [ ];
+					this._form.submit(this._submit.bind(this));
+					this._removeOnSubmit = removeOnSubmit || [];
 				}
 				else {
 					this._form = null;
 					
 					// allow override
-					this._supportPaste = (supportPaste === true) ? true : false;
+					this._supportPaste = (supportPaste === true);
 				}
 			}
 		}
@@ -1666,26 +1600,27 @@ WCF.Message.Quote.Manager = Class.extend({
 	},
 	
 	/**
-	 * Sets an alternative editor element on runtime.
+	 * Sets an alternative editor element id on runtime.
 	 * 
-	 * @param	jQuery		element
+	 * @param	{(string|jQuery)}       elementId       element id or jQuery element
 	 */
-	setAlternativeEditor: function(element) {
-		this._editorElementAlternative = element;
+	setAlternativeEditor: function(elementId) {
+		if (typeof elementId === 'object') elementId = elementId[0].id;
+		this._editorIdAlternative = elementId;
 	},
 	
 	/**
-	 * Clears alternative editor element.
+	 * Clears alternative editor element id.
 	 */
 	clearAlternativeEditor: function() {
-		this._editorElementAlternative = null;
+		this._editorIdAlternative = '';
 	},
 	
 	/**
 	 * Registers a quote handler.
 	 * 
-	 * @param	string				objectType
-	 * @param	WCF.Message.Quote.Handler	handler
+	 * @param	{string}			objectType
+	 * @param	{WCF.Message.Quote.Handler}	handler
 	 */
 	register: function(objectType, handler) {
 		this._handlers[objectType] = handler;
@@ -1694,8 +1629,8 @@ WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * Updates number of stored quotes.
 	 * 
-	 * @param	integer		count
-	 * @param	object		fullQuoteObjectIDs
+	 * @param	{int}		count
+	 * @param	{Object}	fullQuoteObjectIDs
 	 */
 	updateCount: function(count, fullQuoteObjectIDs) {
 		this._count = parseInt(count) || 0;
@@ -1704,17 +1639,19 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		// update full quote ids of handlers
 		for (var $objectType in this._handlers) {
-			var $objectIDs = fullQuoteObjectIDs[$objectType] || [ ];
-			this._handlers[$objectType].updateFullQuoteObjectIDs($objectIDs);
+			if (this._handlers.hasOwnProperty($objectType)) {
+				var $objectIDs = fullQuoteObjectIDs[$objectType] || [];
+				this._handlers[$objectType].updateFullQuoteObjectIDs($objectIDs);
+			}
 		}
 	},
 	
 	/**
 	 * Inserts all associated quotes upon first time using quick reply.
 	 * 
-	 * @param	string		className
-	 * @param	integer		parentObjectID
-	 * @param	object		callback
+	 * @param	{string}	className
+	 * @param	{int}		parentObjectID
+	 * @param	{Object}	callback
 	 */
 	insertQuotes: function(className, parentObjectID, callback) {
 		if (!this._insertQuotes) {
@@ -1741,24 +1678,28 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Toggles the display of the 'Show quotes' button
 	 */
 	_toggleShowQuotes: function() {
-		if (!this._count) {
-			if (this._showQuotes !== null) {
-				this._showQuotes.hide();
-			}
-		}
-		else {
-			if (this._showQuotes === null) {
-				this._showQuotes = $('#showQuotes');
-				if (!this._showQuotes.length) {
-					this._showQuotes = $('<div id="showQuotes" class="balloonTooltip" />').click($.proxy(this._click, this)).appendTo(document.body);
+		require(['WoltLab/WCF/Ui/Page/Action'], (function(UiPageAction) {
+			var buttonName = 'showQuotes';
+			
+			if (this._count) {
+				var button = UiPageAction.get(buttonName);
+				if (button === undefined) {
+					button = elCreate('a');
+					button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+					
+					UiPageAction.add(buttonName, button);
 				}
+				
+				button.textContent = WCF.Language.get('wcf.message.quote.showQuotes').replace(/#count#/, this._count);
+				
+				UiPageAction.show(buttonName);
+			}
+			else {
+				UiPageAction.hide(buttonName);
 			}
 			
-			var $text = WCF.Language.get('wcf.message.quote.showQuotes').replace(/#count#/, this._count);
-			this._showQuotes.text($text).show();
-		}
-		
-		this._hasTemplate = false;
+			this._hasTemplate = false;
+		}).bind(this));
 	},
 	
 	/**
@@ -1782,7 +1723,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * Renders the dialog.
 	 * 
-	 * @param	string		template
+	 * @param	{string}	template
 	 */
 	renderDialog: function(template) {
 		// create dialog if not exists
@@ -1852,7 +1793,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * Checks for change event on delete-checkboxes.
 	 * 
-	 * @param	object		event
+	 * @param	{Object}	event
 	 */
 	_change: function(event) {
 		var $input = $(event.currentTarget);
@@ -1862,11 +1803,9 @@ WCF.Message.Quote.Manager = Class.extend({
 			this._removeOnSubmit.push($quoteID);
 		}
 		else {
-			for (var $index in this._removeOnSubmit) {
-				if (this._removeOnSubmit[$index] == $quoteID) {
-					delete this._removeOnSubmit[$index];
-					break;
-				}
+			var index = this._removeOnSubmit.indexOf($quoteID);
+			if (index !== -1) {
+				this._removeOnSubmit.splice(index, 1);
 			}
 		}
 	},
@@ -1875,21 +1814,13 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Inserts the selected quotes.
 	 */
 	_insertSelected: function() {
-		if (this._editorElementAlternative === null) {
-			var $api = $('.jsQuickReply:eq(0)').data('__api');
-			if ($api && !$api.getContainer().is(':visible')) {
-				this._insertQuotes = false;
-				$api.click(null);
-			}
-		}
-		
 		if (!this._dialog.find('input.jsCheckbox:checked').length) {
 			this._dialog.find('input.jsCheckbox').prop('checked', 'checked');
 		}
 		
 		// insert all quotes
 		this._dialog.find('input.jsCheckbox:checked').each($.proxy(function(index, input) {
-			this._insertQuote(null, input);
+			this._insertQuote(null, input, undefined);
 		}, this));
 		
 		// close dialog
@@ -1899,11 +1830,19 @@ WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * Inserts a quote.
 	 * 
-	 * @param	object		event
-	 * @param	object		inputElement
-	 * @param	object		data
+	 * @param	{Event}		event
+	 * @param	{Object}	inputElement
+	 * @param	{Object}	data
 	 */
 	_insertQuote: function(event, inputElement, data) {
+		var listItem = $(event ? event.currentTarget : inputElement).parents('li:eq(0)');
+		var text = listItem.children('.jsFullQuote')[0].textContent.trim();
+		
+		var message = listItem.parents('.message:eq(0)');
+		var author = message.data('username');
+		var link = message.data('link');
+		var isText = listItem.find('.jsQuote').length === 0;
+		/*
 		var $listItem = null, $quote, $username, $link;
 		if (data === undefined) {
 			$listItem = (event === null) ? $(inputElement).parents('li') : $(event.currentTarget).parents('li');
@@ -1919,10 +1858,29 @@ WCF.Message.Quote.Manager = Class.extend({
 			$username = data.quote.username;
 			$link = data.quote.link;
 		}
+		*/
 		
+		console.debug('insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId));
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
+			author: author,
+			content: text,
+			isText: isText,
+			link: link
+		});
+		
+		// remove quote upon submit or upon request
+		this._removeOnSubmit.push(listItem.data('quote-id'));
+		
+		// close dialog
+		if (event !== null) {
+			this._dialog.wcfDialog('close');
+		}
+		
+		return;
 		// insert into editor
 		if ($.browser.redactor) {
-			if (this._editorElementAlternative === null) {
+			if (this._editorIdAlternative === null) {
 				var insert = true;
 				if (event !== null || data !== null) {
 					var $api = $('.jsQuickReply:eq(0)').data('__api');
@@ -1937,10 +1895,10 @@ WCF.Message.Quote.Manager = Class.extend({
 					}
 				}
 				
-				if (insert && this._editorElement.length) this._editorElement.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
+				if (insert && this._editorId.length) this._editorId.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
 			}
 			else {
-				this._editorElementAlternative.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
+				this._editorIdAlternative.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
 			}
 		}
 		else {
@@ -1948,7 +1906,7 @@ WCF.Message.Quote.Manager = Class.extend({
 			$quote = "[quote='" + $username + "','" + $link + "']" + $quote + "[/quote]";
 			
 			// plain textarea
-			var $textarea = (this._editorElementAlternative === null) ? this._editorElement : this._editorElementAlternative;
+			var $textarea = (this._editorIdAlternative === null) ? this._editorId : this._editorIdAlternative;
 			var $value = $textarea.val();
 			$quote += "\n\n";
 			if ($value.length == 0) {
@@ -1960,13 +1918,7 @@ WCF.Message.Quote.Manager = Class.extend({
 			}
 		}
 		
-		// remove quote upon submit or upon request
-		if ($listItem !== null) this._removeOnSubmit.push($listItem.attr('data-quote-id'));
 		
-		// close dialog
-		if (event !== null) {
-			this._dialog.wcfDialog('close');
-		}
 	},
 	
 	/**
@@ -1984,9 +1936,11 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		if ($quoteIDs.length) {
 			// get object types
-			var $objectTypes = [ ];
+			var $objectTypes = [];
 			for (var $objectType in this._handlers) {
-				$objectTypes.push($objectType);
+				if (this._handlers.hasOwnProperty($objectType)) {
+					$objectTypes.push($objectType);
+				}
 			}
 			
 			this._proxy.setOption('data', {
@@ -2007,8 +1961,8 @@ WCF.Message.Quote.Manager = Class.extend({
 	_submit: function() {
 		if (this._supportPaste && this._removeOnSubmit.length > 0) {
 			var $formSubmit = this._form.find('.formSubmit');
-			for (var $i in this._removeOnSubmit) {
-				$('<input type="hidden" name="__removeQuoteIDs[]" value="' + this._removeOnSubmit[$i] + '" />').appendTo($formSubmit);
+			for (var i = 0, length = this._removeOnSubmit.length; i < length; i++) {
+				$('<input type="hidden" name="__removeQuoteIDs[]" value="' + this._removeOnSubmit[i] + '" />').appendTo($formSubmit);
 			}
 		}
 	},
@@ -2016,7 +1970,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * Returns a list of quote ids marked for removal.
 	 * 
-	 * @return	array<integer>
+	 * @return	{Array}
 	 */
 	getQuotesMarkedForRemoval: function() {
 		return this._removeOnSubmit;
@@ -2055,7 +2009,9 @@ WCF.Message.Quote.Manager = Class.extend({
 	countQuotes: function() {
 		var $objectTypes = [ ];
 		for (var $objectType in this._handlers) {
-			$objectTypes.push($objectType);
+			if (this._handlers.hasOwnProperty($objectType)) {
+				$objectTypes.push($objectType);
+			}
 		}
 		
 		this._proxy.setOption('data', {
@@ -2069,11 +2025,9 @@ WCF.Message.Quote.Manager = Class.extend({
 	/**
 	 * Handles successful AJAX requests.
 	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
+	 * @param	{Object}	data
 	 */
-	_success: function(data, textStatus, jqXHR) {
+	_success: function(data) {
 		if (data === null) {
 			return;
 		}

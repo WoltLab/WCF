@@ -76,6 +76,26 @@ define(['Dictionary', 'Dom/Util'], function(Dictionary, DomUtil) {
 		},
 		
 		/**
+		 * Returns true if there is a registered button with the provided name.
+		 * 
+		 * @param       {string}        buttonName      unique identifier
+		 * @return      {boolean}       true if there is a registered button with this name
+		 */
+		has: function (buttonName) {
+			return _buttons.has(buttonName);
+		},
+		
+		/**
+		 * Returns the stored button by name or undefined.
+		 * 
+		 * @param       {string}        buttonName      unique identifier
+		 * @return      {Element}       button element or undefined
+		 */
+		get: function(buttonName) {
+			return _buttons.get(buttonName);
+		},
+		
+		/**
 		 * Removes a button by its button name.
 		 * 
 		 * @param       {string}        buttonName      unique identifier

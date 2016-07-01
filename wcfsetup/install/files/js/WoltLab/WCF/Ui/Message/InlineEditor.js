@@ -8,14 +8,14 @@
  */
 define(
 	[
-		'Ajax',         'Core',            'Dictionary',        'Environment',
-		'EventHandler', 'Language',        'ObjectMap',         'Dom/Traverse',
-		'Dom/Util',     'Ui/Notification', 'Ui/ReusableDropdown'
+		'Ajax',         'Core',            'Dictionary',          'Environment',
+		'EventHandler', 'Language',        'ObjectMap',           'Dom/Traverse',
+		'Dom/Util',     'Ui/Notification', 'Ui/ReusableDropdown', 'WoltLab/WCF/Ui/Scroll'
 	],
 	function(
-		Ajax,            Core,              Dictionary,          Environment,
-		EventHandler,    Language,          ObjectMap,           DomTraverse,
-		DomUtil,         UiNotification,    UiReusableDropdown
+		Ajax,            Core,              Dictionary,            Environment,
+		EventHandler,    Language,          ObjectMap,             DomTraverse,
+		DomUtil,         UiNotification,    UiReusableDropdown,    UiScroll
 	)
 {
 	"use strict";
@@ -28,7 +28,7 @@ define(
 		/**
 		 * Initializes the message inline editor.
 		 * 
-		 * @param	{Object<string, *>}		options		list of configuration options
+		 * @param	{Object}        options		list of configuration options
 		 */
 		init: function(options) {
 			this._activeDropdownElement = null;
@@ -43,7 +43,9 @@ define(
 				dropdownIdentifier: '',
 				editorPrefix: 'messageEditor',
 				
-				messageSelector: '.jsMessage'
+				messageSelector: '.jsMessage',
+				
+				quoteManager: null
 			}, options);
 			
 			this.rebuild();
@@ -292,6 +294,7 @@ define(
 		_clickDropdownItem: function(event) {
 			event.preventDefault();
 			
+			//noinspection JSCheckFunctionSignatures
 			this._dropdownSelect(elData(event.currentTarget, 'item'));
 		},
 		
@@ -333,6 +336,7 @@ define(
 			var messageBody = elementData.messageBodyEditor;
 			var editor = elCreate('div');
 			editor.className = 'editorContainer';
+			//noinspection JSUnresolvedVariable
 			DomUtil.setInnerHtml(editor, data.returnValues.template);
 			messageBody.appendChild(editor);
 			
@@ -358,13 +362,11 @@ define(
 			var editorElement = elById(id);
 			if (Environment.editor() === 'redactor') {
 				window.setTimeout((function() {
-					// TODO: quote manager
-					if (this._quoteManager) {
-						this._quoteManager.setAlternativeEditor($element);
+					if (this._options.quoteManager) {
+						this._options.quoteManager.setAlternativeEditor(id);
 					}
 					
-					// TODO
-					new WCF.Effect.Scroll().scrollTo(this._activeElement, true);
+					UiScroll.element(this._activeElement);
 				}).bind(this), 250);
 			}
 			else {
@@ -392,9 +394,8 @@ define(
 			
 			this._activeElement = null;
 			
-			// @TODO
-			if (this._quoteManager) {
-				this._quoteManager.clearAlternativeEditor();
+			if (this._options.quoteManager) {
+				this._options.quoteManager.clearAlternativeEditor();
 			}
 		},
 		
@@ -410,7 +411,7 @@ define(
 					message: ''
 				},
 				objectID: this._getObjectId(this._activeElement),
-				removeQuoteIDs: [] // @TODO
+				removeQuoteIDs: (this._options.quoteManager) ? this._options.quoteManager.getQuotesMarkedForRemoval() : []
 			};
 			
 			var id = this._getEditorId();
@@ -482,15 +483,18 @@ define(
 			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageBody);
 			
 			// set new content
+			//noinspection JSUnresolvedVariable
 			DomUtil.setInnerHtml(elementData.messageBody, data.returnValues.message);
 			
 			// handle attachment list
+			//noinspection JSUnresolvedVariable
 			if (typeof data.returnValues.attachmentList === 'string') {
 				for (var i = 0, length = attachmentLists.length; i < length; i++) {
 					elRemove(attachmentLists[i]);
 				}
 				
 				var element = elCreate('div');
+				//noinspection JSUnresolvedVariable
 				DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 				
 				while (element.childNodes.length) {
@@ -499,6 +503,7 @@ define(
 			}
 			
 			// handle poll
+			//noinspection JSUnresolvedVariable
 			if (typeof data.returnValues.poll === 'string') {
 				// find current poll
 				var poll = elBySel('.pollContainer', elementData.messageBody);
@@ -509,6 +514,7 @@ define(
 				
 				var pollContainer = elCreate('div');
 				pollContainer.className = 'jsInlineEditorHideContent';
+				//noinspection JSUnresolvedVariable
 				DomUtil.setInnerHtml(pollContainer, data.returnValues.poll);
 				
 				DomUtil.prepend(pollContainer, elementData.messageBody);
@@ -520,12 +526,9 @@ define(
 			
 			UiNotification.show();
 			
-			// @TODO
-			return;
-			
-			if (this._quoteManager) {
-				this._quoteManager.clearAlternativeEditor();
-				this._quoteManager.countQuotes();
+			if (this._options.quoteManager) {
+				this._options.quoteManager.clearAlternativeEditor();
+				this._options.quoteManager.countQuotes();
 			}
 		},
 		
@@ -613,7 +616,7 @@ define(
 			var elementData = this._elements.get(this._activeElement);
 			var editor = elBySel('.redactor-editor', elementData.messageBodyEditor);
 			
-			// handle errors occuring on editor load
+			// handle errors occurring on editor load
 			if (editor === null) {
 				this._restoreMessage();
 				
@@ -622,6 +625,7 @@ define(
 			
 			this._restoreEditor();
 			
+			//noinspection JSUnresolvedVariable
 			if (!data || data.returnValues === undefined || data.returnValues.errorType === undefined) {
 				return true;
 			}
@@ -634,7 +638,7 @@ define(
 				DomUtil.insertAfter(innerError, editor);
 			}
 			
-			
+			//noinspection JSUnresolvedVariable
 			innerError.textContent = data.returnValues.errorType;
 			
 			return false;

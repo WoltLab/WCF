@@ -23,4 +23,18 @@
 		
 		transition-delay: 0s;
 	}
+	
+	&.interactive {
+		pointer-events: all;
+		
+		> span {
+			cursor: pointer;
+			
+			&:not(:first-child) {
+				border-left: 1px solid $wcfTooltipText;
+				margin-left: 10px;
+				padding-left: 10px;
+			}
+		}
+	}
 }

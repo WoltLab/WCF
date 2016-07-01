@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLab/WCF/Ui/Redactor/Quote
  */
-define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog) {
+define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog) {
 	"use strict";
 	
 	var _headerHeight = 0;
@@ -41,6 +41,68 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			
 			// bind listeners on init
 			this._observeLoad();
+			
+			// quote manager
+			EventHandler.add('com.woltlab.wcf.redactor2', 'insertQuote_' + this._elementId, this._insertQuote.bind(this));
+		},
+		
+		/**
+		 * Inserts a quote.
+		 * 
+		 * @param       {Object}        data            quote data
+		 * @protected
+		 */
+		_insertQuote: function (data) {
+			this._editor.buffer.set();
+			
+			// caret must be within a `<p>`, if it is not move it
+			/** @type Node */
+			var block = this._editor.selection.block();
+			if (block === false) {
+				this._editor.selection.restore();
+				
+				block = this._editor.selection.block();
+			}
+			
+			if (block.nodeName !== 'P') {
+				var redactor = this._editor.core.editor()[0];
+				
+				// find parent before Redactor
+				while (block.parentNode !== redactor) {
+					block = block.parentNode;
+				}
+				
+				// caret.after() requires a following element
+				var next = this._editor.caret.next(block);
+				if (next === undefined || next.nodeName !== 'P') {
+					var p = elCreate('p');
+					p.textContent = '\u200B';
+					
+					DomUtil.insertAfter(p, block);
+				}
+				
+				this._editor.caret.after(block);
+			}
+			
+			var content = '';
+			if (data.isText) content = this._editor.marker.html();
+			else content = data.content;
+			
+			var quoteId = Core.getUuid();
+			this._editor.insert.html('<blockquote id="' + quoteId + '">' + content + '</blockquote>');
+			
+			var quote = elById(quoteId);
+			elData(quote, 'author', data.author);
+			elData(quote, 'link', data.link);
+			
+			if (data.isText) {
+				this.insert.text(data.content);
+			}
+			
+			quote.removeAttribute('id');
+			
+			this._editor.caret.after(quote);
+			this._editor.selection.save();
 		},
 		
 		/**
