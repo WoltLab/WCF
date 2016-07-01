@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\log\modification;
-use wcf\data\modification\log\ModificationLogEditor;
+use wcf\data\modification\log\ModificationLogAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -78,15 +78,19 @@ class ModificationLogHandler extends SingletonFactory {
 			else $username = '';
 		}
 		
-		return ModificationLogEditor::create(array(
-			'objectTypeID' => $objectTypeObj->objectTypeID,
-			'objectID' => $objectID,
-			'action' => $action,
-			'userID' => $userID,
-			'username' => $username,
-			'time' => $time,
-			'additionalData' => serialize($additionalData)
+		$action = new ModificationLogAction(array(), 'create', array(
+			'data' => array(
+				'objectTypeID' => $objectTypeObj->objectTypeID,
+				'objectID' => $objectID,
+				'action' => $action,
+				'userID' => $userID,
+				'username' => $username,
+				'time' => $time,
+				'additionalData' => serialize($additionalData)
+			)
 		));
+		$result = $action->executeAction();
+		return $result['returnValues']; 
 	}
 	
 	/**
