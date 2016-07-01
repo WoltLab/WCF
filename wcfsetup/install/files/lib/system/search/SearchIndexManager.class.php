@@ -144,13 +144,6 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * @inheritDoc
 	 */
-	public function supportsBulkInsert() {
-		return $this->getSearchIndexManager()->supportsBulkInsert();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function beginBulkOperation() {
 		$this->getSearchIndexManager()->beginBulkOperation();
 	}
