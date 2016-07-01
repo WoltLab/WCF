@@ -24,6 +24,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 				ajax: {
 					className: ''
 				},
+				quoteManager: null,
 				successMessage: 'wcf.global.success.add'
 			}, options);
 			
@@ -75,6 +76,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 			// build parameters
 			var parameters = DomUtil.getDataAttributes(this._container, 'data-', true, true);
 			parameters.data = { message: this._getEditor().code.get() };
+			parameters.removeQuoteIDs = (this._options.quoteManager) ? this._options.quoteManager.getQuotesMarkedForRemoval() : [];
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters.data);
 			
@@ -176,6 +178,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 		 * @protected
 		 */
 		_handleError: function(data) {
+			//noinspection JSUnresolvedVariable
 			this.throwError(this._textarea, data.returnValues.errorType);
 		},
 		
@@ -209,24 +212,30 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 			// TODO: clear autosave content and disable it
 			
 			// redirect to new page
+			//noinspection JSUnresolvedVariable
 			if (data.returnValues.url) {
+				//noinspection JSUnresolvedVariable
 				window.location = data.returnValues.url;
 			}
 			else {
+				//noinspection JSUnresolvedVariable
 				if (data.returnValues.template) {
 					var elementId;
 					
 					// insert HTML
 					if (elData(this._container, 'sort-order') === 'DESC') {
+						//noinspection JSUnresolvedVariable
 						DomUtil.insertHtml(data.returnValues.template, this._container, 'after');
 						elementId = DomUtil.identify(this._container.nextElementSibling);
 					}
 					else {
+						//noinspection JSUnresolvedVariable
 						DomUtil.insertHtml(data.returnValues.template, this._container, 'before');
 						elementId = DomUtil.identify(this._container.previousElementSibling);
 					}
 					
 					// update last post time
+					//noinspection JSUnresolvedVariable
 					elData(this._container, 'last-post-time', data.returnValues.lastPostTime);
 					
 					window.location.hash = elementId;
@@ -237,7 +246,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 				
 				// TODO: resume autosave
 				
-				// TODO: reload quotes
+				if (this._options.quoteManager) {
+					this._options.quoteManager.countQuotes();
+				}
 			}
 		},
 		
@@ -252,6 +263,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 		_ajaxFailure: function(data) {
 			this._hideLoadingOverlay();
 			
+			//noinspection JSUnresolvedVariable
 			if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {
 				return true;
 			}

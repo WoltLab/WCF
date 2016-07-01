@@ -1594,9 +1594,12 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		this._toggleShowQuotes();
 		
+		// TODO: when is this event being used?
 		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
 			this._insertQuote(null, undefined, data);
 		}).bind(this));
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.quote', 'reload', this.countQuotes.bind(this));
 	},
 	
 	/**
@@ -1835,6 +1838,8 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * @param	{Object}	data
 	 */
 	_insertQuote: function(event, inputElement, data) {
+		// TODO: what is with this data attribute, when is the event actually used?
+		
 		var listItem = $(event ? event.currentTarget : inputElement).parents('li:eq(0)');
 		var text = listItem.children('.jsFullQuote')[0].textContent.trim();
 		
@@ -1842,25 +1847,6 @@ WCF.Message.Quote.Manager = Class.extend({
 		var author = message.data('username');
 		var link = message.data('link');
 		var isText = listItem.find('.jsQuote').length === 0;
-		/*
-		var $listItem = null, $quote, $username, $link;
-		if (data === undefined) {
-			$listItem = (event === null) ? $(inputElement).parents('li') : $(event.currentTarget).parents('li');
-			$quote = $.trim($listItem.children('div.jsFullQuote').text());
-			var $message = $listItem.parents('article.message');
-			$username = $message.attr('data-username');
-			$link = $message.data('link');
-			
-			data = { forceInsert: true };
-		}
-		else {
-			$quote = data.quote.text;
-			$username = data.quote.username;
-			$link = data.quote.link;
-		}
-		*/
-		
-		console.debug('insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId));
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
 			author: author,
@@ -1876,49 +1862,6 @@ WCF.Message.Quote.Manager = Class.extend({
 		if (event !== null) {
 			this._dialog.wcfDialog('close');
 		}
-		
-		return;
-		// insert into editor
-		if ($.browser.redactor) {
-			if (this._editorIdAlternative === null) {
-				var insert = true;
-				if (event !== null || data !== null) {
-					var $api = $('.jsQuickReply:eq(0)').data('__api');
-					if ($api && !$api.getContainer().is(':visible')) {
-						if (data.forceInsert) {
-							this._insertQuotes = false;
-							$api.click(null);
-						}
-						else {
-							insert = false;
-						}
-					}
-				}
-				
-				if (insert && this._editorId.length) this._editorId.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
-			}
-			else {
-				this._editorIdAlternative.redactor('wbbcode.insertQuoteBBCode', $username, $link, $quote, $quote);
-			}
-		}
-		else {
-			// build quote tag
-			$quote = "[quote='" + $username + "','" + $link + "']" + $quote + "[/quote]";
-			
-			// plain textarea
-			var $textarea = (this._editorIdAlternative === null) ? this._editorId : this._editorIdAlternative;
-			var $value = $textarea.val();
-			$quote += "\n\n";
-			if ($value.length == 0) {
-				$textarea.val($quote);
-			}
-			else {
-				var $position = $textarea.getCaret();
-				$textarea.val( $value.substr(0, $position) + $quote + $value.substr($position) );
-			}
-		}
-		
-		
 	},
 	
 	/**
