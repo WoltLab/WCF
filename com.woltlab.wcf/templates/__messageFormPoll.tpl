@@ -14,13 +14,20 @@
 	
 	<div id="poll" class="jsOnly tabMenuContent container containerPadding">
 		<fieldset>
-			<dl{if $errorField == 'pollOptions'} class="formError"{/if}>
+			<dl{if $errorField == 'pollQuestion'} class="formError"{/if}>
 				<dt>
 					<label for="pollQuestion">{lang}wcf.poll.question{/lang}</label>
 				</dt>
 				<dd>
 					<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" maxlength="255" />
+					{if $errorField == 'pollQuestion'}
+						<small class="innerError">
+							{lang}wcf.global.form.error.empty{/lang}
+						</small>
+					{/if}
 				</dd>
+			</dl>
+			<dl{if $errorField == 'pollOptions'} class="formError"{/if}>
 				<dt>
 					<label>{lang}wcf.poll.options{/lang}</label>
 				</dt>
