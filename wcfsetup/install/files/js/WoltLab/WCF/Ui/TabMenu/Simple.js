@@ -233,11 +233,11 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 			tab.classList.add('active');
 			var newContent = this._containers.get(name);
 			newContent.classList.add('active');
+			newContent.classList.remove('hidden');
 			
 			if (this._isLegacy) {
 				tab.classList.add('ui-state-active');
 				newContent.classList.add('ui-state-active');
-				newContent.classList.remove('hidden');
 			}
 			
 			if (this._store) {
