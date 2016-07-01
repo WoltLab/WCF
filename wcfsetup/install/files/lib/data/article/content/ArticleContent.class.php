@@ -97,7 +97,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage('com.woltlab.wcf.article.content', $this->articleContentID);
 		
 		$processor = new HtmlOutputProcessor();
-		$processor->process($this->message, 'com.woltlab.wcf.article.content', $this->articleContentID);
+		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
 		
 		return $processor->getHtml();
 	}
