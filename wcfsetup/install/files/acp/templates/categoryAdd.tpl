@@ -130,7 +130,7 @@
 		{/if}
 		
 		<dl{if $errorField == 'showOrder'} class="formError"{/if}>
-			<dt><label for="showOrder">{@$objectType->getProcessor()->getLanguageVariable('showOrder')}</label></dt>
+			<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
 			<dd>
 				<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short">
 				{if $errorField == 'showOrder'}

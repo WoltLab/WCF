@@ -72,6 +72,7 @@
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete the article <span class="confirmationObject">{$article->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
@@ -83,6 +84,7 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
+		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -594,6 +596,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
+	</category>
+	
+	<category name="wcf.acp.media">
+		<item name="wcf.acp.media.chooseImage"><![CDATA[Select Image]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">

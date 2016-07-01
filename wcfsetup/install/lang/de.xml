@@ -72,6 +72,7 @@
 		<item name="wcf.acp.article.author"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Vorschau anzeigen]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.article.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Wollen Sie den Artikel <span class="confirmationObject">{$article->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
@@ -83,6 +84,7 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unveröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Zeitgesteuerte Veröffentlichung]]></item>
+		<item name="wcf.acp.article.teaser"><![CDATA[Einleitungstext]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -597,6 +599,10 @@
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[Das Hauptkennwort ist ein zusätzlicher Schutz für sicherheitskritische Funktionen. Sie sollten ein möglichst sicheres Kennwort verwenden, dass sich von Ihrem regulären Administrator-Kennwort unterscheidet, Dritten nicht bekannt ist und auch nicht auf anderen Internetseiten verwendet wird.]]></item>
 	</category>
 	
+	<category name="wcf.acp.media">
+		<item name="wcf.acp.media.chooseImage"><![CDATA[Bild auswählen]]></item>
+	</category>
+		
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>
