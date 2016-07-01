@@ -20,8 +20,6 @@ class SearchKeywordManager extends SingletonFactory {
 	 * @param	string		$keyword
 	 */
 	public function add($keyword) {
-		$keyword = static::simplifyKeyword($keyword);
-		
 		// search existing entry
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_search_keyword
@@ -43,17 +41,5 @@ class SearchKeywordManager extends SingletonFactory {
 			]]);
 			$action->executeAction();
 		}
-	}
-	
-	/**
-	 * Returns simplified version of the given keyword.
-	 * 
-	 * @param	string		$keyword
-	 * @return	string
-	 */
-	public static function simplifyKeyword($keyword) {
-		// TODO: do something useful
-		
-		return $keyword;
 	}
 }
