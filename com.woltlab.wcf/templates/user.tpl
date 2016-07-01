@@ -142,7 +142,7 @@
 {include file='header'}
 
 {if !$user->isProtected()}
-	<div id="profileContent" class="section tabMenuContainer userProfileContent" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+	<div id="profileContent" class="section tabMenuContainer userProfileContent" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem($userID)->getIdentifier()}">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
@@ -156,7 +156,7 @@
 		{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 			{if $menuItem->getContentManager()->isVisible($userID)}
 				<div id="{$menuItem->getIdentifier()}" class="tabMenuContent" data-menu-item="{$menuItem->menuItem}">
-					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem()}
+					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem($userID)}
 						{@$profileContent}
 					{/if}
 				</div>
