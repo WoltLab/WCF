@@ -2694,7 +2694,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">Weitere Informationen</a>]]></item>
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com/de/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Community-Software: <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
-		
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategogie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
 	</category>
 	
