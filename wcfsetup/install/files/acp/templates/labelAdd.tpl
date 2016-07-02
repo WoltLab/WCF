@@ -43,12 +43,13 @@
 			<dl{if $errorField == 'groupID'} class="formError"{/if}>
 				<dt><label for="groupID">{lang}wcf.acp.label.group{/lang}</label></dt>
 				<dd>
-					<select id="groupID" name="groupID">
+					<select id="groupID" name="groupID"{if $action == 'edit'} disabled{/if}>
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$labelGroupList item=group}
 							<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
 						{/foreach}
 					</select>
+					<small>{lang}wcf.acp.label.group.permanentSelection{/lang}</small>
 					{if $errorField == 'groupID'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

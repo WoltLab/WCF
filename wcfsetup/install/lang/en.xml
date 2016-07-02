@@ -535,6 +535,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Chosen label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
+		<item name="wcf.acp.label.group.permanentSelection"><![CDATA[The selected label group cannot be modified and is permanent for this label.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[The title is visible for every user who can interact with the label group.]]></item>

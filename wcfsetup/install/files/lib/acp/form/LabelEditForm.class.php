@@ -35,9 +35,9 @@ class LabelEditForm extends LabelAddForm {
 	
 	/**
 	 * label object
-	 * @var	\wcf\data\label\Label
+	 * @var	Label
 	 */
-	public $labelObj = null;
+	public $labelObj;
 	
 	/**
 	 * @inheritDoc
@@ -68,10 +68,12 @@ class LabelEditForm extends LabelAddForm {
 		}
 		
 		// update label
+		
+		// groupID is immutable because altering it would cause issues with objects that are
+		// assigned to them, but the new group is not allowed at their current position  
 		$this->objectAction = new LabelAction([$this->labelID], 'update', ['data' => array_merge($this->additionalFields, [
 			'label' => $this->label,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
-			'groupID' => $this->groupID,
 			'showOrder' => $this->showOrder
 		])]);
 		$this->objectAction->executeAction();
