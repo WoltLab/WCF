@@ -99,9 +99,8 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	/**
 	 * @inheritDoc
 	 */
-	public function getLink($articleID = null, $boxID = null, $messageObjectType = null, $messageID = null) {
+	public function getLink() {
 		return LinkHandler::getInstance()->getLink('Media', array_merge($this->linkParameters, [
-			'forceFrontend' => true,
 			'object' => $this
 		]));
 	}
@@ -135,7 +134,6 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 		}
 		
 		return LinkHandler::getInstance()->getLink('Media', array_merge($this->linkParameters, [
-			'forceFrontend' => true,
 			'object' => $this,
 			'thumbnail' => $size
 		]));
