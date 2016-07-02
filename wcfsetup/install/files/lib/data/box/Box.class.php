@@ -19,7 +19,6 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a box.

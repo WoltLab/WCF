@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\email;
 use wcf\data\language\Language;
-use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 
 /**

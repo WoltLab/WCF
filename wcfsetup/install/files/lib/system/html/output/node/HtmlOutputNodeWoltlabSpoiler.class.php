@@ -2,7 +2,6 @@
 namespace wcf\system\html\output\node;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\WCF;
-use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**

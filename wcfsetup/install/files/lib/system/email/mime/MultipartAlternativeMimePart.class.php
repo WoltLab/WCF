@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\email\mime;
-use wcf\util\StringUtil;
 
 /**
  * Represents a multipart/alternative mime container.

@@ -4,7 +4,6 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\data\condition\ConditionAction;
 use wcf\data\page\Page;
-use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;

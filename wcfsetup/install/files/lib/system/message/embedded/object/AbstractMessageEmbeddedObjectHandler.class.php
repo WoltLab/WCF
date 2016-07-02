@@ -3,7 +3,6 @@ namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectType;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\html\input\HtmlInputProcessor;
-use wcf\util\ArrayUtil;
 
 /**
  * Provides default implementations for message embedded object handlers.

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\request\route;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\request\ControllerMap;
 use wcf\util\FileUtil;
 

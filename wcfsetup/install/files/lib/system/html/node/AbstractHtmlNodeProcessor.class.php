@@ -2,7 +2,6 @@
 namespace wcf\system\html\node;
 use wcf\system\exception\SystemException;
 use wcf\system\html\IHtmlProcessor;
-use wcf\util\DOMUtil;
 use wcf\util\JSON;
 
 /**
