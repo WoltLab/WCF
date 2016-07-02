@@ -2,6 +2,7 @@
 namespace wcf\system\user\notification\event;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\CommentUserNotificationObject;
 
 /**
  * User notification event for profile comments.
@@ -10,6 +11,8 @@ use wcf\system\request\LinkHandler;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	CommentUserNotificationObject	getUserNotificationObject()
  */
 class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
@@ -21,7 +24,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
 	 * @inheritDoc
 	 */
 	protected function prepare() {
-		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->userNotificationObject->objectID);
+		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
 	}
 	
 	/**
@@ -68,7 +71,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$user = UserProfileRuntimeCache::getInstance()->getObject($this->userNotificationObject->objectID);
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID);
 		
 		$authors = $this->getAuthors();
 		if (count($authors) > 1) {
@@ -100,7 +103,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', ['object' => UserProfileRuntimeCache::getInstance()->getObject($this->userNotificationObject->objectID)], '#wall');
+		return LinkHandler::getInstance()->getLink('User', ['object' => UserProfileRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)], '#wall');
 	}
 	
 	/**

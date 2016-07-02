@@ -26,6 +26,7 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements I
 		}
 		
 		if (isset($conditionData['greaterThan'])) {
+			/** @noinspection PhpUndefinedFieldInspection */
 			$objectList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' > ?', [$conditionData['greaterThan']]);
 		}
 		if (isset($conditionData['lessThan'])) {

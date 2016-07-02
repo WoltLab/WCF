@@ -19,11 +19,10 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 	 */
 	public function getFormElement(Option $option, $value) {
 		$selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
+		/** @noinspection PhpUndefinedFieldInspection */
 		if ($option->allowemptyvalue) {
 			$selectOptions = array_merge(
-				[
-					'' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')
-				],
+				['' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')],
 				$selectOptions
 			);
 		}

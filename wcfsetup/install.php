@@ -782,6 +782,7 @@ class ZipFile extends File {
 		if (!self::$gzopen64 && !function_exists('gzopen')) {
 			throw new SystemException('Can not find functions of the zlib extension');
 		}
+		/** @noinspection PhpUndefinedFunctionInspection */
 		$this->resource = (self::$gzopen64 ? @gzopen64($filename, $mode) : @gzopen($filename, $mode));
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename);

@@ -20,6 +20,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	public function getFormElement(Option $option, $value) {
 		$options = $this->parseEnableOptions($option);
 		
+		/** @noinspection PhpUndefinedFieldInspection */
 		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],

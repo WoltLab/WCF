@@ -39,6 +39,7 @@ class ImageHandler extends SingletonFactory {
 		}
 		
 		$imageAdapter = $this->imageAdapters[IMAGE_ADAPTER_TYPE];
+		/** @noinspection PhpUndefinedCallbackInspection */
 		$isSupported = call_user_func([$imageAdapter, 'isSupported']);
 		
 		// fallback to GD if image adapter is not available
