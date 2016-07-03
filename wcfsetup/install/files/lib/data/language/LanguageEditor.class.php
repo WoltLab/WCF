@@ -97,7 +97,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					try {
 						$output = LanguageFactory::getInstance()->getScriptingCompiler()->compileString($languageItem, $languageItemValue);
 					}
-					catch (SystemException $e) {} // ignore compiler errors
+					catch (SystemException $e) {
+						continue;
+					} // ignore compiler errors
 					
 					$writer->write("\$this->dynamicItems['".$languageItem."'] = '");
 					$writer->write(str_replace(array("\\", "'"), array("\\\\", "\'"), $output['template']));
