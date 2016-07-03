@@ -16,8 +16,14 @@ namespace {
 	register_shutdown_function([WCF::class, 'destruct']);
 	// set autoload function
 	spl_autoload_register([WCF::class, 'autoload']);
-
-	// define escape string shortcut
+	
+	/**
+	 * Escapes a string for use in sql query.
+	 * 
+	 * @see	\wcf\system\database\Database::escapeString()
+	 * @param	string		$string
+	 * @return	string
+	 */
 	function escapeString($string) {
 		return WCF::getDB()->escapeString($string);
 	}
@@ -99,7 +105,6 @@ namespace wcf\functions\exception {
 		touch($logFile);
 		
 		// don't forget to update ExceptionLogViewPage, when changing the log file format
-		/** @noinspection PhpUndefinedMethodInspection */
 		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
 			'PHP version: '.phpversion()."\n".
@@ -108,9 +113,7 @@ namespace wcf\functions\exception {
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? str_replace("\n", ' ', $_SERVER['HTTP_REFERER']) : '')."\n".
 			'User Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? str_replace("\n", ' ', $_SERVER['HTTP_USER_AGENT']) : '')."\n".
 			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
-		/** @noinspection PhpUndefinedMethodInspection */
 		do {
-			/** @noinspection PhpUndefinedMethodInspection */
 			$message .= "======\n".
 			'Error Class: '.get_class($e)."\n".
 			'Error Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
@@ -134,7 +137,7 @@ namespace wcf\functions\exception {
 				return $item;
 			}, sanitizeStacktrace($e, true))))."\n";
 		}
-		while ($e = $e->getPrevious());
+		while (($e = $e->getPrevious()));
 		
 		// calculate Exception-ID
 		$exceptionID = sha1($message);
@@ -523,6 +526,8 @@ EXPLANATION;
 													case 'object':
 														return get_class($item);
 												}
+												
+												throw new \LogicException('Unreachable');
 											}, $trace[$i]['args']));
 										echo ')</li>';
 									}
@@ -533,7 +538,7 @@ EXPLANATION;
 					</div>
 					<?php
 					$first = false;
-					} while ($e = $e->getPrevious());
+					} while (($e = $e->getPrevious()));
 					?>
 				<?php } ?>
 			</div>
@@ -591,6 +596,7 @@ EXPLANATION;
 	 * Returns the given path relative to `WCF_DIR`, unless both,
 	 * `EXCEPTION_PRIVACY` is `public` and the debug mode is enabled.
 	 * 
+	 * @param	string		$path
 	 * @return	string
 	 */
 	function sanitizePath($path) {
