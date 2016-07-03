@@ -86,7 +86,14 @@ namespace wcf\functions\exception {
 	use wcf\system\exception\SystemException;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
-
+	
+	/**
+	 * Logs the given Throwable.
+	 * 
+	 * @param	\Throwable|\Exception	$e
+	 * @param	string			$logFile	The log file to use. If set to `null` the default log file will be used and the variable contents will be replaced by the actual path.
+	 * @return	string					The ID of the log entry.
+	 */
 	function logThrowable($e, &$logFile = null) {
 		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		touch($logFile);
@@ -137,6 +144,13 @@ namespace wcf\functions\exception {
 		return $exceptionID;
 	}
 
+	/**
+	 * Pretty prints the given Throwable. It is recommended to `exit;`
+	 * the request after calling this function.
+	 * 
+	 * @param	\Throwable|\Exception	$e
+	 * @throws	\Exception
+	 */
 	function printThrowable($e) {
 		$exceptionID = logThrowable($e, $logFile);
 		
@@ -528,6 +542,14 @@ EXPLANATION;
 	<?php
 	}
 
+	/**
+	 * Returns the stack trace of the given Throwable with sensitive
+	 * information removed.
+	 * 
+	 * @param	\Throwable|\Exception	$e
+	 * @param	boolean			$ignorePaths	If set to `true`: Don't call `sanitizePath`.
+	 * @return	mixed[]
+	 */
 	function sanitizeStacktrace($e, $ignorePaths = false) {
 		$trace = $e->getTrace();
 
@@ -565,6 +587,12 @@ EXPLANATION;
 		}, $trace);
 	}
 	
+	/**
+	 * Returns the given path relative to `WCF_DIR`, unless both,
+	 * `EXCEPTION_PRIVACY` is `public` and the debug mode is enabled.
+	 * 
+	 * @return	string
+	 */
 	function sanitizePath($path) {
 		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
