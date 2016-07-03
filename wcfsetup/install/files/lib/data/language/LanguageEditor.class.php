@@ -100,7 +100,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					catch (SystemException $e) {} // ignore compiler errors
 					
 					$writer->write("\$this->dynamicItems['".$languageItem."'] = '");
-					$writer->write(str_replace("'", "\'", $output['template']));
+					$writer->write(str_replace(array("\\", "'"), array("\\\\", "\'"), $output['template']));
 					$writer->write("';\n");
 				}
 			}
