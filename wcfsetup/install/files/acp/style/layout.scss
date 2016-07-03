@@ -20,6 +20,10 @@ $wcfAcpMenuWidth: 150px;
 	top: 0;
 	z-index: 300;
 	
+	.pageHeader {
+		min-height: 0;
+	}
+	
 	@include screen-lg {
 		.pageHeader .layoutBoundary {
 			background-color: rgb(44, 62, 80);

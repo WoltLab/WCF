@@ -1297,7 +1297,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Seite bearbeiten]]></item>
 		<item name="wcf.acp.page.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Mehrsprachige Seite]]></item>
+		<item name="wcf.acp.page.i18n.i18n.description"><![CDATA[Inhalt, URL und Meta-Daten werden individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.page.i18n.none"><![CDATA[Einsprachige Seite]]></item>
+		<item name="wcf.acp.page.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verasst werden.]]></item>
 		<item name="wcf.acp.page.isLandingPage"><![CDATA[Seite ist Startseite]]></item>
 		<item name="wcf.acp.page.isDisabled"><![CDATA[Seite deaktivieren]]></item>
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Letzte Aktualisierung]]></item>
@@ -1310,9 +1312,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.parentPage.none"><![CDATA[Keine]]></item>
 		<item name="wcf.acp.page.type"><![CDATA[Seiten-Typ]]></item>
 		<item name="wcf.acp.page.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.page.type.html.description"><![CDATA[Direkte Eingabe des gesamten HTML für den Inhaltsbereich mit maximaler Flexibilität.]]></item>
 		<item name="wcf.acp.page.type.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.page.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.page.type.text.description"><![CDATA[Erstellung des Inhaltes mit Hilfe des WYSIWYG-Editors (empfohlen).]]></item>
 		<item name="wcf.acp.page.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.page.type.tpl.description"><![CDATA[Eingabemöglichkeit entspricht dem Typ „HTML“, zusätzlich wird Template-Scripting unterstützt.]]></item>
 		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 	</category>
 	

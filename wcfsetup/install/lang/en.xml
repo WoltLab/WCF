@@ -2723,7 +2723,9 @@ Errors are:
 		<item name="wcf.acp.page.edit"><![CDATA[Edit Page]]></item>
 		<item name="wcf.acp.page.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Monolingual page]]></item>
+		<item name="wcf.acp.page.i18n.i18n.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
 		<item name="wcf.acp.page.i18n.none"><![CDATA[Multilingual page]]></item>
+		<item name="wcf.acp.page.i18n.none.description"><![CDATA[The content, URL and meta data will be provided for each language separately.]]></item>
 		<item name="wcf.acp.page.isLandingPage"><![CDATA[Landing page]]></item>
 		<item name="wcf.acp.page.isDisabled"><![CDATA[Disable page]]></item>
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
@@ -2736,9 +2738,12 @@ Errors are:
 		<item name="wcf.acp.page.parentPage.none"><![CDATA[None]]></item>
 		<item name="wcf.acp.page.type"><![CDATA[Page Type]]></item>
 		<item name="wcf.acp.page.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.page.type.html.description"><![CDATA[Use raw HTML to build the page content for maximum flexibility.]]></item>
 		<item name="wcf.acp.page.type.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.page.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.page.type.text.description"><![CDATA[Create content using the built-in WYISWYG editor (recommended).]]></item>
 		<item name="wcf.acp.page.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.page.type.tpl.description"><![CDATA[Similar to the type “HTML”, but offers additional support for template scripting.]]></item>
 		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 	</category>
 	
