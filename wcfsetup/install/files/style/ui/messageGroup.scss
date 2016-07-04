@@ -223,7 +223,7 @@
 		.columnAvatar > div {
 			&::after {
 				color: $wcfContentLink;
-				content: "\f069";
+				content: $fa-var-asterisk;
 				font-family: FontAwesome;
 				font-weight: normal !important;
 				font-style: normal !important;

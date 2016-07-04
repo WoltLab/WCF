@@ -152,3 +152,14 @@ ol.nativeList {
 .pointer {
 	cursor: pointer;
 }
+
+a.externalURL::after {
+	content: $fa-var-external-link;
+	display: inline-block;
+	font-family: FontAwesome !important;
+	font-size: 14px !important;
+	font-weight: normal !important;
+	font-style: normal !important;
+	margin-left: 4px;
+	vertical-align: -1px;
+}

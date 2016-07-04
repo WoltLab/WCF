@@ -14,7 +14,7 @@
 	}
 	
 	.boxContainer {
-		> div,
+		> div:not(.box),
 		> fieldset,
 		> section:not(.box) {
 			background-color: $wcfSidebarBackground;
