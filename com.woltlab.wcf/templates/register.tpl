@@ -39,7 +39,7 @@
 	<section class="section" id="fieldset1">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.user.register.honeyPot{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.user.register.honeyPot.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.user.register.honeyPot.description{/lang}</p>
 		</header>
 		
 		<dl>

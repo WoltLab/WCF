@@ -29,7 +29,7 @@
 <section class="section">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.acp.rebuildData{/lang}</h2>
-		<small class="sectionDescription">{lang}wcf.acp.rebuildData.description{/lang}</small>
+		<p class="sectionDescription">{lang}wcf.acp.rebuildData.description{/lang}</p>
 	</header>
 	
 	{foreach from=$objectTypes item=objectType}

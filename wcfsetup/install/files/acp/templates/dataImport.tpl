@@ -128,7 +128,7 @@
 		<section class="section">
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.dataImport.configure.data{/lang}</h2>
-				<small class="sectionDescription">{lang}wcf.acp.dataImport.configure.data.description{/lang}</small>
+				<p class="sectionDescription">{lang}wcf.acp.dataImport.configure.data.description{/lang}</p>
 			</header>
 			
 			{foreach from=$supportedData key=objectTypeName item=objectTypes}

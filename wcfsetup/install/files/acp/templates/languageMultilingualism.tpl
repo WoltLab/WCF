@@ -33,7 +33,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle"><label><input type="checkbox" id="enable" name="enable" value="1"{if $enable} checked{/if}> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></h2>
-			<small class="sectionDescription">{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.language.multilingualism.enable.description{/lang}</p>
 		</header>
 		
 		<dl id="languageIDs"{if $errorField == 'languageIDs'} class="formError"{/if}{if !$enable} style="display: none;"{/if}>

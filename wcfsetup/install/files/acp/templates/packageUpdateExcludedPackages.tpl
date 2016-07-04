@@ -2,7 +2,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.package.update.excludedPackages.excluding{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.excluding.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.excluding.description{/lang}</p>
 		</header>
 		
 		<ul class="nativeList">
@@ -21,7 +21,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.package.update.excludedPackages.excluded{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.excluded.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.excluded.description{/lang}</p>
 		</header>
 		
 		<ul class="nativeList">

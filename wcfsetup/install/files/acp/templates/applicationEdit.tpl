@@ -64,7 +64,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.application.cookie{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.application.cookie.warning{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.application.cookie.warning{/lang}</p>
 		</header>
 		
 		<dl{if $errorField == 'cookieDomain'} class="formError{/if}">

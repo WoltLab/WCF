@@ -178,7 +178,7 @@
 								<section class="section">
 									<header class="sectionHeader">
 										<h2 class="sectionTitle">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</h2>
-										{hascontent}<small class="sectionDescription">{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
+										{hascontent}<p class="sectionDescription">{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 									</header>
 										
 									{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}

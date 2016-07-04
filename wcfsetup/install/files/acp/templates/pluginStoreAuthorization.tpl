@@ -5,7 +5,7 @@
 <section class="section">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.acp.pluginStore.authorization.credentials{/lang}</h2>
-		<small class="sectionDescription">{lang}wcf.acp.pluginStore.authorization.credentials.description{/lang}</small>
+		<p class="sectionDescription">{lang}wcf.acp.pluginStore.authorization.credentials.description{/lang}</p>
 	</header>
 	
 	<dl>

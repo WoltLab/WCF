@@ -75,7 +75,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.group.assignment.conditions{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.group.assignment.conditions.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.group.assignment.conditions.description{/lang}</p>
 		</header>
 		
 		{if $errorField == 'conditions'}

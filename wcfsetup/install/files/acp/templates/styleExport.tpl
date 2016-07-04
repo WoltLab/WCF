@@ -20,7 +20,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.style.exportStyle.components{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.style.exportStyle.components.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.style.exportStyle.components.description{/lang}</p>
 		</header>
 		
 		<dl>
@@ -43,7 +43,7 @@
 		<section class="section">
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.exportStyle.asPackage{/lang}</h2>
-				<small class="sectionDescription">{lang}wcf.acp.style.exportStyle.asPackage.description{/lang}</small>
+				<p class="sectionDescription">{lang}wcf.acp.style.exportStyle.asPackage.description{/lang}</p>
 			</header>
 				
 			<dl>

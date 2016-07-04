@@ -4,7 +4,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.captcha.question.captcha{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.captcha.question.captcha.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.captcha.question.captcha.description{/lang}</p>
 		</header>
 		
 		<dl{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} class="formError"{/if}>

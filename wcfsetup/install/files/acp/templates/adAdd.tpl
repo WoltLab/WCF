@@ -115,13 +115,13 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.ad.conditions{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.ad.conditions.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.ad.conditions.description{/lang}</p>
 		</header>
 		
 		<section class="section" id="pageConditions">
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.ad.conditions.page{/lang}</h2>
-				<small class="sectionDescription">{lang}wcf.acp.ad.conditions.page.description{/lang}</small>
+				<p class="sectionDescription">{lang}wcf.acp.ad.conditions.page.description{/lang}</p>
 			</header>
 			
 			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.page'] item='pageConditionObjectType'}
@@ -132,7 +132,7 @@
 		<section class="section" id="pointInTimeConditions">
 			<header class="sectionHeader">
 				<h2 class="sectionTitle">{lang}wcf.acp.ad.conditions.pointInTime{/lang}</h2>
-				<small class="sectionDescription">{lang}wcf.acp.ad.conditions.pointInTime.description{/lang}</small>
+				<p class="sectionDescription">{lang}wcf.acp.ad.conditions.pointInTime.description{/lang}</p>
 			</header>
 				
 			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
@@ -146,7 +146,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.ad.conditions.user{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.ad.conditions.user.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.ad.conditions.user.description{/lang}</p>
 		</header>
 	
 		{include file='userConditions' groupedObjectTypes=$groupedConditionObjectTypes['com.woltlab.wcf.user']}

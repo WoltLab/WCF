@@ -71,7 +71,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.conditions{/lang}</h2>
-			{hascontent}<small class="sectionDescription">{content}{lang __optional=true}{$objectType->getProcessor()->getLanguageItemPrefix()}.conditions.descriptions{/lang}{/content}</small>{/hascontent}
+			{hascontent}<p class="sectionDescription">{content}{lang __optional=true}{$objectType->getProcessor()->getLanguageItemPrefix()}.conditions.descriptions{/lang}{/content}</p>{/hascontent}
 		</header>
 		
 		{@$objectType->getProcessor()->getConditionHTML()}

@@ -69,7 +69,7 @@
 	<section class="section" id="optionValueContainer">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</h2>
-			<small class="sectionDescription">{implode from=$parentCategories item=parentCategory glue=' &raquo; '}{lang}wcf.acp.group.option.category.{@$parentCategory->categoryName}{/lang}{/implode}</small>
+			<p class="sectionDescription">{implode from=$parentCategories item=parentCategory glue=' &raquo; '}{lang}wcf.acp.group.option.category.{@$parentCategory->categoryName}{/lang}{/implode}</p>
 		</header>
 		
 		{foreach from=$groups item=group}

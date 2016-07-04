@@ -56,7 +56,7 @@
 <section class="section sectionContainerList">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.moderation.activation.content{/lang}</h2>
-		<small class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</small>
+		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
 	</header>
 
 	{@$disabledContent}

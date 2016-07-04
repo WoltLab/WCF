@@ -166,7 +166,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 					+ '<section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">'
 						+ '<header class="sectionHeader">'
 							+ '<h2 class="sectionTitle">' + Language.get('wcf.page.pageObjectID.search.results') + '</h2>'
-							+ '<small class="sectionDescription">' + Language.get('wcf.page.pageObjectID.search.results.description') + '</small>'
+							+ '<p class="sectionDescription">' + Language.get('wcf.page.pageObjectID.search.results.description') + '</p>'
 						+ '</header>'
 						+ '<ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>'
 					+ '</section>'

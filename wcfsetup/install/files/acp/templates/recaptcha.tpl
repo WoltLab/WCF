@@ -6,7 +6,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.recaptcha.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.recaptcha.description{/lang}</p>
 		</header>
 		
 		<dl class="wide reCaptcha{if $errorField|isset && $errorField == 'recaptchaString'} formError{/if}">

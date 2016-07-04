@@ -75,7 +75,7 @@
 						<section class="section">
 							<header class="sectionHeader">
 								<h2 class="sectionTitle">{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
-								{hascontent}<small class="sectionDescription">{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
+								{hascontent}<p class="sectionDescription">{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 							</header>
 							
 							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}

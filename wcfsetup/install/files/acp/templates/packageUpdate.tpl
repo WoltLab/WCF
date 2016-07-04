@@ -25,7 +25,7 @@
 				<input type="checkbox" value="1" checked>
 				{$update[packageName]|language}
 			</label></h2>
-			{if $update[packageDescription]}<small class="sectionDescription">{$update[packageDescription]|language}</small>{/if}
+			{if $update[packageDescription]}<p class="sectionDescription">{$update[packageDescription]|language}</p>{/if}
 		</header>
 		
 		<dl>

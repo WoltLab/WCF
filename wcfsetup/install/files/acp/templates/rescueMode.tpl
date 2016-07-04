@@ -45,7 +45,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.rescueMode.credentials{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.rescueMode.credentials.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.rescueMode.credentials.description{/lang}</p>
 		</header>
 		
 		<dl{if $errorField == 'username'} class="formError"{/if}>
@@ -88,7 +88,7 @@
 	<section class="section">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle">{lang}wcf.acp.rescueMode.application{/lang}</h2>
-			<small class="sectionDescription">{lang}wcf.acp.rescueMode.application.description{/lang}</small>
+			<p class="sectionDescription">{lang}wcf.acp.rescueMode.application.description{/lang}</p>
 		</header>
 		
 		{foreach from=$applications item=application}
