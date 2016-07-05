@@ -163,11 +163,14 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 				thumbnailSize = elBySel('select[name=thumbnailSize]', dialogContent).value;
 			}
 			
-			// TODO: media to be inserted is located in dictionary this._mediaToInsert
-			// TODO: insertType = 'separate' or 'gallery' (last case only possible if multiple media files are inserted and all of them are images)
-			// TODO: thumbnailSize = 'small', 'media', 'large' or 'original'
-			// TODO: redactor is accessible by this._options.editor
-			throw new Error("TODO: implement me")
+			if (insertType === 'separate') {
+				this._options.editor.buffer.set();
+				
+				this._mediaToInsert.forEach(this._insertMediaItem.bind(this, thumbnailSize));
+			}
+			else {
+				this._insertMediaGallery();
+			}
 			
 			if (this._mediaToInsertByClipboard) {
 				// TODO: unmark in clipboard
@@ -177,6 +180,55 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 			this._mediaToInsertByClipboard = false;
 			
 			// todo: close manager dialog?
+		},
+		
+		/**
+		 * Inserts a series of uploaded images using a slider.
+		 * 
+		 * @protected
+		 */
+		_insertMediaGallery: function() {
+			var mediaIds = [];
+			this._mediaToInsert.forEach(function(item) {
+				mediaIds.push(item.mediaID);
+			});
+			
+			this._options.editor.buffer.set();
+			this._options.editor.insert.text('[wsm]' + mediaIds.join(',') + '[/wsm]');
+		},
+		
+		/**
+		 * Inserts a single media item.
+		 * 
+		 * @param       {string}        thumbnailSize   preferred image dimension, is ignored for non-images
+		 * @param       {Object}        item            media item data
+		 * @protected
+		 */
+		_insertMediaItem: function(thumbnailSize, item) {
+			if (item.isImage) {
+				var sizes = ['small', 'medium', 'large', 'original'];
+				
+				// check if size is actually available
+				var available = '', size;
+				for (var i = 0; i < 4; i++) {
+					size = sizes[i];
+					
+					if (item[size + 'ThumbnailHeight']) {
+						available = size;
+						
+						if (thumbnailSize == size) {
+							break;
+						}
+					}
+				}
+				
+				thumbnailSize = available;
+				
+				this._options.editor.insert.html('<img src="' + item[thumbnailSize + 'ThumbnailLink'] + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
+			}
+			else {
+				this._options.editor.insert.text('[wsm]' + item.mediaID + '[/wsm]');
+			}
 		},
 		
 		/**
