@@ -650,6 +650,15 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
+	 * Removes a prefilter by its internal name.
+	 * 
+	 * @param       string          $name   internal prefilter identifier
+	 */
+	public function removePrefilter($name) {
+		unset($this->prefilters[$name]);
+	}
+	
+	/**
 	 * Sets the dir for the compiled templates.
 	 * 
 	 * @param	string		$compileDir

@@ -92,6 +92,42 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	}
 	
 	/**
+	 * Registers the embedded objects found in a message using the simplified syntax.
+	 * 
+	 * @param       string          $messageObjectType      object type identifier
+	 * @param       integer         $messageID              object id
+	 * @param       integer[][]     $embeddedContent        list of object ids for embedded objects by object type id
+	 * @return      boolean         true if at least one embedded object was found
+	 */
+	public function registerSimpleObjects($messageObjectType, $messageID, array $embeddedContent) {
+		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
+		
+		// delete existing assignments
+		$this->removeObjects($messageObjectType, [$messageID]);
+		
+		if (empty($embeddedContent)) {
+			return false;
+		}
+		
+		// prepare statement
+		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
+					(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+			VALUES		(?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		// call embedded object handlers
+		WCF::getDB()->beginTransaction();
+		foreach ($embeddedContent as $objectTypeID => $objectIDs) {
+			foreach ($objectIDs as $objectID) {
+				$statement->execute([$messageObjectTypeID, $messageID, $objectTypeID, $objectID]);
+			}
+		}
+		WCF::getDB()->commitTransaction();
+		
+		return true;
+	}
+	
+	/**
 	 * Removes embedded object assigments for given messages.
 	 * 
 	 * @param	string			$messageObjectType
@@ -115,8 +151,13 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * @param	integer[]		$messageIDs
 	 */
 	public function loadObjects($messageObjectType, array $messageIDs) {
+		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
+		if ($messageObjectTypeID === null) {
+			throw new \UnexpectedValueException("Expected a valid object type for definition 'com.woltlab.wcf.message'.");
+		}
+		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('messageObjectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType)]);
+		$conditionBuilder->add('messageObjectTypeID = ?', [$messageObjectTypeID]);
 		$conditionBuilder->add('messageID IN (?)', [$messageIDs]);
 		
 		// get object ids
@@ -232,9 +273,24 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	}
 	
 	/**
+	 * @return      ISimpleMessageEmbeddedObjectHandler[];
+	 */
+	public function getSimpleMessageEmbeddedObjectHandlers() {
+		$handlers = [];
+		foreach ($this->getEmbeddedObjectHandlers() as $handler) {
+			if ($handler instanceof ISimpleMessageEmbeddedObjectHandler) {
+				$name = lcfirst(preg_replace('~^.*\\\\([A-Z][a-zA-Z]+)MessageEmbeddedObjectHandler$~', '$1', get_class($handler)));
+				$handlers[$name] = $handler;
+			}
+		}
+		
+		return $handlers;
+	}
+	
+	/**
 	 * Returns all embedded object handlers.
 	 * 
-	 * @return	array
+	 * @return	IMessageEmbeddedObjectHandler[]
 	 */
 	protected function getEmbeddedObjectHandlers() {
 		if ($this->embeddedObjectHandlers === null) {
@@ -251,7 +307,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Returns a specific embedded object handler.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	object
+	 * @return	IMessageEmbeddedObjectHandler
 	 */
 	protected function getEmbeddedObjectHandler($objectTypeID) {
 		$this->getEmbeddedObjectHandlers();

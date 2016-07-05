@@ -155,7 +155,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 */
 	public function getLink() {
 		if ($this->controller) {
-			// todo
+			// todo: use a unified method for this
 			$controllerParts = explode('\\', $this->controller);
 			$controllerName = $controllerParts[count($controllerParts) - 1];
 			$controllerName = preg_replace('/(page|action|form)$/i', '', $controllerName);
@@ -289,6 +289,16 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 		}
 		
 		return $this->boxIDs;
+	}
+	
+	/**
+	 * Returns the parsed template.
+	 * 
+	 * @param       PageContent     $pageContent    page content
+	 * @return      string          parsed template
+	 */
+	public function getParsedTemplate(PageContent $pageContent) {
+		return $pageContent->getParsedTemplate($this->getTplName($pageContent->languageID));
 	}
 	
 	/**

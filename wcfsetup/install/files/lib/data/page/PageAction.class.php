@@ -7,6 +7,7 @@ use wcf\data\ISearchAction;
 use wcf\data\IToggleAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\WCF;
@@ -90,6 +91,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						$pageContentEditor->update(['hasEmbeddedObjects' => 1]);
 					}
 				}
+				else if ($page->pageType == 'html' || $page->pageType == 'tpl') {
+					HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content', $pageContent->pageContentID, $pageContent->content);
+				}
 			}
 		}
 		
@@ -170,6 +174,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						if ($pageContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
 							$pageContentEditor->update(['hasEmbeddedObjects' => ($pageContent->hasEmbeddedObjects ? 0 : 1)]);
 						}
+					}
+					else if ($page->pageType == 'html' || $page->pageType == 'tpl') {
+						HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content', $pageContent->pageContentID, $pageContent->content);
 					}
 				}
 				

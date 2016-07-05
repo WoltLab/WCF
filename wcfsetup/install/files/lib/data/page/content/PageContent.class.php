@@ -2,7 +2,9 @@
 namespace wcf\data\page\content;
 use wcf\data\DatabaseObject;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\template\plugin\SimpledEmbeddedObjectPrefilterTemplatePlugin;
 use wcf\system\WCF;
 
 /**
@@ -48,6 +50,36 @@ class PageContent extends DatabaseObject {
 		$processor->process($this->content, 'com.woltlab.wcf.page.content', $this->pageContentID);
 		
 		return $processor->getHtml();
+	}
+	
+	/**
+	 * Parses simple placeholders embedded in raw html.
+	 * 
+	 * @return      string          parsed content
+	 */
+	public function getParsedContent() {
+		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content', [$this->pageContentID]);
+		
+		return HtmlSimpleParser::getInstance()->replaceTags('com.woltlab.wcf.page.content', $this->pageContentID, $this->content);
+	}
+	
+	/**
+	 * Parses simple placeholders embedded in HTML with template scripting.
+	 * 
+	 * @param       string          $templateName           content template name
+	 * @return      string          parsed template
+	 */
+	public function getParsedTemplate($templateName) {
+		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content', [$this->pageContentID]);
+		HtmlSimpleParser::getInstance()->setContext('com.woltlab.wcf.page.content', $this->pageContentID);
+		
+		WCF::getTPL()->registerPrefilter(['simpleEmbeddedObject']);
+		
+		$returnValue = WCF::getTPL()->fetch($templateName);
+		
+		WCF::getTPL()->removePrefilter('simpleEmbeddedObject');
+		
+		return $returnValue;
 	}
 	
 	/**

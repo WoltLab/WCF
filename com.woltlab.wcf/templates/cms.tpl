@@ -46,9 +46,9 @@
 			{@$content->getFormattedContent()}
 		</section>
 	{elseif $page->pageType == 'html'}
-		{@$content->content}
+		{@$content->getParsedContent()}
 	{elseif $page->pageType == 'tpl'}
-		{include file=$page->getTplName($contentLanguageID)}
+		{@$page->getParsedTemplate($content)}
 	{/if}
 {/if}
 
