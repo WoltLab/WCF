@@ -76,7 +76,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 					+ '</select>'
 				+ '</dd>'
 			+ '</dl>' : '')
-			+ '<dl>'
+			+ '<dl class="thumbnailSizeSelection">'
 				+ '<dt>' + Language.get('wcf.media.insert.imageSize') + '</dt>'
 				+ '<dd>'
 					+ '<select name="thumbnailSize">'
@@ -97,6 +97,20 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 							onClose: this._editorClose.bind(this),
 							onSetup: function(content) {
 								elByClass('buttonPrimary', content)[0].addEventListener(WCF_CLICK_EVENT, this._insertMedia.bind(this));
+								
+								// toggle thumbnail size selection based on selected insert type
+								var insertType = elBySel('select[name=insertType]', content);
+								if (insertType !== null) {
+									var thumbnailSelection = elByClass('thumbnailSizeSelection', content)[0];
+									insertType.addEventListener('change', function(event) {
+										if (event.currentTarget.value === 'gallery') {
+											elHide(thumbnailSelection);
+										}
+										else {
+											elShow(thumbnailSelection);
+										}
+									});
+								}
 							}.bind(this),
 							title: Language.get('wcf.media.insert')
 						},
