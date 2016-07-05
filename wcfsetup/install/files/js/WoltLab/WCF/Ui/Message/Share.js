@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/Share
  */
-define([], function() {
+define(['EventHandler'], function(EventHandler) {
 	"use strict";
 	
 	/**
@@ -37,15 +37,15 @@ define([], function() {
 				},
 				linkedIn: {
 					link: elBySel('.jsShareLinkedIn', container),
-					share: (function() { this._share('twitter', 'https://www.linkedin.com/cws/share?url={pageURL}', false); }).bind(this)
+					share: (function() { this._share('linkedIn', 'https://www.linkedin.com/cws/share?url={pageURL}', false); }).bind(this)
 				},
 				pinterest: {
 					link: elBySel('.jsSharePinterest', container),
-					share: (function() { this._share('twitter', 'https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}', false); }).bind(this)
+					share: (function() { this._share('pinterest', 'https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}', false); }).bind(this)
 				},
 				xing: {
 					link: elBySel('.jsShareXing', container),
-					share: (function() { this._share('twitter', 'https://www.xing.com/social_plugins/share?url={pageURL}', false); }).bind(this)
+					share: (function() { this._share('xing', 'https://www.xing.com/social_plugins/share?url={pageURL}', false); }).bind(this)
 				},
 				whatsApp: {
 					link: elBySel('.jsShareWhatsApp', container),
@@ -54,6 +54,18 @@ define([], function() {
 					}).bind(this)
 				}
 			};
+
+			var title = elBySel('meta[property="og:title"]');
+			if (title !== null) this._pageDescription = encodeURIComponent(title.content);
+			var url = elBySel('meta[property="og:url"]');
+			if (url !== null) this._pageUrl = encodeURIComponent(url.content);
+
+			EventHandler.fire('com.woltlab.wcf.message.share', 'shareProvider', {
+				container: container,
+				providers: providers,
+				pageDescription: this._pageDescription,
+				pageUrl: this._pageUrl
+			});
 			
 			for (var provider in providers) {
 				if (providers.hasOwnProperty(provider)) {
@@ -62,11 +74,6 @@ define([], function() {
 					}
 				}
 			}
-			
-			var title = elBySel('meta[property="og:title"]');
-			if (title !== null) this._pageDescription = encodeURIComponent(title.content);
-			var url = elBySel('meta[property="og:url"]');
-			if (url !== null) this._pageUrl = encodeURIComponent(url.content);
 		},
 		
 		_share: function(objectName, url, appendURL) {
