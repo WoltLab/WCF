@@ -180,5 +180,34 @@
 				</attribute>
 			</attributes>
 		</bbcode>
+		
+		<bbcode name="wsm">
+			<classname><![CDATA[wcf\system\bbcode\WoltLabSuiteMediaBBCode]]></classname>
+			<isBlockElement>1</isBlockElement>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
+					<usetext>1</usetext>
+				</attribute>
+				<attribute name="1">
+					<validationpattern>^(small|medium|large|original)$</validationpattern>
+				</attribute>
+				<attribute name="2">
+					<validationpattern>^(left|right|none)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		
+		<bbcode name="wsmg">
+			<classname><![CDATA[wcf\system\bbcode\WoltLabSuiteMediaGalleryBBCode]]></classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+(,\d+)*$</validationpattern>
+					<required>1</required>
+					<usetext>1</usetext>
+				</attribute>
+			</attributes>
+		</bbcode>
 	</import>
 </data>
