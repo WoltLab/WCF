@@ -60,7 +60,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// We're also injecting a bogus meta tag that magically enables DOMDocument
 		// to handle UTF-8 properly. This avoids encoding non-ASCII characters as it
 		// would conflict with already existing entities when reverting them.
-		@$this->document->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . $html);
+		@$this->document->loadHTML('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>');
 		
 		$this->nodeData = [];
 	}
