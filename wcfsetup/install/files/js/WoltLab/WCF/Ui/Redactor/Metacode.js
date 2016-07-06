@@ -66,6 +66,12 @@ define(['Dom/Util'], function(DomUtil) {
 			
 			var buffer = '[' + name;
 			if (attributes.length) {
+				for (var i = 0, length = attributes.length; i < length; i++) {
+					if (!/^'.*'$/.test(attributes[i])) {
+						attributes[i] = "'" + attributes[i] + "'";
+					}
+				}
+				
 				buffer += '=' + attributes.join(',');
 			}
 			

@@ -1,0 +1,1 @@
+<img src="{if $thumbnailSize == 'original'}{$media->getLink()}{else}{$media->getThumbnailLink($thumbnailSize)}{/if}" alt="{$media->getTitle()}"{if $float != 'none'} class="messageFloatObject{$float|ucfirst}"{/if}> 

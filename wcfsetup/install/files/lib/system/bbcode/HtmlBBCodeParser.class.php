@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * that can be safely passed through HTMLPurifier's validation mechanism.
  * 
  * All though not exactly required for all bbcodes, the actual output of an bbcode
- * cannot be forseen and potentially conflict with HTMLPurifier's whitelist. Examples
+ * cannot be foreseen and potentially conflict with HTMLPurifier's whitelist. Examples
  * are <iframe> or other embedded media that is allowed as a result of a bbcode, but
  * not allowed to be directly provided by a user. 
  * 

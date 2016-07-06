@@ -208,7 +208,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 			});
 			
 			this._options.editor.buffer.set();
-			this._options.editor.insert.text('[wsm]' + mediaIds.join(',') + '[/wsm]');
+			this._options.editor.insert.text("[wsmg='" + mediaIds.join(',') + "'][/wsmg]");
 		},
 		
 		/**
@@ -241,7 +241,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 				this._options.editor.insert.html('<img src="' + item[thumbnailSize + 'ThumbnailLink'] + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
 			}
 			else {
-				this._options.editor.insert.text('[wsm]' + item.mediaID + '[/wsm]');
+				this._options.editor.insert.text("[wsm='" + item.mediaID + "'][/wsm]");
 			}
 		},
 		

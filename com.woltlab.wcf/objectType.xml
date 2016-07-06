@@ -757,6 +757,11 @@
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname><![CDATA[wcf\system\message\embedded\object\PageMessageEmbeddedObjectHandler]]></classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname><![CDATA[wcf\system\message\embedded\object\MediaMessageEmbeddedObjectHandler]]></classname>
+		</type>
 		<!-- embedded object handlers -->
 		
 		<type>
