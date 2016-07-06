@@ -82,7 +82,7 @@
 		<cronjob name="com.woltlab.wcf.backgroundQueueCleanUp">
 			<classname><![CDATA[wcf\system\cronjob\BackgroundQueueCleanUpCronjob]]></classname>
 			<description><![CDATA[Requeues stuck queue items]]></description>
-			<description language="de"><![CDATA[Start hängen gebliebene Hintergrundaufgaben neu]]></description>
+			<description language="de"><![CDATA[Räumt Hintergrundaufgaben auf]]></description>
 			<startminute>*/10</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
