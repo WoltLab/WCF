@@ -130,6 +130,6 @@ trait TMultiCategoryObject {
 	 * @param	integer[]	$categoryIDs
 	 */
 	public function setCategoryIDs(array $categoryIDs) {
-		$this->categoryIDs= $categoryIDs;
+		$this->categoryIDs = $categoryIDs;
 	}
 }
