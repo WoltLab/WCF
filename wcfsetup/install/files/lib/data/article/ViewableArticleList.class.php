@@ -13,6 +13,11 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
+ *        
+ * @method	ViewableArticle		current()
+ * @method	ViewableArticle[]	getObjects()
+ * @method	ViewableArticle|null	search($objectID)
+ * @property	ViewableArticle[]	$objects
  */
 class ViewableArticleList extends ArticleList {
 	/**

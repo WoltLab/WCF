@@ -11,6 +11,11 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
+ *
+ * @method	ViewableArticleContent		current()
+ * @method	ViewableArticleContent[]	getObjects()
+ * @method	ViewableArticleContent|null	search($objectID)
+ * @property	ViewableArticleContent[]	$objects
  */
 class ViewableArticleContentList extends ArticleContentList {
 	/**
@@ -41,7 +46,6 @@ class ViewableArticleContentList extends ArticleContentList {
 			$mediaList->readObjects();
 			$images = $mediaList->getObjects();
 			
-			/** @var ViewableArticleContent $articleContent */
 			foreach ($this->getObjects() as $articleContent) {
 				if ($articleContent->imageID && isset($images[$articleContent->imageID])) {
 					$articleContent->setImage($images[$articleContent->imageID]);
