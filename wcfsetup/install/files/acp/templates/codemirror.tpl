@@ -35,41 +35,55 @@
 		});
 	{/if}
 	
-	var elements = document.querySelectorAll('{@$codemirrorSelector|encodeJS}');
-	var config = {
-		{if $codemirrorMode|isset}mode: '{@$codemirrorMode|encodeJS}',{/if}
-		lineWrapping: true,
-		indentWithTabs: true,
-		lineNumbers: true,
-		indentUnit: 4,
-		readOnly: {if !$editable|isset || $editable}false{else}true{/if}
-	};
-	
-	[].forEach.call(elements, function(element) {
-		{event name='javascriptInit'}
+	require(['EventHandler', 'Dom/Traverse', 'Dom/Util'], function(EventHandler, DomTraverse, DomUtil) {
+		var elements = document.querySelectorAll('{@$codemirrorSelector|encodeJS}');
+		var config = {
+			{if $codemirrorMode|isset}mode: '{@$codemirrorMode|encodeJS}',{/if}
+			lineWrapping: true,
+			indentWithTabs: true,
+			lineNumbers: true,
+			indentUnit: 4,
+			readOnly: {if !$editable|isset || $editable}false{else}true{/if}
+		};
 		
-		if (element.codemirror) {
-			for (var key in config) {
-				if (config.hasOwnProperty(key)) {
-					element.codemirror.setOption(key, config[key]);
+		[].forEach.call(elements, function (element) {
+			{event name='javascriptInit'}
+			
+			if (element.codemirror) {
+				for (var key in config) {
+					if (config.hasOwnProperty(key)) {
+						element.codemirror.setOption(key, config[key]);
+					}
 				}
 			}
-		}
-		else {
-			element.codemirror = CodeMirror.fromTextArea(element, config);
-			var oldToTextArea = element.codemirror.toTextArea;
-			element.codemirror.toTextArea = function() {
-				oldToTextArea();
-				element.codemirror = null;
-			};
-		}
-		
-		setTimeout(function () {
-			element.codemirror.refresh();
-		}, 250);
-		setTimeout(function () {
-			element.codemirror.refresh();
-		}, 1000);
+			else {
+				element.codemirror = CodeMirror.fromTextArea(element, config);
+				var oldToTextArea = element.codemirror.toTextArea;
+				element.codemirror.toTextArea = function () {
+					oldToTextArea();
+					element.codemirror = null;
+				};
+			}
+			
+			setTimeout(function () {
+				element.codemirror.refresh();
+			}, 250);
+			setTimeout(function () {
+				element.codemirror.refresh();
+			}, 1000);
+			
+			var tab = DomTraverse.parentByClass(element, 'tabMenuContent');
+			if (tab !== null) {
+				var name = elData(tab, 'name');
+				var tabMenu = DomTraverse.parentByClass(tab, 'tabMenuContainer');
+				
+				EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', function(data) {
+					if (data.activeName === name) {
+						element.codemirror.refresh();
+					}
+				});
+			}
+		});
 	});
 </script>
 {assign var='codemirrorLoaded' value=true}
