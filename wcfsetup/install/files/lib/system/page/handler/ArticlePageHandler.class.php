@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page\handler;
+use wcf\data\article\ViewableArticleList;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
@@ -43,8 +44,25 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 	 * @inheritDoc
 	 */
 	public function lookup($searchString) {
-		// @todo
-		return [];
+		$articleList = new ViewableArticleList();
+		$articleList->sqlSelects = "(SELECT title FROM wcf".WCF_N."_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = ".WCF::getLanguage()->languageID.") LIMIT 1) AS title";
+		$articleList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf'.WCF_N.'_article_content WHERE title LIKE ?)', ['%' . $searchString . '%']);
+		$articleList->sqlLimit = 10;
+		$articleList->sqlOrderBy = 'title';
+		$articleList->readObjects();
+		
+		$results = [];
+		foreach ($articleList->getObjects() as $article) {
+			$results[] = [
+				'description' => $article->getFormattedTeaser(),
+				'image' => ($article->getImage() ? $article->getImage()->getElementTag(48) : ''),
+				'link' => $article->getLink(),
+				'objectID' => $article->articleID,
+				'title' => $article->getTitle()
+			];
+		}
+		
+		return $results;
 	}
 	
 	/**

@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system\page\handler;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -47,8 +49,36 @@ class CategoryArticleListPageHandler extends AbstractLookupPageHandler implement
 	 * @inheritDoc
 	 */
 	public function lookup($searchString) {
-		// @todo
-		return [];
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('category.objectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category')]);
+		$conditionBuilder->add('(category.title LIKE ? OR language_item.languageItemValue LIKE ?)', ['%' . $searchString . '%', '%' . $searchString . '%']);
+		$sql = "SELECT          DISTINCT categoryID
+			FROM            wcf".WCF_N."_category category
+			LEFT JOIN       wcf".WCF_N."_language_item language_item
+			ON              (language_item.languageItem = category.title)
+			".$conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql, 10);
+		$statement->execute($conditionBuilder->getParameters());
+		$results = [];
+		while ($categoryID = $statement->fetchColumn()) {
+			$category = ArticleCategory::getCategory($categoryID);
+			
+			// build hierarchy
+			$description = '';
+			foreach ($category->getParentCategories() as $parentCategory) {
+				$description .= $parentCategory->getTitle() . ' &raquo; ';
+			}
+			
+			$results[] = [
+				'description' => $description,
+				'image' => 'fa-folder-open-o',
+				'link' => $category->getLink(),
+				'objectID' => $categoryID,
+				'title' => $category->getTitle()
+			];
+		}
+		
+		return $results;
 	}
 	
 	/**
