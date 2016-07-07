@@ -13,6 +13,10 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 	 * @constructor
 	 */
 	function MediaManagerEditor(options) {
+		options = Core.extend({
+			callbackInsert: null
+		}, options);
+		
 		MediaManagerBase.call(this, options);
 		
 		this._activeButton = null;
@@ -177,13 +181,18 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 				thumbnailSize = elBySel('select[name=thumbnailSize]', dialogContent).value;
 			}
 			
-			if (insertType === 'separate') {
-				this._options.editor.buffer.set();
-				
-				this._mediaToInsert.forEach(this._insertMediaItem.bind(this, thumbnailSize));
+			if (this._options.callbackInsert !== null) {
+				this._options.callbackInsert(this._mediaToInsert, insertType, thumbnailSize);
 			}
 			else {
-				this._insertMediaGallery();
+				if (insertType === 'separate') {
+					this._options.editor.buffer.set();
+					
+					this._mediaToInsert.forEach(this._insertMediaItem.bind(this, thumbnailSize));
+				}
+				else {
+					this._insertMediaGallery();
+				}
 			}
 			
 			if (this._mediaToInsertByClipboard) {
