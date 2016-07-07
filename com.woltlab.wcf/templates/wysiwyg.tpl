@@ -40,6 +40,11 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.min.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/combined.min.js?v={@LAST_UPDATE_TIME}'
 		{/if}
+		
+		{if $__redactorJavaScript|isset}{@$__redactorJavaScript}{/if}
+		{assign var=$__redactorJavaScript value=''}
+		
+		{event name='redactorJavaScript'}
 	], function () {
 		require(['Language', 'WoltLab/WCF/Ui/Redactor/Metacode'], function(Language, UiRedactorMetacode) {
 			Language.addObject({
@@ -170,6 +175,11 @@
 			// load the button plugin last to ensure all buttons have been initialized
 			// already and we can safely add all icons
 			config.plugins.push('WoltLabButton');
+			
+			{if $__redactorConfig|isset}{@$__redactorConfig}{/if}
+			{assign var=$__redactorConfig value=''}
+			
+			{event name='redactorConfig'}
 			
 			$(element).redactor(config);
 		});
