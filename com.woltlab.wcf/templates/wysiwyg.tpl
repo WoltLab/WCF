@@ -42,7 +42,7 @@
 		{/if}
 		
 		{if $__redactorJavaScript|isset}{@$__redactorJavaScript}{/if}
-		{assign var=$__redactorJavaScript value=''}
+		{assign var=__redactorJavaScript value=''}
 		
 		{event name='redactorJavaScript'}
 	], function () {
@@ -173,7 +173,7 @@
 			{/if}
 			
 			{if $__redactorConfig|isset}{@$__redactorConfig}{/if}
-			{assign var=$__redactorConfig value=''}
+			{assign var=__redactorConfig value=''}
 			
 			{event name='redactorConfig'}
 			
