@@ -149,7 +149,7 @@ class Request {
 	}
 	
 	/**
-	 * Returns true if the requested page is avaiable during the offline mode.
+	 * Returns true if the requested page is available during the offline mode.
 	 * 
 	 * @return	boolean
 	 */

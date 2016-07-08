@@ -4,7 +4,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
- * Represents a list of madia files.
+ * Represents a list of media files.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

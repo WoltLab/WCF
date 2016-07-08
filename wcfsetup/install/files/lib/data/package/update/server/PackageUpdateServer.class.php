@@ -159,7 +159,7 @@ class PackageUpdateServer extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the highlighed server URL.
+	 * Returns the highlighted server URL.
 	 * 
 	 * @return	string
 	 */

@@ -84,7 +84,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	public $createdResponse = null;
 	
 	/**
-	 * errors occuring durch the validation of addComment or addResponse
+	 * errors occurring through the validation of addComment or addResponse
 	 * @var	array
 	 */
 	public $validationErrors = [];

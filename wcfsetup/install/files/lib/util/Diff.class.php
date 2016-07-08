@@ -25,7 +25,7 @@ class Diff {
 	const REMOVED = '-';
 	
 	/**
-	 * indentifier for unchanged lines
+	 * identifier for unchanged lines
 	 * @var	string
 	 */
 	const SAME = ' ';

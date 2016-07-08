@@ -29,7 +29,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	}
 	
 	/**
-	 * Builds the list of controllers violating the camcel-case schema by having more than
+	 * Builds the list of controllers violating the camel-case schema by having more than
 	 * two consecutive upper-case letters in the name. The list is divided on an application
 	 * and environment level to prevent any issues with controllers with the same name but
 	 * correct spelling to be incorrectly handled.

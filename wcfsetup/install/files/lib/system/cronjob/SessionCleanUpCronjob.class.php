@@ -7,7 +7,7 @@ use wcf\data\session\virtual\SessionVirtualEditor;
 use wcf\data\session\SessionEditor;
 
 /**
- * Deletes expired sesions.
+ * Deletes expired sessions.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH

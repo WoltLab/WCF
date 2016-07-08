@@ -7,7 +7,7 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\request\IRouteController;
 
 /**
- * Represents an automatic assignement to a user group.
+ * Represents an automatic assignment to a user group.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
@@ -31,7 +31,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	protected static $databaseTableName = 'user_group_assignment';
 	
 	/**
-	 * Returns the conditions of the automatic assignement to a user group.
+	 * Returns the conditions of the automatic assignment to a user group.
 	 * 
 	 * @return	Condition[]
 	 */

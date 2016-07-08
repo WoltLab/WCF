@@ -51,7 +51,7 @@ class RecentActivityListPage extends AbstractPage {
 		
 		$lastEventTime = $this->eventList->getLastEventTime();
 		
-		// removes orphaned and non-accessable events
+		// removes orphaned and non-accessible events
 		UserActivityEventHandler::validateEvents($this->eventList);
 		
 		WCF::getTPL()->assign([

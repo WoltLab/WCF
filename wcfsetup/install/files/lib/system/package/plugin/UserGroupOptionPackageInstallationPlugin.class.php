@@ -61,7 +61,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			if (!in_array($tag, self::$reservedTags)) $additionalData[$tag] = $value;
 		}
 		
-		// check if the otion exist already and was installed by this package
+		// check if the option exist already and was installed by this package
 		$sql = "SELECT	optionID
 			FROM	wcf".WCF_N."_user_group_option
 			WHERE	optionName = ?

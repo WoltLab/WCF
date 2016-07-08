@@ -251,7 +251,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if the current group is a moderator-group.
 	 * 
-	 * @reutn	boolean
+	 * @return	boolean
 	 */
 	public function isModGroup() {
 		// workaround for WCF-Setup

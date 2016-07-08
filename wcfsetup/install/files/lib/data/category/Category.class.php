@@ -158,9 +158,9 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	public function getParentCategories() {
 		if ($this->parentCategories === null) {
 			$this->parentCategories = [];
-			$parentCaregory = $this;
-			while ($parentCaregory = $parentCaregory->getParentCategory()) {
-				$this->parentCategories[] = $parentCaregory;
+			$parentCategory = $this;
+			while ($parentCategory = $parentCategory->getParentCategory()) {
+				$this->parentCategories[] = $parentCategory;
 			}
 			
 			$this->parentCategories = array_reverse($this->parentCategories);

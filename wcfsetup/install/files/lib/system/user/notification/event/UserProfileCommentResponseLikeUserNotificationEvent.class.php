@@ -5,7 +5,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * User notification event for profile commment response likes.
+ * User notification event for profile comment response likes.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH

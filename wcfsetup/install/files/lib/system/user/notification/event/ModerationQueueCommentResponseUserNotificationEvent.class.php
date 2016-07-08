@@ -9,7 +9,7 @@ use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\WCF;
 
 /**
- * User notification event for moderation queue commments.
+ * User notification event for moderation queue comments.
  *
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

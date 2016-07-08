@@ -1,5 +1,5 @@
 /**
- * Shows and hides an element that dependes on certain selected pages when setting up conditions.
+ * Shows and hides an element that depends on certain selected pages when setting up conditions.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

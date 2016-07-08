@@ -69,7 +69,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * Sest the article's content.
+	 * Sets the article's content.
 	 *
 	 * @param       ViewableArticleContent  $articleContent
 	 */

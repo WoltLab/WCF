@@ -253,7 +253,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * Reads the Information wich the Server sends back.
+	 * Reads the Information which the Server sends back.
 	 * 
 	 * @return	string
 	 */

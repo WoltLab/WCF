@@ -17,7 +17,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * Executes madia file-related actions.
+ * Executes media file-related actions.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

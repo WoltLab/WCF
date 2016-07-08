@@ -26,7 +26,7 @@ abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAc
 	
 	/**
 	 * Returns all users who the active user can access due to their user group
-	 * assocition.
+	 * association.
 	 * 
 	 * @param	UserList	$userList
 	 * @return	User[]

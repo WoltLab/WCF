@@ -13,7 +13,7 @@ use wcf\system\setup\IFileHandler;
  */
 abstract class PackageInstallationFileHandler implements IFileHandler {
 	/**
-	 * abbrevation of the application the files belong to
+	 * abbreviation of the application the files belong to
 	 * @var	string
 	 */
 	protected $application = '';

@@ -161,7 +161,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * Throws an previously catched exception while maintaing the propriate stacktrace.
+	 * Throws an previously catched exception while maintaining the propriate stacktrace.
 	 * 
 	 * @param	\Exception|\Throwable	$e
 	 * @throws	AJAXException

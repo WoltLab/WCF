@@ -31,11 +31,11 @@ define(
 		 * Initializes the like handler.
 		 * 
 		 * @param	{string}	objectType	object type
-		 * @param	{object}	options		initilization options
+		 * @param	{object}	options		initialization options
 		 */
 		init: function(objectType, options) {
 			if (options.containerSelector === '') {
-				throw new Error("[WoltLab/WCF/Ui/Like/Handler] Expected a non-emtpy string for option 'containerSelector'.");
+				throw new Error("[WoltLab/WCF/Ui/Like/Handler] Expected a non-empty string for option 'containerSelector'.");
 			}
 			
 			this._containers = new ObjectMap();

@@ -5,7 +5,7 @@ use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
- * Represents a viewable madia file.
+ * Represents a viewable media file.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

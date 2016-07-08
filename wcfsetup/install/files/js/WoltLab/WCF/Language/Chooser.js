@@ -275,7 +275,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		 * Returns the selected language for a certain chooser.
 		 * 
 		 * @param	{string}	chooserId	input element id
-		 * @return	{int}	        choosen language id
+		 * @return	{int}	        chosen language id
 		 */
 		getLanguageId: function(chooserId) {
 			return ~~this.getChooser(chooserId).element.value;

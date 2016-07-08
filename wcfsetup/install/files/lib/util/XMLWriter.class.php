@@ -18,7 +18,7 @@ class XMLWriter {
 	protected $activeDocument = false;
 	
 	/**
-	 * number of open elments
+	 * number of open elements
 	 * @var	integer
 	 */
 	protected $openElements = 0;

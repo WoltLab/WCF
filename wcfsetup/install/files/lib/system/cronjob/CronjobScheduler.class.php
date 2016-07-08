@@ -67,7 +67,7 @@ class CronjobScheduler extends SingletonFactory {
 			
 			// check if all required options are set for cronjob to be executed
 			// note: a general log is created to avoid confusion why a cronjob
-			// apperently is not executed while that is indeed the correct internal
+			// apparently is not executed while that is indeed the correct internal
 			// behavior
 			if ($cronjobEditor->validateOptions()) {
 				try {

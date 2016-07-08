@@ -74,7 +74,7 @@ class ViewableModerationQueueList extends ModerationQueueList {
 				ModerationQueueManager::getInstance()->populate($objectTypeID, $queueItems);
 			}
 			
-			// check for non-existant items
+			// check for non-existent items
 			$queueIDs = [];
 			foreach ($this->objects as $index => $object) {
 				if ($object->isOrphaned()) {

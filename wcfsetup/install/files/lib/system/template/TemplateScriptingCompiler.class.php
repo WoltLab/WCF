@@ -468,7 +468,7 @@ class TemplateScriptingCompiler {
 	 * @throws	SystemException
 	 */
 	protected function compileBlockPlugin($tagCommand, $tagArgs) {
-		// check wheater this is the start ({block}) or the
+		// check whether this is the start ({block}) or the
 		// end tag ({/block})
 		if (substr($tagCommand, 0, 1) == '/') {
 			$tagCommand = substr($tagCommand, 1);
@@ -516,7 +516,7 @@ class TemplateScriptingCompiler {
 	 * @throws	SystemException
 	 */
 	protected function compileCompilerPlugin($tagCommand, $tagArgs) {
-		// check wheater this is the start ({block}) or the
+		// check whether this is the start ({block}) or the
 		// end tag ({/block})
 		if (substr($tagCommand, 0, 1) == '/') {
 			$tagCommand = substr($tagCommand, 1);

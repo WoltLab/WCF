@@ -23,7 +23,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 		
 		WCF::getDB()->beginTransaction();
 		/** @noinspection PhpUnusedLocalVariableInspection */
-		$commited = false;
+		$committed = false;
 		try {
 			$sql = "SELECT		jobID, job
 				FROM		wcf".WCF_N."_background_job
@@ -60,7 +60,7 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 			
 			if (empty($jobIDs)) {
 				WCF::getDB()->commitTransaction();
-				$commited = true;
+				$committed = true;
 				return;
 			}
 			
@@ -72,10 +72,10 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob {
 			$statement->execute($condition->getParameters());
 			
 			WCF::getDB()->commitTransaction();
-			$commited = true;
+			$committed = true;
 		}
 		finally {
-			if (!$commited) WCF::getDB()->rollBackTransaction();
+			if (!$committed) WCF::getDB()->rollBackTransaction();
 		}
 	}
 }

@@ -128,7 +128,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Removes embedded object assigments for given messages.
+	 * Removes embedded object assignments for given messages.
 	 * 
 	 * @param	string			$messageObjectType
 	 * @param	integer[]		$messageIDs

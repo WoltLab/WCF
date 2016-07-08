@@ -80,7 +80,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLab/WCF/Med
 				
 				var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
 				
-				// TODO: treshold option?
+				// TODO: threshold option?
 				if (this._input.value.length >= 3) {
 					if (innerInfo) {
 						elHide(innerInfo);

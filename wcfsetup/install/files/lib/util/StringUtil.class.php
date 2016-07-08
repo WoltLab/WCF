@@ -307,7 +307,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Checks wether $haystack starts with $needle, or not.
+	 * Checks whether $haystack starts with $needle, or not.
 	 * 
 	 * @param	string		$haystack	The string to be checked for starting with $needle
 	 * @param	string		$needle		The string to be found at the start of $haystack
@@ -576,7 +576,7 @@ final class StringUtil {
 		$openTags = [];
 		$truncatedString = '';
 		
-		// initalize length counter with the ending length
+		// initialize length counter with the ending length
 		$totalLength = mb_strlen($etc);
 		
 		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);

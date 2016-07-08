@@ -78,7 +78,7 @@ define(['Dom/Util'], function(DomUtil) {
 		 *      |<bar>This is <foo>a </foo></bar>|<bar><foo>simple <bar>example</bar></strike></foo></bar>|
 		 *      
 		 *      As a result we can now remove <bar> both inside the <strike> element as well as
-		 *      the outer <bar> without harming the effect of <bar> for the preceeding siblings.
+		 *      the outer <bar> without harming the effect of <bar> for the preceding siblings.
 		 *      
 		 *      This process is repeated for siblings appearing after the <strike> element too, it
 		 *      works as described above but flipped. This is an expensive operation and will only

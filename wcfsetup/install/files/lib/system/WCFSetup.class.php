@@ -607,7 +607,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Shows the page for configurating the database connection.
+	 * Shows the page for configuring the database connection.
 	 */
 	protected function configureDB() {
 		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST'])) {

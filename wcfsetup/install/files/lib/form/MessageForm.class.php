@@ -18,7 +18,7 @@ use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
 /**
- * MessageForm is an abstract form implementation for a message with optional captcha suppport.
+ * MessageForm is an abstract form implementation for a message with optional captcha support.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH

@@ -108,7 +108,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * Determines wheater the cache needs to be rebuild or not.
+	 * Determines whether the cache needs to be rebuild or not.
 	 * 
 	 * @param	string		$filename
 	 * @param	integer		$maxLifetime

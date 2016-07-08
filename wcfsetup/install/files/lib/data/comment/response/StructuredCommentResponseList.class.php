@@ -102,7 +102,7 @@ class StructuredCommentResponseList extends CommentResponseList {
 	}
 	
 	/**
-	 * Returns mimimum response time.
+	 * Returns minimum response time.
 	 * 
 	 * @return	integer
 	 */
