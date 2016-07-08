@@ -161,7 +161,7 @@ abstract class Database {
 	}
 	
 	/**
-	 * Commits a transaction and returns true if the transaction was successfull.
+	 * Commits a transaction and returns true if the transaction was successful.
 	 * 
 	 * @return	boolean
 	 * @throws	DatabaseTransactionException
@@ -191,7 +191,7 @@ abstract class Database {
 	}
 	
 	/**
-	 * Rolls back a transaction and returns true if the rollback was successfull.
+	 * Rolls back a transaction and returns true if the rollback was successful.
 	 * 
 	 * @return	boolean
 	 * @throws	DatabaseTransactionException

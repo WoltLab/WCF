@@ -78,7 +78,7 @@ class OptionForm extends AbstractOptionListForm {
 		// reset styles to make sure the updated option values are used
 		StyleHandler::resetStylesheets();
 		
-		// show succes message
+		// show success message
 		WCF::getTPL()->assign('success', true);
 	}
 	

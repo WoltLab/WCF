@@ -7,7 +7,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Bulk processing action implementation for sening mails to users.
+ * Bulk processing action implementation for sending mails to users.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

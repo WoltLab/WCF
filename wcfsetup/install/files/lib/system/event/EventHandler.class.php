@@ -30,7 +30,7 @@ class EventHandler extends SingletonFactory {
 	protected $inheritedActions = null;
 	
 	/**
-	 * instances of registerd actions
+	 * instances of registered actions
 	 * @var	array
 	 */
 	protected $actionsObjects = [];

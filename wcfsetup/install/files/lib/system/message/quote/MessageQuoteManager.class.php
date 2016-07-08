@@ -91,7 +91,7 @@ class MessageQuoteManager extends SingletonFactory {
 	
 	/**
 	 * Adds a quote unless it is already stored. If you want to quote a whole
-	 * message while maintaing the original markup, pass $obj->getExcerpt() for
+	 * message while maintaining the original markup, pass $obj->getExcerpt() for
 	 * $message and $obj->getMessage() for $fullQuote.
 	 * 
 	 * @param	string		$objectType

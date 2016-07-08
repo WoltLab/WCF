@@ -513,7 +513,7 @@ class Box extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the box with the given idnetifier.
+	 * Returns the box with the given identifier.
 	 *
 	 * @param	string		$identifier
 	 * @return	Box

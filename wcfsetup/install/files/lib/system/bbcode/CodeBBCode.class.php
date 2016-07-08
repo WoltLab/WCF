@@ -39,7 +39,7 @@ class CodeBBCode extends AbstractBBCode {
 	protected $filename = '';
 	
 	/**
-	 * start line numer attribute value
+	 * start line number attribute value
 	 * @var	string
 	 */
 	protected $startLineNumber = 1;

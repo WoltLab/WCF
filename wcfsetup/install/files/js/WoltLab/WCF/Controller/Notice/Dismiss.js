@@ -1,5 +1,5 @@
 /**
- * Handles dismissable user notices.
+ * Handles dismissible user notices.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH

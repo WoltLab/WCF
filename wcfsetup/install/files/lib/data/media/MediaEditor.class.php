@@ -3,7 +3,7 @@ namespace wcf\data\media;
 use wcf\data\DatabaseObjectEditor;
 
 /**
- * Procides functions to edit media files.
+ * Provides functions to edit media files.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

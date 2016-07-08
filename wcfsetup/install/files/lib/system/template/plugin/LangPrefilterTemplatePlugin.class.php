@@ -4,7 +4,7 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\WCF;
 
 /**
- * Template prefiler plugin which compiles static language variables.
+ * Template prefilter plugin which compiles static language variables.
  * 
  * Dynamic language variables will catched by the 'lang' compiler function.
  * It is recommended to use static language variables.

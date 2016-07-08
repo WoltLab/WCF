@@ -60,7 +60,7 @@ define(['Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Language', 'List', 'Uploa
 			
 			var span = elCreate('span');
 			if (this._options.maxSize >= file.size) {
-				span.className = 'icon icon48 fa-spinnner';
+				span.className = 'icon icon48 fa-spinner';
 			}
 			else {
 				span.className = 'icon icon48 fa-ban-circle';

@@ -13,7 +13,7 @@ use wcf\system\exception\SystemException;
  */
 class CategoryNodeTree implements \IteratorAggregate {
 	/**
-	 * list of ids of categories which will not be inluded in the node tree
+	 * list of ids of categories which will not be included in the node tree
 	 * @var	integer[]
 	 */
 	protected $excludedCategoryIDs = [];

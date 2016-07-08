@@ -10,7 +10,7 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\WCF;
 
 /**
- * User notification event for profile's owner for commment responses.
+ * User notification event for profile's owner for comment responses.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH

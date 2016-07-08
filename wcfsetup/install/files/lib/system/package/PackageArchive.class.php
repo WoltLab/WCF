@@ -471,7 +471,7 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Returns true if the package is an application and has an unique abbrevation.
+	 * Returns true if the package is an application and has an unique abbreviation.
 	 * 
 	 * @return	boolean
 	 */

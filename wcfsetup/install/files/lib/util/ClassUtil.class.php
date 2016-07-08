@@ -26,7 +26,7 @@ final class ClassUtil {
 	}
 	
 	/**
-	 * Checks wether given class extends or implements the target class or interface.
+	 * Checks whether given class extends or implements the target class or interface.
 	 * You SHOULD NOT call this method if 'instanceof' satisfies your request!
 	 * 
 	 * @param	string		$className

@@ -68,7 +68,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 			return [];
 		}
 		
-		// removes orphaned and non-accessable events
+		// removes orphaned and non-accessible events
 		UserActivityEventHandler::validateEvents($eventList);
 		
 		if (!count($eventList)) {

@@ -346,7 +346,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		// step 2) copy
 		//
 		
-		// cretae poll
+		// create poll
 		$pollData = $row;
 		$pollData['objectTypeID'] = $targetObjectType->objectTypeID;
 		$pollData['objectID'] = $this->parameters['targetObjectID'];

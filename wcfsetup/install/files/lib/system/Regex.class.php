@@ -42,7 +42,7 @@ final class Regex {
 	const NO_ANALYSE = 8;
 	
 	/**
-	 * indicates that whitespaces are igored in regex
+	 * indicates that whitespaces are ignored in regex
 	 * @var	integer
 	 */
 	const IGNORE_WHITESPACE = 16;

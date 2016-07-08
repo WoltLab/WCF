@@ -39,7 +39,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
 	 * Reorders content to provide a logical order. In fact the content of
 	 * '{content}' is moved outside the if-condition in order to capture
-	 * the content during runtime, safely determining wether content is empty
+	 * the content during runtime, safely determining whether content is empty
 	 * or not.
 	 * 
 	 * @param	array		$matches

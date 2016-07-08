@@ -11,7 +11,7 @@ namespace wcf\system\search\acp;
  */
 interface IACPSearchResultProvider {
 	/**
-	 * Returns a list of seach results for given query.
+	 * Returns a list of search results for given query.
 	 * 
 	 * @param	string		$query
 	 * @return	ACPSearchResult[]

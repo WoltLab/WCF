@@ -24,7 +24,7 @@ class StaticRoute extends FlexibleRoute {
 	protected $staticController = '';
 	
 	/**
-	 * Creates a new static route instace.
+	 * Creates a new static route instance.
 	 */
 	public function __construct() {
 		// static routes are disallowed for ACP

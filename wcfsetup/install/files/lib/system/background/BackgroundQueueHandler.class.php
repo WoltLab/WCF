@@ -75,7 +75,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Immediatly performs the given job.
+	 * Immediately performs the given job.
 	 * This method automatically handles requeuing in case of failure.
 	 * 
 	 * This method is used internally by performNextJob(), but it can
@@ -135,7 +135,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 */
 	public function performNextJob() {
 		WCF::getDB()->beginTransaction();
-		$commited = false;
+		$committed = false;
 		try {
 			$sql = "SELECT		jobID, job
 				FROM		wcf".WCF_N."_background_job
@@ -174,10 +174,10 @@ class BackgroundQueueHandler extends SingletonFactory {
 				return;
 			}
 			WCF::getDB()->commitTransaction();
-			$commited = true;
+			$committed = true;
 		}
 		finally {
-			if (!$commited) WCF::getDB()->rollBackTransaction();
+			if (!$committed) WCF::getDB()->rollBackTransaction();
 		}
 		
 		$job = null;

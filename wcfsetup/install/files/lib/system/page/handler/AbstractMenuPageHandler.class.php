@@ -2,7 +2,7 @@
 namespace wcf\system\page\handler;
 
 /**
- * Default implementation for pages supporting visiblity and outstanding items.
+ * Default implementation for pages supporting visibility and outstanding items.
  * 
  * It is highly recommended to extend this class rather than implementing the interface
  * directly to achieve better upwards-compatibility in case of interface changes.

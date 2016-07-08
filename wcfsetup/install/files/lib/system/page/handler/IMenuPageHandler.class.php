@@ -2,7 +2,7 @@
 namespace wcf\system\page\handler;
 
 /**
- * Default interface for pages supporting visiblity and outstanding items.
+ * Default interface for pages supporting visibility and outstanding items.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH

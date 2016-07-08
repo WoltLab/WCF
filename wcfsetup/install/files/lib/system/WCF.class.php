@@ -287,7 +287,7 @@ class WCF {
 	 * @throws	ErrorException
 	 */
 	public static final function handleError($severity, $message, $file, $line) {
-		// this is neccessary for the shut-up operator
+		// this is necessary for the shut-up operator
 		if (error_reporting() == 0) return;
 		
 		throw new ErrorException($message, 0, $severity, $file, $line);

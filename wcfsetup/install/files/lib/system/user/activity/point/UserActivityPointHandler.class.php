@@ -231,7 +231,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the user activity point event object type with the given id or
-	 * null if no such object tyoe exists.
+	 * null if no such object type exists.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @return	\wcf\data\object\type\ObjectType

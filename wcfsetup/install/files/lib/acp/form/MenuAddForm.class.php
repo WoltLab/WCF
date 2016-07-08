@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
- * @since	3.0k
+ * @since	3.0
  */
 class MenuAddForm extends AbstractForm {
 	/**

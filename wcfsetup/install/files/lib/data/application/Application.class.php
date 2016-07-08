@@ -93,7 +93,7 @@ class Application extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the directory of the application with the given abbrevation.
+	 * Returns the directory of the application with the given abbreviation.
 	 * 
 	 * @param	string		$abbreviation
 	 * @return	string

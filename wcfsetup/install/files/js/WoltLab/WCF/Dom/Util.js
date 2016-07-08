@@ -326,14 +326,14 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * 
 		 * @param       {Element}       element         target element
 		 * @param       {string=}       prefix          attribute prefix
-		 * @param       {boolean=}      camcelCaseName  transform attribute names into camel case using dashes as separators
+		 * @param       {boolean=}      camelCaseName  transform attribute names into camel case using dashes as separators
 		 * @param       {boolean=}      idToUpperCase   transform '-id' into 'ID'
 		 * @returns     {object<string, string>}        list of data attributes
 		 */
-		getDataAttributes: function(element, prefix, camcelCaseName, idToUpperCase) {
+		getDataAttributes: function(element, prefix, camelCaseName, idToUpperCase) {
 			prefix = prefix || '';
 			if (!/^data-/.test(prefix)) prefix = 'data-' + prefix;
-			camcelCaseName = (camcelCaseName === true);
+			camelCaseName = (camelCaseName === true);
 			idToUpperCase = (idToUpperCase === true);
 			
 			var attribute, attributes = {}, name, tmp;
@@ -342,7 +342,7 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 				
 				if (attribute.name.indexOf(prefix) === 0) {
 					name = attribute.name.replace(new RegExp('^' + prefix), '');
-					if (camcelCaseName) {
+					if (camelCaseName) {
 						tmp = name.split('-');
 						name = '';
 						for (var j = 0, innerLength = tmp.length; j < innerLength; j++) {

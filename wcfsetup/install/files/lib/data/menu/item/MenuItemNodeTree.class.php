@@ -104,7 +104,7 @@ class MenuItemNodeTree {
 							$node->setIsActive();
 							
 							// only one effective item can be marked as active, use the first
-							// occurence with the highest priority and ignore everything else
+							// occurrence with the highest priority and ignore everything else
 							return;
 						}
 					}

@@ -29,7 +29,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	public $neededPermissions = ['admin.user.canMailUser'];
 	
 	/**
-	 * type of the file containg the exported email addresses
+	 * type of the file containing the exported email addresses
 	 * @var	string
 	 */
 	public $fileType = 'csv';

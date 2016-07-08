@@ -84,7 +84,7 @@ final class DOMUtil {
 	}
 	
 	/**
-	 * Returns the immediate parent element before provided ancenstor element. Returns null if
+	 * Returns the immediate parent element before provided ancestor element. Returns null if
 	 * the ancestor element is the direct parent of provided node.
 	 * 
 	 * @param	\DOMNode		$node		node

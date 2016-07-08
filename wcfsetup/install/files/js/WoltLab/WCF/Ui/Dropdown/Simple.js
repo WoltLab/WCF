@@ -356,7 +356,7 @@ define(
 			
 			var dropdown = _dropdowns.get(targetId), preventToggle = false;
 			if (dropdown !== undefined) {
-				// Repeated clicks on the dropdown buttom will not cause it to close, the only way
+				// Repeated clicks on the dropdown button will not cause it to close, the only way
 				// to close it is by clicking somewhere else in the document or on another dropdown
 				// toggle. This is used with the search bar to prevent the dropdown from closing by
 				// setting the caret position in the search input field.

@@ -210,7 +210,7 @@ final class CronjobUtil {
 			
 		}
 		
-		// compare day, month and year wether we have to recalculate hour and minute
+		// compare day, month and year whether we have to recalculate hour and minute
 		if (($day != self::$result['day']) || ($month != self::$result['month']) || ($year != self::$result['year'])) {
 			// calculate new time base
 			$timeBase = gmmktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);

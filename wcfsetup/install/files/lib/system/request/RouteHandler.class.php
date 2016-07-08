@@ -204,7 +204,7 @@ class RouteHandler extends SingletonFactory {
 	 * This heavily limits the abilities for end-users to define appealing urls, but at
 	 * the same time this ensures a sufficient level of stability.
 	 * 
-	 * @param	string	$customUrl	url to perform sanitiy checks on
+	 * @param	string	$customUrl	url to perform sanity checks on
 	 * @return	bool	true if `$customUrl` passes the sanity check
 	 * @since	3.0
 	 */

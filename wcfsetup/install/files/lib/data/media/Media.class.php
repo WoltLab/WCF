@@ -8,7 +8,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * Represents a madia file.
+ * Represents a media file.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH

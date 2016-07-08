@@ -63,7 +63,7 @@ interface IModerationQueueManager {
 	public function populate($objectTypeID, array $objects);
 	
 	/**
-	 * Returns whether the afftected content may be removed.
+	 * Returns whether the affected content may be removed.
 	 * 
 	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
 	 * @return	boolean

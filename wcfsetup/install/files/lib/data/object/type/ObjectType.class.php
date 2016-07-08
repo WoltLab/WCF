@@ -54,7 +54,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
-	 * Returns the names of proporties that should be serialized.
+	 * Returns the names of properties that should be serialized.
 	 * 
 	 * @return	string[]
 	 */
