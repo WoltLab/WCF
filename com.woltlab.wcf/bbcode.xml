@@ -188,7 +188,6 @@
 				<attribute name="0">
 					<validationpattern>^\d+$</validationpattern>
 					<required>1</required>
-					<usetext>1</usetext>
 				</attribute>
 				<attribute name="1">
 					<validationpattern>^(small|medium|large|original)$</validationpattern>
@@ -205,7 +204,16 @@
 				<attribute name="0">
 					<validationpattern>^\d+(,\d+)*$</validationpattern>
 					<required>1</required>
-					<usetext>1</usetext>
+				</attribute>
+			</attributes>
+		</bbcode>
+		
+		<bbcode name="wsp">
+			<classname><![CDATA[wcf\system\bbcode\WoltLabSuitePageBBCode]]></classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
 				</attribute>
 			</attributes>
 		</bbcode>

@@ -53,7 +53,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
+	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'search', 'toggle', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -267,6 +267,43 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	public function getSearchResultList() {
 		/** @noinspection PhpUndefinedMethodInspection */
 		return $this->pageEditor->getHandler()->lookup($this->parameters['data']['searchString']);
+	}
+	
+	/**
+	 * Validates parameters to search for a page by its internal name.
+	 */
+	public function validateSearch() {
+		$this->readString('searchString');
+	}
+	
+	/**
+	 * Searches for a page by its internal name.
+	 * 
+	 * @return      array   list of matching pages
+	 */
+	public function search() {
+		$sql = "SELECT          pageID
+			FROM            wcf".WCF_N."_page
+			WHERE           name LIKE ?
+					AND requireObjectID = ?
+			ORDER BY        name";
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
+		$statement->execute([
+			'%' . $this->parameters['searchString'] . '%',
+			0
+		]);
+		
+		$pages = [];
+		while ($pageID = $statement->fetchColumn()) {
+			$page = PageCache::getInstance()->getPage($pageID);
+			$pages[] = [
+				'displayLink' => $page->getDisplayLink(),
+				'name' => $page->name,
+				'pageID' => $pageID
+			];
+		}
+		
+		return $pages;
 	}
 	
 	/**

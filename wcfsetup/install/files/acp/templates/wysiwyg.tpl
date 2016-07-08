@@ -172,14 +172,14 @@
 				config.plugins.push('WoltLabMedia');
 			{/if}
 			
-			// load the button plugin last to ensure all buttons have been initialized
-			// already and we can safely add all icons
-			config.plugins.push('WoltLabButton');
-			
 			{if $__redactorConfig|isset}{@$__redactorConfig}{/if}
 			{assign var=$__redactorConfig value=''}
 			
 			{event name='redactorConfig'}
+			
+			// load the button plugin last to ensure all buttons have been initialized
+			// already and we can safely add all icons
+			config.plugins.push('WoltLabButton');
 			
 			$(element).redactor(config);
 		});

@@ -2,6 +2,7 @@
 namespace wcf\system\message\embedded\object;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
+use wcf\system\html\input\HtmlInputProcessor;
 
 /**
  * Parses embedded pages and outputs their link or title.
@@ -12,6 +13,20 @@ use wcf\data\page\PageCache;
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  */
 class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObjectHandler {
+	/**
+	 * @inheritDoc
+	 */
+	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData) {
+		$pageIDs = [];
+		if (!empty($embeddedData['wsp'])) {
+			for ($i = 0, $length = count($embeddedData['wsp']); $i < $length; $i++) {
+				$pageIDs[] = intval($embeddedData['wsp'][$i][0]);
+			}
+		}
+		
+		return array_unique($pageIDs);
+	}
+	
 	/**
 	 * @inheritDoc
 	 */
