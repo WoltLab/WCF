@@ -147,7 +147,7 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 		 * @protected
 		 */
 		_setAvailableBoxPositions: function() {
-			var supportedPositions = elData(_boxController.options[_boxController.selectedIndex], 'supported-positions');
+			var supportedPositions = JSON.parse(elData(_boxController.options[_boxController.selectedIndex], 'supported-positions'));
 			
 			var option;
 			for (var i = 0, length = _position.childElementCount; i < length; i++) {
