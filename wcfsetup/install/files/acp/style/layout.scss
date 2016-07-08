@@ -259,3 +259,32 @@ $wcfAcpMenuWidth: 150px;
 .pageFooter {
 	box-shadow: 0 0 10px rgba(0, 0, 0, .6);
 }
+
+.codemirrorToolbar {
+	background-color: rgb(52, 73, 94);
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		flex: 0 0 auto;
+		margin-bottom: 1px;
+		
+		> a {
+			color: rgb(255, 255, 255);
+			display: block;
+			font-size: 12px;
+			outline: none;
+			padding: 10px;
+			text-align: center;
+			font-weight: 400;
+			
+			&:hover {
+				background-color: rgb(19, 34, 48);
+			}
+			
+			.icon {
+				color: inherit;
+			}
+		}
+	}
+}
