@@ -9,7 +9,7 @@
 define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 	"use strict";
 	
-	var _link;
+	var _languages, _link;
 	
 	/**
 	 * @exports     WoltLab/WCF/Acp/Ui/Page/Add
@@ -18,9 +18,11 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 		/**
 		 * Initializes the page add handler.
 		 * 
-		 * @param       {string}        link    redirect URL
+		 * @param       {string}        link            redirect URL
+		 * @param       {int}           languages       number of available languages
 		 */
-		init: function(link) {
+		init: function(link, languages) {
+			_languages = languages;
 			_link = link;
 			
 			var buttons = elBySelAll('.jsButtonPageAdd');
@@ -51,7 +53,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 							event.preventDefault();
 							
 							var pageType = elBySel('input[name="pageType"]:checked', content).value;
-							var isMultilingual = elBySel('input[name="isMultilingual"]:checked', content).value;
+							var isMultilingual = (_languages > 1) ? elBySel('input[name="isMultilingual"]:checked', content).value : 0;
 							
 							window.location = _link.replace(/{\$pageType}/, pageType).replace(/{\$isMultilingual}/, isMultilingual);
 						});

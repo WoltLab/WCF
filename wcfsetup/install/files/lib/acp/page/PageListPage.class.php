@@ -4,6 +4,7 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationList;
 use wcf\data\page\PageList;
 use wcf\page\SortablePage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -146,6 +147,7 @@ class PageListPage extends SortablePage {
 			'applicationPackageID' => $this->applicationPackageID,
 			'pageType' => $this->pageType,
 			'availableApplications' => $this->availableApplications,
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'showPageAddDialog' => $this->showPageAddDialog
 		]);
 	}

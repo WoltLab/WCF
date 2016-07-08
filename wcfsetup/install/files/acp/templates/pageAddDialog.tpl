@@ -12,15 +12,17 @@
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt>{lang}wcf.acp.page.i18n{/lang}</dt>
-			<dd>
-				<label><input type="radio" name="isMultilingual" value="0" checked> {lang}wcf.acp.page.i18n.none{/lang}</label>
-				<small>{lang}wcf.acp.page.i18n.none.description{/lang}</small>
-				<label><input type="radio" name="isMultilingual" value="1"> {lang}wcf.acp.page.i18n.i18n{/lang}</label>
-				<small>{lang}wcf.acp.page.i18n.i18n.description{/lang}</small>
-			</dd>
-		</dl>
+		{if $availableLanguages|count > 1}
+			<dl>
+				<dt>{lang}wcf.acp.page.i18n{/lang}</dt>
+				<dd>
+					<label><input type="radio" name="isMultilingual" value="0" checked> {lang}wcf.acp.page.i18n.none{/lang}</label>
+					<small>{lang}wcf.acp.page.i18n.none.description{/lang}</small>
+					<label><input type="radio" name="isMultilingual" value="1"> {lang}wcf.acp.page.i18n.i18n{/lang}</label>
+					<small>{lang}wcf.acp.page.i18n.i18n.description{/lang}</small>
+				</dd>
+			</dl>
+		{/if}
 		
 		<div class="formSubmit">
 			<button class="buttonPrimary">{lang}wcf.global.button.next{/lang}</button>
@@ -33,7 +35,7 @@
 			'wcf.acp.page.add': '{lang}wcf.acp.page.add{/lang}'
 		});
 		
-		AcpUiPageAdd.init('{link controller='PageAdd' encode=false}{literal}pageType={$pageType}&isMultilingual={$isMultilingual}{/literal}{/link}');
+		AcpUiPageAdd.init('{link controller='PageAdd' encode=false}{literal}pageType={$pageType}&isMultilingual={$isMultilingual}{/literal}{/link}', {@$availableLanguages|count});
 		
 		{if $showPageAddDialog}
 			window.setTimeout(function() {

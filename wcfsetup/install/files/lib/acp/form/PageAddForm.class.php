@@ -155,8 +155,6 @@ class PageAddForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->readPageType();
-		
 		// get available applications
 		$applicationList = new ApplicationList();
 		$applicationList->readObjects();
@@ -170,6 +168,8 @@ class PageAddForm extends AbstractForm {
 		$boxList->sqlOrderBy = 'box.name';
 		$boxList->readObjects();
 		$this->availableBoxes = $boxList->getObjects();
+		
+		$this->readPageType();
 	}
 	
 	/**
@@ -273,7 +273,7 @@ class PageAddForm extends AbstractForm {
 			throw new UserInputException('pageType');
 		}
 		
-		if ($this->pageType == 'system') {
+		if ($this->pageType == 'system' || count($this->availableLanguages) === 1) {
 			$this->isMultilingual = 0;
 		}
 	}
