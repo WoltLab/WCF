@@ -5,8 +5,10 @@ use wcf\data\box\BoxAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -26,6 +28,12 @@ class BoxEditForm extends BoxAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.box.list';
 	
 	/**
+	 * list of available positions per box handler
+	 * @var array
+	 */
+	public $availableBoxPositions = [];
+	
+	/**
 	 * box id
 	 * @var	integer
 	 */
@@ -35,7 +43,7 @@ class BoxEditForm extends BoxAddForm {
 	 * box object
 	 * @var	Box
 	 */
-	public $box = null;
+	public $box;
 	
 	/**
 	 * @inheritDoc
@@ -53,6 +61,19 @@ class BoxEditForm extends BoxAddForm {
 			throw new IllegalLinkException();
 		}
 		if ($this->box->isMultilingual) $this->isMultilingual = 1;
+		
+		$this->readBoxPositions();
+	}
+	
+	/**
+	 * Loads available box positions per box controller.
+	 */
+	protected function readBoxPositions() {
+		foreach ($this->availableBoxControllers as $boxController) {
+			/** @var IBoxController $controller */
+			$controller = $boxController->getProcessor();
+			$this->availableBoxPositions[$boxController->objectTypeID] = $controller::getSupportedPositions();
+		}
 	}
 	
 	/**
@@ -68,6 +89,26 @@ class BoxEditForm extends BoxAddForm {
 	protected function validateName() {
 		if (mb_strtolower($this->name) != mb_strtolower($this->box->name)) {
 			parent::validateName();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		parent::validate();
+		
+		$this->validateBoxPosition();
+	}
+	
+	/**
+	 * Validates the selected box position.
+	 */
+	protected function validateBoxPosition() {
+		if ($this->boxType == 'system') {
+			if (!in_array($this->position, $this->availableBoxPositions[$this->boxController->objectTypeID])) {
+				throw new UserInputException('position', 'invalid');
+			}
 		}
 	}
 	
@@ -190,6 +231,7 @@ class BoxEditForm extends BoxAddForm {
 		
 		WCF::getTPL()->assign([
 			'action' => 'edit',
+			'availableBoxPositions' => $this->availableBoxPositions,
 			'boxID' => $this->boxID,
 			'box' => $this->box
 		]);

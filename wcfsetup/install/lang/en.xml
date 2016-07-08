@@ -160,6 +160,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.list"><![CDATA[Boxes]]></item>
 		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
+		<item name="wcf.acp.box.position.error.invalid"><![CDATA[The selected position is invalid.]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Show box title]]></item>
 		<item name="wcf.acp.box.type"><![CDATA[Page Type]]></item>
 		<item name="wcf.acp.box.type.html"><![CDATA[HTML]]></item>

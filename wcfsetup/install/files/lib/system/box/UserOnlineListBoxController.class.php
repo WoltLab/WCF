@@ -17,7 +17,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * enables the display of the user online record

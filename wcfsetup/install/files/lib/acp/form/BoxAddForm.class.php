@@ -18,6 +18,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\page\handler\ILookupPageHandler;
+use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -160,7 +161,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * list of page handlers by page id
-	 * @var	\wcf\system\page\handler\IMenuPageHandler[]
+	 * @var	IMenuPageHandler[]
 	 */
 	public $pageHandlers = [];
 	
@@ -182,6 +183,11 @@ class BoxAddForm extends AbstractForm {
 	public $htmlInputProcessors = [];
 	
 	/**
+	 * @var ObjectType[]
+	 */
+	public $availableBoxControllers = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -200,6 +206,8 @@ class BoxAddForm extends AbstractForm {
 				}
 			}
 		}
+		
+		$this->availableBoxControllers = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController');
 	}
 	
 	/**
@@ -495,7 +503,7 @@ class BoxAddForm extends AbstractForm {
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'availableBoxTypes' => Box::$availableBoxTypes,
 			'availablePositions' => Box::$availablePositions,
-			'availableBoxControllers' => ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController'),
+			'availableBoxControllers' => $this->availableBoxControllers,
 			'boxController' => $this->boxController,
 			'pageNodeList' => $this->pageNodeList,
 			'pageHandlers' => $this->pageHandlers,

@@ -17,7 +17,7 @@ class TagCloudBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * taggable object type

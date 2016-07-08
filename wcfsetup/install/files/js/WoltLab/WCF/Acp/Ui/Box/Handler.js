@@ -10,6 +10,7 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 	"use strict";
 	
 	var _activePageId = 0;
+	var _boxController;
 	var _cache;
 	var _containerExternalLink;
 	var _containerPageID;
@@ -17,6 +18,7 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 	var _handlers;
 	var _pageId;
 	var _pageObjectId;
+	var _position;
 	
 	/**
 	 * @exports     WoltLab/WCF/Acp/Ui/Box/Handler
@@ -29,6 +31,8 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 		 */
 		init: function(handlers) {
 			_handlers = handlers;
+			
+			_boxController = elById('boxControllerID');
 			
 			_containerPageID = elById('linkPageIDContainer');
 			_containerExternalLink = elById('externalURLContainer');
@@ -61,6 +65,14 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 					this._toggleLinkType(input.value);
 				}
 			}).bind(this));
+			
+			if (_boxController !== null) {
+				_position = elById('position');
+				_boxController.addEventListener('change', this._setAvailableBoxPositions.bind(this));
+				
+				// update positions on init
+				this._setAvailableBoxPositions();
+			}
 		},
 		
 		/**
@@ -127,6 +139,22 @@ define(['Dictionary', 'WoltLab/Wcf/Ui/Page/Search/Handler'], function(Dictionary
 				_pageObjectId.value = objectId;
 				_cache.set(_activePageId, objectId);
 			});
+		},
+		
+		/**
+		 * Updates the available box positions per box controller.
+		 * 
+		 * @protected
+		 */
+		_setAvailableBoxPositions: function() {
+			var supportedPositions = elData(_boxController.options[_boxController.selectedIndex], 'supported-positions');
+			
+			var option;
+			for (var i = 0, length = _position.childElementCount; i < length; i++) {
+				option = _position.children[i];
+				
+				option.disabled = (supportedPositions.indexOf(option.value) === -1);
+			}
 		}
 	};
 });

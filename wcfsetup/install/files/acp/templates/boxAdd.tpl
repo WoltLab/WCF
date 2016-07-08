@@ -92,7 +92,7 @@
 					<dd>
 						<select name="boxControllerID" id="boxControllerID">
 							{foreach from=$availableBoxControllers item=availableBoxController}
-								<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if}>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
+								<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
 							{/foreach}
 						</select>
 						

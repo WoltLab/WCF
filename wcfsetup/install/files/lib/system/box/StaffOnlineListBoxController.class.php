@@ -16,7 +16,7 @@ class StaffOnlineListBoxController extends AbstractDatabaseObjectListBoxControll
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * @inheritDoc

@@ -16,7 +16,7 @@ class StatisticsBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * @inheritDoc

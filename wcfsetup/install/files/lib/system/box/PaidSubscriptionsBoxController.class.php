@@ -18,7 +18,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * @inheritDoc

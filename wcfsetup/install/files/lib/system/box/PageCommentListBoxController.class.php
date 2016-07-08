@@ -16,7 +16,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['contentTop', 'contentBottom'];
+	protected static $supportedPositions = ['contentTop', 'contentBottom'];
 	
 	/**
 	 * @inheritDoc

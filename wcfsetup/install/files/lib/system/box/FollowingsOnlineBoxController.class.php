@@ -21,7 +21,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * @inheritDoc

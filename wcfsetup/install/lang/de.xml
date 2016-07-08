@@ -161,6 +161,7 @@
 		<item name="wcf.acp.box.list"><![CDATA[Boxen]]></item>
 		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Box verwendet.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
+		<item name="wcf.acp.box.position.error.invalid"><![CDATA[Die ausgewählte Position ist ungültig.]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Box-Titel anzeigen]]></item>
 		<item name="wcf.acp.box.type"><![CDATA[Box-Typ]]></item>
 		<item name="wcf.acp.box.type.html"><![CDATA[HTML]]></item>

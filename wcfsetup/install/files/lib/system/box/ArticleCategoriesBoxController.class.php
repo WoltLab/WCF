@@ -19,7 +19,7 @@ class ArticleCategoriesBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'footer'];
+	protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'footer'];
 	
 	/**
 	 * @inheritDoc

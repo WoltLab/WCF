@@ -73,5 +73,5 @@ interface IBoxController {
 	 * 
 	 * @return	string[]
 	 */
-	public function getSupportedPositions();
+	public static function getSupportedPositions();
 }

@@ -29,7 +29,7 @@ abstract class AbstractBoxController implements IBoxController {
 	 * supported box positions
 	 * @var string[]
 	 */
-	protected $supportedPositions = [];
+	protected static $supportedPositions = [];
 	
 	/**
 	 * Creates a new instance of AbstractBoxController.
@@ -107,9 +107,9 @@ abstract class AbstractBoxController implements IBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	public function getSupportedPositions() {
-		if (!empty($this->supportedPositions)) {
-			return $this->supportedPositions;
+	public static function getSupportedPositions() {
+		if (!empty(static::$supportedPositions)) {
+			return static::$supportedPositions;
 		}
 		
 		return Box::$availablePositions;
