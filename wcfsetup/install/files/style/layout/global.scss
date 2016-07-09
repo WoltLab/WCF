@@ -140,13 +140,13 @@ ol.nativeList {
 .separatorLeft::before {
 	color: $wcfContentText;
 	content: "\00b7";
-	margin-right: 5px;
+	margin-right: 0.25em;
 }
 
 .separatorRight::after {
 	color: $wcfContentText;
 	content: "\00b7";
-	margin-left: 5px;
+	margin-left: 0.25em;
 }
 
 .pointer {
