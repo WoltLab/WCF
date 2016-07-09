@@ -202,7 +202,8 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 			this._mediaToInsert = new Dictionary();
 			this._mediaToInsertByClipboard = false;
 			
-			// todo: close manager dialog?
+			// close manager dialog
+			UiDialog.close(this);
 		},
 		
 		/**
