@@ -111,11 +111,11 @@
 				<dl{if $errorField == 'parentPageID'} class="formError"{/if}>
 					<dt><label for="parentPageID">{lang}wcf.acp.page.parentPage{/lang}</label></dt>
 					<dd>
-						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
+						<select name="parentPageID" id="parentPageID"{if $action == 'edit' && $page->hasFixedParent} disabled{/if}>
 							<option value="0">{lang}wcf.acp.page.parentPage.none{/lang}</option>
 							
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'parentPageID'}

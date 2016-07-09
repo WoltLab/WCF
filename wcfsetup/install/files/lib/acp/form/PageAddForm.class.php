@@ -289,6 +289,10 @@ class PageAddForm extends AbstractForm {
 			if (!$page->pageID) {
 				throw new UserInputException('parentPageID', 'invalid');
 			}
+			
+			if ($page->requireObjectID) {
+				throw new UserInputException('parentPageID', 'invalid');
+			}
 		}
 	}
 	

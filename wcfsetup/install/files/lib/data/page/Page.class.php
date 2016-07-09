@@ -37,6 +37,7 @@ use wcf\system\WCF;
  * @property-read	string		$handler
  * @property-read	string		$controllerCustomURL
  * @property-read	integer		$requireObjectID
+ * @property-read	integer		$hasFixedParent
  * @property-read	integer		$lastUpdateTime
  * @property-read	string		$permissions
  * @property-read	string		$options

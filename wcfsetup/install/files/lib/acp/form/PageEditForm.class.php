@@ -5,6 +5,7 @@ use wcf\data\page\PageAction;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -66,8 +67,11 @@ class PageEditForm extends PageAddForm {
 		
 		$this->pageType = $this->page->pageType;
 		if ($this->page->originIsSystem) {
-			$this->parentPageID = $this->page->parentPageID;
 			$this->applicationPackageID = $this->page->applicationPackageID;
+			
+			if ($this->page->hasFixedParent) {
+				$this->parentPageID = $this->page->parentPageID;
+			}
 		}
 		
 		if ($this->page->requireObjectID) {
@@ -90,6 +94,20 @@ class PageEditForm extends PageAddForm {
 	 */
 	protected function validatePageType() {
 		// type is immutable
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateParentPageID() {
+		if ($this->page->hasFixedParent) {
+			if ($this->parentPageID != $this->page->parentPageID) {
+				throw new UserInputException('parentPageID', 'invalid');
+			}
+		}
+		else {
+			parent::validateParentPageID();
+		}
 	}
 	
 	/**

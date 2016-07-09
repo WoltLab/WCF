@@ -98,6 +98,7 @@
 			<controller>wcf\form\AvatarEditForm</controller>
 			<name language="de"><![CDATA[Avatar-Verwaltung]]></name>
 			<name language="en"><![CDATA[Avatar Management]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -112,6 +113,7 @@
 			<controller>wcf\form\EmailActivationForm</controller>
 			<name language="de"><![CDATA[Aktivierung neuer E-Mail-Adresse]]></name>
 			<name language="en"><![CDATA[New Email Address Verification]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -126,6 +128,7 @@
 			<controller>wcf\form\EmailNewActivationCodeForm</controller>
 			<name language="de"><![CDATA[E-Mail-Aktivierungscode-Anforderung]]></name>
 			<name language="en"><![CDATA[New Email Activation Code Request]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -195,6 +198,7 @@
 			<controller>wcf\form\NotificationSettingsForm</controller>
 			<name language="de"><![CDATA[Benachrichtigungseinstellungen]]></name>
 			<name language="en"><![CDATA[Notification Settings]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -236,6 +240,7 @@
 			<controller>wcf\form\RegisterActivationForm</controller>
 			<name language="de"><![CDATA[Registrierung abschließen]]></name>
 			<name language="en"><![CDATA[Complete Registration]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
 			
 			<content language="en">
@@ -250,6 +255,7 @@
 			<controller>wcf\form\RegisterNewActivationCodeForm</controller>
 			<name language="de"><![CDATA[Aktivierungscode-Anforderung]]></name>
 			<name language="en"><![CDATA[New Activation Code Request]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
 			
 			<content language="en">
@@ -277,6 +283,7 @@
 			<controller>wcf\form\SettingsForm</controller>
 			<name language="de"><![CDATA[Einstellungen]]></name>
 			<name language="en"><![CDATA[Settings]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -292,6 +299,7 @@
 			<name language="de"><![CDATA[Signatur-Verwaltung]]></name>
 			<name language="en"><![CDATA[Signature Management]]></name>
 			<options>module_user_signature</options>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -321,6 +329,7 @@
 			<controller>wcf\page\FollowingPage</controller>
 			<name language="de"><![CDATA[Benutzer, denen Sie folgen]]></name>
 			<name language="en"><![CDATA[Followed Users]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -335,6 +344,7 @@
 			<controller>wcf\page\IgnoredUsersPage</controller>
 			<name language="de"><![CDATA[Blockierte Benutzer]]></name>
 			<name language="en"><![CDATA[Blocked Users]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -364,6 +374,7 @@
 			<name language="de"><![CDATA[Gelöschte Inhalte]]></name>
 			<name language="en"><![CDATA[Deleted Content]]></name>
 			<permissions>mod.general.canUseModeration</permissions>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.ModerationList</parent>
 			
 			<content language="en">
@@ -380,6 +391,7 @@
 			<name language="en"><![CDATA[Content Approval]]></name>
 			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
+			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
 			
 			<content language="en">
@@ -395,6 +407,7 @@
 			<name language="de"><![CDATA[Inhaltsmeldung]]></name>
 			<name language="en"><![CDATA[Content Report]]></name>
 			<parent>com.woltlab.wcf.ModerationList</parent>
+			<hasFixedParent>1</hasFixedParent>
 			<permissions>mod.general.canUseModeration</permissions>
 			<requireObjectID>1</requireObjectID>
 			
@@ -410,6 +423,7 @@
 			<controller>wcf\page\NotificationListPage</controller>
 			<name language="de"><![CDATA[Benachrichtigungen]]></name>
 			<name language="en"><![CDATA[Notifications]]></name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -425,6 +439,7 @@
 			<name language="de"><![CDATA[Bezahlte Mitgliedschaften]]></name>
 			<name language="en"><![CDATA[Paid Subscriptions]]></name>
 			<options>module_paid_subscription</options>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			
 			<content language="en">
@@ -440,6 +455,7 @@
 			<name language="de"><![CDATA[Suchergebnisse]]></name>
 			<name language="en"><![CDATA[Search Results]]></name>
 			<parent>com.woltlab.wcf.Search</parent>
+			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
 			
 			<content language="en">
@@ -495,6 +511,7 @@
 			<name language="en"><![CDATA[List of Articles in Certain Category]]></name>
 			<options>module_article</options>
 			<parent>com.woltlab.wcf.ArticleList</parent>
+			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Article">
@@ -505,6 +522,7 @@
 			<name language="en"><![CDATA[Article]]></name>
 			<options>module_article</options>
 			<parent>com.woltlab.wcf.CategoryArticleList</parent>
+			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
 		</page>
 		
