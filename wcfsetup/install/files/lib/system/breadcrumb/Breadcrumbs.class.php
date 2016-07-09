@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\breadcrumb;
+use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\system\page\PageLocationManager;
 use wcf\system\SingletonFactory;
@@ -76,6 +77,9 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 		throw new \BadMethodCallException("Breadcrumbs::remove() is no longer supported, please use " . PageLocationManager::class . " instead.");
 	}
 	
+	/**
+	 * Loads the list of breadcrumbs.
+	 */
 	protected function loadBreadcrumbs() {
 		$this->items = [];
 		$locations = PageLocationManager::getInstance()->getLocations();
@@ -83,6 +87,28 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 		// locations are provided starting with the current location followed
 		// by all relevant ancestors, but breadcrumbs appear in the reverse order
 		$locations = array_reverse($locations);
+		
+		// use the top-most location to find the path up to the very top of
+		// the page order
+		if (!empty($locations)) {
+			$location = $locations[0];
+			
+			if ($location['pageID']) {
+				$page = PageCache::getInstance()->getPage($location['pageID']);
+				while ($page->parentPageID) {
+					$page = PageCache::getInstance()->getPage($page->parentPageID);
+					
+					array_unshift($locations, [
+						'identifier' => $page->identifier,
+						'link' => $page->getLink(),
+						'pageID' => $page->pageID,
+						'pageObjectID' => 0,
+						'title' => $page->getTitle(),
+						'useAsParentLocation' => false
+					]);
+				}
+			}
+		}
 		
 		// add the landing page as first location, unless it is already included
 		$landingPage = PageCache::getInstance()->getLandingPage();
