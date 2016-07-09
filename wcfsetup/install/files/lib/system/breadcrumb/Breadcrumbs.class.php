@@ -95,7 +95,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 			
 			if ($location['pageID']) {
 				$page = PageCache::getInstance()->getPage($location['pageID']);
-				while ($page->parentPageID) {
+				while ($page !== null && $page->parentPageID) {
 					$page = PageCache::getInstance()->getPage($page->parentPageID);
 					
 					array_unshift($locations, [
