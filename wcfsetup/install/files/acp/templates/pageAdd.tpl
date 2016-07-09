@@ -2,15 +2,18 @@
 
 <script data-relocate="true">
 	$(function() {
-		$('#isLandingPage').change(function(event) {
-			if ($('#isLandingPage')[0].checked) {
-				$('#isDisabled')[0].checked = false;
-				$('#isDisabled')[0].disabled = true;
-			}
-			else {
-				$('#isDisabled')[0].disabled = false;
-			}
-		}).trigger('change');
+		var isDisabled = elById('isDisabled');
+		if (isDisabled !== null) {
+			$('#isLandingPage').change(function() {
+				if ($('#isLandingPage')[0].checked) {
+					isDisabled.checked = false;
+					isDisabled.disabled = true;
+				}
+				else {
+					isDisabled.disabled = false;
+				}
+			}).trigger('change');
+		}
 		
 		{if $action != 'edit' || !$page->isLandingPage}
 			$('#isDisabled').change(function(event) {
@@ -366,7 +369,7 @@
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
 					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
 					<dd>
-						<ul class="scrollableCheckboxList">
+						<ul class="scrollableCheckboxList" id="boxVisibilitySettings">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
 									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}</label>
@@ -382,6 +385,17 @@
 								{/if}
 							</small>
 						{/if}
+						<script data-relocate="true">
+							require(['Language', 'WoltLab/WCF/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
+								Language.addObject({
+									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
+									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',
+									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}'
+								});
+								
+								new UiItemListFilter('boxVisibilitySettings');
+							});
+						</script>
 					</dd>
 				</dl>
 			</div>

@@ -13,3 +13,11 @@
 		white-space: nowrap;
 	}
 }
+
+.itemListFilter {
+	max-width: 500px;
+	
+	> .inputAddon {
+		margin-top: 5px;
+	}
+}
