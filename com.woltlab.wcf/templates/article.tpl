@@ -76,6 +76,40 @@
 		{/foreach}
 	{/if}
 	<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
+	
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "NewsArticle",
+			"@id": "{$canonicalURL}",
+			"headline": "{$articleContent->title}",
+			"datePublished": "{@$article->time|plainTime}",
+			"dateModified": "{@$article->time|plainTime}",
+			"description": "{@$articleContent->getFormattedTeaser()}",
+			"author": {
+				"@type": "Person",
+				"name": "{$article->username}"
+			},
+			"publisher": {
+				"@type": "Organization",
+				"name": "{PAGE_TITLE|language}",
+				"logo": {
+					"@type": "ImageObject",
+					"url": "{@$__wcf->getPath()}images/default-logo.png",{* @TODO *}
+					"width": 288,
+					"height": 40
+				}
+			}
+			{if $articleContent->getImage()}
+			,"image": {
+				"@type": "ImageObject",
+				"url": "{$articleContent->getImage()->getThumbnailLink('large')}",
+				"width": {@$articleContent->getImage()->getThumbnailWidth('large')},
+				"height": {@$articleContent->getImage()->getThumbnailHeight('large')}
+			}
+			{/if}
+		}
+	</script>
 {/capture}
 
 {include file='header'}
@@ -145,7 +179,7 @@
 				<div class="articleAboutAuthorText">{$article->getUserProfile()->aboutMe}</div>
 				
 				<div class="articleAboutAuthorUsername">
-					<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}" rel="author">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
+					<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
 					
 					{if MODULE_USER_RANK}
 						{if $article->getUserProfile()->getUserTitle()}
