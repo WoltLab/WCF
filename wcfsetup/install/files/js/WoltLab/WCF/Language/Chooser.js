@@ -147,13 +147,13 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 				dropdownMenu.appendChild(listItem);
 				
 				listItem = elCreate('li');
-				elData(listItem, 'language-id', availableLanguageId);
+				elData(listItem, 'language-id', 0);
 				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
 				dropdownMenu.appendChild(listItem);
 				
-				a = elCreate('a');
-				a.textContent = Language.get('wcf.global.language.noSelection');
-				listItem.appendChild(a);
+				link = elCreate('a');
+				link.textContent = Language.get('wcf.global.language.noSelection');
+				listItem.appendChild(link);
 				
 				if (languageId === 0) {
 					dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
