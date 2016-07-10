@@ -74,6 +74,7 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 					});
 					
 					_pageHeader.classList.add('searchBarOpen');
+					WCF.Dropdown.Interactive.Handler.closeAll();
 					searchInput.focus();
 				}
 			});
