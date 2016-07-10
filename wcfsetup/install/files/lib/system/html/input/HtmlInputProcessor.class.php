@@ -44,7 +44,10 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		$this->setContext($objectType, $objectID);
 		
 		// enforce consistent newlines
-		$html = StringUtil::unifyNewlines($html);
+		$html = StringUtil::trim(StringUtil::unifyNewlines($html));
+		
+		// check if this is true HTML or just a bbcode string
+		$html = $this->convertToHtml($html);
 		
 		// transform bbcodes into metacode markers
 		$html = HtmlBBCodeParser::getInstance()->parse($html);
@@ -130,5 +133,56 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		}
 		
 		return $this->htmlInputFilter;
+	}
+	
+	/**
+	 * Converts bbcodes using newlines into valid HTML.
+	 * 
+	 * @param       string          $html           html string
+	 * @return      string          parsed html string
+	 */
+	protected function convertToHtml($html) {
+		if (!preg_match('~^<[a-zA-Z\-]+~', $html) || !preg_match('~</[a-zA-Z\-]>$~', $html)) {
+			$parts = preg_split('~(\n+)~', $html, null, PREG_SPLIT_DELIM_CAPTURE);
+			
+			$openParagraph = false;
+			$html = '';
+			for ($i = 0, $length = count($parts); $i < $length; $i++) {
+				$part = $parts[$i];
+				if (strpos($part, "\n") !== false) {
+					$newlines = substr_count($part, "\n");
+					if ($newlines === 1) {
+						$html .= '<br>';
+					}
+					else {
+						if ($openParagraph) {
+							$html .= '</p>';
+							$openParagraph = false;
+						}
+						
+						// ignore two newline because a new paragraph with bbcodes is created
+						// using two subsequent newlines
+						$newlines -= 2;
+						if ($newlines === 0) {
+							continue;
+						}
+						
+						$html .= str_repeat('<p><br></p>', $newlines);
+					}
+				}
+				else {
+					if (!$openParagraph) {
+						$html .= '<p>';
+					}
+					
+					$html .= $part;
+					$openParagraph = true;
+				}
+			}
+			
+			$html .= '</p>';
+		}
+		
+		return $html;
 	}
 }
