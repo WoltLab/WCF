@@ -95,11 +95,6 @@
 			position: relative;
 			width: 48px;
 			height: 48px;
-			
-			> p > img {
-				opacity: .6;
-				transition: opacity .12s;
-			}
 		}
 		
 		.myAvatar {
@@ -177,20 +172,6 @@
 			white-space: nowrap;
 		}
 	}
-	/*todo
-	.messageGroupInfo {
-		@include inlineList;
-		@include wcfFontSmall;
-		
-		> li:not(:last-child) {
-			margin-right: 5px;
-			
-			&:after {
-				content: "\00b7";
-				margin-left: 5px;
-			}
-		}
-	}*/
 	
 	// hover
 	.tabularListRow:hover,
@@ -202,10 +183,6 @@
 				opacity: 1;
 			}
 		}
-		
-		.columnAvatar div > p > img {
-			opacity: 1;
-		}
 	}
 	
 	// new status
@@ -213,28 +190,6 @@
 	tr.new { // deprecated
 		.columnSubject > h3 > .messageGroupLink {
 			font-weight: bold;
-		}
-		
-		.columnAvatar div > p > img {
-			opacity: 1;
-		}
-		
-		// new message icon
-		.columnAvatar > div {
-			&::after {
-				color: $wcfContentLink;
-				content: $fa-var-asterisk;
-				font-family: FontAwesome;
-				font-weight: normal !important;
-				font-style: normal !important;
-				font-size: 14px;
-				position: absolute;
-				text-decoration: none !important;
-				top: -4px;
-				right: -2px;
-				
-				@include textShadow($wcfContentLink);
-			}
 		}
 	}
 	
@@ -261,46 +216,3 @@
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
 }
-
-/*
-.messageGroupList {
-	.columnSubject {
-		
-		
-		
-	}
-	
-	tr {
-		/*
-		TODO
-		&.messageDisabled {
-			color: $wcfDisabledColor;
-			
-			> td {
-				background-color: $wcfDisabledBackgroundColor !important;
-			}
-			
-			a:not(.badge) {
-				color: $wcfDisabledColor;
-			}
-		}
-		*/
-		
-		/*
-		TODO
-		&.messageDeleted {
-			color: $wcfDeletedColor;
-			
-			> td {
-				background-color: $wcfDeletedBackgroundColor !important;
-			}
-			
-			a:not(.badge) {
-				color: $wcfDeletedColor;
-			}
-		}
-		*/
-		/*
-	}
-}
-*/
