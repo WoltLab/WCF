@@ -58,6 +58,27 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		$this->embeddedContent = $this->getHtmlInputNodeProcessor()->getEmbeddedContent();
 	}
 	
+	/**
+	 * Processes only embedded content. This method should only be called when rebuilding
+	 * data where only embedded content is relevant, but no actual parsing is required.
+	 * 
+	 * @param       string          $html           html string
+	 * @param       string          $objectType     object type identifier
+	 * @param       integer         $objectID       object id
+	 * @throws      \UnexpectedValueException
+	 */
+	public function processEmbeddedContent($html, $objectType, $objectID) {
+		if (!$objectID) {
+			throw new \UnexpectedValueException("Object id parameter must be non-zero.");
+		}
+		
+		$this->setContext($objectType, $objectID);
+		
+		$this->getHtmlInputNodeProcessor()->load($this, $html);
+		$this->getHtmlInputNodeProcessor()->processEmbeddedContent();
+		$this->embeddedContent = $this->getHtmlInputNodeProcessor()->getEmbeddedContent();
+	}
+	
 	public function validate() {
 		// TODO
 	}

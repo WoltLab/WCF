@@ -30,8 +30,6 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	public function process() {
 		EventHandler::getInstance()->fireAction($this, 'beforeProcess');
 		
-		$this->embeddedContent = [];
-		
 		// process metacode markers first
 		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacodeMarker());
 		
@@ -47,9 +45,18 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$textParser->parse();
 		
 		// extract embedded content
-		$this->parseEmbeddedContent();
+		$this->processEmbeddedContent();
 		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
+	}
+	
+	/**
+	 * Processes embedded content.
+	 */
+	public function processEmbeddedContent() {
+		$this->embeddedContent = [];
+		
+		$this->parseEmbeddedContent();
 	}
 	
 	/**
