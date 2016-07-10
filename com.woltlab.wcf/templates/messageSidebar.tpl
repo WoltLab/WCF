@@ -2,7 +2,7 @@
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 
-<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $userProfile->userID} itemscope itemtype="http://data-vocabulary.org/Person"{/if}>
+<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}">
 	<div class="messageAuthor">
 		{event name='messageAuthor'}
 		
@@ -11,16 +11,15 @@
 			
 			{if $userProfile->getAvatar()}
 				<div class="userAvatar">
-					{capture assign='__userAvatar'}{@$userProfile->getAvatar()->getImageTag(128)}{/capture}
-					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}">{@'<img'|str_replace:'<img itemprop="photo"':$__userAvatar}</a>
+					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}">{@$userProfile->getAvatar()->getImageTag(128)}</a>
 					
 					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
 				</div>
 			{/if}
 			
 			<div class="messageAuthorContainer">
-				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}" rel="author">
-					<span itemprop="name">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
+				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}">
+					<span>{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
 				</a>
 				{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
 				
@@ -30,7 +29,7 @@
 			{if MODULE_USER_RANK}
 				{if $userProfile->getUserTitle()}
 					<div class="userTitle">
-						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}" itemprop="title">{$userProfile->getUserTitle()}</span>
+						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
 					</div>
 				{/if}
 				{if $userProfile->getRank() && $userProfile->getRank()->rankImage}
@@ -76,7 +75,7 @@
 									{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
 									{if $__formattedUserOption}
 										<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
-										<dd{if $__sidebarUserOption == 'location'} itemprop="locality"{/if}>{@$__formattedUserOption}</dd>
+										<dd>{@$__formattedUserOption}</dd>
 									{/if}
 								{/if}
 							{/foreach}
