@@ -21,6 +21,9 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter {
 		$highlighter = $file = '';
 		
 		switch (count($attributes)) {
+			case 0:
+				break;
+			
 			case 1:
 				if (is_numeric($attributes[0])) {
 					$line = intval($attributes[0]);
