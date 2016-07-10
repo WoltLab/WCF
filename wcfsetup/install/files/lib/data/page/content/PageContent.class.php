@@ -43,8 +43,6 @@ class PageContent extends DatabaseObject {
 	 * @return      string
 	 */
 	public function getFormattedContent() {
-		// assign embedded objects
-		MessageEmbeddedObjectManager::getInstance()->setActiveMessage('com.woltlab.wcf.page.content', $this->pageContentID);
 		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content', [$this->pageContentID]);
 		
 		$processor = new HtmlOutputProcessor();
