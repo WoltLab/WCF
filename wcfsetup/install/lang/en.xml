@@ -2342,6 +2342,9 @@ Errors are:
 <p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>]]></item>
 		<item name="wcf.global.exception.title"><![CDATA[An error has occured]]></item>
 		<item name="wcf.global.exception.subtitle"><![CDATA[Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
+		<item name="wcf.global.filter.button.clear"><![CDATA[Clear Filter]]></item>
+		<item name="wcf.global.filter.error.noMatches"><![CDATA[Filter does not match anything.]]></item>
+		<item name="wcf.global.filter.placeholder"><![CDATA[Filter by name]]></item>
 		<item name="wcf.global.success"><![CDATA[The action has been completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>

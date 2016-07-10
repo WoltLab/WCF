@@ -2,6 +2,7 @@
 namespace wcf\system\html\output;
 use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 use wcf\system\html\AbstractHtmlProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Processes stored HTML for final display.
@@ -71,6 +72,8 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 		}
 		
 		parent::setContext($objectType, $objectID);
+		
+		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
 	}
 	
 	/**

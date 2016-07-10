@@ -218,7 +218,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'applicationPackageID' => $applicationPackageID,
 			'requireObjectID' => (!empty($data['elements']['requireObjectID'])) ? 1 : 0,
 			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
-			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : ''
+			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
+			'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0
 		];
 	}
 	

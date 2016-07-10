@@ -238,9 +238,6 @@ class Box extends DatabaseObject {
 		
 		if ($boxContent !== null) {
 			if ($this->boxType == 'text') {
-				// assign embedded objects
-				MessageEmbeddedObjectManager::getInstance()->setActiveMessage('com.woltlab.wcf.box.content', $boxContent->boxContentID);
-				
 				$processor = new HtmlOutputProcessor();
 				$processor->process($boxContent->content, 'com.woltlab.wcf.box.content', $boxContent->boxContentID);
 				

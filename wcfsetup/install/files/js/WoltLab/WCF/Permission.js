@@ -2,7 +2,7 @@
  * Manages user permissions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Permission
  */
@@ -14,7 +14,7 @@ define(['Dictionary'], function(Dictionary) {
 	/**
 	 * @exports	WoltLab/WCF/Permission
 	 */
-	var Permission = {
+	return {
 		/**
 		 * Adds a single permission to the store.
 		 * 
@@ -58,6 +58,4 @@ define(['Dictionary'], function(Dictionary) {
 			return false;
 		}
 	};
-	
-	return Permission;
 });

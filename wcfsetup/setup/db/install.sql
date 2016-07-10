@@ -963,6 +963,7 @@ CREATE TABLE wcf1_page (
 	handler VARCHAR(255) NOT NULL DEFAULT '',
 	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
 	requireObjectID TINYINT(1) NOT NULL DEFAULT 0,
+	hasFixedParent TINYINT(1) NOT NULL DEFAULT 0,
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
 	options TEXT NULL

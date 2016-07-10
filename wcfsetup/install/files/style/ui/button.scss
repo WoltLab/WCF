@@ -128,8 +128,7 @@ a.button {
 	
 	> li {
 		&:not(:last-child) {
-			// TODO: border-right: 1px solid $wcfContentBorder;
-			margin-right: 0;
+			margin-right: 1px;
 		}
 		
 		&:first-child .button {
