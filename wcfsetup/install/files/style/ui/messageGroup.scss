@@ -55,10 +55,15 @@
 		top: 1px;
 	}
 	
-	.tabularListRowHead .columnMark > label::before {
-		top: -3px;
+	.tabularListRowHead {
+		.columnMark > label::before {
+			top: -3px;
+		}
+		
+		.jsMarked .columnMark > label::after {
+			top: 3px;
+		}
 	}
-	
 	
 	.messageDeleted .columnAvatar,
 	.messageDisabled .columnAvatar {
