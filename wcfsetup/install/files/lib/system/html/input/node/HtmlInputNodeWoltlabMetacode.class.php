@@ -74,7 +74,10 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 			
 			/** @var IMetacodeConverter $converter */
 			if ($converter->validateAttributes($attributes)) {
-				$newElement = $converter->convert(DOMUtil::childNodesToFragment($element), $attributes);
+				$fragment = DOMUtil::childNodesToFragment($element);
+				if (!$fragment->hasChildNodes()) $fragment->appendChild($fragment->ownerDocument->createTextNode(''));
+				
+				$newElement = $converter->convert($fragment, $attributes);
 				if (!($newElement instanceof \DOMElement)) {
 					throw new \UnexpectedValueException("Expected a valid DOMElement as return value.");
 				}
