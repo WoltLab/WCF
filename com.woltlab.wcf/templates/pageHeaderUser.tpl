@@ -3,7 +3,7 @@
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu">
-				<a class="jsTooltip" href="{link controller='User' object=$__wcf->user}{/link}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
+				<a href="{link controller='User' object=$__wcf->user}{/link}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
 				<div class="interactiveDropdown interactiveDropdownStatic interactiveDropdownUserMenu">
 					<div class="interactiveDropdownHeader">
 						<span class="interactiveDropdownTitle">{lang}wcf.user.controlPanel{/lang}</span>
@@ -79,7 +79,7 @@
 			<!-- user notifications -->
 			{if !$__hideUserMenu|isset}
 				<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
-					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
+					<a href="{link controller='NotificationList'}{/link}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
 							//<![CDATA[
@@ -253,7 +253,7 @@
 		{if !$__hideUserMenu|isset}
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}">
-					<a class="jsTooltip" href="{link controller='ModerationList'}{/link}" title="{lang}wcf.moderation.moderation{/lang}">
+					<a href="{link controller='ModerationList'}{/link}">
 						<span class="icon icon32 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>
 						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
