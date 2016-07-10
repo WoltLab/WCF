@@ -376,7 +376,10 @@
 /* content - footer */
 .messageFooter {
 	flex: 0 0 auto;
-	margin-top: 20px;
+	
+	.formSubmit {
+		margin-top: 20px;
+	}
 }
 
 .messageFooterNote {
@@ -428,6 +431,7 @@
 
 .messageSignature {
 	border-top: 1px solid $wcfContentBorderInner;
+	margin-top: 20px;
 	opacity: .6;
 	padding-top: 10px;
 	transition: opacity .12s linear;
