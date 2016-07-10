@@ -356,7 +356,7 @@ WCF.ACP.Style.List = Class.extend({
 	 * @param	integer		styleID
 	 */
 	_delete: function(event, styleID) {
-		var $confirmMessage = $(event.currentTarget).data('confirmMessage');
+		var $confirmMessage = $(event.currentTarget).data('confirmMessageHtml');
 		if ($confirmMessage) {
 			var self = this;
 			WCF.System.Confirmation.show($confirmMessage, function(action) {
