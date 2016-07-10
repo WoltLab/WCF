@@ -271,20 +271,27 @@
 	padding: 3px;
 	position: relative;
 	
-	.pageHeaderSearchType > .button {
-		border-radius: 2px 0 0 2px;
-		min-width: 140px;
-		padding: 4px 24px 4px 8px;
-		position: relative;
-		text-align: left;
-		white-space: nowrap;
+	.pageHeaderSearchType {
+		display: flex;
 		
-		&::after {
-			color: inherit;
-			content: $fa-var-caret-down;
-			font-family: FontAwesome;
-			position: absolute;
-			right: 8px;
+		> .button {
+			border-radius: 2px 0 0 2px;
+			max-width: 200px;
+			min-width: 140px;
+			overflow: hidden;
+			padding: 4px 24px 4px 8px;
+			position: relative;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			
+			&::after {
+				color: inherit;
+				content: $fa-var-caret-down;
+				font-family: FontAwesome;
+				position: absolute;
+				right: 8px;
+			}
 		}
 	}
 	
