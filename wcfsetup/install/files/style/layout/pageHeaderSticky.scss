@@ -117,25 +117,8 @@
 			}
 		}
 		
-		&:not(.searchBarOpen) {
-			.pageHeaderSearchInputContainer {
-				display: none;
-			}
-		}
-		
-		&.searchBarOpen {
-			.pageHeaderSearchInputContainer {
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-				position: absolute;
-				top: 50px !important;
-				z-index: 100; 
-			}
-			
-			.pageHeaderSearchLabel {
-				background: $wcfHeaderMenuLinkBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
-			}
+		.pageHeaderSearchInputContainer {
+			display: none;
 		}
 	}
 }
@@ -169,5 +152,34 @@
 	
 	.boxesHero {
 		background-color: $wcfHeaderBackground;
+	}
+}
+
+@include screen-md-down {
+	.pageHeaderSearch.open {
+		left: 0;
+		position: absolute;
+		right: 0;
+		
+		.pageHeaderSearchInputContainer {
+			border-radius: 0;
+			display: flex;
+			
+			.pageHeaderSearchType > .button {
+				border-radius: 0;
+				
+				// input field is larger on iOS
+				align-items: center;
+				display: flex;
+			}
+			
+			.pageHeaderSearchInput {
+				flex: 1 1 auto;
+			}
+			
+			.pageHeaderSearchInputButton {
+				border-radius: 0;
+			}
+		}
 	}
 }

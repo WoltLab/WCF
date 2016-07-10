@@ -48,6 +48,20 @@ input[type="search"] {
 	-webkit-appearance: none;
 }
 
+.iOS {
+	input[type="date"],
+	input[type="datetime"],
+	input[type="email"],
+	input[type="number"],
+	input[type="password"],
+	input[type="search"],
+	input[type="text"],
+	input[type="url"],
+	textarea {
+		font-size: 16px;
+	}
+}
+
 textarea {
 	border-width: 1px;
 	width: 100%;

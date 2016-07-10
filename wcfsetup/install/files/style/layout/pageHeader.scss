@@ -404,31 +404,7 @@
 		}
 	}
 	
-	.pageHeader {
-		&.searchBarOpen {
-			.pageHeaderLogo,
-			.mainMenu,
-			.userPanel {
-				display: none;
-			}
-			
-			.pageHeaderSearch {
-				flex: 0 0 100%;
-				
-				.pageHeaderSearchInputContainer {
-					display: block;
-				} 
-				
-				.pageHeaderSearchInput {
-					width: 100%;
-				}
-			}
-		}
-		
-		&:not(.searchBarOpen) {
-			.pageHeaderSearch {
-				display: none;
-			}
-		}
+	.pageHeaderSearch:not(.open) {
+		display: none;
 	}
 }

@@ -7,8 +7,8 @@
  * @module	WoltLab/WCF/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'Language', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
-	function(Core,    Environment,   Language,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
+	function(Core,    Environment,   EventHandler,   Language,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
 {
 	"use strict";
 	
@@ -76,7 +76,7 @@ define(
 		},
 		
 		_init: function() {
-			//@todothis._initSearchBar();
+			this._initSearchBar();
 			this._initButtonGroupNavigation();
 			this._initMobileMenu();
 			
@@ -85,19 +85,20 @@ define(
 		},
 		
 		_initSearchBar: function() {
-			var _searchBar = elBySel('.searchBar');
+			var _searchBar = elById('pageHeaderSearch');
+			var _searchInput = elById('pageHeaderSearchInput');
 			
-			_searchBar.addEventListener(WCF_CLICK_EVENT, function() {
-				if (_enabled) {
-					_searchBar.classList.add('searchBarOpen');
+			EventHandler.add('com.woltlab.wcf.MainMenuMobile', 'more', function(data) {
+				if (data.identifier === 'com.woltlab.wcf.search') {
+					_searchBar.style.setProperty('top', elById('pageHeader').offsetHeight + 'px', '');
+					_searchBar.classList.add('open');
+					_searchInput.focus();
 					
-					return false;
+					data.handler.close(true);
 				}
-				
-				return false;
 			});
 			
-			_main.addEventListener(WCF_CLICK_EVENT, function() { _searchBar.classList.remove('searchBarOpen'); });
+			_main.addEventListener(WCF_CLICK_EVENT, function() { _searchBar.classList.remove('open'); });
 		},
 		
 		_initButtonGroupNavigation: function() {
