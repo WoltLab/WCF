@@ -186,6 +186,10 @@ class HtmlInputNodeTextParser {
 			// $i = 1 to skip the full match
 			for ($i = 1, $length = count($matches); $i < $length; $i++) {
 				for ($j = 0, $innerLength = count($matches[$i]); $j < $innerLength; $j++) {
+					if ($matches[$i][$j] === '') {
+						continue;
+					}
+					
 					$username = $this->getUsername($matches[$i][$j]);
 					if (!isset($usernames[$username])) {
 						$usernames[$username] = $username;
