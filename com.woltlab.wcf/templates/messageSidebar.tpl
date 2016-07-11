@@ -1,8 +1,11 @@
+{if !$enableMicrodata|isset}
+	{assign var=enableMicrodata value=false}
+{/if}
 {if !$__messageSidebarJavascript|isset}
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 
-<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}">
+<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
 	<div class="messageAuthor">
 		{event name='messageAuthor'}
 		
@@ -18,8 +21,8 @@
 			{/if}
 			
 			<div class="messageAuthorContainer">
-				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}">
-					<span>{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
+				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
+					<span{if $enableMicrodata} itemprop="name"{/if}>{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
 				</a>
 				{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
 				
@@ -38,7 +41,7 @@
 			{/if}
 		{else}
 			<div class="messageAuthorContainer">
-				<span class="username">{$userProfile->username}</span>
+				<span class="username"{if $enableMicrodata} itemprop="name"{/if}>{$userProfile->username}</span>
 				
 				{event name='messageAuthorContainer'}
 			</div>

@@ -1,27 +1,35 @@
 {capture assign='pageTitle'}{$articleContent->title}{/capture}
 
+{assign var='__mainItemScope' value='itemprop="mainEntity" itemscope itemtype="http://schema.org/Article"'}
+
 {capture assign='contentHeader'}
 	<header class="contentHeader articleContentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{$articleContent->title}</h1>
+			<h1 class="contentTitle" itemprop="name headline">{$articleContent->title}</h1>
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
-				<li>
+				<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<span class="icon icon16 fa-user"></span>
 					{if $article->userID}
-						<a href="{link controller='User' id=$article->userID title=$article->username}{/link}" class="userLink" data-user-id="{@$article->userID}">{$article->username}</a>
+						<a href="{link controller='User' id=$article->userID title=$article->username}{/link}" class="userLink" data-user-id="{@$article->userID}" itemprop="url">
+							<span itemprop="name">{$article->username}</span>
+						</a>
 					{else}
-						{$article->username}
+						<span itemprop="name">{$article->username}</span>
 					{/if}
 				</li>
 				
 				<li>
 					<span class="icon icon16 fa-clock-o"></span>
-					{@$article->time|time}
+					<span>{@$article->time|time}</span>
+					<meta itemprop="datePublished" content="{@$article->time|date:'c'}">
+					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
 				</li>
 				
-				<li>
+				<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
 					<span class="icon icon16 fa-comments"></span>
-					{lang}wcf.article.articleComments{/lang}
+					<span>{lang}wcf.article.articleComments{/lang}</span>
+					<meta itemprop="interactionType" content="http://schema.org/CommentAction">
+					<meta itemprop="userInteractionCount" content="{@$article->comments}">
 				</li>
 				
 				<li>
@@ -31,6 +39,14 @@
 				
 				<li class="articleLikesBadge"></li>
 			</ul>
+			
+			<meta itemprop="mainEntityOfPage" content="{$canonicalURL}">
+			<div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+				<meta itemprop="name" content="{PAGE_TITLE|language}">
+				<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+					<meta itemprop="url" content="{@$__wcf->getPath()}images/default-logo.png">{* @TODO *}
+				</div>
+			</div>
 		</div>
 		
 		{hascontent}
@@ -76,51 +92,20 @@
 		{/foreach}
 	{/if}
 	<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
-	
-	<script type="application/ld+json">
-		{
-			"@context": "http://schema.org",
-			"@type": "NewsArticle",
-			"@id": "{$canonicalURL}",
-			"headline": "{$articleContent->title}",
-			"datePublished": "{@$article->time|plainTime}",
-			"dateModified": "{@$article->time|plainTime}",
-			"description": "{@$articleContent->getFormattedTeaser()}",
-			"author": {
-				"@type": "Person",
-				"name": "{$article->username}"
-			},
-			"publisher": {
-				"@type": "Organization",
-				"name": "{PAGE_TITLE|language}",
-				"logo": {
-					"@type": "ImageObject",
-					"url": "{@$__wcf->getPath()}images/default-logo.png",{* @TODO *}
-					"width": 288,
-					"height": 40
-				}
-			}
-			{if $articleContent->getImage()}
-			,"image": {
-				"@type": "ImageObject",
-				"url": "{$articleContent->getImage()->getThumbnailLink('large')}",
-				"width": {@$articleContent->getImage()->getThumbnailWidth('large')},
-				"height": {@$articleContent->getImage()->getThumbnailHeight('large')}
-			}
-			{/if}
-		}
-	</script>
 {/capture}
 
 {include file='header'}
 
 {if $articleContent->getImage()}
 	<section class="section">
-		<figure class="articleImage">
+		<figure class="articleImage" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
 			<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
 			{if $articleContent->getImage()->caption}
-				<figcaption>{$articleContent->getImage()->caption}</figcaption>
+				<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
 			{/if}
+			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
+			<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
+			<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
 		</figure>
 	</section>
 {/if}

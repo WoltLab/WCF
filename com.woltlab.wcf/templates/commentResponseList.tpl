@@ -9,20 +9,24 @@
 				{@$response->getUserProfile()->getAvatar()->getImageTag(32)}
 			{/if}
 			
-			<div class="commentContent commentResponseContent">
+			<div class="commentContent commentResponseContent" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+				<meta itemprop="dateCreated" content="{@$response->time|date:'c'}">
+				
 				<div class="containerHeadline">
-					<h3>
+					<h3 itemprop="author" itemscope itemtype="http://schema.org/Person">
 						{if $response->userID}
-							<a href="{link controller='User' object=$response->getUserProfile()}{/link}" class="userLink" data-user-id="{@$response->userID}">{$response->username}</a>
+							<a href="{link controller='User' object=$response->getUserProfile()}{/link}" class="userLink" data-user-id="{@$response->userID}" itemprop="url">
+								<span itemprop="name">{$response->username}</span>
+							</a>
 						{else}
-							{$response->username}
+							<span itemprop="name">{$response->username}</span>
 						{/if}
 						
 						<small class="separatorLeft">{@$response->time|time}</small>
 					</h3>
 				</div>
 				
-				<div class="userMessage">{@$response->getFormattedMessage()}</div>
+				<div class="userMessage" itemprop="text">{@$response->getFormattedMessage()}</div>
 				
 				<nav class="jsMobileNavigation buttonGroupNavigation">
 					<ul class="buttonList iconList">
