@@ -29,6 +29,9 @@
 <link rel="icon" href="{@$__wcf->getFavicon()}" type="image/x-icon">
 <link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
 
+<!-- thema color (mobile Chrome) -->
+<meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground')}">
+
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
