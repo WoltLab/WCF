@@ -7,8 +7,8 @@
 			"@type": "NewsArticle",
 			"mainEntityOfPage": "{$regularCanonicalURL}",
 			"headline": "{$articleContent->title}",
-			"datePublished": "{@$article->time|plainTime}",
-			"dateModified": "{@$article->time|plainTime}",
+			"datePublished": "{@$article->time|date:'c'}",
+			"dateModified": "{@$article->time|date:'c'}",
 			"description": "{@$articleContent->getFormattedTeaser()}",
 			"author": {
 				"@type": "Person",
