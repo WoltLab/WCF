@@ -2551,7 +2551,7 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Zugewiesener Benutzer]]></item>
-		<item name="wcf.moderation.assignedUser.change"><![CDATA[(Ändern)]]></item>
+		<item name="wcf.moderation.assignedUser.change"><![CDATA[Zugewiesenen Benutzer ändern]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[Dieser Benutzer hat unzureichende Zugriffsrechte]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
@@ -2679,7 +2679,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.report.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Meldung)]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, aggressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
-		<item name="wcf.moderation.report.removeContent"><![CDATA[Gemeldeten Inhalt löschen]]></item>
+		<item name="wcf.moderation.report.removeContent"><![CDATA[Inhalt löschen]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Wollen Sie den gemeldeten Inhalt wirklich löschen?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung löschen]]></item>

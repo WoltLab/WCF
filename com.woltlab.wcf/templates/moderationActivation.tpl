@@ -35,6 +35,7 @@
 			<nav class="contentHeaderNavigation">
 				<ul>
 					{content}
+						<li class="jsOnly"><a id="moderationAssignUser" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.moderation.assignedUser.change{/lang}</span></a></li>
 						{if !$queue->isDone()}
 							{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="enableContent" class="button"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.moderation.activation.enableContent{/lang}</span></a></li>{/if}
 							<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.activation.removeContent{/lang}</span></a></li>
@@ -82,7 +83,6 @@
 			'wcf.moderation.activation.enableContent.confirmMessage': '{lang}wcf.moderation.activation.enableContent.confirmMessage{/lang}',
 			'wcf.moderation.activation.removeContent.confirmMessage': '{lang}wcf.moderation.activation.removeContent.confirmMessage{/lang}',
 			'wcf.moderation.assignedUser': '{lang}wcf.moderation.assignedUser{/lang}',
-			'wcf.moderation.assignedUser.change': '{lang}wcf.moderation.assignedUser.change{/lang}',
 			'wcf.moderation.assignedUser.error.notAffected': '{lang}wcf.moderation.assignedUser.error.notAffected{/lang}',
 			'wcf.moderation.status.outstanding': '{lang}wcf.moderation.status.outstanding{/lang}',
 			'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}',

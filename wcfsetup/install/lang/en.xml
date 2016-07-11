@@ -2556,7 +2556,7 @@ Errors are:
 	
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
-		<item name="wcf.moderation.assignedUser.change"><![CDATA[(Change)]]></item>
+		<item name="wcf.moderation.assignedUser.change"><![CDATA[Change Assigned User]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[This user does not have sufficient privileges.]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Type]]></item>
@@ -2684,7 +2684,7 @@ Errors are:
 		<item name="wcf.moderation.report.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Report)]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (racism, glorification of violence, offending, or sexist) content.]]></item>
-		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
+		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Content]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>

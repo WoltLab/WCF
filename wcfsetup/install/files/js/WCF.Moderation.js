@@ -93,7 +93,7 @@ WCF.Moderation.Management = Class.extend({
 		
 		$(this._buttonSelector).click($.proxy(this._click, this));
 		
-		$('<a>' + WCF.Language.get('wcf.moderation.assignedUser.change') + '</a>').click($.proxy(this._clickAssignedUser, this)).insertAfter($('#moderationAssignedUserContainer > dd > span'));
+		$('#moderationAssignUser').click($.proxy(this._clickAssignedUser, this));
 	},
 	
 	/**
