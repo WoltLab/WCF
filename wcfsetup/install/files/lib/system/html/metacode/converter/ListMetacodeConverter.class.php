@@ -171,13 +171,6 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 	}
 	
 	/**
-	 * @inheritDoc
-	 */
-	public function validateAttributes(array $attributes) {
-		return true;
-	}
-	
-	/**
 	 * Returns true if provided node is within another list, prevents issues
 	 * with nested lists handled in the wrong order.
 	 * 

@@ -138,10 +138,20 @@
 			</attributes>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
+		
 		<bbcode name="table">
 			<classname><![CDATA[wcf\system\bbcode\TableBBCode]]></classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
+		<bbcode name="tr">
+			<classname><![CDATA[wcf\system\bbcode\TrBBCode]]></classname>
+			<isBlockElement>1</isBlockElement>
+		</bbcode>
+		<bbcode name="td">
+			<classname><![CDATA[wcf\system\bbcode\TdBBcode]]></classname>
+			<isBlockElement>1</isBlockElement>
+		</bbcode>
+		
 		<bbcode name="media">
 			<classname><![CDATA[wcf\system\bbcode\MediaBBCode]]></classname>
 			<sourcecode>1</sourcecode>
