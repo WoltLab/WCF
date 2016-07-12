@@ -28,12 +28,6 @@ class BoxEditForm extends BoxAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.box.list';
 	
 	/**
-	 * list of available positions per box handler
-	 * @var array
-	 */
-	public $availableBoxPositions = [];
-	
-	/**
 	 * box id
 	 * @var	integer
 	 */
@@ -61,19 +55,6 @@ class BoxEditForm extends BoxAddForm {
 			throw new IllegalLinkException();
 		}
 		if ($this->box->isMultilingual) $this->isMultilingual = 1;
-		
-		$this->readBoxPositions();
-	}
-	
-	/**
-	 * Loads available box positions per box controller.
-	 */
-	protected function readBoxPositions() {
-		foreach ($this->availableBoxControllers as $boxController) {
-			/** @var IBoxController $controller */
-			$controller = $boxController->getProcessor();
-			$this->availableBoxPositions[$boxController->objectTypeID] = $controller::getSupportedPositions();
-		}
 	}
 	
 	/**
@@ -98,19 +79,10 @@ class BoxEditForm extends BoxAddForm {
 	public function validate() {
 		parent::validate();
 		
-		$this->validateBoxPosition();
+		
 	}
 	
-	/**
-	 * Validates the selected box position.
-	 */
-	protected function validateBoxPosition() {
-		if ($this->boxType == 'system') {
-			if (!in_array($this->position, $this->availableBoxPositions[$this->boxController->objectTypeID])) {
-				throw new UserInputException('position', 'invalid');
-			}
-		}
-	}
+	
 	
 	/**
 	 * @inheritDoc
@@ -231,7 +203,6 @@ class BoxEditForm extends BoxAddForm {
 		
 		WCF::getTPL()->assign([
 			'action' => 'edit',
-			'availableBoxPositions' => $this->availableBoxPositions,
 			'boxID' => $this->boxID,
 			'box' => $this->box
 		]);

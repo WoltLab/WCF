@@ -11,6 +11,7 @@ use wcf\data\page\Page;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -188,6 +189,12 @@ class BoxAddForm extends AbstractForm {
 	public $availableBoxControllers = [];
 	
 	/**
+	 * list of available positions per box handler
+	 * @var array
+	 */
+	public $availableBoxPositions = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -208,6 +215,18 @@ class BoxAddForm extends AbstractForm {
 		}
 		
 		$this->availableBoxControllers = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController');
+		$this->readBoxPositions();
+	}
+	
+	/**
+	 * Loads available box positions per box controller.
+	 */
+	protected function readBoxPositions() {
+		foreach ($this->availableBoxControllers as $boxController) {
+			/** @var IBoxController $controller */
+			$controller = $boxController->getProcessor();
+			$this->availableBoxPositions[$boxController->objectTypeID] = $controller::getSupportedPositions();
+		}
 	}
 	
 	/**
@@ -307,9 +326,7 @@ class BoxAddForm extends AbstractForm {
 		}
 		
 		// validate box position
-		if (!in_array($this->position, Box::$availablePositions)) {
-			throw new UserInputException('position');
-		}
+		$this->validateBoxPosition();
 		
 		// validate link
 		if ($this->linkType == 'internal') {
@@ -396,6 +413,21 @@ class BoxAddForm extends AbstractForm {
 		}
 		if (Box::getBoxByName($this->name)) {
 			throw new UserInputException('name', 'notUnique');
+		}
+	}
+	
+	/**
+	 * Validates the selected box position.
+	 */
+	protected function validateBoxPosition() {
+		if (!in_array($this->position, Box::$availablePositions)) {
+			throw new UserInputException('position');
+		}
+		
+		if ($this->boxType == 'system') {
+			if (!in_array($this->position, $this->availableBoxPositions[$this->boxController->objectTypeID])) {
+				throw new UserInputException('position', 'invalid');
+			}
 		}
 	}
 	
@@ -507,7 +539,8 @@ class BoxAddForm extends AbstractForm {
 			'boxController' => $this->boxController,
 			'pageNodeList' => $this->pageNodeList,
 			'pageHandlers' => $this->pageHandlers,
-			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues)
+			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
+			'availableBoxPositions' => $this->availableBoxPositions
 		]);
 	}
 }
