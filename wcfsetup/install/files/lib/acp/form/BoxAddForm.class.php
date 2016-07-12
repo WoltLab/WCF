@@ -62,7 +62,7 @@ class BoxAddForm extends AbstractForm {
 	 * box position
 	 * @var	string
 	 */
-	public $position = '';
+	public $position = 'contentTop';
 	
 	/**
 	 * show order
