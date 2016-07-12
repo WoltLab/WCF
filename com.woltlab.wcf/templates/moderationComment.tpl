@@ -1,4 +1,4 @@
-<article class="message">
+<article class="message messageReduced">
 	<section class="messageContent">
 		<header class="messageHeader">
 			<div class="box32 messageHeaderWrapper">

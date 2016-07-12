@@ -1,6 +1,6 @@
 {if !$supportPaste|isset}{assign var=supportPaste value=false}{/if}
 {foreach from=$messages item=message}
-	<article class="message jsInvalidQuoteTarget" data-link="{@$message->getLink()}" data-username="{$message->getUsername()}">
+	<article class="message messageReduced jsInvalidQuoteTarget" data-link="{@$message->getLink()}" data-username="{$message->getUsername()}">
 		<div class="messageContent">
 			<header class="messageHeader">
 				<div class="box32 messageHeaderWrapper">

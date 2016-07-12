@@ -1,14 +1,22 @@
 .messageList {
-	border-bottom: 1px solid $wcfContentBorder;
-	
-	@include screen-md-up {
-		border-top: 1px solid $wcfContentBorder;
-		
-		> li {
-			padding: 30px 0;
+	&:not(.messageReducedList) {
+		@include screen-md-up {
+			border-bottom: 1px solid $wcfContentBorder;
+			border-top: 1px solid $wcfContentBorder;
 			
-			&:not(:first-child) {
-				border-top: 1px solid $wcfContentBorder;
+			> li {
+				padding: 30px 0;
+				
+				&:not(:first-child) {
+					border-top: 1px solid $wcfContentBorder;
+				}
+			}
+		}
+	}
+	&.messageReducedList {
+		@include screen-md-up {
+			> li {
+				padding-bottom: 30px;
 			}
 		}
 	}
@@ -198,7 +206,9 @@
 }
 
 .messageAuthorContainer:not(:last-child) {
-	margin-bottom: 5px;
+	@include screen-md-up {
+		margin-bottom: 5px;
+	}
 }
 
 // sidebar right
@@ -457,4 +467,27 @@
 	.icon + span:not(.invisible)  {
 		margin-left: 5px;
 	}
+}
+
+.messageReduced {
+	.messageHeader {
+		background-color: $wcfSidebarBackground;
+		color: $wcfSidebarText;
+		
+		@include screen-sm-down {
+			margin: 0 -10px;
+			padding: 10px
+		}
+		
+		@include screen-md-up {
+			padding: 10px 20px;
+		}	
+	}
+	
+	@include screen-md-up {
+		.messageBody,
+		.messageFooter {
+			padding: 0 20px;
+		}
+	}	
 }
