@@ -445,11 +445,12 @@ final class DOMUtil {
 			
 			$currentNode = $node;
 			while (($parent = $currentNode->parentNode) !== $ancestor) {
+				/** @var \DOMElement $newNode */
 				$newNode = $parent->cloneNode();
 				self::insertBefore($newNode, $parent);
 				
 				while ($currentNode->previousSibling) {
-					$newNode->appendChild($currentNode->previousSibling);
+					self::prepend($currentNode->previousSibling, $newNode);
 				}
 				
 				$currentNode = $parent;
