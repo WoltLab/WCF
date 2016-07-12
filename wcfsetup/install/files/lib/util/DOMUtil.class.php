@@ -55,6 +55,21 @@ final class DOMUtil {
 	}
 	
 	/**
+	 * Returns a static list of child nodes of provided element.
+	 * 
+	 * @param       \DOMElement     $element        target element
+	 * @return      \DOMNode[]      list of child nodes
+	 */
+	public static function getChildNodes(\DOMElement $element) {
+		$nodes = [];
+		foreach ($element->childNodes as $node) {
+			$nodes[] = $node;
+		}
+		
+		return $nodes;
+	}
+	
+	/**
 	 * Returns the common ancestor of both nodes.
 	 * 
 	 * @param	\DOMNode		$node1		first node
