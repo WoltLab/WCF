@@ -40,6 +40,6 @@ class HtmlOutputNodeWoltlabSize extends AbstractHtmlOutputNode {
 	 * @inheritDoc
 	 */
 	public function replaceTag(array $data) {
-		return '<span style="font-size: ' . $data['size'] . 'px">' . self::PLACEHOLDER . '</span>';
+		return '<span style="font-size: ' . $data['size'] . 'pt">' . self::PLACEHOLDER . '</span>';
 	}
 }
