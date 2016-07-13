@@ -47,11 +47,14 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
+		$showOrder = $this->getShowOrder(isset($data['elements']['showorder']) ? $data['elements']['showorder'] : null);
+		
 		return [
 			'smileyCode' => $data['attributes']['name'],
 			'smileyTitle' => $data['elements']['title'],
 			'smileyPath' => $data['elements']['path'],
-			'aliases' => (isset($data['elements']['aliases']) ? $data['elements']['aliases'] : '')
+			'aliases' => (isset($data['elements']['aliases']) ? $data['elements']['aliases'] : ''),
+			'showOrder' => $showOrder
 		];
 	}
 	
