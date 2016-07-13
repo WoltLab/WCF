@@ -1373,6 +1373,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Rebuilds the daily statistics.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll"><![CDATA[Rebuild Polls]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll.description"><![CDATA[Rebuilds the poll counters.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article"><![CDATA[Rebuild Articles]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article.description"><![CDATA[Rebuilds the article search index.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">
@@ -1840,6 +1842,8 @@ You can now fully access the website.]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Liked the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.search.categories"><![CDATA[Search in Categories]]></item>
+		<item name="wcf.article.articles"><![CDATA[Articles]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -2917,7 +2921,12 @@ Errors are:
 		<item name="wcf.user.style"><![CDATA[Styles]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Forces a specific style instead of the default one.]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Username must be {REGISTER_USERNAME_MIN_LENGTH} up to {REGISTER_USERNAME_MAX_LENGTH} characters long.]]></item>
-		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK && REGISTER_PASSWORD_MIN_LENGTH}Password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters.{else}A secure password should be at least 8 characters long.{/if}]]></item>
+		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Due to security reasons every password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters long{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
+		*} and contain {*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}lower-case letters{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}upper-case letters{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}digits{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} and {/if}special chars{/if}{/if}.{else}A secure password should be at least 8 characters long.{/if}]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Lost Password]]></item>
 		<item name="wcf.user.lostPassword.description"><![CDATA[You must provide your username or email address to request a new password. Contact the site’s administrator if you need assistance.]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>

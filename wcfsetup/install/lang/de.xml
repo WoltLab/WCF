@@ -1398,6 +1398,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Erzeugt die täglichen Statistiken neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll"><![CDATA[Umfragen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll.description"><![CDATA[Aktualisiert Zähler der Umfragen]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article"><![CDATA[Artikel aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article.description"><![CDATA[Aktualisiert den Suchindex für Artikel]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">
@@ -1865,6 +1867,8 @@ Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Mag den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Hat einen Kommentar zum Artikel <a href="{$article->getLink()}#comments">{$article->getTitle()}</a> geschrieben.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comments">{$article->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.article.search.categories"><![CDATA[Folgende Kategorien durchsuchen]]></item>
+		<item name="wcf.article.articles"><![CDATA[Artikel]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -2874,7 +2878,13 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.style"><![CDATA[Stile]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Stile der Benutzeroberfläche]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
-		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK && REGISTER_PASSWORD_MIN_LENGTH}Das Kennwort muss mindestens {REGISTER_PASSWORD_MIN_LENGTH} Zeichen lang sein.{else}Ein sicheres Kennwort sollte mindestens 8 Zeichen lang sein.{/if}]]></item>
+		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Das Kennwort muss aus Sicherheitsgründen mindestens {REGISTER_PASSWORD_MIN_LENGTH} Zeichen lang sein{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
+		*} und {*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}kleine Buchstaben{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} und{/if} {/if}große Buchstaben{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} und{/if} {/if}Zahlen{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} und {/if}Sonderzeichen{/if} {*
+		*}enthalten{/if}.{else}Ein sicheres Kennwort sollte mindestens 8 Zeichen lang sein.{/if}]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Kennwort vergessen]]></item>
 		<item name="wcf.user.lostPassword.description"><![CDATA[Wenn Sie Ihr Kennwort vergessen haben, müssen Sie entweder den Benutzernamen oder die E-Mail-Adresse angeben, die Sie in Ihrem Profil hinterlegt haben. Sie können dabei nur eines der beiden Felder ausfüllen. Wenn Sie beide Daten nicht mehr wissen, wenden Sie sich bitte an den Administrator.]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[Es wurde kein Benutzer mit der E-Mail-Adresse: „{$email}“ gefunden.]]></item>
