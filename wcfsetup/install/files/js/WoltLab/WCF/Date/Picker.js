@@ -114,6 +114,17 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.parentNode.insertBefore(container, element);
 				container.insertBefore(element, button);
 				
+				button = elCreate('a');
+				button.className = 'inputSuffix button';
+				button.addEventListener(WCF_CLICK_EVENT, this.clear.bind(this, element));
+				if (isEmpty) button.style.setProperty('visibility', 'hidden', '');
+				
+				container.appendChild(button);
+				
+				icon = elCreate('span');
+				icon.className = 'icon icon16 fa-times';
+				button.appendChild(icon);
+				
 				// check if the date input has one of the following classes set otherwise default to 'short'
 				var hasClass = false, knownClasses = ['tiny', 'short', 'medium', 'long'];
 				for (var j = 0; j < 4; j++) {
@@ -127,6 +138,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				}
 				
 				_data.set(element, {
+					clearButton: button,
 					shadow: shadowElement,
 					
 					isDateTime: isDateTime,
@@ -440,6 +452,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			_input.value = value;
 			elData(_input, 'value', date.getTime());
+			data.clearButton.style.removeProperty('visibility');
 			data.shadow.value = shadowValue;
 		},
 		
@@ -673,6 +686,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			element.removeAttribute('data-value');
 			element.value = '';
 			
+			data.clearButton.style.setProperty('visibility', 'hidden', '');
 			data.isEmpty = true;
 			data.shadow.value = '';
 		},
