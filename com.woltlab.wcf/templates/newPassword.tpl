@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' __disableAds=true}
 
 {include file='formError'}
 
@@ -47,4 +47,4 @@
 	</div>
 </form>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}

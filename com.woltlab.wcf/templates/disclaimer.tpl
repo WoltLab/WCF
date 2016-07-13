@@ -18,4 +18,4 @@
 	{/if}
 </form>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}

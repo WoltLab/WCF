@@ -4,7 +4,7 @@
 
 {include file='userMenuSidebar'}
 
-{include file='header'}
+{include file='header' __disableAds=true}
 
 {include file='formError'}
 
@@ -113,4 +113,4 @@
 	//]]>
 </script>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}

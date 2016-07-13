@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' __disableAds=true}
 
 {if $__wcf->user->userID && $__wcf->user->activationCode}<p class="info">{lang}wcf.user.registerActivation.info{/lang}</p>{/if}
 
@@ -42,4 +42,4 @@
 	</div>
 </form>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}

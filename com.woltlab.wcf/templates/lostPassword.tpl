@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' __disableAds=true}
 
 <p class="info">{lang}wcf.user.lostPassword.description{/lang}</p>
 
@@ -58,4 +58,4 @@
 	//]]>
 </script>
 
-{include file='footer'}
+{include file='footer' __disableAds=true}
