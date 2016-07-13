@@ -589,7 +589,7 @@ WCF.Comment.Handler = Class.extend({
 					$comment.find('.jsCommentResponseAdd textarea').val('').blur().trigger('updateHeight');
 					
 					var $responseList = $comment.find('ul.commentResponseList');
-					if (!$responseList.length) $responseList = $('<ul class="commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
+					if (!$responseList.length) $responseList = $('<ul class="containerList commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
 					$(data.returnValues.template).appendTo($responseList).wcfFadeIn();
 					
 					if (!WCF.User.userID) {
