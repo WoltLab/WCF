@@ -50,10 +50,14 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		// validate pairs and remove items that lack an opening/closing element
 		$pairs = $this->validatePairs($pairs);
 		
-		$pairs = $this->revertMarkerInsideCodeBlocks($pairs);
-		
 		// group pairs by tag name
 		$groups = $this->groupPairsByName($pairs);
+		
+		// convert source bbcode groups first to ensure no bbcodes inside
+		// source blocks will be evaluated
+		$groups = $this->convertSourceGroups($groups);
+		
+		$groups = $this->revertMarkerInsideCodeBlocks($groups, $htmlNodeProcessor);
 		
 		// convert pairs into HTML or metacode
 		$this->convertGroups($groups);
@@ -61,11 +65,12 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	
 	/**
 	 * Transforms bbcode markers inside source code elements into their plain bbcode representation.
-	 * 
-	 * @param	array		$pairs		list of bbcode marker pairs
-	 * @return	array		filtered list of bbcode marker pairs
+	 *
+	 * @param	array		                $groups		grouped list of bbcode marker pairs
+	 * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+	 * @return      array                           filtered groups without source bbcodes
 	 */
-	protected function revertMarkerInsideCodeBlocks(array $pairs) {
+	protected function revertMarkerInsideCodeBlocks(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		$isInsideCode = function(\DOMElement $element) {
 			$parent = $element;
 			while ($parent = $parent->parentNode) {
@@ -85,15 +90,23 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			return false;
 		};
 		
-		foreach ($pairs as $uuid => $pair) {
-			if ($isInsideCode($pair['open']) || $isInsideCode($pair['close'])) {
-				$this->convertToBBCode($pair);
-				
-				unset($pairs[$uuid]);
+		foreach ($groups as $name => $pairs) {
+			for ($i = 0, $length = count($pairs); $i < $length; $i++) {
+				$pair = $pairs[$i];
+				if ($isInsideCode($pair['open']) || $isInsideCode($pair['close'])) {
+					$pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
+					$this->convertToBBCode($name, $pair);
+					
+					unset($groups[$name][$i]);
+					
+					if (empty($groups[$name])) {
+						unset($groups[$name]);
+					}
+				}
 			}
 		}
 		
-		return $pairs;
+		return $groups;
 	}
 	
 	/**
@@ -182,12 +195,12 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	}
 	
 	/**
-	 * Converts bbcode marker pairs into block- or inline-elements.
-	 * 
+	 * Converts source bbcode groups.
+	 *
 	 * @param	array		$groups		grouped list of bbcode marker pairs
+	 * @return      array           filtered groups without source bbcodes
 	 */
-	protected function convertGroups(array $groups) {
-		// process source elements first
+	protected function convertSourceGroups(array $groups) {
 		foreach ($this->sourceElements as $name) {
 			if (in_array($name, $this->blockElements)) {
 				if (isset($groups[$name])) {
@@ -211,7 +224,15 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			}
 		}
 		
-		// remaining block elements
+		return $groups;
+	}
+	
+	/**
+	 * Converts bbcode marker pairs into block- or inline-elements.
+	 * 
+	 * @param	array		$groups		grouped list of bbcode marker pairs
+	 */
+	protected function convertGroups(array $groups) {
 		foreach ($this->blockElements as $name) {
 			if (isset($groups[$name])) {
 				for ($i = 0, $length = count($groups[$name]); $i < $length; $i++) {
@@ -392,20 +413,21 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	 * Converts a bbcode marker pair into their plain bbcode representation. This method is used
 	 * to convert markers inside source code elements.
 	 * 
+	 * @param       string          $name           bbcode name
 	 * @param	array		$pair		bbcode marker pair
 	 */
-	protected function convertToBBCode(array $pair) {
+	protected function convertToBBCode($name, array $pair) {
 		/** @var \DOMElement $start */
 		$start = $pair['open'];
 		/** @var \DOMElement $end */
 		$end = $pair['close'];
 		
 		$attributes = (isset($pair['attributes'])) ? $pair['attributes'] : '';
-		$textNode = $start->ownerDocument->createTextNode(HtmlBBCodeParser::getInstance()->buildBBCodeTag($pair['name'], $attributes, true));
+		$textNode = $start->ownerDocument->createTextNode(HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
 		DOMUtil::insertBefore($textNode, $start);
 		DOMUtil::removeNode($start);
 		
-		$textNode = $end->ownerDocument->createTextNode('[/' . $pair['name'] . ']');
+		$textNode = $end->ownerDocument->createTextNode('[/' . $name . ']');
 		DOMUtil::insertBefore($textNode, $end);
 		DOMUtil::removeNode($end);
 	}
