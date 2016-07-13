@@ -2011,8 +2011,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Wollen Sie wirklich {if $count == 1}einem{else}{#$count}{/if} Benutzer ein neues Kennwort zusenden?]]></item>
 		
-		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if} markiert]]></item>
-		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if}]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer]]></item>
 	</category>
 	
 	<category name="wcf.comment">

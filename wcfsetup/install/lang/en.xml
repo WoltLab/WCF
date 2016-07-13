@@ -1989,9 +1989,9 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
 		
-		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if} marked]]></item>
-		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if} marked]]></item>
-		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One User{else}{#$count} Users{/if} marked]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if}]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if}]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One User{else}{#$count} Users{/if}]]></item>
 	</category>
 	
 	<category name="wcf.comment">
