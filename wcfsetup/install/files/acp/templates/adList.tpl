@@ -36,6 +36,8 @@
 			{foreach from=$objects item='ad'}
 				<li class="sortableNode sortableNoNesting jsAd" data-object-id="{@$ad->adID}">
 					<span class="sortableNodeLabel">
+						<a href="{link controller='AdEdit' object=$ad}{/link}">{$ad->adName}</a>
+						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-{if !$ad->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
 							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
@@ -43,8 +45,6 @@
 							
 							{event name='itemButtons'}
 						</span>
-						
-						<a href="{link controller='AdEdit' object=$ad}{/link}">{$ad->adName}</a>
 					</span>
 				</li>
 			{/foreach}
