@@ -138,13 +138,24 @@ define(
 				_pageMenuMain = new UiPageMenuMain();
 				_pageMenuUser = new UiPageMenuUser();
 			}
+			
+			elBySelAll('.boxMenu', null, function(boxMenu) {
+				boxMenu.addEventListener(WCF_CLICK_EVENT, function(event) {
+					event.stopPropagation();
+					
+					if (event.target === boxMenu) {
+						event.preventDefault();
+						
+						boxMenu.classList.add('open');
+					}
+				});
+			});
 		},
 		
 		_closeAllMenus: function() {
-			var openMenus = elBySelAll('.jsMobileButtonGroupNavigation > ul.open');
-			for (var i = 0, length = openMenus.length; i < length; i++) {
-				openMenus[i].classList.remove('open');
-			}
+			elBySelAll('.jsMobileButtonGroupNavigation > ul.open, .boxMenu.open', null, function (menu) {
+				menu.classList.remove('open');
+			});
 		}
 	};
 });

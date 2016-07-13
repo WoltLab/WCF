@@ -402,6 +402,21 @@
 			.boxMenuDepth2 .boxMenuLink {
 				padding-left: 60px;
 			}
+			
+			@include screen-md-down {
+				> .active {
+					pointer-events: none;
+					
+					> a::after {
+						content: $fa-var-caret-down;
+						font-family: FontAwesome;
+					}
+				}
+				
+				&:not(.open) > :not(.active) {
+					display: none;
+				}
+			}
 		}
 	}
 	
