@@ -2332,7 +2332,8 @@ Errors are:
 		<item name="wcf.global.date"><![CDATA[Date]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
+		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
+		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>
@@ -2378,7 +2379,8 @@ Errors are:
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>
 		<item name="wcf.global.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
-		<item name="wcf.global.error.illegalLink"><![CDATA[The link you’re trying to reach is no longer available or invalid.]]></item>
+		<item name="wcf.global.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
+		<item name="wcf.global.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Back to previous page.]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Unspecified]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Default Value]]></item>

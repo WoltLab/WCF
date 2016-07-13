@@ -2354,7 +2354,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
-		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
+		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Zugriff verweigert]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Keine Antwort vom Server erhalten, Anfrage wurde abgebrochen.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">Was ist passiert?</p>
@@ -2400,7 +2400,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste „Strg/Ctrl“ (Windows) oder „Befehl/Command“ (Mac OS) möglich.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
 		<item name="wcf.global.page.jumpTo.description"><![CDATA[Geben Sie einen Wert zwischen „1“ und „#pages#“ ein.]]></item>
-		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
+		<item name="wcf.global.error.illegalLink"><![CDATA[Die von Ihnen angeforderte Seite wurde nicht gefunden. Bitte überprüfen Sie die Adresse oder gehen Sie zurück auf die Startseite.]]></item>
+		<item name="wcf.global.error.illegalLink.title"><![CDATA[Seite nicht gefunden]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Standard]]></item>

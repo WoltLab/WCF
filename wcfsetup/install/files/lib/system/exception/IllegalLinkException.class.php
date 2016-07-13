@@ -23,6 +23,11 @@ class IllegalLinkException extends NamedUserException {
 	 */
 	public function show() {
 		@header('HTTP/1.0 404 Not Found');
+		
+		WCF::getTPL()->assign([
+			'title' => WCF::getLanguage()->get('wcf.global.error.illegalLink.title')
+		]);
+		
 		parent::show();
 	}
 }
