@@ -1,4 +1,4 @@
-<textarea id="{$option->optionName}" name="values[{$option->optionName}]" cols="40" rows="10">{$value}</textarea>
+<textarea id="{$option->optionName}" name="values[{$option->optionName}]" cols="40" rows="10"{if $option->required} required{/if}>{$value}</textarea>
 {include file='wysiwyg' wysiwygSelector=$option->optionName}
 
 <script data-relocate="true">
