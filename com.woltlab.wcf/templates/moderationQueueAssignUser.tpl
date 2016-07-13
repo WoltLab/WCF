@@ -10,7 +10,7 @@
 				<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUser} checked{/if}> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
 				<li>
 					<input type="radio" name="assignedUserID" value="-1"{if !$assignedUser} checked{/if}>
-					<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser}{$assignedUser->username}{/if}">
+					<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser && $assignedUser->userID != $__wcf->getUser()->userID}{$assignedUser->username}{/if}">
 					{*if $errorField == 'assignedUsername'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
