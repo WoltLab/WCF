@@ -217,6 +217,9 @@ final class HTTPRequest {
 	 */
 	private function setURL($url) {
 		$parsedUrl = $originUrl = parse_url($url);
+		if (empty($originUrl['scheme']) || empty($originUrl['host'])) {
+			throw new SystemException("Invalid URL '{$url}' given");
+		}
 		
 		$this->originUseSSL = $originUrl['scheme'] === 'https';
 		$this->originHost = $originUrl['host'];
