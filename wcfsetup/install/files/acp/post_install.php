@@ -1,4 +1,6 @@
 <?php
+use wcf\data\category\CategoryEditor;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\system\WCF;
@@ -19,3 +21,10 @@ $action = new UserProfileAction([$editor], 'updateUserRank');
 $action->executeAction();
 $action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 $action->executeAction();
+
+// add default article category
+CategoryEditor::create([
+	'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category'),
+	'title' => 'Default Category',
+	'time' => TIME_NOW
+]);
