@@ -48,15 +48,26 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.readOnly = true;
 				
 				var isDateTime = (elAttr(element, 'type') === 'datetime');
+				var isTimeOnly = (isDateTime && elDataBool(element, 'time-only'));
 				
 				elData(element, 'is-date-time', isDateTime);
+				elData(element, 'is-time-only', isTimeOnly);
 				
 				// convert value
 				var date = null, value = elAttr(element, 'value');
 				if (elAttr(element, 'value')) {
-					date = new Date(value);
+					if (isDateTime) {
+						date = new Date();
+						var tmp = value.split(':');
+						date.setHours(tmp[0], tmp[1]);
+					}
+					else {
+						date = new Date(value);
+					}
+					
 					elData(element, 'value', date.getTime());
-					value = DateUtil['formatDate' + (isDateTime ? 'Time' : '')](date);
+					var format = (isTimeOnly) ? 'formatTime' : ('formatDate' + (isDateTime ? 'Time' : '')); 
+					value = DateUtil[format](date);
 				}
 				
 				var isEmpty = (value.length === 0);
@@ -90,7 +101,12 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				shadowElement.type = 'hidden';
 				
 				if (date !== null) {
-					shadowElement.value = DateUtil.format(date, (isDateTime) ? 'c' : 'Y-m-d');
+					if (isTimeOnly) {
+						shadowElement.value = DateUtil.format(date, 'H:i');
+					}
+					else {
+						shadowElement.value = DateUtil.format(date, (isDateTime) ? 'c' : 'Y-m-d');
+					}
 				}
 				
 				element.parentNode.insertBefore(shadowElement, element);
@@ -143,6 +159,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					
 					isDateTime: isDateTime,
 					isEmpty: isEmpty,
+					isTimeOnly: isTimeOnly,
 					
 					onClose: null
 				});
@@ -250,6 +267,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			else {
 				_datePicker.classList.remove('datePickerTime');
 			}
+			
+			_datePicker.classList[(data.isTimeOnly) ? 'add' : 'remove']('datePickerTimeOnly');
 			
 			this._renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 			
@@ -436,8 +455,14 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					_dateMinute.value
 				);
 				
-				value = DateUtil.formatDateTime(date);
-				shadowValue = DateUtil.format(date, 'c');
+				if (data.isTimeOnly) {
+					value = DateUtil.formatTime(date);
+					shadowValue = DateUtil.format(date, 'H:i');
+				}
+				else {
+					value = DateUtil.formatDateTime(date);
+					shadowValue = DateUtil.format(date, 'c');
+				}
 			}
 			else {
 				date = new Date(

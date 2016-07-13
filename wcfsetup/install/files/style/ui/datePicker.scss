@@ -18,8 +18,21 @@
 		display: block;
 	}
 	
-	&.datePickerTime > footer {
-		display: block;
+	&.datePickerTime {
+		&.datePickerTimeOnly {
+			> header,
+			> ul {
+				display: none;
+			}
+			
+			> footer {
+				border-top-width: 0;
+			}
+		}
+		
+		> footer {
+			display: block;
+		}
 	}
 	
 	> header {
