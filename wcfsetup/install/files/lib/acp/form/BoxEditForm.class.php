@@ -76,17 +76,6 @@ class BoxEditForm extends BoxAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public function validate() {
-		parent::validate();
-		
-		
-	}
-	
-	
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function save() {
 		AbstractForm::save();
 		

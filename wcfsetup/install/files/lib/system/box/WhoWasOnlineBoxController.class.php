@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\box;
-use wcf\data\DatabaseObject;
 use wcf\data\user\online\UsersOnlineList;
 use wcf\data\user\UserProfile;
+use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\WhoWasOnlineCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
