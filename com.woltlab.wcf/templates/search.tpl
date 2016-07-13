@@ -84,8 +84,6 @@
 		
 	{event name='sections'}
 		
-	{include file='captcha'}
-		
 	{foreach from=$objectTypes key=objectTypeName item=objectType}
 		{if $objectType->isAccessible() && $objectType->getFormTemplateName()}
 			{assign var='__jsID' value='.'|str_replace:'_':$objectTypeName}
@@ -108,6 +106,8 @@
 			</section>
 		{/if}
 	{/foreach}
+	
+	{include file='captcha'}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
