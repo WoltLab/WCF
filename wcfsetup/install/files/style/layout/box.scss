@@ -413,8 +413,24 @@
 					}
 				}
 				
-				&:not(.open) > :not(.active) {
-					display: none;
+				&:not(.open) {
+					:first-child ~ :not(.active) {
+						display: block;
+						pointer-events: none;
+						
+						> a::after {
+							content: $fa-var-caret-down;
+							font-family: FontAwesome;
+						}
+					}
+					
+					> .active ~ li {
+						display: none !important;
+					}
+					
+					li:not(.active) {
+						display: none;
+					}
 				}
 			}
 		}
