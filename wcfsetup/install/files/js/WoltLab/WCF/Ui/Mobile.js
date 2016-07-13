@@ -108,26 +108,28 @@ define(
 				if (navigation.classList.contains('jsMobileButtonGroupNavigation')) continue;
 				else navigation.classList.add('jsMobileButtonGroupNavigation');
 				
+				navigation.parentNode.classList.add('hasMobileNavigation');
+				
 				var button = elCreate('a');
-				button.classList.add('dropdownLabel');
+				button.className = 'dropdownLabel';
 				
 				var span = elCreate('span');
-				span.className = 'icon icon24 fa-list';
+				span.className = 'icon icon24 fa-ellipsis-v';
 				button.appendChild(span);
 				
-				(function(button) {
-					button.addEventListener(WCF_CLICK_EVENT, function(ev) {
-						var next = button.nextElementSibling;
-						if (next !== null) {
-							next.classList.toggle('open');
-							
-							ev.stopPropagation();
-							return false;
-						}
+				var list = elBySel('.buttonList', navigation);
+				list.addEventListener(WCF_CLICK_EVENT, function(event) {
+					event.stopPropagation();
+				});
+				
+				(function(navigation, button) {
+					button.addEventListener(WCF_CLICK_EVENT, function(event) {
+						event.preventDefault();
+						event.stopPropagation();
 						
-						return true;
+						navigation.classList.toggle('open');
 					});
-				})(button);
+				})(navigation, button);
 				
 				navigation.insertBefore(button, navigation.firstChild);
 			}
@@ -153,7 +155,7 @@ define(
 		},
 		
 		_closeAllMenus: function() {
-			elBySelAll('.jsMobileButtonGroupNavigation > ul.open, .boxMenu.open', null, function (menu) {
+			elBySelAll('.jsMobileButtonGroupNavigation.open, .boxMenu.open', null, function (menu) {
 				menu.classList.remove('open');
 			});
 		}
