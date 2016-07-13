@@ -283,6 +283,7 @@
 			position: relative;
 			text-align: left;
 			text-overflow: ellipsis;
+			text-transform: initial;
 			white-space: nowrap;
 			
 			&::after {

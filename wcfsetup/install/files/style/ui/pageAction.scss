@@ -15,9 +15,9 @@
 }
 
 .pageAction {
-	bottom: 20px;
+	bottom: 10px;
 	position: fixed;
-	right: 20px;
+	right: 10px;
 	z-index: 400;
 	
 	@include inlineList;
@@ -46,21 +46,8 @@
 			visibility: hidden;
 		}
 		
-		> a {
-			background-color: rgba(0, 0, 0, .7);
-			border-radius: 2px;
-			color: rgba(224, 224, 224, 1);
-			padding: 5px 10px;
-			
-			> .icon {
-				color: inherit;
-			}
-		}
-		
-		> a:hover,
-		&.dropdownOpen > a {
-			background-color: rgba(0, 0, 0, 1);
-			color: rgba(255, 255, 255, 1);
+		&.toTop > a {
+			padding: 2px;
 		}
 	}
 }

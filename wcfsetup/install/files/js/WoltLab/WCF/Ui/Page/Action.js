@@ -41,6 +41,8 @@ define(['Dictionary', 'Dom/Util'], function(Dictionary, DomUtil) {
 			if (_didInit === false) this.setup();
 			
 			var listItem = elCreate('li');
+			button.classList.add('button');
+			button.classList.add('buttonPrimary');
 			listItem.appendChild(button);
 			elAttr(listItem, 'aria-hidden', (buttonName === 'toTop' ? 'true' : 'false'));
 			elData(listItem, 'name', buttonName);

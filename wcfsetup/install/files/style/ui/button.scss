@@ -11,7 +11,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	cursor: pointer;
 	display: inline-block;
 	outline: none;
-	padding: 6px 12px;
+	padding: 8px 18px;
 	text-decoration: none;
 	
 	// input elements do not inherit font family, size and line-height from body
@@ -36,9 +36,14 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	}
 	
 	&.small {
-		padding: 4px 7px;
+		padding: 6px 8px;
+		text-transform: initial;
 		
 		@include wcfFontSmall;
+	}
+	
+	&:not(.inputPrefix) {
+		text-transform: uppercase;
 	}
 }
 
@@ -98,7 +103,8 @@ a.button {
 	@include inlineList;
 	
 	&.smallButtons .button {
-		padding: 5px 7px;
+		padding: 6px 8px;
+		text-transform: initial;
 		
 		@include wcfFontSmall;
 	}
