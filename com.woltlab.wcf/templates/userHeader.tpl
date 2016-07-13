@@ -141,8 +141,8 @@
 			</div>
 		</div>
 		
-		{hascontent}
-			<div class="userProfileDetails">
+		<div class="userProfileDetails">
+			{hascontent}
 				<div class="layoutBoundary">
 					<ul class="userStats">
 						{content}
@@ -175,8 +175,7 @@
 						{/content}
 					</ul>
 				</div>
-			</div>
-		{/hascontent}
+			{/hascontent}
+		</div>
 	</div>
 </div>
-

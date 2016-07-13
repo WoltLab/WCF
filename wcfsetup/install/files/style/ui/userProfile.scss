@@ -278,6 +278,10 @@
 }
 
 .userProfileDetails {
+	@include screen-md-up {
+		min-height: 94px;
+	}
+	
 	> .layoutBoundary {
 		@include screen-md-up {
 			padding: 20px 20px 20px 208px;
