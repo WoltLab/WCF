@@ -1,0 +1,183 @@
+@mixin dropdownMenu {
+	background-color: $wcfDropdownBackground;
+	border-radius: 2px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	color: $wcfDropdownText;
+	display: none;
+	min-width: 160px;
+	padding: 3px 0;
+	pointer-events: all;
+	position: absolute;
+	text-align: left;
+	visibility: hidden;
+	z-index: 450;
+	
+	&.dropdownMenuPageSearch {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+	
+	&.dropdownArrowRight {
+		&::after {
+			left: auto;
+			right: 9px;
+		}
+		
+		&::before {
+			left: auto;
+			right: 10px;
+		}
+	}
+	
+	&.dropdownArrowBottom {
+		&::after {
+			border: 10px transparent solid;
+			border-top-color: $wcfDropdownBorder;
+			border-bottom-width: 0;
+			bottom: -10px;
+			top: auto;
+		}
+		
+		&::before {
+			border: 9px transparent solid;
+			border-top-color: $wcfDropdownBackground;
+			border-bottom-width: 0;
+			bottom: -9px;
+			top: auto;
+		}
+	}
+	
+	&.dropdownOpen {
+		display: block;
+		visibility: visible;
+	}
+	
+	li {
+		display: block;
+		
+		&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
+		&.dropdownList > li:hover:not(.dropdownDivider),
+		&.dropdownNavigationItem,
+		&.active {
+			background-color: $wcfDropdownBackgroundActive;
+			color: $wcfDropdownLinkActive;
+			
+			> a {
+				color: $wcfDropdownLinkActive;
+			}
+		}
+		
+		&.dropdownDivider {
+			border-top: 1px solid $wcfDropdownBorderInner;
+			margin: 3px 0;
+		}
+		
+		&.dropdownText {
+			padding: $wcfGapTiny $wcfGapMedium;
+			
+			@include wcfFontSmall;
+		}
+		
+		&.boxFlag {
+			padding-top: 2px;
+		}
+		
+		/*
+		// @TODO
+		&.missingValue > span {
+			position: relative;
+			
+			&:after {
+				color: @wcfWarningBackgroundColor;
+				content: @fa-var-exclamation-triangle;
+				font-family: FontAwesome;
+				position: absolute;
+				right: @wcfGapMedium;
+				top: @wcfGapTiny;
+			}
+		}
+		*/
+		
+		> a,
+		> span {
+			clear: both;
+			cursor: pointer;
+			display: block;
+			max-width: 350px;
+			overflow: hidden;
+			padding: 5px 20px;
+			text-decoration: none;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			word-wrap: normal;
+			
+			> div > h3 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		
+		> a {
+			color: $wcfDropdownLink;
+		}
+		
+		> a > small {
+			display: block;
+		}
+		
+		> a + span.badge {
+			display: none;
+		}
+		
+		> .box16 {
+			align-items: center;
+			cursor: pointer;
+			min-height: 0;
+			padding: 5px 10px;
+		}
+		
+		> label {
+			display: block;
+		}
+		
+		.containerHeadline {
+			margin-bottom: 0;
+			
+			> p {
+				@include wcfFontSmall;
+			}
+		}
+		
+		.icon {
+			color: inherit;
+		}
+	}
+	
+	.scrollableDropdownMenu {
+		max-height: 300px;
+		overflow: auto;
+	}
+	
+	@include screen-xs {
+		left: 0 !important;
+		right: 0 !important;
+	}
+	
+	@include screen-md-down {
+		li {
+			overflow: hidden;
+			
+			> a,
+			> span {
+				max-width: none;
+				white-space: normal;
+			}
+		}
+	}
+	
+	@include screen-md-up {
+		.dropdownMenu.pageHeaderSearchDropdown {
+			transform: translateY(-10px);
+		}
+	}
+}

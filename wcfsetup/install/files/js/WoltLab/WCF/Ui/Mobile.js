@@ -7,14 +7,16 @@
  * @module	WoltLab/WCF/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
-	function(Core,    Environment,   EventHandler,   Language,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
+	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
 {
 	"use strict";
 	
-	var _buttonGroupNavigations = null;
+	var _buttonGroupNavigations = elByClass('buttonGroupNavigation');
 	var _enabled = false;
+	var _knownMessages = new List();
 	var _main = null;
+	var _messages = elByClass('message');
 	var _options = {};
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
@@ -33,7 +35,6 @@ define(
 				enableMobileMenu: true
 			}, options);
 			
-			_buttonGroupNavigations = elByClass('buttonGroupNavigation');
 			_main = elById('main');
 			
 			if (Environment.touch()) {
@@ -76,8 +77,11 @@ define(
 		},
 		
 		_init: function() {
+			_enabled = true;
+			
 			this._initSearchBar();
 			this._initButtonGroupNavigation();
+			this._initMessages();
 			this._initMobileMenu();
 			
 			UiCloseOverlay.add('WoltLab/WCF/Ui/Mobile', this._closeAllMenus.bind(this));
@@ -135,6 +139,34 @@ define(
 			}
 		},
 		
+		_initMessages: function() {
+			Array.prototype.forEach.call(_messages, function(message) {
+				if (_knownMessages.has(message)) {
+					return;
+				}
+				
+				var navigation = elBySel('.jsMobileNavigation', message);
+				var quickOptions = elBySel('.messageQuickOptions', message); 
+				
+				if (quickOptions) {
+					quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
+						if (_enabled) {
+							event.preventDefault();
+							event.stopPropagation();
+							
+							navigation.classList.toggle('open');
+						}
+					});
+					
+					navigation.addEventListener(WCF_CLICK_EVENT, function(event) {
+						event.stopPropagation();
+					});
+				}
+				
+				_knownMessages.add(message);
+			});
+		},
+		
 		_initMobileMenu: function() {
 			if (_options.enableMobileMenu) {
 				_pageMenuMain = new UiPageMenuMain();
@@ -155,7 +187,7 @@ define(
 		},
 		
 		_closeAllMenus: function() {
-			elBySelAll('.jsMobileButtonGroupNavigation.open, .boxMenu.open', null, function (menu) {
+			elBySelAll('.jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open, .boxMenu.open', null, function (menu) {
 				menu.classList.remove('open');
 			});
 		}

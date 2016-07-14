@@ -235,6 +235,7 @@
 	
 	@include screen-sm-down {
 		margin-top: 20px;
+		position: relative;
 	}
 	
 	&.loading {
@@ -337,17 +338,20 @@
 	}
 	
 	@include screen-sm-down {
-		flex: 0 0 24px;
+		flex: 0 0 24px !important;
 		height: 1.5em;
 		position: relative;
 		
 		&::before {
-			content: $fa-var-bars;
+			content: $fa-var-ellipsis-v;
 			font-family: FontAwesome;
 			font-size: 18px;
+			height: 24px;
 			position: absolute;
 			right: 0;
+			text-align: center;
 			top: -2px;
+			width: 24px;
 		}
 		
 		> li {
@@ -434,7 +438,32 @@
 		}
 		
 		@include screen-sm-down {
-			display: none;
+			&:not(.open) {
+				display: none;
+			}
+			
+			// uses pointless additional classes to increase selector specificity :(
+			&.buttonList.open {
+				@include dropdownMenu;
+				
+				display: block;
+				position: absolute;
+				visibility: visible;
+				top: 10px;
+				
+				.button {
+					// these three are required to work around the .button default styling
+					background-color: transparent;
+					color: $wcfDropdownLink;
+					
+					@include wcfFontDefault;
+					
+					> .invisible {
+						display: inline;
+						margin-left: 5px;
+					}
+				}
+			}
 		}
 	}
 }
