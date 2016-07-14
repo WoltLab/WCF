@@ -15,7 +15,7 @@
 		</div>
 		
 		<dl class="plain dataList containerContent small">
-			{include file='userInformationStatistics' user=$__wcf->user}
+			{include file='userInformationStatistics' user=$__wcf->getUserProfileHandler()}
 		</dl>
 	</div>
 </div>
