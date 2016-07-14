@@ -164,13 +164,22 @@
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;
 			display: flex;
+			flex-wrap: wrap;
 			
-			.pageHeaderSearchType > .button {
-				border-radius: 0;
+			.pageHeaderSearchType {
+				flex: 0 0 100%;
+				margin-bottom: 3px;
 				
-				// input field is larger on iOS
-				align-items: center;
-				display: flex;
+				> .button {
+					border-radius: 0;
+					max-width: unset;
+					min-width: unset;
+					width: 100%;
+					
+					// input field is larger on iOS
+					align-items: center;
+					display: flex;
+				}
 			}
 			
 			.pageHeaderSearchInput {

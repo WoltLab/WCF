@@ -122,8 +122,6 @@
 	justify-content: flex-end;
 	
 	> .menuOverlayItemLink {
-		align-items: center;
-		display: flex;
 		flex: 1 1 auto;
 	}
 }
@@ -182,13 +180,19 @@
 }
 
 .menuOverlayItemLink {
+	align-items: center;
 	background-color: rgb(44, 62, 80);
+	display: flex;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	
 	.icon::before {
 		color: #fff;
+	}
+	
+	&:hover {
+		color: rgb(255, 255, 255);
 	}
 	
 	/* wrapper class for links containing an additional badge */
@@ -269,7 +273,7 @@
 	font-family: FontAwesome;
 	font-size: 18px;
 	position: absolute;
-	left: 10px;
+	left: 12px;
 	top: 50%;
 	transform: translateY(-50%);
 }
