@@ -89,7 +89,7 @@
 	{if MODULE_COOKIE_POLICY_PAGE && $__wcf->session->isFirstVisit() && !$__wcf->user->userID}
 		<p class="info cookiePolicyNotice">
 			{lang}wcf.page.cookiePolicy.info{/lang}
-			<span class="icon icon16 fa-times jsTooltip jsOnly pointer cookiePolicyNoticeDismiss" title="{lang}wcf.global.button.close{/lang}"></span>
+			<span class="icon icon24 fa-times jsTooltip jsOnly pointer cookiePolicyNoticeDismiss" title="{lang}wcf.global.button.close{/lang}"></span>
 			<script data-relocate="true">
 				elBySel('.cookiePolicyNoticeDismiss').addEventListener(WCF_CLICK_EVENT, function() {
 					elRemove(elBySel('.cookiePolicyNotice'));

@@ -404,12 +404,49 @@
 			}
 			
 			@include screen-md-down {
-				> .active {
+				position: relative;
+				
+				.boxMenuLink {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+				
+				&:not(.open) {
+					> li:first-child,
+					> li.active:not(:first-child) {
+						pointer-events: none;
+						
+						> a::after {
+							content: $fa-var-caret-down;
+							font-family: FontAwesome;
+							font-size: 14px;
+							margin-left: 7px;
+						}
+					}
+					
+					> li:first-child ~ li {
+						display: none;
+					}
+					
+					> li.active:not(:first-child) {
+						display: block;
+						position: absolute;
+						left: 0;
+						right: 0;
+						top: 0;
+					}
+				}
+				
+				
+				/*> .active {
 					pointer-events: none;
 					
 					> a::after {
 						content: $fa-var-caret-down;
 						font-family: FontAwesome;
+						font-size: 14px;
+						margin-left: 7px;
 					}
 				}
 				
@@ -421,6 +458,8 @@
 						> a::after {
 							content: $fa-var-caret-down;
 							font-family: FontAwesome;
+							font-size: 14px;
+							margin-left: 7px;
 						}
 					}
 					
@@ -432,6 +471,7 @@
 						display: none;
 					}
 				}
+				*/
 			}
 		}
 	}
