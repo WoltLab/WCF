@@ -68,7 +68,6 @@ class Tag extends DatabaseObject implements IRouteController {
 	 * @return	string
 	 */
 	public static function buildString(array $tags, $separator = ', ') {
-		// TODO: This method seems to be unused and unnecessary, as it is a simply wrapper around implode now
 		return implode($separator, $tags);
 	}
 	
