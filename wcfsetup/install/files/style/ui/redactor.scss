@@ -108,47 +108,6 @@
 			vertical-align: top;
 		}
 	}
-	
-	.TODO_codeBox {
-		overflow: hidden;
-		position: relative;
-		
-		.redactorEditCodeBox {
-			background-color: rgba(255, 255, 255, .8);
-			bottom: 0;
-			left: 0;
-			opacity: 0;
-			position: absolute;
-			right: 0;
-			text-align: center;
-			top: 0;
-			transition: opacity .12s linear;
-			z-index: 200;
-			
-			> div {
-				cursor: pointer;
-				left: 50%;
-				padding: 1em 3em;
-				position: absolute;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
-		}
-		
-		&:hover .redactorEditCodeBox {
-			opacity: 1;
-		}
-		
-		ol {
-			margin-bottom: 0;
-			margin-top: 0;
-		}
-	}
-	
-	&.TODO_msie .quoteBox {
-		/* resets 'hasLayout' causing IE to display resize handle and wonky editing behavior */
-		min-height: 0;
-	}
 }
 
 .redactor-dropdown {

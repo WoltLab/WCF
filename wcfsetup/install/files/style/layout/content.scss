@@ -2,7 +2,7 @@
 /* content header */
 .contentHeader,
 .boxHeadline { // deprecated
-	color: $wcfContentHeadlineText; // todo: rename variable
+	color: $wcfContentHeadlineText;
 	
 	.contentTitle,
 	> h1 { // deprecated
@@ -16,10 +16,10 @@
 	}
 	
 	a {
-		color: $wcfContentHeadlineLink; // todo: rename variable
+		color: $wcfContentHeadlineLink;
 		
 		&:hover {
-			color: $wcfContentHeadlineLinkActive; // todo: rename variable
+			color: $wcfContentHeadlineLinkActive;
 		}
 	}
 }
@@ -104,15 +104,15 @@
 	margin-bottom: 20px;
 	
 	> h2 {
-		color: $wcfContentHeadlineText; // todo: rename variable
+		color: $wcfContentHeadlineText;
 		
 		@include wcfFontSection;
 		
 		a {
-			color: $wcfContentHeadlineLink; // todo: rename variable
+			color: $wcfContentHeadlineLink;
 			
 			&:hover {
-				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				color: $wcfContentHeadlineLinkActive;
 			}
 		}
 		
@@ -141,15 +141,15 @@
 	}
 	
 	.sectionTitle {
-		color: $wcfContentHeadlineText; // todo: rename variable
+		color: $wcfContentHeadlineText;
 		
 		@include wcfFontSection;
 		
 		a {
-			color: $wcfContentHeadlineLink; // todo: rename variable
+			color: $wcfContentHeadlineLink;
 			
 			&:hover {
-				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				color: $wcfContentHeadlineLinkActive;
 			}
 		}
 		
@@ -218,7 +218,7 @@ fieldset {
 	
 	> legend {
 		border-bottom: 1px solid $wcfContentBorderInner;
-		color: $wcfContentHeadlineText; // todo: rename variable
+		color: $wcfContentHeadlineText;
 		float: left;
 		margin-bottom: 20px;
 		padding-bottom: 10px;
@@ -227,10 +227,10 @@ fieldset {
 		@include wcfFontSection;
 		
 		a {
-			color: $wcfContentHeadlineLink; // todo: rename variable
+			color: $wcfContentHeadlineLink;
 			
 			&:hover {
-				color: $wcfContentHeadlineLinkActive; // todo: rename variable
+				color: $wcfContentHeadlineLinkActive;
 			}
 		}
 		

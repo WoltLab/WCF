@@ -40,11 +40,6 @@
 		&:not(:last-child) {
 			margin-right: 5px;
 		}
-		
-		> a {
-			// @todo: still necessary?
-			/*display: inline-flex;*/
-		}
 	}
 	
 	/* adds a comma after each list item */

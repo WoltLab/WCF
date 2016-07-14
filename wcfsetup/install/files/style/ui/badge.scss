@@ -6,7 +6,6 @@ a.badge {
 	display: inline-block;
 	padding: 2px 6px;
 	position: relative;
-	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	vertical-align: middle;
 	white-space: nowrap;
 	word-wrap: normal;

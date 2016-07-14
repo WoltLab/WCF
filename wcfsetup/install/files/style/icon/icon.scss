@@ -126,7 +126,7 @@ a > span.fa:not(.pointer) {
 }
 
 .icon144 {
-	font-size: 130px; // TODO
+	font-size: 130px;
 	height: 144px;
 	line-height: 144px;
 	width: 144px;
@@ -135,7 +135,6 @@ a > span.fa:not(.pointer) {
 // spinner animation
 .fa-spinner {
 	animation: wcfSpinner .6s linear infinite;
-	// TODO: these colors shouldn't be hard-coded
 	border: 2px solid rgb(204, 204, 204);
 	border-top-color: rgb(79, 129, 189);
 	border-radius: 50%;
