@@ -540,7 +540,7 @@ define(
 				
 				var parent = data.markAll;
 				while (parent = parent.parentNode) {
-					if (parent.classList.contains('columnMark')) {
+					if (parent instanceof Element && parent.classList.contains('columnMark')) {
 						parent = parent.parentNode;
 						break;
 					}
