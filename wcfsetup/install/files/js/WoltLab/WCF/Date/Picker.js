@@ -56,7 +56,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				// convert value
 				var date = null, value = elAttr(element, 'value');
 				if (elAttr(element, 'value')) {
-					if (isDateTime) {
+					if (isTimeOnly) {
 						date = new Date();
 						var tmp = value.split(':');
 						date.setHours(tmp[0], tmp[1]);
