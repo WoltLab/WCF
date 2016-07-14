@@ -93,6 +93,10 @@
 			top: 18px;
 			transition: opacity .12s;
 			
+			> .dropdownLabel {
+				display: none;
+			}
+			
 			> ul {
 				background-color: $wcfContentBackground;
 				border: 1px solid rgba(0, 0, 0, .15);
