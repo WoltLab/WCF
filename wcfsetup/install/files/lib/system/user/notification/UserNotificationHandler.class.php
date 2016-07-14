@@ -230,6 +230,10 @@ class UserNotificationHandler extends SingletonFactory {
 				foreach ($recipients as $recipient) {
 					if ($recipient->mailNotificationType == 'instant') {
 						if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
+							// update UserNotification object
+							$event->setObject($notifications[$recipient->userID]['object'], $notificationObject, $userProfile, $additionalData);
+							
+							// send notification
 							$this->sendInstantMailNotification($notifications[$recipient->userID]['object'], $recipient, $event);
 						}
 					}
