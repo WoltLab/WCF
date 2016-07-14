@@ -50,4 +50,21 @@
 			padding: 2px;
 		}
 	}
+	
+	@include screen-xs {
+		flex-wrap: nowrap;
+		left: 10px;
+		
+		> li {
+			flex: 1 1 auto;
+			overflow: hidden;
+			
+			> a {
+				overflow: hidden;
+				text-align: center;
+				text-overflow: ellipsis;
+				width: 100%;
+			}
+		}
+	}
 }
