@@ -201,6 +201,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$banExpires = $this->parameters['banExpires'];
 		if ($banExpires) {
 			$banExpires = strtotime($banExpires);
+			if ($banExpires > 2147483647) $banExpires = 2147483647;
 		}
 		else {
 			$banExpires = 0;
