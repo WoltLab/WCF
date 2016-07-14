@@ -194,6 +194,6 @@
 	 */
 	var clickEvent = ('touchstart' in document.documentElement || 'ontouchstart' in window || navigator.MaxTouchPoints > 0 || navigator.msMaxTouchPoints > 0) ? 'touchstart' : 'click';
 	Object.defineProperty(window, 'WCF_CLICK_EVENT', {
-		value: clickEvent
+		value: 'click' //clickEvent
 	});
 })(window, document);
