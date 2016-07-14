@@ -312,7 +312,7 @@
 		<page identifier="com.woltlab.wcf.EditHistory">
 			<pageType>system</pageType>
 			<controller>wcf\page\EditHistoryPage</controller>
-			<name language="de"><![CDATA[Edit History TODO]]></name>
+			<name language="de"><![CDATA[Versionsgeschichte]]></name>
 			<name language="en"><![CDATA[Edit History]]></name>
 			<options>module_edit_history</options>
 			<requireObjectID>1</requireObjectID>
@@ -321,7 +321,7 @@
 				<title>Edit History</title>
 			</content>
 			<content language="de">
-				<title>Edit History TODO</title>
+				<title>Versionsgeschichte</title>
 			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Following">

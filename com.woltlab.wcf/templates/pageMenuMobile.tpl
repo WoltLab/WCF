@@ -76,7 +76,7 @@
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
 		{if $__wcf->user->userID}
 			{* logged-in *}
-			<li class="menuOverlayTitle">{lang}wcf.user.controlPanel{/lang}</li>
+			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem">
 				<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
 					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}
@@ -132,7 +132,7 @@
 			</li>
 		{else}
 			{* guest *}
-			<li class="menuOverlayTitle">TODO: user menu</li>
+			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
 				<a href="#" class="menuOverlayItemLink box24">
 					<span class="icon icon24 fa-sign-in"></span>
