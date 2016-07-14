@@ -24,30 +24,6 @@ use wcf\util\StringUtil;
  */
 class MediaPage extends AbstractPage {
 	/**
-	 * article which uses the media file as the main article image
-	 * @var	Article|null
-	 */
-	public $article;
-	
-	/**
-	 * id of the article which uses the media file as the main article image
-	 * @var	integer
-	 */
-	public $articleID = 0;
-	
-	/**
-	 * box which uses the media file as box image
-	 * @var	Box
-	 */
-	public $box;
-	
-	/**
-	 * id of the box which uses the media file as box image
-	 * @var	integer
-	 */
-	public $boxID = 0;
-	
-	/**
 	 * etag for the media file
 	 * @var	string
 	 */
@@ -64,24 +40,6 @@ class MediaPage extends AbstractPage {
 	 * @var	Media
 	 */
 	public $media;
-	
-	/**
-	 * message in which the media is embedded
-	 * @var	IMessage
-	 */
-	public $message;
-	
-	/**
-	 * id of the message in which the media is embedded
-	 * @var	integer
-	 */
-	public $messageID = 0;
-	
-	/**
-	 * name of the object type of the message in which the media is embedded
-	 * @var	string
-	 */
-	public $messageObjectType = '';
 	
 	/**
 	 * id of the requested media file
@@ -112,46 +70,6 @@ class MediaPage extends AbstractPage {
 		'application/pdf',
 		'image/pjpeg'
 	];
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function checkPermissions() {
-		parent::checkPermissions();
-		
-		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
-			if ($this->articleID) {
-				$this->article = new Article($this->articleID);
-				
-				if (!$this->article->articleID || !$this->article->canRead()) {
-					throw new PermissionDeniedException();
-				}
-			}
-			else if ($this->boxID) {
-				$this->box = BoxHandler::getInstance()->getBox($this->boxID);
-				
-				if ($this->box === null || !$this->box->isAccessible()) {
-					throw new PermissionDeniedException();
-				}
-			}
-			else if ($this->messageID) {
-				MessageEmbeddedObjectManager::getInstance()->loadObjects($this->messageObjectType, [$this->messageID]);
-				$this->message = MessageEmbeddedObjectManager::getInstance()->getObject($this->messageObjectType, $this->messageID);
-				if ($this->message === null || !($this->message instanceof IMessage) || !$this->message->isVisible()) {
-					throw new PermissionDeniedException();
-				}
-			}
-			else {
-				$parameters = ['canAccess' => false];
-				
-				EventHandler::getInstance()->fireAction($this, 'checkMediaAccess', $parameters);
-				
-				if (empty($parameters['canAccess'])) {
-					throw new PermissionDeniedException();
-				}
-			}
-		}
-	}
 	
 	/**
 	 * @inheritDoc
@@ -201,6 +119,9 @@ class MediaPage extends AbstractPage {
 		if (!$this->media->mediaID) {
 			throw new IllegalLinkException();
 		}
+		if (!$this->media->isAccessible()) {
+			throw new PermissionDeniedException();
+		}
 		
 		if (isset($_REQUEST['thumbnail'])) $this->thumbnail = StringUtil::trim($_REQUEST['thumbnail']);
 		if ($this->thumbnail && !isset(Media::getThumbnailSizes()[$this->thumbnail])) {
@@ -209,18 +130,6 @@ class MediaPage extends AbstractPage {
 		
 		if ($this->thumbnail && !$this->media->{$this->thumbnail.'ThumbnailType'}) {
 			$this->thumbnail = '';
-		}
-		
-		// read context parameters
-		if (isset($_REQUEST['articleID'])) {
-			$this->articleID = intval($_REQUEST['articleID']);
-		}
-		else if (isset($_REQUEST['boxID'])) {
-			$this->boxID = intval($_REQUEST['boxID']);
-		}
-		else if (isset($_REQUEST['messageObjectType']) && isset($_REQUEST['messageID'])) {
-			$this->messageObjectType = StringUtil::trim($_REQUEST['messageObjectType']);
-			$this->messageID = intval($_REQUEST['messageID']);
 		}
 	}
 	

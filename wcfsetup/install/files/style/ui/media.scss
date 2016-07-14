@@ -110,9 +110,10 @@
 	}
 }
 
-#mediaEditor {
-	#mediaThumbnail {
+[id^=mediaEditor] {
+	.mediaThumbnail {
 		text-align: center;
+		margin-bottom: 20px;
 		
 		+ .box48 > dl {
 			font-size: $wcfFontSizeSmall;

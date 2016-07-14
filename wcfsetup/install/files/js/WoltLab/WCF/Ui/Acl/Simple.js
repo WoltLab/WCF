@@ -1,31 +1,33 @@
 define(['Language', 'Dom/ChangeListener', 'WoltLab/WCF/Ui/User/Search/Input'], function(Language, DomChangeListener, UiUserSearchInput) {
 	"use strict";
 	
-	function UiAclSimple() { this.init(); }
+	function UiAclSimple(prefix) { this.init(prefix); }
 	UiAclSimple.prototype = {
-		init: function() {
+		init: function(prefix) {
+			this._prefix = prefix || '';
+			
 			this._build();
 		},
 		
 		_build: function () {
-			var container = elById('aclInputContainer');
+			var container = elById(this._prefix + 'aclInputContainer');
 			
-			elById('aclAllowAll').addEventListener('change', (function() {
+			elById(this._prefix + 'aclAllowAll').addEventListener('change', (function() {
 				elHide(container);
 			}));
-			elById('aclAllowAll_no').addEventListener('change', (function() {
+			elById(this._prefix + 'aclAllowAll_no').addEventListener('change', (function() {
 				elShow(container);
 			}));
 			
-			new UiUserSearchInput(elById('aclSearchInput'), {
+			new UiUserSearchInput(elById(this._prefix + 'aclSearchInput'), {
 				callbackSelect: this._select.bind(this),
 				includeUserGroups: true,
 				preventSubmit: true
 			});
 			
-			this._aclListContainer = elById('aclListContainer');
+			this._aclListContainer = elById(this._prefix + 'aclListContainer');
 			
-			this._list = elById('aclAccessList');
+			this._list = elById(this._prefix + 'aclAccessList');
 			this._list.addEventListener(WCF_CLICK_EVENT, this._removeItem.bind(this));
 			
 			DomChangeListener.trigger();

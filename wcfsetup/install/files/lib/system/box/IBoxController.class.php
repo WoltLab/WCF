@@ -4,7 +4,7 @@ use wcf\data\box\Box;
 
 /**
  * Default interface for box controllers.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -28,17 +28,12 @@ interface IBoxController {
 	
 	/**
 	 * Returns the image of this box.
+	 * 
+	 * Note: The box itself checks if the active user can access the returned media file.
 	 *
 	 * @return	\wcf\data\media\ViewableMedia
 	 */
 	public function getImage();
-	
-	/**
-	 * Returns true if this box has an image.
-	 *
-	 * @return	boolean
-	 */
-	public function hasImage();
 	
 	/**
 	 * Returns the title link of this box.

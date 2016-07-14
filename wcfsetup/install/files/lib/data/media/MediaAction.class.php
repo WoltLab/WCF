@@ -3,6 +3,7 @@ namespace wcf\data\media;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\IUploadAction;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -238,6 +239,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 */
 	public function validateGetEditorDialog() {
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
+		
+		$this->getSingleObject();
 	}
 	
 	/**
@@ -246,15 +249,21 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 * @return	string[]
 	 */
 	public function getEditorDialog() {
-		I18nHandler::getInstance()->register('title');
-		I18nHandler::getInstance()->register('caption');
-		I18nHandler::getInstance()->register('altText');
+		$media = new ViewableMedia($this->getSingleObject()->getDecoratedObject());
+		
+		I18nHandler::getInstance()->register('title_' . $media->mediaID);
+		I18nHandler::getInstance()->register('caption_' . $media->mediaID);
+		I18nHandler::getInstance()->register('altText_' . $media->mediaID);
 		I18nHandler::getInstance()->assignVariables();
 		
 		return [
 			'template' => WCF::getTPL()->fetch('mediaEditor', 'wcf', [
+				'__aclSimplePrefix' => 'mediaEditor_' . $media->mediaID . '_',
+				'aclValues' => SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $media->mediaID),
+				'__languageChooserPrefix' => 'mediaEditor_' . $media->mediaID . '_',
 				'languageID' => WCF::getUser()->languageID,
-				'languages' => LanguageFactory::getInstance()->getLanguages()
+				'languages' => LanguageFactory::getInstance()->getLanguages(),
+				'media' => $media
 			])
 		];
 	}
@@ -361,6 +370,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 						$altText
 					]);
 				}
+			}
+			
+			if (!empty($this->parameters['aclValues'])) {
+				SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.media', $media->mediaID, $this->parameters['aclValues']);
 			}
 		}
 	}

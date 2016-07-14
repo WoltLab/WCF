@@ -72,13 +72,6 @@ abstract class AbstractBoxController implements IBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasImage() {
-		return false;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function getLink() {
 		return '';
 	}

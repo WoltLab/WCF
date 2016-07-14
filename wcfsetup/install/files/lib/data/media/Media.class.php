@@ -3,6 +3,7 @@ namespace wcf\data\media;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
+use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -54,12 +55,6 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	protected $i18nData;
 	
 	/**
-	 * parameters used to build the link to the media file
-	 * @var	array
-	 */
-	protected $linkParameters = [];
-	
-	/**
 	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'media';
@@ -100,18 +95,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('Media', array_merge($this->linkParameters, [
-			'object' => $this
-		]));
-	}
-	
-	/**
-	 * Sets additional parameters used to build the link to the media file.
-	 * 
-	 * @param	array		$parameters
-	 */
-	public function setLinkParameters(array $parameters) {
-		$this->linkParameters = $parameters;
+		return LinkHandler::getInstance()->getLink('Media', ['object' => $this]);
 	}
 	
 	/**
@@ -133,10 +117,10 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 			return $this->getLink();
 		}
 		
-		return LinkHandler::getInstance()->getLink('Media', array_merge($this->linkParameters, [
+		return LinkHandler::getInstance()->getLink('Media', [
 			'object' => $this,
 			'thumbnail' => $size
-		]));
+		]);
 	}
 	
 	/**
@@ -222,6 +206,15 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 		}
 		
 		return $this->i18nData;
+	}
+	
+	/**
+	 * Returns true if the media file can be accessed by the active user.
+	 * 
+	 * @return	boolean
+	 */
+	public function isAccessible() {
+		return WCF::getSession()->getPermission('admin.content.cms.canManageMedia') || SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.media', $this->mediaID);
 	}
 	
 	/**

@@ -1059,7 +1059,7 @@
 		</type>
 		<!-- /box controllers -->
 		
-		<!-- pages -->
+		<!-- simple acl -->
 		<type>
 			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
@@ -1068,7 +1068,11 @@
 			<name>com.woltlab.wcf.box</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
-		<!-- /pages -->
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
+		</type>
+		<!-- /simple acl -->
 		
 		<!-- article list box condition -->
 		<type>

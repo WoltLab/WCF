@@ -26,7 +26,7 @@
 			<input type="text" id="{@$__aclSimplePrefix}aclSearchInput" class="long" placeholder="{lang}wcf.acl.search.description{/lang}">
 		</dd>
 	</dl>
-	
+
 	<dl id="{@$__aclSimplePrefix}aclListContainer"{if $aclValues[allowAll]} style="display: none;"{/if}>
 		<dt>{lang}wcf.acl.access.granted{/lang}</dt>
 		<dd>

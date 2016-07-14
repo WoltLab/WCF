@@ -131,6 +131,8 @@
 			{event name='dataFields'}
 		</section>
 		
+		{include file='aclSimple'}
+		
 		{event name='sections'}
 		
 		<div class="formSubmit">

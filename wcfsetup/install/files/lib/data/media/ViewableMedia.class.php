@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\media;
+use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -20,6 +22,12 @@ use wcf\util\StringUtil;
  * @property-read	string|null	$altText
  */
 class ViewableMedia extends DatabaseObjectDecorator {
+	/**
+	 * user profile of the user who uploaded the media file
+	 * @var	UserProfile
+	 */
+	protected $userProfile;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -68,6 +76,24 @@ class ViewableMedia extends DatabaseObjectDecorator {
 		}
 		
 		return '<img src="'.StringUtil::encodeHTML($this->getThumbnailLink($size)).'" alt="'.StringUtil::encodeHTML($this->altText).'" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $this->getThumbnailWidth($size) . 'px; height: ' . $this->getThumbnailHeight($size) . 'px;">';
+	}
+	
+	/**
+	 * Returns the user profile of the user who uploaded the media file.
+	 * 
+	 * @return	UserProfile
+	 */
+	public function getUserProfile() {
+		if ($this->userProfile === null) {
+			if ($this->userID) {
+				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			}
+			else {
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
+			}
+		}
+		
+		return $this->userProfile;
 	}
 	
 	/**

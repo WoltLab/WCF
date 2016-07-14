@@ -1,9 +1,10 @@
+{if !$__languageChooserPrefix|isset}{assign var='__languageChooserPrefix' value=''}{/if}
 {if !$label|isset}{assign var='label' value='wcf.user.language'}{/if}
 
 {if $languages|count}
 	<dl{if $errorField|isset && $errorField == 'languageID'} class="formError"{/if}>
 		<dt>{lang}{$label}{/lang}</dt>
-		<dd id="languageIDContainer">
+		<dd id="{@$__languageChooserPrefix}languageIDContainer">
 			<noscript>
 				<select name="languageID" id="languageID">
 					{foreach from=$languages item=__language}
@@ -25,7 +26,7 @@
 				{/implode}
 			};
 			
-			LanguageChooser.init('languageIDContainer', 'languageID', {$languageID}, languages)
+			LanguageChooser.init('{@$__languageChooserPrefix}languageIDContainer', 'languageID', {$languageID}, languages)
 		});
 	</script>
 {/if}

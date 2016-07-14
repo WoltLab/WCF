@@ -2478,7 +2478,7 @@ Errors are:
 		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Filesize]]></item>
 		<item name="wcf.media.imageDimensions"><![CDATA[Dimensions]]></item>
-		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$width}×{#$height}]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width}×{#$media->height}]]></item>
 		<item name="wcf.media.insert"><![CDATA[Insert File]]></item>
 		<item name="wcf.media.insert.imageSize"><![CDATA[Image Size]]></item>
 		<item name="wcf.media.insert.imageSize.large"><![CDATA[Large Thumbnail]]></item>

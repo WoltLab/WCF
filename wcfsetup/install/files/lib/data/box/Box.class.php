@@ -28,7 +28,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
- *
+ * 
  * @property-read	integer		$boxID
  * @property-read	integer|null	$objectTypeID		id of the box controller object type
  * @property-read	string		$identifier
@@ -108,6 +108,17 @@ class Box extends DatabaseObject {
 	public $boxContents;
 	
 	/**
+	 * @var	IMenuPageHandler
+	 */
+	protected $linkPageHandler;
+	
+	/**
+	 * page object
+	 * @var	Page
+	 */
+	protected $linkPage;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __get($name) {
@@ -132,17 +143,6 @@ class Box extends DatabaseObject {
 			$this->data['additionalData'] = [];
 		}
 	}
-	
-	/**
-	 * @var	IMenuPageHandler
-	 */
-	protected $linkPageHandler;
-	
-	/**
-	 * page object
-	 * @var	Page
-	 */
-	protected $linkPage;
 	
 	/**
 	 * Returns true if the active user can delete this box.
@@ -323,56 +323,37 @@ class Box extends DatabaseObject {
 	 * @return	ViewableMedia
 	 */
 	public function getImage() {
-		if ($this->boxType == 'system') {
-			return $this->getController()->getImage();
-		}
-		else if ($this->boxType == 'menu') {
+		if ($this->boxType === 'menu') {
 			return null;
 		}
 		
-		if ($this->image !== null) {
-			return $this->image;
-		}
-		
-		$this->getBoxContents();
-		if ($this->isMultilingual) {
-			if (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID) {
-				$this->image = ViewableMedia::getMedia($this->boxContents[WCF::getLanguage()->languageID]->imageID);
+		if ($this->image === null) {
+			if ($this->boxType === 'system') {
+				$this->image = $this->getController()->getImage();
+			}
+			else {
+				$this->getBoxContents();
+				if ($this->isMultilingual) {
+					if (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID) {
+						$this->image = ViewableMedia::getMedia($this->boxContents[WCF::getLanguage()->languageID]->imageID);
+					}
+				}
+				else if (isset($this->boxContents[0]) && $this->boxContents[0]->imageID) {
+					$this->image = ViewableMedia::getMedia($this->boxContents[0]->imageID);
+				}
 			}
 		}
-		else if (isset($this->boxContents[0]) && $this->boxContents[0]->imageID) {
-			$this->image = ViewableMedia::getMedia($this->boxContents[0]->imageID);
-		}
 		
-		$this->image->setLinkParameters(['boxID' => $this->boxID]);
+		if ($this->image === null || !$this->image->isAccessible()) {
+			return null;
+		}
 		
 		return $this->image;
 	}
 	
 	/**
-	 * Returns true if this box has an image.
-	 * 
-	 * @return	boolean
-	 */
-	public function hasImage() {
-		if ($this->boxType == 'system') {
-			return $this->getController()->hasImage();
-		}
-		else if ($this->boxType == 'menu') {
-			return false;
-		}
-		
-		$this->getBoxContents();
-		if ($this->isMultilingual) {
-			return (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID);
-		}
-		
-		return (isset($this->boxContents[0]) && $this->boxContents[0]->imageID);
-	}
-	
-	/**
 	 * Returns the URL of this box.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getLink() {

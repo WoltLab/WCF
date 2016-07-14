@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\media\MediaAction;
 use wcf\data\media\ViewableMedia;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -20,6 +21,12 @@ use wcf\util\ArrayUtil;
  * @since	3.0
  */
 class MediaEditForm extends AbstractForm {
+	/**
+	 * acl values
+	 * @var array
+	 */
+	public $aclValues = [];
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -63,6 +70,7 @@ class MediaEditForm extends AbstractForm {
 		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign([
+			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
 			'action' => 'edit',
 			'isMultilingual' => $this->isMultilingual,
 			'languages' => LanguageFactory::getInstance()->getLanguages(),
@@ -96,6 +104,8 @@ class MediaEditForm extends AbstractForm {
 				if (!empty($contentData['caption'])) I18nHandler::getInstance()->setValues('caption', $contentData['caption']);
 				if (!empty($contentData['title'])) I18nHandler::getInstance()->setValues('title', $contentData['title']);
 			}
+			
+			$this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $this->media->mediaID);
 		}
 		
 		if (!$this->languageID) {
@@ -114,6 +124,8 @@ class MediaEditForm extends AbstractForm {
 			if (isset($_POST['languageID'])) $this->languageID = intval($_POST['languageID']);
 		}
 		I18nHandler::getInstance()->readValues();
+		
+		if (isset($_POST['aclValues']) && is_array($_POST['aclValues'])) $this->aclValues = $_POST['aclValues'];
 	}
 	
 	/**
@@ -150,6 +162,9 @@ class MediaEditForm extends AbstractForm {
 			'title' => I18nHandler::getInstance()->getValues('title')
 		]));
 		$this->objectAction->executeAction();
+		
+		// save acl
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.media', $this->media->mediaID, $this->aclValues);
 		
 		$this->saved();
 		
