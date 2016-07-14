@@ -220,6 +220,8 @@ define(
 				this._createDialog(id, html, options);
 			}
 			
+			document.documentElement.classList.add('pageOverlayActive');
+			
 			return _dialogs.get(id);
 		},
 		
@@ -520,6 +522,7 @@ define(
 				elData(_container, 'close-on-click', 'false');
 				
 				window.removeEventListener('keyup', _keyupListener);
+				document.documentElement.classList.remove('pageOverlayActive');
 			}
 			else {
 				data = _dialogs.get(_activeDialog);

@@ -99,6 +99,8 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			UiScreen.scrollDisable();
 			
 			_pageContainer.classList.add('menuOverlay-' + this._menu.id);
+			
+			document.documentElement.classList.add('pageOverlayActive');
 		},
 		
 		/**
@@ -117,6 +119,8 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 				UiScreen.scrollEnable();
 				
 				_pageContainer.classList.remove('menuOverlay-' + this._menu.id);
+				
+				document.documentElement.classList.remove('pageOverlayActive');
 			}
 		},
 		
