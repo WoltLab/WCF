@@ -117,9 +117,21 @@
 			}
 		}
 		
-		.pageHeaderSearchInputContainer {
+		&:not(.searchBarOpen) .pageHeaderSearchInputContainer {
 			display: none;
 		}
+		
+		&.searchBarOpen .pageHeaderSearchInputContainer {
+			position: absolute;
+			
+			// Regular top calculation does not work because one of the parents
+			// is set to `position: fixed`, screwing up the entire calculation.
+			// We can work around this by using a relative top value of 100%
+			// which equals the total height of the parent container.
+			top: 100% !important;
+		}
+		
+		
 	}
 }
 
