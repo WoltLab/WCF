@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -167,12 +168,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			
 			$data['name'] = $element->getAttribute('name');
 			
-			if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
-				$matches = [];
-				preg_match_all("/(\W)/", $data['name'], $matches);
-				throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
-			}
-			
+			$this->validateOption($data);
 			$this->saveOption($data, $data['categoryname']);
 		}
 	}
@@ -274,6 +270,31 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @param	integer		$existingOptionID
 	 */
 	abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateOption(array $data) {
+		if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
+			$matches = [];
+			preg_match_all("/(\W)/", $data['name'], $matches);
+			throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
+		}
+		
+		// check if option already exists
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_".$this->tableName."
+			WHERE	optionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$data['name']
+		]);
+		$row = $statement->fetchArray();
+		if ($row && $row['packageID'] != $this->installation->getPackageID()) {
+			$package = new Package($row['packageID']);
+			throw new SystemException($this->tableName . " '" . $data['name'] . "' is already provided by '" . $package . "' ('" . $package->package . "').");
+		}
+	}
 	
 	/**
 	 * @inheritDoc

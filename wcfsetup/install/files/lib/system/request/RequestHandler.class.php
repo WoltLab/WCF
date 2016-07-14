@@ -123,7 +123,7 @@ class RequestHandler extends SingletonFactory {
 							$url .= '?' . $_SERVER['QUERY_STRING'];
 						}
 						
-						HeaderUtil::redirect($url, true);
+						HeaderUtil::redirect($url, true, false);
 						exit;
 					}
 				}
@@ -197,7 +197,7 @@ class RequestHandler extends SingletonFactory {
 		}
 		
 		$redirectURL = LinkHandler::getInstance()->getLink($routeData['controller'], $routeData);
-		HeaderUtil::redirect($redirectURL, true);
+		HeaderUtil::redirect($redirectURL, true, false);
 		exit;
 	}
 	
@@ -220,7 +220,7 @@ class RequestHandler extends SingletonFactory {
 		}
 		else if (!empty($data['redirect'])) {
 			// force a redirect
-			HeaderUtil::redirect($data['redirect'], true);
+			HeaderUtil::redirect($data['redirect'], true, false);
 		}
 		
 		// copy route data
