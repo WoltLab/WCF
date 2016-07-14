@@ -150,8 +150,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.edit"><![CDATA[Edit Box]]></item>
 		<item name="wcf.acp.box.image"><![CDATA[Box Image]]></item>
 		<item name="wcf.acp.box.i18n"><![CDATA[Multilingualism]]></item>
-		<item name="wcf.acp.box.i18n.i18n"><![CDATA[Monolingual box]]></item>
-		<item name="wcf.acp.box.i18n.none"><![CDATA[Multilingual box]]></item>
+		<item name="wcf.acp.box.i18n.i18n"><![CDATA[Multilingual box]]></item>
+		<item name="wcf.acp.box.i18n.none"><![CDATA[Monolingual box]]></item>
 		<item name="wcf.acp.box.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.box.linkType.none"><![CDATA[None]]></item>
 		<item name="wcf.acp.box.linkType.internal"><![CDATA[Internal link]]></item>
