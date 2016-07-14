@@ -537,6 +537,18 @@ define(
 			
 			if (data.markAll !== null) {
 				data.markAll.checked = markAll;
+				
+				var parent = data.markAll;
+				while (parent = parent.parentNode) {
+					if (parent.classList.contains('columnMark')) {
+						parent = parent.parentNode;
+						break;
+					}
+				}
+				
+				if (parent) {
+					parent.classList[(markAll ? 'add' : 'remove')]('jsMarked');
+				}
 			}
 		}
 	};
