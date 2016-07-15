@@ -81,7 +81,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				}
 				
 				// update search index
-				SearchIndexManager::getInstance()->add('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
+				SearchIndexManager::getInstance()->set('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
 				
 				// save embedded objects
 				if (!empty($content['htmlInputProcessor'])) {
@@ -149,7 +149,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					}
 					
 					// update search index
-					SearchIndexManager::getInstance()->add('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
+					SearchIndexManager::getInstance()->set('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $article->time, $article->userID, $article->username, ($languageID ?: null), $articleContent->teaser);
 					
 					// save embedded objects
 					if (!empty($content['htmlInputProcessor'])) {
