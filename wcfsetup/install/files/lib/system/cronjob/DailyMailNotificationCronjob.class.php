@@ -165,6 +165,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 					$notification->additionalData
 				);
 				$class->setLanguage($user->getLanguage());
+				WCF::setLanguage($user->getLanguage()->languageID);
 				
 				if (isset($authorToNotification[$notification->notificationID])) {
 					$eventAuthors = [];
