@@ -77,6 +77,10 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					elData(element, 'min-date', '100');
 					elData(element, 'max-date', 'now');
 				}
+				else {
+					if (element.min) elData(element, 'min-date', element.min);
+					if (element.max) elData(element, 'max-date', element.max);
+				}
 				
 				this._initDateRange(element, now, true);
 				this._initDateRange(element, now, false);
@@ -198,6 +202,9 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				if (elById(value) === null) {
 					throw new Error("Reference date picker identified by '" + value + "' does not exists (element id: '" + element.id + "').");
 				}
+			}
+			else if (/^\d{4}\-\d{2}\-\d{2}T/.test(value)) {
+				value = new Date(value).getTime();
 			}
 			else {
 				value = new Date((isMinDate ? 1970 : 2038), 0, 1).getTime();
