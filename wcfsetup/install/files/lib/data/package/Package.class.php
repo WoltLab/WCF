@@ -282,13 +282,30 @@ class Package extends DatabaseObject {
 	 * Checks the version number of the installed package against the "fromversion"
 	 * number of the update.
 	 * 
+	 * The "fromversion" number may contain wildcards (asterisks) which means
+	 * that the update covers the whole range of release numbers where the asterisk
+	 * wildcards digits from 0 to 9.
+	 * For example, if "fromversion" is "1.1.*" and this package updates to
+	 * version 1.2.0, all releases from 1.1.0 to 1.1.9 may be updated using
+	 * this package.
+	 * 
 	 * @param	string		$currentVersion
 	 * @param	string		$fromVersion
 	 * @return	boolean
 	 */
 	public static function checkFromversion($currentVersion, $fromVersion) {
-		if (self::compareVersion($currentVersion, $fromVersion, '=')) {
-			return true;
+		if (mb_strpos($fromVersion, '*') !== false) {
+			// from version with wildcard
+			// use regular expression
+			$fromVersion = str_replace('\*', '.*', preg_quote($fromVersion, '!'));
+			if (preg_match('!^'.$fromVersion.'$!i', $currentVersion)) {
+				return true;
+			}
+		}
+		else {
+			if (self::compareVersion($currentVersion, $fromVersion, '=')) {
+				return true;
+			}
 		}
 		
 		return false;
