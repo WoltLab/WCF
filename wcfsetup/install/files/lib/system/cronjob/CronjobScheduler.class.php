@@ -109,52 +109,56 @@ class CronjobScheduler extends SingletonFactory {
 	 * Loads outstanding cronjobs.
 	 */
 	protected function loadCronjobs() {
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_cronjob cronjob
-			WHERE	(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)
-				AND cronjob.isDisabled = ?
-				AND cronjob.failCount < ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			TIME_NOW,
-			TIME_NOW,
-			0,
-			Cronjob::MAX_FAIL_COUNT
-		]);
-		while ($row = $statement->fetchArray()) {
-			$cronjob = new Cronjob(null, $row);
-			$cronjobEditor = new CronjobEditor($cronjob);
-			$executeCronjob = true;
-			
-			$data = [
-				'state' => Cronjob::PENDING
-			];
-			
-			// reset cronjob if it got stuck before and afterNextExec is in the past
-			if ($cronjobEditor->afterNextExec <= TIME_NOW) {
-				if ($cronjobEditor->state == Cronjob::EXECUTING) {
-					$failCount = $cronjobEditor->failCount + 1;
-					$data['failCount'] = $failCount;
-					
-					// disable cronjob
-					if ($failCount == Cronjob::MAX_FAIL_COUNT) {
-						$data['isDisabled'] = 1;
-						$data['state'] = 0;
+		WCF::getDB()->beginTransaction();
+		$committed = false;
+		try {
+			$sql = "SELECT	        *
+				FROM	        wcf" . WCF_N . "_cronjob cronjob
+				WHERE	        (cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)
+						AND cronjob.isDisabled = ?
+						AND cronjob.failCount < ?
+				FOR UPDATE";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([TIME_NOW, TIME_NOW, 0, Cronjob::MAX_FAIL_COUNT]);
+			while ($row = $statement->fetchArray()) {
+				$cronjob = new Cronjob(null, $row);
+				$cronjobEditor = new CronjobEditor($cronjob);
+				$executeCronjob = true;
+				
+				$data = ['state' => Cronjob::PENDING];
+				
+				// reset cronjob if it got stuck before and afterNextExec is in the past
+				if ($cronjobEditor->afterNextExec <= TIME_NOW) {
+					if ($cronjobEditor->state == Cronjob::EXECUTING) {
+						$failCount = $cronjobEditor->failCount + 1;
+						$data['failCount'] = $failCount;
+						
+						// disable cronjob
+						if ($failCount == Cronjob::MAX_FAIL_COUNT) {
+							$data['isDisabled'] = 1;
+							$data['state'] = 0;
+							$executeCronjob = false;
+						}
+					}
+				} // ignore cronjobs which seem to be running
+				else {
+					if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != Cronjob::READY) {
 						$executeCronjob = false;
 					}
 				}
+				
+				// mark cronjob as pending, preventing parallel execution
+				$cronjobEditor->update($data);
+				
+				if ($executeCronjob) {
+					$this->cronjobEditors[] = $cronjobEditor;
+				}
 			}
-			// ignore cronjobs which seem to be running
-			else if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != Cronjob::READY) {
-				$executeCronjob = false;
-			}
-			
-			// mark cronjob as pending, preventing parallel execution
-			$cronjobEditor->update($data);
-			
-			if ($executeCronjob) {
-				$this->cronjobEditors[] = $cronjobEditor;
-			}
+			WCF::getDB()->commitTransaction();
+			$committed = true;
+		}
+		finally {
+			if (!$committed) WCF::getDB()->rollBackTransaction();
 		}
 	}
 	
