@@ -13,6 +13,8 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
+ *        
+ * @property	ViewableUserActivityEventList   $objectList
  */
 class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
@@ -116,10 +118,16 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 			$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
 		}
 		
+		// load more items than necessary to avoid empty list if some items are invisible for current user
+		$this->objectList->sqlLimit = $this->box->limit * 3;
+		
 		parent::readObjects();
 		
-		// removes orphaned and non-accessable events
+		// removes orphaned and non-accessible events
 		/** @noinspection PhpParamsInspection */
 		UserActivityEventHandler::validateEvents($this->objectList);
+		
+		// remove unused items
+		$this->objectList->truncate($this->box->limit);
 	}
 }

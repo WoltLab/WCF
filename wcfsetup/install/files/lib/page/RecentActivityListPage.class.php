@@ -37,6 +37,10 @@ class RecentActivityListPage extends AbstractPage {
 		parent::readData();
 		
 		$this->eventList = new ViewableUserActivityEventList();
+		
+		// load more items than necessary to avoid empty list if some items are invisible for current user
+		$this->eventList->sqlLimit = 60;
+		
 		$this->eventList->readObjects();
 		
 		// add breadcrumbs
@@ -54,6 +58,9 @@ class RecentActivityListPage extends AbstractPage {
 		// removes orphaned and non-accessible events
 		UserActivityEventHandler::validateEvents($this->eventList);
 		
+		// remove unused items
+		$this->eventList->truncate(20);
+				
 		WCF::getTPL()->assign([
 			'eventList' => $this->eventList,
 			'lastEventTime' => $lastEventTime,

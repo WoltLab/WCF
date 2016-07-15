@@ -19,6 +19,10 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
 	 */
 	public function getContent($userID) {
 		$eventList = new ViewableUserActivityEventList();
+		
+		// load more items than necessary to avoid empty list if some items are invisible for current user
+		$eventList->sqlLimit = 60;
+		
 		$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$userID]);
 		$eventList->readObjects();
 		
@@ -26,6 +30,9 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
 		if ($lastEventTime) {
 			UserActivityEventHandler::validateEvents($eventList);
 		}
+		
+		// remove unused items
+		$eventList->truncate(20);
 		
 		WCF::getTPL()->assign([
 			'eventList' => $eventList,

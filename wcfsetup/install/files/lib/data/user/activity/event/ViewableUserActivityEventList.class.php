@@ -123,4 +123,14 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 		
 		return $orphanedEventIDs;
 	}
+	
+	/**
+	 * Truncates the items in object list to given number of items.
+	 * 
+	 * @param       integer         $limit
+	 */
+	public function truncate($limit) {
+		$this->objects = array_slice($this->objects, 0, $limit, true);
+		$this->indexToObject = array_keys($this->objects);
+	}
 }
