@@ -7,6 +7,7 @@ use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
 use wcf\system\search\mysql\MysqlSearchIndexManager;
 use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
  * Manages the search index.
@@ -103,6 +104,9 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 * @inheritDoc
 	 */
 	public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		// strip html; remove whitespace from beginning and end of the message
+		$message = StringUtil::trim(StringUtil::stripHTML($message));
+		
 		$this->getSearchIndexManager()->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
