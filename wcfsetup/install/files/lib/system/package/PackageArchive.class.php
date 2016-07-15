@@ -319,35 +319,6 @@ class PackageArchive {
 			}
 		}
 		
-		// get php requirements
-		/*$requirements = $xpath->query('./ns:phprequirements', $package);
-		foreach ($requirements as $requirement) {
-			$elements = $xpath->query('child::*', $requirement);
-			foreach ($elements as $element) {
-				switch ($element->tagName) {
-					case 'version':
-						$this->phpRequirements['version'] = $element->nodeValue;
-					break;
-					
-					case 'setting':
-						$this->phpRequirements['settings'][$element->getAttribute('name')] = $element->nodeValue;
-					break;
-					
-					case 'extension':
-						$this->phpRequirements['extensions'][] = $element->nodeValue;
-					break;
-					
-					case 'function':
-						$this->phpRequirements['functions'][] = $element->nodeValue;
-					break;
-					
-					case 'class':
-						$this->phpRequirements['classes'][] = $element->nodeValue;
-					break;
-				}
-			}
-		}*/
-		
 		// add com.woltlab.wcf to package requirements
 		if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {
 			$this->requirements['com.woltlab.wcf'] = ['name' => 'com.woltlab.wcf'];
