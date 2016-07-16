@@ -392,7 +392,7 @@ define(
 				}
 				
 				if (typeof data.onShow === 'function') {
-					data.onShow(id);
+					data.onShow(data.content);
 				}
 			}
 			

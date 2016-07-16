@@ -108,8 +108,14 @@
 			padding-bottom: 10px;
 			
 			> .contentTitle {
+				align-items: center;
+				display: flex;
 				flex: 0 0 auto;
 				margin-right: 10px;
+				
+				> .icon {
+					margin-left: 5px;
+				}
 			}
 			
 			> .userTitleBadge {
@@ -212,6 +218,7 @@
 				padding: 5px 0;
 				position: absolute;
 				visibility: hidden;
+				z-index: 1;
 				
 				@include screen-md-up {
 					right: 0;

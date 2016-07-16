@@ -56,7 +56,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'disable', 'enable'];
+	protected $requireACP = ['create', 'delete'];
 	
 	/**
 	 * Validates permissions and parameters.

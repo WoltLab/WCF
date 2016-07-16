@@ -6,13 +6,40 @@
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-			require(['Language', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Ignore', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
+			require(['Language', 'WoltLab/WCF/Ui/User/Editor', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Ignore', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserEditor, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
 				Language.addObject({
+					'wcf.acp.user.disable': '{lang}wcf.acp.user.disable{/lang}',
+					'wcf.acp.user.enable': '{lang}wcf.acp.user.enable{/lang}',
+					'wcf.user.ban': '{lang}wcf.user.ban{/lang}',
+					'wcf.user.banned': '{lang}wcf.user.banned{/lang}',
+					'wcf.user.ban.confirmMessage': '{lang}wcf.user.ban.confirmMessage{/lang}',
+					'wcf.user.ban.expires': '{lang}wcf.user.ban.expires{/lang}',
+					'wcf.user.ban.expires.description': '{lang}wcf.user.ban.expires.description{/lang}',
+					'wcf.user.ban.neverExpires': '{lang}wcf.user.ban.neverExpires{/lang}',
+					'wcf.user.ban.reason.description': '{lang}wcf.user.ban.reason.description{/lang}',
 					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
 					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
 					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}',
+					'wcf.user.disableAvatar': '{lang}wcf.user.disableAvatar{/lang}',
+					'wcf.user.disableAvatar.confirmMessage': '{lang}wcf.user.disableAvatar.confirmMessage{/lang}',
+					'wcf.user.disableAvatar.expires': '{lang}wcf.user.disableAvatar.expires{/lang}',
+					'wcf.user.disableAvatar.expires.description': '{lang}wcf.user.disableAvatar.expires.description{/lang}',
+					'wcf.user.disableAvatar.neverExpires': '{lang}wcf.user.disableAvatar.neverExpires{/lang}',
+					'wcf.user.disableSignature': '{lang}wcf.user.disableSignature{/lang}',
+					'wcf.user.disableSignature.confirmMessage': '{lang}wcf.user.disableSignature.confirmMessage{/lang}',
+					'wcf.user.disableSignature.expires': '{lang}wcf.user.disableSignature.expires{/lang}',
+					'wcf.user.disableSignature.expires.description': '{lang}wcf.user.disableSignature.expires.description{/lang}',
+					'wcf.user.disableSignature.neverExpires': '{lang}wcf.user.disableSignature.neverExpires{/lang}',
+					'wcf.user.edit': '{lang}wcf.user.edit{/lang}',
+					'wcf.user.enableAvatar': '{lang}wcf.user.enableAvatar{/lang}',
+					'wcf.user.enableSignature': '{lang}wcf.user.enableSignature{/lang}',
+					'wcf.user.unban': '{lang}wcf.user.unban{/lang}'
 				});
+				
+				{if $isAccessible}
+					UiUserEditor.init();
+				{/if}
 				
 				{if !$user->isIgnoredUser($__wcf->user->userID)}
 					new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
@@ -70,42 +97,6 @@
 					}
 					
 					$visitorList.open();
-				});
-			{/if}
-			
-			{if $isAccessible && $__wcf->user->userID != $user->userID}
-				WCF.Language.addObject({
-					'wcf.user.ban': '{lang}wcf.user.ban{/lang}',
-					'wcf.user.ban.confirmMessage': '{lang}wcf.user.ban.confirmMessage{/lang}',
-					'wcf.user.ban.expires': '{lang}wcf.user.ban.expires{/lang}',
-					'wcf.user.ban.expires.description': '{lang}wcf.user.ban.expires.description{/lang}',
-					'wcf.user.ban.neverExpires': '{lang}wcf.user.ban.neverExpires{/lang}',
-					'wcf.user.ban.reason.description': '{lang}wcf.user.ban.reason.description{/lang}',
-					'wcf.user.unban': '{lang}wcf.user.unban{/lang}',
-					'wcf.user.disableAvatar': '{lang}wcf.user.disableAvatar{/lang}',
-					'wcf.user.ban.expires': '{lang}wcf.user.ban.expires{/lang}',
-					'wcf.user.ban.expires.description': '{lang}wcf.user.ban.expires.description{/lang}',
-					'wcf.user.ban.neverExpires': '{lang}wcf.user.ban.neverExpires{/lang}',
-					'wcf.user.disableAvatar.confirmMessage': '{lang}wcf.user.disableAvatar.confirmMessage{/lang}',
-					'wcf.user.disableAvatar.expires': '{lang}wcf.user.disableAvatar.expires{/lang}',
-					'wcf.user.disableAvatar.expires.description': '{lang}wcf.user.disableAvatar.expires.description{/lang}',
-					'wcf.user.disableAvatar.neverExpires': '{lang}wcf.user.disableAvatar.neverExpires{/lang}',
-					'wcf.user.disableSignature': '{lang}wcf.user.disableSignature{/lang}',
-					'wcf.user.disableSignature.confirmMessage': '{lang}wcf.user.disableSignature.confirmMessage{/lang}',
-					'wcf.user.disableSignature.expires': '{lang}wcf.user.disableSignature.expires{/lang}',
-					'wcf.user.disableSignature.expires.description': '{lang}wcf.user.disableSignature.expires.description{/lang}',
-					'wcf.user.disableSignature.neverExpires': '{lang}wcf.user.disableSignature.neverExpires{/lang}',
-					'wcf.user.edit': '{lang}wcf.user.edit{/lang}',
-					'wcf.user.enableAvatar': '{lang}wcf.user.enableAvatar{/lang}',
-					'wcf.user.enableSignature': '{lang}wcf.user.enableSignature{/lang}'
-				});
-				
-				var $userInlineEditor = new WCF.User.InlineEditor('.userHeadline');
-				$userInlineEditor.setPermissions({
-					canBanUser: {if $__wcf->session->getPermission('admin.user.canBanUser')}true{else}false{/if},
-					canDisableAvatar: {if $__wcf->session->getPermission('admin.user.canDisableAvatar')}true{else}false{/if},
-					canDisableSignature: {if $__wcf->session->getPermission('admin.user.canDisableSignature')}true{else}false{/if},
-					canEditUser: {if $__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')}true{else}false{/if}
 				});
 			{/if}
 			

@@ -32,6 +32,9 @@
 				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
 					data-disable-signature="{@$user->disableSignature}"
 				{/if}
+				{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+					data-is-disabled="{if $user->activationCode}true{else}false{/if}"
+				{/if}
 				{/if}>
 				
 				<div class="layoutBoundary">
@@ -118,11 +121,16 @@
 									<a class="jsTooltip" title="{lang}wcf.user.profile.management{/lang}"><span class="icon icon32 fa-cog"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.management{/lang}</span></a>
 									<ul class="userProfileButtonMenu" data-menu="management">
 										{content}
-											{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
-												<li><a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="jsUserInlineEditor">{lang}wcf.user.edit{/lang}</a></li>
-											{/if}
-										
 											{event name='menuManagement'}
+											
+											{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
+												{if $__wcf->session->getPermission('admin.user.canBanUser')}<li><a href="#" class="jsButtonUserBan">{lang}wcf.user.{if $user->banned}un{/if}ban{/lang}</a></li>{/if}
+												{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}<li><a href="#" class="jsButtonUserDisableAvatar">{lang}wcf.user.{if $user->disableAvatar}enable{else}disable{/if}Avatar{/lang}</a></li>{/if}
+												{if $__wcf->session->getPermission('admin.user.canDisableSignature')}<li><a href="#" class="jsButtonUserDisableSignature">{lang}wcf.user.{if $user->disableSignature}enable{else}disable{/if}Signature{/lang}</a></li>{/if}
+												{if $__wcf->session->getPermission('admin.user.canEnableUser')}<li><a href="#" class="jsButtonUserEnable">{lang}wcf.acp.user.{if $user->activationCode}enable{else}disable{/if}{/lang}</a></li>{/if}
+												
+												<li class="divider"><a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="jsUserInlineEditor">{lang}wcf.user.edit{/lang}</a></li>
+											{/if}
 										{/content}
 									</ul>
 								</li>
