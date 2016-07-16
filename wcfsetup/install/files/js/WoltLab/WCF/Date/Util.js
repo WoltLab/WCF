@@ -197,7 +197,7 @@ define(['Language'], function(Language) {
 		 * @param	{Date}		date	target date
 		 * @return	{int}		UTC timestamp in seconds
 		 */
-		gmdate: function(data) {
+		gmdate: function(date) {
 			if (!(date instanceof Date)) {
 				date = new Date();
 			}
@@ -215,8 +215,8 @@ define(['Language'], function(Language) {
 		/**
 		 * Returns a Date object with precise offset (including timezone and local timezone).
 		 * 
-		 * @param	{int}		timestamp	timestamp in miliseconds
-		 * @param	{int}		offset		timezone offset in miliseconds
+		 * @param	{int}		timestamp	timestamp in milliseconds
+		 * @param	{int}		offset		timezone offset in milliseconds
 		 * @return	{Date}		localized date
 		 */
 		getTimezoneDate: function(timestamp, offset) {
