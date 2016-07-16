@@ -814,6 +814,14 @@ WCF.User.Profile.TabMenu = Class.extend({
 				}
 			}, this));
 		}
+		
+		$('.jsButtonUserLikes').click((function (event) {
+			event.preventDefault();
+			
+			require(['Ui/TabMenu'], function (UiTabMenu) {
+				UiTabMenu.getTabMenu('profileContent').select('likes');
+			})
+		}).bind(this))
 	},
 	
 	/**

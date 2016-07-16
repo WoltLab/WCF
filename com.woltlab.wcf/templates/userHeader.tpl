@@ -158,7 +158,7 @@
 							
 							{if MODULE_LIKE && $user->likesReceived}
 								<li>
-									{if !$user->isProtected()}<a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{/if}
+									{if !$user->isProtected()}<a href="#" class="jsButtonUserLikes jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{/if}
 										<span class="userStatsValue">{@$user->likesReceived|shortUnit}</span>
 										<span class="userStatsTitle">{lang}wcf.like.likesReceived{/lang}</span>
 									{if !$user->isProtected()}</a>{/if}
