@@ -93,6 +93,14 @@ define(
 		},
 		
 		/**
+		 * Is called if the media manager dialog is closed.
+		 */
+		_dialogClose: function() {
+			// only show media clipboard if editor is open
+			Clipboard.hideEditor('com.woltlab.wcf.media');
+		},
+		
+		/**
 		 * Returns all data to setup the media manager dialog.
 		 * 
 		 * @return	{object}	dialog setup data
@@ -101,6 +109,8 @@ define(
 			return {
 				id: 'mediaManager',
 				options: {
+					onClose: this._dialogClose.bind(this),
+					onShow: this._dialogShow.bind(this),
 					title: this._options.dialogTitle
 				},
 				source: {
@@ -115,6 +125,14 @@ define(
 					}
 				}
 			};
+		},
+		
+		/**
+		 * Is called if the media manager dialog is shown.
+		 */
+		_dialogShow: function() {
+			// only show media clipboard if editor is open
+			Clipboard.showEditor('com.woltlab.wcf.media');
 		},
 		
 		/**

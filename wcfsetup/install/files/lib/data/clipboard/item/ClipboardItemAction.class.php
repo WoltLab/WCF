@@ -116,7 +116,8 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	 * Validates generic parameters used for most clipboard actions.
 	 */
 	protected function validateDefaultParameters() {
-		$this->readString('pageClassName');
+		$this->readStringArray('pageClassNames');
+		
 		$this->readInteger('pageObjectID', true);
 	}
 	
@@ -140,7 +141,7 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	 * @return	mixed[]
 	 */
 	protected function getEditorItems() {
-		$data = ClipboardHandler::getInstance()->getEditorItems($this->parameters['pageClassName'], $this->parameters['pageObjectID']);
+		$data = ClipboardHandler::getInstance()->getEditorItems($this->parameters['pageClassNames'], $this->parameters['pageObjectID']);
 		
 		if ($data === null) {
 			return [];

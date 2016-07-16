@@ -189,6 +189,8 @@ define(
 		 * @return	{object<string, *>}		dialog data
 		 */
 		openStatic: function(id, html, options, createOnly) {
+			document.documentElement.classList.add('pageOverlayActive');
+			
 			if (_dialogs.has(id)) {
 				this._updateDialog(id, html);
 			}
@@ -219,8 +221,6 @@ define(
 				
 				this._createDialog(id, html, options);
 			}
-			
-			document.documentElement.classList.add('pageOverlayActive');
 			
 			return _dialogs.get(id);
 		},

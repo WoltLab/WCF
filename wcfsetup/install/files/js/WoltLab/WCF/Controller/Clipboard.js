@@ -34,6 +34,8 @@ define(
 	var _callbackItem = null;
 	var _callbackUnmarkAll = null;
 	
+	var _addPageOverlayActiveClass = false;
+	
 	/**
 	 * Clipboard API
 	 * 
@@ -46,17 +48,29 @@ define(
 		 * @param	{object<string, *>}	options		initialization options
 		 */
 		setup: function(options) {
-			_callbackCheckbox = this._mark.bind(this);
-			_callbackItem = this._executeAction.bind(this);
-			_callbackUnmarkAll = this._unmarkAll.bind(this);
-			_options = Core.extend({
-				hasMarkedItems: false,
-				pageClassName: '',
-				pageObjectId: 0
-			}, options);
-			
-			if (!_options.pageClassName) {
+			if (!options.pageClassName) {
 				throw new Error("Expected a non-empty string for parameter 'pageClassName'.");
+			}
+			
+			if (_callbackCheckbox === null) {
+				_callbackCheckbox = this._mark.bind(this);
+				_callbackItem = this._executeAction.bind(this);
+				_callbackUnmarkAll = this._unmarkAll.bind(this);
+				
+				_options = Core.extend({
+					hasMarkedItems: false,
+					pageClassNames: [options.pageClassName],
+					pageObjectId: 0
+				}, options);
+				
+				delete _options.pageClassName;
+			}
+			else {
+				if (options.pageObjectId) {
+					throw new Error("Cannot load secondary clipboard with page object id set.");
+				}
+				
+				_options.pageClassNames.push(options.pageClassName);
 			}
 			
 			this._initContainers();
@@ -122,7 +136,7 @@ define(
 			Ajax.api(this, {
 				actionName: 'getMarkedItems',
 				parameters: {
-					pageClassName: _options.pageClassName,
+					pageClassNames: _options.pageClassNames,
 					pageObjectID: _options.pageObjectId
 				}
 			});
@@ -216,7 +230,7 @@ define(
 			Ajax.api(this, {
 				actionName: (isMarked ? 'mark' : 'unmark'),
 				parameters: {
-					pageClassName: _options.pageClassName,
+					pageClassNames: _options.pageClassNames,
 					pageObjectID: _options.pageObjectId,
 					objectIDs: objectIds,
 					objectType: type
@@ -549,6 +563,36 @@ define(
 				if (parent) {
 					parent.classList[(markAll ? 'add' : 'remove')]('jsMarked');
 				}
+			}
+		},
+		
+		/**
+		 * Hides the clipboard editor for the given object type.
+		 * 
+		 * @param	{string}	objectType
+		 */
+		hideEditor: function(objectType) {
+			UiPageAction.remove('wcfClipboard-' + objectType);
+			
+			if (_addPageOverlayActiveClass) {
+				_addPageOverlayActiveClass = false;
+				
+				document.documentElement.classList.add('pageOverlayActive');
+			}
+		},
+		
+		/**
+		 * Shows the clipboard editor for the given object type.
+		 * 
+		 * @param	{string}	objectType
+		 */
+		showEditor: function(objectType) {
+			this._loadMarkedItems();
+			
+			if (document.documentElement.classList.contains('pageOverlayActive')) {
+				document.documentElement.classList.remove('pageOverlayActive');
+				
+				_addPageOverlayActiveClass = true;
 			}
 		}
 	};

@@ -292,16 +292,18 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Returns items for clipboard editor.
 	 * 
-	 * @param	string		$page
-	 * @param	integer		$pageObjectID
+	 * @param	string|string[]		$page
+	 * @param	integer			$pageObjectID
 	 * @return	mixed[][]
 	 * @throws	SystemException
 	 */
 	public function getEditorItems($page, $pageObjectID) {
-		$this->pageObjectID = 0;
+		$pages = $page;
+		if (!is_array($pages)) {
+			$pages = [$page];
+		}
 		
-		// ignore unknown pages
-		if (!isset($this->pageCache[$page])) return null;
+		$this->pageObjectID = 0;
 		
 		// get objects
 		$this->loadMarkedItems();
@@ -312,9 +314,11 @@ class ClipboardHandler extends SingletonFactory {
 		// fetch action ids
 		$this->loadActionCache();
 		$actionIDs = [];
-		foreach ($this->pageCache[$page] as $actionID) {
-			if (isset($this->actionCache[$actionID])) {
-				$actionIDs[] = $actionID;
+		foreach ($pages as $page) {
+			foreach ($this->pageCache[$page] as $actionID) {
+				if (isset($this->actionCache[$actionID])) {
+					$actionIDs[] = $actionID;
+				}
 			}
 		}
 		$actionIDs = array_unique($actionIDs);
