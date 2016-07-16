@@ -3795,11 +3795,6 @@ WCF.Effect.Scroll = Class.extend({
 		var $documentHeight = $(document).height();
 		var $windowHeight = $(window).height();
 		
-		// handles menu height
-		/*if (excludeMenuHeight) {
-			$elementOffset = Math.max($elementOffset - $('#topMenu').outerHeight(), 0);
-		}*/
-		
 		if ($elementOffset > $documentHeight - $windowHeight) {
 			$elementOffset = $documentHeight - $windowHeight;
 			if ($elementOffset < 0) {
@@ -3817,24 +3812,6 @@ WCF.Effect.Scroll = Class.extend({
 		}
 		
 		return false;
-	}
-});
-
-/**
- * Creates a smooth scroll effect.
- */
-WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
-	/**
-	 * Initializes effect.
-	 */
-	init: function() {
-		var self = this;
-		$(document).on('click', 'a[href$=#top],a[href$=#bottom]', function() {
-			var $target = $(this.hash);
-			self.scrollTo($target, true);
-			
-			return false;
-		});
 	}
 });
 

@@ -180,8 +180,6 @@ requirejs.config({
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.Effect.SmoothScroll();
-		
 		WCF.System.PageNavigation.init('.pagination');
 		WCF.User.Profile.ActivityPointList.init();
 		
