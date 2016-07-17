@@ -1138,7 +1138,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 		
 		require(['Environment'], function(Environment) {
-			if (Environment.platform() !== 'desktop' && $itemContainer !== null) {
+			if (Environment.platform() === 'desktop' && $itemContainer !== null) {
 				// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
 				$itemContainer.perfectScrollbar({
 					suppressScrollX: true
@@ -1261,7 +1261,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 */
 	rebuildScrollbar: function() {
 		require(['Environment'], function(Environment) {
-			if (Environment.platform() !== 'desktop') {
+			if (Environment.platform() === 'desktop') {
 				var $itemContainer = this._itemList.parent();
 				
 				// do NOT use 'update', seems to be broken
