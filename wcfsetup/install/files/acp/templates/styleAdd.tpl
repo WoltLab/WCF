@@ -561,7 +561,7 @@
 				
 				<dl class="wide">
 					<dd>
-						<textarea id="overrideLess" rows="20" cols="40" name="overrideLess">{$variables[overrideLess]}</textarea>
+						<textarea id="overrideLess" rows="20" cols="40" name="overrideLess">{if !$variables[overrideLess]|empty}{$variables[overrideLess]}{/if}</textarea>
 						{if $errorField == 'overrideLess'}
 							<small class="innerError">
 								{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
