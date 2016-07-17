@@ -104,7 +104,7 @@ class BirthdayOptionType extends DateOptionType {
 		$ageFrom = intval($value['ageFrom']);
 		$ageTo = intval($value['ageTo']);
 		
-		if ($ageFrom < 0 || $ageFrom > 120 || $ageTo < 0 || $ageTo > 120) return false;
+		if ($ageFrom < 0 || $ageFrom > 120 || $ageTo < 0 || $ageTo > 120) return;
 		
 		$dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.($ageTo + 1).'Y'))->add(new \DateInterval('P1D'));
 		$dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.$ageFrom.'Y'));
