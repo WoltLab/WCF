@@ -102,6 +102,12 @@ class TagCloud {
 		return $tags;
 	}
 	
+	/**
+	 * Calculates the weight of the tag based on the given tag count.
+	 * 
+	 * @param	integer		$counter
+	 * @return	float|int
+	 */
 	private function calculateWeight($counter) {
 		if ($this->maxCounter == $this->minCounter) {
 			return 2;

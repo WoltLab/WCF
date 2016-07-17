@@ -62,6 +62,11 @@ class TableMetacodeConverter extends AbstractMetacodeConverter {
 		return $element;
 	}
 	
+	/**
+	 * Processes the rows of the table.
+	 * 
+	 * @param	\DOMElement	$row
+	 */
 	protected function handleRow(\DOMElement $row) {
 		// get all table columns
 		$cols = [];
