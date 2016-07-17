@@ -6,7 +6,7 @@ use wcf\system\Regex;
 /**
  * Provides functions to compute password hashes.
  * 
- * @author	Alexander Ebert
+ * @author	Sascha Greuel, Alexander Ebert
  * @copyright	2001-2015 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -33,6 +33,7 @@ final class PasswordUtil {
 	private static $supportedEncryptionTypes = array(
 		'ipb2',		// Invision Power Board 2.x
 		'ipb3',		// Invision Power Board 3.x
+		'ipb4',		// Invision Power Board 4.x
 		'mybb1',	// MyBB 1.x
 		'phpbb3',	// phpBB 3.x
 		'phpass',	// phpass Portable Hashes
@@ -324,6 +325,19 @@ final class PasswordUtil {
 	 */
 	protected static function ipb3($username, $password, $salt, $dbHash) {
 		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
+	}
+	
+	/**
+	 * Validates the password hash for Invision Power Board 4.x (ipb4).
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function ipb4($username, $password, $salt, $dbHash) {
+		return self::secureCompare($dbHash, self::getSaltedHash($password, '$2a$13$' . $salt));
 	}
 	
 	/**
