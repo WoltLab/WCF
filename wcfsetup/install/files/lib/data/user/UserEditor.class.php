@@ -174,8 +174,11 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 							(userID, groupID)
 				VALUES			(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			$currentGroups = $this->getGroupIDs();
 			foreach ($groupIDs as $groupID) {
-				$statement->execute(array($this->userID, $groupID));
+				if (!in_array($groupID, $currentGroups)) {
+					$statement->execute(array($this->userID, $groupID));
+				}
 			}
 		}
 	}
