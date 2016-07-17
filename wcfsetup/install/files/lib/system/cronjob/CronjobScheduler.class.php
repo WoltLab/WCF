@@ -182,6 +182,7 @@ class CronjobScheduler extends SingletonFactory {
 		}
 		
 		// execute cronjob
+		/** @var ICronjob $cronjob */
 		$cronjob = new $className();
 		$cronjob->execute($cronjobEditor->getDecoratedObject());
 		

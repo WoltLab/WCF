@@ -151,6 +151,7 @@ class CodeBBCode extends AbstractBBCode {
 			return WCF::getTPL()->fetch('codeBBCodeTag');
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
+			/** @noinspection PhpUndefinedMethodInspection */
 			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.text', [
 				'highlighterTitle' => $className::getInstance()->getTitle(),
 				'lines' => substr_count($content, "\n") + 1

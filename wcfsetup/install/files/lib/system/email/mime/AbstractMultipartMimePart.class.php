@@ -59,6 +59,8 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 	 */
 	protected function getConcatenatedParts($parts) {
 		$content = "";
+		
+		/** @var AbstractMimePart $part */
 		foreach ($parts as $part) {
 			$content .= "--".$this->boundary."\r\n";
 			$content .= "content-type: ".$part->getContentType()."\r\n";
