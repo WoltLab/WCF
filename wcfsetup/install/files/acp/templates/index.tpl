@@ -13,7 +13,7 @@
 </header>
 
 {if $inRescueMode}
-	<p style="background-color: rgb(255, 153, 153); border: 2px solid rgb(255, 0, 0); padding: 1em;">{lang}wcf.acp.index.inRescueMode{/lang}</p>
+	<p class="error">{lang}wcf.acp.index.inRescueMode{/lang}</p>
 {/if}
 
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
