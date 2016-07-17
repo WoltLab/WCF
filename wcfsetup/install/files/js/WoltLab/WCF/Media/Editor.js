@@ -239,6 +239,7 @@ define(
 							},
 							source: {
 								after: (function(content, data) {
+									// make sure that the language chooser is initialized first
 									setTimeout(function() {
 										LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
 										
@@ -264,7 +265,7 @@ define(
 										elById('mediaEditor_' + this._media.mediaID).parentNode.scrollTop = 0;
 										
 										DomChangeListener.trigger();
-									}.bind(this), 100);
+									}.bind(this), 0);
 								}).bind(this),
 								data: {
 									actionName: 'getEditorDialog',
