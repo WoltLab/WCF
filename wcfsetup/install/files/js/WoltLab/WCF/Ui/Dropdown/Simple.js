@@ -364,7 +364,7 @@ define(
 					preventToggle = true;
 				}
 				
-				// check if 'isOverlayDropdownButton' is set which indicates if the dropdown toggle is in an overlay
+				// check if 'isOverlayDropdownButton' is set which indicates that the dropdown toggle is within an overlay
 				if (elData(dropdown, 'is-overlay-dropdown-button') === null) {
 					var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
 					elData(dropdown, 'is-overlay-dropdown-button', (dialogContent !== null));
