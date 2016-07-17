@@ -130,18 +130,28 @@ class UserProfileMenu extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the first menu item.
-	 * 
+	 * Returns the first visible menu item.
+	 *
+	 * @param 	integer		$userID
 	 * @return	\wcf\data\user\profile\menu\item\UserProfileMenuItem
 	 */
-	public function getActiveMenuItem() {
+	public function getActiveMenuItem($userID = 0) {
 		if (empty($this->menuItems)) {
 			return null;
 		}
 		
 		if ($this->activeMenuItem === null) {
-			reset($this->menuItems);
-			$this->activeMenuItem = current($this->menuItems);
+			if (!empty($userID)) {
+				foreach ($this->menuItems as $menuItem) {
+					if ($menuItem->getContentManager()->isVisible($userID)) {
+						$this->activeMenuItem = $menuItem;
+						break;
+					}
+				}
+			}
+			else {
+				$this->activeMenuItem = reset($this->menuItems);
+			}
 		}
 		
 		return $this->activeMenuItem;
