@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
 /**
@@ -31,6 +32,9 @@ class NamedUserException extends UserException {
 			'templateName' => 'userException',
 			'templateNameApplication' => 'wcf'
 		));
+		
+		EventHandler::getInstance()->fireAction($this, 'display');
+		
 		WCF::getTPL()->display('userException');
 	}
 }
