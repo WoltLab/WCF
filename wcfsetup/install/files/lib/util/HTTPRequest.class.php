@@ -214,6 +214,7 @@ final class HTTPRequest {
 	 * Parses the given URL and applies PROXY_SERVER_HTTP.
 	 * 
 	 * @param	string		$url
+	 * @throws	SystemException
 	 */
 	private function setURL($url) {
 		$parsedUrl = $originUrl = parse_url($url);
