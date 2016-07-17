@@ -4277,7 +4277,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	addThousandsSeparator: function(number) {
-		return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, '$1' + WCF.Language.get('wcf.global.thousandsSeparator'));
+		return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.|,))/g, '$1' + WCF.Language.get('wcf.global.thousandsSeparator'));
 	},
 	
 	/**
