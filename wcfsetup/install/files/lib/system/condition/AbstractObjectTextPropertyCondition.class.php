@@ -55,7 +55,9 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		$className = $this->getClassName();
-		if (!($object instanceof $className)) return;
+		if (!($object instanceof $className)) {
+			throw new \InvalidArgumentException("Object is no instance of '{$className}', instance of '".get_class($object)."' given.");
+		}
 		
 		return in_array($object->{$this->getPropertyName()}, $conditionData[$this->fieldName]);
 	}

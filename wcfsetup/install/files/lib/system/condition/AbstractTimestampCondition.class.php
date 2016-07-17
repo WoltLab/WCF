@@ -64,7 +64,9 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		$className = $this->getClassName();
-		if (!($object instanceof $className)) return;
+		if (!($object instanceof $className)) {
+			throw new \InvalidArgumentException("Object is no instance of '{$className}', instance of '".get_class($object)."' given.");
+		}
 		
 		if (isset($conditionData['startTime']) && $object->{$this->getPropertyName()} < strtotime($conditionData['startTime'])) {
 			return false;
