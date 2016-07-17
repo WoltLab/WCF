@@ -101,6 +101,53 @@ define(
 		},
 		
 		/**
+		 * Initializes the dialog when first loaded.
+		 *
+		 * @param	{string}	content		dialog content
+		 * @param	{object}	data		AJAX request's response data
+		 */
+		_dialogInit: function(content, data) {
+			// store media data locally
+			var media = data.returnValues.media || { };
+			for (var mediaId in media) {
+				if (objOwns(media, mediaId)) {
+					this._mediaData.set(~~mediaId, media[mediaId]);
+				}
+			}
+			
+			this._mediaManagerMediaList = elById('mediaManagerMediaList');
+			
+			// store list items locally
+			var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI');
+			for (var i = 0, length = listItems.length; i < length; i++) {
+				var listItem = listItems[i];
+				
+				this._media.set(~~elData(listItem, 'object-id'), listItem);
+			}
+			
+			if (Permission.get('admin.content.cms.canManageMedia')) {
+				new MediaUpload('mediaManagerMediaUploadButton', 'mediaManagerMediaList', {
+					mediaManager: this
+				});
+				
+				Clipboard.setup({
+					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
+					pageClassName: 'menuManagerDialog-' + this.getMode()
+				});
+				
+				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
+			}
+			
+			this._search = new MediaManagerSearch(this);
+			
+			if (!listItems.length) {
+				this._search.hideSearch();
+			}
+			
+			this._dialogShow();
+		},
+		
+		/**
 		 * Returns all data to setup the media manager dialog.
 		 * 
 		 * @return	{object}	dialog setup data
@@ -114,7 +161,7 @@ define(
 					title: this._options.dialogTitle
 				},
 				source: {
-					after: this._initDialog.bind(this),
+					after: this._dialogInit.bind(this),
 					data: {
 						actionName: 'getManagementDialog',
 						className: 'wcf\\data\\media\\MediaAction',
@@ -131,6 +178,8 @@ define(
 		 * Is called if the media manager dialog is shown.
 		 */
 		_dialogShow: function() {
+			if (!this._mediaManagerMediaList) return;
+			
 			// only show media clipboard if editor is open
 			Clipboard.showEditor('com.woltlab.wcf.media');
 		},
@@ -175,51 +224,6 @@ define(
 			}
 			else {
 				p.textContent = media.title[media.languageID] || media.filename;
-			}
-		},
-		
-		/**
-		 * Initializes the dialog when first loaded.
-		 * 
-		 * @param	{string}	content		dialog content
-		 * @param	{object}	data		AJAX request's response data
-		 */
-		_initDialog: function(content, data) {
-			// store media data locally
-			var media = data.returnValues.media || { };
-			for (var mediaId in media) {
-				if (objOwns(media, mediaId)) {
-					this._mediaData.set(~~mediaId, media[mediaId]);
-				}
-			}
-			
-			this._mediaManagerMediaList = elById('mediaManagerMediaList');
-			
-			// store list items locally
-			var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI');
-			for (var i = 0, length = listItems.length; i < length; i++) {
-				var listItem = listItems[i];
-				
-				this._media.set(~~elData(listItem, 'object-id'), listItem);
-			}
-			
-			if (Permission.get('admin.content.cms.canManageMedia')) {
-				new MediaUpload('mediaManagerMediaUploadButton', 'mediaManagerMediaList', {
-					mediaManager: this
-				});
-				
-				Clipboard.setup({
-					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
-					pageClassName: 'menuManagerDialog-' + this.getMode()
-				});
-				
-				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
-			}
-			
-			this._search = new MediaManagerSearch(this);
-			
-			if (!listItems.length) {
-				this._search.hideSearch();
 			}
 		},
 		
