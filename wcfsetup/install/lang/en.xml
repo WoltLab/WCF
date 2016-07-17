@@ -821,6 +821,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
+		<item name="wcf.acp.option.login_logout_redirect"><![CDATA[Enable delayed redirect after login/logout]]></item>
+		<item name="wcf.acp.option.login_logout_redirect.description"><![CDATA[Enables the delayed redirect after successful login/logout]]></item>
 		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery Source]]></item>
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Use Local Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Use Google Hosted Libraries CDN]]></item>

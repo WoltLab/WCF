@@ -37,7 +37,12 @@ class LogoutAction extends \wcf\acp\action\LogoutAction {
 		$this->executed();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->get('wcf.user.logout.redirect'));
+		if (LOGIN_LOGOUT_REDIRECT) {
+			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->get('wcf.user.logout.redirect'));
+		} else {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
+		}
+		
 		exit;
 	}
 }

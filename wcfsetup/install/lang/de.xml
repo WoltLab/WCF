@@ -820,6 +820,8 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
+		<item name="wcf.acp.option.login_logout_redirect"><![CDATA[Verzögerte Weiterleitung nach Login/Logout aktivieren]]></item>
+		<item name="wcf.acp.option.login_logout_redirect.description"><![CDATA[Aktiviert die verzögerte Weiterleitung nach erfolgreichem Login/Logout]]></item>
 		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery-Quelle]]></item>
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[lokale Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
