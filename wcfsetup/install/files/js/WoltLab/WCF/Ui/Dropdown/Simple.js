@@ -358,6 +358,23 @@ define(
 			
 			var dropdown = _dropdowns.get(targetId), preventToggle = false;
 			if (dropdown !== undefined) {
+				// check if the dropdown is still the same, as some components (e.g. page actions)
+				// re-create the parent of a button
+				if (event) {
+					var button = event.currentTarget, parent = button.parentNode;
+					if (parent !== dropdown) {
+						parent.classList.add('dropdown');
+						parent.id = dropdown.id;
+						
+						// remove dropdown class and id from old parent
+						dropdown.classList.remove('dropdown');
+						dropdown.id = '';
+						
+						dropdown = parent;
+						_dropdowns.set(targetId, parent);
+					}
+				}
+				
 				// Repeated clicks on the dropdown button will not cause it to close, the only way
 				// to close it is by clicking somewhere else in the document or on another dropdown
 				// toggle. This is used with the search bar to prevent the dropdown from closing by
