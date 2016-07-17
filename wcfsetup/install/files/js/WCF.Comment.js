@@ -892,7 +892,7 @@ WCF.Comment.Like = WCF.Like.extend({
 	 * @see	WCF.Like._getContainers()
 	 */
 	_getContainers: function() {
-		return $('.commentList > li.comment');
+		return $('.commentList > li.comment[data-support-likes=1]');
 	},
 	
 	/**
@@ -957,7 +957,7 @@ WCF.Comment.Response.Like = WCF.Like.extend({
 	 * @see	WCF.Like._getContainers()
 	 */
 	_getContainers: function() {
-		return $('.commentResponseList > li.commentResponse');
+		return $('.commentResponseList > li.commentResponse[data-support-likes=1]');
 	},
 	
 	/**
