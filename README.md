@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/WoltLab/WCF.svg?branch=master)](https://travis-ci.org/WoltLab/WCF)
+
 WoltLab Community Framework 2.1
 ===============================
 
