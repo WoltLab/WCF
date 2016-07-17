@@ -189,12 +189,8 @@ class PackageInstallationNodeBuilder {
 			$this->installation->queue->processNo,
 			$node
 		]);
-		$data = [];
-		while ($row = $statement->fetchArray()) {
-			$data[] = $row;
-		}
 		
-		return $data;
+		return $statement->fetchAll(\PDO::FETCH_ASSOC);
 	}
 	
 	/**

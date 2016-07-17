@@ -73,10 +73,7 @@ class SimpleAclHandler extends SingletonFactory {
 			$objectTypeID,
 			$objectID
 		]);
-		$userIDs = [];
-		while ($row = $statement->fetchArray()) {
-			$userIDs[] = $row['userID'];
-		}
+		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		$sql = "SELECT  groupID
 			FROM    wcf".WCF_N."_acl_simple_to_group
@@ -87,10 +84,7 @@ class SimpleAclHandler extends SingletonFactory {
 			$objectTypeID,
 			$objectID
 		]);
-		$groupIDs = [];
-		while ($row = $statement->fetchArray()) {
-			$groupIDs[] = $row['groupID'];
-		}
+		$groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!empty($userIDs) || !empty($groupIDs)) {
 			$data['allowAll'] = false;

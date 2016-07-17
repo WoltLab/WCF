@@ -89,10 +89,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			ORDER BY	sqlIndex DESC, sqlColumn DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->installation->getPackageID()]);
-		$entries = [];
-		while ($row = $statement->fetchArray()) {
-			$entries[] = $row;
-		}
+		$entries = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		// get all tablenames from database
 		$existingTableNames = WCF::getDB()->getEditor()->getTableNames();

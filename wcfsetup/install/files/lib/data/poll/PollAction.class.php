@@ -173,12 +173,8 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			$poll->pollID,
 			WCF::getUser()->userID
 		]);
-		$alreadyVoted = false;
-		$optionIDs = [];
-		while ($row = $statement->fetchArray()) {
-			$alreadyVoted = true;
-			$optionIDs[] = $row['optionID'];
-		}
+		$optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+		$alreadyVoted = !empty($optionIDs);
 		
 		// calculate the difference
 		foreach ($this->parameters['optionIDs'] as $index => $optionID) {

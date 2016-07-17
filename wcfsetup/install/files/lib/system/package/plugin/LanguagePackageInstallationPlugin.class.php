@@ -67,15 +67,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		}
 		
 		// get installed languages
-		$installedLanguages = [];
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_language
 			ORDER BY	isDefault DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$installedLanguages[] = $row;
-		}
+		$installedLanguages = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		// install language
 		foreach ($installedLanguages as $installedLanguage) {

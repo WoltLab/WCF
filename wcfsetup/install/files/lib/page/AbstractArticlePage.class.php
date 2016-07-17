@@ -132,10 +132,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 					ORDER BY	count DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, ARTICLE_RELATED_ARTICLES);
 				$statement->execute($conditionBuilder->getParameters());
-				$articleContentIDs = [];
-				while ($row = $statement->fetchArray()) {
-					$articleContentIDs[] = $row['objectID'];
-				}
+				$articleContentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				
 				if (!empty($articleContentIDs)) {
 					$conditionBuilder = new PreparedStatementConditionBuilder();
@@ -145,10 +142,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 						" . $conditionBuilder;
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute($conditionBuilder->getParameters());
-					$articleIDs = [];
-					while ($row = $statement->fetchArray()) {
-						$articleIDs[] = $row['articleID'];
-					}
+					$articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 					
 					$this->relatedArticles = new AccessibleArticleList();
 					$this->relatedArticles->getConditionBuilder()->add('article.articleID IN (?)', [$articleIDs]);

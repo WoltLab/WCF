@@ -35,16 +35,13 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		}
 		
 		// fetch ordered pips
-		$pips = [];
 		$sql = "SELECT		pluginName, className,
 					CASE pluginName WHEN 'packageinstallationplugin' THEN 1 WHEN 'file' THEN 2 ELSE 0 END AS pluginOrder
 			FROM		wcf".WCF_N."_package_installation_plugin
 			ORDER BY	pluginOrder, priority";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$pips[] = $row;
-		}
+		$pips = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		// insert pips
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node

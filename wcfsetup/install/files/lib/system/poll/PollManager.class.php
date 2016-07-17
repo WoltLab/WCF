@@ -145,6 +145,7 @@ class PollManager extends SingletonFactory {
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->poll->pollID]);
+			// TODO?: $this->pollOptions = $statement->fetchAll(\PDO::FETCH_ASSOC);
 			while ($row = $statement->fetchArray()) {
 				$this->pollOptions[] = $row;
 			}

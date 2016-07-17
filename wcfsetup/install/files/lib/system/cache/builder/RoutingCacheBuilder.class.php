@@ -111,10 +111,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				AND controllerCustomURL <> ''";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$rows = [];
-		while ($row = $statement->fetchArray()) {
-			$rows[] = $row;
-		}
+		$rows = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		// fetch content pages using the common page controller
 		$sql = "SELECT		page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.applicationPackageID

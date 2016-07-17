@@ -40,7 +40,7 @@ class SmileyImporter extends AbstractImporter {
 				$known = explode("\n", $row['aliases']);
 			}
 			$known[] = $row['smileyCode'];
-				
+			
 			foreach ($known as $smileyCode) {
 				$this->knownCodes[mb_strtolower($smileyCode)] = $row['smileyID'];
 			}

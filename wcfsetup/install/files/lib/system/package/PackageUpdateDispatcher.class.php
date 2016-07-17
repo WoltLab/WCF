@@ -672,7 +672,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// get versions
-		$versions = [];
 		$sql = "SELECT		puv.*, pu.*, pus.loginUsername, pus.loginPassword
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
@@ -688,9 +687,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$version,
 			0
 		]);
-		while ($row = $statement->fetchArray()) {
-			$versions[] = $row;
-		}
+		$versions = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		if (empty($versions)) {
 			throw new SystemException("Cannot find package '".$package."' in version '".$version."'");
