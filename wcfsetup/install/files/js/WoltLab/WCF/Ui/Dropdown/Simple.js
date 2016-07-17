@@ -1,8 +1,8 @@
 /**
- * Simple Dropdown
+ * Simple dropdown implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Dropdown/Simple
  */
@@ -279,6 +279,7 @@ define(
 		 */
 		_onDialogScroll: function(event) {
 			var dialogContent = event.currentTarget;
+			//noinspection JSCheckFunctionSignatures
 			var dropdowns = elBySelAll('.dropdown.dropdownOpen', dialogContent);
 			
 			for (var i = 0, length = dropdowns.length; i < length; i++) {
@@ -342,7 +343,7 @@ define(
 		 * Toggles the dropdown's state between open and close.
 		 * 
 		 * @param	{?Event}	event		        event object, should be 'null' if targetId is given
-		 * @param	{string=}	targetId	        dropdown wrapper id
+		 * @param	{string?}	targetId	        dropdown wrapper id
 		 * @param       {Element=}      alternateElement        alternative reference element for alignment
 		 * @return	{boolean}	'false' if event is not null
 		 */
@@ -351,6 +352,7 @@ define(
 				event.preventDefault();
 				event.stopPropagation();
 				
+				//noinspection JSCheckFunctionSignatures
 				targetId = elData(event.currentTarget, 'target');
 			}
 			
@@ -397,8 +399,8 @@ define(
 				}
 			}).bind(this));
 			
-			// TODO
-			WCF.Dropdown.Interactive.Handler.closeAll();
+			//noinspection JSDeprecatedSymbols
+			window.WCF.Dropdown.Interactive.Handler.closeAll();
 			
 			return (event === null);
 		}
