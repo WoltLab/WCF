@@ -38,6 +38,8 @@
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
 			{event name='copyright'}
+			
+			{include file='footerCopyright'}
 		</div>
 		
 		{if MODULE_WCF_AD && $__disableAds|empty}
