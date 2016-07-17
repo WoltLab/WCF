@@ -182,13 +182,31 @@ WCF.User.Panel.Abstract = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		this._triggerElement.click($.proxy(this.toggle, this));
+		var timerBlockClick = null;
+		this._triggerElement[0].addEventListener(WCF_CLICK_EVENT, (function(event) {
+			event.preventDefault();
+			
+			if ($.browser.mobile) {
+				this.toggle();
+			}
+			else if (this._dropdown.isOpen() && timerBlockClick === null) {
+				this.toggle();
+			}
+		}).bind(this));
+		
+		//this._triggerElement.click($.proxy(this.toggle, this));
 		
 		var timer = null;
 		this._triggerElement.hover(
 			(function() {
 				if (this._dropdown === null || !this._dropdown.isOpen()) {
-					timer = window.setTimeout(this.toggle.bind(this, undefined, true), 300);
+					timer = window.setTimeout((function() {
+						timerBlockClick = window.setTimeout(function() {
+							timerBlockClick = null;
+						}, 300);
+						
+						this.toggle(undefined, true);
+					}).bind(this), 300);
 				}
 			}).bind(this),
 			function() {
