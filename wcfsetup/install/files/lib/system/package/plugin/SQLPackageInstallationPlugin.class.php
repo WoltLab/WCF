@@ -99,7 +99,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		}
 		
 		// get all tablenames from database
-		$existingTableNames = WCF::getDB()->getEditor()->getTablenames();
+		$existingTableNames = array_map('strtolower', WCF::getDB()->getEditor()->getTableNames());
 		
 		// delete or alter tables
 		foreach ($entries as $entry) {
@@ -118,11 +118,11 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 				WCF::getDB()->getEditor()->dropTable($entry['sqlTable']);
 			}
 			// drop column
-			else if (in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlColumn'])) {
+			else if (in_array(strtolower($entry['sqlTable']), $existingTableNames) && !empty($entry['sqlColumn'])) {
 				WCF::getDB()->getEditor()->dropColumn($entry['sqlTable'], $entry['sqlColumn']);
 			}
 			// drop index
-			else if (in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlIndex'])) {
+			else if (in_array(strtolower($entry['sqlTable']), $existingTableNames) && !empty($entry['sqlIndex'])) {
 				if (substr($entry['sqlIndex'], -3) == '_fk') {
 					WCF::getDB()->getEditor()->dropForeignKey($entry['sqlTable'], $entry['sqlIndex']);
 				}
