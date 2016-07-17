@@ -68,7 +68,7 @@ define(
 				if (button !== null) {
 					canEdit = elDataBool(element, 'can-edit');
 					
-					if (this._options.canEditInline) {
+					if (this._options.canEditInline || elDataBool(element, 'can-edit-inline')) {
 						button.addEventListener(WCF_CLICK_EVENT, this._clickDropdown.bind(this, element));
 						button.classList.add('jsDropdownEnabled');
 						
@@ -248,6 +248,13 @@ define(
 					else {
 						if (objOwns(visibility, item) && visibility[item] === false) {
 							elHide(listItem);
+							
+							// check if previous item was a divider
+							if (i > 0 && i + 1 === this._dropdownMenu.childElementCount) {
+								if (elData(listItem.previousElementSibling, 'item') === 'divider') {
+									elHide(listItem.previousElementSibling);
+								}
+							}
 						}
 						else {
 							elShow(listItem);
