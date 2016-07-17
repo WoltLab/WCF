@@ -532,7 +532,7 @@ class PackageInstallationDispatcher {
 	 * Executes a package installation plugin.
 	 * 
 	 * @param	mixed[]		$nodeData
-	 * @return	boolean
+	 * @return	PackageInstallationStep
 	 * @throws	SystemException
 	 */
 	protected function executePIP(array $nodeData) {

@@ -45,13 +45,13 @@ class Email {
 	
 	/**
 	 * References header
-	 * @var	Mailbox[]
+	 * @var	string[]
 	 */
 	protected $references = [];
 	
 	/**
 	 * In-Reply-To header
-	 * @var	Mailbox[]
+	 * @var	string[]
 	 */
 	protected $inReplyTo = [];
 	

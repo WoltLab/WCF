@@ -59,7 +59,7 @@ class PackageCache extends SingletonFactory {
 	 * @return	Package[]
 	 */
 	public function getPackages() {
-		return $this->packages;
+		return $this->packages['packages'];
 	}
 	
 	/**

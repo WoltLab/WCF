@@ -79,12 +79,11 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * Gets the start timestamp.
-	 * 
-	 * @return	integer
+	 * Determines the start timestamp.
 	 */
 	protected function getStartDate() {
 		if ($this->startDate) return;
+		
 		$sql = "SELECT	MIN(registrationDate)
 			FROM	wcf".WCF_N."_user";
 		$statement = WCF::getDB()->prepareStatement($sql);

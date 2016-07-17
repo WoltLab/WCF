@@ -284,7 +284,7 @@ class Tar implements IArchive {
 	 * Unpacks file header for one file entry.
 	 * 
 	 * @param	string		$binaryData
-	 * @return	array		$fileheader
+	 * @return	array|boolean
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {

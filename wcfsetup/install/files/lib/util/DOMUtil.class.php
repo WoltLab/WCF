@@ -74,7 +74,7 @@ final class DOMUtil {
 	 * 
 	 * @param	\DOMNode		$node1		first node
 	 * @param	\DOMNode		$node2		second node
-	 * @return	\DOMElement|null	common ancestor or null
+	 * @return	\DOMNode|null	common ancestor or null
 	 */
 	public static function getCommonAncestor(\DOMNode $node1, \DOMNode $node2) {
 		// abort if both elements share a common element or are both direct descendants
@@ -436,7 +436,7 @@ final class DOMUtil {
 	 * @param	\DOMNode	$node		reference node
 	 * @param	\DOMElement	$ancestor	ancestor element that should not be split
 	 * @param	boolean		$splitBefore	true if nodes before `$node` should be moved into a new node, false to split nodes after `$node`
-	 * @return	\DOMElement	parent node containing `$node`, direct child of `$ancestor`
+	 * @return	\DOMNode	parent node containing `$node`, direct child of `$ancestor`
 	 */
 	public static function splitParentsUntil(\DOMNode $node, \DOMElement $ancestor, $splitBefore = true) {
 		if (!self::contains($ancestor, $node)) {
