@@ -351,16 +351,13 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	public function getGroupOption($name) {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
-			$this->groupOptions = $groupOptionIDs = [];
+			$this->groupOptions = [];
 			
 			$sql = "SELECT		optionName, optionID
 				FROM		wcf".WCF_N."_user_group_option";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
-			
-			while ($row = $statement->fetchArray()) {
-				$groupOptionIDs[$row['optionName']] = $row['optionID'];
-			}
+			$groupOptionIDs = $statement->fetchMap('optionName', 'optionID');
 			
 			if (!empty($groupOptionIDs)) {
 				$conditions = new PreparedStatementConditionBuilder();
@@ -374,9 +371,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				while ($row = $statement->fetchArray()) {
-					$this->groupOptions[$row['optionName']] = $row['optionValue'];
-				}
+				$this->groupOptions = $statement->fetchMap('optionName', 'optionValue');
 			}
 		}
 		

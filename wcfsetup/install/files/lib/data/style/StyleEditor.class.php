@@ -633,10 +633,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			WHERE		language_item.languageItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->styleDescription]);
-		$styleDescriptions = [];
-		while ($row = $statement->fetchArray()) {
-			$styleDescriptions[$row['languageCode']] = $row['languageItemValue'];
-		}
+		$styleDescriptions = $statement->fetchMap('languageCode', 'languageItemValue');
 		
 		// create style info file
 		$xml = new XMLWriter();

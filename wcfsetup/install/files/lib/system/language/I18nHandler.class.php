@@ -284,10 +284,7 @@ class I18nHandler extends SingletonFactory {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$languageItemIDs = [];
-		while ($row = $statement->fetchArray()) {
-			$languageItemIDs[$row['languageID']] = $row['languageItemID'];
-		}
+		$languageItemIDs = $statement->fetchMap('languageID', 'languageItemID');
 		
 		$insertLanguageIDs = $updateLanguageIDs = [];
 		foreach ($languageIDs as $languageID) {

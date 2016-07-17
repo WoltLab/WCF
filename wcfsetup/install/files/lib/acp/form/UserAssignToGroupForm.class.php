@@ -126,11 +126,7 @@ class UserAssignToGroupForm extends AbstractForm {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		
-		$groups = [];
-		while ($row = $statement->fetchArray()) {
-			$groups[$row['userID']][] = $row['groupID'];
-		}
+		$groups = $statement->fetchMap('userID', 'groupID', false);
 		
 		foreach ($this->users as $user) {
 			if (!UserGroup::isAccessibleGroup($groups[$user->userID])) {

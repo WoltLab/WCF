@@ -32,10 +32,7 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				$lockedFiles = [];
-				while ($row = $statement->fetchArray()) {
-					$lockedFiles[$row['filename']] = $row['packageID'];
-				}
+				$lockedFiles = $statement->fetchMap('filename', 'packageID');
 				
 				// check delivered files
 				if (!empty($lockedFiles)) {

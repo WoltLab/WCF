@@ -141,14 +141,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		
-		$userToGroup = [];
-		while ($row = $statement->fetchArray()) {
-			if (!isset($userToGroup[$row['userID']])) {
-				$userToGroup[$row['userID']] = [];
-			}
-			
-			$userToGroup[$row['userID']][] = $row['groupID'];
-		}
+		$userToGroup = $statement->fetchMap('userID', 'groupID', false);
 		
 		// validate if user's group is accessible for current user
 		foreach ($userIDs as $userID) {

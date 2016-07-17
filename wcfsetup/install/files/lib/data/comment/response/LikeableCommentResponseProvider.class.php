@@ -62,7 +62,6 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 		}
 		
 		// get objects type ids
-		$responses = [];
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('comment_response.responseID IN (?)', [$responseIDs]);
 		$sql = "SELECT		comment.objectTypeID, comment_response.responseID
@@ -72,9 +71,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$responses[$row['responseID']] = $row['objectTypeID'];
-		}
+		$responses = $statement->fetchMap('responseID', 'objectTypeID');
 		
 		// group likes by object type id
 		$likeData = [];

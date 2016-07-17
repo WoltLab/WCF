@@ -199,9 +199,7 @@ class PackageInstallationSQLParser extends SQLParser {
 				AND sqlIndex = ''";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$this->knownTables[$row['sqlTable']] = $row['packageID'];
-		}
+		$this->knownTables = $statement->fetchMap('sqlTable', 'packageID');
 	}
 	
 	/**

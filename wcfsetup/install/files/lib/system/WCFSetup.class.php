@@ -1127,10 +1127,7 @@ class WCFSetup extends WCF {
 					FROM	wcf".WCF_N."_package_installation_queue";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute();
-				$queues = [];
-				while ($row = $statement->fetchArray()) {
-					$queues[$row['queueID']] = $row['parentQueueID'];
-				}
+				$queues = $statement->fetchMap('queueID', 'parentQueueID');
 				
 				$queueIDs = [];
 				/** @noinspection PhpUndefinedVariableInspection */

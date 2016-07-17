@@ -236,11 +236,7 @@ class HtmlInputNodeTextParser {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		
-		$users = [];
-		while ($row = $statement->fetchArray()) {
-			$users[$row['userID']] = $row['username'];
-		}
+		$users = $statement->fetchMap('userID', 'username');
 		
 		// sort usernames with the longest one being first
 		uasort($users, function($a, $b) {

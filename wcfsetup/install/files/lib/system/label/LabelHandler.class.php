@@ -210,15 +210,7 @@ class LabelHandler extends SingletonFactory {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		
-		$labels = [];
-		while ($row = $statement->fetchArray()) {
-			if (!isset($labels[$row['labelID']])) {
-				$labels[$row['labelID']] = [];
-			}
-			
-			$labels[$row['labelID']][] = $row['objectID'];
-		}
+		$labels = $statement->fetchMap('labelID', 'objectID', false);
 		
 		// optionally filter out labels without permissions
 		if ($validatePermissions) {

@@ -497,9 +497,7 @@ class StyleAddForm extends AbstractForm {
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$this->variables[$row['variableName']] = $row['defaultValue'];
-		}
+		$this->variables = $statement->fetchMap('variableName', 'defaultValue');
 	}
 	
 	/**

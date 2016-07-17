@@ -150,10 +150,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			FROM	wcf".WCF_N."_package";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$installedPackages = [];
-		while ($row = $statement->fetchArray()) {
-			$installedPackages[$row['package']] = $row['packageVersion'];
-		}
+		$installedPackages = $statement->fetchMap('package', 'packageVersion');
 		
 		// filter by version
 		$conditions = new PreparedStatementConditionBuilder();

@@ -81,10 +81,7 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$usernames = [];
-		while ($row = $statement->fetchArray()) {
-			$usernames[$row['userID']] = $row['username'];
-		}
+		$usernames = $statement->fetchMap('userID', 'username');
 		
 		// update like objects
 		$sql = "UPDATE	wcf".WCF_N."_like_object

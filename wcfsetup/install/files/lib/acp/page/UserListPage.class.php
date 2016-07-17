@@ -243,8 +243,6 @@ class UserListPage extends SortablePage {
 		
 		// get user data
 		if (!empty($userIDs)) {
-			$userToGroups = [];
-			
 			// get group ids
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("user_table.userID IN (?)", [$userIDs]);
@@ -254,9 +252,7 @@ class UserListPage extends SortablePage {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$userToGroups[$row['userID']][] = $row['groupID'];
-			}
+			$userToGroups = $statement->fetchMap('userID', 'groupID', false);
 			
 			$sql = "SELECT		user_avatar.*, option_value.*, user_table.*
 				FROM		wcf".WCF_N."_user user_table

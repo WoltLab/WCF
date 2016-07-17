@@ -35,7 +35,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 		unset($file);
 		
 		// get existing templates
-		$existingTemplates = $updateTemplateIDs = [];
+		$updateTemplateIDs = [];
 		$sql = "SELECT	templateName, templateID
 			FROM	wcf".WCF_N."_template
 			WHERE	packageID = ?
@@ -43,9 +43,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 				AND templateGroupID IS NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$packageID, $this->application]);
-		while ($row = $statement->fetchArray()) {
-			$existingTemplates[$row['templateName']] = $row['templateID'];
-		}
+		$existingTemplates = $statement->fetchMap('templateName', 'templateID');
 		
 		// save new templates
 		$sql = "INSERT INTO	wcf".WCF_N."_template

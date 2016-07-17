@@ -80,7 +80,6 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 		
 		if (!empty($this->objectTypeIDs)) {
 			// get tag ids
-			$tagIDs = [];
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('object.objectTypeID IN (?)', [$this->objectTypeIDs]);
 			$conditionBuilder->add('object.languageID IN (?)', [$this->languageIDs]);
@@ -91,9 +90,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 				ORDER BY	counter DESC";
 			$statement = WCF::getDB()->prepareStatement($sql, 500);
 			$statement->execute($conditionBuilder->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$tagIDs[$row['tagID']] = $row['counter'];
-			}
+			$tagIDs = $statement->fetchMap('tagID', 'counter');
 			
 			// get tags
 			if (!empty($tagIDs)) {

@@ -281,14 +281,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE	pollID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->poll->pollID]);
-		$voteData = [];
-		while ($row = $statement->fetchArray()) {
-			if (!isset($voteData[$row['optionID']])) {
-				$voteData[$row['optionID']] = [];
-			}
-			
-			$voteData[$row['optionID']][] = $row['userID'];
-		}
+		$voteData = $statement->fetchMap('optionID', 'userID', false);
 		
 		// assign user ids
 		foreach ($voteData as $optionID => $userIDs) {

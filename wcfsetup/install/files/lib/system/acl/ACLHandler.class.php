@@ -351,10 +351,7 @@ class ACLHandler extends SingletonFactory {
 						".$conditions;
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute($conditions->getParameters());
-					
-					while ($row = $statement->fetchArray()) {
-						$data['user']['label'][$row['userID']] = $row['username'];
-					}
+					$data['user']['label'] = $statement->fetchMap('userID', 'username');
 				}
 			}
 		}

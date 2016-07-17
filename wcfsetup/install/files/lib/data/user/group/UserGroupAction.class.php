@@ -118,10 +118,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 			$statement->execute();
 		}
 		
-		$optionValues = [];
-		while ($row = $statement->fetchArray()) {
-			$optionValues[$row['optionID']] = $row['optionValue'];
-		}
+		$optionValues = $statement->fetchMap('optionID', 'optionValue');
 		
 		$groupAction = new UserGroupAction([], 'create', [
 			'data' => [

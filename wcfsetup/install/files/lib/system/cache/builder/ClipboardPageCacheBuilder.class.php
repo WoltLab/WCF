@@ -20,15 +20,6 @@ class ClipboardPageCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$data = [];
-		while ($row = $statement->fetchArray()) {
-			if (!isset($data[$row['pageClassName']])) {
-				$data[$row['pageClassName']] = [];
-			}
-			
-			$data[$row['pageClassName']][] = $row['actionID'];
-		}
-		
-		return $data;
+		return $statement->fetchMap('pageClassName', 'actionID', false);
 	}
 }

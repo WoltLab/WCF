@@ -207,9 +207,7 @@ class UserGroupOptionForm extends AbstractForm {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$this->values[$row['groupID']] = $row['optionValue'];
-			}
+			$this->values = $statement->fetchMap('groupID', 'optionValue');
 		}
 		
 		// create form elements for each group

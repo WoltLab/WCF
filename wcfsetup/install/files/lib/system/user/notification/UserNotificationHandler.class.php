@@ -133,10 +133,7 @@ class UserNotificationHandler extends SingletonFactory {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$notifications = [];
-		while ($row = $statement->fetchArray()) {
-			$notifications[$row['userID']] = $row['notificationID'];
-		}
+		$notifications = $statement->fetchMap('userID', 'notificationID');
 		
 		// check if event supports stacking and author should be added
 		if (!empty($notifications) && $event->isStackable()) {

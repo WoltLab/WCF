@@ -71,15 +71,12 @@ class VisitTracker extends SingletonFactory {
 				
 				// cache does not exist or is outdated
 				if ($data === null) {
-					$this->userVisits = [];
 					$sql = "SELECT	objectTypeID, visitTime
 						FROM	wcf".WCF_N."_tracked_visit_type
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute([WCF::getUser()->userID]);
-					while ($row = $statement->fetchArray()) {
-						$this->userVisits[$row['objectTypeID']] = $row['visitTime'];
-					}
+					$this->userVisits = $statement->fetchMap('objectTypeID', 'visitTime');
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'trackedUserVisits', serialize($this->userVisits));

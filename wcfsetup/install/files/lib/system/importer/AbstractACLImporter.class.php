@@ -39,9 +39,7 @@ class AbstractACLImporter extends AbstractImporter {
 			WHERE	objectTypeID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->objectTypeID]);
-		while ($row = $statement->fetchArray()) {
-			$this->options[$row['optionName']] = $row['optionID'];
-		}
+		$this->options = $statement->fetchMap('optionName', 'optionID');
 	}
 	
 	/**

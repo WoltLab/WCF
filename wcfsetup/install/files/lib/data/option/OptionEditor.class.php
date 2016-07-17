@@ -42,10 +42,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 			FROM		wcf".WCF_N."_option";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$optionIDs = [];
-		while ($row = $statement->fetchArray()) {
-			$optionIDs[$row['optionName']] = $row['optionID'];
-		}
+		$optionIDs = $statement->fetchMap('optionName', 'optionID');
 		
 		$newOptions = [];
 		foreach ($options as $name => $value) {

@@ -186,6 +186,36 @@ class PreparedStatement {
 	}
 	
 	/**
+	 * Returns a map of all fetched rows using one column as key and another column as value.
+	 * 
+	 * @param	string		$keyColumn	name of the key column
+	 * @param	string		$valueColumn	name of the value column
+	 * @param	boolean		$uniqueKey	if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned 
+	 * @return	string[]|string[][]
+	 */
+	public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true) {
+		$map = [];
+		
+		while (($row = $this->fetchArray())) {
+			$key = $row[$keyColumn];
+			$value = $row[$valueColumn];
+			
+			if ($uniqueKey) {
+				$map[$key] = $value;
+			}
+			else {
+				if (!isset($map[$key])) {
+					$map[$key] = [];
+				}
+				
+				$map[$key][] = $value;
+			}
+		}
+		
+		return $map;
+	}
+	
+	/**
 	 * Counts number of affected rows by the last sql statement (INSERT, UPDATE or DELETE).
 	 * 
 	 * @return	integer		number of affected rows

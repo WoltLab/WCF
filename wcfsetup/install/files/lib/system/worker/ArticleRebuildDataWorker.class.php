@@ -86,12 +86,7 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$cumulativeLikes = [];
-		
-		/** @noinspection PhpAssignmentInConditionInspection */
-		while ($row = $statement->fetchArray()) {
-			$cumulativeLikes[$row['objectID']] = $row['cumulativeLikes'];
-		}
+		$cumulativeLikes = $statement->fetchMap('objectID', 'cumulativeLikes');
 		
 		foreach ($this->objectList as $article) {
 			$editor = new ArticleEditor($article);

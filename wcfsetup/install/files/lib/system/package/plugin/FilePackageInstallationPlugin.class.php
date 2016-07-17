@@ -88,15 +88,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->installation->getPackageID()]);
-		
-		$files = [];
-		while ($row = $statement->fetchArray()) {
-			if (!isset($files[$row['application']])) {
-				$files[$row['application']] = [];
-			}
-			
-			$files[$row['application']][] = $row['filename'];
-		}
+		$files = $statement->fetchMap('application', 'filename', false);
 		
 		foreach ($files as $application => $filenames) {
 			/** @noinspection PhpUndefinedMethodInspection */

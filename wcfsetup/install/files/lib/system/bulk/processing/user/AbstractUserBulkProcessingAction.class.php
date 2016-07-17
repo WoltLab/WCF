@@ -41,15 +41,7 @@ abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAc
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
-		
-		$groupIDs = [];
-		while ($row = $statement->fetchArray()) {
-			if (!isset($groupIDs[$row['userID']])) {
-				$groupIDs[$row['userID']] = [];
-			}
-			
-			$groupIDs[$row['userID']][] = $row['groupID'];
-		}
+		$groupIDs = $statement->fetchMap('userID', 'groupID', false);
 		
 		$users = [];
 		foreach ($userList as $user) {

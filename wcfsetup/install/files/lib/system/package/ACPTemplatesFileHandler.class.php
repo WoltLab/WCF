@@ -52,11 +52,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				
-				$lockedFiles = [];
-				while ($row = $statement->fetchArray()) {
-					$lockedFiles[$row['templateName']] = $row['packageID'];
-				}
+				$lockedFiles = $statement->fetchMap('templateName', 'packageID');
 				
 				// check if acp templates from the package beeing
 				// installed are in conflict with already installed

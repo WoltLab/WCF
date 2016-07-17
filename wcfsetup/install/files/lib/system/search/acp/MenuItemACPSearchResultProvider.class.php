@@ -41,10 +41,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 			ORDER BY	languageItemValue ASC";
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
-		$languageItems = [];
-		while ($row = $statement->fetchArray()) {
-			$languageItems[$row['languageItem']] = $row['languageItemValue'];
-		}
+		$languageItems = $statement->fetchMap('languageItem', 'languageItemValue');
 		
 		if (empty($languageItems)) {
 			return [];
