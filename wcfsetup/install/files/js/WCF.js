@@ -5553,6 +5553,18 @@ WCF.Effect = {};
  */
 WCF.Effect.Scroll = Class.extend({
 	/**
+	 * Initializes effect.
+	 *
+	 * @param	string	$selector
+	 */
+	init: function($selector) {
+		$($selector).click($.proxy(function(event) {
+			this.scrollTo($((event.currentTarget).hash), true);
+			event.preventDefault();
+		}, this));
+	},
+	
+	/**
 	 * Scrolls to a specific element offset.
 	 * 
 	 * @param	jQuery		element
@@ -5599,16 +5611,10 @@ WCF.Effect.Scroll = Class.extend({
  */
 WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 	/**
-	 * Initializes effect.
+	 * @see	WCF.Effect.Scroll.init()
 	 */
 	init: function() {
-		var self = this;
-		$(document).on('click', 'a[href$=#top],a[href$=#bottom]', function() {
-			var $target = $(this.hash);
-			self.scrollTo($target, true);
-			
-			return false;
-		});
+		this._super('a[href$=#top],a[href$=#bottom]');
 	}
 });
 
