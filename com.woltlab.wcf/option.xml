@@ -954,34 +954,6 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 				<suffix>pixel</suffix>
 			</option>
 			
-			<!-- message.general -->
-			<option name="enable_bbcodes_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="enable_html_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="enable_smilies_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="pre_parse_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="show_signature_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<!-- /message.general -->
-			
 			<!-- message.general.edit -->
 			<option name="module_edit_history">
 				<categoryname>message.general.edit</categoryname>
@@ -1587,6 +1559,12 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 		<option name="mail_debug_logfile_path" />
 		<option name="recent_activity_items" />
 		<option name="recent_activity_sidebar_items" />
+		
+		<option name="enable_bbcodes_default_value" />
+		<option name="enable_html_default_value" />
+		<option name="enable_smilies_default_value" />
+		<option name="pre_parse_default_value" />
+		<option name="show_signature_default_value" />
 		
 		<optioncategory name="dashboard.content.recentActivities" />
 		<optioncategory name="dashboard.sidebar.recentActivities" />
