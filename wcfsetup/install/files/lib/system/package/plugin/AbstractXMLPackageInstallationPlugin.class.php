@@ -124,31 +124,8 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function importItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
 		foreach ($elements as $element) {
-			$data = array(
-				'attributes' => array(),
-				'elements' => array(),
-				'nodeValue' => ''
-			);
-			
-			// fetch attributes
-			$attributes = $xpath->query('attribute::*', $element);
-			foreach ($attributes as $attribute) {
-				$data['attributes'][$attribute->name] = $attribute->value;
-			}
-			
-			// fetch child elements
-			$items = $xpath->query('child::*', $element);
-			foreach ($items as $item) {
-				$this->getElement($xpath, $data['elements'], $item);
-			}
-			
-			// include node value if item does not contain any child elements (eg. pip)
-			if (empty($data['elements'])) {
-				$data['nodeValue'] = $element->nodeValue;
-			}
-			
 			// map element data to database fields
-			$data = $this->prepareImport($data);
+			$data = $this->prepareImport($this->getElementData($xpath, $element));
 			
 			// validate item data
 			$this->validateImport($data);
@@ -176,8 +153,38 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * Sets element value from XPath.
+	 * Reads the element data
 	 * 
+	 * @param	\DOMXPath	$xpath
+	 * @param	\DOMElement	$element
+	 * @return	array<string>
+	 */
+	protected function getElementData(\DOMXPath $xpath, \DOMElement $element) {
+		$data = array('attributes' => array(), 'elements' => array(), 'nodeValue' => '');
+		
+		// fetch attributes
+		$attributes = $xpath->query('attribute::*', $element);
+		foreach ($attributes as $attribute) {
+			$data['attributes'][$attribute->name] = $attribute->value;
+		}
+		
+		// fetch child elements
+		$items = $xpath->query('child::*', $element);
+		foreach ($items as $item) {
+			$this->getElement($xpath, $data['elements'], $item);
+		}
+		
+		// include node value if item does not contain any child elements (eg. pip)
+		if (empty($data['elements'])) {
+			$data['nodeValue'] = $element->nodeValue;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * Sets element value from XPath.
+	 *
 	 * @param	\DOMXPath	$xpath
 	 * @param	array		$elements
 	 * @param	\DOMElement	$element
