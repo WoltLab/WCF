@@ -55,7 +55,7 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 	 * @see	\wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
-		$affectedCount = static::deleteAll($objectIDs);
+		$affectedCount = parent::deleteAll($objectIDs);
 		
 		// delete versions
 		$sql = "DELETE FROM	".static::getDatabaseVersionTableName()."
