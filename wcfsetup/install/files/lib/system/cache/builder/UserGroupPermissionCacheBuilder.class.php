@@ -77,13 +77,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 					}
 				}
 				
-				// unset false values
-				if ($result === false) {
-					unset($data[$optionName]);
-				}
-				else {
-					$data[$optionName] = $result;
-				}
+				$data[$optionName] = $result;
 			}
 		}
 		
