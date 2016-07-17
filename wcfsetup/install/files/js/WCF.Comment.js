@@ -161,7 +161,7 @@ WCF.Comment.Handler = Class.extend({
 		if ($comment.data('displayedResponses') < $comment.data('responses')) {
 			if (this._loadNextResponses[commentID] === undefined) {
 				var $difference = $comment.data('responses') - $comment.data('displayedResponses');
-				this._loadNextResponses[commentID] = $('<li class="jsCommentLoadNextResponses"><a>' + WCF.Language.get('wcf.comment.response.more', { count: $difference }) + '</a></li>').appendTo(this._commentButtonList[commentID]);
+				this._loadNextResponses[commentID] = $('<li class="jsCommentLoadNextResponses"><a><span class="icon icon16 icon-comment"></span> ' + WCF.Language.get('wcf.comment.response.more', { count: $difference }) + '</a></li>').appendTo(this._commentButtonList[commentID]);
 				this._loadNextResponses[commentID].children('a').data('commentID', commentID).click($.proxy(this._loadResponses, this));
 				this._commentButtonList[commentID].parent().show();
 			}
