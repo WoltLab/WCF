@@ -110,6 +110,7 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function loadCronjobs() {
 		WCF::getDB()->beginTransaction();
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$committed = false;
 		try {
 			$sql = "SELECT	        *
