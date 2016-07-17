@@ -3,7 +3,6 @@ namespace wcf\page;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\Page;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;

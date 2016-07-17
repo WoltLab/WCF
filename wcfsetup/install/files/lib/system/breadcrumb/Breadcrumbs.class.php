@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\breadcrumb;
-use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\system\page\PageLocationManager;
 use wcf\system\SingletonFactory;

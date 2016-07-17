@@ -1,15 +1,8 @@
 <?php
 namespace wcf\page;
-use wcf\data\article\Article;
-use wcf\data\box\Box;
 use wcf\data\media\Media;
-use wcf\data\IMessage;
-use wcf\system\box\BoxHandler;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\WCF;
 use wcf\util\FileReader;
 use wcf\util\StringUtil;
 

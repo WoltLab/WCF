@@ -5,10 +5,8 @@ use wcf\data\box\BoxAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
-use wcf\system\box\IBoxController;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
