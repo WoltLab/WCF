@@ -118,7 +118,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			ON		(tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')." AND tracked_visit.objectID = moderation_queue.queueID AND tracked_visit.userID = ".WCF::getUser()->userID.")
 			".$conditions."
 			ORDER BY	moderation_queue.lastChangeTime DESC";
-		$statement = WCF::getDB()->prepareStatement($sql, 5);
+		$statement = WCF::getDB()->prepareStatement($sql, 10);
 		$statement->execute($conditions->getParameters());
 		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
@@ -137,13 +137,13 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		// check if user storage is outdated
 		$totalCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
 		$count = count($queues);
-		if ($count < 5) {
+		if ($count < 10) {
 			// load more entries to fill up list
 			$queueList = new ViewableModerationQueueList();
 			$queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
 			if (!empty($queueIDs)) $queueList->getConditionBuilder()->add("moderation_queue.queueID NOT IN (?)", [$queueIDs]);
 			$queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
-			$queueList->sqlLimit = 5 - $count;
+			$queueList->sqlLimit = 10 - $count;
 			$queueList->loadUserProfiles = true;
 			$queueList->readObjects();
 			foreach ($queueList as $queue) {
