@@ -1376,14 +1376,14 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="like_allow_for_own_content">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
 			</option>
 			
 			<option name="like_enable_dislike">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
 			</option>
 			
