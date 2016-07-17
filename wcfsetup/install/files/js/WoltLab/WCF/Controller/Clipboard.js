@@ -2,7 +2,7 @@
  * Clipboard API Handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Clipboard
  */
@@ -45,7 +45,7 @@ define(
 		/**
 		 * Initializes the clipboard API handler.
 		 * 
-		 * @param	{object<string, *>}	options		initialization options
+		 * @param	{Object}	options		initialization options
 		 */
 		setup: function(options) {
 			if (!options.pageClassName) {
@@ -222,9 +222,9 @@ define(
 		/**
 		 * Saves the state for given item object ids.
 		 * 
-		 * @param	{string}		type		object type
-		 * @param	{array<int>}	        objectIds	item object ids
-		 * @param	{boolean}		isMarked	true if marked
+		 * @param	{string}        type		object type
+		 * @param	{int[]}         objectIds	item object ids
+		 * @param	{boolean}       isMarked	true if marked
 		 */
 		_saveState: function(type, objectIds, isMarked) {
 			Ajax.api(this, {
@@ -262,12 +262,14 @@ define(
 				});
 			};
 			
+			//noinspection JSUnresolvedVariable
 			var confirmMessage = (typeof data.internalData.confirmMessage === 'string') ? data.internalData.confirmMessage : '';
 			var fireEvent = true;
 			
 			if (typeof data.parameters === 'object' && data.parameters.actionName && data.parameters.className) {
 				if (data.parameters.actionName === 'unmarkAll' || Array.isArray(data.parameters.objectIDs)) {
 					if (confirmMessage.length) {
+						//noinspection JSUnresolvedVariable
 						var template = (typeof data.internalData.template === 'string') ? data.internalData.template : '';
 						
 						UiConfirmation.show({
@@ -298,6 +300,7 @@ define(
 									}
 								}
 								
+								//noinspection JSUnresolvedFunction
 								this._executeProxyAction(listItem, data, formData);
 							}).bind(this),
 							message: confirmMessage,
@@ -326,9 +329,9 @@ define(
 		/**
 		 * Forwards clipboard actions to an individual handler.
 		 * 
-		 * @param	{Element}		listItem	dropdown item element
-		 * @param	{object<string, *>}	data		action data
-		 * @param	{object<string, *>=}	formData	form data
+		 * @param	{Element}	listItem	dropdown item element
+		 * @param	{Object}	data		action data
+		 * @param	{Object?}	formData	form data
 		 */
 		_executeProxyAction: function(listItem, data, formData) {
 			formData = formData || {};
@@ -336,9 +339,13 @@ define(
 			var objectIds = (data.parameters.actionName !== 'unmarkAll') ? data.parameters.objectIDs : [];
 			var parameters = { data: formData };
 			
+			//noinspection JSUnresolvedVariable
 			if (typeof data.internalData.parameters === 'object') {
+				//noinspection JSUnresolvedVariable
 				for (var key in data.internalData.parameters) {
-					if (objOwns(data.internalData.parameters, key)) {
+					//noinspection JSUnresolvedVariable
+					if (data.internalData.parameters.hasOwnProperty(key)) {
+						//noinspection JSUnresolvedVariable
 						parameters[key] = data.internalData.parameters[key];
 					}
 				}
@@ -401,6 +408,7 @@ define(
 		_ajaxSuccess: function(data) {
 			if (data.actionName === 'unmarkAll') {
 				_containers.forEach((function(containerData) {
+					//noinspection JSUnresolvedVariable
 					if (elData(containerData.element, 'type') === data.returnValues.objectType) {
 						var clipboardObjects = elByClass('jsMarked', containerData.element);
 						while (clipboardObjects.length) {
@@ -414,6 +422,7 @@ define(
 							containerData.checkboxes[i].checked = false;
 						}
 						
+						//noinspection JSUnresolvedVariable
 						UiPageAction.remove('wcfClipboard-' + data.returnValues.objectType);
 					}
 				}).bind(this));
@@ -427,14 +436,18 @@ define(
 			_containers.forEach((function(containerData) {
 				var typeName = elData(containerData.element, 'type');
 				
-				var objectIds = (data.returnValues.markedItems && objOwns(data.returnValues.markedItems, typeName)) ? data.returnValues.markedItems[typeName] : [];
+				//noinspection JSUnresolvedVariable
+				var objectIds = (data.returnValues.markedItems && data.returnValues.markedItems.hasOwnProperty(typeName)) ? data.returnValues.markedItems[typeName] : [];
 				this._rebuildMarkings(containerData, objectIds);
 			}).bind(this));
 			
 			var keepEditors = [], typeName;
+			//noinspection JSUnresolvedVariable
 			if (data.returnValues && data.returnValues.items) {
+				//noinspection JSUnresolvedVariable
 				for (typeName in data.returnValues.items) {
-					if (objOwns(data.returnValues.items, typeName)) {
+					//noinspection JSUnresolvedVariable
+					if (data.returnValues.items.hasOwnProperty(typeName)) {
 						keepEditors.push(typeName);
 					}
 				}
@@ -450,6 +463,7 @@ define(
 			});
 			
 			// no items
+			//noinspection JSUnresolvedVariable
 			if (!data.returnValues || !data.returnValues.items) {
 				return;
 			}
@@ -457,11 +471,14 @@ define(
 			// rebuild editors
 			var created, dropdown, editor, typeData;
 			var divider, item, itemData, itemIndex, label, unmarkAll;
+			//noinspection JSUnresolvedVariable
 			for (typeName in data.returnValues.items) {
-				if (!objOwns(data.returnValues.items, typeName)) {
+				//noinspection JSUnresolvedVariable
+				if (!data.returnValues.items.hasOwnProperty(typeName)) {
 					continue;
 				}
 				
+				//noinspection JSUnresolvedVariable
 				typeData = data.returnValues.items[typeName];
 				created = false;
 				
@@ -488,7 +505,9 @@ define(
 				
 				// create editor items
 				for (itemIndex in typeData.items) {
-					if (!objOwns(typeData.items, itemIndex)) continue;
+					if (!typeData.items.hasOwnProperty(itemIndex)) {
+						continue;
+					}
 					
 					itemData = typeData.items[itemIndex];
 					
@@ -532,8 +551,8 @@ define(
 		/**
 		 * Rebuilds the mark state for each item.
 		 * 
-		 * @param	{object<string, *>}	data		container data
-		 * @param	{array<int>}	        objectIds	item object ids
+		 * @param	{Object}	data		container data
+		 * @param	{int[]}	        objectIds	item object ids
 		 */
 		_rebuildMarkings: function(data, objectIds) {
 			var markAll = true;
@@ -582,11 +601,9 @@ define(
 		},
 		
 		/**
-		 * Shows the clipboard editor for the given object type.
-		 * 
-		 * @param	{string}	objectType
+		 * Shows the clipboard editor.
 		 */
-		showEditor: function(objectType) {
+		showEditor: function() {
 			this._loadMarkedItems();
 			
 			if (document.documentElement.classList.contains('pageOverlayActive')) {
