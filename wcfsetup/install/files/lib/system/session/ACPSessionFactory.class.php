@@ -54,16 +54,7 @@ class ACPSessionFactory {
 	 * @return	string
 	 */
 	protected function readSessionID() {
-		if (isset($_GET['s'])) {
-			if (is_string($_GET['s'])) {
-				return $_GET['s'];
-			}
-		}
-		else if (isset($_POST['s'])) {
-			if (is_string($_POST['s'])) {
-				return $_POST['s'];
-			}
-		}
+		if (isset($_REQUEST['s']) && is_string($_REQUEST['s'])) return $_REQUEST['s'];
 		
 		return '';
 	}

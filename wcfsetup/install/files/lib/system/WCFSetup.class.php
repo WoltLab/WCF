@@ -121,8 +121,7 @@ class WCFSetup extends WCF {
 	 * Gets the status of the developer mode.
 	 */
 	protected static function getDeveloperMode() {
-		if (isset($_GET['dev'])) self::$developerMode = intval($_GET['dev']);
-		else if (isset($_POST['dev'])) self::$developerMode = intval($_POST['dev']);
+		if (isset($_REQUEST['dev'])) self::$developerMode = intval($_REQUEST['dev']);
 	}
 	
 	/**
