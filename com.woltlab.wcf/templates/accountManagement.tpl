@@ -213,7 +213,7 @@
 		{/if}
 		
 		{hascontent}
-			<fieldset id="3rdParty">
+			<fieldset id="thirdParty">
 				<legend>{lang}wcf.user.3rdparty{/lang}</legend>
 				
 				{content}
