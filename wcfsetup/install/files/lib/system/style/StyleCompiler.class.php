@@ -41,6 +41,7 @@ class StyleCompiler extends SingletonFactory {
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/lessc.inc.php');
 		$this->compiler = new \lessc();
+		$this->compiler->setFormatter("compressed");
 		$this->compiler->setImportDir(array(WCF_DIR));
 	}
 	
