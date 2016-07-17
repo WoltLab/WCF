@@ -218,7 +218,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	public function delete() {
 		foreach ($this->getObjects() as $box) {
 			if ($box->boxType == 'tpl') {
-				foreach ($box->getBoxContent() as $languageID => $content) {
+				foreach ($box->getBoxContents() as $languageID => $content) {
 					$file = WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
 					if (file_exists($file)) {
 						@unlink($file);
