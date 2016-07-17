@@ -119,24 +119,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
 		
-		foreach ($objects as $object) {
-			if (is_object($object)) {
-				if ($object instanceof $this->className) {
-					$this->objects[] = $object;
-				}
-				else if ($object instanceof $baseClass) {
-					$this->objects[] = new $this->className($object);
-				}
-				else {
-					throw new SystemException('invalid value of parameter objects given');
-				}
-				
-				$this->objectIDs[] = $object->$indexName;
-			}
-			else {
-				$this->objectIDs[] = $object;
-			}
-		}
+		$this->setObjects($objects);
 		
 		$this->action = $action;
 		$this->parameters = $parameters;
@@ -232,15 +215,29 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Sets the database objects.
 	 * 
-	 * @param	array<\wcf\data\DatabaseObject>		$objects
+	 * @param	array<mixed>		$objects
 	 */
 	public function setObjects(array $objects) {
-		$this->objects = $objects;
+		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
 		
-		// update object IDs
-		$this->objectIDs = array();
-		foreach ($this->objects as $object) {
-			$this->objectIDs[] = $object->getObjectID();
+		foreach ($objects as $object) {
+			if (is_object($object)) {
+				if ($object instanceof $this->className) {
+					$this->objects[] = $object;
+				}
+				else if ($object instanceof $baseClass) {
+					$this->objects[] = new $this->className($object);
+				}
+				else {
+					throw new SystemException('invalid value of parameter objects given');
+				}
+				
+				$this->objectIDs[] = $object->$indexName;
+			}
+			else {
+				$this->objectIDs[] = $object;
+			}
 		}
 	}
 	
