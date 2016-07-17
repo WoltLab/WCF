@@ -129,7 +129,6 @@
 		$(function() {
 			if (jQuery.browser.touch) $('html').addClass('touch');
 			
-			new WCF.Effect.SmoothScroll();
 			WCF.System.PageNavigation.init('.pagination');
 			
 			{if $__wcf->user->userID}
