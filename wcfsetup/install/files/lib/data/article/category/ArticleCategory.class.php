@@ -18,6 +18,9 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Article\Category
  * @since	3.0
  * 
+ * @method		ArticleCategory[]	getChildCategories()
+ * @method		ArticleCategory		getParentCategory()
+ * @method		ArticleCategory[]	getParentCategories()
  * @method static	ArticleCategory|null	getCategory($categoryID)
  */
 class ArticleCategory extends AbstractDecoratedCategory implements ITitledLinkObject {

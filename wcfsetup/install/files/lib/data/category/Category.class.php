@@ -138,9 +138,9 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * Returns the parent category of this category.
+	 * Returns the parent category of the category or `null` if the category has no parent category.
 	 * 
-	 * @return	Category
+	 * @return	Category|null
 	 */
 	public function getParentCategory() {
 		if ($this->parentCategoryID && $this->parentCategory === null) {
