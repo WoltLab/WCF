@@ -102,7 +102,7 @@
 	{if $__disableLoginLink|empty}
 		<!-- login box -->
 		<li id="userLogin">
-			<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
+			<a class="loginLink" href="{link controller='Login'}{/link}"><span>{lang}wcf.user.loginOrRegister</span>{/lang}</a>
 			<div id="loginForm" style="display: none;">
 				{capture assign='__3rdPartyButtons'}
 					{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
