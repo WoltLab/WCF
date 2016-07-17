@@ -4,7 +4,6 @@ use wcf\data\DatabaseObject;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\template\plugin\SimpledEmbeddedObjectPrefilterTemplatePlugin;
 use wcf\system\WCF;
 
 /**
