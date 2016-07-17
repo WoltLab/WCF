@@ -282,9 +282,14 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Clears assignment of all template variables. This should not be called
 	 * during runtime as it could leed to an unexpected behaviour.
+	 * 
+	 * @param	boolean		$assignSystemVariables	Assign System Variables after clear
 	 */
-	public function clearAllAssign() {
+	public function clearAllAssign($assignSystemVariables = false) {
 		$this->v = array();
+		if ($assignSystemVariables) {
+			$this->assignSystemVariables();
+		}
 	}
 	
 	/**
