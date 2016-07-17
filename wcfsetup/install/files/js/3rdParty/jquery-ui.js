@@ -1,6 +1,6 @@
 /*! jQuery UI - v1.12.0 - 2016-07-17
 * http://jqueryui.com
-* Includes: widget.js, position.js, data.js, disable-selection.js, scroll-parent.js, widgets/draggable.js, widgets/droppable.js, widgets/resizable.js, widgets/selectable.js, widgets/sortable.js, widgets/mouse.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js
+* Includes: widget.js, position.js, data.js, disable-selection.js, form-reset-mixin.js, keycode.js, scroll-parent.js, widgets/draggable.js, widgets/droppable.js, widgets/resizable.js, widgets/selectable.js, widgets/sortable.js, widgets/mouse.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-drop.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 (function( factory ) {
@@ -1301,6 +1301,114 @@ var disableSelection = $.fn.extend( {
 		return this.off( ".ui-disableSelection" );
 	}
 } );
+
+
+
+
+// Support: IE8 Only
+// IE8 does not support the form attribute and when it is supplied. It overwrites the form prop
+// with a string, so we need to find the proper form.
+var form = $.fn.form = function() {
+	return typeof this[ 0 ].form === "string" ? this.closest( "form" ) : $( this[ 0 ].form );
+};
+
+
+/*!
+ * jQuery UI Form Reset Mixin 1.12.0
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
+//>>label: Form Reset Mixin
+//>>group: Core
+//>>description: Refresh input widgets when their form is reset
+//>>docs: http://api.jqueryui.com/form-reset-mixin/
+
+
+
+var formResetMixin = $.ui.formResetMixin = {
+	_formResetHandler: function() {
+		var form = $( this );
+
+		// Wait for the form reset to actually happen before refreshing
+		setTimeout( function() {
+			var instances = form.data( "ui-form-reset-instances" );
+			$.each( instances, function() {
+				this.refresh();
+			} );
+		} );
+	},
+
+	_bindFormResetHandler: function() {
+		this.form = this.element.form();
+		if ( !this.form.length ) {
+			return;
+		}
+
+		var instances = this.form.data( "ui-form-reset-instances" ) || [];
+		if ( !instances.length ) {
+
+			// We don't use _on() here because we use a single event handler per form
+			this.form.on( "reset.ui-form-reset", this._formResetHandler );
+		}
+		instances.push( this );
+		this.form.data( "ui-form-reset-instances", instances );
+	},
+
+	_unbindFormResetHandler: function() {
+		if ( !this.form.length ) {
+			return;
+		}
+
+		var instances = this.form.data( "ui-form-reset-instances" );
+		instances.splice( $.inArray( this, instances ), 1 );
+		if ( instances.length ) {
+			this.form.data( "ui-form-reset-instances", instances );
+		} else {
+			this.form
+				.removeData( "ui-form-reset-instances" )
+				.off( "reset.ui-form-reset" );
+		}
+	}
+};
+
+
+/*!
+ * jQuery UI Keycode 1.12.0
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
+//>>label: Keycode
+//>>group: Core
+//>>description: Provide keycodes as keynames
+//>>docs: http://api.jqueryui.com/jQuery.ui.keyCode/
+
+
+var keycode = $.ui.keyCode = {
+	BACKSPACE: 8,
+	COMMA: 188,
+	DELETE: 46,
+	DOWN: 40,
+	END: 35,
+	ENTER: 13,
+	ESCAPE: 27,
+	HOME: 36,
+	LEFT: 37,
+	PAGE_DOWN: 34,
+	PAGE_UP: 33,
+	PERIOD: 190,
+	RIGHT: 39,
+	SPACE: 32,
+	TAB: 9,
+	UP: 38
+};
 
 
 /*!
@@ -8134,57 +8242,6 @@ var effectsEffectBounce = $.effects.define( "bounce", function( options, done ) 
 
 
 /*!
- * jQuery UI Effects Clip 1.12.0
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
-//>>label: Clip Effect
-//>>group: Effects
-//>>description: Clips the element on and off like an old TV.
-//>>docs: http://api.jqueryui.com/clip-effect/
-//>>demos: http://jqueryui.com/effect/
-
-
-
-var effectsEffectClip = $.effects.define( "clip", "hide", function( options, done ) {
-	var start,
-		animate = {},
-		element = $( this ),
-		direction = options.direction || "vertical",
-		both = direction === "both",
-		horizontal = both || direction === "horizontal",
-		vertical = both || direction === "vertical";
-
-	start = element.cssClip();
-	animate.clip = {
-		top: vertical ? ( start.bottom - start.top ) / 2 : start.top,
-		right: horizontal ? ( start.right - start.left ) / 2 : start.right,
-		bottom: vertical ? ( start.bottom - start.top ) / 2 : start.bottom,
-		left: horizontal ? ( start.right - start.left ) / 2 : start.left
-	};
-
-	$.effects.createPlaceholder( element );
-
-	if ( options.mode === "show" ) {
-		element.cssClip( animate.clip );
-		animate.clip = start;
-	}
-
-	element.animate( animate, {
-		queue: false,
-		duration: options.duration,
-		easing: options.easing,
-		complete: done
-	} );
-
-} );
-
-
-/*!
  * jQuery UI Effects Drop 1.12.0
  * http://jqueryui.com
  *
@@ -8236,103 +8293,6 @@ var effectsEffectDrop = $.effects.define( "drop", "hide", function( options, don
 		easing: options.easing,
 		complete: done
 	} );
-} );
-
-
-/*!
- * jQuery UI Effects Explode 1.12.0
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
-//>>label: Explode Effect
-//>>group: Effects
-// jscs:disable maximumLineLength
-//>>description: Explodes an element in all directions into n pieces. Implodes an element to its original wholeness.
-// jscs:enable maximumLineLength
-//>>docs: http://api.jqueryui.com/explode-effect/
-//>>demos: http://jqueryui.com/effect/
-
-
-
-var effectsEffectExplode = $.effects.define( "explode", "hide", function( options, done ) {
-
-	var i, j, left, top, mx, my,
-		rows = options.pieces ? Math.round( Math.sqrt( options.pieces ) ) : 3,
-		cells = rows,
-		element = $( this ),
-		mode = options.mode,
-		show = mode === "show",
-
-		// Show and then visibility:hidden the element before calculating offset
-		offset = element.show().css( "visibility", "hidden" ).offset(),
-
-		// Width and height of a piece
-		width = Math.ceil( element.outerWidth() / cells ),
-		height = Math.ceil( element.outerHeight() / rows ),
-		pieces = [];
-
-	// Children animate complete:
-	function childComplete() {
-		pieces.push( this );
-		if ( pieces.length === rows * cells ) {
-			animComplete();
-		}
-	}
-
-	// Clone the element for each row and cell.
-	for ( i = 0; i < rows; i++ ) { // ===>
-		top = offset.top + i * height;
-		my = i - ( rows - 1 ) / 2;
-
-		for ( j = 0; j < cells; j++ ) { // |||
-			left = offset.left + j * width;
-			mx = j - ( cells - 1 ) / 2;
-
-			// Create a clone of the now hidden main element that will be absolute positioned
-			// within a wrapper div off the -left and -top equal to size of our pieces
-			element
-				.clone()
-				.appendTo( "body" )
-				.wrap( "<div></div>" )
-				.css( {
-					position: "absolute",
-					visibility: "visible",
-					left: -j * width,
-					top: -i * height
-				} )
-
-				// Select the wrapper - make it overflow: hidden and absolute positioned based on
-				// where the original was located +left and +top equal to the size of pieces
-				.parent()
-					.addClass( "ui-effects-explode" )
-					.css( {
-						position: "absolute",
-						overflow: "hidden",
-						width: width,
-						height: height,
-						left: left + ( show ? mx * width : 0 ),
-						top: top + ( show ? my * height : 0 ),
-						opacity: show ? 0 : 1
-					} )
-					.animate( {
-						left: left + ( show ? 0 : mx * width ),
-						top: top + ( show ? 0 : my * height ),
-						opacity: show ? 1 : 0
-					}, options.duration || 500, options.easing, childComplete );
-		}
-	}
-
-	function animComplete() {
-		element.css( {
-			visibility: "visible"
-		} );
-		$( pieces ).remove();
-		done();
-	}
 } );
 
 
