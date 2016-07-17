@@ -37,7 +37,13 @@
 			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
-			{event name='copyright'}
+			{hascontent}
+				<div class="marginTop">
+					{content}
+						{event name='copyright'}
+					{/content}
+				</div>
+			{/hascontent}
 		</div>
 		
 		{if MODULE_WCF_AD && $__disableAds|empty}
