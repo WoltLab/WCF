@@ -91,18 +91,25 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		};
 		
 		foreach ($groups as $name => $pairs) {
+			$needsReindex = false;
 			for ($i = 0, $length = count($pairs); $i < $length; $i++) {
 				$pair = $pairs[$i];
 				if ($isInsideCode($pair['open']) || $isInsideCode($pair['close'])) {
 					$pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
 					$this->convertToBBCode($name, $pair);
 					
+					$needsReindex = true;
 					unset($groups[$name][$i]);
 					
 					if (empty($groups[$name])) {
+						$needsReindex = false;
 						unset($groups[$name]);
 					}
 				}
+			}
+			
+			if ($needsReindex) {
+				$groups[$name] = array_values($groups[$name]);
 			}
 		}
 		
