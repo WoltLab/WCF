@@ -385,6 +385,10 @@
 			max-width: 100%;
 		}
 	}
+	
+	> *:first-child {
+		margin-top: 0;
+	}
 }
 
 /* content - footer */
