@@ -41,7 +41,11 @@ class HtmlBBCodeParser extends BBCodeParser {
 		// difference to the original implementation: sourcecode bbcodes are handled too
 		$this->buildTagArray(false);
 		
+		// difference to the original implementation: we don't care for unclosed tags,
+		// they'll be marked as invalid and removed at the end, leaving lonely opening
+		// tags that will eventually be removed within the marker processor
 		$this->buildXMLStructure();
+		
 		$this->buildParsedString();
 		
 		return $this->parsedText;
@@ -137,6 +141,94 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		if (isset($this->textArray[$i + 1])) $this->parsedText .= $this->textArray[$i + 1];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function buildXMLStructure() {
+		// stack for open tags
+		$openTagStack = $openTagDataStack = [];
+		$newTagArray = [];
+		$newTextArray = [];
+		
+		$i = -1;
+		foreach ($this->tagArray as $i => $tag) {
+			if ($tag['closing']) {
+				// closing tag
+				if (in_array($tag['name'], $openTagStack) && $this->isAllowed($openTagStack, $tag['name'], true)) {
+					// close unclosed tags
+					while (($previousTag = end($openTagStack)) != $tag['name']) {
+						$nextIndex = count($newTagArray);
+						
+						// mark as invalid and do not flag as opened tag
+						$newTag = $this->buildTag('[/'.end($openTagStack).']');
+						$newTag['invalid'] = true;
+						
+						$newTagArray[$nextIndex] = $newTag;
+						if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
+						$newTextArray[$nextIndex] .= $this->textArray[$i];
+						$this->textArray[$i] = '';
+						array_pop($openTagStack);
+						array_pop($openTagDataStack);
+					}
+					
+					$nextIndex = count($newTagArray);
+					$newTagArray[$nextIndex] = $tag;
+					array_pop($openTagStack);
+					array_pop($openTagDataStack);
+					if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
+					$newTextArray[$nextIndex] .= $this->textArray[$i];
+				}
+				else {
+					// no such tag open
+					// handle as plain text
+					$this->textArray[$i] .= $tag['source'];
+					$last = count($newTagArray);
+					if (!isset($newTextArray[$last])) $newTextArray[$last] = '';
+					$newTextArray[$last] .= $this->textArray[$i];
+				}
+			}
+			else {
+				// opening tag
+				if ($this->isAllowed($openTagStack, $tag['name']) && $this->isValidTag($tag)) {
+					$openTagStack[] = $tag['name'];
+					$openTagDataStack[] = $tag;
+					$nextIndex = count($newTagArray);
+					$newTagArray[$nextIndex] = $tag;
+					if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
+					$newTextArray[$nextIndex] .= $this->textArray[$i];
+				}
+				else {
+					// tag not allowed
+					$this->textArray[$i] .= $tag['source'];
+					$last = count($newTagArray);
+					if (!isset($newTextArray[$last])) $newTextArray[$last] = '';
+					$newTextArray[$last] .= $this->textArray[$i];
+				}
+			}
+		}
+		
+		$last = count($newTagArray);
+		if (!isset($newTextArray[$last])) $newTextArray[$last] = '';
+		$newTextArray[$last] .= $this->textArray[$i + 1];
+		
+		// close unclosed open tags
+		while (end($openTagStack)) {
+			$nextIndex = count($newTagArray);
+			
+			// mark as invalid
+			$newTag = $this->buildTag('[/'.end($openTagStack).']');
+			$newTag['invalid'] = true;
+			
+			$newTagArray[$nextIndex] = $newTag;
+			if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
+			array_pop($openTagStack);
+			array_pop($openTagDataStack);
+		}
+		
+		$this->tagArray = $newTagArray;
+		$this->textArray = $newTextArray;
 	}
 	
 	/**
@@ -282,6 +374,11 @@ class HtmlBBCodeParser extends BBCodeParser {
 		$data = array_pop($this->openTagIdentifiers);
 		if ($data['name'] !== $name) {
 			throw new SystemException("Tag mismatch, expected '".$name."', got '".$data['name']."'.");
+		}
+		
+		if (!empty($data['invalid'])) {
+			// drop invalid closing tags
+			return '';
 		}
 		
 		return '<woltlab-metacode-marker data-uuid="' . $data['uuid'] . '" />';
