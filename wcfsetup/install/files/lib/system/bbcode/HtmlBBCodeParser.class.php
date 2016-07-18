@@ -46,101 +46,11 @@ class HtmlBBCodeParser extends BBCodeParser {
 		// tags that will eventually be removed within the marker processor
 		$this->buildXMLStructure();
 		
+		$this->handleSourceBBCodes();
+		
 		$this->buildParsedString();
 		
 		return $this->parsedText;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function buildParsedString() {
-		// reset parsed text
-		$this->parsedText = '';
-		
-		// reset identifiers for open tags
-		$this->openTagIdentifiers = [];
-		
-		// create text buffer
-		$buffer =& $this->parsedText;
-		
-		// stack of buffered tags
-		$bufferedTagStack = [];
-		
-		// loop through the tags
-		$i = -1;
-		foreach ($this->tagArray as $i => $tag) {
-			// append text to buffer
-			$buffer .= $this->textArray[$i];
-			
-			if ($tag['closing']) {
-				// get buffered opening tag
-				$openingTag = end($bufferedTagStack);
-				
-				// closing tag
-				if ($openingTag && $openingTag['name'] == $tag['name']) {
-					$hideBuffer = false;
-					// insert buffered content as attribute value
-					foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-						if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
-							$openingTag['attributes'][$attribute->attributeNo] = $buffer;
-							$hideBuffer = true;
-							break;
-						}
-					}
-					
-					// validate tag attributes again
-					if ($this->isValidTag($openingTag)) {
-						// build tag
-						if ($this->bbcodes[$tag['name']]->className) {
-							// difference to the original implementation: use the custom HTML element than to process them directly
-							$parsedTag = $this->compileTag($openingTag, $buffer, $tag);
-						}
-						else {
-							// build tag
-							$parsedTag = $this->buildOpeningTag($openingTag);
-							$closingTag = $this->buildClosingTag($tag);
-							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $buffer.$closingTag;
-						}
-					}
-					else {
-						$parsedTag = $openingTag['source'].$buffer.$tag['source'];
-					}
-					
-					// close current buffer
-					array_pop($bufferedTagStack);
-					
-					// open previous buffer
-					if (count($bufferedTagStack) > 0) {
-						$bufferedTag =& $bufferedTagStack[count($bufferedTagStack) - 1];
-						$buffer =& $bufferedTag['buffer'];
-					}
-					else {
-						$buffer =& $this->parsedText;
-					}
-					
-					// append parsed tag
-					$buffer .= $parsedTag;
-				}
-				else {
-					$buffer .= $this->buildClosingTag($tag);
-				}
-			}
-			else {
-				// opening tag
-				if ($this->needBuffering($tag)) {
-					// start buffering
-					$tag['buffer'] = '';
-					$bufferedTagStack[] = $tag;
-					$buffer =& $bufferedTagStack[(count($bufferedTagStack) - 1)]['buffer'];
-				}
-				else {
-					$buffer .= $this->buildOpeningTag($tag);
-				}
-			}
-		}
-		
-		if (isset($this->textArray[$i + 1])) $this->parsedText .= $this->textArray[$i + 1];
 	}
 	
 	/**
@@ -229,6 +139,183 @@ class HtmlBBCodeParser extends BBCodeParser {
 		
 		$this->tagArray = $newTagArray;
 		$this->textArray = $newTextArray;
+	}
+	
+	/**
+	 * Flags bbcodes inside code bbcodes for reversal, turning them back
+	 * into their source state (= textual representation).
+	 */
+	protected function handleSourceBBCodes() {
+		$sourceBBCodes = $this->getSourceBBCodes();
+		
+		$inCode = '';
+		$openTagStack = [];
+		
+		for ($i = 0, $length = count($this->tagArray); $i < $length; $i++) {
+			$tag = $this->tagArray[$i];
+			
+			if (!empty($tag['invalid'])) {
+				continue;
+			}
+			
+			$name = $tag['name'];
+			
+			if ($tag['closing']) {
+				if ($inCode) {
+					// matches opening code tag
+					if ($inCode === $name) {
+						$inCode = '';
+						array_pop($openTagStack);
+					}
+					else {
+						// unrelated tag, flag as invalid
+						$this->tagArray[$i]['inCode'] = true;
+					}
+					
+					continue;
+				}
+				
+				array_pop($openTagStack);
+			}
+			else {
+				if ($inCode) {
+					// inside code block, flag as invalid
+					$this->tagArray[$i]['inCode'] = true;
+					continue;
+				}
+				
+				// starts a new code block
+				if (in_array($name, $sourceBBCodes)) {
+					// look ahead to see if there is a valid closing tag
+					$hasClosingTag = false;
+					for ($j = $i + 1; $j < $length; $j++) {
+						if ($this->tagArray[$j]['name'] === $name && empty($this->tagArray[$j]['invalid'])) {
+							$hasClosingTag = true;
+							break;
+						}
+					}
+					
+					if ($hasClosingTag) {
+						$inCode = $name;
+					}
+					else {
+						// no closing tag, flag as invalid to avoid the
+						// entire content afterwards being treated as code
+						$this->tagArray[$i]['inCode'] = true;
+					}
+				}
+				
+				$openTagStack[] = $name;
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function buildParsedString() {
+		// reset parsed text
+		$this->parsedText = '';
+		
+		// reset identifiers for open tags
+		$this->openTagIdentifiers = [];
+		
+		// create text buffer
+		$buffer =& $this->parsedText;
+		
+		// stack of buffered tags
+		$bufferedTagStack = [];
+		
+		// loop through the tags
+		$i = -1;
+		foreach ($this->tagArray as $i => $tag) {
+			// append text to buffer
+			$buffer .= $this->textArray[$i];
+			
+			if ($tag['closing']) {
+				if (!empty($tag['invalid'])) {
+					// drop invalid closing tag
+					continue;
+				}
+				else if (!empty($tag['inCode'])) {
+					// revert bbcodes inside code
+					$buffer .= $tag['source'];
+					continue;
+				}
+				
+				// get buffered opening tag
+				$openingTag = end($bufferedTagStack);
+				
+				// closing tag
+				if ($openingTag && $openingTag['name'] == $tag['name']) {
+					$hideBuffer = false;
+					// insert buffered content as attribute value
+					foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
+						if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
+							$openingTag['attributes'][$attribute->attributeNo] = $buffer;
+							$hideBuffer = true;
+							break;
+						}
+					}
+					
+					// validate tag attributes again
+					if ($this->isValidTag($openingTag)) {
+						// build tag
+						if ($this->bbcodes[$tag['name']]->className) {
+							// difference to the original implementation: use the custom HTML element than to process them directly
+							$parsedTag = $this->compileTag($openingTag, $buffer, $tag);
+						}
+						else {
+							// build tag
+							$parsedTag = $this->buildOpeningTag($openingTag);
+							$closingTag = $this->buildClosingTag($tag);
+							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $buffer.$closingTag;
+						}
+					}
+					else {
+						$parsedTag = $openingTag['source'].$buffer.$tag['source'];
+					}
+					
+					// close current buffer
+					array_pop($bufferedTagStack);
+					
+					// open previous buffer
+					if (count($bufferedTagStack) > 0) {
+						$bufferedTag =& $bufferedTagStack[count($bufferedTagStack) - 1];
+						$buffer =& $bufferedTag['buffer'];
+					}
+					else {
+						$buffer =& $this->parsedText;
+					}
+					
+					// append parsed tag
+					$buffer .= $parsedTag;
+				}
+				else {
+					$buffer .= $this->buildClosingTag($tag);
+				}
+			}
+			else {
+				if (!empty($tag['inCode'])) {
+					// revert bbcodes inside code
+					$buffer .= $tag['source'];
+					continue;
+				}
+				
+				// opening tag
+				if ($this->needBuffering($tag)) {
+					// start buffering
+					$tag['buffer'] = '';
+					$bufferedTagStack[] = $tag;
+					$buffer =& $bufferedTagStack[(count($bufferedTagStack) - 1)]['buffer'];
+				}
+				else {
+					$buffer .= $this->buildOpeningTag($tag);
+				}
+			}
+		}
+		
+		if (isset($this->textArray[$i + 1])) $this->parsedText .= $this->textArray[$i + 1];
 	}
 	
 	/**
@@ -374,11 +461,6 @@ class HtmlBBCodeParser extends BBCodeParser {
 		$data = array_pop($this->openTagIdentifiers);
 		if ($data['name'] !== $name) {
 			throw new SystemException("Tag mismatch, expected '".$name."', got '".$data['name']."'.");
-		}
-		
-		if (!empty($data['invalid'])) {
-			// drop invalid closing tags
-			return '';
 		}
 		
 		return '<woltlab-metacode-marker data-uuid="' . $data['uuid'] . '" data-source="' . base64_encode($tag['source']) . '" />';
