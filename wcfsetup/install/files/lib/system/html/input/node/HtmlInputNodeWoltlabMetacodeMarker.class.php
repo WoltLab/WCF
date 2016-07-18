@@ -129,6 +129,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			$attributes = $element->getAttribute('data-attributes');
 			$name = $element->getAttribute('data-name');
 			$uuid = $element->getAttribute('data-uuid');
+			$source = @base64_decode($element->getAttribute('data-source'));
 			
 			if (!isset($pairs[$uuid])) {
 				$pairs[$uuid] = [
@@ -143,9 +144,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				$pairs[$uuid]['attributes'] = $attributes;
 				$pairs[$uuid]['name'] = $name;
 				$pairs[$uuid]['open'] = $element;
+				$pairs[$uuid]['openSource'] = $source;
 			}
 			else {
 				$pairs[$uuid]['close'] = $element;
+				$pairs[$uuid]['closeSource'] = $source;
 			}
 		}
 		
@@ -194,7 +197,9 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			$groups[$name][] = [
 				'attributes' => $data['attributes'],
 				'close' => $data['close'],
-				'open' => $data['open']
+				'closeSource' => $data['closeSource'],
+				'open' => $data['open'],
+				'openSource' => $data['openSource']
 			];
 		}
 		
@@ -430,11 +435,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		$end = $pair['close'];
 		
 		$attributes = (isset($pair['attributes'])) ? $pair['attributes'] : '';
-		$textNode = $start->ownerDocument->createTextNode(HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
+		$textNode = $start->ownerDocument->createTextNode(($pair['openSource']) ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
 		DOMUtil::insertBefore($textNode, $start);
 		DOMUtil::removeNode($start);
 		
-		$textNode = $end->ownerDocument->createTextNode('[/' . $name . ']');
+		$textNode = $end->ownerDocument->createTextNode(($pair['closeSource']) ?: '[/' . $name . ']');
 		DOMUtil::insertBefore($textNode, $end);
 		DOMUtil::removeNode($end);
 	}

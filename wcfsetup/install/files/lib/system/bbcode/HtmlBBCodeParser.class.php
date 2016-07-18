@@ -359,7 +359,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 			$attributes = ' data-attributes="' . base64_encode(JSON::encode($tag['attributes'])) . '"';
 		}
 		
-		return '<woltlab-metacode-marker data-name="' . $name . '" data-uuid="' . $uuid . '"' . $attributes . ' />';
+		return '<woltlab-metacode-marker data-name="' . $name . '" data-uuid="' . $uuid . '" data-source="' . base64_encode($tag['source']) . '"' . $attributes . ' />';
 	}
 	
 	/**
@@ -381,7 +381,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 			return '';
 		}
 		
-		return '<woltlab-metacode-marker data-uuid="' . $data['uuid'] . '" />';
+		return '<woltlab-metacode-marker data-uuid="' . $data['uuid'] . '" data-source="' . base64_encode($tag['source']) . '" />';
 	}
 	
 	/**

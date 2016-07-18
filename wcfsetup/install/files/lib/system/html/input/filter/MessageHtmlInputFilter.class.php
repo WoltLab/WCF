@@ -88,6 +88,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		$definition->addElement('woltlab-metacode-marker', 'Inline', 'Empty', '', [
 			'data-attributes' => 'Text',
 			'data-name' => 'Text',
+			'data-source' => 'Text',
 			'data-uuid' => 'Text'
 		]);
 		
