@@ -83,7 +83,7 @@
 						</td>
 						<td class="columnText columnSubject">
 							<h3>
-								<span class="badge label">{lang}wcf.moderation.type.{@$definitionNames[$entry->objectTypeID]}{/lang}</span>
+								<span class="badge label">{$entry->getLabel()}</span>
 								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()|tableWordwrap}</a>
 							</h3>
 							

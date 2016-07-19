@@ -2611,6 +2611,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.type"><![CDATA[Typ]]></item>
 		<item name="wcf.moderation.type.all"><![CDATA[Alle Einträge]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Zeitgesteuerte Freischaltung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Meldung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Kommentar]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Antwort auf Kommentar]]></item>
