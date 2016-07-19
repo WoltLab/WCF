@@ -35,27 +35,13 @@ class SignatureEditForm extends MessageForm {
 	 * parsed signature cache
 	 * @var	string
 	 */
-	public $signatureCache = null;
+	public $signatureCache;
 	
 	/**
+	 * TODO: this is still missing
 	 * @inheritDoc
 	 */
 	public $allowedBBCodesPermission = 'user.signature.allowedBBCodes';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $permissionCanUseSmilies = 'user.signature.canUseSmilies';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $permissionCanUseHtml = 'user.signature.canUseHtml';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $permissionCanUseBBCodes = 'user.signature.canUseBBCodes';
 	
 	/**
 	 * @inheritDoc
@@ -93,11 +79,7 @@ class SignatureEditForm extends MessageForm {
 		
 		// default values
 		if (empty($_POST)) {
-			$this->enableBBCodes = WCF::getUser()->signatureEnableBBCodes;
-			$this->enableHtml = WCF::getUser()->signatureEnableHtml;
-			$this->enableSmilies = WCF::getUser()->signatureEnableSmilies;
 			$this->text = WCF::getUser()->signature;
-			$this->preParse = true;
 		}
 		
 		$this->signatureCache = SignatureCache::getInstance()->getSignature(WCF::getUser());
@@ -132,10 +114,8 @@ class SignatureEditForm extends MessageForm {
 		
 		$this->objectAction = new UserAction([WCF::getUser()], 'update', [
 			'data' => array_merge($this->additionalFields, [
-				'signature' => $this->text,
-				'signatureEnableBBCodes' => $this->enableBBCodes,
-				'signatureEnableHtml' => $this->enableHtml,
-				'signatureEnableSmilies' => $this->enableSmilies
+				'signature' => $this->htmlInputProcessor->getHtml(),
+				'signatureEnableHtml' => 1
 			])
 		]);
 		$this->objectAction->executeAction();
