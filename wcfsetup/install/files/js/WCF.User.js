@@ -2823,6 +2823,7 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		// bind event listeners
 		$(this._buttonSelector).each($.proxy(function(index, button) {
 			var $button = $(button);
+			$button.addClass('pointer');
 			var $objectID = $button.data('objectID');
 			this._buttons[$objectID] = $button.click($.proxy(this._click, this));
 		}, this));
@@ -2945,8 +2946,13 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 			$button.data('isSubscribed', true);
 		}
 		else {
-			$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
-			$button.data('isSubscribed', false);
+			if ($button.data('removeOnUnsubscribe')) {
+				$button.parent().remove();
+			}
+			else {
+				$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
+				$button.data('isSubscribed', false);
+			}
 			
 			if (this._reloadOnUnsubscribe) {
 				window.location.reload();
