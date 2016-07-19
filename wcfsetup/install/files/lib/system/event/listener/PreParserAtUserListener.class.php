@@ -109,14 +109,16 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 				
 				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {
 					// containing the full match
-					$usernames = array($matches[1]);
+					$usernames = array(
+						'full' => $matches[1]
+					);
 					
 					// containing only the part before the first space
-					if (isset($matches[2])) $usernames[] = $matches[2];
+					if (isset($matches[2])) $usernames['part'] = $matches[2];
 					
 					$usernames = array_map(array('\wcf\system\event\listener\PreParserAtUserListener', 'getUsername'), $usernames);
 					
-					foreach ($usernames as $username) {
+					foreach ($usernames as $type => $username) {
 						if (!isset($users[$username])) continue;
 						$link = LinkHandler::getInstance()->getLink('User', array(
 							'appendSession' => false,
@@ -126,8 +128,8 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 						$mention = "[url='".$link."']@".$users[$username]->username.'[/url]';
 						
 						// check if only the part before the first space matched, in that case append the second word
-						if (isset($matches[2]) && strcasecmp($matches[2], $username) === 0) {
-							$mention .= mb_substr($matches[1], strlen($matches[2]));
+						if ($type === 'part') {
+							$mention .= mb_substr($matches[1], mb_strlen($matches[2]));
 						}
 						
 						return $mention;
