@@ -230,4 +230,13 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 			return null;
 		}
 	}
+	
+	/**
+	 * Returns false if this label group has no permissions at all.
+	 * 
+	 * @return      boolean
+	 */
+	public function hasPermissions() {
+		return (empty($this->permissions['group']) && empty($this->permissions['user']));
+	}
 }

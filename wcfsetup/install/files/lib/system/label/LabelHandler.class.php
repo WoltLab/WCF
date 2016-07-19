@@ -140,7 +140,7 @@ class LabelHandler extends SingletonFactory {
 					continue;
 				}
 				
-				if ($group->getPermission($optionID)) {
+				if (!$group->hasPermissions() || $group->getPermission($optionID)) {
 					$isValid = true;
 				}
 			}
@@ -289,7 +289,7 @@ class LabelHandler extends SingletonFactory {
 			
 			// validate permissions
 			if ($validatePermissions) {
-				if (!$this->labelGroups['groups'][$groupID]->getPermission($optionID)) {
+				if ($this->labelGroups['groups'][$groupID]->hasPermissions() && !$this->labelGroups['groups'][$groupID]->getPermission($optionID)) {
 					continue;
 				}
 			}
