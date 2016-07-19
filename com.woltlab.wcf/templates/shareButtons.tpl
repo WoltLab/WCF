@@ -21,7 +21,7 @@
 		{if 'Google'|in_array:$__share_buttons_providers}
 			<li>
 				<a class="button jsShareGoogle" title="{lang}wcf.message.share.google{/lang}">
-					<span class="icon icon24 fa-google-plus"></span>{*@todo: change to fa-google-plus-official (fa 4.6)*}
+					<span class="icon icon24 fa-google-plus-official"></span>
 					<span>{lang}wcf.message.share.google{/lang}</span>
 				</a>
 			</li>
