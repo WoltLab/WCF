@@ -1069,12 +1069,6 @@ Examples for medium ID detection:
 Examples:<br>
 WBB=WoltLab Burning Board<br>
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
-		<item name="wcf.acp.option.url_controller_replacement"><![CDATA[Controller Aliasing]]></item>
-		<item name="wcf.acp.option.url_controller_replacement.description"><![CDATA[You can rename controllers by assigning an alias to them, please provide only one alias per line. Aliases must be defined as “real-name=custom-name” and contain only lower-case a-z, the numbers 0-9 and the dash for compatibility reasons. Examples:
-<ul class="nativeList">
-	<li>“board-list=forums”, the link “http://example.com/index.php?board-list/” will turn into “http://example.com/index.php?forums/”</li>
-	<li>“members-list=profiles”, the link “http://example.com/index.php?members-list/” will turn into “http://example.com/index.php?profiles/”</li>
-</ul>]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for “Users Online” list]]></item>
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Map Zoom]]></item>
@@ -2515,16 +2509,6 @@ Errors are:
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Remove All Quotes]]></item>
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Removed Marked Quotes]]></item>
 		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
-		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Enable BBCodes]]></item>
-		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Allows BBCodes to be used once enabled.]]></item>
-		<item name="wcf.message.settings.enableHtml"><![CDATA[Enable HTML]]></item>
-		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Allows HTML code to be used once enabled.]]></item>
-		<item name="wcf.message.settings.enableSmilies"><![CDATA[Enable smilies]]></item>
-		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smilies will be displayed as a smiley-image.]]></item>
-		<item name="wcf.message.settings.preParse"><![CDATA[Detect links]]></item>
-		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to web pages are automatically detected.]]></item>
-		<item name="wcf.message.settings.showSignature"><![CDATA[Display signature]]></item>
-		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, which can be edited in your profile.]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
