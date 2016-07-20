@@ -1,6 +1,7 @@
 <?php
 namespace wcf\util;
 use wcf\system\Callback;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\Regex;
 
 /**
@@ -43,63 +44,40 @@ class MessageUtil {
 	/**
 	 * Returns the mentioned users in the given text.
 	 * 
-	 * @param	string		$text
-	 * @return	string[]
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
+	 * @return      string[]                mentioned usernames
 	 */
-	public static function getMentionedUsers($text) {
-		// remove quotes
-		$newText = $text;
-		if (preg_match_all("~(?:\[quote|\[/quote\])~i", $text, $matches)) {
-			$newText = '';
-			$substrings = preg_split("~(?:\[quote|\[/quote\])~i", $text);
-			
-			$inQuote = 0;
-			foreach ($matches[0] as $i => $tag) {
-				if (!$inQuote) {
-					$newText .= $substrings[$i];
-				}
-				
-				if ($tag == '[quote') {
-					$inQuote++;
-				}
-				else {
-					$inQuote--;
-				}
+	public static function getMentionedUsers(HtmlInputProcessor $htmlInputProcessor) {
+		$usernames = [];
+		
+		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-mention');
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			if (DOMUtil::hasParent($element, 'blockquote')) {
+				// ignore mentions within quotes
+				continue;
 			}
 			
-			if (!$inQuote) $newText .= $substrings[count($substrings) - 1];
+			$usernames[] = $element->getAttribute('data-username');
 		}
 		
-		// check for mentions
-		if (preg_match_all("~\[url='[^']+'\]@(.+?)\[/url\]~", $newText, $matches)) {
-			return $matches[1];
-		}
-		
-		return [];
+		return $usernames;
 	}
 	
 	/**
 	 * Returns the quoted users in the given text.
-	 * 
-	 * @param	string		$text
-	 * @return	string[]
+	 *
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
+	 * @return      string[]                quoted usernames
 	 */
-	public static function getQuotedUsers($text) {
+	public static function getQuotedUsers(HtmlInputProcessor $htmlInputProcessor) {
 		$usernames = [];
-		if (preg_match_all("~(?:\[(quote)=(?:')?(.+?)(?:')?(?:,[^\]]*)?\]|\[/quote\])~i", $text, $matches)) {
-			$level = 0;
-			
-			foreach ($matches[1] as $i => $tag) {
-				if ($tag == 'quote') {
-					if (!$level) {
-						$usernames[] = $matches[2][$i];
-					}
-					$level++;
-				}
-				else {
-					$level--;
-				}
-			}
+		
+		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('blockquote');
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			$username = $element->getAttribute('data-author');
+			if (!empty($username)) $usernames[] = $username;
 		}
 		
 		return $usernames;
