@@ -692,6 +692,7 @@
 		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription.add"><![CDATA[Mitgliedschaft hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[Mitgliedschaften]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Aktive Mitgliedschaften]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transaktionen]]></item>

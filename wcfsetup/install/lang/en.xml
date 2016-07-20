@@ -691,6 +691,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Failed Login Attempts]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription.add"><![CDATA[Add Paid Subscription]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Active Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transactions]]></item>
 		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Notifications]]></item>
