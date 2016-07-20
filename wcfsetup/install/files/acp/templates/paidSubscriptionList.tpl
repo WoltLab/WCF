@@ -38,7 +38,7 @@
 					<th class="columnTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}</a></th>
 					<th class="columnDigits columnCost{if $sortField == 'cost'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=cost&sortOrder={if $sortField == 'cost' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.paidSubscription.cost{/lang}</a></th>
 					<th class="columnDigits columnSubscriptionLength{if $sortField == 'subscriptionLength'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=subscriptionLength&sortOrder={if $sortField == 'subscriptionLength' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.paidSubscription.subscriptionLength{/lang}</a></th>
-					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.paidSubscription.showOrder{/lang}</a></th>
+					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
