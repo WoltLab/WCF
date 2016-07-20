@@ -181,7 +181,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, 2, $tagArgs['page'], $tagArgs['pages']);
 				}
 				else {
-					$html .= '<li class="jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
+					$html .= '<li class="jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
 				}
 			}
 			
@@ -196,7 +196,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page'], $tagArgs['pages']);
 				}
 				else {
-					$html .= '<li class="jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
+					$html .= '<li class="jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
 				}
 			}
 			

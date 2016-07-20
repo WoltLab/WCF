@@ -7,7 +7,7 @@
 	{/if}
 	
 	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage') && $__wcf->getAvailableUpdates() && SHOW_UPDATE_NOTICE_FRONTEND}
-		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
+		<p class="info">{lang}wcf.page.availableUpdates{/lang}</p>
 	{/if}
 	
 	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation'}

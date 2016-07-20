@@ -2289,7 +2289,6 @@ Errors are:
 	</category>
 	
 	<category name="wcf.global">
-		<item name="wcf.global.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
 		<item name="wcf.global.button.back"><![CDATA[« Back]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Cancel]]></item>
@@ -2321,8 +2320,6 @@ Errors are:
 		<item name="wcf.global.date"><![CDATA[Date]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
-		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>
@@ -2350,8 +2347,6 @@ Errors are:
 		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous Page]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
-		<item name="wcf.global.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to Page Bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to Page Top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Search …]]></item>
@@ -2366,11 +2361,6 @@ Errors are:
 		<item name="wcf.global.jumpToPage"><![CDATA[To Front Page]]></item>
 		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
-		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>
-		<item name="wcf.global.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
-		<item name="wcf.global.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
-		<item name="wcf.global.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
-		<item name="wcf.global.error.backward"><![CDATA[Back to previous page.]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Unspecified]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.global.noSelection"><![CDATA[(No Selection)]]></item>
@@ -2701,6 +2691,16 @@ Errors are:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Article <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Article category <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
+		<item name="wcf.page.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
+		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
+		<item name="wcf.page.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
+		<item name="wcf.page.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
+		<item name="wcf.page.error.backward"><![CDATA[Back to previous page.]]></item>
+		<item name="wcf.page.jumpTo"><![CDATA[Go to Page]]></item>
+		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
+		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>
+		<item name="wcf.page.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
