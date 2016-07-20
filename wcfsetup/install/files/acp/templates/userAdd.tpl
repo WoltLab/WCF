@@ -298,15 +298,6 @@
 						</dd>
 					</dl>
 					
-					<dl>
-						<dt>{lang}wcf.message.settings{/lang}</dt>
-						<dd>
-							<label><input id="signatureEnableSmilies" name="signatureEnableSmilies" type="checkbox" value="1"{if $signatureEnableSmilies} checked{/if}> {lang}wcf.message.settings.enableSmilies{/lang}</label>
-							<label><input id="signatureEnableBBCodes" name="signatureEnableBBCodes" type="checkbox" value="1"{if $signatureEnableBBCodes} checked{/if}> {lang}wcf.message.settings.enableBBCodes{/lang}</label>
-							<label><input id="signatureEnableHtml" name="signatureEnableHtml" type="checkbox" value="1"{if $signatureEnableHtml} checked{/if}> {lang}wcf.message.settings.enableHtml{/lang}</label>
-						</dd>
-					</dl>
-					
 					{event name='signatureFields'}
 				</section>
 				
