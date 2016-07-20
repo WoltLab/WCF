@@ -1,7 +1,7 @@
 <?php
 namespace wcf\util;
-use wcf\system\Callback;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\Callback;
 use wcf\system\Regex;
 
 /**
