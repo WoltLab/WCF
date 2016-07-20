@@ -59,6 +59,7 @@
 * Removed sitemap function/overlay
 * Added rebuild polls worker
 * Added notification feed page
+* Added informal variant of german language
 
 #### CMS
 
