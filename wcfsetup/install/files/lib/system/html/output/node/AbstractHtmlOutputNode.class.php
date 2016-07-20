@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\output\node;
 use wcf\system\html\node\AbstractHtmlNode;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
 
 /**
  * Default implementation for html output nodes.
@@ -17,6 +18,14 @@ abstract class AbstractHtmlOutputNode extends AbstractHtmlNode implements IHtmlO
 	 * @var string
 	 */
 	protected $outputType = 'text/html';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor) {
+		// there is no validation for output nodes
+		return [];
+	}
 	
 	/**
 	 * @inheritDoc

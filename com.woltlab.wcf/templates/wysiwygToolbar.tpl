@@ -53,9 +53,7 @@ buttons.push('alignment');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}
 	buttons.push('woltlabImage');
 {/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
-	buttons.push('table');
-{/if}
+buttons.push('table');
 
 buttons.push('wcfSeparator');
 

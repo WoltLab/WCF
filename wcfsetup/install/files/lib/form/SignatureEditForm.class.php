@@ -19,6 +19,11 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $disallowedBBCodesPermission = 'user.signature.disallowedBBCodes';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $loginRequired = true;
 	
 	/**
@@ -29,7 +34,7 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $templateName = 'signatureEdit';
+	public $showSignatureSetting = false;
 	
 	/**
 	 * parsed signature cache
@@ -38,15 +43,9 @@ class SignatureEditForm extends MessageForm {
 	public $signatureCache;
 	
 	/**
-	 * TODO: this is still missing
 	 * @inheritDoc
 	 */
-	public $allowedBBCodesPermission = 'user.signature.allowedBBCodes';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $showSignatureSetting = false;
+	public $templateName = 'signatureEdit';
 	
 	/**
 	 * @inheritDoc

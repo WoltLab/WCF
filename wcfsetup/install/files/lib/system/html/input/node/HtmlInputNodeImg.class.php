@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -18,6 +19,13 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	 * @inheritDoc
 	 */
 	protected $tagName = 'img';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAllowed(AbstractHtmlNodeProcessor $nodeProcessor) {
+		return (BBCodeHandler::getInstance()->isAvailableBBCode('img')) ? [] : ['img'];
+	}
 	
 	/**
 	 * @inheritDoc

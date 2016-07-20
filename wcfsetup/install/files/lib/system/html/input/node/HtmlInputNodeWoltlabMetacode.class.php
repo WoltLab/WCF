@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\metacode\converter\IMetacodeConverter;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
@@ -31,6 +32,28 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 	 * @inheritDoc
 	 */
 	protected $tagName = 'woltlab-metacode';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor) {
+		$bbcodes = [];
+		/** @var \DOMElement $element */
+		foreach ($htmlNodeProcessor->getDocument()->getElementsByTagName($this->tagName) as $element) {
+			$bbcodes[] = $element->getAttribute('data-name');
+		}
+		
+		$disallowedBBCodes = [];
+		foreach ($bbcodes as $bbcode) {
+			if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
+				continue;
+			}
+			
+			$disallowedBBCodes[] = $bbcode;
+		}
+		
+		return $disallowedBBCodes;
+	}
 	
 	/**
 	 * @inheritDoc

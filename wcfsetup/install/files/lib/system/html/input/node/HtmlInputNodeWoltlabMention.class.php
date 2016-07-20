@@ -20,6 +20,14 @@ class HtmlInputNodeWoltlabMention extends AbstractHtmlInputNode {
 	/**
 	 * @inheritDoc
 	 */
+	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor) {
+		// mentions are always allowed
+		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		// TODO
 		

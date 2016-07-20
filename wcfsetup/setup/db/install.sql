@@ -240,7 +240,6 @@ CREATE TABLE wcf1_bbcode (
 	buttonLabel VARCHAR(255) NOT NULL DEFAULT '',
 	isBlockElement TINYINT(1) NOT NULL DEFAULT 0,
 	isSourceCode TINYINT(1) NOT NULL DEFAULT 0,
-	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	showButton TINYINT(1) NOT NULL DEFAULT 0,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY bbcodeTag (bbcodeTag)

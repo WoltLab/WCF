@@ -1,7 +1,10 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
+use wcf\system\html\node\IHtmlNode;
+use wcf\util\StringUtil;
 
 /**
  * Processes HTML nodes and handles bbcodes.
@@ -48,6 +51,51 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->processEmbeddedContent();
 		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
+	}
+	
+	/**
+	 * Checks the input html for disallowed bbcodes and returns any matches.
+	 * 
+	 * @return      string[]        list of matched disallowed bbcodes
+	 */
+	public function validate() {
+		$result = [];
+		
+		$this->invokeNodeHandlers('wcf\system\html\input\node\HtmlInputNode', [], function(IHtmlNode $nodeHandler) use (&$result) {
+			$disallowed = $nodeHandler->isAllowed($this);
+			if ($disallowed) {
+				$result[] = array_merge($result, $disallowed);
+			}
+		});
+		
+		// handle custom nodes that have no dedicated handler
+		$customTags = [
+			'color' => 'woltlab-color',
+			'font' => 'woltlab-size',
+			'size' => 'woltlab-size',
+			'spoiler' => 'woltlab-spoiler'
+		];
+		
+		foreach ($customTags as $bbcode => $tagName) {
+			if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
+				continue;
+			}
+			
+			if ($this->getDocument()->getElementsByTagName($tagName)->length) {
+				$result[] = $bbcode;
+			}
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Returns the raw text content of current document.
+	 * 
+	 * @return      string          raw text content
+	 */
+	public function getTextContent() {
+		return StringUtil::trim($this->getDocument()->getElementsByTagName('body')->item(0)->textContent);
 	}
 	
 	/**

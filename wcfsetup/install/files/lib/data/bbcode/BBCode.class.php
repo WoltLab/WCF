@@ -24,11 +24,16 @@ use wcf\system\WCF;
  * @property-read	string		$wysiwygIcon
  * @property-read	string		$buttonLabel
  * @property-read	integer		$isSourceCode
- * @property-read	integer		$isDisabled
  * @property-read	integer		$showButton
  * @property-read	integer		$originIsSystem
  */
 class BBCode extends ProcessibleDatabaseObject implements IRouteController {
+	/**
+	 * list of attributes
+	 * @var BBCodeAttribute[]
+	 */
+	protected $attributes;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -51,10 +56,19 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	 */
 	public function getAttributes() {
 		if ($this->attributes === null) {
-			$this->data['attributes'] = BBCodeCache::getInstance()->getBBCodeAttributes($this->bbcodeTag);
+			$this->attributes = BBCodeCache::getInstance()->getBBCodeAttributes($this->bbcodeTag);
 		}
 		
 		return $this->attributes;
+	}
+	
+	/**
+	 * Sets the attributes of this bbcode.
+	 * 
+	 * @param       BBCodeAttribute[]       $attributes     list of attributes
+	 */
+	public function setAttributes(array $attributes) {
+		$this->attributes = $attributes;
 	}
 	
 	/**

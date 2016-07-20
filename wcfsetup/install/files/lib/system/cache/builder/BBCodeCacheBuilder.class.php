@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
-use wcf\data\bbcode\BBCode;
+use wcf\data\bbcode\BBCodeList;
 use wcf\system\WCF;
 
 /**
@@ -25,7 +25,6 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 			FROM		wcf".WCF_N."_bbcode_attribute attribute
 			LEFT JOIN	wcf".WCF_N."_bbcode bbcode
 			ON		(bbcode.bbcodeID = attribute.bbcodeID)
-			WHERE		bbcode.isDisabled = 0
 			ORDER BY	attribute.attributeNo";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
@@ -36,14 +35,14 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// get bbcodes
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_bbcode
-			WHERE	isDisabled = 0";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$row['attributes'] = (isset($attributes[$row['bbcodeTag']]) ? $attributes[$row['bbcodeTag']] : []);
-			$data['bbcodes'][$row['bbcodeTag']] = new BBCode(null, $row);
+		$bbcodeList = new BBCodeList();
+		$bbcodeList->readObjects();
+		foreach ($bbcodeList as $bbcode) {
+			if (isset($attributes[$bbcode->bbcodeTag])) {
+				$bbcode->setAttributes($attributes[$bbcode->bbcodeTag]);
+			}
+			
+			$data['bbcodes'][$bbcode->bbcodeTag] = $bbcode;
 		}
 		
 		// get code highlighters

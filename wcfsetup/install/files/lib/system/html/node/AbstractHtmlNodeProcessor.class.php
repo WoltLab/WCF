@@ -242,8 +242,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	 * 
 	 * @param       string          $classNamePattern       full namespace pattern for class guessing
 	 * @param       string[]        $skipTags               list of tag names that should be ignored
+	 * @param       callable        $callback               optional callback
 	 */
-	protected function invokeNodeHandlers($classNamePattern, array $skipTags = []) {
+	protected function invokeNodeHandlers($classNamePattern, array $skipTags = [], callable $callback = null) {
 		$skipTags = array_merge($skipTags, ['html', 'head', 'title', 'meta', 'body', 'link']);
 		
 		$tags = [];
@@ -263,7 +264,12 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 			}, $tagName);
 			$className = $classNamePattern . ucfirst($tagName);
 			if (class_exists($className)) {
-				$this->invokeHtmlNode(new $className);
+				if ($callback === null) {
+					$this->invokeHtmlNode(new $className);
+				}
+				else {
+					$callback(new $className);
+				}
 			}
 		}
 	}

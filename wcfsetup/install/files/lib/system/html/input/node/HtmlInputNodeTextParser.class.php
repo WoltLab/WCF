@@ -3,6 +3,7 @@ namespace wcf\system\html\input\node;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -146,6 +147,10 @@ class HtmlInputNodeTextParser {
 			$users = $this->lookupUsernames($usernames);
 		}
 		
+		$allowEmail = BBCodeHandler::getInstance()->isAvailableBBCode('email');
+		$allowMedia = BBCodeHandler::getInstance()->isAvailableBBCode('media');
+		$allowURL = BBCodeHandler::getInstance()->isAvailableBBCode('url');
+		
 		for ($i = 0, $length = count($nodes); $i < $length; $i++) {
 			/** @var \DOMText $node */
 			$node = $nodes[$i];
@@ -155,7 +160,13 @@ class HtmlInputNodeTextParser {
 				$value = $this->parseMention($node, $value, $users);
 			}
 			
-			$value = $this->parseURL($node, $value);
+			if ($allowURL || $allowMedia) {
+				$value = $this->parseURL($node, $value, $allowURL, $allowMedia);
+			}
+			
+			if ($allowEmail) {
+				$value = $this->parseEmail($node, $value);
+			}
 			
 			$value = $this->parseSmiley($node, $value);
 			
@@ -304,9 +315,11 @@ class HtmlInputNodeTextParser {
 	 * 
 	 * @param       \DOMText        $text           text node
 	 * @param       string          $value          node value
+	 * @param       boolean         $allowURL       url bbcode is allowed
+	 * @param       boolean         $allowMedia     media bbcode is allowed
 	 * @return      string          modified node value with replacement placeholders
 	 */
-	protected function parseURL(\DOMText $text, $value) {
+	protected function parseURL(\DOMText $text, $value, $allowURL, $allowMedia) {
 		static $urlPattern = '';
 		if ($urlPattern === '') {
 			$urlPattern = '~
@@ -329,16 +342,26 @@ class HtmlInputNodeTextParser {
 			)?~ix';
 		}
 		
-		return preg_replace_callback($urlPattern, function($matches) use ($text) {
+		return preg_replace_callback($urlPattern, function($matches) use ($text, $allowURL, $allowMedia) {
 			$link = $matches[0];
 			
 			if (BBCodeMediaProvider::isMediaURL($link)) {
-				$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', [$link]);
+				if ($allowMedia) {
+					$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', [$link]);
+				}
+				else {
+					return $matches[0];
+				}
 			}
 			else {
-				$element = $text->ownerDocument->createElement('a');
-				$element->setAttribute('href', $link);
-				$element->textContent = $link;
+				if ($allowURL) {
+					$element = $text->ownerDocument->createElement('a');
+					$element->setAttribute('href', $link);
+					$element->textContent = $link;
+				}
+				else {
+					return $matches[0];
+				}
 			}
 			
 			return $this->addReplacement($text, $element);
@@ -353,7 +376,7 @@ class HtmlInputNodeTextParser {
 	 * @return      string          modified node value with replacement placeholders
 	 */
 	protected function parseEmail(\DOMText $text, $value) {
-		if (mb_strpos($this->text, '@') === false) {
+		if (mb_strpos($value, '@') === false) {
 			return $value;
 		}
 		

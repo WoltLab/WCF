@@ -395,11 +395,8 @@
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Mindestzeit zwischen zwei Kommentaren]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentare oder Antworten vergehen muss. [Zeit in Sekunden, 0 für unbeschränkt]]]></item>
-		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Kann Smileys benutzen]]></item>
-		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Kann HTML benutzen]]></item>
-		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Kann BBCodes benutzen]]></item>
-		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe verwendet werden.]]></item>
+		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Kann Benutzerränge verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Kann Aktivitätspunkte bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Kann unsichtbare Benutzer sehen]]></item>
@@ -420,11 +417,8 @@
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Kann Benutzerprofile sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Kann Benutzer-Online-Listen sehen]]></item>
-		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Kann BBCodes in der Signatur verwenden]]></item>
-		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Kann HTML in der Signatur verwenden]]></item>
-		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Kann Smileys in der Signatur verwenden]]></item>
-		<item name="wcf.acp.group.option.user.signature.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe in ihrer Signatur verwendet werden.]]></item>
+		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe in ihrer Signatur <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priorisierung]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Bestimmt u.a. die Reihenfolge auf der Team-Seite sowie die Auswahl von Benutzerrängen und „Wer ist online“-Darstellungen auf Basis der höchsten Priorität.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[„Benutzer online“-Darstellung]]></item>

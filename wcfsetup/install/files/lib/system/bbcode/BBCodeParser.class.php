@@ -523,25 +523,10 @@ class BBCodeParser extends SingletonFactory {
 	 * @param	string			$text
 	 * @param	string[]		$allowedBBCodes
 	 * @return	string[]
+	 * @deprecated  3.0 - please use HtmlInputProcessor::validate() instead
 	 */
 	public function validateBBCodes($text, array $allowedBBCodes) {
-		// if all BBCodes are allowed, return directly
-		if (in_array('all', $allowedBBCodes)) {
-			return [];
-		}
-		
-		$this->setText($text);
-		$this->buildTagArray(false);
-		$this->buildXMLStructure();
-		
-		$usedDisallowedBBCodes = [];
-		foreach ($this->tagArray as $tag) {
-			if (!in_array($tag['name'], $allowedBBCodes) && !isset($usedDisallowedBBCodes[$tag['name']])) {
-				$usedDisallowedBBCodes[$tag['name']] = $tag['name'];
-			}
-		}
-		
-		return $usedDisallowedBBCodes;
+		throw new \RuntimeException("validateBBCodes() is no longer supported, please use HtmlInputProcessor::validate() instead.");
 	}
 	
 	/**

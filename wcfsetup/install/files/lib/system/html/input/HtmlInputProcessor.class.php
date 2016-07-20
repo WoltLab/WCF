@@ -5,6 +5,7 @@ use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\html\AbstractHtmlProcessor;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -82,8 +83,13 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		$this->embeddedContent = $this->getHtmlInputNodeProcessor()->getEmbeddedContent();
 	}
 	
+	/**
+	 * Checks the input html for disallowed bbcodes and returns any matches.
+	 * 
+	 * @return      string[]        list of matched disallowed bbcodes
+	 */
 	public function validate() {
-		// TODO
+		return $this->getHtmlInputNodeProcessor()->validate();
 	}
 	
 	/**
@@ -93,6 +99,15 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 */
 	public function getHtml() {
 		return $this->getHtmlInputNodeProcessor()->getHtml();
+	}
+	
+	/**
+	 * Returns the raw text content of current document.
+	 * 
+	 * @return      string          raw text content
+	 */
+	public function getTextContent() {
+		return $this->getHtmlInputNodeProcessor()->getTextContent();
 	}
 	
 	/**
