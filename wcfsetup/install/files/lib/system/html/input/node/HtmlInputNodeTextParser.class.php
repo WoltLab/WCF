@@ -283,12 +283,12 @@ class HtmlInputNodeTextParser {
 		foreach ($users as $userID => $username) {
 			do {
 				$needle = '@' . $username;
-				$pos = mb_strpos($value, $needle);
+				$pos = mb_stripos($value, $needle);
 				
 				// username not found, maybe it is quoted
 				if ($pos === false) {
-					$needle = "@'" . str_replace("'", "''", $username) . "'";
-					$pos = mb_strpos($value, $needle);
+					$needle = "@'" . str_ireplace("'", "''", $username) . "'";
+					$pos = mb_stripos($value, $needle);
 				}
 				
 				if ($pos !== false) {
@@ -301,7 +301,7 @@ class HtmlInputNodeTextParser {
 					// we use preg_replace() because the username could appear multiple times
 					// and we need to replace them one by one, also avoiding only replacing
 					// the non-quoted username even though both variants are present
-					$value = preg_replace('~' . preg_quote($needle, '~') . '~', $marker, $value, 1);
+					$value = preg_replace('~' . preg_quote($needle, '~') . '~i', $marker, $value, 1);
 				}
 			}
 			while ($pos);
