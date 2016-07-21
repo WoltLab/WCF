@@ -16,7 +16,7 @@ class MediaBBCode extends AbstractBBCode {
 	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
-		$content = StringUtil::trim($content);
+		$content = StringUtil::trim($openingTag['attributes'][0]);
 		
 		if ($parser->getOutputType() == 'text/html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
@@ -25,7 +25,7 @@ class MediaBBCode extends AbstractBBCode {
 				}
 			}
 		}
-		if ($parser->getOutputType() == 'text/simplified-html') {
+		else if ($parser->getOutputType() == 'text/simplified-html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
 					return StringUtil::getAnchorTag($content);
