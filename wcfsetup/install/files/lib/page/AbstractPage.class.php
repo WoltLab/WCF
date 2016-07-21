@@ -180,7 +180,7 @@ abstract class AbstractPage implements IPage {
 		
 		// check if current request URL matches the canonical URL
 		if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
-			$canoncialURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
+			$canonicalURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
 			// IIS Rewrite-Module has a bug causing the REQUEST_URI to be ISO-encoded
@@ -199,15 +199,15 @@ abstract class AbstractPage implements IPage {
 			$requestURL = parse_url($requestURI);
 			
 			$redirect = false;
-			if ($canoncialURL['path'] != $requestURL['path']) {
+			if ($canonicalURL['path'] != $requestURL['path']) {
 				$redirect = true;
 			}
-			else if (isset($canoncialURL['query'])) {
+			else if (isset($canonicalURL['query'])) {
 				if (!isset($requestURL['query'])) {
 					$redirect = true;
 				}
 				else {
-					parse_str($canoncialURL['query'], $cQueryString);
+					parse_str($canonicalURL['query'], $cQueryString);
 					parse_str($requestURL['query'], $rQueryString);
 					
 					foreach ($cQueryString as $key => $value) {
@@ -221,14 +221,11 @@ abstract class AbstractPage implements IPage {
 			
 			if ($redirect) {
 				$redirectURL = $this->canonicalURL;
-				// TODO
-				/*
 				if (!empty($requestURL['query'])) {
-					$queryString = $requestURL['query'];
 					parse_str($requestURL['query'], $rQueryString);
 					
-					if (!empty($canoncialURL['query'])) {
-						parse_str($canoncialURL['query'], $cQueryString);
+					if (!empty($canonicalURL['query'])) {
+						parse_str($canonicalURL['query'], $cQueryString);
 						
 						// clean query string
 						foreach ($cQueryString as $key => $value) {
@@ -239,11 +236,9 @@ abstract class AbstractPage implements IPage {
 					}
 					
 					// drop route data from query
-					if (!URL_LEGACY_MODE) {
-						foreach ($rQueryString as $key => $value) {
-							if ($value === '') {
-								unset($rQueryString[$key]);
-							}
+					foreach ($rQueryString as $key => $value) {
+						if ($value === '') {
+							unset($rQueryString[$key]);
 						}
 					}
 					
@@ -251,7 +246,6 @@ abstract class AbstractPage implements IPage {
 						$redirectURL .= (mb_strpos($redirectURL, '?') === false ? '?' : '&') . http_build_query($rQueryString, '', '&');
 					}
 				}
-				*/
 				
 				// force a permanent redirect as recommended by Google
 				// https://support.google.com/webmasters/answer/6033086?hl=en#a_note_about_redirects

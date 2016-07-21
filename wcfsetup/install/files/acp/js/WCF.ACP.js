@@ -322,7 +322,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 */
 	init: function(queueID, actionName, allowRollback, isUpdate) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
-		this._allowRollback = (allowRollback === true) ? true : false;
+		this._allowRollback = (allowRollback === true);
 		this._queueID = queueID;
 		
 		switch (this._actionName) {
