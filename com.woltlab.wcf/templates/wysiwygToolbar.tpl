@@ -57,7 +57,9 @@ buttons.push('table');
 
 buttons.push('wcfSeparator');
 
-buttons.push('woltlabMedia');
+{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+	buttons.push('woltlabMedia');
+{/if}
 buttons.push('woltlabQuote');
 
 {foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}

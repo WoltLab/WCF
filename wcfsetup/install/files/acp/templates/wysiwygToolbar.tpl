@@ -53,13 +53,13 @@ buttons.push('alignment');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}
 	buttons.push('woltlabImage');
 {/if}
-{if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
-	buttons.push('table');
-{/if}
+buttons.push('table');
 
 buttons.push('wcfSeparator');
 
-buttons.push('woltlabMedia');
+{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+	buttons.push('woltlabMedia');
+{/if}
 buttons.push('woltlabQuote');
 
 {foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
