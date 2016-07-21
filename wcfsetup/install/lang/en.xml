@@ -2422,7 +2422,7 @@ Errors are:
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
-		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (racism, glorification of violence, offending, or sexist) content.]]></item>
+		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: spam, advertisement and other questionable (racism, glorification of violence, offending, or sexist) content.]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
@@ -2534,7 +2534,7 @@ Errors are:
 
 <p><small><em>Source: <a rel="nofollow" href="http://forum-template.wikidot.com/legal:privacy-policy" target="_blank">forum-template.wikidot.com</a></em></small></p>
 ]]></item>
-		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{link controller='CookiePolicy'}{/link}">More details</a>]]></item>
+		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our <a href="{link controller='CookiePolicy'}{/link}">Cookie Policy</a>.]]></item>
 		<item name="wcf.page.cookiePolicy"><![CDATA[Cookie Policy]]></item>
 		<item name="wcf.page.cookiePolicy.text"><![CDATA[<p>This website uses cookies required to operate and use this site. You will find an explanation of our cookie usage below.</p>
 		
