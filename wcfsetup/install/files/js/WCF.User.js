@@ -966,10 +966,10 @@ WCF.User.Profile.Editor = Class.extend({
 	/**
 	 * Begins editing.
 	 * 
-	 * @param       {Event}         event   event object
+	 * @param       {Event?}         event   event object
 	 */
 	_beginEdit: function(event) {
-		event.preventDefault();
+		if (event) event.preventDefault();
 		
 		this._actionName = 'beginEdit';
 		this._buttons.beginEdit.parent().addClass('active');
@@ -1008,7 +1008,7 @@ WCF.User.Profile.Editor = Class.extend({
 				
 				case 'textarea':
 					if ($element.data('redactor')) {
-						$value = $element.redactor('wutil.getText');
+						$value = $element.redactor('code.get');
 					}
 				break;
 			}
