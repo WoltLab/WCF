@@ -118,7 +118,7 @@
 		
 		<dl>
 			<dt><label for="categoryID">{lang}wcf.acp.article.publicationStatus{/lang}</label></dt>
-			<dd>
+			<dd class="floated">
 				<label><input type="radio" name="publicationStatus" value="0"{if $publicationStatus == 0} checked{/if}> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
 				<label><input type="radio" name="publicationStatus" value="1"{if $publicationStatus == 1} checked{/if}> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
 				<label><input type="radio" name="publicationStatus" value="2"{if $publicationStatus == 2} checked{/if}> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
