@@ -1790,6 +1790,8 @@ WCF.ACP.Worker = Class.extend({
 			this._callback(this, data);
 		}
 		else {
+			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check');
+			
 			// display continue button
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function() { window.location = data.proceedURL; });
@@ -2396,15 +2398,15 @@ WCF.ACP.Import.Manager = Class.extend({
 	
 	/**
 	 * current object type index
-	 * @var	integer
+	 * @var	int
 	 */
 	_index: -1,
 	
 	/**
 	 * list of object types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	_objectTypes: [ ],
+	_objectTypes: [],
 	
 	/**
 	 * action proxy
@@ -2421,8 +2423,8 @@ WCF.ACP.Import.Manager = Class.extend({
 	/**
 	 * Initializes the WCF.ACP.Importer object.
 	 * 
-	 * @param	array<string>	objectTypes
-	 * @param	string		redirectURL
+	 * @param	{string[]}	objectTypes
+	 * @param	{string}	redirectURL
 	 */
 	init: function(objectTypes, redirectURL) {
 		this._currentAction = '';
