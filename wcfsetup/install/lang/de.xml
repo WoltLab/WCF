@@ -2359,7 +2359,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.filter.placeholder"><![CDATA[Nach Name filtern]]></item>
 		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
-		<item name="wcf.global.success.edit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Änderungen wurden gespeichert.]]></item>
+		<item name="wcf.global.success.edit"><![CDATA[Die Änderungen wurden gespeichert.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[Keine Auswahl]]></item>
 		<item name="wcf.global.loading"><![CDATA[Lädt …]]></item>
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
