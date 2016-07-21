@@ -23,28 +23,38 @@ class MessageOptionType extends TextareaOptionType {
 	protected $htmlInputProcessor;
 	
 	/**
+	 * object type for definition 'com.woltlab.wcf.message'
+	 * @var string
+	 */
+	protected $messageObjectType = '';
+	
+	/**
 	 * @inheritDoc
 	 */
-	/*public function getData(Option $option, $newValue) {
-		if ($option->disallowedbbcodepermission) {
-			BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($option->disallowedbbcodepermission))));
+	public function getData(Option $option, $newValue) {
+		if (!$this->messageObjectType) $this->messageObjectType = $option->messageObjectType;
+		if (empty($this->messageObjectType)) {
+			throw new \RuntimeException("Message object type '".$option->optionName."' requires an object type for definition 'com.woltlab.wcf.message'.");
 		}
 		
+		$permission = ($option->disallowedbbcodepermission) ?: 'user.message.disallowedBBCodes';
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($permission))));
+		
 		$this->htmlInputProcessor = new HtmlInputProcessor();
-		$this->htmlInputProcessor->process($newValue, 'com.woltlab.wcf.invalid', 0);
+		
+		// the object id is fixed because options are not tied to a specific object
+		// especially when used in the user option context, such as "about me"
+		$this->htmlInputProcessor->process($newValue, $this->messageObjectType, 0);
 		
 		return parent::getData($option, $this->htmlInputProcessor->getHtml());
-	}*/
+	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		$disallowedBBCodes = [];
-		if ($option->disallowedbbcodepermission) {
-			$disallowedBBCodes = explode(',', WCF::getSession()->getPermission($option->disallowedbbcodepermission));
-		}
-		BBCodeHandler::getInstance()->setDisallowedBBCodes($disallowedBBCodes);
+		$permission = ($option->disallowedbbcodepermission) ?: 'user.message.disallowedBBCodes';
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($permission))));
 		
 		WCF::getTPL()->assign([
 			'defaultSmilies' => SmileyCache::getInstance()->getCategorySmilies(),
@@ -58,16 +68,13 @@ class MessageOptionType extends TextareaOptionType {
 	/**
 	 * @inheritDoc
 	 */
-	/*public function validate(Option $option, $newValue) {
+	public function validate(Option $option, $newValue) {
 		parent::validate($option, $newValue);
 		
-		if ($option->disallowedbbcodepermission) {
-			$disallowedBBCodes = $this->htmlInputProcessor->validate();
-			
-			if (!empty($disallowedBBCodes)) {
-				WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
-				throw new UserInputException($option->optionName, 'disallowedBBCodes');
-			}
+		$disallowedBBCodes = $this->htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
+			throw new UserInputException($option->optionName, 'disallowedBBCodes');
 		}
-	}*/
+	}
 }

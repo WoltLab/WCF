@@ -194,9 +194,6 @@ class UserEditForm extends UserAddForm {
 		$this->userTitle = $this->user->userTitle;
 		
 		$this->signature = $this->user->signature;
-		$this->signatureEnableBBCodes = $this->user->signatureEnableBBCodes;
-		$this->signatureEnableSmilies = $this->user->signatureEnableSmilies;
-		$this->signatureEnableHtml = $this->user->signatureEnableHtml;
 		$this->disableSignature = $this->user->disableSignature;
 		$this->disableSignatureReason = $this->user->disableSignatureReason;
 		$this->disableSignatureExpires = $this->user->disableSignatureExpires;
@@ -291,10 +288,7 @@ class UserEditForm extends UserAddForm {
 				'password' => $this->password,
 				'languageID' => $this->languageID,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->signature,
-				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
-				'signatureEnableSmilies' => $this->signatureEnableSmilies,
-				'signatureEnableHtml' => $this->signatureEnableHtml
+				'signature' => $this->htmlInputProcessor->getHtml()
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,

@@ -3,8 +3,10 @@ namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -65,6 +67,11 @@ class UserAddForm extends UserOptionListForm {
 	 * @var	integer[]
 	 */
 	public $groupIDs = [];
+	
+	/**
+	 * @var HtmlInputProcessor
+	 */
+	public $htmlInputProcessor;
 	
 	/**
 	 * language id
@@ -220,6 +227,17 @@ class UserAddForm extends UserOptionListForm {
 			$this->errorType[$e->getField()] = $e->getType();
 		}
 		
+		// validate signature
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($this->signature, 'com.woltlab.wcf.user.signature', 0);
+		
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission('user.signature.disallowedBBCodes')));
+		$disallowedBBCodes = $this->htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
+			throw new UserInputException('signature', 'disallowedBBCodes');
+		}
+		
 		// validate dynamic options
 		parent::validate();
 	}
@@ -239,7 +257,7 @@ class UserAddForm extends UserOptionListForm {
 				'email' => $this->email,
 				'password' => $this->password,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->signature
+				'signature' => $this->htmlInputProcessor->getHtml()
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,

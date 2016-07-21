@@ -29,6 +29,11 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $messageObjectType = 'com.woltlab.wcf.user.signature';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $neededModules = ['MODULE_USER_SIGNATURE'];
 	
 	/**

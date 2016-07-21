@@ -74,6 +74,14 @@
 			<name>com.woltlab.wcf.box.content</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.user.aboutMe</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.signature</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.bbcode.smiley</name>
