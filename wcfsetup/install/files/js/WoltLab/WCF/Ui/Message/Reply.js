@@ -238,7 +238,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 					//noinspection JSUnresolvedVariable
 					elData(this._container, 'last-post-time', data.returnValues.lastPostTime);
 					
-					window.location.hash = elementId;
+					window.history.replaceState(undefined, '', '#' + elementId);
 					UiScroll.element(elById(elementId));
 				}
 				
