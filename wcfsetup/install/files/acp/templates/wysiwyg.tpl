@@ -132,6 +132,8 @@
 						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}'
 					}
 				},
+				linkify: false,
+				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
 				plugins: [
 					'alignment',
