@@ -1507,6 +1507,7 @@ WCF.Action.Proxy = Class.extend({
 					data: options.data,
 					type: options.type,
 					url: options.url,
+					responseType: (options.dataType === 'json' ? 'application/json' : ''),
 					
 					autoAbort: options.autoAbortPrevious,
 					ignoreError: options.suppressErrors,
