@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/Reply
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification', '../Scroll'], function(Ajax, Core, EventHandler, Language, DomUtil, UiNotification, UiScroll) {
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Notification', '../Scroll'], function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, UiNotification, UiScroll) {
 	"use strict";
 	
 	/**
@@ -249,6 +249,8 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/Util', 'Ui/Notification
 				if (this._options.quoteManager) {
 					this._options.quoteManager.countQuotes();
 				}
+				
+				DomChangeListener.trigger();
 			}
 		},
 		

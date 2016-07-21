@@ -9,12 +9,12 @@
 define(
 	[
 		'Ajax',         'Core',            'Dictionary',          'Environment',
-		'EventHandler', 'Language',        'ObjectMap',           'Dom/Traverse',
+		'EventHandler', 'Language',        'ObjectMap',           'Dom/ChangeListener', 'Dom/Traverse',
 		'Dom/Util',     'Ui/Notification', 'Ui/ReusableDropdown', 'WoltLab/WCF/Ui/Scroll'
 	],
 	function(
 		Ajax,            Core,              Dictionary,            Environment,
-		EventHandler,    Language,          ObjectMap,             DomTraverse,
+		EventHandler,    Language,          ObjectMap,             DomChangeListener,    DomTraverse,
 		DomUtil,         UiNotification,    UiReusableDropdown,    UiScroll
 	)
 {
@@ -49,6 +49,8 @@ define(
 			}, options);
 			
 			this.rebuild();
+			
+			DomChangeListener.add('Ui/Message/InlineEdit_' + this._options.className, this.rebuild.bind(this));
 		},
 		
 		/**
