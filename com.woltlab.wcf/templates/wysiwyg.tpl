@@ -108,12 +108,21 @@
 				lang: 'wsc', // fake language to offload phrases
 				langs: {
 					wsc: {
+						// general
+						edit: '{lang}wcf.global.button.edit{/lang}',
+						
 						// formatting dropdown
 						heading2: '{lang}wcf.editor.format.heading2{/lang}',
 						heading3: '{lang}wcf.editor.format.heading3{/lang}',
 						heading4: '{lang}wcf.editor.format.heading4{/lang}',
 						paragraph: '{lang}wcf.editor.format.paragraph{/lang}',
 						
+						// links
+						'link-edit': '{lang}wcf.editor.link.edit{/lang}',
+						'link-insert': '{lang}wcf.editor.link.add{/lang}',
+						unlink: '{lang}wcf.editor.link.unlink{/lang}',
+						
+						// text alignment
 						'align-center': '{lang}wcf.editor.alignment.center{/lang}',
 						'align-justify': '{lang}wcf.editor.alignment.justify{/lang}',
 						'align-left': '{lang}wcf.editor.alignment.left{/lang}',

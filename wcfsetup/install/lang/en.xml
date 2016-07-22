@@ -2262,6 +2262,7 @@ Errors are:
 		
 		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>
 		<item name="wcf.editor.link.edit"><![CDATA[Edit Link]]></item>
+		<item name="wcf.editor.link.unlink"><![CDATA[Unlink]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
 		

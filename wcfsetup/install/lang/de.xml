@@ -2283,6 +2283,7 @@ Fehler sind beispielsweise:
 		
 		<item name="wcf.editor.link.add"><![CDATA[Link einfügen]]></item>
 		<item name="wcf.editor.link.edit"><![CDATA[Link bearbeiten]]></item>
+		<item name="wcf.editor.link.unlink"><![CDATA[Link entfernen]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
 		
