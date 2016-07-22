@@ -28,6 +28,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabImage.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLink.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
@@ -145,12 +146,18 @@
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
 				plugins: [
+					// Imperavi
 					'alignment',
 					'source',
 					'table',
+					
+					// WoltLab specials
+					'WoltLabBlock',
+					'WoltLabKeydown',
+					
+					// WoltLab core
 					'WoltLabAlignment',
 					'WoltLabAttachment',
-					'WoltLabBlock',
 					'WoltLabCode',
 					'WoltLabColor',
 					'WoltLabDropdown',
