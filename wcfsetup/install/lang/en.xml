@@ -2545,7 +2545,7 @@ Errors are:
 		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Myself ({$__wcf->getUser()->username})]]></item>
 		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.outstandingItems"><![CDATA[Pending Items]]></item>
-		<item name="wcf.moderation.doneItems"><![CDATA[Done Items]]></item>
+		<item name="wcf.moderation.doneItems"><![CDATA[Resolved Items]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.moderation.markAllAsRead.confirmMessage"><![CDATA[Do you really want to mark all entries as read?]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
@@ -2577,7 +2577,7 @@ Errors are:
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.outstanding"><![CDATA[Pending]]></item>
 		<item name="wcf.moderation.status.processing"><![CDATA[In Progress]]></item>
-		<item name="wcf.moderation.status.done"><![CDATA[Done]]></item>
+		<item name="wcf.moderation.status.done"><![CDATA[Resolved]]></item>
 		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.activation"><![CDATA[Content has been approved]]></item>
 		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.report"><![CDATA[Report was justified, content has been deleted]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Approval was denied]]></item>
