@@ -17,6 +17,12 @@ use wcf\system\SingletonFactory;
  */
 class PageLocationManager extends SingletonFactory {
 	/**
+	 * true if all parents of the highest page have been added
+	 * @var boolean
+	 */
+	protected $addedParentLocations = false;
+	
+	/**
 	 * list of locations with descending priority
 	 * @var	array
 	 */
@@ -108,6 +114,37 @@ class PageLocationManager extends SingletonFactory {
 	 * @return	array
 	 */
 	public function getLocations() {
+		if (!$this->addedParentLocations) {
+			$this->addParents();
+			
+			$this->addedParentLocations = true;
+		}
+		
 		return $this->stack;
+	}
+	
+	/**
+	 * Adds all parents as defined through the page configuration.
+	 */
+	protected function addParents() {
+		if (!empty($this->stack)) {
+			$location = end($this->stack);
+			
+			if ($location['pageID']) {
+				$page = PageCache::getInstance()->getPage($location['pageID']);
+				while ($page !== null && $page->parentPageID) {
+					$page = PageCache::getInstance()->getPage($page->parentPageID);
+					
+					$this->stack[] = [
+						'identifier' => $page->identifier,
+						'link' => $page->getLink(),
+						'pageID' => $page->pageID,
+						'pageObjectID' => 0,
+						'title' => $page->getTitle(),
+						'useAsParentLocation' => false
+					];
+				}
+			}
+		}
 	}
 }
