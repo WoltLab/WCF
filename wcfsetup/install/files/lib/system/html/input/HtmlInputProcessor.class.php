@@ -157,7 +157,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 * @return      string          parsed html string
 	 */
 	protected function convertToHtml($html) {
-		if (!preg_match('~^<[a-zA-Z\-]+~', $html) || !preg_match('~</[a-zA-Z\-]>$~', $html)) {
+		if (!preg_match('~^<[a-zA-Z\-]+~', $html) || !preg_match('~</[a-zA-Z\-]+>$~', $html)) {
 			$html = StringUtil::encodeHTML($html);
 			$parts = preg_split('~(\n+)~', $html, null, PREG_SPLIT_DELIM_CAPTURE);
 			
