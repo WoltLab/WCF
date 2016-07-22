@@ -69,6 +69,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 			var pages = elData(element, 'pages');
 			_input.value = pages;
 			_input.setAttribute('max', pages);
+			_input.select();
 			
 			_description.textContent = Language.get('wcf.page.jumpTo.description').replace(/#pages#/, pages);
 		},
