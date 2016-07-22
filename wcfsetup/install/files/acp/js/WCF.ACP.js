@@ -1050,7 +1050,7 @@ WCF.ACP.Package.Search = Class.extend({
 		// update badge count
 		if (count !== undefined) {
 			this._content = { 1: template };
-			this._packageSearchResultContainer.find('> header > h2 > .badge').html(count);
+			this._packageSearchResultContainer.find('h2.sectionTitle > .badge').html(count);
 		}
 		
 		// bind listener
