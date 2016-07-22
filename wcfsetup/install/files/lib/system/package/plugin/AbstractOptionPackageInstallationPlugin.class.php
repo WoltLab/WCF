@@ -127,7 +127,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			];
 			
 			// adjust show order
-			if ($data['showOrder'] !== null || $this->installation->getAction() != 'update') {
+			if ($data['showOrder'] !== null || $this->installation->getAction() != 'update' || $this->getExistingCategory($element->getAttribute('name')) === false) {
 				$data['showOrder'] = $this->getShowOrder($data['showOrder'], $data['parentCategoryName'], 'parentCategoryName', '_category');
 			}
 			
@@ -202,13 +202,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * Installs option categories.
+	 * Returns the category with given name. 
 	 * 
-	 * @param	array		$category
-	 * @throws	SystemException
+	 * @param       string          $category
+	 * @return      array|false
 	 */
-	protected function saveCategory($category) {
-		// search existing category
+	protected function getExistingCategory($category) {
 		$sql = "SELECT	categoryID, packageID
 			FROM	".$this->application.WCF_N."_".$this->tableName."_category
 			WHERE	categoryName = ?";
@@ -216,7 +215,18 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		$statement->execute([
 			$category['categoryName']
 		]);
-		$row = $statement->fetchArray();
+		return $statement->fetchArray();
+	}
+	
+	/**
+	 * Installs option categories.
+	 * 
+	 * @param	array		$category
+	 * @throws	SystemException
+	 */
+	protected function saveCategory($category) {
+		// search existing category
+		$row = $this->getExistingCategory($category);
 		if (empty($row['categoryID'])) {
 			// insert new category
 			$sql = "INSERT INTO	".$this->application.WCF_N."_".$this->tableName."_category
