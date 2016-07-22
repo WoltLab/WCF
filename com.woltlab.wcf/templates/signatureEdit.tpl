@@ -28,7 +28,7 @@
 			<dl class="wide{if $errorField == 'text'} formError{/if}">
 				<dt><label for="text">{lang}wcf.user.signature{/lang}</label></dt>
 				<dd>
-					<textarea id="text" name="text" rows="20" cols="40">{$text}</textarea>
+					<textarea id="text" class="wysiwygTextarea" name="text" rows="20" cols="40">{$text}</textarea>
 					{if $errorField == 'text'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
