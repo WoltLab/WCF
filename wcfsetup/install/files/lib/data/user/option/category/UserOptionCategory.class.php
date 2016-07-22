@@ -31,23 +31,6 @@ class UserOptionCategory extends DatabaseObject {
 	protected static $databaseTableIndexName = 'categoryID';
 	
 	/**
-	 * @inheritDoc
-	 */
-	public function __construct($categoryID, $row = null, UserOptionCategory $category = null) {
-		if ($categoryID !== null) {
-			$sql = "SELECT	option_category.*,
-					(SELECT COUNT(DISTINCT optionName) FROM wcf".WCF_N."_user_option WHERE categoryName = option_category.categoryName) AS options
-				FROM	wcf".WCF_N."_user_option_category option_category
-				WHERE	option_category.categoryID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$categoryID]);
-			$row = $statement->fetchArray();
-		}
-		
-		parent::__construct(null, $row, $category);
-	}
-	
-	/**
 	 * Returns the title of this category.
 	 * 
 	 * @return	string
