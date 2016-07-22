@@ -24,7 +24,29 @@ define(['Dom/Util'], function(DomUtil) {
 		 * @param       {Object=}       attributes      optional list of attributes for the format tag
 		 */
 		format: function(editorElement, tagName, className, attributes) {
-			document.execCommand('strikethrough');
+			var selection = window.getSelection();
+			if (!selection.rangeCount) {
+				// no active selection
+				return;
+			}
+			
+			var range = selection.getRangeAt(0);
+			var tmpElement = null;
+			if (range.collapsed) {
+				tmpElement = elCreate('strike');
+				tmpElement.textContent = '\u200B';
+				range.insertNode(tmpElement);
+				
+				range = document.createRange();
+				range.selectNodeContents(tmpElement);
+				
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+			
+			if (tmpElement === null) {
+				document.execCommand('strikethrough');
+			}
 			
 			var elements = elBySelAll('strike', editorElement), formatElement, property, strike;
 			for (var i = 0, length = elements.length; i < length; i++) {
