@@ -128,14 +128,9 @@
 			$('#requestFullscreen').show();
 		}
 		
-		// force that both containers have got the same width
-		var max = Math.max($('#left > ol').prop('scrollWidth'), $('#right > ol').prop('scrollWidth'));
-		$('#left > ol').width(max);
-		$('#right > ol').width(max);
-		
 		// sync scrolling
 		var sync = $('#left, #right');
-		function syncPosition(event) {
+		function syncPosition() {
 			var other = sync.not(this);
 			other.off('scroll');
 			other.prop('scrollLeft', $(this).prop('scrollLeft'));
