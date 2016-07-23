@@ -5,7 +5,6 @@ use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\html\AbstractHtmlProcessor;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -37,18 +36,21 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * Processes the input html string.
 	 *
-	 * @param       string          $html           html string
-	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       string          $html                   html string
+	 * @param       string          $objectType             object type identifier
+	 * @param       integer         $objectID               object id
+	 * @param       boolean         $convertFromBBCode      interpret input as bbcode
 	 */
-	public function process($html, $objectType, $objectID = 0) {
+	public function process($html, $objectType, $objectID = 0, $convertFromBBCode = false) {
 		$this->setContext($objectType, $objectID);
 		
 		// enforce consistent newlines
 		$html = StringUtil::trim(StringUtil::unifyNewlines($html));
 		
 		// check if this is true HTML or just a bbcode string
-		$html = $this->convertToHtml($html);
+		if ($convertFromBBCode) {
+			$html = $this->convertToHtml($html);
+		}
 		
 		// transform bbcodes into metacode markers
 		$html = HtmlBBCodeParser::getInstance()->parse($html);
@@ -157,48 +159,44 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 * @return      string          parsed html string
 	 */
 	protected function convertToHtml($html) {
-		if (!preg_match('~^<[a-zA-Z\-]+~', $html) || !preg_match('~</[a-zA-Z\-]+>$~', $html)) {
-			$html = StringUtil::encodeHTML($html);
-			$parts = preg_split('~(\n+)~', $html, null, PREG_SPLIT_DELIM_CAPTURE);
-			
-			$openParagraph = false;
-			$html = '';
-			for ($i = 0, $length = count($parts); $i < $length; $i++) {
-				$part = $parts[$i];
-				if (strpos($part, "\n") !== false) {
-					$newlines = substr_count($part, "\n");
-					if ($newlines === 1) {
-						$html .= '<br>';
-					}
-					else {
-						if ($openParagraph) {
-							$html .= '</p>';
-							$openParagraph = false;
-						}
-						
-						// ignore two newline because a new paragraph with bbcodes is created
-						// using two subsequent newlines
-						$newlines -= 2;
-						if ($newlines === 0) {
-							continue;
-						}
-						
-						$html .= str_repeat('<p><br></p>', $newlines);
-					}
+		$html = StringUtil::encodeHTML($html);
+		$parts = preg_split('~(\n+)~', $html, null, PREG_SPLIT_DELIM_CAPTURE);
+		
+		$openParagraph = false;
+		$html = '';
+		for ($i = 0, $length = count($parts); $i < $length; $i++) {
+			$part = $parts[$i];
+			if (strpos($part, "\n") !== false) {
+				$newlines = substr_count($part, "\n");
+				if ($newlines === 1) {
+					$html .= '<br>';
 				}
 				else {
-					if (!$openParagraph) {
-						$html .= '<p>';
+					if ($openParagraph) {
+						$html .= '</p>';
+						$openParagraph = false;
 					}
 					
-					$html .= $part;
-					$openParagraph = true;
+					// ignore two newline because a new paragraph with bbcodes is created
+					// using two subsequent newlines
+					$newlines -= 2;
+					if ($newlines === 0) {
+						continue;
+					}
+					
+					$html .= str_repeat('<p><br></p>', $newlines);
 				}
 			}
-			
-			$html .= '</p>';
+			else {
+				if (!$openParagraph) {
+					$html .= '<p>';
+				}
+				
+				$html .= $part;
+				$openParagraph = true;
+			}
 		}
 		
-		return $html;
+		return $html . '</p>';
 	}
 }
