@@ -32,14 +32,12 @@ $wcfAcpMenuWidth: 150px;
 		}
 		
 		.pageHeaderLogo {
-			align-items: center;
 			background-color: rgb(52, 73, 94);
-			display: flex;
 			flex: 0 0 $wcfAcpMenuWidth;
 			height: 50px;
-			justify-content: center;
 			margin: 0;
 			order: 1;
+			position: relative;
 			
 			.pageHeaderLogoLarge {
 				display: none;
@@ -47,6 +45,17 @@ $wcfAcpMenuWidth: 150px;
 			
 			.pageHeaderLogoSmall {
 				display: inline;
+			}
+			
+			> a {
+				align-items: center;
+				bottom: 0;
+				display: flex;
+				justify-content: center;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
 			}
 		}
 		
