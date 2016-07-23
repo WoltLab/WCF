@@ -1,0 +1,32 @@
+/* element list with checkboxes */
+.structuredList {
+	border: 1px solid rgb(79, 129, 189);
+	border-width: 1px 0;
+	
+	li {
+		display: flex;
+		padding: 10px 0;
+		
+		&:not(:first-child) {
+			border-top: 1px solid rgb(238, 238, 238);
+		}
+		
+		&:hover {
+			background-color: $wcfTabularBoxBackgroundActive
+		}
+		
+		> span {
+			flex: 1 1 auto;
+		}
+		
+		> label {
+			cursor: pointer;
+			flex: 0 0 auto;
+		}
+		
+		> span,
+		> label {
+			padding: 0 5px;
+		}
+	}
+}
