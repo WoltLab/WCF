@@ -428,6 +428,7 @@ define(
 			}
 			else {
 				contentContainer.classList.remove('dialogForm');
+				contentContainer.style.removeProperty('margin-bottom');
 			}
 			
 			unavailableHeight += DomUtil.outerHeight(data.header);
