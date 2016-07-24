@@ -1186,20 +1186,6 @@ monsterid:wcf.acp.option.gravatar_default_type.monsterid
 retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<options>module_gravatar</options>
 			</option>
-			<option name="max_avatar_width">
-				<categoryname>user.avatar</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>192</defaultvalue>
-				<minvalue>96</minvalue>
-				<suffix>pixel</suffix>
-			</option>
-			<option name="max_avatar_height">
-				<categoryname>user.avatar</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>192</defaultvalue>
-				<minvalue>96</minvalue>
-				<suffix>pixel</suffix>
-			</option>
 			<!-- /user.avatar -->
 			
 			<!-- user.signature -->

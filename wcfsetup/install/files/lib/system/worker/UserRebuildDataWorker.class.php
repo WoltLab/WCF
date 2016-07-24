@@ -1,10 +1,14 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\like\Like;
+use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\avatar\UserAvatarEditor;
+use wcf\data\user\avatar\UserAvatarList;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\image\ImageHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
@@ -72,6 +76,30 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					".$conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());
+			}
+			
+			// update old avatars
+			$avatarList = new UserAvatarList();
+			$avatarList->getConditionBuilder()->add('user_avatar.userID IN (?)', [$userIDs]);
+			$avatarList->getConditionBuilder()->add('(user_avatar.width <> ? OR user_avatar.height <> ?)', [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]);
+			$avatarList->readObjects();
+			foreach ($avatarList as $avatar) {
+				$width = $avatar->width;
+				$height = $avatar->height;
+				if ($width != $height) {
+					$width = $height = min($width, $height, UserAvatar::AVATAR_SIZE);
+					$adapter = ImageHandler::getInstance()->getAdapter();
+					$adapter->loadFile($avatar->getLocation());
+					$thumbnail = $adapter->createThumbnail($width, $height, false);
+					$adapter->writeImage($thumbnail, $avatar->getLocation());
+				}
+				
+				if ($width < UserAvatar::AVATAR_SIZE || $height < UserAvatar::AVATAR_SIZE) {
+				}
+				
+				$editor = new UserAvatarEditor($avatar);
+				$editor->update([
+				]);
 			}
 		}
 	}

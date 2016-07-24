@@ -26,11 +26,7 @@
 			<dl class="avatarType jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
 				<dt>
 					{if $avatarType == 'custom'}
-						{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-							{@$__wcf->getUserProfileHandler()->getAvatar()->getCropImageTag(96)}
-						{else}
-							{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
-						{/if}
+						{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 					{else}
 						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 96px; height: 96px">
 					{/if}
@@ -84,7 +80,6 @@
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.user.avatar.type.custom.crop': '{lang}wcf.user.avatar.type.custom.crop{/lang}',
 				'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
 				'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
 				'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
@@ -94,11 +89,7 @@
 			});
 			
 			{if !$__wcf->user->disableAvatar}
-				{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-					new WCF.User.Avatar.Upload(0, new WCF.User.Avatar.Crop({@$__wcf->getUserProfileHandler()->getAvatar()->avatarID}));
-				{else}
-					new WCF.User.Avatar.Upload();
-				{/if}
+				new WCF.User.Avatar.Upload();
 			{/if}
 		});
 		//]]>

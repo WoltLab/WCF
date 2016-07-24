@@ -971,10 +971,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
-		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
-		<item name="wcf.acp.option.max_avatar_height.description"><![CDATA[The maximum height in pixels for avatars.]]></item>
-		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
-		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width in pixels for avatars.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
@@ -3217,9 +3213,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Crop Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[The scaled versions of your avatar are based on a square cutout. You may specify an individual cutout by holding down your mouse button and moving the highlighted area to the desired position.]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 96×96 pixel, it is recommended to provide a dimension of {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The maximum dimensions are 128×128 pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
 		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>

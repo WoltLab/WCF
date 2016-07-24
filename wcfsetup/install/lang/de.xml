@@ -968,8 +968,6 @@
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Authentifizierung über Drittanbieter]]></item>
-		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximale Avatar-Höhe]]></item>
-		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximale Avatar-Breite]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Aktiviert die Unterstützung für Gravatare („Global Recognized Avatar“).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[„Benutzer online“-Anzeige]]></item>
@@ -3178,9 +3176,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du Probleme mit der Aktivierung haben sol
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar verwalten]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->avatarID || $__wcf->user->enableGravatar} {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} derzeitigen Avatar gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Avatar-Funktion {if !$__wcf->user->disableAvatarReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableAvatarReason}{/if}]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
-		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Avatar zuschneiden]]></item>
-		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[Die verkleinerten Darstellungen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Avatars verwenden einen quadratischen Ausschnitt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} den gewünschten Ausschnitt individuell festlegen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den hervorgehobenen Bereich mit gedrückter Maustaste an die gewünschte Position {if LANGUAGE_USE_INFORMAL_VARIANT}verschiebst{else}verschieben{/if}.]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} und maximal eine Größe von {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize} besitzen. Die Mindestgröße für Avatare liegt bei 96×96 Pixel, die empfohlene Maximalgröße bei {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} Pixel, größere Avatare werden - sofern möglich - automatisch auf die Maximalgröße verkleinert.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} und maximal eine Größe von {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize} besitzen. Die Maximalgröße für Avatare liegt bei 128×128 Pixel, größere Avatare werden - sofern möglich - automatisch auf die Maximalgröße verkleinert.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Gravatar verwenden]]></item>
 		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Bei einem Gravatar handelt es sich um einen global verfügbaren Avatar (Global Recognized Avatar), welcher mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse („{$__wcf->user->email}“) verknüpft ist. Auf der folgenden Website können Sie einen Gravatar anlegen: <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a>]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Zu {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse konnte kein Gravatar gefunden werden.]]></item>
