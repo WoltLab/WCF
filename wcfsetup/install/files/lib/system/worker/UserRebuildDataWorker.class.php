@@ -95,10 +95,17 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				}
 				
 				if ($width < UserAvatar::AVATAR_SIZE || $height < UserAvatar::AVATAR_SIZE) {
+					$adapter = ImageHandler::getInstance()->getAdapter();
+					$adapter->loadFile($avatar->getLocation());
+					$adapter->resize(0, 0, $width, $height, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
+					$adapter->writeImage($adapter->getImage(), $avatar->getLocation());
+					$width = $height = UserAvatar::AVATAR_SIZE;
 				}
 				
 				$editor = new UserAvatarEditor($avatar);
 				$editor->update([
+					'width' => $width,
+					'height' => $height
 				]);
 			}
 		}
