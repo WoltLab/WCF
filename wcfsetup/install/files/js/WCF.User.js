@@ -189,7 +189,7 @@ WCF.User.Panel.Abstract = Class.extend({
 			if ($.browser.mobile) {
 				this.toggle();
 			}
-			else if (this._dropdown.isOpen() && timerBlockClick === null) {
+			else if ((this._dropdown && this._dropdown.isOpen()) && timerBlockClick === null) {
 				this.toggle();
 			}
 		}).bind(this));
