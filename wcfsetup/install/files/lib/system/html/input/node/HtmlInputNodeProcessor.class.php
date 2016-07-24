@@ -64,7 +64,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->invokeNodeHandlers('wcf\system\html\input\node\HtmlInputNode', [], function(IHtmlNode $nodeHandler) use (&$result) {
 			$disallowed = $nodeHandler->isAllowed($this);
 			if ($disallowed) {
-				$result[] = array_merge($result, $disallowed);
+				$result = array_merge($result, $disallowed);
 			}
 		});
 		
@@ -73,7 +73,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			'color' => 'woltlab-color',
 			'font' => 'woltlab-size',
 			'size' => 'woltlab-size',
-			'spoiler' => 'woltlab-spoiler'
+			'spoiler' => 'woltlab-spoiler',
+			'url' => 'a'
 		];
 		
 		foreach ($customTags as $bbcode => $tagName) {
