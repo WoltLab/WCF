@@ -179,8 +179,14 @@ class QuickReplyManager extends SingletonFactory {
 		$tableIndexName = call_user_func([$this->container, 'getDatabaseTableIndexName']);
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['time'] = TIME_NOW;
-		$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
-		$parameters['data']['username'] = WCF::getUser()->username;
+		
+		if (!isset($parameters['data']['userID'])) {
+			$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
+		}
+		
+		if (!isset($parameters['data']['username'])) {
+			$parameters['data']['username'] = WCF::getUser()->username;
+		}
 		
 		// pre-parse message text
 		/*if ($parameters['data']['preParse']) {

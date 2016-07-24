@@ -38,7 +38,8 @@ requirejs.config({
 			'Ui/Screen': 'WoltLab/WCF/Ui/Screen',
 			'Ui/SimpleDropdown': 'WoltLab/WCF/Ui/Dropdown/Simple',
 			'Ui/TabMenu': 'WoltLab/WCF/Ui/TabMenu',
-			'Upload': 'WoltLab/WCF/Upload'
+			'Upload': 'WoltLab/WCF/Upload',
+			'User': 'WoltLab/WCF/User'
 		}
 	}
 });

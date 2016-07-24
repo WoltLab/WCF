@@ -3517,6 +3517,8 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 
 /**
  * Holds userdata of the current user
+ * 
+ * @deprecated	use WCF/WoltLab/User
  */
 WCF.User = {
 	/**
@@ -4965,24 +4967,25 @@ WCF.System.ObjectStore = {
  */
 WCF.System.Captcha = {
 	/**
-	 * adds call
-	 * @var	object<function>
-	 */
-	_captchas: { },
-	
-	/**
 	 * Adds a callback for a certain captcha.
 	 * 
 	 * @param	string		captchaID
 	 * @param	function	callback
 	 */
 	addCallback: function(captchaID, callback) {
-		if (!$.isFunction(callback)) {
-			console.debug('[WCF.System.Captcha] Given callback is no function');
-			return;
-		}
-		
-		this._captchas[captchaID] = callback;
+		require(['WoltLab/WCF/Controller/Captcha'], function(ControllerCaptcha) {
+			try {
+				ControllerCaptcha.add(captchaID, callback);
+			}
+			catch (e) {
+				if (e instanceof TypeError) {
+					console.debug('[WCF.System.Captcha] Given callback is no function');
+					return;
+				}
+				
+				// ignore other errors
+			}
+		});
 	},
 	
 	/**
@@ -4991,19 +4994,31 @@ WCF.System.Captcha = {
 	 * @return	object
 	 */
 	getData: function(captchaID) {
-		if (this._captchas[captchaID] === undefined) {
-			console.debug('[WCF.System.Captcha] Unknow captcha id "' + captchaID + '"');
-			return;
-		}
+		var returnValue;
+		require(['WoltLab/WCF/Controller/Captcha'], function(ControllerCaptcha) {
+			try {
+				returnValue = ControllerCaptcha.getData(captchaID);
+			}
+			catch (e) {
+				console.debug('[WCF.System.Captcha] Unknow captcha id "' + captchaID + '"');
+			}
+		});
 		
-		return this._captchas[captchaID]();
+		return returnValue;
 	},
 	
 	/**
 	 * Removes the callback with the given captcha id.
 	 */
 	removeCallback: function(captchaID) {
-		delete this._captchas[captchaID];
+		require(['WoltLab/WCF/Controller/Captcha'], function(ControllerCaptcha) {
+			try {
+				ControllerCaptcha.delete(captchaID);
+			}
+			catch (e) {
+				// ignore errors for unknown captchas
+			}
+		});
 	}
 };
 

@@ -22,7 +22,7 @@ requirejs.config({
 });
 </script>
 <script data-relocate="true">
-	require(['Language', 'WoltLab/WCF/BootstrapFrontend'], function(Language, BootstrapFrontend) {
+	require(['Language', 'WoltLab/WCF/BootstrapFrontend', 'User'], function(Language, BootstrapFrontend, User) {
 		Language.addObject({
 			'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 			'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
@@ -112,6 +112,8 @@ requirejs.config({
 			},
 			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
 		});
+		
+		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()

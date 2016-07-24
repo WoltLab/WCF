@@ -6,7 +6,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/Reply
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Notification', '../Scroll'], function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, UiNotification, UiScroll) {
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', '../Scroll', 'EventKey', 'User', 'WoltLab/WCF/Controller/Captcha'],
+	function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha) {
 	"use strict";
 	
 	/**
@@ -58,13 +59,60 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		},
 		
 		/**
-		 * Validates the message and submits it to the server.
+		 * Submits the guest dialog.
 		 * 
-		 * @param       {Event}         event   event object
+		 * @param	{Event}		event
 		 * @protected
 		 */
-		_submit: function(event) {
-			event.preventDefault();
+		_submitGuestDialog: function(event) {
+			// only submit when enter key is pressed
+			if (event.type === 'keypress' && !EventKey.Enter(event)) {
+				return;
+			}
+			
+			var usernameInput = elBySel('input[name=username]', event.currentTarget.closest('.dialogContent'));
+			if (usernameInput.value === '') {
+				var error = DomTraverse.nextByClass(usernameInput, 'innerError');
+				if (!error) {
+					var error = elCreate('small');
+					error.className = 'innerError';
+					error.innerText = Language.get('wcf.global.form.error.empty');
+					
+					DomUtil.insertAfter(error, usernameInput);
+					
+					usernameInput.closest('dl').classList.add('formError');
+				}
+				
+				return;
+			}
+			
+			var parameters = {
+				parameters: {
+					data: {
+						username: usernameInput.value
+					}
+				}
+			};
+			
+			var captchaId = elData(event.currentTarget, 'captcha-id');
+			if (ControllerCaptcha.has(captchaId)) {
+				parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
+			}
+			
+			this._submit(undefined, parameters);
+		},
+		
+		/**
+		 * Validates the message and submits it to the server.
+		 * 
+		 * @param	{Event?}	event			event object
+		 * @param	{Object?}	additionalParameters	additional parameters sent to the server
+		 * @protected
+		 */
+		_submit: function(event, additionalParameters) {
+			if (event) {
+				event.preventDefault();
+			}
 			
 			if (!this._validate()) {
 				// validation failed, bail out
@@ -80,9 +128,13 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters.data);
 			
-			Ajax.api(this, {
+			if (!User.userId && !additionalParameters) {
+				parameters.requireGuestDialog = true;
+			}
+			
+			Ajax.api(this, Core.extend({
 				parameters: parameters
-			});
+			}, additionalParameters));
 		},
 		
 		/**
@@ -255,11 +307,31 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		},
 		
 		_ajaxSuccess: function(data) {
-			this._insertMessage(data);
+			if (!User.userId && !data.returnValues.guestDialogID) {
+				throw new Error("Missing 'guestDialogID' return value for guest.");
+			}
 			
-			this._reset();
-			
-			this._hideLoadingOverlay();
+			if (!User.userId && data.returnValues.guestDialog) {
+				UiDialog.openStatic(data.returnValues.guestDialogID, data.returnValues.guestDialog, {
+					closable: false,
+					title: Language.get('wcf.global.confirmation.title')
+				});
+				
+				var dialog = UiDialog.getDialog(data.returnValues.guestDialogID);
+				elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
+				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
+			}
+			else {
+				this._insertMessage(data);
+				
+				if (!User.userId) {
+					UiDialog.close(data.returnValues.guestDialogID);
+				}
+				
+				this._reset();
+				
+				this._hideLoadingOverlay();
+			}
 		},
 		
 		_ajaxFailure: function(data) {
