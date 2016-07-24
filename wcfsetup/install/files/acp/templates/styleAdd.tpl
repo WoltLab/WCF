@@ -479,6 +479,7 @@
 		{* colors *}
 		<div id="colors" class="tabMenuContent">
 			<div class="section">
+				<p class="error" style="margin-bottom: 20px">TODO: outdated!</p>
 				<div id="spWrapper">
 					<div id="spWindow">
 						<div id="spHeader" data-region="wcfHeader">
