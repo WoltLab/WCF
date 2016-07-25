@@ -873,6 +873,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 */
 		keydown: function() {
 			this.keydown.enterWithinBlockquote = false;
+			this.keydown.woltlabIsEnter = false;
 			
 			// keydown.onTab
 			var $mpOnTab = this.keydown.onTab;
@@ -901,6 +902,8 @@ RedactorPlugins.wmonkeypatch = function() {
 			// keydown.setupBuffer
 			var $mpSetupBuffer = this.keydown.setupBuffer;
 			this.keydown.setupBuffer = (function(e, key) {
+				this.keydown.woltlabIsEnter = (key == this.keyCode.ENTER && !e.shiftKey && !e.ctrlKey && !e.metaKey);
+				
 				// undo
 				if (this.keydown.ctrl && key === 89 && !e.shiftKey && !e.altKey && this.opts.rebuffer.length !== 0) {
 					e.preventDefault();
@@ -1309,6 +1312,24 @@ RedactorPlugins.wmonkeypatch = function() {
 					fixApple = true;
 				}
 				else {
+					// Removing the marker without moving the selection first causes Firefox
+					// to move the selection somewhere else. Unfortunately the predicted new
+					// location is sometimes completely off, messing up everything.
+					if (this.keydown.woltlabIsEnter && this.utils.browser('mozilla')) {
+						$node = null;
+						
+						var text = document.createTextNode("\u200B");
+						if (marker.nextSibling) marker.parentNode.insertBefore(text, marker.nextSibling);
+						else marker.parentNode.appendChild(text);
+						
+						this.selection.implicitRange = document.createRange();
+						this.selection.implicitRange.setStartAfter(text);
+						this.selection.implicitRange.setEndAfter(text);
+						
+						getSelection().removeAllRanges();
+						getSelection().addRange(this.selection.implicitRange);
+					}
+					
 					marker.parentNode.removeChild(marker);
 				}
 				
@@ -1320,7 +1341,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					getSelection().removeAllRanges();
 					getSelection().addRange(this.selection.implicitRange);
 				}
-				else {
+				else if (!this.utils.browser('mozilla')) {
 					this.selection.implicitRange = null;
 				}
 				
@@ -1338,7 +1359,18 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			// selection.removeMarkers
 			this.selection.removeMarkers = (function() {
-				this.$editor.find('span.redactor-selection-marker').each($removeEmptyTextNodes);
+				var func = (function() {
+					this.$editor.find('span.redactor-selection-marker').each($removeEmptyTextNodes);
+				}).bind(this);
+				
+				if (this.keydown.woltlabIsEnter && this.utils.browser('mozilla')) {
+					// slightly delay removal to give Firefox some time to accept
+					// the new caret position
+					setTimeout(func, 1);
+				}
+				else {
+					func();
+				}
 			}).bind(this);
 			
 			// selection.removeNodesMarkers
