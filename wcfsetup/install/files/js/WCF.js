@@ -1260,7 +1260,12 @@ WCF.Dropdown = {
 			}
 		}
 		else {
-			if ($top + $menuDimensions.height > $(window).height() + $(document).scrollTop()) {
+			var menuHeight = $menuDimensions.height;
+			var scrollTop = $(document).scrollTop();
+			
+			// only open towards the top if there is not enough space downwards
+			// *and* the dropdown does not overflow the document's top
+			if (($top + menuHeight > $(window).height() + scrollTop) && ($top + scrollTop) - menuHeight > 0) {
 				$bottom = $(window).height() - $dropdownOffsets.top + 10;
 				$top = 'auto';
 				
