@@ -940,6 +940,9 @@ RedactorPlugins.wmonkeypatch = function() {
 			// link.insert
 			var $mpInsert = this.link.insert;
 			this.link.insert = (function() {
+				// Firefox: remove any invisible characters present in the url
+				this.link.$inputUrl[0].value = this.link.$inputUrl[0].value.trim().replace(/\u200B/, '');
+				
 				$mpInsert.call(this);
 				
 				this.selection.get();
