@@ -24,7 +24,6 @@ class GooglePlusUserOptionOutput implements IUserOptionOutput {
 		$url = StringUtil::encodeHTML('https://plus.google.com/'.$value.'/posts');
 		$value = StringUtil::encodeHTML($value);
 		
-		
 		return '<a href="'.$url.'" class="externalURL"'.((EXTERNAL_LINK_REL_NOFOLLOW || EXTERNAL_LINK_TARGET_BLANK) ? (' rel="'.(EXTERNAL_LINK_REL_NOFOLLOW ? 'nofollow' : '').((EXTERNAL_LINK_REL_NOFOLLOW && EXTERNAL_LINK_TARGET_BLANK) ? ' ' : '').(EXTERNAL_LINK_TARGET_BLANK ? 'noopener noreferrer' : '').' me"') : ' rel="me"').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.$value.'</a>';
 	}
 }
