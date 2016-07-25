@@ -2935,7 +2935,7 @@ If you cannot activate your email address or have any troubles following the ins
 	<category name="wcf.user.register">
 		<item name="wcf.user.register"><![CDATA[Registration]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.register.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br />
+		<item name="wcf.user.register.needActivation.redirect"><![CDATA[Thank you for registering, {$user->username}.<br />
 An email was sent to “{$user->email}” containing a one-time link to verify your account and ultimately completing your registration.]]></item>
 		<item name="wcf.user.register.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br />
 Your account is awaiting approval from an administrator.<br />

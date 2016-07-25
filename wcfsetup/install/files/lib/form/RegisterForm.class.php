@@ -472,7 +472,7 @@ class RegisterForm extends UserAddForm {
 					WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail', array('user' => $user))
 				);
 				$mail->send();
-				$this->message = 'wcf.user.register.needActivation';
+				$this->message = 'wcf.user.register.needActivation.redirect';
 			}
 		}
 		else if (REGISTER_ACTIVATION_METHOD == 2) {

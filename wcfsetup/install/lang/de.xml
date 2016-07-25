@@ -2924,7 +2924,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 	<category name="wcf.user.register">
 		<item name="wcf.user.register"><![CDATA[Registrierung]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Aktivierung der Registrierung auf der Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.register.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br />
+		<item name="wcf.user.register.needActivation.redirect"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br />
 Wir haben Ihnen eine E-Mail an {$user->email} geschickt. Die E-Mail enthält einen Link, den Sie einmalig aufrufen müssen, um die Gültigkeit Ihrer E-Mail-Adresse zu bestätigen und damit Ihre Registrierung abzuschließen.]]></item>
 		<item name="wcf.user.register.awaitActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. Ihre Benutzerdaten werden in Kürze von einem Administrator geprüft.<br />
 Sobald Ihr Benutzerkonto freigeschaltet ist, werden Sie per E-Mail darüber in Kenntnis gesetzt.]]></item>
