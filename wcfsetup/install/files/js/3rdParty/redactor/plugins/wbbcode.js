@@ -559,7 +559,7 @@ RedactorPlugins.wbbcode = function() {
 				else {
 					if ($value.match(/^<span/)) {
 						if ($value.match(/^<span(?:.*?)style="([^"]+)"(?:[^>]*?)>/)) {
-							var $style = RegExp.$1;
+							var $style = RegExp.$1.replace(/&quot;/g, '"');
 							var $start;
 							var $end;
 							
@@ -601,7 +601,7 @@ RedactorPlugins.wbbcode = function() {
 									}
 								}
 							}
-							else if ($style.match(/font-family: ?([^;]+);?/)) {
+							else if ($style.replace(/"/g, '').match(/font-family: ?([^;]+);?/)) {
 								$start = "[font='" + RegExp.$1.replace(/'/g, '') + "']";
 								$end = "[/font='" + RegExp.$1.replace(/'/g, '') + "']";
 								
