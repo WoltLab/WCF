@@ -5,8 +5,7 @@ CREATE TABLE wcf1_acl_option (
 	packageID INT(10) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
 	optionName VARCHAR(255) NOT NULL,
-	categoryName VARCHAR(255) NOT NULL,
-	UNIQUE KEY (packageID, objectTypeID, optionName)
+	categoryName VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_acl_option_category;
@@ -14,8 +13,7 @@ CREATE TABLE wcf1_acl_option_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
-	categoryName VARCHAR(255) NOT NULL,
-	UNIQUE KEY (packageID, objectTypeID, categoryName)
+	categoryName VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_acl_option_to_user;
@@ -63,8 +61,7 @@ CREATE TABLE wcf1_acp_menu_item (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	icon VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY menuItem (menuItem, packageID)
+	icon VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_acp_search_provider;
@@ -73,8 +70,7 @@ CREATE TABLE wcf1_acp_search_provider (
 	packageID INT(10) NOT NULL,
 	providerName VARCHAR(255) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
-	showOrder INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY providerName (providerName, packageID)
+	showOrder INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session;
@@ -118,7 +114,7 @@ CREATE TABLE wcf1_acp_session_virtual (
 	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	sessionID CHAR(40) NOT NULL,
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	userAgent VARCHAR(100) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
@@ -129,8 +125,7 @@ CREATE TABLE wcf1_acp_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10),
 	templateName VARCHAR(255) NOT NULL,
-	application VARCHAR(20) NOT NULL,
-	UNIQUE KEY applicationTemplate (application, templateName)
+	application VARCHAR(20) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_ad;
@@ -241,8 +236,7 @@ CREATE TABLE wcf1_bbcode (
 	isBlockElement TINYINT(1) NOT NULL DEFAULT 0,
 	isSourceCode TINYINT(1) NOT NULL DEFAULT 0,
 	showButton TINYINT(1) NOT NULL DEFAULT 0,
-	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
-	UNIQUE KEY bbcodeTag (bbcodeTag)
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_bbcode_attribute;
@@ -345,8 +339,7 @@ CREATE TABLE wcf1_clipboard_action (
 	packageID INT(10) NOT NULL DEFAULT 0,
 	actionName VARCHAR(50) NOT NULL DEFAULT '',
 	actionClassName VARCHAR(200) NOT NULL DEFAULT '',
-	showOrder INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY actionName (packageID, actionName, actionClassName)
+	showOrder INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_clipboard_item;
@@ -405,8 +398,7 @@ DROP TABLE IF EXISTS wcf1_core_object;
 CREATE TABLE wcf1_core_object (
 	objectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
-	objectName VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY object (packageID, objectName)
+	objectName VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_cronjob;
@@ -429,9 +421,7 @@ CREATE TABLE wcf1_cronjob (
 	canBeDisabled TINYINT(1) NOT NULL DEFAULT 1,
 	state TINYINT(1) NOT NULL DEFAULT 0,
 	failCount TINYINT(1) NOT NULL DEFAULT 0,
-	options TEXT,
-	
-	UNIQUE KEY cronjobName (cronjobName, packageID)
+	options TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_cronjob_log;
@@ -472,9 +462,7 @@ CREATE TABLE wcf1_event_listener (
 	inherit TINYINT(1) NOT NULL DEFAULT 0,
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
 	permissions TEXT,
-	options TEXT,
-	
-	UNIQUE KEY listenerName (listenerName, packageID)
+	options TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_import_mapping;
@@ -536,15 +524,14 @@ CREATE TABLE wcf1_language (
 DROP TABLE IF EXISTS wcf1_language_category;
 CREATE TABLE wcf1_language_category (
 	languageCategoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	languageCategory VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY languageCategory (languageCategory)
+	languageCategory VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_language_item;
 CREATE TABLE wcf1_language_item (
 	languageItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	languageID INT(10) NOT NULL,
-	languageItem VARCHAR(255) NOT NULL DEFAULT '',
+	languageItem VARCHAR(150) NOT NULL DEFAULT '',
 	languageItemValue MEDIUMTEXT NOT NULL,
 	languageCustomItemValue MEDIUMTEXT,
 	languageUseCustomValue TINYINT(1) NOT NULL DEFAULT 0,
@@ -730,7 +717,7 @@ CREATE TABLE wcf1_object_type (
 	objectTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	definitionID INT(10) NOT NULL,
 	packageID INT(10) NOT NULL,
-	objectType VARCHAR(255) NOT NULL,
+	objectType VARCHAR(150) NOT NULL,
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	additionalData MEDIUMTEXT,
 	UNIQUE KEY objectType (objectType, definitionID, packageID)
@@ -742,8 +729,7 @@ CREATE TABLE wcf1_object_type_definition (
 	definitionName VARCHAR(255) NOT NULL,
 	packageID INT(10) NOT NULL,
 	interfaceName VARCHAR(255) NOT NULL DEFAULT '',
-	categoryName VARCHAR(80) NOT NULL DEFAULT '',
-	UNIQUE KEY definitionName (definitionName)
+	categoryName VARCHAR(80) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_option;
@@ -763,9 +749,7 @@ CREATE TABLE wcf1_option (
 	options TEXT,
 	supportI18n TINYINT(1) NOT NULL DEFAULT 0,
 	requireI18n TINYINT(1) NOT NULL DEFAULT 0,
-	additionalData MEDIUMTEXT,
-	
-	UNIQUE KEY optionName (optionName)
+	additionalData MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_option_category;
@@ -776,8 +760,7 @@ CREATE TABLE wcf1_option_category (
 	parentCategoryName VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
-	options TEXT,
-	UNIQUE KEY categoryName (categoryName)
+	options TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_package;
@@ -802,24 +785,21 @@ DROP TABLE IF EXISTS wcf1_package_exclusion;
 CREATE TABLE wcf1_package_exclusion (
 	packageID INT(10) NOT NULL,
 	excludedPackage VARCHAR(255) NOT NULL DEFAULT '',
-	excludedPackageVersion VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY packageID (packageID, excludedPackage)
+	excludedPackageVersion VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_package_installation_file_log;
 CREATE TABLE wcf1_package_installation_file_log (
 	packageID INT(10),
 	filename VARCHAR(255) NOT NULL,
-	application VARCHAR(20) NOT NULL,
-	UNIQUE KEY applicationFile (application, filename)
+	application VARCHAR(20) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_package_installation_form;
 CREATE TABLE wcf1_package_installation_form (
 	queueID INT(10) NOT NULL,
 	formName VARCHAR(80) NOT NULL DEFAULT '',
-	document TEXT NOT NULL,
-	UNIQUE KEY formDocument (queueID, formName)
+	document TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_package_installation_node;
@@ -862,8 +842,7 @@ CREATE TABLE wcf1_package_installation_sql_log (
 	packageID INT(10), 
 	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
 	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
-	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
-	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
+	sqlIndex VARCHAR(100) NOT NULL DEFAULT ''
 );
 
 /* SQL_PARSER_OFFSET */
@@ -871,8 +850,7 @@ CREATE TABLE wcf1_package_installation_sql_log (
 DROP TABLE IF EXISTS wcf1_package_requirement;
 CREATE TABLE wcf1_package_requirement (
 	packageID INT(10) NOT NULL,
-	requirement INT(10) NOT NULL,
-	UNIQUE KEY packageID (packageID, requirement)
+	requirement INT(10) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_package_update;
@@ -884,23 +862,20 @@ CREATE TABLE wcf1_package_update (
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	isApplication TINYINT(1) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
+	isApplication TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_exclusion;
 CREATE TABLE wcf1_package_update_exclusion (
 	packageUpdateVersionID INT(10) NOT NULL,
 	excludedPackage VARCHAR(255) NOT NULL DEFAULT '',
-	excludedPackageVersion VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, excludedPackage)
+	excludedPackageVersion VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_fromversion;
 CREATE TABLE wcf1_package_update_fromversion (
 	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
-	fromversion VARCHAR(50) NOT NULL DEFAULT '',
-	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, fromversion)
+	fromversion VARCHAR(50) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_optional;
@@ -913,8 +888,7 @@ DROP TABLE IF EXISTS wcf1_package_update_requirement;
 CREATE TABLE wcf1_package_update_requirement (
 	packageUpdateVersionID INT(10) NOT NULL,
 	package VARCHAR(255) NOT NULL DEFAULT '',
-	minversion VARCHAR(50) NOT NULL DEFAULT '',
-	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, package)
+	minversion VARCHAR(50) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_server;
@@ -941,8 +915,7 @@ CREATE TABLE wcf1_package_update_version (
 	license VARCHAR(255) NOT NULL DEFAULT '',
 	licenseURL VARCHAR(255) NOT NULL DEFAULT '',
 	isAccessible TINYINT(1) NOT NULL DEFAULT 1,
-	isCritical TINYINT(1) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
+	isCritical TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_page;
@@ -1077,7 +1050,6 @@ CREATE TABLE wcf1_search_keyword (
 	keyword VARCHAR(255) NOT NULL,
 	searches INT(10) NOT NULL DEFAULT 0,
 	lastSearchTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (keyword),
 	KEY (searches, lastSearchTime)
 );
 
@@ -1106,7 +1078,7 @@ CREATE TABLE wcf1_session_virtual (
 	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	sessionID CHAR(40) NOT NULL,
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	userAgent VARCHAR(100) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
@@ -1121,14 +1093,13 @@ CREATE TABLE wcf1_smiley (
 	smileyTitle VARCHAR(255) NOT NULL DEFAULT '',
 	smileyCode VARCHAR(255) NOT NULL DEFAULT '',
 	aliases TEXT NOT NULL,
-	showOrder INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY smileyCode (smileyCode)
+	showOrder INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_spider;
 CREATE TABLE wcf1_spider (
 	spiderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	spiderIdentifier VARCHAR(255) DEFAULT '',
+	spiderIdentifier VARCHAR(150) DEFAULT '',
 	spiderName VARCHAR(255) DEFAULT '',
 	spiderURL VARCHAR(255) DEFAULT '',
 	UNIQUE KEY spiderIdentifier (spiderIdentifier)
@@ -1170,8 +1141,7 @@ DROP TABLE IF EXISTS wcf1_style_variable;
 CREATE TABLE wcf1_style_variable (
 	variableID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	variableName VARCHAR(50) NOT NULL,
-	defaultValue MEDIUMTEXT,
-	UNIQUE KEY variableName (variableName)
+	defaultValue MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable_value;
@@ -1187,8 +1157,7 @@ CREATE TABLE wcf1_tag (
 	tagID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	languageID INT(10) NOT NULL DEFAULT 0,
 	name VARCHAR(255) NOT NULL,
-	synonymFor INT(10),
-	UNIQUE KEY (languageID, name)
+	synonymFor INT(10)
 );
 
 DROP TABLE IF EXISTS wcf1_tag_to_object;
@@ -1210,7 +1179,6 @@ CREATE TABLE wcf1_template (
 	application VARCHAR(20) NOT NULL,
 	templateGroupID INT(10),
 	lastModificationTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY applicationTemplate (application, templateGroupID, templateName),
 	KEY templateGroupID (packageID, templateGroupID, templateName)
 );
 
@@ -1409,8 +1377,7 @@ CREATE TABLE wcf1_user_group_option (
 	permissions TEXT,
 	options TEXT,
 	usersOnly TINYINT(1) NOT NULL DEFAULT 0,
-	additionalData MEDIUMTEXT,
-	UNIQUE KEY optionName (optionName, packageID)
+	additionalData MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option_category;
@@ -1421,8 +1388,7 @@ CREATE TABLE wcf1_user_group_option_category (
 	parentCategoryName VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
-	options TEXT,
-	UNIQUE KEY categoryName (categoryName)
+	options TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option_value;
@@ -1454,8 +1420,7 @@ CREATE TABLE wcf1_user_menu_item (
 	permissions TEXT,
 	options TEXT,
 	className VARCHAR(255) NOT NULL DEFAULT '',
-	iconClassName VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY menuItem (menuItem, packageID)
+	iconClassName VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 -- notifications
@@ -1508,8 +1473,7 @@ CREATE TABLE wcf1_user_notification_event (
 	permissions TEXT,
 	options TEXT,
 	preset TINYINT(1) NOT NULL DEFAULT 0,
-	presetMailNotificationType ENUM('none', 'instant', 'daily') NOT NULL DEFAULT 'none',
-	UNIQUE KEY eventName (eventName, objectTypeID)
+	presetMailNotificationType ENUM('none', 'instant', 'daily') NOT NULL DEFAULT 'none'
 );
 
 -- user configuration for events
@@ -1556,7 +1520,6 @@ CREATE TABLE wcf1_user_option (
 	options TEXT,
 	additionalData MEDIUMTEXT,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
-	UNIQUE KEY optionName (optionName, packageID),
 	KEY categoryName (categoryName)
 );
 
@@ -1568,8 +1531,7 @@ CREATE TABLE wcf1_user_option_category (
 	parentCategoryName VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
-	options TEXT,
-	UNIQUE KEY categoryName (categoryName)
+	options TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_user_option_value;
@@ -1585,8 +1547,7 @@ CREATE TABLE wcf1_user_profile_menu_item (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
 	options TEXT NULL,
-	className VARCHAR(255) NOT NULL,
-	UNIQUE KEY (packageID, menuItem)
+	className VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_user_profile_visitor;
@@ -1615,8 +1576,7 @@ DROP TABLE IF EXISTS wcf1_user_storage;
 CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
 	field VARCHAR(80) NOT NULL DEFAULT '',
-	fieldValue MEDIUMTEXT,
-	UNIQUE KEY userStorageData (userID, field)
+	fieldValue MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_user_to_group;
