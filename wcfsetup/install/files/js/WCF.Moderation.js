@@ -572,7 +572,7 @@ WCF.Moderation.Report.Content = Class.extend({
 	_submit: function() {
 		var $text = this._dialog.find('.jsReportMessage').val();
 		if ($.trim($text) == '') {
-			this._dialog.find('fieldset > dl').addClass('formError');
+			this._dialog.find('.section > dl').addClass('formError');
 			
 			if (!this._dialog.find('.innerError').length) {
 				this._dialog.find('.jsReportMessage').after($('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + "</small>"));
