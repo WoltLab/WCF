@@ -87,26 +87,28 @@
 					</dd>
 				</dl>
 				
-				<dl id="boxControllerContainer"{if $errorField == 'boxControllerID'} class="formError"{/if}{if !$boxController} style="display: none;"{/if}>
-					<dt><label for="boxControllerID">{lang}wcf.acp.box.boxController{/lang}</label></dt>
-					<dd>
-						<select name="boxControllerID" id="boxControllerID">
-							{foreach from=$availableBoxControllers item=availableBoxController}
-								<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
-							{/foreach}
-						</select>
-						
-						{if $errorField == 'boxType'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.box.boxController.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
+				{if $boxType == 'system'}
+					<dl id="boxControllerContainer"{if $errorField == 'boxControllerID'} class="formError"{/if}{if !$boxController} style="display: none;"{/if}>
+						<dt><label for="boxControllerID">{lang}wcf.acp.box.boxController{/lang}</label></dt>
+						<dd>
+							<select name="boxControllerID" id="boxControllerID">
+								{foreach from=$availableBoxControllers item=availableBoxController}
+									<option value="{@$availableBoxController->objectTypeID}"{if $boxController && $availableBoxController->objectTypeID == $boxController->objectTypeID} selected{/if} data-supported-positions='[{implode from=$availableBoxPositions[$availableBoxController->objectTypeID] item=$__position}"{$__position}"{/implode}]'>{lang}wcf.acp.box.boxController.{@$availableBoxController->objectType}{/lang}</option>
+								{/foreach}
+							</select>
+							
+							{if $errorField == 'boxType'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.box.boxController.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+				{/if}
 				
 				<dl{if $errorField == 'position'} class="formError"{/if}>
 					<dt><label for="position">{lang}wcf.acp.box.position{/lang}</label></dt>
