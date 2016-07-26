@@ -1985,8 +1985,6 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	object		data
 		 */
 		_keyupCallback: function(data) {
-			this.keydown.woltlabIsEnter = false;
-			
 			switch (data.event.which) {
 				case $.ui.keyCode.BACKSPACE:
 				case $.ui.keyCode.DELETE:
