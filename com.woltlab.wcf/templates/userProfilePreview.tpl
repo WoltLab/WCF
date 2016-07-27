@@ -8,7 +8,7 @@
 			{include file='userInformation' disableUserInformationButtons=true}
 			
 			{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
-				<dl class="plain inlineDataList userStats">
+				<dl class="plain inlineDataList">
 					<dt>{lang}wcf.user.usersOnline.lastActivity{/lang}</dt>
 					<dd>{@$user->getLastActivityTime()|time}{if $user->getCurrentLocation()}, {@$user->getCurrentLocation()}{/if}</dd>
 				</dl>

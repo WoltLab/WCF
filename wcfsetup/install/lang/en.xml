@@ -1210,7 +1210,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installed Packages]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Plugins]]></item>
 		<item name="wcf.acp.package.search"><![CDATA[Search Package]]></item>
-		<item name="wcf.acp.package.search.conditions"><![CDATA[Search Terms]]></item>
 		<item name="wcf.acp.package.search.package"><![CDATA[Package Identifier]]></item>
 		<item name="wcf.acp.package.search.package.description"><![CDATA[Searches for a specific identifier, e.g. “com.woltlab.wcf”.]]></item>
 		<item name="wcf.acp.package.search.packageDescription"><![CDATA[Package Description]]></item>
@@ -1218,9 +1217,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Search Results]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Search for Updates]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no updates available.]]></item>
-		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
-		<item name="wcf.acp.package.source.download"><![CDATA[Download Package]]></item>
-		<item name="wcf.acp.package.source.download.description"><![CDATA[Provide the direct path to the desired resource, it may be either an URL or a local filesystem path.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
@@ -1340,7 +1336,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The Update-Server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
@@ -1415,7 +1410,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
-		<item name="wcf.acp.updateServer.data"><![CDATA[Server Data]]></item>
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server <span class="confirmationObject">{$updateServer->serverURL}</span>?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
@@ -1522,7 +1516,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Options]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
-		<item name="wcf.acp.style.general.data"><![CDATA[General]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Width]]></item>
@@ -1655,7 +1648,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in this time frame will be reverted to the newest version that is either older than the given timeframe or made by an unrelated user [time in days]]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Revert changes by the following users]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
-		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
 		<item name="wcf.acp.user.search.display"><![CDATA[Appearance]]></item>
 		<item name="wcf.acp.user.search.display.columns"><![CDATA[Columns]]></item>
@@ -1731,7 +1723,6 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
-		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
@@ -2842,7 +2833,6 @@ Errors are:
 		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
-		<item name="wcf.user.login.data"><![CDATA[Credentials]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
@@ -3001,7 +2991,6 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.activityPoint.objectType"><![CDATA[Type]]></item>
 		<item name="wcf.user.activityPoint.pointsPerObject"><![CDATA[Points]]></item>
 		<item name="wcf.user.activityPoint.sum"><![CDATA[Sum]]></item>
-		<item name="wcf.user.stats"><![CDATA[Statistics]]></item>
 		<item name="wcf.user.usercp"><![CDATA[User Account]]></item>
 		<item name="wcf.user.button.mail"><![CDATA[Send Email]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[You’re not blocking any users.]]></item>
