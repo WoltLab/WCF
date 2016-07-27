@@ -32,7 +32,7 @@ trait TMessageQuickReplyGuestDialogAction {
 	/**
 	 * @see	AbstractDatabaseObjectAction::$parameters
 	 */
-	protected $parameters = [];
+	//protected $parameters = [];
 	
 	/**
 	 * @see	AbstractDatabaseObjectAction::readString()
