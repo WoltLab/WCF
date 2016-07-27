@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\IUploadAction;
-use wcf\data\user\UserAction;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
