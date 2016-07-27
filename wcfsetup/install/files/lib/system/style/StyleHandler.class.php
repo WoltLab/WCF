@@ -200,4 +200,13 @@ class StyleHandler extends SingletonFactory {
 		
 		return null;
 	}
+	
+	/**
+	 * Returns true if there is more than one available style and the changer is to be displayed.
+	 * 
+	 * @return      boolean         true if style changer should be displayed
+	 */
+	public function showStyleChanger() {
+		return ($this->countStyles() && SHOW_STYLE_CHANGER);
+	}
 }

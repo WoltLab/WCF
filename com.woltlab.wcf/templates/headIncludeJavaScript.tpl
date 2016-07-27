@@ -110,7 +110,7 @@ requirejs.config({
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
-			styleChanger: {if $__wcf->getStyleHandler()->countStyles() > 1}true{else}false{/if}
+			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
 		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');

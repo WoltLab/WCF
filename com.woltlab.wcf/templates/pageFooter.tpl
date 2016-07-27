@@ -1,17 +1,25 @@
 <footer id="pageFooter" class="pageFooter">
-	{hascontent}
+	{assign var=__boxesFooter value=$__wcf->getBoxHandler()->getBoxes('footer')}
+	{assign var=__showStyleChanger value=$__wcf->getStyleHandler()->showStyleChanger()}
+	
+	{if $__boxesFooter|count || $__showStyleChanger}
 		<div class="boxesFooter">
-			<div class="layoutBoundary">
-				<div class="boxContainer">
-					{content}
-						{foreach from=$__wcf->getBoxHandler()->getBoxes('footer') item=box}
+			<div class="layoutBoundary{if $__showStyleChanger} clearfix{/if}">
+				{if $__showStyleChanger}
+					<span class="styleChanger">
+						<a href="#" class="jsButtonStyleChanger">{lang}wcf.style.changeStyle{/lang}</a>
+					</span>
+				{/if}
+				{if $__boxesFooter|count}
+					<div class="boxContainer">
+						{foreach from=$__boxesFooter item=box}
 							{@$box->render()}
 						{/foreach}
-					{/content}
-				</div>
+					</div>
+				{/if}
 			</div>
 		</div>
-	{/hascontent}
+	{/if}
 	
 	{hascontent}
 		<div id="pageFooterCopyright" class="pageFooterCopyright">
