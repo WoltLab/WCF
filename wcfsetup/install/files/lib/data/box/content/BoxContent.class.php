@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\box\content;
-use wcf\data\DatabaseObject;
 use wcf\data\media\ViewableMedia;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**

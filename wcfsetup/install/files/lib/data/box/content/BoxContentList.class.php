@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\box\content;
-use wcf\data\DatabaseObjectList;
 use wcf\data\media\ViewableMediaList;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of box content.
