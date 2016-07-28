@@ -35,15 +35,15 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 		text-decoration: none;
 	}
 	
+	&:not(.inputPrefix) {
+		text-transform: uppercase;
+	}
+	
 	&.small {
 		padding: 6px 8px;
 		text-transform: initial;
 		
 		@include wcfFontSmall;
-	}
-	
-	&:not(.inputPrefix) {
-		text-transform: uppercase;
 	}
 }
 
