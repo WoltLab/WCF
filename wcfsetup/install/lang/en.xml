@@ -3411,6 +3411,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.icq"><![CDATA[ICQ]]></item>
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
+		<item name="wcf.user.option.instagram"><![CDATA[Instagram]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
 		<item name="wcf.user.option.googlePlus.description"><![CDATA[The 21 digit Google Plus user ID, Google Plus username (+Username), or the URL of your Google Plus profile.]]></item>
