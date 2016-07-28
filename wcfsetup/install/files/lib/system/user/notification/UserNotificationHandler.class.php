@@ -236,9 +236,6 @@ class UserNotificationHandler extends SingletonFactory {
 						}
 					}
 				}
-				
-				// reset language to current user language
-				WCF::setLanguage(WCF::getUser()->getLanguage()->languageID);
 			}
 			
 			// reset notification count
@@ -645,7 +642,6 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// recipient's language
 		$event->setLanguage($user->getLanguage());
-		WCF::setLanguage($user->getLanguage()->languageID);
 		
 		// generate token if not present
 		if (!$user->notificationMailToken) {
