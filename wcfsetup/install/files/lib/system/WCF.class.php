@@ -460,11 +460,6 @@ class WCF {
 			$this->getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
 		}
 		
-		// TODO: this is required for the uninstallation of applications, find a different solution!
-		if (PACKAGE_ID == 1) {
-			//return;
-		}
-		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		if ($application->packageID != 1) {
@@ -480,6 +475,10 @@ class WCF {
 		foreach ($applications as $application) {
 			if ($application->packageID == 1) {
 				// ignore WCF
+				continue;
+			}
+			else if ($application->isTainted) {
+				// ignore apps flagged for uninstallation
 				continue;
 			}
 			
