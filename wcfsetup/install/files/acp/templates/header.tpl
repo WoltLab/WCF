@@ -16,12 +16,12 @@
 	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
 	
 	<script>
-		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
+		var SID_ARG_2ND = '';
 		var WCF_PATH = '{@$__wcf->getPath()}';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var TIME_NOW = {@TIME_NOW};
-		var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
+		var URL_LEGACY_MODE = false;
 	</script>
 	
 	{js application='wcf' file='require' bundle='WCF.Core' core='true'}
@@ -34,7 +34,8 @@
 		});
 	</script>
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
+		// this caused some timing issues, check if it is still required
+		//document.addEventListener('DOMContentLoaded', function() {
 			require(['Language', 'WoltLab/WCF/Acp/Bootstrap', 'User'], function(Language, AcpBootstrap, User) {
 				Language.addObject({
 					'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
@@ -107,7 +108,7 @@
 				
 				User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 			});
-		});
+		//});
 	</script>
 	{js application='wcf' lib='jquery'}
 	
