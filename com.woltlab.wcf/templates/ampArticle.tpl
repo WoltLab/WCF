@@ -19,9 +19,9 @@
 				"name": "{PAGE_TITLE|language}",
 				"logo": {
 					"@type": "ImageObject",
-					"url": "{@$__wcf->getPath()}images/default-logo.png",{* @TODO *}
-					"width": 288,
-					"height": 40
+					"url": "{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}",
+					"width": {@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoWidth')},
+					"height": {@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')}
 				}
 			}
 			{if $articleContent->getImage()}

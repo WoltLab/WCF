@@ -48,6 +48,19 @@ class ActiveStyle extends DatabaseObjectDecorator {
 			return $this->getImage($this->getDecoratedObject()->getVariable('pageLogo'));
 		}
 		
-		return '';
+		return WCF::getPath() . 'images/default-logo.png';
+	}
+	
+	/**
+	 * Returns mobile page logo.
+	 *
+	 * @return	string
+	 */
+	public function getPageLogoMobile() {
+		if ($this->getDecoratedObject()->getVariable('pageLogoMobile')) {
+			return $this->getImage($this->getDecoratedObject()->getVariable('pageLogoMobile'));
+		}
+		
+		return WCF::getPath() . 'images/default-logo-small.png';
 	}
 }

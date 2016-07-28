@@ -44,7 +44,7 @@
 			<div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
 				<meta itemprop="name" content="{PAGE_TITLE|language}">
 				<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-					<meta itemprop="url" content="{@$__wcf->getPath()}images/default-logo.png">{* @TODO *}
+					<meta itemprop="url" content="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}">
 				</div>
 			</div>
 		</div>
