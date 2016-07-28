@@ -85,7 +85,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		if (this._editorId) {
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, $.proxy(this._submitInline, this));
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset', $.proxy(this._reset, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, $.proxy(this._reset, this));
 			
 			// TODO
 			//WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._editorId, $.proxy(this._editorUpload, this));
