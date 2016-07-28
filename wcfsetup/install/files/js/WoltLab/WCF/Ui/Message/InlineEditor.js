@@ -425,6 +425,25 @@ define(
 			
 			var id = this._getEditorId();
 			
+			// add any available settings
+			var settingsContainer = elById('settings_' + id);
+			if (settingsContainer) {
+				elBySelAll('input, select, textarea', settingsContainer, function (element) {
+					if (element.nodeName === 'INPUT' && (element.type === 'checkbox' || element.type === 'radio')) {
+						if (!element.checked) {
+							return;
+						}
+					}
+					
+					var name = element.name;
+					if (parameters.hasOwnProperty(name)) {
+						throw new Error("Variable overshadowing, key '" + name + "' is already present.");
+					}
+					
+					parameters[name] = element.value.trim();
+				});
+			}
+			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
 			
 			if (!this._validate(parameters)) {
