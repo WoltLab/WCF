@@ -154,8 +154,8 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 			var rect = el.getBoundingClientRect();
 			
 			return {
-				top: rect.top + window.pageYOffset,
-				left: rect.left + window.pageXOffset
+				top: Math.round(rect.top + (window.scrollY || window.pageYOffset)),
+				left: Math.round(rect.left + (window.scrollX || window.pageXOffset))
 			};
 		},
 		
@@ -198,7 +198,7 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		setStyles: function(el, styles) {
 			var important = false;
 			for (var property in styles) {
-				if (objOwns(styles, property)) {
+				if (styles.hasOwnProperty(property)) {
 					if (/ !important$/.test(styles[property])) {
 						important = true;
 						
@@ -208,10 +208,10 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 						important = false;
 					}
 					
-					// for a set style property with priority = important, Safari is not able to
-					// overwrite it with a property != important; removing the property first
-					// solves the issue
-					if (Environment.browser() === 'safari' && el.style.getPropertyPriority(property) === 'important' && !important) {
+					// for a set style property with priority = important, some browsers are
+					// not able to overwrite it with a property != important; removing the
+					// property first solves this issue
+					if (el.style.getPropertyPriority(property) === 'important' && !important) {
 						el.style.removeProperty(property);
 					}
 					
