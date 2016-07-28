@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  */
 class InstagramUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value)) return '';
@@ -22,6 +22,6 @@ class InstagramUserOptionOutput implements IUserOptionOutput {
 		$url = StringUtil::encodeHTML('http://instagram.com/'.$value);
 		$value = StringUtil::encodeHTML($value);
 		
-		return '<a href="'.$url.'" class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.$value.'</a>';
+		return '<a href="'.$url.'" class="externalURL"'.((EXTERNAL_LINK_REL_NOFOLLOW || EXTERNAL_LINK_TARGET_BLANK) ? (' rel="'.(EXTERNAL_LINK_REL_NOFOLLOW ? 'nofollow' : '').((EXTERNAL_LINK_REL_NOFOLLOW && EXTERNAL_LINK_TARGET_BLANK) ? ' ' : '').(EXTERNAL_LINK_TARGET_BLANK ? 'noopener noreferrer' : '').'"') : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.$value.'</a>';
 	}
 }
