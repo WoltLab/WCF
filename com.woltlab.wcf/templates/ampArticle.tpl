@@ -61,7 +61,7 @@
 	{/if}
 	
 	<div class="articleContent">
-		{@$articleContent->getFormattedContent()}
+		{@$articleContent->getAmpFormattedContent()}
 	</div>
 </article>
 
