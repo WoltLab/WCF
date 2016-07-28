@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/Reply
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', '../Scroll', 'EventKey', 'User', 'WoltLab/WCF/Controller/Captcha'],
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', 'WoltLab/WCF/Ui/Scroll', 'EventKey', 'User', 'WoltLab/WCF/Controller/Captcha'],
 	function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha) {
 	"use strict";
 	
@@ -54,8 +54,6 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 					}).bind(this));
 				}).bind(this));
 			}
-			
-			// TODO: add event listener for submit through keyboard in Redactor
 		},
 		
 		/**
@@ -74,7 +72,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			if (usernameInput.value === '') {
 				var error = DomTraverse.nextByClass(usernameInput, 'innerError');
 				if (!error) {
-					var error = elCreate('small');
+					error = elCreate('small');
 					error.className = 'innerError';
 					error.innerText = Language.get('wcf.global.form.error.empty');
 					
@@ -94,6 +92,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				}
 			};
 			
+			//noinspection JSCheckFunctionSignatures
 			var captchaId = elData(event.currentTarget, 'captcha-id');
 			if (ControllerCaptcha.has(captchaId)) {
 				parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
@@ -306,6 +305,10 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			}
 		},
 		
+		/**
+		 * @param {{returnValues:{guestDialog:string,guestDialogID:string}}} data
+		 * @protected
+		 */
 		_ajaxSuccess: function(data) {
 			if (!User.userId && !data.returnValues.guestDialogID) {
 				throw new Error("Missing 'guestDialogID' return value for guest.");

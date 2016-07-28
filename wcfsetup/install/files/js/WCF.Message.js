@@ -388,14 +388,7 @@ WCF.Message.Preview = Class.extend({
 	 * @return	string
 	 */
 	_getMessage: function() {
-		if (!$.browser.redactor) {
-			return $.trim(this._textarea.val());
-		}
-		else if (this._textarea.data('redactor')) {
-			return this._textarea.redactor('wutil.getText');
-		}
-		
-		return null;
+		return this._textarea.redactor('code.get');
 	},
 	
 	/**
@@ -456,33 +449,39 @@ WCF.Message.Preview = Class.extend({
  * @see	WCF.Message.Preview
  */
 WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
-	_attachmentObjectType: null,
-	_attachmentObjectID: null,
-	_tmpHash: null,
+	_dialog: null,
+	_options: {},
 	
 	/**
 	 * @see	WCF.Message.Preview.init()
 	 */
-	init: function(attachmentObjectType, attachmentObjectID, tmpHash) {
-		this._super('wcf\\data\\bbcode\\MessagePreviewAction', 'text', 'previewButton');
+	init: function(options) {
+		if (arguments.length > 1 && typeof options === 'string') {
+			throw new Error("Outdated API call, please update your implementation.");
+		}
 		
-		this._attachmentObjectType = attachmentObjectType || null;
-		this._attachmentObjectID = attachmentObjectID || null;
-		this._tmpHash = tmpHash || null;
+		this._options = $.extend({
+			disallowedBBCodesPermission: 'user.message.disallowedBBCodes',
+			messageFieldID: '',
+			previewButtonID: '',
+			messageObjectType: '',
+			messageObjectID: 0
+		}, options);
+		
+		if (!this._options.messageObjectType) {
+			throw new Error("Field 'messageObjectType' cannot be empty.");
+		}
+		
+		this._super('wcf\\data\\bbcode\\MessagePreviewAction', this._options.messageFieldID, this._options.previewButtonID);
 	},
 	
 	/**
 	 * @see	WCF.Message.Preview._handleResponse()
 	 */
 	_handleResponse: function(data) {
-		var $preview = $('#previewContainer');
-		if (!$preview.length) {
-			$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="messageTextPreview"></div></section>').prependTo($('#messageContainer')).wcfFadeIn();
-		}
-		
-		$preview.find('div:eq(0)').html(data.returnValues.message);
-		
-		new WCF.Effect.Scroll().scrollTo($preview);
+		require(['WoltLab/WCF/Ui/Dialog'], (function(UiDialog) {
+			UiDialog.open(this, '<div class="htmlContent">' + data.returnValues.message + '</div>');
+		}).bind(this));
 	},
 	
 	/**
@@ -491,13 +490,23 @@ WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
 	_getParameters: function(message) {
 		var $parameters = this._super(message);
 		
-		if (this._attachmentObjectType != null) {
-			$parameters.attachmentObjectType = this._attachmentObjectType;
-			$parameters.attachmentObjectID = this._attachmentObjectID;
-			$parameters.tmpHash = this._tmpHash;
+		for (var key in this._options) {
+			if (this._options.hasOwnProperty(key) && key !== 'messageFieldID' && key !== 'previewButtonID') {
+				$parameters[key] = this._options[key];
+			}
 		}
 		
 		return $parameters;
+	},
+	
+	_dialogSetup: function() {
+		return {
+			id: 'messagePreview',
+			options: {
+				title: WCF.Language.get('wcf.global.preview')
+			},
+			source: null
+		}
 	}
 });
 

@@ -273,6 +273,34 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	}
 	
 	/**
+	 * Temporarily registers a message, the parsed data will not be stored.
+	 * 
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor
+	 */
+	public function registerTemporaryMessage(HtmlInputProcessor $htmlInputProcessor) {
+		$context = $htmlInputProcessor->getContext();
+		
+		// set active message information
+		$this->activeMessageObjectTypeID = $context['objectTypeID'];
+		$this->activeMessageID = $context['objectID'];
+		
+		$embeddedData = $htmlInputProcessor->getEmbeddedContent();
+		
+		/** @var IMessageEmbeddedObjectHandler $handler */
+		foreach ($this->getEmbeddedObjectHandlers() as $handler) {
+			$objectIDs = $handler->parse($htmlInputProcessor, $embeddedData);
+			
+			if (!empty($objectIDs)) {
+				// save assignments
+				$this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$handler->objectTypeID] = $objectIDs;
+				
+				// loads objects
+				$this->embeddedObjects[$handler->objectTypeID] = $handler->loadObjects($objectIDs);
+			}
+		}
+	}
+	
+	/**
 	 * @return      ISimpleMessageEmbeddedObjectHandler[];
 	 */
 	public function getSimpleMessageEmbeddedObjectHandlers() {

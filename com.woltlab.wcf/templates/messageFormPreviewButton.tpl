@@ -1,4 +1,9 @@
-<button id="previewButton" class="jsOnly" accesskey="p">{lang}wcf.global.button.preview{/lang}</button>
+{if !$previewMessageFieldID|isset}{assign var=previewMessageFieldID value='text'}{/if}
+{if !$previewButtonID|isset}{assign var=previewButtonID value='buttonMessagePreview'}{/if}
+{if !$previewMessageObjectType|isset}{assign var=previewMessageObjectType value=''}{/if}
+{if !$previewMessageObjectID|isset}{assign var=previewMessageObjectID value=0}{/if}
+
+<button id="{$previewButtonID}" class="jsOnly">{lang}wcf.global.button.preview{/lang}</button>
 
 <script data-relocate="true">
 	//<![CDATA[
@@ -7,7 +12,12 @@
 			'wcf.global.preview': '{lang}wcf.global.preview{/lang}' 
 		});
 		
-		new WCF.Message.DefaultPreview({if MODULE_ATTACHMENT && $attachmentHandler !== null}'{@$attachmentObjectType}', '{@$attachmentObjectID}', '{$tmpHash|encodeJS}'{/if});
+		new WCF.Message.DefaultPreview({
+			messageFieldID: '{$previewMessageFieldID}',
+			previewButtonID: '{$previewButtonID}',
+			messageObjectType: '{$previewMessageObjectType}',
+			messageObjectID: '{$previewMessageObjectID}'
+		});
 	});
 	//]]>
 </script>
