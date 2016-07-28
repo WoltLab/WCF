@@ -2447,6 +2447,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Kommentar-Antwort]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[Weitere Likes]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[Keine weiteren Likes]]></item>
+		<item name="wcf.like.dislikes.more"><![CDATA[Weitere Dislikes]]></item>
+		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[Keine weiteren Dislikes]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Mag den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{link controller='User' object=$user}#wall{/link}">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Mag die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{link controller='User' object=$user}#wall{/link}">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Artikel]]></item>
@@ -3044,7 +3046,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.register.needActivation.mail"><![CDATA[Hallo {@$user->username},
 
 vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language}. 
-Bevor wir {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung aktivieren können, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse bestätigen.
+Bevor wir {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktivieren können, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse bestätigen.
 
 Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}bestätige{else}bestätigen Sie{/if} die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du folgenden Link aufrufst{else}Sie folgenden Link aufrufen{/if}:
 {link controller='RegisterActivation' isEmail=true}u={@$user->userID}&a={@$user->activationCode}{/link} 

@@ -1301,6 +1301,7 @@ CREATE TABLE wcf1_user (
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
+	KEY email (email),
 	KEY registrationDate (registrationDate),
 	KEY styleID (styleID),
 	KEY activationCode (activationCode),

@@ -121,6 +121,10 @@ class UserOptionHandler extends OptionHandler {
 	 */
 	public function resetOptionValues() {
 		$this->optionValues = [];
+		
+		foreach ($this->options as $option) {
+			$this->optionValues[$option->optionName] = $option->defaultValue;
+		}
 	}
 	
 	/**
