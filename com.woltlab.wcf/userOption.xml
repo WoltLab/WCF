@@ -156,6 +156,16 @@
 				<visible>15</visible>
 				<editable>3</editable>
 			</option>
+			<option name="instagram">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<outputclass>wcf\system\option\user\InstagramUserOptionOutput</outputclass>
+				<validationpattern>^$|^[A-Za-z0-9_\.]+$</validationpattern>
+				<contentpattern>^https?://www.instagram.com/([A-Za-z0-9_\.]+)$</contentpattern>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
 			<option name="twitter">
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
