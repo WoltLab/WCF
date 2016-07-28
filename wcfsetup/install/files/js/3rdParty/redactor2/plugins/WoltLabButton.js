@@ -80,6 +80,14 @@ $.Redactor.prototype.WoltLabButton = function() {
 				}
 			}
 			
+			// button mobile visibility
+			for (i = 0, length = toolbar.childElementCount; i < length; i++) {
+				listItem = toolbar.children[i];
+				button = listItem.children[0];
+				
+				elData(listItem, 'show-on-mobile', (this.opts.woltlab.buttonMobile.indexOf(button.rel) !== -1));
+			}
+			
 			// add remaining elements
 			toolbarOrder.forEach(function(buttonName) {
 				toolbar.appendChild(toolbarButtons[buttonName]);

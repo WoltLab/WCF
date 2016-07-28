@@ -86,7 +86,7 @@
 				'wcf.editor.spoiler.title': '{lang __literal=true}wcf.editor.spoiler.title{/lang}'
 			});
 			
-			var buttons = [], buttonOptions = [], customButtons = [];
+			var buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
 			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
@@ -175,6 +175,7 @@
 				woltlab: {
 					autosave: autosave,
 					buttons: buttonOptions,
+					buttonMobile: buttonMobile,
 					customButtons: customButtons,
 					highlighters: highlighters
 				}
