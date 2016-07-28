@@ -488,8 +488,9 @@ define(
 		 * @protected
 		 */
 		_showMessage: function(data) {
-			var elementData = this._elements.get(this._activeElement);
-			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageBody);
+			var activeElement = this._activeElement;
+			var elementData = this._elements.get(activeElement);
+			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageFooter);
 			
 			// set new content
 			//noinspection JSUnresolvedVariable
@@ -507,7 +508,7 @@ define(
 				DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 				
 				while (element.childNodes.length) {
-					elementData.messageBody.appendChild(element.childNodes[0]);
+					elementData.messageFooter.appendChild(element.childNodes[0]);
 				}
 			}
 			
@@ -531,7 +532,7 @@ define(
 			
 			this._restoreMessage();
 			
-			this._updateHistory(this._getHash(this._getObjectId(this._activeElement)));
+			this._updateHistory(this._getHash(this._getObjectId(activeElement)));
 			
 			UiNotification.show();
 			
