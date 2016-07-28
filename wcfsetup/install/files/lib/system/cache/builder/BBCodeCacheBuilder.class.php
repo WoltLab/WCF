@@ -41,6 +41,11 @@ class BBCodeCacheBuilder extends AbstractCacheBuilder {
 			if (isset($attributes[$bbcode->bbcodeTag])) {
 				$bbcode->setAttributes($attributes[$bbcode->bbcodeTag]);
 			}
+			else {
+				// set an empty array, because the internal default value of a bbcode's
+				// attributes is null, this avoid an infinite loop
+				$bbcode->setAttributes([]);
+			}
 			
 			$data['bbcodes'][$bbcode->bbcodeTag] = $bbcode;
 		}
