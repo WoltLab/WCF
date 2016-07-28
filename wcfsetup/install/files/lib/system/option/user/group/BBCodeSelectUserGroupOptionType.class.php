@@ -20,7 +20,13 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 * available BBCodes
 	 * @var	string[]
 	 */
-	protected $bbCodes = null;
+	protected $bbCodes;
+	
+	/**
+	 * list of bbcode tags that are always available
+	 * @var string[]
+	 */
+	protected static $alwaysAvailable = ['align', 'attach', 'b', 'code', 'i', 'list', 'quote', 's', 'sub', 'sup', 'table', 'td', 'tr', 'tt', 'u', 'wsm', 'wsmg', 'wsp'];
 	
 	/**
 	 * @inheritDoc
@@ -41,17 +47,10 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$this->loadBBCodeSelection();
 		}
 		
-		if ($value == 'all') {
-			$selectedBBCodes = $this->bbCodes;
-		}
-		else {
-			$selectedBBCodes = explode(',', $value);
-		}
-		
 		WCF::getTPL()->assign([
 			'bbCodes' => $this->bbCodes,
 			'option' => $option,
-			'selectedBBCodes' => $selectedBBCodes
+			'selectedBBCodes' => explode(',', $value)
 		]);
 		
 		return WCF::getTPL()->fetch('bbCodeSelectOptionType');
@@ -64,6 +63,8 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 */
 	protected function loadBBCodeSelection() {
 		$this->bbCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());
+		$this->bbCodes = array_diff($this->bbCodes, self::$alwaysAvailable);
+		
 		asort($this->bbCodes);
 	}
 	
@@ -75,19 +76,14 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$this->loadBBCodeSelection();
 		}
 		
-		if ($defaultValue == 'all') {
-			$defaultValue = $this->bbCodes;
-		}
-		else if (empty($defaultValue) || $defaultValue == 'none') {
+		if (empty($defaultValue)) {
 			$defaultValue = [];
 		}
 		else {
 			$defaultValue = explode(',', StringUtil::unifyNewlines($defaultValue));
 		}
-		if ($groupValue == 'all') {
-			$groupValue = $this->bbCodes;
-		}
-		else if (empty($groupValue) || $groupValue == 'none') {
+		
+		if (empty($groupValue)) {
 			$groupValue = [];
 		}
 		else {
@@ -123,7 +119,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
-		// handle special case where no allowed BBCodes have been set
+		// handle special case where no disallowed BBCodes have been set
 		if (empty($value1)) {
 			if (empty($value2)) {
 				return 0;
@@ -138,26 +134,13 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 		$value1 = explode(',', $value1);
 		$value2 = explode(',', $value2);
 		
-		// handle special 'all' value
-		if (in_array('all', $value1)) {
-			if (in_array('all', $value2)) {
-				return 0;
-			}
-			else {
-				return 1;
-			}
-		}
-		else if (in_array('all', $value2)) {
-			return -1;
-		}
-		
-		// check if value1 contains more BBCodes than value2
+		// check if value1 disallows more BBCodes than value2
 		$diff = array_diff($value1, $value2);
 		if (!empty($diff)) {
 			return 1;
 		}
 		
-		// check if value1 contains less BBCodes than value2
+		// check if value1 disallows less BBCodes than value2
 		$diff = array_diff($value2, $value1);
 		if (!empty($diff)) {
 			return -1;

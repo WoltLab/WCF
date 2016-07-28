@@ -395,11 +395,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage smilies]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Delay for Comments]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Seconds required between creating two comments or replies. Use 0 to disable.]]></item>
-		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use smilies]]></item>
-		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
-		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[All selected BBCodes can be used by the users of this user group.]]></item>
+		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Disallowed BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used by the users of this user group.]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Can manage user ranks]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Can manage activity points]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Can see invisible users]]></item>
@@ -420,11 +417,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can see user profiles]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see “Users Online” list]]></item>
-		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Can use BBCodes in signature]]></item>
-		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Can use HTML in signature]]></item>
-		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Can use smilies in signature]]></item>
-		<item name="wcf.acp.group.option.user.signature.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[All selected BBCodes can be used in the signature.]]></item>
+		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes"><![CDATA[Disallowed BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used in the signature.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and “Users Online” marking based on highest priority.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[“Users Online” Marking]]></item>
@@ -697,6 +691,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Failed Login Attempts]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription.add"><![CDATA[Add Paid Subscription]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Active Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transactions]]></item>
 		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Notifications]]></item>
@@ -976,10 +971,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
-		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
-		<item name="wcf.acp.option.max_avatar_height.description"><![CDATA[The maximum height in pixels for avatars.]]></item>
-		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
-		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width in pixels for avatars.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
@@ -1074,12 +1065,6 @@ Examples for medium ID detection:
 Examples:<br>
 WBB=WoltLab Burning Board<br>
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
-		<item name="wcf.acp.option.url_controller_replacement"><![CDATA[Controller Aliasing]]></item>
-		<item name="wcf.acp.option.url_controller_replacement.description"><![CDATA[You can rename controllers by assigning an alias to them, please provide only one alias per line. Aliases must be defined as “real-name=custom-name” and contain only lower-case a-z, the numbers 0-9 and the dash for compatibility reasons. Examples:
-<ul class="nativeList">
-	<li>“board-list=forums”, the link “http://example.com/index.php?board-list/” will turn into “http://example.com/index.php?forums/”</li>
-	<li>“members-list=profiles”, the link “http://example.com/index.php?members-list/” will turn into “http://example.com/index.php?profiles/”</li>
-</ul>]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for “Users Online” list]]></item>
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Map Zoom]]></item>
@@ -1225,7 +1210,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installed Packages]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Plugins]]></item>
 		<item name="wcf.acp.package.search"><![CDATA[Search Package]]></item>
-		<item name="wcf.acp.package.search.conditions"><![CDATA[Search Terms]]></item>
 		<item name="wcf.acp.package.search.package"><![CDATA[Package Identifier]]></item>
 		<item name="wcf.acp.package.search.package.description"><![CDATA[Searches for a specific identifier, e.g. “com.woltlab.wcf”.]]></item>
 		<item name="wcf.acp.package.search.packageDescription"><![CDATA[Package Description]]></item>
@@ -1233,9 +1217,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Search Results]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Search for Updates]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no updates available.]]></item>
-		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
-		<item name="wcf.acp.package.source.download"><![CDATA[Download Package]]></item>
-		<item name="wcf.acp.package.source.download.description"><![CDATA[Provide the direct path to the desired resource, it may be either an URL or a local filesystem path.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
@@ -1355,7 +1336,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The Update-Server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
@@ -1430,7 +1410,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
-		<item name="wcf.acp.updateServer.data"><![CDATA[Server Data]]></item>
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server <span class="confirmationObject">{$updateServer->serverURL}</span>?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
@@ -1537,7 +1516,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Options]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
-		<item name="wcf.acp.style.general.data"><![CDATA[General]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Width]]></item>
@@ -1670,7 +1648,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in this time frame will be reverted to the newest version that is either older than the given timeframe or made by an unrelated user [time in days]]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Revert changes by the following users]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
-		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
 		<item name="wcf.acp.user.search.display"><![CDATA[Appearance]]></item>
 		<item name="wcf.acp.user.search.display.columns"><![CDATA[Columns]]></item>
@@ -1746,7 +1723,6 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
-		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
@@ -2273,6 +2249,7 @@ Errors are:
 		
 		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>
 		<item name="wcf.editor.link.edit"><![CDATA[Edit Link]]></item>
+		<item name="wcf.editor.link.unlink"><![CDATA[Unlink]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
 		
@@ -2281,6 +2258,7 @@ Errors are:
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
+		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		
 		<item name="wcf.editor.spoiler.label"><![CDATA[Label]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
@@ -2300,7 +2278,6 @@ Errors are:
 	</category>
 	
 	<category name="wcf.global">
-		<item name="wcf.global.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
 		<item name="wcf.global.button.back"><![CDATA[« Back]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Cancel]]></item>
@@ -2332,8 +2309,6 @@ Errors are:
 		<item name="wcf.global.date"><![CDATA[Date]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
-		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>
@@ -2361,8 +2336,6 @@ Errors are:
 		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous Page]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
-		<item name="wcf.global.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to Page Bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to Page Top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Search …]]></item>
@@ -2377,11 +2350,6 @@ Errors are:
 		<item name="wcf.global.jumpToPage"><![CDATA[To Front Page]]></item>
 		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
-		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>
-		<item name="wcf.global.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
-		<item name="wcf.global.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
-		<item name="wcf.global.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
-		<item name="wcf.global.error.backward"><![CDATA[Back to previous page.]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Unspecified]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.global.noSelection"><![CDATA[(No Selection)]]></item>
@@ -2456,6 +2424,8 @@ Errors are:
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[More Likes]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no more likes]]></item>
+		<item name="wcf.like.dislikes.more"><![CDATA[More Dislikes]]></item>
+		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[There are no more dislikes]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Article]]></item>
@@ -2520,16 +2490,6 @@ Errors are:
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Remove All Quotes]]></item>
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Removed Marked Quotes]]></item>
 		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
-		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Enable BBCodes]]></item>
-		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Allows BBCodes to be used once enabled.]]></item>
-		<item name="wcf.message.settings.enableHtml"><![CDATA[Enable HTML]]></item>
-		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Allows HTML code to be used once enabled.]]></item>
-		<item name="wcf.message.settings.enableSmilies"><![CDATA[Enable smilies]]></item>
-		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smilies will be displayed as a smiley-image.]]></item>
-		<item name="wcf.message.settings.preParse"><![CDATA[Detect links]]></item>
-		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to web pages are automatically detected.]]></item>
-		<item name="wcf.message.settings.showSignature"><![CDATA[Display signature]]></item>
-		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, which can be edited in your profile.]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
@@ -2575,7 +2535,7 @@ Errors are:
 		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Myself ({$__wcf->getUser()->username})]]></item>
 		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.moderation.outstandingItems"><![CDATA[Pending Items]]></item>
-		<item name="wcf.moderation.doneItems"><![CDATA[Done Items]]></item>
+		<item name="wcf.moderation.doneItems"><![CDATA[Resolved Items]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.moderation.markAllAsRead.confirmMessage"><![CDATA[Do you really want to mark all entries as read?]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
@@ -2607,7 +2567,7 @@ Errors are:
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.outstanding"><![CDATA[Pending]]></item>
 		<item name="wcf.moderation.status.processing"><![CDATA[In Progress]]></item>
-		<item name="wcf.moderation.status.done"><![CDATA[Done]]></item>
+		<item name="wcf.moderation.status.done"><![CDATA[Resolved]]></item>
 		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.activation"><![CDATA[Content has been approved]]></item>
 		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.report"><![CDATA[Report was justified, content has been deleted]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Approval was denied]]></item>
@@ -2617,6 +2577,7 @@ Errors are:
 		<item name="wcf.moderation.type"><![CDATA[Type]]></item>
 		<item name="wcf.moderation.type.all"><![CDATA[All Items]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Approval]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Delayed]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Report]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
@@ -2721,6 +2682,16 @@ Errors are:
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Article <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Article category <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
+		<item name="wcf.page.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
+		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
+		<item name="wcf.page.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
+		<item name="wcf.page.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
+		<item name="wcf.page.error.backward"><![CDATA[Back to previous page.]]></item>
+		<item name="wcf.page.jumpTo"><![CDATA[Go to Page]]></item>
+		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
+		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>
+		<item name="wcf.page.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
@@ -2865,7 +2836,6 @@ Errors are:
 		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
-		<item name="wcf.user.login.data"><![CDATA[Credentials]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
@@ -3024,7 +2994,6 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.activityPoint.objectType"><![CDATA[Type]]></item>
 		<item name="wcf.user.activityPoint.pointsPerObject"><![CDATA[Points]]></item>
 		<item name="wcf.user.activityPoint.sum"><![CDATA[Sum]]></item>
-		<item name="wcf.user.stats"><![CDATA[Statistics]]></item>
 		<item name="wcf.user.usercp"><![CDATA[User Account]]></item>
 		<item name="wcf.user.button.mail"><![CDATA[Send Email]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[You’re not blocking any users.]]></item>
@@ -3236,9 +3205,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Crop Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[The scaled versions of your avatar are based on a square cutout. You may specify an individual cutout by holding down your mouse button and moving the highlighted area to the desired position.]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 96×96 pixel, it is recommended to provide a dimension of {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The maximum dimensions are 128×128 pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
 		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>

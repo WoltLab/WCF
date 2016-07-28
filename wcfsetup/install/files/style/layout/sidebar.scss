@@ -85,7 +85,8 @@
 		}
 	}
 	
-	.sidebarBoxList {
+	.sidebarItemList,
+	.sidebarBoxList { // deprecated
 		> li {
 			&:not(:last-child) {
 				margin-bottom: 10px;

@@ -445,6 +445,16 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="language_use_informal_variant">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="show_style_changer">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<option name="footer_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
@@ -1180,20 +1190,6 @@ wavatar:wcf.acp.option.gravatar_default_type.wavatar
 monsterid:wcf.acp.option.gravatar_default_type.monsterid
 retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<options>module_gravatar</options>
-			</option>
-			<option name="max_avatar_width">
-				<categoryname>user.avatar</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>192</defaultvalue>
-				<minvalue>96</minvalue>
-				<suffix>pixel</suffix>
-			</option>
-			<option name="max_avatar_height">
-				<categoryname>user.avatar</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>192</defaultvalue>
-				<minvalue>96</minvalue>
-				<suffix>pixel</suffix>
 			</option>
 			<!-- /user.avatar -->
 			

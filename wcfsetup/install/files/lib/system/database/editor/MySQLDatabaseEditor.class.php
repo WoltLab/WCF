@@ -92,7 +92,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				".$columnDefinition."
 				".(!empty($indexDefinition) ? ',' : '')."
 				".$indexDefinition."
-			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
@@ -174,6 +174,15 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "ALTER TABLE `".$tableName."` DROP INDEX `".$indexName."`";
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function dropPrimaryKey($tableName) {
+		$sql = "ALTER TABLE ".$tableName." DROP PRIMARY KEY";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}

@@ -114,7 +114,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLab/WCF/Ui/Page/Jump
 			if (right > this._options.maxPage) right = this._options.maxPage;
 			
 			// left ... links
-			var jumpToHtml = '<a class="jsTooltip" title="' + Language.get('wcf.global.page.jumpTo') + '">&hellip;</a>';
+			var jumpToHtml = '<a class="jsTooltip" title="' + Language.get('wcf.page.jumpTo') + '">&hellip;</a>';
 			if (left > 1) {
 				if (left - 1 < 2) {
 					list.appendChild(this._createLink(2));

@@ -43,6 +43,14 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	/**
 	 * @inheritDoc
 	 */
+	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor) {
+		// metacode-marker isn't present at time of validation
+		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		// collect pairs
 		$pairs = $this->buildPairs($elements);

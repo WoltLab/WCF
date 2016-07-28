@@ -103,7 +103,7 @@
 <div class="formSubmit">
 	<input type="button" id="backButton" value="{lang}wcf.global.button.back{/lang}" accesskey="c">
 	{if $validationPassed}
-		<input type="button" class="buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s">
+		<input type="button" class="default buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" accesskey="s">
 	{/if}
 </div>
 

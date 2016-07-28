@@ -750,8 +750,8 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		if (this.options.staticViewer && !imageData.image.height && $image[0].complete) {
-			// Firefox returns bogus values if attempting to read the real dimensions
-			if ($.browser.mozilla) {
+			// Firefox and Safari returns bogus values if attempting to read the real dimensions
+			if ($.browser.mozilla || $.browser.safari) {
 				var $img = new Image();
 				$img.src = imageData.image.url;
 				
@@ -1213,7 +1213,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		$(this.options.imageSelector).each(function(index, link) {
 			var $link = $(link);
-			var $thumbnail = $link.children('img');
+			var $thumbnail = $link.find('> img, .attachmentThumbnailImageScalable').first();
 			if (!$thumbnail.length) {
 				$thumbnail = $link.parentsUntil('.formAttachmentList').last().find('.attachmentTinyThumbnail');
 			}
@@ -1223,7 +1223,7 @@ $.widget('ui.wcfImageViewer', {
 					fullURL: $thumbnail.data('source') ? $thumbnail.data('source').replace(/\\\//g, '/') : $link.prop('href'),
 					link: '',
 					title: $link.prop('title'),
-					url: $link.prop('href'),
+					url: $link.prop('href')
 				},
 				series: null,
 				thumbnail: {

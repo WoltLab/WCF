@@ -28,18 +28,16 @@ $wcfAcpMenuWidth: 150px;
 		.pageHeader .layoutBoundary {
 			background-color: rgb(44, 62, 80);
 			height: 50px;
-			padding: 10px 10px 10px 0;
+			padding: 0 10px 0 0;
 		}
 		
 		.pageHeaderLogo {
-			align-items: center;
 			background-color: rgb(52, 73, 94);
-			display: flex;
 			flex: 0 0 $wcfAcpMenuWidth;
 			height: 50px;
-			justify-content: center;
 			margin: 0;
 			order: 1;
+			position: relative;
 			
 			.pageHeaderLogoLarge {
 				display: none;
@@ -47,6 +45,17 @@ $wcfAcpMenuWidth: 150px;
 			
 			.pageHeaderLogoSmall {
 				display: inline;
+			}
+			
+			> a {
+				align-items: center;
+				bottom: 0;
+				display: flex;
+				justify-content: center;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
 			}
 		}
 		

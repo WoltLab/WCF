@@ -121,6 +121,10 @@ class UserOptionHandler extends OptionHandler {
 	 */
 	public function resetOptionValues() {
 		$this->optionValues = [];
+		
+		foreach ($this->options as $option) {
+			$this->optionValues[$option->optionName] = $option->defaultValue;
+		}
 	}
 	
 	/**
@@ -292,7 +296,6 @@ class UserOptionHandler extends OptionHandler {
 	public function readUserInput(array &$source) {
 		parent::readUserInput($source);
 		
-		// remove 4 byte utf-8 characters (e.g. emoji)
 		foreach ($this->rawValues as &$value) {
 			if (is_string($value)) $value = MessageUtil::stripCrap($value);
 		}

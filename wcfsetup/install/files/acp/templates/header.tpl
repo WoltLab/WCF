@@ -35,76 +35,78 @@
 	</script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-		require(['Language', 'WoltLab/WCF/Acp/Bootstrap'], function(Language, AcpBootstrap) {
-			Language.addObject({
-				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
-				'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
-				'__months': [ '{lang}wcf.date.month.january{/lang}', '{lang}wcf.date.month.february{/lang}', '{lang}wcf.date.month.march{/lang}', '{lang}wcf.date.month.april{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.june{/lang}', '{lang}wcf.date.month.july{/lang}', '{lang}wcf.date.month.august{/lang}', '{lang}wcf.date.month.september{/lang}', '{lang}wcf.date.month.october{/lang}', '{lang}wcf.date.month.november{/lang}', '{lang}wcf.date.month.december{/lang}' ], 
-				'__monthsShort': [ '{lang}wcf.date.month.short.jan{/lang}', '{lang}wcf.date.month.short.feb{/lang}', '{lang}wcf.date.month.short.mar{/lang}', '{lang}wcf.date.month.short.apr{/lang}', '{lang}wcf.date.month.short.may{/lang}', '{lang}wcf.date.month.short.jun{/lang}', '{lang}wcf.date.month.short.jul{/lang}', '{lang}wcf.date.month.short.aug{/lang}', '{lang}wcf.date.month.short.sep{/lang}', '{lang}wcf.date.month.short.oct{/lang}', '{lang}wcf.date.month.short.nov{/lang}', '{lang}wcf.date.month.short.dec{/lang}' ],
-				'wcf.acp.search.noResults': '{lang}wcf.acp.search.noResults{/lang}',
-				'wcf.clipboard.item.unmarkAll': '{lang}wcf.clipboard.item.unmarkAll{/lang}',
-				'wcf.date.relative.now': '{lang __literal=true}wcf.date.relative.now{/lang}',
-				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang __literal=true}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
-				'wcf.date.relative.hours': '{capture assign=relativeHours}{lang __literal=true}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
-				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang __literal=true}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
-				'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
-				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
-				'wcf.date.shortDateTimeFormat': '{lang}wcf.date.shortDateTimeFormat{/lang}',
-				'wcf.date.hour': '{lang}wcf.date.hour{/lang}',
-				'wcf.date.minute': '{lang}wcf.date.minute{/lang}',
-				'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',
-				'wcf.date.firstDayOfTheWeek': '{lang}wcf.date.firstDayOfTheWeek{/lang}',
-				'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
-				'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
-				'wcf.global.button.close': '{lang}wcf.global.button.close{/lang}',
-				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
-				'wcf.global.button.delete': '{lang}wcf.global.button.delete{/lang}',
-				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
-				'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
-				'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
-				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
-				'wcf.global.button.hide': '{lang}wcf.global.button.hide{/lang}',
-				'wcf.global.button.insert': '{lang}wcf.global.button.insert{/lang}',
-				'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
-				'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
-				'wcf.global.button.reset': '{lang}wcf.global.button.reset{/lang}',
-				'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
-				'wcf.global.button.search': '{lang}wcf.global.button.search{/lang}',
-				'wcf.global.button.submit': '{lang}wcf.global.button.submit{/lang}',
-				'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
-				'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
-				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
-				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
-				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
-				'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
-				'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
-				'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
-				'wcf.global.form.error.greaterThan': '{lang __literal=true}wcf.global.form.error.greaterThan{/lang}',
-				'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
-				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
-				'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
-				'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
-				'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',
-				'wcf.global.page.pagination': '{lang}wcf.global.page.pagination{/lang}',
-				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
-				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
-				'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
-				'wcf.global.reason': '{lang}wcf.global.reason{/lang}',
-				'wcf.global.scrollUp': '{lang}wcf.global.scrollUp{/lang}',
-				'wcf.global.success': '{lang}wcf.global.success{/lang}',
-				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
-				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
-				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
-				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}'
-				{event name='javascriptLanguageImport'}
+			require(['Language', 'WoltLab/WCF/Acp/Bootstrap', 'User'], function(Language, AcpBootstrap, User) {
+				Language.addObject({
+					'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
+					'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
+					'__months': [ '{lang}wcf.date.month.january{/lang}', '{lang}wcf.date.month.february{/lang}', '{lang}wcf.date.month.march{/lang}', '{lang}wcf.date.month.april{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.june{/lang}', '{lang}wcf.date.month.july{/lang}', '{lang}wcf.date.month.august{/lang}', '{lang}wcf.date.month.september{/lang}', '{lang}wcf.date.month.october{/lang}', '{lang}wcf.date.month.november{/lang}', '{lang}wcf.date.month.december{/lang}' ], 
+					'__monthsShort': [ '{lang}wcf.date.month.short.jan{/lang}', '{lang}wcf.date.month.short.feb{/lang}', '{lang}wcf.date.month.short.mar{/lang}', '{lang}wcf.date.month.short.apr{/lang}', '{lang}wcf.date.month.short.may{/lang}', '{lang}wcf.date.month.short.jun{/lang}', '{lang}wcf.date.month.short.jul{/lang}', '{lang}wcf.date.month.short.aug{/lang}', '{lang}wcf.date.month.short.sep{/lang}', '{lang}wcf.date.month.short.oct{/lang}', '{lang}wcf.date.month.short.nov{/lang}', '{lang}wcf.date.month.short.dec{/lang}' ],
+					'wcf.acp.search.noResults': '{lang}wcf.acp.search.noResults{/lang}',
+					'wcf.clipboard.item.unmarkAll': '{lang}wcf.clipboard.item.unmarkAll{/lang}',
+					'wcf.date.relative.now': '{lang __literal=true}wcf.date.relative.now{/lang}',
+					'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang __literal=true}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
+					'wcf.date.relative.hours': '{capture assign=relativeHours}{lang __literal=true}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
+					'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang __literal=true}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
+					'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
+					'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
+					'wcf.date.shortDateTimeFormat': '{lang}wcf.date.shortDateTimeFormat{/lang}',
+					'wcf.date.hour': '{lang}wcf.date.hour{/lang}',
+					'wcf.date.minute': '{lang}wcf.date.minute{/lang}',
+					'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',
+					'wcf.date.firstDayOfTheWeek': '{lang}wcf.date.firstDayOfTheWeek{/lang}',
+					'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
+					'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
+					'wcf.global.button.close': '{lang}wcf.global.button.close{/lang}',
+					'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
+					'wcf.global.button.delete': '{lang}wcf.global.button.delete{/lang}',
+					'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
+					'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
+					'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
+					'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
+					'wcf.global.button.hide': '{lang}wcf.global.button.hide{/lang}',
+					'wcf.global.button.insert': '{lang}wcf.global.button.insert{/lang}',
+					'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
+					'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
+					'wcf.global.button.reset': '{lang}wcf.global.button.reset{/lang}',
+					'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
+					'wcf.global.button.search': '{lang}wcf.global.button.search{/lang}',
+					'wcf.global.button.submit': '{lang}wcf.global.button.submit{/lang}',
+					'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
+					'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
+					'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
+					'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
+					'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+					'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
+					'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
+					'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
+					'wcf.global.form.error.greaterThan': '{lang __literal=true}wcf.global.form.error.greaterThan{/lang}',
+					'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
+					'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
+					'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
+					'wcf.page.jumpTo': '{lang}wcf.page.jumpTo{/lang}',
+					'wcf.page.jumpTo.description': '{lang}wcf.page.jumpTo.description{/lang}',
+					'wcf.global.page.pagination': '{lang}wcf.global.page.pagination{/lang}',
+					'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
+					'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
+					'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
+					'wcf.global.reason': '{lang}wcf.global.reason{/lang}',
+					'wcf.global.scrollUp': '{lang}wcf.global.scrollUp{/lang}',
+					'wcf.global.success': '{lang}wcf.global.success{/lang}',
+					'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
+					'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
+					'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
+					'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}'
+					{event name='javascriptLanguageImport'}
+				});
+				
+				AcpBootstrap.setup({
+					bootstrap: {
+						enableMobileMenu: {if $__isLogin|empty}true{else}false{/if}
+					}
+				});
+				
+				User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 			});
-			
-			AcpBootstrap.setup({
-				bootstrap: {
-					enableMobileMenu: {if $__isLogin|empty}true{else}false{/if}
-				}
-			});
-		});
 		});
 	</script>
 	{js application='wcf' lib='jquery'}

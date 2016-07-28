@@ -24,7 +24,7 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 			
 			// init buttons
 			['ban', 'disableAvatar', 'disableSignature', 'enable'].forEach((function(action) {
-				var button = elBySel('.jsButtonUser' + StringUtil.ucfirst(action), _userHeader);
+				var button = elBySel('.userProfileButtonMenu .jsButtonUser' + StringUtil.ucfirst(action));
 				
 				// button is missing if users lacks the permission
 				if (button) {
@@ -121,7 +121,7 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 				case 'ban':
 				case 'unban':
 					elData(_userHeader, 'banned', (data.actionName === 'ban'));
-					elBySel('.jsButtonUserBan', _userHeader).textContent = Language.get('wcf.user.' + (data.actionName === 'ban' ? 'unban' : 'ban'));
+					elBySel('.userProfileButtonMenu .jsButtonUserBan').textContent = Language.get('wcf.user.' + (data.actionName === 'ban' ? 'unban' : 'ban'));
 					
 					var contentTitle = elBySel('.contentTitle', _userHeader);
 					var banIcon = elBySel('.jsUserBanned', contentTitle);
@@ -140,21 +140,21 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 				case 'disableAvatar':
 				case 'enableAvatar':
 					elData(_userHeader, 'disable-avatar', (data.actionName === 'disableAvatar'));
-					elBySel('.jsButtonUserDisableAvatar', _userHeader).textContent = Language.get('wcf.user.' + (data.actionName === 'disableAvatar' ? 'enable' : 'disable') + 'Avatar');
+					elBySel('.userProfileButtonMenu .jsButtonUserDisableAvatar').textContent = Language.get('wcf.user.' + (data.actionName === 'disableAvatar' ? 'enable' : 'disable') + 'Avatar');
 					
 					break;
 				
 				case 'disableSignature':
 				case 'enableSignature':
 					elData(_userHeader, 'disable-signature', (data.actionName === 'disableSignature'));
-					elBySel('.jsButtonUserDisableSignature', _userHeader).textContent = Language.get('wcf.user.' + (data.actionName === 'disableSignature' ? 'enable' : 'disable') + 'Signature');
+					elBySel('.userProfileButtonMenu .jsButtonUserDisableSignature').textContent = Language.get('wcf.user.' + (data.actionName === 'disableSignature' ? 'enable' : 'disable') + 'Signature');
 					
 					break;
 				
 				case 'enable':
 				case 'disable':
 					elData(_userHeader, 'is-disabled', (data.actionName === 'disable'));
-					elBySel('.jsButtonUserEnable', _userHeader).textContent = Language.get('wcf.acp.user.' + (data.actionName === 'enable' ? 'disable' : 'enable'));
+					elBySel('.userProfileButtonMenu .jsButtonUserEnable').textContent = Language.get('wcf.acp.user.' + (data.actionName === 'enable' ? 'disable' : 'enable'));
 					
 					break;
 			}

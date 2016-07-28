@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Select
  */
-define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/WCF/Media/Manager/Base'], function(Core, DomTraverse, Language, ObjectMap, UiDialog, MediaManagerBase) {
+define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/WCF/Media/Manager/Base'], function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, MediaManagerBase) {
 	"use strict";
 	
 	/**
@@ -30,6 +30,18 @@ define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/W
 					this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 					
 					this._storeElements.set(button, storeElement);
+					
+					// add remove button
+					var removeButton = elCreate('p');
+					removeButton.className = 'button';
+					DomUtil.insertAfter(removeButton, button);
+					
+					var icon = elCreate('span');
+					icon.className = 'icon icon16 fa-times';
+					removeButton.appendChild(icon);
+					
+					if (!storeElement.value) elHide(removeButton);
+					removeButton.addEventListener(WCF_CLICK_EVENT, this._removeMedia.bind(this));
 				}
 			}
 		}
@@ -84,6 +96,9 @@ define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/W
 				}
 			}
 			
+			// show remove button
+			elShow(this._activeButton.nextElementSibling);
+			
 			UiDialog.close('mediaManager');
 		},
 		
@@ -91,6 +106,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/W
 		 * @see	WoltLab/WCF/Media/Manager/Base#_click
 		 */
 		_click: function(event) {
+			event.preventDefault();
 			this._activeButton = event.currentTarget;
 			
 			MediaManagerSelect._super.prototype._click.call(this, event);
@@ -137,6 +153,28 @@ define(['Core', 'Dom/Traverse', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/W
 			elData(icon, 'object-id', media.mediaID);
 			elAttr(icon, 'title', Language.get('wcf.media.button.choose'));
 			a.appendChild(icon);
+		},
+		
+		/**
+		 * Handles clicking on the remove button.
+		 *
+		 * @param	{Event}		event		click event
+		 */
+		_removeMedia: function(event) {
+			event.preventDefault();
+			
+			var removeButton = event.currentTarget;
+			elHide(removeButton);
+			
+			var button = removeButton.previousElementSibling;
+			elById(elData(button, 'store')).value = 0;
+			var display = elData(button, 'display');
+			if (display) {
+				var displayElement = elById(display);
+				if (displayElement) {
+					displayElement.innerHTML = '';
+				}
+			}
 		}
 	});
 	

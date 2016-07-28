@@ -469,7 +469,7 @@ define(
 			}
 			
 			// rebuild editors
-			var created, dropdown, editor, typeData;
+			var actionName, created, dropdown, editor, typeData;
 			var divider, item, itemData, itemIndex, label, unmarkAll;
 			//noinspection JSUnresolvedVariable
 			for (typeName in data.returnValues.items) {
@@ -537,7 +537,14 @@ define(
 				dropdown.appendChild(unmarkAll);
 				
 				if (keepEditors.indexOf(typeName) !== -1) {
-					UiPageAction.add('wcfClipboard-' + typeName, editor);
+					actionName = 'wcfClipboard-' + typeName;
+					
+					if (UiPageAction.has(actionName)) {
+						UiPageAction.show(actionName);
+					}
+					else {
+						UiPageAction.add(actionName, editor);
+					}
 				}
 				
 				if (created) {

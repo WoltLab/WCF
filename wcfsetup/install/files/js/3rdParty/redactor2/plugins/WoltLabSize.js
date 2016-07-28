@@ -36,21 +36,17 @@ $.Redactor.prototype.WoltLabSize = function() {
 		
 		setSize: function(key) {
 			require(['WoltLab/WCF/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.selection.save();
+				this.buffer.set();
 				
 				UiRedactorFormat.format(this.$editor[0], 'woltlab-size', 'woltlab-size-' + key.replace(/^size_/, ''));
-				
-				this.selection.restore();
 			}).bind(this));
 		},
 		
 		removeSize: function() {
 			require(['WoltLab/WCF/Ui/Redactor/Format'], (function(UiRedactorFormat) {
-				this.selection.save();
+				this.buffer.set();
 				
 				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-size');
-				
-				this.selection.restore();
 			}).bind(this));
 		}
 	};

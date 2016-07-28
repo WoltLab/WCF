@@ -76,7 +76,7 @@
 			<dt><label for="objectTypeID">{lang}wcf.acp.ad.location{/lang}</label></dt>
 			<dd>
 				<select name="objectTypeID" id="objectTypeID">
-					<option value="0"{if !$objectTypeID} checked{/if}>{lang}wcf.global.noSelection{/lang}</option>
+					<option value="0"{if !$objectTypeID} selected{/if}>{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$locations key='locationGroupLabel' item='locationGroup'}
 						<optgroup label="{$locationGroupLabel}">
 							{foreach from=$locationGroup key='locationID' item='location'}

@@ -126,12 +126,8 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	bbcodeTag = ?
-				AND packageID = ?";
-		$parameters = [
-			$data['bbcodeTag'],
-			$this->installation->getPackageID()
-		];
+			WHERE	bbcodeTag = ?";
+		$parameters = [$data['bbcodeTag']];
 		
 		return [
 			'sql' => $sql,

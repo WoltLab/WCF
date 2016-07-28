@@ -14,6 +14,7 @@ interface IUserAvatar {
 	 * Returns true if this avatar can be cropped.
 	 * 
 	 * @return	boolean
+	 * @deprecated  3.0
 	 */
 	public function canCrop();
 	
@@ -38,6 +39,7 @@ interface IUserAvatar {
 	 * 
 	 * @param	integer		$size
 	 * @return	string
+	 * @deprecated  3.0
 	 */
 	public function getCropImageTag($size = null);
 	

@@ -104,4 +104,14 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		// reset application cache
 		ApplicationCacheBuilder::getInstance()->reset();
 	}
+	
+	/**
+	 * Marks an application as tainted, prevents loading it during uninstallation.
+	 */
+	public function markAsTainted() {
+		$applicationEditor = $this->getSingleObject();
+		$applicationEditor->update(['isTainted' => 1]);
+		
+		ApplicationCacheBuilder::getInstance()->reset();
+	}
 }

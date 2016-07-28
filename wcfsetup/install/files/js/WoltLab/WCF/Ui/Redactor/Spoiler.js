@@ -31,8 +31,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + this._elementId, this._observeLoad.bind(this));
 			
 			// register custom block element
-			this._editor.WoltLabBlock.register('woltlab-spoiler');
-			this._editor.block.tags.push('woltlab-spoiler');
+			this._editor.WoltLabBlock.register('woltlab-spoiler', true);
 			
 			// support for active button marking
 			this._editor.opts.activeButtonsStates['woltlab-spoiler'] = 'woltlabSpoiler';

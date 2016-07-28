@@ -130,3 +130,21 @@ a {
 	}
 }
 
+.sideBySide {
+	margin-top: 20px;
+	
+	@include screen-md-up {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+		
+		> .section {
+			display: table-cell;
+			width: 49%;
+			
+			& + .section {
+				padding-left: 2%;
+			}
+		}
+	}
+}

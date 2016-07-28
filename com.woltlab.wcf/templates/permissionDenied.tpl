@@ -1,10 +1,10 @@
-{capture assign='pageTitle'}{lang}wcf.global.error.permissionDenied.title{/lang}{/capture}
-{capture assign='contentTitle'}{lang}wcf.global.error.permissionDenied.title{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
+{capture assign='contentTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
 
 {include file='header' __disableAds=true}
 
 <div class="section">
-	<p>{lang}wcf.global.error.permissionDenied{/lang}</p>
+	<p>{lang}wcf.page.error.permissionDenied{/lang}</p>
 </div>
 
 {event name='content'}

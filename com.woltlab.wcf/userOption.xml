@@ -61,6 +61,7 @@
 				<outputclass>wcf\system\option\user\MessageUserOptionOutput</outputclass>
 				<visible>15</visible>
 				<editable>3</editable>
+				<messageObjectType>com.woltlab.wcf.user.aboutMe</messageObjectType>
 			</option>
 			<option name="birthday">
 				<categoryname>profile.personal</categoryname>

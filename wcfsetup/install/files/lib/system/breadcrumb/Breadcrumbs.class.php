@@ -87,28 +87,6 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 		// by all relevant ancestors, but breadcrumbs appear in the reverse order
 		$locations = array_reverse($locations);
 		
-		// use the top-most location to find the path up to the very top of
-		// the page order
-		if (!empty($locations)) {
-			$location = $locations[0];
-			
-			if ($location['pageID']) {
-				$page = PageCache::getInstance()->getPage($location['pageID']);
-				while ($page !== null && $page->parentPageID) {
-					$page = PageCache::getInstance()->getPage($page->parentPageID);
-					
-					array_unshift($locations, [
-						'identifier' => $page->identifier,
-						'link' => $page->getLink(),
-						'pageID' => $page->pageID,
-						'pageObjectID' => 0,
-						'title' => $page->getTitle(),
-						'useAsParentLocation' => false
-					]);
-				}
-			}
-		}
-		
 		// add the landing page as first location, unless it is already included
 		$landingPage = PageCache::getInstance()->getLandingPage();
 		$addLandingPage = true;

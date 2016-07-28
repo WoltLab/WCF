@@ -53,6 +53,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 	 * Deletes avatar files.
 	 */
 	public function deleteFiles() {
+		// delete wcf2.1 files
 		foreach (UserAvatar::$avatarThumbnailSizes as $size) {
 			if ($this->width < $size && $this->height < $size) break;
 			

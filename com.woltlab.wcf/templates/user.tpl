@@ -1,7 +1,5 @@
 {capture assign='pageTitle'}{$user->username} - {lang}wcf.user.members{/lang}{/capture}
 
-{assign var='contentHeader' value=' '}{* necessary to hide default content header in heade.tpl *}
-
 {capture assign='headContent'}
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
@@ -126,7 +124,150 @@
 	</noscript>
 {/capture}
 
-{include file='userHeader' assign='boxesTop'}
+{capture assign='contentHeader'}
+	<header class="contentHeader userProfileUser"{if $isAccessible}
+		data-object-id="{@$user->userID}"
+		{if $__wcf->session->getPermission('admin.user.canBanUser')}
+			data-banned="{@$user->banned}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
+			data-disable-avatar="{@$user->disableAvatar}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
+			data-disable-signature="{@$user->disableSignature}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+			data-is-disabled="{if $user->activationCode}true{else}false{/if}"
+		{/if}
+		{/if}>
+		<div class="contentHeaderIcon">
+			{if $user->userID == $__wcf->user->userID}
+				<a href="{link controller='AvatarEdit'}{/link}" class="jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag(128)}</a>
+			{else}
+				<span>{@$user->getAvatar()->getImageTag(128)}</span>
+			{/if}
+		</div>
+		
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">
+				{$user->username}
+				{if $user->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}
+			</h1>
+			{if MODULE_USER_RANK}
+				{if $user->getUserTitle()}
+					<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
+				{/if}
+				{if $user->getRank() && $user->getRank()->rankImage}
+					<span class="userRankImage">{@$user->getRank()->getImage()}</span>
+				{/if}
+			{/if}
+			<div class="contentDescription">
+				<ul class="inlineList commaSeparated">
+					{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
+					{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
+					{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
+					{if $user->getOldUsername()}<li>{lang}wcf.user.profile.oldUsername{/lang}</li>{/if}
+					<li>{lang}wcf.user.membersList.registrationDate{/lang}</li>
+					{event name='userDataRow1'}
+				</ul>
+				
+				{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
+					<ul class="inlineList commaSeparated">
+						<li>{lang}wcf.user.usersOnline.lastActivity{/lang}: {@$user->getLastActivityTime()|time}</li>
+						{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
+					</ul>
+				{/if}
+				
+				<dl class="plain inlineDataList">
+					{include file='userInformationStatistics'}
+					
+					{if $user->profileHits}
+						<dt{if $user->getProfileAge() > 1} title="{lang}wcf.user.profileHits.hitsPerDay{/lang}"{/if}>{lang}wcf.user.profileHits{/lang}</dt>
+						<dd>{#$user->profileHits}</dd>
+					{/if}
+				</dl>
+			</div>
+		</div>
+		
+		<nav class="contentHeaderNavigation">
+			<ul class="userProfileButtonContainer">
+				{hascontent}
+					<li class="dropdown">
+						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.customization{/lang}"><span class="icon icon32 fa-pencil"></span> <span class="invisible">{lang}wcf.user.profile.customization{/lang}</span></a>
+						<ul class="dropdownMenu userProfileButtonMenu" data-menu="customization">
+							{content}
+								{event name='menuCustomization'}
+								
+								{if $user->userID == $__wcf->user->userID}
+									<li><a href="{link controller='AvatarEdit'}{/link}">{lang}wcf.user.avatar.edit{/lang}</a></li>
+								{/if}
+								
+								{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
+									<li><a href="#" class="jsButtonEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>
+								{/if}
+							{/content}
+						</ul>
+					</li>
+				{/hascontent}
+				
+				{hascontent}
+					<li class="dropdown">
+						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.user{/lang}"><span class="icon icon32 fa-user"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.interaction{/lang}</span></a>
+						<ul class="dropdownMenu userProfileButtonMenu" data-menu="interaction">
+							{content}
+								{event name='menuInteraction'}
+								
+								{if $user->userID != $__wcf->user->userID}
+									{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
+										<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
+									{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
+										<li><a href="{link controller='Mail' object=$user}{/link}">{lang}wcf.user.button.mail{/lang}</a></li>
+									{/if}
+								{/if}
+								
+								{if $user->userID != $__wcf->user->userID && $__wcf->session->getPermission('user.profile.canReportContent')}
+									<li class="jsReportUser" data-object-id="{@$user->userID}"><a href="#">{lang}wcf.user.profile.report{/lang}</a></li>
+								{/if}
+							{/content}
+						</ul>
+					</li>
+				{/hascontent}
+				
+				{hascontent}
+					<li class="dropdown">
+						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon32 fa-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
+						<ul class="dropdownMenu userProfileButtonMenu" data-menu="search">
+							{content}{event name='menuSearch'}{event name='quickSearchItems'}{/content}
+						</ul>
+					</li>
+				{/hascontent}
+				
+				{hascontent}
+					<li class="dropdown">
+						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.management{/lang}"><span class="icon icon32 fa-cog"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.management{/lang}</span></a>
+						<ul class="dropdownMenu userProfileButtonMenu" data-menu="management">
+							{content}
+								{event name='menuManagement'}
+								
+								{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
+									{if $__wcf->session->getPermission('admin.user.canBanUser')}<li><a href="#" class="jsButtonUserBan">{lang}wcf.user.{if $user->banned}un{/if}ban{/lang}</a></li>{/if}
+									{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}<li><a href="#" class="jsButtonUserDisableAvatar">{lang}wcf.user.{if $user->disableAvatar}enable{else}disable{/if}Avatar{/lang}</a></li>{/if}
+									{if $__wcf->session->getPermission('admin.user.canDisableSignature')}<li><a href="#" class="jsButtonUserDisableSignature">{lang}wcf.user.{if $user->disableSignature}enable{else}disable{/if}Signature{/lang}</a></li>{/if}
+									{if $__wcf->session->getPermission('admin.user.canEnableUser')}<li><a href="#" class="jsButtonUserEnable">{lang}wcf.acp.user.{if $user->activationCode}enable{else}disable{/if}{/lang}</a></li>{/if}
+									
+									<li><a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="jsUserInlineEditor">{lang}wcf.user.edit{/lang}</a></li>
+								{/if}
+							{/content}
+						</ul>
+					</li>
+				{/hascontent}
+				
+				{event name='contentHeaderNavigation'}
+			</ul>
+		</nav>
+		
+	</header>
+{/capture}
 
 {include file='userSidebar' assign='sidebarRight'}
 

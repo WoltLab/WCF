@@ -41,6 +41,10 @@
 			display: inline;
 		}
 	}
+	
+	.htmlContent {
+		@include clearfix;
+	}
 }
 
 .articleAboutAuthor {

@@ -111,7 +111,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			this._xhr.onload = function() {
 				if (this.readyState === XMLHttpRequest.DONE) {
 					if (this.status >= 200 && this.status < 300 || this.status === 304) {
-						if (options.responseType && options.responseType !== this.getResponseHeader('Content-Type')) {
+						if (options.responseType && this.getResponseHeader('Content-Type').indexOf(options.responseType) !== 0) {
 							// request succeeded but invalid response type
 							self._failure(this, options);
 						}

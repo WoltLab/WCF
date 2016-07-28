@@ -37,5 +37,6 @@ define('URL_LEGACY_MODE', 0);
 define('URL_TO_LOWERCASE', 1);
 define('SEARCH_ENGINE', 'mysql');
 define('SHOW_VERSION_NUMBER', 1);
+define('LANGUAGE_USE_INFORMAL_VARIANT', 0);
 
 define('WCF_OPTION_INC_PHP_SUCCESS', true);

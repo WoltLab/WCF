@@ -1,6 +1,6 @@
 {include file='header' templateName='permissionDenied' templateNameApplication='wcf'}
 
-<p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
+<p class="error">{lang}wcf.page.error.permissionDenied{/lang}</p>
 
 {if ENABLE_DEBUG_MODE}
 	<!-- 

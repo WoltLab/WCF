@@ -17,7 +17,7 @@ class PermissionDeniedException extends UserException {
 	 * Creates a new PermissionDeniedException object.
 	 */
 	public function __construct() {
-		parent::__construct(WCF::getLanguage()->get('wcf.global.error.permissionDenied'));
+		parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied'));
 	}
 	
 	/**

@@ -697,17 +697,33 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(dirname(WCF_DIR)));
-			// check if there is already an application
-			$sql = "SELECT	COUNT(*)
-				FROM	wcf".WCF_N."_package
-				WHERE	packageDir = ?";
+			// check if there are packages installed in a parent
+			// directory of WCF, or if packages are below it
+			$sql = "SELECT  packageDir
+				FROM    wcf".WCF_N."_package
+				WHERE   packageDir <> ''";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(['../']);
-			if ($statement->fetchSingleColumn()) {
-				// use abbreviation
-				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
+			$statement->execute();
+			
+			$isParent = null;
+			while ($column = $statement->fetchColumn()) {
+				if ($isParent !== null) {
+					continue;
+				}
+				
+				if (preg_match('~^\.\./[^\.]~', $column)) {
+					$isParent = false;
+				}
+				else if (mb_strpos($column, '.') !== 0) {
+					$isParent = true;
+				}
 			}
+			
+			$defaultPath = WCF_DIR;
+			if ($isParent === false) {
+				$defaultPath = dirname(WCF_DIR);
+			}
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . Package::getAbbreviation($this->getPackage()->package) . '/';
 			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);

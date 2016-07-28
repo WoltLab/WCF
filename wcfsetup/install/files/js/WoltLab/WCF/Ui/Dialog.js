@@ -383,8 +383,6 @@ define(
 				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 				_activeDialog = id;
 				
-				this.rebuild(id);
-				
 				// set focus on first applicable element
 				var focusElement = elBySel('.jsDialogAutoFocus', data.dialog);
 				if (focusElement !== null && focusElement.offsetParent !== null) {
@@ -395,6 +393,8 @@ define(
 					data.onShow(data.content);
 				}
 			}
+			
+			this.rebuild(id);
 			
 			DomChangeListener.trigger();
 		},
@@ -428,6 +428,7 @@ define(
 			}
 			else {
 				contentContainer.classList.remove('dialogForm');
+				contentContainer.style.removeProperty('margin-bottom');
 			}
 			
 			unavailableHeight += DomUtil.outerHeight(data.header);

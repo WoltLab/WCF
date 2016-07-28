@@ -169,7 +169,7 @@ class PollManager extends SingletonFactory {
 		
 		// poll data
 		if (isset($postData['pollEndTime'])) {
-			$d = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $postData['pollEndTime'], WCF::getUser()->getTimeZone());
+			$d = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $postData['pollEndTime']);
 			$this->pollData['endTime'] = ($d !== false) ? $d->getTimestamp() : 0;
 		}
 		
@@ -205,6 +205,18 @@ class PollManager extends SingletonFactory {
 	 * Validates poll parameters.
 	 */
 	public function validate() {
+		$count = count($this->pollOptions);
+
+		// if no question and no options are given, ignore poll completely
+		if (empty($this->pollData['question']) && !$count) {
+			return;
+		}
+
+		// no question given
+		if (empty($this->pollData['question'])) {
+			throw new UserInputException('pollQuestion');
+		}
+		
 		if ($this->pollData['endTime'] && $this->pollData['endTime'] <= TIME_NOW) {
 			if ($this->poll === null || $this->poll->endTime >= TIME_NOW) {
 				// end time is in the past
@@ -212,19 +224,8 @@ class PollManager extends SingletonFactory {
 			}
 		}
 		
-		$count = count($this->pollOptions);
-		if (empty($this->pollData['question'])) {
-			if ($count) {
-				// options given, but no question
-				throw new UserInputException('pollQuestion');
-			}
-			else {
-				// if no question and no options are given, ignore poll completely
-				return;
-			}
-		}
-		else if (!$count) {
-			// no options given
+		// no options given
+		if (!$count) {
 			throw new UserInputException('pollOptions');
 		}
 		

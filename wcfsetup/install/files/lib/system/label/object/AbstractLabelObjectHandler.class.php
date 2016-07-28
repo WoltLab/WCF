@@ -104,7 +104,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 			}
 			
 			// check permission
-			if ($optionID && !$this->labelGroups[$groupID]->getPermission($optionID)) {
+			if ($optionID && ($this->labelGroups[$groupID]->hasPermissions() && !$this->labelGroups[$groupID]->getPermission($optionID))) {
 				$validationErrors[0] = 'invalid';
 				continue;
 			}

@@ -2,7 +2,7 @@
  * Dialog based style changer.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Style/Changer
  */
@@ -12,26 +12,15 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 	/**
 	 * @exports	WoltLab/WCF/Controller/Style/Changer
 	 */
-	var ControllerStyleChanger = {
+	return {
 		/**
 		 * Adds the style changer to the bottom navigation.
 		 */
 		setup: function() {
-			var list = elBySel('#footerNavigation > ul.navigationItems');
-			if (list === null) {
-				return;
+			var link = elBySel('.jsButtonStyleChanger');
+			if (link) {
+				link.addEventListener(WCF_CLICK_EVENT, this.showDialog.bind(this));
 			}
-			
-			var listItem = elCreate('li');
-			listItem.classList.add('styleChanger');
-			listItem.addEventListener(WCF_CLICK_EVENT, this.showDialog.bind(this));
-			
-			var link = elCreate('a');
-			elAttr(link, 'href', '#');
-			link.textContent = Language.get('wcf.style.changeStyle');
-			listItem.appendChild(link);
-			
-			list.appendChild(listItem);
 		},
 		
 		/**
@@ -88,6 +77,4 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 			});
 		}
 	};
-	
-	return ControllerStyleChanger;
 });

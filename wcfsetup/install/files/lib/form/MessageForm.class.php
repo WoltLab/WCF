@@ -27,12 +27,6 @@ use wcf\util\StringUtil;
  */
 abstract class MessageForm extends AbstractCaptchaForm {
 	/**
-	 * name of the permission which contains the allowed BBCodes
-	 * @var	string
-	 */
-	public $allowedBBCodesPermission = 'user.message.allowedBBCodes';
-	
-	/**
 	 * attachment handler
 	 * @var	AttachmentHandler
 	 */
@@ -67,6 +61,12 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	 * @var	Smiley[]
 	 */
 	public $defaultSmilies = [];
+	
+	/**
+	 * name of the permission which contains the disallowed BBCodes
+	 * @var	string
+	 */
+	public $disallowedBBCodesPermission = 'user.message.disallowedBBCodes';
 	
 	/**
 	 * enables multilingualism
@@ -213,28 +213,28 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			throw new UserInputException('text');
 		}
 		
-		// check text length
-		if ($this->maxTextLength != 0 && mb_strlen($this->text) > $this->maxTextLength) {
-			throw new UserInputException('text', 'tooLong');
+		if ($this->disallowedBBCodesPermission) {
+			BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission($this->disallowedBBCodesPermission)));
 		}
 		
 		$this->htmlInputProcessor = new HtmlInputProcessor();
 		$this->htmlInputProcessor->process($this->text, $this->messageObjectType, 0);
 		
-		// TODO: add checks for disallowed bbcodes and stuff
-		$this->htmlInputProcessor->validate();
+		// check text length
+		$message = $this->htmlInputProcessor->getTextContent();
+		if ($this->maxTextLength != 0 && mb_strlen($message) > $this->maxTextLength) {
+			throw new UserInputException('text', 'tooLong');
+		}
 		
-		/*if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
-			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->text, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
-			if (!empty($disallowedBBCodes)) {
-				WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
-				throw new UserInputException('text', 'disallowedBBCodes');
-			}
-		}*/
+		$disallowedBBCodes = $this->htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
+			throw new UserInputException('text', 'disallowedBBCodes');
+		}
 		
 		// search for censored words
 		if (ENABLE_CENSORSHIP) {
-			$result = Censorship::getInstance()->test($this->text);
+			$result = Censorship::getInstance()->test($message);
 			if ($result) {
 				WCF::getTPL()->assign('censoredWords', $result);
 				throw new UserInputException('text', 'censoredWordsFound');
@@ -309,8 +309,8 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			}
 		}
 		
-		if ($this->allowedBBCodesPermission) {
-			BBCodeHandler::getInstance()->setAllowedBBCodes(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission)));
+		if ($this->disallowedBBCodesPermission) {
+			BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission($this->disallowedBBCodesPermission)));
 		}
 	}
 	
@@ -334,9 +334,5 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			'text' => $this->text,
 			'tmpHash' => $this->tmpHash
 		]);
-		
-		if ($this->allowedBBCodesPermission) {
-			WCF::getTPL()->assign('allowedBBCodes', explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
-		}
 	}
 }

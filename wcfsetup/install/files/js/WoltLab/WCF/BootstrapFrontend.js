@@ -33,7 +33,7 @@ define(
 			Bootstrap.setup();
 			
 			if (options.styleChanger) {
-				//ControllerStyleChanger.setup();
+				ControllerStyleChanger.setup();
 			}
 			
 			this._initUserPopover();

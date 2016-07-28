@@ -1,17 +1,17 @@
 <?php
 namespace wcf\data\bbcode;
-use wcf\system\bbcode\MessageParser;
-use wcf\system\bbcode\PreParser;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\StringUtil;
 
 /**
  * Provides a default message preview action.
  * 
- * @author	Marcel Werk
+ * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Message
@@ -26,13 +26,9 @@ class MessagePreviewAction extends BBCodeAction {
 	 * Validates parameters for message preview.
 	 */
 	public function validateGetMessagePreview() {
-		if (!isset($this->parameters['data']['message'])) {
-			throw new UserInputException('message');
-		}
-		
-		if (!isset($this->parameters['options'])) {
-			throw new UserInputException('options');
-		}
+		$this->readString('message', false, 'data');
+		$this->readString('messageObjectType');
+		$this->readInteger('messageObjectID', true);
 	}
 	
 	/**
@@ -42,22 +38,14 @@ class MessagePreviewAction extends BBCodeAction {
 	 * @throws	UserInputException
 	 */
 	public function getMessagePreview() {
-		// get options
-		$enableBBCodes = (isset($this->parameters['options']['enableBBCodes'])) ? 1 : 0;
-		$enableHtml = (isset($this->parameters['options']['enableHtml'])) ? 1 : 0;
-		$enableSmilies = (isset($this->parameters['options']['enableSmilies'])) ? 1 : 0;
-		$preParse = (isset($this->parameters['options']['preParse'])) ? 1 : 0;
-		
-		$allowedBBCodesPermission = (isset($this->parameters['allowedBBCodesPermission'])) ? $this->parameters['allowedBBCodesPermission'] : 'user.message.allowedBBCodes';
-		
-		// validate permissions for options
-		if ($enableBBCodes && !WCF::getSession()->getPermission('user.message.canUseBBCodes')) $enableBBCodes = 0;
-		if ($enableHtml && !WCF::getSession()->getPermission('user.message.canUseHtml')) $enableHtml = 0;
-		if ($enableSmilies && !WCF::getSession()->getPermission('user.message.canUseSmilies')) $enableSmilies = 0;
+		$htmlInputProcessor = new HtmlInputProcessor();
+		$htmlInputProcessor->process($this->parameters['data']['message'], $this->parameters['messageObjectType'], $this->parameters['messageObjectID']);
 		
 		// check if disallowed bbcode are used
-		if ($enableBBCodes && $allowedBBCodesPermission) {
-			$disallowedBBCodes = MessageParser::getInstance()->validateBBCodes($this->parameters['data']['message'], ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($allowedBBCodesPermission))));
+		$disallowedBBCodesPermission = (isset($this->parameters['disallowedBBCodesPermission'])) ? $this->parameters['disallowedBBCodesPermission'] : 'user.message.disallowedBBCodes';
+		if ($disallowedBBCodesPermission) {
+			BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($disallowedBBCodesPermission))));
+			$disallowedBBCodes = $htmlInputProcessor->validate();
 			if (!empty($disallowedBBCodes)) {
 				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
 					'disallowedBBCodes' => $disallowedBBCodes
@@ -65,27 +53,14 @@ class MessagePreviewAction extends BBCodeAction {
 			}
 		}
 		
-		// get message
-		$message = StringUtil::trim($this->parameters['data']['message']);
+		MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
 		
-		// get embedded objects
-		MessageEmbeddedObjectManager::getInstance()->parseTemporaryMessage($message);
-		
-		// parse URLs
-		if ($preParse && $enableBBCodes) {
-			if ($allowedBBCodesPermission) {
-				$message = PreParser::getInstance()->parse($message, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($allowedBBCodesPermission))));
-			}
-			else {
-				$message = PreParser::getInstance()->parse($message);
-			}
-		}
-		
-		// parse message
-		$preview = MessageParser::getInstance()->parse($message, $enableSmilies, $enableHtml, $enableBBCodes, false);
+		$htmlOutputProcessor = new HtmlOutputProcessor();
+		$htmlOutputProcessor->process($htmlInputProcessor->getHtml(), $this->parameters['messageObjectType'], $this->parameters['messageObjectID']);
 		
 		return [
-			'message' => $preview
+			'message' => $htmlOutputProcessor->getHtml(),
+			'raw' => $htmlInputProcessor->getHtml()
 		];
 	}
 }

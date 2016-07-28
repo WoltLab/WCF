@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\log\modification;
 use wcf\data\modification\log\ModificationLog;
-use wcf\data\modification\log\ModificationLogEditor;
+use wcf\data\modification\log\ModificationLogAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -36,7 +36,7 @@ class ModificationLogHandler extends SingletonFactory {
 	 * Returns object type by object type name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectType) {
 		foreach ($this->cache as $objectTypeObj) {
@@ -80,15 +80,19 @@ class ModificationLogHandler extends SingletonFactory {
 			else $username = '';
 		}
 		
-		return ModificationLogEditor::create([
-			'objectTypeID' => $objectTypeObj->objectTypeID,
-			'objectID' => $objectID,
-			'action' => $action,
-			'userID' => $userID,
-			'username' => $username,
-			'time' => $time,
-			'additionalData' => serialize($additionalData)
+		$action = new ModificationLogAction([], 'create', [
+			'data' => [
+				'objectTypeID' => $objectTypeObj->objectTypeID,
+				'objectID' => $objectID,
+				'action' => $action,
+				'userID' => $userID,
+				'username' => $username,
+				'time' => $time,
+				'additionalData' => serialize($additionalData)
+			]
 		]);
+		
+		return $action->executeAction()['returnValues'];
 	}
 	
 	/**

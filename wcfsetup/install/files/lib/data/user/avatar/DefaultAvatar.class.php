@@ -16,7 +16,7 @@ class DefaultAvatar implements IUserAvatar {
 	 * image size
 	 * @var	integer
 	 */
-	public $size = 150;
+	public $size = UserAvatar::AVATAR_SIZE;
 	
 	/**
 	 * @inheritDoc

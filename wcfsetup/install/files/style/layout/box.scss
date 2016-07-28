@@ -723,4 +723,15 @@
 			}
 		}
 	}
+	
+	.styleChanger {
+		@include screen-sm-down {
+			display: none;
+		}
+		
+		@include screen-md-up {
+			float: right;
+			padding-left: 20px;
+		}
+	}
 }

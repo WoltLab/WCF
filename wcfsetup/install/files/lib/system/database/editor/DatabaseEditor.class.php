@@ -109,14 +109,21 @@ abstract class DatabaseEditor {
 	 * @param	array		$indexData
 	 */
 	abstract public function addForeignKey($tableName, $indexName, $indexData);
-	
+
 	/**
 	 * Drops an existing index.
-	 * 
+	 *
 	 * @param	string		$tableName
 	 * @param	string		$indexName
 	 */
 	abstract public function dropIndex($tableName, $indexName);
+
+	/**
+	 * Drops existing primary keys.
+	 *
+	 * @param	string		$tableName
+	 */
+	abstract public function dropPrimaryKey($tableName);
 	
 	/**
 	 * Drops an existing foreign key.

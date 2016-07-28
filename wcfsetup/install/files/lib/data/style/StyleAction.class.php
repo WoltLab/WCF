@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\IUploadAction;
@@ -623,6 +624,14 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 		StyleHandler::getInstance()->changeStyle($this->style->styleID);
 		if (StyleHandler::getInstance()->getStyle()->styleID == $this->style->styleID) {
 			WCF::getSession()->setStyleID($this->style->styleID);
+			
+			if (WCF::getUser()->userID) {
+				// set this as the permanent style
+				$userAction = new UserAction([WCF::getUser()], 'update', ['data' => [
+					'styleID' => ($this->style->isDefault ? 0 : $this->style->styleID)
+				]]);
+				$userAction->executeAction();
+			}
 		}
 	}
 	

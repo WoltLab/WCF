@@ -54,9 +54,9 @@ class Gravatar extends DefaultAvatar {
 	
 	/**
 	 * urls of this gravatar
-	 * @var	string[]
+	 * @var	string
 	 */
-	protected $url = [];
+	protected $url = '';
 	
 	/**
 	 * Creates a new Gravatar object.
@@ -75,34 +75,20 @@ class Gravatar extends DefaultAvatar {
 	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
-		if ($size === null) $size = $this->size;
-		else {
-			switch ($size) {
-				case 16:
-				case 24:
-					$size = 32;
-					break;
-				case 48:
-				case 64:
-					$size = 96;
-					break;
-			}
-		}
-		
-		if (!isset($this->url[$size])) {
+		if (empty($this->url)) {
 			// try to use cached gravatar
-			$cachedFilename = sprintf(self::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->gravatar)), $size, $this->fileExtension);
+			$cachedFilename = sprintf(self::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->gravatar)), $this->size, $this->fileExtension);
 			if (file_exists(WCF_DIR.$cachedFilename) && filemtime(WCF_DIR.$cachedFilename) > (TIME_NOW - (self::GRAVATAR_CACHE_EXPIRE * 86400))) {
-				$this->url[$size] = WCF::getPath().$cachedFilename;
+				$this->url = WCF::getPath().$cachedFilename;
 			}
 			else {
-				$this->url[$size] = LinkHandler::getInstance()->getLink('GravatarDownload', [
+				$this->url = LinkHandler::getInstance()->getLink('GravatarDownload', [
 					'forceFrontend' => true
-				], 'userID='.$this->userID.'&size='.$size);
+				], 'userID='.$this->userID);
 			}
 		}
 		
-		return $this->url[$size];
+		return $this->url;
 	}
 	
 	/**
@@ -121,36 +107,5 @@ class Gravatar extends DefaultAvatar {
 		catch (SystemException $e) {
 			return false;
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getImageTag($size = null) {
-		if ($size === null) $size = $this->size;
-		
-		$retinaSize = null;
-		switch ($size) {
-			case 16:
-				$retinaSize = 32;
-				break;
-			case 24:
-			case 32:
-			case 48:
-				$retinaSize = 96;
-				break;
-			case 96:
-				$retinaSize = 128;
-				break;
-		}
-		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage">';
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function canCrop() {
-		return false;
 	}
 }

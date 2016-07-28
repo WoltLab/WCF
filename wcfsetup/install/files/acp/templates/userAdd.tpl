@@ -295,15 +295,7 @@
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
 							<textarea name="signature" id="signature" cols="40" rows="10">{$signature}</textarea>
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt>{lang}wcf.message.settings{/lang}</dt>
-						<dd>
-							<label><input id="signatureEnableSmilies" name="signatureEnableSmilies" type="checkbox" value="1"{if $signatureEnableSmilies} checked{/if}> {lang}wcf.message.settings.enableSmilies{/lang}</label>
-							<label><input id="signatureEnableBBCodes" name="signatureEnableBBCodes" type="checkbox" value="1"{if $signatureEnableBBCodes} checked{/if}> {lang}wcf.message.settings.enableBBCodes{/lang}</label>
-							<label><input id="signatureEnableHtml" name="signatureEnableHtml" type="checkbox" value="1"{if $signatureEnableHtml} checked{/if}> {lang}wcf.message.settings.enableHtml{/lang}</label>
+							{include file='wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>
 					
@@ -394,14 +386,7 @@
 					<dl class="jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
 						<dt>
 							{if $avatarType == 'custom'}
-								{assign var='__customAvatar' value=$userAvatar->getImageTag(96)}
-								{if $userAvatar->canCrop()}
-									{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
-									{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
-									{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'">'}
-								{/if}
-								
-								{@$__customAvatar}
+								{@$userAvatar->getImageTag(96)}
 							{else}
 								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96">
 							{/if}
@@ -509,7 +494,6 @@
 					//<![CDATA[
 					$(function() {
 						WCF.Language.addObject({
-							'wcf.user.avatar.type.custom.crop': '{lang}wcf.user.avatar.type.custom.crop{/lang}',
 							'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
 							'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
 							'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
@@ -518,11 +502,7 @@
 							'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}'
 						});
 						
-						{if $userAvatar && $userAvatar->canCrop()}
-							new WCF.User.Avatar.Upload({@$user->userID}, new WCF.User.Avatar.Crop({@$userAvatar->avatarID}));
-						{else}
-							new WCF.User.Avatar.Upload({@$user->userID});
-						{/if}
+						new WCF.User.Avatar.Upload({@$user->userID});
 					});
 					//]]>
 				</script>

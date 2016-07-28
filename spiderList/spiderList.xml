@@ -679,6 +679,10 @@
 	<spider ident="legs">
 		<name>legs</name>
 	</spider>
+	<spider ident="linkdexbot">
+		<name>Linkdex</name>
+		<url>http://www.linkdex.com/bots/</url>
+	</spider>
 	<spider ident="LinkScan Server">
 		<name>LinkScan</name>
 	</spider>
@@ -918,6 +922,9 @@
 	<spider ident="Poppi">
 		<name>Poppi</name>
 	</spider>
+	<spider ident="publiclibraryarchive.org">
+		<name>publiclibraryarchive.org</name>
+	</spider>
 	<spider ident="gestaltIconoclast">
 		<name>Popular Iconoclast</name>
 	</spider>
@@ -945,6 +952,10 @@
 	<spider ident="SBSearch">
 		<name>SecretSearchEngineLabs.com</name>
 		<url>http://www.secretsearchenginelabs.com/secret-web-crawler.php</url>
+	</spider>
+	<spider ident="SemrushBot">
+		<name>SemrushBot</name>
+		<url>http://semrush.com/bot/</url>
 	</spider>
 	<spider ident="StackRambler">
 		<name>Rambler</name>
@@ -1127,6 +1138,9 @@
 	<spider ident="Black Widow">
 		<name>TACH Black Widow</name>
 	</spider>
+	<spider ident"Tapatalk CloudSearch">
+		<name>Tapatalk CloudSearch</name>
+	</spider>
 	<spider ident="Tarantula">
 		<name>Tarantula</name>
 	</spider>
@@ -1161,6 +1175,10 @@
 	</spider>
 	<spider ident="Peregrinator-Mathematics">
 		<name>The Peregrinator</name>
+	</spider>
+	<spider ident="Pixray-Seeker">
+		<name>Pixray</name>
+		<url>http://www.pixray.com/pixraybot/</url>
 	</spider>
 	<spider ident="thumbshots-de-Bot">
 		<name>thumbshots-de-Bot</name>
@@ -1212,6 +1230,10 @@
 	<spider ident="Unpartisan">
 		<name>Unpartisan</name>
 		<url>http://www.unpartisan.com</url>
+	</spider>
+	<spider ident="UptimeRobot/2.0">
+		<name>Uptime Robot</name>
+		<url>http://uptimerobot.com/</url>
 	</spider>
 	<spider ident="urlck">
 		<name>URL Check</name>
@@ -1340,6 +1362,9 @@
 	<spider ident="Hazel's Ferret Web hopper">
 		<name>Wild Ferret Web Hopper</name>
 	</spider>
+	<spider ident="HRCrawler">
+		<name>HRCrawler</name>
+	</spider>
 	<spider ident="WinHTTP">
 		<name>WinHTTP</name>
 	</spider>
@@ -1415,5 +1440,8 @@
 	<spider ident="Zookabot">
 		<name>Zookabotk</name>
 		<url>http://zookabot.com/</url>
+	</spider>
+	<spider ident="360Spider">
+		<name>360Spider</name>
 	</spider>
 </data>

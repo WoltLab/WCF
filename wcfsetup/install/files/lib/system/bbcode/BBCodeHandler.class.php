@@ -14,16 +14,16 @@ use wcf\system\SingletonFactory;
  */
 class BBCodeHandler extends SingletonFactory {
 	/**
-	 * list of BBCodes allowed for usage
-	 * @var	BBCode[]
-	 */
-	protected $allowedBBCodes = [];
-	
-	/**
 	 * list of BBCodes displayed as buttons
 	 * @var	BBCode[]
 	 */
 	protected $buttonBBCodes = [];
+	
+	/**
+	 * list of BBCodes disallowed for usage
+	 * @var	BBCode[]
+	 */
+	protected $disallowedBBCodes = [];
 	
 	/**
 	 * list of BBCodes which contain raw code (disabled BBCode parsing)
@@ -49,22 +49,7 @@ class BBCodeHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function isAvailableBBCode($bbCodeTag) {
-		// TODO
-		return true;
-		
-		$bbCode = BBCodeCache::getInstance()->getBBCodeByTag($bbCodeTag);
-		if ($bbCode === null || $bbCode->isDisabled) {
-			return false;
-		}
-		
-		if (in_array('all', $this->allowedBBCodes)) {
-			return true;
-		}
-		else if (in_array('none', $this->allowedBBCodes)) {
-			return false;
-		}
-		
-		return in_array($bbCodeTag, $this->allowedBBCodes);
+		return !in_array($bbCodeTag, $this->disallowedBBCodes);
 	}
 	
 	/**
@@ -99,12 +84,20 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * @param string[] $bbcodes
+	 * @deprecated 3.0 - please use setDisallowedBBCodes() instead
+	 */
+	public function setAllowedBBCodes(array $bbcodes) {
+		throw new \RuntimeException("setAllowedBBCodes() is no longer supported, please use setDisallowedBBCodes() instead.");
+	}
+	
+	/**
 	 * Sets the allowed BBCodes.
 	 * 
 	 * @param	string[]	$bbCodes
 	 */
-	public function setAllowedBBCodes(array $bbCodes) {
-		$this->allowedBBCodes = $bbCodes;
+	public function setDisallowedBBCodes(array $bbCodes) {
+		$this->disallowedBBCodes = $bbCodes;
 	}
 	
 	/**

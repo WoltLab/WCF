@@ -3,7 +3,6 @@ namespace wcf\data\bbcode;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\IToggleAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
@@ -19,7 +18,7 @@ use wcf\system\WCF;
  * @method	BBCodeEditor[]	getObjects()
  * @method	BBCodeEditor	getSingleObject()
  */
-class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction {
+class BBCodeAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -38,7 +37,7 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['delete', 'toggle', 'update'];
+	protected $requireACP = ['delete', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -108,24 +107,6 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 			if (!$bbcode->canDelete()) {
 				throw new PermissionDeniedException();
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		parent::validateUpdate();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $bbcode) {
-			$bbcode->update([
-				'isDisabled' => $bbcode->isDisabled ? 0 : 1
-			]);
 		}
 	}
 }

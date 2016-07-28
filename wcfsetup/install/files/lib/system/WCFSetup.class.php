@@ -21,6 +21,7 @@ use wcf\system\setup\Installer;
 use wcf\system\template\SetupTemplateEngine;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 use wcf\util\XML;
@@ -1082,6 +1083,18 @@ class WCFSetup extends WCF {
 		}
 		$tar->close();
 		
+		// delete install files
+		$installPhpDeleted = @unlink('./install.php');
+		@unlink('./test.php');
+		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');
+		
+		// render page
+		WCF::getTPL()->assign([
+			'installPhpDeleted' => $installPhpDeleted,
+			'wcfSetupTarDeleted' => $wcfSetupTarDeleted
+		]);
+		$output = WCF::getTPL()->fetch('stepInstallPackages');
+		
 		// register packages in queue
 		// get new process id
 		$sql = "SELECT	MAX(processNo) AS processNo
@@ -1184,16 +1197,9 @@ class WCFSetup extends WCF {
 		SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
 		SessionHandler::getInstance()->update();
 		
-		$installPhpDeleted = @unlink('./install.php');
-		@unlink('./test.php');
-		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');
-		
 		// print page
-		WCF::getTPL()->assign([
-			'installPhpDeleted' => $installPhpDeleted,
-			'wcfSetupTarDeleted' => $wcfSetupTarDeleted
-		]);
-		WCF::getTPL()->display('stepInstallPackages');
+		HeaderUtil::sendHeaders();
+		echo $output;
 		
 		// delete tmp files
 		$directory = TMP_DIR.'/';

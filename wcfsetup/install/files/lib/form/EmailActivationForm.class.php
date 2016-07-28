@@ -92,13 +92,18 @@ class EmailActivationForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$data = [
+			'email' => $this->user->newEmail,
+			'newEmail' => '',
+			'reactivationCode' => 0
+		];
+		if ($this->user->activationCode != 0 && REGISTER_ACTIVATION_METHOD == 1) {
+			$data['activationCode'] = 0;
+		}
+		
 		// enable new email
 		$this->objectAction = new UserAction([$this->user], 'update', [
-			'data' => array_merge($this->additionalFields, [
-				'email' => $this->user->newEmail,
-				'newEmail' => '',
-				'reactivationCode' => 0
-			])
+			'data' => array_merge($this->additionalFields, $data)
 		]);
 		$this->objectAction->executeAction();
 		$this->saved();

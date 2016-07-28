@@ -150,115 +150,6 @@ WCF.ACP.Cronjob.LogList = Class.extend({
 });
 
 /**
- * Handles ACPMenu.
- * 
- * @param	array<string>		activeMenuItems
- */
-WCF.ACP.Menu = Class.extend({
-	/**
-	 * Initializes ACPMenu.
-	 * 
-	 * @param	array		activeMenuItems
-	 */
-	init: function(activeMenuItems) {
-		this._headerNavigation = $('nav#mainMenu');
-		this._sidebarNavigation = $('aside.collapsibleMenu > div');
-		
-		this._prepareElements(activeMenuItems);
-	},
-	
-	/**
-	 * Resets all elements and binds event listeners.
-	 */
-	_prepareElements: function(activeMenuItems) {
-		this._headerNavigation.find('li').removeClass('active');
-		
-		this._sidebarNavigation.find('legend').each($.proxy(function(index, menuHeader) {
-			$(menuHeader).click($.proxy(this._toggleItem, this));
-		}, this));
-		
-		// close all navigation groups
-		this._sidebarNavigation.find('nav ul').each(function() {
-			$(this).hide();
-		});
-		
-		this._headerNavigation.find('li').click($.proxy(this._toggleSidebar, this));
-		
-		if (activeMenuItems.length === 0) {
-			this._renderSidebar(this._headerNavigation.find('li:first').data('menuItem'), []);
-		}
-		else {
-			this._renderSidebar('', activeMenuItems);
-		}
-	},
-	
-	/**
-	 * Toggles a navigation group entry.
-	 */
-	_toggleItem: function(event) {
-		var $menuItem = $(event.currentTarget);
-		
-		$menuItem.parent().find('nav ul').stop(true, true).toggle('blind', { }, 200).end();
-		$menuItem.toggleClass('active');
-	},
-	
-	/**
-	 * Handles clicks on main menu.
-	 * 
-	 * @param	object		event
-	 */
-	_toggleSidebar: function(event) {
-		var $target = $(event.currentTarget);
-		
-		if ($target.hasClass('active')) {
-			return;
-		}
-		
-		this._renderSidebar($target.data('menuItem'), []);
-	},
-	
-	/**
-	 * Renders sidebar including highlighting of currently active menu items.
-	 * 
-	 * @param	string		menuItem
-	 * @param	array		activeMenuItems
-	 */
-	_renderSidebar: function(menuItem, activeMenuItems) {
-		// reset visible and active items
-		this._headerNavigation.find('li').removeClass('active');
-		this._sidebarNavigation.find('> div').hide();
-		
-		if (activeMenuItems.length === 0) {
-			// show active menu
-			this._headerNavigation.find('li[data-menu-item="' + menuItem + '"]').addClass('active');
-			this._sidebarNavigation.find('div[data-parent-menu-item="' + menuItem + '"]').show();
-		}
-		else {
-			// open menu by active menu items, first element is always a head navigation item
-			menuItem = activeMenuItems.shift();
-			
-			this._headerNavigation.find('li[data-menu-item="' + menuItem + '"]').addClass('active');
-			this._sidebarNavigation.find('div[data-parent-menu-item="' + menuItem + '"]').show();
-			
-			for (var $i = 0, $size = activeMenuItems.length; $i < $size; $i++) {
-				var $item = activeMenuItems[$i];
-				
-				if ($.wcfIsset($item)) {
-					var $menuItem = $('#' + $.wcfEscapeID($item));
-					
-					if ($menuItem.getTagName() === 'ul') {
-						$menuItem.show().parents('fieldset').children('legend').addClass('active');
-					}
-					else {
-						$menuItem.addClass('active');
-					}
-				}
-			}
-		}
-	}
-});
-
-/**
  * Namespace for ACP package management.
  */
 WCF.ACP.Package = { };
@@ -322,7 +213,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 */
 	init: function(queueID, actionName, allowRollback, isUpdate) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
-		this._allowRollback = (allowRollback === true) ? true : false;
+		this._allowRollback = (allowRollback === true);
 		this._queueID = queueID;
 		
 		switch (this._actionName) {
@@ -1050,7 +941,7 @@ WCF.ACP.Package.Search = Class.extend({
 		// update badge count
 		if (count !== undefined) {
 			this._content = { 1: template };
-			this._packageSearchResultContainer.find('> header > h2 > .badge').html(count);
+			this._packageSearchResultContainer.find('h2.sectionTitle > .badge').html(count);
 		}
 		
 		// bind listener
@@ -1790,6 +1681,8 @@ WCF.ACP.Worker = Class.extend({
 			this._callback(this, data);
 		}
 		else {
+			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check');
+			
 			// display continue button
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function() { window.location = data.proceedURL; });
@@ -2396,15 +2289,15 @@ WCF.ACP.Import.Manager = Class.extend({
 	
 	/**
 	 * current object type index
-	 * @var	integer
+	 * @var	int
 	 */
 	_index: -1,
 	
 	/**
 	 * list of object types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	_objectTypes: [ ],
+	_objectTypes: [],
 	
 	/**
 	 * action proxy
@@ -2421,8 +2314,8 @@ WCF.ACP.Import.Manager = Class.extend({
 	/**
 	 * Initializes the WCF.ACP.Importer object.
 	 * 
-	 * @param	array<string>	objectTypes
-	 * @param	string		redirectURL
+	 * @param	{string[]}	objectTypes
+	 * @param	{string}	redirectURL
 	 */
 	init: function(objectTypes, redirectURL) {
 		this._currentAction = '';

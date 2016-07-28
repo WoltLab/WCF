@@ -290,7 +290,7 @@ class CLIWCF extends WCF {
 			}
 			catch (PermissionDeniedException $e) {
 				Log::error('permissionDenied');
-				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.error.permissionDenied'));
+				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied'));
 				
 				if (self::getArgvParser()->exitOnFail) {
 					exit(1);

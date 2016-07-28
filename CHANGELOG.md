@@ -59,6 +59,7 @@
 * Removed sitemap function/overlay
 * Added rebuild polls worker
 * Added notification feed page
+* Added informal variant of german language
 
 #### CMS
 
@@ -153,6 +154,8 @@
 * Obsolete interface `wcf\page\ITrackablePage` deprecated.
 * PIP `wcf\system\package\plugin\SitemapPackageInstallationPlugin` removed.
 * Option `share_buttons_show_count` removed.
+* Option `max_avatar_width` removed.
+* Option `max_avatar_height` removed.
 
 #### Documentation
 

@@ -7,7 +7,7 @@
 			<p class="sectionDescription">{lang}wcf.captcha.question.captcha.description{/lang}</p>
 		</header>
 		
-		<dl class="condensed{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} formError{/if}">
+		<dl class="{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} formError{/if}">
 			<dt><label for="captchaAnswer">{lang}{$captchaQuestionObject->question}{/lang}</label></dt>
 			<dd>
 				<input type="text" id="captchaAnswer" name="captchaAnswer" class="medium">

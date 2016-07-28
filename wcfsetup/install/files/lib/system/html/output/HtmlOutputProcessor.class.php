@@ -67,10 +67,6 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * @throws \InvalidArgumentException
 	 */
 	public function setContext($objectType, $objectID) {
-		if (!$objectID) {
-			throw new \InvalidArgumentException("Output processor requires a valid objectID.");
-		}
-		
 		parent::setContext($objectType, $objectID);
 		
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);

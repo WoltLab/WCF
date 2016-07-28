@@ -11,6 +11,7 @@ use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\visitTracker\VisitTracker;
+use wcf\system\WCF;
 
 /**
  * Represents a viewable moderation queue entry.
@@ -176,5 +177,20 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 		if ($this->time > max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'), VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) return true;
 		
 		return false;
+	}
+	
+	/**
+	 * Returns the label for this queue entry.
+	 * 
+	 * @return      string
+	 */
+	public function getLabel() {
+		$definition = ObjectTypeCache::getInstance()->getDefinition(ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->definitionID);
+		
+		if ($definition->definitionName == 'com.woltlab.wcf.moderation.activation' && $this->getAffectedObject()->enableTime) {
+			return WCF::getLanguage()->get('wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed');
+		}
+		
+		return WCF::getLanguage()->get('wcf.moderation.type.'.$definition->definitionName);
 	}
 }

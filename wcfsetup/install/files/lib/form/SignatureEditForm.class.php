@@ -19,7 +19,17 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $disallowedBBCodesPermission = 'user.signature.disallowedBBCodes';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $loginRequired = true;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $messageObjectType = 'com.woltlab.wcf.user.signature';
 	
 	/**
 	 * @inheritDoc
@@ -29,38 +39,18 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $templateName = 'signatureEdit';
+	public $showSignatureSetting = false;
 	
 	/**
 	 * parsed signature cache
 	 * @var	string
 	 */
-	public $signatureCache = null;
+	public $signatureCache;
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $allowedBBCodesPermission = 'user.signature.allowedBBCodes';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $permissionCanUseSmilies = 'user.signature.canUseSmilies';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $permissionCanUseHtml = 'user.signature.canUseHtml';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $permissionCanUseBBCodes = 'user.signature.canUseBBCodes';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $showSignatureSetting = false;
+	public $templateName = 'signatureEdit';
 	
 	/**
 	 * @inheritDoc
@@ -93,11 +83,7 @@ class SignatureEditForm extends MessageForm {
 		
 		// default values
 		if (empty($_POST)) {
-			$this->enableBBCodes = WCF::getUser()->signatureEnableBBCodes;
-			$this->enableHtml = WCF::getUser()->signatureEnableHtml;
-			$this->enableSmilies = WCF::getUser()->signatureEnableSmilies;
 			$this->text = WCF::getUser()->signature;
-			$this->preParse = true;
 		}
 		
 		$this->signatureCache = SignatureCache::getInstance()->getSignature(WCF::getUser());
@@ -132,10 +118,8 @@ class SignatureEditForm extends MessageForm {
 		
 		$this->objectAction = new UserAction([WCF::getUser()], 'update', [
 			'data' => array_merge($this->additionalFields, [
-				'signature' => $this->text,
-				'signatureEnableBBCodes' => $this->enableBBCodes,
-				'signatureEnableHtml' => $this->enableHtml,
-				'signatureEnableSmilies' => $this->enableSmilies
+				'signature' => $this->htmlInputProcessor->getHtml(),
+				'signatureEnableHtml' => 1
 			])
 		]);
 		$this->objectAction->executeAction();

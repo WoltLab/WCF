@@ -6,6 +6,7 @@ use wcf\data\IDatabaseObjectAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
 use wcf\data\IVisitableObjectAction;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\PreParser;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ParentClassException;
@@ -26,12 +27,6 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Message
  */
 class QuickReplyManager extends SingletonFactory {
-	/**
-	 * list of allowed bbcodes
-	 * @var	string[]
-	 */
-	public $allowedBBodes = null;
-	
 	/**
 	 * container object
 	 * @var	\wcf\data\DatabaseObject
@@ -90,12 +85,12 @@ class QuickReplyManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Sets the allowed bbcodes.
+	 * Sets the disallowed bbcodes.
 	 * 
-	 * @param	string[]		$allowedBBCodes
+	 * @param	string[]		$disallowedBBCodes
 	 */
-	public function setAllowedBBCodes(array $allowedBBCodes = null) {
-		$this->allowedBBodes = $allowedBBCodes;
+	public function setDisallowedBBCodes(array $disallowedBBCodes) {
+		BBCodeHandler::getInstance()->setDisallowedBBCodes($disallowedBBCodes);
 	}
 	
 	/**
@@ -184,8 +179,14 @@ class QuickReplyManager extends SingletonFactory {
 		$tableIndexName = call_user_func([$this->container, 'getDatabaseTableIndexName']);
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['time'] = TIME_NOW;
-		$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
-		$parameters['data']['username'] = WCF::getUser()->username;
+		
+		if (!isset($parameters['data']['userID'])) {
+			$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
+		}
+		
+		if (!isset($parameters['data']['username'])) {
+			$parameters['data']['username'] = WCF::getUser()->username;
+		}
 		
 		// pre-parse message text
 		/*if ($parameters['data']['preParse']) {

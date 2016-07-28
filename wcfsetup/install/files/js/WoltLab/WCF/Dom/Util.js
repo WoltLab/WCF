@@ -154,8 +154,8 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 			var rect = el.getBoundingClientRect();
 			
 			return {
-				top: rect.top + window.scrollY,
-				left: rect.left + window.scrollX
+				top: rect.top + window.pageYOffset,
+				left: rect.left + window.pageXOffset
 			};
 		},
 		

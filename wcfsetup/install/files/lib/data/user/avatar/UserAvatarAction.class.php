@@ -3,7 +3,6 @@ namespace wcf\data\user\avatar;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -107,10 +106,6 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 				if (@copy($fileLocation, $avatar->getLocation())) {
 					@unlink($fileLocation);
 					
-					// create thumbnails
-					$action = new UserAvatarAction([$avatar], 'generateThumbnails');
-					$action->executeAction();
-					
 					// delete old avatar
 					if ($user->avatarID) {
 						$action = new UserAvatarAction([$user->avatarID], 'delete');
@@ -130,7 +125,6 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 					// return result
 					return [
 						'avatarID' => $avatar->avatarID,
-						'canCrop' => $avatar->canCrop(),
 						'url' => $avatar->getURL(96)
 					];
 				}
@@ -147,27 +141,6 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Generates the thumbnails of the avatars in all needed sizes.
-	 */
-	public function generateThumbnails() {
-		if (empty($this->objects)) {
-			$this->readObjects();
-		}
-		
-		foreach ($this->getObjects() as $avatar) {
-			$adapter = ImageHandler::getInstance()->getAdapter();
-			$adapter->loadFile($avatar->getLocation());
-			
-			foreach (UserAvatar::$avatarThumbnailSizes as $size) {
-				if ($avatar->width <= $size && $avatar->height <= $size) break 2;
-				
-				$thumbnail = $adapter->createThumbnail($size, $size, false);
-				$adapter->writeImage($thumbnail, $avatar->getLocation($size));
-			}
-		}
 	}
 	
 	/**
@@ -243,10 +216,6 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		if (@copy($filename, $avatar->getLocation())) {
 			@unlink($filename);
 			
-			// create thumbnails
-			$action = new UserAvatarAction([$avatar], 'generateThumbnails');
-			$action->executeAction();
-			
 			$avatarID = $avatar->avatarID;
 		}
 		else {
@@ -287,20 +256,12 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 */
 	protected function enforceDimensions($filename) {
 		$imageData = getimagesize($filename);
-		if ($imageData[0] > MAX_AVATAR_WIDTH || $imageData[1] > MAX_AVATAR_HEIGHT) {
+		if ($imageData[0] > UserAvatar::AVATAR_SIZE || $imageData[1] > UserAvatar::AVATAR_SIZE) {
 			try {
-				$obtainDimensions = true;
-				if (MAX_AVATAR_WIDTH / $imageData[0] < MAX_AVATAR_HEIGHT / $imageData[1]) {
-					if (round($imageData[1] * (MAX_AVATAR_WIDTH / $imageData[0])) < 48) $obtainDimensions = false;
-				}
-				else {
-					if (round($imageData[0] * (MAX_AVATAR_HEIGHT / $imageData[1])) < 48) $obtainDimensions = false;
-				}
-				
 				$adapter = ImageHandler::getInstance()->getAdapter();
 				$adapter->loadFile($filename);
 				$filename = FileUtil::getTemporaryFilename();
-				$thumbnail = $adapter->createThumbnail(MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT, $obtainDimensions);
+				$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
 				$adapter->writeImage($thumbnail, $filename);
 			}
 			catch (SystemException $e) {
@@ -314,80 +275,5 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return $filename;
-	}
-	
-	/**
-	 * Validates the 'getCropDialog' action.
-	 */
-	public function validateGetCropDialog() {
-		$this->avatar = $this->getSingleObject();
-	}
-	
-	/**
-	 * Returns the data for the dialog to crop an avatar.
-	 * 
-	 * @return	array
-	 */
-	public function getCropDialog() {
-		return [
-			'cropX' => $this->avatar->cropX,
-			'cropY' => $this->avatar->cropY,
-			'template' => WCF::getTPL()->fetch('avatarCropDialog', 'wcf', [
-				'avatar' => $this->avatar
-			])
-		];
-	}
-	
-	/**
-	 * Validates the 'cropAvatar' action.
-	 */
-	public function validateCropAvatar() {
-		$this->avatar = $this->getSingleObject();
-		
-		// check if user can edit the given avatar
-		if ($this->avatar->userID != WCF::getUser()->userID && !WCF::getSession()->getPermission('admin.user.canEditUser')) {
-			throw new PermissionDeniedException();
-		}
-		
-		if (!WCF::getSession()->getPermission('user.profile.avatar.canUploadAvatar') || UserProfileRuntimeCache::getInstance()->getObject($this->avatar->userID)->disableAvatar) {
-			throw new PermissionDeniedException();
-		}
-		
-		// check parameters
-		$this->readInteger('cropX', true);
-		$this->readInteger('cropY', true);
-		
-		if ($this->parameters['cropX'] < 0 || $this->parameters['cropX'] > $this->avatar->width - UserAvatar::$maxThumbnailSize) {
-			throw new UserInputException('cropX');
-		}
-		if ($this->parameters['cropY'] < 0 || $this->parameters['cropY'] > $this->avatar->height - UserAvatar::$maxThumbnailSize) {
-			throw new UserInputException('cropY');
-		}
-	}
-	
-	/**
-	 * Craps an avatar.
-	 */
-	public function cropAvatar() {
-		// created clipped avatar as base for new thumbnails
-		$adapter = ImageHandler::getInstance()->getAdapter();
-		$adapter->loadFile($this->avatar->getLocation());
-		$adapter->clip($this->parameters['cropX'], $this->parameters['cropY'], UserAvatar::$maxThumbnailSize, UserAvatar::$maxThumbnailSize);
-		
-		// update thumbnails
-		foreach (UserAvatar::$avatarThumbnailSizes as $size) {
-			$thumbnail = $adapter->createThumbnail($size, $size);
-			$adapter->writeImage($thumbnail, $this->avatar->getLocation($size));
-		}
-		
-		// update database entry
-		$this->avatar->update([
-			'cropX' => $this->parameters['cropX'],
-			'cropY' => $this->parameters['cropY']
-		]);
-		
-		return [
-			'url' => $this->avatar->getURL(96)
-		];
 	}
 }

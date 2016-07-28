@@ -3,8 +3,10 @@ namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -67,6 +69,11 @@ class UserAddForm extends UserOptionListForm {
 	public $groupIDs = [];
 	
 	/**
+	 * @var HtmlInputProcessor
+	 */
+	public $htmlInputProcessor;
+	
+	/**
 	 * language id
 	 * @var	integer
 	 */
@@ -89,24 +96,6 @@ class UserAddForm extends UserOptionListForm {
 	 * @var	string
 	 */
 	public $signature = '';
-	
-	/**
-	 * enables smilies
-	 * @var	boolean
-	 */
-	public $signatureEnableSmilies = 1;
-	
-	/**
-	 * enables bbcodes
-	 * @var	boolean
-	 */
-	public $signatureEnableBBCodes = 1;
-	
-	/**
-	 * enables html
-	 * @var	boolean
-	 */
-	public $signatureEnableHtml = 0;
 	
 	/**
 	 * true to disable this signature
@@ -149,11 +138,6 @@ class UserAddForm extends UserOptionListForm {
 		if (isset($_POST['userTitle'])) $this->userTitle = $_POST['userTitle'];
 		
 		if (isset($_POST['signature'])) $this->signature = StringUtil::trim($_POST['signature']);
-		
-		$this->signatureEnableBBCodes = $this->signatureEnableSmilies = 0;
-		if (!empty($_POST['signatureEnableBBCodes'])) $this->signatureEnableBBCodes = 1;
-		if (!empty($_POST['signatureEnableSmilies'])) $this->signatureEnableSmilies = 1;
-		if (!empty($_POST['signatureEnableHtml'])) $this->signatureEnableHtml = 1;
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
 			if (isset($_POST['disableSignatureReason'])) $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
@@ -243,6 +227,17 @@ class UserAddForm extends UserOptionListForm {
 			$this->errorType[$e->getField()] = $e->getType();
 		}
 		
+		// validate signature
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($this->signature, 'com.woltlab.wcf.user.signature', 0);
+		
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission('user.signature.disallowedBBCodes')));
+		$disallowedBBCodes = $this->htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
+			throw new UserInputException('signature', 'disallowedBBCodes');
+		}
+		
 		// validate dynamic options
 		parent::validate();
 	}
@@ -262,10 +257,7 @@ class UserAddForm extends UserOptionListForm {
 				'email' => $this->email,
 				'password' => $this->password,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->signature,
-				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
-				'signatureEnableSmilies' => $this->signatureEnableSmilies,
-				'signatureEnableHtml' => $this->signatureEnableHtml
+				'signature' => $this->htmlInputProcessor->getHtml()
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
@@ -293,8 +285,7 @@ class UserAddForm extends UserOptionListForm {
 		]);
 		
 		// reset values
-		$this->signatureEnableHtml = $this->disableSignature = 0;
-		$this->signatureEnableSmilies = $this->signatureEnableBBCodes = 1;
+		$this->disableSignature = 0;
 		$this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = $this->userTitle = '';
 		$this->signature = $this->disableSignatureReason = $this->disableSignatureExpires = '';
 		$this->groupIDs = [];
@@ -409,9 +400,6 @@ class UserAddForm extends UserOptionListForm {
 			'action' => 'add',
 			'userTitle' => $this->userTitle,
 			'signature' => $this->signature,
-			'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
-			'signatureEnableSmilies' => $this->signatureEnableSmilies,
-			'signatureEnableHtml' => $this->signatureEnableHtml,
 			'disableSignature' => $this->disableSignature,
 			'disableSignatureReason' => $this->disableSignatureReason,
 			'disableSignatureExpires' => $this->disableSignatureExpires

@@ -1,5 +1,5 @@
 {if $boxPosition == 'sidebarLeft' || $boxPosition == 'sidebarRight'}
-	<ul class="sidebarBoxList">
+	<ul class="sidebarItemList">
 		{foreach from=$boxArticleList item=boxArticle}
 			<li>
 				<a href="{$boxArticle->getLink()}" class="box48">

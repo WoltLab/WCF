@@ -179,6 +179,15 @@ class Box extends DatabaseObject {
 	}
 	
 	/**
+	 * Sets the box's content.
+	 *
+	 * @param       BoxContent[]    $boxContents
+	 */
+	public function setBoxContents($boxContents) {
+		$this->boxContents = $boxContents;
+	}
+	
+	/**
 	 * Returns the title of the box as set in the box content database table.
 	 * 
 	 * @return	string
@@ -334,11 +343,11 @@ class Box extends DatabaseObject {
 				$this->getBoxContents();
 				if ($this->isMultilingual) {
 					if (isset($this->boxContents[WCF::getLanguage()->languageID]) && $this->boxContents[WCF::getLanguage()->languageID]->imageID) {
-						$this->image = ViewableMedia::getMedia($this->boxContents[WCF::getLanguage()->languageID]->imageID);
+						$this->image = $this->boxContents[WCF::getLanguage()->languageID]->getImage();
 					}
 				}
 				else if (isset($this->boxContents[0]) && $this->boxContents[0]->imageID) {
-					$this->image = ViewableMedia::getMedia($this->boxContents[0]->imageID);
+					$this->image = $this->boxContents[0]->getImage();
 				}
 			}
 		}

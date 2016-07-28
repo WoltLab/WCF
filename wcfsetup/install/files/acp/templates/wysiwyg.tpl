@@ -28,6 +28,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabImage.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLink.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
@@ -85,7 +86,7 @@
 				'wcf.editor.spoiler.title': '{lang __literal=true}wcf.editor.spoiler.title{/lang}'
 			});
 			
-			var buttons = [], buttonOptions = [], customButtons = [];
+			var buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
 			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
@@ -108,12 +109,21 @@
 				lang: 'wsc', // fake language to offload phrases
 				langs: {
 					wsc: {
+						// general
+						edit: '{lang}wcf.global.button.edit{/lang}',
+						
 						// formatting dropdown
 						heading2: '{lang}wcf.editor.format.heading2{/lang}',
 						heading3: '{lang}wcf.editor.format.heading3{/lang}',
 						heading4: '{lang}wcf.editor.format.heading4{/lang}',
 						paragraph: '{lang}wcf.editor.format.paragraph{/lang}',
 						
+						// links
+						'link-edit': '{lang}wcf.editor.link.edit{/lang}',
+						'link-insert': '{lang}wcf.editor.link.add{/lang}',
+						unlink: '{lang}wcf.editor.link.unlink{/lang}',
+						
+						// text alignment
 						'align-center': '{lang}wcf.editor.alignment.center{/lang}',
 						'align-justify': '{lang}wcf.editor.alignment.justify{/lang}',
 						'align-left': '{lang}wcf.editor.alignment.left{/lang}',
@@ -132,14 +142,22 @@
 						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}'
 					}
 				},
+				linkify: false,
+				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
 				plugins: [
+					// Imperavi
 					'alignment',
 					'source',
 					'table',
+					
+					// WoltLab specials
+					'WoltLabBlock',
+					'WoltLabKeydown',
+					
+					// WoltLab core
 					'WoltLabAlignment',
 					'WoltLabAttachment',
-					'WoltLabBlock',
 					'WoltLabCode',
 					'WoltLabColor',
 					'WoltLabDropdown',
@@ -157,6 +175,7 @@
 				woltlab: {
 					autosave: autosave,
 					buttons: buttonOptions,
+					buttonMobile: buttonMobile,
 					customButtons: customButtons,
 					highlighters: highlighters
 				}

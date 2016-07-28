@@ -19,9 +19,17 @@ interface IHtmlNode {
 	public function getTagName();
 	
 	/**
+	 * Checks for disallowed bbcodes, must return the offending bbcode on match.
+	 * 
+	 * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+	 * @return      string[]                        disallowed bbcodes on match or empty array
+	 */
+	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor);
+	
+	/**
 	 * Processes the provided elements and marks them for replacement if applicable.
 	 * 
-	 * @param       \DOMElement[]           $elements               static list of matched elements, does not change when removing elements
+	 * @param       \DOMElement[]                   $elements               static list of matched elements, does not change when removing elements
 	 * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
 	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor);

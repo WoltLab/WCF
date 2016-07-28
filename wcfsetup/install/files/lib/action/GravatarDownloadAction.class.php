@@ -34,7 +34,7 @@ class GravatarDownloadAction extends AbstractAction {
 	 * avatar size
 	 * @var	integer
 	 */
-	public $size = 150;
+	public $size = UserAvatar::AVATAR_SIZE;
 	
 	/**
 	 * @inheritDoc
@@ -46,13 +46,6 @@ class GravatarDownloadAction extends AbstractAction {
 		$this->user = new User($this->userID);
 		if (!$this->user->userID) {
 			throw new IllegalLinkException();
-		}
-		
-		if (!empty($_REQUEST['size'])) {
-			$this->size = intval($_REQUEST['size']);
-			if (!in_array($this->size, UserAvatar::$avatarThumbnailSizes)) {
-				$this->size = 150;
-			}
 		}
 	}
 	

@@ -84,71 +84,322 @@ class SystemException extends \Exception implements IPrintableException {
 	 * This method is called by WCF::handleException().
 	 */
 	public function show() {
-		?>
+		/*
+		* A notice on the HTML used below:
+		*
+		* It might appear a bit weird to use <p> all over the place where semantically
+		* other elements would fit in way better. The reason behind this is that we avoid
+		* inheriting unwanted styles (e.g. exception displayed in an overlay) and that
+		* the output needs to be properly readable when copied & pasted somewhere.
+		*
+		* Besides the visual appearance, the output was built to provide a maximum of
+		* compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
+		* without the potential of messing up the formatting and thus harming the readability.
+		*/
+?><!DOCTYPE html>
 <html>
 <head>
-<title>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></title>
-
-<style type="text/css">
-	body {
-		font-family: Verdana, Helvetica, sans-serif;
-		font-size: 0.8em;
-	}
-	div {
-		border: 1px outset lightgrey;
-		padding: 3px;
-		background-color: lightgrey;
-	}
-	
-	div div {
-		border: 1px inset lightgrey;
-		padding: 4px;
-	}
-	
-	h1 {
-		background-color: #154268;
-		padding: 4px;
-		color: #fff;
-		margin: 0 0 3px 0;
-		font-size: 1.15em;
-	}
-	h2 {
-		font-size: 1.1em;
-		margin-bottom: 0;
-	}
-	
-	pre, p {
-		margin: 0;
-	}
-</style>
-</head>
-
-<body>
-	<div>
-		<h1>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></h1>
+	<title>Fatal Error: <?php echo htmlentities($this->getMessage()); ?></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.exceptionBody {
+			margin: 0;
+			padding: 0;
+		}
 		
-		<div>
-			<p><?php echo $this->getDescription(); ?></p>
-			<?php if ($this->getCode()) { ?><p>You get more information about the problem in our knowledge base: <a href="http://www.woltlab.com/help/?code=<?php echo intval($this->getCode()); ?>">http://www.woltlab.com/help/?code=<?php echo intval($this->getCode()); ?></a></p><?php } ?>
+		.exceptionContainer {
+			box-sizing: border-box;
+			font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			font-size: 14px;
+			padding-bottom: 20px;
+		}
+		
+		.exceptionContainer * {
+			box-sizing: inherit;
+			color: #000;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.exceptionHeader {
+			background-color: rgb(44, 62, 80);
+			padding: 30px 0;
+		}
+		
+		.exceptionTitle {
+			color: #fff;
+			font-size: 28px;
+			font-weight: 300;
+		}
+		
+		.exceptionErrorCode {
+			color: #fff;
+			margin-top: .5em;
+		}
+		
+		.exceptionErrorCode .exceptionInlineCode {
+			background-color: rgb(52, 73, 94);
+			border-radius: 3px;
+			color: #fff;
+			font-family: monospace;
+			padding: 3px 10px;
+			white-space: nowrap;
+		}
+		
+		.exceptionSubtitle {
+			border-bottom: 1px solid rgb(238, 238, 238);
+			color: rgb(44, 62, 80);
+			font-size: 24px;
+			font-weight: 300;
+			margin-bottom: 15px;
+			padding-bottom: 10px;
+		}
+		
+		.exceptionContainer > .exceptionBoundary {
+			margin-top: 30px;
+		}
+		
+		.exceptionText .exceptionInlineCodeWrapper {
+			border: 1px solid rgb(169, 169, 169);
+			border-radius: 3px;
+			padding: 2px 5px;
+		}
+		
+		.exceptionText .exceptionInlineCode {
+			font-family: monospace;
+			white-space: nowrap;
+		}
+		
+		.exceptionFieldTitle {
+			color: rgb(59, 109, 169);
+		}
+		
+		.exceptionFieldTitle .exceptionColon {
+			/* hide colon in browser, but will be visible after copy & paste */
+			opacity: 0;
+		}
+		
+		.exceptionFieldValue {
+			font-size: 18px;
+			min-height: 1.5em;
+		}
+		
+		.exceptionSystemInformation,
+		.exceptionErrorDetails,
+		.exceptionStacktrace {
+			list-style-type: none;
+		}
+		
+		.exceptionSystemInformation > li:not(:first-child),
+		.exceptionErrorDetails > li:not(:first-child) {
+			margin-top: 10px;
+		}
+		
+		.exceptionStacktrace {
+			display: block;
+			margin-top: 5px;
+			overflow: auto;
+			padding-bottom: 20px;
+		}
+		
+		.exceptionStacktraceFile,
+		.exceptionStacktraceFile span,
+		.exceptionStacktraceCall,
+		.exceptionStacktraceCall span {
+			font-family: monospace !important;
+			white-space: nowrap !important;
+		}
+		
+		.exceptionStacktraceCall + .exceptionStacktraceFile {
+			margin-top: 5px;
+		}
+		
+		.exceptionStacktraceCall {
+			padding-left: 40px;
+		}
+		
+		.exceptionStacktraceCall,
+		.exceptionStacktraceCall span {
+			color: rgb(102, 102, 102) !important;
+			font-size: 13px !important;
+		}
+		
+		/* mobile */
+		@media (max-width: 767px) {
+			.exceptionBoundary {
+				min-width: 320px;
+				padding: 0 10px;
+			}
 			
-			<h2>Information:</h2>
-			<p>
-				<b>error message:</b> <?php echo htmlspecialchars($this->getMessage()); ?><br>
-				<b>error code:</b> <?php echo intval($this->getCode()); ?><br>
-				<?php echo $this->information; ?>
-				<b>file:</b> <?php echo htmlspecialchars($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br>
-				<b>php version:</b> <?php echo htmlspecialchars(phpversion()); ?><br>
-				<b>wcf version:</b> <?php if (defined('WCF_VERSION')) echo WCF_VERSION; ?><br>
-				<b>date:</b> <?php echo gmdate('r'); ?><br>
-				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo htmlspecialchars($_SERVER['REQUEST_URI']); ?><br>
-				<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo htmlspecialchars($_SERVER['HTTP_REFERER']); ?><br>
-			</p>
+			.exceptionText .exceptionInlineCodeWrapper {
+				display: inline-block;
+				overflow: auto;
+			}
 			
-			<h2>Stacktrace:</h2>
-			<pre><?php echo htmlspecialchars($this->getTraceAsString()); ?></pre>
+			.exceptionErrorCode .exceptionInlineCode {
+				font-size: 13px;
+				padding: 2px 5px;
+			}
+		}
+		
+		/* desktop */
+		@media (min-width: 768px) {
+			.exceptionBoundary {
+				margin: 0 auto;
+				max-width: 1400px;
+				min-width: 1200px;
+				padding: 0 10px;
+			}
+			
+			.exceptionSystemInformation {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.exceptionSystemInformation1,
+			.exceptionSystemInformation3,
+			.exceptionSystemInformation5 {
+				flex: 0 0 200px;
+				margin: 0 0 10px 0 !important;
+			}
+			
+			.exceptionSystemInformation2,
+			.exceptionSystemInformation4,
+			.exceptionSystemInformation6 {
+				flex: 0 0 calc(100% - 210px);
+				margin: 0 0 10px 10px !important;
+				max-width: calc(100% - 210px);
+			}
+			
+			.exceptionSystemInformation1 { order: 1; }
+			.exceptionSystemInformation2 { order: 2; }
+			.exceptionSystemInformation3 { order: 3; }
+			.exceptionSystemInformation4 { order: 4; }
+			.exceptionSystemInformation5 { order: 5; }
+			.exceptionSystemInformation6 { order: 6; }
+			
+			.exceptionSystemInformation .exceptionFieldValue {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	</style>
+</head>
+<body class="exceptionBody">
+	<div class="exceptionContainer">
+		<div class="exceptionHeader">
+			<div class="exceptionBoundary">
+				<p class="exceptionTitle">An error has occured</p>
+			</div>
 		</div>
 		
-		<?php echo $this->functions; ?>
+		<div class="exceptionBoundary">
+			<p class="exceptionSubtitle">System Information</p>
+			<ul class="exceptionSystemInformation">
+				<li class="exceptionSystemInformation1">
+					<p class="exceptionFieldTitle">PHP Version<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php echo htmlentities(phpversion()); ?></p>
+				</li>
+				<li class="exceptionSystemInformation3">
+					<p class="exceptionFieldTitle">WoltLab Suite Core<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue">3.0</p>
+				</li>
+				<li class="exceptionSystemInformation5">
+					<p class="exceptionFieldTitle">Peak Memory Usage<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php echo round(memory_get_peak_usage() / 1024 / 1024, 3); ?>/<?php echo ini_get('memory_limit'); ?></p>
+				</li>
+				<li class="exceptionSystemInformation2">
+					<p class="exceptionFieldTitle">Request URI<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_URI'])) echo htmlentities($_SERVER['REQUEST_URI']); ?></p>
+				</li>
+				<li class="exceptionSystemInformation4">
+					<p class="exceptionFieldTitle">Referrer<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php if (isset($_SERVER['HTTP_REFERER'])) echo htmlentities($_SERVER['HTTP_REFERER']); ?></p>
+				</li>
+				<li class="exceptionSystemInformation6">
+					<p class="exceptionFieldTitle">User Agent<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php if (isset($_SERVER['HTTP_USER_AGENT'])) echo htmlentities($_SERVER['HTTP_USER_AGENT']); ?></p>
+				</li>
+			</ul>
+		</div>
+			
+		<?php
+		$first = true;
+		do {
+			?>
+			<div class="exceptionBoundary">
+				<p class="exceptionSubtitle"><?php if (!$this->getPrevious() && !$first) { echo "Original "; } else if ($this->getPrevious() && $first) { echo "Final "; } ?>Error</p>
+				<?php if ($this instanceof SystemException && $this->getDescription()) { ?>
+					<p class="exceptionText"><?php echo $this->getDescription(); ?></p>
+				<?php } ?>
+				<ul class="exceptionErrorDetails">
+					<li>
+						<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
+						<p class="exceptionFieldValue"><?php echo htmlentities(get_class($this)); ?></p>
+					</li>
+					<li>
+						<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
+						<p class="exceptionFieldValue"><?php echo htmlentities($this->getMessage()); ?></p>
+					</li>
+					<?php if ($this->getCode()) { ?>
+						<li>
+							<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
+							<p class="exceptionFieldValue"><?php echo intval($this->getCode()); ?></p>
+						</li>
+					<?php } ?>
+					<li>
+						<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
+						<p class="exceptionFieldValue" style="word-break: break-all"><?php echo htmlentities($this->getFile()); ?> (<?php echo $this->getLine(); ?>)</p>
+					</li>
+					
+					<li>
+						<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span></p>
+						<ul class="exceptionStacktrace">
+							<?php
+							$trace = $this->getTrace();
+							for ($i = 0, $max = count($trace); $i < $max; $i++) {
+							?>
+							<li class="exceptionStacktraceFile"><?php echo '#'.$i.' '.htmlentities($trace[$i]['file']).' ('.$trace[$i]['line'].')'.':'; ?></li>
+							<li class="exceptionStacktraceCall">
+								<?php
+								echo $trace[$i]['class'].$trace[$i]['type'].$trace[$i]['function'].'(';
+								echo implode(', ', array_map(function ($item) {
+									switch (gettype($item)) {
+										case 'integer':
+										case 'double':
+											return $item;
+										case 'NULL':
+											return 'null';
+										case 'string':
+											return "'".addcslashes(htmlentities($item), "\\'")."'";
+										case 'boolean':
+											return $item ? 'true' : 'false';
+										case 'array':
+											$keys = array_keys($item);
+											if (count($keys) > 5) return "[ ".count($keys)." items ]";
+											return '[ '.implode(', ', array_map(function ($item) {
+												return $item.' => ';
+											}, $keys)).']';
+										case 'object':
+											return get_class($item);
+									}
+									
+									throw new \LogicException('Unreachable');
+								}, $trace[$i]['args']));
+								echo ')</li>';
+								}
+								?>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<?php
+			$first = false;
+		} while (($e = $this->getPrevious()));
+		?>
 	</div>
 </body>
 </html>

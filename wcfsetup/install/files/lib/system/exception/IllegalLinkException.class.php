@@ -15,7 +15,7 @@ class IllegalLinkException extends NamedUserException {
 	 * Creates a new IllegalLinkException object.
 	 */
 	public function __construct() {
-		parent::__construct(WCF::getLanguage()->get('wcf.global.error.illegalLink'));
+		parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink'));
 	}
 	
 	/**
@@ -25,7 +25,7 @@ class IllegalLinkException extends NamedUserException {
 		@header('HTTP/1.0 404 Not Found');
 		
 		WCF::getTPL()->assign([
-			'title' => WCF::getLanguage()->get('wcf.global.error.illegalLink.title')
+			'title' => WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink.title')
 		]);
 		
 		parent::show();

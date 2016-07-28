@@ -109,7 +109,7 @@ final class UserUtil {
 				$userAgent = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $userAgent);
 			}
 			
-			return mb_substr($userAgent, 0, 255);
+			return mb_substr($userAgent, 0, 191);
 		}
 		return '';
 	}

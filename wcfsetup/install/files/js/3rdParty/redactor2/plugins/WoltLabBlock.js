@@ -30,17 +30,22 @@ $.Redactor.prototype.WoltLabBlock = function() {
 			}).bind(this);
 		},
 		
-		register: function(tag) {
+		register: function(tag, arrowKeySupport) {
 			if (this.block.tags.indexOf(tag) !== -1) {
 				return;
 			}
 			
 			this.block.tags.push(tag);
+			this.opts.paragraphizeBlocks.push(tag);
 			
 			if (this.opts.blockTags.indexOf(tag) === -1) {
 				this.opts.blockTags.push(tag);
 				
 				this.reIsBlock = new RegExp('^(' + this.opts.blockTags.join('|').toUpperCase() + ')$', 'i');
+			}
+			
+			if (arrowKeySupport) {
+				this.WoltLabKeydown.register(tag);
 			}
 		}
 	}

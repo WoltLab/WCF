@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Message/Manager
  */
-define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/Util'], function(Ajax, Core, Dictionary, Language, DomUtil) {
+define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Util'], function(Ajax, Core, Dictionary, Language, DomChangeListener, DomUtil) {
 	"use strict";
 	
 	/**
@@ -28,6 +28,8 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/Util'], function(Ajax, Co
 			}, options);
 			
 			this.rebuild();
+			
+			DomChangeListener.add('Ui/Message/Manager' + this._options.className, this.rebuild.bind(this));
 		},
 		
 		/**

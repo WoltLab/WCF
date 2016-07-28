@@ -69,8 +69,9 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 			var pages = elData(element, 'pages');
 			_input.value = pages;
 			_input.setAttribute('max', pages);
+			_input.select();
 			
-			_description.textContent = Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, pages);
+			_description.textContent = Language.get('wcf.page.jumpTo.description').replace(/#pages#/, pages);
 		},
 		
 		/**
@@ -106,7 +107,7 @@ define(['Language', 'ObjectMap', 'Ui/Dialog'], function(Language, ObjectMap, UiD
 		
 		_dialogSetup: function() {
 			var source = '<dl>'
-					+ '<dt><label for="jsPaginationPageNo">' + Language.get('wcf.global.page.jumpTo') + '</label></dt>'
+					+ '<dt><label for="jsPaginationPageNo">' + Language.get('wcf.page.jumpTo') + '</label></dt>'
 					+ '<dd>'
 						+ '<input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">'
 						+ '<small></small>'

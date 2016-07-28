@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\box\content;
+use wcf\data\media\ViewableMedia;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
@@ -32,6 +33,12 @@ class BoxContent extends DatabaseObject {
 	protected static $databaseTableIndexName = 'boxContentID';
 	
 	/**
+	 * image media object
+	 * @var	ViewableMedia
+	 */
+	protected $image;
+	
+	/**
 	 * Returns a certain box content.
 	 *
 	 * @param       integer         $boxID
@@ -61,5 +68,29 @@ class BoxContent extends DatabaseObject {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns the image of this box content.
+	 *
+	 * @return	ViewableMedia|null
+	 */
+	public function getImage() {
+		if ($this->image === null) {
+			if ($this->imageID) {
+				$this->image = ViewableMedia::getMedia($this->imageID);
+			}
+		}
+		
+		return $this->image;
+	}
+	
+	/**
+	 * Sets the image of this box content.
+	 * 
+	 * @param       ViewableMedia   $image
+	 */
+	public function setImage(ViewableMedia $image) {
+		$this->image = $image;
 	}
 }

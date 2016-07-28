@@ -246,6 +246,13 @@
 				<permissions>admin.paidSubscription.canManageSubscription</permissions>
 				<options>module_paid_subscription</options>
 			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.paidSubscription.add">
+				<controller><![CDATA[wcf\acp\form\PaidSubscriptionAddForm]]></controller>
+				<parent>wcf.acp.menu.link.paidSubscription.list</parent>
+				<permissions>admin.paidSubscription.canManageSubscription</permissions>
+				<options>module_paid_subscription</options>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
 			<acpmenuitem name="wcf.acp.menu.link.paidSubscription.user.list">
 				<controller><![CDATA[wcf\acp\page\PaidSubscriptionUserListPage]]></controller>
 				<parent>wcf.acp.menu.link.paidSubscription</parent>

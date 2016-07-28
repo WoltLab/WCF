@@ -166,8 +166,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		}
 		
 		WCF::getTPL()->assign([
-			'queues' => $queues,
-			'definitionNames' => ModerationQueueManager::getInstance()->getDefinitionNamesByObjectTypeIDs()
+			'queues' => $queues
 		]);
 		
 		return [
