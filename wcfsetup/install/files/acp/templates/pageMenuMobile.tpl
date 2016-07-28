@@ -1,4 +1,5 @@
 {* main menu *}
+{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}
 <div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
 		<li class="menuOverlayTitle">{lang}wcf.menu.page{/lang}</li>
