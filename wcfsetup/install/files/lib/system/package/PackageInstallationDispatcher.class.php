@@ -222,6 +222,10 @@ class PackageInstallationDispatcher {
 							'public',
 							'exception_privacy'
 						]);
+						$statement->execute([
+							'debug',
+							'mail_send_method'
+						])
 					}
 					
 					// update options.inc.php
