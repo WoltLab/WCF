@@ -77,7 +77,7 @@ class NewPasswordForm extends AbstractForm {
 			
 			(new UserEditor($this->user))->update([
 				'lastLostPasswordRequestTime' => 0,
-				'lostPasswordKey' => NULL
+				'lostPasswordKey' => null
 			]);
 			WCF::getSession()->register('lostPasswordRequest', $this->user->userID);
 		}

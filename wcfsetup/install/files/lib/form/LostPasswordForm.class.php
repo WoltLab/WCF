@@ -2,12 +2,12 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\system\exception\NamedUserException;
-use wcf\system\exception\UserInputException;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
+use wcf\system\exception\NamedUserException;
+use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
