@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Ui/Redactor/Autosave
  */
-define([], function() {
+define(['Dom/Traverse'], function(DomTraverse) {
 	"use strict";
 	
 	// time between save requests in seconds
@@ -38,6 +38,11 @@ define([], function() {
 			
 			// remove attribute to prevent Redactor's built-in autosave to kick in
 			this._element.removeAttribute('data-autosave');
+			
+			var form = DomTraverse.parentByTag(this._element, 'FORM');
+			if (form !== null) {
+				form.addEventListener('submit', this.destroy.bind(this));
+			}
 		},
 		
 		/**
@@ -46,7 +51,7 @@ define([], function() {
 		 * 
 		 * @return      {string}        message content
 		 */
-		getInitialValue: function () {
+		getInitialValue: function() {
 			var value = '';
 			try {
 				value = window.localStorage.getItem(this._key);
