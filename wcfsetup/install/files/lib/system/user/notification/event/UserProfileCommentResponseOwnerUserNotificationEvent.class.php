@@ -87,15 +87,13 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$comment = new Comment($this->getUserNotificationObject()->commentID);
-		$owner = new User($comment->objectID);
+		$comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
+		$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		if ($comment->userID) {
-			$commentAuthor = new User($comment->userID);
+			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
 		else {
-			$commentAuthor = new User(null, [
-				'username' => $comment->username
-			]);
+			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
 		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
