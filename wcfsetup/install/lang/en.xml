@@ -418,7 +418,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be added to the user group.]]></item>
 		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Do you really want to delete the automatic user group assignment “{$assignment->title}”?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
-		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not chosen any condition.]]></item>
+		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable Automatic Assignment]]></item>
@@ -1413,7 +1413,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
 		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by another smiley.]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
-		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative to “{$__wcf->getPath()}”.]]></item>
+		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[The smiley path is relative to “{$__wcf->getPath()}”.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path.]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley File]]></item>
@@ -1767,7 +1767,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too large.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments allowed.]]></item>
-		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have chosen too many attachments, remaining: #remaining#.]]></item>
+		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many attachments, remaining: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[The maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
 Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
@@ -2335,15 +2335,15 @@ Errors are:
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Removed Marked Quotes]]></item>
 		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Enable BBCodes]]></item>
-		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Allows BBCodes to be used once enabled.]]></item>
+		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Allows BBCodes to be used.]]></item>
 		<item name="wcf.message.settings.enableHtml"><![CDATA[Enable HTML]]></item>
-		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Allows HTML code to be used once enabled.]]></item>
+		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Allows HTML code to be used.]]></item>
 		<item name="wcf.message.settings.enableSmilies"><![CDATA[Enable smilies]]></item>
-		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smilies will be displayed as a smiley-image.]]></item>
+		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Displays smilies as smiley-images.]]></item>
 		<item name="wcf.message.settings.preParse"><![CDATA[Detect links]]></item>
-		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to web pages are automatically detected.]]></item>
+		<item name="wcf.message.settings.preParse.description"><![CDATA[Automatically detects web page links.]]></item>
 		<item name="wcf.message.settings.showSignature"><![CDATA[Display signature]]></item>
-		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, which can be edited in your profile.]]></item>
+		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends your signature to this message.]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.message.share.google"><![CDATA[Google Plus]]></item>
@@ -3282,7 +3282,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[The 21 digit Google Plus user ID, Google Plus username (+Username), or the URL of your Google Plus profile.]]></item>
+		<item name="wcf.user.option.googlePlus.description"><![CDATA[Enter the 21 digit Google Plus user ID, Google Plus username (+Username), or the URL of your Google Plus profile.]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 		
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
