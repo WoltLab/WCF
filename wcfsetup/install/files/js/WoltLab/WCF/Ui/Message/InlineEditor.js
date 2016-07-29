@@ -508,6 +508,7 @@ define(
 		 */
 		_showMessage: function(data) {
 			var activeElement = this._activeElement;
+			var editorId = this._getEditorId();
 			var elementData = this._elements.get(activeElement);
 			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageFooter);
 			
@@ -553,6 +554,8 @@ define(
 			
 			this._updateHistory(this._getHash(this._getObjectId(activeElement)));
 			
+			EventHandler.fire('com.woltlab.wcf.redactor', 'autosaveDestroy_' + editorId);
+			
 			UiNotification.show();
 			
 			if (this._options.quoteManager) {
@@ -595,6 +598,7 @@ define(
 		 * @protected
 		 */
 		_destroyEditor: function() {
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'autosaveDestroy_' + this._getEditorId());
 			EventHandler.fire('com.woltlab.wcf.redactor', 'destroy_' + this._getEditorId());
 		},
 		
