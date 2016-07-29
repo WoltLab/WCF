@@ -2611,46 +2611,33 @@ WCF.ACP.Tag.SetAsSynonymsHandler = Class.extend({
 	
 	/**
 	 * Initializes the SetAsSynonymsHandler object.
-	 * 
-	 * @param	array<integer>		objectIDs
 	 */
 	init: function() {
-		// bind listener
-		$('.jsClipboardEditor').each($.proxy(function(index, container) {
-			var $container = $(container);
-			var $types = eval($container.data('types'));
-			if (WCF.inArray('com.woltlab.wcf.tag', $types)) {
-				$container.on('clipboardAction', $.proxy(this._execute, this));
-				return false;
-			}
-		}, this));
+		require(['EventHandler'], function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.tag', this._clipboardAction.bind(this));
+		}.bind(this));
 	},
 	
 	/**
-	 * Handles clipboard actions.
-	 * 
-	 * @param	object		event
-	 * @param	string		type
-	 * @param	string		actionName
-	 * @param	object		parameters
+	 * Reacts to executed clipboard actions.
+	 *
+	 * @param	{object<string, *>}	actionData	data of the executed clipboard action
 	 */
-	_execute: function(event, type, actionName, parameters) {
-		if (type !== 'com.woltlab.wcf.tag' || actionName !== 'com.woltlab.wcf.tag.setAsSynonyms') {
-			return;
+	_clipboardAction: function(actionData) {
+		if (actionData.data.actionName === 'com.woltlab.wcf.tag.setAsSynonyms') {
+			this._objectIDs = actionData.data.parameters.objectIDs;
+			if (this._dialog === null) {
+				this._dialog = $('<div id="setAsSynonymsDialog" />').hide().appendTo(document.body);
+				this._dialog.wcfDialog({
+					closable: false,
+					title: WCF.Language.get('wcf.acp.tag.setAsSynonyms')
+				});
+			}
+			
+			this._dialog.html(actionData.data.parameters.template);
+			$button = this._dialog.find('button[data-type="submit"]').disable().click($.proxy(this._submit, this));
+			this._dialog.find('input[type=radio]').change(function() { $button.enable(); });
 		}
-		
-		this._objectIDs = parameters.objectIDs;
-		if (this._dialog === null) {
-			this._dialog = $('<div id="setAsSynonymsDialog" />').hide().appendTo(document.body);
-			this._dialog.wcfDialog({
-				closable: false,
-				title: WCF.Language.get('wcf.acp.tag.setAsSynonyms')
-			});
-		}
-		
-		this._dialog.html(parameters.template);
-		$button = this._dialog.find('button[data-type="submit"]').disable().click($.proxy(this._submit, this));
-		this._dialog.find('input[type=radio]').change(function() { $button.enable(); });
 	},
 	
 	/**
