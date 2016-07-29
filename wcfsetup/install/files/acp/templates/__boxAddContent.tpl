@@ -1,4 +1,8 @@
-<textarea name="content[{@$languageID}]" id="content{@$languageID}">{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
+<textarea name="content[{@$languageID}]" id="content{@$languageID}"
+	{if $boxType == 'text'}
+		class="wysiwygTextarea" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{@$boxID}{else}0{/if}-{@$languageID}"
+	{/if}
+>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 {if $boxType == 'text'}
 	{include file='wysiwyg' wysiwygSelector='content'|concat:$languageID}
 {elseif $boxType == 'html'}

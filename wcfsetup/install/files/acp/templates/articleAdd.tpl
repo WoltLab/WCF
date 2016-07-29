@@ -237,7 +237,7 @@
 			<dl{if $errorField == 'content'} class="formError"{/if}>
 				<dt><label for="content0">{lang}wcf.acp.article.content{/lang}</label></dt>
 				<dd>
-					<textarea name="content[0]" id="content0" rows="10">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
 					{include file='wysiwyg' wysiwygSelector='content0'}
 					{if $errorField == 'content'}
 						<small class="innerError">
@@ -351,7 +351,7 @@
 						<dl{if $errorField == 'content'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.article.content{/lang}</label></dt>
 							<dd>
-								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" rows="10">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
+								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
 								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">

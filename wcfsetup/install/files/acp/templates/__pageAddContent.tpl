@@ -26,7 +26,11 @@
 	</script>
 {/if}
 
-<textarea name="content[{@$languageID}]" id="{@$__pageContentID}">{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
+<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
+          {if $pageType == 'text'}
+	          class="wysiwygTextarea" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
+          {/if}
+>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 {if $pageType == 'text'}
 	{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
 	{capture append='__redactorConfig'}
