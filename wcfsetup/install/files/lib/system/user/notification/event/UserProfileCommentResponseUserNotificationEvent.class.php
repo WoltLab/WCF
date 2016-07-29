@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\email\Email;
 
 /**
  * User notification event for profile comment responses.
@@ -72,31 +73,17 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	public function getEmailMessage($notificationType = 'instant') {
 		$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail.stacked', [
-				'author' => $this->author,
-				'authors' => array_values($authors),
-				'count' => $count,
-				'notificationType' => $notificationType,
-				'others' => $count - 1,
-				'owner' => $owner,
-				'response' => $this->userNotificationObject,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			]);
-		}
+		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail', [
-			'response' => $this->userNotificationObject,
-			'author' => $this->author,
-			'owner' => $owner,
-			'notificationType' => $notificationType
-		]);
+		return [
+			'template' => 'email_notification_userProfileCommentResponse',
+			'application' => 'wcf',
+			'in-reply-to' => [$messageID],
+			'references' => [$messageID],
+			'variables' => [
+				'owner' => $owner
+			]
+		];
 	}
 	
 	/**

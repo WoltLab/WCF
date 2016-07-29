@@ -44,9 +44,9 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 	 * @param	string	$mimeType	Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
 	 * @param	string	$template	Template to evaluate
 	 * @param	string	$application	Application of the template to evaluate (default: wcf)
-	 * @param	string	$content	Content of this text part (this is passed to the template).
+	 * @param	mixed	$content	Content of this text part. Passend as 'content' to the template. If it is an array it will additionally be merged with the template variables.
 	 */
-	public function __construct($mimeType, $template, $application = 'wcf', $content = '') {
+	public function __construct($mimeType, $template, $application = 'wcf', $content = null) {
 		parent::__construct($content, $mimeType);
 		
 		$this->template = $template;
@@ -113,11 +113,17 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 	protected function getTemplateVariables() {
 		$styleCache = StyleCacheBuilder::getInstance()->getData();
 		
-		return [
+		$result = [
 			'content' => $this->content,
 			'mimeType' => $this->mimeType,
 			'mailbox' => $this->mailbox,
 			'style' => new ActiveStyle($styleCache['styles'][$styleCache['default']])
 		];
+		
+		if (is_array($this->content)) {
+			return array_merge($result, $this->content);
+		}
+		
+		return $result;
 	}
 }

@@ -19,13 +19,22 @@
 			text-decoration: none;
 		}
 		
+		td {
+			vertical-align: top;
+		}
+		
 		{* see email_paddingHelper.tpl *}
 		table.paddingHelper.block {
 			width: 100%;
 		}
 		
 		.content {
-			padding: 0 20px;
+			padding: 40px 40px 60px;
+		}
+		.header {
+			background-color: {$style->getVariable('wcfHeaderBackground', true)};
+			color: {$style->getVariable('wcfHeaderText', true)};
+			padding: 20px 10px;
 		}
 		.footer {
 			background-color: {$style->getVariable('wcfFooterBackground', true)};
@@ -38,6 +47,14 @@
 			font-size: {$style->getVariable('wcfFontSizeTitle')};
 			color: {$style->getVariable('wcfContentHeadlineText')};
 		}
+		small {
+			font-size: {$style->getVariable('wcfFontSizeSmall')};
+			font-weight: 300;
+		}
+		
+		.largeMarginTop {
+			margin-top: 40px;
+		}
 		
 		{* Buttons *}
 		td.button {
@@ -48,12 +65,45 @@
 		td.button a {
 			color: {$style->getVariable('wcfButtonPrimaryText', true)};
 		}
+		
+		.box128 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 20px;
+		}
+		
+		.box128 td.boxContent {
+			padding-left: 20px;
+		}
+		
+		.box64 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 15px;
+		}
+		
+		.box64 td.boxContent {
+			padding-left: 15px;
+		}
+		
+		.containerHeadline h3 {
+			margin: 0;
+			padding: 0;
+			font-weight: 400;
+		}
 		</style>
 	</head>
 	<body>
-	<div class="content">
-		{@$content}
-	</div>
+	{capture assign='header'}
+	{/capture}
+	{include file='email_paddingHelper' block=true class='header' content=$header sandbox=true}
+	
+	{if $beforeContent|isset}{@$beforeContent}{/if}
+	
+	{include file='email_paddingHelper' block=true class='content' content=$content sandbox=true}
+	
+	{if $afterContent|isset}{@$afterContent}{/if}
+	
 	{capture assign='footer'}
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>

@@ -14,14 +14,17 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\object\type\IUserNotificationObjectType;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\util\CryptoUtil;
 
 /**
  * Handles user notifications.
@@ -227,17 +230,12 @@ class UserNotificationHandler extends SingletonFactory {
 				foreach ($recipients as $recipient) {
 					if ($recipient->mailNotificationType == 'instant') {
 						if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
-							// update UserNotification object
 							$event->setObject($notifications[$recipient->userID]['object'], $notificationObject, $userProfile, $additionalData);
-							
-							// send notification
+							$event->setAuthors([$userProfile->userID => $userProfile]);
 							$this->sendInstantMailNotification($notifications[$recipient->userID]['object'], $recipient, $event);
 						}
 					}
 				}
-				
-				// reset language to current user language
-				WCF::setLanguage(WCF::getUser()->getLanguage()->languageID);
 			}
 			
 			// reset notification count
@@ -644,34 +642,56 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// recipient's language
 		$event->setLanguage($user->getLanguage());
-		WCF::setLanguage($user->getLanguage()->languageID);
 		
-		// add mail header
-		$message = $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.header', [
-			'user' => $user
-			])."\n\n";
-		
-		// get message
-		$message .= $event->getEmailMessage();
-		
-		// append notification mail footer
-		$token = $user->notificationMailToken;
-		if (!$token) {
-			// generate token if not present
-			$token = mb_substr(StringUtil::getHash(serialize([$user->userID, StringUtil::getRandomID()])), 0, 20);
+		// generate token if not present
+		if (!$user->notificationMailToken) {
+			$token = bin2hex(CryptoUtil::randomBytes(10));
 			$editor = new UserEditor($user);
 			$editor->update(['notificationMailToken' => $token]);
+			
+			// reload user
+			$user = new User($user->userID);
 		}
-		$message .= "\n\n".$user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.footer', [
-			'user' => $user,
-			'token' => $token,
-			'notification' => $notification
-			]);
 		
-		// build mail
-		$mail = new Mail([$user->username => $user->email], $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.subject', ['title' => $event->getEmailTitle()]), $message);
-		$mail->setLanguage($user->getLanguage());
-		$mail->send();
+		$email = new Email();
+		$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.subject', [
+			'title' => $event->getEmailTitle()
+		]));
+		$email->addRecipient(new UserMailbox($user));
+		
+		$message = $event->getEmailMessage('instant');
+		if (is_array($message)) {
+			if (!isset($message['variables'])) $message['variables'] = [];
+			$variables = [
+				'notificationContent' => $message,
+				'event' => $event,
+				'notificationType' => 'instant',
+				'variables' => $message['variables']
+			];
+			
+			if (isset($message['message-id'])) {
+				$email->setMessageID($message['message-id']);
+			}
+			if (isset($message['in-reply-to'])) {
+				foreach ($message['in-reply-to'] as $inReplyTo) $email->addInReplyTo($inReplyTo);
+			}
+			if (isset($message['references'])) {
+				foreach ($message['references'] as $references) $email->addReferences($references);
+			}
+			
+			$html = new RecipientAwareTextMimePart('text/html', 'email_notification', 'wcf', $variables);
+			$plainText = new RecipientAwareTextMimePart('text/plain', 'email_notification', 'wcf', $variables);
+			$email->setBody(new MimePartFacade([$html, $plainText]));
+		}
+		else {
+			$email->setBody(new RecipientAwareTextMimePart('text/plain', 'email_notification', 'wcf', [
+				'notificationContent' => $message,
+				'event' => $event,
+				'notificationType' => 'instant'
+			]));
+		}
+		
+		$email->send();
 	}
 	
 	/**
