@@ -4,9 +4,13 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
@@ -95,7 +99,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		// generate a new lost password key
-		$lostPasswordKey = StringUtil::getRandomID();
+		$lostPasswordKey = bin2hex(CryptoUtil::randomBytes(20));
 		
 		// save key and request time in database
 		$this->objectAction = new UserAction([$this->user], 'update', [
@@ -106,13 +110,18 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		]);
 		$this->objectAction->executeAction();
 		
-		// send mail
-		$mail = new Mail([$this->user->username => $this->user->email], WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail', [
-			'username' => $this->user->username,
-			'userID' => $this->user->userID,
-			'key' => $lostPasswordKey
+		// reload object
+		$this->user = new User($this->user->userID);
+		
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($this->user));
+		$email->setSubject($this->user->getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_lostPassword'),
+			new RecipientAwareTextMimePart('text/plain', 'email_lostPassword')
 		]));
-		$mail->send();
+		$email->send();
+		
 		$this->saved();
 		
 		// forward to index page

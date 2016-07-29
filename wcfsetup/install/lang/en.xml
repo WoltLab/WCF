@@ -1761,13 +1761,24 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
-		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Dear {@$username},
-
-Your password has been changed by an administrator.
-Your new password is: {$password}
-
-Login with your new password: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
+
+an administrator resetted your password. You are now required to set a new password to be able to use your
+user account {@$mailbox->getUser()->username} on the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] again:
+
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+
+If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} you’ll have to use
+the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}] for security reasons.]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
+<p>an administrator resetted your password. You are now required to set a new password to be able to use your
+user account {@$mailbox->getUser()->username} on the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a> again:</p>]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Choose new password]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
+<p>If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} you’ll have to use
+the lost password form <a href="{link controller='LostPassword' isEmail=true}{/link}">lost password form</a> for security reasons.</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Sending New Passwords]]></item>
 		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Failed Login Attempts]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Environment]]></item>
@@ -2879,29 +2890,32 @@ Errors are:
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[The password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.lostPassword.mail"><![CDATA[Dear {@$username},
+		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-if you have lost your password you can request a new one using the link below.
-Request a new password: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}
+you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. You can change your password after clicking
+the following link:
 
-If you have not lost your password, you can safely ignore this email.]]></item>
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+
+If you don’t want to change your password you can simply wait. The request will expire at {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.]]></item>
+		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
+<p>you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>]]></item>
+		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Change Password]]></item>
+		<item name="wcf.user.lostPassword.mail.html.outro"><![CDATA[
+<p>If you don’t want to change your password you can simply wait. The request will expire at {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Security Key is invalid.]]></item>
+		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
+		<item name="wcf.user.newPassword.info"><![CDATA[You are setting a new password for the user “{$user->username}”.]]></item>
+		<item name="wcf.user.newPassword.success"><![CDATA[The password of the user “{$user->username}” has been changed successfully. You may now login with your new password.]]></item>
 		<item name="wcf.user.userID.error.notValid"><![CDATA[User ID is invalid.]]></item>
-		<item name="wcf.user.newPassword.mail"><![CDATA[Dear {@$username},
-
-your new password for "{@PAGE_TITLE|language}" is:
-{@$newPassword}
-
-
-You can change your password any time at:
-{link controller='AccountManagement' isEmail=true}{/link} ]]></item>
-		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
+		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[Heads up! You’re editing your own user account, careless changes might lock you out!]]></item>
 		<item name="wcf.user.accountManagement.password.description"><![CDATA[Please confirm changes with your <u>current</u> password!]]></item>
-		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
 		<item name="wcf.user.changeUsername"><![CDATA[Change Username]]></item>
 		<item name="wcf.user.changeUsername.description"><![CDATA[You may change your username every {$renamePeriod} days. Changes between uppercase or lowercase are always allowed.
 		{if $__wcf->getUser()->lastUsernameChange}Last change was {@$__wcf->getUser()->lastUsernameChange|date}.{/if}]]></item>

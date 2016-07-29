@@ -2,35 +2,33 @@
 
 {include file='formError'}
 
+<p class="info">{lang}wcf.user.newPassword.info{/lang}</p>
+
 <form method="post" action="{link controller='NewPassword'}{/link}">
 	<div class="section">
-		<dl{if $errorField == 'userID'} class="formError"{/if}>
-			<dt>
-				<label for="userID">{lang}wcf.user.userID{/lang}</label>
-			</dt>
+		<dl{if $errorField == 'newPassword'} class="formError"{/if}>
+			<dt><label for="newPassword">{lang}wcf.user.newPassword{/lang}</label></dt>
 			<dd>
-				<input type="text" id="userID" name="u" value="{@$userID}" required class="medium">
-				{if $errorField == 'userID'}
+				<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium">
+					
+				{if $errorField == 'newPassword'}
 					<small class="innerError">
-						{lang}wcf.user.userID.error.{$errorType}{/lang}
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						{if $errorType == 'notSecure'}{lang}wcf.user.password.error.notSecure{/lang}{/if}
 					</small>
 				{/if}
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'lostPasswordKey'} class="formError"{/if}>
-			<dt>
-				<label for="lostPasswordKey">{lang}wcf.user.lostPasswordKey{/lang}</label>
-			</dt>
+		<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
+			<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 			<dd>
-				<input type="text" id="lostPasswordKey" name="k" value="{$lostPasswordKey}" required class="medium">
-				{if $errorField == 'lostPasswordKey'}
+				<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium">
+					
+				{if $errorField == 'confirmNewPassword'}
 					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.user.lostPasswordKey.error.{$errorType}{/lang}
-						{/if}
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						{if $errorType == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}
 					</small>
 				{/if}
 			</dd>
