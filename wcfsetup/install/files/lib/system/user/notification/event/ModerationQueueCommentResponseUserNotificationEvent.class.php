@@ -3,9 +3,9 @@ namespace wcf\system\user\notification\event;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
-use wcf\system\email\Email;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\email\Email;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\WCF;
 

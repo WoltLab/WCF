@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email\mime;
+use Pelago\Emogrifier;
 use wcf\data\style\ActiveStyle;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\email\Mailbox;
@@ -72,7 +73,7 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 			$result = EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, $this->getTemplateVariables(), true);
 			
 			if ($this->mimeType === 'text/html') {
-				$emogrifier = new \Pelago\Emogrifier();
+				$emogrifier = new Emogrifier();
 				$emogrifier->disableInvisibleNodeRemoval();
 				
 				$emogrifier->setHtml($result);
