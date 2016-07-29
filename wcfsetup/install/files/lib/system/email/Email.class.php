@@ -482,7 +482,7 @@ class Email {
 			$mail = clone $this;
 			
 			if ($recipient['mailbox'] instanceof UserMailbox) {
-				$mail->addHeader('X-Community-Framework-Recipient', $recipient['mailbox']->getUser()->username);
+				$mail->addHeader('X-WoltLab-Suite-Recipient', $recipient['mailbox']->getUser()->username);
 			}
 			
 			if ($this->body instanceof IRecipientAwareMimePart) $this->body->setRecipient($recipient['mailbox']);
