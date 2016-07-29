@@ -225,7 +225,7 @@ class PackageInstallationDispatcher {
 						$statement->execute([
 							'debug',
 							'mail_send_method'
-						])
+						]);
 					}
 					
 					// update options.inc.php
