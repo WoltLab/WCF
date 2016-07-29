@@ -2542,18 +2542,12 @@ Errors are:
 		<item name="wcf.moderation.markAllAsRead.confirmMessage"><![CDATA[Do you really want to mark all entries as read?]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[No more items.]]></item>
-		<item name="wcf.moderation.notification.comment.mail"><![CDATA[{if !$author->userID}a guest{else}{@$author->username}{/if} wrote a comment on the moderation entry "{$moderationQueue->getTitle()}":
-{if $notificationType == 'instant'}
----------------------------------
-{@$comment->message} 
----------------------------------
-{/if}{$moderationQueue->getLink()}#comments]]></item>
-		<item name="wcf.moderation.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} and {#$others} other users{/if} wrote comments on the moderation entry "{$moderationQueue->getTitle()}":
-{$moderationQueue->getLink()}#comments]]></item>
-		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on the moderation entry <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
-		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} wrote comments on the moderation entry <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
 		<item name="wcf.moderation.notification.comment.title"><![CDATA[New comment (Moderation)]]></item>
 		<item name="wcf.moderation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Moderation)]]></item>
+		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on the moderation entry <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} wrote comments on the moderation entry <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a comment{else}comments{/if} on the moderation entry {$notificationContent[variables][moderationQueue]->getTitle()} [URL:{$notificationContent[variables][moderationQueue]->getLink()}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+		<item name="wcf.moderation.notification.comment.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a comment{else}comments{/if} on the moderation entry <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.moderation.notification.commentResponse.mail"><![CDATA[{if !$author->userID}a guest{else}{@$author->username}{/if} wrote a reply to {@$commentAuthor->username}’s comment on the moderation entry "{$moderationQueue->getTitle()}":
 {if $notificationType == 'instant'}
 ---------------------------------
@@ -2599,18 +2593,12 @@ Errors are:
 		<item name="wcf.moderation.activation.content"><![CDATA[Content awaiting approval]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Approve]]></item>
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
-		<item name="wcf.moderation.activation.notification.comment.mail"><![CDATA[{if !$author->userID}a guest{else}{@$author->username}{/if} wrote a comment on "{$moderationQueue->getTitle()}" waiting for approval:
-{if $notificationType == 'instant'}
----------------------------------
-{@$comment->message} 
----------------------------------
-{/if}{$moderationQueue->getLink()}#comments]]></item>
-		<item name="wcf.moderation.activation.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} and {#$others} other users{/if} wrote comments on "{$moderationQueue->getTitle()}" waiting for approval:
-{$moderationQueue->getLink()}#comments]]></item>
-		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
-		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} wrote comments on <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[New comment (Approval)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Approval)]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} wrote comments on <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a comment{else}comments{/if} on {$notificationContent[variables][moderationQueue]->getTitle()} [URL:{$notificationContent[variables][moderationQueue]->getLink()}] waiting for approval{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+		<item name="wcf.moderation.activation.notification.comment.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a comment{else}comments{/if} on the moderation entry <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> waiting for approval:</p>]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail"><![CDATA[{if !$author->userID}a guest{else}{@$author->username}{/if} wrote a reply to {@$commentAuthor->username}’s comment on "{$moderationQueue->getTitle()}" waiting for approval:
 {if $notificationType == 'instant'}
 ---------------------------------
@@ -2631,18 +2619,12 @@ Errors are:
 		<item name="wcf.moderation.report"><![CDATA[Report]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
-		<item name="wcf.moderation.report.notification.comment.mail"><![CDATA[{if !$author->userID}a guest{else}{@$author->username}{/if} wrote a comment on the report "{$moderationQueue->getTitle()}":
-{if $notificationType == 'instant'}
----------------------------------
-{@$comment->message} 
----------------------------------
-{/if}{$moderationQueue->getLink()}#comments]]></item>
-		<item name="wcf.moderation.report.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{/if}{else}{@$authors[0]->username} and {#$others} other users{/if} wrote comments on the report "{$moderationQueue->getTitle()}":
-{$moderationQueue->getLink()}#comments]]></item>
-		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
-		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} wrote comments on the report <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
 		<item name="wcf.moderation.report.notification.comment.title"><![CDATA[New comment (Report)]]></item>
 		<item name="wcf.moderation.report.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Report)]]></item>
+		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a comment on the report <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} wrote comments on the report <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.report.notification.comment.mail.plaintext"><![CDATA[{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a comment{else}comments{/if} on the report {$notificationContent[variables][moderationQueue]->getTitle()} [URL:{$notificationContent[variables][moderationQueue]->getLink()}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+		<item name="wcf.moderation.report.notification.comment.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a comment{else}comments{/if} on the report <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.mail"><![CDATA[{if !$author->userID}a guest{else}{@$author->username}{/if} wrote a reply to {@$commentAuthor->username}’s comment on the report "{$moderationQueue->getTitle()}":
 {if $notificationType == 'instant'}
 ---------------------------------

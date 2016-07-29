@@ -4,6 +4,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
+use wcf\system\email\Email;
 use wcf\system\moderation\queue\IModerationQueueHandler;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\WCF;
@@ -50,29 +51,19 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable($this->languageItemPrefix.'.comment.mail.stacked', [
-				'author' => $this->author,
-				'authors' => array_values($authors),
-				'count' => $count,
-				'others' => $count - 1,
+		return [
+			'message-id' => 'com.woltlab.wcf.moderation.queue.notification/'.$this->getUserNotificationObject()->commentID,
+			'template' => 'email_notification_moderationQueueComment',
+			'application' => 'wcf',
+			'references' => [
+				'<com.woltlab.wcf.moderation.queue/'.$this->moderationQueue->queueID.'@'.Email::getHost().'>'
+			],
+			'variables' => [
 				'moderationQueue' => $this->moderationQueue,
-				'notificationType' => $notificationType
-			]);
-		}
-		
-		return $this->getLanguage()->getDynamicVariable($this->languageItemPrefix.'.comment.mail', [
-			'comment' => $this->userNotificationObject,
-			'author' => $this->author,
-			'moderationQueue' => $this->moderationQueue,
-			'notificationType' => $notificationType
-		]);
+				'notificationType' => $notificationType,
+				'languageItemPrefix' => $this->languageItemPrefix
+			]
+		];
 	}
 	
 	/**
