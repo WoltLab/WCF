@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -51,20 +53,10 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$authors = array_values($this->getAuthors());
-		$count = count($authors);
-		
-		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail.stacked', [
-				'author' => $this->author,
-				'authors' => $authors,
-				'count' => $count,
-				'others' => $count - 1,
-				'notificationType' => $notificationType
-			]);
-		}
-		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail', ['author' => $this->author]);
+		return [
+			'template' => 'email_notification_userFollowFollowing',
+			'application' => 'wcf'
+		];
 	}
 	
 	/**

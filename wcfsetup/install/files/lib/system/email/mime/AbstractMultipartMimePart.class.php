@@ -76,7 +76,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 			$content .= "\r\n";
 			switch ($part->getContentTransferEncoding()) {
 				case 'quoted-printable':
-					$content .= quoted_printable_encode($part->getContent());
+					$content .= quoted_printable_encode(str_replace("\n", "\r\n", StringUtil::unifyNewlines($part->getContent())));
 				break;
 				case 'base64':
 					$content .= chunk_split(base64_encode($part->getContent()));

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\email\mime;
+use wcf\data\style\ActiveStyle;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\email\Mailbox;
 use wcf\system\template\EmailTemplateEngine;
 use wcf\system\WCF;
@@ -39,12 +41,12 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 	/**
 	 * Creates a new AbstractRecipientAwareTextMimePart.
 	 * 
-	 * @param	string	$content	Content of this text part (this is passed to the template).
 	 * @param	string	$mimeType	Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
 	 * @param	string	$template	Template to evaluate
 	 * @param	string	$application	Application of the template to evaluate (default: wcf)
+	 * @param	mixed	$content	Content of this text part. Passend as 'content' to the template. If it is an array it will additionally be merged with the template variables.
 	 */
-	public function __construct($content, $mimeType, $template, $application = 'wcf') {
+	public function __construct($mimeType, $template, $application = 'wcf', $content = null) {
 		parent::__construct($content, $mimeType);
 		
 		$this->template = $template;
@@ -67,14 +69,61 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 		try {
 			if ($this->mailbox) WCF::setLanguage($this->mailbox->getLanguage()->languageID);
 			
-			return EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, [
-				'content' => $this->content,
-				'mimeType' => $this->mimeType,
-				'mailbox' => $this->mailbox
-			], true);
+			$result = EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, $this->getTemplateVariables(), true);
+			
+			if ($this->mimeType === 'text/html') {
+				$emogrifier = new \Pelago\Emogrifier();
+				$emogrifier->disableInvisibleNodeRemoval();
+				
+				$emogrifier->setHtml($result);
+				
+				$result = $emogrifier->emogrify();
+			}
+			else if ($this->mimeType === 'text/plain') {
+				$counter = 1;
+				$urls = [];
+				$result = preg_replace_callback('~\[URL:(https?://[^\]\s]*)\]~', function ($matches) use (&$counter, &$urls) {
+					if (!isset($urls[$matches[1]])) {
+						$urls[$matches[1]] = $counter++;
+					}
+					
+					return '['.$urls[$matches[1]].']';
+				}, $result);
+				$result = preg_replace_callback('/(\r?\n-- \r?\n|$)/', function ($matches) use ($urls) {
+					$list = '';
+					foreach ($urls as $url => $number) {
+						$list .= "\r\n[".$number."] ".$url;
+					}
+					return $list."\r\n".$matches[0];
+				}, $result, 1);
+			}
+			
+			return $result;
 		}
 		finally {
 			WCF::setLanguage($language->languageID);
 		}
+	}
+	
+	/**
+	 * Returns the templates variables to be passed to the EmailTemplateEngine.
+	 * 
+	 * @return	mixed[]
+	 */
+	protected function getTemplateVariables() {
+		$styleCache = StyleCacheBuilder::getInstance()->getData();
+		
+		$result = [
+			'content' => $this->content,
+			'mimeType' => $this->mimeType,
+			'mailbox' => $this->mailbox,
+			'style' => new ActiveStyle($styleCache['styles'][$styleCache['default']])
+		];
+		
+		if (is_array($this->content)) {
+			return array_merge($result, $this->content);
+		}
+		
+		return $result;
 	}
 }

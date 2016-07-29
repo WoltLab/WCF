@@ -4,7 +4,10 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -147,8 +150,14 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		$this->user = new User($this->user->userID);
 		
 		// send activation mail
-		$mail = new Mail([$this->user->username => (!empty($this->email) ? $this->email : $this->user->email)], WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail', ['user' => $this->user]));
-		$mail->send();
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($this->user));
+		$email->setSubject(WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+			new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation')
+		]));
+		$email->send();
 		$this->saved();
 		
 		// forward to index page

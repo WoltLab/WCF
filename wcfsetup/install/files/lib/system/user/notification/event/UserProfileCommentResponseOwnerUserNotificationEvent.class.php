@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\email\Email;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\WCF;
@@ -97,33 +98,18 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 			]);
 		}
 		
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.mail.stacked', [
-				'author' => $this->author,
-				'authors' => array_values($authors),
-				'commentAuthor' => $commentAuthor,
-				'count' => $count,
-				'notificationType' => $notificationType,
-				'others' => $count - 1,
-				'owner' => $owner,
-				'response' => $this->userNotificationObject,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			]);
-		}
+		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.mail', [
-			'response' => $this->userNotificationObject,
-			'author' => $this->author,
-			'commentAuthor' => $commentAuthor,
-			'owner' => $owner,
-			'notificationType' => $notificationType
-		]);
+		return [
+			'template' => 'email_notification_userProfileCommentResponseOwner',
+			'application' => 'wcf',
+			'in-reply-to' => [$messageID],
+			'references' => [$messageID],
+			'variables' => [
+				'commentAuthor' => $commentAuthor,
+				'owner' => $owner
+			]
+		];
 	}
 	
 	/**

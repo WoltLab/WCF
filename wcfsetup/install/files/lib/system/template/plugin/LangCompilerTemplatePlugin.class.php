@@ -23,7 +23,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 		
 		$tagArgs = $compiler->makeArgString($tagArgs);
 		return "<?php
-			\$this->tagStack[] = array('lang', array($tagArgs));
+			\$this->tagStack[] = array('lang', array_merge(\$this->v, array($tagArgs)));
 			ob_start();
 			?>";
 	}

@@ -71,15 +71,23 @@ class Style extends DatabaseObject {
 	
 	/**
 	 * Returns a specific style variable or null if not found.
+	 * If $toHex is set to true the color defined by the variable
+	 * will be converted to the hexadecimal notation (e.g. for use
+	 * in emails)
 	 * 
 	 * @param	string		$variableName
+	 * @param	boolean		$toHex
 	 * @return	string
 	 */
-	public function getVariable($variableName) {
+	public function getVariable($variableName, $toHex = false) {
 		if (isset($this->variables[$variableName])) {
 			// check if variable is empty
 			if ($this->variables[$variableName] == '~""') {
 				return '';
+			}
+			
+			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), 1\)$/', $this->variables[$variableName], $matches)) {
+				return sprintf('#%02x%02x%02x', $matches[1], $matches[2], $matches[3]);
 			}
 			
 			return $this->variables[$variableName];

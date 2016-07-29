@@ -450,7 +450,7 @@ class Email {
 		
 		switch ($this->body->getContentTransferEncoding()) {
 			case 'quoted-printable':
-				return quoted_printable_encode($this->body->getContent());
+				return quoted_printable_encode(str_replace("\n", "\r\n", StringUtil::unifyNewlines($this->body->getContent())));
 			break;
 			case 'base64':
 				return chunk_split(base64_encode($this->body->getContent()));
