@@ -175,14 +175,16 @@ class PreParser extends SingletonFactory {
 		static $userRegex = null;
 		if ($userRegex === null) {
 			$userRegex = new Regex("
-				(?:^|(?<=\s|\]))				# either at start of string, or after whitespace
+				(?:^|(?<=\s|\]))					# either at start of string, or after whitespace
 				@
 				(
-					([^',\s][^,\s]{2,})(?:\s[^,\s]+)?	# either at most two strings, not containing
-										# whitespace or the comma, not starting with a single quote
-										# separated by a single whitespace character
+					([^',\s][^,\s]{2,})(?:\s[^@,\s][^,\s]*)?	# either at most two strings,
+											# not containing the whitespace or the comma,
+											# not starting with a single quote
+											# the second string not starting with the at sign
+											# separated by a single whitespace character
 				|
-					'(?:''|[^']){3,}'			# or a string delimited by single quotes
+					'(?:''|[^']){3,}'				# or a string delimited by single quotes
 				)
 			", Regex::IGNORE_WHITESPACE);
 		}
@@ -250,14 +252,16 @@ class PreParser extends SingletonFactory {
 				
 				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {
 					// containing the full match
-					$usernames = [$matches[1]];
+					$usernames = [
+						'full' => $matches[1]
+					];
 					
 					// containing only the part before the first space
-					if (isset($matches[2])) $usernames[] = $matches[2];
+					if (isset($matches[2])) $usernames['part'] = $matches[2];
 					
 					$usernames = array_map([PreParser::class, 'getUsername'], $usernames);
 					
-					foreach ($usernames as $username) {
+					foreach ($usernames as $type => $username) {
 						if (!isset($users[$username])) continue;
 						$link = LinkHandler::getInstance()->getLink('User', [
 							'appendSession' => false,
@@ -267,8 +271,8 @@ class PreParser extends SingletonFactory {
 						$mention = "[url='".$link."']@".$users[$username]->username.'[/url]';
 						
 						// check if only the part before the first space matched, in that case append the second word
-						if (isset($matches[2]) && strcasecmp($matches[2], $username) === 0) {
-							$mention .= mb_substr($matches[1], strlen($matches[2]));
+						if ($type === 'part') {
+							$mention .= mb_substr($matches[1], mb_strlen($matches[2]));
 						}
 						
 						return $mention;

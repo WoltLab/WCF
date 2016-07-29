@@ -173,8 +173,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 					throw new PermissionDeniedException();
 				}
 			}
-			
-			throw new PermissionDeniedException();
+			else {
+				throw new PermissionDeniedException();
+			}
 		}
 	}
 	
