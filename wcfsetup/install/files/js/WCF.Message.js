@@ -437,7 +437,7 @@ WCF.Message.Preview = Class.extend({
 			$innerError = $('<small class="innerError" />').appendTo(this._textarea.parent());
 		}
 		
-		$innerError.html(data.returnValues.errorType);
+		$innerError.html((data.returnValues.errorType === 'empty' ? WCF.Language.get('wcf.global.form.error.empty') : data.returnValues.errorMessage));
 		
 		return false;
 	}
