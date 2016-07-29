@@ -149,7 +149,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			if ($user->activationCode) continue;
 			if ($user->banned) continue;
 			
-			$notifications = array_map(function ($notificationID) use ($notificationObjects, $eventObjects, $user, $objectTypes, $authors, $authorToNotification) {
+			$notifications = array_map(function ($notificationID) use ($notificationObjects, $eventObjects, $user, $objectTypes, $authors, $authorToNotification, $unknownAuthor) {
 				$notification = $notificationObjects[$notificationID];
 				
 				$className = $eventObjects[$notification->eventID]->className;
