@@ -1131,6 +1131,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google stellt <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.google.com/maps/documentation/javascript/get-api-key'|rawurlencode}" class="externalURL">hier</a> eine ausführliche Anleitung bereit, wie {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einen API-Schlüssel erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}.]]></item>
 		<item name="wcf.acp.option.suffix.days"><![CDATA[Tage]]></item>
 		<item name="wcf.acp.option.suffix.minutes"><![CDATA[Minuten]]></item>
+		<item name="wcf.acp.option.suffix.percent"><![CDATA[%]]></item>
 		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixel]]></item>
 		<item name="wcf.acp.option.suffix.seconds"><![CDATA[Sekunden]]></item>
 		<item name="wcf.acp.option.suffix.years"><![CDATA[Jahre]]></item>
