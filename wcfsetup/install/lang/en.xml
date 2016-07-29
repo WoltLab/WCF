@@ -2879,12 +2879,22 @@ Errors are:
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[The password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.lostPassword.mail"><![CDATA[Dear {@$username},
+		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-if you have lost your password you can request a new one using the link below.
-Request a new password: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}
+you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. You can change your password after clicking
+the following link:
 
-If you have not lost your password, you can safely ignore this email.]]></item>
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+
+If you don’t want to change your password you can simply wait. The request will expire at {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.]]></item>
+		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
+<p>you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>]]></item>
+		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Change Password]]></item>
+		<item name="wcf.user.lostPassword.mail.html.outro"><![CDATA[
+<p>If you don’t want to change your password you can simply wait. The request will expire at {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Security Key is invalid.]]></item>

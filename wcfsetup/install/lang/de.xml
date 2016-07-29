@@ -2838,12 +2838,25 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[Es wurde kein Benutzer mit der E-Mail-Adresse: „{$email}“ gefunden.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Das Kennwort für dieses Benutzerkonto wurde in den letzten 24 Stunden bereits einmal angefordert. Aus Sicherheitsgründen kann das Kennwort eines Benutzers nur einmal pro Tag angefordert werden. Sie können das Kennwort für dieses Benutzerkonto in {#$hours} Stunde{if $hours != 1}n{/if} erneut anfordern.]]></item>
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Kennwort vergessen auf der Website: {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.lostPassword.mail"><![CDATA[Hallo {@$username},
+		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}wenn du dein Kennwort vergessen hast, kannst du über folgenden Link ein neues Kennwort anfordern.{else}wenn Sie Ihr Kennwort vergessen haben, können Sie über folgenden Link ein neues Kennwort anfordern.{/if} 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Klicke{else}Klicken Sie{/if} hier, um ein neues Kennwort anzufordern: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}
+{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anders) hat{else}Sie (oder jemand anders) haben{/if} angegeben das Kennwort für das Benutzerkonto
+{@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] vergessen zu haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein{else}Sie können Ihr{/if} Kennwort
+nach einem Klick auf den Folgenden Link ändern:
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Falls du dein Kennwort nicht vergessen hast, kannst du diese E-Mail ignorieren.{else}Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignorieren.{/if}]]></item>
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+
+Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Kennwort nicht ändern {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann wird diese Anfrage
+am {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.]]></item>
+		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du (oder jemand anders) hat{else}Sie (oder jemand anders) haben{/if} angegeben das
+Kennwort für das Benutzerkonto {@$mailbox->getUser()->username} auf der Seite <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a> vergessen zu
+haben:</p>]]></item>
+		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Kennwort ändern]]></item>
+		<item name="wcf.user.lostPassword.mail.html.outro"><![CDATA[
+<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Kennwort nicht ändern {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if},
+dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhälst{else}Sie erhalten{/if} in Kürze eine E-Mail mit weiteren Informationen.]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Sicherheitsschlüssel]]></item>
 		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
