@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\system\email\mime\MimePartFacade;
-use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\request\LinkHandler;
 
 /**
