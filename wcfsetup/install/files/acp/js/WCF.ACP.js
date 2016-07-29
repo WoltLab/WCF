@@ -1921,28 +1921,19 @@ WCF.ACP.User.BanHandler = {
 			}
 		}, this));
 		
-		// bind listener
-		$('.jsClipboardEditor').each($.proxy(function(index, container) {
-			var $container = $(container);
-			var $types = eval($container.data('types'));
-			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
-				$container.on('clipboardAction', $.proxy(this._execute, this));
-				return false;
-			}
-		}, this));
+		require(['EventHandler'], function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.user', this._clipboardAction.bind(this));
+		}.bind(this));
 	},
 	
 	/**
-	 * Handles clipboard actions.
-	 * 
-	 * @param	object		event
-	 * @param	string		type
-	 * @param	string		actionName
-	 * @param	object		parameters
+	 * Reacts to executed clipboard actions.
+	 *
+	 * @param	{object<string, *>}	actionData	data of the executed clipboard action
 	 */
-	_execute: function(event, type, actionName, parameters) {
-		if (actionName == 'com.woltlab.wcf.user.ban') {
-			this.ban(parameters.objectIDs);
+	_clipboardAction: function(actionData) {
+		if (actionData.data.actionName === 'com.woltlab.wcf.user.ban') {
+			this.ban(actionData.data.parameters.objectIDs);
 		}
 	},
 	
@@ -2136,28 +2127,19 @@ WCF.ACP.User.EnableHandler = {
 			}
 		}, this));
 		
-		// bind listener
-		$('.jsClipboardEditor').each($.proxy(function(index, container) {
-			var $container = $(container);
-			var $types = eval($container.data('types'));
-			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
-				$container.on('clipboardAction', $.proxy(this._execute, this));
-				return false;
-			}
-		}, this));
+		require(['EventHandler'], function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.user', this._clipboardAction.bind(this));
+		}.bind(this));
 	},
 	
 	/**
-	 * Handles clipboard actions.
-	 * 
-	 * @param	object		event
-	 * @param	string		type
-	 * @param	string		actionName
-	 * @param	object		parameters
+	 * Reacts to executed clipboard actions.
+	 *
+	 * @param	{object<string, *>}	actionData	data of the executed clipboard action
 	 */
-	_execute: function(event, type, actionName, parameters) {
-		if (actionName == 'com.woltlab.wcf.user.enable') {
-			this.enable(parameters.objectIDs);
+	_clipboardAction: function(actionData) {
+		if (actionData.data.actionName === 'com.woltlab.wcf.user.enable') {
+			this.enable(actionData.data.parameters.objectIDs);
 		}
 	},
 	
@@ -2219,44 +2201,25 @@ WCF.ACP.User.EnableHandler = {
  */
 WCF.ACP.User.SendNewPasswordHandler = {
 	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
 	 * Initializes WCF.ACP.User.SendNewPasswordHandler on first use.
 	 */
 	init: function() {
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		// bind clipboard event listener
-		$('.jsClipboardEditor').each($.proxy(function(index, container) {
-			var $container = $(container);
-			var $types = eval($container.data('types'));
-			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
-				$container.on('clipboardAction', $.proxy(this._execute, this));
-				return false;
-			}
-		}, this));
+		require(['EventHandler'], function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.user', this._clipboardAction.bind(this));
+		}.bind(this));
 	},
 	
 	/**
-	 * Handles clipboard actions.
-	 * 
-	 * @param	object		event
-	 * @param	string		type
-	 * @param	string		actionName
-	 * @param	object		parameters
+	 * Reacts to executed clipboard actions.
+	 *
+	 * @param	{object<string, *>}	actionData	data of the executed clipboard action
 	 */
-	_execute: function(event, type, actionName, parameters) {
-		if (actionName == 'com.woltlab.wcf.user.sendNewPassword') {
-			WCF.System.Confirmation.show(parameters.confirmMessage, function(action) {
+	_clipboardAction: function(actionData) {
+		if (actionData.data.actionName === 'com.woltlab.wcf.user.sendNewPassword') {
+			WCF.System.Confirmation.show(actionData.data.parameters.confirmMessage, function(action) {
 				if (action === 'confirm') {
 					new WCF.ACP.Worker('sendingNewPasswords', 'wcf\\system\\worker\\SendNewPasswordWorker', WCF.Language.get('wcf.acp.user.sendNewPassword.workerTitle'), {
-						userIDs: parameters.objectIDs
+						userIDs: actionData.data.parameters.objectIDs
 					});
 				}
 			});
