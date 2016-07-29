@@ -382,6 +382,26 @@ class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * @inheritDoc
 	 */
+	protected function executeDropPrimaryKeyStatement($tableName) {
+		if ($this->test) {
+			if ($ownerPackageID = $this->getIndexOwnerID($tableName, '')) {
+				if ($ownerPackageID != $this->package->packageID) {
+					throw new SystemException("Cannot drop primary key from '".$tableName."'. A package can only drop own indices.");
+				}
+			}
+		}
+		else {
+// 			// log
+// 			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => '', 'packageID' => $this->package->packageID, 'action' => 'delete');
+			
+			// execute
+			parent::executeDropPrimaryKeyStatement($tableName);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function executeDropForeignKeyStatement($tableName, $indexName) {
 		if ($this->test) {
 			if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {

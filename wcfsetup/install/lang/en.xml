@@ -722,6 +722,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.item.link.internal"><![CDATA[Internal link]]></item>
 		<item name="wcf.acp.menu.item.list"><![CDATA[Menu Items]]></item>
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Parent Menu Item]]></item>
+		<item name="wcf.acp.menu.link.other"><![CDATA[Other]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -802,7 +803,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.module.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
-		<item name="wcf.acp.option.category.module.display"><![CDATA[Appearance]]></item>
+		<item name="wcf.acp.option.category.module.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
 		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
@@ -1142,6 +1143,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google provides a detailed description on how to get an API key <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.google.com/maps/documentation/javascript/get-api-key'|rawurlencode}" class="externalURL">here</a>.]]></item>
 		<item name="wcf.acp.option.suffix.days"><![CDATA[Days]]></item>
 		<item name="wcf.acp.option.suffix.minutes"><![CDATA[Minutes]]></item>
+		<item name="wcf.acp.option.suffix.percent"><![CDATA[%]]></item>
 		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixels]]></item>
 		<item name="wcf.acp.option.suffix.seconds"><![CDATA[Seconds]]></item>
 		<item name="wcf.acp.option.suffix.years"><![CDATA[Years]]></item>
@@ -2263,6 +2265,7 @@ Errors are:
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
+		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		
 		<item name="wcf.editor.spoiler.label"><![CDATA[Label]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
@@ -2428,6 +2431,8 @@ Errors are:
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[More Likes]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no more likes]]></item>
+		<item name="wcf.like.dislikes.more"><![CDATA[More Dislikes]]></item>
+		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[There are no more dislikes]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Article]]></item>

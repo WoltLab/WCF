@@ -20,6 +20,7 @@
 			{* WoltLab *}
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAlignment.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAttachment.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAutosave.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabBlock.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabButton.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabCode.js?v={@LAST_UPDATE_TIME}',
@@ -47,7 +48,7 @@
 		
 		{event name='redactorJavaScript'}
 	], function () {
-		require(['Language', 'WoltLab/WCF/Ui/Redactor/Metacode'], function(Language, UiRedactorMetacode) {
+		require(['Language', 'WoltLab/WCF/Ui/Redactor/Autosave', 'WoltLab/WCF/Ui/Redactor/Metacode'], function(Language, UiRedactorAutosave, UiRedactorMetacode) {
 			Language.addObject({
 				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
 				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',
@@ -79,6 +80,7 @@
 				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',
 				'wcf.editor.quote.url': '{lang}wcf.editor.quote.url{/lang}',
 				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}',
+				'wcf.editor.quote.url.error.invalid': '{lang}wcf.editor.quote.url.error.invalid{/lang}',
 				
 				'wcf.editor.spoiler.label': '{lang}wcf.editor.spoiler.label{/lang}',
 				'wcf.editor.spoiler.label.description': '{lang}wcf.editor.spoiler.label.description{/lang}',
@@ -86,7 +88,7 @@
 				'wcf.editor.spoiler.title': '{lang __literal=true}wcf.editor.spoiler.title{/lang}'
 			});
 			
-			var buttons = [], buttonOptions = [], customButtons = [];
+			var buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
 			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
@@ -97,9 +99,10 @@
 			var element = elById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 			UiRedactorMetacode.convert(element);
 			
-			var autosave = elData(element, 'autosave') || '';
+			var autosave = elData(element, 'autosave') || null;
 			if (autosave) {
-				element.removeAttribute('data-autosave');
+				autosave = new UiRedactorAutosave(element);
+				element.value = autosave.getInitialValue();
 			}
 			
 			var config = {
@@ -158,6 +161,7 @@
 					// WoltLab core
 					'WoltLabAlignment',
 					'WoltLabAttachment',
+					'WoltLabAutosave',
 					'WoltLabCode',
 					'WoltLabColor',
 					'WoltLabDropdown',
@@ -175,6 +179,7 @@
 				woltlab: {
 					autosave: autosave,
 					buttons: buttonOptions,
+					buttonMobile: buttonMobile,
 					customButtons: customButtons,
 					highlighters: highlighters
 				}

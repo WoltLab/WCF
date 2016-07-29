@@ -2,6 +2,7 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
 use wcf\data\application\Application;
+use wcf\data\application\ApplicationAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
@@ -83,6 +84,12 @@ class UninstallPackageAction extends InstallPackageAction {
 		WCF::getTPL()->assign([
 			'queue' => $queue
 		]);
+		
+		// mark package as tainted if it is an app
+		if ($package->isApplication) {
+			$applicationAction = new ApplicationAction([$package->packageID], 'markAsTainted');
+			$applicationAction->executeAction();
+		}
 		
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($queue->processNo, $this->installation->nodeBuilder->getNextNode());
 		$this->data = [

@@ -425,6 +425,25 @@ define(
 			
 			var id = this._getEditorId();
 			
+			// add any available settings
+			var settingsContainer = elById('settings_' + id);
+			if (settingsContainer) {
+				elBySelAll('input, select, textarea', settingsContainer, function (element) {
+					if (element.nodeName === 'INPUT' && (element.type === 'checkbox' || element.type === 'radio')) {
+						if (!element.checked) {
+							return;
+						}
+					}
+					
+					var name = element.name;
+					if (parameters.hasOwnProperty(name)) {
+						throw new Error("Variable overshadowing, key '" + name + "' is already present.");
+					}
+					
+					parameters[name] = element.value.trim();
+				});
+			}
+			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
 			
 			if (!this._validate(parameters)) {
@@ -488,8 +507,10 @@ define(
 		 * @protected
 		 */
 		_showMessage: function(data) {
-			var elementData = this._elements.get(this._activeElement);
-			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageBody);
+			var activeElement = this._activeElement;
+			var editorId = this._getEditorId();
+			var elementData = this._elements.get(activeElement);
+			var attachmentLists = elBySelAll('.attachmentThumbnailList, .attachmentFileList', elementData.messageFooter);
 			
 			// set new content
 			//noinspection JSUnresolvedVariable
@@ -507,7 +528,7 @@ define(
 				DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 				
 				while (element.childNodes.length) {
-					elementData.messageBody.appendChild(element.childNodes[0]);
+					elementData.messageFooter.appendChild(element.childNodes[0]);
 				}
 			}
 			
@@ -531,7 +552,9 @@ define(
 			
 			this._restoreMessage();
 			
-			this._updateHistory(this._getHash(this._getObjectId(this._activeElement)));
+			this._updateHistory(this._getHash(this._getObjectId(activeElement)));
+			
+			EventHandler.fire('com.woltlab.wcf.redactor', 'autosaveDestroy_' + editorId);
 			
 			UiNotification.show();
 			
@@ -575,6 +598,7 @@ define(
 		 * @protected
 		 */
 		_destroyEditor: function() {
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'autosaveDestroy_' + this._getEditorId());
 			EventHandler.fire('com.woltlab.wcf.redactor', 'destroy_' + this._getEditorId());
 		},
 		

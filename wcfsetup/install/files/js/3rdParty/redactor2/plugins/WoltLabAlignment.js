@@ -1,4 +1,4 @@
-$.Redactor.prototype.WoltLabAlignment  = function() {
+$.Redactor.prototype.WoltLabAlignment = function() {
 	"use strict";
 	
 	return {

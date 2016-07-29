@@ -222,7 +222,7 @@
 <body>
 	<header class="header">
 		<div class="logo">
-			<a href="{link}{/link}"><amp-img width="288" height="40" src="{@$__wcf->getPath()}images/default-logo.png"></amp-img></a>{* @TODO *}
+			<a href="{link}{/link}"><amp-img width="{@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoWidth')}" height="{@$__wcf->getStyleHandler()->getStyle()->getVariable('pageLogoHeight')}" src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}"></amp-img></a>
 		</div>
 		
 		<button on='tap:sidebar.toggle'>{lang}wcf.global.page.pagination{/lang}</button>

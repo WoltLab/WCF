@@ -480,6 +480,9 @@ class StyleAddForm extends AbstractForm {
 			'individualScss',
 			'overrideScss',
 			'pageLogo',
+			'pageLogoWidth',
+			'pageLogoHeight',
+			'pageLogoMobile',
 			'useFluidLayout',
 			'useGoogleFont',
 			'wcfFontFamilyGoogle',
@@ -540,7 +543,7 @@ class StyleAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset variables
-		$this->authorName = $this->authorURL = $this->copyright = $this->packageName = $this->image = '';
+		$this->authorName = $this->authorURL = $this->copyright = $this->packageName = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		
 		$this->imagePath = 'images/';

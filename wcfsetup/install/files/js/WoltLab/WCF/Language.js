@@ -57,7 +57,12 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 			
 			if (typeof value === 'string') {
 				// lazily convert to WCF.Template
-				_languageItems.set(key, new Template(value));
+				try {
+					_languageItems.set(key, new Template(value));
+				}
+				catch (e) {
+					_languageItems.set(key, new Template('{literal}' + value.replace(/\{\/literal\}/g, '{/literal}{ldelim}/literal}{literal}') + '{/literal}'));
+				}
 				value = _languageItems.get(key);
 			}
 			

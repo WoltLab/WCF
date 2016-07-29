@@ -261,17 +261,17 @@ class WCF {
 		}
 		catch (\Throwable $e2) {
 			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
-			echo $e2;
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
 			echo "\n\nwas thrown while:\n\n";
-			echo $e;
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
 			echo "\n\nwas handled.</pre>";
 			exit;
 		}
 		catch (\Exception $e2) {
 			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
-			echo $e2;
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
 			echo "\n\nwas thrown while:\n\n";
-			echo $e;
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
 			echo "\n\nwas handled.</pre>";
 			exit;
 		}
@@ -460,11 +460,6 @@ class WCF {
 			$this->getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
 		}
 		
-		// TODO: this is required for the uninstallation of applications, find a different solution!
-		if (PACKAGE_ID == 1) {
-			//return;
-		}
-		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		if ($application->packageID != 1) {
@@ -480,6 +475,10 @@ class WCF {
 		foreach ($applications as $application) {
 			if ($application->packageID == 1) {
 				// ignore WCF
+				continue;
+			}
+			else if ($application->isTainted) {
+				// ignore apps flagged for uninstallation
 				continue;
 			}
 			

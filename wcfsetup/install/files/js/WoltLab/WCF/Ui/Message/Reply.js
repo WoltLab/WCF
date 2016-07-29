@@ -260,7 +260,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		 * @protected
 		 */
 		_insertMessage: function(data) {
-			// TODO: clear autosave content and disable it
+			this._getEditor().WoltLabAutosave.reset();
 			
 			// redirect to new page
 			//noinspection JSUnresolvedVariable
@@ -294,8 +294,6 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				}
 				
 				UiNotification.show(Language.get(this._options.successMessage));
-				
-				// TODO: resume autosave
 				
 				if (this._options.quoteManager) {
 					this._options.quoteManager.countQuotes();

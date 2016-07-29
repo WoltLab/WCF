@@ -26,6 +26,7 @@
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
 		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
+		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}', '{@$__wcf->getPath()}images/');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
@@ -231,15 +232,6 @@
 					<dd>
 						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage">
 						<div id="uploadImage"></div>
-						{if $errorField == 'image'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 				</dl>
@@ -355,19 +347,35 @@
 					<dd>
 						<img src="" alt="" id="styleLogo" style="max-width: 100%">
 						<div id="uploadLogo"></div>
-						{if $errorField == 'image'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
 					</dd>
 					<dd>
 						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long">
 						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="pageLogoWidth">{lang}wcf.acp.style.globals.pageLogo.width{/lang}</label></dt>
+					<dd>
+						<input type="number" name="pageLogoWidth" id="pageLogoWidth" value="{$variables[pageLogoWidth]}" class="tiny">
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="pageLogoHeight">{lang}wcf.acp.style.globals.pageLogo.height{/lang}</label></dt>
+					<dd>
+						<input type="number" name="pageLogoHeight" id="pageLogoHeight" value="{$variables[pageLogoHeight]}" class="tiny">
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
+					<dd>
+						<img src="" alt="" id="styleLogoMobile" style="max-width: 100%">
+						<div id="uploadLogoMobile"></div>
+					</dd>
+					<dd>
+						<input type="text" name="pageLogoMobile" id="pageLogoMobile" value="{$variables[pageLogoMobile]}" class="long">
+						<small>{lang}wcf.acp.style.globals.pageLogoMobile.description{/lang}</small>
 					</dd>
 				</dl>
 				

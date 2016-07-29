@@ -2306,12 +2306,12 @@ if (window.WCF.Language == null) {
 	 */
 	WCF.Language = {
 		add: function(key, value) {
-			require(['WoltLab/WCF/Language'], function(Language) {
+			require(['Language'], function(Language) {
 				Language.add(key, value);
 			});
 		},
 		addObject: function(object) {
-			require(['WoltLab/WCF/Language'], function(Language) {
+			require(['Language'], function(Language) {
 				Language.addObject(object);
 			});
 		},

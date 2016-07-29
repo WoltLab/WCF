@@ -1,5 +1,5 @@
 {* main menu / page options / breadcrumbs *}
-<div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png"> {* TODO: use real path *}
+<div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}">
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
 		<li class="menuOverlayTitle">{lang}wcf.menu.page.navigation{/lang}</li>
 		{*<li class="menuOverlayItem">
@@ -72,7 +72,7 @@
 </div>
 
 {* user menu *}
-<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
+<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}">
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
 		{if $__wcf->user->userID}
 			{* logged-in *}

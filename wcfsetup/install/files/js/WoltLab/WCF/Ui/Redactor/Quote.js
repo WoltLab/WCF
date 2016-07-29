@@ -173,10 +173,25 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			event.preventDefault();
 			
 			var id = 'redactor-quote-' + this._elementId;
+			var urlInput = elById(id + '-url');
+			var innerError = elBySel('.innerError', urlInput.parentNode);
+			if (innerError !== null) elRemove(innerError);
 			
-			['author', 'url'].forEach((function (attr) {
-				elData(this._blockquote, attr, elById(id + '-' + attr).value);
-			}).bind(this));
+			var url = urlInput.value.replace(/\u200B/g, '').trim();
+			// simple test to check if it at least looks like it could be a valid url
+			if (url.length && !/^https?:\/\/[^\/]+/.test(url)) {
+				innerError = elCreate('small');
+				innerError.className = 'innerError';
+				innerError.textContent = Language.get('wcf.editor.quote.url.error.invalid');
+				urlInput.parentNode.insertBefore(innerError, urlInput.nextElementSibling);
+				return;
+			}
+			
+			// set author
+			elData(this._blockquote, 'author', elById(id + '-author').value);
+			
+			// set url
+			elData(this._blockquote, 'url', url);
 			
 			this._setTitle(this._blockquote);
 			this._editor.caret.after(this._blockquote);

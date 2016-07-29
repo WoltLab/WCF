@@ -149,7 +149,8 @@ CREATE TABLE wcf1_application (
 	domainName VARCHAR(255) NOT NULL,
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
-	cookiePath VARCHAR(255) NOT NULL DEFAULT '/'
+	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
+	isTainted TINYINT(1) NOT DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_article;
@@ -1301,6 +1302,7 @@ CREATE TABLE wcf1_user (
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
+	KEY email (email),
 	KEY registrationDate (registrationDate),
 	KEY styleID (styleID),
 	KEY activationCode (activationCode),
@@ -1995,6 +1997,9 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individual
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSidebarOrientation', 'left');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideScss', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', '288');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', '40');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoMobile', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useGoogleFont', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackground', 'rgba(224, 224, 224, 1)');
