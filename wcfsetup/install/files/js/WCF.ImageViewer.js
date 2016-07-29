@@ -365,6 +365,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._bindListener();
 		
+		document.documentElement.classList.add('pageOverlayActive');
+		
 		return true;
 	},
 	
@@ -391,6 +393,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		WCF.System.DisableScrolling.enable();
 		WCF.System.DisableZoom.enable();
+		
+		document.documentElement.classList.remove('pageOverlayActive');
 		
 		return true;
 	},
