@@ -109,7 +109,14 @@ class UserClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return $this->__validateAccessibleGroups(array_keys($this->objects));
+		$userIDs = [];
+		foreach ($this->objects as $user) {
+			if (!$user->banned) {
+				$userIDs[] = $user->userID;
+			}
+		}
+		
+		return $this->__validateAccessibleGroups($userIDs);
 	}
 	
 	/**
