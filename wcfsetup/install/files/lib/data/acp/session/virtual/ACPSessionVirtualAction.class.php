@@ -38,6 +38,7 @@ class ACPSessionVirtualAction extends AbstractDatabaseObjectAction {
 		if (!isset($this->parameters['data']['ipAddress'])) $this->parameters['data']['ipAddress'] = UserUtil::getIpAddress();
 		if (!isset($this->parameters['data']['userAgent'])) $this->parameters['data']['userAgent'] = UserUtil::getUserAgent();
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create();
 	}
 }

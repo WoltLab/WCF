@@ -50,6 +50,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$this->parameters['data']['lastChangeTime'] = TIME_NOW;
 		}
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create();
 	}
 	
