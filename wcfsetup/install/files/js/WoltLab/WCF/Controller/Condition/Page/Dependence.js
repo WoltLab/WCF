@@ -6,32 +6,40 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Controller/Condition/Page/Dependence
  */
-define(['Dom/Traverse'], function(DomTraverse) {
+define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], function(DomChangeListener, DomTraverse, EventHandler, ObjectMap) {
 	"use strict";
 	
 	var _pages = elBySelAll('input[name="pageIDs[]"]');
+	var _dependentElements = [];
+	var _pageIds = new ObjectMap();
+	var _hiddenElements = new ObjectMap();
 	
-	/**
-	 * @constructor
-	 */
-	function ControllerConditionPageDependence(dependentElement, pageIds) {
-		this._dependentElement = dependentElement;
-		this._pageIds = pageIds;
-		
-		for (var i = 0, length = _pages.length; i < length; i++) {
-			_pages[i].addEventListener('change', this._checkVisibility.bind(this));
-		}
-		
-		// remove the dependent element before submit if it is hidden
-		DomTraverse.parentByTag(this._dependentElement, 'FORM').addEventListener('submit', function() {
-			if (this._dependentElement.style.getPropertyValue('display') === 'none') {
-				this._dependentElement.remove();
+	var _didInit = false;
+	
+	return {
+		register: function(dependentElement, pageIds) {
+			_dependentElements.push(dependentElement);
+			_pageIds.set(dependentElement, pageIds);
+			_hiddenElements.set(dependentElement, []);
+			
+			if (!_didInit) {
+				for (var i = 0, length = _pages.length; i < length; i++) {
+					_pages[i].addEventListener('change', this._checkVisibility.bind(this));
+				}
+				
+				_didInit = true;
 			}
-		}.bind(this));
+			
+			// remove the dependent element before submit if it is hidden
+			DomTraverse.parentByTag(dependentElement, 'FORM').addEventListener('submit', function() {
+				if (dependentElement.style.getPropertyValue('display') === 'none') {
+					dependentElement.remove();
+				}
+			});
+			
+			this._checkVisibility();
+		},
 		
-		this._checkVisibility();
-	};
-	ControllerConditionPageDependence.prototype = {
 		/**
 		 * Checks if any of the relevant pages is selected. If that is the case, the dependent
 		 * element is shown, otherwise it is hidden.
@@ -39,17 +47,51 @@ define(['Dom/Traverse'], function(DomTraverse) {
 		 * @private
 		 */
 		_checkVisibility: function() {
-			var page;
-			for (var i = 0, length = _pages.length; i < length; i++) {
-				page = _pages[i];
+			var dependentElement, page, pageIds;
+			
+			depenentElementLoop: for (var i = 0, length = _dependentElements.length; i < length; i++) {
+				dependentElement = _dependentElements[i];
+				pageIds = _pageIds.get(dependentElement);
 				
-				if (page.checked && this._pageIds.indexOf(~~page.value) !== -1) {
-					elShow(this._dependentElement);
-					return;
+				for (var j = 0, length2 = _pages.length; j < length2; j++) {
+					page = _pages[j];
+					
+					if (page.checked && pageIds.indexOf(~~page.value) !== -1) {
+						this._showDependentElement(dependentElement);
+						
+						continue depenentElementLoop;
+					}
 				}
+				
+				this._hideDependentElement(dependentElement);
 			}
 			
-			elHide(this._dependentElement);
+			EventHandler.fire('com.woltlab.wcf.pageConditionDependence', 'checkVisivility');
+		},
+		
+		_hideDependentElement: function(dependentElement) {
+			elHide(dependentElement);
+			
+			var hiddenElements = _hiddenElements.get(dependentElement);
+			for (var i = 0, length = hiddenElements.length; i < length; i++) {
+				elHide(hiddenElements[i]);
+			}
+			
+			_hiddenElements.set(dependentElement, [])
+		},
+		
+		_showDependentElement: function(dependentElement) {
+			elShow(dependentElement);
+			
+			// make sure that all parent elements are also visible
+			var parentNode = dependentElement;
+			while ((parentNode = parentNode.parentNode) && parentNode instanceof Element) {
+				if (parentNode.style.getPropertyValue('display') === 'none') {
+					_hiddenElements.get(dependentElement).push(parentNode);
+				}
+				
+				elShow(parentNode);
+			}
 		}
 	};
 	

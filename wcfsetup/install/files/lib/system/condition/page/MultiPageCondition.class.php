@@ -43,7 +43,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 			if ($pageNode->getDepth() > 1) {
 				$fieldElement .= ' style="padding-left: '.($pageNode->getDepth()*20-20).'px"';
 			}
-			$fieldElement .= '><label><input type="checkbox" name="'.$this->fieldName.'[]" value="'.$pageNode->pageID.'"';
+			$fieldElement .= '><label><input type="checkbox" name="'.$this->fieldName.'[]" value="'.$pageNode->pageID.'" data-identifier="'.$pageNode->identifier.'"';
 			if (in_array($pageNode->pageID, $this->fieldValue)) {
 				$fieldElement .= ' checked';
 			}
