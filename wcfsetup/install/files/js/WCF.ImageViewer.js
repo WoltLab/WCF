@@ -1213,7 +1213,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		$(this.options.imageSelector).each(function(index, link) {
 			var $link = $(link);
-			var $thumbnail = $link.find('> img, .attachmentThumbnailImageScalable').first();
+			var $thumbnail = $link.find('> img, .attachmentThumbnailImage > img').first();
 			if (!$thumbnail.length) {
 				$thumbnail = $link.parentsUntil('.formAttachmentList').last().find('.attachmentTinyThumbnail');
 			}
