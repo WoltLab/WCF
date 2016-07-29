@@ -1761,13 +1761,24 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
-		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Dear {@$username},
-
-Your password has been changed by an administrator.
-Your new password is: {$password}
-
-Login with your new password: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
+
+an administrator resetted your password. You are now required to set a new password to be able to use your
+user account {@$mailbox->getUser()->username} on the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] again:
+
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+
+If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} you’ll have to use
+the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}] for security reasons.]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
+<p>an administrator resetted your password. You are now required to set a new password to be able to use your
+user account {@$mailbox->getUser()->username} on the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a> again:</p>]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Choose new password]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
+<p>If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} you’ll have to use
+the lost password form <a href="{link controller='LostPassword' isEmail=true}{/link}">lost password form</a> for security reasons.</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Sending New Passwords]]></item>
 		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Failed Login Attempts]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Environment]]></item>

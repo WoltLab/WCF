@@ -1,14 +1,19 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\PasswordUtil;
+use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 
 /**
  * Worker implementation for sending new passwords.
@@ -22,7 +27,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected $limit = 50;
+	protected $limit = 20;
 	
 	/**
 	 * @inheritDoc
@@ -47,7 +52,18 @@ class SendNewPasswordWorker extends AbstractWorker {
 		
 		/** @var UserEditor $userEditor */
 		foreach ($userList as $userEditor) {
-			$this->sendNewPassword($userEditor);
+			$this->resetPassword($userEditor);
+		}
+		
+		$userList = new UserList();
+		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
+		$userList->sqlLimit = $this->limit;
+		$userList->sqlOffset = $this->limit * $this->loopCount;
+		$userList->readObjects();
+		
+		/** @var User $user */
+		foreach ($userList as $user) {
+			$this->sendLink($user);
 		}
 	}
 	
@@ -73,25 +89,43 @@ class SendNewPasswordWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * Sends a new password to the given user.
+	 * Resets the password of the given user.
 	 * 
-	 * @param	\wcf\data\user\UserEditor	$userEditor
+	 * @param	UserEditor	$userEditor
 	 */
-	protected function sendNewPassword(UserEditor $userEditor) {
+	protected function resetPassword(UserEditor $userEditor) {
+		try {
+			$lostPasswordKey = bin2hex(CryptoUtil::randomBytes(20));
+			$lastLostPasswordRequestTime = TIME_NOW;
+		}
+		catch (CryptoException $e) {
+			$lostPasswordKey = null;
+			$lastLostPasswordRequestTime = 0;
+		}
 		$userAction = new UserAction([$userEditor], 'update', [
 			'data' => [
-				'password' => null
+				'password' => null,
+				'lostPasswordKey' => $lostPasswordKey,
+				'lastLostPasswordRequestTime' => $lastLostPasswordRequestTime
 			]
 		]);
 		$userAction->executeAction();
-		
-		// send mail
-		// TODO: Send link
-		$mail = new Mail([$userEditor->username => $userEditor->email], $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail', [
-			'password' => $newPassword,
-			'username' => $userEditor->username
+	}
+	
+	/**
+	 * Send links.
+	 * 
+	 * @param	User	$user
+	 */
+	protected function sendLink(User $user) {
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($user));
+		$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_sendNewPassword'),
+			new RecipientAwareTextMimePart('text/plain', 'email_sendNewPassword')
 		]));
-		$mail->send();
+		$email->send();
 	}
 	
 	/**

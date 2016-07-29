@@ -1795,6 +1795,27 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter <em>System -&gt; O
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke hier, um dich mit deinem{else}Klicken Sie hier, um sich mit Ihrem{/if} neuen Kennwort anzumelden: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
+
+ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort setzen, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie ihr {/if}
+Benutzerkonto {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]
+weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
+
+    {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} diese Nachricht erst nach dem {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} lesen, ist es
+aus Sicherheitsgründen erforderlich, dass Sie die Kennwort vergessen-Funktion [URL:{link controller='LostPassword' isEmail=true}{/link}] nutzen.]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
+<p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort setzen, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie ihr{/if}
+Benutzerkonto {@$mailbox->getUser()->username} auf der Seite <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>
+weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:</p>]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Neues Kennwort setzen]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} diese Nachricht erst nach dem {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} lesen, ist es
+aus Sicherheitsgründen erforderlich, dass Sie die <a href="{link controller='LostPassword' isEmail=true}{/link}">Kennwort vergessen-Funktion</a> nutzen.</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Neue Passwörter zusenden]]></item>
 		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Umgebung]]></item>
