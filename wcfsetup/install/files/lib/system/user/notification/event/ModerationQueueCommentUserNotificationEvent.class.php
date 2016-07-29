@@ -60,7 +60,6 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
 			],
 			'variables' => [
 				'moderationQueue' => $this->moderationQueue,
-				'notificationType' => $notificationType,
 				'languageItemPrefix' => $this->languageItemPrefix
 			]
 		];

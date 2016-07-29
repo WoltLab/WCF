@@ -3,6 +3,7 @@ namespace wcf\system\user\notification\event;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
+use wcf\system\email\Email;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
@@ -56,24 +57,6 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.mail.stacked', [
-				'author' => $this->author,
-				'authors' => array_values($authors),
-				'count' => $count,
-				'notificationType' => $notificationType,
-				'others' => $count - 1,
-				'moderationQueue' => $this->getModerationQueue(),
-				'response' => $this->userNotificationObject
-			]);
-		}
-		
 		$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
 		if ($comment->userID) {
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
@@ -82,13 +65,22 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			$commentAuthor = UserProfile::getGuestUserProfile($comment->username);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.mail', [
-			'author' => $this->author,
-			'commentAuthor' => $commentAuthor,
-			'moderationQueue' => $this->getModerationQueue(),
-			'notificationType' => $notificationType,
-			'response' => $this->userNotificationObject
-		]);
+		$messageID = '<com.woltlab.wcf.moderation.queue.notification/'.$comment->commentID.'@'.Email::getHost().'>';
+		
+		return [
+			'template' => 'email_notification_moderationQueueCommentResponse',
+			'application' => 'wcf',
+			'in-reply-to' => [$messageID],
+			'references' => [
+				'<com.woltlab.wcf.moderation.queue/'.$this->getModerationQueue()->queueID.'@'.Email::getHost().'>',
+				$messageID
+			],
+			'variables' => [
+				'moderationQueue' => $this->getModerationQueue(),
+				'commentAuthor' => $commentAuthor,
+				'languageItemPrefix' => $this->getLanguageItemPrefix()
+			]
+		];
 	}
 	
 	/**
