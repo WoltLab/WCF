@@ -10,6 +10,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
+use wcf\data\user\User;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
@@ -185,6 +186,20 @@ class PackageInstallationDispatcher {
 					$statement->execute([
 						StringUtil::getUUID(),
 						'wcf_uuid'
+					]);
+					
+					$user = new User(1);
+					$statement->execute([
+						$user->username,
+						'mail_from_name'
+					]);
+					$statement->execute([
+						$user->email,
+						'mail_from_address'
+					]);
+					$statement->execute([
+						$user->email,
+						'mail_admin_address'
 					]);
 					
 					try {
