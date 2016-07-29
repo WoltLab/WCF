@@ -12,7 +12,7 @@
 				<category name="module.user">
 					<parent>module</parent>
 				</category>
-				<category name="module.display">
+				<category name="module.customization">
 					<parent>module</parent>
 				</category>
 				<category name="module.content">
@@ -339,7 +339,7 @@
 			</option>
 			
 			<option name="module_smiley">
-				<categoryname>module.content</categoryname>
+				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -400,7 +400,7 @@
 			</option>
 			
 			<option name="module_wcf_ad">
-				<categoryname>module.display</categoryname>
+				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>

@@ -18,41 +18,6 @@
 				<parent>wcf.acp.menu.link.option</parent>
 				<showorder>1</showorder>
 			</acpmenuitem>
-			
-			<acpmenuitem name="wcf.acp.menu.link.option.management">
-				<parent>wcf.acp.menu.link.option</parent>
-				<showorder>2</showorder>
-			</acpmenuitem>
-			
-			<acpmenuitem name="wcf.acp.menu.link.activityPoint">
-				<parent>wcf.acp.menu.link.option</parent>
-				<controller><![CDATA[wcf\acp\form\UserActivityPointOptionForm]]></controller>
-				<permissions>admin.user.canEditActivityPoints</permissions>
-			</acpmenuitem>
-			
-			<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
-				<parent>wcf.acp.menu.link.option</parent>
-				<controller><![CDATA[wcf\acp\form\NotificationPresetSettingsForm]]></controller>
-				<permissions>admin.user.canEditUser</permissions>
-			</acpmenuitem>
-			
-			<acpmenuitem name="wcf.acp.menu.link.userOptionDefaults">
-				<controller><![CDATA[wcf\acp\form\UserOptionSetDefaultsForm]]></controller>
-				<parent>wcf.acp.menu.link.option</parent>
-				<permissions>admin.user.canManageUserOption</permissions>
-			</acpmenuitem>
-			
-			<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
-				<parent>wcf.acp.menu.link.option</parent>
-				<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
-				<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-			</acpmenuitem>
-			<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
-				<parent>wcf.acp.menu.link.captcha.question.list</parent>
-				<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
-				<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-				<icon>fa-plus</icon>
-			</acpmenuitem>
 			<!-- /option -->
 			
 			<!-- package -->
@@ -87,6 +52,36 @@
 				<permissions>admin.configuration.package.canEditServer</permissions>
 			</acpmenuitem>
 			<!-- /package -->
+		
+			<!-- other -->
+			<acpmenuitem name="wcf.acp.menu.link.other">
+				<parent>wcf.acp.menu.link.configuration</parent>
+				<showorder>3</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.activityPoint">
+				<parent>wcf.acp.menu.link.other</parent>
+				<controller><![CDATA[wcf\acp\form\UserActivityPointOptionForm]]></controller>
+				<permissions>admin.user.canEditActivityPoints</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
+				<parent>wcf.acp.menu.link.other</parent>
+				<controller><![CDATA[wcf\acp\form\NotificationPresetSettingsForm]]></controller>
+				<permissions>admin.user.canEditUser</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
+				<parent>wcf.acp.menu.link.other</parent>
+				<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
+				<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
+				<parent>wcf.acp.menu.link.captcha.question.list</parent>
+				<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
+				<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /other -->
 		
 		<!-- /configuration -->
 		
@@ -214,6 +209,12 @@
 				<parent>wcf.acp.menu.link.user.option.category.list</parent>
 				<permissions>admin.user.canManageUserOption</permissions>
 				<icon>fa-plus</icon>
+			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.userOptionDefaults">
+				<controller><![CDATA[wcf\acp\form\UserOptionSetDefaultsForm]]></controller>
+				<parent>wcf.acp.menu.link.user.option</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
 			</acpmenuitem>
 			<!-- /option -->
 			
