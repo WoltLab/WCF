@@ -18,7 +18,6 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$license
  * @property-read	string		$licenseURL
  * @property-read	integer		$isAccessible
- * @property-read	integer		$isCritical
  */
 class PackageUpdateVersion extends DatabaseObject {
 	/**

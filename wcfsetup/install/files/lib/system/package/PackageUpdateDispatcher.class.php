@@ -271,8 +271,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		foreach ($elements as $element) {
 			$versionNo = $element->getAttribute('name');
 			$packageInfo['versions'][$versionNo] = [
-				'isAccessible' => ($element->getAttribute('accessible') == 'true' ? true : false),
-				'isCritical' => ($element->getAttribute('critical') == 'true' ? true : false)
+				'isAccessible' => ($element->getAttribute('accessible') == 'true' ? true : false)
 			];
 			
 			$children = $xpath->query('child::*', $element);
@@ -379,7 +378,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
 						'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
 						'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
-						'isCritical' => ($versionData['isCritical'] ? 1 : 0),
 						'packageDate' => $versionData['packageDate'],
 						'packageUpdateID' => $packageUpdateID,
 						'packageVersion' => $packageVersion
@@ -534,7 +532,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$conditions->add("package IN (SELECT DISTINCT package FROM wcf".WCF_N."_package)");
 		
 		$sql = "SELECT		pu.packageUpdateID, pu.packageUpdateServerID, pu.package,
-					puv.packageUpdateVersionID, puv.isCritical, puv.packageDate, puv.filename, puv.packageVersion
+					puv.packageUpdateVersionID, puv.packageDate, puv.filename, puv.packageVersion
 			FROM		wcf".WCF_N."_package_update pu
 			LEFT JOIN	wcf".WCF_N."_package_update_version puv
 			ON		(puv.packageUpdateID = pu.packageUpdateID AND puv.isAccessible = 1)
@@ -554,7 +552,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					// version data
 					if (!isset($updates[$existingVersion['packageID']]['versions'][$row['packageVersion']])) {
 						$updates[$existingVersion['packageID']]['versions'][$row['packageVersion']] = [
-							'isCritical' => $row['isCritical'],
 							'packageDate' => $row['packageDate'],
 							'packageVersion' => $row['packageVersion'],
 							'servers' => []
