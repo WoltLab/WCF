@@ -2689,10 +2689,10 @@ Errors are:
 		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[Do you really want to delete the page <span class="confirmationObject">{$page->name}</span>?]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Edit Page]]></item>
 		<item name="wcf.acp.page.i18n"><![CDATA[Multilingualism]]></item>
-		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Monolingual page]]></item>
-		<item name="wcf.acp.page.i18n.i18n.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
-		<item name="wcf.acp.page.i18n.none"><![CDATA[Multilingual page]]></item>
-		<item name="wcf.acp.page.i18n.none.description"><![CDATA[The content, URL and meta data will be provided for each language separately.]]></item>
+		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Multilingual page]]></item>
+		<item name="wcf.acp.page.i18n.i18n.description"><![CDATA[The content, URL and meta data will be provided for each language separately.]]></item>
+		<item name="wcf.acp.page.i18n.none"><![CDATA[Monolingual page]]></item>
+		<item name="wcf.acp.page.i18n.none.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
 		<item name="wcf.acp.page.isLandingPage"><![CDATA[Landing page]]></item>
 		<item name="wcf.acp.page.isDisabled"><![CDATA[Disable page]]></item>
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
