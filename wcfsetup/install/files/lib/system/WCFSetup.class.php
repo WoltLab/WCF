@@ -434,7 +434,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function configureDirectories() {
 		// get available packages
-		$applications = $packages = [];
+		$packages = [];
 		foreach (glob(TMP_DIR . 'install/packages/*') as $file) {
 			$filename = basename($file);
 			if (preg_match('~\.(?:tar|tar\.gz|tgz)$~', $filename)) {
@@ -443,13 +443,11 @@ class WCFSetup extends WCF {
 				
 				$application = Package::getAbbreviation($package->getPackageInfo('name'));
 				
-				$applications[] = $application;
 				$packages[$application] = [
 					'directory' => ($package->getPackageInfo('applicationDirectory') ?: $application),
 					'packageDescription' => $package->getLocalizedPackageInfo('packageDescription'),
 					'packageName' => $package->getLocalizedPackageInfo('packageName')
 				];
-				
 			}
 		}
 		
@@ -468,9 +466,9 @@ class WCFSetup extends WCF {
 		if (!empty(self::$directories)) {
 			$applicationPaths = $knownPaths = [];
 			
-			// use $showOrder instead of $applications to ensure that the error message for
-			// duplicate directories will trigger in display order rather than the random
-			// sort order returned by glob() above
+			// use $showOrder to ensure that the error message for duplicate directories
+			// will trigger in display order rather than the random sort order returned
+			// by glob() above
 			foreach ($showOrder as $application) {
 				$path = FileUtil::getRealPath($documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application])));
 				if (strpos($path, $documentRoot) !== 0) {

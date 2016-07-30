@@ -167,7 +167,6 @@ final class DOMUtil {
 		$nodeList2 = self::getParents($node2, true);
 		$nodeList2[] = $node2;
 		
-		$commonAncestor = null;
 		$i = 0;
 		while ($nodeList1[$i] === $nodeList2[$i]) {
 			$i++;

@@ -117,10 +117,8 @@ class NotificationPresetSettingsForm extends AbstractForm {
 		
 		// default values
 		if (empty($_POST)) {
-			$eventIDs = [];
 			foreach ($this->events as $events) {
 				foreach ($events as $event) {
-					$eventIDs[] = $event->eventID;
 					$this->settings[$event->eventID] = [
 						'enabled' => $event->preset,
 						'mailNotificationType' => $event->presetMailNotificationType

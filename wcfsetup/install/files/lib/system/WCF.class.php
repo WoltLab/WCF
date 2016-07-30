@@ -506,7 +506,6 @@ class WCF {
 	 * @throws	SystemException
 	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
-		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		// package cache might be outdated
 		if ($package === null) {
@@ -521,7 +520,7 @@ class WCF {
 				throw new SystemException("application identified by package id '".$application->packageID."' is unknown");
 			}
 		}
-			
+		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';

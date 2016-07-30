@@ -116,10 +116,8 @@ class NotificationSettingsForm extends AbstractForm {
 		// default values
 		if (empty($_POST)) {
 			// get user settings
-			$eventIDs = [];
 			foreach ($this->events as $events) {
 				foreach ($events as $event) {
-					$eventIDs[] = $event->eventID;
 					$this->settings[$event->eventID] = [
 						'enabled' => false,
 						'mailNotificationType' => 'none'
