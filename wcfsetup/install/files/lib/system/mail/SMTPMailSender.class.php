@@ -277,7 +277,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * Gets error code and message from a server message.
+	 * Extracts error code and message from a server message.
 	 * 
 	 * @param	string		$data
 	 */

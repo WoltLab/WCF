@@ -37,9 +37,9 @@ class PaidSubscriptionUser extends DatabaseObject {
 	protected $subscription = null;
 	
 	/**
-	 * Gets the paid subscription object.
+	 * Returns the paid subscription object.
 	 * 
-	 * @return	\wcf\data\paid\subscription\PaidSubscription
+	 * @return	PaidSubscription
 	 */
 	public function getSubscription() {
 		if ($this->subscription === null) {
@@ -59,11 +59,11 @@ class PaidSubscriptionUser extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets a specific subscription user.
+	 * Returns a specific subscription user or `null` if such a user does not exist.
 	 * 
 	 * @param	integer		$subscriptionID
 	 * @param	integer		$userID
-	 * @return	\wcf\data\paid\subscription\user\PaidSubscriptionUser
+	 * @return	PaidSubscriptionUser|null
 	 */
 	public static function getSubscriptionUser($subscriptionID, $userID) {
 		$sql = "SELECT	*

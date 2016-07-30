@@ -28,11 +28,11 @@ class UserProfileVisitor extends DatabaseObject {
 	protected static $databaseTableIndexName = 'visitorID';
 	
 	/**
-	 * Gets a profile visitor object.
+	 * Returns a profile visitor object or `null` if it does not exist.
 	 * 
 	 * @param	integer		$ownerID
 	 * @param	integer		$userID
-	 * @return	\wcf\data\user\profile\visitor\UserProfileVisitor
+	 * @return	UserProfileVisitor|null
 	 */
 	public static function getObject($ownerID, $userID) {
 		$sql = "SELECT	*

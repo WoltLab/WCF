@@ -57,7 +57,7 @@ class VisitTracker extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the last visit time for a whole object type.
+	 * Returns the last visit time for a whole object type.
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer

@@ -30,7 +30,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public static $reservedTags = ['classname', 'definitionname', 'name'];
 	
 	/**
-	 * Gets the definition id by name
+	 * Returns the id of the object type definition with the given name.
 	 * 
 	 * @param	string		$definitionName
 	 * @return	integer

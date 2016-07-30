@@ -174,14 +174,14 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * Gets the selected languages.
+	 * Sets the selected languages.
 	 */
 	protected function readVisibleLanguages() {
 		$this->visibleLanguages = $this->user->getLanguageIDs();
 	}
 	
 	/**
-	 * Gets the default values.
+	 * Sets the default values.
 	 */
 	protected function readDefaultValues() {
 		$this->username = $this->user->username;

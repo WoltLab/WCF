@@ -335,7 +335,7 @@ class Mail {
 	}
 	
 	/**
-	 * Gets the sender of this mail.
+	 * Returns the sender of this mail.
 	 * 
 	 * @return	string
 	 */

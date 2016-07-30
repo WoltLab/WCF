@@ -93,11 +93,11 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets a transaction log entry by transaction id.
+	 * Returns the transaction log entry by transaction id or `null` if no such entry exists.
 	 * 
 	 * @param	integer		$paymentMethodObjectTypeID
 	 * @param	string		$transactionID
-	 * @return	\wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog
+	 * @return	PaidSubscriptionTransactionLog|null
 	 */
 	public static function getLogByTransactionID($paymentMethodObjectTypeID, $transactionID) {
 		$sql = "SELECT	*

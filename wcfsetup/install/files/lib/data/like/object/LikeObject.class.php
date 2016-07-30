@@ -65,7 +65,7 @@ class LikeObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets the first 3 users who liked this object.
+	 * Returns the first 3 users who liked this object.
 	 * 
 	 * @return	User[]
 	 */
@@ -96,7 +96,7 @@ class LikeObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets a like object by type and object id.
+	 * Returns the like object with the given type and object id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID

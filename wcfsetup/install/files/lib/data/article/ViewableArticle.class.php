@@ -32,7 +32,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	protected $userProfile = null;
 	
 	/**
-	 * Gets a specific article decorated as viewable article.
+	 * Returns a specific article decorated as viewable article or `null` if it does not exist.
 	 *
 	 * @param	integer		$articleID
 	 * @param       boolean         $enableContentLoading   Enables/disables the loading of article content objects

@@ -11,16 +11,16 @@ namespace wcf\system\tagging;
  */
 interface ITagged {
 	/**
-	 * Gets the id of the tagged object.
+	 * Returns the id of the tagged object.
 	 * 
 	 * @return	integer		the id to get
 	 */
 	public function getObjectID();
 	
 	/**
-	 * Gets the taggable type of this tagged object.
+	 * Returns the taggable type of this tagged object.
 	 * 
-	 * @return	\wcf\system\tagging\ITaggable
+	 * @return	ITaggable
 	 */
 	public function getTaggable();
 }

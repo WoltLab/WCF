@@ -181,7 +181,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * Gets the max value of a specific column.
+	 * Returns the maximum value of a specific column.
 	 * 
 	 * @param	string		$tableName
 	 * @param	string		$columnName

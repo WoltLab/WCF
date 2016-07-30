@@ -61,7 +61,7 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the preferred language of the current user.
+	 * Returns the preferred language of the current user.
 	 * 
 	 * @param	integer		$languageID
 	 * @return	Language

@@ -13,7 +13,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  */
 interface IUserNotificationObjectType extends IDatabaseObjectProcessor {
 	/**
-	 * Gets notification objects by their IDs.
+	 * Returns notification objects by their IDs.
 	 * 
 	 * @param	integer[]	$objectIDs
 	 * @return	IUserNotificationObject[]

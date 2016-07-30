@@ -34,7 +34,7 @@ class AdministrativeAttachment extends DatabaseObjectDecorator {
 	protected $containerObjectLoaded = false;
 	
 	/**
-	 * Gets the container object of this attachment.
+	 * Returns the container object of this attachment.
 	 * 
 	 * @return	IUserContent
 	 */

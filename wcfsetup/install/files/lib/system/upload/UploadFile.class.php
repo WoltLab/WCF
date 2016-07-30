@@ -160,9 +160,9 @@ class UploadFile {
 	}
 	
 	/**
-	 * Gets image data.
+	 * Returns the image data of the file or `null` if the file is no image.
 	 * 
-	 * @return	array
+	 * @return	array|null
 	 */
 	public function getImageData() {
 		if (strpos($this->getMimeType(), 'image/') == 0) {

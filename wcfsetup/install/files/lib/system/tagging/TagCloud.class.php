@@ -74,7 +74,7 @@ class TagCloud {
 	}
 	
 	/**
-	 * Gets a list of weighted tags.
+	 * Returns a list of weighted tags.
 	 * 
 	 * @param	integer		$slice
 	 * @return	TagCloudTag[]	the tags to get

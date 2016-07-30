@@ -67,7 +67,7 @@ interface IAttachmentObjectType {
 	public function getMaxCount();
 	
 	/**
-	 * Gets the container object of an attachment.
+	 * Returns the container object of an attachment.
 	 * 
 	 * @param	integer		$objectID
 	 * @return	\wcf\data\IUserContent

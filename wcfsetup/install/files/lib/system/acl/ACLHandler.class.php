@@ -121,7 +121,7 @@ class ACLHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type id.
+	 * Returns the id of the given acl object type.
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer

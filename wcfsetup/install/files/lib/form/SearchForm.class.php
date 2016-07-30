@@ -428,7 +428,7 @@ class SearchForm extends AbstractCaptchaForm {
 	}
 	
 	/**
-	 * Gets the conditions for a search in the table of the selected object types.
+	 * Sets the conditions for a search in the table of the selected object types.
 	 */
 	protected function getConditions() {
 		if (empty($this->selectedObjectTypes)) {

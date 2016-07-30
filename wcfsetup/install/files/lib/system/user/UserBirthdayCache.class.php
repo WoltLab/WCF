@@ -37,7 +37,7 @@ class UserBirthdayCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the user birthdays for a specific day.
+	 * Returns the user birthdays for a specific day.
 	 * 
 	 * @param	integer		$month
 	 * @param	integer		$day

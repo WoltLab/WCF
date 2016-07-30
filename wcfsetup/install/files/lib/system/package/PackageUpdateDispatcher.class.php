@@ -84,7 +84,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the package_update.xml from an update server.
+	 * Fetches the package_update.xml from an update server.
 	 * 
 	 * @param	PackageUpdateServer	$updateServer
 	 * @param	boolean			$forceHTTP
@@ -655,7 +655,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets package update versions of a package.
+	 * Returns package update versions of the specified package.
 	 * 
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version

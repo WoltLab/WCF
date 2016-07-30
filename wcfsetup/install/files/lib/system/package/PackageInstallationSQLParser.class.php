@@ -190,7 +190,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * Gets known sql tables and their owners from installation log.
+	 * Fetches known sql tables and their owners from installation log.
 	 */
 	protected function getKnownTables() {
 		$sql = "SELECT	packageID, sqlTable

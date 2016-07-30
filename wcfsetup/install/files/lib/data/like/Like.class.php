@@ -43,7 +43,7 @@ class Like extends DatabaseObject {
 	const DISLIKE = -1;
 	
 	/**
-	 * Gets a like by type, object id and user id.
+	 * Returns the like with given type, object id and user id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID

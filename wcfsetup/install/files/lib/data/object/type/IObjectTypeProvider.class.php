@@ -12,7 +12,7 @@ use wcf\data\DatabaseObject;
  */
 interface IObjectTypeProvider {
 	/**
-	 * Gets an object by its ID.
+	 * Returns an object by its ID.
 	 * 
 	 * @param	integer		$objectID
 	 * @return	\wcf\data\DatabaseObject
@@ -20,7 +20,7 @@ interface IObjectTypeProvider {
 	public function getObjectByID($objectID);
 	
 	/**
-	 * Gets like objects by their IDs.
+	 * Returns objects by their IDs.
 	 * 
 	 * @param	integer[]		$objectIDs
 	 * @return	DatabaseObject[]

@@ -103,10 +103,10 @@ class CategoryHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type with the given id.
+	 * Returns the category object type with the given id or null if no such object type exists.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypeIDs[$objectTypeID])) {
@@ -117,10 +117,10 @@ class CategoryHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type with the given name.
+	 * Returns the category object type with the given name or null if no such object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType|null
 	 */
 	public function getObjectTypeByName($objectType) {
 		if (isset($this->objectTypes[$objectType])) {

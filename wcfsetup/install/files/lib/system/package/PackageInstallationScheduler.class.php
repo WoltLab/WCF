@@ -613,11 +613,11 @@ class PackageInstallationScheduler {
 	}
 	
 	/**
-	 * Gets the filename of in session stored donwloads.
+	 * Returns the filename of downloads stored in session or null if no stored downloads exist.
 	 * 
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
-	 * @return	string		$filename
+	 * @return	string|boolean
 	 */
 	protected function getCachedDownload($package, $version) {
 		$cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');
@@ -629,7 +629,7 @@ class PackageInstallationScheduler {
 	}
 	
 	/**
-	 * Gets stored auth data of given update server.
+	 * Returns stored auth data the update server with given data.
 	 * 
 	 * @param	array		$data
 	 * @return	array

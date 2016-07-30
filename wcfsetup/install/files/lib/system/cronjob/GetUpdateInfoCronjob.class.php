@@ -4,7 +4,7 @@ use wcf\data\cronjob\Cronjob;
 use wcf\system\package\PackageUpdateDispatcher;
 
 /**
- * Gets update package information.
+ * Fetches update package information.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH

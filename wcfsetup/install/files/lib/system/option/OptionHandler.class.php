@@ -387,7 +387,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * Gets all options and option categories from cache.
+	 * Fetches all options and option categories from cache.
 	 */
 	protected function readCache() {
 		$cache = call_user_func([$this->cacheClass, 'getInstance']);

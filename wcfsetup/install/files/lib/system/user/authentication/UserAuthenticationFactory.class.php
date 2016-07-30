@@ -5,7 +5,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
 
 /**
- * Gets the user authentication instance.
+ * Provides the user authentication instance.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH

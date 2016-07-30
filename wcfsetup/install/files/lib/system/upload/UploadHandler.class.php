@@ -110,13 +110,16 @@ class UploadHandler {
 	}
 	
 	/**
-	 * Gets an upload handler instance.
+	 * Returns an upload handler instance for the given identifier or `null` if no data exists in `$_FILES`
+	 * for the identifier.
 	 * 
 	 * @param	string		$identifier
-	 * @return	\wcf\system\upload\UploadHandler
+	 * @return	UploadHandler
 	 */
 	public static function getUploadHandler($identifier) {
-		if (isset($_FILES[$identifier]) && is_array($_FILES[$identifier])) return new UploadHandler($_FILES[$identifier]);
+		if (isset($_FILES[$identifier]) && is_array($_FILES[$identifier])) {
+			return new UploadHandler($_FILES[$identifier]);
+		}
 		
 		return null;
 	}

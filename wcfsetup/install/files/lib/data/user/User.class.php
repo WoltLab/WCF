@@ -278,7 +278,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
-	 * Gets all user options from cache.
+	 * Fetches all user options from cache.
 	 */
 	protected static function getUserOptionCache() {
 		self::$userOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');

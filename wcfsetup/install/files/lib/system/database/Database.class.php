@@ -283,7 +283,7 @@ abstract class Database {
 	}
 	
 	/**
-	 * Gets the current database type.
+	 * Returns the current database type.
 	 * 
 	 * @return	string
 	 */
@@ -302,7 +302,7 @@ abstract class Database {
 	}
 	
 	/**
-	 * Gets the sql version.
+	 * Returns the sql version.
 	 * 
 	 * @return	string
 	 */
@@ -318,7 +318,7 @@ abstract class Database {
 	}
 	
 	/**
-	 * Gets the database name.
+	 * Returns the database name.
 	 * 
 	 * @return	string
 	 */

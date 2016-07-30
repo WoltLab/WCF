@@ -263,10 +263,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * Gets the data of a style exchange format file.
+	 * Returns the data of a style exchange format file.
 	 * 
 	 * @param	string		$filename
-	 * @return	array		data
+	 * @return	array
 	 */
 	public static function getStyleData($filename) {
 		// open file

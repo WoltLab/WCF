@@ -71,11 +71,11 @@ class LikeHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets a like object.
+	 * Returns a like object.
 	 * 
 	 * @param	ObjectType	$objectType
 	 * @param	integer		$objectID
-	 * @return	LikeObject
+	 * @return	LikeObject|null
 	 */
 	public function getLikeObject(ObjectType $objectType, $objectID) {
 		if (isset($this->likeObjectCache[$objectType->objectTypeID][$objectID])) {
@@ -86,7 +86,7 @@ class LikeHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the like objects of a specific object type.
+	 * Returns the like objects of a specific object type.
 	 * 
 	 * @param	ObjectType	$objectType
 	 * @return	LikeObject[]

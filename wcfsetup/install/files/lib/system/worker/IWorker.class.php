@@ -25,8 +25,8 @@ interface IWorker {
 	public function setLoopCount($loopCount);
 	
 	/**
-	 * Gets current process, integer between 0 and 100. If the progress
-	 * hits 100 the worker will terminate.
+	 * Returns current process of the worker, an integer between 0 and 100.
+	 * If the progress hits 100, the worker will terminate.
 	 * 
 	 * @return	integer
 	 */

@@ -81,7 +81,7 @@ class UsersOnlineList extends SessionList {
 	}
 	
 	/**
-	 * Gets users online stats.
+	 * Fetches users online stats.
 	 */
 	public function readStats() {
 		$conditionBuilder = clone $this->getConditionBuilder();

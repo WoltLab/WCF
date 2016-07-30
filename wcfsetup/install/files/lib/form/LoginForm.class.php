@@ -70,7 +70,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	}
 	
 	/**
-	 * Gets the redirect url.
+	 * Sets the redirect url.
 	 */
 	protected function checkURL() {
 		if (empty($this->url) || mb_stripos($this->url, '?Login/') !== false) {

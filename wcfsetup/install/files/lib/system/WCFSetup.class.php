@@ -103,7 +103,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the status of the developer mode.
+	 * Sets the status of the developer mode.
 	 */
 	protected static function getDeveloperMode() {
 		if (isset($_GET['dev'])) self::$developerMode = intval($_GET['dev']);
@@ -111,7 +111,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the selected language.
+	 * Sets the selected language.
 	 */
 	protected static function getLanguageSelection() {
 		self::$availableLanguages = self::getAvailableLanguages();
@@ -129,7 +129,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the selected wcf dir from request.
+	 * Sets the selected wcf dir from request.
 	 * 
 	 * @since	3.0
 	 */
@@ -1224,7 +1224,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the package names of the bundled applications in WCFSetup.tar.gz.
+	 * Reads the package names of the bundled applications in WCFSetup.tar.gz.
 	 */
 	protected static function getPackageNames() {
 		// get package name

@@ -228,7 +228,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * Gets the list of results.
+	 * Fetches the list of results.
 	 */
 	protected function readUsers() {
 		// get user ids
@@ -324,7 +324,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * Gets the result of the search with the given search id.
+	 * Fetches the result of the search with the given search id.
 	 */
 	protected function readSearchResult() {
 		// get user search from database
@@ -352,7 +352,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * Gets the user options from cache.
+	 * Fetches the user options from cache.
 	 */
 	protected function readUserOptions() {
 		$this->options = UserOptionCacheBuilder::getInstance()->getData([], 'options');
