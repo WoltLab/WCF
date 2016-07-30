@@ -93,6 +93,26 @@ define(
 				if (!containerId.match(/^wcf\d+$/)) {
 					elData(menu, 'source', containerId);
 				}
+				
+				// prevent page scrolling
+				if (menu.childElementCount && menu.children[0].classList.contains('scrollableDropdownMenu')) {
+					menu = menu.children[0];
+					elData(menu, 'scroll-to-active', true);
+					
+					var menuHeight = null, menuRealHeight = null;
+					menu.addEventListener('wheel', function (event) {
+						if (menuHeight === null) menuHeight = menu.clientHeight;
+						if (menuRealHeight === null) menuRealHeight = menu.scrollHeight;
+						
+						// positive value: scrolling up
+						if (event.wheelDelta > 0 && menu.scrollTop === 0) {
+							event.preventDefault();
+						}
+						else if (event.wheelDelta < 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
+							event.preventDefault();
+						}
+					})
+				}
 			}
 			
 			elData(button, 'target', containerId);
@@ -409,6 +429,23 @@ define(
 				else if (containerId === targetId && menu.childElementCount > 0) {
 					dropdown.classList.add('dropdownOpen');
 					menu.classList.add('dropdownOpen');
+					
+					if (menu.childElementCount && elDataBool(menu.children[0], 'scroll-to-active')) {
+						var list = menu.children[0];
+						list.removeAttribute('data-scroll-to-active');
+						
+						var active = null;
+						for (var i = 0, length = list.childElementCount; i < length; i++) {
+							if (list.children[i].classList.contains('active')) {
+								active = list.children[i];
+								break;
+							}
+						}
+						
+						if (active) {
+							list.scrollTop = Math.max((active.offsetTop + active.clientHeight) - menu.clientHeight, 0);
+						}
+					}
 					
 					this._notifyCallbacks(containerId, 'open');
 					
