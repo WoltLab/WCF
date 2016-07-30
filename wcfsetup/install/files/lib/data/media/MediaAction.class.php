@@ -104,7 +104,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	/**
 	 * Returns the data of the media file to be returned by AJAX requests.
 	 * 
-	 * @param	object		$media		media files whose data will be returned
+	 * @param	Media|ViewableMedia	$media		media files whose data will be returned
 	 * @return	string[]
 	 */
 	protected function getMediaData($media) {
