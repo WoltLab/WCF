@@ -164,8 +164,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	 * @return	string
 	 */
 	public function getObjectTypeName() {
-		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
-		return $objectType->objectType;
+		return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->objectType;
 	}
 	
 	/**

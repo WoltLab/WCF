@@ -139,9 +139,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $this->objectIDs);
 		}
 		
-		$returnValue = parent::delete();
-		
-		return $returnValue;
+		return parent::delete();
 	}
 	
 	/**

@@ -175,9 +175,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @inheritDoc
 	 */
 	public function getTitle() {
-		$title = PageCache::getInstance()->getPageTitle($this->pageID);
-		
-		return $title;
+		return PageCache::getInstance()->getPageTitle($this->pageID);
 	}
 	
 	/**

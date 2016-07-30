@@ -85,8 +85,7 @@ class AdministrativeAttachmentList extends AttachmentList {
 			".$this->getConditionBuilder();
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());
-		$row = $statement->fetchArray();
 		
-		return $row;
+		return $statement->fetchArray();
 	}
 }

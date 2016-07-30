@@ -58,7 +58,6 @@ class DiffHighlighter extends Highlighter {
 			}
 		}
 		
-		$data = implode("\n", $lines);
-		return $data;
+		return implode("\n", $lines);
 	}
 }

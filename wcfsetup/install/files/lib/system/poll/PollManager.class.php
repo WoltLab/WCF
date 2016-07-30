@@ -436,7 +436,6 @@ class PollManager extends SingletonFactory {
 			throw new ParentClassException($className, SingletonFactory::class);
 		}
 		
-		$object = call_user_func([$className, 'getInstance']);
-		return $object;
+		return call_user_func([$className, 'getInstance']);
 	}
 }

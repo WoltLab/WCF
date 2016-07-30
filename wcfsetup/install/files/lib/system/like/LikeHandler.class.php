@@ -511,8 +511,7 @@ class LikeHandler extends SingletonFactory {
 			$user->userID,
 			$likeObject->likeObjectID
 		]);
-		$row = $statement->fetchArray();
 		
-		return $row;
+		return $statement->fetchArray();
 	}
 }

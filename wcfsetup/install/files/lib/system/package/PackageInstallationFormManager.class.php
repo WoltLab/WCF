@@ -137,8 +137,7 @@ abstract class PackageInstallationFormManager {
 		$row = $statement->fetchArray();
 		
 		if ($row) {
-			$document = unserialize(base64_decode($row['document']));
-			return $document;
+			return unserialize(base64_decode($row['document']));
 		}
 		
 		return null;

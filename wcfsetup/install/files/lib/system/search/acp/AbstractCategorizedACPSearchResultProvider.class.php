@@ -45,9 +45,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * @return	integer
 	 */
 	protected function getCategoryID($categoryName) {
-		$category = $this->getTopCategory($categoryName);
-		
-		return $category->categoryID;
+		return $this->getTopCategory($categoryName)->categoryID;
 	}
 	
 	/**
@@ -57,9 +55,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * @return	string
 	 */
 	protected function getCategoryName($categoryName) {
-		$category = $this->getTopCategory($categoryName);
-		
-		return $category->categoryName;
+		return $this->getTopCategory($categoryName)->categoryName;
 	}
 	
 	/**
