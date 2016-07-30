@@ -30,7 +30,7 @@ class PageACPSearchResultProvider implements IACPSearchResultProvider {
 		$pageList->readObjects();
 		foreach ($pageList as $page) {
 			$results[] = new ACPSearchResult($page->name, LinkHandler::getInstance()->getLink('PageEdit', [
-				'id' => $page->pageID,
+				'id' => $page->pageID
 			]));
 		}
 		

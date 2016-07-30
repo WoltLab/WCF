@@ -30,7 +30,7 @@ class BoxACPSearchResultProvider implements IACPSearchResultProvider {
 		$boxList->readObjects();
 		foreach ($boxList as $box) {
 			$results[] = new ACPSearchResult($box->name, LinkHandler::getInstance()->getLink('BoxEdit', [
-				'id' => $box->boxID,
+				'id' => $box->boxID
 			]));
 		}
 		

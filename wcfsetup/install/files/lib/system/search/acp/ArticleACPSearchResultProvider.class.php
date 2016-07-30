@@ -30,7 +30,7 @@ class ArticleACPSearchResultProvider implements IACPSearchResultProvider {
 		$contentList->readObjects();
 		foreach ($contentList as $content) {
 			$results[] = new ACPSearchResult($content->title, LinkHandler::getInstance()->getLink('ArticleEdit', [
-				'id' => $content->articleID,
+				'id' => $content->articleID
 			]));
 		}
 		
