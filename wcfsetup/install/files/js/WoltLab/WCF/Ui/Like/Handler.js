@@ -10,12 +10,12 @@ define(
 	[
 		'Ajax',      'Core',                     'Dictionary',         'Language',
 		'ObjectMap', 'StringUtil',               'Dom/ChangeListener', 'Dom/Util',
-		'Ui/Dialog', 'WoltLab/WCF/Ui/User/List'
+		'Ui/Dialog', 'WoltLab/WCF/Ui/User/List', 'User'
 	],
 	function(
 		Ajax,        Core,                        Dictionary,           Language,
 		ObjectMap,   StringUtil,                  DomChangeListener,    DomUtil,
-		UiDialog,    UiUserList
+		UiDialog,    UiUserList,                  User
 	)
 {
 	"use strict";
@@ -166,7 +166,7 @@ define(
 				this._updateBadge(element);
 			}
 			
-			if (this._options.canLike && (WCF.User.userID != elData(element, 'user-id') || this._options.canLikeOwnContent)) {
+			if (this._options.canLike && (User.userId != elData(element, 'user-id') || this._options.canLikeOwnContent)) {
 				var appendTo = (this._options.buttonAppendToSelector) ? ((this._options.isSingleItem) ? elBySel(this._options.buttonAppendToSelector) : elBySel(this._options.buttonAppendToSelector, element)) : null;
 				var insertPosition = (this._options.buttonBeforeSelector) ? ((this._options.isSingleItem) ? elBySel(this._options.buttonBeforeSelector) : elBySel(this._options.buttonBeforeSelector, element)) : null;
 				if (insertPosition === null && appendTo === null) {
