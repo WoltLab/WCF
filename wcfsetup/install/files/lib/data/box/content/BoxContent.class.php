@@ -39,7 +39,7 @@ class BoxContent extends DatabaseObject {
 	protected $image;
 	
 	/**
-	 * Returns a certain box content.
+	 * Returns a certain box content or `null` if it does not exist.
 	 *
 	 * @param       integer         $boxID
 	 * @param       integer         $languageID

@@ -35,8 +35,8 @@ interface IPackageInstallationPlugin {
 	public function uninstall();
 	
 	/**
-	 * Returns the default file name containing the instructions. If no default
-	 * file name is supported, null is returned.
+	 * Returns the default file name containing the instructions or `null` if no default
+	 * file name is supported.
 	 * 
 	 * @return	string
 	 * @since	3.0
@@ -47,8 +47,8 @@ interface IPackageInstallationPlugin {
 	 * Validates if the passed instruction is valid for this package installation plugin. If anything is
 	 * wrong with it, this method should return false.
 	 * 
-	 * @param	\wcf\system\package\PackageArchive	$packageArchive
-	 * @param	string					$instruction
+	 * @param	PackageArchive	$packageArchive
+	 * @param	string		$instruction
 	 * @return	boolean
 	 */
 	public static function isValid(PackageArchive $packageArchive, $instruction);

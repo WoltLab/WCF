@@ -64,9 +64,9 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	public function sendNotification(Like $like);
 	
 	/**
-	 * Returns the language id of this object or its parent.
+	 * Returns the language id of this object or its parent or `null` if no explicit language is set.
 	 * 
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getLanguageID();
 }

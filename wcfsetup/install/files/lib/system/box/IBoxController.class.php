@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\box\Box;
+use wcf\data\media\ViewableMedia;
 
 /**
  * Default interface for box controllers.
@@ -27,11 +28,11 @@ interface IBoxController {
 	public function hasContent();
 	
 	/**
-	 * Returns the image of this box.
+	 * Returns the image of this box or `null` if the box has no image.
 	 * 
 	 * Note: The box itself checks if the active user can access the returned media file.
 	 *
-	 * @return	\wcf\data\media\ViewableMedia
+	 * @return	ViewableMedia|null
 	 */
 	public function getImage();
 	

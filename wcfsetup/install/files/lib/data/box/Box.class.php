@@ -326,9 +326,9 @@ class Box extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the image of this box.
+	 * Returns the image of this box or `null` if the box has no image.
 	 * 
-	 * @return	ViewableMedia
+	 * @return	ViewableMedia|null
 	 */
 	public function getImage() {
 		if ($this->boxType === 'menu') {

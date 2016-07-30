@@ -125,9 +125,9 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	}
 	
 	/**
-	 * Returns the language of this article content as language object.
+	 * Returns the language of this article content or `null` if no language has been specified.
 	 * 
-	 * @return Language|null
+	 * @return	Language|null
 	 */
 	public function getLanguage() {
 		if ($this->languageID) {
@@ -138,7 +138,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	}
 	
 	/**
-	 * Returns a certain article content.
+	 * Returns a certain article content or `null` if it does not exist.
 	 * 
 	 * @param       integer         $articleID
 	 * @param       integer         $languageID

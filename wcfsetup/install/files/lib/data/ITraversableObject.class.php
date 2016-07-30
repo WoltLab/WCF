@@ -19,10 +19,10 @@ interface ITraversableObject extends \SeekableIterator {
 	
 	/**
 	 * Searches a specific object by object id and setting internal iterator
-	 * pointer to found item. Returns null if object id is not found.
+	 * pointer to found item. Returns `null` if object id is not found.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject|null
 	 */
 	public function search($objectID);
 }

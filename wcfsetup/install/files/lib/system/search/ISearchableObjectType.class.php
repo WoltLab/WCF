@@ -44,10 +44,10 @@ interface ISearchableObjectType {
 	public function getApplication();
 	
 	/**
-	 * Returns the search conditions of this message type.
+	 * Returns the search conditions of this message type or `null` if no special search conditions are necessary.
 	 * 
 	 * @param	IForm		$form
-	 * @return	PreparedStatementConditionBuilder
+	 * @return	PreparedStatementConditionBuilder|null
 	 */
 	public function getConditions(IForm $form = null);
 	

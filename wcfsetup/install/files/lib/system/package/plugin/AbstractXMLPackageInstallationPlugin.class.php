@@ -295,10 +295,11 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function validateImport(array $data) { }
 	
 	/**
-	 * Find an existing item for updating, should return sql query.
+	 * Returns an array with a sql query and its parameters to find an existing item for updating
+	 * or `null` if updates are not supported.
 	 * 
-	 * @param	array	$data
-	 * @return	array
+	 * @param	array		$data
+	 * @return	array|null
 	 */
 	abstract protected function findExistingItem(array $data);
 	

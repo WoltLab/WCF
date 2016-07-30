@@ -298,14 +298,14 @@ class ControllerMap extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the class data for the active request or null if for the given
-	 * configuration no proper class exist.
+	 * Returns the class data for the active request or `null` if no proper class exists
+	 * for the given configuration.
 	 *
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	controller name
 	 * @param	boolean		$isAcpRequest	true if this is an ACP request
 	 * @param	string		$pageType	page type, e.g. 'form' or 'action'
-	 * @return	string[]	className, controller and pageType
+	 * @return	string[]|null	className, controller and pageType
 	 */
 	protected function getClassData($application, $controller, $isAcpRequest, $pageType) {
 		$className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);

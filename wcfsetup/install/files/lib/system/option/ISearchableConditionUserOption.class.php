@@ -35,7 +35,7 @@ interface ISearchableConditionUserOption extends ISearchableUserOption {
 	public function checkUser(User $user, Option $option, $value);
 	
 	/**
-	 * Returns the data of the condition or null if the option should be ignored.
+	 * Returns the data of the condition or `null` if the option should be ignored.
 	 * 
 	 * @param	Option		$option
 	 * @param	mixed		$newValue

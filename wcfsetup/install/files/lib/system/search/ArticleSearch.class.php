@@ -51,7 +51,10 @@ class ArticleSearch extends AbstractSearchableObjectType {
 	 * @inheritDoc
 	 */
 	public function getObject($objectID) {
-		if (isset($this->messageCache[$objectID])) return $this->messageCache[$objectID];
+		if (isset($this->messageCache[$objectID])) {
+			return $this->messageCache[$objectID];
+		}
+		
 		return null;
 	}
 	

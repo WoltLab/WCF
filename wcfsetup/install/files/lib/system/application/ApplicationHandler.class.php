@@ -38,10 +38,11 @@ class ApplicationHandler extends SingletonFactory {
 	
 	/**
 	 * Returns an application based upon it's abbreviation. Will return the
-	 * primary application if $abbreviation equals to 'wcf'
+	 * primary application if the abbreviation is `wcf` or `null` if no such
+	 * application exists.
 	 * 
 	 * @param	string		$abbreviation	package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
-	 * @return	Application
+	 * @return	Application|null
 	 */
 	public function getApplication($abbreviation) {
 		if (isset($this->cache['abbreviation'][$abbreviation])) {
@@ -56,10 +57,11 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns an application by package id.
+	 * Returns an application delivered by the package with the given id or `null`
+	 * if no such application exists.
 	 * 
-	 * @param	integer		$packageID	package id
-	 * @return	Application	application object
+	 * @param	integer			$packageID	package id
+	 * @return	Application|null	application object
 	 * @since	3.0
 	 */
 	public function getApplicationByID($packageID) {
@@ -132,10 +134,10 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns abbreviation for a given package id or null if application is unknown.
+	 * Returns abbreviation for a given package id or `null` if application is unknown.
 	 * 
 	 * @param	integer		$packageID	unique package id
-	 * @return	string
+	 * @return	string|null
 	 */
 	public function getAbbreviation($packageID) {
 		foreach ($this->cache['abbreviation'] as $abbreviation => $applicationID) {

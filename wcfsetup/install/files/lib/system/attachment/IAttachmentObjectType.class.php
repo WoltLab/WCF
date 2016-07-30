@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\attachment;
 use wcf\data\attachment\Attachment;
+use wcf\data\IUserContent;
 
 /**
  * Any attachment object type should implement this interface.
@@ -67,10 +68,10 @@ interface IAttachmentObjectType {
 	public function getMaxCount();
 	
 	/**
-	 * Returns the container object of an attachment.
+	 * Returns the container object of an attachment or `null` if the container object does not exist.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\IUserContent
+	 * @return	IUserContent|null
 	 */
 	public function getObject($objectID);
 	

@@ -97,11 +97,11 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * Returns the decorated category with the given id or null if no such
+	 * Returns the decorated category with the given id or `null` if no such
 	 * category exists.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	AbstractDecoratedCategory
+	 * @return	AbstractDecoratedCategory|null
 	 */
 	public static function getCategory($categoryID) {
 		$category = CategoryHandler::getInstance()->getCategory($categoryID);

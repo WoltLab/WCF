@@ -49,10 +49,11 @@ class CommentHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the object type id for a given object type.
+	 * Returns the id of the comment object type with the given name or `null` if no
+	 * such object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getObjectTypeID($objectType) {
 		if (isset($this->cache['objectTypeIDs'][$objectType])) {
@@ -63,10 +64,11 @@ class CommentHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the object type for a given object type id.
+	 * Returns the comment object type with the given name or `null` if no such
+	 * object type exists.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	ObjectType
+	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->cache['objectTypes'][$objectTypeID])) {

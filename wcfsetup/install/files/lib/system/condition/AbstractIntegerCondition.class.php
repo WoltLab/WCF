@@ -133,10 +133,10 @@ HTML;
 	}
 	
 	/**
-	 * Returns the maximum value the property can have or null if there is no
+	 * Returns the maximum value the property can have or `null` if there is no
 	 * such maximum.
 	 * 
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	protected function getMaxValue() {
 		if ($this->getDecoratedObject()->maxvalue !== null) {
@@ -169,10 +169,10 @@ HTML;
 	}
 	
 	/**
-	 * Returns the minimum value the property can have or null if there is no
+	 * Returns the minimum value the property can have or `null` if there is no
 	 * such minimum.
 	 * 
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	protected function getMinValue() {
 		if ($this->getDecoratedObject()->minvalue !== null) {

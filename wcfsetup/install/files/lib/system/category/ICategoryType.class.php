@@ -74,11 +74,10 @@ interface ICategoryType {
 	
 	/**
 	 * Returns the name of the object type of the definition with the given
-	 * name for categories of this type. If categories of this type are no
-	 * object of the relevant type, null is returned.
+	 * name for categories of this type or `null` if no such object type exists.
 	 * 
 	 * @param	string		$definitionName
-	 * @return	string
+	 * @return	string|null
 	 */
 	public function getObjectTypeName($definitionName);
 	

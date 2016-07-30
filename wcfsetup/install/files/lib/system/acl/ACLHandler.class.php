@@ -136,11 +136,12 @@ class ACLHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the acl option category with the given object type id and name.
+	 * Returns the acl option category with the given object type id and name
+	 * or `null` if no such category exists.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	string		$categoryName
-	 * @return	\wcf\data\acl\option\category\ACLOptionCategory
+	 * @return	ACLOptionCategory|null
 	 */
 	public function getCategory($objectTypeID, $categoryName) {
 		if (isset($this->categories[$objectTypeID][$categoryName])) {

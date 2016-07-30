@@ -107,7 +107,7 @@ class BoxHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the box with the given id or null.
+	 * Returns the box with the given id or `null` if it does not exist.
 	 * 
 	 * @param	integer		$boxID
 	 * @return	Box|null
@@ -135,7 +135,7 @@ class BoxHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the box with given identifier.
+	 * Returns the box with given identifier or `null` if there is no such box.
 	 *
 	 * @param	string		$identifier
 	 * @return	Box|null

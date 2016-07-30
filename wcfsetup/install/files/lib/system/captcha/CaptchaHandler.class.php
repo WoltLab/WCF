@@ -37,7 +37,7 @@ class CaptchaHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the captcha object type with the given id or null if no such
+	 * Returns the captcha object type with the given id or `null` if no such
 	 * object type exists.
 	 * 
 	 * @param	integer		$objectTypeID

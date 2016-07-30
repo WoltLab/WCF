@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\clipboard;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
@@ -135,10 +136,11 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a type id by name.
+	 * Returns the id of the clipboard object type with the given name or `null` if no such
+	 * clipboard object type exists.
 	 * 
 	 * @param	string		$typeName
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getObjectTypeID($typeName) {
 		if (isset($this->cache['objectTypeNames'][$typeName])) {
@@ -149,10 +151,11 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a type by object type id.
+	 * Returns the clipboard object type with the given id or `null` if no such
+	 * clipboard object type exists.
 	 * 
-	 * @param	integer				$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @param	integer		$objectTypeID
+	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->cache['objectTypes'][$objectTypeID])) {
@@ -163,10 +166,13 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns object type by object type name.
+	 * Returns the id of the clipboard object type with the given name or `null` if no such
+	 * clipboard object type exists.
+	 * 
+	 * TODO: The name of this method does not reflect its return type and appears not to be used.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getObjectTypeByName($objectType) {
 		foreach ($this->cache['objectTypes'] as $objectTypeID => $objectTypeObj) {
@@ -290,11 +296,11 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns items for clipboard editor.
+	 * Returns the data of the items for clipboard editor or `null` if no items are marked.
 	 * 
 	 * @param	string|string[]		$page
 	 * @param	integer			$pageObjectID
-	 * @return	mixed[][]
+	 * @return	array|null
 	 * @throws	SystemException
 	 */
 	public function getEditorItems($page, $pageObjectID) {
