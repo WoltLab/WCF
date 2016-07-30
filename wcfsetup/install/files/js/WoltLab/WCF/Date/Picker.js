@@ -154,7 +154,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				}
 				
 				if (!hasClass) {
-					element.classList.add('short')
+					element.classList.add('short');
 				}
 				
 				_data.set(element, {

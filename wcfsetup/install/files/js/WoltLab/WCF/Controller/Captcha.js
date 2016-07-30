@@ -23,7 +23,7 @@ define(['Dictionary'], function(Dictionary) {
 		 */
 		add: function(captchaId, callback) {
 			if (_captchas.has(captchaId)) {
-				throw new Error("Captcha with id '" + captchaId + "' is already registered.")
+				throw new Error("Captcha with id '" + captchaId + "' is already registered.");
 			}
 			
 			if (typeof callback !== 'function') {
@@ -40,7 +40,7 @@ define(['Dictionary'], function(Dictionary) {
 		 */
 		'delete': function(captchaId) {
 			if (!_captchas.has(captchaId)) {
-				throw new Error("Unknown captcha with id '" + captchaId + "'.")
+				throw new Error("Unknown captcha with id '" + captchaId + "'.");
 			}
 			
 			_captchas.delete(captchaId)();
@@ -64,7 +64,7 @@ define(['Dictionary'], function(Dictionary) {
 		 */
 		getData: function(captchaId) {
 			if (!_captchas.has(captchaId)) {
-				throw new Error("Unknown captcha with id '" + captchaId + "'.")
+				throw new Error("Unknown captcha with id '" + captchaId + "'.");
 			}
 			
 			return _captchas.get(captchaId)();

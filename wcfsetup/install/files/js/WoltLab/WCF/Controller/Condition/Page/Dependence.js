@@ -77,7 +77,7 @@ define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], func
 				elHide(hiddenElements[i]);
 			}
 			
-			_hiddenElements.set(dependentElement, [])
+			_hiddenElements.set(dependentElement, []);
 		},
 		
 		_showDependentElement: function(dependentElement) {
@@ -94,6 +94,4 @@ define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], func
 			}
 		}
 	};
-	
-	return ControllerConditionPageDependence;
 });

@@ -33,7 +33,7 @@ define([], function() {
 		this._timer = undefined;
 		
 		this.restart();
-	};
+	}
 	Repeating.prototype = {
 		/**
 		 * Stops the timer and restarts it. The next call will occur in `delta` milliseconds.

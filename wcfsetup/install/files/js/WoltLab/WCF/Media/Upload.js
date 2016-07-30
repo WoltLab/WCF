@@ -37,7 +37,7 @@ define(
 			multiple: this._mediaManager ? true : false,
 			singleFileRequests: true
 		}, options));
-	};
+	}
 	Core.inherit(MediaUpload, Upload, {
 		/**
 		 * @see	WoltLab/WCF/Upload#_createFileElement

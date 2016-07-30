@@ -18,7 +18,7 @@ define(['Core'], function(Core) {
 	 */
 	function Dictionary() {
 		this._dictionary = (_hasMap) ? new Map() : {};
-	};
+	}
 	Dictionary.prototype = {
 		/**
 		 * Sets a new key with given value, will overwrite an existing key.

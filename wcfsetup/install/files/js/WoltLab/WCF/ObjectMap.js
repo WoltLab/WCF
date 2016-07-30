@@ -18,7 +18,7 @@ define([], function() {
 	 */
 	function ObjectMap() {
 		this._map = (_hasMap) ? new WeakMap() : { key: [], value: [] };
-	};
+	}
 	ObjectMap.prototype = {
 		/**
 		 * Sets a new key with given value, will overwrite an existing key.

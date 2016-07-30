@@ -52,7 +52,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		this._internalFileId = 0;
 		
 		this._createButton();
-	};
+	}
 	Upload.prototype = {
 		/**
 		 * Creates the upload button.

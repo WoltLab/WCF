@@ -26,7 +26,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 		}
 		this._mediaToInsert = new Dictionary();
 		this._mediaToInsertByClipboard = false;
-	};
+	}
 	Core.inherit(MediaManagerEditor, MediaManagerBase, {
 		/**
 		 * @see	WoltLab/WCF/Media/Manager/Base#_addButtonEventListeners
@@ -119,7 +119,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 							title: Language.get('wcf.media.insert')
 						},
 						source: dialog
-					}
+					};
 				}).bind(this)
 			});
 		},

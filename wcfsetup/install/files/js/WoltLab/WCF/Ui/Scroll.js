@@ -80,5 +80,5 @@ define(['Dom/Util'], function(DomUtil) {
 				_timeoutScroll = null;
 			}, 100);
 		}
-	}
+	};
 });

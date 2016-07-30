@@ -45,7 +45,7 @@ define(['./Template.grammar', './StringUtil', 'Language'], function(parser, Stri
 			console.debug(e.message);
 			throw e;
 		}
-	};
+	}
 	
 	Object.defineProperty(Template, 'callbacks', {
 		enumerable: false,

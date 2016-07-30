@@ -51,7 +51,7 @@ define(['Ajax', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], fu
 		else {
 			this._fileType = null;
 		}
-	};
+	}
 	MediaSearch.prototype = {
 		/**
 		 * Returns the prefix to identify search-related elements.

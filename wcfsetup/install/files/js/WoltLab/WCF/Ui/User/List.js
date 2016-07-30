@@ -12,7 +12,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLab/WCF/Ui/P
 	/**
 	 * @constructor
 	 */
-	function UiUserList(options) { this.init(options); };
+	function UiUserList(options) { this.init(options); }
 	UiUserList.prototype = {
 		/**
 		 * Initializes the user list.

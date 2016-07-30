@@ -14,7 +14,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 	 * @param	{string}		elementId	input element id
 	 * @param	{object<mixed>}		options		option list
 	 */
-	function UiSuggestion(elementId, options) { this.init(elementId, options); };
+	function UiSuggestion(elementId, options) { this.init(elementId, options); }
 	UiSuggestion.prototype = {
 		/**
 		 * Initializes a new suggestion input.

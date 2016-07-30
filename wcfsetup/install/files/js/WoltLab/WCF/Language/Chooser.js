@@ -159,7 +159,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 					dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
 				}
 				
-				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick)
+				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
 			}
 			else if (languageId === 0) {
 				dropdownToggle.innerHTML = null;

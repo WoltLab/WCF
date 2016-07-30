@@ -45,7 +45,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 				}
 			}
 		}
-	};
+	}
 	Core.inherit(MediaManagerSelect, MediaManagerBase, {
 		/**
 		 * @see	WoltLab/WCF/Media/Manager/Base#_addButtonEventListeners

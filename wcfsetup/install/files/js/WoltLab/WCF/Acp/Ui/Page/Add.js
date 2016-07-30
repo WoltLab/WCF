@@ -62,5 +62,5 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 				}
 			};
 		}
-	}
+	};
 });

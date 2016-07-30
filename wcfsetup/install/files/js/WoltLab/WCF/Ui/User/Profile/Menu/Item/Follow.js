@@ -23,7 +23,7 @@ define(['Core', 'Language', 'Ui/Notification', './Abstract'], function(Core, Lan
 				data: {
 					className: 'wcf\\data\\user\\follow\\UserFollowAction'
 				}
-			}
+			};
 		}
 	});
 	

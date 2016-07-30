@@ -367,7 +367,7 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 		_updateDepth: function(increase) {
 			this._depth += (increase) ? 1 : -1;
 			
-			this._menu.children[0].style.setProperty('transform', 'translateX(' + (this._depth * -100) + '%)', '')
+			this._menu.children[0].style.setProperty('transform', 'translateX(' + (this._depth * -100) + '%)', '');
 		}
 	};
 	

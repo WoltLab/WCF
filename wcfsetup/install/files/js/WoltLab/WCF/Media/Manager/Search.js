@@ -23,7 +23,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLab/WCF/Med
 		
 		this._cancelButton = elById(this._getIdPrefix() + 'SearchCancelButton');
 		this._cancelButton.addEventListener(WCF_CLICK_EVENT, this._cancelSearch.bind(this));
-	};
+	}
 	Core.inherit(MediaManagerSearch, MediaSearch, {
 		/**
 		 * Returns the data for Ajax to setup the Ajax/Request object.

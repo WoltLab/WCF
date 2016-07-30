@@ -7,6 +7,8 @@
  * @module	WoltLab/WCF/File/Util
  */
 define([], function() {
+	"use strict";
+	
 	/**
 	 * @exports	WoltLab/WCF/File/Util
 	 */

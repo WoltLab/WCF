@@ -60,7 +60,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 					this._button.parentNode.appendChild(error);
 				}
 				
-				error.textContent = Language.get('wcf.acp.style.image.error.' + data.returnValues.errorType)
+				error.textContent = Language.get('wcf.acp.style.image.error.' + data.returnValues.errorType);
 			}
 		}
 	});

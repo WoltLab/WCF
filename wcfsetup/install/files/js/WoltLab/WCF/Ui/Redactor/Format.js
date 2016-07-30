@@ -149,7 +149,7 @@ define(['Dom/Util'], function(DomUtil) {
 				lastMatchingParent = this._getLastMatchingParent(strikeElement, editorElement, tagName);
 				
 				if (lastMatchingParent !== null) {
-					this._handleParentNodes(strikeElement, lastMatchingParent, tagName)
+					this._handleParentNodes(strikeElement, lastMatchingParent, tagName);
 				}
 				
 				// remove offending elements from child nodes

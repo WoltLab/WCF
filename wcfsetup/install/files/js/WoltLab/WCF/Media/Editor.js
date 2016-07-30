@@ -38,7 +38,7 @@ define(
 		this._media = null;
 		
 		this._dialogs = new Dictionary();
-	};
+	}
 	MediaEditor.prototype = {
 		/**
 		 * Returns the data for Ajax to setup the Ajax/Request object.
@@ -222,7 +222,7 @@ define(
 		 */
 		edit: function(media) {
 			if (this._media !== null) {
-				throw new Error("Cannot edit media with id '" + media.mediaID + "' while editing media with id '" + this._media.mediaID + "'")
+				throw new Error("Cannot edit media with id '" + media.mediaID + "' while editing media with id '" + this._media.mediaID + "'");
 			}
 			
 			this._media = media;

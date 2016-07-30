@@ -48,4 +48,4 @@
 		
 		return contents;
 	}
-})
+});

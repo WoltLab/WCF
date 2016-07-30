@@ -63,7 +63,7 @@ define([], function() {
 			
 			return url.replace(/^index\.php\/(.*?)\/\?/, function(match, controller) {
 				var parts = controller.split(/([A-Z][a-z0-9]+)/);
-				var controller = '';
+				controller = '';
 				for (var i = 0, length = parts.length; i < length; i++) {
 					var part = parts[i].trim();
 					if (part.length) {

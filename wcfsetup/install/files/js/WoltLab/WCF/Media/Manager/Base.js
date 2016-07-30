@@ -42,7 +42,7 @@ define(
 		}
 		
 		DomChangeListener.add('WoltLab/WCF/Media/Manager', this._addButtonEventListeners.bind(this));
-	};
+	}
 	MediaManagerBase.prototype = {
 		/**
 		 * Adds click event listeners to media buttons.
