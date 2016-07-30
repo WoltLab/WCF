@@ -713,7 +713,6 @@ private:wcf.acp.option.exception_privacy.private]]></selectoptions>
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^[^/]*$</validationpattern>
-				<!-- wcf-recaptcha.woltlab.com global key -->
 				<defaultvalue></defaultvalue>
 				<showorder>2</showorder>
 			</option>
