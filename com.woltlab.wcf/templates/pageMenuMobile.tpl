@@ -2,47 +2,32 @@
 <div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}">
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
 		<li class="menuOverlayTitle">{lang}wcf.menu.page.navigation{/lang}</li>
-		{*<li class="menuOverlayItem">
-			<a href="#" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-sitemap"></span>
-				<span class="menuOverlayItemTitle"></span>
-			</a>
-			<ol class="menuOverlayItemList">*}
-				{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
-					<li class="menuOverlayItem">
-						{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
-						<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}">
-							<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
-							{if $__outstandingItems}
-								<span class="badge badgeUpdate">{#$__outstandingItems}</span>
-							{/if}
-						</a>
-						
-						{if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
-							
-							{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
-								{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
-							{/if}
-				{/foreach}
-			{*</ol>
-		</li>*}
-		{hascontent}
+		{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
 			<li class="menuOverlayItem">
-				<a href="#" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-gears"></span>
-					<span class="menuOverlayItemTitle">{lang}wcf.menu.page.options{/lang}</span>
+				{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
+				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}">
+					<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
+					{if $__outstandingItems}
+						<span class="badge badgeUpdate">{#$__outstandingItems}</span>
+					{/if}
 				</a>
-				<ol class="menuOverlayItemList">
-					{content}
-						{if !$__pageOptions|empty}
-							{@$__pageOptions}
-						{/if}
-						
-						{event name='pageOptions'}
-					{/content}
-				</ol>
-			</li>
-		{/hascontent}
+				
+				{if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
+					
+					{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+						{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+					{/if}
+		{/foreach}
+		<li class="menuOverlayItemSpacer"></li>
+		<li class="menuOverlayItem" id="pageMainMenuMobilePageOptionsContainer">
+			<a href="#" class="menuOverlayItemLink box24">
+				<span class="icon icon24 fa-gears"></span>
+				<span class="menuOverlayItemTitle">{lang}wcf.menu.page.options{/lang}</span>
+			</a>
+			<ol class="menuOverlayItemList">
+				<li class="menuOverlayItem jsMenuOverlayItemPlaceholder"><a href="#">(placeholder)</a></li>
+			</ol>
+		</li>
 		{hascontent}
 			<li class="menuOverlayTitle">{lang}wcf.menu.page.location{/lang}</li>
 			{content}

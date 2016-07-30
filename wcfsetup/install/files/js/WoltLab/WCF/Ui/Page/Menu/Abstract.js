@@ -82,10 +82,11 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 		 * Opens the menu.
 		 * 
 		 * @param       {Event}         event   event object
+		 * @return      {boolean}       true if menu has been opened
 		 */
 		open: function(event) {
 			if (!this._enabled) {
-				return;
+				return false;
 			}
 			
 			if (event instanceof Event) {
@@ -101,12 +102,15 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			_pageContainer.classList.add('menuOverlay-' + this._menu.id);
 			
 			document.documentElement.classList.add('pageOverlayActive');
+			
+			return true;
 		},
 		
 		/**
 		 * Closes the menu.
 		 * 
 		 * @param       {(Event|boolean)}       event   event object or boolean true to force close the menu
+		 * @return      {boolean}               true if menu was open
 		 */
 		close: function(event) {
 			if (event instanceof Event) {
@@ -121,7 +125,11 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 				_pageContainer.classList.remove('menuOverlay-' + this._menu.id);
 				
 				document.documentElement.classList.remove('pageOverlayActive');
+				
+				return true;
 			}
+			
+			return false;
 		},
 		
 		/**
