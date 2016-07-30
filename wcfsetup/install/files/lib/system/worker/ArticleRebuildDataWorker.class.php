@@ -73,7 +73,17 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 			$comments[$articleContent->articleID] += $row['comments'] + $row['responses'];
 			
 			// update search index
-			SearchIndexManager::getInstance()->set('com.woltlab.wcf.article', $articleContent->articleContentID, $articleContent->content, $articleContent->title, $articles[$articleContent->articleID]->time, $articles[$articleContent->articleID]->userID, $articles[$articleContent->articleID]->username, $articleContent->languageID, $articleContent->teaser);
+			SearchIndexManager::getInstance()->set(
+				'com.woltlab.wcf.article',
+				$articleContent->articleContentID,
+				$articleContent->content,
+				$articleContent->title,
+				$articles[$articleContent->articleID]->time,
+				$articles[$articleContent->articleID]->userID,
+				$articles[$articleContent->articleID]->username,
+				$articleContent->languageID,
+				$articleContent->teaser
+			);
 		}
 		
 		// fetch cumulative likes

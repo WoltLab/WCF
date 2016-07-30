@@ -81,7 +81,12 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 			]);
 			
 			// send notification
-			UserNotificationHandler::getInstance()->fireEvent('following', 'com.woltlab.wcf.user.follow', new UserFollowUserNotificationObject($follow), [$follow->followUserID]);
+			UserNotificationHandler::getInstance()->fireEvent(
+				'following',
+				'com.woltlab.wcf.user.follow',
+				new UserFollowUserNotificationObject($follow),
+				[$follow->followUserID]
+			);
 			
 			// fire activity event
 			UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.user.recentActivityEvent.follow', $this->parameters['data']['userID']);

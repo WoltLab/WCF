@@ -66,9 +66,13 @@ class LikeableArticle extends AbstractLikeObject {
 		/* @todo
 		if ($this->getDecoratedObject()->userID != WCF::getUser()->userID) {
 			$notificationObject = new LikeUserNotificationObject($like);
-			UserNotificationHandler::getInstance()->fireEvent('like', 'com.woltlab.wcf.likeableArticle.notification', $notificationObject, [$this->getDecoratedObject()->userID], [
-				'objectID' => $this->getDecoratedObject()->articleID
-			]);
+			UserNotificationHandler::getInstance()->fireEvent(
+				'like',
+				'com.woltlab.wcf.likeableArticle.notification',
+				$notificationObject,
+				[$this->getDecoratedObject()->userID],
+				['objectID' => $this->getDecoratedObject()->articleID]
+			);
 		}
 		*/
 	}
