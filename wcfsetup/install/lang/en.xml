@@ -2939,23 +2939,29 @@ the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>
 		<item name="wcf.user.changeUsername.success"><![CDATA[Username was changed.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[Email Address was changed.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Your new email address{if $newEmail|isset} (“{$newEmail}”){/if} must be verified first. You should have received an email sent to your new email address containing an activation link. Open the link to verify your new email address.]]></item>
-		<item name="wcf.user.changeEmail.needReactivation.mail"><![CDATA[Dear {@$username},
-
-you’ve changed your email address on: {@PAGE_TITLE|language}. It is required to open the link below in order to verify this email address.
-
-{link controller='EmailActivation' isEmail=true}u={@$userID}&a={@$activationCode}{/link} 
-
-**** Unable to click or open the link above? ****
-Please open the link below in your browser:
-{link controller='EmailActivation' isEmail=true}{/link}
-
-Once prompted please provide the following details:
-
-You User ID: 		{@$userID} 
-Activation Code: 	{@$activationCode} 
-
-If you cannot activate your email address or have any troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS}]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.intro"><![CDATA[
+<p>you’ve changed your email address on: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. To complete
+this change it is required to confirm your new email address once:</p>]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.outro"><![CDATA[
+<p>Your activation code is: <code>{$mailbox->getUser()->reactivationCode}</code>.</p>
+<p>If you have troubles confirming your email address, please contact the administrator at:
+<a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
+you did not register an account with us.</p>]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
+
+you’ve changed your email address on: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. To complete
+this change it is required to confirm your new email address once:
+
+    {link controller='EmailActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->reactivationCode}{/link} {* this line ends with a space *}
+
+Your activation code is: {@$mailbox->getUser()->reactivationCode} {* this line ends with a space *}
+
+If you have troubles confirming your email address, please contect the
+administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
+not register with us.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[Password has been changed.]]></item>
 		<item name="wcf.user.activationCode"><![CDATA[9-digit Activation Code]]></item>
 		<item name="wcf.user.newActivationCode"><![CDATA[Request New Activation Code]]></item>
@@ -3059,7 +3065,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
 <p>thank you for registering at: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
-		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address!]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
 <p>Your activation code is: <code>{$mailbox->getUser()->activationCode}</code>.</p>
 <p>If you have troubles confirming your email address, please contact the administrator at:

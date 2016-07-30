@@ -2,8 +2,12 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserList;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -223,7 +227,7 @@ class AccountManagementForm extends AbstractForm {
 		
 		// email
 		if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
-			if (empty($this->email)) {	
+			if (empty($this->email)) {
 				throw new UserInputException('email');
 			}
 			
@@ -346,14 +350,6 @@ class AccountManagementForm extends AbstractForm {
 				$updateParameters['reactivationCode'] = $activationCode;
 				$updateParameters['newEmail'] = $this->email;
 				
-				$messageData = [
-					'username' => WCF::getUser()->username,
-					'userID' => WCF::getUser()->userID,
-					'activationCode' => $activationCode
-				];
-				
-				$mail = new Mail([WCF::getUser()->username => $this->email], WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
-				$mail->send();
 				$success[] = 'wcf.user.changeEmail.needReactivation';
 			}
 		}
@@ -438,6 +434,25 @@ class AccountManagementForm extends AbstractForm {
 			$user = new User(WCF::getUser()->userID);
 			
 			HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($updateParameters['password'], $user->password), TIME_NOW + 365 * 24 * 3600);
+		}
+		
+		if (isset($updateParameters['newEmail']) && isset($updateParameters['reactivationCode'])) {
+			// Use user list to allow overriding of the fields without duplicating logic
+			$userList = new UserList();
+			$userList->useQualifiedShorthand = false;
+			$userList->sqlSelects .= ", user_table.*, newEmail AS email";
+			$userList->getConditionBuilder()->add('user_table.userID = ?', [WCF::getUser()->userID]);
+			$userList->readObjects();
+			$user = $userList->getObjects()[WCF::getUser()->userID];
+			
+			$email = new Email();
+			$email->addRecipient(new UserMailbox($user));
+			$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'));
+			$email->setBody(new MimePartFacade([
+				new RecipientAwareTextMimePart('text/html', 'email_changeEmailNeedReactivation'),
+				new RecipientAwareTextMimePart('text/plain', 'email_changeEmailNeedReactivation')
+			]));
+			$email->send();
 		}
 		
 		$this->saved();

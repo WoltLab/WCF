@@ -2912,25 +2912,29 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.changeUsername.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzername wurde erfolgreich geändert.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse wurde erfolgreich geändert.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} neue E-Mail-Adresse{if $newEmail|isset} („{$newEmail}“){/if} muss noch aktiviert werden. Dazu wurde eine E-Mail mit einem Aktivierungslink an die neue Adresse gesandt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} diesen Aktivierungslink aufrufen, um die neue E-Mail-Adresse zu aktivieren.]]></item>
-		<item name="wcf.user.changeEmail.needReactivation.mail"><![CDATA[Hallo {@$username},
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}du hast deine{else}Sie haben Ihre{/if} E-Mail-Adresse auf der Website: {@PAGE_TITLE|language} geändert. Zum Abschließen dieser Änderung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit der neuen E-Mail-Adresse bestätigen.
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Bitte bestätige die Gültigkeit deiner neuen E-Mail-Adresse, indem du folgenden Link aufrufst{else}Bitte bestätigen Sie die Gültigkeit Ihrer neuen E-Mail-Adresse, indem Sie folgenden Link aufrufen{/if}:
-{link controller='EmailActivation' isEmail=true}u={@$userID}&a={@$activationCode}{/link} 
-
-**** Funktioniert der Link oben nicht? ****
-Wenn der Link nicht funktioniert, {if LANGUAGE_USE_INFORMAL_VARIANT}solltest du{else}sollten Sie{/if} folgende Adresse in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Browser aufrufen:
-{link controller='EmailActivation' isEmail=true}{/link}
-
-Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass keine Leerzeichen in der Adresse sind.
-{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du den Link aufgerufen hast, musst du{else}Wenn Sie den Link aufgerufen haben, müssen Sie{/if} auf der erscheinenden Seite {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Benutzernummer sowie den Aktivierungscode eingeben.
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Benutzernummer lautet: 	{@$userID} 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: 	{@$activationCode} 
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du Probleme mit der Aktivierung haben solltest, wende dich{else}Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich{/if} bitte an den Administrator: {@MAIL_ADMIN_ADDRESS} ]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Aktivierung der neuen E-Mail-Adresse auf der Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.intro"><![CDATA[
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}du hast deine{else}Sie haben Ihre{/if} E-Mail-Adresse auf der Website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> geändert. 
+Zum Abschließen dieser Änderung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit der neuen E-Mail-Adresse bestätigen:</p>]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.activate"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.html.outro"><![CDATA[
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{$mailbox->getUser()->reactivationCode}</code>.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du Probleme mit der Aktivierung haben solltest, wende dich{else}Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich{/if} bitte an den Administrator:
+<a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
+dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.plaintext"><![CDATA[Hallo {$mailbox->getUser()->username},
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}du hast deine{else}Sie haben Ihre{/if} E-Mail-Adresse auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] geändert.
+Zum Abschließen dieser Änderung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit der neuen E-Mail-Adresse bestätigen:
+
+    {link controller='EmailActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->reactivationCode}{/link} {* this line ends with a space *}
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->reactivationCode} {* this line ends with a space *}
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du Probleme mit der Aktivierung haben solltest, wende dich{else}Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich{/if} bitte an den Administrator: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
+dich{else}Sie
+sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Kennwort wurde erfolgreich geändert.]]></item>
 		<item name="wcf.user.activationCode"><![CDATA[9-stelliger Aktivierungscode]]></item>
 		<item name="wcf.user.newActivationCode"><![CDATA[Neuen Aktivierungscode anfordern]]></item>
@@ -3034,7 +3038,7 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}achte{else}achten Sie{/if} darauf, dass 
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
 <p>vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if}
 Benutzerkonto vollständig verwenden können ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
-		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren!]]></item>
+		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{$mailbox->getUser()->activationCode}</code>.</p>
 <p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator

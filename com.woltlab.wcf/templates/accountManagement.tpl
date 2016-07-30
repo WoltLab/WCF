@@ -141,7 +141,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<small>{lang newEmail=$__wcf->user->email}wcf.user.changeEmail.needReactivation{/lang}</small>
+						<small>{lang newEmail=$__wcf->user->newEmail}wcf.user.changeEmail.needReactivation{/lang}</small>
 						<small><a href="{link controller='EmailActivation'}{/link}"><span>{lang}wcf.user.emailActivation{/lang}</span></a></small>
 					</dd>
 				</dl>
