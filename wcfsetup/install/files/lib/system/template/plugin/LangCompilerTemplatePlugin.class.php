@@ -21,7 +21,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('lang');
 		
-		$tagArgs = $compiler->makeArgString($tagArgs);
+		$tagArgs = $compiler::makeArgString($tagArgs);
 		return "<?php
 			\$this->tagStack[] = array('lang', array_merge(\$this->v, array($tagArgs)));
 			ob_start();

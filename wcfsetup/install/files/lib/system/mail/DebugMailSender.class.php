@@ -30,7 +30,7 @@ class DebugMailSender extends MailSender {
 			$this->log = new File($logFilePath . 'mail.log', 'ab');
 		}
 		
-		$this->log->write($this->printMail($mail));
+		$this->log->write(self::printMail($mail));
 	}
 	
 	/**

@@ -20,12 +20,12 @@ class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'var' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+			throw new SystemException($compiler::formatSyntaxError("missing 'var' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		if (!isset($tagArgs['value'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'value' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+			throw new SystemException($compiler::formatSyntaxError("missing 'value' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
-				
+		
 		return "<?php \$this->append(".$tagArgs['var'].", ".$tagArgs['value']."); ?>";
 	}
 	
@@ -33,6 +33,6 @@ class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
-		throw new SystemException($compiler->formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+		throw new SystemException($compiler::formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 	}
 }

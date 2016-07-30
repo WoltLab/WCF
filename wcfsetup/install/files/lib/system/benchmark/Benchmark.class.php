@@ -89,7 +89,7 @@ class Benchmark extends SingletonFactory {
 	 * @return	float
 	 */
 	public function getExecutionTime() {
-		return $this->compareMicrotimes($this->startTime, self::getMicrotime());
+		return self::compareMicrotimes($this->startTime, self::getMicrotime());
 	}
 	
 	/**

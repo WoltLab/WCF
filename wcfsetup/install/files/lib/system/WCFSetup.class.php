@@ -89,14 +89,14 @@ class WCFSetup extends WCF {
 	public function __construct() {
 		@set_time_limit(0);
 		
-		$this->getDeveloperMode();
-		$this->getLanguageSelection();
-		$this->getInstallationDirectories();
+		static::getDeveloperMode();
+		static::getLanguageSelection();
+		static::getInstallationDirectories();
 		$this->initLanguage();
 		$this->initTPL();
 		/** @noinspection PhpUndefinedMethodInspection */
 		self::getLanguage()->loadLanguage();
-		$this->getPackageNames();
+		static::getPackageNames();
 		
 		// start setup
 		$this->setup();
@@ -541,7 +541,7 @@ class WCFSetup extends WCF {
 		}
 		// WCF not yet installed, install files first
 		else {
-			$this->installFiles();
+			static::installFiles();
 			
 			$this->gotoNextStep('selectLanguages');
 		}

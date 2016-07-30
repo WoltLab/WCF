@@ -457,7 +457,7 @@ class WCF {
 		// TODO: what exactly should the base href represent and how should it be calculated, also because
 		// defining it here eventually breaks the ACP due to tpl initialization occurs first
 		if (!class_exists(WCFACP::class, false)) {
-			$this->getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
+			static::getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
 		}
 		
 		// start main application
@@ -545,13 +545,13 @@ class WCF {
 			// register template path if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
 				// add template path and abbreviation
-				$this->getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
+				static::getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
 			}
 			EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
 			
 			// init application and assign it as template variable
 			self::$applicationObjects[$application->packageID] = call_user_func([$className, 'getInstance']);
-			$this->getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
+			static::getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 			EmailTemplateEngine::getInstance()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 		}
 		else {
@@ -561,11 +561,11 @@ class WCF {
 		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
+			static::getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag
-			$this->getTPL()->assign('baseHref', $application->getPageURL());
+			static::getTPL()->assign('baseHref', $application->getPageURL());
 		}
 		
 		// register application
