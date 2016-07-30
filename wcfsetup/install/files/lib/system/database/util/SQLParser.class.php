@@ -295,7 +295,6 @@ class SQLParser {
 	 * Executes a 'DROP PRIMARY KEY' statement.
 	 * 
 	 * @param	string		$tableName
-	 * @param	string		$primaryKeyName
 	 */
 	protected function executeDropPrimaryKeyStatement($tableName) {
 		WCF::getDB()->getEditor()->dropPrimaryKey($tableName);
