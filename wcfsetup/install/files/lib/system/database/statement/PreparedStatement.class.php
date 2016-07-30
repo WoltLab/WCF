@@ -173,13 +173,19 @@ class PreparedStatement {
 	/**
 	 * Fetches the all rows from a result set into database objects.
 	 * 
-	 * @param	string			$className
+	 * @param	string		$className
+	 * @param	string|null	$keyProperty
 	 * @return	DatabaseObject[]
 	 */
-	public function fetchObjects($className) {
+	public function fetchObjects($className, $keyProperty = null) {
 		$objects = [];
 		while ($object = $this->fetchObject($className)) {
-			$objects[] = $object;
+			if ($keyProperty === null) {
+				$objects[] = $object;
+			}
+			else {
+				$objects[$object->$keyProperty] = $object;
+			}
 		}
 		
 		return $objects;

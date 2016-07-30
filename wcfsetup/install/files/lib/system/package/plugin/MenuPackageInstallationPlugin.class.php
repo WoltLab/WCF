@@ -199,12 +199,9 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$boxes = [];
 		
-		/** @var Box $box */
-		while ($box = $statement->fetchObject(Box::class)) {
-			$boxes[$box->identifier] = $box;
-		}
+		/** @var Box[] $boxes */
+		$boxes = $statement->fetchObjects(Box::class, 'identifier');
 		
 		// fetch all menus relevant
 		$menuList = new MenuList();

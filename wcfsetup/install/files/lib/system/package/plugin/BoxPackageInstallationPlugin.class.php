@@ -319,12 +319,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$boxes = [];
 		
-		/** @var Box $box */
-		while ($box = $statement->fetchObject(Box::class)) {
-			$boxes[$box->identifier] = $box;
-		}
+		/** @var Box[] $boxes */
+		$boxes = $statement->fetchObjects(Box::class, 'identifier');
 		
 		// save visibility exceptions
 		$sql = "DELETE FROM	wcf".WCF_N."_box_to_page

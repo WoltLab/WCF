@@ -369,10 +369,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$updateVersions = [];
-		while ($updateVersion = $statement->fetchObject(PackageUpdateVersion::class)) {
-			$updateVersions[$updateVersion->packageUpdateVersionID] = $updateVersion;
-		}
+		
+		/** @var PackageUpdateVersion[] $updateVersions */
+		$updateVersions = $statement->fetchObjects(PackageUpdateVersion::class, 'packageUpdateVersionID');
 		
 		// assign versions
 		foreach ($packageUpdates as $packageUpdateID => $packageUpdate) {

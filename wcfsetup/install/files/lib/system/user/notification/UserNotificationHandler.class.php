@@ -373,12 +373,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql, $limit, $offset);
 		$statement->execute($conditions->getParameters());
 		
-		$notifications = [];
-		while ($notification = $statement->fetchObject(UserNotification::class)) {
-			$notifications[$notification->notificationID] = $notification;
-		}
-		
-		return $notifications;
+		return $statement->fetchObjects(UserNotification::class, 'notificationID');
 	}
 	
 	/**
