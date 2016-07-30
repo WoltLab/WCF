@@ -155,7 +155,7 @@ define(
 			var aclValues = {
 				allowAll: ~~elById('mediaEditor_' + this._media.mediaID + '_aclAllowAll').checked,
 				group: [],
-				user: [],
+				user: []
 			};
 			
 			var aclGroups = elBySelAll('input[name="aclValues[group][]"]', content);
@@ -274,7 +274,7 @@ define(
 								}
 							}
 						};
-					}.bind(this),
+					}.bind(this)
 				});
 			}
 			
