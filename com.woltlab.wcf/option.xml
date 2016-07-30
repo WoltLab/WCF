@@ -518,7 +518,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<option name="exception_privacy">
 				<categoryname>general.system.error</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[mysql]]></defaultvalue>
+				<defaultvalue><![CDATA[reduced]]></defaultvalue>
 				<selectoptions><![CDATA[public:wcf.acp.option.exception_privacy.public
 reduced:wcf.acp.option.exception_privacy.reduced
 private:wcf.acp.option.exception_privacy.private]]></selectoptions>
