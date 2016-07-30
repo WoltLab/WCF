@@ -302,7 +302,7 @@ class StyleCompiler extends SingletonFactory {
 		if (PACKAGE_ID) {
 			foreach (Option::getOptions() as $constantName => $option) {
 				if (in_array($option->optionType, static::$supportedOptionType)) {
-					$variables['wcf_option_'.mb_strtolower($constantName)] = (is_integer($option->optionValue)) ? $option->optionValue : '"'.$option->optionValue.'"';
+					$variables['wcf_option_'.mb_strtolower($constantName)] = (is_int($option->optionValue)) ? $option->optionValue : '"'.$option->optionValue.'"';
 				}
 			}
 		}

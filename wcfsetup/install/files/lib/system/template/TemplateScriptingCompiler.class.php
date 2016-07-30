@@ -270,7 +270,7 @@ class TemplateScriptingCompiler {
 			$compiledContent .= $textBlocks[$i].$compiledTags[$i];
 		}
 		$compiledContent .= $textBlocks[$i];
-		$compiledContent = chop($compiledContent);
+		$compiledContent = rtrim($compiledContent);
 		
 		// reinsert {literal} Tags
 		$compiledContent = $this->reinsertLiterals($compiledContent);

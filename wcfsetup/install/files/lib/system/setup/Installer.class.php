@@ -63,7 +63,7 @@ class Installer {
 				throw new SystemException("Could not create dir '".$this->targetDir."'");
 			}
 		}
-		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir)) {
+		if (FileUtil::isApacheModule() || !is_writable($this->targetDir)) {
 			$this->makeWriteable($this->targetDir);
 		}
 	}
@@ -82,7 +82,7 @@ class Installer {
 			}
 			umask($oldumask);
 		}
-		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir.$dir)) {
+		if (FileUtil::isApacheModule() || !is_writable($this->targetDir.$dir)) {
 			$this->makeWriteable($this->targetDir.$dir);
 		}
 	}
@@ -106,7 +106,7 @@ class Installer {
 	 */
 	protected function createFile($file, $index, Tar $tar) {
 		$tar->extract($index, $this->targetDir.$file);
-		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir.$file)) {
+		if (FileUtil::isApacheModule() || !is_writable($this->targetDir.$file)) {
 			$this->makeWriteable($this->targetDir.$file);
 		}
 	}
