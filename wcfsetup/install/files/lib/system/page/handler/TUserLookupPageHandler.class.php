@@ -1,9 +1,10 @@
 <?php
 namespace wcf\system\page\handler;
 use wcf\data\user\UserProfileList;
+use wcf\system\cache\runtime\UserRuntimeCache;
 
 /**
- * Provides the `lookup` method for looking up users. 
+ * Provides the `isValid` and `lookup` methods for looking up users. 
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
@@ -12,6 +13,13 @@ use wcf\data\user\UserProfileList;
  * @since	3.0
  */
 trait TUserLookupPageHandler {
+	/**
+	 * @see	ILookupPageHandler::isValid()
+	 */
+	public function isValid($objectID) {
+		return UserRuntimeCache::getInstance()->getObject($objectID) !== null;
+	}
+	
 	/**
 	 * @see	ILookupPageHandler::lookup()
 	 */
