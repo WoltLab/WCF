@@ -2,8 +2,11 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -64,14 +67,19 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		]);
 		$this->objectAction->executeAction();
 		
+		// reload user object
+		$this->user = new User($this->user->userID);
+		
 		// send activation mail
-		$messageData = [
-			'username' => $this->user->username,
-			'userID' => $this->user->userID,
-			'activationCode' => $activationCode
-		];
-		$mail = new Mail([$this->user->username => $this->user->newEmail], WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
-		$mail->send();
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($this->user));
+		$email->setSubject($this->user->getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_changeEmailNeedReactivation'),
+			new RecipientAwareTextMimePart('text/plain', 'email_changeEmailNeedReactivation')
+		]));
+		$email->send();
+		
 		$this->saved();
 		
 		// forward to index page
