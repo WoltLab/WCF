@@ -154,6 +154,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 			}
 			
 			this.modal.close();
+			
+			this.buffer.set();
+			
 			this.insert.html(html);
 		}
 	};

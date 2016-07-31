@@ -19,6 +19,8 @@ $.Redactor.prototype.WoltLabLink = function() {
 				e.preventDefault();
 			}
 			
+			this.selection.save();
+			
 			// close tooltip
 			this.observe.closeAllTooltip();
 			
@@ -36,7 +38,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 						return false;
 					}
 					
-					this.selection.restore();
+					//this.selection.restore();
 					
 					// insert or update
 					this.link.insert(link, true);

@@ -10,6 +10,8 @@ $.Redactor.prototype.WoltLabModal = function() {
 	// need to go there nor will it work
 	var _methods = {
 		close: function() {
+			this.selection.restore();
+			
 			_uiDialog.close(this);
 		},
 		
