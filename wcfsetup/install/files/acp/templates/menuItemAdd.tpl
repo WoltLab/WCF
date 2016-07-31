@@ -69,8 +69,8 @@
 				<input type="text" name="title" id="title" value="{$title}" class="long" required>
 				{if $errorField == 'title'}
 					<small class="innerError">
-						{if $errorType == 'multilingual'}
-							{lang}wcf.global.form.error.multilingual{/lang}
+						{if $errorType == 'empty' || $errorType == 'multilingual'}
+							{lang}wcf.global.form.error.{@$errorType}{/lang}
 						{else}
 							{lang}wcf.acp.menu.item.title.error.{$errorType}{/lang}
 						{/if}

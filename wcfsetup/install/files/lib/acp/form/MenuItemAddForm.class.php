@@ -202,7 +202,12 @@ class MenuItemAddForm extends AbstractForm {
 		
 		// validate page menu item name
 		if (!I18nHandler::getInstance()->validateValue('title')) {
-			throw new UserInputException('title');
+			if (I18nHandler::getInstance()->isPlainValue('title')) {
+				throw new UserInputException('title');
+			}
+			else {
+				throw new UserInputException('title', 'multilingual');
+			}
 		}
 		
 		// validate parent menu item

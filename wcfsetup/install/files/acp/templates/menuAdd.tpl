@@ -31,7 +31,7 @@
 				<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" autofocus class="long">
 				{if $errorField == 'title'}
 					<small class="innerError">
-						{if $errorType == 'title' || $errorType == 'multilingual'}
+						{if $errorType == 'empty' || $errorType == 'multilingual'}
 							{lang}wcf.global.form.error.{@$errorType}{/lang}
 						{else}
 							{lang}wcf.acp.menu.title.error.{@$errorType}{/lang}
