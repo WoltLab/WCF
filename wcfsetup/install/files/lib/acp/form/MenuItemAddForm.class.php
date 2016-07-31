@@ -166,6 +166,24 @@ class MenuItemAddForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
+		// validate parent menu item
+		if ($this->parentItemID) {
+			$parentMenuItem = new MenuItem($this->parentItemID);
+			if (!$parentMenuItem->itemID || $parentMenuItem->menuID != $this->menuID) {
+				throw new UserInputException('parentItemID', 'invalid');
+			}
+		}
+		
+		// validate page menu item name
+		if (!I18nHandler::getInstance()->validateValue('title')) {
+			if (I18nHandler::getInstance()->isPlainValue('title')) {
+				throw new UserInputException('title');
+			}
+			else {
+				throw new UserInputException('title', 'multilingual');
+			}
+		}
+		
 		// validate menu item controller
 		if ($this->isInternalLink) {
 			$this->externalURL = '';
@@ -197,24 +215,6 @@ class MenuItemAddForm extends AbstractForm {
 			// validate external url
 			if (!I18nHandler::getInstance()->validateValue('externalURL')) {
 				throw new UserInputException('externalURL');
-			}
-		}
-		
-		// validate page menu item name
-		if (!I18nHandler::getInstance()->validateValue('title')) {
-			if (I18nHandler::getInstance()->isPlainValue('title')) {
-				throw new UserInputException('title');
-			}
-			else {
-				throw new UserInputException('title', 'multilingual');
-			}
-		}
-		
-		// validate parent menu item
-		if ($this->parentItemID) {
-			$parentMenuItem = new MenuItem($this->parentItemID);
-			if (!$parentMenuItem->itemID || $parentMenuItem->menuID != $this->menuID) {
-				throw new UserInputException('parentItemID', 'invalid');
 			}
 		}
 	}
