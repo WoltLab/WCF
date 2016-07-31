@@ -389,10 +389,10 @@ class Email {
 		$headers[] = ['date', $this->getDate()->format(\DateTime::RFC2822)];
 		$headers[] = ['message-id', $this->getMessageID()];
 		if ($this->getReferences()) {
-			$headers[] = ['references', implode(' ', $this->getReferences())];
+			$headers[] = ['references', implode("\r\n   ", $this->getReferences())];
 		}
 		if ($this->getInReplyTo()) {
-			$headers[] = ['in-reply-to', implode(' ', $this->getInReplyTo())];
+			$headers[] = ['in-reply-to', implode("\r\n   ", $this->getInReplyTo())];
 		}
 		$headers[] = ['mime-version', '1.0'];
 		
