@@ -28,7 +28,8 @@ define(
 	function MediaManagerBase(options) {
 		this._options = Core.extend({
 			dialogTitle: Language.get('wcf.media.manager'),
-			fileTypeFilters: {}
+			fileTypeFilters: {},
+			minSearchLength: 3
 		}, options);
 		
 		this._media = new Dictionary();
