@@ -6,7 +6,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Select
  */
-define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/WCF/Media/Manager/Base'], function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, MediaManagerBase) {
+define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLab/WCF/File/Util', 'WoltLab/WCF/Media/Manager/Base'],
+	function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, FileUtil, MediaManagerBase) {
 	"use strict";
 	
 	/**
@@ -91,7 +92,13 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 						displayElement.innerHTML = '<img src="' + media.smallThumbnailLink + '" alt="' + media.altText + '" />';
 					}
 					else {
-						// TODO: add visual representation of the non-image media file
+						displayElement.innerHTML = '<div class="box48" style="margin-bottom: 10px;">'
+							+ '<span class="icon icon48 ' + FileUtil.getIconClassByMimeType(media.fileType) + '"></span>'
+							+ '<div class="containerHeadline">'
+								+ '<h3>' + media.filename + '</h3>'
+								+ '<p>' + media.formattedFilesize + '</p>'
+							+ '</div>'
+						+ '</div>';
 					}
 				}
 			}
