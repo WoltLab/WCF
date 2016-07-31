@@ -23,6 +23,8 @@ $.Redactor.prototype.WoltLabModal = function() {
 		},
 		
 		show: function() {
+			this.selection.save();
+			
 			_uiDialog.open(this);
 			_uiDialog.setTitle(this, _title);
 		}
