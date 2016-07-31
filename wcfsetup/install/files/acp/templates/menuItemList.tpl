@@ -13,6 +13,7 @@
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.menu.item.list{/lang}</h1>
+		<p class="contentHeaderDescription">{lang}{$menu->title}{/lang}</p>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
