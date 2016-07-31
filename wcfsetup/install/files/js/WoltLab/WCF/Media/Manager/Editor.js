@@ -6,7 +6,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLab/WCF/Media/Manager/Editor
  */
-define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Media/Manager/Base'], function(Core, Dictionary, DomTraverse, Language, UiDialog, MediaManagerBase) {
+define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/WCF/Controller/Clipboard', 'WoltLab/WCF/Media/Manager/Base'],
+	function(Core, Dictionary, DomTraverse, Language, UiDialog, ControllerClipboard, MediaManagerBase) {
 	"use strict";
 	
 	/**
@@ -196,7 +197,12 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLab/
 			}
 			
 			if (this._mediaToInsertByClipboard) {
-				// TODO: unmark in clipboard
+				var mediaIds = [];
+				this._mediaToInsert.forEach(function(media) {
+					mediaIds.push(media.mediaID);
+				})
+				
+				ControllerClipboard.unmark('com.woltlab.wcf.media', mediaIds);
 			}
 			
 			this._mediaToInsert = new Dictionary();

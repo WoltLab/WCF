@@ -618,6 +618,16 @@ define(
 				
 				_addPageOverlayActiveClass = true;
 			}
+		},
+		
+		/**
+		 * Unmarks the objects with given clipboard object type and ids.
+		 * 
+		 * @param	{string}	objectType
+		 * @param	{int[]}		objectIds
+		 */
+		unmark: function(objectType, objectIds) {
+			this._saveState(objectType, objectIds, false);
 		}
 	};
 });
