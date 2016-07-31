@@ -90,12 +90,12 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 					
 					return '['.$urls[$matches[1]].']';
 				}, $result);
-				$result = preg_replace_callback('/(\r?\n-- \r?\n|$)/', function ($matches) use ($urls) {
-					$list = '';
+				$result = preg_replace_callback('/(?:\r?\n)*(\r?\n-- \r?\n|$)/', function ($matches) use ($urls) {
+					$list = "\r\n";
 					foreach ($urls as $url => $number) {
 						$list .= "\r\n[".$number."] ".$url;
 					}
-					return $list."\r\n".$matches[0];
+					return $list."\r\n".$matches[1];
 				}, $result, 1);
 			}
 			
