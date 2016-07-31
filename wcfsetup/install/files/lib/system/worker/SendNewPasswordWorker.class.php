@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
@@ -125,7 +126,10 @@ class SendNewPasswordWorker extends AbstractWorker {
 			new RecipientAwareTextMimePart('text/html', 'email_sendNewPassword'),
 			new RecipientAwareTextMimePart('text/plain', 'email_sendNewPassword')
 		]));
-		$email->send();
+		$jobs = $email->getJobs();
+		foreach ($jobs as $job) {
+			BackgroundQueueHandler::getInstance()->performJob($job);
+		}
 	}
 	
 	/**

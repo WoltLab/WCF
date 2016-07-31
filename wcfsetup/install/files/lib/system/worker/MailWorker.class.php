@@ -1,10 +1,15 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\user\User;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\Mailbox;
+use wcf\system\email\UserMailbox;
 use wcf\system\exception\SystemException;
-use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -102,6 +107,25 @@ class MailWorker extends AbstractWorker {
 	 * @inheritDoc
 	 */
 	public function execute() {
+		$email = new Email();
+		$email->setSubject($this->mailData['subject']);
+		$from = new Mailbox($this->mailData['from']);
+		$email->setSender($from);
+		$email->setReplyTo($from);
+		$variables = [
+			'text' => $this->mailData['text'],
+			'enableHTML' => $this->mailData['enableHTML'] ? true : false
+		];
+		if ($this->mailData['enableHTML']) {
+			$email->setBody(new RecipientAwareTextMimePart('text/html', 'email_mailWorker', 'wcf', $variables));
+		}
+		else {
+			$email->setBody(new MimePartFacade([
+				new RecipientAwareTextMimePart('text/html', 'email_mailWorker', 'wcf', $variables),
+				new RecipientAwareTextMimePart('text/plain', 'email_mailWorker', 'wcf', $variables)
+			]));
+		}
+		
 		// get users
 		$sql = "SELECT		user_option.*, user.*
 			FROM		wcf".WCF_N."_user user
@@ -115,25 +139,23 @@ class MailWorker extends AbstractWorker {
 			$user = new User(null, $row);
 			$adminCanMail = $user->adminCanMail;
 			if ($adminCanMail === null || $adminCanMail) {
-				$this->sendMail($user);
+				$this->sendMail($email, $user);
 			}
 		}
 	}
 	
 	/**
-	 * Sends the mail to given user.
+	 * Sends the given blueprint (Email without recipients) to the given user.
 	 * 
-	 * @param	\wcf\data\user\User	$user
+	 * @param	Email	$blueprint
+	 * @param	User	$user
 	 */
-	protected function sendMail(User $user) {
-		try {
-			$mail = new Mail([$user->username => $user->email], $this->mailData['subject'], str_replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
-			if ($this->mailData['enableHTML']) $mail->setContentType('text/html');
-			$mail->setLanguage($user->getLanguage());
-			$mail->send();
-		}
-		catch (SystemException $e) {
-			// ignore errors
+	protected function sendMail(Email $blueprint, User $user) {
+		$email = clone $blueprint;
+		$email->addRecipient(new UserMailbox($user));
+		$jobs = $email->getJobs();
+		foreach ($jobs as $job) {
+			BackgroundQueueHandler::getInstance()->performJob($job);
 		}
 	}
 	
