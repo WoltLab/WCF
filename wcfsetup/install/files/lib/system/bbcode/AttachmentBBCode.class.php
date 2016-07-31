@@ -53,7 +53,7 @@ class AttachmentBBCode extends AbstractBBCode {
 		}
 		
 		if ($attachment !== null) {
-			if ($attachment->showAsImage() && $attachment->canViewPreview() && $parser->getOutputType() == 'text/html') {
+			if ($attachment->showAsImage() && $attachment->canViewPreview() && ($parser->getOutputType() == 'text/html' || $parser->getOutputType() == 'text/simplified-html')) {
 				// image
 				$alignment = (isset($openingTag['attributes'][1]) ? $openingTag['attributes'][1] : '');
 				$thumbnail = (isset($openingTag['attributes'][2]) ? $openingTag['attributes'][2] : false);
@@ -69,6 +69,11 @@ class AttachmentBBCode extends AbstractBBCode {
 					}
 				}
 				else if ($thumbnail !== false) {
+					$thumbnail = true;
+				}
+				
+				// always use thumbnail in simplified version
+				if ($parser->getOutputType() == 'text/simplified-html') {
 					$thumbnail = true;
 				}
 				
