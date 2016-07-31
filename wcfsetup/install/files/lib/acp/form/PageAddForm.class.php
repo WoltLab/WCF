@@ -207,7 +207,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
 		
-		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = ArrayUtil::trim($_POST['customURL']);
+		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = array_map('mb_strtolower', ArrayUtil::trim($_POST['customURL']));
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
 		if (isset($_POST['metaDescription']) && is_array($_POST['metaDescription'])) $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);

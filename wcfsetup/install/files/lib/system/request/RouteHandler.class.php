@@ -209,7 +209,7 @@ class RouteHandler extends SingletonFactory {
 	 * @since	3.0
 	 */
 	public static function isValidCustomUrl($customUrl) {
-		return preg_match('~^[a-zA-Z0-9\-_/]+$~', $customUrl) === 1;
+		return preg_match('~^[a-z0-9\-_/]+$~', $customUrl) === 1;
 	}
 	
 	/**
