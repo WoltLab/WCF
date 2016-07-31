@@ -107,10 +107,15 @@ define(['Dictionary', 'Dom/Util'], function(Dictionary, DomUtil) {
 			if (button !== undefined) {
 				var listItem = button.parentNode;
 				listItem.addEventListener('animationend', function () {
-					_container.removeChild(listItem);
-					_buttons.delete(buttonName);
+					try {
+						_container.removeChild(listItem);
+						_buttons.delete(buttonName);
+					}
+					catch (e) {
+						// ignore errors if the element has already been removed
+					}
 				});
-					
+				
 				this.hide(buttonName);
 			}
 		},
