@@ -319,17 +319,20 @@ define(
 		_updateActiveState: function(element) {
 			var data = this._containers.get(element);
 			
-			var dislikeTarget = (this._options.markListItemAsActive) ? data.dislikeButton.parentNode : data.dislikeButton;
 			var likeTarget = (this._options.markListItemAsActive) ? data.likeButton.parentNode : data.likeButton;
-			
-			if (data.dislikeButton !== null) dislikeTarget.classList.remove('active');
 			likeTarget.classList.remove('active');
 			
 			if (data.liked === 1) {
 				likeTarget.classList.add('active');
 			}
-			else if (data.liked === -1 && data.dislikeButton !== null) {
-				dislikeTarget.classList.add('active');
+			
+			if (this._options.canDislike) {
+				var dislikeTarget = (this._options.markListItemAsActive) ? data.dislikeButton.parentNode : data.dislikeButton;
+				dislikeTarget.classList.remove('active');
+				
+				if (data.liked === -1) {
+					dislikeTarget.classList.add('active');
+				}
 			}
 		},
 		
