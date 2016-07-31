@@ -9,11 +9,7 @@
 define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPageMenuAbstract) {
 	"use strict";
 	
-	var _container = elById('pageMainMenuMobilePageOptionsContainer');
-	var _hasItems = null;
-	var _list = DomTraverse.childByClass(_container, 'menuOverlayItemList');
-	var _navigationList = elBySel('.jsPageNavigationIcons');
-	var _spacer = _container.nextElementSibling;
+	var _container = null, _hasItems = null, _list = null, _navigationList = null, _spacer = null;
 	
 	/**
 	 * @constructor
@@ -31,13 +27,24 @@ define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPag
 				'#pageHeader .mainMenu'
 			);
 			
-			// remove placeholder item
-			elRemove(DomTraverse.childByClass(_list, 'jsMenuOverlayItemPlaceholder'));
+			_container = elById('pageMainMenuMobilePageOptionsContainer');
+			if (_container !== null) {
+				_list = DomTraverse.childByClass(_container, 'menuOverlayItemList');
+				_navigationList = elBySel('.jsPageNavigationIcons');
+				_spacer = _container.nextElementSibling;
+				
+				// remove placeholder item
+				elRemove(DomTraverse.childByClass(_list, 'jsMenuOverlayItemPlaceholder'));
+			}
 		},
 		
 		open: function (event) {
 			if (!UiPageMenuMain._super.prototype.open.call(this, event)) {
 				return false;
+			}
+			
+			if (_container === null) {
+				return true;
 			}
 			
 			_hasItems = _navigationList.childElementCount > 0;
