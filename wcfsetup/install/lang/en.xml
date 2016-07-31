@@ -3440,11 +3440,17 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 	
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.information"><![CDATA[Details]]></item>
-		<item name="wcf.user.mail.mail"><![CDATA[Dear {@$recipient->username},
-
-"{@$username}" sent you a message on "{@PAGE_TITLE|language}":
-{@$message}]]></item>
 		<item name="wcf.user.mail.mail.subject"><![CDATA[Message From {@$username}: {@$subject}]]></item>
+		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
+
+“{@$username}” sent you a message on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]:
+
+{@$message}]]></item>
+<item name="wcf.user.mail.mail.html"><![CDATA[<h1>Dear {$mailbox->getUser()->username},</h1>
+
+<p>„{$username}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
+
+<p>{@$message|newlineToBreak}</p>]]></item>
 		<item name="wcf.user.mail.message"><![CDATA[Message]]></item>
 		<item name="wcf.user.mail.senderEmail"><![CDATA[Your email address]]></item>
 		<item name="wcf.user.mail.sent"><![CDATA[Message has been sent to {$user->username}.]]></item>

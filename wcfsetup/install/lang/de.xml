@@ -3413,11 +3413,17 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 	
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.information"><![CDATA[Informationen]]></item>
-		<item name="wcf.user.mail.mail"><![CDATA[Hallo {@$recipient->username},
-
-"{@$username}" hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website "{@PAGE_TITLE|language}" folgende Nachricht gesandt:
-{@$message}]]></item>
 		<item name="wcf.user.mail.mail.subject"><![CDATA[Nachricht von {@$username}: {@$subject}]]></item>
+		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
+
+„{@$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
+
+{@$message}]]></item>
+		<item name="wcf.user.mail.mail.html"><![CDATA[<h1>Hallo {$mailbox->getUser()->username},</h1>
+
+<p>„{$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
+
+<p>{@$message|newlineToBreak}</p>]]></item>
 		<item name="wcf.user.mail.message"><![CDATA[Nachricht]]></item>
 		<item name="wcf.user.mail.senderEmail"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse]]></item>
 		<item name="wcf.user.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht an {$user->username} wurde erfolgreich versandt.]]></item>

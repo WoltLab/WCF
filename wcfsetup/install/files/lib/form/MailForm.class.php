@@ -2,10 +2,14 @@
 namespace wcf\form;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\Mailbox;
+use wcf\system\email\UserMailbox;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -37,7 +41,7 @@ class MailForm extends AbstractCaptchaForm {
 	 * recipient's user object
 	 * @var	UserProfile
 	 */
-	public $user = 0;
+	public $user = null;
 	
 	/**
 	 * true to add the reply-to header
@@ -131,34 +135,36 @@ class MailForm extends AbstractCaptchaForm {
 	public function save() {
 		parent::save();
 		
-		// get recipient's language
-		$userLanguage = $this->user->getLanguage();
-		
 		// build message data
-		$subjectData = [
-			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email,
-			'subject' => $this->subject
-		];
 		$messageData = [
 			'message' => $this->message,
-			'recipient' => $this->user,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email
 		];
 		
 		// build mail
-		$mail = new Mail([$this->user->username => $this->user->email], $userLanguage->getDynamicVariable('wcf.user.mail.mail.subject', $subjectData), $userLanguage->getDynamicVariable('wcf.user.mail.mail', $messageData));
-		$mail->setLanguage($userLanguage);
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($this->user->getDecoratedObject()));
+		$email->setSubject($this->user->getLanguage()->getDynamicVariable('wcf.user.mail.mail.subject', [
+			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->email,
+			'subject' => $this->subject
+		]));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_mail', 'wcf', $messageData),
+			new RecipientAwareTextMimePart('text/plain', 'email_mail', 'wcf', $messageData)
+		]));
 		
 		// add reply-to tag
 		if (WCF::getUser()->userID) {
-			if ($this->showAddress) $mail->setHeader('Reply-To: '.Mail::buildAddress(WCF::getUser()->username, WCF::getUser()->email));
+			if ($this->showAddress) {
+				$email->setReplyTo(new UserMailbox(WCF::getUser()));
+			}
 		}
 		else {
-			$mail->setHeader('Reply-To: '.$this->email);
+			$email->setReplyTo(new Mailbox($this->email));
 		}
 		
 		// send mail
-		$mail->send();
+		$email->send();
 		$this->saved();
 		
 		// forward to profile page
