@@ -47,11 +47,11 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * 
 	 * @param	mixed	$jobs	Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
 	 * @param	int	$time	Earliest time to consider the job for execution.
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function enqueueAt($jobs, $time) {
 		if ($time < TIME_NOW) {
-			throw new SystemException("You may not schedule a job in the past (".$time." is smaller than the current timestamp ".TIME_NOW.").");
+			throw new \InvalidArgumentException("You may not schedule a job in the past (".$time." is smaller than the current timestamp ".TIME_NOW.").");
 		}
 		if (!is_array($jobs)) $jobs = [$jobs];
 		foreach ($jobs as $job) {
