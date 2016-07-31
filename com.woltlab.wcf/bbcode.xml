@@ -26,7 +26,7 @@
 			<htmlclose>sup</htmlclose>
 		</bbcode>
 		<bbcode name="email">
-			<classname><![CDATA[wcf\system\bbcode\EmailBBCode]]></classname>
+			<classname>wcf\system\bbcode\EmailBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -82,7 +82,7 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="quote">
-			<classname><![CDATA[wcf\system\bbcode\QuoteBBCode]]></classname>
+			<classname>wcf\system\bbcode\QuoteBBCode</classname>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
@@ -92,7 +92,7 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="code">
-			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
+			<classname>wcf\system\bbcode\CodeBBCode</classname>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
@@ -104,7 +104,7 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="img">
-			<classname><![CDATA[wcf\system\bbcode\ImageBBCode]]></classname>
+			<classname>wcf\system\bbcode\ImageBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -120,7 +120,7 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="url">
-			<classname><![CDATA[wcf\system\bbcode\URLBBCode]]></classname>
+			<classname>wcf\system\bbcode\URLBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -130,7 +130,7 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="list">
-			<classname><![CDATA[wcf\system\bbcode\ListBBCode]]></classname>
+			<classname>wcf\system\bbcode\ListBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
@@ -140,24 +140,24 @@
 		</bbcode>
 		
 		<bbcode name="table">
-			<classname><![CDATA[wcf\system\bbcode\TableBBCode]]></classname>
+			<classname>wcf\system\bbcode\TableBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="tr">
-			<classname><![CDATA[wcf\system\bbcode\TrBBCode]]></classname>
+			<classname>wcf\system\bbcode\TrBBCode></classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="td">
-			<classname><![CDATA[wcf\system\bbcode\TdBBcode]]></classname>
+			<classname>wcf\system\bbcode\TdBBcode</classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		
 		<bbcode name="media">
-			<classname><![CDATA[wcf\system\bbcode\MediaBBCode]]></classname>
+			<classname>wcf\system\bbcode\MediaBBCode</classname>
 			<sourcecode>1</sourcecode>
 		</bbcode>
 		<bbcode name="spoiler">
-			<classname><![CDATA[wcf\system\bbcode\SpoilerBBCode]]></classname>
+			<classname>wcf\system\bbcode\SpoilerBBCode</classname>
 			<attributes>
 				<attribute name="0"></attribute>
 			</attributes>
@@ -174,7 +174,7 @@
 		</bbcode>
 		
 		<bbcode name="attach">
-			<classname><![CDATA[wcf\system\bbcode\AttachmentBBCode]]></classname>
+			<classname>wcf\system\bbcode\AttachmentBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^\d+$</validationpattern>
@@ -192,7 +192,7 @@
 		</bbcode>
 		
 		<bbcode name="wsm">
-			<classname><![CDATA[wcf\system\bbcode\WoltLabSuiteMediaBBCode]]></classname>
+			<classname>wcf\system\bbcode\WoltLabSuiteMediaBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 			<attributes>
 				<attribute name="0">
@@ -209,7 +209,7 @@
 		</bbcode>
 		
 		<bbcode name="wsmg">
-			<classname><![CDATA[wcf\system\bbcode\WoltLabSuiteMediaGalleryBBCode]]></classname>
+			<classname>wcf\system\bbcode\WoltLabSuiteMediaGalleryBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^\d+(,\d+)*$</validationpattern>
@@ -219,7 +219,7 @@
 		</bbcode>
 		
 		<bbcode name="wsp">
-			<classname><![CDATA[wcf\system\bbcode\WoltLabSuitePageBBCode]]></classname>
+			<classname>wcf\system\bbcode\WoltLabSuitePageBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^\d+$</validationpattern>

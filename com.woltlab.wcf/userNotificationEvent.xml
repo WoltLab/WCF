@@ -4,27 +4,27 @@
 		<event>
 			<name>following</name>
 			<objecttype>com.woltlab.wcf.user.follow</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserFollowFollowingUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\UserFollowFollowingUserNotificationEvent</classname>
 		</event>
 		
 		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent</classname>
 			<preset>1</preset>
 			<options>module_user_profile_wall</options>
 		</event>
 		<event>
 			<name>commentResponse</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent</classname>
 			<preset>1</preset>
 			<options>module_user_profile_wall</options>
 		</event>
 		<event>
 			<name>commentResponseOwner</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
 			<options>module_user_profile_wall</options>
 		</event>
@@ -32,14 +32,14 @@
 		<event>
 			<name>like</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.like.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentLikeUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\UserProfileCommentLikeUserNotificationEvent</classname>
 			<preset>1</preset>
 			<options>module_like</options>
 		</event>
 		<event>
 			<name>like</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.like.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseLikeUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\UserProfileCommentResponseLikeUserNotificationEvent</classname>
 			<preset>1</preset>
 			<options>module_like</options>
 		</event>
@@ -47,14 +47,14 @@
 		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.moderation.queue.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\ModerationQueueCommentUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\ModerationQueueCommentUserNotificationEvent</classname>
 			<preset>1</preset>
 			<permissions>mod.general.canUseModeration</permissions>
 		</event>
 		<event>
 			<name>commentResponse</name>
 			<objecttype>com.woltlab.wcf.moderation.queue.response.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\ModerationQueueCommentResponseUserNotificationEvent]]></classname>
+			<classname>wcf\system\user\notification\event\ModerationQueueCommentResponseUserNotificationEvent</classname>
 			<preset>1</preset>
 			<permissions>mod.general.canUseModeration</permissions>
 		</event>

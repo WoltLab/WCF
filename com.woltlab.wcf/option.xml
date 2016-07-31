@@ -410,7 +410,7 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
-				<defaultvalue><![CDATA[WoltLab Suite]]></defaultvalue>
+				<defaultvalue>WoltLab Suite</defaultvalue>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
@@ -480,7 +480,7 @@
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
+				<enableoptions>offline_message,offline_message_allow_html</enableoptions>
 			</option>
 			<option name="offline_message">
 				<categoryname>general.offline</categoryname>
@@ -497,10 +497,9 @@
 			<option name="image_adapter_type">
 				<categoryname>general.system.image</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[gd]]></defaultvalue>
-				<selectoptions>
-					<![CDATA[gd:wcf.acp.option.image_adapter_type.gd
-imagick:wcf.acp.option.image_adapter_type.imagick]]>
+				<defaultvalue>gd</defaultvalue>
+				<selectoptions>gd:wcf.acp.option.image_adapter_type.gd
+imagick:wcf.acp.option.image_adapter_type.imagick
 				</selectoptions>
 			</option>
 			<!-- /general.system.image -->
@@ -509,8 +508,8 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<option name="search_engine">
 				<categoryname>general.system.search</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[mysql]]></defaultvalue>
-				<selectoptions><![CDATA[mysql:wcf.acp.option.search_engine.mysql]]></selectoptions>
+				<defaultvalue>mysql</defaultvalue>
+				<selectoptions>mysql:wcf.acp.option.search_engine.mysql</selectoptions>
 			</option>
 			<!-- /general.system.search -->
 			
@@ -518,10 +517,10 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<option name="exception_privacy">
 				<categoryname>general.system.error</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[reduced]]></defaultvalue>
-				<selectoptions><![CDATA[public:wcf.acp.option.exception_privacy.public
+				<defaultvalue>reduced</defaultvalue>
+				<selectoptions>public:wcf.acp.option.exception_privacy.public
 reduced:wcf.acp.option.exception_privacy.reduced
-private:wcf.acp.option.exception_privacy.private]]></selectoptions>
+private:wcf.acp.option.exception_privacy.private</selectoptions>
 			</option>
 			<!-- /general.system.error-->
 			
@@ -748,7 +747,7 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>13</defaultvalue>
-				<selectoptions><![CDATA[1
+				<selectoptions>1
 2
 3
 4
@@ -764,16 +763,16 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 14
 15
 16
-17]]></selectoptions>
+17</selectoptions>
 			</option>
 			<option name="google_maps_type">
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>hybrid</defaultvalue>
-				<selectoptions><![CDATA[map:wcf.acp.option.google_maps_type.map
+				<selectoptions>map:wcf.acp.option.google_maps_type.map
 satellite:wcf.acp.option.google_maps_type.satellite
 hybrid:wcf.acp.option.google_maps_type.hybrid
-physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
+physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 			</option>
 			<option name="google_maps_enable_scale_control">
 				<categoryname>general.system.googleMaps</categoryname>
@@ -816,22 +815,22 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 			<option name="mail_from_name">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_from_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_admin_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_signature">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>textareaI18n</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 				<supporti18n>1</supporti18n>
 			</option>
 			<!-- /general.mail.general -->
@@ -840,13 +839,13 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 			<option name="mail_send_method">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[php]]></defaultvalue>
-				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
+				<defaultvalue>php</defaultvalue>
+				<selectoptions>php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
-debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+debug:wcf.acp.option.mail_send_method.debug</selectoptions>
+				<enableoptions>php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
 smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
-debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -863,9 +862,9 @@ debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mai
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>may</defaultvalue>
-				<selectoptions><![CDATA[none:wcf.acp.option.mail_smtp_starttls.none
+				<selectoptions>none:wcf.acp.option.mail_smtp_starttls.none
 may:wcf.acp.option.mail_smtp_starttls.may
-encrypt:wcf.acp.option.mail_smtp_starttls.encrypt]]></selectoptions>
+encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
@@ -886,13 +885,13 @@ encrypt:wcf.acp.option.mail_smtp_starttls.encrypt]]></selectoptions>
 			<option name="cache_source_type">
 				<categoryname>general.cache.general</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[disk]]></defaultvalue>
-				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
+				<defaultvalue>disk</defaultvalue>
+				<selectoptions>disk:wcf.acp.option.cache_source_type.disk
 memcached:wcf.acp.option.cache_source_type.memcached
-redis:wcf.acp.option.cache_source_type.redis]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcached_host,!cache_source_redis_host
+redis:wcf.acp.option.cache_source_type.redis</selectoptions>
+				<enableoptions>disk:!cache_source_memcached_host,!cache_source_redis_host
 memcached:cache_source_memcached_host,!cache_source_redis_host
-redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
+redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
 			</option>
 			
 			<option name="cache_source_memcached_host">
@@ -924,7 +923,7 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			<option name="paid_subscription_enable_tos_confirmation">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[paid_subscription_tos_url]]></enableoptions>
+				<enableoptions>paid_subscription_tos_url</enableoptions>
 			</option>
 			
 			<option name="paid_subscription_tos_url">
@@ -940,25 +939,25 @@ redis:cache_source_redis_host,!cache_source_memcached_host]]></enableoptions>
 			<option name="attachment_enable_thumbnails">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 				<enableoptions>attachment_retain_dimensions,attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
 			</option>
 			<option name="attachment_retain_dimensions">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[0]]></defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="attachment_thumbnail_height">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[198]]></defaultvalue>
+				<defaultvalue>198</defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[352]]></defaultvalue>
+				<defaultvalue>352</defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>
@@ -1013,7 +1012,7 @@ XING</defaultvalue>
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions><![CDATA[image_proxy_secret]]></enableoptions>
+				<enableoptions>image_proxy_secret</enableoptions>
 			</option>
 			<option name="image_proxy_expiration">
 				<categoryname>message.general.image</categoryname>
@@ -1028,7 +1027,7 @@ XING</defaultvalue>
 			<option name="enable_censorship">
 				<categoryname>message.censorship</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[censored_words]]></enableoptions>
+				<enableoptions>censored_words</enableoptions>
 			</option>
 			<option name="censored_words">
 				<categoryname>message.censorship</categoryname>
@@ -1039,33 +1038,33 @@ XING</defaultvalue>
 			<option name="register_enable_password_security_check">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char]]></enableoptions>
+				<enableoptions>register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char</enableoptions>
 			</option>
 			<option name="register_password_min_length">
 				<categoryname>user.password</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[8]]></defaultvalue>
+				<defaultvalue>8</defaultvalue>
 				<minvalue>0</minvalue>
 			</option>
 			<option name="register_password_must_contain_lower_case">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_password_must_contain_upper_case">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_password_must_contain_digit">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_password_must_contain_special_char">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.password -->
 			
@@ -1088,12 +1087,12 @@ XING</defaultvalue>
 			<option name="register_disabled">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[!register_enable_disclaimer,!register_admin_notification,!register_activation_method]]></enableoptions>
+				<enableoptions>!register_enable_disclaimer,!register_admin_notification,!register_activation_method</enableoptions>
 			</option>
 			<option name="register_enable_disclaimer">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_admin_notification">
 				<categoryname>user.register</categoryname>
@@ -1102,10 +1101,10 @@ XING</defaultvalue>
 			<option name="register_activation_method">
 				<categoryname>user.register</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<selectoptions><![CDATA[0:wcf.acp.option.register_activation_method.disabled
+				<defaultvalue>1</defaultvalue>
+				<selectoptions>0:wcf.acp.option.register_activation_method.disabled
 1:wcf.acp.option.register_activation_method.byUser
-2:wcf.acp.option.register_activation_method.byAdmin]]></selectoptions>
+2:wcf.acp.option.register_activation_method.byAdmin</selectoptions>
 			</option>
 			<option name="register_username_min_length">
 				<categoryname>user.register</categoryname>
@@ -1182,12 +1181,12 @@ XING</defaultvalue>
 			<option name="gravatar_default_type">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[404]]></defaultvalue>
-				<selectoptions><![CDATA[404:wcf.acp.option.gravatar_default_type.404
+				<defaultvalue>404</defaultvalue>
+				<selectoptions>404:wcf.acp.option.gravatar_default_type.404
 identicon:wcf.acp.option.gravatar_default_type.identicon
 wavatar:wcf.acp.option.gravatar_default_type.wavatar
 monsterid:wcf.acp.option.gravatar_default_type.monsterid
-retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
+retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<options>module_gravatar</options>
 			</option>
 			<!-- /user.avatar -->
@@ -1243,19 +1242,19 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 			<option name="members_list_default_sort_field">
 				<categoryname>user.list.members</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[username]]></defaultvalue>
-				<selectoptions><![CDATA[username:wcf.user.username
+				<defaultvalue>username</defaultvalue>
+				<selectoptions>username:wcf.user.username
 registrationDate:wcf.user.registrationDate
 activityPoints:wcf.user.activityPoint
 likesReceived:wcf.like.likesReceived
-lastActivityTime:wcf.user.usersOnline.lastActivity]]></selectoptions>
+lastActivityTime:wcf.user.usersOnline.lastActivity</selectoptions>
 			</option>
 			<option name="members_list_default_sort_order">
 				<categoryname>user.list.members</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[DESC]]></defaultvalue>
-				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
-DESC:wcf.global.sortOrder.descending]]></selectoptions>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			<!-- /user.list.members -->
 			
@@ -1273,17 +1272,17 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="users_online_default_sort_field">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[lastActivityTime]]></defaultvalue>
-				<selectoptions><![CDATA[username:wcf.user.username
+				<defaultvalue>lastActivityTime</defaultvalue>
+				<selectoptions>username:wcf.user.username
 lastActivityTime:wcf.user.usersOnline.lastActivity
-requestURI:wcf.user.usersOnline.location]]></selectoptions>
+requestURI:wcf.user.usersOnline.location</selectoptions>
 			</option>
 			<option name="users_online_default_sort_order">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[DESC]]></defaultvalue>
-				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
-DESC:wcf.global.sortOrder.descending]]></selectoptions>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			<option name="users_online_page_refresh">
 				<categoryname>user.list.online</categoryname>
@@ -1412,18 +1411,18 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="search_default_sort_field">
 				<categoryname>message.search</categoryname>
 				<optiontype>select</optiontype>
-				<selectoptions><![CDATA[relevance:wcf.search.sortBy.relevance
+				<selectoptions>relevance:wcf.search.sortBy.relevance
 subject:wcf.global.subject
 time:wcf.search.sortBy.time
-username:wcf.search.sortBy.username]]></selectoptions>
-				<defaultvalue><![CDATA[time]]></defaultvalue>
+username:wcf.search.sortBy.username</selectoptions>
+				<defaultvalue>time</defaultvalue>
 			</option>
 			<option name="search_default_sort_order">
 				<categoryname>message.search</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>DESC</defaultvalue>
-				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
-DESC:wcf.global.sortOrder.descending]]></selectoptions>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			
 			<!-- message.general.poll -->

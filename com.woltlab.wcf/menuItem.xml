@@ -3,52 +3,52 @@
 	<import>
 		<item identifier="com.woltlab.wcf.Dashboard">
 			<menu>com.woltlab.wcf.MainMenu</menu>
-			<title language="de"><![CDATA[Dashboard]]></title>
-			<title language="en"><![CDATA[Dashboard]]></title>
+			<title language="de">Dashboard</title>
+			<title language="en">Dashboard</title>
 			<page>com.woltlab.wcf.Dashboard</page>
 		</item>
 		<item identifier="com.woltlab.wcf.ArticleList">
 			<menu>com.woltlab.wcf.MainMenu</menu>
-			<title language="de"><![CDATA[Artikel]]></title>
-			<title language="en"><![CDATA[Articles]]></title>
+			<title language="de">Artikel</title>
+			<title language="en">Articles</title>
 			<page>com.woltlab.wcf.ArticleList</page>
 		</item>
 		
 		<item identifier="com.woltlab.wcf.MembersList">
 			<menu>com.woltlab.wcf.MainMenu</menu>
-			<title language="de"><![CDATA[Mitglieder]]></title>
-			<title language="en"><![CDATA[Members]]></title>
+			<title language="de">Mitglieder</title>
+			<title language="en">Members</title>
 			<page>com.woltlab.wcf.MembersList</page>
 		</item>
 		<item identifier="com.woltlab.wcf.RecentActivityList">
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de"><![CDATA[Letzte Aktivitäten]]></title>
-			<title language="en"><![CDATA[Recent Activities]]></title>
+			<title language="de">Letzte Aktivitäten</title>
+			<title language="en">Recent Activities</title>
 			<page>com.woltlab.wcf.RecentActivityList</page>
 		</item>
 		<item identifier="com.woltlab.wcf.UsersOnlineList">
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de"><![CDATA[Benutzer Online]]></title>
-			<title language="en"><![CDATA[Users Online]]></title>
+			<title language="de">Benutzer Online</title>
+			<title language="en">Users Online</title>
 			<page>com.woltlab.wcf.UsersOnlineList</page>
 		</item>
 		<item identifier="com.woltlab.wcf.Team">
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de"><![CDATA[Team]]></title>
-			<title language="en"><![CDATA[Team]]></title>
+			<title language="de">Team</title>
+			<title language="en">Team</title>
 			<page>com.woltlab.wcf.Team</page>
 		</item>
 		<item identifier="com.woltlab.wcf.UserSearch">
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de"><![CDATA[Mitgliedersuche]]></title>
-			<title language="en"><![CDATA[Search Members]]></title>
+			<title language="de">Mitgliedersuche</title>
+			<title language="en">Search Members</title>
 			<page>com.woltlab.wcf.UserSearch</page>
 		</item>
 		
 		<item identifier="com.woltlab.wcf.PrivacyPolicy">
 			<menu>com.woltlab.wcf.FooterMenu</menu>
-			<title language="de"><![CDATA[Datenschutzerklärung]]></title>
-			<title language="en"><![CDATA[Privacy Policy]]></title>
+			<title language="de">Datenschutzerklärung</title>
+			<title language="en">Privacy Policy</title>
 			<page>com.woltlab.wcf.PrivacyPolicy</page>
 		</item>
 	</import>

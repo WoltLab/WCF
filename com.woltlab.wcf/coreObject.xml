@@ -2,68 +2,68 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/coreObject.xsd">
 	<import>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\breadcrumb\Breadcrumbs]]></objectname>
+			<objectname>wcf\system\breadcrumb\Breadcrumbs</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\request\LinkHandler]]></objectname>
+			<objectname>wcf\system\request\LinkHandler</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\menu\acp\ACPMenu]]></objectname>
+			<objectname>wcf\system\menu\acp\ACPMenu</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\benchmark\Benchmark]]></objectname>
+			<objectname>wcf\system\benchmark\Benchmark</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\user\authentication\UserAuthenticationFactory]]></objectname>
+			<objectname>wcf\system\user\authentication\UserAuthenticationFactory</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\MetaTagHandler]]></objectname>
+			<objectname>wcf\system\MetaTagHandler</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\bbcode\BBCodeHandler]]></objectname>
-		</coreobject>
-		
-		<coreobject>
-			<objectname><![CDATA[wcf\system\user\UserProfileHandler]]></objectname>
+			<objectname>wcf\system\bbcode\BBCodeHandler</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\menu\user\profile\UserProfileMenu]]></objectname>
+			<objectname>wcf\system\user\UserProfileHandler</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\menu\user\UserMenu]]></objectname>
+			<objectname>wcf\system\menu\user\profile\UserProfileMenu</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\user\notification\UserNotificationHandler]]></objectname>
+			<objectname>wcf\system\menu\user\UserMenu</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\user\object\watch\UserObjectWatchHandler]]></objectname>
+			<objectname>wcf\system\user\notification\UserNotificationHandler</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\moderation\queue\ModerationQueueManager]]></objectname>
+			<objectname>wcf\system\user\object\watch\UserObjectWatchHandler</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\notice\NoticeHandler]]></objectname>
+			<objectname>wcf\system\moderation\queue\ModerationQueueManager</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\ad\AdHandler]]></objectname>
+			<objectname>wcf\system\notice\NoticeHandler</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\data\smiley\SmileyCache]]></objectname>
+			<objectname>wcf\system\ad\AdHandler</objectname>
 		</coreobject>
 		
 		<coreobject>
-			<objectname><![CDATA[wcf\system\poll\PollManager]]></objectname>
+			<objectname>wcf\data\smiley\SmileyCache</objectname>
+		</coreobject>
+		
+		<coreobject>
+			<objectname>wcf\system\poll\PollManager</objectname>
 		</coreobject>
 		<coreobject>
-			<objectname><![CDATA[wcf\system\search\SearchEngine]]></objectname>
+			<objectname>wcf\system\search\SearchEngine</objectname>
 		</coreobject>
 	</import>
 </data>

@@ -83,11 +83,9 @@
 				<categoryname>profile.personal</categoryname>
 				<optiontype>select</optiontype>
 				<outputclass>wcf\system\option\user\SelectOptionsUserOptionOutput</outputclass>
-				<selectoptions>
-					<![CDATA[0:wcf.global.noDeclaration
+				<selectoptions>0:wcf.global.noDeclaration
 1:wcf.user.gender.male
-2:wcf.user.gender.female]]>
-				</selectoptions>
+2:wcf.user.gender.female</selectoptions>
 				<defaultvalue>0</defaultvalue>
 				<searchable>1</searchable>
 				<visible>15</visible>
@@ -202,20 +200,20 @@
 				<categoryname>settings.privacy.content</categoryname>
 				<optiontype>select</optiontype>
 				<editable>3</editable>
-				<selectoptions><![CDATA[0:wcf.user.access.everyone
+				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
-3:wcf.user.access.nobody]]></selectoptions>
+3:wcf.user.access.nobody</selectoptions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="canViewProfile">
 				<categoryname>settings.privacy.content</categoryname>
 				<optiontype>select</optiontype>
 				<editable>3</editable>
-				<selectoptions><![CDATA[0:wcf.user.access.everyone
+				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
-3:wcf.user.access.nobody]]></selectoptions>
+3:wcf.user.access.nobody</selectoptions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			
@@ -224,20 +222,20 @@
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>select</optiontype>
 				<editable>3</editable>
-				<selectoptions><![CDATA[0:wcf.user.access.everyone
+				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
-3:wcf.user.access.nobody]]></selectoptions>
+3:wcf.user.access.nobody</selectoptions>
 				<defaultvalue>3</defaultvalue>
 			</option>
 			<option name="canMail">
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>select</optiontype>
 				<editable>3</editable>
-				<selectoptions><![CDATA[0:wcf.user.access.everyone
+				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
-3:wcf.user.access.nobody]]></selectoptions>
+3:wcf.user.access.nobody</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="adminCanMail">
@@ -252,10 +250,10 @@
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>select</optiontype>
 				<editable>3</editable>
-				<selectoptions><![CDATA[0:wcf.user.access.everyone
+				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
-3:wcf.user.access.nobody]]></selectoptions>
+3:wcf.user.access.nobody</selectoptions>
 				<options>module_user_profile_wall</options>
 				<defaultvalue>1</defaultvalue>
 			</option>

@@ -519,15 +519,15 @@
 			<option name="user.attachment.allowedExtensions">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>textarea</optiontype>
-				<defaultvalue><![CDATA[gif
+				<defaultvalue>gif
 jpg
 jpeg
 png
 bmp
 zip
 txt
-pdf]]></defaultvalue>
-				<wildcard><![CDATA[*]]></wildcard>
+pdf</defaultvalue>
+				<wildcard>*</wildcard>
 				<options>module_attachment</options>
 			</option>
 			<option name="user.attachment.maxCount">
@@ -673,10 +673,10 @@ pdf]]></defaultvalue>
 			<option name="user.profile.avatar.allowedFileExtensions">
 				<categoryname>user.profile.avatar</categoryname>
 				<optiontype>textarea</optiontype>
-				<defaultvalue><![CDATA[gif
+				<defaultvalue>gif
 jpg
 jpeg
-png]]></defaultvalue>
+png</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /user.profile -->

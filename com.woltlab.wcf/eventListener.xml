@@ -2,57 +2,57 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
 	<import>
 		<eventlistener name="sessionPageAccessLog">
-			<eventclassname><![CDATA[wcf\page\AbstractPage]]></eventclassname>
+			<eventclassname>wcf\page\AbstractPage</eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener name="sessionFormAccessLog">
-			<eventclassname><![CDATA[wcf\form\AbstractForm]]></eventclassname>
+			<eventclassname>wcf\form\AbstractForm</eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener name="sessionActionAccessLog">
-			<eventclassname><![CDATA[wcf\action\AbstractAction]]></eventclassname>
+			<eventclassname>wcf\action\AbstractAction</eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 	</import>
 	
 	<delete>
 		<!-- event listeners with names now -->
 		<eventlistener>
-			<eventclassname><![CDATA[wcf\page\AbstractPage]]></eventclassname>
+			<eventclassname>wcf\page\AbstractPage</eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener>
-			<eventclassname><![CDATA[wcf\form\AbstractForm]]></eventclassname>
+			<eventclassname>wcf\form\AbstractForm</eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener>
-			<eventclassname><![CDATA[wcf\action\AbstractAction]]></eventclassname>
+			<eventclassname>wcf\action\AbstractAction</eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<!-- /event listeners with names now -->
 		
 		<eventlistener>
-			<eventclassname><![CDATA[wcf\system\bbcode\PreParser]]></eventclassname>
+			<eventclassname>wcf\system\bbcode\PreParser</eventclassname>
 			<eventname>beforeParsing</eventname>
-			<listenerclassname><![CDATA[wcf\system\event\listener\PreParserAtUserListener]]></listenerclassname>
+			<listenerclassname>wcf\system\event\listener\PreParserAtUserListener</listenerclassname>
 			<environment>user</environment>
 		</eventlistener>
 	</delete>
