@@ -153,8 +153,8 @@ class LoginForm extends AbstractCaptchaForm {
 					
 				$action = new UserAuthenticationFailureAction([], 'create', [
 					'data' => [
-						'environment' => (RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user'),
-						'userID' => ($user->userID ?: null),
+						'environment' => RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user',
+						'userID' => $user->userID ?: null,
 						'username' => $this->username,
 						'time' => TIME_NOW,
 						'ipAddress' => UserUtil::getIpAddress(),

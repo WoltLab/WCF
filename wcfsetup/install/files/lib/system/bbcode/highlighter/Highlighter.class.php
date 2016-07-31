@@ -186,7 +186,7 @@ abstract class Highlighter extends SingletonFactory {
 		
 		if ($quotesRegEx !== '') {
 			$quotesRegEx = '(?:'.$quotesRegEx.')';
-			$this->quotesRegEx = new Regex($quotesRegEx, ($this->allowsNewslinesInQuotes) ? Regex::DOT_ALL : Regex::MODIFIER_NONE);
+			$this->quotesRegEx = new Regex($quotesRegEx, $this->allowsNewslinesInQuotes ? Regex::DOT_ALL : Regex::MODIFIER_NONE);
 		}
 		
 		// cache comment regex

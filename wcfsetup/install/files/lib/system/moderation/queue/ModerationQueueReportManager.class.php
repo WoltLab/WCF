@@ -156,7 +156,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 					'objectTypeID' => $objectTypeID,
 					'objectID' => $objectID,
 					'containerID' => $containerID,
-					'userID' => (WCF::getUser()->userID ?: null),
+					'userID' => WCF::getUser()->userID ?: null,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				]
@@ -168,7 +168,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 				'data' => [
 					'status' => ModerationQueue::STATUS_OUTSTANDING,
 					'containerID' => $containerID,
-					'userID' => (WCF::getUser()->userID ?: null),
+					'userID' => WCF::getUser()->userID ?: null,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				]

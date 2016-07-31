@@ -436,7 +436,7 @@ class Mail {
 	 * @param	string		$name		filename
 	 */
 	public function addAttachment($path, $name = '') {
-		$this->attachments[] = ['path' => $path, 'name' => ($name ?: basename($path))];
+		$this->attachments[] = ['path' => $path, 'name' => $name ?: basename($path)];
 	}
 	
 	/**

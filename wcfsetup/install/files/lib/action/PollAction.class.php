@@ -200,6 +200,6 @@ class PollAction extends AJAXProxyAction {
 			$this->getVote($returnValues);
 		}
 		
-		$returnValues['canVote'] = ($this->poll->isChangeable) ? 1 : 0;
+		$returnValues['canVote'] = $this->poll->isChangeable ? 1 : 0;
 	}
 }

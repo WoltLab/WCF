@@ -124,7 +124,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			}
 			
 			$data = [
-				'categoryName' => (isset($data['categoryname'])) ? $data['categoryname'] : '',
+				'categoryName' => isset($data['categoryname']) ? $data['categoryname'] : '',
 				'optionName' => $element->getAttribute('name'),
 				'objectTypeID' => $objectTypeID
 			];

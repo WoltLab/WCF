@@ -47,7 +47,7 @@ class QuoteBBCode extends AbstractBBCode {
 			return WCF::getTPL()->fetch('quoteBBCodeTag');
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
-			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.text', ['content' => $content, 'cite' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')])."\n";
+			return WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.text', ['content' => $content, 'cite' => !empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : ''])."\n";
 		}
 	}
 }

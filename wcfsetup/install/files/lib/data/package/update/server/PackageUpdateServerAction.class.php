@@ -53,7 +53,7 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $server) {
-			$server->update(['isDisabled' => ($server->isDisabled) ? 0 : 1]);
+			$server->update(['isDisabled' => $server->isDisabled ? 0 : 1]);
 		}
 	}
 }

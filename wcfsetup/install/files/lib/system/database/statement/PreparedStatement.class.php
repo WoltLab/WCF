@@ -202,7 +202,7 @@ class PreparedStatement {
 	public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true) {
 		$map = [];
 		
-		while (($row = $this->fetchArray())) {
+		while ($row = $this->fetchArray()) {
 			$key = $row[$keyColumn];
 			$value = $row[$valueColumn];
 			

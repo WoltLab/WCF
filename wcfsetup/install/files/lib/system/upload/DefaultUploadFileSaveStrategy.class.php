@@ -103,7 +103,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			'fileType' => $uploadFile->getMimeType(),
 			'fileHash' => sha1_file($uploadFile->getLocation()),
 			'uploadTime' => TIME_NOW,
-			'userID' => (WCF::getUser()->userID ?: null)
+			'userID' => WCF::getUser()->userID ?: null
 		], $this->data);
 		
 		// get image data

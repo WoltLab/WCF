@@ -97,7 +97,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 		/** @noinspection PhpUndefinedFieldInspection */
 		$userAction = new UserAction([WCF::getUser()], 'update', [
 			'options' => [
-				User::getUserOptionID('recentActivitiesFilterByFollowing') => (WCF::getUser()->recentActivitiesFilterByFollowing ? 0 : 1)
+				User::getUserOptionID('recentActivitiesFilterByFollowing') => WCF::getUser()->recentActivitiesFilterByFollowing ? 0 : 1
 			]
 		]);
 		$userAction->executeAction();

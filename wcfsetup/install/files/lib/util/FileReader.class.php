@@ -153,7 +153,7 @@ class FileReader {
 			}
 			
 			// send file size
-			$this->addHeader('Content-Length', ($this->endByte + 1 - $this->startByte));
+			$this->addHeader('Content-Length', $this->endByte + 1 - $this->startByte);
 			
 			// cache headers
 			if ($this->options['maxAge']) {

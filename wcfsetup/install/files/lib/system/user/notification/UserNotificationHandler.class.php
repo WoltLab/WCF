@@ -197,15 +197,15 @@ class UserNotificationHandler extends SingletonFactory {
 		$recipients = $recipientList->getObjects();
 		if (!empty($recipients)) {
 			$data = [
-				'authorID' => ($event->getAuthorID() ?: null),
+				'authorID' => $event->getAuthorID() ?: null,
 				'data' => [
 					'eventID' => $event->eventID,
-					'authorID' => ($event->getAuthorID() ?: null),
+					'authorID' => $event->getAuthorID() ?: null,
 					'objectID' => $notificationObject->getObjectID(),
 					'baseObjectID' => $baseObjectID,
 					'eventHash' => $event->getEventHash(),
 					'packageID' => $objectTypeObject->packageID,
-					'mailNotified' => ($event->supportsEmailNotification() ? 0 : 1),
+					'mailNotified' => $event->supportsEmailNotification() ? 0 : 1,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				],

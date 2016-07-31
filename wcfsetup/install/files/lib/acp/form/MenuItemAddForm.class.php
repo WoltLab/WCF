@@ -221,10 +221,10 @@ class MenuItemAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new MenuItemAction([], 'create', ['data' => array_merge($this->additionalFields, [
-			'isDisabled' => ($this->isDisabled) ? 1 : 0,
+			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'title' => $this->title,
 			'pageID' => $this->pageID,
-			'pageObjectID' => ($this->pageObjectID ?: 0),
+			'pageObjectID' => $this->pageObjectID ?: 0,
 			'externalURL' => $this->externalURL,
 			'menuID' => $this->menuID,
 			'parentItemID' => $this->parentItemID,

@@ -222,10 +222,10 @@ class BBCodeAddForm extends AbstractForm {
 			'className' => $this->className,
 			'htmlOpen' => $this->htmlOpen,
 			'htmlClose' => $this->htmlClose,
-			'isBlockElement' => ($this->isBlockElement ? 1 : 0),
-			'isSourceCode' => ($this->isSourceCode ? 1 : 0),
+			'isBlockElement' => $this->isBlockElement ? 1 : 0,
+			'isSourceCode' => $this->isSourceCode ? 1 : 0,
 			'packageID' => 1,
-			'showButton' => ($this->showButton ? 1 : 0),
+			'showButton' => $this->showButton ? 1 : 0,
 			'wysiwygIcon' => $this->wysiwygIcon
 		])]);
 		$returnValues = $this->objectAction->executeAction();

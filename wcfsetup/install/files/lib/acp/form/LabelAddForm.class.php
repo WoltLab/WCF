@@ -159,7 +159,7 @@ class LabelAddForm extends AbstractForm {
 		// save label
 		$this->objectAction = new LabelAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'label' => $this->label,
-			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
+			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 			'groupID' => $this->groupID,
 			'showOrder' => $this->showOrder
 		])]);

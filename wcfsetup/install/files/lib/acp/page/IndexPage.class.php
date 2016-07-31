@@ -27,7 +27,7 @@ class IndexPage extends AbstractPage {
 		
 		$this->server = [
 			'os' => PHP_OS,
-			'webserver' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : ''),
+			'webserver' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '',
 			'mySQLVersion' => WCF::getDB()->getVersion(),
 			'load' => ''
 		];

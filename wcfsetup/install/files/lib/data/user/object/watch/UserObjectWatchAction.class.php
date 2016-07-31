@@ -87,7 +87,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 			// newly subscribed
 			if ($this->userObjectWatch === null) {
 				UserObjectWatchEditor::create([
-					'notification' => ($this->parameters['enableNotification'] ? 1 : 0),
+					'notification' => $this->parameters['enableNotification'] ? 1 : 0,
 					'objectID' => $this->parameters['objectID'],
 					'objectTypeID' => $this->objectType->objectTypeID,
 					'userID' => WCF::getUser()->userID
@@ -97,7 +97,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 				// update notification type
 				$editor = new UserObjectWatchEditor($this->userObjectWatch);
 				$editor->update([
-					'notification' => ($this->parameters['enableNotification'] ? 1 : 0)
+					'notification' => $this->parameters['enableNotification'] ? 1 : 0
 				]);
 			}
 			
@@ -129,7 +129,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 			'userID' => WCF::getUser()->userID,
 			'objectID' => intval($this->parameters['data']['objectID']),
 			'objectTypeID' => $objectType->objectTypeID,
-			'notification' => (!empty($this->parameters['enableNotification']) ? 1 : 0)
+			'notification' => !empty($this->parameters['enableNotification']) ? 1 : 0
 		]);
 		
 		// reset user storage

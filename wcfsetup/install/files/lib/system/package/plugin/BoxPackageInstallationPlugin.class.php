@@ -205,7 +205,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			'position' => $position,
 			'showOrder' => $this->getItemOrder($position),
 			'visibleEverywhere' => (!empty($data['elements']['visibleEverywhere'])) ? 1 : 0,
-			'isMultilingual' => ($isMultilingual) ? '1' : '0',
+			'isMultilingual' => $isMultilingual ? '1' : '0',
 			'cssClassName' => (!empty($data['elements']['cssClassName'])) ? $data['elements']['cssClassName'] : '',
 			'showHeader' => (!empty($data['elements']['showHeader'])) ? 1 : 0,
 			'originIsSystem' => 1,
@@ -347,7 +347,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			
 			// save page ids
 			foreach ($pageIDs as $pageID) {
-				$insertStatement->execute([$boxes[$boxIdentifier]->boxID, $pageID, ($boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1)]);
+				$insertStatement->execute([$boxes[$boxIdentifier]->boxID, $pageID, $boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1]);
 			}
 		}
 	}

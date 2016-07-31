@@ -96,7 +96,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 					'objectTypeID' => $objectTypeID,
 					'objectID' => $objectID,
 					'containerID' => $containerID,
-					'userID' => (WCF::getUser()->userID ?: null),
+					'userID' => WCF::getUser()->userID ?: null,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				]
@@ -108,7 +108,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 				'data' => [
 					'status' => ModerationQueue::STATUS_OUTSTANDING,
 					'containerID' => $containerID,
-					'userID' => (WCF::getUser()->userID ?: null),
+					'userID' => WCF::getUser()->userID ?: null,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				]

@@ -22,7 +22,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	protected function prepareImport(array $data) {
 		$returnValue = parent::prepareImport($data);
 		
-		$returnValue['icon'] = (isset($data['elements']['icon'])) ? $data['elements']['icon'] : '';
+		$returnValue['icon'] = isset($data['elements']['icon']) ? $data['elements']['icon'] : '';
 		
 		return $returnValue;
 	}

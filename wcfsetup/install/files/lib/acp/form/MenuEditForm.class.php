@@ -82,8 +82,8 @@ class MenuEditForm extends MenuAddForm {
 		if ($this->menu->identifier != 'com.woltlab.wcf.MainMenu') {
 			$boxAction = new BoxAction([$this->menu->getBox()->boxID], 'update', ['data' => array_merge($this->additionalFields, [
 				'position' => $this->position,
-				'visibleEverywhere' => ($this->visibleEverywhere) ? 1 : 0,
-				'showHeader' => ($this->showHeader) ? 1 : 0,
+				'visibleEverywhere' => $this->visibleEverywhere ? 1 : 0,
+				'showHeader' => $this->showHeader ? 1 : 0,
 				'showOrder' => $this->showOrder,
 				'cssClassName' => $this->cssClassName
 			]), 'pageIDs' => $this->pageIDs]);

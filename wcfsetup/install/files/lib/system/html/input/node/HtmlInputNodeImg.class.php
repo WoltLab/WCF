@@ -24,7 +24,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	 * @inheritDoc
 	 */
 	public function isAllowed(AbstractHtmlNodeProcessor $nodeProcessor) {
-		return (BBCodeHandler::getInstance()->isAvailableBBCode('img')) ? [] : ['img'];
+		return BBCodeHandler::getInstance()->isAvailableBBCode('img') ? [] : ['img'];
 	}
 	
 	/**

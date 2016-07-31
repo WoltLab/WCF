@@ -48,14 +48,14 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 */
 	protected function prepareImport(array $data) {
 		// adjust show order
-		$showOrder = (isset($data['elements']['showorder'])) ? $data['elements']['showorder'] : null;
+		$showOrder = isset($data['elements']['showorder']) ? $data['elements']['showorder'] : null;
 		$showOrder = $this->getShowOrder($showOrder);
 		
 		// merge values and default values
 		return [
 			'menuItem' => $data['attributes']['name'],
-			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
-			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
+			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
 			'showOrder' => $showOrder,
 			'className' => $data['elements']['classname']
 		];

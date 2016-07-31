@@ -105,7 +105,7 @@ class TemplateDiffPage extends AbstractPage {
 		$templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)', [array_keys($this->templateGroupHierarchy)]);
 		$templateList->readObjects();
 		foreach ($templateList as $template) {
-			$this->templateGroupHierarchy[($template->templateGroupID ?: 0)]['hasTemplate'] = $template->templateID;
+			$this->templateGroupHierarchy[$template->templateGroupID ?: 0]['hasTemplate'] = $template->templateID;
 		}
 		
 		// a valid parent template was given, calculate diff

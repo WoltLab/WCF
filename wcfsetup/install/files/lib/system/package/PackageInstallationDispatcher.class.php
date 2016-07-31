@@ -419,7 +419,7 @@ class PackageInstallationDispatcher {
 				$statement->execute([
 					$this->queue->packageID,
 					$excludedPackage['name'],
-					(!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')
+					!empty($excludedPackage['version']) ? $excludedPackage['version'] : ''
 				]);
 			}
 		}
@@ -707,7 +707,7 @@ class PackageInstallationDispatcher {
 		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
 		if ($directory !== null) {
 			$abbreviation = Package::getAbbreviation($this->getPackage()->package);
-			$directory = (isset($directory[$abbreviation])) ? $directory[$abbreviation] : null;
+			$directory = isset($directory[$abbreviation]) ? $directory[$abbreviation] : null;
 		}
 		
 		if ($directory === null && !PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
@@ -1008,7 +1008,7 @@ class PackageInstallationDispatcher {
 		// validate extensions
 		if (isset($requirements['extensions'])) {
 			foreach ($requirements['extensions'] as $extension) {
-				$passed = (extension_loaded($extension)) ? true : false;
+				$passed = extension_loaded($extension) ? true : false;
 				
 				if (!$passed) {
 					$errors['extension'][] = [
@@ -1116,7 +1116,7 @@ class PackageInstallationDispatcher {
 		
 		// handle values considered as 'true'
 		if (in_array($value, $trueValues)) {
-			return ($compareValue) ? true : false;
+			return $compareValue ? true : false;
 		}
 		// handle values considered as 'false'
 		else if (in_array($value, $falseValues)) {

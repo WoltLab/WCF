@@ -449,7 +449,7 @@ class PackageInstallationNodeBuilder {
 				
 				// requirements will be checked once package is about to be installed
 				$this->requirements[$packageName] = [
-					'minVersion' => (isset($package['minversion'])) ? $package['minversion'] : '',
+					'minVersion' => isset($package['minversion']) ? $package['minversion'] : '',
 					'packageID' => $package['packageID']
 				];
 				
@@ -521,7 +521,7 @@ class PackageInstallationNodeBuilder {
 				'packageID' => $packageID,
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'archive' => $fileName,
-				'action' => ($packageID ? 'update' : 'install')
+				'action' => $packageID ? 'update' : 'install'
 			]);
 			
 			self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');

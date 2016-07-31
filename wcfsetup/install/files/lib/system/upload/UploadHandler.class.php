@@ -52,11 +52,11 @@ class UploadHandler {
 			
 			// multiple uploads
 			for ($i = 0, $l = count($rawFileData['name']); $i < $l; $i++) {
-				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], ($rawFileData['tmp_name'][$i] ? (self::getMimeType($rawFileData['tmp_name'][$i], $rawFileData['type'][$i])) : ''));
+				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], ($rawFileData['tmp_name'][$i] ? self::getMimeType($rawFileData['tmp_name'][$i], $rawFileData['type'][$i]) : ''));
 			}
 		}
 		else {
-			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], ($rawFileData['tmp_name'] ? (self::getMimeType($rawFileData['tmp_name'], $rawFileData['type'])) : ''));
+			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], ($rawFileData['tmp_name'] ? self::getMimeType($rawFileData['tmp_name'], $rawFileData['type']) : ''));
 		}
 	}
 	

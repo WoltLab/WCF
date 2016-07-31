@@ -130,8 +130,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				'name' => $this->getI18nValues($data['elements']['title'], true),
 				'boxType' => 'menu',
 				'position' => $position,
-				'showHeader' => (!empty($data['elements']['box']['showHeader']) ? 1 : 0),
-				'visibleEverywhere' => (!empty($data['elements']['box']['visibleEverywhere']) ? 1 : 0),
+				'showHeader' => !empty($data['elements']['box']['showHeader']) ? 1 : 0,
+				'visibleEverywhere' => !empty($data['elements']['box']['visibleEverywhere']) ? 1 : 0,
 				'cssClassName' => (!empty($data['elements']['box']['cssClassName'])) ? $data['elements']['box']['cssClassName'] : '',
 				'originIsSystem' => 1,
 				'packageID' => $this->installation->getPackageID()
@@ -259,7 +259,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				
 				// save page ids
 				foreach ($pageIDs as $pageID) {
-					$insertStatement->execute([$box->boxID, $pageID, ($box->visibleEverywhere ? 0 : 1)]);
+					$insertStatement->execute([$box->boxID, $pageID, $box->visibleEverywhere ? 0 : 1]);
 				}
 			}
 		}

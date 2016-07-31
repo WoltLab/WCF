@@ -372,7 +372,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			throw new \InvalidArgumentException("Must provide an existing element for start node or end node, both cannot be null.");
 		}
 		
-		$element = ($startNode) ? $startNode->ownerDocument->createElement('woltlab-metacode') : $endNode->ownerDocument->createElement('woltlab-metacode');
+		$element = $startNode ? $startNode->ownerDocument->createElement('woltlab-metacode') : $endNode->ownerDocument->createElement('woltlab-metacode');
 		$element->setAttribute('data-name', $name);
 		$element->setAttribute('data-attributes', $attributes);
 		
@@ -442,12 +442,12 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		/** @var \DOMElement $end */
 		$end = $pair['close'];
 		
-		$attributes = (isset($pair['attributes'])) ? $pair['attributes'] : '';
-		$textNode = $start->ownerDocument->createTextNode(($pair['openSource']) ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
+		$attributes = isset($pair['attributes']) ? $pair['attributes'] : '';
+		$textNode = $start->ownerDocument->createTextNode($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
 		DOMUtil::insertBefore($textNode, $start);
 		DOMUtil::removeNode($start);
 		
-		$textNode = $end->ownerDocument->createTextNode(($pair['closeSource']) ?: '[/' . $name . ']');
+		$textNode = $end->ownerDocument->createTextNode($pair['closeSource'] ?: '[/' . $name . ']');
 		DOMUtil::insertBefore($textNode, $end);
 		DOMUtil::removeNode($end);
 	}

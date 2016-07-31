@@ -49,7 +49,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 		$beforeContent = $matches['before'];
 		$content = $matches['content'];
 		$afterContent = $matches['after'];
-		$elseContent = (isset($matches['else'])) ? $matches['else'] : '';
+		$elseContent = isset($matches['else']) ? $matches['else'] : '';
 		$assignContent = (isset($matches['assign']) && !empty($matches['assign'])) ? $matches['assign'] : '';
 		$variable = 'hascontent_' . StringUtil::getRandomID();
 		

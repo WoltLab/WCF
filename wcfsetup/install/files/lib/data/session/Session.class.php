@@ -34,6 +34,6 @@ class Session extends ACPSession {
 	 * @inheritDoc
 	 */
 	public static function supportsVirtualSessions() {
-		return (SESSION_ENABLE_VIRTUALIZATION) ? true : false;
+		return SESSION_ENABLE_VIRTUALIZATION ? true : false;
 	}
 }

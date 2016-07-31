@@ -83,7 +83,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $language) {
-			$isDisabled = ($language->isDisabled) ? 0 : 1;
+			$isDisabled = $language->isDisabled ? 0 : 1;
 			$language->update(['isDisabled' => $isDisabled]);
 		}
 	}

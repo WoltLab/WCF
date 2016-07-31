@@ -73,7 +73,7 @@ class LabelEditForm extends LabelAddForm {
 		// assigned to them, but the new group is not allowed at their current position  
 		$this->objectAction = new LabelAction([$this->labelID], 'update', ['data' => array_merge($this->additionalFields, [
 			'label' => $this->label,
-			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
+			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 			'showOrder' => $this->showOrder
 		])]);
 		$this->objectAction->executeAction();

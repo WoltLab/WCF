@@ -208,7 +208,7 @@ class CommentHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([
 			WCF::getUser()->userID,
-			(TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime'))
+			TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime')
 		]);
 		if (($row = $statement->fetchArray()) !== false) {
 			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));
@@ -223,7 +223,7 @@ class CommentHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([
 				WCF::getUser()->userID,
-				(TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime'))
+				TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime')
 			]);
 			if (($row = $statement->fetchArray()) !== false) {
 				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));

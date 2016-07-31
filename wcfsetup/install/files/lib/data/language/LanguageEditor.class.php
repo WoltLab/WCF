@@ -77,7 +77,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$items[$languageCategoryID] = [];
 			}
 			
-			$items[$languageCategoryID][$row['languageItem']] = ($row['languageUseCustomValue']) ? $row['languageCustomItemValue'] : $row['languageItemValue'];
+			$items[$languageCategoryID][$row['languageItem']] = $row['languageUseCustomValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue'];
 		}
 		
 		foreach ($items as $languageCategoryID => $languageItems) {
@@ -242,7 +242,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		if (!empty($itemData)) {
 			// insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
-			$step = ($packageID) ? 5 : 4;
+			$step = $packageID ? 5 : 4;
 			WCF::getDB()->beginTransaction();
 			for ($i = 0, $length = count($itemData); $i < $length; $i += 50 * $step) {
 				$parameters = array_slice($itemData, $i, 50 * $step);
@@ -450,7 +450,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			$languageItemEditor = new LanguageItemEditor($languageItem);
 			$languageItemEditor->update([
 				'languageCustomItemValue' => $items[$languageItem->languageItem],
-				'languageUseCustomValue' => (isset($useCustom[$languageItem->languageItem])) ? 1 : 0
+				'languageUseCustomValue' => isset($useCustom[$languageItem->languageItem]) ? 1 : 0
 			]);
 			
 			// remove updated items, leaving items to be created within

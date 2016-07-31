@@ -31,7 +31,7 @@ class GZipFile extends File {
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
-			self::$gzopen64 = (function_exists('gzopen64'));
+			self::$gzopen64 = function_exists('gzopen64');
 		}
 		
 		$this->filename = $filename;

@@ -37,7 +37,7 @@ class MessageOptionType extends TextareaOptionType {
 			throw new \RuntimeException("Message object type '".$option->optionName."' requires an object type for definition 'com.woltlab.wcf.message'.");
 		}
 		
-		$permission = ($option->disallowedbbcodepermission) ?: 'user.message.disallowedBBCodes';
+		$permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
 		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($permission))));
 		
 		$this->htmlInputProcessor = new HtmlInputProcessor();
@@ -53,7 +53,7 @@ class MessageOptionType extends TextareaOptionType {
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		$permission = ($option->disallowedbbcodepermission) ?: 'user.message.disallowedBBCodes';
+		$permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
 		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($permission))));
 		
 		WCF::getTPL()->assign([

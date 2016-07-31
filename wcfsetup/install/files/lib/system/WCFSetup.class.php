@@ -444,7 +444,7 @@ class WCFSetup extends WCF {
 				$application = Package::getAbbreviation($package->getPackageInfo('name'));
 				
 				$packages[$application] = [
-					'directory' => ($package->getPackageInfo('applicationDirectory') ?: $application),
+					'directory' => $package->getPackageInfo('applicationDirectory') ?: $application,
 					'packageDescription' => $package->getLocalizedPackageInfo('packageDescription'),
 					'packageName' => $package->getLocalizedPackageInfo('packageName')
 				];
@@ -764,7 +764,7 @@ class WCFSetup extends WCF {
 		
 		// split by offsets
 		$sqlData = explode('/* SQL_PARSER_OFFSET */', $sql);
-		$offset = (isset($_POST['offset'])) ? intval($_POST['offset']) : 0;
+		$offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
 		if (!isset($sqlData[$offset])) {
 			throw new SystemException("Offset for SQL parser is out of bounds, ".$offset." was requested, but there are only ".count($sqlData)." sections");
 		}
@@ -1146,7 +1146,7 @@ class WCFSetup extends WCF {
 				while ($queueID) {
 					$queueIDs[] = $queueID;
 					
-					$queueID = (isset($queues[$queueID])) ? $queues[$queueID] : 0;
+					$queueID = isset($queues[$queueID]) ? $queues[$queueID] : 0;
 				}
 				
 				// remove previously created queues

@@ -42,7 +42,7 @@ class MessagePreviewAction extends BBCodeAction {
 		$htmlInputProcessor->process($this->parameters['data']['message'], $this->parameters['messageObjectType'], $this->parameters['messageObjectID']);
 		
 		// check if disallowed bbcode are used
-		$disallowedBBCodesPermission = (isset($this->parameters['disallowedBBCodesPermission'])) ? $this->parameters['disallowedBBCodesPermission'] : 'user.message.disallowedBBCodes';
+		$disallowedBBCodesPermission = isset($this->parameters['disallowedBBCodesPermission']) ? $this->parameters['disallowedBBCodesPermission'] : 'user.message.disallowedBBCodes';
 		if ($disallowedBBCodesPermission) {
 			BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($disallowedBBCodesPermission))));
 			$disallowedBBCodes = $htmlInputProcessor->validate();

@@ -137,8 +137,8 @@ class ArticlePage extends AbstractArticlePage {
 			'commentCanAdd' => WCF::getSession()->getPermission('user.article.canAddComment'),
 			'commentList' => $this->commentList,
 			'commentObjectTypeID' => $this->commentObjectTypeID,
-			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0),
-			'likeData' => ((MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : []),
+			'lastCommentTime' => $this->commentList ? $this->commentList->getMinCommentTime() : 0,
+			'likeData' => (MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : [],
 			'articleLikeData' => $this->articleLikeData,
 			'allowSpidersToIndexThisPage' => true
 		]);

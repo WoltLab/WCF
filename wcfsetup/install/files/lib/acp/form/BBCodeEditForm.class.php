@@ -96,9 +96,9 @@ class BBCodeEditForm extends BBCodeAddForm {
 			'className' => $this->className,
 			'htmlClose' => $this->htmlClose,
 			'htmlOpen' => $this->htmlOpen,
-			'isBlockElement' => ($this->isBlockElement ? 1 : 0),
-			'isSourceCode' => ($this->isSourceCode ? 1 : 0),
-			'showButton' => ($this->showButton ? 1 : 0),
+			'isBlockElement' => $this->isBlockElement ? 1 : 0,
+			'isSourceCode' => $this->isSourceCode ? 1 : 0,
+			'showButton' => $this->showButton ? 1 : 0,
 			'wysiwygIcon' => $this->wysiwygIcon
 		])]);
 		$this->objectAction->executeAction();
@@ -162,7 +162,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 		WCF::getTPL()->assign([
 			'bbcode' => $this->bbcode,
 			'action' => 'edit',
-			'nativeBBCode' => (in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes))
+			'nativeBBCode' => in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)
 		]);
 	}
 }

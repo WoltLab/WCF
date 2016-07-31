@@ -164,7 +164,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 			'packageID' => ($package !== null) ? $package->packageID : null,
 			'archive' => $file,
-			'action' => ($package !== null ? 'update' : 'install')
+			'action' => $package !== null ? 'update' : 'install'
 		]);
 		
 		// PackageInstallationDispatcher::openQueue()

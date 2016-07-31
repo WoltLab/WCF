@@ -91,7 +91,7 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	 */
 	public function prepareReport() {
 		// content was already reported
-		$alreadyReported = (ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'], $this->parameters['objectID'])) ? 1 : 0;
+		$alreadyReported = ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'], $this->parameters['objectID']) ? 1 : 0;
 		
 		WCF::getTPL()->assign([
 			'alreadyReported' => $alreadyReported,

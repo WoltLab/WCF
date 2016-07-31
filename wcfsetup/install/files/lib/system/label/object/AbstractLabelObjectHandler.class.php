@@ -127,7 +127,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 		
 		if ($legacyReturnValue) {
 			// WCF 2.0: boolean true/false
-			return (empty($validationErrors));
+			return empty($validationErrors);
 		}
 		else {
 			// WCF 2.1+: detailed error report (empty array if validation passed)

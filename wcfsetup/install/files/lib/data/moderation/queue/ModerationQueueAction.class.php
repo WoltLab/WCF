@@ -194,7 +194,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	 * @return	string[]
 	 */
 	public function getAssignUserForm() {
-		$assignedUser = ($this->moderationQueueEditor->assignedUserID) ? new User($this->moderationQueueEditor->assignedUserID) : null;
+		$assignedUser = $this->moderationQueueEditor->assignedUserID ? new User($this->moderationQueueEditor->assignedUserID) : null;
 		
 		WCF::getTPL()->assign([
 			'assignedUser' => $assignedUser,
@@ -248,7 +248,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	 * @return	string[]
 	 */
 	public function assignUser() {
-		$data = ['assignedUserID' => ($this->parameters['assignedUserID'] ?: null)];
+		$data = ['assignedUserID' => $this->parameters['assignedUserID'] ?: null];
 		if ($this->user->userID) {
 			if ($this->moderationQueueEditor->status == ModerationQueue::STATUS_OUTSTANDING) {
 				$data['status'] = ModerationQueue::STATUS_PROCESSING;
@@ -262,7 +262,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		
 		$this->moderationQueueEditor->update($data);
 		
-		$username = ($this->user->userID) ? $this->user->username : WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody');
+		$username = $this->user->userID ? $this->user->username : WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody');
 		$link = '';
 		if ($this->user->userID) {
 			$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);

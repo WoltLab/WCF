@@ -40,7 +40,7 @@ abstract class AbstractCategoryMultiSelectOptionType extends AbstractOptionType 
 		WCF::getTPL()->assign([
 			'categoryList' => $categoryList,
 			'option' => $option,
-			'value' => (!is_array($value) ? explode("\n", $value) : $value)
+			'value' => !is_array($value) ? explode("\n", $value) : $value
 		]);
 		return WCF::getTPL()->fetch('categoryMultiSelectOptionType');
 	}

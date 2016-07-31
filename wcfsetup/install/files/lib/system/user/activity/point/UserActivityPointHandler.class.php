@@ -171,7 +171,7 @@ class UserActivityPointHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($userToItems as $userID => $items) {
 			$statement->execute([
-				($items * $objectTypeObj->points),
+				$items * $objectTypeObj->points,
 				$items,
 				$objectTypeObj->objectTypeID,
 				$userID

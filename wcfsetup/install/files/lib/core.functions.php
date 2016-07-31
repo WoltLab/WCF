@@ -137,7 +137,7 @@ namespace wcf\functions\exception {
 				return $item;
 			}, sanitizeStacktrace($e, true))))."\n";
 		}
-		while (($e = $e->getPrevious()));
+		while ($e = $e->getPrevious());
 		
 		// calculate Exception-ID
 		$exceptionID = sha1($message);
@@ -538,7 +538,7 @@ EXPLANATION;
 					</div>
 					<?php
 					$first = false;
-					} while (($e = $e->getPrevious()));
+					} while ($e = $e->getPrevious());
 					?>
 				<?php } ?>
 			</div>

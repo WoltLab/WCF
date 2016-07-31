@@ -152,7 +152,7 @@ class PackageStartInstallForm extends AbstractForm {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
 		// obey foreign key
-		$packageID = ($this->package) ? $this->package->packageID : null;
+		$packageID = $this->package ? $this->package->packageID : null;
 		
 		$archive = null;
 		if ($this->stylePackageImportLocation) {
@@ -171,8 +171,8 @@ class PackageStartInstallForm extends AbstractForm {
 			'packageName' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getLocalizedPackageInfo('packageName'),
 			'packageID' => $packageID,
 			'archive' => $archive,
-			'action' => ($this->package != null ? 'update' : 'install'),
-			'isApplication' => (!$isApplication ? '0' : '1')
+			'action' => $this->package != null ? 'update' : 'install',
+			'isApplication' => !$isApplication ? '0' : '1'
 		]);
 		
 		$this->saved();

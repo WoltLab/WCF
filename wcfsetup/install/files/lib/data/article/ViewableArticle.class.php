@@ -78,7 +78,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 			$this->getDecoratedObject()->articleContents = [];
 		}
 		
-		$this->getDecoratedObject()->articleContents[($articleContent->languageID ?: 0)] = $articleContent;
+		$this->getDecoratedObject()->articleContents[$articleContent->languageID ?: 0] = $articleContent;
 	}
 	
 	/**

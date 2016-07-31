@@ -78,7 +78,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		return [
 			'definitionID' => $this->getDefinitionID($data['elements']['definitionname']),
 			'objectType' => $data['elements']['name'],
-			'className' => (isset($data['elements']['classname']) ? $data['elements']['classname'] : ''),
+			'className' => isset($data['elements']['classname']) ? $data['elements']['classname'] : '',
 			'additionalData' => serialize($additionalData)
 		];
 	}

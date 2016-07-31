@@ -182,7 +182,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		WCF::getTPL()->assign([
 			'commentList' => $commentList,
-			'likeData' => (MODULE_LIKE ? $commentList->getLikeData() : [])
+			'likeData' => MODULE_LIKE ? $commentList->getLikeData() : []
 		]);
 		
 		return [

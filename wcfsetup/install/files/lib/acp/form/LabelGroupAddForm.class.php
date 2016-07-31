@@ -159,7 +159,7 @@ class LabelGroupAddForm extends AbstractForm {
 		
 		// save label
 		$this->objectAction = new LabelGroupAction([], 'create', ['data' => array_merge($this->additionalFields, [
-			'forceSelection' => ($this->forceSelection ? 1 : 0),
+			'forceSelection' => $this->forceSelection ? 1 : 0,
 			'groupName' => $this->groupName,
 			'groupDescription' => $this->groupDescription,
 			'showOrder' => $this->showOrder
@@ -283,17 +283,17 @@ class LabelGroupAddForm extends AbstractForm {
 		
 		foreach ($this->labelObjectTypeContainers as $objectTypeID => $container) {
 			if ($container->isBooleanOption()) {
-				$optionValue = (isset($data[$objectTypeID])) ? 1 : 0;
+				$optionValue = isset($data[$objectTypeID]) ? 1 : 0;
 				$container->setOptionValue($optionValue);
 			}
 			else {
-				$hasData = (isset($data[$objectTypeID]));
+				$hasData = isset($data[$objectTypeID]);
 				foreach ($container as $object) {
 					if (!$hasData) {
 						$object->setOptionValue(0);
 					}
 					else {
-						$optionValue = (in_array($object->getObjectID(), $data[$objectTypeID])) ? 1 : 0;
+						$optionValue = in_array($object->getObjectID(), $data[$objectTypeID]) ? 1 : 0;
 						$object->setOptionValue($optionValue);
 					}
 				}

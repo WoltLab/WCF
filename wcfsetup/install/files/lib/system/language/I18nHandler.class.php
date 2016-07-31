@@ -307,7 +307,7 @@ class I18nHandler extends SingletonFactory {
 				$statement->execute([
 					$languageID,
 					$languageVariable,
-					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
+					isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID],
 					0,
 					$languageCategoryID,
 					$packageID
@@ -325,7 +325,7 @@ class I18nHandler extends SingletonFactory {
 			
 			foreach ($updateLanguageIDs as $languageID) {
 				$statement->execute([
-					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
+					isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID],
 					0,
 					$languageItemIDs[$languageID]
 				]);

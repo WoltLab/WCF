@@ -198,7 +198,7 @@ class Article extends DatabaseObject implements ILinkableObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->articleID]);
 			while ($row = $statement->fetchArray()) {
-				$this->articleContents[($row['languageID'] ?: 0)] = new ArticleContent(null, $row);
+				$this->articleContents[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
 			}
 		}
 		
@@ -219,7 +219,7 @@ class Article extends DatabaseObject implements ILinkableObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->articleID]);
 			while ($row = $statement->fetchArray()) {
-				$this->languageLinks[($row['languageID'] ?: 0)] = new ArticleContent(null, $row);
+				$this->languageLinks[$row['languageID'] ?: 0] = new ArticleContent(null, $row);
 			}
 		}
 		

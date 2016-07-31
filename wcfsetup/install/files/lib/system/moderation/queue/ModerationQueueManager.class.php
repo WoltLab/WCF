@@ -326,7 +326,7 @@ class ModerationQueueManager extends SingletonFactory {
 			$statement->execute([
 				$queueID,
 				WCF::getUser()->userID,
-				($isAffected ? 1 : 0)
+				$isAffected ? 1 : 0
 			]);
 		}
 		WCF::getDB()->commitTransaction();

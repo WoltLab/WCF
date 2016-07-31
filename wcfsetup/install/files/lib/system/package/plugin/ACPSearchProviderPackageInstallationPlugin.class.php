@@ -42,7 +42,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 */
 	protected function prepareImport(array $data) {
 		// get show order
-		$showOrder = (isset($data['elements']['showorder'])) ? $data['elements']['showorder'] : null;
+		$showOrder = isset($data['elements']['showorder']) ? $data['elements']['showorder'] : null;
 		$showOrder = $this->getShowOrder($showOrder);
 		
 		return [

@@ -89,7 +89,7 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 			}
 			
 			$languageCode = WCF::getLanguage()->languageCode;
-			$packageName = (isset($product['packageName'][$languageCode])) ? $product['packageName'][$languageCode] : $product['packageName']['en'];
+			$packageName = isset($product['packageName'][$languageCode]) ? $product['packageName'][$languageCode] : $product['packageName']['en'];
 			
 			$this->productData[$wcfMajorRelease][$packageUpdateID] = [
 				'author' => $product['author'],
@@ -101,7 +101,7 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 					'available' => $product['lastVersion'],
 					'installed' => ''
 				],
-				'status' => (isset($this->updateServers[$wcfMajorRelease]) ? 'install' : 'unavailable')
+				'status' => isset($this->updateServers[$wcfMajorRelease]) ? 'install' : 'unavailable'
 			];
 			
 			$package = PackageCache::getInstance()->getPackageByIdentifier($product['package']);

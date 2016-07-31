@@ -20,7 +20,7 @@ abstract class PackageInstallationFormManager {
 	 * @param	PackageInstallationQueue	$queue
 	 */
 	public static function handleRequest(PackageInstallationQueue $queue) {
-		$formName = (isset($_REQUEST['formName'])) ? StringUtil::trim($_REQUEST['formName']) : '';
+		$formName = isset($_REQUEST['formName']) ? StringUtil::trim($_REQUEST['formName']) : '';
 		
 		// ignore request
 		if (empty($formName) || !self::findForm($queue, $formName)) return;

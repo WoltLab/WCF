@@ -398,7 +398,7 @@ class SystemException extends \Exception implements IPrintableException {
 			</div>
 			<?php
 			$first = false;
-		} while (($e = $this->getPrevious()));
+		} while ($e = $this->getPrevious());
 		?>
 	</div>
 </body>
@@ -780,7 +780,7 @@ class Tar {
 		}
 		if(($header['size'] % 512) != 0) {
 			$buffer = $this->file->read(512);
-			$content .= substr($buffer, 0, ($header['size'] % 512));
+			$content .= substr($buffer, 0, $header['size'] % 512);
 		}
 		
 		return $content;
@@ -820,7 +820,7 @@ class Tar {
 		}
 		if (($header['size'] % 512) != 0) {
 			$content = $this->file->read(512);
-			$targetFile->write($content, ($header['size'] % 512));
+			$targetFile->write($content, $header['size'] % 512);
 		}
 		
 		$targetFile->close();
@@ -876,7 +876,7 @@ class Tar {
 				$i++;
 			}
 			
-			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
+			$this->file->seek($this->file->tell() + (512 * ceil($header['size'] / 512)));
 		}
 	}
 	
@@ -1026,7 +1026,7 @@ class ZipFile extends File {
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
-			self::$gzopen64 = (function_exists('gzopen64'));
+			self::$gzopen64 = function_exists('gzopen64');
 		}
 		
 		$this->filename = $filename;

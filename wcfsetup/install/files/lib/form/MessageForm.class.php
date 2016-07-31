@@ -327,7 +327,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 			'attachmentParentObjectID' => $this->attachmentParentObjectID,
 			'availableContentLanguages' => $this->availableContentLanguages,
 			'defaultSmilies' => $this->defaultSmilies,
-			'languageID' => ($this->languageID ?: 0),
+			'languageID' => $this->languageID ?: 0,
 			'maxTextLength' => $this->maxTextLength,
 			'smileyCategories' => $this->smileyCategories,
 			'subject' => $this->subject,

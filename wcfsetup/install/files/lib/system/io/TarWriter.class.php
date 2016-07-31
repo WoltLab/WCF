@@ -70,7 +70,7 @@ class TarWriter extends Tar {
 		}
 		
 		$i = 0;
-		while (($buffer = substr($string, (($i++) * 512), 512)) != '') {
+		while (($buffer = substr($string, ($i++) * 512, 512)) != '') {
 			$this->file->write(pack('a512', $buffer));
 		}
 		
@@ -280,7 +280,7 @@ class TarWriter extends Tar {
 		$this->file->write($binaryDataLast, 356);
 		
 		$i = 0;
-		while (($buffer = substr($filename, (($i++) * 512), 512)) != '') {
+		while (($buffer = substr($filename, ($i++) * 512, 512)) != '') {
 			$this->file->write(pack('a512', $buffer));
 		}
 		

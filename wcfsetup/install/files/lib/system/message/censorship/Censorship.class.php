@@ -128,7 +128,7 @@ class Censorship extends SingletonFactory {
 						
 						if ($position + mb_strlen($word) < mb_strlen($censoredWord)) {
 							// look ahead
-							if (($newIndex = $this->lookAhead($i + 1, mb_substr($censoredWord, $position + mb_strlen($word))))) {
+							if ($newIndex = $this->lookAhead($i + 1, mb_substr($censoredWord, $position + mb_strlen($word)))) {
 								$i = $newIndex;
 							}
 							else {
@@ -173,7 +173,7 @@ class Censorship extends SingletonFactory {
 				return true;
 			}
 			else if (mb_strpos($search, $this->words[$index]) === (mb_strlen($search) - mb_strlen($this->words[$index]))) {
-				return $this->lookBehind($index - 1, mb_substr($search, 0, (mb_strlen($search) - mb_strlen($this->words[$index]))));
+				return $this->lookBehind($index - 1, mb_substr($search, 0, mb_strlen($search) - mb_strlen($this->words[$index])));
 			}
 		}
 		

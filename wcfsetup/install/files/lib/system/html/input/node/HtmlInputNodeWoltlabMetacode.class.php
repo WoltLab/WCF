@@ -82,7 +82,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 			$attributes = $htmlNodeProcessor->parseAttributes($element->getAttribute('data-attributes'));
 			
 			// check for converters
-			$converter = (isset($converters[$name])) ? $converters[$name] : null;
+			$converter = isset($converters[$name]) ? $converters[$name] : null;
 			if ($converter === null) {
 				$className = 'wcf\\system\\html\\metacode\\converter\\' . $name . 'MetacodeConverter';
 				if (class_exists($className)) {
@@ -98,7 +98,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 				$bbcode = BBCodeCache::getInstance()->getBBCodeByTag($name);
 				if ($bbcode !== null) {
 					$bbcodeAttributes = $bbcode->getAttributes();
-					$attr = (isset($bbcodeAttributes[0])) ? $bbcodeAttributes[0] : null;
+					$attr = isset($bbcodeAttributes[0]) ? $bbcodeAttributes[0] : null;
 					
 					if ($attr !== null && $attr->useText && !empty($attributes[0]) && StringUtil::trim($attributes[0]) == StringUtil::trim($element->textContent)) {
 						// discard content as it is already present in the first attribute

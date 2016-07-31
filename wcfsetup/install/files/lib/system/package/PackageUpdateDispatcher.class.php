@@ -117,7 +117,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		catch (SystemException $e) {
 			$reply = $request->getReply();
 			
-			$statusCode = (is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode'];
+			$statusCode = is_array($reply['statusCode']) ? reset($reply['statusCode']) : $reply['statusCode'];
 			// status code 0 is a connection timeout
 			if (!$statusCode && $secureConnection) {
 				if (preg_match('~https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
@@ -271,7 +271,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		foreach ($elements as $element) {
 			$versionNo = $element->getAttribute('name');
 			$packageInfo['versions'][$versionNo] = [
-				'isAccessible' => ($element->getAttribute('accessible') == 'true' ? true : false)
+				'isAccessible' => $element->getAttribute('accessible') == 'true' ? true : false
 			];
 			
 			$children = $xpath->query('child::*', $element);
@@ -332,7 +332,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					case 'license':
 						$packageInfo['versions'][$versionNo]['license'] = [
 							'license' => $child->nodeValue,
-							'licenseURL' => ($child->hasAttribute('url') ? $child->getAttribute('url') : '')
+							'licenseURL' => $child->hasAttribute('url') ? $child->getAttribute('url') : ''
 						];
 					break;
 				}
@@ -375,9 +375,9 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					// create new database entry
 					$version = PackageUpdateVersionEditor::create([
 						'filename' => $packageFile,
-						'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
-						'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
-						'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
+						'license' => isset($versionData['license']['license']) ? $versionData['license']['license'] : '',
+						'licenseURL' => isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : '',
+						'isAccessible' => $versionData['isAccessible'] ? 1 : 0,
 						'packageDate' => $versionData['packageDate'],
 						'packageUpdateID' => $packageUpdateID,
 						'packageVersion' => $packageVersion
@@ -391,7 +391,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							$requirementInserts[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'package' => $requiredIdentifier,
-								'minversion' => (isset($required['minversion']) ? $required['minversion'] : '')
+								'minversion' => isset($required['minversion']) ? $required['minversion'] : ''
 							];
 						}
 					}
@@ -412,7 +412,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							$excludedPackagesParameters[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'excludedPackage' => $excludedIdentifier,
-								'excludedPackageVersion' => (isset($exclusion['version']) ? $exclusion['version'] : '')
+								'excludedPackageVersion' => isset($exclusion['version']) ? $exclusion['version'] : ''
 							];
 						}
 					}

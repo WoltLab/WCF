@@ -299,7 +299,7 @@ class SessionHandler extends SingletonFactory {
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
 			'requestURI' => UserUtil::getRequestURI(),
-			'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
+			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
 		];
 	}
 	
@@ -570,7 +570,7 @@ class SessionHandler extends SingletonFactory {
 				'userAgent' => UserUtil::getUserAgent(),
 				'lastActivityTime' => TIME_NOW,
 				'requestURI' => UserUtil::getRequestURI(),
-				'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
+				'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
 			];
 			
 			if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
@@ -783,7 +783,7 @@ class SessionHandler extends SingletonFactory {
 						'userAgent' => UserUtil::getUserAgent(),
 						'lastActivityTime' => TIME_NOW,
 						'requestURI' => UserUtil::getRequestURI(),
-						'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
+						'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
 					];
 					
 					$this->session = call_user_func([$this->sessionEditorClassName, 'create'], $sessionData);

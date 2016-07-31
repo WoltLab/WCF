@@ -307,7 +307,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 					// start buffering
 					$tag['buffer'] = '';
 					$bufferedTagStack[] = $tag;
-					$buffer =& $bufferedTagStack[(count($bufferedTagStack) - 1)]['buffer'];
+					$buffer =& $bufferedTagStack[count($bufferedTagStack) - 1]['buffer'];
 				}
 				else {
 					$buffer .= $this->buildOpeningTag($tag);

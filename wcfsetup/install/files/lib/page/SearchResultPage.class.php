@@ -162,7 +162,7 @@ class SearchResultPage extends MultipleLinkPage {
 			'highlight' => $this->highlight,
 			'sortField' => $this->searchData['sortField'],
 			'sortOrder' => $this->searchData['sortOrder'],
-			'alterable' => (!empty($this->searchData['alterable']) ? 1 : 0),
+			'alterable' => !empty($this->searchData['alterable']) ? 1 : 0,
 			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
 			'resultListTemplateName' => $this->resultListTemplateName,
 			'resultListApplication' => $this->resultListApplication,

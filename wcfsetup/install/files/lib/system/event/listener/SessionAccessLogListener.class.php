@@ -28,7 +28,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				WCF::getSession()->sessionID,
-				(TIME_NOW - SESSION_TIMEOUT)
+				TIME_NOW - SESSION_TIMEOUT
 			]);
 			$row = $statement->fetchArray();
 			if (!empty($row['sessionLogID'])) {

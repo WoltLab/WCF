@@ -76,7 +76,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 		$this->objectAction = new TemplateGroupAction([$this->templateGroup], 'update', ['data' => array_merge($this->additionalFields, [
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
-			'parentTemplateGroupID' => ($this->parentTemplateGroupID ?: null)
+			'parentTemplateGroupID' => $this->parentTemplateGroupID ?: null
 		])]);
 		$this->objectAction->executeAction();
 		$this->saved();

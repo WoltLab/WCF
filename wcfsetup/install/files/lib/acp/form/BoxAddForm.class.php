@@ -441,19 +441,19 @@ class BoxAddForm extends AbstractForm {
 		if ($this->boxType == 'system' || $this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
-					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
-					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
-					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
-					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
+					'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
+					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
+					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
+					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null
 				];
 			}
 		}
 		else {
 			$content[0] = [
-				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
-				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
-				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
-				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
+				'title' => !empty($this->title[0]) ? $this->title[0] : '',
+				'content' => !empty($this->content[0]) ? $this->content[0] : '',
+				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
+				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null
 			];
 		}
 		
@@ -468,7 +468,7 @@ class BoxAddForm extends AbstractForm {
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
 			'linkPageID' => $this->linkPageID,
-			'linkPageObjectID' => ($this->linkPageObjectID ?: 0),
+			'linkPageObjectID' => $this->linkPageObjectID ?: 0,
 			'externalURL' => $this->externalURL,
 			'identifier' => ''
 		];

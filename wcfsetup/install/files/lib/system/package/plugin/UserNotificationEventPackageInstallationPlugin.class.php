@@ -79,9 +79,9 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			'eventName' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
 			'objectTypeID' => $objectTypeID,
-			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''),
-			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
-			'preset' => (!empty($data['elements']['preset']) ? 1 : 0),
+			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
+			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'preset' => !empty($data['elements']['preset']) ? 1 : 0,
 			'presetMailNotificationType' => $presetMailNotificationType
 		];
 	}

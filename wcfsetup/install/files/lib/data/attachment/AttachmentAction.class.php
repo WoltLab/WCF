@@ -83,10 +83,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 	public function validateUpload() {
 		// IE<10 fallback
 		if (isset($_POST['isFallback'])) {
-			$this->parameters['objectType'] = (isset($_POST['objectType'])) ? $_POST['objectType'] : '';
-			$this->parameters['objectID'] = (isset($_POST['objectID'])) ? $_POST['objectID'] : 0;
-			$this->parameters['parentObjectID'] = (isset($_POST['parentObjectID'])) ? $_POST['parentObjectID'] : 0;
-			$this->parameters['tmpHash'] = (isset($_POST['tmpHash'])) ? $_POST['tmpHash'] : '';
+			$this->parameters['objectType'] = isset($_POST['objectType']) ? $_POST['objectType'] : '';
+			$this->parameters['objectID'] = isset($_POST['objectID']) ? $_POST['objectID'] : 0;
+			$this->parameters['parentObjectID'] = isset($_POST['parentObjectID']) ? $_POST['parentObjectID'] : 0;
+			$this->parameters['tmpHash'] = isset($_POST['tmpHash']) ? $_POST['tmpHash'] : '';
 		}
 		
 		// read variables
@@ -138,7 +138,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		], [
 			'objectID' => intval($this->parameters['objectID']),
 			'objectTypeID' => $objectType->objectTypeID,
-			'tmpHash' => (!$this->parameters['objectID'] ? $this->parameters['tmpHash'] : '')
+			'tmpHash' => !$this->parameters['objectID'] ? $this->parameters['tmpHash'] : ''
 		]);
 		
 		/** @noinspection PhpUndefinedMethodInspection */
@@ -167,8 +167,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 					'formattedFilesize' => FileUtil::formatFilesize($attachment->filesize),
 					'isImage' => $attachment->isImage,
 					'attachmentID' => $attachment->attachmentID,
-					'tinyURL' => ($attachment->tinyThumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'tiny=1') : ''),
-					'thumbnailURL' => ($attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'thumbnail=1') : ''),
+					'tinyURL' => $attachment->tinyThumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'tiny=1') : '',
+					'thumbnailURL' => $attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'thumbnail=1') : '',
 					'url' => LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]),
 					'height' => $attachment->height,
 					'width' => $attachment->width

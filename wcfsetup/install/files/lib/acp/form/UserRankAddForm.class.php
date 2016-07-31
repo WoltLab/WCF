@@ -181,7 +181,7 @@ class UserRankAddForm extends AbstractForm {
 		// save label
 		$this->objectAction = new UserRankAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'rankTitle' => $this->rankTitle,
-			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
+			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 			'groupID' => $this->groupID,
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,

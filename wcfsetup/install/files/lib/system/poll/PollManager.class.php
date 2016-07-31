@@ -177,9 +177,9 @@ class PollManager extends SingletonFactory {
 		if (isset($postData['pollQuestion'])) $this->pollData['question'] = StringUtil::trim($postData['pollQuestion']);
 		
 		// boolean values
-		$this->pollData['isChangeable'] = (isset($postData['pollIsChangeable'])) ? 1 : 0;
-		$this->pollData['resultsRequireVote'] = (isset($postData['pollResultsRequireVote'])) ? 1 : 0;
-		$this->pollData['sortByVotes'] = (isset($postData['pollSortByVotes'])) ? 1 : 0;
+		$this->pollData['isChangeable'] = isset($postData['pollIsChangeable']) ? 1 : 0;
+		$this->pollData['resultsRequireVote'] = isset($postData['pollResultsRequireVote']) ? 1 : 0;
+		$this->pollData['sortByVotes'] = isset($postData['pollSortByVotes']) ? 1 : 0;
 		
 		if ($this->poll === null) {
 			$this->pollData['isPublic'] = (isset($postData['pollIsPublic']) && $this->canStartPublicPoll()) ? 1 : 0;
@@ -305,7 +305,7 @@ class PollManager extends SingletonFactory {
 	public function assignVariables() {
 		$variables = [
 			'__showPoll' => true,
-			'pollID' => ($this->poll === null ? 0 : $this->poll->pollID),
+			'pollID' => $this->poll === null ? 0 : $this->poll->pollID,
 			'pollOptions' => $this->pollOptions
 		];
 		foreach ($this->pollData as $key => $value) {

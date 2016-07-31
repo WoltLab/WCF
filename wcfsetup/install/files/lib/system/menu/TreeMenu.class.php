@@ -187,7 +187,7 @@ abstract class TreeMenu extends SingletonFactory {
 	 */
 	public function getActiveMenuItem($level = 0) {
 		if ($level < count($this->activeMenuItems)) {
-			return $this->activeMenuItems[(count($this->activeMenuItems) - ($level + 1))];
+			return $this->activeMenuItems[count($this->activeMenuItems) - ($level + 1)];
 		}
 		return null;
 	}

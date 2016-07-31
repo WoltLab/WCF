@@ -109,7 +109,7 @@ class MailWorker extends AbstractWorker {
 			ON		(user_option.userID = user.userID)
 			".$this->conditions."
 			ORDER BY	user.userID";
-		$statement = WCF::getDB()->prepareStatement($sql, $this->limit, ($this->limit * $this->loopCount));
+		$statement = WCF::getDB()->prepareStatement($sql, $this->limit, $this->limit * $this->loopCount);
 		$statement->execute($this->conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$user = new User(null, $row);

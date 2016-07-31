@@ -347,7 +347,7 @@ class SearchForm extends AbstractCaptchaForm {
 			'username' => $this->username,
 			'userID' => $this->userID,
 			'selectedObjectTypes' => $this->selectedObjectTypes,
-			'alterable' => (!$this->userID ? 1 : 0)
+			'alterable' => !$this->userID ? 1 : 0
 		];
 		if ($this->modifySearchID) {
 			$this->objectAction = new SearchAction([$this->modifySearchID], 'update', ['data' => [
@@ -360,7 +360,7 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		else {
 			$this->objectAction = new SearchAction([], 'create', ['data' => [
-				'userID' => (WCF::getUser()->userID ?: null),
+				'userID' => WCF::getUser()->userID ?: null,
 				'searchData' => serialize($this->searchData),
 				'searchTime' => TIME_NOW,
 				'searchType' => 'messages',

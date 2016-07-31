@@ -517,7 +517,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$scheduler = new PackageInstallationScheduler($this->parameters['packages']);
 		
 		try {
-			$scheduler->buildPackageInstallationStack(($queueType == 'install'));
+			$scheduler->buildPackageInstallationStack($queueType == 'install');
 		}
 		catch (PackageUpdateUnauthorizedException $e) {
 			return [
@@ -549,7 +549,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					'userID' => WCF::getUser()->userID,
 					'package' => $package['package'],
 					'packageName' => $package['packageName'],
-					'packageID' => ($package['packageID'] ?: null),
+					'packageID' => $package['packageID'] ?: null,
 					'archive' => $package['archive'],
 					'action' => $package['action']
 				]);

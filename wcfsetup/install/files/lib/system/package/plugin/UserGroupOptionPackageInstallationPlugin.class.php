@@ -76,7 +76,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		$data = [
 			'categoryName' => $categoryName,
 			'optionType' => $optionType,
-			'defaultValue' => (isset($option['userdefaultvalue']) ? $userDefaultValue : $defaultValue),
+			'defaultValue' => isset($option['userdefaultvalue']) ? $userDefaultValue : $defaultValue,
 			'validationPattern' => $validationPattern,
 			'showOrder' => $showOrder,
 			'enableOptions' => $enableOptions,

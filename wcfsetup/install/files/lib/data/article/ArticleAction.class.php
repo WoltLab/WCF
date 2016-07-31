@@ -67,7 +67,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				/** @var ArticleContent $articleContent */
 				$articleContent = ArticleContentEditor::create([
 					'articleID' => $article->articleID,
-					'languageID' => ($languageID ?: null),
+					'languageID' => $languageID ?: null,
 					'title' => $content['title'],
 					'teaser' => $content['teaser'],
 					'content' => $content['content'],
@@ -144,7 +144,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 						/** @var ArticleContent $articleContent */
 						$articleContent = ArticleContentEditor::create([
 							'articleID' => $article->articleID,
-							'languageID' => ($languageID ?: null),
+							'languageID' => $languageID ?: null,
 							'title' => $content['title'],
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
@@ -176,7 +176,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 						/** @noinspection PhpUndefinedMethodInspection */
 						$content['htmlInputProcessor']->setObjectID($articleContent->articleContentID);
 						if ($articleContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
-							$articleContentEditor->update(['hasEmbeddedObjects' => ($articleContent->hasEmbeddedObjects ? 0 : 1)]);
+							$articleContentEditor->update(['hasEmbeddedObjects' => $articleContent->hasEmbeddedObjects ? 0 : 1]);
 						}
 					}
 				}

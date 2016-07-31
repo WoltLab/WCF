@@ -373,7 +373,7 @@ class GDImageAdapter implements IImageAdapter {
 	 */
 	public function rotate($degrees) {
 		// imagerotate interpretes degrees as counter-clockwise
-		return imagerotate($this->image, (360.0 - $degrees), ($this->color ?: 0));
+		return imagerotate($this->image, 360.0 - $degrees, ($this->color ?: 0));
 	}
 	
 	/**

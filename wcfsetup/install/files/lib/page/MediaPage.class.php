@@ -89,8 +89,8 @@ class MediaPage extends AbstractPage {
 			'filename' => $this->media->filename,
 			'mimeType' => $mimeType,
 			'filesize' => $filesize,
-			'showInline' => (in_array($mimeType, self::$inlineMimeTypes)),
-			'enableRangeSupport' => ($this->thumbnail ? true : false),
+			'showInline' => in_array($mimeType, self::$inlineMimeTypes),
+			'enableRangeSupport' => $this->thumbnail ? true : false,
 			'lastModificationTime' => $this->media->uploadTime,
 			'expirationDate' => TIME_NOW + 31536000,
 			'maxAge' => 31536000

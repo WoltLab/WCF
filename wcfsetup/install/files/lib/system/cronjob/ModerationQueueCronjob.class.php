@@ -28,7 +28,7 @@ class ModerationQueueCronjob extends AbstractCronjob {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			ModerationQueue::STATUS_DONE,
-			(TIME_NOW - (86400 * 30))
+			TIME_NOW - (86400 * 30)
 		]);
 		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		

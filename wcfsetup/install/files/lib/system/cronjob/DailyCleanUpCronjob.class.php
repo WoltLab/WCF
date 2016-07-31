@@ -35,7 +35,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				floor($row['searches'] / 4),
-				(TIME_NOW - 86400 * 30)
+				TIME_NOW - 86400 * 30
 			]);
 		}
 		
@@ -44,7 +44,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME)
+			TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME
 		]);
 		
 		// clean up user activity events
@@ -52,7 +52,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME)
+			TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME
 		]);
 		
 		// clean up profile visitors
@@ -60,7 +60,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME)
+			TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME
 		]);
 		
 		// tracked visits
@@ -95,7 +95,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		execTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - (86400 * 7))
+			TIME_NOW - (86400 * 7)
 		]);
 		
 		// clean up session access log
@@ -107,7 +107,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 					)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - (86400 * 30))
+			TIME_NOW - (86400 * 30)
 		]);
 		
 		// clean up session log
@@ -115,7 +115,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		lastActivityTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - (86400 * 30))
+			TIME_NOW - (86400 * 30)
 		]);
 		
 		// clean up search data
@@ -123,7 +123,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		searchTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			(TIME_NOW - 86400)
+			TIME_NOW - 86400
 		]);
 		
 		// clean up expired edit history entries
@@ -133,7 +133,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 					WHERE		obsoletedAt < ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute([
-					(TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION)
+					TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION
 				]);
 			}
 		}
@@ -150,7 +150,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				WHERE		time < ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
-				(TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION)
+				TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION
 			]);
 		}
 		

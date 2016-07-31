@@ -113,7 +113,7 @@ class Style extends DatabaseObject {
 		$statement->execute([$this->styleID]);
 		while ($row = $statement->fetchArray()) {
 			$variableName = $row['variableName'];
-			$variableValue = (isset($row['variableValue'])) ? $row['variableValue'] : $row['defaultValue'];
+			$variableValue = isset($row['variableValue']) ? $row['variableValue'] : $row['defaultValue'];
 			
 			$this->variables[$variableName] = $variableValue;
 		}
@@ -144,7 +144,7 @@ class Style extends DatabaseObject {
 		
 		return [
 			'preset' => $tmp[0],
-			'custom' => (isset($tmp[1])) ? $tmp[1] : ''
+			'custom' => isset($tmp[1]) ? $tmp[1] : ''
 		];
 	}
 	

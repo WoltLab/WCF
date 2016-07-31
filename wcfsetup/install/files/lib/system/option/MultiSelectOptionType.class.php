@@ -36,7 +36,7 @@ class MultiSelectOptionType extends SelectOptionType {
 		WCF::getTPL()->assign([
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
-			'value' => (!is_array($value) ? explode("\n", $value) : $value)
+			'value' => !is_array($value) ? explode("\n", $value) : $value
 		]);
 		return WCF::getTPL()->fetch($this->formElementTemplate);
 	}
@@ -49,7 +49,7 @@ class MultiSelectOptionType extends SelectOptionType {
 			'option' => $option,
 			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'selectOptions' => $this->getSelectOptions($option),
-			'value' => (!is_array($value) ? explode("\n", $value) : $value)
+			'value' => !is_array($value) ? explode("\n", $value) : $value
 		]);
 		return WCF::getTPL()->fetch($this->searchableFormElementTemplate);
 	}

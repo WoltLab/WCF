@@ -195,7 +195,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			WHERE	" . ($parentItemID === null ? 'menuID' : 'parentItemID') . " = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([
-			($parentItemID === null ? $menuID : $parentItemID)
+			$parentItemID === null ? $menuID : $parentItemID
 		]);
 		
 		$row = $statement->fetchSingleRow();

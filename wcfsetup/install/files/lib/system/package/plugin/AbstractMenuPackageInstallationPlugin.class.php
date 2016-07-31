@@ -33,18 +33,18 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 */
 	protected function prepareImport(array $data) {
 		// adjust show order
-		$showOrder = (isset($data['elements']['showorder'])) ? $data['elements']['showorder'] : null;
-		$parent = (isset($data['elements']['parent'])) ? $data['elements']['parent'] : '';
+		$showOrder = isset($data['elements']['showorder']) ? $data['elements']['showorder'] : null;
+		$parent = isset($data['elements']['parent']) ? $data['elements']['parent'] : '';
 		$showOrder = $this->getShowOrder($showOrder, $parent, 'parentMenuItem');
 		
 		// merge values and default values
 		return [
 			'menuItem' => $data['attributes']['name'],
 			'menuItemController' => isset($data['elements']['controller']) ? $data['elements']['controller'] : '',
-			'menuItemLink' => (isset($data['elements']['link'])) ? $data['elements']['link'] : '',
-			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
-			'parentMenuItem' => (isset($data['elements']['parent'])) ? $data['elements']['parent'] : '',
-			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
+			'menuItemLink' => isset($data['elements']['link']) ? $data['elements']['link'] : '',
+			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'parentMenuItem' => isset($data['elements']['parent']) ? $data['elements']['parent'] : '',
+			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
 			'showOrder' => $showOrder
 		];
 	}

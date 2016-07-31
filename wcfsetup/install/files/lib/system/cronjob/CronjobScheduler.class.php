@@ -83,7 +83,7 @@ class CronjobScheduler extends SingletonFactory {
 			
 			// get time of next execution
 			$nextExec = $cronjobEditor->getNextExec();
-			$afterNextExec = $cronjobEditor->getNextExec(($nextExec + 120));
+			$afterNextExec = $cronjobEditor->getNextExec($nextExec + 120);
 			
 			// mark cronjob as done
 			$cronjobEditor->update([
@@ -177,7 +177,7 @@ class CronjobScheduler extends SingletonFactory {
 		}
 		
 		// verify class signature
-		if (!(is_subclass_of($className, ICronjob::class))) {
+		if (!is_subclass_of($className, ICronjob::class)) {
 			throw new ImplementationException($className, ICronjob::class);
 		}
 		

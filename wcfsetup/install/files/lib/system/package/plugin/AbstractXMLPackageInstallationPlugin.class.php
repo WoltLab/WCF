@@ -196,7 +196,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 */
 	protected function getI18nValues(array $values, $singleValueOnly = false) {
 		if (empty($values)) {
-			return ($singleValueOnly) ? '' : [];
+			return $singleValueOnly ? '' : [];
 		}
 		
 		// check for a value with an empty language code and treat it as 'en' unless 'en' exists

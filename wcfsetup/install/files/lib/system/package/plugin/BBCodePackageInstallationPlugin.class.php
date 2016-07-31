@@ -87,14 +87,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	protected function prepareImport(array $data) {
 		$data = [
 			'bbcodeTag' => mb_strtolower(StringUtil::trim($data['attributes']['name'])),
-			'htmlOpen' => (!empty($data['elements']['htmlopen']) ? $data['elements']['htmlopen'] : ''),
-			'htmlClose' => (!empty($data['elements']['htmlclose']) ? $data['elements']['htmlclose'] : ''),
-			'wysiwygIcon' => (!empty($data['elements']['wysiwygicon']) ? $data['elements']['wysiwygicon'] : ''),
-			'attributes' => (isset($data['elements']['attributes']) ? $data['elements']['attributes'] : []),
-			'className' => (!empty($data['elements']['classname']) ? $data['elements']['classname'] : ''),
-			'isBlockElement' => (!empty($data['elements']['isBlockElement']) ? 1 : 0),
-			'isSourceCode' => (!empty($data['elements']['sourcecode']) ? 1 : 0),
-			'buttonLabel' => (isset($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : ''),
+			'htmlOpen' => !empty($data['elements']['htmlopen']) ? $data['elements']['htmlopen'] : '',
+			'htmlClose' => !empty($data['elements']['htmlclose']) ? $data['elements']['htmlclose'] : '',
+			'wysiwygIcon' => !empty($data['elements']['wysiwygicon']) ? $data['elements']['wysiwygicon'] : '',
+			'attributes' => isset($data['elements']['attributes']) ? $data['elements']['attributes'] : [],
+			'className' => !empty($data['elements']['classname']) ? $data['elements']['classname'] : '',
+			'isBlockElement' => !empty($data['elements']['isBlockElement']) ? 1 : 0,
+			'isSourceCode' => !empty($data['elements']['sourcecode']) ? 1 : 0,
+			'buttonLabel' => isset($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : '',
 			'originIsSystem' => 1
 		];
 		
@@ -171,10 +171,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 					BBCodeAttributeEditor::create([
 						'bbcodeID' => $bbcodeID,
 						'attributeNo' => $attributeNo,
-						'attributeHtml' => (!empty($attribute['html']) ? $attribute['html'] : ''),
-						'validationPattern' => (!empty($attribute['validationpattern']) ? $attribute['validationpattern'] : ''),
-						'required' => (!empty($attribute['required']) ? $attribute['required'] : 0),
-						'useText' => (!empty($attribute['usetext']) ? $attribute['usetext'] : 0)
+						'attributeHtml' => !empty($attribute['html']) ? $attribute['html'] : '',
+						'validationPattern' => !empty($attribute['validationpattern']) ? $attribute['validationpattern'] : '',
+						'required' => !empty($attribute['required']) ? $attribute['required'] : 0,
+						'useText' => !empty($attribute['usetext']) ? $attribute['usetext'] : 0
 					]);
 				}
 			}

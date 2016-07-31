@@ -27,7 +27,7 @@ class SelectOptionType extends RadioButtonOptionType {
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value,
-			'allowEmptyValue' => ($this->allowEmptyValue || $option->allowEmptyValue)
+			'allowEmptyValue' => $this->allowEmptyValue || $option->allowEmptyValue
 		]);
 		return WCF::getTPL()->fetch('selectOptionType');
 	}

@@ -521,7 +521,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			}
 		}
 		
-		$number = (count($numbers)) ? max($numbers) + 1 : 2;
+		$number = count($numbers) ? max($numbers) + 1 : 2;
 		$styleName = $this->styleEditor->styleName . ' ('.$number.')';
 		
 		// create the new style
@@ -653,7 +653,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $style) {
-			$isDisabled = ($style->isDisabled) ? 0 : 1;
+			$isDisabled = $style->isDisabled ? 0 : 1;
 			$style->update(['isDisabled' => $isDisabled]);
 		}
 	}
@@ -681,7 +681,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			if (WCF::getUser()->userID) {
 				// set this as the permanent style
 				$userAction = new UserAction([WCF::getUser()], 'update', ['data' => [
-					'styleID' => ($this->style->isDefault ? 0 : $this->style->styleID)
+					'styleID' => $this->style->isDefault ? 0 : $this->style->styleID
 				]]);
 				$userAction->executeAction();
 			}

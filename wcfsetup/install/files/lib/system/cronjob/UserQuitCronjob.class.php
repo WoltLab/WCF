@@ -26,7 +26,7 @@ class UserQuitCronjob extends AbstractCronjob {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			0,
-			(TIME_NOW - 7 * 24 * 3600)
+			TIME_NOW - 7 * 24 * 3600
 		]);
 		$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		

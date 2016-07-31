@@ -130,7 +130,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		$this->objectAction = new TemplateGroupAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
-			'parentTemplateGroupID' => ($this->parentTemplateGroupID ?: null)
+			'parentTemplateGroupID' => $this->parentTemplateGroupID ?: null
 		])]);
 		$this->objectAction->executeAction();
 		$this->saved();

@@ -92,7 +92,7 @@ class Email {
 	 */
 	public static function getHost() {
 		if (self::$host === null) {
-			self::$host = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '';
+			self::$host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
 			if (empty(self::$host)) {
 				self::$host = gethostname();
 				if (self::$host === false) {

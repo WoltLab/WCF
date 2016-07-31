@@ -74,7 +74,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				/** @var BoxContent $boxContent */
 				$boxContent = BoxContentEditor::create([
 					'boxID' => $box->boxID,
-					'languageID' => ($languageID ?: null),
+					'languageID' => $languageID ?: null,
 					'title' => $content['title'],
 					'content' => $content['content'],
 					'imageID' => $content['imageID']
@@ -103,7 +103,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				$statement->execute([
 					$box->boxID,
 					$pageID,
-					($box->visibleEverywhere ? 0 : 1)
+					$box->visibleEverywhere ? 0 : 1
 				]);
 			}
 		}
@@ -150,7 +150,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						/** @var BoxContent $boxContent */
 						$boxContent = BoxContentEditor::create([
 							'boxID' => $box->boxID,
-							'languageID' => ($languageID ?: null),
+							'languageID' => $languageID ?: null,
 							'title' => $content['title'],
 							'content' => $content['content'],
 							'imageID' => $content['imageID']
@@ -163,7 +163,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						/** @noinspection PhpUndefinedMethodInspection */
 						$content['htmlInputProcessor']->setObjectID($boxContent->boxContentID);
 						if ($boxContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
-							$boxContentEditor->update(['hasEmbeddedObjects' => ($boxContent->hasEmbeddedObjects ? 0 : 1)]);
+							$boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
 						}
 					}
 				}
@@ -193,7 +193,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				$visibleEverywhere = (isset($this->parameters['data']['visibleEverywhere']) ? $this->parameters['data']['visibleEverywhere'] : $box->visibleEverywhere);
 				
 				foreach ($this->parameters['pageIDs'] as $pageID) {
-					$insertStatement->execute([$box->boxID, $pageID, ($visibleEverywhere ? 0 : 1)]);
+					$insertStatement->execute([$box->boxID, $pageID, $visibleEverywhere ? 0 : 1]);
 				}
 			}
 		}

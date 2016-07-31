@@ -59,7 +59,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 		else if (!empty($tagArgs['lib'])) {
 			if ($isJqueryUi) {
-				$src .= (ENABLE_DEBUG_MODE) ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
+				$src .= ENABLE_DEBUG_MODE ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
 			}
 			else {
 				$src .= '3rdParty/' . $tagArgs['lib'];

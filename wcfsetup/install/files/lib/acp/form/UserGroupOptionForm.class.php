@@ -212,7 +212,7 @@ class UserGroupOptionForm extends AbstractForm {
 		
 		// create form elements for each group
 		foreach ($this->groups as $group) {
-			$optionValue = (isset($this->values[$group->groupID])) ? $this->values[$group->groupID] : '';
+			$optionValue = isset($this->values[$group->groupID]) ? $this->values[$group->groupID] : '';
 			$this->formElements[$group->groupID] = $this->optionType->getFormElement($this->userGroupOption, $optionValue);
 		}
 	}

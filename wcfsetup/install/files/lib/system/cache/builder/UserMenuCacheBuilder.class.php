@@ -38,7 +38,7 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder {
 				'menuItem' => 'wcf.user.option.category.'.$row['categoryName'],
 				'parentMenuItem' => 'wcf.user.menu.settings',
 				'menuItemController' => SettingsForm::class,
-				'menuItemLink' => ($categoryShortName != 'general' ? 'category='.$categoryShortName : ''),
+				'menuItemLink' => $categoryShortName != 'general' ? 'category='.$categoryShortName : '',
 				'permissions' => $row['permissions'],
 				'options' => $row['options']
 			]);

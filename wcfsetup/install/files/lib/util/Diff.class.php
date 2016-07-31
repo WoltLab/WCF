@@ -297,7 +297,7 @@ class Diff {
 				}
 				
 				// calculate marker
-				$result[] = '@@ -'.($leftStart).(($j - $plus - $start) > 1 ? ','.($j - $plus - $start) : '').' +'.($rightStart).(($j - $minus - $start) > 1 ? ','.($j - $minus - $start) : '').' @@';
+				$result[] = '@@ -'. $leftStart .(($j - $plus - $start) > 1 ? ','.($j - $plus - $start) : '').' +'. $rightStart .(($j - $minus - $start) > 1 ? ','.($j - $minus - $start) : '').' @@';
 				
 				// append lines
 				foreach (array_slice($d, $start, $j - $start) as $item) $result[] = implode('', $item);

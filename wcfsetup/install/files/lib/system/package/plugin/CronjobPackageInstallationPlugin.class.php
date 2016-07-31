@@ -70,13 +70,13 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 */
 	protected function prepareImport(array $data) {
 		return [
-			'canBeDisabled' => (isset($data['elements']['canbedisabled'])) ? intval($data['elements']['canbedisabled']) : 1,
-			'canBeEdited' => (isset($data['elements']['canbeedited'])) ? intval($data['elements']['canbeedited']) : 1,
-			'className' => (isset($data['elements']['classname'])) ? $data['elements']['classname'] : '',
-			'cronjobName' => (isset($data['attributes']['name']) ? $data['attributes']['name'] : ''),
-			'description' => (isset($data['elements']['description'])) ? $data['elements']['description'] : '',
-			'isDisabled' => (isset($data['elements']['isdisabled'])) ? intval($data['elements']['isdisabled']) : 0,
-			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
+			'canBeDisabled' => isset($data['elements']['canbedisabled']) ? intval($data['elements']['canbedisabled']) : 1,
+			'canBeEdited' => isset($data['elements']['canbeedited']) ? intval($data['elements']['canbeedited']) : 1,
+			'className' => isset($data['elements']['classname']) ? $data['elements']['classname'] : '',
+			'cronjobName' => isset($data['attributes']['name']) ? $data['attributes']['name'] : '',
+			'description' => isset($data['elements']['description']) ? $data['elements']['description'] : '',
+			'isDisabled' => isset($data['elements']['isdisabled']) ? intval($data['elements']['isdisabled']) : 0,
+			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
 			'startDom' => $data['elements']['startdom'],
 			'startDow' => $data['elements']['startdow'],
 			'startHour' => $data['elements']['starthour'],

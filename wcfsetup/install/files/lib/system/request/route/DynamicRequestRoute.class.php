@@ -132,7 +132,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
-		$application = (isset($components['application'])) ? $components['application'] : null;
+		$application = isset($components['application']) ? $components['application'] : null;
 		
 		// drop application component to avoid being appended as query string
 		unset($components['application']);

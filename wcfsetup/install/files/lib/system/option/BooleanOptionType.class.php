@@ -90,6 +90,6 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 			return 0;
 		}
 		
-		return ($value1) ? 1 : -1;
+		return $value1 ? 1 : -1;
 	}
 }

@@ -146,8 +146,8 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			CronjobLogEditor::create([
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => ($exception ? 0 : 1),
-				'error' => ($exception ? $exception->getMessage() : '')
+				'success' => $exception ? 0 : 1,
+				'error' => $exception ? $exception->getMessage() : ''
 			]);
 			
 			// calculate next exec-time
@@ -155,7 +155,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			$data = [
 				'lastExec' => TIME_NOW,
 				'nextExec' => $nextExec, 
-				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
+				'afterNextExec' => $cronjob->getNextExec($nextExec + 120)
 			];
 			
 			// cronjob failed

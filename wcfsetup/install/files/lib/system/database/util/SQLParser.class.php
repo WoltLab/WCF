@@ -74,9 +74,9 @@ class SQLParser {
 							$columnType = strtolower($matches[2][$i]);
 							$column['data'] = [
 								'type' => $columnType,
-								'notNull' => ((!empty($matches[4][$i]) && strtoupper($matches[4][$i]) == 'NOT NULL') ? true : false),
+								'notNull' => (!empty($matches[4][$i]) && strtoupper($matches[4][$i]) == 'NOT NULL') ? true : false,
 								'default' => $matches[5][$i],
-								'autoIncrement' => (!empty($matches[6][$i]) ? true : false),
+								'autoIncrement' => !empty($matches[6][$i]) ? true : false,
 								'key' => strtoupper($matches[7][$i])
 							];
 							if (!empty($matches[3][$i])) {
@@ -133,10 +133,10 @@ class SQLParser {
 					$columnType = strtolower($match[6]);
 					$columnData = [
 						'type' => $columnType,
-						'notNull' => ((!empty($match[8]) && strtoupper($match[8]) == 'NOT NULL') ? true : false),
-						'default' => (isset($match[9]) ? $match[9] : ''),
-						'autoIncrement' => (!empty($match[10]) ? true : false),
-						'key' => (!empty($match[11]) ? strtoupper($match[11]) : '')
+						'notNull' => (!empty($match[8]) && strtoupper($match[8]) == 'NOT NULL') ? true : false,
+						'default' => isset($match[9]) ? $match[9] : '',
+						'autoIncrement' => !empty($match[10]) ? true : false,
+						'key' => !empty($match[11]) ? strtoupper($match[11]) : ''
 					];
 					if (!empty($match[7])) {
 						if ($columnType == 'enum') $columnData['values'] = $match[7];

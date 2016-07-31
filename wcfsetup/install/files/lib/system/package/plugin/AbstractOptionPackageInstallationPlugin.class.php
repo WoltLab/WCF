@@ -120,10 +120,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			// build data block with defaults
 			$data = [
 				'categoryName' => $element->getAttribute('name'),
-				'options' => (isset($data['options'])) ? $data['options'] : '',
-				'parentCategoryName' => (isset($data['parent'])) ? $data['parent'] : '',
-				'permissions' => (isset($data['permissions'])) ? $data['permissions'] : '',
-				'showOrder' => (isset($data['showorder'])) ? intval($data['showorder']) : null
+				'options' => isset($data['options']) ? $data['options'] : '',
+				'parentCategoryName' => isset($data['parent']) ? $data['parent'] : '',
+				'permissions' => isset($data['permissions']) ? $data['permissions'] : '',
+				'showOrder' => isset($data['showorder']) ? intval($data['showorder']) : null
 			];
 			
 			// adjust show order

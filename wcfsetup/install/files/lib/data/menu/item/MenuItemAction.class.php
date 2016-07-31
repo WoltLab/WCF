@@ -65,7 +65,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $object) {
-			$object->update(['isDisabled' => ($object->isDisabled) ? 0 : 1]);
+			$object->update(['isDisabled' => $object->isDisabled ? 0 : 1]);
 		}
 	}
 	
@@ -123,7 +123,7 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
 		foreach ($this->parameters['data']['structure'] as $parentItemID => $children) {
 			foreach ($children as $showOrder => $menuItemID) {
 				$statement->execute([
-					($parentItemID ?: null),
+					$parentItemID ?: null,
 					$showOrder + 1,
 					$menuItemID
 				]);

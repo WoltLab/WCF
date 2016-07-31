@@ -103,10 +103,10 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 			$data = [];
 			
 			// update cumulative likes
-			$data['cumulativeLikes'] = (isset($cumulativeLikes[$article->articleID])) ? $cumulativeLikes[$article->articleID] : 0;
+			$data['cumulativeLikes'] = isset($cumulativeLikes[$article->articleID]) ? $cumulativeLikes[$article->articleID] : 0;
 			
 			// update comment counter
-			$data['comments'] = (isset($comments[$article->articleID])) ? $comments[$article->articleID] : 0;
+			$data['comments'] = isset($comments[$article->articleID]) ? $comments[$article->articleID] : 0;
 			
 			// update data
 			$editor->update($data);

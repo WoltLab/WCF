@@ -160,8 +160,8 @@ class MenuAddForm extends AbstractForm {
 			'name' => $this->title,
 			'boxType' => 'menu',
 			'position' => $this->position,
-			'visibleEverywhere' => ($this->visibleEverywhere) ? 1 : 0,
-			'showHeader' => ($this->showHeader) ? 1 : 0,
+			'visibleEverywhere' => $this->visibleEverywhere ? 1 : 0,
+			'showHeader' => $this->showHeader ? 1 : 0,
 			'showOrder' => $this->showOrder,
 			'cssClassName' => $this->cssClassName,
 			'packageID' => 1

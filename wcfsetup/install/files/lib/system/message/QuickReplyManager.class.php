@@ -114,17 +114,17 @@ class QuickReplyManager extends SingletonFactory {
 			throw new UserInputException('message', WCF::getLanguage()->get('wcf.global.form.error.empty'));
 		}
 		
-		$parameters['lastPostTime'] = (isset($parameters['lastPostTime'])) ? intval($parameters['lastPostTime']) : 0;
+		$parameters['lastPostTime'] = isset($parameters['lastPostTime']) ? intval($parameters['lastPostTime']) : 0;
 		if (!$parameters['lastPostTime']) {
 			throw new UserInputException('lastPostTime');
 		}
 		
-		$parameters['pageNo'] = (isset($parameters['pageNo'])) ? intval($parameters['pageNo']) : 0;
+		$parameters['pageNo'] = isset($parameters['pageNo']) ? intval($parameters['pageNo']) : 0;
 		if (!$parameters['pageNo']) {
 			throw new UserInputException('pageNo');
 		}
 		
-		$parameters['objectID'] = (isset($parameters['objectID'])) ? intval($parameters['objectID']) : 0;
+		$parameters['objectID'] = isset($parameters['objectID']) ? intval($parameters['objectID']) : 0;
 		if (!$parameters['objectID']) {
 			throw new UserInputException('objectID');
 		}
@@ -240,7 +240,7 @@ class QuickReplyManager extends SingletonFactory {
 			// update visit time (messages shouldn't occur as new upon next visit)
 			if (is_subclass_of($containerActionClassName, IVisitableObjectAction::class)) {
 				/** @var IDatabaseObjectAction $containerAction */
-				$containerAction = new $containerActionClassName([($this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container)], 'markAsRead');
+				$containerAction = new $containerActionClassName([$this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container], 'markAsRead');
 				$containerAction->executeAction();
 			}
 			

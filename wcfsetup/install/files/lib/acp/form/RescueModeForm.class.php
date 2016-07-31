@@ -232,7 +232,7 @@ class RescueModeForm extends AbstractCaptchaForm {
 				$action = new UserAuthenticationFailureAction([], 'create', [
 					'data' => [
 						'environment' => 'admin',
-						'userID' => ($this->user !== null ? $this->user->userID : null),
+						'userID' => $this->user !== null ? $this->user->userID : null,
 						'username' => $this->username,
 						'time' => TIME_NOW,
 						'ipAddress' => UserUtil::getIpAddress(),

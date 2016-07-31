@@ -128,7 +128,7 @@ final class DOMUtil {
 	 * @return	\DOMNode	parent node, can be `\DOMElement` or `\DOMDocument`
 	 */
 	public static function getParentNode(\DOMNode $node) {
-		return ($node->parentNode) ?: $node->ownerDocument;
+		return $node->parentNode ?: $node->ownerDocument;
 	}
 	
 	/**
@@ -146,7 +146,7 @@ final class DOMUtil {
 			$parents[] = $parent;
 		}
 		
-		return ($reverseOrder) ? array_reverse($parents) : $parents;
+		return $reverseOrder ? array_reverse($parents) : $parents;
 	}
 	
 	/**

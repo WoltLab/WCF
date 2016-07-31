@@ -493,7 +493,7 @@ class WCF {
 			}
 			
 			// refresh the session 1 minute before it expires
-			self::getTPL()->assign('__sessionKeepAlive', (SESSION_TIMEOUT - 60));
+			self::getTPL()->assign('__sessionKeepAlive', SESSION_TIMEOUT - 60);
 		}
 	}
 	
@@ -724,7 +724,7 @@ class WCF {
 		}
 		
 		if (class_exists($objectName)) {
-			if (!(is_subclass_of($objectName, SingletonFactory::class))) {
+			if (!is_subclass_of($objectName, SingletonFactory::class)) {
 				throw new ParentClassException($objectName, SingletonFactory::class);
 			}
 			
@@ -969,7 +969,7 @@ class WCF {
 	 */
 	protected function initCronjobs() {
 		if (PACKAGE_ID) {
-			self::getTPL()->assign('executeCronjobs', (CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && !OFFLINE));
+			self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && !OFFLINE);
 		}
 	}
 }

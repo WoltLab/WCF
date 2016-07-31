@@ -252,7 +252,7 @@ class LikeHandler extends SingletonFactory {
 				$likeObject = LikeObjectEditor::create([
 					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
 					'objectID' => $likeable->getObjectID(),
-					'objectUserID' => ($likeable->getUserID() ?: null),
+					'objectUserID' => $likeable->getUserID() ?: null,
 					'likes' => ($likeValue == Like::LIKE) ? 1 : 0,
 					'dislikes' => ($likeValue == Like::DISLIKE) ? 1 : 0,
 					'cumulativeLikes' => $cumulativeLikes,
@@ -265,7 +265,7 @@ class LikeHandler extends SingletonFactory {
 				if ($like->likeID) {
 					$userEditor = new UserEditor(new User($likeable->getUserID()));
 					$userEditor->updateCounters([
-						'likesReceived' => ($like->likeValue == Like::LIKE ? -1 : 1)
+						'likesReceived' => $like->likeValue == Like::LIKE ? -1 : 1
 					]);
 				}
 				else if ($likeValue == Like::LIKE) {
@@ -281,7 +281,7 @@ class LikeHandler extends SingletonFactory {
 				$like = LikeEditor::create([
 					'objectID' => $likeable->getObjectID(),
 					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
-					'objectUserID' => ($likeable->getUserID() ?: null),
+					'objectUserID' => $likeable->getUserID() ?: null,
 					'userID' => $user->userID,
 					'time' => $time,
 					'likeValue' => $likeValue

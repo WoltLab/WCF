@@ -412,31 +412,31 @@ class PageAddForm extends AbstractForm {
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
-					'customURL' => (!empty($this->customURL[$language->languageID]) ? $this->customURL[$language->languageID] : ''),
-					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
-					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
-					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
-					'metaDescription' => (!empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : ''),
-					'metaKeywords' => (!empty($this->metaKeywords[$language->languageID]) ? $this->metaKeywords[$language->languageID] : '')
+					'customURL' => !empty($this->customURL[$language->languageID]) ? $this->customURL[$language->languageID] : '',
+					'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
+					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
+					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
+					'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
+					'metaKeywords' => !empty($this->metaKeywords[$language->languageID]) ? $this->metaKeywords[$language->languageID] : ''
 				];
 			}
 		}
 		else {
 			$content[0] = [
-				'customURL' => (!empty($this->customURL[0]) ? $this->customURL[0] : ''),
-				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
-				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
-				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
-				'metaDescription' => (!empty($this->metaDescription[0]) ? $this->metaDescription[0] : ''),
-				'metaKeywords' => (!empty($this->metaKeywords[0]) ? $this->metaKeywords[0] : '')
+				'customURL' => !empty($this->customURL[0]) ? $this->customURL[0] : '',
+				'title' => !empty($this->title[0]) ? $this->title[0] : '',
+				'content' => !empty($this->content[0]) ? $this->content[0] : '',
+				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
+				'metaDescription' => !empty($this->metaDescription[0]) ? $this->metaDescription[0] : '',
+				'metaKeywords' => !empty($this->metaKeywords[0]) ? $this->metaKeywords[0] : ''
 			];
 		}
 		
 		$this->objectAction = new PageAction([], 'create', ['data' => array_merge($this->additionalFields, [
-			'parentPageID' => ($this->parentPageID ?: null),
+			'parentPageID' => $this->parentPageID ?: null,
 			'pageType' => $this->pageType,
 			'name' => $this->name,
-			'isDisabled' => ($this->isDisabled) ? 1 : 0,
+			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'isLandingPage' => 0,
 			'applicationPackageID' => $this->applicationPackageID,
 			'lastUpdateTime' => TIME_NOW,

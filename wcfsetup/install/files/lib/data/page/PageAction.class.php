@@ -74,7 +74,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 				/** @var PageContent $pageContent */
 				$pageContent = PageContentEditor::create([
 					'pageID' => $page->pageID,
-					'languageID' => ($languageID ?: null),
+					'languageID' => $languageID ?: null,
 					'title' => $content['title'],
 					'content' => $content['content'],
 					'metaDescription' => $content['metaDescription'],
@@ -157,7 +157,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						/** @var PageContent $pageContent */
 						$pageContent = PageContentEditor::create([
 							'pageID' => $page->pageID,
-							'languageID' => ($languageID ?: null),
+							'languageID' => $languageID ?: null,
 							'title' => $content['title'],
 							'content' => $content['content'],
 							'metaDescription' => $content['metaDescription'],
@@ -172,7 +172,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						/** @noinspection PhpUndefinedMethodInspection */
 						$content['htmlInputProcessor']->setObjectID($pageContent->pageContentID);
 						if ($pageContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
-							$pageContentEditor->update(['hasEmbeddedObjects' => ($pageContent->hasEmbeddedObjects ? 0 : 1)]);
+							$pageContentEditor->update(['hasEmbeddedObjects' => $pageContent->hasEmbeddedObjects ? 0 : 1]);
 						}
 					}
 					else if ($page->pageType == 'html' || $page->pageType == 'tpl') {
@@ -245,7 +245,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $object) {
-			$object->update(['isDisabled' => ($object->isDisabled) ? 0 : 1]);
+			$object->update(['isDisabled' => $object->isDisabled ? 0 : 1]);
 		}
 	}
 	

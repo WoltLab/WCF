@@ -71,28 +71,28 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	 * @inheritDoc
 	 */
 	public function canEditComment(Comment $comment) {
-		return $this->canEdit(($comment->userID == WCF::getUser()->userID));
+		return $this->canEdit($comment->userID == WCF::getUser()->userID);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function canEditResponse(CommentResponse $response) {
-		return $this->canEdit(($response->userID == WCF::getUser()->userID));
+		return $this->canEdit($response->userID == WCF::getUser()->userID);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function canDeleteComment(Comment $comment) {
-		return $this->canDelete(($comment->userID == WCF::getUser()->userID));
+		return $this->canDelete($comment->userID == WCF::getUser()->userID);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function canDeleteResponse(CommentResponse $response) {
-		return $this->canDelete(($response->userID == WCF::getUser()->userID));
+		return $this->canDelete($response->userID == WCF::getUser()->userID);
 	}
 	
 	/**

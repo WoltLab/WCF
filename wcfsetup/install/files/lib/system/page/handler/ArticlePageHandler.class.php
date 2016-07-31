@@ -55,7 +55,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 		foreach ($articleList->getObjects() as $article) {
 			$results[] = [
 				'description' => $article->getFormattedTeaser(),
-				'image' => ($article->getImage() ? $article->getImage()->getElementTag(48) : ''),
+				'image' => $article->getImage() ? $article->getImage()->getElementTag(48) : '',
 				'link' => $article->getLink(),
 				'objectID' => $article->articleID,
 				'title' => $article->getTitle()

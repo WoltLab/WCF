@@ -63,7 +63,7 @@ class SMTPMailSender extends MailSender {
 			throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
 		}
 		
-		$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : '';
+		$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 		if (empty($host)) {
 			$host = gethostname();
 			if ($host === false) {
@@ -203,7 +203,7 @@ class SMTPMailSender extends MailSender {
 			throw new SystemException($this->formatError("smtp error"));
 		}
 		
-		$serverName = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '';
+		$serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
 		if (empty($serverName)) {
 			$serverName = gethostname();
 			if ($serverName === false) {

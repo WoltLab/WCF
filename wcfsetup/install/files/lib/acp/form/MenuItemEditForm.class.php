@@ -88,10 +88,10 @@ class MenuItemEditForm extends MenuItemAddForm {
 		
 		// update menu
 		$this->objectAction = new MenuItemAction([$this->itemID], 'update', ['data' => array_merge($this->additionalFields, [
-			'isDisabled' => ($this->isDisabled) ? 1 : 0,
+			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'title' => $this->title,
 			'pageID' => $this->pageID,
-			'pageObjectID' => ($this->pageObjectID ?: 0),
+			'pageObjectID' => $this->pageObjectID ?: 0,
 			'externalURL' => $this->externalURL,
 			'parentItemID' => $this->parentItemID,
 			'showOrder' => $this->showOrder

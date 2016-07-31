@@ -171,7 +171,7 @@ class Box extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->boxID]);
 			while ($row = $statement->fetchArray()) {
-				$this->boxContents[($row['languageID'] ?: 0)] = new BoxContent(null, $row);
+				$this->boxContents[$row['languageID'] ?: 0] = new BoxContent(null, $row);
 			}
 		}
 		

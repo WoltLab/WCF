@@ -120,7 +120,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->pageID]);
 			while ($row = $statement->fetchArray()) {
-				$this->pageContents[($row['languageID'] ?: 0)] = new PageContent(null, $row);
+				$this->pageContents[$row['languageID'] ?: 0] = new PageContent(null, $row);
 			}
 		}
 		

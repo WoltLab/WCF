@@ -77,7 +77,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 							$className = $abbreviation . '\\' . ($libDirectory === 'lib/acp' ? 'acp\\' : '') . $pageType . '\\' . $filename;
 							
 							if (!isset($data['lookup'][$abbreviation])) $data['lookup'][$abbreviation] = ['acp' => [], 'frontend' => []];
-							$data['lookup'][$abbreviation][($libDirectory === 'lib' ? 'frontend' : 'acp')][$ciController] = $className;
+							$data['lookup'][$abbreviation][$libDirectory === 'lib' ? 'frontend' : 'acp'][$ciController] = $className;
 							$data['reverse'][$filename] = $ciController;
 						}
 					}

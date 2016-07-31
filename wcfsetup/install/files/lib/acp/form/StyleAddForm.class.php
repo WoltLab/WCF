@@ -240,7 +240,7 @@ class StyleAddForm extends AbstractForm {
 		foreach ($this->specialVariables as $variableName) {
 			if (isset($_POST[$variableName])) $this->variables[$variableName] = StringUtil::trim($_POST[$variableName]);
 		}
-		$this->variables['useFluidLayout'] = (isset($_POST['useFluidLayout'])) ? 1 : 0;
+		$this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
 		
 		// style data
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);

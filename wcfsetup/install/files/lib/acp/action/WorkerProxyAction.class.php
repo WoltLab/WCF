@@ -110,7 +110,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 		// build return values
 		$returnValues = [
 			'className' => $this->className,
-			'loopCount' => ($this->loopCount + 1),
+			'loopCount' => $this->loopCount + 1,
 			'parameters' => $parameters,
 			'proceedURL' => $proceedURL,
 			'progress' => $progress

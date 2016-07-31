@@ -45,7 +45,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		return [
 			'className' => $data['nodeValue'],
 			'pluginName' => $data['attributes']['name'],
-			'priority' => ($this->installation->getPackage()->package == 'com.woltlab.wcf' ? 1 : 0)
+			'priority' => $this->installation->getPackage()->package == 'com.woltlab.wcf' ? 1 : 0
 		];
 	}
 	

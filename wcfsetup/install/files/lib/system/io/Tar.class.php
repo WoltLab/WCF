@@ -187,7 +187,7 @@ class Tar implements IArchive {
 		}
 		if (($header['size'] % 512) != 0) {
 			$buffer = $this->file->read(512);
-			$content .= substr($buffer, 0, ($header['size'] % 512));
+			$content .= substr($buffer, 0, $header['size'] % 512);
 		}
 		
 		return $content;
@@ -276,7 +276,7 @@ class Tar implements IArchive {
 				$i++;
 			}
 			
-			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
+			$this->file->seek($this->file->tell() + (512 * ceil($header['size'] / 512)));
 		}
 	}
 	

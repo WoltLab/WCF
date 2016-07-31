@@ -61,9 +61,9 @@ class UserProfileAction extends UserAction {
 	 */
 	public function getMessagePreview() {
 		// get options
-		$enableBBCodes = (isset($this->parameters['options']['enableBBCodes'])) ? 1 : 0;
-		$enableHtml = (isset($this->parameters['options']['enableHtml'])) ? 1 : 0;
-		$enableSmilies = (isset($this->parameters['options']['enableSmilies'])) ? 1 : 0;
+		$enableBBCodes = isset($this->parameters['options']['enableBBCodes']) ? 1 : 0;
+		$enableHtml = isset($this->parameters['options']['enableHtml']) ? 1 : 0;
+		$enableSmilies = isset($this->parameters['options']['enableSmilies']) ? 1 : 0;
 		
 		// validate permissions for options
 		if ($enableBBCodes && !WCF::getSession()->getPermission('user.signature.canUseBBCodes')) $enableBBCodes = 0;
@@ -299,7 +299,7 @@ class UserProfileAction extends UserAction {
 			WCF::getTPL()->assign([
 				'errorType' => $errors,
 				'optionTree' => $optionHandler->getOptionTree(),
-				'__userTitle' => ($userTitle !== null ? $userTitle : $this->userProfile->userTitle)
+				'__userTitle' => $userTitle !== null ? $userTitle : $this->userProfile->userTitle
 			]);
 			
 			return [

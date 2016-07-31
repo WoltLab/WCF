@@ -107,7 +107,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		$reply = $request->getReply();
 		$response = JSON::decode($reply['body']);
 		
-		$code = (isset($response['status'])) ? $response['status'] : 500;
+		$code = isset($response['status']) ? $response['status'] : 500;
 		switch ($code) {
 			case 200:
 				if (empty($response['products'])) {

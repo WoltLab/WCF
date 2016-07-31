@@ -281,7 +281,7 @@ class ControllerMap extends SingletonFactory {
 	 * @return      string[]|null   className, controller and pageType, or null if this is not a legacy controller name
 	 */
 	protected function getLegacyClassData($application, $controller, $isAcpRequest) {
-		$environment = ($isAcpRequest) ? 'acp' : 'frontend';
+		$environment = $isAcpRequest ? 'acp' : 'frontend';
 		if (isset($this->ciControllers['lookup'][$application][$environment][$controller])) {
 			$className = $this->ciControllers['lookup'][$application][$environment][$controller];
 			

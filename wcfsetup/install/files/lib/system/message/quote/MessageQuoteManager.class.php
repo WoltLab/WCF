@@ -77,9 +77,9 @@ class MessageQuoteManager extends SingletonFactory {
 		// load stored quotes from session
 		$messageQuotes = WCF::getSession()->getVar('__messageQuotes'.$this->packageID);
 		if (is_array($messageQuotes)) {
-			$this->quotes = (isset($messageQuotes['quotes'])) ? $messageQuotes['quotes'] : [];
-			$this->quoteData = (isset($messageQuotes['quoteData'])) ? $messageQuotes['quoteData'] : [];
-			$this->removeQuoteIDs = (isset($messageQuotes['removeQuoteIDs'])) ? $messageQuotes['removeQuoteIDs'] : [];
+			$this->quotes = isset($messageQuotes['quotes']) ? $messageQuotes['quotes'] : [];
+			$this->quoteData = isset($messageQuotes['quoteData']) ? $messageQuotes['quoteData'] : [];
+			$this->removeQuoteIDs = isset($messageQuotes['removeQuoteIDs']) ? $messageQuotes['removeQuoteIDs'] : [];
 		}
 		
 		// load object types

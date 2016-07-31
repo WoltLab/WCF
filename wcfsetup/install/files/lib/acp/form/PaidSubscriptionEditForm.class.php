@@ -154,7 +154,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$useRequestData = (empty($_POST)) ? false : true;
+		$useRequestData = empty($_POST) ? false : true;
 		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
 		WCF::getTPL()->assign([

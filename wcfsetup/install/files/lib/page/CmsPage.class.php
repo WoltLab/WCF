@@ -112,7 +112,7 @@ class CmsPage extends AbstractPage {
 			'contentLanguageID' => $this->languageID,
 			'page' => $this->page,
 			'pageID' => $this->pageID,
-			'activePageLanguage' => ($this->languageID ? LanguageFactory::getInstance()->getLanguage($this->languageID) : null),
+			'activePageLanguage' => $this->languageID ? LanguageFactory::getInstance()->getLanguage($this->languageID) : null,
 			'allowSpidersToIndexThisPage' => true
 		]);
 	}

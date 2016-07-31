@@ -132,7 +132,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * @return	string
 	 */
 	protected function getQuotes() {
-		$supportPaste = (isset($_POST['supportPaste'])) ? (bool)$_POST['supportPaste'] : false;
+		$supportPaste = isset($_POST['supportPaste']) ? (bool)$_POST['supportPaste'] : false;
 		
 		return MessageQuoteManager::getInstance()->getQuotes($supportPaste);
 	}

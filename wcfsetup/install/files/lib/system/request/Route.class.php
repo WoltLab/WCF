@@ -257,7 +257,7 @@ class Route implements IRoute {
 	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
-		$application = (isset($components['application'])) ? $components['application'] : null;
+		$application = isset($components['application']) ? $components['application'] : null;
 		self::loadDefaultControllers();
 		
 		// drop application component to avoid being appended as query string
@@ -367,7 +367,7 @@ class Route implements IRoute {
 			$controllerName = RequestHandler::getTokenizedController($controller);
 			$alias = (!$this->isACP) ? RequestHandler::getInstance()->getAliasByController($controllerName) : null;
 			
-			self::$controllerNames[$controller] = ($alias) ?: $controllerName;
+			self::$controllerNames[$controller] = $alias ?: $controllerName;
 		}
 		
 		return self::$controllerNames[$controller];

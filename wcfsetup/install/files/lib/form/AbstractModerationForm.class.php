@@ -127,7 +127,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 			'commentCanAdd' => true,
 			'commentList' => $this->commentList,
 			'commentObjectTypeID' => $this->commentObjectTypeID,
-			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0)
+			'lastCommentTime' => $this->commentList ? $this->commentList->getMinCommentTime() : 0
 		]);
 	}
 	

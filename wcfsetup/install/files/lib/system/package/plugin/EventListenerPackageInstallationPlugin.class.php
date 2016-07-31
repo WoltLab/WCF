@@ -46,10 +46,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			if (!isset($item['attributes']['name'])) {
 				$legacyStatement->execute([
 					$this->installation->getPackageID(),
-					(isset($item['elements']['environment']) ? $item['elements']['environment'] : 'user'),
+					isset($item['elements']['environment']) ? $item['elements']['environment'] : 'user',
 					$item['elements']['eventclassname'],
 					$item['elements']['eventname'],
-					(isset($item['elements']['inherit'])) ? $item['elements']['inherit'] : 0,
+					isset($item['elements']['inherit']) ? $item['elements']['inherit'] : 0,
 					$item['elements']['listenerclassname']
 				]);
 			}
@@ -66,20 +66,20 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
-		$nice = (isset($data['elements']['nice'])) ? intval($data['elements']['nice']) : 0;
+		$nice = isset($data['elements']['nice']) ? intval($data['elements']['nice']) : 0;
 		if ($nice < -128) $nice = -128;
 		else if ($nice > 127) $nice = 127;
 		
 		return [
-			'environment' => (isset($data['elements']['environment']) ? $data['elements']['environment'] : 'user'),
+			'environment' => isset($data['elements']['environment']) ? $data['elements']['environment'] : 'user',
 			'eventClassName' => $data['elements']['eventclassname'],
 			'eventName' => $data['elements']['eventname'],
-			'inherit' => (isset($data['elements']['inherit'])) ? intval($data['elements']['inherit']) : 0,
+			'inherit' => isset($data['elements']['inherit']) ? intval($data['elements']['inherit']) : 0,
 			'listenerClassName' => $data['elements']['listenerclassname'],
-			'listenerName' => (isset($data['attributes']['name']) ? $data['attributes']['name'] : ''),
+			'listenerName' => isset($data['attributes']['name']) ? $data['attributes']['name'] : '',
 			'niceValue' => $nice,
-			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
-			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '')
+			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''
 		];
 	}
 	

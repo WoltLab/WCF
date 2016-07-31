@@ -67,30 +67,30 @@ class ArticleEditForm extends ArticleAddForm {
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 				$content[$language->languageID] = [
-					'title' => (!empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : ''),
-					'tags' => (!empty($this->tags[$language->languageID]) ? $this->tags[$language->languageID] : []),
-					'teaser' => (!empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : ''),
-					'content' => (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
-					'htmlInputProcessor' => (isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null),
-					'imageID' => (!empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null)
+					'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
+					'tags' => !empty($this->tags[$language->languageID]) ? $this->tags[$language->languageID] : [],
+					'teaser' => !empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : '',
+					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
+					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
+					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null
 				];
 			}
 		}
 		else {
 			$content[0] = [
-				'title' => (!empty($this->title[0]) ? $this->title[0] : ''),
-				'tags' => (!empty($this->tags[0]) ? $this->tags[0] : []),
-				'teaser' => (!empty($this->teaser[0]) ? $this->teaser[0] : ''),
-				'content' => (!empty($this->content[0]) ? $this->content[0] : ''),
-				'htmlInputProcessor' => (isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null),
-				'imageID' => (!empty($this->imageID[0]) ? $this->imageID[0] : null)
+				'title' => !empty($this->title[0]) ? $this->title[0] : '',
+				'tags' => !empty($this->tags[0]) ? $this->tags[0] : [],
+				'teaser' => !empty($this->teaser[0]) ? $this->teaser[0] : '',
+				'content' => !empty($this->content[0]) ? $this->content[0] : '',
+				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
+				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null
 			];
 		}
 		
 		$data = [
 			'categoryID' => $this->categoryID,
 			'publicationStatus' => $this->publicationStatus,
-			'publicationDate' => ($this->publicationStatus == Article::DELAYED_PUBLICATION ? $this->publicationDateObj->getTimestamp() : 0),
+			'publicationDate' => $this->publicationStatus == Article::DELAYED_PUBLICATION ? $this->publicationDateObj->getTimestamp() : 0,
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
@@ -146,7 +146,7 @@ class ArticleEditForm extends ArticleAddForm {
 					$this->tags[$languageID] = TagEngine::getInstance()->getObjectTags(
 						'com.woltlab.wcf.article',
 						$content->articleContentID,
-						[($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID())]
+						[$languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()]
 					);
 				}
 			}

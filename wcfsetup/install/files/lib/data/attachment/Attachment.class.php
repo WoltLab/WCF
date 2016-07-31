@@ -133,7 +133,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 * @inheritDoc
 	 */
 	public function getLocation() {
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-' . $this->fileHash;
+		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash;
 	}
 	
 	/**
@@ -150,10 +150,10 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 */
 	public function getThumbnailLocation($size = '') {
 		if ($size == 'tiny') {
-			return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-tiny-' . $this->fileHash;
+			return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
 		}
 		
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . ($this->attachmentID) . '-thumbnail-' . $this->fileHash;
+		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
 	}
 	
 	/**

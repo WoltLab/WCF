@@ -188,7 +188,7 @@ class BoxHandler extends SingletonFactory {
 					VALUES          (?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($pages as $page) {
-				$statement->execute([$box->boxID, $page->pageID, ($visible ? 1 : 0)]);
+				$statement->execute([$box->boxID, $page->pageID, $visible ? 1 : 0]);
 			}
 		}
 	}

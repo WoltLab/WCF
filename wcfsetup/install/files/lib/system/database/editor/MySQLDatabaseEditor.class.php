@@ -40,12 +40,12 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$typeMatches = $regex->getMatches();
 			
 			$columns[] = ['name' => $row['Field'], 'data' => [
-				'type' => ((empty($typeMatches)) ? $row['Type'] : $typeMatches[1]),
-				'length' => ((empty($typeMatches)) ? '' : $typeMatches[2]),
-				'notNull' => (($row['Null'] == 'YES') ? false : true),
-				'key' => (($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : '')),
+				'type' => empty($typeMatches) ? $row['Type'] : $typeMatches[1],
+				'length' => empty($typeMatches) ? '' : $typeMatches[2],
+				'notNull' => ($row['Null'] == 'YES') ? false : true,
+				'key' => ($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : ''),
 				'default' => $row['Default'],
-				'autoIncrement' => ($row['Extra'] == 'auto_increment' ? true : false)
+				'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false
 			]];
 		}
 		

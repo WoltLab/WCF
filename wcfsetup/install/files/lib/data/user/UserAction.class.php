@@ -264,8 +264,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		// insert user groups
-		$addDefaultGroups = (isset($this->parameters['addDefaultGroups'])) ? $this->parameters['addDefaultGroups'] : true;
-		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : [];
+		$addDefaultGroups = isset($this->parameters['addDefaultGroups']) ? $this->parameters['addDefaultGroups'] : true;
+		$groupIDs = isset($this->parameters['groups']) ? $this->parameters['groups'] : [];
 		$userEditor->addToGroups($groupIDs, false, $addDefaultGroups);
 		
 		// insert visible languages
@@ -323,10 +323,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 		
-		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : [];
-		$languageIDs = (isset($this->parameters['languageIDs'])) ? $this->parameters['languageIDs'] : [];
-		$removeGroups = (isset($this->parameters['removeGroups'])) ? $this->parameters['removeGroups'] : [];
-		$userOptions = (isset($this->parameters['options'])) ? $this->parameters['options'] : [];
+		$groupIDs = isset($this->parameters['groups']) ? $this->parameters['groups'] : [];
+		$languageIDs = isset($this->parameters['languageIDs']) ? $this->parameters['languageIDs'] : [];
+		$removeGroups = isset($this->parameters['removeGroups']) ? $this->parameters['removeGroups'] : [];
+		$userOptions = isset($this->parameters['options']) ? $this->parameters['options'] : [];
 		
 		if (!empty($groupIDs)) {
 			$action = new UserAction($this->objects, 'addToGroups', [
