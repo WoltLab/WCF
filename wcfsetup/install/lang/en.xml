@@ -40,7 +40,7 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (bottom)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[End of Page]]></item>
 		<item name="wcf.acp.ad.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Choose display order of the ads.]]></item>
+		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Choose display order of ads.]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -193,7 +193,7 @@ Examples for medium ID detection:
 	<category name="wcf.acp.dashboard">
 		<item name="wcf.acp.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
 		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
-		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine the display order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
+		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Choose display order of boxes by sorting them. You can enable or disable boxes by moving them between the Active Boxes and Disabled Boxes.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dataImport">
@@ -369,16 +369,16 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can change their username]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can view members list]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can view users’ profiles]]></item>
-		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can view “Users Online” list]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can view users online list]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Can use BBCodes in signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Can use HTML in signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Can use smilies in signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[All selected BBCodes can be used in the signature.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
-		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and “Users Online” marking based on highest priority.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[“Users Online” Marking]]></item>
-		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this user group in the “Users Online” list. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
+		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and users online marking based on highest priority.]]></item>
+		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[Users Online Marking]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this user group in the users online list. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.notValid"><![CDATA[There must be an occurrence of “%s”.]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Display members on team page]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
@@ -425,7 +425,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
-		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum “About Me” Length]]></item>
+		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
@@ -680,7 +680,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be displayed again.]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only view it in a new session.]]></item>
 		<item name="wcf.acp.notice.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of the notices.]]></item>
+		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -693,7 +693,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[You can specify a weight factor to allow load balancing, for example “localhost:11211:67” or “10.0.13.37:31337:33”. Enter one server per line.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
-		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from “Filesystem” require special extensions or services running on your machine.]]></item>
+		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from filesystem require special extensions or services running on your machine.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Use Filesystem (default)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Use Memcached]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
@@ -709,7 +709,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
 		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Search]]></item>
-		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[Changing the backend requires a rebuild of the search indices available on the page “Rebuild Data”.]]></item>
+		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[​Changing the backend requires a rebuild of the search indices available on the Rebuild Data page.​​​]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
@@ -804,13 +804,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.show_clock"><![CDATA[Display current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
-		<item name="wcf.acp.option.user_online_timeout"><![CDATA[“Users Online” Timeout]]></item>
-		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Inactive users will not appear in “Users Online” after the following seconds.]]></item>
-		<item name="wcf.acp.option.offline"><![CDATA[Enable “Maintenance Mode”]]></item>
+		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users Online Timeout]]></item>
+		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Inactive users will not appear in users online after the following seconds.]]></item>
+		<item name="wcf.acp.option.offline"><![CDATA[Enable maintenance mode]]></item>
 		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all applications and prevents access from unprivileged users.]]></item>
-		<item name="wcf.acp.option.offline_message"><![CDATA[“Maintenance Mode” Notice]]></item>
-		<item name="wcf.acp.option.offline_message.description"><![CDATA[The notice that is displayed to visitors while “Maintenance Mode” is enabled.]]></item>
-		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Enable HTML code in “Maintenance Mode” notice]]></item>
+		<item name="wcf.acp.option.offline_message"><![CDATA[Maintenance Mode Notice]]></item>
+		<item name="wcf.acp.option.offline_message.description"><![CDATA[The notice that is displayed to visitors while maintenance mode is enabled.]]></item>
+		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Enable HTML code in maintenance mode notice]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Display version number in copyright notice]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Enable debug mode]]></item>
@@ -829,7 +829,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab News]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display woltlab news]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s start page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
@@ -892,7 +892,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.cleanup"><![CDATA[Cleanup]]></item>
 		<item name="wcf.acp.option.category.user.list"><![CDATA[Member Lists]]></item>
 		<item name="wcf.acp.option.category.user.list.members"><![CDATA[Members List]]></item>
-		<item name="wcf.acp.option.category.user.list.online"><![CDATA[“Users Online” List]]></item>
+		<item name="wcf.acp.option.category.user.list.online"><![CDATA[Users Online List]]></item>
 		<item name="wcf.acp.option.category.user.register"><![CDATA[Registration]]></item>
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
@@ -903,7 +903,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.max_avatar_width.description"><![CDATA[The maximum width in pixels for avatars.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
-		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
+		<item name="wcf.acp.option.module_users_online"><![CDATA[Users online list]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff list]]></item>
@@ -945,28 +945,28 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort by]]></item>
-		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[Choose default sort option of the member list.]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[Choose default sort option of member list.]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Sort Order]]></item>
-		<item name="wcf.acp.option.members_list_default_sort_order.description"><![CDATA[Choose default sort order of the member list.]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_order.description"><![CDATA[Choose default sort order of member list.]]></item>
 		<item name="wcf.acp.option.users_online_show_guests"><![CDATA[Display guests]]></item>
 		<item name="wcf.acp.option.users_online_show_robots"><![CDATA[Display search engine spiders]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Sort by]]></item>
-		<item name="wcf.acp.option.users_online_default_sort_field.description"><![CDATA[Choose default sort option of the “Users Online” list.]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_field.description"><![CDATA[Choose default sort option of users online list.]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Sort Order]]></item>
-		<item name="wcf.acp.option.users_online_default_sort_order.description"><![CDATA[Choose default sort order of the “Users Online” list.]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_order.description"><![CDATA[Choose default sort order of users online list.]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page]]></item>
-		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[“Users Online” will be refreshed in the following seconds. Use 0 to disable.]]></item>
-		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the “Most Users Online” record]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Refreshes users online in the following seconds. Use 0 to disable.]]></item>
+		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most users online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notifications]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Notifications will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Recent Activity]]></item>
-		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Recent Activities will be removed after the following days.]]></item>
+		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Recent activities will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
-		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile Visitors will be removed after the following days.]]></item>
+		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Likes System]]></item>
-		<item name="wcf.acp.option.module_like"><![CDATA[Likes System]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Likes system]]></item>
 		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their content]]></item>
 		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display likes summary]]></item>
@@ -985,9 +985,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort by]]></item>
-		<item name="wcf.acp.option.search_default_sort_field.description"><![CDATA[Choose default sort option of the search results.]]></item>
+		<item name="wcf.acp.option.search_default_sort_field.description"><![CDATA[Choose default sort option of search results.]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Sort Order]]></item>
-		<item name="wcf.acp.option.search_default_sort_order.description"><![CDATA[Choose default sort order of the search results.]]></item>
+		<item name="wcf.acp.option.search_default_sort_order.description"><![CDATA[Choose default sort order of search results.]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Poll Options]]></item>
@@ -1009,7 +1009,7 @@ Examples for medium ID detection:
 	<li>“board-list=forums”, the link “http://example.com/index.php?board-list/” will turn into “http://example.com/index.php?forums/”</li>
 	<li>“members-list=profiles”, the link “http://example.com/index.php?members-list/” will turn into “http://example.com/index.php?profiles/”</li>
 </ul>]]></item>
-		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for “Users Online” list]]></item>
+		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for users online list]]></item>
 		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
 		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Map Zoom]]></item>
 		<item name="wcf.acp.option.google_maps_zoom.description"><![CDATA[The default map zoom.]]></item>
@@ -1019,21 +1019,21 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.google_maps_type.map"><![CDATA[Map]]></item>
 		<item name="wcf.acp.option.google_maps_type.satellite"><![CDATA[Satellite]]></item>
 		<item name="wcf.acp.option.google_maps_type.physical"><![CDATA[Terrain]]></item>
-		<item name="wcf.acp.option.google_maps_enable_scale_control"><![CDATA[Display Map Scale]]></item>
-		<item name="wcf.acp.option.google_maps_enable_dragging"><![CDATA[Enable Map Dragging]]></item>
+		<item name="wcf.acp.option.google_maps_enable_scale_control"><![CDATA[Display map scale]]></item>
+		<item name="wcf.acp.option.google_maps_enable_dragging"><![CDATA[Enable map dragging]]></item>
 		<item name="wcf.acp.option.google_maps_enable_dragging.description"><![CDATA[You can move the map by keeping the left button of your mouse pressed.]]></item>
-		<item name="wcf.acp.option.google_maps_enable_scroll_wheel_zoom"><![CDATA[Enable Zoom by Scroll Wheel]]></item>
-		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Enable Zoom by Double-Clicking]]></item>
+		<item name="wcf.acp.option.google_maps_enable_scroll_wheel_zoom"><![CDATA[Enable zoom by scroll wheel]]></item>
+		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Enable zoom by double-clicking]]></item>
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Default Map Position (Latitude)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Use current user location]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[When entering a location, the current location of the user is used as start point on the map.]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply the “Users Online” marking for usernames]]></item>
-		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Enable Privacy Policy Page]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply the users online marking for usernames]]></item>
+		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Enable privacy policy page]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Inform users regarding the use of their personal data.]]></item>
-		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on “Cookie Usage”]]></item>
+		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on cookie usage]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
-		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable URL-Rewrite]]></item>
+		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Attention! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you! Please read the following article for instructions: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fblog.woltlab.com%2Fentry%2F67-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a>. Enabling this option will rewrite URLs into a better readable representation. Examples: 
 <ul class="nativeList">
 <li>the link “http://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “http://example.com/thread/1-hello-i-am-john-doe/”</li>
@@ -1049,8 +1049,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Enables the <a href="{link controller='AdList'}{/link}">advertisement management</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>
-		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for “Lost Password”]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable Captcha protection for “Send Email to User”]]></item>
+		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for lost password]]></item>
+		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable Captcha protection for send email to user]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable Captcha protection for search]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[User Authentication]]></item>
@@ -1235,7 +1235,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[Year(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[You have entered an invalid length. You can set a maximum of 90 for “Day(s)”, 24 for “Month(s)” or 5 for “Year(s)”.]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Choose display order of the paid subscriptions.]]></item>
+		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Choose display order of paid subscriptions.]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[Disable subscription]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled.description"><![CDATA[Disabling a subscription will make it unpurchasable.]]></item>
 		<item name="wcf.acp.paidSubscription.isRecurring"><![CDATA[Recurring Payment]]></item>
@@ -1255,7 +1255,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.paidSubscription.excludedSubscriptions.description"><![CDATA[Prevents purchasing of other subscriptions for buyers of this subscription.]]></item>
 		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[Do you really want to terminate the subscription “{$subscriptionUser->title|language}” for the user “{$subscriptionUser->username}”?]]></item>
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
-		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the option “Supported Payment Methods”.]]></item>
+		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the Supported Payment Methods option.]]></item>
 		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription “{$subscription->title|language}”?]]></item>
 	</category>
 	
@@ -1487,7 +1487,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102px × 64px, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Image Path]]></item>
-		<item name="wcf.acp.style.imagePath.description"><![CDATA[Path for optional images for your style, directory should be located within “images”.]]></item>
+		<item name="wcf.acp.style.imagePath.description"><![CDATA[The path for optional images for your style, the directory should be located within “images”.]]></item>
 		<item name="wcf.acp.style.importStyle"><![CDATA[Import Style]]></item>
 		<item name="wcf.acp.style.import.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
@@ -2484,7 +2484,7 @@ Errors are:
 
 <p>Our site may use a feature of your browser to set a “cookie” on your computer. Cookies are small packets of information that a web site’s computer stores on your computer. The Operators’s web sites can then read the cookies whenever you visit our site. We may use cookies in a number of ways, such as to save your password so you do not have to re-enter it each time you visit our site, to deliver content specific to your interests and to track the pages you have visited. These cookies allow us to use the information we collect to customize your experience so that your visit to our site is as relevant and as valuable to you as possible.</p>
 
-<p>Most browser software can be set up to deal with cookies. You may modify your browser preference to provide you with choices relating to cookies. You have the choice to accept all cookies, to be notified when a cookie is set or to reject all cookies. If you choose to reject cookies, certain of the functions and conveniences of our web site may not work properly, and you may be unable to use those of the Operators’s services that require registration in order to participate, or you will have to re-register each time you visit our site. Most browsers offer instructions on how to reset the browser to reject cookies in the “Help” section of the toolbar. We do not link non-personal information from cookies to personally identifiable information without your permission.</p>
+<p>Most browser software can be set up to deal with cookies. You may modify your browser preference to provide you with choices relating to cookies. You have the choice to accept all cookies, to be notified when a cookie is set or to reject all cookies. If you choose to reject cookies, certain functions and conveniences of our web site may not work properly, and you may be unable to use those of the Operators’s services that require registration in order to participate, or you will have to re-register each time you visit our site. Most browsers offer instructions on how to reset the browser to reject cookies in the “Help” section of the toolbar. We do not link non-personal information from cookies to personally identifiable information without your permission.</p>
 
 <h3>Personal Information</h3>
 
@@ -2867,7 +2867,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.following.noUsers"><![CDATA[You are not following any users at the moment.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Custom User Title]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[You can enter a custom user title.]]></item>
-		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[The title exceeds the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
+		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[The user title exceeds the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[The user title is invalid.]]></item>
 		<item name="wcf.user.team"><![CDATA[Staff Members]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Age]]></item>
