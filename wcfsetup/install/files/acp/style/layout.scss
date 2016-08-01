@@ -9,6 +9,10 @@ $wcfAcpMenuWidth: 150px;
 .pageContainer {
 	/* required for sticky page header */
 	padding-top: 50px;
+	
+	@include screen-lg {
+		min-width: 1240px;
+	}
 }
 
 /* page header */
