@@ -72,6 +72,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$html = $this->document->saveHTML($this->document->getElementsByTagName('body')->item(0));
 		
 		// remove nuisance added by PHP
+		$html = preg_replace('~^<!DOCTYPE[^>]+>\n~', '', $html);
 		$html = preg_replace('~^<body>~', '', $html);
 		$html = preg_replace('~</body>$~', '', $html);
 		

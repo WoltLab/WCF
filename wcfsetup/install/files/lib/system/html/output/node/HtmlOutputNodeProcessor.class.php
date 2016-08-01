@@ -100,6 +100,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		if ($this->outputType === 'text/plain') {
 			$html = StringUtil::trim($html);
+			$html = StringUtil::decodeHTML($html);
 		}
 		
 		return $html;
