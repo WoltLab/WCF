@@ -8,7 +8,7 @@
  */
 define('LAST_UPDATE_TIME', TIME_NOW);
 
-define('COOKIE_PREFIX', 'wcf22_');
+define('COOKIE_PREFIX', 'wsc30_');
 define('COOKIE_PATH', '');
 define('COOKIE_DOMAIN', '');
 
