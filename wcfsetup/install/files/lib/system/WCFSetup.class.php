@@ -134,11 +134,6 @@ class WCFSetup extends WCF {
 	 * @since	3.0
 	 */
 	protected static function getInstallationDirectories() {
-		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
-			if (!isset($_REQUEST['directories']) || !is_array($_REQUEST['directories'])) $_REQUEST['directories'] = [];
-			$_REQUEST['directories']['wcf'] = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
-		}
-		
 		if (!empty($_REQUEST['directories']) && is_array($_REQUEST['directories'])) {
 			foreach ($_REQUEST['directories'] as $application => $directory) {
 				self::$directories[$application] = $directory;
@@ -251,13 +246,10 @@ class WCFSetup extends WCF {
 					break;
 				}
 			
-			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'configureDirectories':
-				if (!self::$developerMode || !isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
-					$this->calcProgress(3);
-					$this->configureDirectories();
-					break;
-				}
+				$this->calcProgress(3);
+				$this->configureDirectories();
+			break;
 			
 			case 'unzipFiles':
 				$this->calcProgress(4);
@@ -459,6 +451,14 @@ class WCFSetup extends WCF {
 		$showOrder = ['wcf'];
 		foreach (array_keys($packages) as $application) {
 			if ($application !== 'wcf') $showOrder[] = $application;
+		}
+		
+		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+			// resolve path relative to document root
+			$relativePath = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], INSTALL_SCRIPT_DIR);
+			foreach ($packages as $application => $packageData) {
+				self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
+			}
 		}
 		
 		$documentRoot = FileUtil::unifyDirSeparator($_SERVER['DOCUMENT_ROOT']);
