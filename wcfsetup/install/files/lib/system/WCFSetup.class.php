@@ -512,7 +512,7 @@ class WCFSetup extends WCF {
 		}
 		else {
 			// resolve path relative to document root
-			$relativePath = str_replace(FileUtil::unifyDirSeparator($_SERVER['DOCUMENT_ROOT']), '', FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR));
+			$relativePath = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], INSTALL_SCRIPT_DIR);
 			foreach ($packages as $application => $packageData) {
 				self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
 			}
@@ -834,7 +834,7 @@ class WCFSetup extends WCF {
 			}
 			else {
 				// regular file
-				$fileInserts[] = str_replace(WCF_DIR, '', $file);
+				$fileInserts[] = preg_replace('/^'.preg_quote(WCF_DIR, '/').'/', '', $file);
 			}
 		}
 		
