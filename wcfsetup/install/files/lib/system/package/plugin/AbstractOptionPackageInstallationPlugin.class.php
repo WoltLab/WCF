@@ -293,7 +293,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		
 		// check if option already exists
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
