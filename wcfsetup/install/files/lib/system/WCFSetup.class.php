@@ -372,6 +372,9 @@ class WCFSetup extends WCF {
 		$system['memoryLimit']['value'] = ini_get('memory_limit');
 		$system['memoryLimit']['result'] = $this->compareMemoryLimit();
 		
+		// openssl extension
+		$system['openssl']['result'] = @extension_loaded('openssl');
+		
 		WCF::getTPL()->assign([
 			'system' => $system,
 			'nextStep' => 'configureDirectories'
