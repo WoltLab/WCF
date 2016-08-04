@@ -109,9 +109,6 @@
 	<span style="font-size: 0;">-- <br></span>
 	{content}
 	{@MAIL_SIGNATURE|language|nl2br}
-	{if $mailbox|is_a:'wcf\system\email\UserMailbox'}
-	{if MAIL_SIGNATURE|language}<br><br>{/if}
-	This email was sent to you, because you registered on the {$mailbox->getUser()->registrationDate|plainTime} at {@PAGE_TITLE|language}.{/if} {* TODO: language item *}
 	{/content}
 	{/hascontent}
 	{/capture}
