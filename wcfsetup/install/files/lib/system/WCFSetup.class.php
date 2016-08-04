@@ -456,15 +456,15 @@ class WCFSetup extends WCF {
 			if ($application !== 'wcf') $showOrder[] = $application;
 		}
 		
+		$documentRoot = FileUtil::unifyDirSeparator(realpath($_SERVER['DOCUMENT_ROOT']));
 		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
 			// resolve path relative to document root
-			$relativePath = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], INSTALL_SCRIPT_DIR);
+			$relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
 			foreach ($packages as $application => $packageData) {
 				self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
 			}
 		}
 		
-		$documentRoot = FileUtil::unifyDirSeparator($_SERVER['DOCUMENT_ROOT']);
 		$errors = [];
 		if (!empty(self::$directories)) {
 			$applicationPaths = $knownPaths = [];
@@ -515,7 +515,7 @@ class WCFSetup extends WCF {
 		}
 		else {
 			// resolve path relative to document root
-			$relativePath = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], INSTALL_SCRIPT_DIR);
+			$relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
 			foreach ($packages as $application => $packageData) {
 				self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
 			}
