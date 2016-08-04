@@ -1,7 +1,7 @@
 {include file='header' pageTitle=$objectType->getProcessor()->getLanguageItemPrefix()}
 
 <script data-relocate="true">
-	require(['WoltLab/WCF/Ui/TabMenu'], function(UiTabMenu) {
+	require(['WoltLabSuite/Core/Ui/TabMenu'], function(UiTabMenu) {
 		UiTabMenu.setup();
 		
 		function toggleActionOptions(event) {

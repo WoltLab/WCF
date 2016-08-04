@@ -7,7 +7,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 		init: function() {
 			this.link.show = this.WoltLabLink.show.bind(this);
 			
-			require(['WoltLab/WCF/Ui/Redactor/Link'], function(UiRedactorLink) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Link'], function(UiRedactorLink) {
 				_dialogApi = UiRedactorLink;
 			});
 		},

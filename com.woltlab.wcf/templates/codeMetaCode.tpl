@@ -24,7 +24,7 @@
 		{if !$__overlongCodeBoxSeen|isset}
 			{assign var='__overlongCodeBoxSeen' value=true}
 			<script data-relocate="true">
-				require(['WoltLab/WCF/Bbcode/Collapsible'], function(BbcodeCollapsible) {
+				require(['WoltLabSuite/Core/Bbcode/Collapsible'], function(BbcodeCollapsible) {
 					BbcodeCollapsible.observe();
 				});
 			</script>

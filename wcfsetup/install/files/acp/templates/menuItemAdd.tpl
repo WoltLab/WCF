@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.menu.item.'|concat:$action}
 
 <script data-relocate="true">
-	require(['Dictionary', 'Language', 'WoltLab/WCF/Acp/Ui/Menu/Item/Handler'], function(Dictionary, Language, AcpUiMenuItemHandler) {
+	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler'], function(Dictionary, Language, AcpUiMenuItemHandler) {
 		Language.addObject({
 			'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
 			'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',

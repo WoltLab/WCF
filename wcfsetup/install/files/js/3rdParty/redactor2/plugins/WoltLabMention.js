@@ -5,7 +5,7 @@ $.Redactor.prototype.WoltLabMention = function() {
 		init: function() {
 			//var WoltLabMention = document.registerElement('woltlab-mention');
 			
-			require(['WoltLab/WCF/Ui/Redactor/Mention'], (function(UiRedactorMention) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Mention'], (function(UiRedactorMention) {
 				new UiRedactorMention(this);
 			}).bind(this));
 		}

@@ -5,7 +5,7 @@ $.Redactor.prototype.WoltLabPage = function() {
 		init: function() {
 			var button = this.button.add('woltlabPage', '');
 			
-			require(['WoltLab/WCF/Ui/Redactor/Page'], (function (UiRedactorPage) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Page'], (function (UiRedactorPage) {
 				new UiRedactorPage(this, button[0]);
 			}).bind(this));
 		}

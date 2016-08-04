@@ -5,7 +5,7 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require(['WoltLab/WCF/Acp/Ui/Style/Image/Upload', 'WoltLab/WCF/Acp/Ui/Style/Editor'], function(AcpUiStyleImageUpload, AcpUiStyleEditor) {
+	require(['WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor'], function(AcpUiStyleImageUpload, AcpUiStyleEditor) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},

@@ -3,7 +3,7 @@ $.Redactor.prototype.WoltLabSpoiler = function() {
 	
 	return {
 		init: function() {
-			require(['WoltLab/WCF/Ui/Redactor/Spoiler'], (function (UiRedactorSpoiler) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Spoiler'], (function (UiRedactorSpoiler) {
 				new UiRedactorSpoiler(this);
 			}).bind(this));
 		}

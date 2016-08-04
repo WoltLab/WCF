@@ -263,7 +263,7 @@ WCF.Poll.Management = Class.extend({
 		});
 		
 		// reset date picker
-		require(['WoltLab/WCF/Date/Picker'], (function(UiDatePicker) {
+		require(['WoltLabSuite/Core/Date/Picker'], (function(UiDatePicker) {
 			UiDatePicker.clear('pollEndTime_' + this._editorId);
 		}).bind(this));
 	},

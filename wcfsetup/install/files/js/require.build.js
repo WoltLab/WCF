@@ -1,6 +1,6 @@
 ({
 	mainConfigFile: 'require.config.js',
-	name: "WoltLab/_Meta",
+	name: "WoltLabSuite/_Meta",
 	out: "WCF.Core.min.js",
 	useStrict: true,
 	preserveLicenseComments: false,
@@ -20,17 +20,17 @@
 		"require.linearExecution"
 	],
 	excludeShallow: [
-		'WoltLab/_Meta'
+		'WoltLabSuite/_Meta'
 	],
 	rawText: {
-		'WoltLab/_Meta': 'define([], function() {});'
+		'WoltLabSuite/_Meta': 'define([], function() {});'
 	},
 	onBuildRead: function(moduleName, path, contents) {
 		if (!process.versions.node) {
 			throw new Error('You need to run node.js');
 		}
 		
-		if (moduleName === 'WoltLab/_Meta') {
+		if (moduleName === 'WoltLabSuite/_Meta') {
 			if (global.allModules == undefined) {
 				var fs   = module.require('fs'),
 				    path = module.require('path');
@@ -42,8 +42,8 @@
 					var files = fs.readdirSync(folder);
 					for (var i = 0; i < files.length; i++) {
 						var filename = path.join(folder, files[i]);
-						if (filename === 'WoltLab/WCF/Acp') continue;
-
+						if (filename === 'WoltLabSuite/Core/Acp') continue;
+						
 						if (path.extname(filename) == '.js') {
 							global.allModules.push(filename);
 						}

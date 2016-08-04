@@ -17,7 +17,7 @@
 </script>
 
 <script data-relocate="true">
-	require(['WoltLab/WCF/Ui/User/Search/Input'], function(UiUserSearchInput) {
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], function(UiUserSearchInput) {
 		new UiUserSearchInput(elBySel('input[name="username"]'));
 	});
 </script>
@@ -26,7 +26,7 @@
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
 		
-		require(['WoltLab/WCF/Media/Manager/Select'], function(MediaManagerSelect) {
+		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
 			new MediaManagerSelect({
 				dialogTitle: '{lang}wcf.acp.media.chooseImage{/lang}',
 				fileTypeFilters: {
@@ -202,7 +202,7 @@
 				</dl>
 				
 				<script data-relocate="true">
-					require(['WoltLab/WCF/Ui/ItemList'], function(UiItemList) {
+					require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 						UiItemList.init(
 							'tagSearchInput',
 							[{if !$tags[0]|empty}{implode from=$tags[0] item=tag}'{$tag|encodeJS}'{/implode}{/if}],
@@ -316,7 +316,7 @@
 							</dl>
 							
 							<script data-relocate="true">
-								require(['WoltLab/WCF/Ui/ItemList'], function(UiItemList) {
+								require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 									UiItemList.init(
 										'tagSearchInput{@$availableLanguage->languageID}',
 										[{if !$tags[$availableLanguage->languageID]|empty}{implode from=$tags[$availableLanguage->languageID] item=tag}'{$tag|encodeJS}'{/implode}{/if}],

@@ -3,7 +3,7 @@ $.Redactor.prototype.WoltLabCode = function() {
 	
 	return {
 		init: function() {
-			require(['WoltLab/WCF/Ui/Redactor/Code'], (function (UiRedactorCode) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Code'], (function (UiRedactorCode) {
 				new UiRedactorCode(this);
 			}).bind(this));
 		}

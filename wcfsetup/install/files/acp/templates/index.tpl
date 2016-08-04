@@ -165,7 +165,7 @@
 						<li>Andrea Berg</li>
 						<li>Thorsten Buitkamp</li>
 						<li>
-							<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://github.com/WoltLab/WCF/contributors"|rawurlencode}" class="externalURL">{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
+							<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://github.com/WoltLabSuite/Core/contributors"|rawurlencode}" class="externalURL">{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
 						</li>
 					</ul>
 				</dd>

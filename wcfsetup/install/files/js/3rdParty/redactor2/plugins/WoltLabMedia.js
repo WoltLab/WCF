@@ -6,7 +6,7 @@ $.Redactor.prototype.WoltLabMedia = function() {
 			var button = this.button.add('woltlabMedia', '');
 			$(button).addClass('jsMediaEditorButton');
 			
-			require(['WoltLab/WCF/Media/Manager/Editor'], function(MediaManagerEditor) {
+			require(['WoltLabSuite/Core/Media/Manager/Editor'], function(MediaManagerEditor) {
 				new MediaManagerEditor({
 					editor: this
 				});

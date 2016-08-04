@@ -101,7 +101,7 @@
 			{if $__wcf->getLanguage()->getLanguages()|count > 1}
 				<li id="pageLanguageContainer">
 					<script data-relocate="true">
-						require(['EventHandler', 'WoltLab/WCF/Language/Chooser'], function(EventHandler, LanguageChooser) {
+						require(['EventHandler', 'WoltLabSuite/Core/Language/Chooser'], function(EventHandler, LanguageChooser) {
 							var languages = {
 								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
 									'{@$__language->languageID}': {

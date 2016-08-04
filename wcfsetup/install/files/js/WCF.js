@@ -742,7 +742,7 @@ $.extend(WCF, {
 	},
 	
 	/**
-	 * @deprecated Use WoltLab/WCF/Core.getUuid().
+	 * @deprecated Use WoltLabSuite/Core/Core.getUuid().
 	 */
 	getUUID: function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -1277,7 +1277,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 /**
  * Clipboard API
  * 
- * @deprecated	3.0 - please use `WoltLab/WCF/Controller/Clipboard` instead
+ * @deprecated	3.0 - please use `WoltLabSuite/Core/Controller/Clipboard` instead
  */
 WCF.Clipboard = {
 	/**
@@ -1289,7 +1289,7 @@ WCF.Clipboard = {
 	 * @param	integer		pageObjectID
 	 */
 	init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
-		require(['WoltLab/WCF/Controller/Clipboard'], function(ControllerClipboard) {
+		require(['WoltLabSuite/Core/Controller/Clipboard'], function(ControllerClipboard) {
 			ControllerClipboard.setup({
 				hasMarkedItems: (hasMarkedItems > 0),
 				pageClassName: page,
@@ -1302,14 +1302,14 @@ WCF.Clipboard = {
 	 * Reloads the list of marked items.
 	 */
 	reload: function() {
-		require(['WoltLab/WCF/Controller/Clipboard'], function(ControllerClipboard) {
+		require(['WoltLabSuite/Core/Controller/Clipboard'], function(ControllerClipboard) {
 			ControllerClipboard.reload();
 		});
 	}
 };
 
 /**
- * @deprecated Use WoltLab/WCF/Timer/Repeating
+ * @deprecated Use WoltLabSuite/Core/Timer/Repeating
  */
 WCF.PeriodicalExecuter = Class.extend({
 	/**
@@ -1416,14 +1416,14 @@ WCF.PeriodicalExecuter = Class.extend({
 /**
  * Handler for loading overlays
  * 
- * @deprecated	3.0 - Please use WoltLab/WCF/Ajax/Status
+ * @deprecated	3.0 - Please use WoltLabSuite/Core/Ajax/Status
  */
 WCF.LoadingOverlayHandler = {
 	/**
 	 * Adds one loading-request and shows the loading overlay if nessercery
 	 */
 	show: function() {
-		require(['WoltLab/WCF/Ajax/Status'], function(AjaxStatus) {
+		require(['WoltLabSuite/Core/Ajax/Status'], function(AjaxStatus) {
 			AjaxStatus.show();
 		});
 	},
@@ -1432,7 +1432,7 @@ WCF.LoadingOverlayHandler = {
 	 * Removes one loading-request and hides loading overlay if there're no more pending requests
 	 */
 	hide: function() {
-		require(['WoltLab/WCF/Ajax/Status'], function(AjaxStatus) {
+		require(['WoltLabSuite/Core/Ajax/Status'], function(AjaxStatus) {
 			AjaxStatus.hide();
 		});
 	},
@@ -1461,7 +1461,7 @@ WCF.Action = {};
 /**
  * Basic implementation for AJAX-based proxyies
  * 
- * @deprecated	3.0 - please use `WoltLab/WCF/Ajax.api()` instead
+ * @deprecated	3.0 - please use `WoltLabSuite/Core/Ajax.api()` instead
  * 
  * @param	object		options
  */
@@ -2302,7 +2302,7 @@ WCF.Dictionary = Class.extend({
 // non strict equals by intent
 if (window.WCF.Language == null) {
 	/**
-	 * @deprecated Use WoltLab/WCF/Language
+	 * @deprecated Use WoltLabSuite/Core/Language
 	 */
 	WCF.Language = {
 		add: function(key, value) {
@@ -2649,7 +2649,7 @@ WCF.MultipleLanguageInput = Class.extend({
 
 /**
  * Number utilities.
- * @deprecated Use WoltLab/WCF/NumberUtil
+ * @deprecated Use WoltLabSuite/Core/NumberUtil
  */
 WCF.Number = {
 	/**
@@ -2668,7 +2668,7 @@ WCF.Number = {
 
 /**
  * String utilities.
- * @deprecated Use WoltLab/WCF/StringUtil
+ * @deprecated Use WoltLabSuite/Core/StringUtil
  */
 WCF.String = {
 	/**
@@ -2762,7 +2762,7 @@ WCF.TabMenu = {
 	 * Initializes all TabMenus
 	 */
 	init: function() {
-		require(['WoltLab/WCF/Ui/TabMenu'], function(UiTabMenu) {
+		require(['WoltLabSuite/Core/Ui/TabMenu'], function(UiTabMenu) {
 			UiTabMenu.setup();
 		});
 	},
@@ -3636,16 +3636,16 @@ WCF.CloseOverlayHandler = {
 };
 
 /**
- * @deprecated Use WoltLab/WCF/Dom/Change/Listener
+ * @deprecated Use WoltLabSuite/Core/Dom/Change/Listener
  */
 WCF.DOMNodeInsertedHandler = {
 	addCallback: function(identifier, callback) {
-		require(['WoltLab/WCF/Dom/Change/Listener'], function (ChangeListener) {
+		require(['WoltLabSuite/Core/Dom/Change/Listener'], function (ChangeListener) {
 			ChangeListener.add('__legacy__', callback);
 		});
 	},
 	_executeCallbacks: function() {
-		require(['WoltLab/WCF/Dom/Change/Listener'], function (ChangeListener) {
+		require(['WoltLabSuite/Core/Dom/Change/Listener'], function (ChangeListener) {
 			ChangeListener.trigger();
 		});
 	},
@@ -4172,7 +4172,7 @@ WCF.Search = {};
 /**
  * Performs a quick search.
  * 
- * @deprecated  3.0 - please use `WoltLab/WCF/Ui/Search/Input` instead
+ * @deprecated  3.0 - please use `WoltLabSuite/Core/Ui/Search/Input` instead
  */
 WCF.Search.Base = Class.extend({
 	/**
@@ -4701,7 +4701,7 @@ WCF.Search.Base = Class.extend({
  * Provides quick search for users and user groups.
  * 
  * @see	WCF.Search.Base
- * @deprecated  3.0 - please use `WoltLab/WCF/Ui/User/Search/Input` instead
+ * @deprecated  3.0 - please use `WoltLabSuite/Core/Ui/User/Search/Input` instead
  */
 WCF.Search.User = WCF.Search.Base.extend({
 	/**
@@ -4901,7 +4901,7 @@ WCF.System.FlexibleMenu = {
 	 * @param	string		containerID
 	 */
 	registerMenu: function(containerID) {
-		require(['WoltLab/WCF/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
+		require(['WoltLabSuite/Core/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
 			UiFlexibleMenu.register(containerID);
 		});
 	},
@@ -4912,7 +4912,7 @@ WCF.System.FlexibleMenu = {
 	 * @param	string		containerID
 	 */
 	rebuild: function(containerID) {
-		require(['WoltLab/WCF/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
+		require(['WoltLabSuite/Core/Ui/FlexibleMenu'], function(UiFlexibleMenu) {
 			UiFlexibleMenu.rebuild(containerID);
 		});
 	}
@@ -4973,7 +4973,7 @@ WCF.System.Captcha = {
 	 * @param	function	callback
 	 */
 	addCallback: function(captchaID, callback) {
-		require(['WoltLab/WCF/Controller/Captcha'], function(ControllerCaptcha) {
+		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				ControllerCaptcha.add(captchaID, callback);
 			}
@@ -4995,7 +4995,7 @@ WCF.System.Captcha = {
 	 */
 	getData: function(captchaID) {
 		var returnValue;
-		require(['WoltLab/WCF/Controller/Captcha'], function(ControllerCaptcha) {
+		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				returnValue = ControllerCaptcha.getData(captchaID);
 			}
@@ -5011,7 +5011,7 @@ WCF.System.Captcha = {
 	 * Removes the callback with the given captcha id.
 	 */
 	removeCallback: function(captchaID) {
-		require(['WoltLab/WCF/Controller/Captcha'], function(ControllerCaptcha) {
+		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				ControllerCaptcha.delete(captchaID);
 			}
@@ -5287,11 +5287,11 @@ WCF.System.Fullscreen = {
 /**
  * Provides the 'jump to page' overlay.
  * 
- * @deprecated	3.0 - use `WoltLab/WCF/Ui/Page/JumpTo` instead
+ * @deprecated	3.0 - use `WoltLabSuite/Core/Ui/Page/JumpTo` instead
  */
 WCF.System.PageNavigation = {
 	init: function(selector, callback) {
-		require(['WoltLab/WCF/Ui/Page/JumpTo'], function(UiPageJumpTo) {
+		require(['WoltLabSuite/Core/Ui/Page/JumpTo'], function(UiPageJumpTo) {
 			var elements = elBySelAll(selector);
 			for (var i = 0, length = elements.length; i < length; i++) {
 				UiPageJumpTo.init(elements[i], callback);
@@ -5919,7 +5919,7 @@ WCF.InlineEditor = Class.extend({
 /**
  * Default implementation for ajax file uploads.
  * 
- * @deprecated	Use WoltLab/WCF/Upload
+ * @deprecated	Use WoltLabSuite/Core/Upload
  * 
  * @param	jquery		buttonSelector
  * @param	jquery		fileListSelector
@@ -6297,7 +6297,7 @@ WCF.Upload = Class.extend({
 /**
  * Default implementation for parallel AJAX file uploads.
  * 
- * @deprecated	Use WoltLab/WCF/Upload
+ * @deprecated	Use WoltLabSuite/Core/Upload
  */
 WCF.Upload.Parallel = WCF.Upload.extend({
 	/**
@@ -6705,7 +6705,7 @@ WCF.Popover = Class.extend({
 		this._activeElementID = '';
 		this._identifier = selector;
 		
-		require(['WoltLab/WCF/Controller/Popover'], (function(popover) {
+		require(['WoltLabSuite/Core/Controller/Popover'], (function(popover) {
 			popover.init({
 				attributeName: 'legacy',
 				className: selector,
@@ -7052,7 +7052,7 @@ WCF.EditableItemList = Class.extend({
  * @param       {function}                              callback                function called after a language is selected
  * @param       {boolean}                               allowEmptyValue         true if no language may be selected
  * 
- * @deprecated  3.0 - please use `WoltLab/WCF/Language/Chooser` instead
+ * @deprecated  3.0 - please use `WoltLabSuite/Core/Language/Chooser` instead
  */
 WCF.Language.Chooser = Class.extend({
 	/**
@@ -7066,7 +7066,7 @@ WCF.Language.Chooser = Class.extend({
 	 * @param       {boolean}                               allowEmptyValue         true if no language may be selected
 	 */
 	init: function(containerId, chooserId, languageId, languages, callback, allowEmptyValue) {
-		require(['WoltLab/WCF/Language/Chooser'], function(LanguageChooser) {
+		require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 			LanguageChooser.init(containerId, chooserId, languageId, languages, callback, allowEmptyValue);
 		});
 	}
@@ -7548,7 +7548,7 @@ jQuery.fn.extend({
 	wcfTabs: function(method) {
 		var element = this[0], parameters = Array.prototype.slice.call(arguments, 1);
 		
-		require(['Dom/Util', 'WoltLab/WCF/Ui/TabMenu'], function(DomUtil, TabMenu) {
+		require(['Dom/Util', 'WoltLabSuite/Core/Ui/TabMenu'], function(DomUtil, TabMenu) {
 			var container = TabMenu.getTabMenu(DomUtil.identify(element));
 			if (container !== null) {
 				container[method].apply(container, parameters);
@@ -7560,7 +7560,7 @@ jQuery.fn.extend({
 /**
  * jQuery widget implementation of the wcf pagination.
  * 
- * @deprecated	3.0 - use `WoltLab/WCF/Ui/Pagination` instead
+ * @deprecated	3.0 - use `WoltLabSuite/Core/Ui/Pagination` instead
  */
 $.widget('ui.wcfPages', {
 	_api: null,
@@ -7578,7 +7578,7 @@ $.widget('ui.wcfPages', {
 	 * Creates the pages widget.
 	 */
 	_create: function() {
-		require(['WoltLab/WCF/Ui/Pagination'], (function(UiPagination) {
+		require(['WoltLabSuite/Core/Ui/Pagination'], (function(UiPagination) {
 			this._api = new UiPagination(this.element[0], {
 				activePage: this.options.activePage,
 				maxPage: this.options.maxPage,

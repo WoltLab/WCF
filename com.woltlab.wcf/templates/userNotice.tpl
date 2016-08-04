@@ -28,7 +28,7 @@
 		{/content}
 		
 		<script data-relocate="true">
-			require(['WoltLab/WCF/Controller/Notice/Dismiss'], function(ControllerNoticeDismiss) {
+			require(['WoltLabSuite/Core/Controller/Notice/Dismiss'], function(ControllerNoticeDismiss) {
 				ControllerNoticeDismiss.setup();
 			});
 		</script>

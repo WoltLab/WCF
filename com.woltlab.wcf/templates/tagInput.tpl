@@ -8,7 +8,7 @@
 	</dl>
 	
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Ui/ItemList'], function(UiItemList) {
+		require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 			UiItemList.init(
 				'tagSearchInput{if $tagInputSuffix|isset}{@$tagInputSuffix}{/if}',
 				[{if $tags|isset && $tags|count}{implode from=$tags item=tag}'{$tag|encodeJS}'{/implode}{/if}],

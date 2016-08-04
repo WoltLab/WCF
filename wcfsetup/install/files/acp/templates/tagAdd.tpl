@@ -67,7 +67,7 @@
 			</dl>
 			
 			<script data-relocate="true">
-				require(['WoltLab/WCF/Ui/ItemList'], function(UiItemList) {
+				require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 					UiItemList.init(
 						'synonyms',
 						[{if !$synonyms|empty}{implode from=$synonyms item=synonym}'{$synonym|encodeJS}'{/implode}{/if}],

@@ -30,7 +30,7 @@
 	</div>
 </div>
 <script data-relocate="true">
-	require(['Language', 'WoltLab/WCF/Acp/Ui/Page/Add'], function(Language, AcpUiPageAdd) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Page/Add'], function(Language, AcpUiPageAdd) {
 		Language.addObject({
 			'wcf.acp.page.add': '{lang}wcf.acp.page.add{/lang}'
 		});

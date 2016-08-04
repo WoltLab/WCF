@@ -70,7 +70,7 @@
 	</ul>
 	
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Ui/Message/Share'], function(UiMessageShare) {
+		require(['WoltLabSuite/Core/Ui/Message/Share'], function(UiMessageShare) {
 			UiMessageShare.init();
 		});
 	</script>

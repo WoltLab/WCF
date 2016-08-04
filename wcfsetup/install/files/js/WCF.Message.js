@@ -479,7 +479,7 @@ WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
 	 * @see	WCF.Message.Preview._handleResponse()
 	 */
 	_handleResponse: function(data) {
-		require(['WoltLab/WCF/Ui/Dialog'], (function(UiDialog) {
+		require(['WoltLabSuite/Core/Ui/Dialog'], (function(UiDialog) {
 			UiDialog.open(this, '<div class="htmlContent">' + data.returnValues.message + '</div>');
 		}).bind(this));
 	},
@@ -729,7 +729,7 @@ WCF.Message.Smilies = Class.extend({
 /**
  * Provides an inline message editor.
  * 
- * @deprecated	3.0 - please use `WoltLab/WCF/Ui/Message/InlineEditor` instead
+ * @deprecated	3.0 - please use `WoltLabSuite/Core/Ui/Message/InlineEditor` instead
  * 
  * @param	integer		containerID
  */
@@ -772,7 +772,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	WCF.Message.Quote.Manager	quoteManager
 	 */
 	init: function(containerID, supportExtendedForm, quoteManager) {
-		require(['WoltLab/WCF/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
+		require(['WoltLabSuite/Core/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
 			new UiMessageInlineEditor({
 				className: this._getClassName(),
 				containerId: containerID,
@@ -795,7 +795,7 @@ WCF.Message.InlineEditor = Class.extend({
 	_click: function(event, containerID) {
 		containerID = (event === null) ? ~~containerID : ~~elData(event.currentTarget, 'container-id');
 		
-		require(['WoltLab/WCF/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
+		require(['WoltLabSuite/Core/Ui/Message/InlineEditor'], (function(UiMessageInlineEditor) {
 			UiMessageInlineEditor.legacyEdit(containerID);
 		}).bind(this));
 		
@@ -1690,7 +1690,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Toggles the display of the 'Show quotes' button
 	 */
 	_toggleShowQuotes: function() {
-		require(['WoltLab/WCF/Ui/Page/Action'], (function(UiPageAction) {
+		require(['WoltLabSuite/Core/Ui/Page/Action'], (function(UiPageAction) {
 			var buttonName = 'showQuotes';
 			
 			if (this._count) {
@@ -2118,11 +2118,11 @@ WCF.Message.Share.Content = Class.extend({
 /**
  * Provides buttons to share a page through multiple social community sites.
  * 
- * @deprecated  3.0 - please use `WoltLab/WCF/Ui/Message/Share` instead
+ * @deprecated  3.0 - please use `WoltLabSuite/Core/Ui/Message/Share` instead
  */
 WCF.Message.Share.Page = Class.extend({
 	init: function() {
-		require(['WoltLab/WCF/Ui/Message/Share'], function(UiMessageShare) {
+		require(['WoltLabSuite/Core/Ui/Message/Share'], function(UiMessageShare) {
 			UiMessageShare.init();
 		});
 	}

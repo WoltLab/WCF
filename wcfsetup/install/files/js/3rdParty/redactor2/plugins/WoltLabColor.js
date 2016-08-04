@@ -44,7 +44,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 		setColor: function(key) {
 			key = key.replace(/^color_/, '');
 			
-			require(['WoltLab/WCF/Ui/Redactor/Format'], (function(UiRedactorFormat) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.format(this.$editor[0], 'woltlab-color', 'woltlab-color-' + key);
@@ -52,7 +52,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 		},
 		
 		removeColor: function() {
-			require(['WoltLab/WCF/Ui/Redactor/Format'], (function(UiRedactorFormat) {
+			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-color');

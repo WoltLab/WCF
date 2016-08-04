@@ -386,7 +386,7 @@
 							</small>
 						{/if}
 						<script data-relocate="true">
-							require(['Language', 'WoltLab/WCF/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
+							require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
 								Language.addObject({
 									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
 									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',

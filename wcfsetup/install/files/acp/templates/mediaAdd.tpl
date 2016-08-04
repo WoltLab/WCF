@@ -2,7 +2,7 @@
 
 {if $action == 'add'}
 	<script data-relocate="true">
-		require(['EventHandler', 'WoltLab/WCF/Media/Upload'], function(EventHandler, MediaUpload) {
+		require(['EventHandler', 'WoltLabSuite/Core/Media/Upload'], function(EventHandler, MediaUpload) {
 			new MediaUpload('uploadButton', 'mediaFile');
 			
 			// redirect the user to the edit form after uploading the file
@@ -145,7 +145,7 @@
 {if $action == 'edit'}
 	{* this code needs to be put after all multipleLanguageInputJavascript template have been included *}
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Language/Input'], function(LanguageInput) {
+		require(['WoltLabSuite/Core/Language/Input'], function(LanguageInput) {
 			function updateLanguageFields() {
 				var languageIdContainer = elById('languageIDContainer').parentNode;
 				

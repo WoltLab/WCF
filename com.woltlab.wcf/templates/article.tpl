@@ -310,7 +310,7 @@
 
 {if MODULE_LIKE && ARTICLE_ENABLE_LIKE}
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Ui/Like/Handler'], function(UiLikeHandler) {
+		require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
 			new UiLikeHandler('com.woltlab.wcf.likeableArticle', {
 				// settings
 				isSingleItem: true,

@@ -16,7 +16,7 @@
 	</dl>
 	
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Language/Chooser'], function(LanguageChooser) {
+		require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 			var languages = {
 				{implode from=$languages item=__language}
 					'{@$__language->languageID}': {

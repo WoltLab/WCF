@@ -53,7 +53,7 @@
 </section>
 
 <script data-relocate="true">
-	require(['WoltLab/WCF/Ui/Acl/Simple'], function(UiAclSimple) {
+	require(['WoltLabSuite/Core/Ui/Acl/Simple'], function(UiAclSimple) {
 		new UiAclSimple('{@$__aclSimplePrefix}');
 	});
 </script>

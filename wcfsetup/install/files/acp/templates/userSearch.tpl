@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.user.search'}
 
 <script data-relocate="true">
-	require(['WoltLab/WCF/Ui/User/Search/Input'], function(UiUserSearchInput) {
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], function(UiUserSearchInput) {
 		new UiUserSearchInput(elBySel('input[name="username"]'));
 	});
 </script>

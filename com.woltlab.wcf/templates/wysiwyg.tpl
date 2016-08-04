@@ -49,7 +49,7 @@
 		
 		{event name='redactorJavaScript'}
 	], function () {
-		require(['Language', 'WoltLab/WCF/Ui/Redactor/Autosave', 'WoltLab/WCF/Ui/Redactor/Metacode'], function(Language, UiRedactorAutosave, UiRedactorMetacode) {
+		require(['Language', 'WoltLabSuite/Core/Ui/Redactor/Autosave', 'WoltLabSuite/Core/Ui/Redactor/Metacode'], function(Language, UiRedactorAutosave, UiRedactorMetacode) {
 			Language.addObject({
 				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
 				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',

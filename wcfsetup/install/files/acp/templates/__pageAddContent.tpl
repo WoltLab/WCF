@@ -19,7 +19,7 @@
 		<li><a href="#" id="codemirror-{@$__pageContentID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}"><span class="icon icon16 fa-file-text-o"></span></a></li>
 	</ul>
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Acp/Ui/CodeMirror/Media', 'WoltLab/WCF/Acp/Ui/CodeMirror/Page'], function(AcpUiCodeMirrorMedia, AcpUiCodeMirrorPage) {
+		require(['WoltLabSuite/Core/Acp/Ui/CodeMirror/Media', 'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'], function(AcpUiCodeMirrorMedia, AcpUiCodeMirrorPage) {
 			new AcpUiCodeMirrorMedia('{@$__pageContentID}');
 			new AcpUiCodeMirrorPage('{@$__pageContentID}');
 		});

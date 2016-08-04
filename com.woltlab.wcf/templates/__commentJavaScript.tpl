@@ -16,7 +16,7 @@
 		
 		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}', '{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}', '{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-			require(['WoltLab/WCF/Ui/Like/Handler'], function(UiLikeHandler) {
+			require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
 				var canDislike = {if LIKE_ENABLE_DISLIKE}true{else}false{/if};
 				var canLike = {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}true{else}false{/if};
 				var canLikeOwnContent = {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if};

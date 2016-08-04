@@ -71,7 +71,7 @@
 
 {if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 	<script data-relocate="true">
-		require(['WoltLab/WCF/Ui/Search/Page'], function(UiSearchPage) {
+		require(['WoltLabSuite/Core/Ui/Search/Page'], function(UiSearchPage) {
 			UiSearchPage.init('{if !$__searchObjectTypeName|empty}{@$__searchObjectTypeName}{else}everywhere{/if}');
 		});
 	</script>

@@ -30,7 +30,7 @@
 	</div>
 </div>
 <script data-relocate="true">
-	require(['Language', 'WoltLab/WCF/Acp/Ui/Box/Add'], function(Language, AcpUiBoxAdd) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Add'], function(Language, AcpUiBoxAdd) {
 		Language.addObject({
 			'wcf.acp.box.add': '{lang}wcf.acp.box.add{/lang}'
 		});

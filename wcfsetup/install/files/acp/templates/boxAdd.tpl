@@ -5,12 +5,12 @@
 		{include file='mediaJavaScript'}
 		
 		{if $boxType == 'system'}
-			require(['WoltLab/WCF/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
+			require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
 				AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
 			});
 		{/if}
 		
-		require(['Dictionary', 'Language', 'WoltLab/WCF/Acp/Ui/Box/Handler', 'WoltLab/WCF/Media/Manager/Select'], function(Dictionary, Language, AcpUiBoxHandler, MediaManagerSelect) {
+		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler', 'WoltLabSuite/Core/Media/Manager/Select'], function(Dictionary, Language, AcpUiBoxHandler, MediaManagerSelect) {
 			Language.addObject({
 				'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
 				'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
@@ -391,7 +391,7 @@
 					<dd>
 						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 						<script data-relocate="true">
-							require(['Language', 'WoltLab/WCF/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
+							require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
 								Language.addObject({
 									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
 									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',

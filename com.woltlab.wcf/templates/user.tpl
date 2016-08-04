@@ -4,7 +4,7 @@
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-			require(['Language', 'WoltLab/WCF/Ui/User/Editor', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Ignore', 'WoltLab/WCF/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserEditor, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
+			require(['Language', 'WoltLabSuite/Core/Ui/User/Editor', 'WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Ignore', 'WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserEditor, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
 				Language.addObject({
 					'wcf.acp.user.disable': '{lang}wcf.acp.user.disable{/lang}',
 					'wcf.acp.user.enable': '{lang}wcf.acp.user.enable{/lang}',

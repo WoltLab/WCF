@@ -1,6 +1,6 @@
 {if $availableLanguages|count > 1}
 	<script data-relocate="true">
-		require(['Language', 'WoltLab/WCF/Language/Input'], function(Language, LanguageInput) {
+		require(['Language', 'WoltLabSuite/Core/Language/Input'], function(Language, LanguageInput) {
 			Language.addObject({
 				'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}'
 			});

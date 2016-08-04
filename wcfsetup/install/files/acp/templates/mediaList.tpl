@@ -2,7 +2,7 @@
 
 <script data-relocate="true">
 	document.addEventListener('DOMContentLoaded', function() {
-		require(['EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLab/WCF/Controller/Clipboard', 'WoltLab/WCF/Media/Search'], function (EventHandler, Language, UiSimpleDropdown, Clipboard, MediaSearch) {
+		require(['EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Search'], function (EventHandler, Language, UiSimpleDropdown, Clipboard, MediaSearch) {
 			Language.add('wcf.media.search.filetype', '{lang}wcf.media.search.filetype{/lang}');
 			
 			Clipboard.setup({
