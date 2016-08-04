@@ -16,14 +16,4 @@ use wcf\data\DatabaseObject;
  * @property-read	integer		$success
  * @property-read	string		$error
  */
-class CronjobLog extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'cronjob_log';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'cronjobLogID';
-}
+class CronjobLog extends DatabaseObject {}

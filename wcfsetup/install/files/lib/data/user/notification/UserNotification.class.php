@@ -30,16 +30,6 @@ class UserNotification extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'user_notification';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'notificationID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function __get($name) {
 		$value = parent::__get($name);
 		

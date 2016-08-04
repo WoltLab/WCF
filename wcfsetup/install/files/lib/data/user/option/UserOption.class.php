@@ -100,11 +100,6 @@ class UserOption extends Option {
 	protected static $databaseTableName = 'user_option';
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'optionID';
-	
-	/**
 	 * option value
 	 * @var	string
 	 */

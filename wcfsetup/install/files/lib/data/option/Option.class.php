@@ -38,16 +38,6 @@ class Option extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'option';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'optionID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function __get($name) {
 		$value = parent::__get($name);
 		

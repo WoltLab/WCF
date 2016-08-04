@@ -19,16 +19,6 @@ use wcf\data\DatabaseObject;
  */
 class PollOption extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'poll_option';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'optionID';
-	
-	/**
 	 * true, if option was selected by current user
 	 * @var	boolean
 	 */

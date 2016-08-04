@@ -18,16 +18,6 @@ use wcf\system\WCF;
  */
 class UserIgnore extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_ignore';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'ignoreID';
-	
-	/**
 	 * Returns a UserIgnore object for given ignored user id.
 	 * 
 	 * @param	integer		$ignoreUserID

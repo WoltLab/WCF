@@ -27,16 +27,6 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	use TUserContent;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'comment_response';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'responseID';
-	
-	/**
 	 * comment object
 	 * @var	Comment
 	 */

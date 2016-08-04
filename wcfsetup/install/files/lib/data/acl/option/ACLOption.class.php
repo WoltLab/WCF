@@ -18,16 +18,6 @@ use wcf\data\DatabaseObject;
  */
 class ACLOption extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'acl_option';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'optionID';
-	
-	/**
 	 * Returns a list of options by object type id.
 	 * 
 	 * @param	integer		$objectTypeID

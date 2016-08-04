@@ -23,11 +23,6 @@ class ACPSessionAccessLog extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'acp_session_access_log';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'sessionAccessLogID';
 	
 	/**

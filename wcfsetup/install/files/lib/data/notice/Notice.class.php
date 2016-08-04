@@ -32,16 +32,6 @@ class Notice extends DatabaseObject implements IRouteController {
 	protected $isDismissed = null;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'notice';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'noticeID';
-	
-	/**
 	 * Returns the textual representation of the notice.
 	 * 
 	 * @return	string

@@ -14,14 +14,4 @@ use wcf\data\DatabaseObject;
  * @property-read	integer		$packageID
  * @property-read	string		$objectName
  */
-class CoreObject extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'core_object';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'objectID';
-}
+class CoreObject extends DatabaseObject {}

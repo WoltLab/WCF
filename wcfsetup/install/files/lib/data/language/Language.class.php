@@ -22,16 +22,6 @@ use wcf\system\WCF;
  */
 class Language extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'language';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'languageID';
-	
-	/**
 	 * list of language items
 	 * @var	string[]
 	 */

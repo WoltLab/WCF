@@ -24,10 +24,5 @@ class LanguageItem extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'language_item';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'languageItemID';
 }

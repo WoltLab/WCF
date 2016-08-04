@@ -17,9 +17,4 @@ class UserGroupOption extends Option {
 	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_group_option';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'optionID';
 }

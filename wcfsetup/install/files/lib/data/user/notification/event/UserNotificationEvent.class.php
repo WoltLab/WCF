@@ -30,15 +30,5 @@ class UserNotificationEvent extends ProcessibleDatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'user_notification_event';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'eventID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $processorInterface = IUserNotificationEvent::class;
 }

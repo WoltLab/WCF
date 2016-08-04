@@ -29,16 +29,6 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	public static $avatarThumbnailSizes = [32, 96, 128, 256];
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_avatar';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'avatarID';
-	
-	/**
 	 * maximum thumbnail size
 	 * @var	integer
 	 * @deprecated 3.0

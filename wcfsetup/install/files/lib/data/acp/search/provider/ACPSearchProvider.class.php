@@ -21,9 +21,4 @@ class ACPSearchProvider extends DatabaseObject {
 	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'acp_search_provider';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'providerID';
 }

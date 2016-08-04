@@ -24,16 +24,6 @@ class ModificationLog extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'modification_log';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'logID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function __get($name) {
 		$value = parent::__get($name);
 		

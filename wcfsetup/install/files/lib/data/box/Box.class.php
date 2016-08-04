@@ -55,16 +55,6 @@ class Box extends DatabaseObject {
 	protected $image;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'box';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'boxID';
-	
-	/**
 	 * available box types
 	 * @var	string[]
 	 */

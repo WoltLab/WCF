@@ -26,16 +26,6 @@ class EditHistoryEntry extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'edit_history_entry';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'entryID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected $object = null;
 	
 	/**

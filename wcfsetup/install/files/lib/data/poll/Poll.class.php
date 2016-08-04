@@ -29,16 +29,6 @@ use wcf\system\WCF;
  */
 class Poll extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'poll';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'pollID';
-	
-	/**
 	 * participation status
 	 * @var	boolean
 	 */

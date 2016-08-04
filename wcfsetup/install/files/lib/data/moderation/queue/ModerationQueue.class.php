@@ -25,16 +25,6 @@ use wcf\system\WCF;
  * @property-read	array		$additionalData
  */
 class ModerationQueue extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'moderation_queue';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'queueID';
-	
 	// states of column 'status'
 	const STATUS_OUTSTANDING = 0;
 	const STATUS_PROCESSING = 1;

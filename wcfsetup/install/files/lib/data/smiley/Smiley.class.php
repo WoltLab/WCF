@@ -23,16 +23,6 @@ use wcf\util\StringUtil;
  */
 class Smiley extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'smiley';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'smileyID';
-	
-	/**
 	 * Returns the url to this smiley.
 	 * 
 	 * @return	string

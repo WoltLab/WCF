@@ -43,16 +43,6 @@ use wcf\util\FileUtil;
  */
 class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'attachment';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'attachmentID';
-	
-	/**
 	 * indicates if the attachment is embedded
 	 * @var	boolean
 	 */

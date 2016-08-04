@@ -23,16 +23,6 @@ use wcf\util\StringUtil;
  */
 class UserRank extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_rank';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'rankID';
-	
-	/**
 	 * Returns the image of this user rank.
 	 * 
 	 * @return	string		html code

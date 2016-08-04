@@ -31,16 +31,6 @@ use wcf\system\WCF;
  */
 class Style extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'style';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'styleID';
-	
-	/**
 	 * list of style variables
 	 * @var	string[]
 	 */

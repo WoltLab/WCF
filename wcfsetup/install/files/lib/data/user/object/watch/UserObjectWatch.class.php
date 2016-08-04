@@ -19,16 +19,6 @@ use wcf\system\WCF;
  */
 class UserObjectWatch extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_object_watch';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'watchID';
-	
-	/**
 	 * Returns the UserObjectWatch with the given data or null if no such object
 	 * exists.
 	 * 

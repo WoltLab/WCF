@@ -40,11 +40,6 @@ class Application extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'application';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'packageID';
 	
 	/**

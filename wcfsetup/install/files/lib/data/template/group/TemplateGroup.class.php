@@ -21,11 +21,6 @@ class TemplateGroup extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'template_group';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'templateGroupID';
 	
 	protected static $templateGroupStructure = null;

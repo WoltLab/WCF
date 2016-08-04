@@ -15,14 +15,4 @@ use wcf\data\DatabaseObject;
  * @property-read	integer		$searches
  * @property-read	integer		$lastSearchTime
  */
-class SearchKeyword extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'search_keyword';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'keywordID';
-}
+class SearchKeyword extends DatabaseObject {}

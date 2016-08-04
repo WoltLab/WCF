@@ -22,16 +22,6 @@ class LabelGroup extends DatabaseObject implements IRouteController {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'label_group';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'groupID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->groupName);
 	}

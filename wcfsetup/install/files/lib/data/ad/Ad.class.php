@@ -24,16 +24,6 @@ use wcf\system\WCF;
  */
 class Ad extends DatabaseObject implements IRouteController {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'adID';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'ad';
-	
-	/**
 	 * Returns the conditions of the ad.
 	 * 
 	 * @return	Condition[]

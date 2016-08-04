@@ -29,11 +29,6 @@ class ACPSessionVirtual extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'acp_session_virtual';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'virtualSessionID';
 	
 	/**

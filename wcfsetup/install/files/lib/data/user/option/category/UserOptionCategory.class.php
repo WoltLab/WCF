@@ -21,16 +21,6 @@ use wcf\system\WCF;
  */
 class UserOptionCategory extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_option_category';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'categoryID';
-	
-	/**
 	 * Returns the title of this category.
 	 * 
 	 * @return	string

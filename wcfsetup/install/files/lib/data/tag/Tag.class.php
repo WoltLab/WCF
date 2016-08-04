@@ -20,16 +20,6 @@ use wcf\util\ArrayUtil;
  */
 class Tag extends DatabaseObject implements IRouteController {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'tag';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'tagID';
-	
-	/**
 	 * Return the tag with the given name or null of no such tag exists.
 	 * 
 	 * @param	string		$name

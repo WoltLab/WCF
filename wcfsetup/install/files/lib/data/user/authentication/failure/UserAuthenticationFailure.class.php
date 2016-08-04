@@ -22,16 +22,6 @@ use wcf\system\WCF;
  */
 class UserAuthenticationFailure extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_authentication_failure';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'failureID';
-	
-	/**
 	 * Returns the ip address and attempts to convert into IPv4.
 	 * 
 	 * @return	string

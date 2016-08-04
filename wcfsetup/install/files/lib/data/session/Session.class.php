@@ -16,16 +16,6 @@ class Session extends ACPSession {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'session';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'sessionID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public static function supportsPersistentLogins() {
 		return true;
 	}

@@ -11,14 +11,4 @@ use wcf\data\acp\session\virtual\ACPSessionVirtual;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Session\Virtual
  */
-class SessionVirtual extends ACPSessionVirtual {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'session_virtual';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'virtualSessionID';
-}
+class SessionVirtual extends ACPSessionVirtual {}

@@ -19,11 +19,6 @@ class PackageInstallationPlugin extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'package_installation_plugin';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'pluginName';
 	
 	/**

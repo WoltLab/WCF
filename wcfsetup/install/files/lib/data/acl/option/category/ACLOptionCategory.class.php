@@ -15,14 +15,4 @@ use wcf\data\DatabaseObject;
  * @property-read	integer		$objectTypeID
  * @property-read	string		$categoryName
  */
-class ACLOptionCategory extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'acl_option_category';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'categoryID';
-}
+class ACLOptionCategory extends DatabaseObject {}

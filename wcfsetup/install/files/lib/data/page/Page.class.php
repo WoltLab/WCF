@@ -53,16 +53,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	public static $availablePageTypes = ['text', 'html', 'tpl', 'system'];
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'page';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'pageID';
-	
-	/**
 	 * @var	\wcf\system\page\handler\IMenuPageHandler
 	 */
 	protected $pageHandler;

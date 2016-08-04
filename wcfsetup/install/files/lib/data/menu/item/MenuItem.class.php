@@ -32,16 +32,6 @@ use wcf\system\WCF;
  */
 class MenuItem extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'menu_item';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'itemID';
-	
-	/**
 	 * @var	IMenuPageHandler
 	 */
 	protected $handler;

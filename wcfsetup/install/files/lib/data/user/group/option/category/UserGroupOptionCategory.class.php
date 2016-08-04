@@ -23,14 +23,4 @@ use wcf\data\TDatabaseObjectPermissions;
 class UserGroupOptionCategory extends DatabaseObject {
 	use TDatabaseObjectOptions;
 	use TDatabaseObjectPermissions;
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_group_option_category';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'categoryID';
 }

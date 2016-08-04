@@ -20,16 +20,6 @@ use wcf\system\WCF;
  */
 class Label extends DatabaseObject implements IRouteController {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'label';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'labelID';
-	
-	/**
 	 * Returns the label's textual representation if a label is treated as a
 	 * string.
 	 * 

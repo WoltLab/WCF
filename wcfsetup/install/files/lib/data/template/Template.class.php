@@ -22,16 +22,6 @@ use wcf\util\FileUtil;
  * @property-read	integer		$lastModificationTime
  */
 class Template extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'template';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'templateID';
-	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc

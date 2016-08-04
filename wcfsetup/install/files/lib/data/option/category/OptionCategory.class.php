@@ -23,14 +23,4 @@ use wcf\data\TDatabaseObjectPermissions;
 class OptionCategory extends DatabaseObject {
 	use TDatabaseObjectOptions;
 	use TDatabaseObjectPermissions;
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'option_category';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'categoryID';
 }

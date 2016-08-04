@@ -29,17 +29,7 @@ class ACPSession extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'acp_session';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexIsIdentity = false;
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'sessionID';
 	
 	/**
 	 * Returns true if this session type supports persistent logins.

@@ -23,11 +23,6 @@ class PackageUpdate extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'package_update';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'packageUpdateID';
 	
 	/**

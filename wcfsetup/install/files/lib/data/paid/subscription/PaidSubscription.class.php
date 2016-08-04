@@ -29,16 +29,6 @@ use wcf\system\WCF;
  */
 class PaidSubscription extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'paid_subscription';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'subscriptionID';
-	
-	/**
 	 * Returns list of purchase buttons.
 	 * 
 	 * @return	string[]

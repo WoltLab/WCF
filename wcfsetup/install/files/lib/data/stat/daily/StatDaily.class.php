@@ -16,14 +16,4 @@ use wcf\data\DatabaseObject;
  * @property-read	integer		$counter
  * @property-read	integer		$total
  */
-class StatDaily extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'stat_daily';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'statID';
-}
+class StatDaily extends DatabaseObject {}

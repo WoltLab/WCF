@@ -38,11 +38,6 @@ class UserProfileMenuItem extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'user_profile_menu_item';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
 	/**

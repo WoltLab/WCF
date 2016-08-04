@@ -34,11 +34,6 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'article_content';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'articleContentID';
 	
 	/**

@@ -22,16 +22,6 @@ use wcf\system\WCF;
  */
 class Menu extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'menu';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'menuID';
-	
-	/**
 	 * menu item node tree
 	 * @var	MenuItemNodeTree
 	 */

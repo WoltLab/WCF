@@ -17,14 +17,4 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$searchType
  * @property-read	string		$searchHash
  */
-class Search extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'search';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'searchID';
-}
+class Search extends DatabaseObject {}

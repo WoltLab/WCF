@@ -21,16 +21,6 @@ use wcf\system\request\IRouteController;
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'assignmentID';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_group_assignment';
-	
-	/**
 	 * Returns the conditions of the automatic assignment to a user group.
 	 * 
 	 * @return	Condition[]

@@ -25,16 +25,6 @@ use wcf\system\WCF;
  */
 class PackageInstallationQueue extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'package_installation_queue';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'queueID';
-	
-	/**
 	 * Returns a new process number for package installation queue.
 	 * 
 	 * @return	integer

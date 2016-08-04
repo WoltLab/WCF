@@ -36,16 +36,6 @@ class Cronjob extends DatabaseObject {
 	use TDatabaseObjectOptions;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'cronjob';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'cronjobID';
-	
-	/**
 	 * indicates that cronjob is available for execution
 	 */
 	const READY = 0;

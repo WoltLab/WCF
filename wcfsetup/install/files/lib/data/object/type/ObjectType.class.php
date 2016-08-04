@@ -30,11 +30,6 @@ class ObjectType extends ProcessibleDatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'object_type';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'objectTypeID';
 	
 	/**

@@ -15,14 +15,4 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$spiderName
  * @property-read	string		$spiderURL
  */
-class Spider extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'spider';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'spiderID';
-}
+class Spider extends DatabaseObject {}

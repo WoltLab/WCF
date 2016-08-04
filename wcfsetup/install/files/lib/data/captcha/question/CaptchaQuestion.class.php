@@ -20,16 +20,6 @@ use wcf\util\StringUtil;
  */
 class CaptchaQuestion extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'captcha_question';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'questionID';
-	
-	/**
 	 * Returns true if the given user input is an answer to this question.
 	 * 
 	 * @param	string		$answer

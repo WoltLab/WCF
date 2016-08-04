@@ -16,14 +16,4 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$interfaceName
  * @property-read	string		$categoryName
  */
-class ObjectTypeDefinition extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'object_type_definition';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'definitionID';
-}
+class ObjectTypeDefinition extends DatabaseObject {}

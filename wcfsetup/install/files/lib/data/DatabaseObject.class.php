@@ -127,15 +127,36 @@ abstract class DatabaseObject implements IStorableObject {
 	 * @inheritDoc
 	 */
 	public static function getDatabaseTableName() {
-		$classParts = explode('\\', get_called_class());
-		return $classParts[0].WCF_N.'_'.static::$databaseTableName;
+		$className = get_called_class();
+		$classParts = explode('\\', $className);
+		
+		if (static::$databaseTableName !== '') {
+			return $classParts[0].WCF_N.'_'.static::$databaseTableName;
+		}
+		
+		static $databaseTableName = null;
+		if ($databaseTableName === null) {
+			$databaseTableName = $classParts[0].WCF_N.'_'.strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
+		}
+		
+		return $databaseTableName;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
-		return static::$databaseTableName;
+		if (static::$databaseTableName !== '') {
+			return static::$databaseTableName;
+		}
+		
+		static $databaseTableNameAlias = null;
+		if ($databaseTableNameAlias === null) {
+			$classParts = explode('\\', get_called_class());
+			$databaseTableNameAlias = strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
+		}
+		
+		return $databaseTableNameAlias;
 	}
 	
 	/**
@@ -149,7 +170,18 @@ abstract class DatabaseObject implements IStorableObject {
 	 * @inheritDoc
 	 */
 	public static function getDatabaseTableIndexName() {
-		return static::$databaseTableIndexName;
+		if (static::$databaseTableIndexName !== '') {
+			return static::$databaseTableIndexName;
+		}
+		
+		static $databaseTableIndexName = null;
+		if ($databaseTableIndexName === null) {
+			$className = explode('\\', get_called_class());
+			$parts = preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($className), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+			$databaseTableIndexName = strtolower(array_pop($parts)).'ID';
+		}
+		
+		return $databaseTableIndexName;
 	}
 	
 	/**

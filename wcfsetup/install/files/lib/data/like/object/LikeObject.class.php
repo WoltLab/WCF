@@ -26,11 +26,6 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'like_object';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'likeObjectID';
 	
 	/**

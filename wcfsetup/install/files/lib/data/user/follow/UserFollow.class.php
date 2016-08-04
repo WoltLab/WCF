@@ -18,16 +18,6 @@ use wcf\system\WCF;
  */
 class UserFollow extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_follow';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'followID';
-	
-	/**
 	 * Retrieves a follower.
 	 * 
 	 * @param	integer		$userID

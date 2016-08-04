@@ -65,16 +65,6 @@ use wcf\util\PasswordUtil;
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'userID';
-	
-	/**
 	 * list of group ids
 	 * @var integer[]
 	 */

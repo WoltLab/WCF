@@ -20,16 +20,6 @@ class Condition extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableIndexName = 'conditionID';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'condition';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function __get($name) {
 		$value = parent::__get($name);
 		

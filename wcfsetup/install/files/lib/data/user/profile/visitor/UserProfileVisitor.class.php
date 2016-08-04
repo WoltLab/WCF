@@ -18,16 +18,6 @@ use wcf\system\WCF;
  */
 class UserProfileVisitor extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_profile_visitor';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'visitorID';
-	
-	/**
 	 * Returns a profile visitor object or `null` if it does not exist.
 	 * 
 	 * @param	integer		$ownerID

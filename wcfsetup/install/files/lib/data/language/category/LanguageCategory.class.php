@@ -17,10 +17,5 @@ class LanguageCategory extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'language_category';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'languageCategoryID';
 }

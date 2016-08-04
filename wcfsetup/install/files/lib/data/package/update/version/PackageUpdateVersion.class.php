@@ -23,10 +23,5 @@ class PackageUpdateVersion extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'package_update_version';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'packageUpdateVersionID';
 }

@@ -21,14 +21,4 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$permissions
  * @property-read	string		$options
  */
-class TemplateListener extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'template_listener';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'listenerID';
-}
+class TemplateListener extends DatabaseObject {}

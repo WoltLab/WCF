@@ -53,16 +53,6 @@ class Package extends DatabaseObject {
 	protected $requiredPackages = null;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'package';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'packageID';
-	
-	/**
 	 * list of ids of packages which are required by another package
 	 * @var	integer[]
 	 */

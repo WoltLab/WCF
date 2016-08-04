@@ -50,16 +50,6 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	const OTHER = 4;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'user_group';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'groupID';
-	
-	/**
 	 * group cache
 	 * @var	UserGroup[]
 	 */

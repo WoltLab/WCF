@@ -22,16 +22,6 @@ class UserActivityEvent extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'user_activity_event';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'eventID';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function __get($name) {
 		$value = parent::__get($name);
 		

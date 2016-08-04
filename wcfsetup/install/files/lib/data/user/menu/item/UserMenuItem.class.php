@@ -32,11 +32,6 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableName = 'user_menu_item';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
 	/**

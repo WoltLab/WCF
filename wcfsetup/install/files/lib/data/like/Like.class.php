@@ -21,16 +21,6 @@ use wcf\system\WCF;
  */
 class Like extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'like';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'likeID';
-	
-	/**
 	 * like value
 	 * @var	integer
 	 */

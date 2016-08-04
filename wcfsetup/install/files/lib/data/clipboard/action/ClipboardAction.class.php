@@ -16,14 +16,4 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$actionClassName
  * @property-read	integer		$showOrder
  */
-class ClipboardAction extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'clipboard_action';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'actionID';
-}
+class ClipboardAction extends DatabaseObject {}

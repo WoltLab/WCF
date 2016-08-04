@@ -30,16 +30,6 @@ use wcf\system\WCF;
  */
 class Article extends DatabaseObject implements ILinkableObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'article';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'articleID';
-	
-	/**
 	 * indicates that article is unpublished
 	 */
 	const UNPUBLISHED = 0;

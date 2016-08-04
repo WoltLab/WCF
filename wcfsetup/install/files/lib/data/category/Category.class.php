@@ -71,16 +71,6 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * @inheritDoc
 	 */
-	protected static $databaseTableIndexName = 'categoryID';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'category';
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected static $processorInterface = ICategoryType::class;
 	
 	/**

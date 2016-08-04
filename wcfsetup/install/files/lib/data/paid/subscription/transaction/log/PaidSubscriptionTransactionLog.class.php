@@ -26,16 +26,6 @@ use wcf\system\WCF;
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'paid_subscription_transaction_log';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'logID';
-	
-	/**
 	 * user object
 	 * @var	\wcf\data\user\User
 	 */

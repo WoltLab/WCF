@@ -15,16 +15,6 @@ use wcf\data\DatabaseObject;
  * @property-read	string		$defaultValue
  */
 class StyleVariable extends DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'style_variable';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'variableID';
-	
 	const TYPE_COLOR = 'color';
 	const TYPE_TEXT = 'text';
 	const TYPE_UNIT = 'unit';

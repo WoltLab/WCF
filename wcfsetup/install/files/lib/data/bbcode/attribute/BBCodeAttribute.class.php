@@ -26,11 +26,6 @@ class BBCodeAttribute extends DatabaseObject {
 	protected static $databaseTableName = 'bbcode_attribute';
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'attributeID';
-	
-	/**
 	 * Reads attributes by assigned bbcode.
 	 * 
 	 * @param	\wcf\data\bbcode\BBCode		$bbcode

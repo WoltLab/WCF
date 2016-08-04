@@ -26,11 +26,6 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	protected static $databaseTableName = 'bbcode_media_provider';
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'providerID';
-	
-	/**
 	 * cached providers
 	 * @var	BBCodeMediaProvider[]
 	 */

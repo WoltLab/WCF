@@ -29,16 +29,6 @@ class EventListener extends DatabaseObject {
 	use TDatabaseObjectPermissions;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableName = 'event_listener';
-	
-	/**
-	 * @inheritDoc
-	 */
-	protected static $databaseTableIndexName = 'listenerID';
-	
-	/**
 	 * prefix of automatically created event listener names
 	 * @var	string
 	 * @deprecated	will be removed once listener names are mandatory
