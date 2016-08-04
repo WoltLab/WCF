@@ -794,18 +794,7 @@ class PackageInstallationDispatcher {
 					$wcfDomainPath = $row['domainPath'];
 				}
 				
-				$documentRoot = '';
-				
-				// strip longest common suffix
-				$a = strrev(FileUtil::unifyDirSeparator($wcfDomainPath));
-				$b = strrev($documentRoot = FileUtil::unifyDirSeparator(WCF_DIR));
-				for ($i = 0, $max = min(strlen($a), strlen($b)); $i < $max; $i++) {
-					if ($a{$i} !== $b{$i}) {
-						$documentRoot = substr(strrev($b), 0, -$i);
-						break;
-					}
-				}
-				
+				$documentRoot = substr(FileUtil::unifyDirSeparator(WCF_DIR), 0, -strlen(FileUtil::unifyDirSeparator($wcfDomainPath)));
 				$domainPath = FileUtil::addLeadingSlash(FileUtil::getRelativePath($documentRoot, $packageDir));
 				
 				// update application path
