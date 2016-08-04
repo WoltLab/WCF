@@ -119,6 +119,7 @@ a.button {
 			
 			> a {
 				display: block;
+				min-width: min-content;
 				text-align: center;
 			}
 		}
