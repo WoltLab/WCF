@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\email;
 use wcf\data\user\User;
-use wcf\system\email\mime\PlainTextMimePart;
-use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\HtmlTextMimePart;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\PlainTextMimePart;
 
 /**
  * Simplifies creating and sending a new Email.
