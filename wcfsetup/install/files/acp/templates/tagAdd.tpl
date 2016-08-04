@@ -62,22 +62,24 @@
 			<dl>
 				<dt><label for="synonyms">{lang}wcf.acp.tag.synonyms{/lang}</label></dt>
 				<dd>
-					<div id="synonymList" class="editableItemList"></div>
 					<input id="synonyms" type="text" value="" class="long">
 				</dd>
 			</dl>
 			
-			<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@LAST_UPDATE_TIME}"></script>
 			<script data-relocate="true">
-				//<![CDATA[
-				$(function() {
-					var $tagList = new WCF.Tagging.TagList('#synonymList', '#synonyms');
-					
-					{if $synonyms|isset && $synonyms|count}
-						$tagList.load([ {implode from=$synonyms item='synonym'}'{$synonym|encodeJS}'{/implode} ]);
-					{/if}
+				require(['WoltLab/WCF/Ui/ItemList'], function(UiItemList) {
+					UiItemList.init(
+						'synonyms',
+						[{if !$synonyms|empty}{implode from=$synonyms item=synonym}'{$synonym|encodeJS}'{/implode}{/if}],
+						{
+							ajax: {
+								className: 'wcf\\data\\tag\\TagAction'
+							},
+							maxLength: {@TAGGING_MAX_TAG_LENGTH},
+							submitFieldName: 'tags[]'
+						}
+					);
 				});
-				//]]>
 			</script>
 		{elseif $tagObj|isset}
 			<dl>
