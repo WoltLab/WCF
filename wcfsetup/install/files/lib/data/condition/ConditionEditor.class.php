@@ -12,8 +12,9 @@ use wcf\system\cache\builder\ConditionCacheBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Condition
  * 
- * @method	Condition	getDecoratedObject()
- * @mixin	Condition
+ * @method static	Condition	create(array $parameters = [])
+ * @method		Condition	getDecoratedObject()
+ * @mixin		Condition
  */
 class ConditionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

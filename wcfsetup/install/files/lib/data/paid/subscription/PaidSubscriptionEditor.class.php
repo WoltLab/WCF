@@ -12,9 +12,10 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription
- *
- * @method	PaidSubscription	getDecoratedObject()
- * @mixin	PaidSubscription
+ * 
+ * @method static	PaidSubscription	create(array $parameters = [])
+ * @method		PaidSubscription	getDecoratedObject()
+ * @mixin		PaidSubscription
  */
 class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

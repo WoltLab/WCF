@@ -9,9 +9,10 @@ use wcf\data\DatabaseObjectEditor;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language\Item
- *
- * @method	LanguageItem	getDecoratedObject()
- * @mixin	LanguageItem
+ * 
+ * @method static	LanguageItem	create(array $parameters = [])
+ * @method		LanguageItem	getDecoratedObject()
+ * @mixin		LanguageItem
  */
 class LanguageItemEditor extends DatabaseObjectEditor {
 	/**

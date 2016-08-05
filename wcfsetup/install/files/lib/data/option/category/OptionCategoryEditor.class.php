@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Option\Category
  * 
- * @method	OptionCategory		getDecoratedObject()
- * @mixin	OptionCategory
+ * @method static	OptionCategory		create(array $parameters = [])
+ * @method		OptionCategory		getDecoratedObject()
+ * @mixin		OptionCategory
  */
 class OptionCategoryEditor extends DatabaseObjectEditor {
 	/**

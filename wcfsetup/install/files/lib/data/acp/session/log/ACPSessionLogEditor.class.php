@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session\Log
  * 
- * @method	ACPSessionLog	getDecoratedObject()
- * @mixin	ACPSessionLog
+ * @method static	ACPSessionLog	create(array $parameters = [])
+ * @method		ACPSessionLog	getDecoratedObject()
+ * @mixin		ACPSessionLog
  */
 class ACPSessionLogEditor extends DatabaseObjectEditor {
 	/**

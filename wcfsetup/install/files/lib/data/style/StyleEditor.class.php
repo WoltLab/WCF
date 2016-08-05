@@ -878,6 +878,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	
 	/**
 	 * @inheritDoc
+	 * @return	Style
 	 */
 	public static function create(array $parameters = []) {
 		$variables = null;
@@ -903,7 +904,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$parameters['isDefault'] = 1;
 		}
 		
-		// save style
+		/** @var Style $style */
 		$style = parent::create($parameters);
 		$styleEditor = new StyleEditor($style);
 		

@@ -26,6 +26,7 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * @inheritDoc
+	 * @return	MenuItem
 	 */
 	public static function create(array $parameters = []) {
 		$title = '';
@@ -34,6 +35,7 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			$parameters['title'] = '';
 		}
 		
+		/** @var MenuItem $menuItem */
 		$menuItem = parent::create($parameters);
 		
 		if (is_array($title)) {

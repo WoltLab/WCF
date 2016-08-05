@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Modification\Log
  * 
- * @method	ModificationLog		getDecoratedObject()
- * @mixin	ModificationLog
+ * @method static	ModificationLog		create(array $parameters = [])
+ * @method		ModificationLog		getDecoratedObject()
+ * @mixin		ModificationLog
  */
 class ModificationLogEditor extends DatabaseObjectEditor {
 	/**

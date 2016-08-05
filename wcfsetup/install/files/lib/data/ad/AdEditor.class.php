@@ -15,8 +15,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Ad
  * 
- * @method	Ad	getDecoratedObject()
- * @mixin	Ad
+ * @method static	Ad	create(array $parameters = [])
+ * @method		Ad	getDecoratedObject()
+ * @mixin		Ad
  */
 class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

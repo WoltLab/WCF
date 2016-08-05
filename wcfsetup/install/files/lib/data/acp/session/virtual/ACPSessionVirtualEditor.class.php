@@ -11,8 +11,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session\Virtual
  * 
- * @method	ACPSessionVirtual	getDecoratedObject()
- * @mixin	ACPSessionVirtual
+ * @method static	ACPSessionVirtual	create(array $parameters = [])
+ * @method		ACPSessionVirtual	getDecoratedObject()
+ * @mixin		ACPSessionVirtual
  */
 class ACPSessionVirtualEditor extends DatabaseObjectEditor {
 	/**

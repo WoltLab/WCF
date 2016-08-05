@@ -11,8 +11,9 @@ use wcf\data\DatabaseObjectEditor;
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
  * 
- * @method	ArticleContent	getDecoratedObject()
- * @mixin	ArticleContent
+ * @method static	ArticleContent	create(array $parameters = [])
+ * @method		ArticleContent	getDecoratedObject()
+ * @mixin		ArticleContent
  */
 class ArticleContentEditor extends DatabaseObjectEditor {
 	/**

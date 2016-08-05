@@ -27,6 +27,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	
 	/**
 	 * @inheritDoc
+	 * @return	Cronjob
 	 */
 	public static function create(array $parameters = []) {
 		$descriptions = [];
@@ -48,6 +49,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 			$cronjobEditor->saveDescriptions($descriptions, false);
 		}
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return $cronjob;
 	}
 	

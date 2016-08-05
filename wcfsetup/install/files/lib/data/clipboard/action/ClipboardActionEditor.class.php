@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Clipboard\Action
  * 
- * @method	ClipboardAction		getDecoratedObject()
- * @mixin	ClipboardAction
+ * @method static	ClipboardAction		create(array $parameters = [])
+ * @method		ClipboardAction		getDecoratedObject()
+ * @mixin		ClipboardAction
  */
 class ClipboardActionEditor extends DatabaseObjectEditor {
 	/**

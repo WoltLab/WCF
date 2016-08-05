@@ -11,8 +11,9 @@ use wcf\system\moderation\queue\ModerationQueueManager;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  * 
- * @method	ModerationQueue		getDecoratedObject()
- * @mixin	ModerationQueue
+ * @method static	ModerationQueue		create(array $parameters = [])
+ * @method		ModerationQueue		getDecoratedObject()
+ * @mixin		ModerationQueue
  */
 class ModerationQueueEditor extends DatabaseObjectEditor {
 	/**

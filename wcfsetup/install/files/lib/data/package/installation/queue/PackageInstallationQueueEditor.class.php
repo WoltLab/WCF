@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Installation\Queue
  * 
- * @method	PackageInstallationQueue	getDecoratedObject()
- * @mixin	PackageInstallationQueue
+ * @method static	PackageInstallationQueue	create(array $parameters = [])
+ * @method		PackageInstallationQueue	getDecoratedObject()
+ * @mixin		PackageInstallationQueue
  */
 class PackageInstallationQueueEditor extends DatabaseObjectEditor {
 	/**

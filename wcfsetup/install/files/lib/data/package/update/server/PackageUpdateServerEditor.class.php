@@ -12,8 +12,9 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Server
  * 
- * @method	PackageUpdateServer	getDecoratedObject()
- * @mixin	PackageUpdateServer
+ * @method static	PackageUpdateServer	create(array $parameters = [])
+ * @method		PackageUpdateServer	getDecoratedObject()
+ * @mixin		PackageUpdateServer
  */
 class PackageUpdateServerEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

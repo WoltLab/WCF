@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group
- *
+ * 
  * @method	UserGroup	getDecoratedObject()
  * @mixin	UserGroup
  */
@@ -27,8 +27,10 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	
 	/**
 	 * @inheritDoc
+	 * @return	UserGroup
 	 */
 	public static function create(array $parameters = []) {
+		/** @var UserGroup $group */
 		$group = parent::create($parameters);
 		
 		// update accessible groups

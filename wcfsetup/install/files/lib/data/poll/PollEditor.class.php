@@ -10,9 +10,10 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Poll
- *
- * @method	Poll	getDecoratedObject()
- * @mixin	Poll
+ * 
+ * @method static	Poll	create(array $parameters = [])
+ * @method		Poll	getDecoratedObject()
+ * @mixin		Poll
  */
 class PollEditor extends DatabaseObjectEditor {
 	/**

@@ -35,6 +35,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * @inheritDoc
+	 * @return	User
 	 */
 	public static function create(array $parameters = []) {
 		// create salt and password hash
@@ -48,6 +49,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		// handle registration date
 		if (!isset($parameters['registrationDate'])) $parameters['registrationDate'] = TIME_NOW;
 		
+		/** @var User $user */
 		$user = parent::create($parameters);
 		
 		// create default values for user options

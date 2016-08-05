@@ -12,8 +12,9 @@ use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Captcha\Question
  * 
- * @method	CaptchaQuestion		getDecoratedObject()
- * @mixin	CaptchaQuestion
+ * @method static	CaptchaQuestion		create(array $parameters = [])
+ * @method		CaptchaQuestion		getDecoratedObject()
+ * @mixin		CaptchaQuestion
  */
 class CaptchaQuestionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

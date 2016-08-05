@@ -16,8 +16,9 @@ use wcf\util\DirectoryUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Template\Group
  * 
- * @method	TemplateGroup	getDecoratedObject()
- * @mixin	TemplateGroup
+ * @method static	TemplateGroup	create(array $parameters = [])
+ * @method		TemplateGroup	getDecoratedObject()
+ * @mixin		TemplateGroup
  */
 class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Event\Listener
  * 
- * @method	EventListener	getDecoratedObject()
- * @mixin	EventListener
+ * @method static	EventListener	create(array $parameters = [])
+ * @method		EventListener	getDecoratedObject()
+ * @mixin		EventListener
  */
 class EventListenerEditor extends DatabaseObjectEditor {
 	/**

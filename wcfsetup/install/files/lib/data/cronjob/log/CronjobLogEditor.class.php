@@ -11,8 +11,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language\Item
  * 
- * @method	CronjobLog	getDecoratedObject()
- * @mixin	CronjobLog
+ * @method static	CronjobLog	create(array $parameters = [])
+ * @method		CronjobLog	getDecoratedObject()
+ * @mixin		CronjobLog
  */
 class CronjobLogEditor extends DatabaseObjectEditor {
 	/**

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Category
- *
+ * 
  * @method	Category	getDecoratedObject()
  * @mixin	Category
  */
@@ -107,6 +107,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * @inheritDoc
+	 * @return	Category
 	 */
 	public static function create(array $parameters = []) {
 		// default values
@@ -122,6 +123,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			$parameters['additionalData'] = serialize([]);
 		}
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create($parameters);
 	}
 	

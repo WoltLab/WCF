@@ -12,8 +12,9 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Application
  * 
- * @method	Application	getDecoratedObject()
- * @mixin	Application
+ * @method static	Application	create(array $parameters = [])
+ * @method		Application	getDecoratedObject()
+ * @mixin		Application
  */
 class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

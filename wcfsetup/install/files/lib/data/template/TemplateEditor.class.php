@@ -26,12 +26,14 @@ class TemplateEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * @inheritDoc
+	 * @return	Template
 	 */
 	public static function create(array $parameters = []) {
 		// obtain default values
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
 		if (!isset($parameters['lastModificationTime'])) $parameters['lastModificationTime'] = TIME_NOW;
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create($parameters);
 	}
 	

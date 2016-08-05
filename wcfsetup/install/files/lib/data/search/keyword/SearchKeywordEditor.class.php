@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Search\Keyword
  * 
- * @method	SearchKeyword	getDecoratedObject()
- * @mixin	SearchKeyword
+ * @method static	SearchKeyword	create(array $parameters = [])
+ * @method		SearchKeyword	getDecoratedObject()
+ * @mixin		SearchKeyword
  */
 class SearchKeywordEditor extends DatabaseObjectEditor {
 	/**

@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Object\Type\Definition
  * 
- * @method	ObjectTypeDefinition	getDecoratedObject()
- * @mixin	ObjectTypeDefinition
+ * @method static	ObjectTypeDefinition	create(array $parameters = [])
+ * @method		ObjectTypeDefinition	getDecoratedObject()
+ * @mixin		ObjectTypeDefinition
  */
 class ObjectTypeDefinitionEditor extends DatabaseObjectEditor {
 	/**

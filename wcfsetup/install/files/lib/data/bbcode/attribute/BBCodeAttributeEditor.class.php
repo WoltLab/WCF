@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Attribute
  * 
- * @method	BBCodeAttribute		getDecoratedObject()
- * @mixin	BBCodeAttribute
+ * @method static	BBCodeAttribute		create(array $parameters = [])
+ * @method		BBCodeAttribute		getDecoratedObject()
+ * @mixin		BBCodeAttribute
  */
 class BBCodeAttributeEditor extends DatabaseObjectEditor {
 	/**

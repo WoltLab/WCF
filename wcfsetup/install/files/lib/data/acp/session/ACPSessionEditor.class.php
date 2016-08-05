@@ -23,12 +23,14 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * @inheritDoc
+	 * @return	ACPSession
 	 */
 	public static function create(array $parameters = []) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
 			$parameters['userID'] = null;
 		}
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create($parameters);
 	}
 	

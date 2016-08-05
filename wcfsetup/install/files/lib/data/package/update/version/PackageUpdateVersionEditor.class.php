@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Version
  * 
- * @method	PackageUpdateVersion	getDecoratedObject()
- * @mixin	PackageUpdateVersion
+ * @method static	PackageUpdateVersion	create(array $parameters = [])
+ * @method		PackageUpdateVersion	getDecoratedObject()
+ * @mixin		PackageUpdateVersion
  */
 class PackageUpdateVersionEditor extends DatabaseObjectEditor {
 	/**

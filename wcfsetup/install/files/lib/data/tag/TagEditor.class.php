@@ -11,8 +11,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Tag
  * 
- * @method	Tag	getDecoratedObject()
- * @mixin	Tag
+ * @method static	Tag	create(array $parameters = [])
+ * @method		Tag	getDecoratedObject()
+ * @mixin		Tag
  */
 class TagEditor extends DatabaseObjectEditor {
 	/**

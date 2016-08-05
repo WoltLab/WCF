@@ -12,8 +12,9 @@ use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group\Option
  * 
- * @method	UserGroupOption		getDecoratedObject()
- * @mixin	UserGroupOption
+ * @method static	UserGroupOption		create(array $parameters = [])
+ * @method		UserGroupOption		getDecoratedObject()
+ * @mixin		UserGroupOption
  */
 class UserGroupOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

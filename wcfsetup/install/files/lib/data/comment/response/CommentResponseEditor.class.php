@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  * 
- * @method	CommentResponse		getDecoratedObject()
- * @mixin	CommentResponse
+ * @method static	CommentResponse		create(array $parameters = [])
+ * @method		CommentResponse		getDecoratedObject()
+ * @mixin		CommentResponse
  */
 class CommentResponseEditor extends DatabaseObjectEditor {
 	/**

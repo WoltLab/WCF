@@ -11,9 +11,10 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Attachment
- *
- * @method	Attachment	getDecoratedObject()
- * @mixin	Attachment
+ * 
+ * @method static	Attachment	create(array $parameters = [])
+ * @method		Attachment	getDecoratedObject()
+ * @mixin		Attachment
  */
 class AttachmentEditor extends DatabaseObjectEditor {
 	/**

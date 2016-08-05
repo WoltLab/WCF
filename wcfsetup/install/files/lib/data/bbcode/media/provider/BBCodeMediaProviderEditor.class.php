@@ -12,8 +12,9 @@ use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  * 
- * @method	BBCodeMediaProvider	getDecoratedObject()
- * @mixin	BBCodeMediaProvider
+ * @method static	BBCodeMediaProvider	create(array $parameters = [])
+ * @method		BBCodeMediaProvider	getDecoratedObject()
+ * @mixin		BBCodeMediaProvider
  */
 class BBCodeMediaProviderEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

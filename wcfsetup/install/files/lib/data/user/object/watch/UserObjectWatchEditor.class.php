@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Object\Watch
  * 
- * @method	UserObjectWatch		getDecoratedObject()
- * @mixin	UserObjectWatch
+ * @method static	UserObjectWatch		create(array $parameters = [])
+ * @method		UserObjectWatch		getDecoratedObject()
+ * @mixin		UserObjectWatch
  */
 class UserObjectWatchEditor extends DatabaseObjectEditor {
 	/**

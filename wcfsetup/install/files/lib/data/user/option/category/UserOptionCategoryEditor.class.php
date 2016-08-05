@@ -11,7 +11,7 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Option\Category
- *
+ * 
  * @method	UserOptionCategory	getDecoratedObject()
  * @mixin	UserOptionCategory
  */
@@ -23,11 +23,13 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditable
 	
 	/**
 	 * @inheritDoc
+	 * @return	UserOptionCategory
 	 */
 	public static function create(array $parameters = []) {
 		// obtain default values
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create($parameters);
 	}
 	

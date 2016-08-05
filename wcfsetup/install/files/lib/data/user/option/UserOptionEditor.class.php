@@ -24,8 +24,10 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	
 	/**
 	 * @inheritDoc
+	 * @return	UserOption
 	 */
 	public static function create(array $parameters = []) {
+		/** @var UserOption $userOption */
 		$userOption = parent::create($parameters);
 		
 		// alter the table "wcf".WCF_N."_user_option_value" with this new option

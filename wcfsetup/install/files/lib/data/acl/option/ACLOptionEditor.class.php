@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acl\Option
  * 
- * @method	ACLOption	getDecoratedObject()
- * @mixin	ACLOption
+ * @method static	ACLOption	create(array $parameters = [])
+ * @method		ACLOption	getDecoratedObject()
+ * @mixin		ACLOption
  */
 class ACLOptionEditor extends DatabaseObjectEditor {
 	/**

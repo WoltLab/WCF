@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Template\Listener
  * 
- * @method	TemplateListener	getDecoratedObject()
- * @mixin	TemplateListener
+ * @method static	TemplateListener	create(array $parameters = [])
+ * @method		TemplateListener	getDecoratedObject()
+ * @mixin		TemplateListener
  */
 class TemplateListenerEditor extends DatabaseObjectEditor {
 	/**

@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  * 
- * @method	Like	getDecoratedObject()
- * @mixin	Like
+ * @method static	Like	create(array $parameters = [])
+ * @method		Like	getDecoratedObject()
+ * @mixin		Like
  */
 class LikeEditor extends DatabaseObjectEditor {
 	/**

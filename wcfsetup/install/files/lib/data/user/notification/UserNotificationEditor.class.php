@@ -11,8 +11,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Notification
  * 
- * @method	UserNotification	getDecoratedObject()
- * @mixin	UserNotification
+ * @method static	UserNotification	create(array $parameters = [])
+ * @method		UserNotification	getDecoratedObject()
+ * @mixin		UserNotification
  */
 class UserNotificationEditor extends DatabaseObjectEditor {
 	/**

@@ -13,8 +13,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label
  * 
- * @method	Label	getDecoratedObject()
- * @mixin	Label
+ * @method static	Label	create(array $parameters = [])
+ * @method		Label	getDecoratedObject()
+ * @mixin		Label
  */
 class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

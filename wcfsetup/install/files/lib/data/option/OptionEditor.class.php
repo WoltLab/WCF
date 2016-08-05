@@ -16,8 +16,9 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Option
  * 
- * @method	Option		getDecoratedObject()
- * @mixin	Option
+ * @method static	Option		create(array $parameters = [])
+ * @method		Option		getDecoratedObject()
+ * @mixin		Option
  */
 class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Template
  * 
- * @method	ACPTemplate	getDecoratedObject()
- * @mixin	ACPTemplate
+ * @method static	ACPTemplate	create(array $parameters = [])
+ * @method		ACPTemplate	getDecoratedObject()
+ * @mixin		ACPTemplate
  */
 class ACPTemplateEditor extends DatabaseObjectEditor {
 	/**

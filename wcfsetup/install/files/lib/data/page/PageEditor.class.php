@@ -18,8 +18,9 @@ use wcf\util\FileUtil;
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
  * 
- * @method	Page	getDecoratedObject()
- * @mixin	Page
+ * @method static	Page	create(array $parameters = [])
+ * @method		Page	getDecoratedObject()
+ * @mixin		Page
  */
 class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Poll\Option
  * 
- * @method	PollOption	getDecoratedObject()
- * @mixin	PollOption
+ * @method static	PollOption	create(array $parameters = [])
+ * @method		PollOption	getDecoratedObject()
+ * @mixin		PollOption
  */
 class PollOptionEditor extends DatabaseObjectEditor {
 	/**

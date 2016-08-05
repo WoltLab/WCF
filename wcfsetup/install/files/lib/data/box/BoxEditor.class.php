@@ -11,8 +11,9 @@ use wcf\data\DatabaseObjectEditor;
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
  * 
- * @method	Box	getDecoratedObject()
- * @mixin	Box
+ * @method static	Box	create(array $parameters = [])
+ * @method		Box	getDecoratedObject()
+ * @mixin		Box
  */
 class BoxEditor extends DatabaseObjectEditor {
 	/**

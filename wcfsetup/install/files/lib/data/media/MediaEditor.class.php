@@ -11,8 +11,9 @@ use wcf\data\DatabaseObjectEditor;
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
  * 
- * @method	Media	getDecoratedObject()
- * @mixin	Media
+ * @method static	Media	create(array $parameters = [])
+ * @method		Media	getDecoratedObject()
+ * @mixin		Media
  */
 class MediaEditor extends DatabaseObjectEditor {
 	/**

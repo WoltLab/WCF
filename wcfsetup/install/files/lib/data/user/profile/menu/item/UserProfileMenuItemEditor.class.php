@@ -24,11 +24,13 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 	
 	/**
 	 * @inheritDoc
+	 * @return	UserProfileMenuItem
 	 */
 	public static function create(array $parameters = []) {
 		// calculate show order
 		$parameters['showOrder'] = self::getShowOrder($parameters['showOrder']);
 		
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return parent::create($parameters);
 	}
 	

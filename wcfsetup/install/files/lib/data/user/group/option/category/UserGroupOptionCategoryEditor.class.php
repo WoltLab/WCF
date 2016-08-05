@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group\Option\Category
  * 
- * @method	UserGroupOptionCategory		getDecoratedObject()
- * @mixin	UserGroupOptionCategory
+ * @method static	UserGroupOptionCategory		create(array $parameters = [])
+ * @method		UserGroupOptionCategory		getDecoratedObject()
+ * @mixin		UserGroupOptionCategory
  */
 class UserGroupOptionCategoryEditor extends DatabaseObjectEditor {
 	/**

@@ -11,8 +11,9 @@ use wcf\data\IEditableCachedObject;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Object\Type
  * 
- * @method	ObjectType	getDecoratedObject()
- * @mixin	ObjectType
+ * @method static	ObjectType	create(array $parameters = [])
+ * @method		ObjectType	getDecoratedObject()
+ * @mixin		ObjectType
  */
 class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**

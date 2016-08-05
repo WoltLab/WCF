@@ -10,8 +10,9 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Menu\Item
  * 
- * @method	ACPMenuItem	getDecoratedObject()
- * @mixin	ACPMenuItem
+ * @method static	ACPMenuItem	create(array $parameters = [])
+ * @method		ACPMenuItem	getDecoratedObject()
+ * @mixin		ACPMenuItem
  */
 class ACPMenuItemEditor extends DatabaseObjectEditor {
 	/**
