@@ -150,7 +150,7 @@ CREATE TABLE wcf1_application (
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
 	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
-	isTainted TINYINT(1) NOT DEFAULT 0
+	isTainted TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_article;
