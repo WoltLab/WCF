@@ -34,7 +34,7 @@ class Tag extends DatabaseObject implements IRouteController {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$languageID, $name]);
 		
-		return $statement->fetchObject(Tag::class);
+		return $statement->fetchObject(self::class);
 	}
 	
 	/**
