@@ -24,7 +24,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	 * 
 	 * @param	string		$name
 	 * @param	integer		$languageID
-	 * @return	mixed
+	 * @return	Tag|null
 	 */
 	public static function getTag($name, $languageID = 0) {
 		$sql = "SELECT	*
@@ -33,10 +33,8 @@ class Tag extends DatabaseObject implements IRouteController {
 				AND name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$languageID, $name]);
-		$row = $statement->fetchArray();
-		if ($row !== false) return new Tag(null, $row);
 		
-		return null;
+		return $statement->fetchObject(Tag::class);
 	}
 	
 	/**
