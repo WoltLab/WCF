@@ -203,10 +203,8 @@ class TemplateAddForm extends AbstractForm {
 		$this->tplName = $this->templateSource = '';
 		$this->templateGroupID = 0;
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

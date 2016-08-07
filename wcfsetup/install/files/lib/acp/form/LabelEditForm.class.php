@@ -88,10 +88,8 @@ class LabelEditForm extends LabelAddForm {
 		// reset values if non-custom value was choosen
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

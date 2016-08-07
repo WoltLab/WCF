@@ -103,7 +103,7 @@ class ArticleEditForm extends ArticleAddForm {
 		// call saved event
 		$this->saved();
 		
-		// show success
+		// show success message
 		WCF::getTPL()->assign('success', true);
 	}
 	

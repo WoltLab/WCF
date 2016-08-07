@@ -127,7 +127,7 @@ class BoxEditForm extends BoxAddForm {
 		// call saved event
 		$this->saved();
 		
-		// show success
+		// show success message
 		WCF::getTPL()->assign('success', true);
 	}
 	

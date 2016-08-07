@@ -205,7 +205,7 @@ class PageEditForm extends PageAddForm {
 		// call saved event
 		$this->saved();
 		
-		// show success
+		// show success message
 		WCF::getTPL()->assign('success', true);
 	}
 	

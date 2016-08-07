@@ -261,10 +261,8 @@ class BBCodeAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->reset();
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

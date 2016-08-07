@@ -146,10 +146,8 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 		// reset values
 		$this->username = $this->endDate = '';
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

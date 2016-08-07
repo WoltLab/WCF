@@ -186,10 +186,8 @@ class MenuAddForm extends AbstractForm {
 		// reset values
 		$this->title = '';
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 		
 		I18nHandler::getInstance()->reset();
 	}

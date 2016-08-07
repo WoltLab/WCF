@@ -464,7 +464,7 @@ class PageAddForm extends AbstractForm {
 		// call saved event
 		$this->saved();
 		
-		// show success
+		// show success message
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables

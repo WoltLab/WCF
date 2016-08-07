@@ -181,9 +181,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		WCF::getTPL()->assign('success', true);
 		
 		// reset values
 		$this->groupName = '';

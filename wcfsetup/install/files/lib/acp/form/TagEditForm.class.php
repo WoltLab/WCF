@@ -97,10 +97,8 @@ class TagEditForm extends TagAddForm {
 		
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

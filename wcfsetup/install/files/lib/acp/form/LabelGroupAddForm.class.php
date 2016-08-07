@@ -196,10 +196,8 @@ class LabelGroupAddForm extends AbstractForm {
 		$this->showOrder = 0;
 		$this->setObjectTypeRelations();
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 		
 		I18nHandler::getInstance()->reset();
 	}

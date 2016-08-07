@@ -102,10 +102,8 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		// reset values
 		$this->title = $this->regex = $this->html = '';
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

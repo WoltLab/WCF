@@ -89,10 +89,8 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

@@ -66,10 +66,8 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 		
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

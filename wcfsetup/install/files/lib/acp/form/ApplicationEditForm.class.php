@@ -178,10 +178,8 @@ class ApplicationEditForm extends AbstractForm {
 		// re-calculate cookie settings
 		ApplicationHandler::rebuild();
 		
-		// show success.
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

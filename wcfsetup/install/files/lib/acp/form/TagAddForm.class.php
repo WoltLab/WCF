@@ -178,10 +178,8 @@ class TagAddForm extends AbstractForm {
 		$this->name = '';
 		$this->synonyms = [];
 		
-		// show success
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
