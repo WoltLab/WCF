@@ -60,7 +60,7 @@
 								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 fa-download"></span></a></li>
 								
 								{if !$style->isDefault}
-									<li><span class="icon icon16 fa-{if !$style->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$style->styleID}"></span></li>
+									<li><a title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" class="jsTooltip"><span class="icon icon16 fa-{if !$style->isDisabled}check-{/if}square-o jsToggleButton" data-object-id="{@$style->styleID}"></span></a></li>
 									<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 fa-check-circle"></span></a></li>
 									<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 fa-times"></span></a></li>
 								{/if}
