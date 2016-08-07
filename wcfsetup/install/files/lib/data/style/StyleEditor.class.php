@@ -38,7 +38,7 @@ use wcf\util\XMLWriter;
  * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
-	const EXCLUDE_WCF_VERSION = '3.0.0 Alpha 1';
+	const EXCLUDE_WCF_VERSION = '3.1.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
 	
 	/**
