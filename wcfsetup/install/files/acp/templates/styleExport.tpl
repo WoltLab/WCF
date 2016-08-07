@@ -45,7 +45,7 @@
 				<h2 class="sectionTitle">{lang}wcf.acp.style.exportStyle.asPackage{/lang}</h2>
 				<p class="sectionDescription">{lang}wcf.acp.style.exportStyle.asPackage.description{/lang}</p>
 			</header>
-				
+			
 			<dl>
 				<dt></dt>
 				<dd>
