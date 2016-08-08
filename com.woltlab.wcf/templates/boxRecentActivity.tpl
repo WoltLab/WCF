@@ -2,7 +2,7 @@
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.user.recentActivity{/lang}</h2>
 		
-		{if $canFilterByFollowedUsers}{*todo*}
+		{if $canFilterByFollowedUsers}
 			<nav class="jsMobileNavigation buttonGroupNavigation jsOnly jsRecentActivitySwitchContext">
 				<ul class="buttonGroup">
 					<li><a href="#" class="button small{if !$filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.all{/lang}</a></li>

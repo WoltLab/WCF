@@ -841,7 +841,6 @@ png</defaultvalue>
 			</option>
 			<!-- /user.profileComment -->
 			
-			<!-- todo: find better category -->
 			<option name="user.tag.canViewTag">
 				<categoryname>user.message</categoryname>
 				<optiontype>boolean</optiontype>

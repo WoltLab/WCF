@@ -146,7 +146,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 */
 	public function getLink() {
 		if ($this->controller) {
-			// todo: use a unified method for this
 			$controllerParts = explode('\\', $this->controller);
 			$controllerName = $controllerParts[count($controllerParts) - 1];
 			$controllerName = preg_replace('/(page|action|form)$/i', '', $controllerName);

@@ -62,7 +62,6 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
 	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		// @todo
 		$message = SearchResultTextParser::getInstance()->parse($this->getDecoratedObject()->getFormattedContent());
 		
 		if ($this->getImage()) {

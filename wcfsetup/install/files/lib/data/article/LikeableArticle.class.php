@@ -59,24 +59,6 @@ class LikeableArticle extends AbstractLikeObject {
 		$editor->update(['cumulativeLikes' => $cumulativeLikes]);
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
-	public function sendNotification(Like $like) {
-		/* @todo
-		if ($this->getDecoratedObject()->userID != WCF::getUser()->userID) {
-			$notificationObject = new LikeUserNotificationObject($like);
-			UserNotificationHandler::getInstance()->fireEvent(
-				'like',
-				'com.woltlab.wcf.likeableArticle.notification',
-				$notificationObject,
-				[$this->getDecoratedObject()->userID],
-				['objectID' => $this->getDecoratedObject()->articleID]
-			);
-		}
-		*/
-	}
-	
 	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
