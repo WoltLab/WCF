@@ -13,6 +13,7 @@ use wcf\system\io\RemoteFile;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
+use wcf\util\JSON;
 use wcf\util\XML;
 
 /**
@@ -24,6 +25,12 @@ use wcf\util\XML;
  * @package	WoltLabSuite\Core\System\Package
  */
 class PackageUpdateDispatcher extends SingletonFactory {
+	protected $hasAuthCode = false;
+	protected $purchasedVersions = [
+		'woltlab' => [],
+		'pluginstore' => []
+	];
+	
 	/**
 	 * Refreshes the package database.
 	 * 
@@ -37,18 +44,27 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		// loop servers
 		$updateServers = [];
 		$foundWoltLabServer = false;
+		$requirePurchasedVersions = false;
 		foreach ($tmp as $updateServer) {
 			if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
-				// try to queue a woltlab.com update server first to probe for SSL support
-				if (!$foundWoltLabServer && preg_match('~^https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
-					array_unshift($updateServers, $updateServer);
-					$foundWoltLabServer = true;
+				if (preg_match('~^https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
+					$requirePurchasedVersions = true;
 					
-					continue;
+					// move a woltlab.com update server to the front of the queue to probe for SSL support
+					if (!$foundWoltLabServer) {
+						array_unshift($updateServers, $updateServer);
+						$foundWoltLabServer = true;
+						
+						continue;
+					}
 				}
 				
 				$updateServers[] = $updateServer;
 			}
+		}
+		
+		if ($requirePurchasedVersions && PACKAGE_SERVER_AUTH_CODE) {
+			$this->getPurchasedVersions();
 		}
 		
 		// loop servers
@@ -80,6 +96,33 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		if ($refreshedPackageLists) {
 			PackageUpdateCacheBuilder::getInstance()->reset();
+		}
+	}
+	
+	protected function getPurchasedVersions() {
+		if (!RemoteFile::supportsSSL()) {
+			return;
+		}
+		
+		$request = new HTTPRequest(
+			'https://api.woltlab.com/1.0/customer/license/list.json',
+			['timeout' => 5],
+			['authCode' => PACKAGE_SERVER_AUTH_CODE]
+		);
+		
+		try {
+			$request->execute();
+			$reply = JSON::decode($request->getReply()['body']);
+			if ($reply['status'] == 200) {
+				$this->hasAuthCode = true;
+				$this->purchasedVersions = [
+					'woltlab' => (isset($reply['woltlab']) ? $reply['woltlab'] : []),
+					'pluginstore' => (isset($reply['pluginstore']) ? $reply['pluginstore'] : [])
+				];
+			}
+		}
+		catch (SystemException $e) {
+			// ignore
 		}
 	}
 	
@@ -136,7 +179,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		// parse given package update xml
 		$allNewPackages = false;
 		if ($updateServer->apiVersion == '2.0' || $reply['statusCode'] != 304) {
-			$allNewPackages = $this->parsePackageUpdateXML($reply['body']);
+			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
 		}
 		
 		$data = [
@@ -194,11 +237,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Parses a stream containing info from a packages_update.xml.
 	 * 
-	 * @param	string		$content
-	 * @return	array
-	 * @throws	SystemException
+	 * @param       PackageUpdateServer     $updateServer
+	 * @param       string                  $content
+	 * @return      array
+	 * @throws      SystemException
 	 */
-	protected function parsePackageUpdateXML($content) {
+	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content) {
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
@@ -206,25 +250,27 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$allNewPackages = [];
 		$packages = $xpath->query('/ns:section/ns:package');
+		/** @var \DOMElement $package */
 		foreach ($packages as $package) {
 			if (!Package::isValidPackageName($package->getAttribute('name'))) {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
-			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($xpath, $package);
+			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package);
 		}
 		
 		return $allNewPackages;
 	}
 	
 	/**
-	 * Parses the xml stucture from a packages_update.xml.
+	 * Parses the xml structure from a packages_update.xml.
 	 * 
-	 * @param	\DOMXPath	$xpath
-	 * @param	\DOMNode	$package
-	 * @return	array
+	 * @param       PackageUpdateServer     $updateServer
+	 * @param       \DOMXPath               $xpath
+	 * @param       \DOMElement             $package
+	 * @return      array
 	 */
-	protected function parsePackageUpdateXMLBlock(\DOMXPath $xpath, \DOMNode $package) {
+	protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package) {
 		// define default values
 		$packageInfo = [
 			'author' => '',
@@ -266,15 +312,42 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			}
 		}
 		
+		$key = '';
+		if ($this->hasAuthCode) {
+			if (preg_match('~^https?://update\.woltlab\.com~', $updateServer->serverURL)) {
+				$key = 'woltlab';
+			}
+			else if (preg_match('~^https?://store\.woltlab\.com~', $updateServer->serverURL)) {
+				$key = 'pluginstore';
+			}
+		}
+		
 		// parse versions
 		$elements = $xpath->query('./ns:versions/ns:version', $package);
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$versionNo = $element->getAttribute('name');
-			$packageInfo['versions'][$versionNo] = [
-				'isAccessible' => $element->getAttribute('accessible') == 'true' ? true : false
-			];
+			
+			$isAccessible = ($element->getAttribute('accessible') == 'true') ? 1 : 0;
+			if ($key && $element->getAttribute('requireAuth') == 'true') {
+				$packageName = $package->getAttribute('name');
+				if (isset($this->purchasedVersions[$key][$packageName])) {
+					if ($this->purchasedVersions[$key][$packageName] == '*') {
+						$isAccessible = 1;
+					}
+					else {
+						$isAccessible = (Package::compareVersion($versionNo, $this->purchasedVersions[$key][$packageName] . '99', '<=') ? 1 : 0);
+					}
+				}
+				else {
+					$isAccessible = 0;
+				}
+			}
+			
+			$packageInfo['versions'][$versionNo] = ['isAccessible' => $isAccessible];
 			
 			$children = $xpath->query('child::*', $element);
+			/** @var \DOMElement $child */
 			foreach ($children as $child) {
 				switch ($child->tagName) {
 					case 'fromversions':
@@ -318,6 +391,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					
 					case 'excludedpackages':
 						$excludedpackages = $xpath->query('child::*', $child);
+						/** @var \DOMElement $excludedPackage */
 						foreach ($excludedpackages as $excludedPackage) {
 							$exclusion = $excludedPackage->nodeValue;
 							$version = $excludedPackage->getAttribute('version');

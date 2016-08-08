@@ -555,7 +555,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<option name="package_server_auth_code">
 				<categoryname>general.system.packageServer</categoryname>
 				<optiontype>text</optiontype>
-				<hidden>1</hidden>
 			</option>
 			<!-- /general.system.packageServer -->
 			
