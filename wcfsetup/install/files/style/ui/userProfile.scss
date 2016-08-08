@@ -6,6 +6,47 @@
 	.contentDescription {
 		margin-top: 20px;
 	}
+	
+	@include screen-md-down {
+		display: flex;
+		flex-wrap: wrap;
+		
+		.contentHeaderIcon {
+			display: block;
+			flex: 0 0 48px;
+			margin-right: 10px;
+			
+			img {
+				width: 48px !important;
+				height: 48px !important;
+			}
+		}
+		
+		.contentHeaderTitle {
+			flex: 0 0 calc(100% - 58px);
+			max-width: calc(100% - 58px);
+		}
+		
+		.contentHeaderNavigation {
+			flex: 0 0 100%;
+			
+			.userProfileButtonContainer {
+				display: flex;
+				
+				> li {
+					flex: 1 1 auto;
+					margin-top: 0 !important;
+				}
+			}
+		}
+	}
+	
+	@include screen-md-up {
+		.contentHeaderIcon {
+			flex: 0 0 128px;
+			margin-right: 20px;
+		}
+	}
 }
 
 .userAvatarImage {
