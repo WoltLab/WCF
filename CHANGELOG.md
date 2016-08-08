@@ -5,7 +5,7 @@
 ### 3.0.0 Alpha 1 (XXXX-YY-ZZ)
 
 * Clipboard support for tags in ACP ("delete" and "set as synonyms").
-* `wcf\data\user\UserProfileCache` for caching user profiles during runtime.
+* `wcf\system\cache\runtime\UserProfileRuntimeCache` for caching user profiles during runtime.
 * `wcf\system\cache\builder\EventListenerCacheBuilder` returns `wcf\data\event\listener\EventListener` objects instead of data arrays.
 * `wcf\system\cache\source\RedisCacheSource` added.
 * Background queue (`wcf\system\background\*`) added.
