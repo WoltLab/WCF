@@ -76,12 +76,6 @@ class PackageArchive {
 	];
 	
 	/**
-	 * list of php requirements
-	 * @var	mixed[][]
-	 */
-	protected $phpRequirements = [];
-	
-	/**
 	 * default name of the package.xml file
 	 * @var	string
 	 */
@@ -832,8 +826,9 @@ class PackageArchive {
 	 * Returns a list of php requirements for current package.
 	 * 
 	 * @return	mixed[][]
+	 * @deprecated  3.0
 	 */
 	public function getPhpRequirements() {
-		return $this->phpRequirements;
+		return [];
 	}
 }

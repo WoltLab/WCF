@@ -108,11 +108,6 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		catch (SystemException $e) {
 			$this->error('noValidPackage');
 		}
-		$errors = PackageInstallationDispatcher::validatePHPRequirements($archive->getPhpRequirements());
-		if (!empty($errors)) {
-			// TODO: Nice output
-			$this->error('phpRequirements', ['errors' => $errors]);
-		}
 		
 		// try to find existing package
 		$sql = "SELECT	*

@@ -89,9 +89,6 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
-								{elseif $errorType == 'phpRequirements'}
-									{* todo: use language variable (-> else) *}
-									<pre>{$phpRequirements|print_r}</pre>
 								{else}
 									{lang}wcf.acp.package.error.{@$errorType}{/lang}
 								{/if}
