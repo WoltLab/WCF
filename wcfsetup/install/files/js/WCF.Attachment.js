@@ -87,9 +87,32 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, $.proxy(this._submitInline, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, $.proxy(this._reset, this));
 			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach', (function(data) {
+				var images = this._getImageAttachments();
+				var attachmentId = data.attributes[0] || 0;
+				if (images.hasOwnProperty(attachmentId)) {
+					var thumbnail = data.attributes[2];
+					thumbnail = (thumbnail === true || thumbnail === 'true');
+					
+					var image = elCreate('img');
+					image.className = 'woltlabAttachment';
+					image.src = images[attachmentId][(thumbnail ? 'thumbnailUrl' : 'url')];
+					elData(image, 'attachment-id', attachmentId);
+					
+					var float = data.attributes[1] || 'none';
+					if (float === 'left') image.classList.add('messageFloatObjectLeft');
+					else if (float === 'right') image.classList.add('messageFloatObjectRight');
+					
+					var metacode = data.metacode;
+					metacode.parentNode.insertBefore(image, metacode);
+					elRemove(metacode);
+					
+					data.cancel = true;
+				}
+			}).bind(this));
+			
 			// TODO
 			//WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._editorId, $.proxy(this._editorUpload, this));
-			//WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'getImageAttachments_' + this._editorId, $.proxy(this._getImageAttachments, this));
 		}
 	},
 	
@@ -118,18 +141,22 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * Sets the attachments representing an image.
 	 * 
-	 * @param	object		data
+	 * @return      {Object}
 	 */
-	_getImageAttachments: function(data) {
+	_getImageAttachments: function() {
+		var images = {};
+		
 		this._fileListSelector.children('li').each(function(index, attachment) {
 			var $attachment = $(attachment);
-			if ($attachment.children('img.attachmentTinyThumbnail').length) {
-				data.imageAttachments[parseInt($attachment.data('objectID'))] = {
-					height: parseInt($attachment.data('height')),
-					width: parseInt($attachment.data('width'))
+			if ($attachment.data('isImage')) {
+				images[~~$attachment.data('objectID')] = {
+					thumbnailUrl: $attachment.find('.jsButtonAttachmentInsertThumbnail').data('url'),
+					url: $attachment.find('.jsButtonAttachmentInsertFull').data('url')
 				};
 			}
 		});
+		
+		return images;
 	},
 	
 	/**
@@ -299,6 +326,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					
 					$li.data('height', attachmentData.height);
 					$li.data('width', attachmentData.width);
+					elData($li[0], 'is-image', attachmentData.isImage);
 				}
 				// show file icon
 				else {

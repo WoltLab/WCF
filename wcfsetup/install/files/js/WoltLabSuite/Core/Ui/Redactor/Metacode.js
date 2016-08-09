@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Metacode
  */
-define(['Dom/Util'], function(DomUtil) {
+define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 	"use strict";
 	
 	/**
@@ -22,11 +22,21 @@ define(['Dom/Util'], function(DomUtil) {
 			var div = elCreate('div');
 			div.innerHTML = element.textContent;
 			
-			var attributes, metacode, metacodes = elByTag('woltlab-metacode', div), name, tagClose, tagOpen;
+			var attributes, data, metacode, metacodes = elByTag('woltlab-metacode', div), name, tagClose, tagOpen;
 			while (metacodes.length) {
 				metacode = metacodes[0];
 				name = elData(metacode, 'name');
-				attributes = elData(metacode, 'attributes');
+				attributes = this._parseAttributes(elData(metacode, 'attributes'));
+				
+				data = {
+					attributes: attributes,
+					cancel: false,
+					metacode: metacode
+				};
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'metacode_' + name, data);
+				if (data.cancel === true) {
+					continue;
+				}
 				
 				tagOpen = this._getOpeningTag(name, attributes);
 				tagClose = this._getClosingTag(name);
@@ -50,29 +60,19 @@ define(['Dom/Util'], function(DomUtil) {
 		 * Returns a text node representing the opening bbcode tag.
 		 * 
 		 * @param       {string}        name            bbcode tag
-		 * @param       {string}        attributes      base64- and JSON-encoded attributes
+		 * @param       {Array}         attributes      list of attributes
 		 * @returns     {Text}          text node containing the opening bbcode tag
 		 * @protected
 		 */
 		_getOpeningTag: function(name, attributes) {
-			try {
-				attributes = JSON.parse(atob(attributes));
-			}
-			catch (e) { /* invalid base64 data or invalid json */ }
-			
-			if (!Array.isArray(attributes)) {
-				attributes = [];
-			}
-			
 			var buffer = '[' + name;
 			if (attributes.length) {
-				for (var i = 0, length = attributes.length; i < length; i++) {
-					if (!/^'.*'$/.test(attributes[i])) {
-						attributes[i] = "'" + attributes[i] + "'";
-					}
-				}
+				buffer += '=';
 				
-				buffer += '=' + attributes.join(',');
+				for (var i = 0, length = attributes.length; i < length; i++) {
+					if (i > 0) buffer += ",";
+					buffer += "'" + attributes[i] + "'";
+				}
 			}
 			
 			return document.createTextNode(buffer + ']');
@@ -149,6 +149,37 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			return paragraph;
+		},
+		
+		/**
+		 * Parses the attributes string.
+		 * 
+		 * @param       {string}        attributes      base64- and JSON-encoded attributes
+		 * @return      {Array}         list of parsed attributes
+		 * @protected
+		 */
+		_parseAttributes: function(attributes) {
+			try {
+				attributes = JSON.parse(atob(attributes));
+			}
+			catch (e) { /* invalid base64 data or invalid json */ }
+			
+			if (!Array.isArray(attributes)) {
+				return [];
+			}
+			
+			var attribute, parsedAttributes = [];
+			for (var i = 0, length = attributes.length; i < length; i++) {
+				attribute = attributes[i];
+				
+				if (typeof attribute === 'string') {
+					attribute = attribute.replace(/^'(.*)'$/, '$1');
+				}
+				
+				parsedAttributes.push(attribute);
+			}
+			
+			return parsedAttributes;
 		}
 	};
 });
