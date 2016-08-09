@@ -72,7 +72,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			thumbnailOptions += '<option value="original">' + Language.get('wcf.media.insert.imageSize.original') + '</option>';
 			
 			var dialog = '<div class="section">'
-			+ (this._mediaToInsert.size > 1 ? '<dl>'
+			/*+ (this._mediaToInsert.size > 1 ? '<dl>'
 				+ '<dt>' + Language.get('wcf.media.insert.type') + '</dt>'
 				+ '<dd>'
 					+ '<select name="insertType">'
@@ -80,7 +80,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 						+ '<option value="gallery">' + Language.get('wcf.media.insert.type.gallery') + '</option>'
 					+ '</select>'
 				+ '</dd>'
-			+ '</dl>' : '')
+			+ '</dl>' : '')*/
 			+ '<dl class="thumbnailSizeSelection">'
 				+ '<dt>' + Language.get('wcf.media.insert.imageSize') + '</dt>'
 				+ '<dd>'
@@ -104,7 +104,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 								elByClass('buttonPrimary', content)[0].addEventListener(WCF_CLICK_EVENT, this._insertMedia.bind(this));
 								
 								// toggle thumbnail size selection based on selected insert type
-								var insertType = elBySel('select[name=insertType]', content);
+								/*var insertType = elBySel('select[name=insertType]', content);
 								if (insertType !== null) {
 									var thumbnailSelection = elByClass('thumbnailSizeSelection', content)[0];
 									insertType.addEventListener('change', function(event) {
@@ -115,7 +115,9 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 											elShow(thumbnailSelection);
 										}
 									});
-								}
+								}*/
+								var thumbnailSelection = elBySel('.thumbnailSizeSelection', content);
+								elShow(thumbnailSelection);
 							}.bind(this),
 							title: Language.get('wcf.media.insert')
 						},
@@ -176,9 +178,9 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 				
 				var dialogContent = event.currentTarget.closest('.dialogContent');
 				
-				if (this._mediaToInsert.size > 1) {
+				/*if (this._mediaToInsert.size > 1) {
 					insertType = elBySel('select[name=insertType]', dialogContent).value;
-				}
+				}*/
 				thumbnailSize = elBySel('select[name=thumbnailSize]', dialogContent).value;
 			}
 			
@@ -200,7 +202,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 				var mediaIds = [];
 				this._mediaToInsert.forEach(function(media) {
 					mediaIds.push(media.mediaID);
-				})
+				});
 				
 				ControllerClipboard.unmark('com.woltlab.wcf.media', mediaIds);
 			}
