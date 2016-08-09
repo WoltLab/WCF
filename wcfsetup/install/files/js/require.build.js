@@ -36,7 +36,7 @@
 				    path = module.require('path');
 				global.allModules = [];
 				
-				var queue = ['WoltLab'];
+				var queue = ['WoltLabSuite'];
 				var folder;
 				while (folder = queue.shift()) {
 					var files = fs.readdirSync(folder);
