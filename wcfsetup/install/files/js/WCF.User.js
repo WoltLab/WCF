@@ -2512,6 +2512,9 @@ WCF.User.List = Class.extend({
 					maxPage: this._pageCount
 				}).on('wcfpagesswitched', $.proxy(this._showPage, this));
 			}
+			else {
+				this._dialog.find('.jsPagination').hide();
+			}
 			
 			// show dialog
 			if ($dialogCreated) {

@@ -356,12 +356,12 @@ fieldset {
 	}
 }
 
+.paginationBottom {
+	margin-top: 20px;
+}
+
 .contentFooter {
 	@include screen-sm-down {
-		> .paginationBottom {
-			margin-top: 20px;
-		}
-		
 		> .contentFooterNavigation {
 			margin-top: 20px;
 			
@@ -382,7 +382,6 @@ fieldset {
 		
 		> .paginationBottom {
 			flex: 0 0 auto;
-			margin-top: 20px;
 		}
 		
 		> .contentFooterNavigation {
