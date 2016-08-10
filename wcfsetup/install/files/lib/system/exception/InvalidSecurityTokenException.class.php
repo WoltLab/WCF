@@ -15,6 +15,6 @@ class InvalidSecurityTokenException extends NamedUserException {
 	 * Creates a new InvalidSecurityTokenException object.
 	 */
 	public function __construct() {
-		parent::__construct(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'));
+		parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'));
 	}
 }
