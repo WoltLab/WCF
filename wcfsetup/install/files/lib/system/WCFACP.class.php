@@ -141,7 +141,7 @@ class WCFACP extends WCF {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
+					throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
 				}
 				
 				// build redirect path
@@ -165,7 +165,7 @@ class WCFACP extends WCF {
 						WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
 					}
 					catch (PermissionDeniedException $e) {
-						throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+						throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 					}
 				}
 				else {

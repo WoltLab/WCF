@@ -104,7 +104,7 @@ class AJAXException extends LoggedException {
 				$responseData['code'] = self::INTERNAL_ERROR;
 				$responseData['exceptionID'] = $exceptionID;
 				if (!WCF::debugModeIsEnabled()) {
-					$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.internalError');
+					$responseData['message'] = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.internalError');
 				}
 			break;
 		}
