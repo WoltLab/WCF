@@ -4,6 +4,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\route\DynamicRequestRoute;
+use wcf\system\request\route\IRequestRoute;
 use wcf\system\request\route\LookupRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -65,7 +66,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	IRoute[]
+	 * @var	IRequestRoute[]
 	 */
 	protected $routes = [];
 	
@@ -96,16 +97,16 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	IRoute  $route
+	 * @param	IRequestRoute   $route
 	 */
-	public function addRoute(IRoute $route) {
+	public function addRoute(IRequestRoute $route) {
 		array_unshift($this->routes, $route);
 	}
 	
 	/**
 	 * Returns all registered routes. 
 	 * 
-	 * @return	IRoute[]
+	 * @return	IRequestRoute[]
 	 **/
 	public function getRoutes() {
 		return $this->routes; 
