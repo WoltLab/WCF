@@ -133,3 +133,17 @@
 		}
 	}
 }
+
+.colorPreview {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
+	border: 1px solid $wcfContentBorderInner;
+	display: inline-block;
+	
+	> div {
+		border: 2px solid $wcfContentBackground;
+		cursor: pointer;
+		display: block;
+		height: 60px;
+		width: 180px;
+	}
+}
