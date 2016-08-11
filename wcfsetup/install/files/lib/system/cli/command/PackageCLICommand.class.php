@@ -101,8 +101,6 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		// PackageStartInstallForm::validateArchive()
 		// try to open the archive
 		try {
-			// TODO: Exceptions thrown within openArchive() are discarded, resulting in
-			// the meaningless message 'not a valid package'
 			$archive->openArchive();
 		}
 		catch (SystemException $e) {
@@ -273,7 +271,6 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			$queue = new PackageInstallationQueue($queueID);
 			
 			if (!$queue->queueID) {
-				// todo: what to output?
 				echo "InstallPackageAction::readParameters()";
 				return;
 			}

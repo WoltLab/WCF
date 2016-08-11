@@ -3,7 +3,6 @@ namespace wcf\system\message\quote;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\IMessage;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -12,10 +11,10 @@ use wcf\util\ArrayUtil;
 /**
  * Manages message quotes.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Message\Quote
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Message\Quote
  */
 class MessageQuoteManager extends SingletonFactory {
 	/**
@@ -35,12 +34,6 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @var	ObjectType[]
 	 */
 	protected $objectTypes = [];
-	
-	/**
-	 * primary application's package id
-	 * @var	integer
-	 */
-	protected $packageID = 0;
 	
 	/**
 	 * list of stored quotes
@@ -70,12 +63,8 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @inheritDoc
 	 */
 	protected function init() {
-		// @todo
-		$this->packageID = 1;
-		//$this->packageID = ApplicationHandler::getInstance()->getPrimaryApplication()->packageID;
-		
 		// load stored quotes from session
-		$messageQuotes = WCF::getSession()->getVar('__messageQuotes'.$this->packageID);
+		$messageQuotes = WCF::getSession()->getVar('__messageQuotes');
 		if (is_array($messageQuotes)) {
 			$this->quotes = isset($messageQuotes['quotes']) ? $messageQuotes['quotes'] : [];
 			$this->quoteData = isset($messageQuotes['quoteData']) ? $messageQuotes['quoteData'] : [];
@@ -601,7 +590,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Updates data stored in session,
 	 */
 	protected function updateSession() {
-		WCF::getSession()->register('__messageQuotes'.$this->packageID, [
+		WCF::getSession()->register('__messageQuotes', [
 			'quotes' => $this->quotes,
 			'quoteData' => $this->quoteData,
 			'removeQuoteIDs' => $this->removeQuoteIDs

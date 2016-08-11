@@ -127,7 +127,6 @@ class BBCodeAddForm extends AbstractForm {
 		if (isset($_POST['showButton'])) $this->showButton = true;
 		if (isset($_POST['wysiwygIcon'])) $this->wysiwygIcon = StringUtil::trim($_POST['wysiwygIcon']);
 		
-		// TODO: The code below violates every implicit convention of value reading and type casting
 		$attributeNo = 0;
 		foreach ($this->attributes as $key => $val) {
 			$val['attributeNo'] = $attributeNo++;

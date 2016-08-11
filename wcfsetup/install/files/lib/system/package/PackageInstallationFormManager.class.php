@@ -101,7 +101,7 @@ abstract class PackageInstallationFormManager {
 		$statement->execute([
 			base64_encode(serialize($document)),
 			$queue->queueID,
-			$document->formName // TODO: FormDocument::$formName does not exist, FormDocument::getName()?
+			$document->getName()
 		]);
 	}
 	

@@ -2,7 +2,6 @@
 namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectType;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\html\input\HtmlInputProcessor;
 
 /**
  * Provides default implementations for message embedded object handlers.
@@ -20,13 +19,4 @@ abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecora
 	 * @inheritDoc
 	 */
 	protected static $baseClass = ObjectType::class;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData) {
-		// TODO: DEBUG ONLY, remove this method!
-		return [];
-	}
-	
 }

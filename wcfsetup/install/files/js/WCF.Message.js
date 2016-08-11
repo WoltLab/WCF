@@ -1603,11 +1603,6 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		this._toggleShowQuotes();
 		
-		// TODO: when is this event being used?
-		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
-			this._insertQuote(null, undefined, data);
-		}).bind(this));
-		
 		WCF.System.Event.addListener('com.woltlab.wcf.quote', 'reload', this.countQuotes.bind(this));
 	},
 	
@@ -1832,7 +1827,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		// insert all quotes
 		this._dialog.find('input.jsCheckbox:checked').each($.proxy(function(index, input) {
-			this._insertQuote(null, input, undefined);
+			this._insertQuote(null, input);
 		}, this));
 		
 		// close dialog
@@ -1844,11 +1839,8 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * 
 	 * @param	{Event}		event
 	 * @param	{Object}	inputElement
-	 * @param	{Object}	data
 	 */
-	_insertQuote: function(event, inputElement, data) {
-		// TODO: what is with this data attribute, when is the event actually used?
-		
+	_insertQuote: function(event, inputElement) {
 		var listItem = $(event ? event.currentTarget : inputElement).parents('li:eq(0)');
 		var text = listItem.children('.jsFullQuote')[0].textContent.trim();
 		

@@ -1001,12 +1001,6 @@ WCF.ACP.Package.Search = Class.extend({
 		this._packageSearchResultContainer.find('.pagination').wcfPages('destroy').remove();
 		
 		if (this._pageCount > 1) {
-			// TODO: Fix ui.wcfPages to properly synchronize multiple instances without triggering events
-			/*$('<div class="contentNavigation" />').insertBefore(this._packageSearchResultList).wcfPages({
-				activePage: this._pageNo,
-				maxPage: this._pageCount
-			}).on('wcfpagesswitched', $.proxy(this._showPage, this));*/
-			
 			$('<div class="contentNavigation" />').insertAfter(this._packageSearchResultList).wcfPages({
 				activePage: this._pageNo,
 				maxPage: this._pageCount

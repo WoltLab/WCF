@@ -189,7 +189,6 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 	 * @inheritDoc
 	 */
 	public function canAccess() {
-		// TODO: Check access
 		return true;
 	}
 }

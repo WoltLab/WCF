@@ -457,9 +457,7 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Saves the localized package infos.
-	 * 
-	 * @todo	license and readme
+	 * Saves the localized package info.
 	 */
 	protected function saveLocalizedPackageInfos() {
 		$package = new Package($this->queue->packageID);

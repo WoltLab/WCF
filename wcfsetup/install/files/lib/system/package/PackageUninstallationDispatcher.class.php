@@ -139,8 +139,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	protected function uninstallPackage(array $nodeData) {
 		PackageEditor::deleteAll([$this->queue->packageID]);
 		
-		// remove localized package infos
-		// todo: license/readme
+		// remove localized package info
 		$sql = "DELETE FROM	wcf".WCF_N."_language_item
 			WHERE		languageItem IN (?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);

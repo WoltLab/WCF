@@ -507,8 +507,6 @@ class PackageInstallationNodeBuilder {
 					// the new delivered required version of the package has a
 					// higher version number, thus update/replace the existing
 					// package installation queue
-					
-					// todo
 				}
 			}
 			

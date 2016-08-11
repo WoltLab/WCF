@@ -137,7 +137,7 @@ class MenuItem extends DatabaseObject {
 	}
 	
 	/**
-	 * TODO: Comment
+	 * Returns the page handler for this item.
 	 * 
 	 * @return	IMenuPageHandler|null
 	 * @throws	SystemException

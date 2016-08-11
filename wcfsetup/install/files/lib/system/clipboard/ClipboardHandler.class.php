@@ -169,8 +169,6 @@ class ClipboardHandler extends SingletonFactory {
 	 * Returns the id of the clipboard object type with the given name or `null` if no such
 	 * clipboard object type exists.
 	 * 
-	 * TODO: The name of this method does not reflect its return type and appears not to be used.
-	 * 
 	 * @param	string		$objectType
 	 * @return	integer|null
 	 */

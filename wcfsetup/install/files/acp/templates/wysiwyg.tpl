@@ -94,7 +94,6 @@
 			
 			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
 			
-			// TODO: Should the media stuff be here?
 			{include file='mediaJavaScript'}
 			
 			var element = elById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');

@@ -263,25 +263,6 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		$this->text = $this->htmlInputProcessor->getHtml();
-		
-		// parse URLs
-		/* TODO
-		if ($this->preParse == 1) {
-			// BBCodes are enabled
-			if ($this->enableBBCodes) {
-				if ($this->allowedBBCodesPermission) {
-					$this->text = PreParser::getInstance()->parse($this->text, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
-				}
-				else {
-					$this->text = PreParser::getInstance()->parse($this->text);
-				}
-			}
-			// BBCodes are disabled, thus no allowed BBCodes
-			else {
-				$this->text = PreParser::getInstance()->parse($this->text, array());
-			}
-		}
-		*/
 	}
 	
 	/**

@@ -12,9 +12,6 @@ use wcf\util\StringUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User\Group
- * 
- * @todo	text options types can't have line breaks, why use them to split
- *		values? what to do?
  */
 class TextUserGroupOptionType extends TextOptionType implements IUserGroupOptionType {
 	/**

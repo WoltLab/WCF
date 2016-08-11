@@ -207,7 +207,6 @@ class StyleAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->readValues();
 		
-		// @TODO
 		$colors = [];
 		foreach ($this->colors as $categoryName => $variables) {
 			foreach ($variables as $variable) {

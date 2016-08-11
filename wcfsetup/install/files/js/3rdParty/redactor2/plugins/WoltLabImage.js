@@ -7,7 +7,6 @@ $.Redactor.prototype.WoltLabImage = function() {
 			this.button.addCallback(button, this.WoltLabImage.add);
 			
 			// add support for image source when editing
-			// TODO: float
 			var mpShowEdit = this.image.showEdit;
 			this.image.showEdit = (function($image) {
 				var image = $image[0];
