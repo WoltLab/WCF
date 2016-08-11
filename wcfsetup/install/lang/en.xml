@@ -143,6 +143,7 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.box">
 		<item name="wcf.acp.box.add"><![CDATA[Add Box]]></item>
+		<item name="wcf.acp.box.boxController"><![CDATA[Controller]]></item>
 		<item name="wcf.acp.box.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.box.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.acp.box.cssClassName"><![CDATA[CSS Class Name]]></item>
@@ -151,7 +152,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.image"><![CDATA[Box Image]]></item>
 		<item name="wcf.acp.box.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.box.i18n.i18n"><![CDATA[Multilingual box]]></item>
+		<item name="wcf.acp.box.i18n.i18n.description"><![CDATA[The content will be provided for each language separately.]]></item>
 		<item name="wcf.acp.box.i18n.none"><![CDATA[Monolingual box]]></item>
+		<item name="wcf.acp.box.i18n.none.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
 		<item name="wcf.acp.box.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.box.linkType.none"><![CDATA[None]]></item>
 		<item name="wcf.acp.box.linkType.internal"><![CDATA[Internal link]]></item>
@@ -161,15 +164,21 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
 		<item name="wcf.acp.box.position.error.invalid"><![CDATA[The selected position is invalid.]]></item>
+		<item name="wcf.acp.box.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.acp.box.settings.limit"><![CDATA[Maximum Number of Items]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Show box title]]></item>
-		<item name="wcf.acp.box.type"><![CDATA[Page Type]]></item>
+		<item name="wcf.acp.box.type"><![CDATA[Box Type]]></item>
 		<item name="wcf.acp.box.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.box.type.html.description"><![CDATA[Use raw HTML to build the box content for maximum flexibility.]]></item>
 		<item name="wcf.acp.box.type.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.box.type.system.description"><![CDATA[Dynamic boxes with individual configuration.]]></item>
 		<item name="wcf.acp.box.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.box.type.text.description"><![CDATA[Create content using the built-in WYSIWYG editor (recommended).]]></item>
 		<item name="wcf.acp.box.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.box.type.tpl.description"><![CDATA[Similar to the type “HTML”, but offers additional support for template scripting.]]></item>
 		<item name="wcf.acp.box.visibleEverywhere"><![CDATA[Visible everywhere]]></item>
-		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Choose Where Box Will be Explicitly <strong>Visible</strong>]]></item>
-		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Choose Where Box Will be Explicitly <strong>Hidden</strong>]]></item>
+		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Choose Where the Box Will be Explicitly <strong>Visible</strong>]]></item>
+		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Choose Where the Box Will be Explicitly <strong>Hidden</strong>]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -2708,7 +2717,7 @@ Errors are:
 		<item name="wcf.acp.page.type.html.description"><![CDATA[Use raw HTML to build the page content for maximum flexibility.]]></item>
 		<item name="wcf.acp.page.type.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.page.type.text"><![CDATA[Text]]></item>
-		<item name="wcf.acp.page.type.text.description"><![CDATA[Create content using the built-in WYISWYG editor (recommended).]]></item>
+		<item name="wcf.acp.page.type.text.description"><![CDATA[Create content using the built-in WYSIWYG editor (recommended).]]></item>
 		<item name="wcf.acp.page.type.tpl"><![CDATA[Template]]></item>
 		<item name="wcf.acp.page.type.tpl.description"><![CDATA[Similar to the type “HTML”, but offers additional support for template scripting.]]></item>
 		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>

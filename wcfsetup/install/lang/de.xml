@@ -144,6 +144,7 @@
 	
 	<category name="wcf.acp.box">
 		<item name="wcf.acp.box.add"><![CDATA[Box hinzufügen]]></item>
+		<item name="wcf.acp.box.boxController"><![CDATA[Controller]]></item>
 		<item name="wcf.acp.box.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.box.contents"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.box.cssClassName"><![CDATA[CSS-Klassen]]></item>
@@ -152,7 +153,9 @@
 		<item name="wcf.acp.box.image"><![CDATA[Box-Bild]]></item>
 		<item name="wcf.acp.box.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.box.i18n.i18n"><![CDATA[Mehrsprachige Box]]></item>
+		<item name="wcf.acp.box.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.box.i18n.none"><![CDATA[Einsprachige Box]]></item>
+		<item name="wcf.acp.box.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verasst werden.]]></item>
 		<item name="wcf.acp.box.link"><![CDATA[Verlinkung]]></item>
 		<item name="wcf.acp.box.linkType.none"><![CDATA[Keine]]></item>
 		<item name="wcf.acp.box.linkType.internal"><![CDATA[Interner Link]]></item>
@@ -162,12 +165,18 @@
 		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Box verwendet.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
 		<item name="wcf.acp.box.position.error.invalid"><![CDATA[Die ausgewählte Position ist ungültig.]]></item>
+		<item name="wcf.acp.box.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.acp.box.settings.limit"><![CDATA[Maximale Anzahl]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Box-Titel anzeigen]]></item>
 		<item name="wcf.acp.box.type"><![CDATA[Box-Typ]]></item>
 		<item name="wcf.acp.box.type.html"><![CDATA[HTML]]></item>
+		<item name="wcf.acp.box.type.html.description"><![CDATA[Direkte Eingabe des gesamten HTML für den Inhaltsbereich mit maximaler Flexibilität.]]></item>
 		<item name="wcf.acp.box.type.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.box.type.system.description"><![CDATA[Dynamische Box mit individueller Konfiguration.]]></item>
 		<item name="wcf.acp.box.type.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.box.type.text.description"><![CDATA[Erstellung des Inhaltes mit Hilfe des WYSIWYG-Editors (empfohlen).]]></item>
 		<item name="wcf.acp.box.type.tpl"><![CDATA[Template]]></item>
+		<item name="wcf.acp.box.type.tpl.description"><![CDATA[Eingabemöglichkeit entspricht dem Typ „HTML“, zusätzlich wird Template-Scripting unterstützt.]]></item>
 		<item name="wcf.acp.box.visibleEverywhere"><![CDATA[Box überall sichtbar]]></item>
 		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Box auf ausgewählten Seiten <strong>explizit anzeigen</strong>]]></item>
 		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Box auf ausgewählten Seiten <strong>nicht anzeigen</strong>]]></item>
