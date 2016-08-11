@@ -264,7 +264,6 @@ class PreParser extends SingletonFactory {
 					foreach ($usernames as $type => $username) {
 						if (!isset($users[$username])) continue;
 						$link = LinkHandler::getInstance()->getLink('User', [
-							'appendSession' => false,
 							'object' => $users[$username]
 						]);
 						

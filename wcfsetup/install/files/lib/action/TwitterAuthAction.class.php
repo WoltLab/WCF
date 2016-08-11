@@ -146,9 +146,7 @@ class TwitterAuthAction extends AbstractAction {
 		
 		// start auth by fetching request_token
 		try {
-			$callbackURL = LinkHandler::getInstance()->getLink('TwitterAuth', [
-				'appendSession' => false
-			]);
+			$callbackURL = LinkHandler::getInstance()->getLink('TwitterAuth');
 			$oauthHeader = [
 				'oauth_callback' => $callbackURL,
 				'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),

@@ -136,7 +136,7 @@ class UserPage extends AbstractPage {
 			$this->visitorList->readObjects();
 		}
 		
-		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('User', ['object' => $this->user->getDecoratedObject(), 'appendSession' => false]), true);
+		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('User', ['object' => $this->user->getDecoratedObject()]), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'profile', true);
 		MetaTagHandler::getInstance()->addTag('profile:username', 'profile:username', $this->user->username, true);
 		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->user->username . ' - ' . WCF::getLanguage()->get('wcf.user.members') . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);

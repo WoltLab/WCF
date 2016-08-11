@@ -33,9 +33,7 @@ class GoogleAuthAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		$callbackURL = LinkHandler::getInstance()->getLink('GoogleAuth', [
-			'appendSession' => false
-		]);
+		$callbackURL = LinkHandler::getInstance()->getLink('GoogleAuth');
 		// user accepted the connection
 		if (isset($_GET['code'])) {
 			try {
