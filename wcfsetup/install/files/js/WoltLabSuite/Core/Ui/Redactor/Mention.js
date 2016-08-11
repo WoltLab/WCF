@@ -1,6 +1,8 @@
 define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, Environment, EventHandler, UiAlignment) {
 	"use strict";
 	
+	var _dropdownContainer = null;
+	
 	function UiRedactorMention(redactor) { this.init(redactor); }
 	UiRedactorMention.prototype = {
 		init: function(redactor) {
@@ -145,7 +147,6 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 			elAttr(mention, 'contenteditable', 'false');
 			elData(mention, 'user-id', elData(item, 'user-id'));
 			elData(mention, 'username', elData(item, 'username'));
-			mention.textContent = elData(item, 'username');
 			
 			// U+200C = zero width non-joiner
 			var text = document.createTextNode('\u200c');
@@ -231,7 +232,14 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 			if (this._dropdownMenu === null) {
 				this._dropdownMenu = elCreate('ol');
 				this._dropdownMenu.className = 'dropdownMenu';
-				elById('dropdownMenuContainer').appendChild(this._dropdownMenu);
+				
+				if (_dropdownContainer === null) {
+					_dropdownContainer = elCreate('div');
+					_dropdownContainer.className = 'dropdownMenuContainer';
+					document.body.appendChild(_dropdownContainer);
+				}
+				
+				_dropdownContainer.appendChild(this._dropdownMenu);
 			}
 			
 			this._dropdownMenu.innerHTML = '';
