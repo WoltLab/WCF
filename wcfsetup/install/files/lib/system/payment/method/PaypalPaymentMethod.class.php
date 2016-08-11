@@ -75,7 +75,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 					<input type="hidden" name="lc" value="'.strtoupper(WCF::getLanguage()->languageCode).'">
 					<input type="hidden" name="no_note" value="1">
 					<input type="hidden" name="no_shipping" value="1">
-					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', ['appendSession' => false])).'">
+					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback')).'">
 					<input type="hidden" name="quantity" value="1">
 					<input type="hidden" name="return" value="'.StringUtil::encodeHTML($returnURL).'">
 			
@@ -96,7 +96,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 					<input type="hidden" name="lc" value="'.strtoupper(WCF::getLanguage()->languageCode).'">
 					<input type="hidden" name="no_note" value="1">
 					<input type="hidden" name="no_shipping" value="1">
-					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback', ['appendSession' => false])).'">
+					<input type="hidden" name="notify_url" value="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('PaypalCallback')).'">
 					<input type="hidden" name="quantity" value="1">
 					<input type="hidden" name="return" value="'.StringUtil::encodeHTML($returnURL).'">	
 					

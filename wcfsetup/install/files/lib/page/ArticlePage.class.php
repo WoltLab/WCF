@@ -104,7 +104,7 @@ class ArticlePage extends AbstractArticlePage {
 		
 		// add meta/og tags
 		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->articleContent->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
-		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('Article', ['object' => $this->articleContent, 'appendSession' => false]), true);
+		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('Article', ['object' => $this->articleContent]), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->articleContent->teaser, true);
 		

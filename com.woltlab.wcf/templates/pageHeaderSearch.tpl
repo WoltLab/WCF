@@ -20,13 +20,13 @@
 
 {event name='settings'}
 
-<div id="pageHeaderSearch" class="pageHeaderSearch" itemscope itemtype="http://schema.org/WebSite" itemid="{link appendSession=false}{/link}">
-	<meta itemprop="url" content="{link appendSession=false}{/link}">
+<div id="pageHeaderSearch" class="pageHeaderSearch" itemscope itemtype="http://schema.org/WebSite" itemid="{link}{/link}">
+	<meta itemprop="url" content="{link}{/link}">
 	<meta itemprop="name" content="{PAGE_TITLE|language}">
 	<meta itemprop="description" content="{PAGE_DESCRIPTION|language}">
 	
 	<form method="post" action="{@$__searchLink}" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
-		<meta itemprop="target" content="{link controller='Search' appendSession=false}q={/link}{literal}{q}{/literal}">
+		<meta itemprop="target" content="{link controller='Search'}q={/link}{literal}{q}{/literal}">
 		
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
