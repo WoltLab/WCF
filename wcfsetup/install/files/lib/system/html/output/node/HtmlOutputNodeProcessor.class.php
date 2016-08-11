@@ -50,9 +50,28 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 			while ($paragraphs->length) {
 				$paragraph = $paragraphs->item(0);
 				
-				for ($i = 0; $i < 2; $i++) {
-					$br = $this->getDocument()->createElement('br');
-					$paragraph->appendChild($br);
+				$isLastNode = true;
+				$sibling = $paragraph;
+				while ($sibling = $sibling->nextSibling) {
+					if ($sibling->nodeType === XML_ELEMENT_NODE) {
+						if ($sibling->nodeName !== 'br') {
+							$isLastNode = false;
+							break;
+						}
+					}
+					else if ($sibling->nodeType === XML_TEXT_NODE) {
+						if (StringUtil::trim($sibling->textContent) !== '') {
+							$isLastNode = false;
+							break;
+						}
+					}
+				}
+				
+				if (!$isLastNode) {
+					for ($i = 0; $i < 2; $i++) {
+						$br = $this->getDocument()->createElement('br');
+						$paragraph->appendChild($br);
+					}
 				}
 				
 				DOMUtil::removeNode($paragraph, true);
