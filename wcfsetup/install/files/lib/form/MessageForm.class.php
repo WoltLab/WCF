@@ -6,14 +6,11 @@ use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\bbcode\BBCodeParser;
-use wcf\system\bbcode\PreParser;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
