@@ -741,6 +741,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			elRemove(container);
 			
 			elAttr(element, 'type', 'date' + (data.isDateTime ? 'time' : ''));
+			element.name = data.shadow.name;
 			element.value = data.shadow.value;
 			
 			element.removeAttribute('data-value');
