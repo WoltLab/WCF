@@ -67,12 +67,6 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		$definition->addAttribute('img', 'data-media-id', 'Number');
 		$definition->addAttribute('img', 'data-media-size', new \HTMLPurifier_AttrDef_Enum(['small', 'medium', 'large', 'original']));
 		
-		// mention
-		$definition->addElement('woltlab-mention', 'Inline', 'Inline', '', [
-			'data-user-id' => 'Number',
-			'data-username' => 'Text'
-		]);
-		
 		// spoiler
 		$definition->addElement('woltlab-spoiler', 'Block', 'Flow', '', [
 			'data-label' => 'Text'

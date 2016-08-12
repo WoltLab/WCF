@@ -1,13 +1,3 @@
-<style>
-	woltlab-mention {
-		background-color: rgb(240, 248, 255);
-		border: 1px solid rgb(52, 152, 219);
-		display: inline-block;
-		margin: 0 3px;
-		padding: 0 2px;
-	}
-</style>
-
 <script data-relocate="true">
 	head.load([
 		{if ENABLE_DEBUG_MODE}

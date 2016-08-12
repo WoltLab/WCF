@@ -143,16 +143,8 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 			range.deleteContents();
 			range.collapse(true);
 			
-			var mention = elCreate('woltlab-mention');
-			elAttr(mention, 'contenteditable', 'false');
-			elData(mention, 'user-id', elData(item, 'user-id'));
-			elData(mention, 'username', elData(item, 'username'));
-			
-			// U+200C = zero width non-joiner
-			var text = document.createTextNode('\u200c');
-			
+			var text = document.createTextNode('@' + elData(item, 'username') + '\u00A0');
 			range.insertNode(text);
-			range.insertNode(mention);
 			
 			newRange = document.createRange();
 			newRange.selectNode(text);

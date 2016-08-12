@@ -46,15 +46,19 @@ class MessageUtil {
 	public static function getMentionedUsers(HtmlInputProcessor $htmlInputProcessor) {
 		$usernames = [];
 		
-		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-mention');
+		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-metacode');
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
+			if ($element->getAttribute('data-name') != 'user') {
+				continue;
+			}
+			
 			if (DOMUtil::hasParent($element, 'blockquote')) {
 				// ignore mentions within quotes
 				continue;
 			}
 			
-			$usernames[] = $element->getAttribute('data-username');
+			$usernames[] = $element->textContent;
 		}
 		
 		return $usernames;

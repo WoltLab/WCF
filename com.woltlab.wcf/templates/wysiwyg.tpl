@@ -1,25 +1,3 @@
-<style>
-	woltlab-mention {
-		background-color: rgb(241, 246, 251);
-		border: 1px solid rgb(176, 200, 224);
-		border-radius: 2px;
-		display: inline-block;
-		margin: 0 3px;
-		padding: 0 2px;
-	}
-	
-	woltlab-mention::before {
-		color: rgb(125, 130, 135);
-		content: "@";
-		padding-right: 2px;
-	}
-	
-	woltlab-mention::after {
-		color: rgb(44, 62, 80);
-		content: attr(data-username);
-	}
-</style>
-
 <script data-relocate="true">
 	head.load([
 		{if ENABLE_DEBUG_MODE}

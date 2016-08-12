@@ -770,6 +770,11 @@
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname>wcf\system\message\embedded\object\MediaMessageEmbeddedObjectHandler</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.user</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname>wcf\system\message\embedded\object\UserMessageEmbeddedObjectHandler</classname>
+		</type>
 		<!-- embedded object handlers -->
 		
 		<type>

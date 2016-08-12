@@ -227,5 +227,15 @@
 				</attribute>
 			</attributes>
 		</bbcode>
+		
+		<bbcode name="user">
+			<classname>wcf\system\bbcode\UserBBCode</classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
 	</import>
 </data>

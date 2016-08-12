@@ -26,7 +26,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	 * list of bbcode tags that are always available
 	 * @var string[]
 	 */
-	protected static $alwaysAvailable = ['align', 'attach', 'b', 'code', 'i', 'list', 'quote', 's', 'sub', 'sup', 'table', 'td', 'tr', 'tt', 'u', 'wsm', 'wsmg', 'wsp'];
+	protected static $alwaysAvailable = ['align', 'attach', 'b', 'code', 'i', 'list', 'quote', 's', 'sub', 'sup', 'table', 'td', 'tr', 'tt', 'u', 'user', 'wsm', 'wsmg', 'wsp'];
 	
 	/**
 	 * @inheritDoc

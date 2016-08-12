@@ -7,6 +7,7 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -294,9 +295,10 @@ class HtmlInputNodeTextParser {
 				}
 				
 				if ($pos !== false) {
-					$element = $text->ownerDocument->createElement('woltlab-mention');
-					$element->setAttribute('data-user-id', $userID);
-					$element->setAttribute('data-username', $username);
+					$element = $text->ownerDocument->createElement('woltlab-metacode');
+					$element->setAttribute('data-name', 'user');
+					$element->setAttribute('data-attributes', base64_encode(JSON::encode([$userID])));
+					$element->appendChild($text->ownerDocument->createTextNode($username));
 					
 					$marker = $this->addReplacement($text, $element);
 					

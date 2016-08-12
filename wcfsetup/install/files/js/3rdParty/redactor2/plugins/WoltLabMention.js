@@ -3,8 +3,6 @@ $.Redactor.prototype.WoltLabMention = function() {
 	
 	return {
 		init: function() {
-			//var WoltLabMention = document.registerElement('woltlab-mention');
-			
 			require(['WoltLabSuite/Core/Ui/Redactor/Mention'], (function(UiRedactorMention) {
 				new UiRedactorMention(this);
 			}).bind(this));
