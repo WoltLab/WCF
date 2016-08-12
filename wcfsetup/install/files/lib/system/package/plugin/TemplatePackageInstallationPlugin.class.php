@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
+use wcf\system\exception\SystemException;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\TemplatesFileHandler;
 use wcf\system\WCF;
@@ -104,7 +105,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 					return false;
 				}
 			}
-			catch (\SystemException $e) {
+			catch (SystemException $e) {
 				return false;
 			}
 			
