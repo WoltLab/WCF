@@ -7541,6 +7541,8 @@ jQuery.fn.extend({
 				console.debug("Unsupported method '" + method + "' for datepicker()");
 				break;
 		}
+		
+		return this;
 	}
 });
 
