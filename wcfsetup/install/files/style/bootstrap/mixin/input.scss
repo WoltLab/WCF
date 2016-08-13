@@ -17,10 +17,13 @@
 		color: $wcfInputTextActive;
 	}
 	
-	&[disabled],
-	&[readonly] {
+	&[disabled] {
 		background-color: $wcfInputDisabledBackground !important;
 		border-color: $wcfInputDisabledBorder !important;
+		color: $wcfInputDisabledText !important;
+	}
+	
+	&[readonly] {
 		color: $wcfInputDisabledText !important;
 	}
 }
