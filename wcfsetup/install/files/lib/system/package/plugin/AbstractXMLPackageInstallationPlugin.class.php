@@ -357,7 +357,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 					return false;
 				}
 			}
-			catch (\SystemException $e) {
+			catch (SystemException $e) {
 				return false;
 			}
 			

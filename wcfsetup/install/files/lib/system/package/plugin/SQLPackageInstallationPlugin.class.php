@@ -163,7 +163,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 					return false;
 				}
 			}
-			catch (\SystemException $e) {
+			catch (SystemException $e) {
 				return false;
 			}
 			
