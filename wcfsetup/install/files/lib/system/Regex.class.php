@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Represents a regular expression.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 Tim Duesterhus
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
