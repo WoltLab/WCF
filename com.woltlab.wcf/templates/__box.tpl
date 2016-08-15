@@ -19,7 +19,7 @@
 		</h2>
 	{/if}
 	
-	<div class="boxContent">
+	<div class="boxContent{if $box->boxType == 'text'} htmlContent{/if}">
 		{@$box->getContent()}
 	</div>
 {if $box->showHeader}</section>{else}</div>{/if}
