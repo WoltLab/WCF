@@ -30,6 +30,7 @@ class EmailTemplateEngine extends TemplateEngine {
 			$statement->execute(['_wcf_email/']);
 			
 			parent::setTemplateGroupID($statement->fetchSingleColumn());
+			$initialized = true;
 		}
 		
 		return parent::getTemplateGroupID();
