@@ -126,6 +126,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 			if (value.length < this._options.minLength) {
 				if (this._dropdownContainerId) {
 					UiSimpleDropdown.close(this._dropdownContainerId);
+					this._activeItem = null;
 				}
 				
 				// value below threshold
