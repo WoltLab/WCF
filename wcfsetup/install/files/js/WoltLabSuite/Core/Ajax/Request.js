@@ -61,6 +61,9 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			this._options.url = Core.convertLegacyUrl(this._options.url);
+			if (this._options.url.indexOf('index.php') === 0) {
+				this._options.url = WCF_PATH + this._options.url;
+			}
 			
 			if (this._options.pinData) {
 				this._data = Core.extend({}, this._options.data);
