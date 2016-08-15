@@ -16,12 +16,12 @@ use wcf\system\SingletonFactory;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Object\Type
  * 
- * @property-read	integer		$objectTypeID
- * @property-read	integer		$definitionID
- * @property-read	integer		$packageID
- * @property-read	string		$objectType
- * @property-read	string		$className
- * @property-read	array		$additionalData
+ * @property-read	integer		$objectTypeID		unique id of the object type
+ * @property-read	integer		$definitionID		id of the object type definition the object type belongs to
+ * @property-read	integer		$packageID		id of the package the which delivers the object type
+ * @property-read	string		$objectType		textual identifier of the object type
+ * @property-read	string		$className		PHP class name of the object type processor (implementing the interface forced by the object type definition)
+ * @property-read	array		$additionalData		array with additional data of the object type
  */
 class ObjectType extends ProcessibleDatabaseObject {
 	use TDatabaseObjectOptions;

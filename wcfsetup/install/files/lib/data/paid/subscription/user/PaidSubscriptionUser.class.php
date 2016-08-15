@@ -5,19 +5,19 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Represents a paid subscription user.
+ * Represents an association between a paid subscription and a user.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription\User
- *
- * @property-read	integer		$subscriptionUserID
- * @property-read	integer		$subscriptionID
- * @property-read	integer		$userID
- * @property-read	integer		$startDate
- * @property-read	integer		$endDate
- * @property-read	integer		$isActive
+ * 
+ * @property-read	integer		$subscriptionUserID	unique id of the paid subscription-user-association
+ * @property-read	integer		$subscriptionID		id of the paid subscription the paid subscription-user-association belongs to
+ * @property-read	integer		$userID			id of the user the paid subscription-user-association belongs to
+ * @property-read	integer		$startDate		timestamp at which the paid subscription started
+ * @property-read	integer		$endDate		timestamp at which the paid subscription ended or will end
+ * @property-read	integer		$isActive		is `1` if the user's paid subscription is currently active and thus not expired, otherwise `0`
  */
 class PaidSubscriptionUser extends DatabaseObject {
 	/**

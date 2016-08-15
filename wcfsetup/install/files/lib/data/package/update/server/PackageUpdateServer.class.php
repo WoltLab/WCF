@@ -14,15 +14,15 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Server
  *
- * @property-read	integer		$packageUpdateServerID
- * @property-read	string		$serverURL
- * @property-read	string		$loginUsername
- * @property-read	string		$loginPassword
- * @property-read	integer		$isDisabled
- * @property-read	integer		$lastUpdateTime
- * @property-read	string		$status
- * @property-read	string		$errorMessage
- * @property-read	string		$apiVersion
+ * @property-read	integer		$packageUpdateServerID		unique id of the package update server
+ * @property-read	string		$serverURL			url of the package update server
+ * @property-read	string		$loginUsername			username used to login on the package update server
+ * @property-read	string		$loginPassword			password used to login on the package update server
+ * @property-read	integer		$isDisabled			is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
+ * @property-read	integer		$lastUpdateTime			timestamp at which the data of the package update server has been fetched the last time
+ * @property-read	string		$status				status of the package update server (`online` or `offline`)
+ * @property-read	string		$errorMessage			error message if the package update server if offline or empty otherwise 
+ * @property-read	string		$apiVersion			version of the supported package update server api (`2.0`, `2.1`)
  */
 class PackageUpdateServer extends DatabaseObject {
 	/**

@@ -14,12 +14,12 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Template
  *
- * @property-read	integer		$templateID
- * @property-read	integer		$packageID
- * @property-read	string		$templateName
- * @property-read	string		$application
- * @property-read	integer|null	$templateGroupID
- * @property-read	integer		$lastModificationTime
+ * @property-read	integer		$templateID		unique id of the template
+ * @property-read	integer		$packageID		id of the package which delivers the template
+ * @property-read	string		$templateName		name of the template
+ * @property-read	string		$application		abbreviation of the application to which the template belongs
+ * @property-read	integer|null	$templateGroupID	id of the template group to which the template belongs or `null` if the template belongs to no template group
+ * @property-read	integer		$lastModificationTime	timestamp at which the template has been edited the last time
  */
 class Template extends DatabaseObject {
 	/** @noinspection PhpMissingParentConstructorInspection */

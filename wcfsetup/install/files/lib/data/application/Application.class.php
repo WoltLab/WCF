@@ -17,12 +17,12 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Application
  *
- * @property-read	integer		$packageID
- * @property-read	string		$domainName
- * @property-read	string		$domainPath
- * @property-read	string		$cookieDomain
- * @property-read	string		$cookiePath
- * @property-read       integer         $isTainted
+ * @property-read	integer		$packageID	id of the package which delivers the application
+ * @property-read	string		$domainName	domain used to access the application (may not contain path components, see `$domainPath`)
+ * @property-read	string		$domainPath	path used to access the application
+ * @property-read	string		$cookieDomain	domain used to set cookies (corresponds to `domain` cookie property; may not contain path components, see `$cookiePath`) 
+ * @property-read	string		$cookiePath	path of the cookie (corresponds to `path` cookie property)
+ * @property-read	integer		$isTainted	is `1` if the application is being uninstalled and thus should not be loaded during uninstallation, otherwise `0`
  */
 class Application extends DatabaseObject {
 	/**

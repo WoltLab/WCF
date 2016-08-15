@@ -28,24 +28,24 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
  * 
- * @property-read	integer		$boxID
+ * @property-read	integer		$boxID			unique id of the box
  * @property-read	integer|null	$objectTypeID		id of the box controller object type
- * @property-read	string		$identifier
- * @property-read	string		$name
- * @property-read	string		$boxType
- * @property-read	string		$position
- * @property-read	integer		$showOrder
- * @property-read	integer		$visibleEverywhere
- * @property-read	integer		$isMultilingual
- * @property-read	string		$cssClassName
- * @property-read	integer		$showHeader
- * @property-read	integer		$originIsSystem
- * @property-read	integer		$packageID
- * @property-read	integer|null	$menuID
- * @property-read	integer		$linkPageID
- * @property-read	integer		$linkPageObjectID
- * @property-read	string		$externalURL
- * @property-read	mixed[]		$additionalData
+ * @property-read	string		$identifier		unique textual identifier of the box
+ * @property-read	string		$name			monolingual name of the box shown in the ACP
+ * @property-read	string		$boxType		type of the box which determines the method of outputting its content (default box types are `text`, `html`, `tpl`, `system`)
+ * @property-read	string		$position		name of the position on the page at which the box is shown 
+ * @property-read	integer		$showOrder		position of the box in relation to its siblings
+ * @property-read	integer		$visibleEverywhere	is `1` if the box is visible on every page, otherwise `0`
+ * @property-read	integer		$isMultilingual		is `1` if the box content is available in multiple languages, otherwise `0`
+ * @property-read	string		$cssClassName		css class name(s) of the box
+ * @property-read	integer		$showHeader		is `1` if the box header will be shown, otherwise `0`
+ * @property-read	integer		$originIsSystem		is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
+ * @property-read	integer		$packageID		id of the package which delivers the box or `1` if it has been created in the ACP
+ * @property-read	integer|null	$menuID			id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
+ * @property-read	integer|null	$linkPageID		id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
+ * @property-read	integer		$linkPageObjectID	id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked 
+ * @property-read	string		$externalURL		external link used to for the box image and box title or empty if no external link is set
+ * @property-read	array		$additionalData		array with additional data of the box
  */
 class Box extends DatabaseObject {
 	/**

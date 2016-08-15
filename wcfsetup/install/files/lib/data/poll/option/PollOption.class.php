@@ -11,11 +11,11 @@ use wcf\data\DatabaseObject;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Poll\Poll
  * 
- * @property-read	integer		$optionID
- * @property-read	integer		$pollID
- * @property-read	string		$optionValue
- * @property-read	integer		$votes
- * @property-read	integer		$showOrder
+ * @property-read	integer		$optionID	unique id of the poll option
+ * @property-read	integer		$pollID		id of the poll the option belongs to
+ * @property-read	string		$optionValue	text of the poll option
+ * @property-read	integer		$votes		number of votes for the poll option
+ * @property-read	integer		$showOrder	position of the poll option in relation to the other options of the poll
  */
 class PollOption extends DatabaseObject {
 	/**

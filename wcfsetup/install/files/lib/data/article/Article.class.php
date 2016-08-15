@@ -15,18 +15,18 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
  *
- * @property-read	integer		$articleID
- * @property-read	integer		$userID
- * @property-read	string		$username
- * @property-read	integer		$time
- * @property-read	integer		$categoryID
- * @property-read	integer		$isMultilingual
- * @property-read       integer         $publicationStatus
- * @property-read       integer         $publicationDate
- * @property-read       integer         $enableComments
- * @property-read       integer         $comments
- * @property-read       integer         $views
- * @property-read       integer         $cumulativeLikes
+ * @property-read	integer		$articleID		unique id of the article
+ * @property-read	integer|null	$userID			id of the user the article belongs to or `null` if the user does not exist anymore
+ * @property-read	string		$username		name of the user the article belongs to
+ * @property-read	integer		$time			timestamp at which the comment has been written
+ * @property-read	integer		$categoryID		id of the category the article belongs to
+ * @property-read	integer		$isMultilingual		is `1` if the article is available in multiple languages, otherwise `0`
+ * @property-read	integer		$publicationStatus	publication status of the article (see `Article::UNPUBLISHED`, `Article::PUBLISHED` and `Article::DELAYED_PUBLICATION`)
+ * @property-read	integer		$publicationDate	timestamp at which the article will be automatically published or `0` if it has already been published
+ * @property-read	integer		$enableComments		is `1` if comments are enabled for the article, otherwise `0`
+ * @property-read	integer		$comments		number of comments on the article
+ * @property-read	integer		$views			number of times the article has been viewed
+ * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
  */
 class Article extends DatabaseObject implements ILinkableObject {
 	/**

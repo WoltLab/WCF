@@ -14,18 +14,18 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode
  * 
- * @property-read	integer		$bbcodeID
- * @property-read	string		$bbcodeTag
- * @property-read	integer		$packageID
- * @property-read	string		$htmlOpen
- * @property-read	string		$htmlClose
- * @property-read	string		$className
- * @property-read	integer		$isBlockElement
- * @property-read	string		$wysiwygIcon
- * @property-read	string		$buttonLabel
- * @property-read	integer		$isSourceCode
- * @property-read	integer		$showButton
- * @property-read	integer		$originIsSystem
+ * @property-read	integer		$bbcodeID		unique id of the bbcode
+ * @property-read	string		$bbcodeTag		tag of the bbcode
+ * @property-read	integer		$packageID		id of the package which delivers the bbcode or `1` if it has been created in the acp
+ * @property-read	string		$htmlOpen		html code of the opening tag (without the less-than sign and greater-than sign) or empty if no such html code exists
+ * @property-read	string		$htmlClose		html code of the closing tag (without the less-than sign and greater-than sign) or empty if no such html code exists
+ * @property-read	string		$className		name of the PHP class impementing `wcf\system\bbcode\IBBCode` or empty if no such class exists
+ * @property-read	integer		$isBlockElement		is `1` if the bbcode represents a block element and thus can contain multiple lines, otherwise `0`
+ * @property-read	string		$wysiwygIcon		css class name used as icon for the bbcode in the editor toolbar
+ * @property-read	string		$buttonLabel		name of the language item used as button label for the bbcode in the editor toolbar
+ * @property-read	integer		$isSourceCode		is `1` if the bbcode's content is treated as source code, otherwise `0`
+ * @property-read	integer		$showButton		is `1` if a button for the bbcode will be shown in the editor toolbar, otherwise `0`
+ * @property-read	integer		$originIsSystem		is `1` if the bbcode has been delivered by a package, otherwise `0` (if the bbcode has been created by an admin in the acp)
  */
 class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	/**

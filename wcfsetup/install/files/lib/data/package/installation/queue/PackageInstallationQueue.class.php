@@ -4,24 +4,24 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Represents a package installation queue.
+ * Represents a package installation queue entry.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Installation\Queue
  *
- * @property-read	integer		$queueID
- * @property-read	integer		$parentQueueID
- * @property-read	integer		$processNo
- * @property-read	integer		$userID
- * @property-read	string		$package
- * @property-read	string		$packageName
- * @property-read	integer|null	$packageID
- * @property-read	string		$archive
- * @property-read	string		$action
- * @property-read	integer		$done
- * @property-read	integer		$isApplication
+ * @property-read	integer		$queueID		unique id of the package installation queue entry
+ * @property-read	integer		$parentQueueID		id of the package installation queue entry's parent entry or `0` if it has no parent entry
+ * @property-read	integer		$processNo		numerical identifier of a group of dependent package installation queue entries, i.e. a parent entry and all of its children
+ * @property-read	integer		$userID			id of the user who started the package installation, update or uninstallation
+ * @property-read	string		$package		identifier of the relevant package
+ * @property-read	string		$packageName		name of the relevant package
+ * @property-read	integer|null	$packageID		id of relevant package
+ * @property-read	string		$archive		location of the package file for `$action = install` or `$action = update`, otherwise empty
+ * @property-read	string		$action			action the package installation queue entry belongs to (`install`, `update`, `uninstall`)
+ * @property-read	integer		$done			is `1` if the package installation queue entry has been completed, otherwise `0`
+ * @property-read	integer		$isApplication		is `1` if the package installation queue entry belongs to an application, otherwise `0`
  */
 class PackageInstallationQueue extends DatabaseObject {
 	/**

@@ -15,12 +15,12 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Ad
  *
- * @property-read	integer		$adID
- * @property-read	integer		$objectTypeID
- * @property-read	string		$adName
- * @property-read	string		$ad
- * @property-read	integer		$isDisabled
- * @property-read	integer		$showOrder
+ * @property-read	integer		$adID		unique id of the ad
+ * @property-read	integer		$objectTypeID	id of the `com.woltlab.wcf.adLocation` object type
+ * @property-read	string		$adName		name of the ad shown in ACP
+ * @property-read	string		$ad		ad text
+ * @property-read	integer		$isDisabled	is `1` if the ad is disabled and thus not shown, otherwise `0`
+ * @property-read	integer		$showOrder	position of the ad in relation to the other ads at the same location
  */
 class Ad extends DatabaseObject implements IRouteController {
 	/**

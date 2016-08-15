@@ -13,19 +13,19 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package
  *
- * @property-read	integer		$packageID
- * @property-read	string		$package
- * @property-read	string		$packageDir
- * @property-read	string		$packageName
- * @property-read	string		$packageDescription
- * @property-read	string		$packageVersion
- * @property-read	integer		$packageDate
- * @property-read	integer		$installDate
- * @property-read	integer		$updateDate
- * @property-read	string		$packageURL
- * @property-read	integer		$isApplication
- * @property-read	string		$author
- * @property-read	string		$authorURL
+ * @property-read	integer		$packageID		unique id of the package
+ * @property-read	string		$package		unique textual identifier of the package
+ * @property-read	string		$packageDir		relative directory to Core in which the application is installed or empty if package is no application or Core
+ * @property-read	string		$packageName		name of the package or name of language item which contains the name
+ * @property-read	string		$packageDescription	description of the package or name of language item which contains the description
+ * @property-read	string		$packageVersion		installed version of package
+ * @property-read	integer		$packageDate		timestamp at which the installed package version has been released
+ * @property-read	integer		$installDate		timestamp at which the package has been installed
+ * @property-read	integer		$updateDate		timestamp at which the package has been updated or installed if it has not been updated yet
+ * @property-read	string		$packageURL		external url to website with more information about the package
+ * @property-read	integer		$isApplication		is `1` if the package delivers an application, otherwise `0`
+ * @property-read	string		$author			author of the package
+ * @property-read	string		$authorURL		external url to the website of the package author
  */
 class Package extends DatabaseObject {
 	/**

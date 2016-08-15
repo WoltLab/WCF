@@ -14,16 +14,16 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Menu\Item
  *
- * @property-read	integer		$menuItemID
- * @property-read	integer		$packageID
- * @property-read	string		$menuItem
- * @property-read	string		$parentMenuItem
- * @property-read	string		$menuItemController
- * @property-read	string		$menuItemLink
- * @property-read	integer		$showOrder
- * @property-read	string		$permissions
- * @property-read	string		$options
- * @property-read	string		$icon
+ * @property-read	integer		$menuItemID		unique id of the ACP menu item
+ * @property-read	integer		$packageID		id of the package which delivers the ACP menu item
+ * @property-read	string		$menuItem		textual identifier of the ACP menu item
+ * @property-read	string		$parentMenuItem		textual identifier of the ACP menu item's parent menu item or empty if it has no parent menu item
+ * @property-read	string		$menuItemController	class name of the ACP menu item's controller used to generate menu item link
+ * @property-read	string		$menuItemLink		additional part of the ACP menu item link if `$menuItemController` is set, external link or name of language item which contains the external link
+ * @property-read	integer		$showOrder		position of the ACP menu item in relation to its siblings
+ * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to see the ACP menu item
+ * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the ACP menu item to be shown
+ * @property-read	string		$icon			FontAwesome CSS class name for ACP menu items on the first or third level
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**

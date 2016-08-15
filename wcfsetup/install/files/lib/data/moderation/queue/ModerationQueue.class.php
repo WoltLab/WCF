@@ -12,17 +12,17 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  *
- * @property-read	integer		$queueID
- * @property-read	integer		$objectTypeID
- * @property-read	integer		$objectID
- * @property-read	integer		$containerID
- * @property-read	integer|null	$userID
- * @property-read	integer		$time
- * @property-read	integer|null	$assignedUserID
- * @property-read	integer		$status
- * @property-read	integer		$comments
- * @property-read	integer		$lastChangeTime
- * @property-read	array		$additionalData
+ * @property-read	integer		$queueID		unique id of the moderation queue entry
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.moderation.type` object type
+ * @property-read	integer		$objectID		id of the object of the object type with id `$objectTypeID` to which the moderation queue entry belongs to
+ * @property-read	integer		$containerID		id of the object's container object to which the modification log entry belongs to or `0` if no such container object exists or is logged
+ * @property-read	integer|null	$userID			id of the user who created the moderation queue entry or `null` if the user does not exist anymore or if the moderation queue entry has been created by a guest
+ * @property-read	integer		$time			timestamp at which the moderation queue entry has been created
+ * @property-read	integer|null	$assignedUserID		id of the user to which the moderation queue entry is assigned or `null` if it is not assigned to any user
+ * @property-read	integer		$status			status of the moderation queue entry (see `ModerationQueue::STATUS_*` constants)
+ * @property-read	integer		$comments		number of comments on the moderation queue entry
+ * @property-read	integer		$lastChangeTime		timestamp at which the moderation queue entry has been changed the last time
+ * @property-read	array		$additionalData		array with additional data of the moderation queue entry
  */
 class ModerationQueue extends DatabaseObject {
 	// states of column 'status'

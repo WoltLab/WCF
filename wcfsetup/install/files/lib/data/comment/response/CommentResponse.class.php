@@ -16,12 +16,12 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  *
- * @property-read	integer		$responseID
- * @property-read	integer		$commentID
- * @property-read	integer		$time
- * @property-read	integer|null	$userID
- * @property-read	string		$username
- * @property-read	string		$message
+ * @property-read	integer		$responseID	unique id of the comment response
+ * @property-read	integer		$commentID	id of the comment the comment response belongs to
+ * @property-read	integer		$time		timestamp at which the comment response has been written
+ * @property-read	integer|null	$userID		id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
+ * @property-read	string		$username	name of the user or guest who wrote the comment response
+ * @property-read	string		$message	comment response message
  */
 class CommentResponse extends DatabaseObject implements IMessage {
 	use TUserContent;

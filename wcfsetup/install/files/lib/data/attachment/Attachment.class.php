@@ -16,30 +16,30 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Attachment
  *
- * @property-read	integer		$attachmentID
- * @property-read	integer		$objectTypeID
- * @property-read	integer|null	$objectID
- * @property-read	integer|null	$userID
- * @property-read	string		$tmpHash
- * @property-read	string		$filename
- * @property-read	integer		$filesize
- * @property-read	string		$fileType
- * @property-read	string		$fileHash
- * @property-read	integer		$isImage
- * @property-read	integer		$width
- * @property-read	integer		$height
- * @property-read	string		$tinyThumbnailType
- * @property-read	integer		$tinyThumbnailSize
- * @property-read	integer		$tinyThumbnailWidth
- * @property-read	integer		$tinyThumbnailHeight
- * @property-read	string		$thumbnailType
- * @property-read	integer		$thumbnailSize
- * @property-read	integer		$thumbnailWidth
- * @property-read	integer		$thumbnailHeight
- * @property-read	integer		$downloads
- * @property-read	integer		$lastDownloadTime
- * @property-read	integer		$uploadTime
- * @property-read	integer		$showOrder
+ * @property-read	integer		$attachmentID		unique id of the attachment
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.attachment.objectType` object type
+ * @property-read	integer|null	$objectID		id of the attachment container object the attachment belongs to
+ * @property-read	integer|null	$userID			id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
+ * @property-read	string		$tmpHash		temporary hash used to identify uploaded attachments but not associated with an object yet or empty if the attachment has been associated with an object
+ * @property-read	string		$filename		name of the physical attachment file
+ * @property-read	integer		$filesize		size of the physical attachment file
+ * @property-read	string		$fileType		type of the physical attachment file
+ * @property-read	string		$fileHash		hash of the physical attachment file
+ * @property-read	integer		$isImage		is `1` if the attachment is an image, otherwise `0`
+ * @property-read	integer		$width			width of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$height			height of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	string		$tinyThumbnailType	type of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
+ * @property-read	integer		$tinyThumbnailSize	size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$tinyThumbnailWidth	width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$tinyThumbnailHeight	height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	string		$thumbnailType	type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
+ * @property-read	integer		$thumbnailSize	size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$thumbnailWidth	width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$thumbnailHeight	height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$downloads		number of times the attachment has been downloaded
+ * @property-read	integer		$lastDownloadTime	timestamp at which the attachment has been downloaded the last time
+ * @property-read	integer		$uploadTime		timestamp at which the attachment has been uploaded
+ * @property-read	integer		$showOrder		position of the attachment in relation to the other attachment to the same message
  */
 class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
 	/**

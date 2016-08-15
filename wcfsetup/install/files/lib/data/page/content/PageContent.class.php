@@ -15,15 +15,15 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Page\Content
  * @since	3.0
  *
- * @property-read	integer		$pageContentID
- * @property-read	integer		$pageID
- * @property-read	integer		$languageID
- * @property-read	string		$title
- * @property-read	string		$content
- * @property-read	string		$metaDescription
- * @property-read	string		$metaKeywords
- * @property-read	string		$customURL
- * @property-read	integer		$hasEmbeddedObjects
+ * @property-read	integer		$pageContentID		unique id of the page content
+ * @property-read	integer		$pageID			id of the page the page content belongs to
+ * @property-read	integer		$languageID		id of the page content's language
+ * @property-read	string		$title			title of the page in the associated language
+ * @property-read	string		$content		actual content of the page in the associated language
+ * @property-read	string		$metaDescription	meta description of the page in the associated language
+ * @property-read	string		$metaKeywords		meta keywords of the page in the associated language
+ * @property-read	string		$customURL		custom url of the page in the associated language
+ * @property-read	integer		$hasEmbeddedObjects	is `1` if the page content contains embedded objects, otherwise `0`
  */
 class PageContent extends DatabaseObject {
 	/**

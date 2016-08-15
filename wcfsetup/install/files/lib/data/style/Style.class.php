@@ -11,23 +11,23 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  *
- * @property-read	integer		$styleID
- * @property-read	integer		$packageID
- * @property-read	string		$styleName
- * @property-read	integer		$templateGroupID
- * @property-read	integer		$isDefault
- * @property-read	integer		$isDisabled
- * @property-read	string		$styleDescription
- * @property-read	string		$styleVersion
- * @property-read	string		$styleDate
- * @property-read	string		$image
- * @property-read	string		$copyright
- * @property-read	string		$license
- * @property-read	string		$authorName
- * @property-read	string		$authorURL
- * @property-read	string		$imagePath
- * @property-read	string		$packageName
- * @property-read	integer		$isTainted
+ * @property-read	integer		$styleID		unique id of the style
+ * @property-read	integer		$packageID		id of the package which delivers the style
+ * @property-read	string		$styleName		name of style
+ * @property-read	integer		$templateGroupID	id of the template group used for the style or `0` if the style uses no specific template group 
+ * @property-read	integer		$isDefault		is `1` if the style is the default style for guests and users, otherwise `0`
+ * @property-read	integer		$isDisabled		is `1` if the style is disabled and thus cannot be used without having the specific permission to do so, otherwise `0`
+ * @property-read	string		$styleDescription	description of the style or name of the language item which contains the description
+ * @property-read	string		$styleVersion		version number of the style
+ * @property-read	string		$styleDate		date when the used version of the style has been published
+ * @property-read	string		$image			link or path (relative to `WCF_DIR`) to the preview image of the style
+ * @property-read	string		$copyright		copyright text of the style
+ * @property-read	string		$license		name of the style's license 
+ * @property-read	string		$authorName		name(s) of the style's author(s)
+ * @property-read	string		$authorURL		link to the author's website
+ * @property-read	string		$imagePath		path (relative to `WCF_DIR`) to the images used by the style or empty if style has no special image path
+ * @property-read	string		$packageName		package identifier used to export the style as a package or empty (thus style cannot be exported as package)
+ * @property-read	integer		$isTainted		is `0` if the original declarations of an imported or installed style are not and cannot be altered, otherwise `1`
  */
 class Style extends DatabaseObject {
 	/**

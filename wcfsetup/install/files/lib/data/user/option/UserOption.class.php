@@ -12,14 +12,14 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Option
  * 
- * @property-read	integer		$required
- * @property-read	integer		$askDuringRegistration
- * @property-read	integer		$editable
- * @property-read	integer		$visible
- * @property-read	string		$outputClass
- * @property-read	integer		$searchable
- * @property-read	integer		$isDisabled
- * @property-read	integer		$originIsSystem
+ * @property-read	integer		$required		is `1` if the user option has to be filled out, otherwise `0`
+ * @property-read	integer		$askDuringRegistration	is `1` if the user option will be shown during registration to be filled out, otherwise `0`
+ * @property-read	integer		$editable		setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants
+ * @property-read	integer		$visible		setting for who can see the user option, see `UserOption::VISIBILITY_*` constants
+ * @property-read	string		$outputClass		name of the PHP class implementing `wcf\system\option\user\IUserOptionOutput` for outputting the user option in the user profile
+ * @property-read	integer		$searchable		is `1` if the user option can be searched, otherwise `0`
+ * @property-read	integer		$isDisabled		is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
+ * @property-read	integer		$originIsSystem		is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
  */
 class UserOption extends Option {
 	/**

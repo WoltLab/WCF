@@ -14,18 +14,18 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription
  *
- * @property-read	integer		$subscriptionID
- * @property-read	string		$title
- * @property-read	string		$description
- * @property-read	integer		$isDisabled
- * @property-read	integer		$showOrder
- * @property-read	double		$cost
- * @property-read	string		$currency
- * @property-read	integer		$subscriptionLength
- * @property-read	string		$subscriptionLengthUnit
- * @property-read	integer		$isRecurring
- * @property-read	string		$groupIDs
- * @property-read	string		$excludedSubscriptionIDs
+ * @property-read	integer		$subscriptionID			unique id of the paid subscription
+ * @property-read	string		$title				title of the paid subscription or name of language item which contains the title
+ * @property-read	string		$description			description of the paid subscription or name of language item which contains the description
+ * @property-read	integer		$isDisabled			is `1` if the paid subscription is disabled and thus cannot be bought, otherwise `0`
+ * @property-read	integer		$showOrder			position of the paid subscription in relation to the other paid subscriptions
+ * @property-read	double		$cost				cost of the paid subscription
+ * @property-read	string		$currency			identifier for the currency of the paid subscription cost
+ * @property-read	integer		$subscriptionLength		magnitude part of the duration of the subscription or `0` if the subscription is permanent
+ * @property-read	string		$subscriptionLengthUnit		unit part of the duration of the subscription (`D` for days, `M` for months, `Y` for years) or empty if the subscription is permanent
+ * @property-read	integer		$isRecurring			is `1` if the paid subscription is recurring and thus requires regular (automatic) payments, otherwise `0`
+ * @property-read	string		$groupIDs			comma-separated list with the ids of the user groups for which the subscription pays membership
+ * @property-read	string		$excludedSubscriptionIDs	comma-separated list with the ids of paid subscriptions which prohibit purchase of this paid subscription
  */
 class PaidSubscription extends DatabaseObject {
 	/**

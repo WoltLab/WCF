@@ -19,49 +19,49 @@ use wcf\util\PasswordUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
- *
- * @property-read	integer		$userID
- * @property-read	string		$username
- * @property-read	string		$email
- * @property-read	string		$password
- * @property-read	string		$accessToken
- * @property-read	integer		$languageID
- * @property-read	string		$registrationDate
- * @property-read	integer		$styleID
- * @property-read	integer		$banned
- * @property-read	string		$banReason
- * @property-read	integer		$banExpires
- * @property-read	integer		$activationCode
- * @property-read	integer		$lastLostPasswordRequestTime
- * @property-read	string		$lostPasswordKey
- * @property-read	integer		$lastUsernameChange
- * @property-read	string		$newEmail
- * @property-read	string		$oldUsername
- * @property-read	integer		$quitStarted
- * @property-read	integer		$reactivationCode
- * @property-read	string		$registrationIpAddress
- * @property-read	integer|null	$avatarID
- * @property-read	integer		$disableAvatar
- * @property-read	string		$disableAvatarReason
- * @property-read	integer		$disableAvatarExpires
- * @property-read	integer		$enableGravatar
- * @property-read	string		$gravatarFileExtension
- * @property-read	string		$signature
- * @property-read	integer		$signatureEnableBBCodes
- * @property-read	integer		$signatureEnableHtml
- * @property-read	integer		$signatureEnableSmilies
- * @property-read	integer		$disableSignature
- * @property-read	string		$disableSignatureReason
- * @property-read	integer		$disableSignatureExpires
- * @property-read	integer		$lastActivityTime
- * @property-read	integer		$profileHits
- * @property-read	integer|null	$rankID
- * @property-read	string		$userTitle
- * @property-read	integer|null	$userOnlineGroupID
- * @property-read	integer		$activityPoints
- * @property-read	string		$notificationMailToken
- * @property-read	string		$authData
- * @property-read	integer		$likesReceived
+ * 
+ * @property-read	integer		$userID				unique id of the user
+ * @property-read	string		$username			name of the user
+ * @property-read	string		$email				email address of the user
+ * @property-read	string		$password			double salted hash of the user's password
+ * @property-read	string		$accessToken			token used for access authentication, for example used by feed pages
+ * @property-read	integer		$languageID			id of the interface language used by the user
+ * @property-read	integer		$registrationDate		timestamp at which the user has registered/has been created
+ * @property-read	integer		$styleID			id of the style used by the user
+ * @property-read	integer		$banned				is `1` if the user is banned, otherwise `0`
+ * @property-read	string		$banReason			reason why the user is banned
+ * @property-read	integer		$banExpires			timestamp at which the banned user is automatically unbanned
+ * @property-read	integer		$activationCode			code sent to the user's email address used for account activation
+ * @property-read	integer		$lastLostPasswordRequestTime	timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
+ * @property-read	string		$lostPasswordKey		code used for authenticating setting new password after password loss or empty if password has not been reported as lost
+ * @property-read	integer		$lastUsernameChange		timestamp at which the user changed their name the last time or 0 if username has not been changed
+ * @property-read	string		$newEmail			new email address of the user that has to be manually confirmed or empty if no new email address has been set
+ * @property-read	string		$oldUsername			previous name of the user or empty if they have had no previous name
+ * @property-read	integer		$quitStarted			timestamp at which the user terminated their account
+ * @property-read	integer		$reactivationCode		code used for authenticating setting new email address or empty if no new email address has been set
+ * @property-read	string		$registrationIpAddress		ip address of the user at the time of registration or empty if user has been created manually or if no ip address are logged
+ * @property-read	integer|null	$avatarID			id of the user's avatar or null if they have no avatar
+ * @property-read	integer		$disableAvatar			is `1` if the user's avatar has been disabled, otherwise `0`
+ * @property-read	string		$disableAvatarReason		reason why the user's avatar is disabled
+ * @property-read	integer		$disableAvatarExpires		timestamp at which the user's avatar will automatically be enabled again
+ * @property-read	integer		$enableGravatar			is `1` if the user uses a gravatar as avatar, otherwise `0`
+ * @property-read	string		$gravatarFileExtension		extension of the user's gravatar file
+ * @property-read	string		$signature			text of the user's signature
+ * @property-read	integer		$signatureEnableBBCodes		is `1` if BBCodes will rendered in the user's signature, otherwise `0`
+ * @property-read	integer		$signatureEnableHtml		is `1` if HTML will rendered in the user's signature, otherwise `0`
+ * @property-read	integer		$signatureEnableSmilies		is `1` if smilies will rendered in the user's signature, otherwise `0`
+ * @property-read	integer		$disableSignature		is `1` if the user's signature has been disabled, otherwise `0`
+ * @property-read	string		$disableSignatureReason		reason why the user's signature is disabled
+ * @property-read	integer		$disableSignatureExpires	timestamp at which the user's signature will automatically be enabled again
+ * @property-read	integer		$lastActivityTime		timestamp of the user's last activity
+ * @property-read	integer		$profileHits			number of times the user's profile has been visited
+ * @property-read	integer|null	$rankID				id of the user's rank or null if they have no rank
+ * @property-read	string		$userTitle			custom user title used instead of rank title or empty if user has no custom title
+ * @property-read	integer|null	$userOnlineGroupID		id of the user group whose online marking is used when printing the user's formatted name or null if no special marking is used
+ * @property-read	integer		$activityPoints			total number of the user's activity points
+ * @property-read	string		$notificationMailToken		token used for authenticating requests by the user to disable notification emails
+ * @property-read	string		$authData			data of the third party used for authentication
+ * @property-read	integer		$likesReceived			cumulative result of likes (counting +1) and dislikes (counting -1) the user's contents have received
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**

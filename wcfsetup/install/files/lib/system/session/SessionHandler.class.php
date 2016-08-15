@@ -33,21 +33,19 @@ use wcf\util\UserUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Session
- * 
- * @property-read	string		$sessionID
- * @property-read	integer|null	$userID
- * @property-read	string		$ipAddress
- * @property-read	string		$userAgent
- * @property-read	integer		$lastActivityTime
- * @property-read	string		$requestURI
- * @property-read	string		$requestMethod
- * @property-read	string		$controller
- * @property-read	string		$parentObjectType
- * @property-read	integer		$parentObjectID
- * @property-read	string		$objectType
- * @property-read	integer		$objectID
- * @property-read	string		$sessionVariables
- * @property-read	string		$spiderID
+ *
+ * @property-read	string		$sessionID		unique textual identifier of the session
+ * @property-read	integer|null	$userID			id of the user the session belongs to or `null` if the acp session belongs to a guest
+ * @property-read	string		$ipAddress		id of the user whom the session belongs to
+ * @property-read	string		$userAgent		user agent of the user whom the session belongs to
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
+ * @property-read	string		$requestURI		uri of the latest request
+ * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
+ * @property-read	integer|null	$pageID			id of the latest page visited
+ * @property-read	integer|null	$pageObjectID		id of the object the latest page visited belongs to
+ * @property-read	integer|null	$parentPageID		id of the parent page of latest page visited
+ * @property-read	integer|null	$parentPageObjectID	id of the object the parent page of latest page visited belongs to
+ * @property-read	integer		$spiderID		id of the spider the session belongs to
  */
 class SessionHandler extends SingletonFactory {
 	/**

@@ -14,10 +14,10 @@ use wcf\system\request\IRouteController;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group\Assignment
  *
- * @property-read	integer		$assignmentID
- * @property-read	integer		$groupID
- * @property-read	string		$title
- * @property-read	integer		$isDisabled
+ * @property-read	integer		$assignmentID		unique id of the automatic user group assignment
+ * @property-read	integer		$groupID		id of the user group to which users are automatically assigned
+ * @property-read	string		$title			title of the automatic user group assignment
+ * @property-read	integer		$isDisabled		is `1` if the user group assigment is disabled and thus not checked for automatic assigments, otherwise `0`
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	/**

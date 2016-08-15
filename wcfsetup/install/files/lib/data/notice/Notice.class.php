@@ -15,14 +15,14 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Notice
  *
- * @property-read	integer		$noticeID
- * @property-read	string		$noticeName
- * @property-read	string		$notice
- * @property-read	integer		$noticeUseHtml
- * @property-read	string		$cssClassName
- * @property-read	integer		$showOrder
- * @property-read	integer		$isDisabled
- * @property-read	integer		$isDismissible
+ * @property-read	integer		$noticeID		unique id of the notice
+ * @property-read	string		$noticeName		name of the notice shown in ACP
+ * @property-read	string		$notice			text of the notice or name of language item which contains the text
+ * @property-read	integer		$noticeUseHtml		is `1` if the notice text will be rendered as HTML, otherwise `0`
+ * @property-read	string		$cssClassName		css class name(s) used for the notice HTML element
+ * @property-read	integer		$showOrder		position of the notice in relation to the other notices
+ * @property-read	integer		$isDisabled		is `1` if the notice is disabled and thus not shown, otherwise `0`
+ * @property-read	integer		$isDismissible		is `1` if the notice can be dismissed by users, otherwise `0`
  */
 class Notice extends DatabaseObject implements IRouteController {
 	/**

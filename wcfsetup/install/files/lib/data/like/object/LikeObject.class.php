@@ -13,14 +13,14 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like\Object
  *
- * @property-read	integer		$likeObjectID
- * @property-read	integer		$objectTypeID
- * @property-read	integer		$objectID
- * @property-read	integer|null	$objectUserID
- * @property-read	integer		$likes
- * @property-read	integer		$dislikes
- * @property-read	integer		$cumulativeLikes
- * @property-read	string		$cachedUsers
+ * @property-read	integer		$likeObjectID		unique id of the liked object
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
+ * @property-read	integer		$objectID		id of the liked object
+ * @property-read	integer|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
+ * @property-read	integer		$likes			number of likes of the liked object
+ * @property-read	integer		$dislikes		number of dislikes of the liked object
+ * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting +1) and dislikes (counting -1)
+ * @property-read	string		$cachedUsers		serialized array with the ids and names of the three users who liked (+1) the object last
  */
 class LikeObject extends DatabaseObject {
 	/**

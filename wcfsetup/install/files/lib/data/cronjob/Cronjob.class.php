@@ -12,25 +12,25 @@ use wcf\util\CronjobUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Cronjob
  *
- * @property-read	integer		$cronjobID
- * @property-read	string		$className
- * @property-read	integer		$packageID
- * @property-read	string		$cronjobName
- * @property-read	string		$description
- * @property-read	string		$startMinute
- * @property-read	string		$startHour
- * @property-read	string		$startDom
- * @property-read	string		$startMonth
- * @property-read	string		$startDow
- * @property-read	integer		$lastExec
- * @property-read	integer		$nextExec
- * @property-read	integer		$afterNextExec
- * @property-read	integer		$isDisabled
- * @property-read	integer		$canBeEdited
- * @property-read	integer		$canBeDisabled
- * @property-read	integer		$state
- * @property-read	integer		$failCount
- * @property-read	string		$options
+ * @property-read	integer		$cronjobID		unique id of the cronjob
+ * @property-read	string		$className		PHP class name implementing `wcf\system\cronjob\ICronjob`
+ * @property-read	integer		$packageID		id of the package which delivers the cronjob or the id of the active application during creation in the ACP
+ * @property-read	string		$cronjobName		name and textual identifier of the cronjob
+ * @property-read	string		$description		description of the cronjob or name of language item which contains the description
+ * @property-read	string		$startMinute		minutes in the hour at which the cronjob is executed, wildcard `*` (any minute) or a rule using wildcard `*` 
+ * @property-read	string		$startHour		hour in the day at which the cronjob is executed, wildcard `*` (any hour) or a rule using wildcard `*`
+ * @property-read	string		$startDom		day of the month at which the cronjob is executed, wildcard `*` (any day) or a rule using wildcard `*`
+ * @property-read	string		$startMonth		month in the year in which the cronjob is executed, wildcard `*` (any month) or a rule using wildcard `*`
+ * @property-read	string		$startDow		day in the week at which the cronjob is executed, wildcard `*` (any day) or a rule using wildcard `*`
+ * @property-read	integer		$lastExec		timestamp at which the cronjob has been executed the last time
+ * @property-read	integer		$nextExec		timestamp at which the cronjob will be executed next
+ * @property-read	integer		$afterNextExec		timestamp at which the cronjob will be executed after next
+ * @property-read	integer		$isDisabled		is `1` if the cronjob is disabled and thus not executed, otherwise `0`
+ * @property-read	integer		$canBeEdited		is `1` if the cronjob can be edited in the ACP, otherwise `0`
+ * @property-read	integer		$canBeDisabled		is `1` if the cronjob can be disabled in the ACP so that it will not be executed, otherwise `0`
+ * @property-read	integer		$state			current state of the cronjob (see `Cronjob::READY`, `Cronjob::PENDING`, `Cronjob::EXECUTING` and `Cronjob::MAX_FAIL_COUNT`)
+ * @property-read	integer		$failCount		number of times the cronjob execution failed consecutively
+ * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the cronjob to be executed
  */
 class Cronjob extends DatabaseObject {
 	use TDatabaseObjectOptions;

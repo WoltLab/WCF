@@ -14,10 +14,10 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
- * @property-read	integer		$providerID
- * @property-read	string		$title
- * @property-read	string		$regex
- * @property-read	string		$html
+ * @property-read	integer		$providerID	unique id of the bbcode media provider
+ * @property-read	string		$title		title of the bbcode media provider (shown in acp)
+ * @property-read	string		$regex		regular expression to recognize media elements/element urls
+ * @property-read	string		$html		html code used to render media elements
  */
 class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	/**

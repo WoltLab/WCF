@@ -17,18 +17,18 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Menu\Item
  * @since	3.0
  *
- * @property-read	integer		$itemID
- * @property-read	integer		$menuID
- * @property-read	integer|null	$parentItemID
- * @property-read	string		$identifier
- * @property-read	string		$title
- * @property-read	integer|null	$pageID
- * @property-read	integer		$pageObjectID
- * @property-read	string		$externalURL
- * @property-read	integer		$showOrder
- * @property-read	integer		$isDisabled
- * @property-read	integer		$originIsSystem
- * @property-read	integer		$packageID
+ * @property-read	integer		$itemID			unique id of the menu item
+ * @property-read	integer		$menuID			id of the menu the menu item belongs to
+ * @property-read	integer|null	$parentItemID		id of the menu item's parent menu item or null if it has no parent menu item
+ * @property-read	string		$identifier		textual identifier of the menu item
+ * @property-read	string		$title			title of the menu item or name of language item which contains title
+ * @property-read	integer|null	$pageID			id of the linked `wcf\data\page\Page` object or null of no such page is linked
+ * @property-read	integer		$pageObjectID		id of the object required to show the page referenced by `$pageID`
+ * @property-read	string		$externalURL		external link of the menu item
+ * @property-read	integer		$showOrder		position of the menu item in relation to its siblings
+ * @property-read	integer		$isDisabled		is `1` if the menu item is disabled and thus not shown in the menu, otherwise `0`
+ * @property-read	integer		$originIsSystem		is `1` if the menu item has been delivered by a package, otherwise `0` (if the menu item has been created by an admin in the ACP)
+ * @property-read	integer		$packageID		id of the package the which delivers the menu item or `1` if it has been created in the ACP
  */
 class MenuItem extends DatabaseObject {
 	/**

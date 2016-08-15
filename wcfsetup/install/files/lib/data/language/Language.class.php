@@ -11,14 +11,14 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
- *
- * @property-read	integer		$languageID
- * @property-read	string		$languageCode
- * @property-read	string		$languageName
- * @property-read	string		$countryCode
- * @property-read	integer		$isDefault
- * @property-read	integer		$hasContent
- * @property-read	integer		$isDisabled
+ * 
+ * @property-read	integer		$languageID		unique id of the language
+ * @property-read	string		$languageCode		code of the language according to ISO 639-1
+ * @property-read	string		$languageName		name of the language within the language itself
+ * @property-read	string		$countryCode		code of the country using the language according to ISO 3166-1, used to determine the language's country flag  
+ * @property-read	integer		$isDefault		is `1` if the language is the default language, otherwise `0`
+ * @property-read	integer		$hasContent		is `1` if the language can be selected when creating language-specific content, otherwise `0`
+ * @property-read	integer		$isDisabled		is `1` if the language is disabled and thus not selectable, otherwise `0`
  */
 class Language extends DatabaseObject {
 	/**

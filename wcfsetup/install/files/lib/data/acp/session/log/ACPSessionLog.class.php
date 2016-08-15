@@ -5,22 +5,22 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * Represents a session log entry.
+ * Represents a acp session log entry.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session\Log
  *
- * @property-read	integer		$sessionLogID
- * @property-read	string		$sessionID
- * @property-read	integer|null	$userID
- * @property-read	string		$ipAddress
- * @property-read	string		$hostname
- * @property-read	string		$userAgent
- * @property-read	integer		$time
- * @property-read	integer		$lastActivityTime
- * @property-read	string|null	$active
+ * @property-read	integer		$sessionLogID		unique id of the acp session log entry
+ * @property-read	string		$sessionID		id of the acp session the acp session log entry belongs to
+ * @property-read	integer|null	$userID			id of the user who has caused the acp session log entry or `null` if TODO
+ * @property-read	string		$ipAddress		ip address of the user who has caused the acp session access log entry
+ * @property-read	string		$hostname		name of the internet host corresponding to the user's IP address
+ * @property-read	string		$userAgent		user agent of the user who has caused the acp session access log entry
+ * @property-read	integer		$time			timestamp at which the acp session log entry has been created
+ * @property-read	integer		$lastActivityTime	timestamp at which the associated session has been active for the last time
+ * @property-read	string|null	$active			has the corresponding acp session id as the value if the session is still active, otherwise `null`
  */
 class ACPSessionLog extends DatabaseObject {
 	/**

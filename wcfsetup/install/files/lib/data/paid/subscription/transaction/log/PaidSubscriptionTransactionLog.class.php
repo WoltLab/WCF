@@ -13,16 +13,16 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription\Transaction\Log
- *
- * @property-read	integer		$logID
- * @property-read	integer|null	$subscriptionUserID
- * @property-read	integer|null	$userID
- * @property-read	integer		$subscriptionID
- * @property-read	integer		$paymentMethodObjectTypeID
- * @property-read	integer		$logTime
- * @property-read	string		$transactionID
- * @property-read	string		$transactionDetails
- * @property-read	string		$logMessage
+ * 
+ * @property-read	integer		$logID				unique id of the paid subscription transaction log entry
+ * @property-read	integer|null	$subscriptionUserID		id of the paid subscription-user-association or `null` if no such association exists
+ * @property-read	integer|null	$userID				id of the user who caused the paid subscription transaction log entry or `null` if the user does not exist anymore
+ * @property-read	integer		$subscriptionID			id of the paid subscription
+ * @property-read	integer		$paymentMethodObjectTypeID	id of the `com.woltlab.wcf.payment.method` object type
+ * @property-read	integer		$logTime			timestamp at which the log has been created
+ * @property-read	string		$transactionID			identifier of the paid subscription transaction
+ * @property-read	string		$transactionDetails		serialized defailts of the paid subscription transaction
+ * @property-read	string		$logMessage			log message describing the status of the paid subscription transaction
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**

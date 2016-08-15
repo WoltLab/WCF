@@ -12,11 +12,11 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label
  *
- * @property-read	integer		$labelID
- * @property-read	integer		$groupID
- * @property-read	string		$label
- * @property-read	string		$cssClassName
- * @property-read	integer		$showOrder
+ * @property-read	integer		$labelID		unique id of the label
+ * @property-read	integer		$groupID		id of the label group the label belongs to
+ * @property-read	string		$label			label text or name of language item which contains the label text
+ * @property-read	string		$cssClassName		css class name used when displaying the label
+ * @property-read	integer		$showOrder		position of the label in relation to the other labels in the label group
  */
 class Label extends DatabaseObject implements IRouteController {
 	/**

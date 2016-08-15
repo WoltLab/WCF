@@ -17,13 +17,13 @@ use wcf\util\UserUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session\Virtual
- *
- * @property-read	integer		$virtualSessionID
- * @property-read	string		$sessionID
- * @property-read	string		$ipAddress
- * @property-read	string		$userAgent
- * @property-read	integer		$lastActivityTime
- * @property-read	string		$sessionVariables
+ * 
+ * @property-read	integer		$virtualSessionID	unique id of the virtual acp session
+ * @property-read	string		$sessionID		id of the acp session the virtual acp session belongs to
+ * @property-read	string		$ipAddress		id of the user whom the virtual acp session belongs to
+ * @property-read	string		$userAgent		user agent of the user whom the virtual acp session belongs to
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
+ * @property-read	string		$sessionVariables	serialized array with variables stored on a session-basis
  */
 class ACPSessionVirtual extends DatabaseObject {
 	/**

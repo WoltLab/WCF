@@ -15,15 +15,15 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  *
- * @property-read	integer		$commentID
- * @property-read	integer		$objectTypeID
- * @property-read	integer		$objectID
- * @property-read	integer		$time
- * @property-read	integer|null	$userID
- * @property-read	string		$username
- * @property-read	string		$message
- * @property-read	integer		$responses
- * @property-read	string		$responseIDs
+ * @property-read	integer		$commentID		unique id of the comment
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.comment.commentableContent` object type
+ * @property-read	integer		$objectID		id of the commented object of the object type represented by `$objectTypeID`
+ * @property-read	integer		$time			timestamp at which the comment has been written
+ * @property-read	integer|null	$userID			id of the user who wrote the comment or `null` if the user does not exist anymore or if the comment has been written by a guest
+ * @property-read	string		$username		name of the user or guest who wrote the comment
+ * @property-read	string		$message		comment message
+ * @property-read	integer		$responses		number of responses on the comment
+ * @property-read	string		$responseIDs		serialized array with the ids of the five latest comment responses
  */
 class Comment extends DatabaseObject implements IMessage {
 	use TUserContent;

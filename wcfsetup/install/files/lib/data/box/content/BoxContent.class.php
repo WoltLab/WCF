@@ -13,13 +13,13 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Box\Content
  * @since	3.0
  *
- * @property-read	integer		$boxContentID
- * @property-read	integer		$boxID
- * @property-read	integer		$languageID
- * @property-read	string		$title
- * @property-read	string		$content
- * @property-read	integer		$imageID
- * @property-read	integer		$hasEmbeddedObjects
+ * @property-read	integer		$boxContentID		unique id of the box content
+ * @property-read	integer		$boxID			id of the box the box content belongs to
+ * @property-read	integer		$languageID		id of the box content's language
+ * @property-read	string		$title			title of the page in the associated language
+ * @property-read	string		$content		actual content of the box in the associated language
+ * @property-read	integer|null	$imageID		id of the (image) media object used as box image for the associated language or `null` if no image is used
+ * @property-read	integer		$hasEmbeddedObjects	is `1` if the box content contains embedded objects, otherwise `0`
  */
 class BoxContent extends DatabaseObject {
 	/**

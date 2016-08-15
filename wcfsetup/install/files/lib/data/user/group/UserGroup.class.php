@@ -16,13 +16,13 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group
  *
- * @property-read	integer		$groupID
- * @property-read	string		$groupName
- * @property-read	string		$groupDescription
- * @property-read	integer		$groupType
- * @property-read	integer		$priority
- * @property-read	string		$userOnlineMarking
- * @property-read	integer		$showOnTeamPage
+ * @property-read	integer		$groupID		unique id of the user group
+ * @property-read	string		$groupName		name of the user group or name of language item which contains the name
+ * @property-read	string		$groupDescription	description of the user group or name of language item which contains the description
+ * @property-read	integer		$groupType		identifier of the type of user group
+ * @property-read	integer		$priority		priority of the user group used to determine member's user rank and online marking
+ * @property-read	string		$userOnlineMarking	HTML code used to print the formatted name of a user group member
+ * @property-read	integer		$showOnTeamPage		is `1` if the user group and its members should be shown on the team page, otherwise `0`
  */
 class UserGroup extends DatabaseObject implements ITitledObject {
 	/**

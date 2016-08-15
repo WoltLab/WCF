@@ -12,7 +12,7 @@ use wcf\system\SingletonFactory;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  * 
- * @property-read	string|null	$className
+ * @property-read	string|null	$className	name of the PHP class whose object(s) act as processor
  */
 class ProcessibleDatabaseObject extends DatabaseObject {
 	/**

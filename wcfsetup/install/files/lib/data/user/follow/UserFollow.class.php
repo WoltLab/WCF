@@ -11,10 +11,10 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Follow
  *
- * @property-read	integer		$followID
- * @property-read	integer		$userID
- * @property-read	integer		$followUserID
- * @property-read	integer		$time
+ * @property-read	integer		$followID		unique id of the following relation
+ * @property-read	integer		$userID			id of the following user
+ * @property-read	integer		$followUserID		id of the followed user
+ * @property-read	integer		$time			time at which following relation has been established
  */
 class UserFollow extends DatabaseObject {
 	/**

@@ -11,15 +11,15 @@ use wcf\util\StringUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Smiley
- *
- * @property-read	integer		$smileyID
- * @property-read	integer		$packageID
- * @property-read	integer|null	$categoryID
- * @property-read	string		$smileyPath
- * @property-read	string		$smileyTitle
- * @property-read	string		$smileyCode
- * @property-read	string		$aliases
- * @property-read	integer		$showOrder
+ * 
+ * @property-read	integer		$smileyID	unique id of the smiley
+ * @property-read	integer		$packageID	id of the package which delivers the smiley
+ * @property-read	integer|null	$categoryID	id of the category the smiley belongs to or `null` if it belongs to the default category
+ * @property-read	string		$smileyPath	path to the smiley file relative to wcf's defsult path
+ * @property-read	string		$smileyTitle	title of the smiley
+ * @property-read	string		$smileyCode	code used for displaying the smiley
+ * @property-read	string		$aliases	alternative codes used for displaying the smiley
+ * @property-read	integer		$showOrder	position of the smiley in relation to the other smileys in the same category
  */
 class Smiley extends DatabaseObject {
 	/**

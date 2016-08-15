@@ -11,19 +11,13 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session
  *
- * @property-read	string		$sessionID
- * @property-read	integer|null	$userID
- * @property-read	string		$ipAddress
- * @property-read	string		$userAgent
- * @property-read	integer		$lastActivityTime
- * @property-read	string		$requestURI
- * @property-read	string		$requestMethod
- * @property-read	string		$controller
- * @property-read	string		$parentObjectType
- * @property-read	integer		$parentObjectID
- * @property-read	string		$objectType
- * @property-read	integer		$objectID
- * @property-read	string		$sessionVariables
+ * @property-read	string		$sessionID		unique textual identifier of the acp session
+ * @property-read	integer|null	$userID			id of the user the acp session belongs to or `null` if the acp session belongs to a guest
+ * @property-read	string		$ipAddress		id of the user whom the acp session belongs to
+ * @property-read	string		$userAgent		user agent of the user whom the acp session belongs to
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
+ * @property-read	string		$requestURI		uri of the latest request
+ * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
  */
 class ACPSession extends DatabaseObject {
 	/**

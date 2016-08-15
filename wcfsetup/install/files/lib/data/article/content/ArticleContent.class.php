@@ -21,14 +21,14 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
  *
- * @property-read	integer		$articleContentID
- * @property-read	integer		$articleID
- * @property-read	integer		$languageID
- * @property-read	string		$title
- * @property-read	string		$content
- * @property-read	string		$teaser
- * @property-read	integer		$imageID
- * @property-read	integer		$hasEmbeddedObjects
+ * @property-read	integer		$articleContentID	unique id of the article content
+ * @property-read	integer		$articleID		id of the article the article content belongs to
+ * @property-read	integer		$languageID		id of the article content's language
+ * @property-read	string		$title			title of the article in the associated language
+ * @property-read	string		$content		actual content of the article in the associated language
+ * @property-read	string		$teaser			teaser of the article in the associated language or empty if no teaser exists
+ * @property-read	integer|null	$imageID		id of the (image) media object used as article image for the associated language or `null` if no image is used
+ * @property-read	integer		$hasEmbeddedObjects	is `1` if there are embedded objects in the article content, otherwise `0`
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController {
 	/**

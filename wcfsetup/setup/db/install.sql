@@ -451,8 +451,8 @@ CREATE TABLE wcf1_edit_history_entry (
 	objectID INT(10) NOT NULL,
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
-	time INT(10) NOT NULL DEFAULT 0, -- time the version was created, displayed to the user
-	obsoletedAt INT(10) NOT NULL DEFAULT 0, -- time the version was inserted into the edit history, used for clean up
+	time INT(10) NOT NULL DEFAULT 0,
+	obsoletedAt INT(10) NOT NULL DEFAULT 0,
 	obsoletedByUserID INT(10),
 	message MEDIUMTEXT,
 	editReason TEXT,
@@ -1463,10 +1463,10 @@ CREATE TABLE wcf1_user_menu_item (
 DROP TABLE IF EXISTS wcf1_user_notification;
 CREATE TABLE wcf1_user_notification (
 	notificationID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10) NOT NULL, -- DEPRECATED
+	packageID INT(10) NOT NULL,
 	eventID INT(10) NOT NULL,
 	objectID INT(10) NOT NULL DEFAULT 0,
-	baseObjectID INT(10) NOT NULL DEFAULT 0, -- base object ID for generic implementations referencing the origin, e.g. the object being liked
+	baseObjectID INT(10) NOT NULL DEFAULT 0,
 	eventHash VARCHAR(40) NOT NULL DEFAULT '',
 	authorID INT(10) NULL,
 	timesTriggered INT(10) NOT NULL DEFAULT 0,

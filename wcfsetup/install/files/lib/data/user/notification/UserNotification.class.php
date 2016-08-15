@@ -11,20 +11,20 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Notification
  *
- * @property-read	integer		$notificationID
+ * @property-read	integer		$notificationID		unique id of the user notification
  * @property-read	integer		$packageID		deprecated
- * @property-read	integer		$eventID
- * @property-read	integer		$objectID
- * @property-read	integer		$baseObjectID
- * @property-read	string		$eventHash
- * @property-read	integer|null	$authorID
- * @property-read	integer		$timesTriggered
- * @property-read	integer		$guestTimesTriggered
- * @property-read	integer		$userID
- * @property-read	integer		$time
- * @property-read	integer		$mailNotified
- * @property-read	integer		$confirmTime
- * @property-read	array		$additionalData
+ * @property-read	integer		$eventID		id of the user notification event the user notification belongs to
+ * @property-read	integer		$objectID		id of the object that triggered the user notification
+ * @property-read	integer		$baseObjectID		id of a generic base object of object that triggered the user notification or 0 if there is no such base object
+ * @property-read	string		$eventHash		hash of the event the user notification represents, is used to stack notifications
+ * @property-read	integer|null	$authorID		id of the user that triggered the user notification or null if there is no such user or the user was a guest
+ * @property-read	integer		$timesTriggered		number of times a stacked notification has been triggered by registered users
+ * @property-read	integer		$guestTimesTriggered	number of times a stacked notification has been triggered by guests
+ * @property-read	integer		$userID			id of the user who recieves the user notification
+ * @property-read	integer		$time			timestamp at which the user notification has been created
+ * @property-read	integer		$mailNotified		is 0 has not be notified by mail about the user notifiction, otherwise 1
+ * @property-read	integer		$confirmTime		timestamp at which the user notification has been marked as confirmed/read
+ * @property-read	array		$additionalData		array with additional data of the user notification event
  */
 class UserNotification extends DatabaseObject {
 	/**
