@@ -12,15 +12,15 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 	/**
 	 * @constructor
 	 * @param	{string}		elementId	input element id
-	 * @param	{object<mixed>}		options		option list
+	 * @param	{Object}		options		option list
 	 */
 	function UiSuggestion(elementId, options) { this.init(elementId, options); }
 	UiSuggestion.prototype = {
 		/**
 		 * Initializes a new suggestion input.
 		 * 
-		 * @param	{string}		element id	input element id
-		 * @param	{object<mixed>}		options		option list
+		 * @param	{string}		elementId	input element id
+		 * @param	{Object}		options		option list
 		 */
 		init: function(elementId, options) {
 			this._dropdownMenu = null;
@@ -46,7 +46,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 				// list of excluded search values
 				excludedSearchValues: [],
 				// minimum number of characters required to trigger a search request
-				treshold: 3
+				threshold: 3
 			}, options);
 			
 			if (typeof this._options.callbackSelect !== 'function') {
@@ -172,7 +172,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 			if (this._value === value) {
 				return;
 			}
-			else if (value.length < this._options.treshold) {
+			else if (value.length < this._options.threshold) {
 				if (this._dropdownMenu !== null) {
 					UiSimpleDropdown.close(this._element.id);
 				}
