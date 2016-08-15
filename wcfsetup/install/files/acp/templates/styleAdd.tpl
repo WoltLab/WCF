@@ -492,7 +492,7 @@
 					<div id="spWindow">
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
-								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/wcfLogo.png"></div>
+								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png"></div>
 								<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
 								<div id="spMenu">
 									<ol class="inlineList" data-region="wcfHeaderMenu">

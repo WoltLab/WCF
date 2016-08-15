@@ -1996,7 +1996,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individual
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSidebarOrientation', 'left');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideScss', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', '288');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', '281');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', '40');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoMobile', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');

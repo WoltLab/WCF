@@ -21,7 +21,7 @@ set_error_handler('handleError', E_ALL);
 // define list of needed file
 $neededFilesPattern = [
 	'!^setup/.*!',
-	'!^install/files/acp/images/wcfLogo.*!',
+	'!^install/files/acp/images/woltlabSuite.*!',
 	'!^install/files/acp/style/setup/.*!',
 	'!^install/files/lib/data/.*!',
 	'!^install/files/icon/.*!',
