@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\article;
 use wcf\data\like\object\AbstractLikeObject;
-use wcf\data\like\Like;
 
 /**
  * Likeable object implementation for cms articles.

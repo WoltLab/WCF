@@ -5,7 +5,6 @@ use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the style export form.

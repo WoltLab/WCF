@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\comment\Comment;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
