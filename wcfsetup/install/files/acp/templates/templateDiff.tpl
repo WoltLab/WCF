@@ -58,7 +58,7 @@
 			<div class="section">
 				<header class="sectionHeader">
 					<h2 class="sectionTitle">
-						{if $parent->templateGroupID}{$templateGroupHierarchy[$parent->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
+						{if $parent->templateGroupID}{$templateGroupHierarchy[$parent->templateGroupID][group]->getName()}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
 					</h2>
 					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {@$parent->lastModificationTime|time}</p>
 				</header>
@@ -85,7 +85,7 @@
 			<div class="section">
 				<header class="sectionHeader">
 					<h2 class="sectionTitle">
-						{if $template->templateGroupID}{$templateGroupHierarchy[$template->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
+						{if $template->templateGroupID}{$templateGroupHierarchy[$template->templateGroupID][group]->getName()}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
 					</h2>
 					<p class="sectionDescription">{lang}wcf.acp.template.lastModificationTime{/lang}: {@$template->lastModificationTime|time}</p>
 				</header>

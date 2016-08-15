@@ -1612,7 +1612,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by another template group.]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroupID.error.notValid"><![CDATA[The specified Parent Template Group is invalid.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group <span class="confirmationObject">{$templateGroup->templateGroupName}</span>?]]></item>
+		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group <span class="confirmationObject">{$templateGroup->getName()}</span>?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template.]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid.]]></item>

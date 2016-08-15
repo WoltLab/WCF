@@ -242,7 +242,7 @@
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
 								{foreach from=$availableTemplateGroups item=templateGroup}
-									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->templateGroupName}</option>
+									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->getName()}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'templateGroupID'}
