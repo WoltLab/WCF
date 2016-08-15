@@ -19,16 +19,20 @@ class EmailTemplateEngine extends TemplateEngine {
 	/**
 	 * @inheritDoc
 	 */
-	protected function init() {
-		parent::init();
+	public function getTemplateGroupID() {
+		static $initialized = false;
 		
-		$sql = "SELECT	templateGroupID
-			FROM	wcf".WCF_N."_template_group
-			WHERE	templateGroupFolderName = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(['_wcf_email/']);
+		if (!$initialized) {
+			$sql = "SELECT	templateGroupID
+				FROM	wcf".WCF_N."_template_group
+				WHERE	templateGroupFolderName = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(['_wcf_email/']);
+			
+			parent::setTemplateGroupID($statement->fetchSingleColumn());
+		}
 		
-		parent::setTemplateGroupID($statement->fetchSingleColumn());
+		return parent::getTemplateGroupID();
 	}
 	
 	/**

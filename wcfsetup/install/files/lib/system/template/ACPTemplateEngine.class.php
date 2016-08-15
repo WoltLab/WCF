@@ -50,15 +50,17 @@ class ACPTemplateEngine extends TemplateEngine {
 			$abbreviation = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
 		}
 		
-		return $this->compileDir.$this->templateGroupID.'_'.$abbreviation.'_'.$this->languageID.'_'.$templateName.'.php';
+		return $this->compileDir.$this->getTemplateGroupID().'_'.$abbreviation.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
-	 * @inheritDoc
+	 * This method always throws, because changing the template group is not supported.
+	 * 
+	 * @param	integer		$templateGroupID
+	 * @throws	\BadMethodCallException
 	 */
-	public final function setTemplateGroupID($templateGroupID) {
-		// template groups are not supported by the acp template engine
-		$this->templateGroupID = 0;
+	public function setTemplateGroupID($templateGroupID) {
+		throw new \BadMethodCallException("You may not change the template group of the acp template engine");
 	}
 	
 	/**

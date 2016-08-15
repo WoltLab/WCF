@@ -359,7 +359,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	protected function getPath($templatePath, $templateName) {
-		$templateGroupID = $this->templateGroupID;
+		$templateGroupID = $this->getTemplateGroupID();
 		
 		while ($templateGroupID != 0) {
 			$templateGroup = $this->templateGroupCache[$templateGroupID];
@@ -390,7 +390,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getCompiledFilename($templateName, $application) {
-		return $this->compileDir.$this->templateGroupID.'_'.$application.'_'.$this->languageID.'_'.$templateName.'.php';
+		return $this->compileDir.$this->getTemplateGroupID().'_'.$application.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
@@ -400,7 +400,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getMetaDataFilename($templateName) {
-		return $this->compileDir.$this->templateGroupID.'_'.$templateName.'.meta.php';
+		return $this->compileDir.$this->getTemplateGroupID().'_'.$templateName.'.meta.php';
 	}
 	
 	/**
