@@ -232,11 +232,11 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * Returns false if this label group has no permissions at all.
+	 * Returns true if any permissions have been set for this label group.
 	 * 
-	 * @return      boolean
+	 * @return	boolean
 	 */
 	public function hasPermissions() {
-		return (empty($this->permissions['group']) && empty($this->permissions['user']));
+		return !empty($this->permissions['group']) || !empty($this->permissions['user']);
 	}
 }
