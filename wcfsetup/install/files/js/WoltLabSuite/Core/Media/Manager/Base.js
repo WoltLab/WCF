@@ -83,7 +83,7 @@ define(
 		 */
 		_clipboardAction: function(actionData) {
 			// only consider events if the action has been executed
-			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete' && actionData.responseData === null) {
+			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete' && actionData.responseData !== null) {
 				var mediaIds = actionData.responseData.objectIDs;
 				for (var i = 0, length = mediaIds.length; i < length; i++) {
 					this.removeMedia(~~mediaIds[i], true);
@@ -137,6 +137,11 @@ define(
 				});
 				
 				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
+				
+				var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.mediaFile');
+				deleteAction._didTriggerEffect = function(element) {
+					this.removeMedia(elData(element[0], 'object-id'), true);
+				}.bind(this);
 			}
 			
 			this._search = new MediaManagerSearch(this);
@@ -325,7 +330,12 @@ define(
 		removeMedia: function(mediaId, checkCache) {
 			if (this._media.has(mediaId)) {
 				// remove list item
-				elRemove(this._media.get(mediaId));
+				try {
+					elRemove(this._media.get(mediaId));
+				}
+				catch (e) {
+					// ignore errors if item has already been removed like by WCF.Action.Delete
+				}
 				
 				this._media.delete(mediaId);
 				this._mediaData.delete(mediaId);
@@ -432,8 +442,9 @@ define(
 				listItem.appendChild(a);
 				
 				icon = elCreate('span');
-				icon.className = 'icon icon16 fa-times jsTooltip jsMediaDeleteIcon';
+				icon.className = 'icon icon16 fa-times jsTooltip jsDeleteButton';
 				elData(icon, 'object-id', media.mediaID);
+				elData(icon, 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage'));
 				elAttr(icon, 'title', Language.get('wcf.global.button.delete'));
 				a.appendChild(icon);
 			}

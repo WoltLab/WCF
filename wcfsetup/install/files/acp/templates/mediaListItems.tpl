@@ -1,5 +1,5 @@
 {foreach from=$mediaList item=media}
-	<li class="jsClipboardObject" data-object-id="{@$media->mediaID}">
+	<li class="jsClipboardObject mediaFile" data-object-id="{@$media->mediaID}">
 		<div class="mediaThumbnail">
 			{@$media->getElementTag(144)}
 		</div>
@@ -18,7 +18,7 @@
 						<a><span class="icon icon16 fa-pencil jsTooltip jsMediaEditIcon" data-object-id="{@$media->mediaID}" title="{lang}wcf.global.button.edit{/lang}"></span></a>
 					</li>
 					<li>
-						<a><span class="icon icon16 fa-times jsTooltip jsMediaDeleteIcon" data-object-id="{@$media->mediaID}" title="{lang}wcf.global.button.delete{/lang}"></span></a>
+						<a><span class="icon icon16 fa-times jsTooltip jsDeleteButton" data-object-id="{@$media->mediaID}" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.media.delete.confirmMessage{/lang}"></span></a>
 					</li>
 				{/if}
 				{if $mode == 'editor'}

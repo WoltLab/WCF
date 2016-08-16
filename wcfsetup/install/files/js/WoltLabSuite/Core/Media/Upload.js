@@ -123,7 +123,7 @@ define(
 						fileIcon.classList.add(FileUtil.getIconClassByMimeType(media.fileType));
 					}
 					
-					file.className = 'jsClipboardObject';
+					file.className = 'jsClipboardObject mediaFile';
 					elData(file, 'object-id', media.mediaID);
 					
 					if (this._mediaManager) {
