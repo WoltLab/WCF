@@ -1,16 +1,19 @@
 <?php
 namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\bbcode\BBCodeParser;
-use wcf\system\bbcode\MessageParser;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -30,7 +33,7 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	public $userProfile = null;
 	
@@ -39,19 +42,6 @@ class UserProfileAction extends UserAction {
 	 */
 	public function validateGetMessagePreview() {
 		$this->readString('message', true, 'data');
-		
-		if (!isset($this->parameters['options'])) {
-			throw new UserInputException('options');
-		}
-		
-		if (isset($this->parameters['options']['enableBBCodes']) && WCF::getSession()->getPermission('user.signature.canUseBBCodes')) {
-			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->parameters['data']['message'], explode(',', WCF::getSession()->getPermission('user.signature.allowedBBCodes')));
-			if (!empty($disallowedBBCodes)) {
-				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
-					'disallowedBBCodes' => $disallowedBBCodes
-				]));
-			}
-		}
 	}
 	
 	/**
@@ -60,22 +50,25 @@ class UserProfileAction extends UserAction {
 	 * @return	array
 	 */
 	public function getMessagePreview() {
-		// get options
-		$enableBBCodes = isset($this->parameters['options']['enableBBCodes']) ? 1 : 0;
-		$enableHtml = isset($this->parameters['options']['enableHtml']) ? 1 : 0;
-		$enableSmilies = isset($this->parameters['options']['enableSmilies']) ? 1 : 0;
+		$htmlInputProcessor = new HtmlInputProcessor();
+		$htmlInputProcessor->process($this->parameters['data']['message'], 'com.woltlab.wcf.user.signature', WCF::getUser()->userID);
 		
-		// validate permissions for options
-		if ($enableBBCodes && !WCF::getSession()->getPermission('user.signature.canUseBBCodes')) $enableBBCodes = 0;
-		if ($enableHtml && !WCF::getSession()->getPermission('user.signature.canUseHtml')) $enableHtml = 0;
-		if ($enableSmilies && !WCF::getSession()->getPermission('user.signature.canUseSmilies')) $enableSmilies = 0;
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(explode(',', WCF::getSession()->getPermission('user.signature.disallowedBBCodes'))));
+		$disallowedBBCodes = $htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
+				'disallowedBBCodes' => $disallowedBBCodes
+			]));
+		}
 		
-		// parse message
-		$message = StringUtil::trim($this->parameters['data']['message']);
-		$preview = MessageParser::getInstance()->parse($message, $enableSmilies, $enableHtml, $enableBBCodes, false);
+		MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
+		
+		$htmlOutputProcessor = new HtmlOutputProcessor();
+		$htmlOutputProcessor->process($htmlInputProcessor->getHtml(), 'com.woltlab.wcf.user.signature', WCF::getUser()->userID);
 		
 		return [
-			'message' => $preview
+			'message' => $htmlOutputProcessor->getHtml(),
+			'raw' => $htmlInputProcessor->getHtml()
 		];
 	}
 	

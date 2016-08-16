@@ -21,7 +21,7 @@ class MessagePreviewAction extends BBCodeAction {
 	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getMessagePreview'];
-		
+	
 	/**
 	 * Validates parameters for message preview.
 	 */
