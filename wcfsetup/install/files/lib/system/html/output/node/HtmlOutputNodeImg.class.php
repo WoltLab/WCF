@@ -3,8 +3,8 @@ namespace wcf\system\html\output\node;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 
 /**
  * Processes images.
