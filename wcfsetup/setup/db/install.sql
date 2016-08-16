@@ -355,7 +355,8 @@ CREATE TABLE wcf1_clipboard_item (
 	objectTypeID INT(10) NOT NULL DEFAULT 0,
 	userID INT(10) NOT NULL DEFAULT 0,
 	objectID INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (objectTypeID, userID, objectID)
+	UNIQUE KEY (objectTypeID, userID, objectID),
+	KEY (userID)
 );
 
 DROP TABLE IF EXISTS wcf1_clipboard_page;
