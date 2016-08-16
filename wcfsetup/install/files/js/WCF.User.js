@@ -182,38 +182,7 @@ WCF.User.Panel.Abstract = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		var timerBlockClick = null;
-		this._triggerElement[0].addEventListener(WCF_CLICK_EVENT, (function(event) {
-			event.preventDefault();
-			
-			if ($.browser.mobile) {
-				this.toggle();
-			}
-			else if ((this._dropdown && this._dropdown.isOpen()) && timerBlockClick === null) {
-				this.toggle();
-			}
-		}).bind(this));
-		
-		//this._triggerElement.click($.proxy(this.toggle, this));
-		
-		var timer = null;
-		this._triggerElement.hover(
-			(function() {
-				if (this._dropdown === null || !this._dropdown.isOpen()) {
-					timer = window.setTimeout((function() {
-						timerBlockClick = window.setTimeout(function() {
-							timerBlockClick = null;
-						}, 300);
-						
-						this.toggle(undefined, true);
-					}).bind(this), 300);
-				}
-			}).bind(this),
-			function() {
-				window.clearTimeout(timer);
-				timer = null;
-			}
-		);
+		this._triggerElement.click($.proxy(this.toggle, this));
 		
 		if (this._options.showAllLink) {
 			this._triggerElement.dblclick($.proxy(this._dblClick, this));
@@ -234,20 +203,15 @@ WCF.User.Panel.Abstract = Class.extend({
 	 * Toggles the interactive dropdown.
 	 * 
 	 * @param	{Event?}	event
-	 * @param       {boolean?}      openOnly
 	 * @return	{boolean}
 	 */
-	toggle: function(event, openOnly) {
+	toggle: function(event) {
 		if (event instanceof Event) {
 			event.preventDefault();
 		}
 		
 		if (this._dropdown === null) {
 			this._dropdown = this._initDropdown();
-		}
-		
-		if (openOnly === true && this._dropdown.isOpen()) {
-			return false;
 		}
 		
 		if (this._dropdown.toggle()) {
