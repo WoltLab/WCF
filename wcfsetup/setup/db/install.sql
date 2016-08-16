@@ -355,7 +355,8 @@ CREATE TABLE wcf1_clipboard_item (
 	objectTypeID INT(10) NOT NULL DEFAULT 0,
 	userID INT(10) NOT NULL DEFAULT 0,
 	objectID INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (objectTypeID, userID, objectID)
+	UNIQUE KEY (objectTypeID, userID, objectID),
+	KEY (userID)
 );
 
 DROP TABLE IF EXISTS wcf1_clipboard_page;
@@ -1477,7 +1478,8 @@ CREATE TABLE wcf1_user_notification (
 	confirmTime INT(10) NOT NULL DEFAULT 0,
 	additionalData TEXT,
 	KEY (userID, eventID, objectID, confirmTime),
-	KEY (userID, confirmTime)
+	KEY (userID, confirmTime),
+	KEY (confirmTime)
 );
 
 -- notification authors (stacking)
@@ -1617,7 +1619,8 @@ CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
 	field VARCHAR(80) NOT NULL DEFAULT '',
 	fieldValue MEDIUMTEXT,
-	UNIQUE KEY userStorageData (userID, field)
+	UNIQUE KEY (userID, field),
+	KEY (field)
 );
 
 DROP TABLE IF EXISTS wcf1_user_to_group;

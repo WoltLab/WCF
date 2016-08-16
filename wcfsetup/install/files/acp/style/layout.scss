@@ -210,6 +210,10 @@ $wcfAcpMenuWidth: 150px;
 				padding: 5px 20px;
 				text-transform: uppercase;
 			}
+			
+			&:last-child {
+				margin-bottom: 20px;
+			}
 		}
 		
 		.acpPageSubMenuLink,

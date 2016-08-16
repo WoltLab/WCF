@@ -18,16 +18,17 @@
 	<script>
 		var SID_ARG_2ND = '';
 		var WCF_PATH = '{@$__wcf->getPath()}';
+		var WSC_IS_ACP = true;
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var TIME_NOW = {@TIME_NOW};
 		var URL_LEGACY_MODE = false;
 	</script>
 	
-	{js application='wcf' file='require' bundle='WCF.Core' core='true'}
-	{js application='wcf' file='require.config' bundle='WCF.Core' core='true'}
-	{js application='wcf' file='require.linearExecution' bundle='WCF.Core' core='true'}
-	{js application='wcf' file='wcf.globalHelper' bundle='WCF.Core' core='true'}
+	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
+	{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
+	{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
+	{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true'}
 	<script>
 		requirejs.config({
 			baseUrl: '{@$__wcf->getPath()}js'
