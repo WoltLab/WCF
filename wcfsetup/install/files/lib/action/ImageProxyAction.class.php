@@ -47,7 +47,8 @@ class ImageProxyAction extends AbstractAction {
 			
 			// prepare path
 			$fileExtension = pathinfo($url, PATHINFO_EXTENSION);
-			$fileLocation = WCF_DIR.'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
+			$path = 'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
+			$fileLocation = WCF_DIR.$path;
 			$dir = dirname($fileLocation);
 			if (!@file_exists($dir)) {
 				FileUtil::makePath($dir);
@@ -76,13 +77,9 @@ class ImageProxyAction extends AbstractAction {
 				// update mtime for correct expiration calculation
 				@touch($fileLocation);
 			}
-			else {
-				$imageData = getimagesize($fileLocation);
-			}
 			$this->executed();
 			
-			@header('Content-Type: '.$imageData['mime']);
-			@readfile($fileLocation);
+			HeaderUtil::redirect(WCF::getPath().$path, true, false);
 			exit;
 		}
 		catch (SystemException $e) {
