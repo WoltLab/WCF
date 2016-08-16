@@ -39,7 +39,7 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 				options.pinData = true;
 				options.callbackObject = callbackObject;
 				
-				if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN;
+				if (!options.url) options.url = 'index.php?ajax-proxy/&t=' + SECURITY_TOKEN;
 				
 				request = new AjaxRequest(options);
 				
@@ -82,7 +82,7 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 			
 			options.pinData = false;
 			options.callbackObject = null;
-			if (!options.url) options.url = 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN;
+			if (!options.url) options.url = 'index.php?ajax-proxy/&t=' + SECURITY_TOKEN;
 			
 			var request = new AjaxRequest(options);
 			request.sendRequest();

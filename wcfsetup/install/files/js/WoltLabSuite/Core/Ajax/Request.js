@@ -62,7 +62,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			
 			this._options.url = Core.convertLegacyUrl(this._options.url);
 			if (this._options.url.indexOf('index.php') === 0) {
-				this._options.url = WCF_PATH + (window.WSC_IS_ACP === true ? 'acp/' : '') + this._options.url;
+				this._options.url = WSC_API_URL + this._options.url;
 			}
 			
 			if (this._options.pinData) {

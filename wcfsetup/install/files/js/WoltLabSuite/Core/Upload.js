@@ -2,7 +2,7 @@
  * Uploads file via AJAX.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Upload
  */
@@ -30,10 +30,13 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			// is true if every file from a multi-file selection is uploaded in its own request
 			singleFileRequests: false,
 			// url for uploading file
-			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN
+			url: 'index.php?ajax-upload/&t=' + SECURITY_TOKEN
 		}, options);
 		
-		this._options.url = WCF.convertLegacyURL(this._options.url);
+		this._options.url = Core.convertLegacyUrl(this._options.url);
+		if (this._options.url.indexOf('index.php') === 0) {
+			this._options.url = WSC_API_URL + this._options.url;
+		}
 		
 		this._buttonContainer = elById(buttonContainerId);
 		if (this._buttonContainer === null) {

@@ -5,10 +5,11 @@
 <script>
 	var SID_ARG_2ND	= '';
 	var WCF_PATH = '{@$__wcf->getPath()}';
+	var WSC_API_URL = '{@$__wcf->getPath()}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var TIME_NOW = {@TIME_NOW};
-	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
+	var URL_LEGACY_MODE = false;
 </script>
 
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}

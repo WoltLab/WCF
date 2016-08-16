@@ -364,7 +364,7 @@ WCF.Poll.Manager = Class.extend({
 		this._polls = { };
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this),
-			url: 'index.php/Poll/?t=' + SECURITY_TOKEN
+			url: 'index.php?poll/&t=' + SECURITY_TOKEN
 		});
 		
 		// init polls
