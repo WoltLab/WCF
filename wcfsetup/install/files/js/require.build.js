@@ -3,7 +3,7 @@
 	config = {
 		mainConfigFile: 'require.config.js',
 		name: "WoltLabSuite/_Meta",
-		out: "WCF.Core.min.js",
+		out: "WoltLabSuite.Core.min.js",
 		useStrict: true,
 		preserveLicenseComments: false,
 		optimize: 'uglify2',

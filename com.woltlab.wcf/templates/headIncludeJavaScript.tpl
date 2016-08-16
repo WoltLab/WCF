@@ -11,11 +11,11 @@
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 </script>
 
-{js application='wcf' file='require' bundle='WCF.Core' core='true'}
-{js application='wcf' file='require.config' bundle='WCF.Core' core='true'}
-{js application='wcf' file='require.linearExecution' bundle='WCF.Core' core='true'}
-{js application='wcf' file='wcf.globalHelper' bundle='WCF.Core' core='true'}
-{js application='wcf' file='closest' bundle='WCF.Core' core='true'}
+{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true'}
 <script>
 requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js'
