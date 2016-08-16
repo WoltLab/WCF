@@ -56,8 +56,13 @@ class ImageProxyAction extends AbstractAction {
 			
 			// download image
 			if (!file_exists($fileLocation)) {
-				$request = new HTTPRequest($url);
-				$request->execute();
+				try {
+					$request = new HTTPRequest($url);
+					$request->execute();
+				}
+				catch (SystemException $e) {
+					throw new IllegalLinkException();
+				}
 				$image = $request->getReply()['body'];
 				
 				// check if image is linked
@@ -79,9 +84,11 @@ class ImageProxyAction extends AbstractAction {
 			exit;
 		}
 		catch (SystemException $e) {
+			\wcf\functions\exception\logThrowable($e);
 			throw new IllegalLinkException();
 		}
 		catch (CryptoException $e) {
+			\wcf\functions\exception\logThrowable($e);
 			throw new IllegalLinkException();
 		}
 	}
