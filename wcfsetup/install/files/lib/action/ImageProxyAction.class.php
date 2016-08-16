@@ -2,9 +2,11 @@
 namespace wcf\action;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\HTTPRequest;
 use wcf\util\StringUtil;
 
