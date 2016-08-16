@@ -10,7 +10,7 @@
 		'WoltLabSuite/_Meta'
 	],
 	exclude: [
-		'WoltLabSuite/WCF/Bootstrap'
+		'WoltLabSuite/Core/Bootstrap'
 	],
 	rawText: {
 		'WoltLabSuite/_Meta': 'define([], function() {});'
