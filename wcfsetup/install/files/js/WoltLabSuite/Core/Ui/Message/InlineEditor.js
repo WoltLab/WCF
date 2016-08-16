@@ -514,7 +514,7 @@ define(
 			
 			// set new content
 			//noinspection JSUnresolvedVariable
-			DomUtil.setInnerHtml(elementData.messageBody, data.returnValues.message);
+			DomUtil.setInnerHtml(DomTraverse.childByClass(elementData.messageBody, 'messageText'), data.returnValues.message);
 			
 			// handle attachment list
 			//noinspection JSUnresolvedVariable
