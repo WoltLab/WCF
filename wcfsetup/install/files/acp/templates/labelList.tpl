@@ -48,30 +48,32 @@
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.acp.label.filter{/lang}</h2>
 			
-			<div class="row rowColGap">
+			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-4">
-					<dt><label for="label">{lang}wcf.acp.label.label{/lang}</label></dt>
+					<dt></dt>
 					<dd>
-						<input type="text" id="label" name="label" value="{$labelSearch}" class="long">
+						<input type="text" id="label" name="label" value="{$labelSearch}" placeholder="{lang}wcf.acp.label.label{/lang}" class="long">
 					</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-4">
-					<dt><label for="groupID">{lang}wcf.acp.label.group{/lang}</label></dt>
+					<dt></dt>
 					<dd>
-						<select id="groupID" name="groupID">
-							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-							{foreach from=$labelGroupList item=group}
-								<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
-							{/foreach}
-						</select>
+						<label class="selectDropdown">
+							<select id="groupID" name="groupID">
+								<option value="0">{lang}wcf.acp.label.group{/lang}</option>
+								{foreach from=$labelGroupList item=group}
+									<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
+								{/foreach}
+							</select>
+						</label>
 					</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-4">
-					<dt><label for="cssClassName">{lang}wcf.acp.label.cssClassName{/lang}</label></dt>
+					<dt></dt>
 					<dd>
-						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long">
+						<input type="text" id="cssClassName" name="cssClassName" placeholder="{lang}wcf.acp.label.cssClassName{/lang}" value="{$cssClassName}" class="long">
 					</dd>
 				</dl>
 			</div>
