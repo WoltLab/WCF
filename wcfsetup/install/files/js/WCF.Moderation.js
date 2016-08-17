@@ -626,6 +626,14 @@ WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 		options.enableMarkAsRead = true;
 		
 		this._super($('#outstandingModeration'), 'outstandingModeration', options);
+		
+		require(['EventHandler'], (function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
+				if (data.identifier === 'com.woltlab.wcf.moderation') {
+					this.toggle();
+				}
+			}).bind(this));
+		}).bind(this));
 	},
 	
 	/**
