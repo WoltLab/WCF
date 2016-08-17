@@ -48,6 +48,7 @@ class UserProfileAction extends UserAction {
 	 * Returns a rendered signature preview.
 	 * 
 	 * @return	array
+	 * @throws	UserInputException
 	 */
 	public function getMessagePreview() {
 		$htmlInputProcessor = new HtmlInputProcessor();
