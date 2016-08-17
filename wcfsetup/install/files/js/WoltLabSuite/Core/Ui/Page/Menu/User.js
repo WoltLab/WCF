@@ -24,6 +24,28 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 				'pageUserMenuMobile',
 				'#pageHeader .userPanel'
 			);
+			
+			EventHandler.add('com.woltlab.wcf.userMenu', 'updateBadge', (function (data) {
+				elBySelAll('.menuOverlayItemBadge', this._menu, (function (item) {
+					if (elData(item, 'badge-identifier') === data.identifier) {
+						var badge = elBySel('.badge', item);
+						if (data.count) {
+							if (badge === null) {
+								badge = elCreate('span');
+								badge.className = 'badge badgeUpdate';
+								item.appendChild(badge);
+							}
+							
+							badge.textContent = data.count;
+						}
+						else if (badge !== null) {
+							elRemove(badge);
+						}
+						
+						this._updateButtonState();
+					}
+				}).bind(this));
+			}).bind(this));
 		}
 	});
 	

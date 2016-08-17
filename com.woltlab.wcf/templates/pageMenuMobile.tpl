@@ -94,16 +94,18 @@
 			{/if}
 			<li class="menuOverlayItemSpacer"></li>
 			<li class="menuOverlayItem" data-more="com.woltlab.wcf.notifications">
-				<a href="{link controller='NotificationList'}{/link}" class="menuOverlayItemLink box24">
+				<a href="{link controller='NotificationList'}{/link}" class="menuOverlayItemLink menuOverlayItemBadge box24" data-badge-identifier="userNotifications">
 					<span class="icon icon24 fa-bell-o"></span>
 					<span class="menuOverlayItemTitle">{lang}wcf.user.notification.notifications{/lang}</span>
+					{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}
 				</a>
 			</li>
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
 				<li class="menuOverlayItem" data-more="com.woltlab.wcf.moderation">
-					<a href="#" class="menuOverlayItemLink box24">
+					<a href="#" class="menuOverlayItemLink menuOverlayItemBadge box24" data-badge-identifier="outstandingModeration">
 						<span class="icon icon24 fa-exclamation-triangle"></span>
 						<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
+						{if $__wcf->getModerationQueueManager()->getOutstandingModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}</span>{/if}
 					</a>
 				</li>
 			{/if}

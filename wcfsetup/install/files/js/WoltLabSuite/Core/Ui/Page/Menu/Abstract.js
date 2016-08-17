@@ -36,8 +36,8 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			this._removeActiveList = false;
 			
 			var callbackOpen = this.open.bind(this);
-			var button = elBySel(buttonSelector);
-			button.addEventListener(WCF_CLICK_EVENT, callbackOpen);
+			this._button = elBySel(buttonSelector);
+			this._button.addEventListener(WCF_CLICK_EVENT, callbackOpen);
 			
 			this._initItems();
 			this._initHeader();
@@ -76,6 +76,8 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			backdrop.addEventListener(WCF_CLICK_EVENT, this.close.bind(this));
 			
 			DomUtil.insertAfter(backdrop, this._menu);
+			
+			this._updateButtonState();
 		},
 		
 		/**
@@ -368,6 +370,17 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			this._depth += (increase) ? 1 : -1;
 			
 			this._menu.children[0].style.setProperty('transform', 'translateX(' + (this._depth * -100) + '%)', '');
+		},
+		
+		_updateButtonState: function() {
+			var hasNewContent = false;
+			elBySelAll('.badgeUpdate', this._menu, function (badge) {
+				if (~~badge.textContent > 0) {
+					hasNewContent = true;
+				}
+			});
+			
+			this._button.classList[(hasNewContent ? 'add' : 'remove')]('pageMenuMobileButtonHasContent');
 		}
 	};
 	

@@ -402,6 +402,11 @@ WCF.User.Panel.Abstract = Class.extend({
 				this._markAllAsReadLink = null;
 			}
 		}
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.userMenu', 'updateBadge', {
+			count: count,
+			identifier: this._identifier
+		});
 	},
 	
 	/**

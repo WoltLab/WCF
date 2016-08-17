@@ -234,6 +234,10 @@
 	}
 }
 
+.pageUserMenuMobile .menuOverlayItemBadge:last-child {
+	padding-right: 10px !important;
+}
+
 .menuOverlayItemLink.active,
 .menuOverlayItemLinkIcon.active {
 	background-color: rgb(34, 49, 63);
