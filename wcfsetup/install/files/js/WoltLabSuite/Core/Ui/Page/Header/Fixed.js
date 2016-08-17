@@ -27,10 +27,40 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 			this._initSearchBar();
 			
 			UiScreen.on('screen-md-down', {
-				match: function() { _isMobile = true; },
-				unmatch: function() { _isMobile = false; },
-				setup: function() { _isMobile = true; }
+				match: this._toggleMobile.bind(this, true),
+				unmatch: this._toggleMobile.bind(this, false),
+				setup: this._toggleMobile.bind(this, true)
 			});
+		},
+		
+		/**
+		 * Toggles mobile flag.
+		 * 
+		 * @param       {boolean}       isMobile        true if this viewport equals at least a tablet
+		 * @protected
+		 */
+		_toggleMobile: function (isMobile) {
+			_isMobile = isMobile;
+			
+			this._rebuildPageHeader(false);
+		},
+		
+		/**
+		 * Rebuilds the page header min-height property on viewport change.
+		 * 
+		 * @protected
+		 */
+		_rebuildPageHeader: function () {
+			var clientHeight = _pageHeader.clientHeight;
+			
+			if (!clientHeight) {
+				_pageHeader.style.removeProperty('min-height');
+				clientHeight = _pageHeader.clientHeight;
+			}
+			
+			if (clientHeight) {
+				_pageHeader.style.setProperty('min-height', clientHeight + 'px');
+			}
 		},
 		
 		/**
@@ -40,9 +70,7 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		 * @protected
 		 */
 		_initStickyPageHeader: function() {
-			if (_pageHeader.clientHeight) {
-				_pageHeader.style.setProperty('min-height', _pageHeader.clientHeight + 'px');
-			}
+			this._rebuildPageHeader(true);
 			
 			_triggerHeight = _pageHeader.clientHeight - elBySel('.mainMenu', _pageHeader).clientHeight;
 			
