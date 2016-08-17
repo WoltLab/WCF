@@ -365,6 +365,12 @@ fieldset {
 		> .contentFooterNavigation {
 			margin-top: 20px;
 			
+			> ul > li {
+				&:not(:first-child) {
+					margin-top: 10px;
+				}
+			}
+			
 			.button {
 				display: block;
 				padding: 7px 10px;
