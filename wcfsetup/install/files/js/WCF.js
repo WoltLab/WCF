@@ -6013,6 +6013,9 @@ WCF.Upload = Class.extend({
 		}, options || { });
 		
 		this._options.url = WCF.convertLegacyURL(this._options.url);
+		if (this._options.url.indexOf('index.php') === 0) {
+			this._options.url = WSC_API_URL + this._options.url;
+		}
 		
 		// check for ajax upload support
 		var $xhr = new XMLHttpRequest();
