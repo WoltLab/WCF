@@ -71,7 +71,7 @@
 			<li class="menuOverlayItem">
 				<a href="{link controller='Settings'}{/link}" class="menuOverlayItemLink box24">
 					<span class="icon icon24 fa-cog"></span>
-					<span class="menuOverlayItemTitle">Einstellungen</span>
+					<span class="menuOverlayItemTitle">{lang}wcf.user.panel.settings{/lang}</span>
 				</a>
 				<ol class="menuOverlayItemList">
 					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
