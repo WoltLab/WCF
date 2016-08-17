@@ -58,6 +58,10 @@
 			&.open {
 				left: 0;
 				
+				// dropdown is contained within this element, required to have it stand
+				// above any succeeding siblings
+				z-index: 10;
+				
 				> .buttonList {
 					display: block;
 					visibility: visible;
