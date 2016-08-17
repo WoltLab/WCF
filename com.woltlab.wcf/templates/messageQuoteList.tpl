@@ -31,7 +31,7 @@
 				{event name='beforeMessageText'}
 				
 				<div class="messageText">
-					<ul>
+					<ul class="messageQuoteItemList">
 						{foreach from=$message key=quoteID item=quote}
 							<li data-quote-id="{@$quoteID}">
 								<span>

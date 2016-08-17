@@ -524,3 +524,27 @@
 		}
 	}	
 }
+
+.messageQuoteItemList {
+	/* we need `!important` here to override defaults used for `.htmlContent`
+	   and `.messageText` */
+	list-style-type: none !important;
+	margin-left: 0 !important;
+	
+	> li {
+		display: flex;
+		
+		> span {
+			flex: 0 0 auto;
+			margin-right: 10px;
+		}
+		
+		> .jsQuote {
+			flex: 1 1 auto;
+		}
+		
+		> .jsFullQuote {
+			display: none;
+		}
+	}
+}
