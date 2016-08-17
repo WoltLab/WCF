@@ -1010,7 +1010,12 @@ WCF.Dropdown.Interactive.Handler = {
 		if (this._dropdownContainer === null) {
 			this._dropdownContainer = $('<div class="dropdownMenuContainer" />').appendTo(document.body);
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown.Interactive.Handler', $.proxy(this.closeAll, this));
-			window.addEventListener('scroll', this.closeAll.bind(this));
+			
+			window.addEventListener('scroll', (function (event) {
+				if (!document.documentElement.classList.contains('pageOverlayActive')) {
+					this.closeAll.bind(this)
+				}
+			}).bind(this));
 		}
 		
 		var $instance = new WCF.Dropdown.Interactive.Instance(this._dropdownContainer, triggerElement, identifier, options);
