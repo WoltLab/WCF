@@ -99,12 +99,14 @@
 					<span class="menuOverlayItemTitle">{lang}wcf.user.notification.notifications{/lang}</span>
 				</a>
 			</li>
-			<li class="menuOverlayItem" data-more="com.woltlab.wcf.moderation">
-				<a href="#" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-exclamation-triangle"></span>
-					<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
-				</a>
-			</li>
+			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
+				<li class="menuOverlayItem" data-more="com.woltlab.wcf.moderation">
+					<a href="#" class="menuOverlayItemLink box24">
+						<span class="icon icon24 fa-exclamation-triangle"></span>
+						<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
+					</a>
+				</li>
+			{/if}
 			
 			{event name='userMenuItems'}
 			
