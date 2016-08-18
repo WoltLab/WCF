@@ -7,8 +7,8 @@
 			> li {
 				padding: 30px 0;
 				
-				&:not(:first-child) {
-					border-top: 1px solid $wcfContentBorder;
+				&:not(:last-child) {
+					border-bottom: 1px solid $wcfContentBorder;
 				}
 			}
 		}
@@ -17,6 +17,24 @@
 		@include screen-md-up {
 			> li {
 				padding-bottom: 30px;
+			}
+		}
+	}
+	
+	@include screen-sm-up {
+		> .anchorFixedHeader:target {
+			margin-top: -50px;
+			pointer-events: none;
+			
+			&::after {
+				content: "";
+				display: block;
+				height: 50px;
+			}
+			
+			> .message {
+				pointer-events: all;
+				transform: translateY(50px);
 			}
 		}
 	}
