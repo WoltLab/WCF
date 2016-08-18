@@ -7,8 +7,8 @@
 		<dd id="{@$__languageChooserPrefix}languageIDContainer">
 			<noscript>
 				<select name="languageID" id="languageID">
-					{foreach from=$languages item=__language}
-						<option value="{@$__language->languageID}">{$__language}</option>
+					{foreach from=$languages item=_language}
+						<option value="{@$_language->languageID}">{$_language}</option>
 					{/foreach}
 				</select>
 			</noscript>
@@ -18,10 +18,10 @@
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 			var languages = {
-				{implode from=$languages item=__language}
-					'{@$__language->languageID}': {
-						iconPath: '{@$__language->getIconPath()|encodeJS}',
-						languageName: '{@$__language|encodeJS}'
+				{implode from=$languages item=_language}
+					'{@$_language->languageID}': {
+						iconPath: '{@$_language->getIconPath()|encodeJS}',
+						languageName: '{@$_language|encodeJS}'
 					}
 				{/implode}
 			};

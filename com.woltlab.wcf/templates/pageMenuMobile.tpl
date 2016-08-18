@@ -146,11 +146,11 @@
 						<span class="menuOverlayItemTitle">{$__wcf->getLanguage()}</span>
 					</a>
 					<ol class="menuOverlayItemList" data-title="{lang}wcf.user.language{/lang}">
-						{foreach from=$__wcf->getLanguage()->getLanguages() item=__language}
-							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-id="{@$__language->languageID}">
+						{foreach from=$__wcf->getLanguage()->getLanguages() item=_language}
+							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-id="{@$_language->languageID}">
 								<a href="#" class="menuOverlayItemLink box24">
-									<img src="{$__language->getIconPath()}" alt="">
-									<span class="menuOverlayItemTitle">{$__language}</span>
+									<img src="{$_language->getIconPath()}" alt="">
+									<span class="menuOverlayItemTitle">{$_language}</span>
 								</a>
 							</li>
 						{/foreach}

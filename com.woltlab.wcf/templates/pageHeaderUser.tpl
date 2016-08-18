@@ -103,11 +103,11 @@
 					<script data-relocate="true">
 						require(['EventHandler', 'WoltLabSuite/Core/Language/Chooser'], function(EventHandler, LanguageChooser) {
 							var languages = {
-								{implode from=$__wcf->getLanguage()->getLanguages() item=__language}
-									'{@$__language->languageID}': {
-										iconPath: '{@$__language->getIconPath()|encodeJS}',
-										languageName: '{@$__language|encodeJS}',
-										languageCode: '{@$__language->languageCode|encodeJS}'
+								{implode from=$__wcf->getLanguage()->getLanguages() item=_language}
+									'{@$_language->languageID}': {
+										iconPath: '{@$_language->getIconPath()|encodeJS}',
+										languageName: '{@$_language|encodeJS}',
+										languageCode: '{@$_language->languageCode|encodeJS}'
 									}
 								{/implode}
 							};

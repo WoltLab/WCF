@@ -15,10 +15,10 @@
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
 			var languages = {
-				{implode from=$availableContentLanguages item=__language}
-					'{@$__language->languageID}': {
-						iconPath: '{@$__language->getIconPath()|encodeJS}',
-						languageName: '{@$__language|encodeJS}'
+				{implode from=$availableContentLanguages item=_language}
+					'{@$_language->languageID}': {
+						iconPath: '{@$_language->getIconPath()|encodeJS}',
+						languageName: '{@$_language|encodeJS}'
 					}
 				{/implode}
 			};
