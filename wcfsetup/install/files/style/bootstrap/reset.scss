@@ -65,3 +65,8 @@ html {
 	box-sizing: inherit;
 	min-width: 0;
 }
+
+html {
+	// prevent iOS Safari from blowing up font size when in landscape mode
+	-webkit-text-size-adjust: 100%;
+}

@@ -140,8 +140,8 @@
 }
 
 /* disable auto zoom in mobile safari */
-@include screen-sm-down {
-	.redactor-editor + textarea {
+@include screen-md-down {
+	.redactor-editor {
 		font-size: 16px;
 		max-height: 500px;
 	}
