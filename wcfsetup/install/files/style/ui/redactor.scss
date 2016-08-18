@@ -171,7 +171,6 @@
 				cursor: default;
 			}
 			
-			&:hover,
 			&.redactor-act,
 			&.dropact {
 				background-color: $wcfHeaderMenuLinkBackgroundActive;
@@ -181,6 +180,15 @@
 			.icon {
 				color: inherit;
 				cursor: inherit !important;
+			}
+			
+			@include screen-lg {
+				// hover-styles on mobile are misleading as they stay much longer
+				// due to the click-like behavior
+				&:hover {
+					background-color: $wcfHeaderMenuLinkBackgroundActive;
+					color: $wcfHeaderMenuLinkActive;
+				}
 			}
 		}
 		
