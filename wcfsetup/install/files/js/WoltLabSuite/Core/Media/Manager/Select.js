@@ -60,9 +60,9 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 			for (var i = 0, length = listItems.length; i < length; i++) {
 				var listItem = listItems[i];
 				
-				var chooseIcon = elByClass('jsMediaSelectIcon', listItem)[0];
+				var chooseIcon = elByClass('jsMediaSelectButton', listItem)[0];
 				if (chooseIcon) {
-					chooseIcon.classList.remove('jsMediaSelectIcon');
+					chooseIcon.classList.remove('jsMediaSelectButton');
 					chooseIcon.addEventListener(WCF_CLICK_EVENT, this._chooseMedia.bind(this));
 				}
 			}
@@ -147,19 +147,14 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 			MediaManagerSelect._super.prototype.setupMediaElement.call(this, media, mediaElement);
 			
 			// add media insertion icon
-			var smallButtons = elBySel('nav.buttonGroupNavigation > ul.smallButtons', mediaElement);
+			var buttons = elBySel('nav.buttonGroupNavigation > ul', mediaElement);
 			
 			var listItem = elCreate('li');
-			smallButtons.appendChild(listItem);
+			listItem.className = 'jsMediaSelectButton';
+			elData(listItem, 'object-id', media.mediaID);
+			buttons.appendChild(listItem);
 			
-			var a = elCreate('a');
-			listItem.appendChild(a);
-			
-			var icon = elCreate('span');
-			icon.className = 'icon icon16 fa-check jsTooltip jsMediaSelectIcon';
-			elData(icon, 'object-id', media.mediaID);
-			elAttr(icon, 'title', Language.get('wcf.media.button.choose'));
-			a.appendChild(icon);
+			listItem.innerHTML = '<a><span class="icon icon16 fa-check jsTooltip" title="' + Language.get('wcf.media.button.select') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.select') + '</span></a>';
 		},
 		
 		/**

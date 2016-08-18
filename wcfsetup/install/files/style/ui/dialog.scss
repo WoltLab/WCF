@@ -71,7 +71,8 @@
 		}
 	}
 	
-	&[aria-hidden=false]  ~ .dialogContainer[aria-hidden=false] {
+	&[aria-hidden=false] ~ .dialogContainer[aria-hidden=false],
+	&[aria-hidden=false] ~ .dialogContainer[aria-hidden=true]{
 		z-index: 50;
 	}
 	
@@ -90,7 +91,7 @@
 		> .dialogCloseButton {
 			align-self: center;
 			flex: 0 0 auto;
-						
+			
 			&:hover > .icon {
 				color: $wcfHeaderLinkActive;
 			}

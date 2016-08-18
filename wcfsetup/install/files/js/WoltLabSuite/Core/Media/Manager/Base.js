@@ -56,9 +56,9 @@ define(
 				var listItem = listItems[i];
 				
 				if (Permission.get('admin.content.cms.canManageMedia')) {
-					var editIcon = elByClass('jsMediaEditIcon', listItem)[0];
+					var editIcon = elByClass('jsMediaEditButton', listItem)[0];
 					if (editIcon) {
-						editIcon.classList.remove('jsMediaEditIcon');
+						editIcon.classList.remove('jsMediaEditButton');
 						editIcon.addEventListener(WCF_CLICK_EVENT, this._editMedia.bind(this));
 					}
 				}
@@ -406,47 +406,43 @@ define(
 			var mediaInformation = DomTraverse.childByClass(mediaElement, 'mediaInformation');
 			
 			var buttonGroupNavigation = elCreate('nav');
-			buttonGroupNavigation.className = 'buttonGroupNavigation';
+			buttonGroupNavigation.className = 'jsMobileNavigation buttonGroupNavigation';
 			mediaInformation.parentNode.appendChild(buttonGroupNavigation);
 			
-			var smallButtons = elCreate('ul');
-			smallButtons.className = 'smallButtons buttonGroup';
-			buttonGroupNavigation.appendChild(smallButtons);
+			var buttons = elCreate('ul');
+			buttons.className = 'buttonList iconList';
+			buttonGroupNavigation.appendChild(buttons);
 			
 			var listItem = elCreate('li');
-			smallButtons.appendChild(listItem);
+			buttons.appendChild(listItem);
+			
+			var a = elCreate('a');
+			listItem.appendChild(a);
+			
+			var label = elCreate('label');
+			a.appendChild(label);
 			
 			var checkbox = elCreate('input');
 			checkbox.className = 'jsClipboardItem jsMediaCheckbox';
 			elAttr(checkbox, 'type', 'checkbox');
 			elData(checkbox, 'object-id', media.mediaID);
-			listItem.appendChild(checkbox);
+			label.appendChild(checkbox);
 			
 			if (Permission.get('admin.content.cms.canManageMedia')) {
 				listItem = elCreate('li');
-				smallButtons.appendChild(listItem);
+				listItem.className = 'jsMediaEditButton';
+				elData(listItem, 'object-id', media.mediaID);
+				buttons.appendChild(listItem);
 				
-				var a = elCreate('a');
-				listItem.appendChild(a);
-				
-				var icon = elCreate('span');
-				icon.className = 'icon icon16 fa-pencil jsTooltip jsMediaEditIcon';
-				elData(icon, 'object-id', media.mediaID);
-				elAttr(icon, 'title', Language.get('wcf.global.button.edit'));
-				a.appendChild(icon);
+				listItem.innerHTML = '<a><span class="icon icon16 fa-pencil jsTooltip" title="' + Language.get('wcf.global.button.edit') + '"></span> <span class="invisible">' + Language.get('wcf.global.button.edit') + '</span></a>';
 				
 				listItem = elCreate('li');
-				smallButtons.appendChild(listItem);
+				listItem.className = 'jsDeleteButton';
+				elData(listItem, 'object-id', media.mediaID);
+				elData(listItem, 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage'));
+				buttons.appendChild(listItem);
 				
-				a = elCreate('a');
-				listItem.appendChild(a);
-				
-				icon = elCreate('span');
-				icon.className = 'icon icon16 fa-times jsTooltip jsDeleteButton';
-				elData(icon, 'object-id', media.mediaID);
-				elData(icon, 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage'));
-				elAttr(icon, 'title', Language.get('wcf.global.button.delete'));
-				a.appendChild(icon);
+				listItem.innerHTML = '<a><span class="icon icon16 fa-times jsTooltip" title="' + Language.get('wcf.global.button.delete') + '"></span> <span class="invisible">' + Language.get('wcf.global.button.delete') + '</span></a>';
 			}
 		}
 	};

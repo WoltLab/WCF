@@ -41,9 +41,9 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			for (var i = 0, length = listItems.length; i < length; i++) {
 				var listItem = listItems[i];
 				
-				var insertIcon = elByClass('jsMediaInsertIcon', listItem)[0];
+				var insertIcon = elByClass('jsMediaInsertButton', listItem)[0];
 				if (insertIcon) {
-					insertIcon.classList.remove('jsMediaInsertIcon');
+					insertIcon.classList.remove('jsMediaInsertButton');
 					insertIcon.addEventListener(WCF_CLICK_EVENT, this._openInsertDialog.bind(this));
 				}
 			}
@@ -322,19 +322,12 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			MediaManagerEditor._super.prototype.setupMediaElement.call(this, media, mediaElement);
 			
 			// add media insertion icon
-			var smallButtons = elBySel('nav.buttonGroupNavigation > ul.smallButtons', mediaElement);
+			var buttons = elBySel('nav.buttonGroupNavigation > ul', mediaElement);
 			
 			var listItem = elCreate('li');
-			smallButtons.appendChild(listItem);
+			buttons.appendChild(listItem);
 			
-			var a = elCreate('a');
-			listItem.appendChild(a);
-			
-			var icon = elCreate('span');
-			icon.className = 'icon icon16 fa-plus jsTooltip jsMediaInsertIcon';
-			elData(icon, 'object-id', media.mediaID);
-			elAttr(icon, 'title', Language.get('wcf.media.button.insert'));
-			a.appendChild(icon);
+			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip jsMediaInsertButton" data-object-id="' + media.mediaID + '" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
 		}
 	});
 	

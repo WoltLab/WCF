@@ -24,13 +24,6 @@
 		font-size: 1rem;
 		margin: 0 $wcfGapSmall $wcfGapSmall 0;
 		
-		&:hover {
-			> .buttonGroupNavigation {
-				height: auto;
-				padding: $wcfGapSmall;
-			}
-		}
-		
 		&.jsMarked {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
@@ -97,15 +90,73 @@
 			position: absolute;
 			top: 0;
 			right: 0;
-			background: rgba(0,0,0,0.6); // TODO
-			height: 0;
 			overflow: hidden;
+			background: rgba(0,0,0,0.6); // TODO
 			
 			/* TODO: transition */
 			
 			.icon {
 				color: #fff;
 				@include textShadow(#000);
+			}
+		}
+		
+		@include screen-md-down {
+			.buttonGroupNavigation {
+				&.open {
+					left: 0;
+					
+					// dropdown is contained within this element, required to have it stand
+					// above any succeeding siblings
+					z-index: 10;
+					
+					> .buttonList {
+						display: block;
+						visibility: visible;
+					}
+				}
+				
+				> .dropdownLabel {
+					left: calc(100% - 24px);
+					position: relative;
+				}
+				
+				> .buttonList {
+					@include dropdownMenu;
+					
+					position: static !important;
+					top: 0;
+					
+					> li {
+						.invisible {
+							display: inline;
+							padding-left: 5px;
+						}
+					}
+				}
+			}
+		}
+		
+		@include screen-lg {
+			.buttonGroupNavigation {
+				transition: opacity .12s;
+				
+				> .dropdownLabel {
+					display: none;
+				}
+			}
+		}
+		
+		@include screen-md-up {
+			> .buttonGroupNavigation {
+				height: 0;
+			}
+			
+			&:hover {
+				> .buttonGroupNavigation {
+					height: auto;
+					padding: $wcfGapSmall;
+				}
 			}
 		}
 	}

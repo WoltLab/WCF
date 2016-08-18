@@ -8,26 +8,26 @@
 			<p class="mediaTitle">{if $media->title}{$media->title}{else}{$media->filename}{/if}</p>
 		</div>
 		
-		<nav class="buttonGroupNavigation">
-			<ul class="smallButtons buttonGroup">
+		<nav class="jsMobileNavigation buttonGroupNavigation">
+			<ul class="buttonList iconList">
 				<li>
-					<input type="checkbox" class="jsClipboardItem jsMediaCheckbox" data-object-id="{@$media->mediaID}">
+					<a><label><input type="checkbox" class="jsClipboardItem jsMediaCheckbox" data-object-id="{@$media->mediaID}"></label></a>
 				</li>
 				{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
-					<li>
-						<a><span class="icon icon16 fa-pencil jsTooltip jsMediaEditIcon" data-object-id="{@$media->mediaID}" title="{lang}wcf.global.button.edit{/lang}"></span></a>
+					<li class="jsMediaEditButton" data-object-id="{@$media->mediaID}">
+						<a><span class="icon icon16 fa-pencil jsTooltip" title="{lang}wcf.global.button.edit{/lang}"></span> <span class="invisible">{lang}wcf.global.button.edit{/lang}</span></a>
 					</li>
-					<li>
-						<a><span class="icon icon16 fa-times jsTooltip jsDeleteButton" data-object-id="{@$media->mediaID}" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.media.delete.confirmMessage{/lang}"></span></a>
+					<li class="jsDeleteButton" data-object-id="{@$media->mediaID}" data-confirm-message-html="{lang __encode=true}wcf.media.delete.confirmMessage{/lang}">
+						<a><span class="icon icon16 fa-times jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span> <span class="invisible">{lang}wcf.global.button.delete{/lang}</span></a>
 					</li>
 				{/if}
 				{if $mode == 'editor'}
-					<li>
-						<a><span class="icon icon16 fa-plus jsTooltip jsMediaInsertIcon" data-object-id="{@$media->mediaID}" title="{lang}wcf.media.button.insert{/lang}"></span></a>
+					<li class="jsMediaInsertButton" data-object-id="{@$media->mediaID}">
+						<a><span class="icon icon16 fa-plus jsTooltip" title="{lang}wcf.media.button.insert{/lang}"></span> <span class="invisible">{lang}wcf.media.button.insert{/lang}</span></a>
 					</li>
 				{elseif $mode == 'select'}
-					<li>
-						<a><span class="icon icon16 fa-check jsTooltip jsMediaSelectIcon" data-object-id="{@$media->mediaID}" title="{lang}wcf.media.button.select{/lang}"></span></a>
+					<li class="jsMediaSelectButton" data-object-id="{@$media->mediaID}">
+						<a><span class="icon icon16 fa-check jsTooltip" title="{lang}wcf.media.button.select{/lang}"></span> <span class="invisible">{lang}wcf.media.button.select{/lang}</span></a>
 					</li>
 				{/if}
 			</ul>
