@@ -7,8 +7,8 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 
@@ -68,7 +68,7 @@ class NewPasswordForm extends AbstractForm {
 		
 		if ($this->lostPasswordKey) {
 			if (!$this->user->lostPasswordKey) throw new IllegalLinkException();
-			if (!PasswordUtil::secureCompare($this->user->lostPasswordKey, $this->lostPasswordKey)) {
+			if (!CryptoUtil::secureCompare($this->user->lostPasswordKey, $this->lostPasswordKey)) {
 				throw new IllegalLinkException();
 			}
 			// expire lost password requests after a day
