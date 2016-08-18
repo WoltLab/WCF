@@ -73,6 +73,12 @@ $.Redactor.prototype.WoltLabModal = function() {
 					}
 				};
 			};
+		},
+		
+		rebuild: function () {
+			if (_uiDialog) {
+				_uiDialog.rebuild('redactorOverlay-' + this.uuid);
+			}
 		}
 	};
 };
