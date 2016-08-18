@@ -21,7 +21,7 @@ define([], function() {
 				container = _containers[0];
 				container.classList.remove('jsCollapsibleBbcode');
 				
-				toggleButton = elBySel('.toggleButton');
+				toggleButton = elBySel('.toggleButton', container);
 				if (toggleButton === null) {
 					continue;
 				}
