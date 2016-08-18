@@ -1,6 +1,7 @@
 @mixin input {
 	background-color: $wcfInputBackground;
 	border: 1px solid $wcfInputBorder;
+	border-radius: 0;
 	color: $wcfInputText;
 	outline: none;
 	padding: 4px 8px;
