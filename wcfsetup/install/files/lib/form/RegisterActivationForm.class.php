@@ -99,7 +99,7 @@ class RegisterActivationForm extends AbstractForm {
 		$this->saved();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->get('wcf.user.registerActivation.success'), 10);
+		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success'), 10);
 		exit;
 	}
 	
