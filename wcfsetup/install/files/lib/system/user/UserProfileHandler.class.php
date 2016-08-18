@@ -57,4 +57,13 @@ class UserProfileHandler extends SingletonFactory {
 	public function reloadUserProfile() {
 		$this->userProfile = new UserProfile(new User($this->userID));
 	}
+	
+	/**
+	 * Returns the user profile object.
+	 * 
+	 * @return      UserProfile
+	 */
+	public function getUserProfile() {
+		return $this->userProfile;
+	}
 }
