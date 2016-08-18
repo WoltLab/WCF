@@ -1899,6 +1899,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
 		<item name="wcf.bbcode.code.simplified"><![CDATA[(Code, {#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
+		<item name="wcf.bbcode.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.bbcode.quote.delete"><![CDATA[Delete Quote]]></item>
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Edit Quote]]></item>
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Author]]></item>
