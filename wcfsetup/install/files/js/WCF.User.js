@@ -1530,7 +1530,7 @@ WCF.Notification.List = Class.extend({
 		});
 		
 		// handle 'mark all as confirmed' buttons
-		$('.contentNavigation .jsMarkAllAsConfirmed').click(function() {
+		$('.contentHeaderNavigation .jsMarkAllAsConfirmed').click(function() {
 			WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function(action) {
 				if (action === 'confirm') {
 					new WCF.Action.Proxy({
