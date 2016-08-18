@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\user\online\UsersOnlineList;
+use wcf\system\event\EventHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -12,6 +13,8 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
+ *        
+ * @property	UsersOnlineList         $objectList
  */
 class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
@@ -36,12 +39,20 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	 * @inheritDoc
 	 */
 	protected function getObjectList() {
-		$objectList = new UsersOnlineList();
-		$objectList->readStats();
-		$objectList->checkRecord();
-		$objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
+		return new UsersOnlineList();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function readObjects() {
+		EventHandler::getInstance()->fireAction($this, 'readObjects');
 		
-		return $objectList;
+		$this->objectList->readStats();
+		if ($this->showRecord) $this->objectList->checkRecord();
+		$this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
+		
+		$this->objectList->readObjects();
 	}
 	
 	/**
