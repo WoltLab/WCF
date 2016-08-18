@@ -64,6 +64,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 		
 		return [
 			'objectID' => $this->parameters['objectID'],
+			'objectType' => $this->parameters['objectType'],
 			'template' => WCF::getTPL()->fetch('manageSubscription')
 		];
 	}
@@ -115,6 +116,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 		
 		return [
 			'objectID' => $this->parameters['objectID'],
+			'objectType' => $this->parameters['objectType'],
 			'subscribe' => $this->parameters['subscribe']
 		];
 	}

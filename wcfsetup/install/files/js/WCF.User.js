@@ -2586,8 +2586,14 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		$(this._buttonSelector).each($.proxy(function(index, button) {
 			var $button = $(button);
 			$button.addClass('pointer');
+			var $objectType = $button.data('objectType');
 			var $objectID = $button.data('objectID');
-			this._buttons[$objectID] = $button.click($.proxy(this._click, this));
+			
+			if (this._buttons[$objectType] === undefined) {
+				this._buttons[$objectType] = {};
+			}
+			
+			this._buttons[$objectType][$objectID] = $button.click($.proxy(this._click, this));
 		}, this));
 		
 		WCF.System.Event.addListener('com.woltlab.wcf.objectWatch', 'update', $.proxy(this._updateSubscriptionStatus, this));
@@ -2634,7 +2640,7 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 			}
 			
 			// bind event listener
-			this._dialog.find('.formSubmit > .jsButtonSave').data('objectID', data.returnValues.objectID).click($.proxy(this._save, this));
+			this._dialog.find('.formSubmit > .jsButtonSave').data('objectID', data.returnValues.objectID).data('objectType', data.returnValues.objectType).click($.proxy(this._save, this));
 			var $enableNotification = this._dialog.find('input[name=enableNotification]').disable();
 			
 			// toggle subscription
@@ -2678,7 +2684,7 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 	 * @param	object		event
 	 */
 	_save: function(event) {
-		var $button = this._buttons[$(event.currentTarget).data('objectID')];
+		var $button = this._buttons[$(event.currentTarget).data('objectType')][$(event.currentTarget).data('objectID')];
 		var $subscribe = this._dialog.find('input[name=subscribe]:checked').val();
 		var $enableNotification = (this._dialog.find('input[name=enableNotification]').is(':checked')) ? 1 : 0;
 		
