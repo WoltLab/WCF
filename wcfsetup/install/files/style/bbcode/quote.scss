@@ -10,8 +10,11 @@
 		margin-top: 0;
 	}
 	
+	// hide nested icons
 	.quoteBox {
-		> .quoteBoxHeader > .quoteBoxIcon {
+		clear: both;
+		
+		.quoteBoxIcon {
 			display: none;
 		}
 	}
