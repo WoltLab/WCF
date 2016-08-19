@@ -1,6 +1,4 @@
 @mixin wcfFontDefault {
-	font-weight: 400;
-	
 	@include screen-md-up {
 		font-size: $wcfFontSizeDefault;
 	}

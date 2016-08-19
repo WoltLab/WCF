@@ -64,6 +64,7 @@ input[type="search"] {
 
 textarea {
 	border-width: 1px;
+	font-weight: 400;
 	width: 100%;
 	
 	@include wcfFontDefault;

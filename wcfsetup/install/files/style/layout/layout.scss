@@ -11,6 +11,7 @@ html.disableScrolling {
 }
 
 html, body {
+	font-weight: 400;
 	height: 100%;
 	
 	@include wcfLineHeight;
