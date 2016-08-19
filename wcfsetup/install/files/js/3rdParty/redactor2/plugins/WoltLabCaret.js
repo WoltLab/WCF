@@ -35,6 +35,8 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				return;
 			}
 			
+			this.buffer.set();
+			
 			// click occurred onto the empty editor space, but before or after a block element
 			var insertBefore = (event.clientY < block.getBoundingClientRect().top);
 			var p = elCreate('p');
