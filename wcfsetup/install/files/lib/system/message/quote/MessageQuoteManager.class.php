@@ -4,9 +4,11 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\IMessage;
 use wcf\system\exception\SystemException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\DOMUtil;
 
 /**
  * Manages message quotes.
@@ -128,8 +130,17 @@ class MessageQuoteManager extends SingletonFactory {
 			$this->quoteData[$quoteID.'_pID'] = $parentObjectID;
 			
 			if (!empty($fullQuote)) {
+				// strip quotes container in full quote
+				$htmlInputProcessor = new HtmlInputProcessor();
+				$htmlInputProcessor->processIntermediate($fullQuote);
+				
+				$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('blockquote');
+				while ($elements->length) {
+					DOMUtil::removeNode($elements->item(0));
+				}
+				
 				$this->quotes[$objectType][$objectID][$quoteID] = 1;
-				$this->quoteData[$quoteID.'_fq'] = $fullQuote;
+				$this->quoteData[$quoteID.'_fq'] = $htmlInputProcessor->getHtml();
 			}
 			
 			$this->updateSession();

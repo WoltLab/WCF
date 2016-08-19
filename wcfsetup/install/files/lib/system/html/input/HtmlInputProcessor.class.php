@@ -65,6 +65,17 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	}
 	
 	/**
+	 * Processes a HTML string to provide the general DOM API. This method
+	 * does not perform any filtering or validation. You SHOULD NOT use this
+	 * to deal with HTML that has not been filtered previously.
+	 * 
+	 * @param       string          $html   html string
+	 */
+	public function processIntermediate($html) {
+		$this->getHtmlInputNodeProcessor()->load($this, $html);
+	}
+	
+	/**
 	 * Processes only embedded content. This method should only be called when rebuilding
 	 * data where only embedded content is relevant, but no actual parsing is required.
 	 * 
