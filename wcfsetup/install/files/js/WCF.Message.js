@@ -1604,6 +1604,16 @@ WCF.Message.Quote.Manager = Class.extend({
 		this._toggleShowQuotes();
 		
 		WCF.System.Event.addListener('com.woltlab.wcf.quote', 'reload', this.countQuotes.bind(this));
+		
+		// event forwarding
+		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
+				author: data.quote.username,
+				content: data.quote.text,
+				isText: true,
+				link: data.quote.link
+			});
+		}).bind(this));
 	},
 	
 	/**

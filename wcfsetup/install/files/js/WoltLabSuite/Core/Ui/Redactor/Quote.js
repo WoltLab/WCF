@@ -96,7 +96,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			elData(quote, 'link', data.link);
 			
 			if (data.isText) {
-				this.insert.text(data.content);
+				this._editor.insert.text(data.content);
 			}
 			
 			quote.removeAttribute('id');
