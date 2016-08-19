@@ -46,18 +46,19 @@ class ImageProxyAction extends AbstractAction {
 			if ($url === null) throw new IllegalLinkException();
 			
 			$fileName = sha1($this->key);
+			$dir = WCF_DIR.'images/proxy/'.substr($fileName, 0, 2);
 			
-			// prepare path
-			$fileExtension = pathinfo($url, PATHINFO_EXTENSION);
-			$path = 'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
-			$fileLocation = WCF_DIR.$path;
-			$dir = dirname($fileLocation);
-			if (!@file_exists($dir)) {
+			// ensure that the directory exists
+			if (!file_exists($dir)) {
 				FileUtil::makePath($dir);
 			}
 			
-			// download image
-			if (!file_exists($fileLocation)) {
+			// check whether we already downloaded the image
+			$files = glob($dir.'/'.$fileName.'.{png,gif,jpg}', GLOB_BRACE | GLOB_NOSORT);
+			if ($files === false) throw new IllegalLinkException();
+			
+			if (empty($files)) {
+				// download image
 				try {
 					$request = new HTTPRequest($url);
 					$request->execute();
@@ -67,18 +68,37 @@ class ImageProxyAction extends AbstractAction {
 				}
 				$image = $request->getReply()['body'];
 				
-				// check if image is linked
-				// TODO: handle SVGs
+				// check file type
 				$imageData = getimagesizefromstring($image);
-				if (!$imageData) {
-					throw new IllegalLinkException();
+				if (!$imageData) throw new IllegalLinkException();
+				
+				switch ($imageData[2]) {
+					case IMAGETYPE_PNG:
+						$extension = 'png';
+					break;
+					case IMAGETYPE_GIF:
+						$extension = 'gif';
+					break;
+					case IMAGETYPE_JPEG:
+						$extension = 'jpg';
+					break;
+					default:
+						throw new IllegalLinkException();
 				}
+				
+				$fileLocation = $dir.'/'.$fileName.'.'.$extension;
 				
 				file_put_contents($fileLocation, $image);
 				
 				// update mtime for correct expiration calculation
 				@touch($fileLocation);
 			}
+			else {
+				$fileLocation = $files[0];
+			}
+			
+			$path = FileUtil::getRelativePath(WCF_DIR, dirname($fileLocation)).basename($fileLocation);
+			
 			$this->executed();
 			
 			HeaderUtil::redirect(WCF::getPath().$path, true, false);

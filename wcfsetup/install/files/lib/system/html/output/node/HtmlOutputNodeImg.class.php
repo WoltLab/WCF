@@ -39,8 +39,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	}
 	
 	/**
-	 * Returns the link to the cached image (or the link to fetch the image
-	 * using the image proxy).
+	 * Returns the link to fetch the image using the image proxy.
 	 *
 	 * @param	string		$link
 	 * @return	string
@@ -49,17 +48,6 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	protected function getProxyLink($link) {
 		try {
 			$key = CryptoUtil::createSignedString($link);
-			// does not need to be secure, just sufficiently "random"
-			$fileName = sha1($key);
-			
-			$fileExtension = pathinfo($link, PATHINFO_EXTENSION);
-			
-			$path = 'images/proxy/'.substr($fileName, 0, 2).'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
-			
-			$fileLocation = WCF_DIR.$path;
-			if (file_exists($fileLocation)) {
-				return WCF::getPath().$path;
-			}
 			
 			return LinkHandler::getInstance()->getLink('ImageProxy', [
 				'key' => $key
