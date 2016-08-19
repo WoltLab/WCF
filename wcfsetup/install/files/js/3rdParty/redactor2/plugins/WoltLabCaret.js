@@ -13,6 +13,35 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				
 				mpAfter.call(this, node);
 			}).bind(this);
+			
+			this.$editor[0].addEventListener('mouseup', this.WoltLabCaret._handleEditorClick.bind(this));
+		},
+		
+		_handleEditorClick: function (event) {
+			if (event.target !== this.$editor[0]) {
+				return;
+			}
+			
+			if (!this.selection.get().isCollapsed) {
+				return;
+			}
+			
+			var block = this.selection.block();
+			if (block === false) {
+				return;
+			}
+			
+			if (block.nodeName === 'P') {
+				return;
+			}
+			
+			// click occurred onto the empty editor space, but before or after a block element
+			var insertBefore = (event.clientY < block.getBoundingClientRect().top);
+			var p = elCreate('p');
+			p.textContent = '\u200B';
+			block.parentNode.insertBefore(p, (insertBefore ? block : block.nextSibling));
+			
+			this.caret.end(p);
 		},
 		
 		_addParagraphAfterBlock: function (block) {
