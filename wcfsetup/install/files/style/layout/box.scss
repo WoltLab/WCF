@@ -118,9 +118,6 @@
 	}
 	
 	.boxContainer {
-		margin-left: -15px;
-		margin-right: -15px;
-		
 		@include screen-sm-up {
 			display: flex;
 			flex-wrap: wrap;
@@ -129,11 +126,15 @@
 		@include screen-md-down {
 			padding: 40px 0;
 			margin-bottom: -40px;
+			margin-left: -10px;
+			margin-right: -10px;
 		}
 		
 		@include screen-lg {
 			padding: 60px 0;
 			margin-bottom: -60px;
+			margin-left: -15px;
+			margin-right: -15px;
 		}
 	}
 	
@@ -563,11 +564,13 @@
 	}
 	
 	.boxContainer {
-		margin-left: -15px;
-		margin-right: -15px;
-		
 		@include screen-sm-down {
 			padding: 40px 0;
+		}
+		
+		@include screen-md-down {
+			margin-left: -10px;
+			margin-right: -10px;
 		}
 		
 		@include screen-md-up {
@@ -575,6 +578,11 @@
 			flex-wrap: wrap;
 			margin-bottom: -60px;
 			padding: 60px 0;
+		}
+		
+		@include screen-lg {
+			margin-left: -15px;
+			margin-right: -15px;
 		}
 	}
 	
