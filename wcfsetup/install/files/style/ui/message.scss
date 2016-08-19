@@ -113,7 +113,9 @@
 		text-align: center;
 		
 		& + .messageContent {
+			flex-basis: calc(100% - 270px);
 			margin-left: 30px;
+			max-width: calc(100% - 270px);
 		}
 	}
 	
@@ -248,7 +250,7 @@
 /* content */
 .messageContent {
 	display: flex;
-	flex: auto;
+	flex: 1 1 auto;
 	flex-direction: column;
 	
 	@include screen-sm-down {
@@ -380,7 +382,7 @@
 
 /* content - body */
 .messageBody {
-	flex: auto;
+	flex: 1 1 auto;
 	
 	&.editor {
 		align-items: center;
@@ -392,7 +394,7 @@
 		}
 		
 		> .editorContainer {
-			flex: auto;
+			flex: 1 1 auto;
 		}
 	}
 	
@@ -456,7 +458,7 @@
 	
 	> .messageFooterButtons {
 		@include screen-md-up {
-			flex: auto;
+			flex: 1 1 auto;
 		}
 		
 		@include screen-sm-down {
