@@ -2,7 +2,7 @@
 namespace wcf\system\option\user;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
-use wcf\system\bbcode\MessageParser;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -24,11 +24,12 @@ class MessageUserOptionOutput implements IUserOptionOutput {
 			return '';
 		}
 		
-		MessageParser::getInstance()->setOutputType('text/html');
+		$htmlOutputProcessor = new HtmlOutputProcessor();
+		$htmlOutputProcessor->process($value, 'com.woltlab.wcf.user.aboutMe', $user->userID);
 		
 		WCF::getTPL()->assign([
 			'option' => $option,
-			'value' => MessageParser::getInstance()->parse($value)
+			'value' => $htmlOutputProcessor->getHtml()
 		]);
 		return WCF::getTPL()->fetch('messageUserOptionOutput');
 	}
