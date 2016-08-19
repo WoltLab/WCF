@@ -31,7 +31,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 	/** @const */ var STATE_READY = 2;
 	
 	/** @const */ var DELAY_HIDE = 500;
-	/** @const */ var DELAY_SHOW = 300;
+	/** @const */ var DELAY_SHOW = 800;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Controller/Popover
