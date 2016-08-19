@@ -282,6 +282,17 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		},
 		
 		/**
+		 * Removes the chooser with given id.
+		 * 
+		 * @param	{string}	chooserId	input element id
+		 */
+		removeChooser: function(chooserId) {
+			if (_choosers.has(chooserId)) {
+				_choosers.delete(chooserId);
+			}
+		},
+		
+		/**
 		 * Sets the language for a certain chooser.
 		 * 
 		 * @param	{string}	chooserId	input element id
