@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\html\output\node;
+use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\bbcode\KeywordHighlighter;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\IHtmlNode;
 use wcf\util\DOMUtil;
@@ -27,6 +29,24 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	protected $outputType = 'text/html';
 	
 	/**
+	 * enables keyword highlighting
+	 * @var boolean
+	 */
+	protected $keywordHighlighting = true;
+	
+	/**
+	 * @var string[]
+	 */
+	protected $sourceBBCodes = [];
+	
+	/**
+	 * HtmlOutputNodeProcessor constructor.
+	 */
+	public function __construct() {
+		$this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
+	}
+	
+	/**
 	 * Sets the desired output type.
 	 * 
 	 * @param       string          $outputType     desired output type
@@ -39,6 +59,9 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @inheritDoc
 	 */
 	public function process() {
+		// highlight keywords
+		$this->highlightKeywords();
+		
 		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
 		
 		// dynamic node handlers
@@ -123,6 +146,81 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		}
 		
 		return $html;
+	}
+	
+	/**
+	 * Enables the keyword highlighting.
+	 * 
+	 * @param       boolean         $enable
+	 */
+	public function enableKeywordHighlighting($enable = true) {
+		$this->keywordHighlighting = $enable;
+	}
+	
+	/**
+	 * Executes the keyword highlighting.
+	 */
+	protected function highlightKeywords() {
+		if (!$this->keywordHighlighting) return;
+		if (!count(KeywordHighlighter::getInstance()->getKeywords())) return;
+		$keywordPattern = '('.implode('|', KeywordHighlighter::getInstance()->getKeywords()).')';
+		
+		$nodes = [];
+		foreach ($this->getXPath()->query('//text()') as $node) {
+			$value = StringUtil::trim($node->textContent);
+			if (empty($value)) {
+				// skip empty nodes
+				continue;
+			}
+			
+			// check if node is within a code element or link
+			if ($this->hasCodeParent($node)) {
+				continue;
+			}
+			
+			$nodes[] = $node;
+		}
+		foreach ($nodes as $node) {
+			$split = preg_split('+'.$keywordPattern.'+', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE);
+			if (count($split) == 1) return;
+			
+			for ($i = 0; $i < count($split); $i++) {
+				if ($i % 2 == 0) { // text
+					$node->parentNode->insertBefore($node->ownerDocument->createTextNode($split[$i]), $node);
+				}
+				else { // match
+					$element = $node->ownerDocument->createElement('span');
+					$element->setAttribute('class', 'highlight');
+					$element->appendChild($node->ownerDocument->createTextNode($split[$i]));
+					$node->parentNode->insertBefore($element, $node);
+				}
+			}
+			
+			DOMUtil::removeNode($node);
+		}
+	}
+	
+	/**
+	 * Returns true if text node is inside a code element, suppresing any
+	 * auto-detection of content.
+	 *
+	 * @param       \DOMText        $text           text node
+	 * @return      boolean         true if text node is inside a code element
+	 */
+	protected function hasCodeParent(\DOMText $text) {
+		$parent = $text;
+		/** @var \DOMElement $parent */
+		while ($parent = $parent->parentNode) {
+			$nodeName = $parent->nodeName;
+			if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
+				return true;
+			}
+			else if ($nodeName === 'woltlab-metacode' && in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**

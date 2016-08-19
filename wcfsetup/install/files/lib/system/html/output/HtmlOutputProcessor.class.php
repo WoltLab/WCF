@@ -29,14 +29,16 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * Processes the input html string.
 	 *
-	 * @param       string          $html           html string
-	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       string          $html                           html string
+	 * @param       string          $objectType                     object type identifier
+	 * @param       integer         $objectID                       object id
+	 * @param	boolean		$doKeywordHighlighting                                   
 	 */
-	public function process($html, $objectType, $objectID) {
+	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true) {
 		$this->setContext($objectType, $objectID);
 		
 		$this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);
+		$this->getHtmlOutputNodeProcessor()->enableKeywordHighlighting($doKeywordHighlighting);
 		$this->getHtmlOutputNodeProcessor()->load($this, $html);
 		$this->getHtmlOutputNodeProcessor()->process();
 	}

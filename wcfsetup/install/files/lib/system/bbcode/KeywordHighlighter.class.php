@@ -135,4 +135,13 @@ class KeywordHighlighter extends SingletonFactory {
 		$keywordPattern = str_replace('\*', '\w*', $keywordPattern);
 		return preg_replace('+(?<!&|&\w{1}|&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6})'.$keywordPattern.'(?![^<]*>)+i', '<span class="highlight">\\1</span>', $text);
 	}
+	
+	/**
+	 * Returns search keywords
+	 * 
+	 * @return	string[]
+	 */
+	public function getKeywords() {
+		return $this->keywords;
+	}
 }
