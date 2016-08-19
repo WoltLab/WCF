@@ -415,15 +415,22 @@ class HtmlInputNodeTextParser {
 	protected function parseSmiley(\DOMText $text, $value) {
 		static $smileyPattern = null;
 		if ($smileyPattern === null) {
+			$difficultCodes = [];
 			foreach ($this->smilies as $smileyCode => $url) {
 				$smileyCode = preg_quote($smileyCode, '~');
 				
 				if (!preg_match('~^\\\:.+\\\:$~', $smileyCode)) {
-					$smileyCode = '\B' . $smileyCode . '\B';
+					$difficultCodes[] = $smileyCode;
+					continue;
 				}
 				
 				if (!empty($smileyPattern)) $smileyPattern .= '|';
 				$smileyPattern .= $smileyCode;
+			}
+			
+			if (!empty($difficultCodes)) {
+				if (!empty($smileyPattern)) $smileyPattern .= '|';
+				$smileyPattern .= '(?<=\s|^)(?:' . implode('|', $difficultCodes) . ')(?=\s|$)';
 			}
 			
 			$smileyPattern = '~(' . $smileyPattern . ')~';
