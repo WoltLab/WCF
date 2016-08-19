@@ -28,7 +28,7 @@
 		</item>
 		<item identifier="com.woltlab.wcf.UsersOnlineList">
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de">Benutzer Online</title>
+			<title language="de">Benutzer online</title>
 			<title language="en">Users Online</title>
 			<page>com.woltlab.wcf.UsersOnlineList</page>
 		</item>
