@@ -50,7 +50,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		
 		// quotes
 		$definition->addAttribute('blockquote', 'data-author', 'Text');
-		$definition->addAttribute('blockquote', 'data-url', 'URI');
+		$definition->addAttribute('blockquote', 'data-link', 'URI');
 		
 		// code
 		$definition->addAttribute('pre', 'data-file', 'Text');

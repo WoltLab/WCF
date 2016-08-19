@@ -34,7 +34,7 @@ class HtmlOutputNodeBlockquote extends AbstractHtmlOutputNode {
 					$nodeIdentifier = StringUtil::getRandomID();
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'author' => $element->getAttribute('data-author'),
-						'url' => $element->getAttribute('data-url')
+						'url' => $element->getAttribute('data-link')
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
