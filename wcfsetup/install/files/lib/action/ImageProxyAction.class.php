@@ -58,32 +58,40 @@ class ImageProxyAction extends AbstractAction {
 			if ($files === false) throw new IllegalLinkException();
 			
 			if (empty($files)) {
-				// download image
 				try {
-					$request = new HTTPRequest($url);
-					$request->execute();
-				}
-				catch (SystemException $e) {
-					throw new IllegalLinkException();
-				}
-				$image = $request->getReply()['body'];
-				
-				// check file type
-				$imageData = getimagesizefromstring($image);
-				if (!$imageData) throw new IllegalLinkException();
-				
-				switch ($imageData[2]) {
-					case IMAGETYPE_PNG:
-						$extension = 'png';
-					break;
-					case IMAGETYPE_GIF:
-						$extension = 'gif';
-					break;
-					case IMAGETYPE_JPEG:
-						$extension = 'jpg';
-					break;
-					default:
+					// download image
+					try {
+						$request = new HTTPRequest($url);
+						$request->execute();
+					}
+					catch (SystemException $e) {
 						throw new IllegalLinkException();
+					}
+					$image = $request->getReply()['body'];
+					
+					// check file type
+					$imageData = getimagesizefromstring($image);
+					if (!$imageData) throw new \DomainException();
+					
+					switch ($imageData[2]) {
+						case IMAGETYPE_PNG:
+							$extension = 'png';
+						break;
+						case IMAGETYPE_GIF:
+							$extension = 'gif';
+						break;
+						case IMAGETYPE_JPEG:
+							$extension = 'jpg';
+						break;
+						default:
+							throw new \DomainException();
+					}
+				}
+				catch (\DomainException $e) {
+					// save a dummy image in case the server sent us junk, otherwise we might try to download the file over and over and over again.
+					// taken from the public domain gif at https://commons.wikimedia.org/wiki/File%3aBlank.gif
+					$image = "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xFF\xFF\xFF\x00\x00\x00\x21\xF9\x04\x00\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B";
+					$extension = 'gif';
 				}
 				
 				$fileLocation = $dir.'/'.$fileName.'.'.$extension;
