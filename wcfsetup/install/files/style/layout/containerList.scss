@@ -42,6 +42,10 @@
 			position: absolute;
 			top: 5px;
 			right: 0;
+			
+			@include screen-xs {
+				display: none;
+			}
 		}
 	}
 	
