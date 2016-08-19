@@ -3,6 +3,7 @@ namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\WCF;
@@ -72,6 +73,10 @@ class SignatureEditForm extends MessageForm {
 		
 		if (!empty($this->text)) {
 			$this->validateText();
+		}
+		else {
+			$this->htmlInputProcessor = new HtmlInputProcessor();
+			$this->htmlInputProcessor->process($this->text, $this->messageObjectType, WCF::getUser()->userID);
 		}
 	}
 	
