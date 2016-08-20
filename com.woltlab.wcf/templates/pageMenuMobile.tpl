@@ -105,7 +105,7 @@
 					<a href="#" class="menuOverlayItemLink menuOverlayItemBadge box24" data-badge-identifier="outstandingModeration">
 						<span class="icon icon24 fa-exclamation-triangle"></span>
 						<span class="menuOverlayItemTitle">{lang}wcf.moderation.moderation{/lang}</span>
-						{if $__wcf->getModerationQueueManager()->getOutstandingModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}</span>{/if}
+						{if $__wcf->getModerationQueueManager()->getUnreadModerationCount()}<span class="badge badgeUpdate">{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}</span>{/if}
 					</a>
 				</li>
 			{/if}
