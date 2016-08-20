@@ -14,9 +14,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 	z-index: 399;
 	
 	.icon {
-		color: rgba(102, 102, 102, 1);
-		
-		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+		color: rgb(158, 158, 158);
 	}
 	
 	&.open {
@@ -253,6 +251,10 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 	}
 	
 	&:not(.wcfImageViewerMobile) {
+		.icon:hover {
+			color: rgb(255, 255, 255);
+		}
+		
 		> header {
 			transition: top .24s linear;
 		}
@@ -283,6 +285,10 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 				
 				> li {
 					flex: 0 0 auto;
+					
+					&:not(.pointer) > .icon {
+						color: rgb(66, 66, 66) !important;
+					}
 					
 					&.pointer > span.icon {
 						cursor: pointer;
