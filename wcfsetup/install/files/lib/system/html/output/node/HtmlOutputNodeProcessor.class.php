@@ -182,13 +182,15 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		}
 		foreach ($nodes as $node) {
 			$split = preg_split('+'.$keywordPattern.'+', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE);
-			if (count($split) == 1) return;
+			$count = count($split);
+			if ($count == 1) return;
 			
-			for ($i = 0; $i < count($split); $i++) {
+			for ($i = 0; $i < $count; $i++) {
 				if ($i % 2 == 0) { // text
 					$node->parentNode->insertBefore($node->ownerDocument->createTextNode($split[$i]), $node);
 				}
 				else { // match
+					/** @var \DOMElement $element */
 					$element = $node->ownerDocument->createElement('span');
 					$element->setAttribute('class', 'highlight');
 					$element->appendChild($node->ownerDocument->createTextNode($split[$i]));
