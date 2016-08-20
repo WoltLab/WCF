@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for xml-files which install, update or delete pages. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data element -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- import element -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="page" type="page_import" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- delete element -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="page" type="page_delete" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- deleted page -->
+	<xs:complexType name="page_delete">
+		<xs:attribute name="identifier" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
+	<!-- imported/updated page -->
+	<xs:complexType name="page_import">
+		<xs:complexContent>
+			<xs:extension base="page_delete">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="pageType" minOccurs="1">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="system" />
+								<xs:enumeration value="text" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="controller" type="xs:string" minOccurs="0" />
+					<xs:element name="handler" type="xs:string" minOccurs="0" />
+					<xs:element name="name" type="name_element" minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="content" type="content_element" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="permissions" type="woltlab_varchar" minOccurs="0" />
+					<xs:element name="options" type="woltlab_varchar" minOccurs="0" />
+					<xs:element name="parent" type="woltlab_varchar" minOccurs="0" />
+					<xs:element name="hasFixedParent" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="requireObjectID" type="woltlab_boolean" minOccurs="0" />
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="content_element">
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="title" type="woltlab_varchar" minOccurs="1" />
+				<xs:element name="content" type="xs:string" minOccurs="0" />
+				<xs:element name="customURL" type="woltlab_varchar" minOccurs="0" />
+			</xs:choice>
+			<xs:attribute name="language" type="woltlab_varchar" use="optional" />
+	</xs:complexType>
+	
+	<xs:complexType name="name_element">
+		<xs:simpleContent>
+			<xs:extension base="woltlab_varchar">
+				<xs:attribute name="language" type="woltlab_varchar" use="required" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

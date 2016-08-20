@@ -42,6 +42,14 @@
 					<xs:element name="templatename" type="xs:string" minOccurs="0" />
 					<xs:element name="eventname" type="xs:string" minOccurs="0" />
 					<xs:element name="templatecode" type="xs:string" minOccurs="0" />
+					<xs:element name="nice" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:integer">
+								<xs:minInclusive value="-128" />
+								<xs:maxInclusive value="127" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>
