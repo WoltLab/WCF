@@ -186,10 +186,12 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 			if ($count == 1) return;
 			
 			for ($i = 0; $i < $count; $i++) {
-				if ($i % 2 == 0) { // text
+				// text
+				if ($i % 2 == 0) {
 					$node->parentNode->insertBefore($node->ownerDocument->createTextNode($split[$i]), $node);
 				}
-				else { // match
+				// match
+				else {
 					/** @var \DOMElement $element */
 					$element = $node->ownerDocument->createElement('span');
 					$element->setAttribute('class', 'highlight');
