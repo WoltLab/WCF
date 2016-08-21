@@ -17,7 +17,7 @@ $.Redactor.prototype.WoltLabSize = function() {
 			}
 			
 			dropdown['removeSize'] = {
-				title: 'remove size',
+				title: this.lang.get('remove-size'),
 				func: this.WoltLabSize.removeSize.bind(this)
 			};
 			

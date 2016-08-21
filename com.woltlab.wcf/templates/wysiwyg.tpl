@@ -133,7 +133,13 @@
 						'insert-column-left': '{lang}wcf.editor.table.insertColumnLeft{/lang}',
 						'insert-column-right': '{lang}wcf.editor.table.insertColumnRight{/lang}',
 						'insert-row-above': '{lang}wcf.editor.table.insertRowAbove{/lang}',
-						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}'
+						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}',
+
+						// size
+						'remove-size': '{lang}wcf.editor.button.size.removeSize{/lang}',
+
+						// color
+						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}',
 					}
 				},
 				linkify: false,

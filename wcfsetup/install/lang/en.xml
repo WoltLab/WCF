@@ -2233,6 +2233,7 @@ Errors are:
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
+		<item name="wcf.editor.button.color.removeColor"><![CDATA[Remove Color]]></item>
 		<item name="wcf.editor.button.format"><![CDATA[Headline]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Image]]></item>
@@ -2243,6 +2244,7 @@ Errors are:
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Font Size]]></item>
+		<item name="wcf.editor.button.size.removeSize"><![CDATA[Remove Font Size]]></item>
 		<item name="wcf.editor.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.editor.button.strikethrough"><![CDATA[Strikethrough]]></item>
 		<item name="wcf.editor.button.subscript"><![CDATA[Subscript]]></item>

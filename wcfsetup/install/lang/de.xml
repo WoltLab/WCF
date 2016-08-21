@@ -2266,6 +2266,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
+		<item name="wcf.editor.button.color.removeColor"><![CDATA[Schriftfarbe entfernen]]></item>
 		<item name="wcf.editor.button.format"><![CDATA[Überschrift]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Bild]]></item>
@@ -2276,6 +2277,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Schriftgröße]]></item>
+		<item name="wcf.editor.button.size.removeSize"><![CDATA[Schriftgröße entfernen]]></item>
 		<item name="wcf.editor.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.editor.button.strikethrough"><![CDATA[Durchgestrichen]]></item>
 		<item name="wcf.editor.button.subscript"><![CDATA[Tiefgestellt]]></item>

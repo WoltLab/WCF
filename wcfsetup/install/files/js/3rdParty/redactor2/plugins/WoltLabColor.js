@@ -15,7 +15,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 			var callback = this.WoltLabColor.setColor.bind(this), color;
 			var dropdown = {
 				'removeColor': {
-					title: 'remove color',
+					title: this.lang.get('remove-color'),
 					func: this.WoltLabColor.removeColor.bind(this)
 				}
 			};
