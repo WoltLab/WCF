@@ -31,12 +31,14 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 		}
 		
 		foreach ($usersToGroup as $groupID => $users) {
-			$userAction = new UserAction(array_unique($users), 'addToGroups', [
-				'addDefaultGroups' => false,
-				'deleteOldGroups' => false,
-				'groups' => [$groupID]
-			]);
-			$userAction->executeAction();
+			if (!empty($users)) {
+				$userAction = new UserAction(array_unique($users), 'addToGroups', [
+					'addDefaultGroups' => false,
+					'deleteOldGroups' => false,
+					'groups' => [$groupID]
+				]);
+				$userAction->executeAction();
+			}
 		}
 	}
 }
