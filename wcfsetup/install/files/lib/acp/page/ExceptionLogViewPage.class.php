@@ -148,6 +148,8 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 "File: (?P<file>.*?) \((?P<line>\d+)\)\s*\n".
 "Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
 "Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})", Regex::DOT_ALL);
+		
+		$isPhp7 = version_compare(PHP_VERSION, '7.0.0') >= 0;
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
 			if ($i < $this->startIndex || $i > $this->endIndex) {
@@ -162,11 +164,23 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			$matches = $exceptionRegex->getMatches();
 			$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
 			
-			$chainMatches = array_map(function ($item) {
+			$chainMatches = array_map(function ($item) use ($isPhp7) {
 				if ($item['information'] === '-') $item['information'] = null;
-				else $item['information'] = @unserialize(base64_decode($item['information']));
+				else {
+					if ($isPhp7) {
+						$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
+					}
+					else {
+						$item['information'] = unserialize(base64_decode($item['information']));
+					}
+				}
 				
-				$item['stack'] = @unserialize(base64_decode($item['stack']));
+				if ($isPhp7) {
+					$item['stack'] = unserialize(base64_decode($item['stack']), ['allowed_classes' => false]);
+				}
+				else {
+					$item['stack'] = unserialize(base64_decode($item['stack']));
+				}
 				
 				return $item;
 			}, $chainRegex->getMatches());
