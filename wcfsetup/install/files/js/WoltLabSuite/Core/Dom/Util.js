@@ -275,25 +275,39 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 			var element = elCreate('div');
 			this.setInnerHtml(element, html);
 			
+			var node;
 			if (insertMethod === 'append' || insertMethod === 'after') {
 				while (element.childNodes.length) {
+					node = element.childNodes[0];
+					
 					if (insertMethod === 'append') {
-						referenceElement.appendChild(element.childNodes[0]);
+						referenceElement.appendChild(node);
 					}
 					else {
-						this.insertAfter(element.childNodes[0], referenceElement);
+						this.insertAfter(node, referenceElement);
 					}
 				}
 			}
 			else if (insertMethod === 'prepend' || insertMethod === 'before') {
+				var scriptTags = [];
 				for (var i = element.childNodes.length - 1; i >= 0; i--) {
+					node = element.childNodes[i];
+					if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'SCRIPT') {
+						scriptTags.push(node);
+						continue;
+					}
+					
 					if (insertMethod === 'prepend') {
-						this.prepend(element.childNodes[i], referenceElement);
+						this.prepend(node, referenceElement);
 					}
 					else {
-						referenceElement.parentNode.insertBefore(element.childNodes[i], referenceElement);
+						referenceElement.parentNode.insertBefore(node, referenceElement);
 					}
 				}
+				
+				scriptTags.forEach(function (scriptTag) {
+					document.body.appendChild(scriptTag);
+				});
 			}
 			else {
 				throw new Error("Unknown insert method '" + insertMethod + "'.");
