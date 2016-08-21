@@ -11,13 +11,13 @@ define(
 		'Core',                     'Dictionary',               'Dom/ChangeListener',              'Dom/Traverse',
 		'Dom/Util',                 'EventHandler',             'Language',                        'List',
 		'Permission',               'Ui/Dialog',                'Ui/Notification',                 'WoltLabSuite/Core/Controller/Clipboard',
-		'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/Upload', 'WoltLabSuite/Core/Media/Manager/Search'
+		'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/Upload', 'WoltLabSuite/Core/Media/Manager/Search', 'StringUtil'
 	],
 	function(
 		Core,                        Dictionary,                 DomChangeListener,                 DomTraverse,
 		DomUtil,                     EventHandler,               Language,                          List,
 		Permission,                  UiDialog,                   UiNotification,                    Clipboard,
-		MediaEditor,                 MediaUpload,                MediaManagerSearch
+		MediaEditor,                 MediaUpload,                MediaManagerSearch,                StringUtil
 	)
 {
 	"use strict";
@@ -440,7 +440,12 @@ define(
 				listItem = elCreate('li');
 				listItem.className = 'jsDeleteButton';
 				elData(listItem, 'object-id', media.mediaID);
-				elData(listItem, 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage'));
+				
+				// use temporary title to not unescape html in filename
+				var uuid = Core.getUuid();
+				elData(listItem, 'confirm-message-html', StringUtil.unescapeHTML(Language.get('wcf.media.delete.confirmMessage', {
+					title: uuid
+				})).replace(uuid, StringUtil.escapeHTML(media.filename)));
 				buttons.appendChild(listItem);
 				
 				listItem.innerHTML = '<a><span class="icon icon16 fa-times jsTooltip" title="' + Language.get('wcf.global.button.delete') + '"></span> <span class="invisible">' + Language.get('wcf.global.button.delete') + '</span></a>';

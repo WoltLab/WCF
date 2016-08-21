@@ -2472,6 +2472,7 @@ Errors are:
 		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete the media file <span class="confirmationObject">{$title}</span>?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Edit Media File]]></item>
 		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Filesize]]></item>

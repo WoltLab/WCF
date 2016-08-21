@@ -3,7 +3,7 @@
 		Language.addObject({
 			'wcf.global.button.insert': '{lang}wcf.global.button.insert{/lang}',
 			
-			'wcf.media.delete.confirmMessage': '{lang __encode=true}wcf.media.delete.confirmMessage{/lang}',
+			'wcf.media.delete.confirmMessage': '{lang __encode=true __literal=true}wcf.media.delete.confirmMessage{/lang}',
 			'wcf.media.insert': '{lang}wcf.media.insert{/lang}',
 			'wcf.media.insert.imageSize': '{lang}wcf.media.insert.imageSize{/lang}',
 			'wcf.media.insert.imageSize.small': '{lang}wcf.media.insert.imageSize.small{/lang}',
