@@ -25,6 +25,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabModal.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabParagraphize.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSize.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}',
@@ -168,6 +169,7 @@
 					'WoltLabInlineCode',
 					'WoltLabLink',
 					'WoltLabModal',
+					'WoltLabParagraphize',
 					'WoltLabQuote',
 					'WoltLabSize',
 					'WoltLabSmiley',
@@ -202,6 +204,17 @@
 			// load the button plugin last to ensure all buttons have been initialized
 			// already and we can safely add all icons
 			config.plugins.push('WoltLabButton');
+			
+			var content = element.value;
+			element.value = '';
+			
+			config.callbacks = config.callbacks || { };
+			config.callbacks.init = function() {
+				// slight delay to allow Redactor to initialize itself
+				window.setTimeout(function() {
+					$(element).redactor('code.set', content);
+				}, 10);
+			};
 			
 			$(element).redactor(config);
 		});

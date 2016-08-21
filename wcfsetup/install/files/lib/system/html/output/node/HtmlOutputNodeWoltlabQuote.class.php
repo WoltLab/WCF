@@ -17,11 +17,11 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
  */
-class HtmlOutputNodeBlockquote extends AbstractHtmlOutputNode {
+class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode {
 	/**
 	 * @inheritDoc
 	 */
-	protected $tagName = 'blockquote';
+	protected $tagName = 'woltlab-quote';
 	
 	/**
 	 * @inheritDoc
@@ -43,7 +43,7 @@ class HtmlOutputNodeBlockquote extends AbstractHtmlOutputNode {
 				case 'text/simplified-html':
 				case 'text/plain':
 					// check if this quote is within another
-					if (DOMUtil::hasParent($element, 'blockquote')) {
+					if (DOMUtil::hasParent($element, 'woltlab-quote')) {
 						DOMUtil::removeNode($element);
 					}
 					else {

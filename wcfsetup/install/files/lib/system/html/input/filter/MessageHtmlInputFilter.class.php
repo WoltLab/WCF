@@ -48,10 +48,6 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	protected function setAttributeDefinitions(\HTMLPurifier_Config $config) {
 		$definition = $config->getHTMLDefinition(true);
 		
-		// quotes
-		$definition->addAttribute('blockquote', 'data-author', 'Text');
-		$definition->addAttribute('blockquote', 'data-link', 'URI');
-		
 		// code
 		$definition->addAttribute('pre', 'data-file', 'Text');
 		$definition->addAttribute('pre', 'data-line', 'Number');
@@ -66,6 +62,12 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		// media
 		$definition->addAttribute('img', 'data-media-id', 'Number');
 		$definition->addAttribute('img', 'data-media-size', new \HTMLPurifier_AttrDef_Enum(['small', 'medium', 'large', 'original']));
+		
+		// quote
+		$definition->addElement('woltlab-quote', 'Block', 'Flow', '', [
+			'data-author' => 'Text',
+			'data-link' => 'URI'
+		]);
 		
 		// spoiler
 		$definition->addElement('woltlab-spoiler', 'Block', 'Flow', '', [

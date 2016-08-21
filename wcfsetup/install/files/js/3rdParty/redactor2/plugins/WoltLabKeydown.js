@@ -26,6 +26,16 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					}
 				}
 			}).bind(this);
+			
+			var mpOnEnter = this.keydown.onEnter;
+			this.keydown.onEnter = (function(e) {
+				var isBlockquote = this.keydown.blockquote;
+				if (isBlockquote) this.keydown.blockquote = false;
+				
+				mpOnEnter.call(this, e);
+				
+				if (isBlockquote) this.keydown.blockquote = isBlockquote;
+			}).bind(this);
 		},
 		
 		register: function (tag) {

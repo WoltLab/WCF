@@ -25,16 +25,13 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @param       {jQuery}        button  toolbar button
 		 */
 		init: function(editor, button) {
-			this._blockquote = null;
+			this._quote = null;
 			this._editor = editor;
 			this._elementId = this._editor.$element[0].id;
 			
 			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + this._elementId, this._observeLoad.bind(this));
 			
 			this._editor.button.addCallback(button, this._click.bind(this));
-			
-			// support for active button marking
-			this._editor.opts.activeButtonsStates.blockquote = 'woltlabQuote';
 			
 			// static bind to ensure that removing works
 			this._callbackEdit = this._edit.bind(this);
@@ -64,41 +61,32 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 				block = this._editor.selection.block();
 			}
 			
-			if (block.nodeName !== 'P') {
-				var redactor = this._editor.core.editor()[0];
-				
-				// find parent before Redactor
-				while (block.parentNode !== redactor) {
-					block = block.parentNode;
-				}
-				
-				// caret.after() requires a following element
-				var next = this._editor.caret.next(block);
-				if (next === undefined || next.nodeName !== 'P') {
-					var p = elCreate('p');
-					p.textContent = '\u200B';
-					
-					DomUtil.insertAfter(p, block);
-				}
-				
-				this._editor.caret.after(block);
+			var redactor = this._editor.core.editor()[0];
+			while (block.parentNode && block.parentNode !== redactor) {
+				block = block.parentNode;
 			}
 			
-			var content = '';
-			if (data.isText) content = this._editor.marker.html();
-			else content = data.content;
+			this._editor.caret.after(block);
 			
 			var quoteId = Core.getUuid();
-			this._editor.insert.html('<blockquote id="' + quoteId + '">' + content + '</blockquote>');
+			this._editor.insert.html('<woltlab-quote id="' + quoteId + '"></woltlab-quote>');
 			
 			var quote = elById(quoteId);
 			elData(quote, 'author', data.author);
 			elData(quote, 'link', data.link);
 			
+			this._editor.selection.restore();
+			var content = data.content;
+			console.debug(data);
 			if (data.isText) {
-				this._editor.selection.restore();
-				this._editor.insert.text(data.content);
+				content = StringUtil.escapeHTML(content);
+				content = '<p>' + content + '</p>';
+				content = content.replace(/\n\n/g, '</p><p>');
+				content = content.replace(/\n/g, '<br>');
 			}
+			
+			// bypass the editor as `insert.html()` doesn't like us
+			quote.innerHTML = content;
 			
 			quote.removeAttribute('id');
 			
@@ -113,13 +101,13 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_click: function() {
-			this._editor.button.toggle({}, 'blockquote', 'func', 'block.format');
+			this._editor.button.toggle({}, 'woltlab-quote', 'func', 'block.format');
 			
-			var blockquote = this._editor.selection.block();
-			if (blockquote && blockquote.nodeName === 'BLOCKQUOTE') {
-				this._setTitle(blockquote);
+			var quote = this._editor.selection.block();
+			if (quote && quote.nodeName === 'WOLTLAB-QUOTE') {
+				this._setTitle(quote);
 				
-				blockquote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				quote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 			}
 		},
 		
@@ -130,9 +118,9 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_observeLoad: function() {
-			elBySelAll('blockquote', this._editor.$editor[0], (function(blockquote) {
-				blockquote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
-				this._setTitle(blockquote);
+			elBySelAll('woltlab-quote', this._editor.$editor[0], (function(quote) {
+				quote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				this._setTitle(quote);
 			}).bind(this));
 		},
 		
@@ -143,23 +131,23 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_edit: function(event) {
-			var blockquote = event.currentTarget;
+			var quote = event.currentTarget;
 			
 			if (_headerHeight === 0) {
-				_headerHeight = ~~window.getComputedStyle(blockquote).paddingTop.replace(/px$/, '');
+				_headerHeight = ~~window.getComputedStyle(quote).paddingTop.replace(/px$/, '');
 				
-				var styles = window.getComputedStyle(blockquote, '::before');
+				var styles = window.getComputedStyle(quote, '::before');
 				_headerHeight += ~~styles.paddingTop.replace(/px$/, '');
 				_headerHeight += ~~styles.height.replace(/px$/, '');
 				_headerHeight += ~~styles.paddingBottom.replace(/px$/, '');
 			}
 			
 			// check if the click hit the header
-			var offset = DomUtil.offset(blockquote);
+			var offset = DomUtil.offset(quote);
 			if (event.pageY > offset.top && event.pageY < (offset.top + _headerHeight)) {
 				event.preventDefault();
 				
-				this._blockquote = blockquote;
+				this._quote = quote;
 				
 				UiDialog.open(this);
 			}
@@ -190,13 +178,13 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			}
 			
 			// set author
-			elData(this._blockquote, 'author', elById(id + '-author').value);
+			elData(this._quote, 'author', elById(id + '-author').value);
 			
 			// set url
-			elData(this._blockquote, 'url', url);
+			elData(this._quote, 'url', url);
 			
-			this._setTitle(this._blockquote);
-			this._editor.caret.after(this._blockquote);
+			this._setTitle(this._quote);
+			this._editor.caret.after(this._quote);
 			
 			UiDialog.close(this);
 		},
@@ -204,17 +192,17 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		/**
 		 * Sets or updates the quote's header title.
 		 * 
-		 * @param       {Element}       blockquote     quote element
+		 * @param       {Element}       quote     quote element
 		 * @protected
 		 */
-		_setTitle: function(blockquote) {
+		_setTitle: function(quote) {
 			var title = Language.get('wcf.editor.quote.title', {
-				author: elData(blockquote, 'author'),
-				url: elData(blockquote, 'url')
+				author: elData(quote, 'author'),
+				url: elData(quote, 'url')
 			});
 			
-			if (elData(blockquote, 'title') !== title) {
-				elData(blockquote, 'title', title);
+			if (elData(quote, 'title') !== title) {
+				elData(quote, 'title', title);
 			}
 		},
 		
@@ -232,8 +220,8 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					}).bind(this),
 					
 					onShow: (function() {
-						elById(idAuthor).value = elData(this._blockquote, 'author');
-						elById(idUrl).value = elData(this._blockquote, 'url');
+						elById(idAuthor).value = elData(this._quote, 'author');
+						elById(idUrl).value = elData(this._quote, 'url');
 					}).bind(this),
 					
 					title: Language.get('wcf.editor.quote.edit')

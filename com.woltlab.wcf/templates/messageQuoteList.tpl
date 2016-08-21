@@ -33,7 +33,7 @@
 				<div class="messageText">
 					<ul class="messageQuoteItemList">
 						{foreach from=$message key=quoteID item=quote}
-							<li data-quote-id="{@$quoteID}">
+							<li data-quote-id="{@$quoteID}" data-is-full-quote="{if $message->isFullQuote($quoteID)}true{else}false{/if}">
 								<span>
 									<input type="checkbox" value="1" id="quote_{@$quoteID}" class="jsCheckbox">
 									{if $supportPaste}<span class="icon icon16 fa-plus jsTooltip jsInsertQuote" title="{lang}wcf.message.quote.insertQuote{/lang}"></span>{/if}

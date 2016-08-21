@@ -1857,7 +1857,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		var message = listItem.parents('.message:eq(0)');
 		var author = message.data('username');
 		var link = message.data('link');
-		var isText = listItem.find('.jsQuote').length === 0;
+		var isText = elData(listItem[0], 'is-full-quote');
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
 			author: author,

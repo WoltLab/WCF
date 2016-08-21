@@ -30,12 +30,6 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			EventHandler.add('com.woltlab.wcf.redactor2', 'bbcode_spoiler_' + this._elementId, this._bbcodeSpoiler.bind(this));
 			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + this._elementId, this._observeLoad.bind(this));
 			
-			// register custom block element
-			this._editor.WoltLabBlock.register('woltlab-spoiler', true);
-			
-			// support for active button marking
-			this._editor.opts.activeButtonsStates['woltlab-spoiler'] = 'woltlabSpoiler';
-			
 			// static bind to ensure that removing works
 			this._callbackEdit = this._edit.bind(this);
 			
