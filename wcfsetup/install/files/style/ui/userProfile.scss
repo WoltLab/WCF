@@ -114,6 +114,22 @@
 			}
 		}
 	}
+	
+	&.small {
+		> li {
+			flex: 0 0 24px;
+			
+			&:not(:last-child) {
+				margin-right: -6px;
+			}
+			
+			> a {
+				> img {
+					padding: 1px;
+				}
+			}
+		}	
+	}
 }
 
 .userList {
@@ -146,4 +162,20 @@
 	margin-top: 10px;
 	
 	@include wcfFontSmall;
+}
+
+/* user notifications */
+.userNotificationItemList > .notificationItem {
+	&.notificationUnconfirmed {
+		align-items: center;
+		display: flex;
+		
+		> .box32 {
+			flex: 1 1 auto;
+		}
+		
+		> .notificationItemMarkAsConfirmed {
+			flex: 0 0 auto;
+		}
+	}
 }

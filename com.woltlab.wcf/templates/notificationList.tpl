@@ -77,10 +77,10 @@
 								</p>
 								<p><small>{@$notification[time]|time}</small></p>
 								
-								<ul>
+								<ul class="userAvatarList small">
 									{foreach from=$notification[event]->getAuthors() item=author}
 										{if $author->userID}
-											<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}">{@$author->getAvatar()->getImageTag(24)}</a></li>
+											<li class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}">{@$author->getAvatar()->getImageTag(24)}</a></li>
 										{/if}
 									{/foreach}
 								</ul>
