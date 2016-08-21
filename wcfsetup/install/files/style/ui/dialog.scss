@@ -71,8 +71,11 @@
 		}
 	}
 	
-	&[aria-hidden=false] ~ .dialogContainer[aria-hidden=false],
-	&[aria-hidden=false] ~ .dialogContainer[aria-hidden=true]{
+	&[aria-hidden=true] {
+		visibility: hidden;
+	}
+	
+	&[aria-hidden=false] ~ .dialogContainer[aria-hidden=false] {
 		z-index: 50;
 	}
 	
