@@ -414,6 +414,7 @@ define(
 			buttonGroupNavigation.appendChild(buttons);
 			
 			var listItem = elCreate('li');
+			listItem.className = 'mediaCheckbox'; 
 			buttons.appendChild(listItem);
 			
 			var a = elCreate('a');
@@ -423,7 +424,7 @@ define(
 			a.appendChild(label);
 			
 			var checkbox = elCreate('input');
-			checkbox.className = 'jsClipboardItem jsMediaCheckbox';
+			checkbox.className = 'jsClipboardItem';
 			elAttr(checkbox, 'type', 'checkbox');
 			elData(checkbox, 'object-id', media.mediaID);
 			label.appendChild(checkbox);

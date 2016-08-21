@@ -10,8 +10,8 @@
 		
 		<nav class="jsMobileNavigation buttonGroupNavigation">
 			<ul class="buttonList iconList">
-				<li>
-					<a><label><input type="checkbox" class="jsClipboardItem jsMediaCheckbox" data-object-id="{@$media->mediaID}"></label></a>
+				<li class="mediaCheckbox">
+					<a><label><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></label></a>
 				</li>
 				{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
 					<li class="jsMediaEditButton" data-object-id="{@$media->mediaID}">

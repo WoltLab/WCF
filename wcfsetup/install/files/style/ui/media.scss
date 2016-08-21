@@ -159,6 +159,12 @@
 				}
 			}
 		}
+		
+		@include screen-md-down {
+			> .buttonGroupNavigation .mediaCheckbox {
+				display: none !important;
+			}
+		}
 	}
 }
 
