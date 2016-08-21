@@ -105,6 +105,11 @@
 					wsc: {
 						// general
 						edit: '{lang}wcf.global.button.edit{/lang}',
+						insert: '{lang}wcf.global.button.insert{/lang}',
+						save: '{lang}wcf.global.button.save{/lang}',
+						delete: '{lang}wcf.global.button.delete{/lang}',
+						empty: '{lang}wcf.global.form.error.empty{/lang}',
+						'no-selection': '{lang}wcf.global.noSelection{/lang}',
 						
 						// formatting dropdown
 						heading2: '{lang}wcf.editor.format.heading2{/lang}',
@@ -133,7 +138,18 @@
 						'insert-column-left': '{lang}wcf.editor.table.insertColumnLeft{/lang}',
 						'insert-column-right': '{lang}wcf.editor.table.insertColumnRight{/lang}',
 						'insert-row-above': '{lang}wcf.editor.table.insertRowAbove{/lang}',
-						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}'
+						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}',
+						
+						// image
+						'image-edit': '{lang}wcf.editor.image.edit{/lang}',
+						'image-insert': '{lang}wcf.editor.image.insert{/lang}',
+						'image-source': '{lang}wcf.editor.image.source{/lang}',
+						'image-source-invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
+						'image-link': '{lang}wcf.editor.image.link{/lang}',
+						'image-link-invalid': '{lang}wcf.editor.image.link.error.invalid{/lang}',
+						'image-float': '{lang}wcf.editor.image.float{/lang}',
+						'image-float-left': '{lang}wcf.editor.image.float.left{/lang}',
+						'image-float-right': '{lang}wcf.editor.image.float.right{/lang}',
 					}
 				},
 				linkify: false,

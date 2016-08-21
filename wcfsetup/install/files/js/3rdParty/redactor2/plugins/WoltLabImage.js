@@ -1,5 +1,6 @@
 $.Redactor.prototype.WoltLabImage = function() {
 	"use strict";
+	var StringUtil = require('WoltLabSuite/Core/StringUtil');
 	
 	return {
 		init: function() {
@@ -18,9 +19,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 				mpShowEdit($image);
 				
 				// enforce title and button labels
-				this.modal.setTitle(WCF.Language.get('wcf.editor.image.edit'));
-				this.modal.getActionButton().text(WCF.Language.get('wcf.global.button.save'));
-				this.modal.getDeleteButton().text(WCF.Language.get('wcf.global.button.delete'));
+				this.modal.setTitle(this.lang.get('image-edit'));
+				this.modal.getActionButton().text(this.lang.get('save'));
+				this.modal.getDeleteButton().text(this.lang.get('delete'));
 				
 				elById('redactor-image-source').value = image.src;
 				
@@ -47,10 +48,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 					// check if source is valid
 					var source = sourceInput.value.trim();
 					if (source === '') {
-						return showError(sourceInput, WCF.Language.get('wcf.global.form.error.empty'));
+						return showError(sourceInput, this.lang.get('empty'));
 					}
 					else if (!source.match(this.opts.regexps.url)) {
-						return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
+						return showError(sourceInput, this.lang.get('image-source-invalid'));
 					}
 					
 					// update image source
@@ -64,7 +65,7 @@ $.Redactor.prototype.WoltLabImage = function() {
 				// set float behavior
 				var float = elById('redactor-image-float').value;
 				if (float === 'left' || float === 'right') {
-					image.classList.add('messageFloatObject' + WCF.String.ucfirst(float));
+					image.classList.add('messageFloatObject' + StringUtil.ucfirst(float));
 				}
 				
 				mpUpdate();
@@ -77,20 +78,20 @@ $.Redactor.prototype.WoltLabImage = function() {
 			// overwrite modal template
 			this.opts.modal['image-edit'] = '<div class="section">'
 					+ '<dl id="redactor-image-source-container">'
-						+ '<dt><label for="redactor-image-source">' + WCF.Language.get('wcf.editor.image.source') + '</label></dt>'
+						+ '<dt><label for="redactor-image-source">' + this.lang.get('image-source') + '</label></dt>'
 						+ '<dd><input type="text" id="redactor-image-source" class="long"></dd>'
 					+ '</dl>'
 					+ '<dl>'
-						+ '<dt><label for="redactor-image-link">' + WCF.Language.get('wcf.editor.image.link') + '</label></dt>'
+						+ '<dt><label for="redactor-image-link">' + this.lang.get('image-link') + '</label></dt>'
 						+ '<dd><input type="text" id="redactor-image-link" class="long"></dd>'
 					+ '</dl>'
 					+ '<dl>'
-						+ '<dt><label for="redactor-image-float">' + WCF.Language.get('wcf.editor.image.float') + '</label></dt>'
+						+ '<dt><label for="redactor-image-float">' + this.lang.get('image-float') + '</label></dt>'
 						+ '<dd>'
 							+ '<select id="redactor-image-float">'
-								+ '<option value="none">' + WCF.Language.get('wcf.global.noSelection') + '</option>'
-								+ '<option value="left">' + WCF.Language.get('wcf.editor.image.float.left') + '</option>'
-								+ '<option value="right">' + WCF.Language.get('wcf.editor.image.float.right') + '</option>'
+								+ '<option value="none">' + this.lang.get('no-selection') + '</option>'
+								+ '<option value="left">' + this.lang.get('image-float-left') + '</option>'
+								+ '<option value="right">' + this.lang.get('image-float-right') + '</option>'
 							+ '</select>'
 						+ '</dd>'
 					+ '</dl>'
@@ -104,14 +105,14 @@ $.Redactor.prototype.WoltLabImage = function() {
 		},
 		
 		add: function() {
-			this.modal.load('image-edit', WCF.Language.get('wcf.editor.image.insert'));
+			this.modal.load('image-edit', this.lang.get('image-insert'));
 			
 			this.modal.show();
 			
 			this.modal.getDeleteButton().hide();
 			var button = this.modal.getActionButton()[0];
 			button.addEventListener(WCF_CLICK_EVENT, this.WoltLabImage.insert);
-			button.textContent = WCF.Language.get('wcf.global.button.insert');
+			button.textContent = this.lang.get('insert');
 			
 			this.WoltLabModal.rebuild();
 		},
@@ -130,10 +131,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 			// check if source is valid
 			var source = sourceInput.value.trim();
 			if (source === '') {
-				return showError(sourceInput, WCF.Language.get('wcf.global.form.error.empty'));
+				return showError(sourceInput, this.lang.get('empty'));
 			}
 			else if (!source.match(this.opts.regexps.url)) {
-				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
+				return showError(sourceInput, this.lang.get('image-source-invalid'));
 			}
 			
 			// check if link is valid
@@ -141,17 +142,17 @@ $.Redactor.prototype.WoltLabImage = function() {
 			var link = linkInput.value.trim();
 			
 			if (link !== '' && !link.match(this.opts.regexps.url)) {
-				return showError(linkInput, WCF.Language.get('wcf.editor.image.link.error.invalid'));
+				return showError(linkInput, this.lang.get('image-link-invalid'));
 			}
 			
 			var float = elById('redactor-image-float').value, className = '';
 			if (float === 'left' || float === 'right') {
-				className = 'messageFloatObject' + WCF.String.ucfirst(float);
+				className = 'messageFloatObject' + StringUtil.ucfirst(float);
 			}
 			
-			var html = '<img src="' + WCF.String.escapeHTML(source) + '"' + (className ? ' class="' + className + '"' : '') + '>';
+			var html = '<img src="' + StringUtil.escapeHTML(source) + '"' + (className ? ' class="' + className + '"' : '') + '>';
 			if (link) {
-				html = '<a href="' + WCF.String.escapeHTML(link) + '">' + html + '</a>'; 
+				html = '<a href="' + StringUtil.escapeHTML(link) + '">' + html + '</a>';
 			}
 			
 			this.modal.close();
