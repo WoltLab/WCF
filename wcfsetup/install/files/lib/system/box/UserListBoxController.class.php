@@ -104,6 +104,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 		if ($this->userIDs !== null) {
 			$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($this->userIDs);
 			
+			// filter `null` values of users that have been deleted in the meantime
+			$userProfiles = array_filter($userProfiles, function($userProfile) {
+				return $userProfile !== null;
+			});
+			
 			DatabaseObject::sort($userProfiles, $this->sortField, $this->sortOrder);
 		}
 		
