@@ -364,8 +364,9 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 		},
 		
 		_ajaxSetup: function() {
-			// does nothing
-			return {};
+			return {
+				silent: true
+			};
 		},
 		
 		/**
