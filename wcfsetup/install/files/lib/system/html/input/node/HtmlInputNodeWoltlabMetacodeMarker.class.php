@@ -415,6 +415,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			case 'code':
 			case 'div':
 			case 'p':
+			case 'woltlab-quote':
+			case 'woltlab-spoiler':
 				return true;
 				break;
 			

@@ -134,7 +134,7 @@ class MessageQuoteManager extends SingletonFactory {
 				$htmlInputProcessor = new HtmlInputProcessor();
 				$htmlInputProcessor->processIntermediate($fullQuote);
 				
-				$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('blockquote');
+				$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-quote');
 				while ($elements->length) {
 					DOMUtil::removeNode($elements->item(0));
 				}

@@ -2,7 +2,7 @@
 namespace wcf\system\html\metacode\converter;
 
 /**
- * Converts quote bbcode into `<blockquote>`.
+ * Converts quote bbcode into `<woltlab-quote>`.
  * 
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -15,7 +15,7 @@ class QuoteMetacodeConverter extends AbstractMetacodeConverter {
 	 * @inheritDoc
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
-		$element = $fragment->ownerDocument->createElement('blockquote');
+		$element = $fragment->ownerDocument->createElement('woltlab-quote');
 		$element->setAttribute('data-quote-title', isset($attributes[0]) ? $attributes[0] : '');
 		$element->setAttribute('data-quote-url', isset($attributes[1]) ? $attributes[1] : '');
 		$element->appendChild($fragment);

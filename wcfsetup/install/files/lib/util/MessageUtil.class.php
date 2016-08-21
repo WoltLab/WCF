@@ -53,7 +53,7 @@ class MessageUtil {
 				continue;
 			}
 			
-			if (DOMUtil::hasParent($element, 'blockquote')) {
+			if (DOMUtil::hasParent($element, 'woltlab-quote')) {
 				// ignore mentions within quotes
 				continue;
 			}
@@ -73,7 +73,7 @@ class MessageUtil {
 	public static function getQuotedUsers(HtmlInputProcessor $htmlInputProcessor) {
 		$usernames = [];
 		
-		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('blockquote');
+		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-quote');
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$username = $element->getAttribute('data-author');

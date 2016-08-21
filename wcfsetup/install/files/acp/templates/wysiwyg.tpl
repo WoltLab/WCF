@@ -133,7 +133,13 @@
 						'insert-column-left': '{lang}wcf.editor.table.insertColumnLeft{/lang}',
 						'insert-column-right': '{lang}wcf.editor.table.insertColumnRight{/lang}',
 						'insert-row-above': '{lang}wcf.editor.table.insertRowAbove{/lang}',
-						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}'
+						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}',
+
+						// size
+						'remove-size': '{lang}wcf.editor.button.size.removeSize{/lang}',
+
+						// color
+						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}',
 					}
 				},
 				linkify: false,
@@ -196,6 +202,17 @@
 			// load the button plugin last to ensure all buttons have been initialized
 			// already and we can safely add all icons
 			config.plugins.push('WoltLabButton');
+			
+			var content = element.value;
+			element.value = '';
+			
+			config.callbacks = config.callbacks || { };
+			config.callbacks.init = function() {
+				// slight delay to allow Redactor to initialize itself
+				window.setTimeout(function() {
+					$(element).redactor('code.set', content);
+				}, 10);
+			};
 			
 			$(element).redactor(config);
 		});

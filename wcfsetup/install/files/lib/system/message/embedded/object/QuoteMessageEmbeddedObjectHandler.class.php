@@ -21,7 +21,7 @@ class QuoteMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHan
 		$usernames = [];
 		
 		/** @var \DOMElement $element */
-		foreach ($htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('blockquote') as $element) {
+		foreach ($htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-quote') as $element) {
 			$username = StringUtil::trim($element->getAttribute('data-author'));
 			if (!empty($username) && !in_array($username, $usernames)) {
 				$usernames[] = $username;
