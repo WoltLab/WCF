@@ -120,7 +120,7 @@ namespace wcf\functions\exception {
 			'Error Code: '.intval($e->getCode())."\n".
 			'File: '.str_replace("\n", ' ', $e->getFile()).' ('.$e->getLine().')'."\n".
 			'Extra Information: '.($e instanceof IExtraInformationException ? base64_encode(serialize($e->getExtraInformation())) : '-')."\n".
-			'Stack Trace: '.base64_encode(serialize(array_map(function ($item) {
+			'Stack Trace: '.json_encode(array_map(function ($item) {
 				$item['args'] = array_map(function ($item) {
 					switch (gettype($item)) {
 						case 'object':
@@ -135,7 +135,7 @@ namespace wcf\functions\exception {
 				}, $item['args']);
 				
 				return $item;
-			}, sanitizeStacktrace($e, true))))."\n";
+			}, sanitizeStacktrace($e, true)))."\n";
 		}
 		while ($e = $e->getPrevious());
 		

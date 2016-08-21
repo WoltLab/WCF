@@ -8,6 +8,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
+use wcf\util\JSON;
 
 /**
  * Shows the exception log.
@@ -147,7 +148,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 "Error Code: (?P<code>\d+)\s*\n".
 "File: (?P<file>.*?) \((?P<line>\d+)\)\s*\n".
 "Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
-"Stack Trace: (?P<stack>[a-zA-Z0-9+/]+={0,2})", Regex::DOT_ALL);
+"Stack Trace: (?P<stack>\[[^\n]+\])", Regex::DOT_ALL);
 		
 		$isPhp7 = version_compare(PHP_VERSION, '7.0.0') >= 0;
 		foreach ($this->exceptions as $key => $val) {
@@ -175,12 +176,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 					}
 				}
 				
-				if ($isPhp7) {
-					$item['stack'] = unserialize(base64_decode($item['stack']), ['allowed_classes' => false]);
-				}
-				else {
-					$item['stack'] = unserialize(base64_decode($item['stack']));
-				}
+				$item['stack'] = JSON::decode($item['stack']);
 				
 				return $item;
 			}, $chainRegex->getMatches());
