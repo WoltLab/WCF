@@ -126,6 +126,8 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		 * @protected
 		 */
 		_scroll: function() {
+			if (_isMobile) return;
+			
 			var wasFixed = _isFixed;
 			
 			_isFixed = (window.scrollY > _triggerHeight);
