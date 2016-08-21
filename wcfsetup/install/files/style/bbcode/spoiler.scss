@@ -6,7 +6,6 @@
 	margin: 1em 0;
 	padding: 10px 20px;
 	position: relative;
-	white-space: pre;
 	
 	&::before {
 		content: attr(data-title);
