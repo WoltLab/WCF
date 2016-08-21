@@ -57,7 +57,7 @@
 		color: $wcfContentDimmedText;
 	}
 	
-	@include screen-md-down {
+	@include screen-sm-down {
 		.contentHeaderIcon {
 			display: none;
 		}

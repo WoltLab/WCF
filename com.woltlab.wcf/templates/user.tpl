@@ -146,6 +146,7 @@
 			{else}
 				<span>{@$user->getAvatar()->getImageTag(128)}</span>
 			{/if}
+			{if $user->isOnline()}<span class="badge green badgeOnline">{lang}wcf.user.online{/lang}</span>{/if}
 		</div>
 		
 		<div class="contentHeaderTitle">

@@ -1,4 +1,40 @@
 .userProfileUser {
+	.contentHeaderIcon {
+		position: relative;
+		
+		a {
+			display: block;
+		}
+		
+		.badgeOnline {
+			left: 0;
+			pointer-events: none;
+			position: absolute;
+			
+			@include screen-md-up {
+				bottom: 0;
+			}
+			
+			@include screen-sm-down {
+				color: transparent;
+				padding: 0;
+				top: 0;
+				width: 0;
+				
+				&::before {
+					background-color: inherit;
+					border: 1px solid rgba(255, 255, 255, 1);
+					border-radius: 50%;
+					content: "";
+					height: 16px;
+					left: 34px; /* 48px (avatar) - 16px (width) - 2px (border-left + border-right) */
+					position: absolute;
+					width: 16px;
+				}
+			}
+		}
+	}
+	
 	.contentHeaderIcon a {
 		display: block;
 	}
@@ -7,7 +43,7 @@
 		margin-top: 20px;
 	}
 	
-	@include screen-md-down {
+	@include screen-sm-down {
 		display: flex;
 		flex-wrap: wrap;
 		
@@ -26,7 +62,9 @@
 			flex: 0 0 calc(100% - 58px);
 			max-width: calc(100% - 58px);
 		}
-		
+	}
+	
+	@include screen-xs {
 		.contentHeaderNavigation {
 			flex: 0 0 100%;
 			
