@@ -49,6 +49,22 @@
 		}
 	}
 	
+	&.containerListButtonGroup {
+		text-align: right;
+		
+		&:hover {
+			background-color: transparent;
+		}
+		
+		> .buttonGroup {
+			display: inline-flex;
+			
+			&:not(:first-child) {
+				margin-left: 5px;
+			}
+		}
+	}
+	
 	@include screen-md-down {
 		.hasMobileNavigation > .containerHeadline > h3 {
 			padding-right: 30px;

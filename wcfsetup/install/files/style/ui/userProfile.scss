@@ -138,24 +138,6 @@
 	}
 }
 
-.likeList {
-	> .likeTypeSelection {
-		text-align: right;
-		
-		&:hover {
-			background-color: transparent;
-		}
-		
-		> .buttonGroup {
-			display: inline-flex;
-			
-			&:not(:first-child) {
-				margin-left: 5px;
-			}
-		}
-	}
-}
-
 /* using `dl` + `.inlineDataList` to prevent styles applied to the
    data list provided by the `userInformation` template */
 .userProfilePreview dl.inlineDataList {

@@ -18,7 +18,7 @@
 </script>
 
 <ul id="likeList" class="containerList recentActivityList likeList" data-last-like-time="{@$lastLikeTime}">
-	<li class="likeTypeSelection">
+	<li class="containerListButtonGroup likeTypeSelection">
 		<ul class="buttonGroup" id="likeType">
 			<li><a class="button small active" data-like-type="received">{lang}wcf.like.likesReceived{/lang}</a></li>
 			<li><a class="button small" data-like-type="given">{lang}wcf.like.likesGiven{/lang}</a></li>
