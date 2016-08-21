@@ -93,8 +93,9 @@ class PageCache extends SingletonFactory {
 				if ($languageID !== null && isset($this->cache['pageTitles'][$pageID][$languageID])) {
 					return $this->cache['pageTitles'][$pageID][$languageID];
 				}
-				
-				return $this->cache['pageTitles'][$pageID][WCF::getLanguage()->languageID];
+				else if (isset($this->cache['pageTitles'][$pageID][WCF::getLanguage()->languageID])) {
+					return $this->cache['pageTitles'][$pageID][WCF::getLanguage()->languageID];
+				}
 			}
 			else {
 				return $this->cache['pageTitles'][$pageID][0];
