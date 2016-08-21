@@ -712,6 +712,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxes]]></item>
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Add Box]]></item>
 		<item name="wcf.acp.menu.link.cms.media.list"><![CDATA[Media]]></item>
+		<item name="wcf.acp.menu.link.cms.media.add"><![CDATA[Add Medium]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
@@ -1159,6 +1160,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.type.boolean.never"><![CDATA[Never]]></item>
 		<item name="wcf.acp.option.type.boolean.no"><![CDATA[No]]></item>
 		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Yes]]></item>
+		<item name="wcf.acp.option.category.cms"><![CDATA[CMS]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
