@@ -74,6 +74,10 @@
 				> li {
 					flex: 1 1 auto;
 					margin-top: 0 !important;
+					
+					&:not(:last-child) {
+						margin-right: 1px;
+					}
 				}
 			}
 		}
