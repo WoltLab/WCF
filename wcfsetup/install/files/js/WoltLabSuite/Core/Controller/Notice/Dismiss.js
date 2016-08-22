@@ -40,13 +40,7 @@ define(['Ajax'], function(Ajax) {
 					objectIDs: [ elData(button, 'object-id') ]
 				},
 				success: function() {
-					var parent = button.parentNode;
-					
-					parent.addEventListener('transitionend', function() {
-						elRemove(parent);
-					});
-					
-					parent.classList.remove('active');
+					elRemove(button.parentNode);
 				}
 			});
 		}
