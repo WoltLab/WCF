@@ -84,7 +84,7 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 			// check for converters
 			$converter = isset($converters[$name]) ? $converters[$name] : null;
 			if ($converter === null) {
-				$className = 'wcf\\system\\html\\metacode\\converter\\' . $name . 'MetacodeConverter';
+				$className = 'wcf\\system\\html\\metacode\\converter\\' . ucfirst($name) . 'MetacodeConverter';
 				if (class_exists($className)) {
 					$converter = new $className();
 					
