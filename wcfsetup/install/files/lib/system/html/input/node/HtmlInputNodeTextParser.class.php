@@ -159,6 +159,11 @@ class HtmlInputNodeTextParser {
 			$node = $nodes[$i];
 			$oldValue = $value = $node->textContent;
 			
+			// this extra step ensures we don't trip over some random
+			// &nbsp; inserted by the editor and at the same time
+			// gets rid of them afterwards
+			$value = preg_replace('~\x{00A0}~u', ' ', $value);
+			
 			if (!empty($users)) {
 				$value = $this->parseMention($node, $value, $users);
 			}
