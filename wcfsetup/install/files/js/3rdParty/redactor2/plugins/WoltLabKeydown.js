@@ -36,6 +36,15 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				
 				if (isBlockquote) this.keydown.blockquote = isBlockquote;
 			}).bind(this);
+			
+			var mpOnTab = this.keydown.onTab;
+			this.keydown.onTab = (function(e, key) {
+				if (!this.keydown.pre && $(this.selection.current()).closest('ul, ol', this.core.editor()[0]).length === 0) {
+					return true;
+				}
+				
+				return mpOnTab.call(this, e, key);
+			}).bind(this);
 		},
 		
 		register: function (tag) {
