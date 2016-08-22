@@ -32,7 +32,10 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			}
 			
 			if (block.nodeName === 'P') {
-				return;
+				block = block.parentNode;
+				if (block === this.$editor[0] || !this.utils.isBlockTag(block.nodeName)) {
+					return;
+				}
 			}
 			
 			this.buffer.set();
