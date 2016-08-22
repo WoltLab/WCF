@@ -642,7 +642,7 @@ WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 	_initDropdown: function() {
 		var $dropdown = this._super();
 		
-		$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon16 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
+		$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon24 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
 		
 		return $dropdown;
 	},
