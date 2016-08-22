@@ -205,8 +205,122 @@
 			margin-right: 5px;
 		}
 	}
-
 	
+	@include screen-md-up {
+		.messageGroupCounterMobile,
+		.messageGroupInfoMobile {
+			display: none;
+		}
+	}
+	
+	@include screen-sm-down {
+		.tabularListColumns > .columnMark {
+			display: none;
+		}
+		
+		.tabularListRowHead {
+			.columnMark,
+			.columnStats {
+				display: none;
+			}
+			
+			.columnSubject {
+				padding: 0;
+			}
+			
+			.columnLastPost {
+				flex-basis: auto;
+				padding: 0;
+			}
+		}
+		
+		.tabularListRow:not(.tabularListRowHead) > .tabularListColumns {
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			padding: 5px 0;
+			
+			> li {
+				padding: 0;
+			}
+			
+			.columnAvatar {
+				margin-right: 10px;
+				padding: 0;
+				
+				div {
+					height: 32px;
+					width: 32px;
+				}
+				
+				img {
+					max-height: 32px;
+					max-width: 32px;
+				}
+				
+				.myAvatar {
+					display: none;
+				}
+			}
+			
+			.columnSubject {
+				/* 37px = avatar width + margin-right */
+				flex-basis: calc(100% - 42px);
+				max-width: calc(100% - 42px);
+				
+				> h3 {
+					align-items: flex-start;
+					display: flex;
+					
+					> a {
+						flex: 1 1 auto;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						
+						@include wcfFontDefault;
+					}
+					
+					> .messageGroupCounterMobile {
+						flex: 0 0 auto;
+						margin-left: 10px;
+					}
+				}
+				
+				.messageGroupInfoMobile {
+					color: $wcfContentDimmedText;
+					display: flex;
+					
+					@include wcfFontSmall;
+					
+					> .messageGroupAuthorMobile {
+						flex: 1 1 auto;
+					}
+					
+					> .messageGroupLastPostTimeMobile {
+						flex: 0 0 auto;
+						margin-left: 10px;
+					}
+				}
+				
+				.statusDisplay,
+				.messageGroupInfo,
+				.messageGroupTime,
+				.messageGroupEditLink {
+					display: none;
+				}
+				
+				.labelList {
+					float: none;
+					padding-bottom: 2px;
+					padding-left: 0;
+				}
+			}
+			
+			.columnStats,
+			.columnLastPost {
+				display: none;
+			}
+		}
+	}
 }
 
 .messageGroupListStatsSimple {
@@ -216,4 +330,18 @@
 	position: absolute;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
+}
+
+@include screen-md-down {
+	.mobileLinkShadowContainer {
+		position: relative;
+		
+		> .mobileLinkShadow {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
 }

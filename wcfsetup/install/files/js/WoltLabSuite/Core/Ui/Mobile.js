@@ -7,8 +7,8 @@
  * @module	WoltLabSuite/Core/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
-	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
+	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
 {
 	"use strict";
 	
@@ -20,6 +20,7 @@ define(
 	var _options = {};
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
+	var _messageGroups = null;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Mobile
@@ -45,6 +46,9 @@ define(
 				document.documentElement.classList.add('mobile');
 			}
 			
+			var messageGroupList = elBySel('.messageGroupList');
+			if (messageGroupList) _messageGroups = elByClass('messageGroup', messageGroupList);
+			
 			UiScreen.on('screen-md-down', {
 				match: this.enable.bind(this),
 				unmatch: this.disable.bind(this),
@@ -62,6 +66,8 @@ define(
 				_pageMenuMain.enable();
 				_pageMenuUser.enable();
 			}
+			
+			if (_messageGroups) this.rebuildShadow(_messageGroups, '.messageGroupLink');
 		},
 		
 		/**
@@ -74,6 +80,8 @@ define(
 				_pageMenuMain.disable();
 				_pageMenuUser.disable();
 			}
+			
+			if (_messageGroups) this.removeShadow(_messageGroups);
 		},
 		
 		_init: function() {
@@ -86,6 +94,8 @@ define(
 			
 			UiCloseOverlay.add('WoltLabSuite/Core/Ui/Mobile', this._closeAllMenus.bind(this));
 			DomChangeListener.add('WoltLabSuite/Core/Ui/Mobile', this._initButtonGroupNavigation.bind(this));
+			
+			if (_messageGroups) this.rebuildShadow(_messageGroups, '.messageGroupLink');
 		},
 		
 		_initSearchBar: function() {
@@ -190,6 +200,41 @@ define(
 			elBySelAll('.jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open, .boxMenu.open', null, function (menu) {
 				menu.classList.remove('open');
 			});
+		},
+		
+		rebuildShadow: function(elements, linkSelector) {
+			var element, parent, shadow;
+			for (var i = 0, length = elements.length; i < length; i++) {
+				element = elements[i];
+				parent = element.parentNode;
+				
+				shadow = DomTraverse.childByClass(parent, 'mobileLinkShadow');
+				if (shadow === null) {
+					shadow = elCreate('a');
+					shadow.className = 'mobileLinkShadow';
+					shadow.href = elBySel(linkSelector, element).href;
+					
+					parent.appendChild(shadow);
+					parent.classList.add('mobileLinkShadowContainer');
+				}
+			}
+		},
+		
+		removeShadow: function(elements) {
+			var element, parent, shadow;
+			for (var i = 0, length = elements.length; i < length; i++) {
+				element = elements[i];
+				parent = element.parentNode;
+				
+				if (parent.classList.contains('mobileLinkShadowContainer')) {
+					shadow = DomTraverse.childByClass(parent, 'mobileLinkShadow');
+					if (shadow !== null) {
+						elRemove(shadow);
+					}
+					
+					parent.classList.remove('mobileLinkShadowContainer');
+				}
+			}
 		}
 	};
 });
