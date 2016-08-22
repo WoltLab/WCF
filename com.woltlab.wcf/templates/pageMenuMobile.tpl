@@ -130,7 +130,7 @@
 			</li>
 			<li class="menuOverlayItem">
 				<a href="{link controller='Register'}{/link}" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-asterisk"></span>
+					<span class="icon icon24 fa-user-plus"></span>
 					<span class="menuOverlayItemTitle">{lang}wcf.user.register{/lang}</span>
 				</a>
 			</li>
