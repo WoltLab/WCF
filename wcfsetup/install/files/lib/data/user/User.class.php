@@ -10,6 +10,7 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\PasswordUtil;
 
 /**
@@ -136,7 +137,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			}
 			
 			// password is correct
-			if (PasswordUtil::secureCompare($this->password, PasswordUtil::getDoubleSaltedHash($password, $this->password))) {
+			if (CryptoUtil::secureCompare($this->password, PasswordUtil::getDoubleSaltedHash($password, $this->password))) {
 				$isValid = true;
 			}
 		}
@@ -166,7 +167,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @return	boolean		password correct
 	 */
 	public function checkCookiePassword($passwordHash) {
-		if (PasswordUtil::isBlowfish($this->password) && PasswordUtil::secureCompare($this->password, PasswordUtil::getSaltedHash($passwordHash, $this->password))) {
+		if (PasswordUtil::isBlowfish($this->password) && CryptoUtil::secureCompare($this->password, PasswordUtil::getSaltedHash($passwordHash, $this->password))) {
 			return true;
 		}
 		

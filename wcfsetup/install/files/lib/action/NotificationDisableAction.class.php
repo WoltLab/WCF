@@ -5,8 +5,8 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -70,7 +70,7 @@ class NotificationDisableAction extends AbstractAction {
 		}
 		
 		if (isset($_REQUEST['token'])) $this->token = StringUtil::trim($_REQUEST['token']);
-		if (empty($this->token) || !PasswordUtil::secureCompare($this->user->notificationMailToken, $this->token)) {
+		if (empty($this->token) || !CryptoUtil::secureCompare($this->user->notificationMailToken, $this->token)) {
 			throw new IllegalLinkException();
 		}
 	}
