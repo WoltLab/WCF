@@ -42,7 +42,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 	
 	&.small {
 		padding: 6px 8px;
-		text-transform: initial;
+		text-transform: none;
 		
 		@include wcfFontSmall;
 	}
@@ -105,7 +105,7 @@ a.button {
 	
 	&.smallButtons .button {
 		padding: 6px 8px;
-		text-transform: initial;
+		text-transform: none;
 		
 		@include wcfFontSmall;
 	}
