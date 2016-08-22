@@ -251,6 +251,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLabSuite/Core/Ui/
 					}
 					
 					var inputElement = elCreate('input');
+					inputElement.type = 'text';
 					element.parentNode.insertBefore(inputElement, element);
 					inputElement.id = element.id;
 					
