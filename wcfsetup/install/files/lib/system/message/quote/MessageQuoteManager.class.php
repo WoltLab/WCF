@@ -254,6 +254,8 @@ class MessageQuoteManager extends SingletonFactory {
 					
 					$this->markQuotesForRemoval([$quoteID]);
 					
+					$renderedQuotes[0]['isFullQuote'] = (isset($this->quoteData[$quoteID . '_fq']));
+					
 					return $renderedQuotes[0];
 				}
 			}

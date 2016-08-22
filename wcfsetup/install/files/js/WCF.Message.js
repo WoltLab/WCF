@@ -1607,10 +1607,11 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		// event forwarding
 		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
+			//noinspection JSUnresolvedVariable
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
 				author: data.quote.username,
 				content: data.quote.text,
-				isText: true,
+				isText: !data.quote.isFullQuote,
 				link: data.quote.link
 			});
 		}).bind(this));
@@ -1857,7 +1858,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		var message = listItem.parents('.message:eq(0)');
 		var author = message.data('username');
 		var link = message.data('link');
-		var isText = elData(listItem[0], 'is-full-quote');
+		var isText = !elDataBool(listItem[0], 'is-full-quote');
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'insertQuote_' + (this._editorIdAlternative ? this._editorIdAlternative : this._editorId), {
 			author: author,
