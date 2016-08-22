@@ -44,7 +44,8 @@ input[type="url"] {
 	}
 }
 
-input[type="search"] {
+input[type="search"],
+input[type="text"] {
 	-webkit-appearance: none;
 }
 
