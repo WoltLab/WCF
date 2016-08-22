@@ -998,10 +998,8 @@ XING</selectoptions>
 Twitter
 Google
 Reddit
-WhatsApp
 LinkedIn
-Pinterest
-XING</defaultvalue>
+Pinterest</defaultvalue>
 			</option>
 			
 			<!-- /message.general.share -->
