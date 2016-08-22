@@ -8,6 +8,7 @@ input[type="text"],
 input[type="url"],
 select,
 textarea {
+	margin: 0; /* safari fix */
 	@include input;
 }
 
