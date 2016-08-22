@@ -51,29 +51,25 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<label class="selectDropdown">
-						<select name="position" id="boxPosition">
-							<option value="0">{lang}wcf.acp.box.position{/lang}</option>
-							{foreach from=$availablePositions item=availablePosition}
-								<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
-							{/foreach}
-						</select>
-					</label>
+					<select name="position" id="boxPosition">
+						<option value="0">{lang}wcf.acp.box.position{/lang}</option>
+						{foreach from=$availablePositions item=availablePosition}
+							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
+						{/foreach}
+					</select>
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<label class="selectDropdown">
-						<select name="boxType" id="boxType">
-							<option value="">{lang}wcf.acp.box.type{/lang}</option>
-							<option value="text"{if $boxType == 'text'} selected{/if}>{lang}wcf.acp.box.type.text{/lang}</option>
-							<option value="html"{if $boxType == 'html'} selected{/if}>{lang}wcf.acp.box.type.html{/lang}</option>
-							<option value="tpl"{if $boxType == 'tpl'} selected{/if}>{lang}wcf.acp.box.type.tpl{/lang}</option>
-							<option value="system"{if $boxType == 'system'} selected{/if}>{lang}wcf.acp.box.type.system{/lang}</option>
-						</select>
-					</label>
+					<select name="boxType" id="boxType">
+						<option value="">{lang}wcf.acp.box.type{/lang}</option>
+						<option value="text"{if $boxType == 'text'} selected{/if}>{lang}wcf.acp.box.type.text{/lang}</option>
+						<option value="html"{if $boxType == 'html'} selected{/if}>{lang}wcf.acp.box.type.html{/lang}</option>
+						<option value="tpl"{if $boxType == 'tpl'} selected{/if}>{lang}wcf.acp.box.type.tpl{/lang}</option>
+						<option value="system"{if $boxType == 'system'} selected{/if}>{lang}wcf.acp.box.type.system{/lang}</option>
+					</select>
 				</dd>
 			</dl>
 			

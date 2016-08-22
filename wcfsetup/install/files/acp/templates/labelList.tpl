@@ -59,14 +59,12 @@
 				<dl class="col-xs-12 col-md-4">
 					<dt></dt>
 					<dd>
-						<label class="selectDropdown">
-							<select id="groupID" name="groupID">
-								<option value="0">{lang}wcf.acp.label.group{/lang}</option>
-								{foreach from=$labelGroupList item=group}
-									<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
-								{/foreach}
-							</select>
-						</label>
+						<select id="groupID" name="groupID">
+							<option value="0">{lang}wcf.acp.label.group{/lang}</option>
+							{foreach from=$labelGroupList item=group}
+								<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
+							{/foreach}
+						</select>
 					</dd>
 				</dl>
 				

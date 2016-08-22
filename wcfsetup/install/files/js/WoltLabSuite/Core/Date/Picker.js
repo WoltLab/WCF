@@ -519,11 +519,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_dateMonth = elCreate('select');
 			_dateMonth.className = 'month';
 			_dateMonth.addEventListener('change', this._changeMonth.bind(this));
-			
-			var selectWrapper = elCreate('label');
-			selectWrapper.className = 'selectDropdown';
-			selectWrapper.appendChild(_dateMonth);
-			monthYearContainer.appendChild(selectWrapper);
+			monthYearContainer.appendChild(_dateMonth);
 			
 			var i, months = '', monthNames = Language.get('__monthsShort');
 			for (i = 0; i < 12; i++) {
@@ -534,11 +530,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_dateYear = elCreate('select');
 			_dateYear.className = 'year';
 			_dateYear.addEventListener('change', this._changeYear.bind(this));
-			
-			selectWrapper = elCreate('label');
-			selectWrapper.className = 'selectDropdown';
-			selectWrapper.appendChild(_dateYear);
-			monthYearContainer.appendChild(selectWrapper);
+			monthYearContainer.appendChild(_dateYear);
 			
 			_dateMonthNext = elCreate('a');
 			_dateMonthNext.className = 'next';

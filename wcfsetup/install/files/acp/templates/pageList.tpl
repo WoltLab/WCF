@@ -52,29 +52,25 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<label class="selectDropdown">
-						<select name="applicationPackageID" id="applicationPackageID">
-							<option value="0">{lang}wcf.acp.page.application{/lang}</option>
-							{foreach from=$availableApplications item=availableApplication}
-								<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
-							{/foreach}
-						</select>
-					</label>
+					<select name="applicationPackageID" id="applicationPackageID">
+						<option value="0">{lang}wcf.acp.page.application{/lang}</option>
+						{foreach from=$availableApplications item=availableApplication}
+							<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $applicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+						{/foreach}
+					</select>
 				</dd>
 			</dl>
 			
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<label class="selectDropdown">
-						<select name="pageType" id="pageType">
-							<option value="">{lang}wcf.acp.page.type{/lang}</option>
-							<option value="text"{if $pageType == 'text'} selected{/if}>{lang}wcf.acp.page.type.text{/lang}</option>
-							<option value="html"{if $pageType == 'html'} selected{/if}>{lang}wcf.acp.page.type.html{/lang}</option>
-							<option value="tpl"{if $pageType == 'tpl'} selected{/if}>{lang}wcf.acp.page.type.tpl{/lang}</option>
-							<option value="system"{if $pageType == 'system'} selected{/if}>{lang}wcf.acp.page.type.system{/lang}</option>
-						</select>
-					</label>
+					<select name="pageType" id="pageType">
+						<option value="">{lang}wcf.acp.page.type{/lang}</option>
+						<option value="text"{if $pageType == 'text'} selected{/if}>{lang}wcf.acp.page.type.text{/lang}</option>
+						<option value="html"{if $pageType == 'html'} selected{/if}>{lang}wcf.acp.page.type.html{/lang}</option>
+						<option value="tpl"{if $pageType == 'tpl'} selected{/if}>{lang}wcf.acp.page.type.tpl{/lang}</option>
+						<option value="system"{if $pageType == 'system'} selected{/if}>{lang}wcf.acp.page.type.system{/lang}</option>
+					</select>
 				</dd>
 			</dl>
 			
