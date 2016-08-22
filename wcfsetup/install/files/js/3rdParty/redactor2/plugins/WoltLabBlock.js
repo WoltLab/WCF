@@ -86,7 +86,7 @@ $.Redactor.prototype.WoltLabBlock = function() {
 		},
 		
 		_paragraphize: function (block) {
-			if (['p', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'figure'].indexOf(block.nodeName) !== -1) {
+			if (['p', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'figure'].indexOf(block.nodeName.toLowerCase()) !== -1) {
 				// do not paragraphize these blocks
 				return;
 			}
