@@ -1,10 +1,10 @@
 <!-- begin:parser_nonessential -->
 <div class="spoilerBox jsSpoilerBox">
-	<header class="jsOnly">
+	<div class="jsOnly spoilerBoxHeader">
 		<a class="button small jsSpoilerToggle"{if $buttonTitle} data-has-custom-label="true"{/if}>{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
-	</header>
+	</div>
 	
-	<div style="display: none">
+	<div class="spoilerBoxContent" style="display: none">
 		{@$content}
 	</div>
 </div>

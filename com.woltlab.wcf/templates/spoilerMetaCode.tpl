@@ -1,9 +1,9 @@
 <div class="spoilerBox jsSpoilerBox">
-	<header class="jsOnly">
+	<div class="jsOnly spoilerBoxHeader">
 		<a class="button small jsSpoilerToggle"{if $buttonLabel} data-has-custom-label="true"{/if}>{if $buttonLabel}{$buttonLabel}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
-	</header>
+	</div>
 	
-	<div style="display: none">
+	<div class="spoilerBoxContent" style="display: none">
 		<!-- META_CODE_INNER_CONTENT -->
 	</div>
 	
