@@ -91,6 +91,19 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 				}
 				
 				if (!$isLastNode) {
+					// check if paragraph only contains <br>
+					if (StringUtil::trim($paragraph->textContent) === '') {
+						// get last element
+						$element = $paragraph->firstChild;
+						while ($element && $element->nodeType !== XML_ELEMENT_NODE) {
+							$element = $element->nextSibling;
+						}
+						
+						if ($element && $element->nodeName === 'br') {
+							$paragraph->removeChild($element);
+						}
+					}
+					
 					for ($i = 0; $i < 2; $i++) {
 						$br = $this->getDocument()->createElement('br');
 						$paragraph->appendChild($br);
