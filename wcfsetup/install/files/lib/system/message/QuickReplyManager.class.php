@@ -7,7 +7,6 @@ use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
 use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\bbcode\PreParser;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
@@ -187,12 +186,6 @@ class QuickReplyManager extends SingletonFactory {
 		if (!isset($parameters['data']['username'])) {
 			$parameters['data']['username'] = WCF::getUser()->username;
 		}
-		
-		// pre-parse message text
-		/*if ($parameters['data']['preParse']) {
-			$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
-		}
-		unset($parameters['data']['preParse']);*/
 		
 		$parameters['data'] = array_merge($additionalFields, $parameters['data']);
 		
