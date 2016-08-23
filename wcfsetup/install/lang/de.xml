@@ -2786,6 +2786,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.tagging.tags.description"><![CDATA[Mehrere Tags müssen durch ein Komma getrennt werden.]]></item>
 		<item name="wcf.tagging.objectTypes"><![CDATA[Inhalte]]></item>
 		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[Es wurden keine Einträge mit diesem Tag gefunden.]]></item>
+		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Artikel mit dem Tag „{$tag->name}“]]></item>
 	</category>
 	
 	<category name="wcf.user">

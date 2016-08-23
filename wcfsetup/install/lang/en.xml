@@ -2819,6 +2819,8 @@ Errors are:
 		<item name="wcf.tagging.tags.description"><![CDATA[Add multiple tags by separating them with a comma.]]></item>
 		<item name="wcf.tagging.objectTypes"><![CDATA[Content]]></item>
 		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[No items matched this tag.]]></item>
+		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Articles Tagged With “{$tag->name}”]]></item>
 	</category>
 	
 	<category name="wcf.user">
