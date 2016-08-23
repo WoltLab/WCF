@@ -67,6 +67,12 @@
 	outline: none;
 	overflow: auto;
 	
+	* {
+		// setting min-width to "0" inside contenteditable causes
+		// IE11 to do all sort of funny things
+		min-width: auto;
+	}
+	
 	& + textarea {
 		border-width: 0;
 		box-shadow: none;
