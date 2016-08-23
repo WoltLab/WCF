@@ -1,4 +1,3 @@
-define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, Environment, EventHandler, UiAlignment) {
 	"use strict";
 	
 	var _dropdownContainer = null;
@@ -18,6 +17,8 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 			
 			redactor.WoltLabEvent.register('keydown', this._keyDown.bind(this));
 			redactor.WoltLabEvent.register('keyup', this._keyUp.bind(this));
+			
+			UiCloseOverlay.add('UiRedactorMention-' + redactor.core.element()[0].id, this._hideDropdown.bind(this));
 		},
 		
 		_keyDown: function(data) {
@@ -62,6 +63,15 @@ define(['Ajax', 'Environment', 'EventHandler', 'Ui/Alignment'], function(Ajax, E
 				this._active = false;
 				
 				return;
+			}
+			
+			if (this._dropdownActive) {
+				data.cancel = true;
+				
+				// ignore arrow up/down
+				if (event.which === 38 || event.which === 40) {
+					return;
+				}
 			}
 			
 			var text = this._getTextLineInFrontOfCaret();
