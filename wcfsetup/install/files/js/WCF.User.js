@@ -284,7 +284,7 @@ WCF.User.Panel.Abstract = Class.extend({
 			if (this._options.enableMarkAsRead) {
 				var $outstandingItems = this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding');
 				if (this._markAllAsReadLink === null && $outstandingItems.length && this._options.markAllAsReadConfirmMessage) {
-					var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon16 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
+					var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon24 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
 					$button.click((function(event) {
 						this._dropdown.close();
 						
@@ -473,7 +473,7 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 	_initDropdown: function() {
 		var $dropdown = this._super();
 		
-		$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon16 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
+		$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon24 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
 		
 		return $dropdown;
 	},

@@ -281,10 +281,15 @@ define(
 				return false;
 			}
 			
-			this.close(containerId);
-			
-			var menu = _menus.get(containerId);
-			_menus.parentNode.removeChild(menu);
+			try {
+				this.close(containerId);
+				
+				var menu = _menus.get(containerId);
+				_menus.parentNode.removeChild(menu);
+			}
+			catch (e) {
+				// the elements might not exist anymore thus ignore all errors cleaning up
+			}
 			
 			_menus['delete'](containerId);
 			_dropdowns['delete'](containerId);

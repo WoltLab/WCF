@@ -2803,7 +2803,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[Die Anmeldung erfordert den Einsatz von Cookies, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}aktiviere{else}aktivieren Sie{/if} diese, um die Anmeldung durchzuführen.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Registrierung]]></item>
-		<item name="wcf.user.login.register.teaser"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch kein Benutzerkonto auf unserer Seite? <a href="{link controller='Register'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Melde dich{else}Melden Sie sich{/if} kostenlos an</a> und {if LANGUAGE_USE_INFORMAL_VARIANT}nimm{else}nehmen Sie{/if} an unserer Community teil!]]></item>
+		<item name="wcf.user.login.register.teaser"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch kein Benutzerkonto auf unserer Seite? <a href="{link controller='Register'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Registriere dich{else}Registrieren Sie sich{/if} kostenlos</a> und {if LANGUAGE_USE_INFORMAL_VARIANT}nimm{else}nehmen Sie{/if} an unserer Community teil!]]></item>
 		<item name="wcf.user.login.register.registerNow"><![CDATA[Benutzerkonto erstellen]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>

@@ -43,7 +43,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		$('.codeBox:not(.jsCodeViewer)').each($.proxy(function(index, codeBox) {
 			var $codeBox = $(codeBox).addClass('jsCodeViewer');
 			
-			$('<span class="codeBoxPlainSource icon icon16 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('.codeBoxHeader')).click($.proxy(this._click, this));
+			$('<span class="codeBoxPlainSource icon icon24 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('.codeBoxHeader')).click($.proxy(this._click, this));
 		}, this));
 	},
 	

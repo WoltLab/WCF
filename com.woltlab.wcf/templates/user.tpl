@@ -39,12 +39,12 @@
 					UiUserEditor.init();
 				{/if}
 				
-				{if !$user->isIgnoredUser($__wcf->user->userID)}
-					new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
-				{/if}
-				
 				{if !$user->getPermission('user.profile.cannotBeIgnored')}
 					new UiUserProfileMenuItemIgnore({@$user->userID}, {if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}true{else}false{/if});
+				{/if}
+				
+				{if !$user->isIgnoredUser($__wcf->user->userID)}
+				new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
 				{/if}
 			});
 		{/if}

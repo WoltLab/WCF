@@ -1,5 +1,5 @@
 {hascontent}
-	<div id="{$option->optionName}">
+	<div id="{$option->optionName}" class="htmlContent">
 		{content}
 			{@$value}
 		{/content}

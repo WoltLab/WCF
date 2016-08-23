@@ -128,6 +128,21 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
 		}
 		
+		// pick the display name by choosing the default language, or 'en' or '' (empty string)
+		$defaultLanguageCode = LanguageFactory::getInstance()->getDefaultLanguage()->getFixedLanguageCode();
+		if (isset($data['elements']['name'][$defaultLanguageCode])) {
+			// use the default language
+			$name = $data['elements']['name'][$defaultLanguageCode];
+		}
+		else if (isset($data['elements']['name']['en'])) {
+			// use the value for English
+			$name = $data['elements']['name']['en'];
+		}
+		else {
+			// fallback to the display name without/empty language attribute
+			$name = $data['elements']['name'][''];
+		}
+		
 		$ignoreMissingContent = false;
 		switch ($boxType) {
 			/** @noinspection PhpMissingBreakStatementInspection */
@@ -200,7 +215,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		return [
 			'identifier' => $identifier,
 			'content' => $content,
-			'name' => $this->getI18nValues($data['elements']['name'], true),
+			'name' => $name,
 			'boxType' => $boxType,
 			'position' => $position,
 			'showOrder' => $this->getItemOrder($position),

@@ -135,6 +135,7 @@
 
 * `wcf\system\clipboard\action\UserExtendedClipboardAction` removed.
 * `wcf\system\event\listener\PreParserAtUserListener` removed.
+* `wcf\system\bbcode\PreParser` removed.
 * `wcf\action\AJAXProxyAction::getData()` removed.
 * `wcf\system\page\PageManager` removed.
 * `wcf\system\option\PageMultiSelectOptionType` removed.
