@@ -33,6 +33,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	public function process() {
 		EventHandler::getInstance()->fireAction($this, 'beforeProcess');
 		
+		// fix invalid html such as metacode markers outside of block elements
+		$this->fixDom();
+		
 		// process metacode markers first
 		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacodeMarker());
 		
@@ -54,6 +57,39 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->processEmbeddedContent();
 		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
+	}
+	
+	/**
+	 * Fixes malformed HTML with metacode markers and text being placed
+	 * outside of paragraphs.
+	 */
+	protected function fixDom() {
+		$appendToPreviousParagraph = function ($node) {
+			/** @var \DOMElement $paragraph */
+			$paragraph = $node->previousSibling;
+			
+			if (!$paragraph || $paragraph->nodeName !== 'p') {
+				$paragraph = $node->ownerDocument->createElement('p');
+				$node->parentNode->insertBefore($paragraph, $node);
+			}
+			
+			$paragraph->appendChild($node);
+			
+			return $paragraph;
+		};
+		
+		/** @var \DOMNode $node */
+		$node = $this->getDocument()->getElementsByTagName('body')->item(0)->firstChild;
+		while ($node) {
+			if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName === 'woltlab-metacode-marker') {
+				$node = $appendToPreviousParagraph($node);
+			}
+			else if ($node->nodeType === XML_TEXT_NODE) {
+				$node = $appendToPreviousParagraph($node);
+			}
+			
+			$node = $node->nextSibling;
+		}
 	}
 	
 	/**
