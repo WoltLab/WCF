@@ -15,7 +15,7 @@
 	}
 	&.messageReducedList {
 		@include screen-md-up {
-			> li {
+			> li:not(:last-child) {
 				padding-bottom: 30px;
 			}
 		}
@@ -40,8 +40,8 @@
 	}
 	
 	@include screen-sm-down {
-		> li {
-			padding-bottom: 20px;
+		> li:not(:last-child) {
+			padding-bottom: 30px;
 		}
 	}
 }
