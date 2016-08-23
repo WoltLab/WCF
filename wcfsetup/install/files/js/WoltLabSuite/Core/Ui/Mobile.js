@@ -167,7 +167,8 @@ define(
 							navigation.classList.toggle('open');
 						}
 					});
-					
+				}
+				if (navigation) {
 					navigation.addEventListener(WCF_CLICK_EVENT, function(event) {
 						event.stopPropagation();
 					});
