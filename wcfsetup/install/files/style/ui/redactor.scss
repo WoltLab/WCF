@@ -73,6 +73,13 @@
 		min-width: auto;
 	}
 	
+	&.redactor-placeholder::after {
+		color: $wcfContentDimmedText;
+		content: attr(placeholder);
+		display: block;
+		position: absolute;
+	}
+	
 	& + textarea {
 		border-width: 0;
 		box-shadow: none;

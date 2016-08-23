@@ -140,12 +140,13 @@
 						'remove-size': '{lang}wcf.editor.button.size.removeSize{/lang}',
 
 						// color
-						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}',
+						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}'
 					}
 				},
 				linkify: false,
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
+				placeholder: elData(element, 'placeholder') || '',
 				plugins: [
 					// Imperavi
 					'alignment',
