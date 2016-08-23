@@ -22,13 +22,15 @@
 				}
 			}
 			
-			&:hover .columnStats {
-				> dl {
-					visibility: visible;
-				}
-				
-				.messageGroupListStatsSimple {
-					display: none;
+			@include screen-lg {
+				&:hover .columnStats {
+					> dl {
+						visibility: visible;
+					}
+					
+					.messageGroupListStatsSimple {
+						display: none;
+					}
 				}
 			}
 		}

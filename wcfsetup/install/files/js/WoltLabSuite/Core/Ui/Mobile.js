@@ -210,12 +210,14 @@ define(
 				
 				shadow = DomTraverse.childByClass(parent, 'mobileLinkShadow');
 				if (shadow === null) {
-					shadow = elCreate('a');
-					shadow.className = 'mobileLinkShadow';
-					shadow.href = elBySel(linkSelector, element).href;
-					
-					parent.appendChild(shadow);
-					parent.classList.add('mobileLinkShadowContainer');
+					if (elBySel(linkSelector, element).href) {
+						shadow = elCreate('a');
+						shadow.className = 'mobileLinkShadow';
+						shadow.href = elBySel(linkSelector, element).href;
+						
+						parent.appendChild(shadow);
+						parent.classList.add('mobileLinkShadowContainer');
+					}
 				}
 			}
 		},
