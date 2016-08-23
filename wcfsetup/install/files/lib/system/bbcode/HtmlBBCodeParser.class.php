@@ -460,6 +460,12 @@ class HtmlBBCodeParser extends BBCodeParser {
 		
 		$data = array_pop($this->openTagIdentifiers);
 		if ($data['name'] !== $name) {
+			// check if this is a source code tag as some people
+			// love to nest the same source bbcode
+			if (in_array($name, $this->getSourceBBCodes())) {
+				return $tag['source'];
+			}
+			
 			throw new SystemException("Tag mismatch, expected '".$name."', got '".$data['name']."'.");
 		}
 		
