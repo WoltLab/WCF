@@ -10,7 +10,7 @@
 		<p class="info">{lang}wcf.page.availableUpdates{/lang}</p>
 	{/if}
 	
-	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation'}
+	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect'}
 		<p class="warning">{lang}wcf.user.register.needActivation{/lang}</p>
 	{/if}
 	
