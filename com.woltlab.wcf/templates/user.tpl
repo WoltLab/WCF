@@ -44,7 +44,7 @@
 				{/if}
 				
 				{if !$user->isIgnoredUser($__wcf->user->userID)}
-				new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
+					new UiUserProfileMenuItemFollow({@$user->userID}, {if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}true{else}false{/if});
 				{/if}
 			});
 		{/if}
