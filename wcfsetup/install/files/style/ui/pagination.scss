@@ -35,5 +35,12 @@
 		&:not(:last-child) {
 			margin-right: 1px;
 		}
+		
+		&:not(.skip) {
+			> a,
+			> span {
+				padding: 4px 8px;
+			}
+		}
 	}
 }

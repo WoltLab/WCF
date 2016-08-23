@@ -59,7 +59,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 			listItem.className = 'skip';
 			list.appendChild(listItem);
 			
-			var iconClassNames = 'icon icon16 fa-chevron-left';
+			var iconClassNames = 'icon icon24 fa-chevron-left';
 			if (this._options.activePage > 1) {
 				link = elCreate('a');
 				link.className = iconClassNames + ' jsTooltip';
@@ -157,7 +157,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 			listItem.className = 'skip';
 			list.appendChild(listItem);
 			
-			iconClassNames = 'icon icon16 fa-chevron-right';
+			iconClassNames = 'icon icon24 fa-chevron-right';
 			if (this._options.activePage < this._options.maxPage) {
 				link = elCreate('a');
 				link.className = iconClassNames + ' jsTooltip';
