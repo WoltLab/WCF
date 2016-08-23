@@ -27,6 +27,14 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 			_tooltip = elCreate('div');
 			elAttr(_tooltip, 'id', 'balloonTooltip');
 			_tooltip.classList.add('balloonTooltip');
+			_tooltip.addEventListener('transitionend', function () {
+				if (!_tooltip.classList.contains('active')) {
+					// reset back to the upper left corner, prevent it from staying outside
+					// the viewport if the body overflow was previously hidden
+					_tooltip.style.removeProperty('top');
+					_tooltip.style.removeProperty('left');
+				}
+			});
 			
 			_text = elCreate('span');
 			elAttr(_text, 'id', 'balloonTooltipText');
@@ -114,11 +122,6 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		 */
 		_mouseLeave: function() {
 			_tooltip.classList.remove('active');
-			
-			// reset back to the upper left corner, prevent it from staying outside
-			// the viewport if the body overflow was previously hidden
-			_tooltip.style.removeProperty('top');
-			_tooltip.style.removeProperty('left');
 		}
 	};
 });

@@ -30,7 +30,7 @@ define([], function() {
 			var titleHeight = ~~styles.height.replace(/px$/, '');
 			if (titleHeight === 0) {
 				// firefox returns garbage for pseudo element height
-				// https://bugzilla.mozilla.org/show_bug.cgi?id=925694#c7
+				// https://bugzilla.mozilla.org/show_bug.cgi?id=925694
 				
 				titleHeight = element.scrollHeight;
 				element.classList.add('redactorCalcHeight');
