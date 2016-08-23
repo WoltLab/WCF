@@ -1,3 +1,4 @@
+define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, UiCloseOverlay) {
 	"use strict";
 	
 	var _dropdownContainer = null;
