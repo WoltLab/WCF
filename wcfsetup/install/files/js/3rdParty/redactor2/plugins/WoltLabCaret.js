@@ -38,6 +38,12 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				}
 			}
 			
+			if (block.nodeName === 'TD') {
+				while (block.nodeName !== 'TABLE') {
+					block = block.parentNode;
+				}
+			}
+			
 			this.buffer.set();
 			
 			// click occurred onto the empty editor space, but before or after a block element
