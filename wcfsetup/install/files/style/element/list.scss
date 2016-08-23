@@ -23,8 +23,11 @@ ol.nativeList {
 	@include inlineList;
 	
 	align-items: baseline;
+	margin-bottom: -4px;
+	margin-right: -8px;
 	
-	> li:not(:last-child) {
+	> li {
+		margin-bottom: 4px;
 		margin-right: 8px;
 	}
 	
