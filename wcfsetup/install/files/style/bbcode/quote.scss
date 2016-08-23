@@ -21,7 +21,7 @@ woltlab-quote,
 	}
 }
 
-woltlab-quote::before {
+woltlab-quote:not(.redactorCalcHeight)::before {
 	content: attr(data-title);
 	cursor: pointer;
 	display: block;

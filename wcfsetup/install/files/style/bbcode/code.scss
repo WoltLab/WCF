@@ -9,7 +9,7 @@
 	position: relative;
 	white-space: pre;
 	
-	&::before {
+	&:not(.redactorCalcHeight)::before {
 		content: attr(data-title);
 		cursor: pointer;
 		display: block;

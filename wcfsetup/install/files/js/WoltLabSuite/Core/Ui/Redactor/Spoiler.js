@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Spoiler
  */
-define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog) {
+define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader) {
 	"use strict";
 	
 	var _headerHeight = 0;
@@ -80,12 +80,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			var spoiler = event.currentTarget;
 			
 			if (_headerHeight === 0) {
-				_headerHeight = ~~window.getComputedStyle(spoiler).paddingTop.replace(/px$/, '');
-				
-				var styles = window.getComputedStyle(spoiler, '::before');
-				_headerHeight += ~~styles.paddingTop.replace(/px$/, '');
-				_headerHeight += ~~styles.height.replace(/px$/, '');
-				_headerHeight += ~~styles.paddingBottom.replace(/px$/, '');
+				_headerHeight = UiRedactorPseudoHeader.getHeight(spoiler);
 			}
 			
 			// check if the click hit the header

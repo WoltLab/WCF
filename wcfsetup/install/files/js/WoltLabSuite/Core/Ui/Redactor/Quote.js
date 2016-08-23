@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Quote
  */
-define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog) {
+define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader) {
 	"use strict";
 	
 	var _headerHeight = 0;
@@ -26,6 +26,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 */
 		init: function(editor, button) {
 			this._quote = null;
+			this._quotes = elByTag('woltlab-quote', editor.$editor[0]);
 			this._editor = editor;
 			this._elementId = this._editor.$element[0].id;
 			
@@ -77,7 +78,6 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			
 			this._editor.selection.restore();
 			var content = data.content;
-			console.debug(data);
 			if (data.isText) {
 				content = StringUtil.escapeHTML(content);
 				content = '<p>' + content + '</p>';
@@ -118,10 +118,13 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_observeLoad: function() {
-			elBySelAll('woltlab-quote', this._editor.$editor[0], (function(quote) {
+			var quote;
+			for (var i = 0, length = this._quotes.length; i < length; i++) {
+				quote = this._quotes[i];
+				
 				quote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
 				this._setTitle(quote);
-			}).bind(this));
+			}
 		},
 		
 		/**
@@ -134,12 +137,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			var quote = event.currentTarget;
 			
 			if (_headerHeight === 0) {
-				_headerHeight = ~~window.getComputedStyle(quote).paddingTop.replace(/px$/, '');
-				
-				var styles = window.getComputedStyle(quote, '::before');
-				_headerHeight += ~~styles.paddingTop.replace(/px$/, '');
-				_headerHeight += ~~styles.height.replace(/px$/, '');
-				_headerHeight += ~~styles.paddingBottom.replace(/px$/, '');
+				_headerHeight = UiRedactorPseudoHeader.getHeight(quote);
 			}
 			
 			// check if the click hit the header

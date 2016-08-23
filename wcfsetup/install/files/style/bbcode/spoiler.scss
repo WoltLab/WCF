@@ -7,7 +7,7 @@
 	padding: 10px 20px;
 	position: relative;
 	
-	&::before {
+	&:not(.redactorCalcHeight)::before {
 		content: attr(data-title);
 		cursor: pointer;
 		display: block;
