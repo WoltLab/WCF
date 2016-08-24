@@ -200,7 +200,9 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				throw new Error("Unable to find element for object id '" + objectId + "' (identifier: '" + identifier + "').");
 			}
 			
-			data.content = DomUtil.createFragmentFromHtml(content);
+			var fragment = DomUtil.createFragmentFromHtml(content);
+			if (!fragment.childElementCount) fragment = DomUtil.createFragmentFromHtml('<p>' + content + '</p>');
+			data.content = fragment;
 			data.state = STATE_READY;
 			
 			if (_activeId) {
@@ -298,6 +300,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				_popover.classList.add('forceHide');
 				
 				// force layout
+				//noinspection BadExpressionStatementJS
 				_popover.offsetTop;
 				
 				this._clearContent();
