@@ -171,6 +171,11 @@ define(
 				if (navigation) {
 					navigation.addEventListener(WCF_CLICK_EVENT, function(event) {
 						event.stopPropagation();
+						
+						// mimic dropdown behavior
+						window.setTimeout(function () {
+							navigation.classList.remove('open');
+						}, 10);
 					});
 				}
 				
