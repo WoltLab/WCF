@@ -12,6 +12,18 @@
 				}
 			}
 		}
+		
+		@include screen-sm-down {
+			.messageSidebar {
+				border-top: 1px solid $wcfContentBorder;
+			}
+			
+			> .messageListPagination {
+				border-top: 1px solid $wcfContentBorder;
+				margin: 0 -10px;
+				padding: 20px 10px;
+			}
+		}
 	}
 	&.messageReducedList {
 		@include screen-md-up {
