@@ -7,7 +7,18 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
-				clipboardData = e.originalEvent.clipboardData.getData('text/plain');
+				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre')) ? true : false;
+				if (isCode) {
+					clipboardData = e.originalEvent.clipboardData.getData('text/plain');
+					
+					var mpCleanEncodeEntities = this.clean.encodeEntities;
+					this.clean.encodeEntities = (function(str) {
+						// revert to original method
+						this.clean.encodeEntities = mpCleanEncodeEntities;
+						
+						return WCF.String.escapeHTML(str);
+					}).bind(this);
+				}
 				
 				mpInit.call(this, e);
 			}).bind(this);
