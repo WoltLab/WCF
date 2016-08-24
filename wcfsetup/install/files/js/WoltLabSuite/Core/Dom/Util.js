@@ -275,42 +275,39 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 			var element = elCreate('div');
 			this.setInnerHtml(element, html);
 			
-			var node;
-			if (insertMethod === 'append' || insertMethod === 'after') {
-				while (element.childNodes.length) {
-					node = element.childNodes[0];
-					
-					if (insertMethod === 'append') {
-						referenceElement.appendChild(node);
-					}
-					else {
-						this.insertAfter(node, referenceElement);
-					}
-				}
+			if (!element.childNodes.length) {
+				return;
 			}
-			else if (insertMethod === 'prepend' || insertMethod === 'before') {
-				var scriptTags = [];
-				for (var i = element.childNodes.length - 1; i >= 0; i--) {
-					node = element.childNodes[i];
-					if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'SCRIPT') {
-						scriptTags.push(node);
-						continue;
-					}
-					
-					if (insertMethod === 'prepend') {
-						this.prepend(node, referenceElement);
-					}
-					else {
-						referenceElement.parentNode.insertBefore(node, referenceElement);
-					}
-				}
+			
+			var node = element.childNodes[0];
+			switch (insertMethod) {
+				case 'append':
+					referenceElement.appendChild(node);
+					break;
 				
-				scriptTags.forEach(function (scriptTag) {
-					document.body.appendChild(scriptTag);
-				});
+				case 'after':
+					this.insertAfter(node, referenceElement);
+					break;
+				
+				case 'prepend':
+					this.prepend(node, referenceElement);
+					break;
+				
+				case 'before':
+					referenceElement.parentNode.insertBefore(node, referenceElement);
+					break;
+				
+				default:
+					throw new Error("Unknown insert method '" + insertMethod + "'.");
+					break;
 			}
-			else {
-				throw new Error("Unknown insert method '" + insertMethod + "'.");
+			
+			var tmp;
+			while (element.childNodes.length) {
+				tmp = element.childNodes[0];
+				
+				this.insertAfter(tmp, node);
+				node = tmp;
 			}
 		},
 		
