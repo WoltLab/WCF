@@ -21,6 +21,14 @@ woltlab-quote,
 	}
 }
 
+.quoteBox {
+	min-height: 104px;
+	
+	.quoteBox {
+		min-height: 0;
+	}
+}
+
 woltlab-quote:not(.redactorCalcHeight)::before {
 	content: attr(data-title);
 	cursor: pointer;
