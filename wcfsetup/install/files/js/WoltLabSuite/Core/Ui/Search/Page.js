@@ -1,4 +1,4 @@
-define(['Core', 'Dom/Util', 'Ui/SimpleDropdown', './Input'], function(Core, DomUtil, UiSimpleDropdown, UiSearchInput) {
+define(['Core', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown', './Input'], function(Core, DomTraverse, DomUtil, UiSimpleDropdown, UiSearchInput) {
 	"use strict";
 	
 	return {
@@ -22,6 +22,13 @@ define(['Core', 'Dom/Util', 'Ui/SimpleDropdown', './Input'], function(Core, DomU
 					var offsetRight = (DomUtil.offset(parent).left + parent.clientWidth) - (DomUtil.offset(searchInput).left + minWidth);
 					var offsetTop = DomUtil.styleAsInt(window.getComputedStyle(parent), 'padding-bottom');
 					dropdownMenu.style.setProperty('transform', 'translateX(-' + Math.ceil(offsetRight) + 'px) translateY(-' + offsetTop + 'px)', '');
+				},
+				callbackSelect: function() {
+					setTimeout(function() {
+						DomTraverse.parentByTag(searchInput, 'FORM').submit();
+					}, 1);
+					
+					return true;
 				}
 			});
 			
