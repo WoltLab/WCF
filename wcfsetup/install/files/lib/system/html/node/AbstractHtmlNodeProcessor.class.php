@@ -81,7 +81,12 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 			$obj = $data['object'];
 			$string = $obj->replaceTag($data['data']);
 			$html = preg_replace_callback('~<wcfNode-' . $data['identifier'] . '>(?P<content>[\s\S]*)</wcfNode-' . $data['identifier'] . '>~', function($matches) use ($string) {
-				$string = str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
+				if (mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
+					return str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
+				}
+				else if (mb_strpos($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;') !== false) {
+					return str_replace('&lt;!-- META_CODE_INNER_CONTENT --&gt;', $matches['content'], $string);
+				}
 				
 				return $string;
 			}, $html);
