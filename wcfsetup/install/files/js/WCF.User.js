@@ -802,7 +802,7 @@ WCF.User.Profile.TabMenu = Class.extend({
 			}, this));
 		}
 		
-		$('.jsButtonUserLikes').click((function (event) {
+		$('.userProfileUser .contentDescription a[href$="#likes"]').click((function (event) {
 			event.preventDefault();
 			
 			require(['Ui/TabMenu'], function (UiTabMenu) {
