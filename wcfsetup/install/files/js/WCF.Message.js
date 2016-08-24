@@ -432,7 +432,7 @@ WCF.Message.Preview = Class.extend({
 		// restore preview button
 		this._previewButton.html(this._previewButtonLabel).enable();
 		
-		var $innerError = this._textarea.next('small.innerError').empty();
+		var $innerError = this._textarea.parent().children('small.innerError').empty();
 		if (!$innerError.length) {
 			$innerError = $('<small class="innerError" />').appendTo(this._textarea.parent());
 		}
