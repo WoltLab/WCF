@@ -35,6 +35,13 @@ define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPag
 				
 				// remove placeholder item
 				elRemove(DomTraverse.childByClass(_list, 'jsMenuOverlayItemPlaceholder'));
+				
+				_list.addEventListener('click', (function (event) {
+					if (event.target !== _list) {
+						this.close();
+						event.stopPropagation();
+					}
+				}).bind(this));
 			}
 		},
 		
