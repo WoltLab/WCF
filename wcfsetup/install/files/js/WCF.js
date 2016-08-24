@@ -1013,7 +1013,7 @@ WCF.Dropdown.Interactive.Handler = {
 			
 			window.addEventListener('scroll', (function (event) {
 				if (!document.documentElement.classList.contains('pageOverlayActive')) {
-					this.closeAll.bind(this)
+					this.closeAll();
 				}
 			}).bind(this));
 		}
@@ -1060,9 +1060,11 @@ WCF.Dropdown.Interactive.Handler = {
 	 * Closes all interactive dropdowns.
 	 */
 	closeAll: function() {
-		$.each(this._dropdownMenus, function(identifier, instance) {
-			instance.close();
-		});
+		for (var instance in this._dropdownMenus) {
+			if (this._dropdownMenus.hasOwnProperty(instance)) {
+				this._dropdownMenus[instance].close();
+			}
+		}
 	}
 };
 
