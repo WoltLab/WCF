@@ -1,14 +1,14 @@
 .messageList {
 	&:not(.messageReducedList) {
 		@include screen-md-up {
-			border-bottom: 1px solid $wcfContentBorder;
 			border-top: 1px solid $wcfContentBorder;
 			
 			> li {
+				border-bottom: 1px solid $wcfContentBorder;
 				padding: 30px 0;
 				
-				&:not(:last-child) {
-					border-bottom: 1px solid $wcfContentBorder;
+				&.messageListPagination:last-child {
+					border-bottom-width: 0;
 				}
 			}
 		}

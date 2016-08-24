@@ -280,9 +280,14 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 						elementId = DomUtil.identify(this._container.nextElementSibling);
 					}
 					else {
+						var insertBefore = this._container;
+						if (insertBefore.previousElementSibling && insertBefore.previousElementSibling.classList.contains('messageListPagination')) {
+							insertBefore = insertBefore.previousElementSibling;
+						}
+						
 						//noinspection JSUnresolvedVariable
-						DomUtil.insertHtml(data.returnValues.template, this._container, 'before');
-						elementId = DomUtil.identify(this._container.previousElementSibling);
+						DomUtil.insertHtml(data.returnValues.template, insertBefore, 'before');
+						elementId = DomUtil.identify(insertBefore.previousElementSibling);
 					}
 					
 					// update last post time
