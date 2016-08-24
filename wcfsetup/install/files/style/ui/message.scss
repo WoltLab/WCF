@@ -411,6 +411,7 @@
 		@extend .htmlContent;
 		
 		img {
+			height: auto !important;
 			max-width: 100%;
 		}
 	}
