@@ -7,6 +7,7 @@ use wcf\system\cache\builder\WhoWasOnlineCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * Box controller for a list of registered users that visited the website in last 24 hours.
@@ -56,7 +57,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 		return WCF::getTPL()->fetch('boxWhoWasOnline', 'wcf', [
 			'whoWasOnlineList' => $this->users,
 			'boxPosition' => $this->box->position,
-			'whoWasOnlineTimeFormat' => WCF::getLanguage()->get('wcf.date.timeFormat')
+			'whoWasOnlineTimeFormat' => DateUtil::TIME_FORMAT
 		]);
 	}
 	
