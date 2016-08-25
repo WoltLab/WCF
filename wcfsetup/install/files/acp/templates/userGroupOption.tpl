@@ -24,7 +24,7 @@
 						inputElement.name = 'values[' + groupId + ']' + (inputElement.name.slice(-2) === '[]' ? '[]' : '');
 						
 						if (isBoolean) {
-							inputElement.checked = (inputElement.getAttribute('checked') === 'checked');
+							inputElement.checked = inputElement.hasAttribute('checked');
 							id += '_' + groupId;
 							label.removeAttribute('for');
 							inputElement.nextElementSibling.setAttribute('for', id);
