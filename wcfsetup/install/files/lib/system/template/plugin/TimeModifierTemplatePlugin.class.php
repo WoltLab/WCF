@@ -3,6 +3,7 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /**
  * Template modifier plugin which formats a unix timestamp.
@@ -29,7 +30,7 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$isFutureDate = ($timestamp > TIME_NOW);
 		$dateTime = $this->getRelativeTime($dateTimeObject, $timestamp, $date, $time, $isFutureDate);
 		
-		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'"'.($isFutureDate ? ' data-is-future-date="true"' : '').'>'.$dateTime.'</time>';
+		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.StringUtil::encodeHTML($date).'" data-time="'.StringUtil::encodeHTML($time).'" data-offset="'.$dateTimeObject->getOffset().'"'.($isFutureDate ? ' data-is-future-date="true"' : '').'>'.$dateTime.'</time>';
 	}
 	
 	/**
