@@ -18,10 +18,10 @@
 	
 	> .item {
 		background-color: $wcfButtonBackground;
-		border: 1px solid $wcfButtonBorder;
+		border-radius: 2px;
 		color: $wcfButtonText;
 		cursor: default;
-		padding: 0 5px;
+		padding: 1px 5px;
 		
 		.icon {
 			color: inherit;
