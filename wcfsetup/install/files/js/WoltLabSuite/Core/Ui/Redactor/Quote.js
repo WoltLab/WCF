@@ -51,17 +51,13 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_insertQuote: function (data) {
+			this._editor.selection.restore();
+			
 			this._editor.buffer.set();
 			
 			// caret must be within a `<p>`, if it is not move it
 			/** @type Node */
 			var block = this._editor.selection.block();
-			if (block === false) {
-				this._editor.selection.restore();
-				
-				block = this._editor.selection.block();
-			}
-			
 			var redactor = this._editor.core.editor()[0];
 			while (block.parentNode && block.parentNode !== redactor) {
 				block = block.parentNode;

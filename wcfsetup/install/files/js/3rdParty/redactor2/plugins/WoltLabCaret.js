@@ -15,6 +15,35 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			}).bind(this);
 			
 			this.$editor[0].addEventListener('mouseup', this.WoltLabCaret._handleEditorClick.bind(this));
+			
+			var internalRange = null;
+			var selection = window.getSelection();
+			this.$editor[0].addEventListener('keyup', function () {
+				internalRange = selection.getRangeAt(0).cloneRange();
+			});
+			
+			var mpSave = this.selection.save;
+			this.selection.save = (function () {
+				internalRange = null;
+				
+				mpSave.call(this);
+			}).bind(this);
+			
+			var mpRestore = this.selection.restore;
+			this.selection.restore = (function () {
+				if (internalRange) {
+					selection.removeAllRanges();
+					selection.addRange(internalRange);
+					
+					internalRange = null;
+					
+					if (selection.rangeCount && this.utils.isRedactorParent(selection.getRangeAt(0).commonAncestorContainer)) {
+						return;
+					}
+				}
+				
+				mpRestore.call(this);
+			}).bind(this);
 		},
 		
 		_handleEditorClick: function (event) {
