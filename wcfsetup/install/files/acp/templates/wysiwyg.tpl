@@ -158,6 +158,7 @@
 					
 					// WoltLab specials
 					'WoltLabBlock',
+					'WoltLabEvent',
 					'WoltLabKeydown',
 					
 					// WoltLab core
@@ -169,7 +170,6 @@
 					'WoltLabCode',
 					'WoltLabColor',
 					'WoltLabDropdown',
-					'WoltLabEvent',
 					'WoltLabImage',
 					'WoltLabInlineCode',
 					'WoltLabInsert',

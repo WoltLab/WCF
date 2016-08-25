@@ -45,6 +45,8 @@ $.Redactor.prototype.WoltLabEvent = function() {
 		
 		register: function(callbackName, callback) {
 			require(['EventHandler'], (function(EventHandler) {
+				var uuid = this.uuid;
+				
 				if (this._callbacks.indexOf(callbackName) === -1) {
 					this.opts.callbacks[callbackName] = (function (event) {
 						var data = {
@@ -53,7 +55,7 @@ $.Redactor.prototype.WoltLabEvent = function() {
 							redactor: this
 						};
 						
-						EventHandler.fire('com.woltlab.wcf.redactor2', callbackName + '_' + this.WoltLabEvent._elementId, data);
+						EventHandler.fire('com.woltlab.wcf.redactor2', callbackName + '_' + uuid + '_' + this.WoltLabEvent._elementId, data);
 						
 						return (data.cancel === false);
 					}).bind(this);
@@ -62,7 +64,7 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				}
 				
 				require(['EventHandler'], (function(EventHandler) {
-					EventHandler.add('com.woltlab.wcf.redactor2', callbackName + '_' + this.WoltLabEvent._elementId, callback);
+					EventHandler.add('com.woltlab.wcf.redactor2', callbackName + '_' + uuid + '_' + this.WoltLabEvent._elementId, callback);
 				}).bind(this));
 			}).bind(this));
 		}
