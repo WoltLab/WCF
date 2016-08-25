@@ -35,7 +35,7 @@
 	flex-wrap: wrap;
 	
 	> li {
-		flex: 0 0 auto;
+		flex: 0 1 auto;
 		
 		&:not(:last-child) {
 			margin-right: 5px;

@@ -627,7 +627,7 @@ class SessionHandler extends SingletonFactory {
 	 * Checks if the active user has the given permissions and throws a
 	 * PermissionDeniedException if that isn't the case.
 	 * 
-	 * @param	string[]	$permissions	ist of permissions where each one must pass
+	 * @param	string[]	$permissions	list of permissions where each one must pass
 	 * @throws	PermissionDeniedException
 	 */
 	public function checkPermissions(array $permissions) {
