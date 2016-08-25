@@ -62,7 +62,7 @@
 	border: 1px solid $wcfContentBorderInner;
 	border-top-width: 0;
 	max-height: 500px;
-	padding: 20px 10px;
+	padding: 10px;
 	position: relative;
 	outline: none;
 	overflow: auto;
@@ -94,6 +94,16 @@
 	
 	// enforce styles used in messages
 	@extend .htmlContent;
+	
+	> :not(p) {
+		&:first-child {
+			margin-top: 10px !important;
+		}
+		
+		&:last-child {
+			margin-bottom: 20px !important;
+		}
+	}
 	
 	// remove margin top for the first paragraph in the editor to avoid a weird looking offset a the top
 	> p:first-child {
