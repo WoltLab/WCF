@@ -45,6 +45,50 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				
 				return mpOnTab.call(this, e, key);
 			}).bind(this);
+			
+			require(['Core', 'Environment'], (function (Core, Environment) {
+				if (Environment.platform() !== 'desktop') {
+					// ignore mobile devices
+					return;
+				}
+				
+				var container = this.$editor[0].closest('form, .message');
+				if (container === null) return;
+				
+				var formSubmit = elBySel('.formSubmit', container);
+				if (formSubmit === null) return;
+				
+				var submitButton = elBySel('input[type="submit"], button[data-type="save"], button[accesskey="s"]', formSubmit);
+				if (submitButton) {
+					// remove access key
+					submitButton.removeAttribute('accesskey');
+					
+					// mimic the same behavior which will also work with more
+					// than one editor instance on the page
+					this.WoltLabEvent.register('keydown', (function (data) {
+						// 83 = [S]
+						if (data.event.which === 83) {
+							var submit = false;
+							
+							if (window.navigator.platform.match(/^Mac/)) {
+								if (data.event.ctrlKey && data.event.altKey) {
+									submit = true;
+								}
+							}
+							else if (data.event.altKey && !data.event.ctrlKey) {
+								submit = true;
+							}
+							
+							if (submit) {
+								data.cancel = true;
+								
+								Core.triggerEvent(submitButton, WCF_CLICK_EVENT);
+							}
+						}
+					}).bind(this));
+				}
+			}).bind(this));
+			
 		},
 		
 		register: function (tag) {
