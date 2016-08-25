@@ -149,7 +149,7 @@
 }
 
 .menuOverlayItemSpacer {
-	margin-top: 20px;
+	margin-top: 25px;
 	
 	/* avoid successive spacers piling up */
 	& + .menuOverlayItemSpacer {
@@ -222,13 +222,13 @@
 	}
 	
 	&.menuOverlayItemLinkMore::after {
-		color: rgb(204, 204, 204);
+		color: #fff;
 		content: $fa-var-angle-right;
 		display: block;
 		font-family: FontAwesome;
-		font-size: 24px;
+		font-size: 18px;
 		position: absolute;
-		right: 10px;
+		right: 18px;
 		top: 50%;
 		transform: translateY(-50%);
 	}

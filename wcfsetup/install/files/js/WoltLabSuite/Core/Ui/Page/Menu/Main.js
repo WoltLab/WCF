@@ -31,7 +31,7 @@ define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPag
 			if (_container !== null) {
 				_list = DomTraverse.childByClass(_container, 'menuOverlayItemList');
 				_navigationList = elBySel('.jsPageNavigationIcons');
-				_spacer = _container.nextElementSibling;
+				//_spacer = _container.nextElementSibling;
 				
 				// remove placeholder item
 				elRemove(DomTraverse.childByClass(_list, 'jsMenuOverlayItemPlaceholder'));
@@ -74,11 +74,11 @@ define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPag
 				}
 				
 				elShow(_container);
-				elShow(_spacer);
+				//elShow(_spacer);
 			}
 			else {
 				elHide(_container);
-				elHide(_spacer);
+				//elHide(_spacer);
 			}
 			
 			return true;
@@ -91,7 +91,7 @@ define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPag
 			
 			if (_hasItems) {
 				elHide(_container);
-				elHide(_spacer);
+				//elHide(_spacer);
 				
 				var item, link, title = DomTraverse.childByClass(_list, 'menuOverlayTitle');
 				while (item = title.nextElementSibling) {
