@@ -3819,15 +3819,15 @@ WCF.Option.Handler = Class.extend({
 	_change: function(option) {
 		option = $(option);
 		
-		var $disableOptions = eval(option.data('disableOptions'));
-		var $enableOptions = eval(option.data('enableOptions'));
+		var disableOptions = eval(option.data('disableOptions'));
+		var enableOptions = eval(option.data('enableOptions'));
 		
 		// determine action by type
 		switch(option.getTagName()) {
 			case 'input':
 				switch(option.attr('type')) {
 					case 'checkbox':
-						this._execute(option.prop('checked'), $disableOptions, $enableOptions);
+						this._execute(option.prop('checked'), disableOptions, enableOptions);
 					break;
 					
 					case 'radio':
@@ -3837,7 +3837,7 @@ WCF.Option.Handler = Class.extend({
 								isActive = false;
 							}
 							
-							this._execute(isActive, $disableOptions, $enableOptions);
+							this._execute(isActive, disableOptions, enableOptions);
 						}
 					break;
 				}
@@ -3845,29 +3845,36 @@ WCF.Option.Handler = Class.extend({
 			
 			case 'select':
 				var $value = option.val();
-				var $disableOptions = $enableOptions = [];
+				var relevantDisableOptions = [];
+				var relevantEnableOptions = [];
 				
-				if (option.data('disableOptions').length > 0) {
-					for (var $index in option.data('disableOptions')) {
-						var $item = option.data('disableOptions')[$index];
+				if (disableOptions.length > 0) {
+					for (var $index in disableOptions) {
+						var $item = disableOptions[$index];
 						
 						if ($item.value == $value) {
-							$disableOptions.push($item.option);
+							relevantDisableOptions.push($item.option);
+						}
+						else {
+							relevantEnableOptions.push($item.option);
 						}
 					}
 				}
 				
-				if (option.data('enableOptions').length > 0) {
-					for (var $index in option.data('enableOptions')) {
-						var $item = option.data('enableOptions')[$index];
+				if (enableOptions.length > 0) {
+					for (var $index in enableOptions) {
+						var $item = enableOptions[$index];
 						
 						if ($item.value == $value) {
-							$enableOptions.push($item.option);
+							relevantEnableOptions.push($item.option);
+						}
+						else {
+							relevantDisableOptions.push($item.option);
 						}
 					}
 				}
 				
-				this._execute(true, $disableOptions, $enableOptions);
+				this._execute(true, relevantDisableOptions, relevantEnableOptions);
 			break;
 		}
 	},
@@ -3934,6 +3941,12 @@ WCF.Option.Handler = Class.extend({
 		if ($tagName == 'select' || ($tagName == 'input' && (element.attr('type') == 'checkbox' || element.attr('type') == 'file' || element.attr('type') == 'radio'))) {
 			if (enable) element.enable();
 			else element.disable();
+			
+			if (element.parents('.optionTypeBoolean:eq(0)')) {
+				var noElement = $('#' + element.wcfIdentify() + '_no');
+				if (enable) noElement.enable();
+				else noElement.disable();
+			}
 		}
 		else {
 			if (enable) element.removeAttr('readonly');
