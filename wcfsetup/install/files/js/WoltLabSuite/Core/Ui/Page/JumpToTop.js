@@ -75,7 +75,7 @@ define(['Environment', 'Language', './Action'], function(Environment, Language, 
 		_afterScroll: function() {
 			this._timeoutScroll = null;
 			
-			PageAction[(window.scrollY >= window.innerHeight / 2) ? 'show' : 'hide']('toTop');
+			PageAction[(window.pageYOffset >= 300) ? 'show' : 'hide']('toTop');
 		}
 	};
 	
