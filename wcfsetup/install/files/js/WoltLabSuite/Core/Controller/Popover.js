@@ -155,6 +155,14 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				if (_cache.has(id)) {
 					return;
 				}
+				// skip if element is in a popover
+				if (element.closest('.popover') !== null) {
+					_cache.set(id, {
+						content: null,
+						state: STATE_NONE
+					});
+					return;
+				}
 				
 				var objectId = (options.legacy) ? id : ~~element.getAttribute(options.attributeName);
 				if (objectId === 0) {
