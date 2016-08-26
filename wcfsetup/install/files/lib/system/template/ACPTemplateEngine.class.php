@@ -24,10 +24,6 @@ class ACPTemplateEngine extends TemplateEngine {
 		
 		$this->templatePaths = ['wcf' => WCF_DIR.'acp/templates/'];
 		$this->compileDir = WCF_DIR.'acp/templates/compiled/';
-		
-		if (!defined('NO_IMPORTS')) {
-			$this->loadTemplateListeners();
-		}
 	}
 	
 	/**

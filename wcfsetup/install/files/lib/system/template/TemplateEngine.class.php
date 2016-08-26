@@ -113,7 +113,6 @@ class TemplateEngine extends SingletonFactory {
 		
 		$this->loadTemplateGroupCache();
 		$this->assignSystemVariables();
-		$this->loadTemplateListeners();
 	}
 	
 	/**
@@ -712,24 +711,6 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Loads all available template listeners.
-	 * 
-	 * @deprecated	2.1
-	 */
-	protected function loadTemplateListeners() {
-		// does nothing
-	}
-	
-	/**
-	 * Returns false.
-	 * 
-	 * @deprecated
-	 */
-	public function hasTemplateListeners() {
-		return false;
 	}
 	
 	/**
