@@ -55,6 +55,8 @@ WCF.ImageViewer = Class.extend({
 	_click: function(event) {
 		event.preventDefault();
 		event.stopPropagation();
+		// skip if element is in a popover
+		if ($(event.currentTarget).closest('.popover').length) return;
 		
 		this._triggerElement.wcfImageViewer('open', null, $(event.currentTarget).wcfIdentify());
 	},
