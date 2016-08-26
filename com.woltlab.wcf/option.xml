@@ -672,30 +672,27 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<optiontype>captchaSelect</optiontype>
 				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
 				<allowemptyvalue>1</allowemptyvalue>
+				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!profile_mail_use_captcha,!search_use_captcha</enableoptions>
 			</option>
 			<option name="register_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<option name="lost_password_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<option name="profile_mail_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<option name="search_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<!-- /security.antispam.captcha -->
 			

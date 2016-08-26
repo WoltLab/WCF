@@ -27,11 +27,50 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 			);
 		}
 		
+		$options = $this->parseEnableOptions($option);
+		
 		return WCF::getTPL()->fetch('selectOptionType', 'wcf', [
+			'disableOptions' => $options['disableOptions'],
+			'enableOptions' => $options['enableOptions'],
 			'selectOptions' => $selectOptions,
 			'option' => $option,
 			'value' => $value
 		]);
+	}
+	
+	/**
+	 * Prepares JSON-encoded values for disabling or enabling dependent options.
+	 *
+	 * @param	Option	$option
+	 * @return	array
+	 * @see	SelectOptionType::parseEnableOptions()
+	 */
+	protected function parseEnableOptions(Option $option) {
+		$disableOptions = $enableOptions = '';
+		
+		if (!empty($option->enableOptions)) {
+			$options = $option->parseMultipleEnableOptions();
+			
+			foreach ($options as $key => $optionData) {
+				$tmp = explode(',', $optionData);
+				
+				foreach ($tmp as $item) {
+					if ($item{0} == '!') {
+						if (!empty($disableOptions)) $disableOptions .= ',';
+						$disableOptions .= "{ value: '".$key."', option: '".mb_substr($item, 1)."' }";
+					}
+					else {
+						if (!empty($enableOptions)) $enableOptions .= ',';
+						$enableOptions .= "{ value: '".$key."', option: '".$item."' }";
+					}
+				}
+			}
+		}
+		
+		return [
+			'disableOptions' => $disableOptions,
+			'enableOptions' => $enableOptions
+		];
 	}
 	
 	/**
