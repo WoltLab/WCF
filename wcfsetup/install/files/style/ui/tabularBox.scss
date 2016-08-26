@@ -132,9 +132,12 @@
 	td,
 	th {
 		padding: 10px;
-		text-align: left;
 		vertical-align: middle;
-	
+		
+		&:not(.text-center):not(.text-right):not(.text-justify) {
+			text-align: left;
+		}
+		
 		> label {
 			cursor: pointer;
 			display: block;
