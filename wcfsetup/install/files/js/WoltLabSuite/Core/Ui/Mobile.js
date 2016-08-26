@@ -93,7 +93,10 @@ define(
 			this._initMobileMenu();
 			
 			UiCloseOverlay.add('WoltLabSuite/Core/Ui/Mobile', this._closeAllMenus.bind(this));
-			DomChangeListener.add('WoltLabSuite/Core/Ui/Mobile', this._initButtonGroupNavigation.bind(this));
+			DomChangeListener.add('WoltLabSuite/Core/Ui/Mobile', (function() {
+				this._initButtonGroupNavigation();
+				this._initMessages();
+			}).bind(this));
 			
 			if (_messageGroups) this.rebuildShadow(_messageGroups, '.messageGroupLink');
 		},
