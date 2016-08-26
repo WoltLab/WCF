@@ -1192,6 +1192,11 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		this._triggerElement.addClass('open');
 		this._container.addClass('open');
 		
+		var pageHeader = elById('pageHeader');
+		if (pageHeader && pageHeader.classList.contains('searchBarOpen')) {
+			pageHeader.classList.remove('searchBarOpen');
+		}
+		
 		this.render();
 	},
 	
