@@ -17,11 +17,11 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		'screen-sm': '(min-width: 545px) and (max-width: 768px)',       /* tablet (portrait) */
 		'screen-sm-down': '(max-width: 768px)',                         /* smartphone + tablet (portrait) */
 		'screen-sm-up': '(min-width: 545px)',                           /* tablet (portrait) + tablet (landscape) + desktop */
-		'screen-sm-md': '(min-width: 545px) and (max-width: 1024px)',   /* tablet (portrait) + tablet (landscape) */
-		'screen-md': '(min-width: 769px) and (max-width: 1024px)',      /* tablet (landscape) */
-		'screen-md-down': '(max-width: 1024px)',                        /* smartphone + tablet (portrait) + tablet (landscape) */
-		'screen-md-up': '(min-width: 1024px)',                          /* tablet (landscape) + desktop */
-		'screen-lg': '(min-width: 1025px)'                              /* desktop */
+		'screen-sm-md': '(min-width: 545px) and (max-width: 1150px)',   /* tablet (portrait) + tablet (landscape) */
+		'screen-md': '(min-width: 769px) and (max-width: 1150px)',      /* tablet (landscape) */
+		'screen-md-down': '(max-width: 1150px)',                        /* smartphone + tablet (portrait) + tablet (landscape) */
+		'screen-md-up': '(min-width: 769px)',                           /* tablet (landscape) + desktop */
+		'screen-lg': '(min-width: 1151px)'                              /* desktop */
 	});
 	
 	/**
