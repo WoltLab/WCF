@@ -2377,14 +2377,14 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.error.timeout"><![CDATA[Keine Antwort vom Server erhalten, Anfrage wurde abgebrochen.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">Was ist passiert?</p>
-<p class="exceptionText">Leider ist bei der Verarbeitung zu einem Fehler gekommen und die Ausführung wurde abgebrochen. Falls möglich leiten Sie bitte den oben stehenden Fehlercode an den Administrator weiter.</p>
+<p class="exceptionText">Leider ist es bei der Verarbeitung zu einem Fehler gekommen und die Ausführung wurde abgebrochen. Falls möglich, leiten Sie bitte den oben stehenden Fehlercode an den Administrator weiter.</p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">
 	Administratoren können die vollständige Fehlermeldung mit Hilfe dieses Codes in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen.
 	Zusätzlich wurden die Informationen in die Protokolldatei <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$logFile}</span></span> geschrieben und können beispielsweise mit Hilfe eines FTP-Programms abgerufen werden.
 </p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
-<p class="exceptionText">Hinweis: Der Fehlercode wird zufällig generiert und erlaubt keinen Rückschluss auf die Ursache und ist daher für Dritte nutzlos.</p>]]></item>
+<p class="exceptionText">Hinweis: Der Fehlercode wird zufällig generiert, erlaubt keinen Rückschluss auf die Ursache und ist daher für Dritte nutzlos.</p>]]></item>
 		<item name="wcf.global.exception.title"><![CDATA[Ein Fehler ist aufgetreten]]></item>
 		<item name="wcf.global.exception.subtitle"><![CDATA[Interner Fehlercode: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.filter.button.clear"><![CDATA[Filter löschen]]></item>
