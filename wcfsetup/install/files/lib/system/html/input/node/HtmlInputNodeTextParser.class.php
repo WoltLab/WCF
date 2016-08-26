@@ -364,6 +364,9 @@ class HtmlInputNodeTextParser {
 			}
 			else {
 				if ($allowURL) {
+					// add protocol if necessary
+					if (!preg_match('/[a-z]:\/\//si', $link)) $link = 'http://'.$link;
+					
 					$element = $text->ownerDocument->createElement('a');
 					$element->setAttribute('href', $link);
 					$element->textContent = $link;
