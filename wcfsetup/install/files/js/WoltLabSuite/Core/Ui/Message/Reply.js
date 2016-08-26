@@ -125,6 +125,25 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			parameters.data = { message: this._getEditor().code.get() };
 			parameters.removeQuoteIDs = (this._options.quoteManager) ? this._options.quoteManager.getQuotesMarkedForRemoval() : [];
 			
+			// add any available settings
+			var settingsContainer = elById('settings_text');
+			if (settingsContainer) {
+				elBySelAll('input, select, textarea', settingsContainer, function (element) {
+					if (element.nodeName === 'INPUT' && (element.type === 'checkbox' || element.type === 'radio')) {
+						if (!element.checked) {
+							return;
+						}
+					}
+					
+					var name = element.name;
+					if (parameters.hasOwnProperty(name)) {
+						throw new Error("Variable overshadowing, key '" + name + "' is already present.");
+					}
+					
+					parameters[name] = element.value.trim();
+				});
+			}
+			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters.data);
 			
 			if (!User.userId && !additionalParameters) {
