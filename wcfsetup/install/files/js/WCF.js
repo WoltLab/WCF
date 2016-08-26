@@ -1065,6 +1065,18 @@ WCF.Dropdown.Interactive.Handler = {
 				this._dropdownMenus[instance].close();
 			}
 		}
+	},
+	
+	getOpenDropdown: function () {
+		for (var instance in this._dropdownMenus) {
+			if (this._dropdownMenus.hasOwnProperty(instance)) {
+				if (this._dropdownMenus[instance].isOpen()) {
+					return this._dropdownMenus[instance];
+				}
+			}
+		}
+		
+		return null;
 	}
 };
 

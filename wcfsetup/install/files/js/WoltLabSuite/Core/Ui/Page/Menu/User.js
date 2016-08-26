@@ -46,6 +46,19 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 					}
 				}).bind(this));
 			}).bind(this));
+		},
+		
+		close: function (event) {
+			var dropdown = WCF.Dropdown.Interactive.Handler.getOpenDropdown();
+			if (dropdown) {
+				event.preventDefault();
+				event.stopPropagation();
+				
+				dropdown.close();
+			}
+			else {
+				UiPageMenuUser._super.prototype.close.call(this, event);
+			}
 		}
 	});
 	
