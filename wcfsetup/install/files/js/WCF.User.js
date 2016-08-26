@@ -331,7 +331,7 @@ WCF.User.Panel.Abstract = Class.extend({
 					}
 					
 					if ($item.data('linkReplaceAll')) {
-						$item.find('> .box32 a:not(.userLink)').prop('href', $link);
+						$item.find('> .box48 a:not(.userLink)').prop('href', $link);
 					}
 				}
 			});
