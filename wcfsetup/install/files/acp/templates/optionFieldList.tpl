@@ -12,7 +12,7 @@
 				<small class="innerError">
 					{if $error == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
-					{else}	
+					{else}
 						{lang}{@$langPrefix}error.{$error}{/lang}
 					{/if}
 				</small>

@@ -1800,7 +1800,7 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 					};
 					this._queryServer($parameters);
 				}
-			}	
+			}
 		}, this));
 	},
 	

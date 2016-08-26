@@ -78,7 +78,7 @@
 							{if !$sidebar|empty}
 								{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
 									{@$sidebar}
-								{/if}	
+								{/if}
 							{/if}
 							
 							{if !$sidebarLeft|empty}
@@ -88,9 +88,9 @@
 							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarLeft') item=box}
 								{@$box->render()}
 							{/foreach}
-				
+							
 							{event name='boxesSidebarLeftBottom'}
-				
+							
 							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
 						{/content}
 					</div>	
@@ -110,9 +110,9 @@
 								{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
 							{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
 								{capture assign='contentTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
-							{/if}	
+							{/if}
 						{/if}
-					
+						
 						{if !$contentTitle|empty}
 							<header class="contentHeader">
 								<div class="contentHeaderTitle">
@@ -146,7 +146,7 @@
 									{@$box->render()}
 								{/foreach}
 							{/content}
-						</div>	
+						</div>
 					</div>
 				{/hascontent}
 				

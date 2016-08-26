@@ -151,7 +151,7 @@ $.Redactor.prototype.WoltLabImage = function() {
 			
 			var html = '<img src="' + WCF.String.escapeHTML(source) + '"' + (className ? ' class="' + className + '"' : '') + '>';
 			if (link) {
-				html = '<a href="' + WCF.String.escapeHTML(link) + '">' + html + '</a>'; 
+				html = '<a href="' + WCF.String.escapeHTML(link) + '">' + html + '</a>';
 			}
 			
 			this.modal.close();

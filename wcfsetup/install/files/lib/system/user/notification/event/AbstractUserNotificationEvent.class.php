@@ -254,7 +254,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @inheritDoc
 	 */
 	public function getComments() {
-		return 0; 
+		return 0;
 	}
 	
 	/**
@@ -277,34 +277,34 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		return $this->getMessage(); 
+		return $this->getMessage();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function __toString() {
-		return $this->getFormattedMessage(); 
+		return $this->getFormattedMessage();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getTime() {
-		return $this->getNotification()->time; 
+		return $this->getNotification()->time;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getUserID() {
-		return $this->getAuthorID(); 
+		return $this->getAuthorID();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getUsername() {
-		return $this->getAuthor()->username; 
+		return $this->getAuthor()->username;
 	}
 }

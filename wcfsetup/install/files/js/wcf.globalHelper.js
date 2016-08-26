@@ -134,7 +134,7 @@
 		var value = elData(element, attribute);
 		
 		return (value === "1" || value === "true");
-	}; 
+	};
 	
 	/**
 	 * Shorthand function to hide an element by setting its 'display' value to 'none'.

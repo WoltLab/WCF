@@ -709,11 +709,11 @@ class SessionHandler extends SingletonFactory {
 	 * @param	boolean				$hideSession	if true, database won't be updated
 	 */
 	public function changeUser(User $user, $hideSession = false) {
-		$eventParameters = ['user' => $user, 'hideSession' => $hideSession]; 
+		$eventParameters = ['user' => $user, 'hideSession' => $hideSession];
 		
 		EventHandler::getInstance()->fireAction($this, 'beforeChangeUser', $eventParameters);
 		
-		$user = $eventParameters['user']; 
+		$user = $eventParameters['user'];
 		$hideSession = $eventParameters['hideSession'];
 		
 		// skip changeUserVirtual, if session will not be persistent anyway

@@ -29,7 +29,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 	 * application
 	 * @var	string
 	 */
-	protected $application = 'wcf'; 
+	protected $application = 'wcf';
 	
 	/**
 	 * @inheritDoc

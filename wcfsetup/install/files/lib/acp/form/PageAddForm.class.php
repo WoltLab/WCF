@@ -321,7 +321,7 @@ class PageAddForm extends AbstractForm {
 			else {
 				throw new UserInputException('customURL_0');
 			}
-		} 
+		}
 		
 		foreach ($this->customURL as $languageID => $customURL) {
 			$this->validateCustomUrl($languageID, $customURL);

@@ -1737,7 +1737,7 @@ ALTER TABLE wcf1_media ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (la
 ALTER TABLE wcf1_media_content ADD FOREIGN KEY (mediaID) REFERENCES wcf1_media (mediaID) ON DELETE CASCADE;
 ALTER TABLE wcf1_media_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_menu ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE; 
+ALTER TABLE wcf1_menu ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_menu_item ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
 ALTER TABLE wcf1_menu_item ADD FOREIGN KEY (parentItemID) REFERENCES wcf1_menu_item (itemID) ON DELETE SET NULL;

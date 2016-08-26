@@ -109,7 +109,7 @@ class RouteHandler extends SingletonFactory {
 	 * @return	IRequestRoute[]
 	 **/
 	public function getRoutes() {
-		return $this->routes; 
+		return $this->routes;
 	}
 	
 	/**

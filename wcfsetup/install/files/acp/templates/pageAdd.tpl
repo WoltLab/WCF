@@ -184,7 +184,7 @@
 								{/if}
 							</dd>
 						</dl>
-					{/foreach}	
+					{/foreach}
 				{/if}
 				
 				{if $action != 'edit' || !$page->requireObjectID}

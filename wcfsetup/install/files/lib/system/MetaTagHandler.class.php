@@ -42,7 +42,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		}
 		if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
 			$this->addTag('og:site_name', 'og:site_name', $value, true);
-		}	
+		}
 	}
 	
 	/**

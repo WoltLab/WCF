@@ -67,7 +67,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					}
 					
 					elData(element, 'value', date.getTime());
-					var format = (isTimeOnly) ? 'formatTime' : ('formatDate' + (isDateTime ? 'Time' : '')); 
+					var format = (isTimeOnly) ? 'formatTime' : ('formatDate' + (isDateTime ? 'Time' : ''));
 					value = DateUtil[format](date);
 				}
 				
@@ -394,7 +394,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					}
 					
 					cell.classList[selectable ? 'remove' : 'add']('otherMonth');
-					date.setDate(date.getDate() + 1); 
+					date.setDate(date.getDate() + 1);
 				}
 				
 				elData(_dateGrid, 'month', month);

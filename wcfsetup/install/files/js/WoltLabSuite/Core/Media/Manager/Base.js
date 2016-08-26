@@ -414,7 +414,7 @@ define(
 			buttonGroupNavigation.appendChild(buttons);
 			
 			var listItem = elCreate('li');
-			listItem.className = 'mediaCheckbox'; 
+			listItem.className = 'mediaCheckbox';
 			buttons.appendChild(listItem);
 			
 			var a = elCreate('a');

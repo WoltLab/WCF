@@ -648,7 +648,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @throws	SystemException
 	 */
 	public function getGuestDialog() {
-		$captchaObjectType = null; 
+		$captchaObjectType = null;
 		
 		if (CAPTCHA_TYPE) {
 			$captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);

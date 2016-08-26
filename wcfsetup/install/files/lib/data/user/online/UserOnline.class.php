@@ -85,7 +85,7 @@ class UserOnline extends UserProfile {
 							}
 						}
 						
-						return ($this->location != '');	
+						return ($this->location != '');
 					}
 				}
 			}

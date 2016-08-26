@@ -6,7 +6,7 @@
 			<h3>{lang}wcf.menu.page.navigation{/lang}</h3>
 			<ol>
 				{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
-					{if $menuItemNode->getDepth() == 1 || $menuItemNode->getParentNode()->isActiveNode()}	
+					{if $menuItemNode->getDepth() == 1 || $menuItemNode->getParentNode()->isActiveNode()}
 					<li>
 						<a href="{$menuItemNode->getURL()}">{lang}{$menuItemNode->title}{/lang}</a>
 					
@@ -23,7 +23,7 @@
 					<li><a href="{$menuItemNode->getURL()}">{lang}{$menuItemNode->title}{/lang}</a></li>
 				{/foreach}
 			</ol>
-						
+			
 			<h3>{lang}wcf.menu.page.location{/lang}</h3>
 			<ol class="breadcrumbs">
 				{assign var=__breadcrumbsDepth value=0}

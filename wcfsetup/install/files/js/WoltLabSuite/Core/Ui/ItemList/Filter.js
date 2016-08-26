@@ -175,7 +175,7 @@ define(['EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], function (Eve
 					innerError.className = 'innerError';
 					innerError.textContent = Language.get('wcf.global.filter.error.noMatches');
 					DomUtil.insertAfter(innerError, this._container);
-				} 
+				}
 			}
 		}
 	};

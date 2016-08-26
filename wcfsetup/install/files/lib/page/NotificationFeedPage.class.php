@@ -21,7 +21,7 @@ class NotificationFeedPage extends AbstractFeedPage {
 		parent::readParameters();
 		
 		if (!WCF::getUser()->userID) {
-			throw new IllegalLinkException(); 
+			throw new IllegalLinkException();
 		}
 		
 		$this->title = WCF::getLanguage()->get('wcf.user.menu.community.notification');
@@ -39,6 +39,6 @@ class NotificationFeedPage extends AbstractFeedPage {
 		
 		foreach ($notifications['notifications'] as $notification) {
 			$this->items->append($notification['event']);
-		} 
+		}
 	}
 }

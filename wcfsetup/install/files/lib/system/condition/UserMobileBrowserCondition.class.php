@@ -81,7 +81,7 @@ HTML;
 	 */
 	public function reset() {
 		$this->usesMobileBrowser = 0;
-		$this->usesNoMobileBrowser = 0; 
+		$this->usesNoMobileBrowser = 0;
 	}
 	
 	/**
@@ -89,7 +89,7 @@ HTML;
 	 */
 	public function setData(Condition $condition) {
 		$this->usesMobileBrowser = $condition->usesMobileBrowser;
-		$this->usesNoMobileBrowser = !$condition->usesMobileBrowser; 
+		$this->usesNoMobileBrowser = !$condition->usesMobileBrowser;
 	}
 	
 	/**

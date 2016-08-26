@@ -82,7 +82,7 @@
 	<div class="paginationTop">
 		{content}
 			{assign var='linkParameters' value=''}
-			{if $categoryID}{capture append=linkParameters}&categoryID={@$categoryID}{/capture}{/if}	
+			{if $categoryID}{capture append=linkParameters}&categoryID={@$categoryID}{/capture}{/if}
 			{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
 			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}

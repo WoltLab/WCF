@@ -24,7 +24,7 @@ $shareXingBackground: rgba(0, 101, 103, 1);
 		@include screen-sm-down {
 			> span:not(.icon) {
 				display: none;
-			}	
+			}
 		}
 	}
 	
@@ -32,7 +32,7 @@ $shareXingBackground: rgba(0, 101, 103, 1);
 		.icon {
 			margin-right: 3px;
 		}
-	}	
+	}
 	
 	.jsShareFacebook {
 		background-color: $shareFacebookBackground;

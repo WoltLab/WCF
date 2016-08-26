@@ -253,8 +253,8 @@
 						{if $relatedArticle->getImage()}
 							<div class="box128">
 								<div class="articleListImage">{@$relatedArticle->getImage()->getThumbnailTag('tiny')}</div>
-						{/if}		
-
+						{/if}
+						
 						<div>
 							<div class="containerHeadline">
 								<h3 class="articleListTitle">{$relatedArticle->getTitle()}</h3>
@@ -284,7 +284,7 @@
 							</div>
 						</div>
 						
-						{if $relatedArticle->getImage()}		
+						{if $relatedArticle->getImage()}
 							</div>
 						{/if}
 					</a>
@@ -305,7 +305,7 @@
 				{include file='commentList'}
 			</ul>
 		</section>
-	{/if}	
+	{/if}
 {/if}
 
 {if MODULE_LIKE && ARTICLE_ENABLE_LIKE}

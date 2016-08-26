@@ -156,7 +156,7 @@ define(
 				}
 				
 				var navigation = elBySel('.jsMobileNavigation', message);
-				var quickOptions = elBySel('.messageQuickOptions', message); 
+				var quickOptions = elBySel('.messageQuickOptions', message);
 				
 				if (quickOptions) {
 					quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {

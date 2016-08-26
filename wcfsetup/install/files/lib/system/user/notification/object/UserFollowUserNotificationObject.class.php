@@ -45,6 +45,6 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
 	 * @inheritDoc
 	 */
 	public function getRelatedObjectID() {
-		return $this->followUserID; 
+		return $this->followUserID;
 	}
 }

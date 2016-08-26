@@ -33,7 +33,7 @@ class CategoryArticleList extends AccessibleArticleList {
 			foreach ($category->getChildCategories() as $category) {
 				if ($category->isAccessible()) {
 					$categoryIDs[] = $category->categoryID;
-				}	
+				}
 			}
 		}
 		

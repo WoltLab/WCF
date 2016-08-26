@@ -64,7 +64,7 @@
 			@include screen-lg {
 				margin-bottom: 60px;
 			}
-		}	
+		}
 	}
 	
 	.boxTitle {
@@ -280,13 +280,13 @@
 				}
 			}
 		}
-	}	
+	}
 }
 
 .boxesTop {
 	border-bottom: 1px solid $wcfContentBorderInner;
-}	
-	
+}
+
 .boxesBottom {
 	border-top: 1px solid $wcfContentBorderInner;
 }
@@ -478,7 +478,7 @@
 			max-height: 100px;
 			overflow: hidden;
 		}
-	}	
+	}
 }
 
 /* styling for boxes in <contentTop>/<contentBottom> position */
@@ -535,7 +535,7 @@
 			float: left;
 			width: 30%;
 		}
-	}	
+	}
 }
 
 .boxesContentTop:not(:first-child) {
@@ -594,7 +594,7 @@
 		@include screen-sm-down {
 			&:not(:last-child) {
 				margin-bottom: 40px;
-			}	
+			}
 		}
 		
 		@include screen-md-up {

@@ -69,7 +69,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 			
 			// split before each target node
 			foreach ($targetNodes as $targetNode) {
-				DOMUtil::splitParentsUntil($targetNode, $element); 
+				DOMUtil::splitParentsUntil($targetNode, $element);
 			}
 			$ancestors = [];
 			foreach ($targetNodes as $targetNode) {
