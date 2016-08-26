@@ -3446,7 +3446,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._updateContent($containerID, $.trim(data.returnValues.content), $newState);
 		
 		// update icon
-		this._exchangeIcon(this._containerData[$containerID].button, (data.returnValues.isOpen ? 'chevron-down' : 'chevron-right'));
+		//this._exchangeIcon(this._containerData[$containerID].button, (data.returnValues.isOpen ? 'chevron-down' : 'chevron-right'));
 	}
 });
 
