@@ -160,9 +160,9 @@ define(['Dom/Traverse'], function(DomTraverse) {
 		 * @protected
 		 */
 		_cleanup: function () {
-			var oneWeekAgo = Date.now() - (7 * 24 * 3600 * 1000);
-			var key, value;
-			for (var i = 0, length = window.localStorage.length; i < length; i++) {
+			var oneWeekAgo = Date.now() - (7 * 24 * 3600 * 1000), removeKeys = [];
+			var i, key, length, value;
+			for (i = 0, length = window.localStorage.length; i < length; i++) {
 				key = window.localStorage.key(i);
 				
 				// check if key matches our prefix
@@ -185,12 +185,16 @@ define(['Dom/Traverse'], function(DomTraverse) {
 				}
 				
 				if (!value || value.timestamp < oneWeekAgo) {
-					try {
-						window.localStorage.removeItem(key);
-					}
-					catch (e) {
-						window.console.warn("Unable to remove from local storage: " + e.message);
-					}
+					removeKeys.push(key);
+				}
+			}
+			
+			for (i = 0, length = removeKeys.length; i < length; i++) {
+				try {
+					window.localStorage.removeItem(removeKeys[i]);
+				}
+				catch (e) {
+					window.console.warn("Unable to remove from local storage: " + e.message);
 				}
 			}
 		}
