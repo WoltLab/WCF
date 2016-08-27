@@ -220,6 +220,7 @@
 				// slight delay to allow Redactor to initialize itself
 				window.setTimeout(function() {
 					$(element).redactor('code.set', content);
+					$(element).redactor('core.editor')[0].classList.add('redactorReady');
 				}, 10);
 			};
 			

@@ -12,6 +12,8 @@ $.Redactor.prototype.WoltLabSource = function() {
 				mpHide.call(this);
 				
 				setTimeout(this.focus.end.bind(this), 100);
+				
+				this.placeholder.enable();
 			}).bind(this);
 			
 			var textarea = this.source.$textarea[0];

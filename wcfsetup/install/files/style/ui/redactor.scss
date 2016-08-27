@@ -1,12 +1,3 @@
-.wysiwygTextarea {
-	background-color: transparent !important;
-	border: 1px solid $wcfContentBorderInner !important;
-	color: transparent !important;
-	display: block;
-	height: 238px;
-	width: 100%;
-}
-
 .redactor-box {
 	position: relative;
 	
@@ -77,6 +68,7 @@
 		color: $wcfContentDimmedText;
 		content: attr(placeholder);
 		display: block;
+		pointer-events: none;
 		position: absolute;
 	}
 	
@@ -488,4 +480,13 @@
 
 .smiley {
 	margin: 0 1px;
+}
+
+.wysiwygTextarea {
+	background-color: transparent !important;
+	border: 1px solid $wcfContentBorderInner !important;
+	color: transparent !important;
+	display: block;
+	height: 238px;
+	width: 100%;
 }
