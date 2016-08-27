@@ -25,7 +25,7 @@
 		max-height: none;
 	}
 	
-	@include screen-sm-up {
+	@include screen-sm-md {
 		display: flex;
 		flex-direction: column;
 		position: fixed;
