@@ -56,7 +56,7 @@ class StyleAddForm extends AbstractForm {
 		'Helvetica, Verdana, sans-serif' => 'Helvetica',
 		'Impact, Compacta, Chicago, sans-serif' => 'Impact',
 		'"Lucida Sans", "Lucida Grande", Monaco, Geneva, sans-serif' => 'Lucida',
-		'"Segoe UI", "Lucida Grande", "Helveltica", sans-serif' => 'Segoe UI',
+		'"Segoe UI", "DejaVu Sans", "Lucida Grande", Helvetica, sans-serif' => 'Segoe UI',
 		'Tahoma, Arial, Helvetica, sans-serif' => 'Tahoma',
 		'"Times New Roman", Times, Georgia, serif' => 'Times New Roman',
 		'"Trebuchet MS", Arial, sans-serif' => 'Trebuchet MS',
