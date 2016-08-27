@@ -599,3 +599,10 @@
 		}
 	}
 }
+
+#messageQuickReply .messageSidebar {
+	-webkit-filter: grayscale(1);
+	filter: grayscale(1);
+	
+	opacity: .6;
+}
