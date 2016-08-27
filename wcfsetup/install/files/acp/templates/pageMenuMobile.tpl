@@ -1,6 +1,6 @@
 {if PACKAGE_ID && $__wcf->user->userID}
 	{* main menu *}
-	<div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
+	<div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}acp/images/woltlabSuite.png">
 		<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
 			<li class="menuOverlayTitle">{lang}wcf.menu.page{/lang}</li>
 			{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
@@ -42,7 +42,7 @@
 	</div>
 	
 	{* user menu *}
-	<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}images/default-logo.png">
+	<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}acp/images/woltlabSuite.png">
 		<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem">
