@@ -5,6 +5,7 @@ use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 
 /**
  * Resolves incoming requests and performs lookups for controller to url mappings.
@@ -81,7 +82,7 @@ class ControllerMap extends SingletonFactory {
 		if ($classData === null) {
 			throw new SystemException("Unknown controller '" . $controller . "'");
 		}
-		else {
+		else if (!$isAcpRequest) {
 			// handle controllers with a custom url
 			$controller = $classData['controller'];
 			
@@ -152,7 +153,7 @@ class ControllerMap extends SingletonFactory {
 			return $this->lookupCache[$lookupKey];
 		}
 		
-		if (isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+		if (!class_exists(WCFACP::class, false) && isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
 			$urlController = $this->customUrls['reverse'][$application][$controller];
 		}
 		else {
