@@ -24,6 +24,24 @@
 		overflow: visible;
 		max-height: none;
 	}
+	
+	@include screen-sm-up {
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		width: 350px;
+		
+		// override JS positioning
+		bottom: 0 !important;
+		left: auto !important;
+		top: 52px !important;
+		right: 0 !important;
+		
+		> .interactiveDropdownItemsContainer {
+			flex: 1 1 auto;
+			max-height: none;
+		}
+	}
 }
 
 /* drop down header */
