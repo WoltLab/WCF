@@ -266,4 +266,9 @@
 			}
 		}
 	}
+	
+	// table without header
+	tbody:first-child > tr:first-child > td {
+		border-top: 1px solid $wcfContentBorder;
+	}
 }
