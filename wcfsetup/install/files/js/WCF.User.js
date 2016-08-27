@@ -2128,12 +2128,6 @@ WCF.User.Action.Follow = Class.extend({
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show();
-		
-		// force rebuilding of popover cache
-		var self = this;
-		WCF.System.ObjectStore.invoke('WCF.User.ProfilePreview', function(profilePreview) {
-			profilePreview.purge(self._userID);
-		});
 	}
 });
 

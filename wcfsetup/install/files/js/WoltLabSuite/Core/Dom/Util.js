@@ -50,7 +50,7 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 */
 		createFragmentFromHtml: function(html) {
 			var tmp = elCreate('div');
-			tmp.innerHTML = html;
+			this.setInnerHtml(tmp, html);
 			
 			var fragment = document.createDocumentFragment();
 			while (tmp.childNodes.length) {

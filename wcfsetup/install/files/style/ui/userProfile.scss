@@ -142,6 +142,20 @@
 	}
 }
 
+.userProfilePreview {
+	position: relative;
+	
+	.userInformation {
+		padding-bottom: 16px;
+	}
+	
+	.buttonGroupNavigation {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+}
+
 /* using `dl` + `.inlineDataList` to prevent styles applied to the
    data list provided by the `userInformation` template */
 .userProfilePreview dl.inlineDataList {

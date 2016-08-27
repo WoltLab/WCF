@@ -5,7 +5,7 @@
 		<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(128)}</a>
 		
 		<div class="userInformation">
-			{include file='userInformation' disableUserInformationButtons=true}
+			{include file='userInformation'}
 			
 			{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
 				<dl class="plain inlineDataList">
@@ -32,5 +32,26 @@
 				</dl>
 			{/hascontent}
 		</div>
+		
+		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
+			<script data-relocate="true">
+				//<![CDATA[
+				$(function() {
+					WCF.Language.addObject({
+						'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
+						'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
+						'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
+						'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+					});
+					
+					new WCF.User.Action.Follow($('.userInformation'));
+					
+					{if !$user->getPermission('user.profile.cannotBeIgnored')}
+						new WCF.User.Action.Ignore($('.userInformation'));
+					{/if}
+				});
+				//]]>
+			</script>
+		{/if}
 	</div>
 {/if}
