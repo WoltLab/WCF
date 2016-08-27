@@ -49,6 +49,7 @@
 	&.allowScroll {
 		.menuOverlayItemList:not(.hidden) {
 			overflow: auto;
+			-webkit-overflow-scrolling: touch;
 		}
 	}
 	
