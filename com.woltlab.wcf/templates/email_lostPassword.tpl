@@ -3,7 +3,7 @@
 {include file='email_plaintext'}
 {else}
 	{capture assign='content'}
-	<h1>{lang}wcf.user.lostPassword.mail.html.headline{/lang}</h1>
+	<h2>{lang}wcf.user.lostPassword.mail.html.headline{/lang}</h2>
 	{lang}wcf.user.lostPassword.mail.html.intro{/lang}
 
 	{capture assign=button}

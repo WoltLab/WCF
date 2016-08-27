@@ -3275,7 +3275,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
-		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h1>Hallo {$mailbox->getUser()->username},</h1>]]></item>
+		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h2>Hallo {$mailbox->getUser()->username},</h2>]]></item>
 		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte antworten Sie nicht auf diese E-Mail</b>.</p>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} <a href="{link controller='NotificationSettings' isEmail=true}{/link}">Benachrichtigungseinstellungen</a>, um die
@@ -3294,7 +3294,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
-		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h1>Hallo {@$mailbox->getUser()->username},</h1>
+		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Hallo {@$mailbox->getUser()->username},</h2>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[{if $notifications|count > $maximum}<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche{else}Besuchen Sie{/if} <a href="{link controller='NotificationList' isEmail=true}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Benachrichtigungs-Übersicht</a>, um auch die restlichen {#$remaining} Benachrichtigungen einzusehen.</p>{/if}
@@ -3435,7 +3435,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 „{@$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
 
 {@$message}]]></item>
-		<item name="wcf.user.mail.mail.html"><![CDATA[<h1>Hallo {$mailbox->getUser()->username},</h1>
+		<item name="wcf.user.mail.mail.html"><![CDATA[<h2>Hallo {$mailbox->getUser()->username},</h2>
 
 <p>„{$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
 

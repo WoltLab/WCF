@@ -3,7 +3,7 @@
 {include file='email_plaintext'}
 {else}
 	{capture assign='content'}
-	<h1>{lang}wcf.user.register.needActivation.mail.html.headline{/lang}</h1>
+	<h2>{lang}wcf.user.register.needActivation.mail.html.headline{/lang}</h2>
 	{lang}wcf.user.register.needActivation.mail.html.intro{/lang}
 
 	{capture assign=button}

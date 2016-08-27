@@ -3,8 +3,9 @@
 		<style type="text/css">
 		* {
 			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
+			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
-		html {
+		html, h1, h2, h3 {
 			padding: 0;
 			margin: 0;
 		}
@@ -31,21 +32,28 @@
 		.content {
 			padding: 40px 40px 60px;
 		}
+		.header, .footer {
+			padding: 20px 40px;
+		}
 		.header {
 			background-color: {$style->getVariable('wcfHeaderBackground', true)};
 			color: {$style->getVariable('wcfHeaderText', true)};
-			padding: 20px 10px;
 		}
 		.footer {
 			background-color: {$style->getVariable('wcfFooterBackground', true)};
 			color: {$style->getVariable('wcfFooterText', true)};
-			padding: 20px 10px;
+			padding: 20px 40px;
 		}
 		h1 {
 			font-weight: 300;
 			line-height: 1.05;
 			font-size: {$style->getVariable('wcfFontSizeTitle')};
+		}
+		h2 {
+			font-weight: 400;
+			line-height: 1.28;
 			color: {$style->getVariable('wcfContentHeadlineText')};
+			font-size: {$style->getVariable('wcfFontSizeSection')};
 		}
 		small {
 			font-size: {$style->getVariable('wcfFontSizeSmall')};
@@ -95,6 +103,7 @@
 	</head>
 	<body>
 	{capture assign='header'}
+	<h1>{@PAGE_TITLE|language}</h1>
 	{/capture}
 	{include file='email_paddingHelper' block=true class='header' content=$header sandbox=true}
 	

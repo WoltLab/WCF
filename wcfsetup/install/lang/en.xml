@@ -3302,7 +3302,7 @@ your notifications on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] as
 
 If you only wish to disable this type of notification you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
-		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h1>Dear {$mailbox->getUser()->username},</h1>]]></item>
+		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>]]></item>
 		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
 
 <p>Visit your <a href="{link controller='NotificationSettings' isEmail=true}{/link}">notification settings</a> to configure
@@ -3322,7 +3322,7 @@ your notifications on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] as
 
 If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
-		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h1>Dear {@$mailbox->getUser()->username},</h1>
+		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {@$mailbox->getUser()->username},</h2>
 
 <p>you currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
@@ -3463,7 +3463,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 “{@$username}” sent you a message on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]:
 
 {@$message}]]></item>
-<item name="wcf.user.mail.mail.html"><![CDATA[<h1>Dear {$mailbox->getUser()->username},</h1>
+<item name="wcf.user.mail.mail.html"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
 <p>„{$username}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
 
