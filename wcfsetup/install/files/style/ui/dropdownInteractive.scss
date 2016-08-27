@@ -37,9 +37,17 @@
 		top: 52px !important;
 		right: 0 !important;
 		
+		> .interactiveDropdownHeader,
+		> .interactiveDropdownShowAll {
+			flex: 0 0 auto;
+		}
+		
 		> .interactiveDropdownItemsContainer {
 			flex: 1 1 auto;
 			max-height: none;
+			overflow: auto;
+			
+			-webkit-overflow-scrolling: touch;
 		}
 	}
 }
