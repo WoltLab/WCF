@@ -28,21 +28,21 @@
 
 /* tablet (portrait) + tablet (landscape) */
 @mixin screen-sm-md() {
-	@media (min-width: 545px) and (max-width: 1150px) {
+	@media (min-width: 545px) and (max-width: 1024px) {
 		@content;
 	}
 }
 
 /* tablet (landscape) */
 @mixin screen-md() {
-	@media (min-width: 769px) and (max-width: 1150px) {
+	@media (min-width: 769px) and (max-width: 1024px) {
 		@content;
 	}
 }
 
 /* smartphone + tablet (portrait) + tablet (landscape) */
 @mixin screen-md-down() {
-	@media (max-width: 1150px) {
+	@media (max-width: 1024px) {
 		@content;
 	}
 }
@@ -56,7 +56,7 @@
 
 /* desktop */
 @mixin screen-lg() {
-	@media (min-width: 1151px) {
+	@media (min-width: 1025px) {
 		@content;
 	}
 }
