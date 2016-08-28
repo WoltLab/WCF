@@ -16,36 +16,33 @@
 	
 	> li {
 		float: left;
-		height: 160px;
-		width: 160px;
 		position: relative;
-		border: 1px solid #aaa;
+		border: 1px solid #eee;
 		overflow: hidden;
 		font-size: 1rem;
-		margin: 0 $wcfGapSmall $wcfGapSmall 0;
+		margin: 0 10px 10px 0;
 		
 		&.jsMarked {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				// TODO background-color: fade($wcfSelectedBackgroundColor, 90%);
-				// TODO color: $wcfSelectedColor;
+				background-color: transparentize($wcfButtonPrimaryBackground, 20%);
+				color: $wcfButtonPrimaryText;
 				
 				a {
-					//TODO: color: $wcfSelectedColor;
+					color: $wcfButtonPrimaryText;
 				}
 				
 				.icon {
-					//TODO: color: $wcfSelectedColor;
+					color: $wcfButtonPrimaryText;
 					text-shadow: none;
 				}
 			}
 		}
 		
 		&.jsSelected {
-			// @todo colors
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: fade-out(green, 10%);
+				background-color: transparentize(green, 20%);
 				color: white;
 				
 				a {
@@ -63,24 +60,23 @@
 			cursor: pointer;
 			
 			> .mediaInformation {
-				background-color: rgba(242, 222, 222, 0.6); // todo
-				color: rgb(169, 68, 66); // todo
+				background-color: $wcfStatusErrorBackground;
+				color: $wcfStatusErrorText;
 			}
 		}
 		
 		> .mediaThumbnail {
 			height: 144px;
 			width: 144px;
-			padding: 8px;
 		}
 		
 		> .mediaInformation {
 			position: absolute;
 			bottom: 0;
-			background: rgba(0,0,0,0.6); // TODO
+			background: rgba(0, 0, 0, 0.6);
 			color: #fff;
 			width: 100%;
-			padding: $wcfGapSmall;
+			padding: 5px 10px;
 			box-sizing: border-box;
 			
 			@include wcfFontSmall;
@@ -91,9 +87,7 @@
 			top: 0;
 			right: 0;
 			overflow: hidden;
-			background: rgba(0,0,0,0.6); // TODO
-			
-			/* TODO: transition */
+			background: rgba(0, 0, 0, 0.6);
 			
 			.icon {
 				color: #fff;
