@@ -1,4 +1,4 @@
-$.Redactor.prototype.WoltLabCaret = function() {
+$.Redactor.prototype.WoltLabList = function() {
 	"use strict";
 	
 	return {
