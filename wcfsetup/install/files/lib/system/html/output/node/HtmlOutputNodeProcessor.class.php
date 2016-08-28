@@ -100,7 +100,8 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 						}
 						
 						if ($element && $element->nodeName === 'br') {
-							$paragraph->removeChild($element);
+							DOMUtil::removeNode($paragraph, true);
+							continue;
 						}
 					}
 					
