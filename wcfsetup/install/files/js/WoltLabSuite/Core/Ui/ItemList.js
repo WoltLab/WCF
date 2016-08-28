@@ -240,16 +240,16 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLabSuite/Core/Ui/
 				
 				list.parentNode.insertBefore(shadow, list);
 				
-				if (element.nodeName === 'TEXTAREA') {
-					//noinspection JSUnresolvedVariable
-					var value, tmp = element.value.split(',');
-					for (var i = 0, length = tmp.length; i < length; i++) {
-						value = tmp[i].trim();
-						if (value.length) {
-							values.push(value);
-						}
+				//noinspection JSUnresolvedVariable
+				var value, tmp = element.value.split(',');
+				for (var i = 0, length = tmp.length; i < length; i++) {
+					value = tmp[i].trim();
+					if (value.length) {
+						values.push(value);
 					}
-					
+				}
+				
+				if (element.nodeName === 'TEXTAREA') {
 					var inputElement = elCreate('input');
 					inputElement.type = 'text';
 					element.parentNode.insertBefore(inputElement, element);
