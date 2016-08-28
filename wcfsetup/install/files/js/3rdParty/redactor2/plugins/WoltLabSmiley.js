@@ -9,6 +9,8 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 		},
 		
 		_insert: function(data) {
+			this.buffer.set();
+			
 			this.insert.html('<img src="' + data.path + '" class="smiley" alt="' + data.code + '">');
 		}
 	}

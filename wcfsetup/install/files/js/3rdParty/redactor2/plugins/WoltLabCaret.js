@@ -16,10 +16,60 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			this.$editor[0].addEventListener('mouseup', this.WoltLabCaret._handleEditorClick.bind(this));
 			
+			this.WoltLabCaret._initInternalRange();
+		},
+		
+		_initInternalRange: function () {
+			var editor = this.core.editor()[0];
 			var internalRange = null;
 			var selection = window.getSelection();
-			this.$editor[0].addEventListener('keyup', function () {
+			
+			var saveRange = function () {
 				internalRange = selection.getRangeAt(0).cloneRange();
+			};
+			
+			var restoreRange = function () {
+				if (internalRange === null) return;
+				
+				if (document.activeElement === editor) {
+					var range = selection.getRangeAt(0);
+					if (range.startOffset !== 0) {
+						return;
+					}
+					
+					var node = range.startContainer;
+					while (node) {
+						if (node.parentNode === editor) {
+							if (node.previousSibling) {
+								return;
+							}
+							
+							break;
+						}
+						
+						if (node.previousSibling) {
+							return;
+						}
+						
+						node = node.parentNode;
+					}
+					
+					if (!node) return;
+				}
+				
+				editor.focus();
+				
+				selection.removeAllRanges();
+				selection.addRange(internalRange);
+				
+				internalRange = null;
+			};
+			
+			this.$editor[0].addEventListener('keyup', saveRange);
+			this.$editor[0].addEventListener('mouseup', function () {
+				if (selection.rangeCount) {
+					saveRange();
+				}
 			});
 			
 			var mpSave = this.selection.save;
@@ -32,10 +82,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var mpRestore = this.selection.restore;
 			this.selection.restore = (function () {
 				if (internalRange) {
-					selection.removeAllRanges();
-					selection.addRange(internalRange);
-					
-					internalRange = null;
+					restoreRange();
 					
 					if (selection.rangeCount && this.utils.isRedactorParent(selection.getRangeAt(0).commonAncestorContainer)) {
 						return;
@@ -43,6 +90,24 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				}
 				
 				mpRestore.call(this);
+			}).bind(this);
+			
+			var mpSet = this.buffer.set;
+			this.buffer.set = (function (type) {
+				if (document.activeElement !== editor) {
+					restoreRange();
+				}
+				
+				mpSet.call(this, type);
+				
+				saveRange();
+			}).bind(this);
+			
+			var mpHtml = this.insert.html;
+			this.insert.html = (function (html, data) {
+				mpHtml.call(this, html, data);
+				
+				saveRange();
 			}).bind(this);
 		},
 		
