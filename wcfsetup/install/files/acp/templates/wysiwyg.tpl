@@ -24,6 +24,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLink.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabList.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabModal.js?v={@LAST_UPDATE_TIME}',
@@ -100,6 +101,29 @@
 				element.value = autosave.getInitialValue();
 			}
 			
+			var placeholderCallback = null, replyContainer = element.closest('.messageQuickReplyContent');
+			if (replyContainer) {
+				var container = elById('messageQuickReply');
+				if (container.classList.contains('messageQuickReplyCollapsed')) {
+					placeholderCallback = function (event) {
+						if (event instanceof Event) {
+							event.preventDefault();
+						}
+						
+						if (container.classList.contains('messageQuickReplyCollapsed')) {
+							container.classList.remove('messageQuickReplyCollapsed');
+							$(element).redactor('focus.end');
+							
+							replyContainer.removeEventListener(WCF_CLICK_EVENT, placeholderCallback);
+						}
+						
+						return null;
+					};
+					
+					replyContainer.addEventListener(WCF_CLICK_EVENT, placeholderCallback);
+				}
+			}
+			
 			var config = {
 				buttons: buttons,
 				formatting: ['p', 'h2', 'h3', 'h4'],
@@ -149,7 +173,7 @@
 				linkify: false,
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
-				placeholder: elData(element, 'placeholder') || '',
+				//placeholder: elData(element, 'placeholder') || '',
 				plugins: [
 					// Imperavi
 					'alignment',
@@ -174,6 +198,7 @@
 					'WoltLabInlineCode',
 					'WoltLabInsert',
 					'WoltLabLink',
+					'WoltLabList',
 					'WoltLabModal',
 					'WoltLabPaste',
 					'WoltLabQuote',
@@ -189,7 +214,8 @@
 					buttons: buttonOptions,
 					buttonMobile: buttonMobile,
 					customButtons: customButtons,
-					highlighters: highlighters
+					highlighters: highlighters,
+					placeholderCallback: placeholderCallback
 				}
 			};
 			
@@ -217,10 +243,15 @@
 			
 			config.callbacks = config.callbacks || { };
 			config.callbacks.init = function() {
+				var editor = element.previousElementSibling;
+				if (replyContainer) {
+					elData(editor, 'reply-placeholder', elData(element, 'reply-placeholder'));
+				}
+				
 				// slight delay to allow Redactor to initialize itself
 				window.setTimeout(function() {
 					$(element).redactor('code.set', content);
-					$(element).redactor('core.editor')[0].classList.add('redactorReady');
+					editor.classList.add('redactorReady');
 				}, 10);
 			};
 			
