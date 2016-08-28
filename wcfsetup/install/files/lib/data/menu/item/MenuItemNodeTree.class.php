@@ -66,8 +66,8 @@ class MenuItemNodeTree {
 		if (!RequestHandler::getInstance()->isACPRequest()) {
 			$possibleLocations = PageLocationManager::getInstance()->getLocations();
 			$length = count($possibleLocations);
-			foreach ($menuItemList as $menuItem) {
-				for ($i = 0; $i < $length; $i++) {
+			for ($i = 0; $i < $length; $i++) {
+				foreach ($menuItemList as $menuItem) {
 					if ($menuItem->pageID == $possibleLocations[$i]['pageID'] && $menuItem->pageObjectID == $possibleLocations[$i]['pageObjectID']) {
 						if (!isset($activeMenuItems[$i])) {
 							$activeMenuItems[$i] = [];
