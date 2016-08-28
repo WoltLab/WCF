@@ -17,10 +17,20 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				
 				mpHtml.call(this, html, data);
 				
-				if (block && block.nodeName === 'P' && block.nextElementSibling && !block.childElementCount && block.textContent.replace(/\u200B/g, '').trim() === '') {
-					// inserting HTML tends to cause new paragraphs inserted
-					// rather than using the current, empty one
-					elRemove(block);
+				if (block && block.nodeName === 'P' && block.nextElementSibling) {
+					var removeBlock = false;
+					if (block.childElementCount === 0 && block.textContent.replace(/\u200B/g, '').trim() === '') {
+						removeBlock = true;
+					}
+					else if (block.childElementCount === 1 && block.innerHTML === '<br>') {
+						removeBlock = true;
+					}
+					
+					if (removeBlock) {
+						// inserting HTML tends to cause new paragraphs inserted
+						// rather than using the current, empty one
+						elRemove(block);
+					}
 				}
 			}).bind(this);
 			
