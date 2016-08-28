@@ -7,10 +7,12 @@ buttonOptions = {
 	italic: { icon: 'fa-italic', title: '{lang}wcf.editor.button.italic{/lang}' },
 	link: { icon: 'fa-link', title: '{lang}wcf.editor.button.link{/lang}' },
 	lists: { icon: 'fa-list', title: '{lang}wcf.editor.button.lists{/lang}' },
+	redo: { icon: 'fa-repeat', title: '{lang}wcf.editor.button.redo{/lang}' },
 	subscript: { icon: 'fa-subscript', title: '{lang}wcf.editor.button.subscript{/lang}' },
 	superscript: { icon: 'fa-superscript', title: '{lang}wcf.editor.button.superscript{/lang}' },
 	table: { icon: 'fa-table', title: '{lang}wcf.editor.button.table{/lang}' },
 	underline: { icon: 'fa-underline', title: '{lang}wcf.editor.button.underline{/lang}' },
+	undo: { icon: 'fa-undo', title: '{lang}wcf.editor.button.undo{/lang}' },
 	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
 	woltlabImage: { icon: 'fa-picture-o', title: '{lang}wcf.editor.button.image{/lang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
@@ -21,6 +23,8 @@ buttonOptions = {
 buttonMobile = ['format', 'bold', 'italic', 'underline', 'alignment', 'link', 'woltlabImage', 'woltlabMedia'];
 
 buttons.push('html');
+buttons.push('undo');
+buttons.push('redo');
 
 buttons.push('wcfSeparator');
 

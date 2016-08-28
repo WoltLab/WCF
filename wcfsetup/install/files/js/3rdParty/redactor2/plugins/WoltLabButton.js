@@ -32,12 +32,22 @@ $.Redactor.prototype.WoltLabButton = function() {
 				//noinspection JSUnresolvedVariable
 				buttonData = this.opts.woltlab.buttons[buttonName];
 				
-				if (buttonName === 'subscript' || buttonName === 'superscript') {
-					button = this.button.addAfter(this.opts.buttons[i - 1], buttonName, '');
-					this.button.setEvent(button, buttonName, { func: 'inline.format' });
-				}
-				else {
-					button = this.button.get(buttonName);
+				switch (buttonName) {
+					case 'subscript':
+					case 'superscript':
+						button = this.button.addAfter(this.opts.buttons[i - 1], buttonName, '');
+						this.button.setEvent(button, buttonName, { func: 'inline.format' });
+						break;
+					
+					case 'redo':
+					case 'undo':
+						button = this.button.addAfter(this.opts.buttons[i - 1], buttonName, '');
+						this.button.addCallback(button, this.buffer[buttonName]);
+						break;
+					
+					default:
+						button = this.button.get(buttonName);
+						break;
 				}
 				
 				// set icon

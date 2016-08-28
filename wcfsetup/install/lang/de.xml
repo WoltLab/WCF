@@ -2278,6 +2278,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
+		<item name="wcf.editor.button.redo"><![CDATA[Wiederholen]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Schriftgröße]]></item>
 		<item name="wcf.editor.button.size.removeSize"><![CDATA[Schriftgröße entfernen]]></item>
 		<item name="wcf.editor.button.spoiler"><![CDATA[Spoiler]]></item>
@@ -2286,6 +2287,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.superscript"><![CDATA[Hochgestellt]]></item>
 		<item name="wcf.editor.button.table"><![CDATA[Tabelle]]></item>
 		<item name="wcf.editor.button.underline"><![CDATA[Unterstrichen]]></item>
+		<item name="wcf.editor.button.undo"><![CDATA[Rückgängig]]></item>
 		
 		<item name="wcf.editor.code.edit"><![CDATA[Code bearbeiten]]></item>
 		<item name="wcf.editor.code.file"><![CDATA[Dateiname]]></item>
