@@ -51,7 +51,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_insertQuote: function (data) {
-			this._editor.selection.restore();
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'showEditor');
 			
 			this._editor.buffer.set();
 			

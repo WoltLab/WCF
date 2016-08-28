@@ -49,8 +49,10 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				replyButtons[i].addEventListener(WCF_CLICK_EVENT, (function(event) {
 					event.preventDefault();
 					
+					this._getEditor().WoltLabReply.showEditor();
+					
 					UiScroll.element(this._container, (function() {
-						this._getEditor().focus.end();
+						this._getEditor().WoltLabCaret.endOfEditor();
 					}).bind(this));
 				}).bind(this));
 			}

@@ -30,6 +30,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabModal.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPaste.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabQuote.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabReply.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSize.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSource.js?v={@LAST_UPDATE_TIME}',
@@ -99,29 +100,6 @@
 			if (autosave) {
 				autosave = new UiRedactorAutosave(element);
 				element.value = autosave.getInitialValue();
-			}
-			
-			var placeholderCallback = null, replyContainer = element.closest('.messageQuickReplyContent');
-			if (replyContainer) {
-				var container = elById('messageQuickReply');
-				if (container.classList.contains('messageQuickReplyCollapsed')) {
-					placeholderCallback = function (event) {
-						if (event instanceof Event) {
-							event.preventDefault();
-						}
-						
-						if (container.classList.contains('messageQuickReplyCollapsed')) {
-							container.classList.remove('messageQuickReplyCollapsed');
-							$(element).redactor('focus.end');
-							
-							replyContainer.removeEventListener(WCF_CLICK_EVENT, placeholderCallback);
-						}
-						
-						return null;
-					};
-					
-					replyContainer.addEventListener(WCF_CLICK_EVENT, placeholderCallback);
-				}
 			}
 			
 			var config = {
@@ -202,6 +180,7 @@
 					'WoltLabModal',
 					'WoltLabPaste',
 					'WoltLabQuote',
+					'WoltLabReply',
 					'WoltLabSize',
 					'WoltLabSmiley',
 					'WoltLabSource',
@@ -214,8 +193,7 @@
 					buttons: buttonOptions,
 					buttonMobile: buttonMobile,
 					customButtons: customButtons,
-					highlighters: highlighters,
-					placeholderCallback: placeholderCallback
+					highlighters: highlighters
 				}
 			};
 			
@@ -243,15 +221,9 @@
 			
 			config.callbacks = config.callbacks || { };
 			config.callbacks.init = function() {
-				var editor = element.previousElementSibling;
-				if (replyContainer) {
-					elData(editor, 'reply-placeholder', elData(element, 'reply-placeholder'));
-				}
-				
 				// slight delay to allow Redactor to initialize itself
 				window.setTimeout(function() {
 					$(element).redactor('code.set', content);
-					editor.classList.add('redactorReady');
 				}, 10);
 			};
 			

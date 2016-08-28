@@ -6,7 +6,13 @@ $.Redactor.prototype.WoltLabEvent = function() {
 			this._callbacks = [];
 			this._elementId = this.$element[0].id;
 			
-			require(['EventHandler'], this.WoltLabEvent._setEvents.bind(this));
+			require(['EventHandler'], (function(EventHandler) {
+				this.WoltLabEvent._setEvents(EventHandler);
+				
+				var uuid = EventHandler.add('com.woltlab.wcf.redactor2', 'showEditor', (function (data) {
+					
+				}).bind(this))
+			}).bind(this));
 		},
 		
 		_setEvents: function(EventHandler) {

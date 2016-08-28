@@ -492,64 +492,57 @@
 }
 
 .messageQuickReplyCollapsed {
+	border-bottom-width: 0 !important;
+	
+	@include screen-sm-down {
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+	
 	.messageSidebar {
-		pointer-events: none;
-		
-		@include screen-sm-down {
-			opacity: .6;
-		}
-		
-		@include screen-md-up {
-			> .messageAuthor {
-				> :not(.userAvatar),
-				.badgeOnline {
-					display: none;
-				}
-			}
-			
-			> .userCredits {
-				display: none;
-			}
-		}
+		display: none;
 	}
 	
 	.messageQuickReplyContent {
-		// simulate clickable area
+		background-color: $wcfSidebarBackground;
 		cursor: pointer;
+		display: inline-block !important;
+		margin: 0 !important;
+		max-width: 100% !important;
+		overflow: hidden;
+		padding: 20px;
+		position: relative;
+		width: 100% !important;
 		
-		.wysiwygTextarea {
-			height: 138px;
+		@include screen-md-up {
+			border-radius: 2px;
 		}
 		
-		> .messageBody,
-		> .messageFooter {
-			pointer-events: none;
+		&::before {
+			color: $wcfSidebarText;
+			content: $fa-var-reply;
+			font-family: FontAwesome;
+			font-size: 28px;
+			height: 32px;
+			line-height: 32px;
+			margin-right: 10px;
+			width: 32px;
+			vertical-align: -5px;
 		}
 		
-		.redactor-editor {
-			max-height: 100px !important;
-			min-height: 100px !important;
-			overflow: hidden;
-			position: relative;
+		&::after {
+			color: $wcfSidebarText;
+			content: attr(data-placeholder);
 			
-			&::before {
-				color: rgb(169, 169, 169);
-				content: attr(data-reply-placeholder);
-				display: block;
-				left: 20px;
-				position: absolute;
-				top: 50%;
-				transform: translateY(-50%);
-			}
-			
-			> * {
-				visibility: hidden;
+			@include screen-sm-up {
+				@include wcfFontSection;
 			}
 		}
 		
-		.redactor-toolbar > li,
-		.messageTabMenu li {
-			opacity: .5;
+		> .messageBody {
+			left: 200%;
+			position: absolute;
+			top: -100%;
 		}
 		
 		> .messageFooter {

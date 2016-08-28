@@ -19,6 +19,22 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			this.WoltLabCaret._initInternalRange();
 		},
 		
+		endOfEditor: function () {
+			var editor = this.core.editor()[0];
+			
+			if (document.activeElement !== editor) {
+				editor.focus();
+			}
+			
+			var lastElement = editor.lastElementChild;
+			if (lastElement.nodeName === 'P') {
+				this.caret.end(lastElement);
+			}
+			else {
+				this.caret.after(lastElement);
+			}
+		},
+		
 		_initInternalRange: function () {
 			var editor = this.core.editor()[0];
 			var internalRange = null;
