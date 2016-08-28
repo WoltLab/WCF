@@ -25,7 +25,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var selection = window.getSelection();
 			
 			var saveRange = function () {
-				internalRange = selection.getRangeAt(0).cloneRange();
+				internalRange = (selection.rangeCount) ? selection.getRangeAt(0).cloneRange() : null;
 			};
 			
 			var restoreRange = function () {

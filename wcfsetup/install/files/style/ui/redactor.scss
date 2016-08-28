@@ -490,3 +490,70 @@
 	height: 238px;
 	width: 100%;
 }
+
+.messageQuickReplyCollapsed {
+	.messageSidebar {
+		pointer-events: none;
+		
+		@include screen-sm-down {
+			opacity: .6;
+		}
+		
+		@include screen-md-up {
+			> .messageAuthor {
+				> :not(.userAvatar),
+				.badgeOnline {
+					display: none;
+				}
+			}
+			
+			> .userCredits {
+				display: none;
+			}
+		}
+	}
+	
+	.messageQuickReplyContent {
+		// simulate clickable area
+		cursor: pointer;
+		
+		.wysiwygTextarea {
+			height: 138px;
+		}
+		
+		> .messageBody,
+		> .messageFooter {
+			pointer-events: none;
+		}
+		
+		.redactor-editor {
+			max-height: 100px !important;
+			min-height: 100px !important;
+			overflow: hidden;
+			position: relative;
+			
+			&::before {
+				color: rgb(169, 169, 169);
+				content: attr(data-reply-placeholder);
+				display: block;
+				left: 20px;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			
+			> * {
+				visibility: hidden;
+			}
+		}
+		
+		.redactor-toolbar > li,
+		.messageTabMenu li {
+			opacity: .5;
+		}
+		
+		> .messageFooter {
+			display: none;
+		}
+	}
+}
