@@ -323,16 +323,22 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * 
 	 * @param	string		$name		bbcode identifier
 	 * @param	array		$attributes	list of attributes
+	 * @param       \DOMElement     $element        element
 	 * @return	string		parsed bbcode
 	 */
-	public function getHtmlOutput($name, array $attributes) {
+	public function getHtmlOutput($name, array $attributes, \DOMElement $element) {
 		if (isset($this->bbcodes[$name])) {
+			$bbcode = $this->bbcodes[$name];
+			if ($bbcode->isSourceCode) {
+				array_unshift($attributes, $element->textContent);
+			}
+			
 			$openingTag = ['attributes' => $attributes, 'name' => $name];
 			$closingTag = ['name' => $name];
 			
-			if ($this->bbcodes[$name]->getProcessor()) {
+			if ($bbcode->getProcessor()) {
 				/** @var IBBCode $processor */
-				$processor = $this->bbcodes[$name]->getProcessor();
+				$processor = $bbcode->getProcessor();
 				return $processor->getParsedTag($openingTag, '<!-- META_CODE_INNER_CONTENT -->', $closingTag, $this);
 			}
 			else {

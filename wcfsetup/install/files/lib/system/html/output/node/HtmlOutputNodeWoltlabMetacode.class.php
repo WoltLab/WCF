@@ -29,12 +29,14 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode {
 			$attributes = $element->getAttribute('data-attributes');
 			
 			$nodeIdentifier = StringUtil::getRandomID();
+			
+			$element = $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+			
 			$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 				'name' => $name,
-				'attributes' => $htmlNodeProcessor->parseAttributes($attributes)
+				'attributes' => $htmlNodeProcessor->parseAttributes($attributes),
+				'element' => $element
 			]);
-			
-			$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
 		}
 	}
 	
@@ -44,6 +46,6 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode {
 	public function replaceTag(array $data) {
 		HtmlBBCodeParser::getInstance()->setOutputType($this->outputType);
 		
-		return HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes']);
+		return HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes'], $data['element']);
 	}
 }
