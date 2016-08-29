@@ -25,7 +25,7 @@
 		&.jsMarked {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: transparentize($wcfButtonPrimaryBackground, 20%);
+				background-color: transparentize($wcfButtonPrimaryBackground, 0.2);
 				color: $wcfButtonPrimaryText;
 				
 				a {
@@ -42,7 +42,7 @@
 		&.jsSelected {
 			> .mediaInformation,
 			> .buttonGroupNavigation {
-				background-color: transparentize(green, 20%);
+				background-color: transparentize(green, 0.2);
 				color: white;
 				
 				a {
