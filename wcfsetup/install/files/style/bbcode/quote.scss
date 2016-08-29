@@ -5,7 +5,6 @@ woltlab-quote,
 	display: block;
 	font-style: italic;
 	margin: 20px 0;
-	padding: 20px;
 	
 	&:first-child {
 		margin-top: 0;
@@ -19,10 +18,20 @@ woltlab-quote,
 			display: none;
 		}
 	}
+	
+	@include screen-md-up {
+		padding: 20px;
+	}
+	
+	@include screen-sm-down {
+		padding: 10px;
+	}
 }
 
 .quoteBox {
-	min-height: 104px;
+	@include screen-md-up {
+		min-height: 104px;
+	}
 	
 	.quoteBox {
 		min-height: 0;
@@ -59,17 +68,37 @@ woltlab-quote:not(.redactorCalcHeight)::before {
 		color: $wcfContentDimmedText;
 		display: block;
 		font-family: Georgia, "Times New Roman", serif;
-		font-size: 160px;
 		font-style: normal;
-		height: 64px;
-		line-height: 160px;
 		text-align: center;
-		width: 64px;
+		
+		@include screen-md-up {
+			font-size: 160px;
+			line-height: 160px;
+			height: 64px;
+			width: 64px;
+		}
+		
+		@include screen-sm-down {
+			font-size: 80px;
+			line-height: 80px;
+			height: 32px;
+			width: 32px;
+		}
 		
 		&::before {
 			content: "\201c";
 			position: relative;
-			top: -5px;
+			
+			@include screen-md-up {
+				top: -5px;
+			}
+		}
+	}
+	
+	@include screen-sm-down {
+		.userAvatarImage {
+			width: 32px !important;
+			height: 32px !important;
 		}
 	}
 }
