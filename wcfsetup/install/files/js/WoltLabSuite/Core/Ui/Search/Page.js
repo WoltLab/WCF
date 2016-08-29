@@ -51,6 +51,11 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown', './Input'], fun
 			var container = elById('pageHeaderSearchParameters');
 			container.innerHTML = '';
 			
+			var extendedLink = elData(event.currentTarget, 'extended-link');
+			if (extendedLink) {
+				elBySel('.pageHeaderSearchExtendedLink').href = extendedLink;
+			}
+			
 			var parameters = elData(event.currentTarget, 'parameters');
 			if (parameters) {
 				parameters = JSON.parse(parameters);
