@@ -24,7 +24,12 @@ $.Redactor.prototype.WoltLabReply = function() {
 		},
 		
 		showEditor: function () {
-			if (!_messageQuickReply.classList.contains('messageQuickReplyCollapsed')) {
+			if (!_messageQuickReply) {
+				// direct api call, but conditions are not met, be graceful
+				this.WoltLabCaret.endOfEditor();
+				return;
+			}
+			else if (!_messageQuickReply.classList.contains('messageQuickReplyCollapsed')) {
 				return;
 			}
 			
