@@ -319,8 +319,7 @@
 		}
 		
 		@include screen-sm-md {
-			// WebKit fix
-			margin-top: -30px;
+			margin-bottom: -30px;
 			
 			-webkit-column-gap: 30px;
 			-moz-column-gap: 30px;
@@ -334,8 +333,10 @@
 				overflow: hidden; /* Fix for Firefox, IE and Edge */
 				
 				// WebKit fix
-				display: inline-block;
-				margin-top: 30px !important;
+				background-clip: padding-box;
+				border-bottom: 30px solid transparent;
+				display: block;
+				margin: 0 !important;
 				width: 100%;
 				
 				-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
@@ -395,11 +396,6 @@
 		
 		&:not(:first-child) {
 			margin-top: 30px;
-		}
-		
-		&.boxAlternative {
-			background-color: transparent;
-			border: 1px solid $wcfContentBorderInner;
 		}
 		
 		&.boxError {
