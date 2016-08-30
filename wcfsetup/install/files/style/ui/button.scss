@@ -114,8 +114,9 @@ a.button {
 		margin-bottom: -10px;
 		
 		> li {
-			flex: 0 0 10%;
+			flex: 0 0 auto;
 			margin-bottom: 10px;
+			min-width: 10%;
 			
 			> a {
 				display: block;
