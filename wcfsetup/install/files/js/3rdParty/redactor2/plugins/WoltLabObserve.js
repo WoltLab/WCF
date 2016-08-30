@@ -1,4 +1,4 @@
-$.Redactor.prototype.WoltLabCaret = function() {
+$.Redactor.prototype.WoltLabObserve = function() {
 	"use strict";
 	
 	return {
