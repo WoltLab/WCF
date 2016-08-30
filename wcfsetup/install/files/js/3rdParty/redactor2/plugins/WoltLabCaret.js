@@ -154,6 +154,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				}
 			}
 			
+			// ignore headlines
+			if (block.nodeName.match(/^H\d$/)) {
+				return;
+			}
+			
 			this.buffer.set();
 			
 			// click occurred onto the empty editor space, but before or after a block element
