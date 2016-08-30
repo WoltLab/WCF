@@ -31,12 +31,18 @@ $.Redactor.prototype.WoltLabButton = function() {
 				
 				//noinspection JSUnresolvedVariable
 				buttonData = this.opts.woltlab.buttons[buttonName];
+				if (buttonName === 'underline') {
+					this.opts.activeButtonsStates.u = 'underline'
+				}
 				
 				switch (buttonName) {
 					case 'subscript':
 					case 'superscript':
 						button = this.button.addAfter(this.opts.buttons[i - 1], buttonName, '');
 						this.button.setEvent(button, buttonName, { func: 'inline.format' });
+						
+						this.opts.activeButtonsStates[(buttonName === 'subscript' ? 'sub' : 'sup')] = buttonName;
+						
 						break;
 					
 					case 'redo':
