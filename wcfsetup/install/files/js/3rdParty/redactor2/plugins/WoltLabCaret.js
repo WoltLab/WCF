@@ -81,8 +81,8 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				internalRange = null;
 			};
 			
-			this.$editor[0].addEventListener('keyup', saveRange);
-			this.$editor[0].addEventListener('mouseup', function () {
+			editor.addEventListener('keyup', saveRange);
+			editor.addEventListener('mouseup', function () {
 				if (selection.rangeCount) {
 					saveRange();
 				}
@@ -125,6 +125,18 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				
 				saveRange();
 			}).bind(this);
+			
+			require(['Environment'], (function (Environment) {
+				if (Environment.platform() === 'ios') {
+					editor.addEventListener('focus', function () {
+						document.addEventListener('selectionchange', saveRange);
+					});
+					
+					editor.addEventListener('blur', function () {
+						document.removeEventListener('selectionchange', saveRange);
+					})
+				}
+			}).bind(this));
 		},
 		
 		_handleEditorClick: function (event) {
