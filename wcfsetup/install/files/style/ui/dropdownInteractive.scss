@@ -240,6 +240,8 @@
 		flex: 1 1 auto;
 		overflow: auto;
 		
+		-webkit-overflow-scrolling: touch;
+		
 		/* increase the clickable area of the mark as read icon */
 		.interactiveDropdownItemMarkAsRead {
 			bottom: 0;
