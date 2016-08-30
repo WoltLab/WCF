@@ -944,11 +944,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable censorship]]></item>
 		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for every message containing the words below.]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Content Share]]></item>
-		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Enable BBCodes (default value)]]></item>
-		<item name="wcf.acp.option.enable_html_default_value"><![CDATA[Enable HTML (default value)]]></item>
-		<item name="wcf.acp.option.enable_smilies_default_value"><![CDATA[Enable smilies (default value)]]></item>
-		<item name="wcf.acp.option.pre_parse_default_value"><![CDATA[Detect URLs (default value)]]></item>
-		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Display signatures (default value)]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Display content share button]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edit History]]></item>
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
@@ -1161,6 +1156,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.type.boolean.no"><![CDATA[No]]></item>
 		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Yes]]></item>
 		<item name="wcf.acp.option.category.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.option.category.articles_per_page"><![CDATA[Articles per Page]]></item>
+		<item name="wcf.acp.option.category.article_enable_comments_default_value"><![CDATA[Enable comments (default value)]]></item>
+		<item name="wcf.acp.option.category.article_enable_like"><![CDATA[Enable likes]]></item>
+		<item name="wcf.acp.option.category.article_related_articles"><![CDATA[Display related articles]]></item>
+		<item name="wcf.acp.option.category.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
+		<item name="wcf.acp.option.category.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
+		<item name="wcf.acp.option.category.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

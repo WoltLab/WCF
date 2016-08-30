@@ -941,11 +941,6 @@
 		<item name="wcf.acp.option.enable_censorship"><![CDATA[Zensur aktivieren]]></item>
 		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Aktiviert die Zensur der unten angegebenen Wörter in allen von Benutzern geschriebenen Texten.]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Teilen]]></item>
-		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Darstellung von BBCodes aktivieren [Vorgabewert]]]></item>
-		<item name="wcf.acp.option.enable_html_default_value"><![CDATA[Darstellung von HTML aktivieren [Vorgabewert]]]></item>
-		<item name="wcf.acp.option.enable_smilies_default_value"><![CDATA[Darstellung von Smileys aktivieren [Vorgabewert]]]></item>
-		<item name="wcf.acp.option.pre_parse_default_value"><![CDATA[URLs automatisch erkennen [Vorgabewert]]]></item>
-		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Signatur anzeigen [Vorgabewert]]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Bearbeitungen]]></item>
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Bearbeitungsverlauf aktivieren]]></item>
@@ -1150,6 +1145,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.type.boolean.no"><![CDATA[Nein]]></item>
 		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Ja]]></item>
 		<item name="wcf.acp.option.category.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.option.category.articles_per_page"><![CDATA[Artikel pro Seite]]></item>
+		<item name="wcf.acp.option.category.article_enable_comments_default_value"><![CDATA[Kommentare aktivieren [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.category.article_enable_like"><![CDATA[Likes aktivieren]]></item>
+		<item name="wcf.acp.option.category.article_related_articles"><![CDATA[Verwandte Artikel anzeigen]]></item>
+		<item name="wcf.acp.option.category.article_related_articles_match_threshold"><![CDATA[Übereinstimmung von verwandten Artikeln]]></item>
+		<item name="wcf.acp.option.category.article_related_articles_match_threshold.description"><![CDATA[Menge an Tags, die für eine Erkennung als verwandter Artikel übereinstimmen müssen.]]></item>
+		<item name="wcf.acp.option.category.article_show_about_author"><![CDATA[„Über den Autor“ anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
