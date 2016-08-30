@@ -15,7 +15,13 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				/** @var Element */
 				var block = this.selection.block();
 				
+				var isEmptyEditor = (this.$editor[0].innerHTML.replace(/<\/?p>/g, '').replace(/<br>/g, '').replace(/\u200B/g, '').trim() === '');
+				
 				mpHtml.call(this, html, data);
+				
+				if (isEmptyEditor) {
+					block = this.$editor[0].firstElementChild;
+				}
 				
 				if (block && block.nodeName === 'P' && block.nextElementSibling) {
 					var removeBlock = false;
