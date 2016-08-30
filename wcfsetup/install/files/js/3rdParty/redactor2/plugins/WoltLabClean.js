@@ -3,6 +3,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 	
 	return {
 		init: function () {
+			this.opts.pasteInlineTags = this.opts.pasteInlineTags.filter(function (value) {
+				return (value !== 'span');
+			});
+			
 			var mpOnSet = this.clean.onSet;
 			this.clean.onSet = (function (html) {
 				return mpOnSet.call(this, html.replace(/\u200B/g, ''));
@@ -10,9 +14,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 			
 			var mpOnSync = this.clean.onSync;
 			this.clean.onSync = (function (html) {
-				var div, replacements = {};
+				var div = elCreate('div');
+				var replacements = {};
+				
 				if (html.indexOf('<pre') !== -1) {
-					div = elCreate('div');
 					div.innerHTML = html;
 					
 					elBySelAll('pre', div, function (pre) {
@@ -27,15 +32,18 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				html = mpOnSync.call(this, html);
 				
-				if (div) {
-					div.innerHTML = html;
-					
-					elBySelAll('pre', div, function (pre) {
+				div.innerHTML = html;
+				
+				elBySelAll('span', div, function (span) {
+					span.outerHTML = span.innerHTML;
+				});
+				elBySelAll('pre', div, function (pre) {
+					if (replacements.hasOwnProperty(pre.textContent)) {
 						pre.textContent = replacements[pre.textContent];
-					});
-					
-					html = div.innerHTML;
-				}
+					}
+				});
+				
+				html = div.innerHTML;
 				
 				return html;
 			}).bind(this);
@@ -53,6 +61,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 				this.clean.encodeEntities = mpCleanEncodeEntities;
 				
 				return html;
+			}).bind(this);
+			
+			var mpStripTags = this.clean.stripTags;
+			this.clean.stripTags = (function(input, denied) {
+				if (Array.isArray(denied)) {
+					denied.push('span');
+				}
+				
+				return mpStripTags.call(this, input, denied);
 			}).bind(this);
 		}
 	}
