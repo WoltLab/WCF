@@ -706,7 +706,7 @@ WCF.Message.Smilies = Class.extend({
 	init: function(editorId) {
 		this._editorId = editorId;
 		
-		$('.messageTabMenu[data-wysiwyg-container-id=' + this._editorId + ']').on('click', '.jsSmiley', this._smileyClick.bind(this));
+		$('.messageTabMenu[data-wysiwyg-container-id=' + this._editorId + ']').on('mousedown', '.jsSmiley', this._smileyClick.bind(this));
 	},
 	
 	/**
