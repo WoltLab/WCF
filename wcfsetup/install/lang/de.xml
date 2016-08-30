@@ -2269,6 +2269,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
 		<item name="wcf.editor.button.color.removeColor"><![CDATA[Schriftfarbe entfernen]]></item>
+		<item name="wcf.editor.button.font"><![CDATA[Schriftart]]></item>
+		<item name="wcf.editor.button.font.removeFont"><![CDATA[Schriftart entfernen]]></item>
 		<item name="wcf.editor.button.format"><![CDATA[Überschrift]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Bild]]></item>

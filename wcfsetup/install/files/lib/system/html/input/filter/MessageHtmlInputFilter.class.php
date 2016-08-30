@@ -59,6 +59,9 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		// size
 		$definition->addElement('woltlab-size', 'Inline', 'Inline', '', ['class' => 'Text']);
 		
+		// font
+		$definition->addElement('woltlab-font', 'Inline', 'Inline', '', ['class' => 'Text']);
+		
 		// media
 		$definition->addAttribute('img', 'data-media-id', 'Number');
 		$definition->addAttribute('img', 'data-media-size', new \HTMLPurifier_AttrDef_Enum(['small', 'medium', 'large', 'original']));

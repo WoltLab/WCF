@@ -2236,6 +2236,8 @@ Errors are:
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
 		<item name="wcf.editor.button.color.removeColor"><![CDATA[Remove Color]]></item>
+		<item name="wcf.editor.button.font"><![CDATA[Font Family]]></item>
+		<item name="wcf.editor.button.font.removeFont"><![CDATA[Remove Font Family]]></item>
 		<item name="wcf.editor.button.format"><![CDATA[Headline]]></item>
 		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Image]]></item>

@@ -14,6 +14,7 @@ buttonOptions = {
 	underline: { icon: 'fa-underline', title: '{lang}wcf.editor.button.underline{/lang}' },
 	undo: { icon: 'fa-undo', title: '{lang}wcf.editor.button.undo{/lang}' },
 	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
+	woltlabFont: { icon: 'fa-font', title: '{lang}wcf.editor.button.font{/lang}' },
 	woltlabImage: { icon: 'fa-picture-o', title: '{lang}wcf.editor.button.image{/lang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
 	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
@@ -41,6 +42,9 @@ buttons.push('wcfSeparator');
 
 buttons.push('subscript');
 buttons.push('superscript');
+{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
+	buttons.push('woltlabFont');
+{/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
 	buttons.push('woltlabSize');
 {/if}

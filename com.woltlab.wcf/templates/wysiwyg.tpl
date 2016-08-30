@@ -19,6 +19,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFont.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabImage.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
@@ -140,12 +141,15 @@
 						'insert-column-right': '{lang}wcf.editor.table.insertColumnRight{/lang}',
 						'insert-row-above': '{lang}wcf.editor.table.insertRowAbove{/lang}',
 						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}',
-
+						
 						// size
 						'remove-size': '{lang}wcf.editor.button.size.removeSize{/lang}',
-
+						
 						// color
-						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}'
+						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}',
+						
+						// font
+						'remove-font': '{lang}wcf.editor.button.font.removeFont{/lang}'
 					}
 				},
 				linkify: false,
@@ -172,6 +176,7 @@
 					'WoltLabCode',
 					'WoltLabColor',
 					'WoltLabDropdown',
+					'WoltLabFont',
 					'WoltLabImage',
 					'WoltLabInlineCode',
 					'WoltLabInsert',
