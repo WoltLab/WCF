@@ -46,7 +46,7 @@
 		
 		{event name='redactorJavaScript'}
 	], function () {
-		require(['Language', 'WoltLabSuite/Core/Ui/Redactor/Autosave', 'WoltLabSuite/Core/Ui/Redactor/Metacode'], function(Language, UiRedactorAutosave, UiRedactorMetacode) {
+		require(['Environment', 'Language', 'WoltLabSuite/Core/Ui/Redactor/Autosave', 'WoltLabSuite/Core/Ui/Redactor/Metacode'], function(Environment, Language, UiRedactorAutosave, UiRedactorMetacode) {
 			Language.addObject({
 				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
 				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',
@@ -223,6 +223,10 @@
 			config.callbacks.init = function() {
 				// slight delay to allow Redactor to initialize itself
 				window.setTimeout(function() {
+					if (content === '' && Environment.platform() === 'ios') {
+						content = '<p><br></p>';
+					}
+					
 					$(element).redactor('code.set', content);
 				}, 10);
 			};
