@@ -1145,13 +1145,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.type.boolean.no"><![CDATA[Nein]]></item>
 		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Ja]]></item>
 		<item name="wcf.acp.option.category.cms"><![CDATA[CMS]]></item>
-		<item name="wcf.acp.option.category.articles_per_page"><![CDATA[Artikel pro Seite]]></item>
-		<item name="wcf.acp.option.category.article_enable_comments_default_value"><![CDATA[Kommentare aktivieren [Vorgabewert]]]></item>
-		<item name="wcf.acp.option.category.article_enable_like"><![CDATA[Likes aktivieren]]></item>
-		<item name="wcf.acp.option.category.article_related_articles"><![CDATA[Verwandte Artikel anzeigen]]></item>
-		<item name="wcf.acp.option.category.article_related_articles_match_threshold"><![CDATA[Übereinstimmung von verwandten Artikeln]]></item>
-		<item name="wcf.acp.option.category.article_related_articles_match_threshold.description"><![CDATA[Menge an Tags, die für eine Erkennung als verwandter Artikel übereinstimmen müssen.]]></item>
-		<item name="wcf.acp.option.category.article_show_about_author"><![CDATA[„Über den Autor“ anzeigen]]></item>
+		<item name="wcf.acp.option.articles_per_page"><![CDATA[Artikel pro Seite]]></item>
+		<item name="wcf.acp.option.article_enable_comments_default_value"><![CDATA[Kommentare aktivieren [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.article_enable_like"><![CDATA[Likes aktivieren]]></item>
+		<item name="wcf.acp.option.article_related_articles"><![CDATA[Verwandte Artikel anzeigen]]></item>
+		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Übereinstimmung von verwandten Artikeln]]></item>
+		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[Menge an Tags, die für eine Erkennung als verwandter Artikel übereinstimmen müssen.]]></item>
+		<item name="wcf.acp.option.article_show_about_author"><![CDATA[„Über den Autor“ anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

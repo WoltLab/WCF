@@ -1156,13 +1156,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.type.boolean.no"><![CDATA[No]]></item>
 		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Yes]]></item>
 		<item name="wcf.acp.option.category.cms"><![CDATA[CMS]]></item>
-		<item name="wcf.acp.option.category.articles_per_page"><![CDATA[Articles per Page]]></item>
-		<item name="wcf.acp.option.category.article_enable_comments_default_value"><![CDATA[Enable comments (default value)]]></item>
-		<item name="wcf.acp.option.category.article_enable_like"><![CDATA[Enable likes]]></item>
-		<item name="wcf.acp.option.category.article_related_articles"><![CDATA[Display related articles]]></item>
-		<item name="wcf.acp.option.category.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
-		<item name="wcf.acp.option.category.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
-		<item name="wcf.acp.option.category.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
+		<item name="wcf.acp.option.articles_per_page"><![CDATA[Articles per Page]]></item>
+		<item name="wcf.acp.option.article_enable_comments_default_value"><![CDATA[Enable comments (default value)]]></item>
+		<item name="wcf.acp.option.article_enable_like"><![CDATA[Enable likes]]></item>
+		<item name="wcf.acp.option.article_related_articles"><![CDATA[Display related articles]]></item>
+		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
+		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
+		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
