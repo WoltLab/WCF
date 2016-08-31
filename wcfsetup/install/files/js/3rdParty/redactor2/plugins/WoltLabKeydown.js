@@ -37,6 +37,16 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				if (isBlockquote) this.keydown.blockquote = isBlockquote;
 			}).bind(this);
 			
+			this.keydown.onShiftEnter = (function(e) {
+				this.buffer.set();
+				
+				if (this.keydown.pre) {
+					return this.keydown.insertNewLine(e);
+				}
+				
+				return this.insert.raw('<br>\u200B');
+			}).bind(this);
+			
 			var mpOnTab = this.keydown.onTab;
 			this.keydown.onTab = (function(e, key) {
 				if (!this.keydown.pre && $(this.selection.current()).closest('ul, ol', this.core.editor()[0]).length === 0) {
