@@ -167,6 +167,12 @@
 	}
 }
 
+@include screen-xs {
+	.redactorActive .pageHeaderContainer {
+		visibility: hidden !important;
+	}
+}
+
 @include screen-md-down {
 	.pageHeaderSearch.open {
 		left: 0;

@@ -1,6 +1,8 @@
 $.Redactor.prototype.WoltLabEvent = function() {
 	"use strict";
 	
+	var _activeInstances = 0;
+	
 	return {
 		init: function() {
 			this._callbacks = [];
@@ -13,6 +15,22 @@ $.Redactor.prototype.WoltLabEvent = function() {
 					
 				}).bind(this))
 			}).bind(this));
+			
+			this.$editor[0].addEventListener('focus', function () {
+				_activeInstances++;
+				
+				document.documentElement.classList.add('redactorActive');
+			});
+			this.$editor[0].addEventListener('blur', function () {
+				_activeInstances--;
+				
+				// short delay to prevent flickering when switching focus between editors
+				window.setTimeout(function () {
+					if (_activeInstances === 0) {
+						document.documentElement.classList.remove('redactorActive');
+					}
+				}, 100);
+			})
 		},
 		
 		_setEvents: function(EventHandler) {
