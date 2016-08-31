@@ -24,6 +24,6 @@ class TaggableArticle extends AbstractTaggable {
 	 * @inheritDoc
 	 */
 	public function getTemplateName() {
-		return 'articleListItems';
+		return 'taggedArticleList';
 	}
 }
