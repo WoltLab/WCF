@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
-	const SHOW_LINKS = 11;
+	const SHOW_LINKS = 9;
 	
 	/**
 	 * CSS class name for <nav> element
