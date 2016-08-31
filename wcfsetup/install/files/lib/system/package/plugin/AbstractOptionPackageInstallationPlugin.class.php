@@ -213,7 +213,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			$category['categoryName']
+			$category
 		]);
 		return $statement->fetchArray();
 	}
@@ -226,7 +226,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	protected function saveCategory($category) {
 		// search existing category
-		$row = $this->getExistingCategory($category);
+		$row = $this->getExistingCategory($category['categoryName']);
 		if (empty($row['categoryID'])) {
 			// insert new category
 			$sql = "INSERT INTO	".$this->application.WCF_N."_".$this->tableName."_category
