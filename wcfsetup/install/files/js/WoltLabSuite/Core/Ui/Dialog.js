@@ -10,12 +10,12 @@ define(
 	[
 		'enquire',      'Ajax',       'Core',      'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
-		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation'
+		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/SimpleDropdown'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
-		DomTraverse,    DomUtil,      UiConfirmation
+		DomTraverse,    DomUtil,      UiConfirmation, UiSimpleDropdown
 	)
 {
 	"use strict";
@@ -392,6 +392,10 @@ define(
 				if (typeof data.onShow === 'function') {
 					data.onShow(data.content);
 				}
+				
+				// close existing dropdowns
+				UiSimpleDropdown.closeAll();
+				window.WCF.Dropdown.Interactive.Handler.closeAll();
 			}
 			
 			this.rebuild(id);
