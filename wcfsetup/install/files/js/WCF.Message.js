@@ -1368,6 +1368,8 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @param	{Event}		event
 	 */
 	_saveFullQuote: function(event) {
+		event.preventDefault();
+		
 		var $listItem = $(event.currentTarget);
 		
 		this._proxy.setOption('data', {
@@ -1391,10 +1393,6 @@ WCF.Message.Quote.Handler = Class.extend({
 		if ($navigationList.hasClass('jsMobileButtonGroupNavigation')) {
 			$navigationList.children('.dropdownLabel').trigger('click');
 		}
-		
-		// discard event
-		event.stopPropagation();
-		return false;
 	},
 	
 	/**

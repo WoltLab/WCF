@@ -72,3 +72,9 @@
 .pageOverlayActive .pageAction {
 	display: none;
 }
+
+@include screen-xs {
+	.redactorActive .pageAction {
+		display: none !important;
+	}
+}
