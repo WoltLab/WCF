@@ -4,7 +4,9 @@
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.poll.button.addOption': '{lang}wcf.poll.button.addOption{/lang}',
-				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}'
+				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}',
+				'wcf.poll.endTime.error.notValid': '{lang}wcf.poll.endTime.error.notValid{/lang}',
+				'wcf.poll.maxVotes.error.notValid': '{lang}wcf.poll.maxVotes.error.notValid{/lang}'
 			});
 			
 			new WCF.Poll.Management(

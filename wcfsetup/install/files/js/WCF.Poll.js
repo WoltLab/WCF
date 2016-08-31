@@ -276,16 +276,24 @@ WCF.Poll.Management = Class.extend({
 		}
 		
 		// get options
-		var hasOptions = false;
+		var count = 0;
 		elBySelAll('li input[type="text"]', this._container[0], function(input) {
 			if (input.value.trim() !== '') {
-				hasOptions = true;
+				count++;
 			}
 		});
 		
-		if (hasOptions === false) {
+		if (count === 0) {
 			data.api.throwError(this._container[0], WCF.Language.get('wcf.global.form.error.empty'));
 			data.valid = false;
+		}
+		else {
+			var pollMaxVotes = elById('pollMaxVotes_' + this._editorId);
+			var num = ~~pollMaxVotes.value;
+			if (num && num > count) {
+				data.api.throwError(pollMaxVotes, WCF.Language.get('wcf.poll.maxVotes.error.notValid'));
+				data.valid = false;
+			}
 		}
 	}
 });
