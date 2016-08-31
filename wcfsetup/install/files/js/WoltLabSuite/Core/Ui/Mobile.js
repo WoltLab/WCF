@@ -134,19 +134,19 @@ define(
 				span.className = 'icon icon24 fa-ellipsis-v';
 				button.appendChild(span);
 				
-				var list = elBySel('.buttonList', navigation);
-				list.addEventListener(WCF_CLICK_EVENT, function(event) {
-					event.stopPropagation();
-					
-					navigation.classList.remove('open');
-				});
-				
 				(function(navigation, button) {
 					button.addEventListener(WCF_CLICK_EVENT, function(event) {
 						event.preventDefault();
 						event.stopPropagation();
 						
 						navigation.classList.toggle('open');
+					});
+					
+					var list = elBySel('.buttonList', navigation);
+					list.addEventListener(WCF_CLICK_EVENT, function(event) {
+						event.stopPropagation();
+						
+						navigation.classList.remove('open');
 					});
 				})(navigation, button);
 				
