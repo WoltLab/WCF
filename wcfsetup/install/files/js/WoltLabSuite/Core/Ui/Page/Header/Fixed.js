@@ -108,6 +108,8 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 			});
 			
 			UiCloseOverlay.add('WoltLabSuite/Core/Ui/Page/Header/Fixed', function() {
+				if (_pageHeader.classList.contains('searchBarForceOpen')) return;
+				
 				_pageHeader.classList.remove('searchBarOpen');
 			});
 			

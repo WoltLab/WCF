@@ -46,6 +46,12 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown', './Input'], fun
 		_click: function(event) {
 			event.preventDefault();
 			
+			var pageHeader = elById('pageHeader');
+			pageHeader.classList.add('searchBarForceOpen');
+			window.setTimeout(function() {
+				pageHeader.classList.remove('searchBarForceOpen');
+			}, 10);
+			
 			var objectType = elData(event.currentTarget, 'object-type');
 			
 			var container = elById('pageHeaderSearchParameters');
