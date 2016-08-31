@@ -33,21 +33,38 @@
 		}
 	}
 	
-	@include screen-sm-up {
-		> .anchorFixedHeader:target {
-			margin-top: -50px;
-			pointer-events: none;
+	> .anchorFixedHeader:target {
+		pointer-events: none;
+		
+		&::after {
+			content: "";
+			display: block;
+		}
+		
+		> .message {
+			pointer-events: all;
+		}
+		
+		@include screen-md-down {
+			margin-top: -52px;
 			
 			&::after {
-				content: "";
-				display: block;
-				height: 50px;
+				height: 52px;
 			}
 			
 			> .message {
-				pointer-events: all;
-				transform: translateY(50px);
+				transform: translateY(52px);
 			}
+		}
+		
+		@include screen-lg {
+			margin-top: -50px;
+			
+			&::after {
+				height: 50px;
+			}
+			
+			transform: translateY(50px);
 		}
 	}
 	
