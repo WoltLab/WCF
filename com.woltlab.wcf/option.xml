@@ -1014,6 +1014,7 @@ Pinterest</defaultvalue>
 				<defaultvalue>14</defaultvalue>
 				<maxvalue>30</maxvalue>
 				<minvalue>7</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /message.general.image -->
 			
