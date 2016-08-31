@@ -64,7 +64,9 @@
 				height: 50px;
 			}
 			
-			transform: translateY(50px);
+			> .message {
+				transform: translateY(50px);
+			}
 		}
 	}
 	
