@@ -354,10 +354,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				if (this._editorId) {
 					if (attachmentData.tinyURL) {
-						var $insertThumbnail = $('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
-						var $insertOriginal = $('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
+						if (attachmentData.thumbnailURL) {
+							var $insertThumbnail = $('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
+							$insertThumbnail.children('span.button').click($.proxy(this._insert, this));
+						}
 						
-						$insertThumbnail.children('span.button').click($.proxy(this._insert, this));
+						var $insertOriginal = $('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
 						$insertOriginal.children('span.button').click($.proxy(this._insert, this));
 					}
 					else {
