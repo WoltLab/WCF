@@ -7,7 +7,6 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 	UiRedactorMention.prototype = {
 		init: function(redactor) {
 			this._active = false;
-			this._caret = null;
 			this._dropdownActive = false;
 			this._dropdownMenu = null;
 			this._itemIndex = 0;
@@ -47,6 +46,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 					break;
 				
 				default:
+					this._hideDropdown();
 					return;
 					break;
 			}
@@ -111,64 +111,6 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			}
 		},
 		
-		_setUsername: function(event, item) {
-			if (event) {
-				event.preventDefault();
-				item = event.currentTarget;
-			}
-			
-			/*if (this._timer !== null) {
-				this._timer.stop();
-				this._timer = null;
-			}
-			this._proxy.abortPrevious();*/
-			
-			var selection = window.getSelection();
-			
-			// restore caret position
-			selection.removeAllRanges();
-			selection.addRange(this._caret);
-			
-			var orgRange = selection.getRangeAt(0).cloneRange();
-			
-			// allow redactor to undo this
-			this._redactor.buffer.set();
-			
-			var startContainer = orgRange.startContainer;
-			var startOffset = orgRange.startOffset - (this._mentionStart.length + 1);
-			
-			// navigating with the keyboard before hitting enter will cause the text node to be split
-			if (startOffset < 0) {
-				startContainer = startContainer.previousSibling;
-				startOffset = startContainer.length - (this._mentionStart.length + 1) - (orgRange.startOffset - 1);
-			}
-			
-			var newRange = document.createRange();
-			newRange.setStart(startContainer, startOffset);
-			newRange.setEnd(orgRange.startContainer, orgRange.startOffset);
-			
-			selection.removeAllRanges();
-			selection.addRange(newRange);
-			
-			var range = getSelection().getRangeAt(0);
-			range.deleteContents();
-			range.collapse(true);
-			
-			var text = document.createTextNode('@' + elData(item, 'username') + '\u00A0');
-			range.insertNode(text);
-			
-			newRange = document.createRange();
-			newRange.selectNode(text);
-			newRange.collapse(false);
-			
-			selection.removeAllRanges();
-			selection.addRange(newRange);
-			
-			this._redactor.selection.save();
-			
-			this._hideDropdown();
-		},
-		
 		_getTextLineInFrontOfCaret: function() {
 			/** @var Range range */
 			var range = window.getSelection().getRangeAt(0);
@@ -183,31 +125,172 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			
 			var text = range.startContainer.textContent.substr(0, range.startOffset);
 			
-			// remove unicode zero-width space and non-breaking space
-			var textBackup = text;
-			text = '';
-			var hadSpace = false;
-			for (var i = 0; i < textBackup.length; i++) {
-				var byte = textBackup.charCodeAt(i).toString(16);
-				if (byte !== '200b' && (!/\s/.test(textBackup[i]) || ((byte === 'a0' || byte === '20') && !hadSpace))) {
-					if (byte === 'a0' || byte === '20') {
-						hadSpace = true;
-					}
-					
-					if (textBackup[i] === '@' && i && /\s/.test(textBackup[i - 1])) {
-						hadSpace = false;
-						text = '';
-					}
-					
-					text += textBackup[i];
-				}
-				else {
-					hadSpace = false;
-					text = '';
-				}
+			return text.replace(/\u200B/g, '').replace(/\u00A0/g, '');
+		},
+		
+		_getDropdownMenuPosition: function() {
+			var data = this._selectMention();
+			if (data === null) {
+				return null;
 			}
 			
-			return text;
+			this._redactor.selection.save();
+			
+			data.selection.removeAllRanges();
+			data.selection.addRange(data.newRange);
+			
+			// get the offsets of the bounding box of current text selection
+			var rect = data.selection.getRangeAt(0).getBoundingClientRect();
+			var offsets = {
+				top: Math.round(rect.bottom) + window.scrollY,
+				left: Math.round(rect.left) + document.body.scrollLeft
+			};
+			
+			if (this._lineHeight === null) {
+				this._lineHeight = Math.round(rect.bottom - rect.top - window.scrollY);
+			}
+			
+			// restore caret position
+			this._redactor.selection.restore();
+			
+			return offsets;
+		},
+		
+		_setUsername: function(event, item) {
+			if (event) {
+				event.preventDefault();
+				item = event.currentTarget;
+			}
+			
+			var data = this._selectMention();
+			if (data === null) {
+				this._hideDropdown();
+				
+				return;
+			}
+			
+			// allow redactor to undo this
+			this._redactor.buffer.set();
+			
+			data.selection.removeAllRanges();
+			data.selection.addRange(data.newRange);
+			
+			var range = getSelection().getRangeAt(0);
+			range.deleteContents();
+			range.collapse(true);
+			
+			var text = document.createTextNode('@' + elData(item, 'username') + ' ');
+			range.insertNode(text);
+			
+			range = document.createRange();
+			range.selectNode(text);
+			range.collapse(false);
+			
+			data.selection.removeAllRanges();
+			data.selection.addRange(range);
+			
+			this._hideDropdown();
+		},
+		
+		_selectMention: function () {
+			var selection = window.getSelection();
+			if (!selection.rangeCount || !selection.isCollapsed) {
+				return null;
+			}
+			
+			var originalRange = selection.getRangeAt(0).cloneRange();
+			
+			// mark the entire text, starting from the '@' to the current cursor position
+			var newRange = document.createRange();
+			
+			var startContainer = originalRange.startContainer;
+			var startOffset = originalRange.startOffset - (this._mentionStart.length + 1);
+			
+			if (startContainer.nodeType === Node.ELEMENT_NODE) {
+				startContainer = startContainer.childNodes[originalRange.startOffset];
+				startOffset = startContainer.length - (this._mentionStart.length + 1);
+			}
+			
+			// navigating with the keyboard before hitting enter will cause the text node to be split
+			if (startOffset < 0) {
+				startContainer = startContainer.previousSibling;
+				if (!startContainer || startContainer.nodeType !== Node.TEXT_NODE) {
+					// selection is no longer where it used to be
+					return null;
+				}
+				
+				startOffset = startContainer.length - (this._mentionStart.length + 1) - (originalRange.startOffset - 1);
+			}
+			
+			try {
+				newRange.setStart(startContainer, startOffset);
+				newRange.setEnd(originalRange.startContainer, originalRange.startOffset);
+			}
+			catch (e) {
+				console.debug(e);
+				return null;
+			}
+			
+			// check if new range includes the mention text
+			var div = elCreate('div');
+			div.appendChild(newRange.cloneContents());
+			if (div.textContent.replace(/\u200B/g, '').replace(/\u00A0/g, '').trim().replace(/^@/, '') !== this._mentionStart) {
+				// string mismatch
+				return null;
+			}
+			
+			return {
+				newRange: newRange,
+				originalRange: originalRange,
+				selection: selection
+			};
+		},
+		
+		_updateDropdownPosition: function() {
+			var offset = this._getDropdownMenuPosition();
+			if (offset === null) {
+				this._hideDropdown();
+				
+				return;
+			}
+			offset.top += 7; // add a little vertical gap
+			
+			this._dropdownMenu.style.setProperty('left', offset.left + 'px', '');
+			this._dropdownMenu.style.setProperty('top', offset.top + 'px', '');
+			
+			this._selectItem(0);
+			
+			if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + window.scrollY) {
+				this._dropdownMenu.classList.add('dropdownArrowBottom');
+				
+				this._dropdownMenu.style.setProperty('top', offset.top - this._dropdownMenu.offsetHeight - 2 * this._lineHeight + 7 + 'px', '');
+			}
+			else {
+				this._dropdownMenu.classList.remove('dropdownArrowBottom');
+			}
+		},
+		
+		_selectItem: function(step) {
+			// find currently active item
+			var item = elBySel('.active', this._dropdownMenu);
+			if (item !== null) {
+				item.classList.remove('active');
+			}
+			
+			this._itemIndex += step;
+			if (this._itemIndex === -1) {
+				this._itemIndex = this._dropdownMenu.childElementCount - 1;
+			}
+			else if (this._itemIndex === this._dropdownMenu.childElementCount) {
+				this._itemIndex = 0;
+			}
+			
+			this._dropdownMenu.children[this._itemIndex].classList.add('active');
+		},
+		
+		_hideDropdown: function() {
+			if (this._dropdownMenu !== null) this._dropdownMenu.classList.remove('dropdownOpen');
+			this._dropdownActive = false;
 		},
 		
 		_ajaxSetup: function() {
@@ -267,88 +350,6 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			this._dropdownActive = true;
 			
 			this._updateDropdownPosition();
-		},
-		
-		_getDropdownMenuPosition: function() {
-			this._redactor.selection.save();
-			
-			var selection = window.getSelection();
-			var orgRange = selection.getRangeAt(0).cloneRange();
-			
-			// mark the entire text, starting from the '@' to the current cursor position
-			var newRange = document.createRange();
-			newRange.setStart(orgRange.startContainer, orgRange.startOffset - (this._mentionStart.length + 1));
-			newRange.setEnd(orgRange.startContainer, orgRange.startOffset);
-			
-			selection.removeAllRanges();
-			selection.addRange(newRange);
-			
-			// get the offsets of the bounding box of current text selection
-			var rect = selection.getRangeAt(0).getBoundingClientRect();
-			var offsets = {
-				top: Math.round(rect.bottom) + window.scrollY,
-				left: Math.round(rect.left) + document.body.scrollLeft
-			};
-			
-			if (this._lineHeight === null) {
-				this._lineHeight = Math.round(rect.bottom - rect.top - window.scrollY);
-			}
-			
-			// restore caret position
-			this._redactor.selection.restore();
-			
-			this._caret = orgRange;
-			
-			return offsets;
-		},
-		
-		_updateDropdownPosition: function() {
-			try {
-				var offset = this._getDropdownMenuPosition();
-				offset.top += 7; // add a little vertical gap
-				
-				this._dropdownMenu.style.setProperty('left', offset.left + 'px', '');
-				this._dropdownMenu.style.setProperty('top', offset.top + 'px', '');
-				
-				this._selectItem(0);
-				
-				if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + window.scrollY) {
-					this._dropdownMenu.classList.add('dropdownArrowBottom');
-					
-					this._dropdownMenu.style.setProperty('top', offset.top - this._dropdownMenu.offsetHeight - 2 * this._lineHeight + 7 + 'px', '');
-				}
-				else {
-					this._dropdownMenu.classList.remove('dropdownArrowBottom');
-				}
-			}
-			catch (e) {
-				console.debug(e);
-				// ignore errors that are caused by pressing enter to
-				// often in a short period of time
-			}
-		},
-		
-		_selectItem: function(step) {
-			// find currently active item
-			var item = elBySel('.active', this._dropdownMenu);
-			if (item !== null) {
-				item.classList.remove('active');
-			}
-			
-			this._itemIndex += step;
-			if (this._itemIndex === -1) {
-				this._itemIndex = this._dropdownMenu.childElementCount - 1;
-			}
-			else if (this._itemIndex === this._dropdownMenu.childElementCount) {
-				this._itemIndex = 0;
-			}
-			
-			this._dropdownMenu.children[this._itemIndex].classList.add('active');
-		},
-		
-		_hideDropdown: function() {
-			if (this._dropdownMenu !== null) this._dropdownMenu.classList.remove('dropdownOpen');
-			this._dropdownActive = false;
 		}
 	};
 	

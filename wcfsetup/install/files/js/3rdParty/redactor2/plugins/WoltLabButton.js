@@ -116,15 +116,19 @@ $.Redactor.prototype.WoltLabButton = function() {
 			var data = { cancel: false };
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'bbcode_' + bbcode + '_' + this.$element[0].id, data);
 			
-			if (data.cancel === true) {
-				return;
+			if (data.cancel !== true) {
+				this.buffer.set();
+				
+				var html = '[' + bbcode + ']' + this.selection.html() + (this.selection.is() ? '' : this.marker.html()) + '[/' + bbcode + ']';
+				this.insert.html(html);
+				this.selection.restore();
 			}
 			
-			this.buffer.set();
-			
-			var html = '[' + bbcode + ']' + this.selection.html() + (this.selection.is() ? '' : this.marker.html()) + '[/' + bbcode + ']';
-			this.insert.html(html);
-			this.selection.restore();
+			window.setTimeout((function () {
+				if (document.activeElement !== this.$editor[0]) {
+					this.$editor[0].focus();
+				}
+			}).bind(this), 10);
 		}
 	};
 };
