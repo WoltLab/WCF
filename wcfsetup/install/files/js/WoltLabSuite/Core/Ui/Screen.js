@@ -11,6 +11,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 	
 	var _mql = new Dictionary();
 	var _scrollDisableCounter = 0;
+	var _scrollOffsetFrom;
 	
 	var _mqMap = Dictionary.fromObject({
 		'screen-xs': '(max-width: 544px)',                              /* smartphone */
@@ -95,6 +96,14 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		 */
 		scrollDisable: function() {
 			if (_scrollDisableCounter === 0) {
+				var h = document.body.scrollTop;
+				_scrollOffsetFrom = 'body';
+				if (!h) {
+					h = document.documentElement.scrollTop;
+					_scrollOffsetFrom = 'documentElement';
+				}
+				
+				elById('pageContainer').style.setProperty('transform', 'translateY(-' + h + 'px)');
 				document.documentElement.classList.add('disableScrolling');
 			}
 			
@@ -110,6 +119,11 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 				
 				if (_scrollDisableCounter === 0) {
 					document.documentElement.classList.remove('disableScrolling');
+					var h = elById('pageContainer').style.getPropertyValue('transform').match(/translateY\(-(\d+)px\)/);
+					elById('pageContainer').style.removeProperty('transform');
+					if (h) {
+						document[_scrollOffsetFrom].scrollTop = ~~h[1];
+					}
 				}
 			}
 		},
