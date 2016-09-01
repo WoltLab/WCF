@@ -5032,14 +5032,14 @@ WCF.System.Captcha = {
 	 */
 	getData: function(captchaID) {
 		var returnValue;
-		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
-			try {
-				returnValue = ControllerCaptcha.getData(captchaID);
-			}
-			catch (e) {
-				console.debug('[WCF.System.Captcha] Unknow captcha id "' + captchaID + '"');
-			}
-		});
+		
+		var ControllerCaptcha = require('WoltLabSuite/Core/Controller/Captcha');
+		try {
+			returnValue = ControllerCaptcha.getData(captchaID);
+		}
+		catch (e) {
+			console.debug('[WCF.System.Captcha] Unknow captcha id "' + captchaID + '"');
+		}
 		
 		return returnValue;
 	},
