@@ -356,7 +356,8 @@ class HtmlInputNodeTextParser {
 			
 			if (BBCodeMediaProvider::isMediaURL($link)) {
 				if ($allowMedia) {
-					$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', [$link]);
+					$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
+					$element->appendChild($element->ownerDocument->createTextNode($link));
 				}
 				else {
 					return $matches[0];
