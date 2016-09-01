@@ -1,8 +1,4 @@
 .messageList {
-	> li {
-		position: relative;
-	}
-	
 	&:not(.messageReducedList) {
 		@include screen-md-up {
 			border-top: 1px solid $wcfContentBorder;
@@ -51,10 +47,6 @@
 		
 		@include screen-md-down {
 			margin-top: -52px;
-			
-			& + li {
-				z-index: -1;
-			}
 			
 			&::after {
 				height: 52px;
