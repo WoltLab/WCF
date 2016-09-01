@@ -142,8 +142,6 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='MediaAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.media.add{/lang}</span></a></li>
-				
 				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
