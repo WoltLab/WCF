@@ -1156,6 +1156,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.type.boolean.no"><![CDATA[No]]></item>
 		<item name="wcf.acp.option.type.boolean.yes"><![CDATA[Yes]]></item>
 		<item name="wcf.acp.option.category.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.option.category.cms.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.option.category.cms.media"><![CDATA[Media]]></item>
 		<item name="wcf.acp.option.articles_per_page"><![CDATA[Articles per Page]]></item>
 		<item name="wcf.acp.option.article_enable_comments_default_value"><![CDATA[Enable comments (default value)]]></item>
 		<item name="wcf.acp.option.article_enable_like"><![CDATA[Enable likes]]></item>
@@ -1163,6 +1165,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
+		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Images]]></item>
+		<item name="wcf.acp.option.module_article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable image proxy]]></item>
+		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Storage Time Period]]></item>
+		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
+		<item name="wcf.acp.option.show_style_changer"><![CDATA[Enable style changer]]></item>
+		<item name="wcf.acp.option.language_use_informal_variant"><![CDATA[Use informal language variant]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
