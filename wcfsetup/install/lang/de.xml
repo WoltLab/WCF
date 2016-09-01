@@ -1149,7 +1149,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.articles_per_page"><![CDATA[Artikel pro Seite]]></item>
 		<item name="wcf.acp.option.article_enable_comments_default_value"><![CDATA[Kommentare aktivieren [Vorgabewert]]]></item>
 		<item name="wcf.acp.option.article_enable_like"><![CDATA[Likes aktivieren]]></item>
-		<item name="wcf.acp.option.article_related_articles"><![CDATA[Verwandte Artikel anzeigen]]></item>
+		<item name="wcf.acp.option.article_related_articles"><![CDATA[Anzahl verwandter Artikel]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Übereinstimmung von verwandten Artikeln]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[Menge an Tags, die für eine Erkennung als verwandter Artikel übereinstimmen müssen.]]></item>
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[„Über den Autor“ anzeigen]]></item>
@@ -1160,6 +1160,17 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Anbieter zum Teilen von Inhalten]]></item>
 		<item name="wcf.acp.option.show_style_changer"><![CDATA[Stil-Auswahl anzeigen]]></item>
 		<item name="wcf.acp.option.language_use_informal_variant"><![CDATA[Informelle Anrede verwenden]]></item>
+		<item name="wcf.acp.option.category.cms.media.thumbnail"><![CDATA[Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.media_large_thumbnail_height"><![CDATA[Höhe der großen Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von großen Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.media_large_thumbnail_width"><![CDATA[Breite der großen Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.media_medium_thumbnail_height"><![CDATA[Höhe der mittleren Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von mittleren Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.media_medium_thumbnail_width"><![CDATA[Breite der mittleren Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.media_small_thumbnail_height"><![CDATA[Höhe der kleinen Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von kleinen Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.media_small_thumbnail_width"><![CDATA[Höhe der kleinen Vorschaugrafiken]]></item>
+	
 	</category>
 	
 	<category name="wcf.acp.package">
