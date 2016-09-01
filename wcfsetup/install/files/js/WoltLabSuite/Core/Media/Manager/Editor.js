@@ -55,19 +55,9 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		_buildInsertDialog: function() {
 			var thumbnailOptions = '';
 			
-			var sizes = ['small', 'medium', 'large'];
-			var size, option;
-			lengthLoop: for (var i = 0, length = sizes.length; i < length; i++) {
-				size = sizes[i];
-				
-				// make sure that all thumbnails support the thumbnail size
-				for (var j = 0, mediaLength = this._mediaToInsert.length; j < mediaLength; j++) {
-					if (!this._mediaToInsert[i][size + 'ThumbnailType']) {
-						continue lengthLoop;
-					}
-				}
-				
-				thumbnailOptions += '<option value="' + size + '">' + Language.get('wcf.media.insert.imageSize.' + size) + '</option>';
+			var thumbnailSizes = this._getThumbnailSizes();
+			for (var i = 0, length = thumbnailSizes.length; i < length; i++) {
+				thumbnailOptions += '<option value="' + thumbnailSizes[i] + '">' + Language.get('wcf.media.insert.imageSize.' + thumbnailSizes[i]) + '</option>';
 			}
 			thumbnailOptions += '<option value="original">' + Language.get('wcf.media.insert.imageSize.original') + '</option>';
 			
@@ -163,13 +153,41 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		},
 		
 		/**
+		 * Returns the supported thumbnail sizes (excluding `original`) for all media images to be inserted.
+		 * 
+		 * @return	{string[]}
+		 */
+		_getThumbnailSizes: function() {
+			var sizes = [];
+			
+			var supportedSizes = ['small', 'medium', 'large'];
+			var size, supportSize;
+			for (var i = 0, length = supportedSizes.length; i < length; i++) {
+				size = supportedSizes[i];
+				
+				supportSize = true;
+				this._mediaToInsert.forEach(function(media) {
+					if (!media[size + 'ThumbnailType']) {
+						supportSize = false;
+					}
+				});
+				
+				if (supportSize) {
+					sizes.push(size);
+				}
+			}
+			
+			return sizes;
+		},
+		
+		/**
 		 * Inserts media files into redactor.
 		 * 
 		 * @param	{Event?}	event
+		 * @param	{string?}	thumbnailSize
 		 */
-		_insertMedia: function(event) {
+		_insertMedia: function(event, thumbnailSize) {
 			var insertType = 'separate';
-			var thumbnailSize;
 			
 			// update insert options with selected values if method is called by clicking on 'insert' button
 			// in dialog
@@ -256,7 +274,12 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 				
 				thumbnailSize = available;
 				
-				this._options.editor.insert.html('<img src="' + item[thumbnailSize + 'ThumbnailLink'] + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
+				if (!thumbnailSize || thumbnailSize === 'original') {
+					this._options.editor.insert.html('<img src="' + item.link + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
+				}
+				else {
+					this._options.editor.insert.html('<img src="' + item[thumbnailSize + 'ThumbnailLink'] + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
+				}
 			}
 			else {
 				this._options.editor.insert.text("[wsm='" + item.mediaID + "'][/wsm]");
@@ -294,13 +317,19 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			}
 			
 			if (imagesOnly) {
-				UiDialog.close(this);
-				var dialogId = this._getInsertDialogId();
-				if (UiDialog.getDialog(dialogId)) {
-					UiDialog.openStatic(dialogId);
+				var thumbnailSizes = this._getThumbnailSizes();
+				if (thumbnailSizes.length) {
+					UiDialog.close(this);
+					var dialogId = this._getInsertDialogId();
+					if (UiDialog.getDialog(dialogId)) {
+						UiDialog.openStatic(dialogId);
+					}
+					else {
+						this._buildInsertDialog();
+					}
 				}
 				else {
-					this._buildInsertDialog();
+					this._insertMedia(undefined, 'original');
 				}
 			}
 			else {
