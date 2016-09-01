@@ -491,6 +491,31 @@
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[Die neue Benutzergruppe wird die gleichen Berechtigungen besitzen wie die kopierte Benutzergruppe.]]></item>
 		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[Kann bezahlte Mitgliedschaften verwalten]]></item>
 		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Kann Tag sehen]]></item>
+		<item name="wcf.acp.group.option.category.user.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.group.option.admin.content.article.canManageArticle"><![CDATA[Kann Artikel verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.article.canManageCategory"><![CDATA[Kann Artikel-Kategorien verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canManageBox"><![CDATA[Kann Boxen verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canManageMedia"><![CDATA[Kann Medien verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canManagePage"><![CDATA[Kann Seiten verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canUseMedia"><![CDATA[Kann Medien einbinden]]></item>
+		<item name="wcf.acp.group.option.category.mod.cms"><![CDATA[CMS]]></item>
+		<item name="wcf.acp.group.option.category.mod.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.group.option.category.mod.page"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.group.option.category.user.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.group.option.category.user.page"><![CDATA[Seiten]]></item>
+		<item name="wcf.acp.group.option.mod.article.canDeleteComment"><![CDATA[Kann Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.mod.article.canEditComment"><![CDATA[Kann Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.mod.article.canModerateComment"><![CDATA[Kann Kommentare moderieren]]></item>
+		<item name="wcf.acp.group.option.mod.page.canDeleteComment"><![CDATA[Kann Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.mod.page.canEditComment"><![CDATA[Kann Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.mod.page.canModerateComment"><![CDATA[Kann Kommentare moderieren]]></item>
+		<item name="wcf.acp.group.option.user.article.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Kann Artikel lesen]]></item>
+		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">

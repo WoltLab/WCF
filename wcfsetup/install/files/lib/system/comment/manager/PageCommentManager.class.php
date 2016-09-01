@@ -22,32 +22,32 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionAdd = 'user.pageComment.canAddComment';
+	protected $permissionAdd = 'user.page.canAddComment';
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionDelete = 'user.pageComment.canDeleteComment';
+	protected $permissionDelete = 'user.page.canDeleteComment';
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionEdit = 'user.pageComment.canEditComment';
+	protected $permissionEdit = 'user.page.canEditComment';
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionModDelete = 'mod.pageComment.canDeleteComment';
+	protected $permissionModDelete = 'mod.page.canDeleteComment';
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionModEdit = 'mod.pageComment.canEditComment';
+	protected $permissionModEdit = 'mod.page.canEditComment';
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $permissionCanModerate = 'mod.pageComment.canModerateComment';
+	protected $permissionCanModerate = 'mod.page.canModerateComment';
 	
 	/**
 	 * @inheritDoc

@@ -34,7 +34,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
 	protected function getTemplate() {
 		/** @noinspection PhpUndefinedMethodInspection */
 		return WCF::getTPL()->fetch('boxPageComments', 'wcf', [
-			'commentCanAdd' => WCF::getSession()->getPermission('user.pageComment.canAddComment'),
+			'commentCanAdd' => WCF::getSession()->getPermission('user.page.canAddComment'),
 			'commentList' => $this->objectList,
 			'commentObjectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.page'),
 			'lastCommentTime' => $this->objectList->getMinCommentTime(),
@@ -47,6 +47,6 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
 	 * @inheritDoc
 	 */
 	public function hasContent() {
-		return WCF::getSession()->getPermission('user.pageComment.canAddComment') || parent::hasContent();
+		return WCF::getSession()->getPermission('user.page.canAddComment') || parent::hasContent();
 	}
 }

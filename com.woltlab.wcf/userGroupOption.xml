@@ -29,11 +29,14 @@
 				<parent>user.message</parent>
 			</category>
 			
-			<category name="user.pageComment">
+			<category name="user.cms">
 				<parent>user</parent>
 			</category>
 			<category name="user.article">
-				<parent>user</parent>
+				<parent>user.cms</parent>
+			</category>
+			<category name="user.page">
+				<parent>user.cms</parent>
 			</category>
 			
 			<category name="mod" />
@@ -43,11 +46,15 @@
 			<category name="mod.profileComment">
 				<parent>mod.general</parent>
 			</category>
-			<category name="mod.pageComment">
-				<parent>mod.general</parent>
+			
+			<category name="mod.cms">
+				<parent>mod</parent>
+			</category>
+			<category name="mod.page">
+				<parent>mod.cms</parent>
 			</category>
 			<category name="mod.article">
-				<parent>mod.general</parent>
+				<parent>mod.cms</parent>
 			</category>
 			
 			<category name="admin" />
@@ -681,19 +688,19 @@ png</defaultvalue>
 			</option>
 			<!-- /user.profile -->
 			
-			<option name="user.pageComment.canAddComment">
-				<categoryname>user.pageComment</categoryname>
+			<option name="user.page.canAddComment">
+				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="user.pageComment.canEditComment">
-				<categoryname>user.pageComment</categoryname>
+			<option name="user.page.canEditComment">
+				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			<option name="user.pageComment.canDeleteComment">
-				<categoryname>user.pageComment</categoryname>
+			<option name="user.page.canDeleteComment">
+				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
@@ -770,22 +777,22 @@ png</defaultvalue>
 			</option>
 			<!-- /mod.general -->
 			
-			<option name="mod.pageComment.canEditComment">
-				<categoryname>mod.pageComment</categoryname>
+			<option name="mod.page.canEditComment">
+				<categoryname>mod.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			<option name="mod.pageComment.canDeleteComment">
-				<categoryname>mod.pageComment</categoryname>
+			<option name="mod.page.canDeleteComment">
+				<categoryname>mod.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			<option name="mod.pageComment.canModerateComment">
-				<categoryname>mod.pageComment</categoryname>
+			<option name="mod.page.canModerateComment">
+				<categoryname>mod.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
