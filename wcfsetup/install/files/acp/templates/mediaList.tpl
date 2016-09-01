@@ -5,6 +5,7 @@
 	
 	require(['WoltLabSuite/Core/Controller/Media/List'], function (ControllerMediaList) {
 		ControllerMediaList.init({
+			fileType: '{$fileType}',
 			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if}
 		});
 	});
