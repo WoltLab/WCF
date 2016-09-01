@@ -250,9 +250,9 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				this._menu.classList.add('androidMenuTouchEnd');
 				this._menu.style.removeProperty('transform');
 				backdrop.style.removeProperty(appearsAt);
-				setTimeout((function() {
+				this._menu.addEventListener('transitionend', (function() {
 					this._menu.classList.remove('androidMenuTouchEnd');
-				}).bind(this), 300);
+				}).bind(this), { once: true });
 				
 				// check whether the user moved the finger far enough
 				if (appearsAt === 'left') {
