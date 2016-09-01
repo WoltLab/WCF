@@ -83,6 +83,7 @@
 					'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
 					'wcf.global.form.error.greaterThan': '{lang __literal=true}wcf.global.form.error.greaterThan{/lang}',
 					'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
+					'wcf.global.form.error.multilingual': '{lang}wcf.global.form.error.multilingual{/lang}',
 					'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 					'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
 					'wcf.page.jumpTo': '{lang}wcf.page.jumpTo{/lang}',

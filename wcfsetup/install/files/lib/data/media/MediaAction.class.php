@@ -249,7 +249,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 * @return	string[]
 	 */
 	public function getEditorDialog() {
-		$media = new ViewableMedia($this->getSingleObject()->getDecoratedObject());
+		$mediaList = new ViewableMediaList();
+		$mediaList->setObjectIDs([$this->getSingleObject()->mediaID]);
+		$mediaList->readObjects();
+		$media = $mediaList->search($this->getSingleObject()->mediaID);
 		
 		I18nHandler::getInstance()->register('title_' . $media->mediaID);
 		I18nHandler::getInstance()->register('caption_' . $media->mediaID);
@@ -257,6 +260,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		I18nHandler::getInstance()->assignVariables();
 		
 		return [
+			'mediaData' => $this->getI18nMediaData($mediaList)[$this->getSingleObject()->mediaID],
 			'template' => WCF::getTPL()->fetch('mediaEditor', 'wcf', [
 				'__aclSimplePrefix' => 'mediaEditor_' . $media->mediaID . '_',
 				'aclValues' => SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $media->mediaID),

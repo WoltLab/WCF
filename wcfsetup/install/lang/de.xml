@@ -714,7 +714,6 @@
 		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxen]]></item>
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Box hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cms.media.list"><![CDATA[Medien]]></item>
-		<item name="wcf.acp.menu.link.cms.media.add"><![CDATA[Medium hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Artikel hinzufügen]]></item>

@@ -46,7 +46,7 @@
 	<dl>
 		<dt><label for="title_{@$media->mediaID}">{lang}wcf.global.title{/lang}</label></dt>
 		<dd>
-			<input type="text" id="title_{@$media->mediaID}" name="title" class="long" value="TODO">
+			<input type="text" id="title_{@$media->mediaID}" name="title" class="long">
 		</dd>
 	</dl>
 	{include file='multipleLanguageInputJavascript' elementIdentifier='title'|concat:'_':$media->mediaID forceSelection=true}
@@ -54,7 +54,7 @@
 	<dl>
 		<dt><label for="caption_{@$media->mediaID}">{lang}wcf.media.caption{/lang}</label></dt>
 		<dd>
-			<textarea id="caption_{@$media->mediaID}" name="caption" cols="40" rows="3">TODO</textarea>
+			<textarea id="caption_{@$media->mediaID}" name="caption" cols="40" rows="3"></textarea>
 		</dd>
 	</dl>
 	{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
@@ -62,7 +62,7 @@
 	<dl>
 		<dt><label for="altText_{@$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
 		<dd>
-			<input type="text" id="altText_{@$media->mediaID}" name="altText" class="long" value="TODO">
+			<input type="text" id="altText_{@$media->mediaID}" name="altText" class="long">
 		</dd>
 	</dl>
 	{include file='multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}

@@ -24,17 +24,15 @@ define(
 	 * @constructor
 	 */
 	function MediaEditor(callbackObject) {
-		if (typeof callbackObject !== 'object') {
-			throw new TypeError("Parameter 'callbackObject' has to be an object, " + typeof callbackObject + " given.");
-		}
-		if (typeof callbackObject._editorClose !== 'function') {
+		this._callbackObject = callbackObject || {};
+		
+		if (this._callbackObject._editorClose && typeof this._callbackObject._editorClose !== 'function') {
 			throw new TypeError("Callback object has no function '_editorClose'.");
 		}
-		if (typeof callbackObject._editorSuccess !== 'function') {
+		if (this._callbackObject._editorSuccess && typeof this._callbackObject._editorSuccess !== 'function') {
 			throw new TypeError("Callback object has no function '_editorSuccess'.");
 		}
 		
-		this._callbackObject = callbackObject;
 		this._media = null;
 		
 		this._dialogs = new Dictionary();
@@ -62,7 +60,9 @@ define(
 		_ajaxSuccess: function(data) {
 			UiNotification.show();
 			
-			this._callbackObject._editorSuccess(this._media);
+			if (this._callbackObject._editorSuccess) {
+				this._callbackObject._editorSuccess(this._media);
+			}
 			
 			UiDialog.close('mediaEditor_' + this._media.mediaID);
 			
@@ -75,7 +75,9 @@ define(
 		_close: function() {
 			this._media = null;
 			
-			this._callbackObject._editorClose();
+			if (this._callbackObject._editorClose) {
+				this._callbackObject._editorClose();
+			}
 		},
 		
 		/**
@@ -138,7 +140,7 @@ define(
 						var error = elCreate('small');
 						error.className = 'innerError';
 						error.textContent = Language.get('wcf.global.form.error.multilingual');
-						thistitle.parentNode.parentNode.appendChild(error);
+						title.parentNode.parentNode.appendChild(error);
 					}
 				}
 				
@@ -218,9 +220,15 @@ define(
 		/**
 		 * Edits the media with the given data.
 		 * 
-		 * @param	{object}	media		data of the edited media
+		 * @param	{object|integer}	media		data of the edited media or media id for which the data will be loaded
 		 */
 		edit: function(media) {
+			if (typeof media !== 'object') {
+				media = {
+					mediaID: ~~media
+				};
+			}
+			
 			if (this._media !== null) {
 				throw new Error("Cannot edit media with id '" + media.mediaID + "' while editing media with id '" + this._media.mediaID + "'");
 			}
@@ -239,14 +247,29 @@ define(
 							},
 							source: {
 								after: (function(content, data) {
+									var didLoadMediaData = false;
+									if (data.returnValues.mediaData) {
+										this._media = data.returnValues.mediaData;
+										
+										didLoadMediaData = true;
+									}
+									
 									// make sure that the language chooser is initialized first
 									setTimeout(function() {
 										LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
+										
+										var title = elBySel('input[name=title]', content);
+										var altText = elBySel('input[name=altText]', content);
 										
 										if (this._media.isMultilingual) {
 											LanguageInput.setValues('altText_' + this._media.mediaID, Dictionary.fromObject(this._media.altText || { }));
 											LanguageInput.setValues('caption_' + this._media.mediaID, Dictionary.fromObject(this._media.caption || { }));
 											LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || { }));
+										}
+										else {
+											title.value = this._media.title ? this._media.title[LANGUAGE_ID] : ''; 
+											altText.value = this._media.altText ? this._media.altText[LANGUAGE_ID] : '';
+											elBySel('textarea[name=caption]', content).value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
 										}
 										
 										var isMultilingual = elBySel('input[name=isMultilingual]', content);
@@ -255,8 +278,8 @@ define(
 										this._updateLanguageFields(null, isMultilingual);
 										
 										var keyPress = this._keyPress.bind(this);
-										elBySel('input[name=altText]', content).addEventListener('keypress', keyPress);
-										elBySel('input[name=title]', content).addEventListener('keypress', keyPress);
+										altText.addEventListener('keypress', keyPress);
+										title.addEventListener('keypress', keyPress);
 										
 										elBySel('button[data-type=submit]', content).addEventListener(WCF_CLICK_EVENT, this._saveData.bind(this));
 										

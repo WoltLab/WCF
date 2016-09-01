@@ -70,8 +70,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			this._fileUpload.addEventListener('change', this._upload.bind(this));
 			
 			this._button = elCreate('p');
-			this._button.classList.add('button');
-			this._button.classList.add('uploadButton');
+			this._button.className = 'button uploadButton';
 			
 			var span = elCreate('span');
 			span.textContent = Language.get('wcf.global.button.upload');

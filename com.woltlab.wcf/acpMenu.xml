@@ -323,12 +323,6 @@
 				<parent>wcf.acp.menu.link.cms</parent>
 				<permissions>admin.content.cms.canManageMedia</permissions>
 			</acpmenuitem>
-			<acpmenuitem name="wcf.acp.menu.link.cms.media.add">
-				<controller>wcf\acp\form\MediaAddForm</controller>
-				<parent>wcf.acp.menu.link.cms.media.list</parent>
-				<permissions>admin.content.cms.canManageMedia</permissions>
-				<icon>fa-plus</icon>
-			</acpmenuitem>
 			<!-- /cms -->
 		
 			<!-- article -->

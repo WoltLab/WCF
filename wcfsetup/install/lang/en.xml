@@ -712,7 +712,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxes]]></item>
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Add Box]]></item>
 		<item name="wcf.acp.menu.link.cms.media.list"><![CDATA[Media]]></item>
-		<item name="wcf.acp.menu.link.cms.media.add"><![CDATA[Add Medium]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
@@ -2513,6 +2512,7 @@ Errors are:
 		<item name="wcf.media.search.filetype.other"><![CDATA[Other]]></item>
 		<item name="wcf.media.search.filetype.text"><![CDATA[Texts]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
+		<item name="wcf.media.upload.success"><![CDATA[The file has been successfully uploaded.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
 	</category>
 	

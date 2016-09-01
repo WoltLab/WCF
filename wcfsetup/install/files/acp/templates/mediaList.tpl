@@ -1,47 +1,17 @@
 {include file='header' pageTitle='wcf.acp.media.list'}
 
 <script data-relocate="true">
-	document.addEventListener('DOMContentLoaded', function() {
-		require(['EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Search'], function (EventHandler, Language, UiSimpleDropdown, Clipboard, MediaSearch) {
-			Language.add('wcf.media.search.filetype', '{lang}wcf.media.search.filetype{/lang}');
-			
-			Clipboard.setup({
-				hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
-				pageClassName: 'wcf\\acp\\page\\MediaListPage'
-			});
-			
-			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', function (actionData) {
-				// only consider events if the action has been executed
-				if (actionData.responseData === null) {
-					return;
-				}
-				
-				if (actionData.data.actionName === 'com.woltlab.wcf.media.delete') {
-					var mediaIds = actionData.responseData.objectIDs;
-					
-					var mediaRows = elByClass('jsMediaRow');
-					for (var i = 0; i < mediaRows.length; i++) {
-						var media = mediaRows[i];
-						var mediaID = ~~elData(elByClass('jsClipboardItem', media)[0], 'object-id');
-						
-						if (mediaIds.indexOf(mediaID) !== -1) {
-							elRemove(media);
-							i--;
-						}
-					}
-					
-					if (!mediaRows.length) {
-						window.location.reload();
-					}
-				}
-			});
-			
-			new MediaSearch('{$fileType}');
-			
-			new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
+	{include file='mediaJavaScript'}
+	
+	require(['WoltLabSuite/Core/Controller/Media/List'], function (ControllerMediaList) {
+		ControllerMediaList.init({
+			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if}
 		});
 	});
 </script>
+
+{* hidden container element containg the element for the uploaded media file *}
+<p id="mediaFile" style="display: none;"></p>
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
@@ -51,7 +21,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='MediaAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.media.add{/lang}</span></a></li>
+			<li><div id="uploadButton"></div></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -136,7 +106,7 @@
 					<tr class="jsMediaRow jsClipboardObject">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></td>
 						<td class="columnIcon">
-							<a href="{link controller='MediaEdit' object=$media}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
+							<span class="icon icon24 fa-pencil jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}"></span>
 							<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$media->mediaID}" data-confirm-message-html="{lang title=$media->filename __encode=true}wcf.media.delete.confirmMessage{/lang}"></span>
 							
 							{event name='rowButtons'}
@@ -147,7 +117,7 @@
 								{@$media->getElementTag(48)}
 								
 								<div>
-									<p><a href="{link controller='MediaEdit' object=$media}{/link}">{$media->filename|tableWordwrap}</a></p>
+									<p>{$media->filename|tableWordwrap}</p>
 									<p><small>{if $media->userID}{if $__wcf->session->getPermission('admin.user.canEditUser')}<a href="{link controller='UserEdit' id=$media->userID}{/link}">{$media->username}</a>{else}{$media->username}{/if}{else}{lang}wcf.user.guest{/lang}{/if}</small></p>
 								</div>
 							</div>
