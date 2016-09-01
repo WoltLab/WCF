@@ -8,7 +8,7 @@
 				
 				// select the tab the sortable list is in as jQuery's sortable requires
 				// the sortable list to be visible
-				tabMenu.select(null, DomTraverse.parentByClass(sortableList, 'tabMenuContent'));
+				tabMenu.select(elData(DomTraverse.parentByClass(sortableList, 'tabMenuContent'), 'name'));
 				
 				new WCF.Sortable.List('{$option->optionName}SortableList', null, 0, { }, true);
 				
