@@ -4,6 +4,7 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\IHtmlNode;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -57,6 +58,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->processEmbeddedContent();
 		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
+		
+		$this->cleanup();
 	}
 	
 	/**
@@ -240,6 +243,48 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->embeddedContent = $metacodesByName;
 		
 		EventHandler::getInstance()->fireAction($this, 'parseEmbeddedContent');
+	}
+	
+	/**
+	 * Removes garbage left in the DOM.
+	 */
+	protected function cleanup() {
+		// remove empty <p> tags
+		$elements = [];
+		foreach ($this->getDocument()->getElementsByTagName('p') as $element) {
+			$elements[] = $element;
+		}
+		
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			if ($element->hasChildNodes()) {
+				if ($element->childNodes->length === 1) {
+					$textContent = StringUtil::trim($element->childNodes[0]->textContent);
+					if (empty($textContent)) {
+						DOMUtil::removeNode($element);
+					}
+				}
+			}
+			else {
+				DOMUtil::removeNode($element);
+			}
+		}
+		
+		// remove <br> at the end of block elements
+		// without a succeeding non-empty paragraph
+		$elements = [];
+		foreach ($this->getDocument()->getElementsByTagName('br') as $element) {
+			$elements[] = $element;
+		}
+		
+		$blocks = ['h1', 'h2', 'h3', 'p'];
+		foreach ($elements as $element) {
+			if (in_array($element->parentNode->nodeName, $blocks)) {
+				if ($element->previousSibling && !$element->nextSibling) {
+					DOMUtil::removeNode($element);
+				}
+			}
+		}
 	}
 	
 	/**
