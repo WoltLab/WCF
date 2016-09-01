@@ -259,8 +259,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		foreach ($elements as $element) {
 			if ($element->hasChildNodes()) {
 				if ($element->childNodes->length === 1) {
-					$textContent = StringUtil::trim($element->childNodes[0]->textContent);
-					if (empty($textContent)) {
+					/** @var \DOMNode $child */
+					$child = $element->childNodes[0];
+					if ($child->nodeType === XML_TEXT_NODE && empty(StringUtil::trim($element->childNodes[0]->textContent))) {
 						DOMUtil::removeNode($element);
 					}
 				}
