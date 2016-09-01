@@ -19,7 +19,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.captcha';
+	public $activeMenuItem = 'wcf.acp.menu.link.other';
 	
 	/**
 	 * edited captcha question
