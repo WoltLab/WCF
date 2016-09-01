@@ -336,7 +336,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				
 				listItem = elCreate('li');
 				link = elCreate('a');
-				link.addEventListener(WCF_CLICK_EVENT, callbackClick);
+				link.addEventListener('mousedown', callbackClick);
 				link.className = 'box16';
 				link.innerHTML = '<span>' + user.icon + '</span> <span>' + user.label + '</span>';
 				elData(link, 'user-id', user.objectID);
