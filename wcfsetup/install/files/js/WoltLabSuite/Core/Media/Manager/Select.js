@@ -89,7 +89,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 				var displayElement = elById(display);
 				if (displayElement) {
 					if (media.isImage) {
-						displayElement.innerHTML = '<img src="' + media.smallThumbnailLink + '" alt="' + media.altText + '" />';
+						displayElement.innerHTML = '<img src="' + (media.smallThumbnailLink ? media.smallThumbnailLink : media.link) + '" alt="' + (media.altText && media.altText[LANGUAGE_ID] ? media.altText[LANGUAGE_ID] : '') + '" />';
 					}
 					else {
 						displayElement.innerHTML = '<div class="box48" style="margin-bottom: 10px;">'
