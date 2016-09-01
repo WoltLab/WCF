@@ -6,10 +6,18 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/Abstract
  */
-define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen'], function(Environment, EventHandler, ObjectMap, DomTraverse, DomUtil, UiScreen) {
+define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen'], function(Core, Environment, EventHandler, ObjectMap, DomTraverse, DomUtil, UiScreen) {
 	"use strict";
 	
 	var _pageContainer = elById('pageContainer');
+
+	/**
+	 * Which edge of the menu is touched? Empty string
+	 * if no menu is currently touched.
+	 * 
+	 * One 'left', 'right' or ''.
+	 */
+	var _androidTouching = '';
 	
 	/**
 	 * @param       {string}        eventIdentifier         event namespace
@@ -78,6 +86,10 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			DomUtil.insertAfter(backdrop, this._menu);
 			
 			this._updateButtonState();
+			
+			if (Environment.platform() === 'android') {
+				this._initializeAndroid();
+			}
 		},
 		
 		/**
@@ -148,6 +160,145 @@ define(['Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 
 			this._enabled = false;
 			
 			this.close(true);
+		},
+		
+		/**
+		 * Initializes the Android Touch Menu.
+		 */
+		_initializeAndroid: function() {
+			var appearsAt, backdrop, touchStart;
+			
+			// specify on which side of the page the menu appears
+			switch (this._menu.id) {
+				case 'pageUserMenuMobile':
+					appearsAt = 'right';
+				break;
+				case 'pageMainMenuMobile':
+					appearsAt = 'left';
+				break;
+				default:
+					return;
+			}
+			
+			backdrop = this._menu.nextElementSibling;
+			
+			// horizontal position of the touch start
+			touchStart = null;
+			
+			document.addEventListener('touchstart', (function(event) {
+				var touches, isOpen, isLeftEdge, isRightEdge;
+				touches = event.touches;
+				
+				isOpen = this._menu.classList.contains('open');
+				
+				// check whether we touch the edges of the menu
+				if (appearsAt === 'left') {
+					isLeftEdge = !isOpen && (touches[0].pageX < 20);
+					isRightEdge = isOpen && (Math.abs(this._menu.offsetWidth - touches[0].pageX) < 20);
+				}
+				else if (appearsAt === 'right') {
+					isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this._menu.offsetWidth - touches[0].pageX) < 20);
+					isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].pageX) < 20);
+				}
+				
+				// abort if more than one touch
+				if (touches.length > 1) {
+					if (_androidTouching) {
+						Core.triggerEvent(document, 'touchend');
+					}
+					return;
+				}
+				
+				// break if a touch is in progress
+				if (_androidTouching) return;
+				// break if no edge has been touched
+				if (!isLeftEdge && !isRightEdge) return;
+				// break if a different menu is open
+				if (document.documentElement.classList.contains('pageOverlayActive')) {
+					var found = false;
+					for (var i = 0; i < _pageContainer.classList.length; i++) {
+						if (_pageContainer.classList[i] === 'menuOverlay-' + this._menu.id) {
+							found = true;
+						}
+					}
+					if (!found) return;
+				}
+				
+				touchStart = touches[0].pageX;
+				
+				if (isLeftEdge) _androidTouching = 'left';
+				if (isRightEdge) _androidTouching = 'right';
+			}).bind(this));
+			
+			document.addEventListener('touchend', (function(event) {
+				// break if we did not start a touch
+				if (!_androidTouching || touchStart === null) return;
+				
+				// break if the menu did not even start opening
+				if (!this._menu.classList.contains('open')) return;
+				
+				// last known position of the finger
+				var position;
+				if (event) {
+					position = event.changedTouches[0].pageX;
+				}
+				else {
+					position = touchStart;
+				}
+				
+				// clean up touch styles
+				this._menu.classList.add('androidMenuTouchEnd');
+				this._menu.style.removeProperty('transform');
+				backdrop.style.removeProperty(appearsAt);
+				setTimeout((function() {
+					this._menu.classList.remove('androidMenuTouchEnd');
+				}).bind(this), 300);
+				
+				// check whether the user moved the finger far enough
+				if (appearsAt === 'left') {
+					if (_androidTouching === 'left' && position < touchStart + 100) this.close();
+					if (_androidTouching === 'right' && position < touchStart - 100) this.close();
+				}
+				else if (appearsAt === 'right') {
+					if (_androidTouching === 'left' && position > touchStart + 100) this.close();
+					if (_androidTouching === 'right' && position > touchStart - 100) this.close();
+				}
+				
+				// reset
+				touchStart = null;
+				_androidTouching = '';
+			}).bind(this));
+			
+			document.addEventListener('touchmove', (function(event) {
+				// break if we did not start a touch
+				if (!_androidTouching || touchStart === null) return;
+				
+				var touches = event.touches;
+				
+				// check whether the user started moving in the correct direction
+				// this avoids false positives, in case the user just wanted to tap
+				var movedFromEdge = false;
+				if (_androidTouching === 'left') movedFromEdge = touches[0].pageX > (touchStart + 5);
+				if (_androidTouching === 'right') movedFromEdge = touches[0].pageX < (touchStart - 5);
+				
+				var isOpen = this._menu.classList.contains('open');
+				
+				if (!isOpen && movedFromEdge) {
+					// the menu is not yet open, but the user moved into the right direction
+					this.open();
+					isOpen = true;
+				}
+				
+				if (isOpen) {
+					// update CSS to the new finger position
+					var position = touches[0].pageX;
+					if (appearsAt === 'right') position = document.body.clientWidth - position;
+					if (position > this._menu.offsetWidth) position = this._menu.offsetWidth;
+					if (position < 0) position = 0;
+					this._menu.style.setProperty('transform', 'translateX(' + (appearsAt === 'left' ? 1 : -1) * (position - this._menu.offsetWidth) + 'px)');
+					backdrop.style.setProperty(appearsAt, Math.min(this._menu.offsetWidth, position) + 'px');
+				}
+			}).bind(this));
 		},
 		
 		/**

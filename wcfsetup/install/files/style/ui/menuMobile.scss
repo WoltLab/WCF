@@ -17,6 +17,32 @@
 			}
 		}
 	}
+
+	&.androidMenuTouchEnd {
+		display: block;
+		position: fixed;
+		transition: transform .24s cubic-bezier(.25, .46, .45, .94);
+		
+		&.pageMainMenuMobile:not(.open) {
+			transform: translateX(-100vw);
+		}
+		&.pageUserMenuMobile:not(.open) {
+			transform: translateX(100vw);
+		}
+		
+		@include screen-sm-up {
+			&.pageMainMenuMobile:not(.open) {
+				transform: translateX(-350px);
+			}
+			&.pageUserMenuMobile:not(.open) {
+				transform: translateX(350px);
+			}
+			
+			+ .menuOverlayMobileBackdrop {
+				transition: left .24s cubic-bezier(.25, .46, .45, .94), right .24s cubic-bezier(.25, .46, .45, .94);
+			}
+		}
+	}
 	
 	> .menuOverlayItemList {
 		// we use `transform: translateX()` for performance reasons
