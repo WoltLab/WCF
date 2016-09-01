@@ -35,6 +35,8 @@
 	
 	> .anchorFixedHeader:target {
 		pointer-events: none;
+		position: relative;
+		z-index: 10;
 		
 		&::after {
 			content: "";
