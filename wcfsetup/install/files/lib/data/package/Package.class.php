@@ -239,6 +239,8 @@ class Package extends DatabaseObject {
 	 * A valid package name begins with at least one alphanumeric character
 	 * or an underscore, followed by a dot, followed by at least one alphanumeric
 	 * character or an underscore and the same again, possibly repeatedly.
+	 * The package name cannot be any longer than 191 characters in total due to
+	 * internal database character encoding limitations.
 	 * Example:
 	 * 	com.woltlab.wcf
 	 * 
@@ -250,6 +252,10 @@ class Package extends DatabaseObject {
 	 * @return	boolean		isValid
 	 */
 	public static function isValidPackageName($packageName) {
+		if (mb_strlen($packageName) < 3 || mb_strlen($packageName) > 191) {
+			return false;
+		}
+		
 		return preg_match('%^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$%', $packageName);
 	}
 	
