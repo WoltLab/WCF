@@ -785,7 +785,7 @@ CREATE TABLE wcf1_option_category (
 DROP TABLE IF EXISTS wcf1_package;
 CREATE TABLE wcf1_package (
 	packageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	package VARCHAR(255) NOT NULL DEFAULT '',
+	package VARCHAR(191) NOT NULL DEFAULT '',
 	packageDir VARCHAR(255) NOT NULL DEFAULT '',
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
@@ -1261,8 +1261,8 @@ CREATE TABLE wcf1_tracked_visit_type (
 DROP TABLE IF EXISTS wcf1_user;
 CREATE TABLE wcf1_user (
 	userID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	username VARCHAR(255) NOT NULL DEFAULT '',
-	email VARCHAR(255) NOT NULL DEFAULT '',
+	username VARCHAR(100) NOT NULL DEFAULT '',
+	email VARCHAR(191) NOT NULL DEFAULT '',
 	password VARCHAR(100) NOT NULL DEFAULT '',
 	accessToken CHAR(40) NOT NULL DEFAULT '',
 	languageID INT(10) NOT NULL DEFAULT 0,
@@ -1298,7 +1298,7 @@ CREATE TABLE wcf1_user (
 	userOnlineGroupID INT(10),
 	activityPoints INT(10) NOT NULL DEFAULT 0,
 	notificationMailToken VARCHAR(20) NOT NULL DEFAULT '',
-	authData VARCHAR(255) NOT NULL DEFAULT '',
+	authData VARCHAR(191) NOT NULL DEFAULT '',
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
