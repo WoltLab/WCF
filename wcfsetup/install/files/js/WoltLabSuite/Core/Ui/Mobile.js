@@ -54,6 +54,12 @@ define(
 				unmatch: this.disable.bind(this),
 				setup: this._init.bind(this)
 			});
+			
+			UiScreen.on('screen-sm-down', {
+				match: this.enableShadow.bind(this),
+				unmatch: this.disableShadow.bind(this),
+				setup: this.enableShadow.bind(this)
+			});
 		},
 		
 		/**
@@ -66,7 +72,12 @@ define(
 				_pageMenuMain.enable();
 				_pageMenuUser.enable();
 			}
-			
+		},
+		
+		/**
+		 * Enables shadow links for larger click areas on messages. 
+		 */
+		enableShadow: function () {
 			if (_messageGroups) this.rebuildShadow(_messageGroups, '.messageGroupLink');
 		},
 		
@@ -80,7 +91,12 @@ define(
 				_pageMenuMain.disable();
 				_pageMenuUser.disable();
 			}
-			
+		},
+		
+		/**
+		 * Disables shadow links.
+		 */
+		disableShadow: function () {
 			if (_messageGroups) this.removeShadow(_messageGroups);
 		},
 		
@@ -97,8 +113,6 @@ define(
 				this._initButtonGroupNavigation();
 				this._initMessages();
 			}).bind(this));
-			
-			if (_messageGroups) this.rebuildShadow(_messageGroups, '.messageGroupLink');
 		},
 		
 		_initSearchBar: function() {
