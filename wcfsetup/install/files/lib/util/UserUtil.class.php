@@ -66,6 +66,10 @@ final class UserUtil {
 	 * @return	boolean
 	 */
 	public static function isValidEmail($email) {
+		if (mb_strlen($email) > 191) {
+			return false;
+		}
+		
 		// local-part
 		$c = '!#\$%&\'\*\+\-\/0-9=\?a-z\^_`\{\}\|~';
 		$string = '['.$c.']*(?:\\\\[\x00-\x7F]['.$c.']*)*';
