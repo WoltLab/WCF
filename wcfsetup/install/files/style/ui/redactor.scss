@@ -500,8 +500,22 @@
 	margin: 0 0 20px 20px;
 }
 
+.smiley,
+.jsSmiley > img {
+	&[src$="_emojione.png"] {
+		max-height: 20px;
+	}
+}
+
 .smiley {
 	margin: 0 1px;
+}
+
+@include screen-md-down {
+	.jsSmiley {
+		display: inline-block;
+		padding: 10px;
+	}
 }
 
 .wysiwygTextarea {
