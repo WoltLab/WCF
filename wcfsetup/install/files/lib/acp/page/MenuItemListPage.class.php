@@ -27,12 +27,6 @@ class MenuItemListPage extends AbstractPage {
 	public $neededPermissions = ['admin.content.cms.canManageMenu'];
 	
 	/**
-	 * menu item list
-	 * @var	\wcf\data\menu\item\MenuItemList
-	 */
-	public $objectList = null;
-	
-	/**
 	 * menu item node tree
 	 * @var	MenuItemNodeTree
 	 */
