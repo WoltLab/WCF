@@ -72,6 +72,7 @@
 				
 				'wcf.editor.link.add': '{lang}wcf.editor.link.add{/lang}',
 				'wcf.editor.link.edit': '{lang}wcf.editor.link.edit{/lang}',
+				'wcf.editor.link.error.invalid': '{lang}wcf.editor.link.error.invalid{/lang}',
 				'wcf.editor.link.url': '{lang}wcf.editor.link.url{/lang}',
 				'wcf.editor.link.text': '{lang}wcf.editor.link.text{/lang}',
 				

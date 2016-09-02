@@ -33,9 +33,10 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 				if (small === null) {
 					small = elCreate('small');
 					small.className = 'innerError';
-					small.textContent = Language.get('wcf.global.form.error.empty');
 					url.parentNode.appendChild(small);
 				}
+				
+				small.textContent = Language.get((url.value.trim() === '' ? 'wcf.global.form.error.empty' : 'wcf.editor.link.error.invalid'));
 			}
 		},
 		
