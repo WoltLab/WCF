@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Email\Transport
  * @since	3.0
  */
-class SmtpEmailTransport implements EmailTransport {
+class SmtpEmailTransport implements IEmailTransport {
 	/**
 	 * SMTP connection
 	 * @var	RemoteFile

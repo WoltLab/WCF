@@ -12,7 +12,7 @@ use wcf\system\email\Mailbox;
  * @package	WoltLabSuite\Core\System\Email\Transport
  * @since	3.0
  */
-interface EmailTransport {
+interface IEmailTransport {
 	/**
 	 * Delivers the given $email to the given Mailbox as the recipient.
 	 * 

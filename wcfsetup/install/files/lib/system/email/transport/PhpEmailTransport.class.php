@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Email\Transport
  * @since	3.0
  */
-class PhpEmailTransport implements EmailTransport {
+class PhpEmailTransport implements IEmailTransport {
 	/**
 	 * Delivers the given email via mail().
 	 * 

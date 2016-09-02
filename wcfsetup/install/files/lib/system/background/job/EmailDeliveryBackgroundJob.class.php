@@ -34,7 +34,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	
 	/**
 	 * instance of the default transport
-	 * @var	\wcf\system\email\transport\EmailTransport
+	 * @var	\wcf\system\email\transport\IEmailTransport
 	 */
 	protected static $transport = null;
 	
@@ -44,7 +44,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	 * @param	Email		$email
 	 * @param	Mailbox		$envelopeFrom
 	 * @param	Mailbox		$envelopeTo
-	 * @see		\wcf\system\email\transport\EmailTransport
+	 * @see		\wcf\system\email\transport\IEmailTransport
 	 */
 	public function __construct(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		$this->email = $email;
