@@ -18,8 +18,8 @@ final class UserUtil {
 	 * @return	boolean
 	 */
 	public static function isValidUsername($name) {
-		// minimum length is 3 characters, maximum length is 255 characters
-		if (mb_strlen($name) < 3 || mb_strlen($name) > 255) {
+		// minimum length is 3 characters, maximum length is 100 characters
+		if (mb_strlen($name) < 3 || mb_strlen($name) > 100) {
 			return false;
 		}
 		

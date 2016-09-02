@@ -1106,14 +1106,14 @@ Pinterest</defaultvalue>
 				<optiontype>integer</optiontype>
 				<defaultvalue>3</defaultvalue>
 				<minvalue>3</minvalue>
-				<maxvalue>255</maxvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			<option name="register_username_max_length">
 				<categoryname>user.register</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>25</defaultvalue>
 				<minvalue>3</minvalue>
-				<maxvalue>255</maxvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			<option name="register_username_force_ascii">
 				<categoryname>user.register</categoryname>
