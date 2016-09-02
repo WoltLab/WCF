@@ -13,13 +13,13 @@
 			
 			@include wcfLineHeight;
 		}
-	}
-	
-	a {
-		color: $wcfContentHeadlineLink;
 		
-		&:hover {
-			color: $wcfContentHeadlineLinkActive;
+		a {
+			color: $wcfContentHeadlineLink;
+			
+			&:hover {
+				color: $wcfContentHeadlineLinkActive;
+			}
 		}
 	}
 }
@@ -75,6 +75,7 @@
 	
 	@include screen-md-up {
 		display: flex;
+		align-items: flex-start;
 		
 		.contentHeaderIcon {
 			flex: 0 0 64px;
