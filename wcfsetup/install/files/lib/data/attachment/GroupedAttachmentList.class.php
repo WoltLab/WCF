@@ -24,12 +24,12 @@ class GroupedAttachmentList extends AttachmentList {
 	protected $objectType = null;
 	
 	/**
-	 * wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 0;
 	
 	/**
-	 * wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'attachment.showOrder';
 	
