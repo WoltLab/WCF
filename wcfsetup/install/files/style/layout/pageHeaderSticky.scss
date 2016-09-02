@@ -168,8 +168,12 @@
 }
 
 @include screen-xs {
-	.redactorActive .pageHeaderContainer {
-		visibility: hidden !important;
+	.pageHeader > div {
+		transition: transform .12s ease-in-out;
+	}
+	
+	.redactorActive .pageHeader > div {
+		transform: translateY(-120%);
 	}
 }
 
