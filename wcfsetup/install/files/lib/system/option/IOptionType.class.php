@@ -15,8 +15,8 @@ interface IOptionType {
 	 * Returns the html code of the form element for the given option of this
 	 * option type.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
-	 * @param	mixed				$value
+	 * @param	Option		$option
+	 * @param	mixed		$value
 	 * @return	string
 	 */
 	public function getFormElement(Option $option, $value);
@@ -25,8 +25,8 @@ interface IOptionType {
 	 * Validates the input for the given option of this option type and throws
 	 * a wcf\system\exception\UserInputException if the validation should fail.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
-	 * @param	string				$newValue
+	 * @param	Option		$option
+	 * @param	string		$newValue
 	 */
 	public function validate(Option $option, $newValue);
 	
@@ -34,8 +34,8 @@ interface IOptionType {
 	 * Returns the value of the given option of this option type which will
 	 * be saved in the database.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
-	 * @param	string				$newValue
+	 * @param	Option		$option
+	 * @param	string		$newValue
 	 * @return	string
 	 */
 	public function getData(Option $option, $newValue);

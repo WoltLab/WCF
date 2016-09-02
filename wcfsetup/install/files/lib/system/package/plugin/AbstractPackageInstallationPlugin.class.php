@@ -28,7 +28,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	
 	/**
 	 * active instance of PackageInstallationDispatcher
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
@@ -41,8 +41,8 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	/**
 	 * Creates a new AbstractPackageInstallationPlugin object.
 	 * 
-	 * @param	\wcf\system\package\PackageInstallationDispatcher	$installation
-	 * @param	array							$instruction
+	 * @param	PackageInstallationDispatcher	$installation
+	 * @param	array				$instruction
 	 */
 	public function __construct(PackageInstallationDispatcher $installation, $instruction = []) {
 		$this->installation = $installation;

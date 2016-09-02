@@ -26,7 +26,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	
 	/**
 	 * edited subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	public $subscription = null;
 	

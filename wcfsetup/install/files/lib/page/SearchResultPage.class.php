@@ -38,7 +38,7 @@ class SearchResultPage extends MultipleLinkPage {
 	
 	/**
 	 * search object
-	 * @var	\wcf\data\search\Search
+	 * @var	Search
 	 */
 	public $search = null;
 	

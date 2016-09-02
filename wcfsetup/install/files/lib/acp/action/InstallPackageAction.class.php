@@ -27,13 +27,13 @@ class InstallPackageAction extends AbstractDialogAction {
 	
 	/**
 	 * PackageInstallationDispatcher object
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
 	/**
 	 * PackageInstallationQueue object
-	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	PackageInstallationQueue
 	 */
 	public $queue = null;
 	

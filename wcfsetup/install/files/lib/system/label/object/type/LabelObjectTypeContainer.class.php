@@ -57,7 +57,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	/**
 	 * Adds a label object type.
 	 * 
-	 * @param	\wcf\system\label\object\type\LabelObjectType	$objectType
+	 * @param	LabelObjectType		$objectType
 	 */
 	public function add(LabelObjectType $objectType) {
 		$this->objectTypes[] = $objectType;

@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class OptionForm extends AbstractOptionListForm {
 	/**
 	 * category option
-	 * @var	\wcf\data\option\category\OptionCategory
+	 * @var	OptionCategory
 	 */
 	public $category = null;
 	

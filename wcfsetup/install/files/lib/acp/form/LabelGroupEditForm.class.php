@@ -35,7 +35,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	
 	/**
 	 * label group object
-	 * @var	\wcf\data\label\group\LabelGroup
+	 * @var	LabelGroup
 	 */
 	public $group = null;
 	

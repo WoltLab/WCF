@@ -43,7 +43,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user editor object
-	 * @var	\wcf\data\user\UserEditor
+	 * @var	UserEditor
 	 */
 	public $user = null;
 	
@@ -67,7 +67,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user avatar object
-	 * @var	\wcf\data\user\avatar\UserAvatar
+	 * @var	UserAvatar
 	 */
 	public $userAvatar = null;
 	

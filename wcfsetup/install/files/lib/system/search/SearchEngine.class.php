@@ -29,7 +29,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	
 	/**
 	 * search engine object
-	 * @var	\wcf\system\search\ISearchEngine
+	 * @var	ISearchEngine
 	 */
 	protected $searchEngine = null;
 	
@@ -72,7 +72,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	/**
 	 * Returns the search engine object.
 	 * 
-	 * @return	\wcf\system\search\ISearchEngine
+	 * @return	ISearchEngine
 	 */
 	protected function getSearchEngine() {
 		if ($this->searchEngine === null) {

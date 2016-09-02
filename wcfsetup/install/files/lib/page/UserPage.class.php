@@ -59,19 +59,19 @@ class UserPage extends AbstractPage {
 	
 	/**
 	 * follower list
-	 * @var	\wcf\data\user\follow\UserFollowerList
+	 * @var	UserFollowerList
 	 */
 	public $followerList;
 	
 	/**
 	 * following list
-	 * @var	\wcf\data\user\follow\UserFollowingList
+	 * @var	UserFollowingList
 	 */
 	public $followingList;
 	
 	/**
 	 * visitor list
-	 * @var	\wcf\data\user\profile\visitor\UserProfileVisitorList
+	 * @var	UserProfileVisitorList
 	 */
 	public $visitorList;
 	

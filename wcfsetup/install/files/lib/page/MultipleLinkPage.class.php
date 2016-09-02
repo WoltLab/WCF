@@ -54,7 +54,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * DatabaseObjectList object
-	 * @var	\wcf\data\DatabaseObjectList
+	 * @var	DatabaseObjectList
 	 */
 	public $objectList = null;
 	

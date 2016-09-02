@@ -22,7 +22,7 @@ class PackageValidationManager extends SingletonFactory {
 	
 	/**
 	 * package validation archive object
-	 * @var	\wcf\system\package\validation\PackageValidationArchive
+	 * @var	PackageValidationArchive
 	 */
 	protected $packageValidationArchive = null;
 	
@@ -89,7 +89,7 @@ class PackageValidationManager extends SingletonFactory {
 	/**
 	 * Returns package validation archive object.
 	 * 
-	 * @return	\wcf\system\package\validation\PackageValidationArchive
+	 * @return	PackageValidationArchive
 	 */
 	public function getPackageValidationArchive() {
 		return $this->packageValidationArchive;

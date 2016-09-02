@@ -13,7 +13,7 @@ use wcf\system\SingletonFactory;
 abstract class AbstractSessionHandler extends SingletonFactory {
 	/**
 	 * SessionHandler object
-	 * @var	\wcf\system\session\SessionHandler
+	 * @var	SessionHandler
 	 */
 	protected $sessionHandler = null;
 	

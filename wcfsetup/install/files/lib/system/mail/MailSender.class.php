@@ -13,7 +13,7 @@ namespace wcf\system\mail;
 abstract class MailSender {
 	/**
 	 * unique mail server instance
-	 * @var	\wcf\system\mail\MailSender
+	 * @var	MailSender
 	 */
 	protected static $instance = null;
 	
@@ -45,7 +45,7 @@ abstract class MailSender {
 	/**
 	 * Sends an e-mail.
 	 * 
-	 * @param	\wcf\system\mail\Mail	$mail
+	 * @param	Mail	$mail
 	 */
 	abstract public function sendMail(Mail $mail);
 }

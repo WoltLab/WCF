@@ -32,7 +32,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	
 	/**
 	 * search index manager object
-	 * @var	\wcf\system\search\ISearchIndexManager
+	 * @var	ISearchIndexManager
 	 */
 	protected $searchIndexManager = null;
 	
@@ -77,7 +77,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * Returns the search index manager object.
 	 * 
-	 * @return	\wcf\system\search\ISearchIndexManager
+	 * @return	ISearchIndexManager
 	 */
 	protected function getSearchIndexManager() {
 		if ($this->searchIndexManager === null) {

@@ -13,7 +13,7 @@ use wcf\system\SingletonFactory;
 abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implements ILabelObjectTypeHandler {
 	/**
 	 * label object type container
-	 * @var	\wcf\system\label\object\type\LabelObjectTypeContainer
+	 * @var	LabelObjectTypeContainer
 	 */
 	public $container = null;
 	

@@ -21,7 +21,7 @@ class UserIgnore extends DatabaseObject {
 	 * Returns a UserIgnore object for given ignored user id.
 	 * 
 	 * @param	integer		$ignoreUserID
-	 * @return	\wcf\data\user\ignore\UserIgnore
+	 * @return	UserIgnore
 	 */
 	public static function getIgnore($ignoreUserID) {
 		$sql = "SELECT	*

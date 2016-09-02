@@ -70,8 +70,8 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * Returns a user object by given login name.
 	 * 
-	 * @param	string			$login
-	 * @return	\wcf\data\user\User
+	 * @param	string		$login
+	 * @return	User
 	 */
 	protected function getUserByLogin($login) {
 		return User::getUserByUsername($login);
@@ -83,7 +83,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * @param	integer		$userID
 	 * @param	string		$password
 	 * @param	string		$userClassname
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	protected function getUserAutomatically($userID, $password, $userClassname = User::class) {
 		$user = new $userClassname($userID);
@@ -97,8 +97,8 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * Validates the cookie password.
 	 * 
-	 * @param	\wcf\data\user\User	$user
-	 * @param	string			$password
+	 * @param	User		$user
+	 * @param	string		$password
 	 * @return	boolean
 	 */
 	protected function checkCookiePassword($user, $password) {

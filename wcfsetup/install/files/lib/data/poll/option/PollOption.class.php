@@ -27,7 +27,7 @@ class PollOption extends DatabaseObject {
 	/**
 	 * Returns relative amount of votes for this option.
 	 * 
-	 * @param	\wcf\data\poll\Poll
+	 * @param	Poll
 	 * @return	integer
 	 */
 	public function getRelativeVotes(Poll $poll) {

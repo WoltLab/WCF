@@ -40,7 +40,7 @@ class LoginForm extends AbstractCaptchaForm {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	

@@ -20,7 +20,7 @@ class ApplicationManagementPage extends AbstractPage {
 	
 	/**
 	 * list of applications
-	 * @var	\wcf\data\application\ViewableApplicationList
+	 * @var	ViewableApplicationList
 	 */
 	public $applicationList = null;
 	

@@ -68,7 +68,7 @@ class Mailbox {
 	 * Returns the language the recipient of this mailbox wants.
 	 * This is used for localization of the email template.
 	 * 
-	 * @return	\wcf\data\language\Language
+	 * @return	Language
 	 */
 	public function getLanguage() {
 		return $this->language;

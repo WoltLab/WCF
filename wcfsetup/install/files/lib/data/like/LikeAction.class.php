@@ -51,7 +51,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	
 	/**
 	 * like object type provider object
-	 * @var	\wcf\data\like\ILikeObjectTypeProvider
+	 * @var	ILikeObjectTypeProvider
 	 */
 	public $objectTypeProvider = null;
 	

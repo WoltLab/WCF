@@ -100,7 +100,7 @@ class WCF {
 	
 	/**
 	 * database object
-	 * @var	\wcf\system\database\Database
+	 * @var	MySQLDatabase
 	 */
 	protected static $dbObj = null;
 	
@@ -118,13 +118,13 @@ class WCF {
 	
 	/**
 	 * session object
-	 * @var	\wcf\system\session\SessionHandler
+	 * @var	SessionHandler
 	 */
 	protected static $sessionObj = null;
 	
 	/**
 	 * template object
-	 * @var	\wcf\system\template\TemplateEngine
+	 * @var	TemplateEngine
 	 */
 	protected static $tplObj = null;
 	
@@ -204,7 +204,7 @@ class WCF {
 	/**
 	 * Returns the session object.
 	 * 
-	 * @return	\wcf\system\session\SessionHandler
+	 * @return	SessionHandler
 	 */
 	public static final function getSession() {
 		return self::$sessionObj;
@@ -231,7 +231,7 @@ class WCF {
 	/**
 	 * Returns the template object.
 	 * 
-	 * @return	\wcf\system\template\TemplateEngine
+	 * @return	TemplateEngine
 	 */
 	public static final function getTPL() {
 		return self::$tplObj;
@@ -577,8 +577,8 @@ class WCF {
 	/**
 	 * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
 	 * 
-	 * @param	\wcf\data\application\Application	$application
-	 * @return	\wcf\system\application\IApplication
+	 * @param	Application	$application
+	 * @return	IApplication
 	 */
 	public static function getApplicationObject(Application $application) {
 		if (isset(self::$applicationObjects[$application->packageID])) {
@@ -896,7 +896,7 @@ class WCF {
 	/**
 	 * Returns style handler.
 	 * 
-	 * @return	\wcf\system\style\StyleHandler
+	 * @return	StyleHandler
 	 */
 	public function getStyleHandler() {
 		return StyleHandler::getInstance();

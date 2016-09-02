@@ -15,7 +15,7 @@ interface IObjectTypeProvider {
 	 * Returns an object by its ID.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
 	 */
 	public function getObjectByID($objectID);
 	

@@ -24,7 +24,7 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * object type
-	 * @var	\wcf\system\attachment\IAttachmentObjectType
+	 * @var	IAttachmentObjectType
 	 */
 	protected $processor = null;
 	
@@ -48,7 +48,7 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * list of attachments
-	 * @var	\wcf\data\attachment\AttachmentList
+	 * @var	AttachmentList
 	 */
 	protected $attachmentList = null;
 	
@@ -76,7 +76,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns a list of attachments.
 	 * 
-	 * @return	\wcf\data\attachment\AttachmentList
+	 * @return	AttachmentList
 	 */
 	public function getAttachmentList() {
 		if ($this->attachmentList === null) {
@@ -215,7 +215,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns the object type processor.
 	 * 
-	 * @return	\wcf\system\attachment\IAttachmentObjectType
+	 * @return	IAttachmentObjectType
 	 */
 	public function getProcessor() {
 		return $this->processor;

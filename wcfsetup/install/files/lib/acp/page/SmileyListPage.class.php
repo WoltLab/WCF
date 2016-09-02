@@ -57,7 +57,7 @@ class SmileyListPage extends MultipleLinkPage {
 	
 	/**
 	 * active category
-	 * @var	\wcf\data\category\Category
+	 * @var	Category
 	 */
 	public $category = null;
 	

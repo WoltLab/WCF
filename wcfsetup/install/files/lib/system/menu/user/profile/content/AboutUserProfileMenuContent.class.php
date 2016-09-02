@@ -16,7 +16,7 @@ use wcf\system\WCF;
 class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent {
 	/**
 	 * user option handler object
-	 * @var	\wcf\system\option\user\UserOptionHandler
+	 * @var	UserOptionHandler
 	 */
 	public $optionHandler = null;
 	

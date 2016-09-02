@@ -43,7 +43,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	
 	/**
 	 * subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	public $subscription = null;
 	
@@ -55,7 +55,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	

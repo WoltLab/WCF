@@ -25,7 +25,7 @@ class StyleHandler extends SingletonFactory {
 	
 	/**
 	 * active style object
-	 * @var	\wcf\data\style\ActiveStyle
+	 * @var	ActiveStyle
 	 */
 	protected $style = null;
 	
@@ -66,7 +66,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns the active style.
 	 * 
-	 * @return	\wcf\data\style\ActiveStyle
+	 * @return	ActiveStyle
 	 */
 	public function getStyle() {
 		if ($this->style === null) {
@@ -140,7 +140,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Resets stylesheet for given style.
 	 * 
-	 * @param	\wcf\data\style\Style	$style
+	 * @param	Style	$style
 	 */
 	public function resetStylesheet(Style $style) {
 		$stylesheets = glob(WCF_DIR.'style/style-'.$style->styleID.'*.css');
@@ -186,7 +186,7 @@ class StyleHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$packageName	style package name
 	 * @param	boolean		$skipTainted	ignore tainted styles
-	 * @return	\wcf\data\style\StyleEditor
+	 * @return	StyleEditor|null
 	 * @since	3.0
 	 */
 	public function getStyleByName($packageName, $skipTainted = false) {

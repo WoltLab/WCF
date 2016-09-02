@@ -26,7 +26,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * active package installation dispatcher
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	

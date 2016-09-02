@@ -29,7 +29,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	
 	/**
 	 * category object
-	 * @var	\wcf\data\user\option\category\UserOptionCategory
+	 * @var	UserOptionCategory
 	 */
 	public $category = null;
 	

@@ -69,7 +69,7 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * list of users
-	 * @var	\wcf\data\user\UserList
+	 * @var	UserList
 	 */
 	public $userList = null;
 	

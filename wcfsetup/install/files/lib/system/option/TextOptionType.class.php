@@ -97,8 +97,8 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	/**
 	 * Tries to extract content from value.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
-	 * @param	string				$newValue
+	 * @param	Option		$option
+	 * @param	string		$newValue
 	 * @return	string
 	 */
 	protected function getContent(Option $option, $newValue) {

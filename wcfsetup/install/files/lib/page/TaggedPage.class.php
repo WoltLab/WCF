@@ -41,19 +41,19 @@ class TaggedPage extends MultipleLinkPage {
 	
 	/**
 	 * tag object
-	 * @var	\wcf\data\tag\Tag
+	 * @var	Tag
 	 */
 	public $tag = null;
 	
 	/**
 	 * object type object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType = null;
 	
 	/**
 	 * tag cloud
-	 * @var	\wcf\system\tagging\TypedTagCloud
+	 * @var	TypedTagCloud
 	 */
 	public $tagCloud = null;
 	

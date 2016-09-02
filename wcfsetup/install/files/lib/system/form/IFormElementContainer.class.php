@@ -56,14 +56,14 @@ interface IFormElementContainer {
 	/**
 	 * Appends a new child to stack.
 	 * 
-	 * @param	\wcf\system\form\IFormElement		$element
+	 * @param	IFormElement	$element
 	 */
 	public function appendChild(IFormElement $element);
 	
 	/**
 	 * Preprens a new child to stack.
 	 * 
-	 * @param	\wcf\system\form\IFormElement		$element
+	 * @param	IFormElement	$element
 	 */
 	public function prependChild(IFormElement $element);
 	

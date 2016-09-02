@@ -47,7 +47,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	
 	/**
 	 * tag for which other tags will be used as synonyms
-	 * @var	\wcf\data\tag\TagEditor
+	 * @var	TagEditor
 	 */
 	public $tagEditor = null;
 	

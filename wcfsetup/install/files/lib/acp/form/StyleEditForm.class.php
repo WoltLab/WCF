@@ -23,7 +23,7 @@ class StyleEditForm extends StyleAddForm {
 	
 	/**
 	 * style object
-	 * @var	\wcf\data\style\Style
+	 * @var	Style
 	 */
 	public $style = null;
 	

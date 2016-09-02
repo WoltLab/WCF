@@ -38,7 +38,7 @@ class StyleImportForm extends AbstractForm {
 	
 	/**
 	 * style editor object
-	 * @var	\wcf\data\style\StyleEditor
+	 * @var	StyleEditor
 	 */
 	public $style = null;
 	

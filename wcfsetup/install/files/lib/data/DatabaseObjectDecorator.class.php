@@ -19,7 +19,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	
 	/**
 	 * decorated object
-	 * @var	\wcf\data\DatabaseObject
+	 * @var	DatabaseObject
 	 */
 	protected $object = null;
 	
@@ -126,7 +126,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * Returns the decorated object
 	 * 
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
 	 */
 	public function getDecoratedObject() {
 		return $this->object;

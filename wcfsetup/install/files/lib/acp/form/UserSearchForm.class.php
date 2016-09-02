@@ -42,7 +42,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * list with searched users
-	 * @var	\wcf\data\user\UserList
+	 * @var	UserList
 	 */
 	public $userList = null;
 	

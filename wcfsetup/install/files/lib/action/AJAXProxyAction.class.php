@@ -23,7 +23,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * object action
-	 * @var	\wcf\data\IDatabaseObjectAction
+	 * @var	IDatabaseObjectAction
 	 */
 	protected $objectAction = null;
 	

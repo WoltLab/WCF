@@ -82,7 +82,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * don't want to miss the automated error handling mechanism of the
 	 * queue.
 	 * 
-	 * @param	\wcf\system\background\job\AbstractBackgroundJob	$job	The job to perform.
+	 * @param	AbstractBackgroundJob	$job	The job to perform.
 	 */
 	public function performJob(AbstractBackgroundJob $job) {
 		$user = WCF::getUser();

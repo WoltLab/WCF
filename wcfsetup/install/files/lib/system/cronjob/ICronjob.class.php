@@ -14,7 +14,7 @@ interface ICronjob {
 	/**
 	 * Executes the cronjob.
 	 * 
-	 * @param	\wcf\data\cronjob\Cronjob	$cronjob
+	 * @param	Cronjob		$cronjob
 	 */
 	public function execute(Cronjob $cronjob);
 }

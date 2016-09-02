@@ -29,7 +29,7 @@ class ApplicationEditForm extends AbstractForm {
 	
 	/**
 	 * viewable application object
-	 * @var	\wcf\data\application\ViewableApplication
+	 * @var	ViewableApplication
 	 */
 	public $application = null;
 	

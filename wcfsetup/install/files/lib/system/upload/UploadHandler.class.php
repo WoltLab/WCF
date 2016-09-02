@@ -99,7 +99,7 @@ class UploadHandler {
 	/**
 	 * Saves the uploaded files.
 	 * 
-	 * @param	\wcf\system\upload\IUploadFileSaveStrategy	$saveStrategy
+	 * @param	IUploadFileSaveStrategy		$saveStrategy
 	 */
 	public function saveFiles(IUploadFileSaveStrategy $saveStrategy) {
 		foreach ($this->files as $file) {

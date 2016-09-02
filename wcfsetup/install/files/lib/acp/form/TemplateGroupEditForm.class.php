@@ -29,7 +29,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	
 	/**
 	 * template group object
-	 * @var	\wcf\data\template\group\TemplateGroup
+	 * @var	TemplateGroup
 	 */
 	public $templateGroup = null;
 	

@@ -47,7 +47,7 @@ abstract class AbstractSearchIndexManager extends SingletonFactory implements IS
 	 * Creates the search index for given object type. Returns true if the
 	 * index was created, otherwise false.
 	 * 
-	 * @param	\wcf\data\object\type\ObjectType	$objectType
+	 * @param	ObjectType	$objectType
 	 * @return	boolean
 	 */
 	abstract protected function createSearchIndex(ObjectType $objectType);

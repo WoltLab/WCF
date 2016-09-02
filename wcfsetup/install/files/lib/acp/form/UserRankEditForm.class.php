@@ -29,7 +29,7 @@ class UserRankEditForm extends UserRankAddForm {
 	
 	/**
 	 * rank object
-	 * @var	\wcf\data\user\rank\UserRank
+	 * @var	UserRank
 	 */
 	public $rank = null;
 	

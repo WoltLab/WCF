@@ -65,7 +65,7 @@ interface IModerationQueueManager {
 	/**
 	 * Returns whether the affected content may be removed.
 	 * 
-	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
+	 * @param	ModerationQueue		$queue
 	 * @return	boolean
 	 */
 	public function canRemoveContent(ModerationQueue $queue);
@@ -74,8 +74,8 @@ interface IModerationQueueManager {
 	 * Removes affected content. It is up to the processing object to use a
 	 * soft-delete or remove the content permanently.
 	 * 
-	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
-	 * @param	string						$message
+	 * @param	ModerationQueue		$queue
+	 * @param	string			$message
 	 */
 	public function removeContent(ModerationQueue $queue, $message = '');
 }

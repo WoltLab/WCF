@@ -39,7 +39,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns the user group the automatic assignment belongs to.
 	 * 
-	 * @return	\wcf\data\user\group\UserGroup
+	 * @return	UserGroup
 	 */
 	public function getUserGroup() {
 		return UserGroup::getGroupByID($this->groupID);

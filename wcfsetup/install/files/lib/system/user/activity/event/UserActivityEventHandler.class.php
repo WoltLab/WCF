@@ -39,8 +39,8 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Returns an object type by id.
 	 * 
-	 * @param	integer				$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @param	integer		$objectTypeID
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypes['objects'][$objectTypeID])) {
@@ -127,7 +127,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Validates an event list and removes orphaned events.
 	 * 
-	 * @param	\wcf\data\user\activity\event\ViewableUserActivityEventList	$eventList
+	 * @param	ViewableUserActivityEventList	$eventList
 	 */
 	public static function validateEvents(ViewableUserActivityEventList $eventList) {
 		$eventIDs = $eventList->validateEvents();

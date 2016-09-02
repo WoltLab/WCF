@@ -33,7 +33,7 @@ abstract class AbstractFormElement implements IFormElement {
 	
 	/**
 	 * FormElementContainer object
-	 * @var	\wcf\system\form\IFormElementContainer
+	 * @var	IFormElementContainer
 	 */
 	protected $parent = null;
 	

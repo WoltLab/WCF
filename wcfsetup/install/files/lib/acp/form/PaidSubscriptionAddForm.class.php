@@ -289,8 +289,8 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	/**
 	 * Saves i18n values.
 	 * 
-	 * @param	\wcf\data\paid\subscription\PaidSubscription		$subscription
-	 * @param	string							$columnName
+	 * @param	PaidSubscription	$subscription
+	 * @param	string			$columnName
 	 */
 	public function saveI18nValue(PaidSubscription $subscription, $columnName) {
 		if (!I18nHandler::getInstance()->isPlainValue($columnName)) {

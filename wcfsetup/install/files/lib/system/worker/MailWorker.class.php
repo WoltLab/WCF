@@ -24,7 +24,7 @@ use wcf\system\WCF;
 class MailWorker extends AbstractWorker {
 	/**
 	 * condition builder object
-	 * @var	\wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @var	PreparedStatementConditionBuilder
 	 */
 	protected $conditions = null;
 	

@@ -162,13 +162,13 @@ class QuickReplyManager extends SingletonFactory {
 	/**
 	 * Creates a new message and returns the parsed template.
 	 * 
-	 * @param	\wcf\data\IMessageQuickReplyAction	$object
-	 * @param	array   				$parameters
-	 * @param	string					$containerActionClassName
-	 * @param	string					$sortOrder
-	 * @param	string					$templateName
-	 * @param	string					$application
-	 * @param       callable                                $callbackCreatedMessage
+	 * @param	IMessageQuickReplyAction	$object
+	 * @param	array   			$parameters
+	 * @param	string				$containerActionClassName
+	 * @param	string				$sortOrder
+	 * @param	string				$templateName
+	 * @param	string				$application
+	 * @param	callable				$callbackCreatedMessage
 	 * @return	array
 	 */
 	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf', callable $callbackCreatedMessage = null) {

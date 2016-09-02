@@ -25,7 +25,7 @@ class NoticeEditForm extends NoticeAddForm {
 	
 	/**
 	 * edited notice object
-	 * @var	\wcf\data\notice\Notice
+	 * @var	Notice
 	 */
 	public $notice = null;
 	

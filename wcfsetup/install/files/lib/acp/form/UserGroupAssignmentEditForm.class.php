@@ -18,7 +18,7 @@ use wcf\system\WCF;
 class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	/**
 	 * edited automatic user group assignment
-	 * @var	\wcf\data\user\group\assignment\UserGroupAssignment
+	 * @var	UserGroupAssignment
 	 */
 	public $assignment = null;
 	

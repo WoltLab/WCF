@@ -17,7 +17,7 @@ interface IRecipientAwareMimePart {
 	 * Note: `null` is a valid parameter and denotes that this mime part should
 	 * not be individualised.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$mailbox
+	 * @param	Mailbox		$mailbox
 	 */
 	public function setRecipient(Mailbox $mailbox = null);
 }

@@ -721,8 +721,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Creates a new package installation scheduler.
 	 * 
-	 * @param	array			$selectedPackages
-	 * @return	\wcf\system\package\PackageInstallationScheduler
+	 * @param	array	$selectedPackages
+	 * @return	PackageInstallationScheduler
 	 */
 	public function prepareInstallation(array $selectedPackages) {
 		return new PackageInstallationScheduler($selectedPackages);

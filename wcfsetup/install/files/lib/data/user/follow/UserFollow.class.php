@@ -22,7 +22,7 @@ class UserFollow extends DatabaseObject {
 	 * 
 	 * @param	integer		$userID
 	 * @param	integer		$followUserID
-	 * @return	\wcf\data\user\follow\UserFollow
+	 * @return	UserFollow
 	 */
 	public static function getFollow($userID, $followUserID) {
 		$sql = "SELECT	followID

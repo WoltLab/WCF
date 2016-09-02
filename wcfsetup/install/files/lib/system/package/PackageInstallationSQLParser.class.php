@@ -16,7 +16,7 @@ use wcf\system\WCF;
 class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * package object
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	protected $package = null;
 	
@@ -71,9 +71,9 @@ class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * Creates a new PackageInstallationSQLParser object.
 	 * 
-	 * @param	string				$queries
-	 * @param	\wcf\data\package\Package	$package
-	 * @param	string				$action
+	 * @param	string		$queries
+	 * @param	Package		$package
+	 * @param	string		$action
 	 */
 	public function __construct($queries, Package $package, $action = 'install') {
 		$this->package = $package;

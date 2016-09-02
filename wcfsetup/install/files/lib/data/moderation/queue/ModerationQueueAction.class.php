@@ -31,13 +31,13 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * moderation queue editor object
-	 * @var	\wcf\data\moderation\queue\ModerationQueueEditor
+	 * @var	ModerationQueueEditor
 	 */
 	public $moderationQueueEditor = null;
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	

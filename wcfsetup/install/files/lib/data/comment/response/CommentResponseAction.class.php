@@ -37,7 +37,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * comment object
-	 * @var	\wcf\data\comment\Comment
+	 * @var	Comment
 	 */
 	public $comment = null;
 	

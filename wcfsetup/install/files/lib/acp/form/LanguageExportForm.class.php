@@ -36,7 +36,7 @@ class LanguageExportForm extends AbstractForm {
 	
 	/**
 	 * language editor object
-	 * @var	\wcf\data\language\LanguageEditor
+	 * @var	LanguageEditor
 	 */
 	public $language = null;
 	

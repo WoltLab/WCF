@@ -32,7 +32,7 @@ class PackagePage extends AbstractPage {
 	
 	/**
 	 * package object
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	public $package = null;
 	

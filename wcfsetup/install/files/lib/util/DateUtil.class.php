@@ -151,10 +151,10 @@ final class DateUtil {
 	/**
 	 * Returns a formatted date.
 	 * 
-	 * @param	\DateTime			$time
-	 * @param	string				$format
-	 * @param	\wcf\data\language\Language	$language
-	 * @param	\wcf\data\user\User		$user
+	 * @param	\DateTime	$time
+	 * @param	string		$format
+	 * @param	Language	$language
+	 * @param	User		$user
 	 * @return	string
 	 */
 	public static function format(\DateTime $time = null, $format = null, Language $language = null, User $user = null) {
@@ -253,9 +253,9 @@ final class DateUtil {
 	/**
 	 * Returns a localized date output.
 	 * 
-	 * @param	string				$date
-	 * @param	string				$format
-	 * @param	\wcf\data\language\Language	$language
+	 * @param	string		$date
+	 * @param	string		$format
+	 * @param	Language	$language
 	 * @return	string
 	 */
 	public static function localizeDate($date, $format, Language $language) {

@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
 class SMTPMailSender extends MailSender {
 	/**
 	 * smtp connection
-	 * @var	\wcf\system\io\RemoteFile
+	 * @var	RemoteFile
 	 */
 	protected $connection = null;
 	

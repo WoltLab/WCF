@@ -46,7 +46,7 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * package installation/update queue
-	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	PackageInstallationQueue
 	 */
 	public $queue = null;
 	

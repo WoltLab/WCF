@@ -31,7 +31,7 @@ class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * active smiley category
-	 * @var	\wcf\data\smiley\category\SmileyCategory
+	 * @var	SmileyCategory
 	 */
 	public $smileyCategory = null;
 	

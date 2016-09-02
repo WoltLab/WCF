@@ -96,13 +96,13 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * regular expression to extract comments
-	 * @var	\wcf\system\Regex
+	 * @var	Regex
 	 */
 	public $cacheCommentsRegEx = null;
 	
 	/**
 	 * regular expression to find quote marks
-	 * @var	\wcf\system\Regex
+	 * @var	Regex
 	 */
 	public $quotesRegEx = null;
 	

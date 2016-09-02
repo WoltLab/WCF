@@ -73,7 +73,7 @@ abstract class Database {
 	
 	/**
 	 * database editor object
-	 * @var	\wcf\system\database\editor\DatabaseEditor
+	 * @var	DatabaseEditor
 	 */
 	protected $editor = null;
 	
@@ -354,7 +354,7 @@ abstract class Database {
 	/**
 	 * Returns a database editor object.
 	 * 
-	 * @return	\wcf\system\database\editor\DatabaseEditor
+	 * @return	DatabaseEditor
 	 */
 	public function getEditor() {
 		if ($this->editor === null) {

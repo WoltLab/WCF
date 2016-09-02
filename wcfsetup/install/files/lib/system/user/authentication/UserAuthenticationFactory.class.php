@@ -21,7 +21,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	
 	/**
 	 * user authentication instance
-	 * @var	\wcf\system\user\authentication\IUserAuthentication
+	 * @var	IUserAuthentication
 	 */
 	protected $userAuthentication = null;
 	
@@ -42,7 +42,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	/**
 	 * Returns user authentication instance.
 	 * 
-	 * @return	\wcf\system\user\authentication\IUserAuthentication
+	 * @return	IUserAuthentication
 	 */
 	public function getUserAuthentication() {
 		return $this->userAuthentication;

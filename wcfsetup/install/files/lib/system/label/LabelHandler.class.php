@@ -322,7 +322,7 @@ class LabelHandler extends SingletonFactory {
 	 * Returns label group by id.
 	 * 
 	 * @param	integer		$groupID
-	 * @return	\wcf\data\label\group\ViewableLabelGroup
+	 * @return	ViewableLabelGroup
 	 */
 	public function getLabelGroup($groupID) {
 		if (isset($this->labelGroups['groups'][$groupID])) {

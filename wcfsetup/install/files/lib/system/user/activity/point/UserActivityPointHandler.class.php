@@ -235,7 +235,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * null if no such object type exists.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypeNames[$objectTypeID])) {
@@ -250,7 +250,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * or null if no such object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectTypeByName($objectType) {
 		if (isset($this->objectTypes[$objectType])) {

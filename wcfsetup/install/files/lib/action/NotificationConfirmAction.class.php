@@ -28,7 +28,7 @@ class NotificationConfirmAction extends AbstractAction {
 	
 	/**
 	 * user notification object
-	 * @var	\wcf\data\user\notification\UserNotification
+	 * @var	UserNotification
 	 */
 	public $notification = null;
 	

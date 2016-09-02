@@ -28,6 +28,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -502,11 +503,11 @@ class PackageInstallationDispatcher {
 	/**
 	 * Saves a localized package info.
 	 * 
-	 * @param	\wcf\system\database\statement\PreparedStatement		$statement
-	 * @param	\wcf\data\language\LanguageList				$languageList
-	 * @param	\wcf\data\language\category\LanguageCategory		$languageCategory
-	 * @param	\wcf\data\package\Package				$package
-	 * @param	string							$infoName
+	 * @param	PreparedStatement	$statement
+	 * @param	LanguageList		$languageList
+	 * @param	LanguageCategory	$languageCategory
+	 * @param	Package			$package
+	 * @param	string			$infoName
 	 */
 	protected function saveLocalizedPackageInfo(PreparedStatement $statement, $languageList, LanguageCategory $languageCategory, Package $package, $infoName) {
 		$infoValues = $this->getArchive()->getPackageInfo($infoName);
@@ -611,7 +612,7 @@ class PackageInstallationDispatcher {
 	 * 
 	 * @param	string		$currentNode
 	 * @param	array		$nodeData
-	 * @return	\wcf\system\package\PackageInstallationStep
+	 * @return	PackageInstallationStep
 	 */
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -673,10 +674,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Extracts files from .tar(.gz) archive and installs them
 	 * 
-	 * @param	string					$targetDir
-	 * @param	string					$sourceArchive
-	 * @param	\wcf\system\setup\IFileHandler		$fileHandler
-	 * @return	\wcf\system\setup\Installer
+	 * @param	string		$targetDir
+	 * @param	string		$sourceArchive
+	 * @param	IFileHandler	$fileHandler
+	 * @return	Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
 		return new Installer($targetDir, $sourceArchive, $fileHandler);
@@ -698,7 +699,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
 	 * 
-	 * @return	\wcf\system\form\FormDocument
+	 * @return	FormDocument
 	 */
 	protected function promptPackageDir() {
 		// check for pre-defined directories originating from WCFSetup

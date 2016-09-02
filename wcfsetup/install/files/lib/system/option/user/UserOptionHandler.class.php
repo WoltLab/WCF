@@ -52,7 +52,7 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * current user
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	
@@ -103,7 +103,7 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Sets option values for a certain user.
 	 * 
-	 * @param	\wcf\data\user\User	$user
+	 * @param	User	$user
 	 */
 	public function setUser(User $user) {
 		$this->optionValues = [];

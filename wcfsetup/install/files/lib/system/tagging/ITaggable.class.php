@@ -14,7 +14,7 @@ interface ITaggable {
 	/**
 	 * Returns a list of tagged objects.
 	 * 
-	 * @param	\wcf\data\tag\Tag	$tag
+	 * @param	Tag	$tag
 	 * @return	\wcf\data\DatabaseObjectList
 	 */
 	public function getObjectList(Tag $tag);

@@ -42,7 +42,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * search object
-	 * @var	\wcf\data\search\Search
+	 * @var	Search
 	 */
 	protected $search = null;
 	

@@ -65,7 +65,7 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * user group option object
-	 * @var	\wcf\data\user\group\option\UserGroupOption
+	 * @var	UserGroupOption
 	 */
 	public $userGroupOption = null;
 	
@@ -250,7 +250,7 @@ class UserGroupOptionForm extends AbstractForm {
 	/**
 	 * Validates object options and permissions.
 	 * 
-	 * @param	\wcf\data\DatabaseObject		$object
+	 * @param	DatabaseObject		$object
 	 * @return	boolean
 	 * 
 	 * @deprecated	3.0

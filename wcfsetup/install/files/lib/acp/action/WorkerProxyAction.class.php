@@ -36,7 +36,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * worker object
-	 * @var	\wcf\system\worker\IWorker
+	 * @var	IWorker
 	 */
 	protected $worker = null;
 	

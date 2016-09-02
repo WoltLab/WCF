@@ -27,7 +27,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * user object watch object
-	 * @var	\wcf\data\user\object\watch\UserObjectWatch
+	 * @var	UserObjectWatch
 	 */
 	protected $userObjectWatch = null;
 	

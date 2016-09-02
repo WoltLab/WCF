@@ -44,7 +44,7 @@ class FormDocument {
 	/**
 	 * Appends a FormElementContainer object.
 	 * 
-	 * @param	\wcf\system\form\IFormElementContainer		$container
+	 * @param	IFormElementContainer		$container
 	 */
 	public function appendContainer(IFormElementContainer $container) {
 		$this->containers[] = $container;
@@ -53,7 +53,7 @@ class FormDocument {
 	/**
 	 * Prepends a FormElementContainer object.
 	 * 
-	 * @param	\wcf\system\form\IFormElementContainer		$container
+	 * @param	IFormElementContainer		$container
 	 */
 	public function prependContainer(IFormElementContainer $container) {
 		array_unshift($this->containers, $container);

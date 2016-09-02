@@ -46,7 +46,7 @@ class StyleCompiler extends SingletonFactory {
 	/**
 	 * Compiles SCSS stylesheets.
 	 * 
-	 * @param	\wcf\data\style\Style	$style
+	 * @param	Style	$style
 	 */
 	public function compile(Style $style) {
 		// read stylesheets by dependency order

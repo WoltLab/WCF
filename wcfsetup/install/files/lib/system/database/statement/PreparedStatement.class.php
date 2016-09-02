@@ -159,7 +159,7 @@ class PreparedStatement {
 	 * Fetches the next row from a result set in a database object.
 	 * 
 	 * @param	string			$className
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
 	 */
 	public function fetchObject($className) {
 		$row = $this->fetchArray();

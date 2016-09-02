@@ -25,7 +25,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	
 	/**
 	 * database object list
-	 * @var	\wcf\data\DatabaseObjectList
+	 * @var	DatabaseObjectList
 	 */
 	protected $objectList = null;
 	

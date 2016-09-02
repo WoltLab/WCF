@@ -330,7 +330,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Creates new database object.
 	 * 
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
 	 */
 	public function create() {
 		return call_user_func([$this->className, 'create'], $this->parameters['data']);

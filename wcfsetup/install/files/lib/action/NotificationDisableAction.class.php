@@ -26,7 +26,7 @@ class NotificationDisableAction extends AbstractAction {
 	
 	/**
 	 * notification event
-	 * @var	\wcf\data\user\notification\event\UserNotificationEvent
+	 * @var	UserNotificationEvent
 	 */
 	public $event = null;
 	
@@ -38,7 +38,7 @@ class NotificationDisableAction extends AbstractAction {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	

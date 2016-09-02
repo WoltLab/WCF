@@ -28,7 +28,7 @@ class BBCodeAttribute extends DatabaseObject {
 	/**
 	 * Reads attributes by assigned bbcode.
 	 * 
-	 * @param	\wcf\data\bbcode\BBCode		$bbcode
+	 * @param	BBCode		$bbcode
 	 * @return	BBCodeAttribute[]
 	 */
 	public static function getAttributesByBBCode(BBCode $bbcode) {

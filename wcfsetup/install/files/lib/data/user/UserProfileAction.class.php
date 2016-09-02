@@ -392,9 +392,9 @@ class UserProfileAction extends UserAction {
 	/**
 	 * Returns the user option handler object.
 	 * 
-	 * @param	\wcf\data\user\User	$user
-	 * @param	boolean			$editMode
-	 * @return	\wcf\system\option\user\UserOptionHandler
+	 * @param	User		$user
+	 * @param	boolean		$editMode
+	 * @return	UserOptionHandler
 	 */
 	protected function getOptionHandler(User $user, $editMode = true) {
 		$optionHandler = new UserOptionHandler(false, '', 'profile');

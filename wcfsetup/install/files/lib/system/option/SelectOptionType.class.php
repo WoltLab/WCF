@@ -52,7 +52,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	/**
 	 * Prepares JSON-encoded values for disabling or enabling dependent options.
 	 * 
-	 * @param	\wcf\data\option\Option	$option
+	 * @param	Option		$option
 	 * @return	array
 	 */
 	protected function parseEnableOptions(Option $option) {

@@ -44,7 +44,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	
 	/**
 	 * bulk processable object type
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType = null;
 	

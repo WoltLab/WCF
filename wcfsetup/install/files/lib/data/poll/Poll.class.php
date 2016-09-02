@@ -42,7 +42,7 @@ class Poll extends DatabaseObject {
 	
 	/**
 	 * related object
-	 * @var	\wcf\data\IPollObject
+	 * @var	IPollObject
 	 */
 	protected $relatedObject = null;
 	
@@ -190,7 +190,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Sets related object for this poll.
 	 * 
-	 * @param	\wcf\data\IPollObject		$object
+	 * @param	IPollObject	$object
 	 */
 	public function setRelatedObject(IPollObject $object) {
 		$this->relatedObject = $object;
@@ -199,7 +199,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns related object.
 	 * 
-	 * @return	\wcf\data\IPollObject
+	 * @return	IPollObject
 	 */
 	public function getRelatedObject() {
 		return $this->relatedObject;

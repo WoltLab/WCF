@@ -134,7 +134,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	protected $user = null;
 	
@@ -408,7 +408,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns the user object of this session.
 	 * 
-	 * @return	\wcf\data\user\User	$user
+	 * @return	User	$user
 	 */
 	public function getUser() {
 		return $this->user;
@@ -705,8 +705,8 @@ class SessionHandler extends SingletonFactory {
 	 * Stores a new user object in this session, e.g. a user was guest because not
 	 * logged in, after the login his old session is used to store his full data.
 	 * 
-	 * @param	\wcf\data\user\User		$user
-	 * @param	boolean				$hideSession	if true, database won't be updated
+	 * @param	User		$user
+	 * @param	boolean		$hideSession	if true, database won't be updated
 	 */
 	public function changeUser(User $user, $hideSession = false) {
 		$eventParameters = ['user' => $user, 'hideSession' => $hideSession];

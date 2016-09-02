@@ -14,7 +14,7 @@ use wcf\data\user\group\UserGroup;
 trait TUserGroupOptionType {
 	/**
 	 * user group object
-	 * @var	\wcf\data\user\group\UserGroup
+	 * @var	UserGroup
 	 */
 	protected $userGroup = null;
 	

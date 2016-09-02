@@ -15,7 +15,7 @@ use wcf\system\io\File;
 class DebugMailSender extends MailSender {
 	/**
 	 * log file
-	 * @var	\wcf\system\io\File
+	 * @var	File
 	 */
 	protected $log = null;
 	
@@ -36,7 +36,7 @@ class DebugMailSender extends MailSender {
 	/**
 	 * Prints the given mail.
 	 * 
-	 * @param	\wcf\system\mail\Mail	$mail
+	 * @param	Mail	$mail
 	 * @return	string
 	 */
 	protected static function printMail(Mail $mail) {

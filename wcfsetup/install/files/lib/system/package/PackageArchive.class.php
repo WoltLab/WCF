@@ -26,13 +26,13 @@ class PackageArchive {
 	
 	/**
 	 * package object of an existing package
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * tar archive object
-	 * @var	\wcf\system\io\Tar
+	 * @var	Tar
 	 */
 	protected $tar = null;
 	
@@ -96,7 +96,7 @@ class PackageArchive {
 	/**
 	 * Sets associated package object.
 	 * 
-	 * @param	\wcf\data\package\Package	$package
+	 * @param	Package		$package
 	 */
 	public function setPackage(Package $package) {
 		$this->package = $package;
@@ -114,7 +114,7 @@ class PackageArchive {
 	/**
 	 * Returns the object of the package archive.
 	 * 
-	 * @return	\wcf\system\io\Tar
+	 * @return	Tar
 	 */
 	public function getTar() {
 		return $this->tar;
@@ -388,8 +388,8 @@ class PackageArchive {
 	 * Checks if the new package is compatible with
 	 * the package that is about to be updated.
 	 * 
-	 * @param	\wcf\data\package\Package	$package
-	 * @return	boolean				isValidUpdate
+	 * @param	Package		$package
+	 * @return	boolean		isValidUpdate
 	 */
 	public function isValidUpdate(Package $package = null) {
 		if ($this->package === null && $package !== null) {

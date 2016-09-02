@@ -38,8 +38,8 @@ class LabelGroup extends DatabaseObject implements IRouteController {
 	/**
 	 * Callback for uasort() to sort label groups by show order and (if equal) group id.
 	 * 
-	 * @param	\wcf\data\DatabaseObject	$groupA
-	 * @param	\wcf\data\DatabaseObject	$groupB
+	 * @param	DatabaseObject		$groupA
+	 * @param	DatabaseObject		$groupB
 	 * @return	integer
 	 */
 	public static function sortLabelGroups(DatabaseObject $groupA, DatabaseObject $groupB) {

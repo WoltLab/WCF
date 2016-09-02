@@ -36,7 +36,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	
 	/**
 	 * bbcode object
-	 * @var	\wcf\data\bbcode\BBCode
+	 * @var	BBCode
 	 */
 	public $bbcode = null;
 	

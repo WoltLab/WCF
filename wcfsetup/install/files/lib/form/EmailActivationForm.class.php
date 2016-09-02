@@ -34,7 +34,7 @@ class EmailActivationForm extends AbstractForm {
 	
 	/**
 	 * User object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	

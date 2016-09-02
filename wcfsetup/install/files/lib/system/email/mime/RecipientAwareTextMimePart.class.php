@@ -35,7 +35,7 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 	
 	/**
 	 * the recipient of the email containing this mime part
-	 * @var	\wcf\system\email\Mailbox
+	 * @var	Mailbox
 	 */
 	protected $mailbox = null;
 	

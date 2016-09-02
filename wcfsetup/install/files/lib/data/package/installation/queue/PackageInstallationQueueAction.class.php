@@ -27,13 +27,13 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * queue of the canceled installation
-	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueueEditor
+	 * @var	PackageInstallationQueueEditor
 	 */
 	protected $queue = null;
 	
 	/**
 	 * package the prepared queue belongs to
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	protected $package = null;
 	

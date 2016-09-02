@@ -25,7 +25,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * menu item
-	 * @var	\wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @var	UserProfileMenuItem
 	 */
 	protected $menuItem = null;
 	

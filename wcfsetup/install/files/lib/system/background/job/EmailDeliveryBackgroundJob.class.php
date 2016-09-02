@@ -16,19 +16,19 @@ use wcf\system\email\Mailbox;
 class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**
 	 * email to send
-	 * @var	\wcf\system\email\Email
+	 * @var	Email
 	 */
 	protected $email;
 	
 	/**
 	 * sender mailbox
-	 * @var	\wcf\system\email\Mailbox
+	 * @var	Mailbox
 	 */
 	protected $envelopeFrom;
 	
 	/**
 	 * recipient mailbox
-	 * @var	\wcf\system\email\Mailbox
+	 * @var	Mailbox
 	 */
 	protected $envelopeTo;
 	
@@ -41,9 +41,9 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**
 	 * Creates the job using the given the email and the destination mailbox.
 	 * 
-	 * @param	\wcf\system\email\Email		$email
-	 * @param	\wcf\system\email\Mailbox	$envelopeFrom
-	 * @param	\wcf\system\email\Mailbox	$envelopeTo
+	 * @param	Email		$email
+	 * @param	Mailbox		$envelopeFrom
+	 * @param	Mailbox		$envelopeTo
 	 * @see		\wcf\system\email\transport\EmailTransport
 	 */
 	public function __construct(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {

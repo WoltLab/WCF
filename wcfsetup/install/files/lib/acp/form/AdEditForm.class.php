@@ -29,7 +29,7 @@ class AdEditForm extends AdAddForm {
 	
 	/**
 	 * edited ad object
-	 * @var	\wcf\data\ad\Ad
+	 * @var	Ad
 	 */
 	public $adObject = null;
 	

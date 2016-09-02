@@ -26,7 +26,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * editor object for the copied user group
-	 * @var	\wcf\data\user\group\UserGroupEditor
+	 * @var	UserGroupEditor
 	 */
 	public $groupEditor = null;
 	

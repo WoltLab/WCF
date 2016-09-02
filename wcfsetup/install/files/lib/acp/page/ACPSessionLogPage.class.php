@@ -50,7 +50,7 @@ class ACPSessionLogPage extends SortablePage {
 	
 	/**
 	 * session log object
-	 * @var	\wcf\data\acp\session\log\ACPSessionLog
+	 * @var	ACPSessionLog
 	 */
 	public $sessionLog = null;
 	

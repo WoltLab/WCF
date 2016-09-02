@@ -15,14 +15,14 @@ interface IUserGroupGroupOptionType {
 	/**
 	 * Sets the active user group object.
 	 * 
-	 * @param	\wcf\data\user\group\UserGroup		$group
+	 * @param	UserGroup	$group
 	 */
 	public function setUserGroup(UserGroup $group);
 	
 	/**
 	 * Returns the active user group object or null.
 	 * 
-	 * @return	\wcf\data\user\group\UserGroup
+	 * @return	UserGroup
 	 */
 	public function getUserGroup();
 }

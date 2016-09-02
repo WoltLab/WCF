@@ -41,7 +41,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	/**
 	 * Adds a result to the collection.
 	 * 
-	 * @param	\wcf\system\search\acp\ACPSearchResult	$result
+	 * @param	ACPSearchResult		$result
 	 */
 	public function addResult(ACPSearchResult $result) {
 		$this->results[] = $result;

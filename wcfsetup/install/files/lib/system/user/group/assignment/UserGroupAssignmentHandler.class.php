@@ -89,7 +89,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 * Returns the users who fullfil all conditions of the given user group
 	 * assignment.
 	 * 
-	 * @param	\wcf\data\user\group\assignment\UserGroupAssignment	$assignment
+	 * @param	UserGroupAssignment	$assignment
 	 * @return	User[]
 	 */
 	public function getUsers(UserGroupAssignment $assignment) {

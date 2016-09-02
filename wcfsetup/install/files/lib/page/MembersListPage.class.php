@@ -75,7 +75,7 @@ class MembersListPage extends SortablePage {
 	
 	/**
 	 * user search
-	 * @var	\wcf\data\search\Search
+	 * @var	Search
 	 */
 	public $search = null;
 	

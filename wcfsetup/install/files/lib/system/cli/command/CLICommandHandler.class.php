@@ -55,7 +55,7 @@ class CLICommandHandler {
 	 * Returns a command by the given line.
 	 * 
 	 * @param	string		$line
-	 * @return	\wcf\system\cli\command\ICLICommand
+	 * @return	ICLICommand
 	 * @throws	IllegalLinkException
 	 */
 	public static function getCommand($line) {

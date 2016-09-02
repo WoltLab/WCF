@@ -30,7 +30,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * attachment object
-	 * @var	\wcf\data\attachment\Attachment
+	 * @var	Attachment
 	 */
 	public $attachment = null;
 	
@@ -48,7 +48,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * file reader object
-	 * @var	\wcf\util\FileReader
+	 * @var	FileReader
 	 */
 	public $fileReader = null;
 	

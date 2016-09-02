@@ -69,7 +69,7 @@ class TemplateAddForm extends AbstractForm {
 	
 	/**
 	 * copied template object
-	 * @var	\wcf\data\template\Template
+	 * @var	Template
 	 */
 	public $copiedTemplate = null;
 	

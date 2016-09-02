@@ -33,7 +33,7 @@ class UserOptionCategory extends DatabaseObject {
 	 * Returns an instance of UserOptionCategory by name.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	\wcf\data\user\option\category\UserOptionCategory
+	 * @return	UserOptionCategory
 	 */
 	public static function getCategoryByName($categoryName) {
 		$sql = "SELECT	*

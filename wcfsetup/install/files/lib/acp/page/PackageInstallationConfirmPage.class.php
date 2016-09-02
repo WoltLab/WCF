@@ -24,13 +24,13 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	
 	/**
 	 * package installation dispatcher object
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	public $packageInstallationDispatcher = null;
 	
 	/**
 	 * package installation queue object
-	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	PackageInstallationQueue
 	 */
 	public $queue = null;
 	

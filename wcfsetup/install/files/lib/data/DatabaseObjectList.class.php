@@ -88,7 +88,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * sql conditions
-	 * @var	\wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @var	PreparedStatementConditionBuilder
 	 */
 	protected $conditionBuilder = null;
 	
@@ -246,7 +246,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the condition builder object.
 	 * 
-	 * @return	\wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @return	PreparedStatementConditionBuilder
 	 */
 	public function getConditionBuilder() {
 		return $this->conditionBuilder;

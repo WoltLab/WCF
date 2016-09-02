@@ -59,7 +59,7 @@ class UserNotification extends DatabaseObject {
 	 * @param	integer		$packageID
 	 * @param	integer		$eventID
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\user\notification\UserNotification
+	 * @return	UserNotification
 	 */
 	public static function getNotification($packageID, $eventID, $objectID) {
 		$sql = "SELECT	*

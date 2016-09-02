@@ -45,7 +45,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * active template compiler
-	 * @var	\wcf\system\template\TemplateCompiler
+	 * @var	TemplateCompiler
 	 */
 	protected $compilerObj = null;
 	
@@ -462,7 +462,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the template compiler.
 	 * 
-	 * @return	\wcf\system\template\TemplateCompiler
+	 * @return	TemplateCompiler
 	 */
 	public function getCompiler() {
 		if ($this->compilerObj === null) {

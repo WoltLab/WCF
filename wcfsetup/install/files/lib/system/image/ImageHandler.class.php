@@ -53,7 +53,7 @@ class ImageHandler extends SingletonFactory {
 	/**
 	 * Returns a new ImageAdapter instance.
 	 * 
-	 * @return	\wcf\system\image\adapter\ImageAdapter
+	 * @return	ImageAdapter
 	 */
 	public function getAdapter() {
 		return new ImageAdapter($this->adapterClassName);

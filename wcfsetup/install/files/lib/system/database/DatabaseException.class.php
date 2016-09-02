@@ -39,13 +39,13 @@ class DatabaseException extends SystemException {
 	
 	/**
 	 * database object
-	 * @var	\wcf\system\database\Database
+	 * @var	Database
 	 */
 	protected $db = null;
 	
 	/**
 	 * prepared statement object
-	 * @var	\wcf\system\database\statement\PreparedStatement
+	 * @var	PreparedStatement
 	 */
 	protected $preparedStatement = null;
 	
@@ -58,10 +58,10 @@ class DatabaseException extends SystemException {
 	/**
 	 * Creates a new DatabaseException.
 	 * 
-	 * @param	string							$message		error message
-	 * @param	\wcf\system\database\Database				$db			affected db object
-	 * @param	\wcf\system\database\statement\PreparedStatement	$preparedStatement	affected prepared statement
-	 * @param	string							$sqlQuery		SQL query if prepare() failed
+	 * @param	string			$message		error message
+	 * @param	Database		$db			affected db object
+	 * @param	PreparedStatement	$preparedStatement	affected prepared statement
+	 * @param	string			$sqlQuery		SQL query if prepare() failed
 	 */
 	public function __construct($message, Database $db, PreparedStatement $preparedStatement = null, $sqlQuery = null) {
 		$this->db = $db;

@@ -23,7 +23,7 @@ interface ICommentManager {
 	/**
 	 * Returns true if the current user may edit given comment.
 	 * 
-	 * @param	\wcf\data\comment\Comment	$comment
+	 * @param	Comment		$comment
 	 * @return	boolean
 	 */
 	public function canEditComment(Comment $comment);
@@ -31,7 +31,7 @@ interface ICommentManager {
 	/**
 	 * Returns true if the current user may edit given response.
 	 * 
-	 * @param	\wcf\data\comment\response\CommentResponse	$response
+	 * @param	CommentResponse		$response
 	 * @return	boolean
 	 */
 	public function canEditResponse(CommentResponse $response);
@@ -39,7 +39,7 @@ interface ICommentManager {
 	/**
 	 * Returns true if the current user may delete given comment.
 	 * 
-	 * @param	\wcf\data\comment\Comment	$comment
+	 * @param	Comment		$comment
 	 * @return	boolean
 	 */
 	public function canDeleteComment(Comment $comment);
@@ -47,7 +47,7 @@ interface ICommentManager {
 	/**
 	 * Returns true if the current user may delete given response.
 	 * 
-	 * @param	\wcf\data\comment\response\CommentResponse	$response
+	 * @param	CommentResponse		$response
 	 */
 	public function canDeleteResponse(CommentResponse $response);
 	

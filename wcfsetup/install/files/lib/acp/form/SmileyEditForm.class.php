@@ -34,7 +34,7 @@ class SmileyEditForm extends SmileyAddForm {
 	
 	/**
 	 * smiley object
-	 * @var	\wcf\data\smiley\Smiley
+	 * @var	Smiley
 	 */
 	public $smiley = null;
 	

@@ -57,7 +57,7 @@ class StyleExportForm extends AbstractForm {
 	
 	/**
 	 * style object
-	 * @var	\wcf\data\style\Style
+	 * @var	Style
 	 */
 	public $style = null;
 	

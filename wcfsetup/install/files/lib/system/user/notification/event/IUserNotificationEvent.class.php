@@ -83,7 +83,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the author for this notification event.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getAuthor();
 	
@@ -128,7 +128,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets the language for the event
 	 * 
-	 * @param	\wcf\data\language\Language	$language
+	 * @param	Language	$language
 	 */
 	public function setLanguage(Language $language);
 	

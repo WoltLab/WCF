@@ -27,7 +27,7 @@ interface ILabelObjectTypeHandler {
 	/**
 	 * Returns a label object type container.
 	 * 
-	 * @return	\wcf\system\label\object\type\LabelObjectTypeContainer
+	 * @return	LabelObjectTypeContainer
 	 */
 	public function getContainer();
 	

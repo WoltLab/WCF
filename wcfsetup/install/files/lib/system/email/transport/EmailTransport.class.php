@@ -16,9 +16,9 @@ interface EmailTransport {
 	/**
 	 * Delivers the given $email to the given Mailbox as the recipient.
 	 * 
-	 * @param	\wcf\system\email\Email		$email
-	 * @param	\wcf\system\email\Mailbox	$envelopeFrom
-	 * @param	\wcf\system\email\Mailbox	$envelopeTo
+	 * @param	Email		$email
+	 * @param	Mailbox		$envelopeFrom
+	 * @param	Mailbox		$envelopeTo
 	 */
 	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo);
 }

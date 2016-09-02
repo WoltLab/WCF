@@ -44,7 +44,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	

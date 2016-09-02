@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class SmtpEmailTransport implements EmailTransport {
 	/**
 	 * SMTP connection
-	 * @var	\wcf\system\io\RemoteFile
+	 * @var	RemoteFile
 	 */
 	protected $connection = null;
 	

@@ -525,7 +525,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	string		$eventName
-	 * @return	\wcf\system\user\notification\event\IUserNotificationEvent
+	 * @return	IUserNotificationEvent
 	 */
 	public function getEvent($objectType, $eventName) {
 		if (!isset($this->availableEvents[$objectType][$eventName])) return null;
@@ -627,9 +627,9 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Sends the mail notification.
 	 * 
-	 * @param	\wcf\data\user\notification\UserNotification			$notification
-	 * @param	\wcf\data\user\User						$user
-	 * @param	\wcf\system\user\notification\event\IUserNotificationEvent	$event
+	 * @param	UserNotification		$notification
+	 * @param	User				$user
+	 * @param	IUserNotificationEvent		$event
 	 */
 	public function sendInstantMailNotification(UserNotification $notification, User $user, IUserNotificationEvent $event) {
 		// no notifications for disabled or banned users

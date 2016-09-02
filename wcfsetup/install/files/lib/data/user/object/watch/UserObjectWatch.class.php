@@ -25,7 +25,7 @@ class UserObjectWatch extends DatabaseObject {
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$userID
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\user\object\watch\UserObjectWatch
+	 * @return	UserObjectWatch
 	 */
 	public static function getUserObjectWatch($objectTypeID, $userID, $objectID) {
 		$sql = "SELECT	*

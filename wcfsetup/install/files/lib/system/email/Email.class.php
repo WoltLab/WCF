@@ -21,13 +21,13 @@ use wcf\util\StringUtil;
 class Email {
 	/**
 	 * From header
-	 * @var	\wcf\system\email\Mailbox
+	 * @var	Mailbox
 	 */
 	protected $sender = null;
 	
 	/**
 	 * Reply-To header
-	 * @var	\wcf\system\email\Mailbox
+	 * @var	Mailbox
 	 */
 	protected $replyTo = null;
 	
@@ -248,7 +248,7 @@ class Email {
 	/**
 	 * Sets the email's 'From'.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$sender
+	 * @param	Mailbox		$sender
 	 */
 	public function setSender(Mailbox $sender = null) {
 		$this->sender = $sender;
@@ -258,7 +258,7 @@ class Email {
 	 * Returns the email's 'From'.
 	 * If no header is set yet the MAIL_FROM_ADDRESS will automatically be set.
 	 * 
-	 * @return	\wcf\system\email\Mailbox
+	 * @return	Mailbox
 	 */
 	public function getSender() {
 		if ($this->sender === null) {
@@ -281,7 +281,7 @@ class Email {
 	 * Returns the email's 'Reply-To'.
 	 * If no header is set yet the MAIL_ADMIN_ADDRESS will automatically be set.
 	 * 
-	 * @return	\wcf\system\email\Mailbox
+	 * @return	Mailbox
 	 */
 	public function getReplyTo() {
 		if ($this->replyTo === null) {
@@ -317,7 +317,7 @@ class Email {
 	/**
 	 * Removes a recipient from this email.
 	 * 
-	 * @param	\wcf\system\email\Mailbox	$recipient
+	 * @param	Mailbox		$recipient
 	 */
 	public function removeRecipient(Mailbox $recipient) {
 		unset($this->recipients[$recipient->getAddress()]);

@@ -19,7 +19,7 @@ class ModerationQueueActivationAction extends ModerationQueueAction {
 	
 	/**
 	 * moderation queue editor object
-	 * @var	\wcf\data\moderation\queue\ModerationQueueEditor
+	 * @var	ModerationQueueEditor
 	 */
 	public $queue = null;
 	

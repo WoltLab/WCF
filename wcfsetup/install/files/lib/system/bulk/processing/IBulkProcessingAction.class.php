@@ -16,7 +16,7 @@ interface IBulkProcessingAction {
 	 * Executes the bulk processing action on all objects in the given object
 	 * list.
 	 * 
-	 * @param	\wcf\data\DatabaseObjectList		$objectList
+	 * @param	DatabaseObjectList	$objectList
 	 */
 	public function executeAction(DatabaseObjectList $objectList);
 	
@@ -31,7 +31,7 @@ interface IBulkProcessingAction {
 	 * Returns an object list which will be populated with conditions to read
 	 * the processed objects.
 	 * 
-	 * @return	\wcf\data\DatabaseObjectList
+	 * @return	DatabaseObjectList
 	 */
 	public function getObjectList();
 	

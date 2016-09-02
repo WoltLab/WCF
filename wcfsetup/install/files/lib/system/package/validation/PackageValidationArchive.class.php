@@ -23,7 +23,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * package archive object
-	 * @var	\wcf\system\package\PackageArchive
+	 * @var	PackageArchive
 	 */
 	protected $archive = null;
 	
@@ -47,13 +47,13 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * associated package object
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * parent package validation archive object
-	 * @var	\wcf\system\package\validation\PackageValidationArchive
+	 * @var	PackageValidationArchive
 	 */
 	protected $parent = null;
 	
@@ -66,9 +66,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Creates a new package validation archive instance.
 	 * 
-	 * @param	string								$archive
-	 * @param	\wcf\system\package\validation\PackageValidationArchive		$parent
-	 * @param	integer								$depth
+	 * @param	string				$archive
+	 * @param	PackageValidationArchive	$parent
+	 * @param	integer				$depth
 	 */
 	public function __construct($archive, PackageValidationArchive $parent = null, $depth = 0) {
 		$this->archive = new PackageArchive($archive);
@@ -359,7 +359,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Returns the package archive object.
 	 * 
-	 * @return	\wcf\system\package\PackageArchive
+	 * @return	PackageArchive
 	 */
 	public function getArchive() {
 		return $this->archive;
@@ -369,7 +369,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Returns the package object based on the package archive's package identifier or null
 	 * if the package isn't already installed.
 	 * 
-	 * @return	\wcf\data\package\Package
+	 * @return	Package
 	 */
 	public function getPackage() {
 		if ($this->package === null) {

@@ -23,7 +23,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	
 	/**
 	 * edited captcha question
-	 * @var	\wcf\data\captcha\question\CaptchaQuestion
+	 * @var	CaptchaQuestion
 	 */
 	public $captchaQuestion = null;
 	

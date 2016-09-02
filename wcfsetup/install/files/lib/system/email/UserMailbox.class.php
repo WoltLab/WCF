@@ -14,14 +14,14 @@ use wcf\data\user\User;
 class UserMailbox extends Mailbox {
 	/**
 	 * User object belonging to this Mailbox
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	protected $user = null;
 	
 	/**
 	 * Creates a new Mailbox.
 	 * 
-	 * @param	\wcf\data\user\User $user	User object belonging to this Mailbox
+	 * @param	User	$user	User object belonging to this Mailbox
 	 */
 	public function __construct(User $user) {
 		parent::__construct($user->email, $user->username, $user->getLanguage());
@@ -32,7 +32,7 @@ class UserMailbox extends Mailbox {
 	/**
 	 * Returns the User object belonging to this Mailbox.
 	 * 
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	public function getUser() {
 		return $this->user;

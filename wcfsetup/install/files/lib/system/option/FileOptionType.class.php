@@ -27,7 +27,7 @@ class FileOptionType extends AbstractOptionType {
 	/**
 	 * Creates the upload handler for the given option.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
+	 * @param	Option		$option
 	 */
 	protected function createUploadHandler(Option $option) {
 		if (!isset($this->uploadHandlers[$option->optionName])) {

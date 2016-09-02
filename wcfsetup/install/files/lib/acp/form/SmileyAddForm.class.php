@@ -79,7 +79,7 @@ class SmileyAddForm extends AbstractForm {
 	
 	/**
 	 * node tree with available smiley categories
-	 * @var	\wcf\data\category\CategoryNodeTree
+	 * @var	CategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	

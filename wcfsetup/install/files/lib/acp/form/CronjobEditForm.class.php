@@ -29,7 +29,7 @@ class CronjobEditForm extends CronjobAddForm {
 	
 	/**
 	 * cronjob object
-	 * @var	\wcf\data\cronjob\Cronjob
+	 * @var	Cronjob
 	 */
 	public $cronjob = null;
 	

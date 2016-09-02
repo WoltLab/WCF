@@ -44,7 +44,7 @@ class LabelAddForm extends AbstractForm {
 	
 	/**
 	 * label group list object
-	 * @var	\wcf\data\label\group\LabelGroupList
+	 * @var	LabelGroupList
 	 */
 	public $labelGroupList = null;
 	

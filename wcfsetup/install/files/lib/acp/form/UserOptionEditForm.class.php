@@ -29,7 +29,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	
 	/**
 	 * user option object
-	 * @var	\wcf\data\user\option\UserOption
+	 * @var	UserOption
 	 */
 	public $userOption = null;
 	

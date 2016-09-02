@@ -35,7 +35,7 @@ class LanguageAddForm extends AbstractForm {
 	
 	/**
 	 * language object
-	 * @var	\wcf\data\language\Language
+	 * @var	Language
 	 */
 	public $language = null;
 	
@@ -59,7 +59,7 @@ class LanguageAddForm extends AbstractForm {
 	
 	/**
 	 * source language object
-	 * @var	\wcf\data\language\Language
+	 * @var	Language
 	 */
 	public $sourceLanguage = null;
 	

@@ -35,7 +35,7 @@ set_exception_handler([CLIWCF::class, 'handleCLIException']);
 class CLIWCF extends WCF {
 	/**
 	 * instance of ConsoleReader
-	 * @var	\phpline\console\ConsoleReader
+	 * @var	ConsoleReader
 	 */
 	protected static $consoleReader = null;
 	
@@ -206,7 +206,7 @@ class CLIWCF extends WCF {
 	/**
 	 * Returns ConsoleReader.
 	 * 
-	 * @return	\phpline\console\ConsoleReader
+	 * @return	ConsoleReader
 	 */
 	public static function getReader() {
 		return self::$consoleReader;

@@ -107,14 +107,14 @@ class UserOption extends Option {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	
 	/**
 	 * Sets target user object.
 	 * 
-	 * @param	\wcf\data\user\User	$user
+	 * @param	User	$user
 	 */
 	public function setUser(User $user) {
 		$this->user = $user;

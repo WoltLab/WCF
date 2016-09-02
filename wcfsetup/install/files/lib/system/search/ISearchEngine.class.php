@@ -28,12 +28,12 @@ interface ISearchEngine {
 	 * 	'sql' => $sql
 	 * );
 	 * 
-	 * @param	string								$objectTypeName
-	 * @param	string								$q
-	 * @param	boolean								$subjectOnly
-	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
-	 * @param	string								$orderBy
-	 * @param	integer								$limit
+	 * @param	string					$objectTypeName
+	 * @param	string					$q
+	 * @param	boolean					$subjectOnly
+	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	string					$orderBy
+	 * @param	integer					$limit
 	 * @return	array
 	 */
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000);
@@ -48,13 +48,13 @@ interface ISearchEngine {
 	/**
 	 * Searches for the given string and returns the data of the found messages.
 	 * 
-	 * @param	string								$q
-	 * @param	array								$objectTypes
-	 * @param	boolean								$subjectOnly
-	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
-	 * @param	array								$additionalConditions
-	 * @param	string								$orderBy
-	 * @param	integer								$limit
+	 * @param	string					$q
+	 * @param	array					$objectTypes
+	 * @param	boolean					$subjectOnly
+	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	array					$additionalConditions
+	 * @param	string					$orderBy
+	 * @param	integer					$limit
 	 * @return	array
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000);

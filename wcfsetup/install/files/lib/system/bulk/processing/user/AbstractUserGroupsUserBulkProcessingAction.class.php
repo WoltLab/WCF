@@ -75,7 +75,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	/**
 	 * Execute the action for the given user.
 	 * 
-	 * @param	\wcf\data\user\UserEditor	$user
+	 * @param	UserEditor	$user
 	 */
 	abstract protected function executeUserAction(UserEditor $user);
 	

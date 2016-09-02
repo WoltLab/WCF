@@ -62,7 +62,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * Returns a level 1 or 2 category for given category name.
 	 * 
 	 * @param	string			$categoryName
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
 	 * @throws	SystemException
 	 */
 	protected function getTopCategory($categoryName) {

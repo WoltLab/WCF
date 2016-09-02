@@ -168,9 +168,9 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Replaces values for given type and object.
 	 * 
-	 * @param	\wcf\data\acl\option\ACLOptionList	$optionList
-	 * @param	string					$type
-	 * @param	integer					$objectID
+	 * @param	ACLOptionList	$optionList
+	 * @param	string		$type
+	 * @param	integer		$objectID
 	 */
 	protected function replaceValues(ACLOptionList $optionList, $type, $objectID) {
 		$options = $optionList->getObjects();
@@ -277,11 +277,11 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Fetches ACL option values by type.
 	 * 
-	 * @param	\wcf\data\acl\option\ACLOptionList	$optionList
-	 * @param	string					$type
-	 * @param	array					$objectIDs
-	 * @param	array					$data
-	 * @param	boolean					$settingsView
+	 * @param	ACLOptionList	$optionList
+	 * @param	string		$type
+	 * @param	array		$objectIDs
+	 * @param	array		$data
+	 * @param	boolean		$settingsView
 	 */
 	protected function getValues(ACLOptionList $optionList, $type, array $objectIDs, array &$data, $settingsView) {
 		$data[$type] = [];
@@ -363,7 +363,7 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	string		$categoryName
-	 * @return	\wcf\data\acl\option\ACLOptionList
+	 * @return	ACLOptionList
 	 */
 	public function getOptions($objectTypeID, $categoryName = '') {
 		$optionList = new ACLOptionList();
@@ -385,9 +385,9 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Removes ACL values from database.
 	 * 
-	 * @param	integer						$objectTypeID
-	 * @param	integer[]					$objectIDs
-	 * @param	\wcf\data\acl\option\category\ACLOptionCategory	$category
+	 * @param	integer			$objectTypeID
+	 * @param	integer[]		$objectIDs
+	 * @param	ACLOptionCategory	$category
 	 */
 	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null) {
 		$optionList = $this->getOptions($objectTypeID, $category);

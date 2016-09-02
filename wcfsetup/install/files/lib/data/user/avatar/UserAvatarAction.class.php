@@ -30,7 +30,7 @@ use wcf\util\HTTPRequest;
 class UserAvatarAction extends AbstractDatabaseObjectAction {
 	/**
 	 * currently edited avatar
-	 * @var	\wcf\data\user\avatar\UserAvatarEditor
+	 * @var	UserAvatarEditor
 	 */
 	public $avatar = null;
 	

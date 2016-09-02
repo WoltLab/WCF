@@ -41,10 +41,10 @@ class Installer {
 	/**
 	 * Creates a new Installer object.
 	 * 
-	 * @param	string				$targetDir
-	 * @param	string				$source
-	 * @param	\wcf\system\setup\IFileHandler	$fileHandler
-	 * @param	string				$folder
+	 * @param	string		$targetDir
+	 * @param	string		$source
+	 * @param	IFileHandler	$fileHandler
+	 * @param	string		$folder
 	 */
 	public function __construct($targetDir, $source, $fileHandler = null, $folder = '') {
 		$this->targetDir = FileUtil::addTrailingSlash($targetDir);

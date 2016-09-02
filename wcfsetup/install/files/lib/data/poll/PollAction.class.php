@@ -34,7 +34,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	
 	/**
 	 * poll object
-	 * @var	\wcf\data\poll\Poll
+	 * @var	Poll
 	 */
 	protected $poll = null;
 	

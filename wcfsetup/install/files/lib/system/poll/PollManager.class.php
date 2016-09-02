@@ -44,7 +44,7 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * poll object
-	 * @var	\wcf\data\poll\Poll
+	 * @var	Poll
 	 */
 	protected $poll = null;
 	
@@ -364,8 +364,8 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns a list of poll options with vote state for current user.
 	 * 
-	 * @param	integer[]		$pollIDs
-	 * @return	\wcf\data\poll\option\PollOptionList
+	 * @param	integer[]	$pollIDs
+	 * @return	PollOptionList
 	 */
 	public function getPollOptions(array $pollIDs) {
 		$optionList = new PollOptionList();
@@ -388,7 +388,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns related object for given poll object.
 	 * 
-	 * @param	\wcf\data\poll\Poll	$poll
+	 * @param	Poll	$poll
 	 * @return	\wcf\data\IPollObject
 	 */
 	public function getRelatedObject(Poll $poll) {

@@ -27,13 +27,13 @@ use wcf\system\WCF;
 class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	protected $user = null;
 	
 	/**
 	 * paid subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	protected $subscription = null;
 	
@@ -59,7 +59,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
 	 * Returns the user of this transaction.
 	 * 
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	public function getUser() {
 		if ($this->user === null) {
@@ -72,7 +72,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
 	 * Returns the paid subscription of this transaction.
 	 * 
-	 * @return	\wcf\data\paid\subscription\PaidSubscription
+	 * @return	PaidSubscription
 	 */
 	public function getSubscription() {
 		if ($this->subscription === null) {

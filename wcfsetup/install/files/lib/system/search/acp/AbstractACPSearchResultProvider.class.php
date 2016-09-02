@@ -15,9 +15,9 @@ abstract class AbstractACPSearchResultProvider {
 	/**
 	 * Validates object options and permissions.
 	 * 
-	 * @param	\wcf\data\DatabaseObject	$object
-	 * @param	string				$optionsColumnName
-	 * @param	string				$permissionsColumnName
+	 * @param	DatabaseObject		$object
+	 * @param	string			$optionsColumnName
+	 * @param	string			$permissionsColumnName
 	 * @return	boolean
 	 */
 	protected function validate(DatabaseObject $object, $optionsColumnName = 'options', $permissionsColumnName = 'permissions') {

@@ -39,8 +39,8 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 	/**
 	 * Returns the selected option value(s) for output.
 	 * 
-	 * @param	\wcf\data\user\option\UserOption		$option
-	 * @param	string					$value
+	 * @param	UserOption	$option
+	 * @param	string		$value
 	 * @return	mixed
 	 */
 	protected static function getResult(UserOption $option, $value) {

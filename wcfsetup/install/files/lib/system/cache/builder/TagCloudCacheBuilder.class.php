@@ -113,8 +113,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Compares the weight between two tags.
 	 * 
-	 * @param	\wcf\data\tag\TagCloudTag	$tagA
-	 * @param	\wcf\data\tag\TagCloudTag	$tagB
+	 * @param	TagCloudTag	$tagA
+	 * @param	TagCloudTag	$tagB
 	 * @return	integer
 	 */
 	protected static function compareTags($tagA, $tagB) {

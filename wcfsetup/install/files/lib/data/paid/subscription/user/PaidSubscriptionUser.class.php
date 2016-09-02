@@ -22,7 +22,7 @@ use wcf\system\WCF;
 class PaidSubscriptionUser extends DatabaseObject {
 	/**
 	 * paid subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	protected $subscription = null;
 	
@@ -42,7 +42,7 @@ class PaidSubscriptionUser extends DatabaseObject {
 	/**
 	 * Sets the paid subscription object.
 	 * 
-	 * @param	\wcf\data\paid\subscription\PaidSubscription		$subscription
+	 * @param	PaidSubscription	$subscription
 	 */
 	public function setSubscription(PaidSubscription $subscription) {
 		$this->subscription = $subscription;

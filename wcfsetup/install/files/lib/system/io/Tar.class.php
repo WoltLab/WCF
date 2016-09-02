@@ -46,7 +46,7 @@ class Tar implements IArchive {
 	
 	/**
 	 * file object
-	 * @var	\wcf\system\io\File
+	 * @var	File
 	 */
 	protected $file = null;
 	

@@ -19,7 +19,7 @@ use wcf\util\FileUtil;
 class DiskCacheSource implements ICacheSource {
 	/**
 	 * up-to-date directory util object for the cache folder
-	 * @var	\wcf\util\DirectoryUtil
+	 * @var	DirectoryUtil
 	 */
 	protected $directoryUtil = null;
 	
@@ -172,7 +172,7 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * Returns an up-to-date directory util object for the cache folder.
 	 * 
-	 * @return	\wcf\util\DirectoryUtil
+	 * @return	DirectoryUtil
 	 */
 	protected function getDirectoryUtil() {
 		if ($this->directoryUtil === null) {

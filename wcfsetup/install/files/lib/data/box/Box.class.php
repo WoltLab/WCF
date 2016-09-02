@@ -86,7 +86,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * box controller
-	 * @var	\wcf\system\box\IBoxController
+	 * @var	IBoxController
 	 */
 	protected $controller;
 	

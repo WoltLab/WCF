@@ -64,7 +64,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * object type definition exists.
 	 * 
 	 * @param	integer		$definitionID
-	 * @return	\wcf\data\object\type\definition\ObjectTypeDefinition
+	 * @return	ObjectTypeDefinition
 	 */
 	public function getDefinition($definitionID) {
 		if (isset($this->definitions[$definitionID])) {
@@ -79,7 +79,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * such object type definition exists.
 	 * 
 	 * @param	string		$definitionName
-	 * @return	\wcf\data\object\type\definition\ObjectTypeDefinition
+	 * @return	ObjectTypeDefinition
 	 */
 	public function getDefinitionByName($definitionName) {
 		if (isset($this->definitionsByName[$definitionName])) {
@@ -114,7 +114,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * exists.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypes[$objectTypeID])) {
@@ -144,7 +144,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectTypeName
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectTypeByName($definitionName, $objectTypeName) {
 		if (isset($this->groupedObjectTypes[$definitionName]) && isset($this->groupedObjectTypes[$definitionName][$objectTypeName])) {

@@ -21,7 +21,7 @@ class ACLOption extends DatabaseObject {
 	 * Returns a list of options by object type id.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	\wcf\data\acl\option\ACLOptionList
+	 * @return	ACLOptionList
 	 */
 	public static function getOptions($objectTypeID) {
 		$optionList = new ACLOptionList();

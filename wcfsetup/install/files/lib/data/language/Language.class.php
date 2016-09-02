@@ -35,7 +35,7 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * instance of LanguageEditor
-	 * @var	\wcf\data\language\LanguageEditor
+	 * @var	LanguageEditor
 	 */
 	private $editor = null;
 	

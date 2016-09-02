@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
 class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * list of attachments
-	 * @var	\wcf\data\attachment\GroupedAttachmentList
+	 * @var	GroupedAttachmentList
 	 * @deprecated
 	 */
 	protected static $attachmentList = null;
@@ -138,7 +138,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * Sets the attachment list.
 	 * 
-	 * @param	\wcf\data\attachment\GroupedAttachmentList	$attachmentList
+	 * @param	GroupedAttachmentList	$attachmentList
 	 * @deprecated
 	 */
 	public static function setAttachmentList(GroupedAttachmentList $attachmentList) {

@@ -40,7 +40,7 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	
 	/**
 	 * language editor object
-	 * @var	\wcf\data\language\LanguageEditor
+	 * @var	LanguageEditor
 	 */
 	protected $languageEditor = null;
 	

@@ -441,7 +441,7 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * Checks the required permissions and options of a category.
 	 * 
-	 * @param	\wcf\data\option\category\OptionCategory		$category
+	 * @param	OptionCategory		$category
 	 * @return	boolean
 	 */
 	protected function checkCategory(OptionCategory $category) {
@@ -451,7 +451,7 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * Checks the required permissions and options of an option.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
+	 * @param	Option		$option
 	 * @return	boolean
 	 */
 	protected function checkOption(Option $option) {
@@ -461,7 +461,7 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * Checks visibility of an option.
 	 * 
-	 * @param	\wcf\data\option\Option		$option
+	 * @param	Option		$option
 	 * @return	boolean
 	 */
 	protected function checkVisibility(Option $option) {

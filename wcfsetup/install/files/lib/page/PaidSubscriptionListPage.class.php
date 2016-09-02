@@ -32,7 +32,7 @@ class PaidSubscriptionListPage extends AbstractPage {
 	
 	/**
 	 * list of user subscriptions
-	 * @var	\wcf\data\paid\subscription\user\PaidSubscriptionUserList
+	 * @var	PaidSubscriptionUserList
 	 */
 	public $userSubscriptionList = [];
 	

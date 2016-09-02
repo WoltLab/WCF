@@ -15,7 +15,7 @@ interface ILikeObjectTypeProvider extends IObjectTypeProvider {
 	/**
 	 * Returns true if the active user can access the given likeable object.
 	 * 
-	 * @param	\wcf\data\like\object\ILikeObject	$object
+	 * @param	ILikeObject	$object
 	 * @return	boolean
 	 */
 	public function checkPermissions(ILikeObject $object);

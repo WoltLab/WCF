@@ -29,7 +29,7 @@ class PackageCache extends SingletonFactory {
 	 * Returns a specific package.
 	 * 
 	 * @param	integer		$packageID
-	 * @return	\wcf\data\package\Package
+	 * @return	Package
 	 */
 	public function getPackage($packageID) {
 		if (isset($this->packages['packages'][$packageID])) {
@@ -66,7 +66,7 @@ class PackageCache extends SingletonFactory {
 	 * Returns a specific package.
 	 * 
 	 * @param	string		$package
-	 * @return	\wcf\data\package\Package
+	 * @return	Package
 	 */
 	public function getPackageByIdentifier($package) {
 		$packageID = $this->getPackageID($package);

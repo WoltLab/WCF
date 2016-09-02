@@ -14,9 +14,9 @@ interface IBlockTemplatePlugin {
 	/**
 	 * Executes this template block.
 	 * 
-	 * @param	array					$tagArgs
-	 * @param	string					$blockContent
-	 * @param	\wcf\system\template\TemplateEngine	$tplObj
+	 * @param	array			$tagArgs
+	 * @param	string			$blockContent
+	 * @param	TemplateEngine		$tplObj
 	 * @return	string
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj);
@@ -24,15 +24,15 @@ interface IBlockTemplatePlugin {
 	/**
 	 * Initialises this template block.
 	 * 
-	 * @param	array					$tagArgs
-	 * @param	\wcf\system\template\TemplateEngine	$tplObj
+	 * @param	array			$tagArgs
+	 * @param	TemplateEngine		$tplObj
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj);
 	
 	/**
 	 * This function is called before every execution of this block function.
 	 * 
-	 * @param	\wcf\system\template\TemplateEngine	$tplObj
+	 * @param	TemplateEngine		$tplObj
 	 * @return	boolean
 	 */
 	public function next(TemplateEngine $tplObj);

@@ -28,7 +28,7 @@ class TemplateEditForm extends TemplateAddForm {
 	
 	/**
 	 * template object
-	 * @var	\wcf\data\template\Template
+	 * @var	Template
 	 */
 	public $template = null;
 	

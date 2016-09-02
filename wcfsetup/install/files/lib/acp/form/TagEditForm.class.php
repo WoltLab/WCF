@@ -35,7 +35,7 @@ class TagEditForm extends TagAddForm {
 	
 	/**
 	 * tag object
-	 * @var	\wcf\data\tag\Tag
+	 * @var	Tag
 	 */
 	public $tagObj = null;
 	

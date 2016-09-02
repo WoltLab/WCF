@@ -17,19 +17,19 @@ use wcf\system\email\mime\PlainTextMimePart;
 class SimpleEmail {
 	/**
 	 * the underlying email object
-	 * @var Email
+	 * @var	Email
 	 */
 	private $email = null;
 	
 	/**
 	 * the text/plain version of the message body
-	 * @var \wcf\system\email\mime\PlainTextMimePart
+	 * @var	PlainTextMimePart
 	 */
 	private $textPlain = null;
 	
 	/**
 	 * the text/html version of the message body
-	 * @var \wcf\system\email\mime\HtmlTextMimePart
+	 * @var	HtmlTextMimePart
 	 */
 	private $textHtml = null;
 	

@@ -33,7 +33,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	
 	/**
 	 * edited media provider object
-	 * @var	\wcf\data\bbcode\media\provider\BBCodeMediaProvider
+	 * @var	BBCodeMediaProvider
 	 */
 	public $mediaProvider = null;
 	

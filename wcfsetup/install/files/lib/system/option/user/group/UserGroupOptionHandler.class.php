@@ -24,7 +24,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	
 	/**
 	 * user group object
-	 * @var	\wcf\data\user\group\UserGroup
+	 * @var	UserGroup
 	 */
 	protected $group = null;
 	
@@ -37,7 +37,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	/**
 	 * Sets current user group.
 	 * 
-	 * @param	\wcf\data\user\group\UserGroup	$group
+	 * @param	UserGroup	$group
 	 */
 	public function setUserGroup(UserGroup $group) {
 		$this->group = $group;

@@ -18,7 +18,7 @@ use wcf\util\DateUtil;
 class DebugEmailTransport implements EmailTransport {
 	/**
 	 * mbox file
-	 * @var	\wcf\system\io\File
+	 * @var	File
 	 */
 	protected $mbox = null;
 	
@@ -36,9 +36,9 @@ class DebugEmailTransport implements EmailTransport {
 	/**
 	 * Writes the given $email into the mbox.
 	 * 
-	 * @param	\wcf\system\email\Email		$email
-	 * @param	\wcf\system\email\Mailbox	$envelopeFrom
-	 * @param	\wcf\system\email\Mailbox	$envelopeTo
+	 * @param	Email		$email
+	 * @param	Mailbox		$envelopeFrom
+	 * @param	Mailbox		$envelopeTo
 	 */
 	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		$this->mbox->write("From ".$envelopeFrom->getAddress()." ".DateUtil::getDateTimeByTimestamp(TIME_NOW)->format('D M d H:i:s Y')."\r\n");

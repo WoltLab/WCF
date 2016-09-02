@@ -30,7 +30,7 @@ class SettingsForm extends AbstractForm {
 	
 	/**
 	 * user option handler
-	 * @var	\wcf\system\option\user\UserOptionHandler
+	 * @var	UserOptionHandler
 	 */
 	public $optionHandler = null;
 	

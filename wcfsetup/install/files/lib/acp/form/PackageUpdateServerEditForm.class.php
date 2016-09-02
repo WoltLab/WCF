@@ -23,7 +23,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	
 	/**
 	 * active package update server
-	 * @var	\wcf\data\package\update\server\PackageUpdateServer
+	 * @var	PackageUpdateServer
 	 */
 	public $updateServer = null;
 	
