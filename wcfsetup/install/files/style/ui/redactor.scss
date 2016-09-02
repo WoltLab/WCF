@@ -126,6 +126,11 @@
 			border: 1px solid #ddd;
 			padding: 5px;
 			vertical-align: top;
+			
+			&::before {
+				content: "";
+				display: inline-block;
+			}
 		}
 	}
 }
