@@ -102,7 +102,7 @@ trait TMessageQuickReplyGuestDialogAction {
 			$this->readString('username', false, 'data');
 			
 			if (!UserUtil::isValidUsername($this->parameters['data']['username'])) {
-				throw new UserInputException('username', 'notValid');
+				throw new UserInputException('username', 'invalid');
 			}
 			if (!UserUtil::isAvailableUsername($this->parameters['data']['username'])) {
 				throw new UserInputException('username', 'notUnique');

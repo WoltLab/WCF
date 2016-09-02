@@ -154,17 +154,17 @@ HTML;
 		if ($this->startTime) {
 			$startDateTime = \DateTime::createFromFormat('H:i', $this->startTime);
 			if ($startDateTime === false) {
-				$this->errorMessages['time'] = 'wcf.date.startTime.error.notValid';
+				$this->errorMessages['time'] = 'wcf.date.startTime.error.invalid';
 				
-				throw new UserInputException('startTime', 'notValid');
+				throw new UserInputException('startTime', 'invalid');
 			}
 		}
 		if ($this->endTime) {
 			$endDateTime = \DateTime::createFromFormat('H:i', $this->endTime);
 			if ($endDateTime === false) {
-				$this->errorMessages['time'] = 'wcf.date.endTime.error.notValid';
+				$this->errorMessages['time'] = 'wcf.date.endTime.error.invalid';
 				
-				throw new UserInputException('endTime', 'notValid');
+				throw new UserInputException('endTime', 'invalid');
 			}
 		}
 		
@@ -177,9 +177,9 @@ HTML;
 		}
 		
 		if ($this->timezone && !in_array($this->timezone, DateUtil::getAvailableTimezones())) {
-			$this->errorMessages['timezone'] = 'wcf.global.form.error.notValidSelection';
+			$this->errorMessages['timezone'] = 'wcf.global.form.error.noValidSelection';
 			
-			throw new UserInputException('timezone', 'notValidSelection');
+			throw new UserInputException('timezone', 'noValidSelection');
 		}
 	}
 	

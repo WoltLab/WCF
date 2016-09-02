@@ -75,7 +75,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		$this->validateFolderName();
 		
 		if ($this->parentTemplateGroupID && !isset($this->availableTemplateGroups[$this->parentTemplateGroupID])) {
-			throw new UserInputException('parentTemplateGroupID', 'notValid');
+			throw new UserInputException('parentTemplateGroupID', 'invalid');
 		}
 	}
 	
@@ -107,7 +107,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		}
 		
 		if (!preg_match('/^[a-z0-9_\- ]+\/$/i', $this->templateGroupFolderName)) {
-			throw new UserInputException('templateGroupFolderName', 'notValid');
+			throw new UserInputException('templateGroupFolderName', 'invalid');
 		}
 		
 		$sql = "SELECT	COUNT(*)

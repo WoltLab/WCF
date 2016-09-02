@@ -194,7 +194,7 @@ class AccountManagementForm extends AbstractForm {
 				
 				// checks for forbidden chars (e.g. the ",")
 				if (!UserRegistrationUtil::isValidUsername($this->username)) {
-					throw new UserInputException('username', 'notValid');
+					throw new UserInputException('username', 'invalid');
 				}
 				
 				// checks if user name exists already.
@@ -235,7 +235,7 @@ class AccountManagementForm extends AbstractForm {
 			if (mb_strtolower($this->email) != mb_strtolower(WCF::getUser()->email)) {
 				// check for valid email (one @ etc.)
 				if (!UserRegistrationUtil::isValidEmail($this->email)) {
-					throw new UserInputException('email', 'notValid');
+					throw new UserInputException('email', 'invalid');
 				}
 				
 				// checks if email already exists.

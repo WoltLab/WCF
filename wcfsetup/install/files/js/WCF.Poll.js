@@ -291,7 +291,7 @@ WCF.Poll.Management = Class.extend({
 			var pollMaxVotes = elById('pollMaxVotes_' + this._editorId);
 			var num = ~~pollMaxVotes.value;
 			if (num && num > count) {
-				data.api.throwError(pollMaxVotes, WCF.Language.get('wcf.poll.maxVotes.error.notValid'));
+				data.api.throwError(pollMaxVotes, WCF.Language.get('wcf.poll.maxVotes.error.invalid'));
 				data.valid = false;
 			}
 		}

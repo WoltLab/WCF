@@ -134,17 +134,17 @@ HTML;
 		if (strlen($this->registrationDateStart)) {
 			$registrationDateStart = @strtotime($this->registrationDateStart);
 			if ($registrationDateStart === false) {
-				$this->errorMessage = 'wcf.condition.timestamp.error.startNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.invalidStart';
 				
-				throw new UserInputException('registrationDate', 'startNotValid');
+				throw new UserInputException('registrationDate', 'invalidStart');
 			}
 		}
 		if (strlen($this->registrationDateEnd)) {
 			$registrationDateEnd = @strtotime($this->registrationDateEnd);
 			if ($registrationDateEnd === false) {
-				$this->errorMessage = 'wcf.condition.timestamp.error.endNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.invalidEnd';
 				
-				throw new UserInputException('registrationDate', 'endNotValid');
+				throw new UserInputException('registrationDate', 'invalidEnd');
 			}
 		}
 		

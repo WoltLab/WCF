@@ -133,7 +133,7 @@ class ApplicationEditForm extends AbstractForm {
 			
 			// check if cookie domain shares the same domain (may exclude subdomains)
 			if (!StringUtil::endsWith($regex->replace($this->domainName, ''), $this->cookieDomain)) {
-				throw new UserInputException('cookieDomain', 'notValid');
+				throw new UserInputException('cookieDomain', 'invalid');
 			}
 		}
 		

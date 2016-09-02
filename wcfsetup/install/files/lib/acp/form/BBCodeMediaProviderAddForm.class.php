@@ -80,7 +80,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		$lines = explode("\n", StringUtil::unifyNewlines($this->regex));
 		
 		foreach ($lines as $line) {
-			if (!Regex::compile($line)->isValid()) throw new UserInputException('regex', 'notValid');
+			if (!Regex::compile($line)->isValid()) throw new UserInputException('regex', 'invalid');
 		}
 	}
 	

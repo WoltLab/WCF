@@ -307,7 +307,7 @@ class UserAddForm extends UserOptionListForm {
 		
 		// check for forbidden chars (e.g. the ",")
 		if (!UserUtil::isValidUsername($username)) {
-			throw new UserInputException('username', 'notValid');
+			throw new UserInputException('username', 'invalid');
 		}
 		
 		// Check if username exists already.
@@ -330,7 +330,7 @@ class UserAddForm extends UserOptionListForm {
 		
 		// check for valid email (one @ etc.)
 		if (!UserUtil::isValidEmail($email)) {
-			throw new UserInputException('email', 'notValid');
+			throw new UserInputException('email', 'invalid');
 		}
 		
 		// Check if email exists already.

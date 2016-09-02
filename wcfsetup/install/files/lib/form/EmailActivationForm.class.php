@@ -67,7 +67,7 @@ class EmailActivationForm extends AbstractForm {
 		// check given user id
 		$this->user = new User($this->userID);
 		if (!$this->user->userID) {
-			throw new UserInputException('u', 'notValid');
+			throw new UserInputException('u', 'invalid');
 		}
 		
 		// user is already enabled
@@ -82,7 +82,7 @@ class EmailActivationForm extends AbstractForm {
 		
 		// check given activation code
 		if ($this->user->reactivationCode != $this->activationCode) {
-			throw new UserInputException('a', 'notValid');
+			throw new UserInputException('a', 'invalid');
 		}
 	}
 	

@@ -188,17 +188,17 @@ HTML;
 		if (strlen($this->startTime)) {
 			$startTime = @strtotime($this->startTime);
 			if ($startTime === false) {
-				$this->errorMessage = 'wcf.condition.timestamp.error.startNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.invalidStart';
 				
-				throw new UserInputException($this->getPropertyName(), 'startNotValid');
+				throw new UserInputException($this->getPropertyName(), 'invalidStart');
 			}
 		}
 		if (strlen($this->endTime)) {
 			$endTime = @strtotime($this->endTime);
 			if ($endTime === false) {
-				$this->errorMessage = 'wcf.condition.timestamp.error.endNotValid';
+				$this->errorMessage = 'wcf.condition.timestamp.error.invalidEnd';
 				
-				throw new UserInputException($this->getPropertyName(), 'endNotValid');
+				throw new UserInputException($this->getPropertyName(), 'invalidEnd');
 			}
 		}
 		

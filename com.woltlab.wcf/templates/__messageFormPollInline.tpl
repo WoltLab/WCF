@@ -5,8 +5,8 @@
 			WCF.Language.addObject({
 				'wcf.poll.button.addOption': '{lang}wcf.poll.button.addOption{/lang}',
 				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}',
-				'wcf.poll.endTime.error.notValid': '{lang}wcf.poll.endTime.error.notValid{/lang}',
-				'wcf.poll.maxVotes.error.notValid': '{lang}wcf.poll.maxVotes.error.notValid{/lang}'
+				'wcf.poll.endTime.error.invalid': '{lang}wcf.poll.endTime.error.invalid{/lang}',
+				'wcf.poll.maxVotes.error.invalid': '{lang}wcf.poll.maxVotes.error.invalid{/lang}'
 			});
 			
 			new WCF.Poll.Management(

@@ -141,7 +141,7 @@ class TemplateAddForm extends AbstractForm {
 		}
 		
 		if (!preg_match('/^[a-z0-9_\-]+$/i', $this->tplName)) {
-			throw new UserInputException('tplName', 'notValid');
+			throw new UserInputException('tplName', 'invalid');
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();

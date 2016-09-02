@@ -331,12 +331,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			
 			$category = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
 			if ($category === null) {
-				throw new UserInputException('parentCategoryID', 'notValid');
+				throw new UserInputException('parentCategoryID', 'invalid');
 			}
 			
 			if ($this->objectType->getProcessor()->getMaximumNestingLevel() != -1) {
 				if (count($category->getParentCategories()) + 1 > $this->objectType->getProcessor()->getMaximumNestingLevel()) {
-					throw new UserInputException('parentCategoryID', 'notValid');
+					throw new UserInputException('parentCategoryID', 'invalid');
 				}
 			}
 		}

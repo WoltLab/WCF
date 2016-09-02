@@ -47,7 +47,7 @@ class UserRegistrationAction extends UserAction {
 		if (!UserRegistrationUtil::isValidUsername($this->parameters['username'])) {
 			return [
 				'isValid' => false,
-				'error' => 'notValid'
+				'error' => 'invalid'
 			];
 		}
 		
@@ -72,7 +72,7 @@ class UserRegistrationAction extends UserAction {
 		if (!UserRegistrationUtil::isValidEmail($this->parameters['email'])) {
 			return [
 				'isValid' => false,
-				'error' => 'notValid'
+				'error' => 'invalid'
 			];
 		}
 		

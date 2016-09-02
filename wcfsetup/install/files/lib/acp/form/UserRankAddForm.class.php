@@ -150,7 +150,7 @@ class UserRankAddForm extends AbstractForm {
 		}
 		$userGroup = UserGroup::getGroupByID($this->groupID);
 		if ($userGroup === null || $userGroup->groupType == UserGroup::GUESTS || $userGroup->groupType == UserGroup::EVERYONE) {
-			throw new UserInputException('groupID', 'notValid');
+			throw new UserInputException('groupID', 'invalid');
 		}
 		
 		// css class name
@@ -158,11 +158,11 @@ class UserRankAddForm extends AbstractForm {
 			throw new UserInputException('cssClassName', 'empty');
 		}
 		else if (!in_array($this->cssClassName, $this->availableCssClassNames)) {
-			throw new UserInputException('cssClassName', 'notValid');
+			throw new UserInputException('cssClassName', 'invalid');
 		}
 		else if ($this->cssClassName == 'custom') {
 			if (!empty($this->customCssClassName) && !Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)) {
-				throw new UserInputException('cssClassName', 'notValid');
+				throw new UserInputException('cssClassName', 'invalid');
 			}
 		}
 		

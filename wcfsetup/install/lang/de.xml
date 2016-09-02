@@ -52,7 +52,7 @@
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} diese Einstellungen anpassen, sollte sich die Domain geändert haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du dir{else}Sollten Sie sich{/if} bei dem korrekten Wert nicht sicher sein, {if LANGUAGE_USE_INFORMAL_VARIANT}übernehme{else}übernehmen Sie{/if} bitte die exakte Angabe im Feld „Domain“.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.invalid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Domain an, über die diese App erreichbar ist. Wenn die App zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „www.example.com“ lauten.]]></item>
@@ -98,14 +98,14 @@
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribut]]></item>
 		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[HTML-Code des Attributs]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
-		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern.error.invalid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Attribut muss ausgefüllt sein]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Inhalt übernehmen]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[Soll der Inhalt des BBCodes als Wert für dieses Attribut übernommen werden, wenn es nicht gesetzt ist?]]></item>
 		<item name="wcf.acp.bbcode.attributes"><![CDATA[Attribute]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[Dieser BBCode ist bereits vorhanden.]]></item>
-		<item name="wcf.acp.bbcode.bbcodeTag.error.notValid"><![CDATA[Dieser BBCode ist ungültig.]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.invalid"><![CDATA[Dieser BBCode ist ungültig.]]></item>
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[Klassen-Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
@@ -135,7 +135,7 @@
 			<li><code>(?&lt;ID&gt;[0-9]+)</code> erkennt eine Medium-ID aus Zahlen.</li>
 			<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> erkennt eine alphanumerische Medium-ID.</li>
 		</ul>]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.error.invalid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
@@ -208,7 +208,7 @@
 		<item name="wcf.acp.captcha.question.add"><![CDATA[Captcha-Frage hinzufügen]]></item>
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Antworten]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} pro Zeile eine mögliche Antwort ein. Antworten, die mit „~“ beginnen und enden, werden als reguläre Ausdrücke interpretiert.]]></item>
-		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[Der reguläre Ausdruck „{$invalidRegex}“ ist ungültig.]]></item>
+		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[Der reguläre Ausdruck „{$invalidRegex}“ ist ungültig.]]></item>
 		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Frage <span class="confirmationObject">{$question->question|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Captcha-Frage bearbeiten]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Frage deaktivieren]]></item>
@@ -243,7 +243,7 @@
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
-		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
+		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
 		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Cronjob <span class="confirmationObject">{$cronjob->description|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
@@ -261,7 +261,7 @@
 		<item name="wcf.acp.dataImport"><![CDATA[Datenimport]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[Diese Daten werden bereits importiert.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
-		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[Der ausgewählte Datentyp ist ungültig.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.error.invalid"><![CDATA[Der ausgewählte Datentyp ist ungültig.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[Alle Daten]]></item>
 		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine App beim Skript-Aufruf mittels --packageID={PACKAGE_ID} geladen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Daten für eine App importieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} das Skript mit der ID des entsprechenden Pakets starten. {if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} mit dem Import fortfahren? [YN]]]></item>
 		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Auswahl? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
@@ -299,7 +299,7 @@
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese Zuordnungen <a id="deleteMapping">löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
-		<item name="wcf.acp.dataImport.selectExporter.error.notValid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
+		<item name="wcf.acp.dataImport.selectExporter.error.invalid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[Es wurde keine Datenquelle für einen Datenimport gefunden.]]></item>
 		<item name="wcf.acp.dataImport.started"><![CDATA[Import begonnen.]]></item>
 	</category>
@@ -432,7 +432,7 @@
 		<item name="wcf.acp.group.priority.description"><![CDATA[Bestimmt u.a. die Reihenfolge auf der Team-Seite sowie die Auswahl von Benutzerrängen und „Wer ist online“-Darstellungen auf Basis der höchsten Priorität.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[„Benutzer online“-Darstellung]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die HTML-Formatierung für Mitglieder dieser Benutzergruppe in der „Wer ist online“-Anzeige anpassen. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> stellt Mitglieder dieser Gruppe beispielsweise in Fettdruck dar.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking.error.notValid"><![CDATA[Die Darstellung muss „%s“ enthalten]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.error.invalid"><![CDATA[Die Darstellung muss „%s“ enthalten]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Mitglieder dieser Benutzergruppe auf der Team-Seite anzeigen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Kann Benutzer aktivieren]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Umbenennung]]></item>
@@ -551,7 +551,7 @@
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS-Klassen]]></item>
-		<item name="wcf.acp.label.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
+		<item name="wcf.acp.label.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Label <span class="confirmationObject">{$label}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
@@ -562,7 +562,7 @@
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
 		<item name="wcf.acp.label.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Labelgruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
-		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
+		<item name="wcf.acp.label.group.error.invalid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.label.group.permanentSelection"><![CDATA[Die ausgewählte Labelgruppe kann nachträglich nicht mehr verändert werden.]]></item>
@@ -622,7 +622,7 @@
 		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löscht{else}löschen{/if}.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
 		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Das Kennwort wurde als unsicher eingestuft. Das Kennwort sollte mindestens acht Zeichen lang sein, große und kleine lateinische Buchstaben, Zahlen und Sonderzeichen enthalten. Es darf nicht mit den Kennwörtern von anderen Administratoren übereinstimmen.]]></item>
-		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löscht{else}löschen{/if}.]]></item>
+		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löscht{else}löschen{/if}.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Vorschlag]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
@@ -766,7 +766,7 @@
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Darstellung]]></item>
 		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
 		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Fehlermeldung]]></item>
-		<item name="wcf.acp.notice.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
+		<item name="wcf.acp.notice.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
 		<item name="wcf.acp.notice.cssClassName.success"><![CDATA[Erfolgsmeldung]]></item>
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warnung]]></item>
@@ -1507,7 +1507,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Benutzernamen für Authentifizierung (optional)]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Adresse]]></item>
-		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[Die eingetragene Adresse ist ungültig.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[Die eingetragene Adresse ist ungültig.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Letzter Zugriff]]></item>
 	</category>
@@ -1535,7 +1535,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.smiley.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
-		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist ungültig.]]></item>
+		<item name="wcf.acp.smiley.categoryID.error.invalid"><![CDATA[Die gewählte Kategorie ist ungültig.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
 		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[Dieser Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
@@ -1560,7 +1560,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss"><![CDATA[Überschreiben von SCSS-Variablen]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} innerhalb dieser Eingabe beliebige SCSS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar sind. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: „$variableName: variableValue;“]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Eingabe war ungültig, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} die folgenden Einträge:]]></item>
-		<item name="wcf.acp.style.advanced.overrideScss.error.notValid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
+		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
@@ -1625,7 +1625,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
 		<item name="wcf.acp.style.packageName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier optional den Paketbezeichner in der Form „tld.domain.paketName“ an. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} beispielsweise die Domain „example.com“ gehört und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Stil „Blue Sunrise“ heißt, so wäre „com.example.style.blueSunrise“ ein passender und gültiger Paketbezeichner.]]></item>
-		<item name="wcf.acp.style.packageName.error.notValid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
+		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
 		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit „com.woltlab.“ beginnen]]></item>
 		<item name="wcf.acp.style.protected"><![CDATA[Dieser Stil ist geschützt und kann nur eingeschränkt verändert werden, {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} diesen <a class="jsStaticDialog" data-dialog-id="styleDisableProtection">Schutz aufheben</a>.]]></item>
 		<item name="wcf.acp.style.protected.confirm"><![CDATA[Schutz aufheben]]></item>
@@ -1639,9 +1639,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Templategruppe]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
-		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Pfad eingegeben.]]></item>
-		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Versionsnummer eingegeben.]]></item>
-		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
+		<item name="wcf.acp.style.imagePath.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Pfad eingegeben.]]></item>
+		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Versionsnummer eingegeben.]]></item>
+		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
 	</category>
@@ -1684,13 +1684,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Verzeichnis]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Übergeordnete Templategruppe]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einer anderen Templategruppe verwendet.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
-		<item name="wcf.acp.template.group.parentTemplateGroupID.error.notValid"><![CDATA[Die ausgewählte übergeordnete Templategruppe ist ungültig.]]></item>
+		<item name="wcf.acp.template.group.parentTemplateGroupID.error.invalid"><![CDATA[Die ausgewählte übergeordnete Templategruppe ist ungültig.]]></item>
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Templategruppe <span class="confirmationObject">{$templateGroup->getName()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>
-		<item name="wcf.acp.template.name.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Namen eingegeben.]]></item>
+		<item name="wcf.acp.template.name.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Template <span class="confirmationObject">{$template->templateName}</span> wirklich löschen?]]></item>
 	</category>
 	
@@ -1812,7 +1812,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter <em>System -&gt; O
 		<item name="wcf.acp.user.rank.add"><![CDATA[Benutzerrang hinzufügen]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
-		<item name="wcf.acp.user.rank.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
+		<item name="wcf.acp.user.rank.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzerrang <span class="confirmationObject">{$userRank->rankTitle|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>
@@ -2025,7 +2025,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.category.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
-		<item name="wcf.category.parentCategoryID.error.notValid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
+		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
 		<item name="wcf.category.position"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
@@ -2100,8 +2100,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der „weniger als“-Wert darf nicht größer sein als {#$maxValue}.]]></item>
 		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der „weniger als“-Wert darf nicht kleiner sein als {#$minValue}.]]></item>
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
-		<item name="wcf.condition.timestamp.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
-		<item name="wcf.condition.timestamp.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
+		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[Das Startdatum ist ungültig.]]></item>
+		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[Das Enddatum ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -2285,8 +2285,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.date.timezone.user"><![CDATA[Zeitzone des Benutzers]]></item>
 		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[Der Endzeitpunkt muss nach dem Startzeitpunkt liegen.]]></item>
-		<item name="wcf.date.startTime.error.notValid"><![CDATA[Der Startzeitpunkt ist ungültig.]]></item>
-		<item name="wcf.date.endTime.error.notValid"><![CDATA[Der Endzeitpunkt ist ungültig.]]></item>
+		<item name="wcf.date.startTime.error.invalid"><![CDATA[Der Startzeitpunkt ist ungültig.]]></item>
+		<item name="wcf.date.endTime.error.invalid"><![CDATA[Der Endzeitpunkt ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.edit">
@@ -2515,7 +2515,7 @@ Fehler sind beispielsweise:
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[Alle]]></item>
 		<item name="wcf.label.error.missing"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} ein Label auswählen.]]></item>
-		<item name="wcf.label.error.notValid"><![CDATA[Die Labelauswahl ist ungültig.]]></item>
+		<item name="wcf.label.error.invalid"><![CDATA[Die Labelauswahl ist ungültig.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
 		<item name="wcf.label.none"><![CDATA[Keine Auswahl]]></item>
@@ -2771,12 +2771,12 @@ Fehler sind beispielsweise:
 		<item name="wcf.poll.button.showVote"><![CDATA[Zur Abstimmung]]></item>
 		<item name="wcf.poll.button.vote"><![CDATA[Abstimmen]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Umfrage endet (optional)]]></item>
-		<item name="wcf.poll.endTime.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
+		<item name="wcf.poll.endTime.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Abgegebene Stimmen dürfen verändert werden]]></item>
 		<item name="wcf.poll.isPublic"><![CDATA[Teilnehmer sind sichtbar]]></item>
 		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
-		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
+		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie können{/if} {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
@@ -2849,7 +2849,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.controlPanel"><![CDATA[Kontrollzentrum]]></item>
 		<item name="wcf.user.email"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Diese E-Mail-Adresse ist bereits durch einen anderen Benutzer vergeben.]]></item>
-		<item name="wcf.user.email.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige E-Mail-Adresse eingegeben.]]></item>
+		<item name="wcf.user.email.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige E-Mail-Adresse eingegeben.]]></item>
 		<item name="wcf.user.ipAddress"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[Browser-Kennung]]></item>
 		<item name="wcf.user.login"><![CDATA[Anmeldung]]></item>
@@ -2873,7 +2873,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.username.placeholder"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Benutzernamen ein]]></item>
 		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername {$username} konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
-		<item name="wcf.user.username.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzernamen eingegeben.]]></item>
+		<item name="wcf.user.username.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 		<item name="wcf.user.group"><![CDATA[Benutzergruppe]]></item>
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
@@ -2947,11 +2947,11 @@ haben:</p>]]></item>
 dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} automatisch ablaufen.</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhälst{else}Sie erhalten{/if} in Kürze eine E-Mail mit weiteren Informationen.]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Sicherheitsschlüssel]]></item>
-		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
+		<item name="wcf.user.lostPasswordKey.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort]]></item>
 		<item name="wcf.user.newPassword.info"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} im Begriff das Kennwort des Benutzers „{$user->username}“ zu ändern.]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[Das Kennwort des Benutzers „{$user->username}“ wurde erfolgreich geändert. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dich{else}Sie können sich{/if} nun mit dem neuen Kennwort einloggen.]]></item>
-		<item name="wcf.user.userID.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Benutzer-ID angegeben.]]></item>
+		<item name="wcf.user.userID.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Benutzer-ID angegeben.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bearbeitest dein{else}Sie bearbeiten Ihr{/if} eigenes Benutzerkonto. Unbedachte Änderungen können dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du dich nicht mehr anmelden kannst. Bitte sei entsprechend vorsichtig!{else}Sie sich nicht mehr anmelden können. Bitte seien Sie entsprechend vorsichtig!{/if}]]></item>
 		<item name="wcf.user.accountManagement.password.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib zur Bestätigung dein{else}geben Sie zur Bestätigung Ihr{/if} <u>bisheriges</u> Kennwort ein!]]></item>
@@ -3008,7 +3008,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.registerActivation"><![CDATA[Registrierung abschließen]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[Dieser Benutzer ist bereits freigeschaltet.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich freigeschaltet.]]></item>
-		<item name="wcf.user.activationCode.error.notValid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Aktivierungscode eingegeben. {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke auf den unten stehenden Link, falls du einen neuen Aktivierungscode anfordern möchtest.{else}Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.{/if}]]></item>
+		<item name="wcf.user.activationCode.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Aktivierungscode eingegeben. {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke auf den unten stehenden Link, falls du einen neuen Aktivierungscode anfordern möchtest.{else}Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.{/if}]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[Optional {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} hier eine neue E-Mail-Adresse eintragen, an die der neue Aktivierungscode gesendet werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Lasse{else}Lassen Sie{/if} dieses Feld frei, wenn der Aktivierungscode an die bestehende Adresse geschickt werden soll.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[Eine E-Mail mit dem neuen Aktivierungscode wurde an {$email} versendet.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Die neue E-Mail-Adresse ist bereits aktiviert.]]></item>

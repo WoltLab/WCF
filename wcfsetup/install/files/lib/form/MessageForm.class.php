@@ -249,7 +249,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		}
 		
 		if (!isset($this->availableContentLanguages[$this->languageID])) {
-			throw new UserInputException('languageID', 'notValid');
+			throw new UserInputException('languageID', 'invalid');
 		}
 	}
 	

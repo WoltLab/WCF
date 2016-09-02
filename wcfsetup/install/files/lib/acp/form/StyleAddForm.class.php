@@ -274,7 +274,7 @@ class StyleAddForm extends AbstractForm {
 				DateUtil::validateDate($this->styleDate);
 			}
 			catch (SystemException $e) {
-				throw new UserInputException('styleDate', 'notValid');
+				throw new UserInputException('styleDate', 'invalid');
 			}
 		}
 		
@@ -287,13 +287,13 @@ class StyleAddForm extends AbstractForm {
 			throw new UserInputException('styleVersion');
 		}
 		else if (!Package::isValidVersion($this->styleVersion)) {
-			throw new UserInputException('styleVersion', 'notValid');
+			throw new UserInputException('styleVersion', 'invalid');
 		}
 		
 		// validate style package name
 		if (!empty($this->packageName)) {
 			if (!Package::isValidPackageName($this->packageName)) {
-				throw new UserInputException('packageName', 'notValid');
+				throw new UserInputException('packageName', 'invalid');
 			}
 			
 			// 3rd party styles may never have com.woltlab.* as name
@@ -313,7 +313,7 @@ class StyleAddForm extends AbstractForm {
 		if ($this->imagePath) {
 			$relativePath = FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->imagePath));
 			if (strpos($relativePath, '../') !== false) {
-				throw new UserInputException('imagePath', 'notValid');
+				throw new UserInputException('imagePath', 'invalid');
 			}
 		}
 		
@@ -372,7 +372,7 @@ class StyleAddForm extends AbstractForm {
 			else {
 				// not valid
 				$errors[] = [
-					'error' => 'notValid',
+					'error' => 'invalid',
 					'text' => $line
 				];
 			}

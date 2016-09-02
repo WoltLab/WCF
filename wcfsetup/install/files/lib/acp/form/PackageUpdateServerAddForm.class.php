@@ -67,7 +67,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 		}
 		
 		if (!PackageUpdateServer::isValidServerURL($this->serverURL)) {
-			throw new UserInputException('serverURL', 'notValid');
+			throw new UserInputException('serverURL', 'invalid');
 		}
 	}
 	

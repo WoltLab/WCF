@@ -268,7 +268,7 @@ class ImportCLICommand implements ICLICommand {
 				break;
 			}
 			
-			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.selectExporter.error.notValid'));
+			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.selectExporter.error.invalid'));
 		}
 		
 		$this->exporter = $this->exporters[$this->exporterName]->getProcessor();
@@ -375,7 +375,7 @@ class ImportCLICommand implements ICLICommand {
 				continue;
 			}
 			else {
-				CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.notValid'));
+				CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.invalid'));
 				continue;
 			}
 			
@@ -422,7 +422,7 @@ class ImportCLICommand implements ICLICommand {
 						continue;
 					}
 					else {
-						CLIWCF::getReader()->println('  '.WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.notValid'));
+						CLIWCF::getReader()->println('  '.WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.invalid'));
 						continue;
 					}
 					

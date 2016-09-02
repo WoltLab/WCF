@@ -229,8 +229,8 @@
 						<input type="text" id="attributes[{@$attribute->attributeNo}][validationPattern]" name="attributes[{@$attribute->attributeNo}][validationPattern]" value="{$attribute->validationPattern}" class="long">
 						{if $errorField == 'attributeValidationPattern'|concat:$attribute->attributeNo}
 							<small class="innerError">
-								{if $errorType == 'notValid'}
-									{lang}wcf.acp.bbcode.attribute.validationPattern.error.notValid{/lang}
+								{if $errorType == 'invalid'}
+									{lang}wcf.acp.bbcode.attribute.validationPattern.error.invalid{/lang}
 								{/if}
 							</small>
 						{/if}

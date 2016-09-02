@@ -314,11 +314,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		
 		if (!empty($this->validSortFields)) {
 			if (!in_array($this->sortField, $this->validSortFields)) {
-				throw new UserInputException('sorting', 'sortFieldNotValid');
+				throw new UserInputException('sorting', 'invalidSortField');
 			}
 			
 			if ($this->sortOrder !== 'ASC' && $this->sortOrder !== 'DESC') {
-				throw new UserInputException('sorting', 'sortOrderNotValid');
+				throw new UserInputException('sorting', 'invalidSortOrder');
 			}
 		}
 		

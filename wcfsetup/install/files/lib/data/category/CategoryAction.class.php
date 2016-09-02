@@ -162,7 +162,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		
 		$objectType = CategoryHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
 		if ($objectType === null) {
-			throw new UserInputException('objectTypeID', 'notValid');
+			throw new UserInputException('objectTypeID', 'invalid');
 		}
 		if (!$objectType->getProcessor()->canAddCategory()) {
 			throw new PermissionDeniedException();

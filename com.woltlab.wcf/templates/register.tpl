@@ -25,7 +25,7 @@
 				{if $errorType.username|isset}
 					<small class="innerError">
 						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType.username == 'notValid'}{lang}wcf.user.username.error.notValid{/lang}{/if}
+						{if $errorType.username == 'invalid'}{lang}wcf.user.username.error.invalid{/lang}{/if}
 						{if $errorType.username == 'notUnique'}{lang}wcf.user.username.error.notUnique{/lang}{/if}
 					</small>
 				{/if}
@@ -75,7 +75,7 @@
 				{if $errorType.email|isset}
 					<small class="innerError">
 						{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType.email == 'notValid'}{lang}wcf.user.email.error.notValid{/lang}{/if}
+						{if $errorType.email == 'invalid'}{lang}wcf.user.email.error.invalid{/lang}{/if}
 						{if $errorType.email == 'notUnique'}{lang}wcf.user.email.error.notUnique{/lang}{/if}
 					</small>
 				{/if}
@@ -193,9 +193,9 @@
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
-			'wcf.user.username.error.notValid': '{lang}wcf.user.username.error.notValid{/lang}',
+			'wcf.user.username.error.invalid': '{lang}wcf.user.username.error.invalid{/lang}',
 			'wcf.user.username.error.notUnique': '{lang}wcf.user.username.error.notUnique{/lang}',
-			'wcf.user.email.error.notValid' : '{lang}wcf.user.email.error.notValid{/lang}',
+			'wcf.user.email.error.invalid' : '{lang}wcf.user.email.error.invalid{/lang}',
 			'wcf.user.email.error.notUnique' : '{lang}wcf.user.email.error.notUnique{/lang}',
 			'wcf.user.confirmEmail.error.notEqual' : '{lang}wcf.user.confirmEmail.error.notEqual{/lang}',
 			'wcf.user.password.error.notSecure' : '{lang}wcf.user.password.error.notSecure{/lang}',

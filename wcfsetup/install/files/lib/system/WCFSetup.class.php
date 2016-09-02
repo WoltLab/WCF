@@ -954,7 +954,7 @@ class WCFSetup extends WCF {
 					throw new UserInputException('username');
 				}
 				if (!UserUtil::isValidUsername($username)) {
-					throw new UserInputException('username', 'notValid');
+					throw new UserInputException('username', 'invalid');
 				}
 				
 				// e-mail address
@@ -962,7 +962,7 @@ class WCFSetup extends WCF {
 					throw new UserInputException('email');
 				}
 				if (!UserUtil::isValidEmail($email)) {
-					throw new UserInputException('email', 'notValid');
+					throw new UserInputException('email', 'invalid');
 				}
 				
 				// confirm e-mail address

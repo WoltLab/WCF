@@ -219,7 +219,7 @@ class PollManager extends SingletonFactory {
 		if ($this->pollData['endTime'] && $this->pollData['endTime'] <= TIME_NOW) {
 			if ($this->poll === null || $this->poll->endTime >= TIME_NOW) {
 				// end time is in the past
-				throw new UserInputException('pollEndTime', 'notValid');
+				throw new UserInputException('pollEndTime', 'invalid');
 			}
 		}
 		
@@ -235,7 +235,7 @@ class PollManager extends SingletonFactory {
 		
 		// less options available than allowed
 		if ($count < $this->pollData['maxVotes']) {
-			throw new UserInputException('pollMaxVotes', 'notValid');
+			throw new UserInputException('pollMaxVotes', 'invalid');
 		}
 	}
 	

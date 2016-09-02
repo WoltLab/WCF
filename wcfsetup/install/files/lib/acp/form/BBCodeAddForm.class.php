@@ -159,12 +159,12 @@ class BBCodeAddForm extends AbstractForm {
 		
 		// tag may only contain alphanumeric chars
 		if (!Regex::compile('^[a-z0-9]+$', Regex::CASE_INSENSITIVE)->match($this->bbcodeTag)) {
-			throw new UserInputException('bbcodeTag', 'notValid');
+			throw new UserInputException('bbcodeTag', 'invalid');
 		}
 		
 		// disallow the Pseudo-BBCodes all and none
 		if ($this->bbcodeTag == 'all' || $this->bbcodeTag == 'none') {
-			throw new UserInputException('bbcodeTag', 'notValid');
+			throw new UserInputException('bbcodeTag', 'invalid');
 		}
 		
 		// check whether the tag is in use
@@ -182,7 +182,7 @@ class BBCodeAddForm extends AbstractForm {
 		foreach ($this->attributes as $attribute) {
 			// Check whether the pattern is a valid regex
 			if (!Regex::compile($attribute->validationPattern)->isValid()) {
-				throw new UserInputException('attributeValidationPattern'.$attribute->attributeNo, 'notValid');
+				throw new UserInputException('attributeValidationPattern'.$attribute->attributeNo, 'invalid');
 			}
 		}
 		

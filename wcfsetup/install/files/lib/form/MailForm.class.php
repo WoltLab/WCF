@@ -114,7 +114,7 @@ class MailForm extends AbstractCaptchaForm {
 			}
 			
 			if (!UserUtil::isValidEmail($this->email)) {
-				throw new UserInputException('email', 'notValid');
+				throw new UserInputException('email', 'invalid');
 			}
 		}
 		

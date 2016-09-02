@@ -154,7 +154,7 @@ class CaptchaQuestionAddForm extends AbstractForm {
 					if (!$regexLength || !Regex::compile(mb_substr($answer, 1, $regexLength))->isValid()) {
 						$this->invalidRegex = $answer;
 						
-						throw new UserInputException('answers', 'regexNotValid');
+						throw new UserInputException('answers', 'invalidRegex');
 					}
 				}
 			}
@@ -167,7 +167,7 @@ class CaptchaQuestionAddForm extends AbstractForm {
 					if (!$regexLength || !Regex::compile(mb_substr($answer, 1, $regexLength))->isValid()) {
 						$this->invalidRegex = $answer;
 						
-						throw new UserInputException('answers', 'regexNotValid');
+						throw new UserInputException('answers', 'invalidRegex');
 					}
 				}
 			}

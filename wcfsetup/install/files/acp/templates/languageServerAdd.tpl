@@ -31,7 +31,7 @@
 				{if $errorField == 'server'}
 					<small class="innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'notValid'}{lang}wcf.acp.languageServer.server.error.notValid{/lang}{/if}
+						{if $errorType == 'invalid'}{lang}wcf.acp.languageServer.server.error.invalid{/lang}{/if}
 					</small>
 				{/if}
 				<small>{lang}wcf.acp.languageServer.server.description{/lang}</small>

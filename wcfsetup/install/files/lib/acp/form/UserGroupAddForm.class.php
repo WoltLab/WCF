@@ -124,7 +124,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 				}
 			}
 			if (mb_strpos($this->userOnlineMarking, '%s') === false) {
-				throw new UserInputException('userOnlineMarking', 'notValid');
+				throw new UserInputException('userOnlineMarking', 'invalid');
 			}
 		}
 		catch (UserInputException $e) {

@@ -18,7 +18,7 @@
 				{if $errorField == 'username'}
 					<small class="innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
-						{if $errorType == 'notValid'}{lang}wcf.global.createUser.error.username.notValid{/lang}{/if}
+						{if $errorType == 'invalid'}{lang}wcf.global.createUser.error.username.invalid{/lang}{/if}
 					</small>
 				{/if}
 			</dd>
@@ -31,7 +31,7 @@
 				{if $errorField == 'email'}
 					<small class="innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
-						{if $errorType == 'notValid'}{lang}wcf.global.createUser.error.email.notValid{/lang}{/if}
+						{if $errorType == 'invalid'}{lang}wcf.global.createUser.error.email.invalid{/lang}{/if}
 					</small>
 				{/if}
 			</dd>

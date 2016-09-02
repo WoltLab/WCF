@@ -83,7 +83,7 @@ class RegisterActivationForm extends AbstractForm {
 		
 		// check given activation code
 		if ($this->user->activationCode != $this->activationCode) {
-			throw new UserInputException('activationCode', 'notValid');
+			throw new UserInputException('activationCode', 'invalid');
 		}
 	}
 	

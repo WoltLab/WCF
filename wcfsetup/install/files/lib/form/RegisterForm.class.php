@@ -262,7 +262,7 @@ class RegisterForm extends UserAddForm {
 		
 		// check for min-max length
 		if (!UserRegistrationUtil::isValidUsername($username)) {
-			throw new UserInputException('username', 'notValid');
+			throw new UserInputException('username', 'invalid');
 		}
 	}
 	
@@ -287,7 +287,7 @@ class RegisterForm extends UserAddForm {
 		parent::validateEmail($email, $confirmEmail);
 		
 		if (!UserRegistrationUtil::isValidEmail($email)) {
-			throw new UserInputException('email', 'notValid');
+			throw new UserInputException('email', 'invalid');
 		}
 	}
 	

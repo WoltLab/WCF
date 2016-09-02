@@ -1346,7 +1346,7 @@ WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.ext
 	_validateOptions: function() {
 		var $value = this._element.val();
 		if ($value.length < this._options.minlength || $value.length > this._options.maxlength) {
-			this._showError(this._element, WCF.Language.get('wcf.user.username.error.notValid'));
+			this._showError(this._element, WCF.Language.get('wcf.user.username.error.invalid'));
 			return false;
 		}
 		

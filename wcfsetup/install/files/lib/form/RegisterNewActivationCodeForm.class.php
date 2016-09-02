@@ -115,7 +115,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 			// check whether user entered the same email, instead of leaving the input empty
 			if (mb_strtolower($this->email) != mb_strtolower($this->user->email)) {
 				if (!UserRegistrationUtil::isValidEmail($this->email)) {
-					throw new UserInputException('email', 'notValid');
+					throw new UserInputException('email', 'invalid');
 				}
 				
 				// Check if email exists already.

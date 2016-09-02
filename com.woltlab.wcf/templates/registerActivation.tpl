@@ -24,7 +24,7 @@
 				<input type="text" id="activationCode" maxlength="9" name="activationCode" value="{@$activationCode}" required class="medium">
 				{if $errorField == 'activationCode'}
 					<small class="innerError">
-						{if $errorType == 'notValid'}{lang}wcf.user.activationCode.error.notValid{/lang}{/if}
+						{if $errorType == 'invalid'}{lang}wcf.user.activationCode.error.invalid{/lang}{/if}
 					</small>
 				{/if}
 				<small><a href="{link controller='RegisterNewActivationCode'}{/link}">{lang}wcf.user.newActivationCode{/lang}</a></small>

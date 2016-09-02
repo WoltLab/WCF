@@ -139,7 +139,7 @@ class CronjobAddForm extends AbstractForm {
 				$fieldName = $match[1];
 			}
 			
-			throw new UserInputException($fieldName, 'notValid');
+			throw new UserInputException($fieldName, 'invalid');
 		}
 	}
 	
