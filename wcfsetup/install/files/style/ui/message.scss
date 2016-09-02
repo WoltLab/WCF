@@ -620,3 +620,10 @@
 		}
 	}
 }
+
+@include screen-sm-down {
+	/* allow tables to overflow on small screens */
+	.messageTableOverflow {
+		overflow: auto;
+	}
+}
