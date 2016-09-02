@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\html;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\InvalidObjectTypeException;
 
 /**
  * Default implementation for html processors.
@@ -28,12 +28,12 @@ abstract class AbstractHtmlProcessor implements IHtmlProcessor {
 	 * 
 	 * @param       string          $objectType     object type identifier
 	 * @param       integer         $objectID       object id
-	 * @throws      SystemException
+	 * @throws      InvalidObjectTypeException
 	 */
 	public function setContext($objectType, $objectID) {
 		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType);
 		if ($objectTypeID === null) {
-			throw new SystemException("Invalid object type '" . $objectType . "' for definition 'com.woltlab.wcf.message'.");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.message');
 		}
 		
 		$this->context = [

@@ -4,8 +4,8 @@ use wcf\data\category\CategoryNodeTree;
 use wcf\data\object\type\ObjectType;
 use wcf\page\AbstractPage;
 use wcf\system\category\CategoryHandler;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
@@ -132,7 +132,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
 		if ($this->objectType === null) {
-			throw new SystemException("Unknown category object type with name '".$this->objectTypeName."'");
+			throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.category');
 		}
 		
 		// check permissions

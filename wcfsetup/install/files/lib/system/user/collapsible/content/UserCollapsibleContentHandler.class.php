@@ -2,6 +2,7 @@
 namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -50,12 +51,12 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	string		$objectID
 	 * @return	boolean
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function isCollapsed($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		if ($objectTypeID === null) {
-			throw new SystemException("Unknown object type '".$objectType."' for definition 'com.woltlab.wcf.collapsibleContent'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.collapsibleContent');
 		}
 		
 		return in_array($objectID, $this->getCollapsedContent($objectTypeID));
@@ -257,7 +258,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	public function resetAll($objectType, $objectID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		if (!$objectTypeID) {
-			throw new SystemException("Unknown collapsible object type '".$objectType."'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.collapsibleContent');
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();

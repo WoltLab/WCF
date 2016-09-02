@@ -6,6 +6,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\SystemException;
 use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
@@ -76,7 +77,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	public function removeQueues(array $objectIDs) {
 		$objectTypeID = ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $this->objectType);
 		if ($objectTypeID === null) {
-			throw new SystemException("Object type '".$this->objectType."' is not valid for definition '".$this->definitionName."'");
+			throw new InvalidObjectTypeException($this->objectType, $this->definitionName);
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();

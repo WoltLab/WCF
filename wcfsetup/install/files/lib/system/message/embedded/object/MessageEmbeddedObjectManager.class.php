@@ -3,6 +3,7 @@ namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -147,13 +148,14 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	/**
 	 * Loads the embedded objects for given messages.
 	 * 
-	 * @param	string			$messageObjectType
-	 * @param	integer[]		$messageIDs
+	 * @param	string		$messageObjectType
+	 * @param	integer[]	$messageIDs
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function loadObjects($messageObjectType, array $messageIDs) {
 		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		if ($messageObjectTypeID === null) {
-			throw new \UnexpectedValueException("Expected a valid object type for definition 'com.woltlab.wcf.message'.");
+			throw new InvalidObjectTypeException($messageObjectType, 'com.woltlab.wcf.message');
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();

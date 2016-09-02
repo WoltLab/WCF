@@ -4,7 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\data\tag\TagAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -188,13 +188,13 @@ class TagEngine extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function getObjectTypeID($objectType) {
 		// get object type
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $objectType);
 		if ($objectTypeObj === null) {
-			throw new SystemException("Object type '".$objectType."' is not valid for definition 'com.woltlab.wcf.tagging.taggableObject'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.tagging.taggableObject');
 		}
 		
 		return $objectTypeObj->objectTypeID;

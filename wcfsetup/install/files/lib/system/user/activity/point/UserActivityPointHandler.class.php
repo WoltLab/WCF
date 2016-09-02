@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\SystemException;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\SingletonFactory;
@@ -48,12 +49,12 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * @param	integer		$objectID
 	 * @param	integer		$userID
 	 * @param	mixed[]		$additionalData
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = []) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
 		if ($objectTypeObj === null) {
-			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.user.activityPointEvent');
 		}
 		
 		if ($userID === null) $userID = WCF::getUser()->userID;
@@ -101,12 +102,12 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	integer[]	$itemsToUser
 	 * @param	boolean		$updateUsers
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function fireEvents($objectType, array $itemsToUser, $updateUsers = true) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
 		if ($objectTypeObj === null) {
-			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.user.activityPointEvent');
 		}
 		
 		if (empty($itemsToUser)) {
@@ -151,7 +152,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * 
 	 * @param	string			$objectType
 	 * @param	integer[]		$userToItems
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function removeEvents($objectType, array $userToItems) {
 		if (empty($userToItems)) return;
@@ -159,7 +160,7 @@ class UserActivityPointHandler extends SingletonFactory {
 		// get and validate object type
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
 		if ($objectTypeObj === null) {
-			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.user.activityPointEvent');
 		}
 		
 		// remove activity points
@@ -212,13 +213,13 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Resets activity points and items for a given object type.
 	 * 
 	 * @param	string		$objectType
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function reset($objectType) {
 		// get and validate object type
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
 		if ($objectTypeObj === null) {
-			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.user.activityPointEvent');
 		}
 		
 		$sql = "UPDATE	wcf".WCF_N."_user_activity_point

@@ -3,7 +3,7 @@ namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -117,11 +117,11 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * @param	integer		$objectID
 	 * @param	string		$message
 	 * @param	array		$additionalData
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function addReport($objectType, $objectID, $message, array $additionalData = []) {
 		if (!$this->isValid($objectType)) {
-			throw new SystemException("Object type '".$objectType."' is not valid for definition 'com.woltlab.wcf.moderation.report'");
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.moderation.report');
 		}
 		
 		$additionalData['message'] = $message;
