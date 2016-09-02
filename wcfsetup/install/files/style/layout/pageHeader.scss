@@ -417,13 +417,14 @@
 		
 		&.pageMenuMobileButtonHasContent::after {
 			background-color: rgb(244, 67, 54);
+			border: 2px solid $wcfHeaderBackground;
 			border-radius: 50%;
 			content: "";
-			height: 10px;
+			height: 14px;
 			position: absolute;
-			right: -3px;
-			top: -6px;
-			width: 10px;
+			right: -5px;
+			top: -8px;
+			width: 14px;
 		}
 	}
 	
