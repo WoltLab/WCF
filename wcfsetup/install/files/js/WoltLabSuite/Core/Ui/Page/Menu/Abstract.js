@@ -193,12 +193,12 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				
 				// check whether we touch the edges of the menu
 				if (appearsAt === 'left') {
-					isLeftEdge = !isOpen && (touches[0].pageX < 20);
-					isRightEdge = isOpen && (Math.abs(this._menu.offsetWidth - touches[0].pageX) < 20);
+					isLeftEdge = !isOpen && (touches[0].clientX < 20);
+					isRightEdge = isOpen && (Math.abs(this._menu.offsetWidth - touches[0].clientX) < 20);
 				}
 				else if (appearsAt === 'right') {
-					isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this._menu.offsetWidth - touches[0].pageX) < 20);
-					isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].pageX) < 20);
+					isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this._menu.offsetWidth - touches[0].clientX) < 20);
+					isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].clientX) < 20);
 				}
 				
 				// abort if more than one touch
@@ -226,7 +226,10 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				// break if redactor is in use
 				if (document.documentElement.classList.contains('redactorActive')) return;
 				
-				touchStart = touches[0].pageX;
+				touchStart = {
+					x: touches[0].clientX,
+					y: touches[0].clientY
+				};
 				
 				if (isLeftEdge) _androidTouching = 'left';
 				if (isRightEdge) _androidTouching = 'right';
@@ -247,10 +250,10 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				// last known position of the finger
 				var position;
 				if (event) {
-					position = event.changedTouches[0].pageX;
+					position = event.changedTouches[0].clientX;
 				}
 				else {
-					position = touchStart;
+					position = touchStart.x;
 				}
 				
 				// clean up touch styles
@@ -263,12 +266,12 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				
 				// check whether the user moved the finger far enough
 				if (appearsAt === 'left') {
-					if (_androidTouching === 'left' && position < touchStart + 100) this.close();
-					if (_androidTouching === 'right' && position < touchStart - 100) this.close();
+					if (_androidTouching === 'left' && position < (touchStart.x + 100)) this.close();
+					if (_androidTouching === 'right' && position < (touchStart.x - 100)) this.close();
 				}
 				else if (appearsAt === 'right') {
-					if (_androidTouching === 'left' && position > touchStart + 100) this.close();
-					if (_androidTouching === 'right' && position > touchStart - 100) this.close();
+					if (_androidTouching === 'left' && position > (touchStart.x + 100)) this.close();
+					if (_androidTouching === 'right' && position > (touchStart.x - 100)) this.close();
 				}
 				
 				// reset
@@ -284,13 +287,14 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				
 				// check whether the user started moving in the correct direction
 				// this avoids false positives, in case the user just wanted to tap
-				var movedFromEdge = false;
-				if (_androidTouching === 'left') movedFromEdge = touches[0].pageX > (touchStart + 5);
-				if (_androidTouching === 'right') movedFromEdge = touches[0].pageX < (touchStart - 5);
+				var movedFromEdge = false, movedVertically = false;
+				if (_androidTouching === 'left') movedFromEdge = touches[0].clientX > (touchStart.x + 5);
+				if (_androidTouching === 'right') movedFromEdge = touches[0].clientX < (touchStart.x - 5);
+				movedVertically = Math.abs(touches[0].clientY - touchStart.y) > 30;
 				
 				var isOpen = this._menu.classList.contains('open');
 				
-				if (!isOpen && movedFromEdge) {
+				if (!isOpen && movedFromEdge && !movedVertically) {
 					// the menu is not yet open, but the user moved into the right direction
 					this.open();
 					isOpen = true;
@@ -298,7 +302,7 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				
 				if (isOpen) {
 					// update CSS to the new finger position
-					var position = touches[0].pageX;
+					var position = touches[0].clientX;
 					if (appearsAt === 'right') position = document.body.clientWidth - position;
 					if (position > this._menu.offsetWidth) position = this._menu.offsetWidth;
 					if (position < 0) position = 0;
