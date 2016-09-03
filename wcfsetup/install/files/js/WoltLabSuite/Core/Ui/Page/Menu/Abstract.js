@@ -223,6 +223,8 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 					}
 					if (!found) return;
 				}
+				// break if redactor is in use
+				if (document.documentElement.classList.contains('redactorActive')) return;
 				
 				touchStart = touches[0].pageX;
 				
