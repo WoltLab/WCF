@@ -237,7 +237,12 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				if (!_androidTouching || touchStart === null) return;
 				
 				// break if the menu did not even start opening
-				if (!this._menu.classList.contains('open')) return;
+				if (!this._menu.classList.contains('open')) {
+					// reset
+					touchStart = null;
+					_androidTouching = '';
+					return;
+				}
 				
 				// last known position of the finger
 				var position;
