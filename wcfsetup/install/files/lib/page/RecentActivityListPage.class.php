@@ -53,17 +53,15 @@ class RecentActivityListPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$lastEventTime = $this->eventList->getLastEventTime();
-		
 		// removes orphaned and non-accessible events
 		UserActivityEventHandler::validateEvents($this->eventList);
 		
 		// remove unused items
 		$this->eventList->truncate(20);
-				
+		
 		WCF::getTPL()->assign([
 			'eventList' => $this->eventList,
-			'lastEventTime' => $lastEventTime,
+			'lastEventTime' => $this->eventList->getLastEventTime(),
 			'allowSpidersToIndexThisPage' => true
 		]);
 	}

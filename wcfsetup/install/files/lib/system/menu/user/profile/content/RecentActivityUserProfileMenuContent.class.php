@@ -26,17 +26,14 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
 		$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$userID]);
 		$eventList->readObjects();
 		
-		$lastEventTime = $eventList->getLastEventTime();
-		if ($lastEventTime) {
-			UserActivityEventHandler::validateEvents($eventList);
-		}
+		UserActivityEventHandler::validateEvents($eventList);
 		
 		// remove unused items
 		$eventList->truncate(20);
 		
 		WCF::getTPL()->assign([
 			'eventList' => $eventList,
-			'lastEventTime' => $lastEventTime,
+			'lastEventTime' => $eventList->getLastEventTime(),
 			'placeholder' => WCF::getLanguage()->get('wcf.user.profile.content.recentActivity.noEntries'),
 			'userID' => $userID
 		]);
