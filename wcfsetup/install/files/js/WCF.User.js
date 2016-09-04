@@ -850,8 +850,10 @@ WCF.User.Profile.TabMenu = Class.extend({
 		
 		// insert content, uses non jQuery because DomUtil.insertHtml() moves <script> elements
 		// to the bottom of the element by default which is exactly what is required here
-		require(['Dom/Util'], function(DomUtil) {
+		require(['Dom/ChangeListener', 'Dom/Util'], function(DomChangeListener, DomUtil) {
 			DomUtil.insertHtml(data.returnValues.template, elById($containerID), 'append');
+			
+			DomChangeListener.trigger();
 		});
 	}
 });
