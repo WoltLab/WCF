@@ -263,7 +263,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 				for (var i = 0; i < 4; i++) {
 					size = sizes[i];
 					
-					if (item[size + 'ThumbnailHeight']) {
+					if (item[size + 'ThumbnailHeight'] != 0) {
 						available = size;
 						
 						if (thumbnailSize == size) {
@@ -274,12 +274,14 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 				
 				thumbnailSize = available;
 				
-				if (!thumbnailSize || thumbnailSize === 'original') {
-					this._options.editor.insert.html('<img src="' + item.link + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
+				if (!thumbnailSize) thumbnailSize = 'original';
+				
+				var link = item.link;
+				if (thumbnailSize !== 'original') {
+					link = item[thumbnailSize + 'ThumbnailLink'];
 				}
-				else {
-					this._options.editor.insert.html('<img src="' + item[thumbnailSize + 'ThumbnailLink'] + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
-				}
+				
+				this._options.editor.insert.html('<img src="' + item.link + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
 			}
 			else {
 				this._options.editor.insert.text("[wsm='" + item.mediaID + "'][/wsm]");
