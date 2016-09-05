@@ -40,6 +40,7 @@
 				<xs:all>
 					<xs:element name="title" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="path" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="path2x" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="aliases" type="woltlab_varchar_nullable" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
