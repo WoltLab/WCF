@@ -198,6 +198,9 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			if (block.nodeName.match(/^H\d$/)) {
 				return;
 			}
+			else if (block.closest('ol, ul', this.$editor[0]) !== null) {
+				return;
+			}
 			
 			// handle nested blocks
 			var insertBefore, rect;
