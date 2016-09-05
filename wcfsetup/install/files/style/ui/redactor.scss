@@ -347,18 +347,16 @@
 }
 
 .redactor-link-tooltip {
-	// TODO: background-color: $wcfTooltipBackgroundColor;
-	border-radius: 6px;
-	// TODO: color: $wcfTooltipColor;
-	// TODO: font-size: $wcfSmallFontSize;
+	background-color: $wcfTooltipBackground;
+	border-radius: 2px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	color: $wcfTooltipText;
 	padding: 5px 10px 7px;
 	position: absolute;
 	z-index: 800;
 	
-	@include boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
-	
 	> a {
-		// TODO: color: $wcfTooltipColor;
+		color: $wcfTooltipText;
 	}
 }
 
