@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\language\Language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -232,6 +233,10 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 		}
 		
 		if ($singleValueOnly) {
+			if (isset($matchingValues[LanguageFactory::getInstance()->getDefaultLanguage()->languageCode])) {
+				return $matchingValues[LanguageFactory::getInstance()->getDefaultLanguage()->languageCode];
+			}
+			
 			return array_shift($matchingValues);
 		}
 		
