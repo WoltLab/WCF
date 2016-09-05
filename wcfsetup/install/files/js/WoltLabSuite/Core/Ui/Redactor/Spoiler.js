@@ -65,7 +65,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		 */
 		_observeLoad: function() {
 			elBySelAll('woltlab-spoiler', this._editor.$editor[0], (function(spoiler) {
-				spoiler.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				spoiler.addEventListener('mousedown', this._callbackEdit);
 				this._setTitle(spoiler);
 			}).bind(this));
 		},
@@ -88,6 +88,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			if (event.pageY > offset.top && event.pageY < (offset.top + _headerHeight)) {
 				event.preventDefault();
 				
+				this._editor.selection.save();
 				this._spoiler = spoiler;
 				
 				UiDialog.open(this);
@@ -133,6 +134,10 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			return {
 				id: id,
 				options: {
+					onClose: (function () {
+						this._editor.selection.restore();
+					}).bind(this),
+					
 					onSetup: (function() {
 						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 					}).bind(this),

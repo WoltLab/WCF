@@ -118,7 +118,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			for (var i = 0, length = this._quotes.length; i < length; i++) {
 				quote = this._quotes[i];
 				
-				quote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				quote.addEventListener('mousedown', this._callbackEdit);
 				this._setTitle(quote);
 			}
 		},
@@ -141,6 +141,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			if (event.pageY > offset.top && event.pageY < (offset.top + _headerHeight)) {
 				event.preventDefault();
 				
+				this._editor.selection.save();
 				this._quote = quote;
 				
 				UiDialog.open(this);
@@ -209,6 +210,10 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			return {
 				id: id,
 				options: {
+					onClose: (function () {
+						this._editor.selection.restore();
+					}).bind(this),
+					
 					onSetup: (function() {
 						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 					}).bind(this),
