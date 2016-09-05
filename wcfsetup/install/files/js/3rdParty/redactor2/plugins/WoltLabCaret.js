@@ -171,10 +171,17 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				return;
 			}
 			
-			this.buffer.set();
-			
 			// click occurred onto the empty editor space, but before or after a block element
 			var insertBefore = (event.clientY < block.getBoundingClientRect().top);
+			
+			// check if there is already a paragraph in place
+			var sibling = block[(insertBefore ? 'previous' : 'next') + 'ElementSibling'];
+			if (sibling && sibling.nodeName === 'P') {
+				return;
+			}
+			
+			this.buffer.set();
+			
 			var p = elCreate('p');
 			p.textContent = '\u200B';
 			block.parentNode.insertBefore(p, (insertBefore ? block : block.nextSibling));
