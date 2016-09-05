@@ -52,8 +52,6 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 			@rename($this->parameters['fileLocation'], WCF_DIR.'images/smilies/'.$smileyFilename);
 			
 			$data['smileyPath'] = 'images/smilies/'.$smileyFilename;
-			
-			
 		}
 		if (!empty($this->parameters['fileLocation2x'])) {
 			$smileyFilename2x = 'smiley'.$smiley->smileyID.'@2x.'.mb_strtolower(mb_substr($this->parameters['fileLocation2x'], mb_strrpos($this->parameters['fileLocation2x'], '.') + 1));
