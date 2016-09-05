@@ -19,8 +19,12 @@ define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 		 * @param       {Element}       element         textarea element
 		 */
 		convert: function(element) {
+			element.textContent = this.convertFromHtml(element.textContent);
+		},
+		
+		convertFromHtml: function (html) {
 			var div = elCreate('div');
-			div.innerHTML = element.textContent;
+			div.innerHTML = html;
 			
 			var attributes, data, metacode, metacodes = elByTag('woltlab-metacode', div), name, tagClose, tagOpen;
 			while (metacodes.length) {
@@ -53,7 +57,7 @@ define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 				DomUtil.unwrapChildNodes(metacode);
 			}
 			
-			element.textContent = div.innerHTML;
+			return div.innerHTML;
 		},
 		
 		/**

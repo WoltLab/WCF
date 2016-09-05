@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Quote
  */
-define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader) {
+define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Metacode', './PseudoHeader'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorMetacode, UiRedactorPseudoHeader) {
 	"use strict";
 	
 	var _headerHeight = 0;
@@ -76,6 +76,9 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 				content = '<p>' + content + '</p>';
 				content = content.replace(/\n\n/g, '</p><p>');
 				content = content.replace(/\n/g, '<br>');
+			}
+			else {
+				content = UiRedactorMetacode.convertFromHtml(content);
 			}
 			
 			// bypass the editor as `insert.html()` doesn't like us
