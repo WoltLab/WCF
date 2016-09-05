@@ -18,6 +18,7 @@
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Kann Labels sehen]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Kann Labels setzen]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Kann Artikel lesen]]></item>
 	</category>
 	
 	<category name="wcf.acp.ad">
@@ -77,7 +78,9 @@
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Einsprachiger Artikel]]></item>
+		<item name="wcf.acp.article.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verfasst werden.]]></item>
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Mehrsprachiger Artikel]]></item>
+		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Artikel-Bild]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
@@ -85,6 +88,7 @@
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Zeitgesteuerte Veröffentlichung]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Einleitungstext]]></item>
+		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -155,7 +159,7 @@
 		<item name="wcf.acp.box.i18n.i18n"><![CDATA[Mehrsprachige Box]]></item>
 		<item name="wcf.acp.box.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.box.i18n.none"><![CDATA[Einsprachige Box]]></item>
-		<item name="wcf.acp.box.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verasst werden.]]></item>
+		<item name="wcf.acp.box.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verfasst werden.]]></item>
 		<item name="wcf.acp.box.link"><![CDATA[Verlinkung]]></item>
 		<item name="wcf.acp.box.linkType.none"><![CDATA[Keine]]></item>
 		<item name="wcf.acp.box.linkType.internal"><![CDATA[Interner Link]]></item>
@@ -180,6 +184,21 @@
 		<item name="wcf.acp.box.visibleEverywhere"><![CDATA[Box überall sichtbar]]></item>
 		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Box auf ausgewählten Seiten <strong>explizit anzeigen</strong>]]></item>
 		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Box auf ausgewählten Seiten <strong>nicht anzeigen</strong>]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCategories"><![CDATA[Artikel-Kategorien]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleList"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Benutzer online, denen der aktive Nutzer folgt]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Seiten-Kommentare]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.recentActivityList"><![CDATA[Letzte Aktivitäten]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.registerButton"><![CDATA[Registrierungs-Button]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.signedInAs"><![CDATA[Angemeldet als]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.staffOnlineList"><![CDATA[Team-Mitglieder online]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.statistics"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysBirthdays"><![CDATA[Heutige Geburtstage]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Heutige Geburtstage von Benutzern, denen der aktive Nutzer folgt]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Mitglieder]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Wer war online]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -1342,7 +1361,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Mehrsprachige Seite]]></item>
 		<item name="wcf.acp.page.i18n.i18n.description"><![CDATA[Inhalt, URL und Meta-Daten werden individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.page.i18n.none"><![CDATA[Einsprachige Seite]]></item>
-		<item name="wcf.acp.page.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verasst werden.]]></item>
+		<item name="wcf.acp.page.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verfasst werden.]]></item>
 		<item name="wcf.acp.page.isLandingPage"><![CDATA[Seite ist Startseite]]></item>
 		<item name="wcf.acp.page.isDisabled"><![CDATA[Seite deaktivieren]]></item>
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Letzte Aktualisierung]]></item>

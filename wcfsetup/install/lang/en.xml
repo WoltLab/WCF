@@ -18,6 +18,7 @@
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Can view labels]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Can read articles]]></item>
 	</category>
 	
 	<category name="wcf.acp.ad">
@@ -77,7 +78,9 @@
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Monolingual article]]></item>
+		<item name="wcf.acp.article.i18n.none.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Multilingual article]]></item>
+		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[The content will be provided for each language separately.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
@@ -85,6 +88,7 @@
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
+		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -179,6 +183,21 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.visibleEverywhere"><![CDATA[Visible everywhere]]></item>
 		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Choose Where the Box Will be Explicitly <strong>Visible</strong>]]></item>
 		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Choose Where the Box Will be Explicitly <strong>Hidden</strong>]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCategories"><![CDATA[Article Categories]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleList"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Users Online Followed by Active User]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Page Comments]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.recentActivityList"><![CDATA[Recent Activity]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.registerButton"><![CDATA[Register Button]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.signedInAs"><![CDATA[Signed In As]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.staffOnlineList"><![CDATA[Staff-Members Online]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.statistics"><![CDATA[Statistics]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysBirthdays"><![CDATA[Today’s Birthdays]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Today's Birthdays of Users Followed by Active User]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Members List]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Users Online]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Who Was Online]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
