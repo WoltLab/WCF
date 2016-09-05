@@ -19,6 +19,17 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			this.WoltLabCaret._initInternalRange();
 		},
 		
+		paragraphAfterBlock: function (block) {
+			var sibling = block.nextElementSibling;
+			if (sibling && sibling.nodeName !== 'P') {
+				sibling = elCreate('p');
+				sibling.textContent = '\u200B';
+				block.parentNode.insertBefore(sibling, block.nextSibling);
+			}
+			
+			this.caret.after(block);
+		},
+		
 		endOfEditor: function () {
 			var editor = this.core.editor()[0];
 			

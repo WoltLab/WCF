@@ -1707,7 +1707,7 @@ WCF.Message.Quote.Manager = Class.extend({
 				var button = UiPageAction.get(buttonName);
 				if (button === undefined) {
 					button = elCreate('a');
-					button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+					button.addEventListener('mousedown', this._click.bind(this));
 					
 					UiPageAction.add(buttonName, button);
 				}
@@ -1728,6 +1728,11 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Handles clicks on 'Show quotes'.
 	 */
 	_click: function() {
+		var editor = document.activeElement;
+		if (editor.classList.contains('redactor-editor')) {
+			$(editor.nextElementSibling).redactor('selection.save');
+		}
+		
 		if (this._hasTemplate) {
 			this._dialog.wcfDialog('open');
 		}

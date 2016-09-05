@@ -53,26 +53,23 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		_insertQuote: function (data) {
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'showEditor');
 			
+			var editor = this._editor.core.editor()[0];
+			this._editor.selection.restore();
+			
 			this._editor.buffer.set();
 			
-			// caret must be within a `<p>`, if it is not move it
-			/** @type Node */
+			// caret must be within a `<p>`, if it is not: move it
 			var block = this._editor.selection.block();
-			var redactor = this._editor.core.editor()[0];
-			while (block.parentNode && block.parentNode !== redactor) {
+			
+			
+			while (block && block.parentNode !== editor) {
 				block = block.parentNode;
 			}
 			
-			this._editor.caret.after(block);
-			
-			var quoteId = Core.getUuid();
-			this._editor.insert.html('<woltlab-quote id="' + quoteId + '"></woltlab-quote>');
-			
-			var quote = elById(quoteId);
+			var quote = elCreate('woltlab-quote');
 			elData(quote, 'author', data.author);
 			elData(quote, 'link', data.link);
 			
-			this._editor.selection.restore();
 			var content = data.content;
 			if (data.isText) {
 				content = StringUtil.escapeHTML(content);
@@ -84,9 +81,13 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			// bypass the editor as `insert.html()` doesn't like us
 			quote.innerHTML = content;
 			
-			quote.removeAttribute('id');
+			block.parentNode.insertBefore(quote, block.nextSibling);
 			
-			this._editor.caret.after(quote);
+			if (block.nodeName === 'P' && (block.innerHTML === '<br>' || block.innerHTML.replace(/\u200B/g, '') === '')) {
+				block.parentNode.removeChild(block);
+			}
+			
+			this._editor.WoltLabCaret.paragraphAfterBlock(quote);
 			
 			this._editor.buffer.set();
 		},
