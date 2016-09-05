@@ -146,7 +146,18 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var block = this.selection.block();
 			if (block === false) {
-				return;
+				// check if the caret is now in a <p> before a <table>
+				// which also happens to be the last element
+				if (this.selection.current() === this.$editor[0]) {
+					var node = this.$editor[0].childNodes[this.selection.get().anchorOffset];
+					if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'TABLE') {
+						block = node;
+					}
+				}
+				
+				if (block === false) {
+					return;
+				}
 			}
 			
 			// get block element that received the click
