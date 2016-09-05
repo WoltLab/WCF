@@ -12,6 +12,7 @@
 	word-wrap: break-word;
 	
 	&:not(.redactorCalcHeight)::before {
+		color: $wcfContentLink;
 		content: attr(data-title);
 		cursor: pointer;
 		display: block;

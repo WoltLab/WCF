@@ -39,6 +39,7 @@ woltlab-quote,
 }
 
 woltlab-quote:not(.redactorCalcHeight)::before {
+	color: $wcfContentLink;
 	content: attr(data-title);
 	cursor: pointer;
 	display: block;
