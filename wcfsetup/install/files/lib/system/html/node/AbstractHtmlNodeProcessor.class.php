@@ -53,6 +53,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$this->document = new \DOMDocument('1.0', 'UTF-8');
 		$this->xpath = null;
 		
+		// strip UTF-8 zero-width whitespace
+		$html = preg_replace('~\x{200B}~u', '', $html);
+		
 		// Ignore all errors when loading the HTML string, because DOMDocument does not
 		// provide a proper way to add custom HTML elements (even though explicitly allowed
 		// in HTML5) and the input HTML has already been sanitized by HTMLPurifier.
