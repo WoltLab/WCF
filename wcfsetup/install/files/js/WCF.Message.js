@@ -75,7 +75,14 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 			this._dialog.wcfDialog('open');
 		}
 		
-		this._dialog.children('textarea').select();
+		var textarea = this._dialog.children('textarea')[0];
+		var selectAll = function () {
+			textarea.selectionStart = 0;
+			textarea.selectionEnd = textarea.value.length;
+		};
+		
+		textarea.addEventListener('mouseup', selectAll);
+		window.setTimeout(selectAll, 10);
 	}
 });
 
