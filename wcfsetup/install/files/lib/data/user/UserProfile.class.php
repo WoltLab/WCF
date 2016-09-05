@@ -791,6 +791,15 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Sets the session-based last activity time.
+	 * 
+	 * @param       integer         $timestamp
+	 */
+	public function setSessionLastActivityTime($timestamp) {
+		$this->object->data['sessionLastActivityTime'] = $timestamp;
+	}
+	
+	/**
 	 * Returns an "empty" user profile object for a guest with the given username.
 	 * 
 	 * Such objects can also be used in situations where the relevant user has been deleted
