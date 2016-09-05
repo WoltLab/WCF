@@ -198,7 +198,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			if (block.nodeName.match(/^H\d$/)) {
 				return;
 			}
-			else if (block.closest('ol, ul', this.$editor[0]) !== null) {
+			else if ($(block).closest('ol, ul', this.$editor[0]).length) {
 				return;
 			}
 			
