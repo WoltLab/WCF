@@ -34,6 +34,9 @@
 				<li class="menuOverlayItem jsMenuOverlayItemPlaceholder"><a href="#">(placeholder)</a></li>
 			</ol>
 		</li>
+		
+		{event name='menuItems'}
+		
 		{hascontent}
 			<li class="menuOverlayTitle">{lang}wcf.menu.page.location{/lang}</li>
 			{content}
@@ -51,8 +54,6 @@
 				{/foreach}
 			{/content}
 		{/hascontent}
-		
-		
 	</ol>
 </div>
 
