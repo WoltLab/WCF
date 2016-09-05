@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\html\output\node;
+use wcf\data\smiley\Smiley;
+use wcf\data\smiley\SmileyCache;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\util\exception\CryptoException;
@@ -24,15 +26,35 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	 * @inheritDoc
 	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		if (!MODULE_IMAGE_PROXY) {
-			return;
-		}
-		
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
-			$src = $element->getAttribute('src');
-			if ($src) {
-				$element->setAttribute('src', $this->getProxyLink($src));
+			$class = $element->getAttribute('class');
+			if (preg_match('~\bsmiley\b~', $class)) {
+				$code = $element->getAttribute('alt');
+				
+				/** @var Smiley $smiley */
+				$smiley = SmileyCache::getInstance()->getSmileyByCode($code);
+				if ($smiley === null) {
+					// output as raw code instead
+					$element->parentNode->insertBefore($element->ownerDocument->createTextNode($code), $element);
+					$element->parentNode->removeChild($element);
+				}
+				else {
+					// enforce database values for src, srcset and style
+					$element->setAttribute('src', $smiley->getURL());
+					
+					if ($smiley->getHeight()) $element->setAttribute('style', 'height: ' . $smiley->getHeight() . 'px');
+					else $element->removeAttribute('style');
+					
+					if ($smiley->smileyPath2x) $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
+					else $element->removeAttribute('srcset');
+				}
+			}
+			else if (MODULE_IMAGE_PROXY) {
+				$src = $element->getAttribute('src');
+				if ($src) {
+					$element->setAttribute('src', $this->getProxyLink($src));
+				}
 			}
 		}
 	}

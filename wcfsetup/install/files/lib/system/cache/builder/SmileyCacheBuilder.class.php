@@ -16,7 +16,7 @@ class SmileyCacheBuilder extends AbstractCacheBuilder {
 	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$data = ['smilies' => []];
+		$data = ['codes' => [], 'smilies' => []];
 		
 		// get smilies
 		$sql = "SELECT		*
@@ -30,7 +30,14 @@ class SmileyCacheBuilder extends AbstractCacheBuilder {
 			$object->smileyCodes = $object->getAliases();
 			$object->smileyCodes[] = $object->smileyCode;
 			
+			// this call will cause the image height to be added to the cache
+			$object->getHeight();
+			
 			$data['smilies'][$object->categoryID][$object->smileyID] = $object;
+			
+			foreach ($object->smileyCodes as $smileyCode) {
+				$data['codes'][$smileyCode] = $object;
+			}
 		}
 		
 		return $data;

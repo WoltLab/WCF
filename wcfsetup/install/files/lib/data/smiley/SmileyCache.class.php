@@ -21,6 +21,8 @@ class SmileyCache extends SingletonFactory {
 	 */
 	protected $cachedSmilies = [];
 	
+	protected $cachedSmileyByCode = [];
+	
 	/**
 	 * cached smiley categories
 	 * @var	SmileyCategory[]
@@ -39,6 +41,7 @@ class SmileyCache extends SingletonFactory {
 	protected function init() {
 		// get smiley cache
 		$this->cachedSmilies = SmileyCacheBuilder::getInstance()->getData([], 'smilies');
+		$this->cachedSmileyByCode = SmileyCacheBuilder::getInstance()->getData([], 'codes');
 		$smileyCategories = CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.bbcode.smiley');
 		
 		$this->cachedCategories[null] = new SmileyCategory(new Category(null, [
@@ -62,6 +65,14 @@ class SmileyCache extends SingletonFactory {
 	 */
 	public function getSmilies() {
 		return $this->cachedSmilies;
+	}
+	
+	public function getSmileyByCode($code) {
+		if (isset($this->cachedSmileyByCode[$code])) {
+			return $this->cachedSmileyByCode[$code];
+		}
+		
+		return null;
 	}
 	
 	/**

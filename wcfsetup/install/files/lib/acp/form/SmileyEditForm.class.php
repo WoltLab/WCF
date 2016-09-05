@@ -73,10 +73,12 @@ class SmileyEditForm extends SmileyAddForm {
 				'smileyCode' => $this->smileyCode,
 				'aliases' => $this->aliases,
 				'smileyPath' => $this->smileyPath,
+				'smileyPath2x' => $this->smileyPath2x,
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null
 			]),
-			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : ''
+			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/'.$this->uploadedFilename : '',
+			'fileLocation2x' => $this->uploadedFilename2x ? WCF_DIR.'images/smilies/'.$this->uploadedFilename2x : ''
 		]);
 		$this->objectAction->executeAction();
 		
@@ -101,6 +103,7 @@ class SmileyEditForm extends SmileyAddForm {
 			$this->smileyCode = $this->smiley->smileyCode;
 			$this->aliases = $this->smiley->aliases;
 			$this->smileyPath = $this->smiley->smileyPath;
+			$this->smileyPath2x = $this->smiley->smileyPath2x;
 			$this->showOrder = $this->smiley->showOrder;
 			$this->categoryID = $this->smiley->categoryID;
 		}

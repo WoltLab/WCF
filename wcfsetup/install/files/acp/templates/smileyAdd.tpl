@@ -109,47 +109,98 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.acp.smiley.smileyFile{/lang}</h2>
 		
-		<dl{if $errorField == 'fileUpload'} class="formError"{/if}>
-			<dt><label for="fileUpload">{lang}wcf.acp.smiley.fileUpload{/lang}</label></dt>
-			<dd>
-				{if $uploadedFilename}
-					<img src="{@$__wcf->getPath()}images/smilies/{$uploadedFilename}" alt="">
-					<input type="hidden" name="uploadedFilename" value="{$uploadedFilename}">
-				{/if}
-				<input type="file" id="fileUpload" name="fileUpload" value="">
-				
-				{if $errorField == 'fileUpload'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.smiley.fileUpload.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-				<small>{lang}wcf.acp.smiley.fileUpload.description{/lang}</small>
-			</dd>
-		</dl>
-		
-		<dl{if $errorField == 'smileyPath'} class="formError"{/if}>
-			<dt><label for="smileyPath">{lang}wcf.acp.smiley.smileyPath{/lang}</label></dt>
-			<dd>
-				<input type="text" id="smileyPath" name="smileyPath" value="{$smileyPath}" class="long">
-				
-				{if $errorField == 'smileyPath'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.smiley.smileyPath.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-				<small>{lang}wcf.acp.smiley.smileyPath.description{/lang}</small>
-			</dd>
-		</dl>
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6{if $errorField == 'fileUpload'} formError{/if}">
+				<dt><label for="fileUpload">{lang}wcf.acp.smiley.fileUpload{/lang}</label></dt>
+				<dd>
+					{if $uploadedFilename}
+						<input type="hidden" name="uploadedFilename" value="{$uploadedFilename}">
+					{/if}
+					<input type="file" id="fileUpload" name="fileUpload" value="">
+					
+					{if $errorField == 'fileUpload'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.smiley.fileUpload.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.smiley.fileUpload.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6{if $errorField == 'smileyPath'} formError{/if}">
+				<dt><label for="smileyPath">{lang}wcf.acp.smiley.smileyPath{/lang}</label></dt>
+				<dd>
+					<input type="text" id="smileyPath" name="smileyPath" value="{$smileyPath}" class="long">
+					
+					{if $errorField == 'smileyPath'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.smiley.smileyPath.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.smiley.smileyPath.description{/lang}</small>
+				</dd>
+			</dl>
+		</div>
 		
 		{event name='smileyFileFields'}
+	</section>
+	
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.acp.smiley.smileyFile2x{/lang}</h2>
+			<p class="sectionDescription">{lang}wcf.acp.smiley.smileyFile2x.description{/lang}</p>
+		</header>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-6{if $errorField == 'fileUpload2x'} formError{/if}">
+				<dt><label for="fileUpload2x">{lang}wcf.acp.smiley.fileUpload{/lang}</label></dt>
+				<dd>
+					{if $uploadedFilename2x}
+						<input type="hidden" name="uploadedFilename2x" value="{$uploadedFilename2x}">
+					{/if}
+					<input type="file" id="fileUpload2x" name="fileUpload2x" value="">
+					
+					{if $errorField == 'fileUpload2x'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.smiley.fileUpload.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.smiley.fileUpload.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-6{if $errorField == 'smileyPath2x'} formError{/if}">
+				<dt><label for="smileyPath2x">{lang}wcf.acp.smiley.smileyPath{/lang}</label></dt>
+				<dd>
+					<input type="text" id="smileyPath2x" name="smileyPath2x" value="{$smileyPath2x}" class="long">
+					
+					{if $errorField == 'smileyPath2x'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.smiley.smileyPath.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.smiley.smileyPath.description{/lang}</small>
+				</dd>
+			</dl>
+		</div>
+		
+		{event name='smileyFile2xFields'}
 	</section>
 	
 	{event name='sections'}

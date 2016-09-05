@@ -53,6 +53,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'smileyCode' => $data['attributes']['name'],
 			'smileyTitle' => $data['elements']['title'],
 			'smileyPath' => $data['elements']['path'],
+			'smileyPath2x' => isset($data['elements']['path2x']) ? $data['elements']['path2x'] : '',
 			'aliases' => isset($data['elements']['aliases']) ? $data['elements']['aliases'] : '',
 			'showOrder' => $showOrder
 		];

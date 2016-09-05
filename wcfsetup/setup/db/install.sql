@@ -1119,6 +1119,7 @@ CREATE TABLE wcf1_smiley (
 	packageID INT(10) NOT NULL,
 	categoryID INT(10),
 	smileyPath VARCHAR(255) NOT NULL DEFAULT '',
+	smileyPath2x VARCHAR(255) NOT NULL DEFAULT '',
 	smileyTitle VARCHAR(255) NOT NULL DEFAULT '',
 	smileyCode VARCHAR(191) NOT NULL DEFAULT '',
 	aliases TEXT NOT NULL,

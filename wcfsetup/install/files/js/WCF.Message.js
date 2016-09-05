@@ -719,8 +719,7 @@ WCF.Message.Smilies = Class.extend({
 		
 		require(['EventHandler'], (function(EventHandler) {
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'insertSmiley_' + this._editorId, {
-				code: elData(event.currentTarget, 'smiley-code'),
-				path: elData(event.currentTarget, 'smiley-path')
+				img: event.currentTarget.children[0]
 			});
 		}).bind(this));
 	}
