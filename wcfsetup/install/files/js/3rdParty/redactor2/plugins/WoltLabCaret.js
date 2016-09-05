@@ -140,16 +140,22 @@ $.Redactor.prototype.WoltLabCaret = function() {
 		},
 		
 		_handleEditorClick: function (event) {
-			if (event.target !== this.$editor[0]) {
-				return;
-			}
-			
 			if (!this.selection.get().isCollapsed) {
 				return;
 			}
 			
 			var block = this.selection.block();
 			if (block === false) {
+				return;
+			}
+			
+			// get block element that received the click
+			var targetBlock = event.target;
+			while (targetBlock && !this.utils.isBlockTag(targetBlock.nodeName)) {
+				targetBlock = targetBlock.parentNode;
+			}
+			
+			if (!targetBlock || targetBlock === block) {
 				return;
 			}
 			
@@ -171,12 +177,37 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				return;
 			}
 			
-			// click occurred onto the empty editor space, but before or after a block element
-			var insertBefore = (event.clientY < block.getBoundingClientRect().top);
+			// handle nested blocks
+			var insertBefore, rect;
+			var parent = block;
+			while (parent) {
+				rect = parent.getBoundingClientRect();
+				
+				if (event.clientY < rect.top) {
+					insertBefore = true;
+					block = parent;
+				}
+				else if (event.clientY > rect.bottom) {
+					insertBefore = false;
+					block = parent;
+				}
+				else {
+					break;
+				}
+				
+				if (parent.parentNode && parent.parentNode !== this.$editor[0]) {
+					parent = parent.parentNode;
+				}
+				else {
+					break;
+				}
+			}
 			
 			// check if there is already a paragraph in place
 			var sibling = block[(insertBefore ? 'previous' : 'next') + 'ElementSibling'];
 			if (sibling && sibling.nodeName === 'P') {
+				this.caret.end(sibling);
+				
 				return;
 			}
 			
