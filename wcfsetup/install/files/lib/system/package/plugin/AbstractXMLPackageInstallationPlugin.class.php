@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\language\Language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
