@@ -38,7 +38,7 @@ $.Redactor.prototype.WoltLabLink = function() {
 						return false;
 					}
 					
-					//this.selection.restore();
+					this.selection.restore();
 					
 					// insert or update
 					this.link.insert(link, true);
