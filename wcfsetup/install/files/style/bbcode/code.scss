@@ -7,7 +7,9 @@
 	margin: 1em 0;
 	padding: 10px 20px;
 	position: relative;
-	white-space: pre;
+	white-space: pre-wrap;
+	word-break: break-all;
+	word-wrap: break-word;
 	
 	&:not(.redactorCalcHeight)::before {
 		content: attr(data-title);
