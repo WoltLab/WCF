@@ -35,7 +35,7 @@ class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy
 			return false;
 		}
 		
-		if (!empty($this->fileTypeFilters['isImage']) && ($uploadFile->getImageData() === null || !preg_match('~^image/(gif|jpe?g|png)$~i', $uploadFile->getMimeType()))) {
+		if (!empty($this->fileTypeFilters['isImage']) && $uploadFile->getImageData() === null) {
 			$uploadFile->setValidationErrorType('noImage');
 			return false;
 		}

@@ -165,14 +165,12 @@ class UploadFile {
 	 * @return	array|null
 	 */
 	public function getImageData() {
-		if (strpos($this->getMimeType(), 'image/') == 0) {
-			if (($imageData = @getimagesize($this->getLocation())) !== false) {
-				return [
-					'width' => $imageData[0],
-					'height' => $imageData[1],
-					'mimeType' => $imageData['mime']
-				];
-			}
+		if (($imageData = @getimagesize($this->getLocation())) !== false) {
+			return [
+				'width' => $imageData[0],
+				'height' => $imageData[1],
+				'mimeType' => $imageData['mime']
+			];
 		}
 		
 		return null;
