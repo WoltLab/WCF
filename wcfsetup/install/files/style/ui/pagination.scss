@@ -48,6 +48,16 @@
 					padding: 4px 8px;
 				}
 			}
+			
+			&:first-child {
+				> a,
+				> span {
+					&::before {
+						left: -1px;
+						position: relative;
+					}
+				}
+			}
 		}
 	}
 }
