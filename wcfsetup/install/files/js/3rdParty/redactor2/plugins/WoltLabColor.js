@@ -44,18 +44,26 @@ $.Redactor.prototype.WoltLabColor = function() {
 		setColor: function(key) {
 			key = key.replace(/^color_/, '');
 			
+			this.selection.save();
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.format(this.$editor[0], 'woltlab-color', 'woltlab-color-' + key);
+				
+				this.buffer.set();
 			}).bind(this));
 		},
 		
 		removeColor: function() {
+			this.selection.save();
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-color');
+				
+				this.buffer.set();
 			}).bind(this));
 		}
 	};

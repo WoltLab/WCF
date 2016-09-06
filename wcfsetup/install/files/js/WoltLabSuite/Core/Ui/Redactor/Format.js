@@ -48,7 +48,7 @@ define(['Dom/Util'], function(DomUtil) {
 				document.execCommand('strikethrough');
 			}
 			
-			var elements = elBySelAll('strike', editorElement), formatElement, property, strike;
+			var elements = elBySelAll('strike', editorElement), formatElement, property, selectElements = [], strike;
 			for (var i = 0, length = elements.length; i < length; i++) {
 				strike = elements[i];
 				
@@ -63,6 +63,31 @@ define(['Dom/Util'], function(DomUtil) {
 				}
 				
 				DomUtil.replaceElement(strike, formatElement);
+				selectElements.push(formatElement);
+			}
+			
+			var count = selectElements.length;
+			if (count) {
+				var firstSelectedElement = selectElements[0];
+				var lastSelectedElement = selectElements[count - 1];
+				
+				// check if parent is of the same format type
+				// and contains only the selected nodes
+				if (tmpElement === null && (firstSelectedElement.parentNode === lastSelectedElement.parentNode)) {
+					var parent = firstSelectedElement.parentNode;
+					if (parent.nodeName === tagName.toUpperCase()) {
+						if (this._isBoundaryElement(firstSelectedElement, parent, 'previous') && this._isBoundaryElement(lastSelectedElement, parent, 'next')) {
+							DomUtil.unwrapChildNodes(parent);
+						}
+					}
+				}
+				
+				range = document.createRange();
+				range.setStart(firstSelectedElement, 0);
+				range.setEnd(lastSelectedElement, lastSelectedElement.childNodes.length);
+				
+				selection.removeAllRanges();
+				selection.addRange(range);
 			}
 		},
 		
@@ -209,7 +234,7 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			// the strike element is now some kind of isolated, meaning we can now safely
-			// remove all offending parent nodes without influcing formatting of any content
+			// remove all offending parent nodes without influencing formatting of any content
 			// before or after the element
 			var elements = elByTag(tagName, lastMatchingParent);
 			while (elements.length) {
@@ -240,6 +265,28 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			return match;
+		},
+		
+		/**
+		 * Returns true if provided element is the first or last element
+		 * of its parent, ignoring empty text nodes appearing between the
+		 * element and the boundary.
+		 * 
+		 * @param       {Element}       element         target element
+		 * @param       {Element}       parent          parent element
+		 * @param       {string}        type            traversal direction, can be either `next` or `previous`
+		 * @return      {boolean}       true if element is the non-empty boundary element
+		 * @protected
+		 */
+		_isBoundaryElement: function (element, parent, type) {
+			var node = element;
+			while (node = node[type + 'Sibling']) {
+				if (node.nodeType !== Node.TEXT_NODE || node.textContent.replace(/\u200B/, '') !== '') {
+					return false;
+				}
+			}
+			
+			return true;
 		}
 	};
 });

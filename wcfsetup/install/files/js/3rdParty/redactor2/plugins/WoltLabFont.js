@@ -35,18 +35,26 @@ $.Redactor.prototype.WoltLabFont = function() {
 		},
 		
 		setFont: function(key) {
+			this.selection.save();
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.format(this.$editor[0], 'woltlab-font', 'woltlab-font-' + key);
+				
+				this.buffer.set();
 			}).bind(this));
 		},
 		
 		removeFont: function() {
+			this.selection.save();
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-font');
+				
+				this.buffer.set();
 			}).bind(this));
 		}
 	};

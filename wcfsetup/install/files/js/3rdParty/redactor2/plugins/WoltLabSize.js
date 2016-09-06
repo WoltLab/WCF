@@ -31,22 +31,29 @@ $.Redactor.prototype.WoltLabSize = function() {
 					link.parentNode.classList.add('woltlab-size-selection');
 				}
 			});
-			
 		},
 		
 		setSize: function(key) {
+			this.selection.save();
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.format(this.$editor[0], 'woltlab-size', 'woltlab-size-' + key.replace(/^size_/, ''));
+				
+				this.buffer.set();
 			}).bind(this));
 		},
 		
 		removeSize: function() {
+			this.selection.save();
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
 				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-size');
+				
+				this.buffer.set();
 			}).bind(this));
 		}
 	};
