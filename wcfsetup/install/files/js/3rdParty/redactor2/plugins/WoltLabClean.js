@@ -30,6 +30,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 					html = div.innerHTML;
 				}
 				
+				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
+				
 				html = mpOnSync.call(this, html);
 				
 				div.innerHTML = html;
