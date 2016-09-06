@@ -2,6 +2,7 @@
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
@@ -104,6 +105,11 @@ final class HeaderUtil {
 	 */
 	public static function parseOutput($output) {
 		self::$output = $output;
+		
+		if (RequestHandler::getInstance()->isACPRequest()) {
+			// force javascript relocation
+			self::$output = preg_replace('~<script([^>]*)>~', '<script data-relocate="true"\\1>', self::$output);
+		}
 		
 		// move script tags to the bottom of the page
 		$javascript = [];

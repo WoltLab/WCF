@@ -70,8 +70,8 @@ class Smiley extends DatabaseObject {
 	
 	public function getHtml() {
 		$srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
-		$style = ($this->getHeight()) ? ' style="height: ' . $this->getHeight() . 'px"' : '';
+		$height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
 		
-		return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" class="smiley"' . $srcset . $style . '>';
+		return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" class="smiley"' . $srcset . $height . '>';
 	}
 }

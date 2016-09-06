@@ -107,6 +107,7 @@
 			
 			var config = {
 				buttons: buttons,
+				clipboardImageUpload: false,
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
 				lang: 'wsc', // fake language to offload phrases
@@ -157,7 +158,7 @@
 				linkify: false,
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
-				//placeholder: elData(element, 'placeholder') || '',
+				pasteImages: false,
 				plugins: [
 					// Imperavi
 					'alignment',

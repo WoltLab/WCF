@@ -599,7 +599,7 @@ define(
 		 */
 		_destroyEditor: function() {
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'autosaveDestroy_' + this._getEditorId());
-			EventHandler.fire('com.woltlab.wcf.redactor', 'destroy_' + this._getEditorId());
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'destroy_' + this._getEditorId());
 		},
 		
 		/**
