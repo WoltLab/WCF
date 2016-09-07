@@ -281,7 +281,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 					link = item[thumbnailSize + 'ThumbnailLink'];
 				}
 				
-				this._options.editor.insert.html('<img src="' + item.link + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
+				this._options.editor.insert.html('<img src="' + link + '" class="woltlabSuiteMedia" data-media-id="' + item.mediaID + '" data-media-size="' + thumbnailSize + '">');
 			}
 			else {
 				this._options.editor.insert.text("[wsm='" + item.mediaID + "'][/wsm]");
