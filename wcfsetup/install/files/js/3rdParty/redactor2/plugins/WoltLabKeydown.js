@@ -37,6 +37,39 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				if (isBlockquote) this.keydown.blockquote = isBlockquote;
 			}).bind(this);
 			
+			this.keydown.replaceToParagraph = (function(tag) {
+				var blockElem = this.selection.block();
+				
+				var blockHtml = blockElem.innerHTML.replace(/<br\s?\/?>/gi, '');
+				if (blockElem.tagName === tag && this.utils.isEmpty(blockHtml) && !$(blockElem).hasClass('redactor-in'))
+				{
+					var p = document.createElement('p');
+					$(blockElem).replaceWith(p);
+					
+					// caret to p
+					var range = document.createRange();
+					range.setStart(p, 0);
+					
+					var textNode = document.createTextNode('\u200B');
+					
+					range.insertNode(textNode);
+					range.setStartAfter(textNode);
+					range.collapse(true);
+					
+					var sel = window.getSelection();
+					sel.removeAllRanges();
+					sel.addRange(range);
+					
+					return false;
+				}
+				else if (blockElem.tagName === 'P')
+				{
+					// WoltLab modification: do not remove class, preserving
+					// text alignment
+					$(blockElem)/*.removeAttr('class')*/.removeAttr('style');
+				}
+			}).bind(this);
+			
 			this.keydown.onShiftEnter = (function(e) {
 				this.buffer.set();
 				
