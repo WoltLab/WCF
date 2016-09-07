@@ -311,7 +311,16 @@ define(
 					DomUtil.setInnerHtml(content, html);
 				}
 				else if (html instanceof DocumentFragment) {
-					if (html.children[0].nodeName !== 'div' || html.childElementCount > 1) {
+					var children = [], node;
+					for (var i = 0, length = html.childNodes.length; i < length; i++) {
+						node = html.childNodes[i];
+						
+						if (node.nodeType === Node.ELEMENT_NODE) {
+							children.push(node);
+						}
+					}
+					
+					if (children[0].nodeName !== 'div' || children.length > 1) {
 						content = elCreate('div');
 						content.id = id;
 						content.appendChild(html);
