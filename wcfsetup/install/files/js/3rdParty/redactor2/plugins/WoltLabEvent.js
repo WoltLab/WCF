@@ -11,8 +11,8 @@ $.Redactor.prototype.WoltLabEvent = function() {
 			require(['EventHandler'], (function(EventHandler) {
 				this.WoltLabEvent._setEvents(EventHandler);
 				
-				var uuid = EventHandler.add('com.woltlab.wcf.redactor2', 'showEditor', (function (data) {
-					
+				EventHandler.add('com.woltlab.wcf.redactor2', 'destroy_' + this._elementId, (function () {
+					EventHandler.removeAllBySuffix('com.woltlab.wcf.redactor2', this._elementId);
 				}).bind(this))
 			}).bind(this));
 			

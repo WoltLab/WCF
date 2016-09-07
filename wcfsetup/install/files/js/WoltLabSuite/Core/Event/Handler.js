@@ -109,6 +109,29 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 			else {
 				actions['delete'](action);
 			}
+		},
+		
+		/**
+		 * Removes all listeners registered for an identifer and ending with a special suffix.
+		 * This is commonly used to unbound event handlers for the editor.
+		 * 
+		 * @param       {string}        identifier      event identifier
+		 * @param       {string}        suffix          action suffix
+		 */
+		removeAllBySuffix: function (identifier, suffix) {
+			var actions = _listeners.get(identifier);
+			if (actions === undefined) {
+				return;
+			}
+			
+			suffix = '_' + suffix;
+			var length = suffix.length * -1;
+			actions.forEach((function (callbacks, action) {
+				//noinspection JSUnresolvedFunction
+				if (action.substr(length) === suffix) {
+					this.removeAll(identifier, action);
+				}
+			}).bind(this));
 		}
 	};
 });
