@@ -44,6 +44,10 @@
 	
 	.htmlContent {
 		@include clearfix;
+		
+		img {
+			max-width: 100%;
+		}
 	}
 }
 
