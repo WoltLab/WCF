@@ -27,7 +27,96 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
-			var mpOnEnter = this.keydown.onEnter;
+			var mpOnEnter = (function(e) {
+				var stop = this.core.callback('enter', e);
+				if (stop === false) {
+					e.preventDefault();
+					return false;
+				}
+				
+				// blockquote exit
+				if (this.keydown.blockquote && this.keydown.exitFromBlockquote(e) === true) {
+					return false;
+				}
+				
+				// pre
+				if (this.keydown.pre) {
+					return this.keydown.insertNewLine(e);
+				}
+				// blockquote & figcaption
+				else if (this.keydown.blockquote || this.keydown.figcaption) {
+					return this.keydown.insertBreakLine(e);
+				}
+				// figure
+				else if (this.keydown.figure) {
+					setTimeout($.proxy(function () {
+						this.keydown.replaceToParagraph('FIGURE');
+						
+					}, this), 1);
+				}
+				// paragraphs
+				else if (this.keydown.block) {
+					setTimeout($.proxy(function () {
+						this.keydown.replaceToParagraph('DIV');
+						
+					}, this), 1);
+					
+					// empty list exit
+					if (this.keydown.block.tagName === 'LI') {
+						var current = this.selection.current();
+						var $parent = $(current).closest('li', this.$editor[0]);
+						// WoltLab modification: this was a call to $.parents() that did
+						// escape Redactor
+						var $list = $parent.parentsUntil(this.$editor[0], 'ul,ol').last();
+						
+						if ($parent.length !== 0 && this.utils.isEmpty($parent.html()) && $list.next().length === 0 && this.utils.isEmpty($list.find("li").last().html())) {
+							$list.find("li").last().remove();
+							
+							var node = $(this.opts.emptyHtml);
+							$list.after(node);
+							this.caret.start(node);
+							
+							return false;
+						}
+					}
+					
+				}
+				// outside
+				else if (!this.keydown.block) {
+					return this.keydown.insertParagraph(e);
+				}
+				
+				// firefox enter into inline element
+				if (this.detect.isFirefox() && this.utils.isInline(this.keydown.parent)) {
+					this.keydown.insertBreakLine(e);
+					return;
+				}
+				
+				// remove inline tags in new-empty paragraph
+				setTimeout($.proxy(function () {
+					var inline = this.selection.inline();
+					if (inline && this.utils.isEmpty(inline.innerHTML)) {
+						var parent = this.selection.block();
+						$(inline).remove();
+						//this.caret.start(parent);
+						
+						var range = document.createRange();
+						range.setStart(parent, 0);
+						
+						var textNode = document.createTextNode('\u200B');
+						
+						range.insertNode(textNode);
+						range.setStartAfter(textNode);
+						range.collapse(true);
+						
+						var sel = window.getSelection();
+						sel.removeAllRanges();
+						sel.addRange(range);
+					}
+					
+				}, this), 1);
+			}).bind(this);
+			
 			this.keydown.onEnter = (function(e) {
 				var isBlockquote = this.keydown.blockquote;
 				if (isBlockquote) this.keydown.blockquote = false;
