@@ -14,7 +14,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				mpAfter.call(this, node);
 			}).bind(this);
 			
-			this.$editor[0].addEventListener('mouseup', this.WoltLabCaret._handleEditorClick.bind(this));
+			this.$editor[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabCaret._handleEditorClick.bind(this));
 			
 			this.WoltLabCaret._initInternalRange();
 		},
@@ -132,9 +132,13 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var mpHtml = this.insert.html;
 			this.insert.html = (function (html, data) {
+				var hasMarker = elBySel('.redactor-selection-marker', this.$editor[0]);
+				
 				mpHtml.call(this, html, data);
 				
-				saveRange();
+				if (hasMarker || elBySel('.redactor-selection-marker', this.$editor[0]) === null) {
+					saveRange();
+				}
 			}).bind(this);
 			
 			require(['Environment'], (function (Environment) {
@@ -151,10 +155,6 @@ $.Redactor.prototype.WoltLabCaret = function() {
 		},
 		
 		_handleEditorClick: function (event) {
-			if (!this.selection.get().isCollapsed) {
-				return;
-			}
-			
 			var block = this.selection.block();
 			if (block === false) {
 				// check if the caret is now in a <p> before a <table>
