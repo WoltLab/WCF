@@ -121,9 +121,11 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				var isBlockquote = this.keydown.blockquote;
 				if (isBlockquote) this.keydown.blockquote = false;
 				
-				mpOnEnter.call(this, e);
+				var returnValue = mpOnEnter.call(this, e);
 				
 				if (isBlockquote) this.keydown.blockquote = isBlockquote;
+				
+				return returnValue;
 			}).bind(this);
 			
 			this.keydown.replaceToParagraph = (function(tag) {
