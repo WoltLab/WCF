@@ -198,28 +198,59 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				return null;
 			}
 			
+			// check if there is an '@' within the current range
+			if (selection.anchorNode.textContent.indexOf('@') === -1) {
+				return null;
+			}
+			
 			var originalRange = selection.getRangeAt(0).cloneRange();
 			
 			// mark the entire text, starting from the '@' to the current cursor position
 			var newRange = document.createRange();
 			
-			var startContainer = originalRange.startContainer;
-			var startOffset = originalRange.startOffset - (this._mentionStart.length + 1);
+			var endContainer = originalRange.startContainer;
+			var endOffset = originalRange.startOffset;
 			
-			if (startContainer.nodeType === Node.ELEMENT_NODE) {
-				startContainer = startContainer.childNodes[originalRange.startOffset];
-				startOffset = startContainer.length - (this._mentionStart.length + 1);
-			}
-			
-			// navigating with the keyboard before hitting enter will cause the text node to be split
-			if (startOffset < 0) {
-				startContainer = startContainer.previousSibling;
-				if (!startContainer || startContainer.nodeType !== Node.TEXT_NODE) {
-					// selection is no longer where it used to be
+			// find the appropriate end location
+			while (endContainer.nodeType === Node.ELEMENT_NODE) {
+				if (endOffset === 0 && endContainer.childNodes.length === 0) {
+					// invalid start location
 					return null;
 				}
 				
-				startOffset = startContainer.length - (this._mentionStart.length + 1) - (originalRange.startOffset - 1);
+				// startOffset for elements will always be after a node index
+				// or at the very start, which means if there is only text node
+				// and the caret is after it, startOffset will equal `1`
+				endContainer = endContainer.childNodes[(endOffset ? endOffset - 1 : 0)];
+				if (endOffset > 0) {
+					if (endContainer.nodeType === Node.TEXT_NODE) {
+						endOffset = endContainer.textContent.length;
+					}
+					else {
+						endOffset = endContainer.childNodes.length;
+					}
+				}
+			}
+			
+			var startContainer = endContainer;
+			var startOffset = -1;
+			while (startContainer !== null) {
+				if (startContainer.nodeType !== Node.TEXT_NODE) {
+					return null;
+				}
+				
+				if (startContainer.textContent.indexOf('@') !== -1) {
+					startOffset = startContainer.textContent.lastIndexOf('@');
+					
+					break;
+				}
+				
+				startContainer = startContainer.previousSibling;
+			}
+			
+			if (startOffset === -1) {
+				// there was a non-text node that was in our way
+				return null;
 			}
 			
 			try {
@@ -227,7 +258,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				newRange.setEnd(originalRange.startContainer, originalRange.startOffset);
 			}
 			catch (e) {
-				console.debug(e);
+				window.console.debug(e);
 				return null;
 			}
 			
@@ -241,7 +272,6 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			
 			return {
 				newRange: newRange,
-				originalRange: originalRange,
 				selection: selection
 			};
 		},
