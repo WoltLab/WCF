@@ -180,6 +180,21 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				return mpOnTab.call(this, e, key);
 			}).bind(this);
 			
+			var mpFormatEmpty = this.keydown.formatEmpty;
+			this.keydown.formatEmpty = (function (e) {
+				// check if there are block elements other than <p>
+				var editor = this.$editor[0], node;
+				for (var i = 0, length = editor.childElementCount; i < length; i++) {
+					node = editor.children[i];
+					if (node.nodeName !== 'P' && this.utils.isBlockTag(node.nodeName)) {
+						// there is at least one block element, treat as non-empty
+						return;
+					}
+				}
+				
+				return mpFormatEmpty.call(this, e);
+			}).bind(this);
+			
 			require(['Core', 'Environment'], (function (Core, Environment) {
 				if (Environment.platform() !== 'desktop') {
 					// ignore mobile devices
