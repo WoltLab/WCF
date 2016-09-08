@@ -13,6 +13,12 @@ use wcf\system\request\ControllerMap;
  */
 class StaticRequestRoute extends DynamicRequestRoute {
 	/**
+	 * controller must be present and match the static controller
+	 * @var boolean
+	 */
+	protected $matchController = false;
+	
+	/**
 	 * static application identifier
 	 * @var	string
 	 */
@@ -33,6 +39,16 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	}
 	
 	/**
+	 * Controller must be part of the url and match the static controller, useful
+	 * for controllers requiring a custom set of additional parameters.
+	 * 
+	 * @param       boolean         $matchController
+	 */
+	public function setMatchController($matchController) {
+		$this->matchController = $matchController;
+	}
+	
+	/**
 	 * Sets the static controller for this route.
 	 *
 	 * @param	string		$application
@@ -49,6 +65,10 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	 * @inheritDoc
 	 */
 	public function buildLink(array $components) {
+		if ($this->matchController) {
+			return parent::buildLink($components);
+		}
+		
 		// static routes don't have these components
 		unset($components['application']);
 		unset($components['controller']);
@@ -74,8 +94,13 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	 */
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {
+			$controller = ControllerMap::getInstance()->lookup($this->staticApplication, $this->staticController);
+			if ($this->matchController && $this->routeData['controller'] !== $controller) {
+				return false;
+			}
+			
 			$this->routeData['application'] = $this->staticApplication;
-			$this->routeData['controller'] = ControllerMap::getInstance()->lookup($this->staticApplication, $this->staticController);
+			$this->routeData['controller'] = $controller;
 			$this->routeData['isDefaultController'] = false;
 			
 			return true;
