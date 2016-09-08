@@ -132,7 +132,7 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 			
 			var wasFixed = _isFixed;
 			
-			_isFixed = (window.scrollY > _triggerHeight);
+			_isFixed = (window.pageYOffset > _triggerHeight);
 			
 			_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
 			_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');
