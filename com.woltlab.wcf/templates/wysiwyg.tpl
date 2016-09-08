@@ -236,7 +236,13 @@
 						content = '<p><br></p>';
 					}
 					
-					$(element).redactor('code.set', content);
+					var redactor = $(element).data('redactor');
+					
+					// set code
+					redactor.code.start(content);
+					
+					// set value
+					redactor.core.textarea().val(redactor.clean.onSync(redactor.$editor.html()));
 				}, 10);
 			};
 			
