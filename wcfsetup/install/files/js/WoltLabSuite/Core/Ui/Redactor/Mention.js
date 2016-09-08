@@ -76,7 +76,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			}
 			
 			var text = this._getTextLineInFrontOfCaret();
-			if (text.length) {
+			if (text.length > 0 && text.length < 25) {
 				var match = text.match(/@([^,]{3,})$/);
 				if (match) {
 					// if mentioning is at text begin or there's a whitespace character
@@ -112,20 +112,12 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 		},
 		
 		_getTextLineInFrontOfCaret: function() {
-			/** @var Range range */
-			var range = window.getSelection().getRangeAt(0);
-			if (!range.collapsed) {
-				return '';
+			var data = this._selectMention(false);
+			if (data !== null) {
+				return data.range.cloneContents().textContent.replace(/\u200B/g, '').replace(/\u00A0/g, ' ').trim();
 			}
 			
-			// in Firefox, blurring and refocusing the browser creates separate text nodes
-			if (Environment.browser() === 'firefox' && range.startContainer.nodeType === Node.TEXT_NODE) {
-				range.startContainer.parentNode.normalize();
-			}
-			
-			var text = range.startContainer.textContent.substr(0, range.startOffset);
-			
-			return text.replace(/\u200B/g, '').replace(/\u00A0/g, '');
+			return '';
 		},
 		
 		_getDropdownMenuPosition: function() {
@@ -137,7 +129,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			this._redactor.selection.save();
 			
 			data.selection.removeAllRanges();
-			data.selection.addRange(data.newRange);
+			data.selection.addRange(data.range);
 			
 			// get the offsets of the bounding box of current text selection
 			var rect = data.selection.getRangeAt(0).getBoundingClientRect();
@@ -173,13 +165,13 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			this._redactor.buffer.set();
 			
 			data.selection.removeAllRanges();
-			data.selection.addRange(data.newRange);
+			data.selection.addRange(data.range);
 			
 			var range = getSelection().getRangeAt(0);
 			range.deleteContents();
 			range.collapse(true);
 			
-			var text = document.createTextNode('@' + elData(item, 'username') + ' ');
+			var text = document.createTextNode('@' + elData(item, 'username') + '\u00A0');
 			range.insertNode(text);
 			
 			range = document.createRange();
@@ -192,7 +184,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			this._hideDropdown();
 		},
 		
-		_selectMention: function () {
+		_selectMention: function (skipCheck) {
 			var selection = window.getSelection();
 			if (!selection.rangeCount || !selection.isCollapsed) {
 				return null;
@@ -203,13 +195,9 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				return null;
 			}
 			
-			var originalRange = selection.getRangeAt(0).cloneRange();
-			
-			// mark the entire text, starting from the '@' to the current cursor position
-			var newRange = document.createRange();
-			
-			var endContainer = originalRange.startContainer;
-			var endOffset = originalRange.startOffset;
+			var range = selection.getRangeAt(0);
+			var endContainer = range.startContainer;
+			var endOffset = range.startOffset;
 			
 			// find the appropriate end location
 			while (endContainer.nodeType === Node.ELEMENT_NODE) {
@@ -254,24 +242,47 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			}
 			
 			try {
-				newRange.setStart(startContainer, startOffset);
-				newRange.setEnd(originalRange.startContainer, originalRange.startOffset);
+				// mark the entire text, starting from the '@' to the current cursor position
+				range = document.createRange();
+				range.setStart(startContainer, startOffset);
+				range.setEnd(endContainer, endOffset);
 			}
 			catch (e) {
 				window.console.debug(e);
 				return null;
 			}
 			
-			// check if new range includes the mention text
-			var div = elCreate('div');
-			div.appendChild(newRange.cloneContents());
-			if (div.textContent.replace(/\u200B/g, '').replace(/\u00A0/g, '').trim().replace(/^@/, '') !== this._mentionStart) {
-				// string mismatch
-				return null;
+			if (skipCheck === false) {
+				// check if the `@` occurs at the very start of the container
+				// or at least has a whitespace in front of it
+				var text = '';
+				if (startOffset) {
+					text = startContainer.textContent.substr(0, startOffset);
+				}
+				
+				while (startContainer = startContainer.previousSibling) {
+					if (startContainer.nodeType === Node.TEXT_NODE) {
+						text = startContainer.textContent + text;
+					}
+					else {
+						break;
+					}
+				}
+				
+				if (text.replace(/\u200B/g, '').match(/\S$/)) {
+					return null;
+				}
+			}
+			else {
+				// check if new range includes the mention text
+				if (range.cloneContents().textContent.replace(/\u200B/g, '').replace(/\u00A0/g, '').trim().replace(/^@/, '') !== this._mentionStart) {
+					// string mismatch
+					return null;
+				}
 			}
 			
 			return {
-				newRange: newRange,
+				range: range,
 				selection: selection
 			};
 		},
