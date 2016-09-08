@@ -43,6 +43,11 @@ define(
 			_container.classList.add('dialogOverlay');
 			elAttr(_container, 'aria-hidden', 'true');
 			_container.addEventListener(WCF_CLICK_EVENT, this._closeOnBackdrop.bind(this));
+			_container.addEventListener('wheel', function (event) {
+				if (event.target === _container) {
+					event.preventDefault();
+				}
+			});
 			
 			elById('content').appendChild(_container);
 			
@@ -303,6 +308,16 @@ define(
 			if (options.disableContentPadding) contentContainer.classList.add('dialogContentNoPadding');
 			dialog.appendChild(contentContainer);
 			
+			contentContainer.addEventListener('wheel', function (event) {
+				// positive value: scrolling up
+				if (event.wheelDelta > 0 && contentContainer.scrollTop === 0) {
+					event.preventDefault();
+				}
+				else if (event.wheelDelta < 0 && (contentContainer.scrollTop + contentContainer.clientHeight === contentContainer.scrollHeight)) {
+					event.preventDefault();
+				}
+			});
+			
 			var content;
 			if (element === null) {
 				if (typeof html === 'string') {
@@ -437,7 +452,7 @@ define(
 				formSubmit.classList.add('dialogFormSubmit');
 				
 				unavailableHeight += DomUtil.outerHeight(formSubmit);
-				contentContainer.style.setProperty('margin-bottom', unavailableHeight + 'px');
+				contentContainer.style.setProperty('margin-bottom', unavailableHeight + 'px', '');
 			}
 			else {
 				contentContainer.classList.remove('dialogForm');
@@ -447,12 +462,12 @@ define(
 			unavailableHeight += DomUtil.outerHeight(data.header);
 			
 			var maximumHeight = (window.innerHeight * (_dialogFullHeight ? 1 : 0.8)) - unavailableHeight;
-			contentContainer.style.setProperty('max-height', ~~maximumHeight + 'px');
+			contentContainer.style.setProperty('max-height', ~~maximumHeight + 'px', '');
 			
 			// fix for a calculation bug in Chrome causing the scrollbar to overlap the border
 			if (Environment.browser() === 'chrome') {
 				if (data.content.scrollHeight > maximumHeight) {
-					data.content.style.setProperty('margin-right', '-1px');
+					data.content.style.setProperty('margin-right', '-1px', '');
 				}
 				else {
 					data.content.style.removeProperty('margin-right');
