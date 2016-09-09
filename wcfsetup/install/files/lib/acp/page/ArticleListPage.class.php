@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\article\Article;
 use wcf\data\article\ArticleList;
 use wcf\data\article\ViewableArticleList;
 use wcf\data\category\CategoryNodeTree;
@@ -38,7 +39,7 @@ class ArticleListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $neededPermissions = ['admin.content.article.canManageArticle'];
+	public $neededPermissions = ['admin.content.article.canManageArticle', 'admin.content.article.canContributeArticle'];
 	
 	/**
 	 * @inheritDoc
@@ -122,6 +123,11 @@ class ArticleListPage extends SortablePage {
 		}
 		if (!empty($this->content)) {
 			$this->objectList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf'.WCF_N.'_article_content WHERE content LIKE ?)', ['%'.$this->content.'%']);
+		}
+		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			// only show own articles
+			$this->objectList->getConditionBuilder()->add('article.userID = ?', [WCF::getUser()->userID]);
+			$this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::UNPUBLISHED]);
 		}
 		
 		$this->objectList->sqlSelects = "(SELECT title FROM wcf".WCF_N."_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = ".WCF::getLanguage()->languageID.") LIMIT 1) AS title";

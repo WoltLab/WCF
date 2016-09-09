@@ -512,6 +512,7 @@
 		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Kann Tag sehen]]></item>
 		<item name="wcf.acp.group.option.category.user.cms"><![CDATA[CMS]]></item>
 		<item name="wcf.acp.group.option.admin.content.article.canManageArticle"><![CDATA[Kann Artikel verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.content.article.canContributeArticle"><![CDATA[Kann Artikel einreichen]]></item>
 		<item name="wcf.acp.group.option.admin.content.article.canManageCategory"><![CDATA[Kann Artikel-Kategorien verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManageBox"><![CDATA[Kann Boxen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManageMedia"><![CDATA[Kann Medien verwalten]]></item>

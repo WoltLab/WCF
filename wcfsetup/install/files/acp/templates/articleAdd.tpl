@@ -1,20 +1,22 @@
 {include file='header' pageTitle='wcf.acp.article.'|concat:$action}
 
-<script data-relocate="true">
-	$(function() {
-		$('input[type="radio"][name="publicationStatus"]').change(function(event) {
-			var $selected = $('input[type="radio"][name="publicationStatus"]:checked');
-			if ($selected.length > 0) {
-				if ($selected.val() == 2) {
-					$('#publicationDateDl').show();
+{if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
+	<script data-relocate="true">
+		$(function() {
+			$('input[type="radio"][name="publicationStatus"]').change(function(event) {
+				var $selected = $('input[type="radio"][name="publicationStatus"]:checked');
+				if ($selected.length > 0) {
+					if ($selected.val() == 2) {
+						$('#publicationDateDl').show();
+					}
+					else {
+						$('#publicationDateDl').hide();
+					}
 				}
-				else {
-					$('#publicationDateDl').hide();
-				}
-			}
-		}).trigger('change');
-	});
-</script>
+			}).trigger('change');
+		});
+	</script>
+{/if}
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/User/Search/Input'], function(UiUserSearchInput) {
@@ -116,30 +118,32 @@
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt><label for="categoryID">{lang}wcf.acp.article.publicationStatus{/lang}</label></dt>
-			<dd class="floated">
-				<label><input type="radio" name="publicationStatus" value="0"{if $publicationStatus == 0} checked{/if}> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
-				<label><input type="radio" name="publicationStatus" value="1"{if $publicationStatus == 1} checked{/if}> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
-				<label><input type="radio" name="publicationStatus" value="2"{if $publicationStatus == 2} checked{/if}> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
-			</dd>
-		</dl>
-		
-		<dl id="publicationDateDl"{if $errorField == 'publicationDate'} class="formError"{/if}{if $publicationStatus != 2} style="display: none"{/if}>
-			<dt><label for="publicationDate">{lang}wcf.acp.article.publicationDate{/lang}</label></dt>
-			<dd>
-				<input type="datetime" id="publicationDate" name="publicationDate" value="{$publicationDate}" class="medium">
-				{if $errorField == 'publicationDate'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.article.publicationDate.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
+		{if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
+			<dl>
+				<dt><label for="categoryID">{lang}wcf.acp.article.publicationStatus{/lang}</label></dt>
+				<dd class="floated">
+					<label><input type="radio" name="publicationStatus" value="0"{if $publicationStatus == 0} checked{/if}> {lang}wcf.acp.article.publicationStatus.unpublished{/lang}</label>
+					<label><input type="radio" name="publicationStatus" value="1"{if $publicationStatus == 1} checked{/if}> {lang}wcf.acp.article.publicationStatus.published{/lang}</label>
+					<label><input type="radio" name="publicationStatus" value="2"{if $publicationStatus == 2} checked{/if}> {lang}wcf.acp.article.publicationStatus.delayed{/lang}</label>
+				</dd>
+			</dl>
+			
+			<dl id="publicationDateDl"{if $errorField == 'publicationDate'} class="formError"{/if}{if $publicationStatus != 2} style="display: none"{/if}>
+				<dt><label for="publicationDate">{lang}wcf.acp.article.publicationDate{/lang}</label></dt>
+				<dd>
+					<input type="datetime" id="publicationDate" name="publicationDate" value="{$publicationDate}" class="medium">
+					{if $errorField == 'publicationDate'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.article.publicationDate.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+		{/if}
 		
 		<dl>
 			<dt></dt>

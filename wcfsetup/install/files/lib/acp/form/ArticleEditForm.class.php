@@ -4,6 +4,7 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
@@ -48,6 +49,12 @@ class ArticleEditForm extends ArticleAddForm {
 			throw new IllegalLinkException();
 		}
 		if ($this->article->isMultilingual) $this->isMultilingual = 1;
+		
+		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			if ($this->article->userID != WCF::getUser()->userID || $this->article->publicationStatus != Article::UNPUBLISHED) {
+				throw new PermissionDeniedException();
+			}
+		}
 	}
 	
 	/**

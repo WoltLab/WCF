@@ -42,7 +42,7 @@ class ArticleAddForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $neededPermissions = ['admin.content.article.canManageArticle'];
+	public $neededPermissions = ['admin.content.article.canManageArticle', 'admin.content.article.canContributeArticle'];
 	
 	/**
 	 * true if created article is multi-lingual
@@ -193,7 +193,14 @@ class ArticleAddForm extends AbstractForm {
 			$this->timeObj = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $this->time);
 		}
 		if (!empty($_POST['enableComments'])) $this->enableComments = 1;
-		if (isset($_POST['publicationStatus'])) $this->publicationStatus = intval($_POST['publicationStatus']);
+		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			if (isset($_POST['publicationStatus'])) $this->publicationStatus = intval($_POST['publicationStatus']);
+		}
+		else {
+			$this->publicationStatus = Article::UNPUBLISHED;
+		}
+		
 		if ($this->publicationStatus == Article::DELAYED_PUBLICATION && isset($_POST['publicationDate'])) {
 			$this->publicationDate = $_POST['publicationDate'];
 			$this->publicationDateObj = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $this->publicationDate);
@@ -383,6 +390,10 @@ class ArticleAddForm extends AbstractForm {
 		$dateTime = DateUtil::getDateTimeByTimestamp(TIME_NOW);
 		$dateTime->setTimezone(WCF::getUser()->getTimeZone());
 		$this->time = $dateTime->format('c');
+		
+		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			$this->publicationStatus = Article::UNPUBLISHED;
+		}
 	}
 	
 	/**
