@@ -142,7 +142,21 @@ class HtmlInputNodeTextParser {
 			/** @var \DOMText $node */
 			$node = $nodes[$i];
 			
-			$this->detectMention($node, $node->textContent, $usernames);
+			$oldValue = $value = $node->textContent;
+			
+			// this extra step ensures that we don't trip over some
+			// random &nbsp; inserted by the editor and at the same
+			// time gets rid of them afterwards
+			$value = preg_replace('~\x{00A0}~u', ' ', $value);
+			
+			// zero-width whitespace causes a lot of issues and is not required 
+			$value = preg_replace('~\x{200B}~u', '', $value);
+			
+			if ($value !== $oldValue) {
+				$node->textContent = $value;
+			}
+			
+			$this->detectMention($node, $value, $usernames);
 		}
 		
 		$users = [];
@@ -158,11 +172,6 @@ class HtmlInputNodeTextParser {
 			/** @var \DOMText $node */
 			$node = $nodes[$i];
 			$oldValue = $value = $node->textContent;
-			
-			// this extra step ensures we don't trip over some random
-			// &nbsp; inserted by the editor and at the same time
-			// gets rid of them afterwards
-			$value = preg_replace('~\x{00A0}~u', ' ', $value);
 			
 			if (!empty($users)) {
 				$value = $this->parseMention($node, $value, $users);
