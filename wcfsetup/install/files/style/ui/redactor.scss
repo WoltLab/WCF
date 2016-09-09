@@ -138,11 +138,12 @@
 .redactor-dropdown {
 	> .dropdownMenu {
 		display: block;
+		position: relative;
 		visibility: visible;
 		
-		/* we cannot influence the actual dropdown position as set by Redactor,
-		   forces a gap while keeping the inline top-attribute unaffected */
-		transform: translateY(3px);
+		@include screen-lg {
+			top: 1px;
+		}
 		
 		> li:hover {
 			background-color: transparent !important;
