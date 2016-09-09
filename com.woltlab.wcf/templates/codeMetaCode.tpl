@@ -8,7 +8,7 @@
 			{assign var='lineNumber' value=$startLineNumber}
 			{foreach from=$content item=line}
 				{if $lineNumbers[$lineNumber]|isset}
-					<li id="{@$lineNumbers[$lineNumber]}"><a href="{@$__wcf->getAnchor($lineNumbers[$lineNumber])}" class="lineAnchor"></a>{@$line}</li>
+					<li><span id="{@$lineNumbers[$lineNumber]}" class="codeBoxJumpAnchor"></span><a href="{@$__wcf->getAnchor($lineNumbers[$lineNumber])}" class="lineAnchor"></a>{@$line}</li>
 				{else}
 					<li>{@$line}</li>
 				{/if}
