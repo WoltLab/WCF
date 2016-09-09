@@ -60,7 +60,10 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			
 			// caret must be within a `<p>`, if it is not: move it
 			var block = this._editor.selection.block();
-			
+			if (block === false) {
+				this._editor.focus.end();
+				block = this._editor.selection.block();
+			}
 			
 			while (block && block.parentNode !== editor) {
 				block = block.parentNode;
