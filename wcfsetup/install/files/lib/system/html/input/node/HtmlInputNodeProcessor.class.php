@@ -65,6 +65,19 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * outside of paragraphs.
 	 */
 	protected function fixDom() {
+		// remove or convert any <div> found
+		$elements = $this->getDocument()->getElementsByTagName('div');
+		while ($elements->length) {
+			$element = $elements->item(0);
+			
+			if ($element->parentNode->nodeName === 'P') {
+				DOMUtil::removeNode($element, true);
+			}
+			else {
+				DOMUtil::replaceElement($element, $element->ownerDocument->createElement('p'), true);
+			}
+		}
+		
 		$appendToPreviousParagraph = function ($node) {
 			/** @var \DOMElement $paragraph */
 			$paragraph = $node->previousSibling;
