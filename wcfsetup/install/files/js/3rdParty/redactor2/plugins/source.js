@@ -128,7 +128,6 @@
 
 				var height = this.core.editor().innerHeight();
 				var code = this.code.get();
-console.debug(height);
 				code = code.replace(/\n\n\n/g, "\n");
 				code = code.replace(/\n\n/g, "\n");
 
