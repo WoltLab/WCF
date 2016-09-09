@@ -166,29 +166,27 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		
 		// clean up temporary folder
 		$tempFolder = FileUtil::getTempFolder();
-		DirectoryUtil::getInstance($tempFolder)->executeCallback(new Callback(function($filename, $object) use ($tempFolder) {
-			if ($filename === $tempFolder) return;
-			if ($filename === $tempFolder.'.htaccess') return;
+		$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($tempFolder, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+		foreach ($it as $file) {
+			if ($file->getPathname() === $tempFolder) continue;
+			if ($file->getPathname() === $tempFolder.'/.htaccess') continue;
 			
-			if ($object->getMTime() < TIME_NOW - 86400) {
-				if ($object->isDir()) {
-					@rmdir($filename);
-				}
-				else if ($object->isFile()) {
-					@unlink($filename);
-				}
+			if ($file->getMTime() < TIME_NOW - 86400) {
+				if ($file->isDir()) @rmdir($file->getPathname());
+				else if ($file->isFile()) @unlink($file->getPathname());
 			}
-		}));
+		}
 		
 		// clean up proxy images
 		if (MODULE_IMAGE_PROXY) {
-			DirectoryUtil::getInstance(WCF_DIR.'images/proxy/')->executeCallback(new Callback(function($filename, $object) {
-				if ($filename === WCF_DIR.'images/proxy/.htaccess') return;
+			$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(WCF_DIR.'images/proxy/', \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+			foreach ($it as $file) {
+				if ($file->getPathname() === WCF_DIR.'images/proxy/.htaccess') continue;
 				
-				if ($object->isFile() && $object->getMTime() < TIME_NOW - 86400 * IMAGE_PROXY_EXPIRATION) {
-					@unlink($filename);
+				if ($file->isFile() && $file->getMTime() < (TIME_NOW - 86400 * IMAGE_PROXY_EXPIRATION)) {
+					@unlink($file->getPathname());
 				}
-			}));
+			}
 		}
 	}
 }
