@@ -1010,12 +1010,6 @@ WCF.Dropdown.Interactive.Handler = {
 		if (this._dropdownContainer === null) {
 			this._dropdownContainer = $('<div class="dropdownMenuContainer" />').appendTo(document.body);
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown.Interactive.Handler', $.proxy(this.closeAll, this));
-			
-			window.addEventListener('scroll', (function (event) {
-				if (!document.documentElement.classList.contains('pageOverlayActive')) {
-					this.closeAll();
-				}
-			}).bind(this));
 		}
 		
 		var $instance = new WCF.Dropdown.Interactive.Instance(this._dropdownContainer, triggerElement, identifier, options);
@@ -1156,14 +1150,20 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		
 		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 		
-		require(['Environment'], function(Environment) {
-			if (Environment.platform() === 'desktop' && $itemContainer !== null) {
-				// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
-				$itemContainer.perfectScrollbar({
-					suppressScrollX: true
-				});
+		require(['Environment', 'EventHandler'], (function(Environment, EventHandler) {
+			if (Environment.platform() === 'desktop') {
+				EventHandler.add('com.woltlab.wcf.pageHeaderFixed', 'change', (function (data) {
+					this.render();
+				}).bind(this));
+				
+				if ($itemContainer !== null) {
+					// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
+					$itemContainer.perfectScrollbar({
+						suppressScrollX: true
+					});
+				}
 			}
-		});
+		}).bind(this));
 		
 		this._container.appendTo(dropdownContainer);
 	},
@@ -1262,22 +1262,29 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * Renders the dropdown.
 	 */
 	render: function() {
-		if (window.matchMedia('(max-width: 767px)').matches) {
-			this._container.css({
-				bottom: '',
-				left: '',
-				right: '',
-				top: elById('pageHeader').clientHeight + 'px'
-			});
-		}
-		else {
-			require(['Ui/Alignment'], (function(UiAlignment) {
+		require(['Dom/Util', 'Ui/Alignment', 'Ui/Screen'], (function (DomUtil, UiAlignment, UiScreen) {
+			if (UiScreen.is('screen-lg')) {
+				this._container[0].classList.remove('interactiveDropdownFixed');
+				
 				UiAlignment.set(this._container[0], this._triggerElement[0], {
 					horizontal: 'right',
 					pointer: true
 				});
-			}).bind(this));
-		}
+				
+				if (DomUtil.getFixedParent(this._triggerElement[0]) !== null) {
+					this._container[0].classList.add('interactiveDropdownFixed');
+					this._container[0].style.setProperty('top', this._triggerElement[0].clientHeight + 'px', '');
+				}
+			}
+			else {
+				this._container.css({
+					bottom: '',
+					left: '',
+					right: '',
+					top: elById('pageHeader').clientHeight + 'px'
+				});
+			}
+		}).bind(this));
 	},
 	
 	/**

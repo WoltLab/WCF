@@ -134,14 +134,18 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 			
 			_isFixed = (window.pageYOffset > _triggerHeight);
 			
-			_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
-			_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');
-			
-			if (!_isFixed && wasFixed) {
-				_pageHeader.classList.remove('searchBarOpen');
-				['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
-					_searchInputContainer.style.removeProperty(propertyName);
-				});
+			if (_isFixed !== wasFixed) {
+				_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
+				_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');
+				
+				EventHandler.fire('com.woltlab.wcf.pageHeaderFixed', 'change', { isFixed: _isFixed });
+				
+				if (!_isFixed && wasFixed) {
+					_pageHeader.classList.remove('searchBarOpen');
+					['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
+						_searchInputContainer.style.removeProperty(propertyName);
+					});
+				}
 			}
 		}
 	};

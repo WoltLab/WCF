@@ -50,6 +50,12 @@
 			-webkit-overflow-scrolling: touch;
 		}
 	}
+	
+	@include screen-lg {
+		&.interactiveDropdownFixed {
+			position: fixed;
+		}
+	}
 }
 
 /* drop down header */

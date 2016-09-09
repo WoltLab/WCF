@@ -432,6 +432,24 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 */
 		isAtNodeEnd: function(element, ancestor) {
 			return _isBoundaryNode(element, ancestor, 'next');
+		},
+		
+		/**
+		 * Returns the first ancestor element with position fixed or null.
+		 * 
+		 * @param       {Element}               element         target element
+		 * @returns     {(Element|null)}        first ancestor with position fixed or null
+		 */
+		getFixedParent: function (element) {
+			while (element && element !== document.body) {
+				if (window.getComputedStyle(element).getPropertyValue('position') === 'fixed') {
+					return element;
+				}
+				
+				element = element.offsetParent;
+			}
+			
+			return null;
 		}
 	};
 	
