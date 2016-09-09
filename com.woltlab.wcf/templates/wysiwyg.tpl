@@ -83,6 +83,8 @@
 				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}',
 				'wcf.editor.quote.url.error.invalid': '{lang}wcf.editor.quote.url.error.invalid{/lang}',
 				
+				'wcf.editor.source.error.active': '{lang}wcf.editor.source.error.active{/lang}',
+				
 				'wcf.editor.spoiler.label': '{lang}wcf.editor.spoiler.label{/lang}',
 				'wcf.editor.spoiler.label.description': '{lang}wcf.editor.spoiler.label.description{/lang}',
 				'wcf.editor.spoiler.edit': '{lang}wcf.editor.spoiler.edit{/lang}',

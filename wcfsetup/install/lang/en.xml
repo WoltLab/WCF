@@ -2364,6 +2364,8 @@ Errors are:
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		
+		<item name="wcf.editor.source.error.active"><![CDATA[Please return to the normal view before submitting.]]></item>
+		
 		<item name="wcf.editor.spoiler.label"><![CDATA[Label]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
 		<item name="wcf.editor.spoiler.edit"><![CDATA[Edit Spoiler]]></item>
