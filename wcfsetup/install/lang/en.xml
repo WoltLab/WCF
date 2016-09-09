@@ -2335,9 +2335,9 @@ Errors are:
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Code{/if}{if $file} - {$file}{/if}]]></item>
 		
-		<item name="wcf.editor.format.heading2"><![CDATA[Headline]]></item>
-		<item name="wcf.editor.format.heading3"><![CDATA[Section]]></item>
-		<item name="wcf.editor.format.heading4"><![CDATA[Subsection]]></item>
+		<item name="wcf.editor.format.heading2"><![CDATA[Heading 1]]></item>
+		<item name="wcf.editor.format.heading3"><![CDATA[Heading 2]]></item>
+		<item name="wcf.editor.format.heading4"><![CDATA[Heading 3]]></item>
 		<item name="wcf.editor.format.paragraph"><![CDATA[Normal text]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>

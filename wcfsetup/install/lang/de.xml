@@ -2369,9 +2369,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Lege{else}Legen Sie{/if} den Wert fest, ab dem die Zeilennummierung startet.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Quellcode{/if}{if $file} - {$file}{/if}]]></item>
 		
-		<item name="wcf.editor.format.heading2"><![CDATA[Überschrift]]></item>
-		<item name="wcf.editor.format.heading3"><![CDATA[Abschnitt]]></item>
-		<item name="wcf.editor.format.heading4"><![CDATA[Unterabschnitt]]></item>
+		<item name="wcf.editor.format.heading2"><![CDATA[Überschrift 1]]></item>
+		<item name="wcf.editor.format.heading3"><![CDATA[Überschrift 2]]></item>
+		<item name="wcf.editor.format.heading4"><![CDATA[Überschrift 3]]></item>
 		<item name="wcf.editor.format.paragraph"><![CDATA[Normaler Text]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Bild bearbeiten]]></item>

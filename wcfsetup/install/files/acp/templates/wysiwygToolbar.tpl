@@ -2,7 +2,7 @@ buttonOptions = {
 	alignment: { icon: 'fa-align-left', title: '{lang}wcf.editor.button.alignment{/lang}' },
 	bold: { icon: 'fa-bold', title: '{lang}wcf.editor.button.bold{/lang}' },
 	deleted: { icon: 'fa-strikethrough', title: '{lang}wcf.editor.button.strikethrough{/lang}' },
-	format: { icon: 'fa-paragraph', title: '{lang}wcf.editor.button.format{/lang}' },
+	format: { icon: 'fa-header', title: '{lang}wcf.editor.button.format{/lang}' },
 	html: { icon: 'fa-file-code-o', title: '{lang}wcf.editor.button.html{/lang}' },
 	italic: { icon: 'fa-italic', title: '{lang}wcf.editor.button.italic{/lang}' },
 	link: { icon: 'fa-link', title: '{lang}wcf.editor.button.link{/lang}' },
@@ -14,6 +14,7 @@ buttonOptions = {
 	underline: { icon: 'fa-underline', title: '{lang}wcf.editor.button.underline{/lang}' },
 	undo: { icon: 'fa-undo', title: '{lang}wcf.editor.button.undo{/lang}' },
 	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
+	woltlabFont: { icon: 'fa-font', title: '{lang}wcf.editor.button.font{/lang}' },
 	woltlabImage: { icon: 'fa-picture-o', title: '{lang}wcf.editor.button.image{/lang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
 	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
@@ -41,6 +42,9 @@ buttons.push('wcfSeparator');
 
 buttons.push('subscript');
 buttons.push('superscript');
+{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
+	buttons.push('woltlabFont');
+{/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
 	buttons.push('woltlabSize');
 {/if}
