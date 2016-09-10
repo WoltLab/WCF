@@ -58,6 +58,10 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 				event.preventDefault();
 				event.stopPropagation();
 				
+				if (_pageHeader.classList.contains('searchBarOpen')) {
+					return this._closeSearchBar();
+				}
+				
 				var facadeHeight = pageHeaderFacade.clientHeight;
 				var scrollTop = window.pageYOffset;
 				var skipScrollHandler = false;
@@ -115,7 +119,7 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		
 		_closeSearchBar: function () {
 			_pageHeader.classList.remove('searchBarOpen');
-			console.debug("yep");
+			
 			['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
 				_searchInputContainer.style.removeProperty(propertyName);
 			});
