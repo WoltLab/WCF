@@ -6,11 +6,12 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Fixed
  */
-define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/SimpleDropdown'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiScreen, UiSimpleDropdown) {
+define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/Scroll', 'Ui/SimpleDropdown'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiScreen, UiScroll, UiSimpleDropdown) {
 	"use strict";
 	
-	var _pageHeader, _pageHeaderContainer, _searchInputContainer, _triggerHeight;
-	var _isFixed = false, _isMobile = false;
+	var _callbackScroll = null;
+	var _pageHeader, _pageHeaderContainer, _searchInput, _searchInputContainer;
+	var _isMobile = false;
 	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Page/Header/Fixed
@@ -23,59 +24,13 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 			_pageHeader = elById('pageHeader');
 			_pageHeaderContainer = elById('pageHeaderContainer');
 			
-			this._initStickyPageHeader();
 			this._initSearchBar();
 			
 			UiScreen.on('screen-md-down', {
-				match: this._toggleMobile.bind(this, true),
-				unmatch: this._toggleMobile.bind(this, false),
-				setup: this._toggleMobile.bind(this, true)
+				match: function () { _isMobile = true; },
+				unmatch: function () { _isMobile = false; },
+				setup: function () { _isMobile = true; }
 			});
-		},
-		
-		/**
-		 * Toggles mobile flag.
-		 * 
-		 * @param       {boolean}       isMobile        true if this viewport equals at least a tablet
-		 * @protected
-		 */
-		_toggleMobile: function (isMobile) {
-			_isMobile = isMobile;
-			
-			this._rebuildPageHeader(false);
-		},
-		
-		/**
-		 * Rebuilds the page header min-height property on viewport change.
-		 * 
-		 * @protected
-		 */
-		_rebuildPageHeader: function () {
-			var clientHeight = _pageHeader.clientHeight;
-			
-			if (!clientHeight) {
-				_pageHeader.style.removeProperty('min-height');
-				clientHeight = _pageHeader.clientHeight;
-			}
-			
-			if (clientHeight) {
-				_pageHeader.style.setProperty('min-height', clientHeight + 'px');
-			}
-		},
-		
-		/**
-		 * Enforces a min-height for the original header's location to prevent collapsing
-		 * when setting the header to `position: fixed`.
-		 * 
-		 * @protected
-		 */
-		_initStickyPageHeader: function() {
-			this._rebuildPageHeader(true);
-			
-			_triggerHeight = _pageHeader.clientHeight - elBySel('.mainMenu', _pageHeader).clientHeight;
-			
-			this._scroll();
-			window.addEventListener('scroll', this._scroll.bind(this));
 		},
 		
 		/**
@@ -89,29 +44,63 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 				event.stopPropagation();
 			});
 			
-			var searchInput = elById('pageHeaderSearchInput');
+			_searchInput = elById('pageHeaderSearchInput');
 			
-			var searchLabel = elBySel('.pageHeaderSearchLabel');
+			var userPanelSearchButton = elById('userPanelSearchButton');
+			var pageHeaderFacade = elById('pageHeaderFacade');
+			
 			_searchInputContainer = elById('pageHeaderSearchInputContainer');
 			
 			var menu = elById('topMenu');
-			searchLabel.addEventListener(WCF_CLICK_EVENT, function() {
-				if ((_isFixed || _isMobile) && !_pageHeader.classList.contains('searchBarOpen')) {
+			userPanelSearchButton.addEventListener(WCF_CLICK_EVENT, (function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				
+				var facadeHeight = pageHeaderFacade.clientHeight;
+				var scrollTop = window.pageYOffset;
+				var skipScrollHandler = false;
+				var isVisible = !_isMobile && (facadeHeight > scrollTop);
+				
+				if (!isVisible && !_pageHeader.classList.contains('searchBarOpen')) {
 					UiAlignment.set(_searchInputContainer, menu, {
 						horizontal: 'right'
 					});
 					
 					_pageHeader.classList.add('searchBarOpen');
-					WCF.Dropdown.Interactive.Handler.closeAll();
-					searchInput.focus();
+					_searchInput.focus();
 				}
-			});
+				else if (!_isMobile) {
+					if (scrollTop) {
+						// setting focus could lead to the search bar to be
+						// hidden behind the fixed panel
+						UiScroll.element(elById('top'), function () {
+							_searchInput.focus();
+						});
+					}
+					else {
+						_searchInput.focus();
+					}
+					
+					skipScrollHandler = true;
+				}
+				
+				WCF.Dropdown.Interactive.Handler.closeAll();
+				
+				if (!skipScrollHandler && !_isMobile && _callbackScroll === null) {
+					_callbackScroll = (function () {
+						if (pageHeaderFacade.clientHeight > window.pageYOffset) {
+							this._closeSearchBar();
+						}
+					}).bind(this);
+					window.addEventListener('scroll', _callbackScroll);
+				}
+			}).bind(this));
 			
-			UiCloseOverlay.add('WoltLabSuite/Core/Ui/Page/Header/Fixed', function() {
+			UiCloseOverlay.add('WoltLabSuite/Core/Ui/Page/Header/Fixed', (function() {
 				if (_pageHeader.classList.contains('searchBarForceOpen')) return;
 				
-				_pageHeader.classList.remove('searchBarOpen');
-			});
+				this._closeSearchBar();
+			}).bind(this));
 			
 			EventHandler.add('com.woltlab.wcf.MainMenuMobile', 'more', (function(data) {
 				if (data.identifier === 'com.woltlab.wcf.search') {
@@ -122,30 +111,18 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 			}).bind(this));
 		},
 		
-		/**
-		 * Updates the page header state after scrolling.
-		 * 
-		 * @protected
-		 */
-		_scroll: function() {
-			if (_isMobile) return;
+		_closeSearchBar: function () {
+			_pageHeader.classList.remove('searchBarOpen');
 			
-			var wasFixed = _isFixed;
+			['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
+				_searchInputContainer.style.removeProperty(propertyName);
+			});
 			
-			_isFixed = (window.pageYOffset > _triggerHeight);
+			_searchInput.blur();
 			
-			if (_isFixed !== wasFixed) {
-				_pageHeader.classList[_isFixed ? 'add' : 'remove']('sticky');
-				_pageHeaderContainer.classList[_isFixed ? 'add' : 'remove']('stickyPageHeader');
-				
-				EventHandler.fire('com.woltlab.wcf.pageHeaderFixed', 'change', { isFixed: _isFixed });
-				
-				if (!_isFixed && wasFixed) {
-					_pageHeader.classList.remove('searchBarOpen');
-					['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
-						_searchInputContainer.style.removeProperty(propertyName);
-					});
-				}
+			if (_callbackScroll !== null) {
+				window.removeEventListener('scroll', _callbackScroll);
+				_callbackScroll = null;
 			}
 		}
 	};

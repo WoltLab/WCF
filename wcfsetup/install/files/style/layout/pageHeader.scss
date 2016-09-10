@@ -14,44 +14,69 @@
 	.icon {
 		color: $wcfHeaderText;
 	}
+	
+	/* reserved space for `.pageHeaderPanel` */
+	padding-top: 50px;
 }
 
-.pageHeader {
-	min-height: 52px;
-}
-
-.pageHeader .layoutBoundary {
-	display: flex;
+.pageHeaderPanel {
+	box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 300;
+	
+	&::after {
+		border-bottom: 1px solid $wcfHeaderMenuLinkBackgroundActive;
+		bottom: 0;
+		content: "";
+		display: block;
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		right: 0;
+	}
+	
+	> .layoutBoundary {
+		display: flex;
+	}
 	
 	@include screen-md-down {
-		padding: 10px;
-	}
-	
-	@include screen-lg {
-		align-items: center;
-		flex-wrap: wrap;
-		padding-top: 30px;
-		padding-bottom: 0;
-	}
-}
-
-/* LOGO */
-.pageHeaderLogo {
-	@include screen-lg {
-		flex: 0 0 50%;
-		margin-bottom: 30px;
+		background-color: $wcfHeaderBackground;
 		
-		.pageHeaderLogoSmall {
-			display: none;
+		> .layoutBoundary {
+			padding: 9px 10px;
 		}
 	}
 	
-	.pageHeaderLogoLarge {
-		max-width: 100%;
+	@include screen-lg {
+		background-color: $wcfHeaderMenuBackground;
 	}
-	
-	.pageHeaderLogoSmall {
-		max-height: 30px;
+}
+
+.pageHeaderFacade {
+	> .layoutBoundary {
+		align-items: center;
+		display: flex;
+		
+		@include screen-lg {
+			align-items: center;
+			padding-bottom: 40px;
+			padding-top: 40px;
+		}
+		
+		@include screen-md-down {
+			height: 50px;
+			justify-content: center;
+			left: 60px;
+			padding: 9px 0;
+			position: fixed;
+			right: 60px;
+			top: 0;
+			width: auto;
+			z-index: 301;
+		}
 	}
 }
 
@@ -167,39 +192,6 @@
 	}
 }
 
-@include screen-lg {
-	.pageHeader:not(.sticky) {
-		.mainMenu {
-			background-color: $wcfHeaderMenuBackground;
-			position: relative;
-			
-			/* The `box-shadow` and the `::before` are used to create a full-width
-			   color stripe that matches the height of the main menu. This trick is
-			   used to allows us to have all elements in the header share a common
-			   ancestor in order to easily move elements with flexbox' `order` property.
-			   
-			   The `box-shadow` is a neat hack because an `::after` element would
-			   increase the page width unless we set `overflow: hidden` to the entire
-			   page header which is bad for multiple reasons. */
-			box-shadow: 900px 0 0 0 $wcfHeaderMenuBackground;
-			
-			&::before {
-				background-color: $wcfHeaderMenuBackground;
-				bottom: 0;
-				content: "";
-				left: -100%;
-				position: absolute;
-				top: 0;
-				width: 100%;
-			}
-		}
-	}
-	
-	.pageHeaderSearchInputContainer .pageHeaderSearchInput {
-		width: 250px;
-	}
-}
-
 /* user panel */
 .userPanel {
 	background-color: $wcfHeaderMenuBackground;
@@ -258,11 +250,35 @@
 	}
 }
 
+/* LOGO */
+.pageHeaderLogo {
+	@include screen-lg {
+		flex: 0 0 50%;
+		
+		.pageHeaderLogoLarge {
+			max-width: 100%;
+		}
+		
+		.pageHeaderLogoSmall {
+			display: none;
+		}
+	}
+	
+	@include screen-md-down {
+		.pageHeaderLogoLarge {
+			display: none;
+		}
+		
+		.pageHeaderLogoSmall {
+			max-height: 30px;
+		}
+	}
+}
+
 /* SEARCH AREA */
 .pageHeaderSearch {
 	@include screen-lg {
 		flex: 0 0 50%;
-		margin-bottom: 30px;
 		text-align: right;
 		
 		.pageHeaderSearchLabel {
@@ -272,18 +288,18 @@
 }
 
 .pageHeaderSearchInputContainer {
-	background-color: $wcfHeaderSearchBoxBackground;
-	border-radius: 2px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	display: inline-flex;
-	padding: 3px;
 	position: relative;
 	
 	.pageHeaderSearchType {
 		display: flex;
 		
 		> .button {
+			align-items: center;
+			background-color: $wcfHeaderMenuLinkBackground;
 			border-radius: 2px 0 0 2px;
+			color: $wcfHeaderMenuLink;
+			display: flex;
 			max-width: 200px;
 			min-width: 140px;
 			overflow: hidden;
@@ -302,24 +318,30 @@
 				right: 8px;
 			}
 		}
-	}
-	
-	.pageHeaderSearchInputButton {
-		border-radius: 0 2px 2px 0;
-		padding: 4px 7px;
+		
+		> .button:hover,
+		&.dropdownOpen > .button {
+			background: $wcfHeaderMenuLinkBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
 	}
 	
 	.pageHeaderSearchInput {
-		background-color: transparent;
+		background-color: $wcfHeaderSearchBoxBackground;
 		border-width: 0;
 		color: $wcfHeaderSearchBoxText;
+		padding-bottom: 8px;
+		padding-top: 8px;
+		width: 250px;
 		
 		&:focus,
 		&:hover {
-			background-color: transparent;
+			background-color: $wcfHeaderSearchBoxBackgroundActive;
 			color: $wcfHeaderSearchBoxTextActive;
 			
-			/* set placeholder color */
+			/* set placeholder color, do not chain these with a comma
+			   as an unrecognized value causes the instruction to be
+			   discarded in entirety */
 			&::-webkit-input-placeholder { /* WebKit browsers */
 				color: $wcfHeaderSearchBoxPlaceholderActive;
 			}
@@ -331,7 +353,9 @@
 			}
 		}
 		
-		/* set placeholder color */
+		/* set placeholder color, do not chain these with a comma
+		   as an unrecognized value causes the instruction to be
+		   discarded in entirety */
 		&::-webkit-input-placeholder { /* WebKit browsers */
 			color: $wcfHeaderSearchBoxPlaceholder;
 		}
@@ -347,32 +371,43 @@
 			display: none;
 		}
 	}
+	
+	.pageHeaderSearchInputButton {
+		background-color: $wcfHeaderMenuLinkBackground;
+		border-radius: 0 2px 2px 0;
+		color: $wcfHeaderMenuLink;
+		padding: 4px 9px;
+		
+		&:hover {
+			background: $wcfHeaderMenuLinkBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+}
+
+@include screen-lg {
+	.searchBarOpen .pageHeaderSearchInputContainer {
+		position: fixed;
+		top: 50px !important;
+		
+		.pageHeaderSearchType > .button {
+			border-top-left-radius: 0;
+		}
+		
+		.pageHeaderSearchInputButton {
+			border-top-right-radius: 0;
+		}
+	}
 }
 
 @include screen-md-down {
-	.pageHeader > div > div {
-		padding-bottom: 10px;
-		padding-top: 10px;
-	}
-	
-	.pageHeaderLogo {
-		flex: 1 1 auto;
-		margin: 0 10px;
-		order: 2;
-		text-align: center;
-		
-		.pageHeaderLogoLarge {
-			display: none;
-		}
-		
-		.pageHeaderLogoSmall {
-			display: inline;
-		}
+	.pageHeaderPanel > .layoutBoundary {
+		/* pushes buttons to the left / right corner */
+		justify-content: space-between;
 	}
 	
 	.userPanel {
 		flex: 0 0 auto;
-		order: 3;
 		
 		&::before {
 			content: $fa-var-user;
@@ -385,7 +420,6 @@
 	
 	.mainMenu {
 		flex: 0 0 auto;
-		order: 1;
 		
 		&::before {
 			content: $fa-var-bars;
@@ -428,7 +462,53 @@
 		}
 	}
 	
-	.pageHeaderSearch:not(.open) {
-		display: none;
+	.pageHeaderSearch {
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 50px !important;
+		
+		.pageHeaderSearchInputContainer {
+			border-radius: 0;
+			display: flex;
+			flex-wrap: wrap;
+			
+			.pageHeaderSearchType {
+				flex: 0 0 100%;
+				
+				> .button {
+					border-radius: 0;
+					max-width: unset;
+					min-width: unset;
+					padding-bottom: 8px;
+					padding-top: 8px;
+					width: 100%;
+				}
+			}
+			
+			.pageHeaderSearchInput {
+				flex: 1 1 auto;
+			}
+			
+			.pageHeaderSearchInputButton {
+				border-radius: 0;
+			}
+		}
+		
+		&:not(.open) {
+			display: none;
+		}
+	}
+}
+
+@include screen-xs {
+	.pageHeaderPanel,
+	.pageHeaderFacade {
+		transition: transform .12s linear;
+	}
+	
+	.redactorActive .pageHeaderPanel,
+	.redactorActive .pageHeaderFacade {
+		transform: translateY(-120%);
 	}
 }

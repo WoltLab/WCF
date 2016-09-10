@@ -1150,12 +1150,8 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		
 		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 		
-		require(['Environment', 'EventHandler'], (function(Environment, EventHandler) {
+		require(['Environment'], (function(Environment) {
 			if (Environment.platform() === 'desktop') {
-				EventHandler.add('com.woltlab.wcf.pageHeaderFixed', 'change', (function (data) {
-					this.render();
-				}).bind(this));
-				
 				if ($itemContainer !== null) {
 					// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
 					$itemContainer.perfectScrollbar({
@@ -1262,19 +1258,12 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	 * Renders the dropdown.
 	 */
 	render: function() {
-		require(['Dom/Util', 'Ui/Alignment', 'Ui/Screen'], (function (DomUtil, UiAlignment, UiScreen) {
+		require(['Ui/Alignment', 'Ui/Screen'], (function (UiAlignment, UiScreen) {
 			if (UiScreen.is('screen-lg')) {
-				this._container[0].classList.remove('interactiveDropdownFixed');
-				
 				UiAlignment.set(this._container[0], this._triggerElement[0], {
 					horizontal: 'right',
 					pointer: true
 				});
-				
-				if (DomUtil.getFixedParent(this._triggerElement[0]) !== null) {
-					this._container[0].classList.add('interactiveDropdownFixed');
-					this._container[0].style.setProperty('top', this._triggerElement[0].clientHeight + 'px', '');
-				}
 			}
 			else {
 				this._container.css({

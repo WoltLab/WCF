@@ -36,6 +36,7 @@ requirejs.config({
 			'Ui/Notification': 'WoltLabSuite/Core/Ui/Notification',
 			'Ui/ReusableDropdown': 'WoltLabSuite/Core/Ui/Dropdown/Reusable',
 			'Ui/Screen': 'WoltLabSuite/Core/Ui/Screen',
+			'Ui/Scroll': 'WoltLabSuite/Core/Ui/Scroll',
 			'Ui/SimpleDropdown': 'WoltLabSuite/Core/Ui/Dropdown/Simple',
 			'Ui/TabMenu': 'WoltLabSuite/Core/Ui/TabMenu',
 			'Upload': 'WoltLabSuite/Core/Upload',

@@ -64,8 +64,6 @@
 			
 			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
-		
-		<label for="pageHeaderSearchInput" class="pageHeaderSearchLabel"></label>
 	</form>
 </div>
 

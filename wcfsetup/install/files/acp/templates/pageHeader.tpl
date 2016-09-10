@@ -1,6 +1,6 @@
 <div class="pageHeaderContainer">
 	<header id="pageHeader" class="pageHeader">
-		<div>
+		<div id="pageHeaderPanel" class="pageHeaderPanel">
 			<div class="layoutBoundary">
 				{include file='pageHeaderLogo'}
 				

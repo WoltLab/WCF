@@ -34,6 +34,7 @@
 	}
 	
 	> .anchorFixedHeader:target {
+		margin-top: -50px;
 		pointer-events: none;
 		position: relative;
 		z-index: 10;
@@ -41,34 +42,12 @@
 		&::after {
 			content: "";
 			display: block;
+			height: 50px;
 		}
 		
 		> .message {
 			pointer-events: all;
-		}
-		
-		@include screen-md-down {
-			margin-top: -52px;
-			
-			&::after {
-				height: 52px;
-			}
-			
-			> .message {
-				transform: translateY(52px);
-			}
-		}
-		
-		@include screen-lg {
-			margin-top: -50px;
-			
-			&::after {
-				height: 50px;
-			}
-			
-			> .message {
-				transform: translateY(50px);
-			}
+			transform: translateY(50px);
 		}
 	}
 	

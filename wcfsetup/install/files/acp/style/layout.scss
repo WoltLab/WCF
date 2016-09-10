@@ -7,9 +7,6 @@ $wcfAcpMenuWidth: 150px;
 }
 
 .pageContainer {
-	/* required for sticky page header */
-	padding-top: 50px;
-	
 	@include screen-lg {
 		min-width: 1240px;
 	}
@@ -17,17 +14,6 @@ $wcfAcpMenuWidth: 150px;
 
 /* page header */
 .pageHeaderContainer {
-	box-shadow: 0 0 10px rgba(0, 0, 0, .6);
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 300;
-	
-	.pageHeader {
-		min-height: 0;
-	}
-	
 	@include screen-lg {
 		.pageHeader .layoutBoundary {
 			background-color: rgb(44, 62, 80);
@@ -49,6 +35,7 @@ $wcfAcpMenuWidth: 150px;
 			
 			.pageHeaderLogoSmall {
 				display: inline;
+				max-height: 30px;
 			}
 			
 			> a {
@@ -255,6 +242,18 @@ $wcfAcpMenuWidth: 150px;
 }
 
 @include screen-md-down {
+	.mainMenu {
+		order: 1;
+	}
+	
+	.pageHeaderLogo {
+		order: 2;
+	}
+	
+	.userPanel {
+		order: 3;
+	}
+	
 	.acpPageMenu,
 	.acpPageSubMenu {
 		display: none;

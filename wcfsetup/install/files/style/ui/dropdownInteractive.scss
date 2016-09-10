@@ -52,9 +52,8 @@
 	}
 	
 	@include screen-lg {
-		&.interactiveDropdownFixed {
-			position: fixed;
-		}
+		position: fixed;
+		top: 50px !important;
 	}
 }
 

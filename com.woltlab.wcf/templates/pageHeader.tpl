@@ -1,14 +1,18 @@
 <div id="pageHeaderContainer" class="pageHeaderContainer">
 	<header id="pageHeader" class="pageHeader">
-		<div>
+		<div id="pageHeaderPanel" class="pageHeaderPanel">
+			<div class="layoutBoundary">
+				{include file='pageHeaderMenu'}
+				
+				{include file='pageHeaderUser'}
+			</div>
+		</div>
+		
+		<div id="pageHeaderFacade" class="pageHeaderFacade">
 			<div class="layoutBoundary">
 				{include file='pageHeaderLogo'}
 				
 				{include file='pageHeaderSearch'}
-				
-				{include file='pageHeaderMenu'}
-				
-				{include file='pageHeaderUser'}
 			</div>
 		</div>
 		
