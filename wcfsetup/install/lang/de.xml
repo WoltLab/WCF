@@ -338,6 +338,7 @@
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[Browser]]></item>
+		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Arbeitsspeicher]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
@@ -647,10 +648,6 @@
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[Das Hauptkennwort ist ein zusätzlicher Schutz für sicherheitskritische Funktionen. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} ein möglichst sicheres Kennwort verwenden, dass sich von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} regulären Administrator-Kennwort unterscheidet, Dritten nicht bekannt ist und auch nicht auf anderen Internetseiten verwendet wird.]]></item>
-	</category>
-	
-	<category name="wcf.acp.media">
-		<item name="wcf.acp.media.chooseImage"><![CDATA[Bild auswählen]]></item>
 	</category>
 		
 	<category name="wcf.acp.menu">
@@ -2579,6 +2576,41 @@ Fehler sind beispielsweise:
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[Für den aktuellen Kartenausschnitt liegen keine Ortsvorschläge vor.]]></item>
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Orte vorschlagen]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Ort verwenden]]></item>
+	</category>
+	
+	<category name="wcf.media">
+		<item name="wcf.media.altText"><![CDATA[Alternativ-Text]]></item>
+		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
+		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
+		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
+		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
+		<item name="wcf.media.delete.confirmMessage"><![CDATA[Möchten Sie die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
+		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>
+		<item name="wcf.media.filename"><![CDATA[Dateiname]]></item>
+		<item name="wcf.media.filesize"><![CDATA[Dateigröße]]></item>
+		<item name="wcf.media.imageDimensions"><![CDATA[Bildformat]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width}×{#$media->height}]]></item>
+		<item name="wcf.media.insert"><![CDATA[Datei einfügen]]></item>
+		<item name="wcf.media.insert.imageSize"><![CDATA[Bildgröße]]></item>
+		<item name="wcf.media.insert.imageSize.large"><![CDATA[Großes Vorschaubild]]></item>
+		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Mittleres Vorschaubild]]></item>
+		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original-Bild]]></item>
+		<item name="wcf.media.insert.imageSize.small"><![CDATA[Kleines Vorschaubild]]></item>
+		<item name="wcf.media.isMultilingual"><![CDATA[Mehrsprachigkeit aktivieren]]></item>
+		<item name="wcf.media.languageID"><![CDATA[Sprache]]></item>
+		<item name="wcf.media.manager"><![CDATA[Medien verwalten]]></item>
+		<item name="wcf.media.media"><![CDATA[Medien]]></item>
+		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
+		<item name="wcf.media.search.filetype"><![CDATA[Dateityp]]></item>
+		<item name="wcf.media.search.filetype.all"><![CDATA[Alle]]></item>
+		<item name="wcf.media.search.filetype.image"><![CDATA[Bilder]]></item>
+		<item name="wcf.media.search.filetype.other"><![CDATA[Sonstige]]></item>
+		<item name="wcf.media.search.filetype.pdf"><![CDATA[PDF]]></item>
+		<item name="wcf.media.search.filetype.text"><![CDATA[Text]]></item>
+		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
+		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
+		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
+		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
 	</category>
 	
 	<category name="wcf.message">

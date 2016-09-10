@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.acp.media.list'}
+{include file='header' pageTitle='wcf.media.media'}
 
 <script data-relocate="true">
 	{include file='mediaJavaScript'}
@@ -16,8 +16,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.media.list{/lang}</h1>
-		<p class="contentHeaderDescription">{lang}wcf.acp.media.stats{/lang}</p>
+		<h1 class="contentTitle">{lang}wcf.media.media{/lang}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

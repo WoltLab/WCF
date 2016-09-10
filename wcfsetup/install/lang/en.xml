@@ -337,6 +337,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Time]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[User Agent]]></item>
+		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Memory]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
@@ -646,10 +647,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
-	</category>
-	
-	<category name="wcf.acp.media">
-		<item name="wcf.acp.media.chooseImage"><![CDATA[Select Image]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
@@ -2549,7 +2546,9 @@ Errors are:
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
+		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete the media file <span class="confirmationObject">{$title}</span>?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Edit Media File]]></item>
 		<item name="wcf.media.filename"><![CDATA[Filename]]></item>
@@ -2565,15 +2564,18 @@ Errors are:
 		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
+		<item name="wcf.media.media"><![CDATA[Media]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
 		<item name="wcf.media.search.filetype"><![CDATA[File Types]]></item>
 		<item name="wcf.media.search.filetype.all"><![CDATA[All File Types]]></item>
 		<item name="wcf.media.search.filetype.image"><![CDATA[Images]]></item>
 		<item name="wcf.media.search.filetype.other"><![CDATA[Other]]></item>
+		<item name="wcf.media.search.filetype.pdf"><![CDATA[PDF]]></item>
 		<item name="wcf.media.search.filetype.text"><![CDATA[Texts]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[The file has been successfully uploaded.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
+		<item name="wcf.media.uploadTime"><![CDATA[Upload Date]]></item>
 	</category>
 	
 	<category name="wcf.message">
