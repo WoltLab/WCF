@@ -31,6 +31,8 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 				unmatch: function () { _isMobile = false; },
 				setup: function () { _isMobile = true; }
 			});
+			
+			EventHandler.add('com.woltlab.wcf.Search', 'close', this._closeSearchBar.bind(this));
 		},
 		
 		/**
@@ -113,7 +115,7 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		
 		_closeSearchBar: function () {
 			_pageHeader.classList.remove('searchBarOpen');
-			
+			console.debug("yep");
 			['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
 				_searchInputContainer.style.removeProperty(propertyName);
 			});
