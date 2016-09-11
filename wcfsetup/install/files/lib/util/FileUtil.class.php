@@ -639,62 +639,6 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Returns the FontAwesome icon CSS class name for a file with the given
-	 * mime type.
-	 * 
-	 * @param	string		$mimeType
-	 * @return	string
-	 */
-	public static function getIconClassByMimeType($mimeType) {
-		if (StringUtil::startsWith($mimeType, 'image/')) {
-			return 'fa-file-image-o';
-		}
-		else if (StringUtil::startsWith($mimeType, 'video/')) {
-			return 'fa-file-video-o';
-		}
-		else if (StringUtil::startsWith($mimeType, 'audio/')) {
-			return 'fa-file-sound-o';
-		}
-		else if (StringUtil::startsWith($mimeType, 'text/')) {
-			return 'fa-file-text-o';
-		}
-		else {
-			switch ($mimeType) {
-				case 'application/msword':
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-					return 'fa-file-word-o';
-				break;
-				
-				case 'application/pdf':
-					return 'fa-file-pdf-o';
-				break;
-				
-				case 'application/vnd.ms-powerpoint':
-				case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-					return 'fa-file-powerpoint-o';
-				break;
-				
-				case 'application/vnd.ms-excel':
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					return 'fa-file-excel-o';
-				break;
-				
-				case 'application/zip':
-				case 'application/x-tar':
-				case 'application/x-gzip':
-					return 'fa-file-archive-o';
-				break;
-				
-				case 'application/xml':
-					return 'fa-file-text-o';
-				break;
-			}
-		}
-		
-		return 'fa-file-o';
-	}
-	
-	/**
 	 * Forbid creation of FileUtil objects.
 	 */
 	private function __construct() {

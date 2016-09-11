@@ -13,7 +13,6 @@
 			'wcf.media.manager': '{lang}wcf.media.manager{/lang}',
 			'wcf.media.edit': '{lang}wcf.media.edit{/lang}',
 			'wcf.media.button.insert': '{lang}wcf.media.button.insert{/lang}',
-			'wcf.media.search.filetype': '{lang}wcf.media.search.filetype{/lang}',
 			'wcf.media.search.noResults': '{lang}wcf.media.search.noResults{/lang}'
 		});
 		

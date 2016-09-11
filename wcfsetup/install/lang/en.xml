@@ -2566,12 +2566,6 @@ Errors are:
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
 		<item name="wcf.media.media"><![CDATA[Media]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
-		<item name="wcf.media.search.filetype"><![CDATA[File Types]]></item>
-		<item name="wcf.media.search.filetype.all"><![CDATA[All File Types]]></item>
-		<item name="wcf.media.search.filetype.image"><![CDATA[Images]]></item>
-		<item name="wcf.media.search.filetype.other"><![CDATA[Other]]></item>
-		<item name="wcf.media.search.filetype.pdf"><![CDATA[PDF]]></item>
-		<item name="wcf.media.search.filetype.text"><![CDATA[Texts]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[The file has been successfully uploaded.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>

@@ -24,60 +24,6 @@ class MediaList extends DatabaseObjectList {
 	public $className = Media::class;
 	
 	/**
-	 * Adds filters for the media files based on their file type.
-	 * 
-	 * @param	array		$filters
-	 */
-	public function addFileTypeFilters(array $filters) {
-		if (isset($filters['isImage'])) {
-			$this->getConditionBuilder()->add('isImage = ?', [$filters['isImage'] ? 1 : 0]);
-		}
-		
-		if (isset($filters['fileTypes'])) {
-			$conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
-			foreach ($filters['fileTypes'] as $fileType) {
-				if (substr($fileType, -1) == '*') {
-					$conditionBuilder->add('fileType LIKE ?', [substr($fileType, 0, -1).'%']);
-				}
-				else {
-					$conditionBuilder->add('fileType = ?', [$fileType]);
-				}
-			}
-			
-			$this->getConditionBuilder()->add($conditionBuilder->__toString(), $conditionBuilder->getParameters());
-		}
-	}
-	
-	/**
-	 * Adds one of the default file filters.
-	 * 
-	 * Default filters are: 'image', 'pdf', 'text', 'other'.
-	 * 
-	 * @param	string		$filter
-	 */
-	public function addDefaultFileTypeFilter($filter) {
-		switch ($filter) {
-			case 'other':
-				$this->getConditionBuilder()->add('media.fileType NOT LIKE ?', ['image/%']);
-				$this->getConditionBuilder()->add('media.fileType <> ?', ['application/pdf']);
-				$this->getConditionBuilder()->add('media.fileType NOT LIKE ?', ['text/%']);
-			break;
-			
-			case 'image':
-				$this->getConditionBuilder()->add('media.fileType LIKE ?', ['image/%']);
-			break;
-			
-			case 'pdf':
-				$this->getConditionBuilder()->add('media.fileType = ?', ['application/pdf']);
-			break;
-			
-			case 'text':
-				$this->getConditionBuilder()->add('media.fileType LIKE ?', ['text/%']);
-			break;
-		}
-	}
-	
-	/**
 	 * Adds conditions to search the media files by a certain search string.
 	 * 
 	 * @param	string		$searchString

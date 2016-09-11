@@ -5,7 +5,6 @@
 	
 	require(['WoltLabSuite/Core/Controller/Media/List'], function (ControllerMediaList) {
 		ControllerMediaList.init({
-			fileType: '{$fileType}',
 			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if}
 		});
 	});
@@ -38,21 +37,7 @@
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<div class="inputAddon dropdown" id="mediaSearch">
-						<span class="button dropdownToggle inputPrefix">
-							<span class="active">{lang}wcf.media.search.filetype{/lang}</span>
-						</span>
-						<ul class="dropdownMenu">
-							<li data-file-type="image"><span>{lang}wcf.media.search.filetype.image{/lang}</span></li>
-							<li data-file-type="text"><span>{lang}wcf.media.search.filetype.text{/lang}</span></li>
-							<li data-file-type="pdf"><span>{lang}wcf.media.search.filetype.pdf{/lang}</span></li>
-							<li data-file-type="other"><span>{lang}wcf.media.search.filetype.other{/lang}</span></li>
-							{event name='filetype'}
-							<li class="dropdownDivider"></li>
-							<li data-file-type="all"><span>{lang}wcf.media.search.filetype.all{/lang}</span></li>
-						</ul>
-						<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.media.filename{/lang}" class="long">
-					</div>
+					<input type="text" id="filename" name="filename" value="{$filename}" placeholder="{lang}wcf.media.filename{/lang}" class="long">
 				</dd>
 			</dl>
 			
@@ -79,8 +64,7 @@
 			{assign var='linkParameters' value=''}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
 			{if $filename}{capture append=linkParameters}&filename={@$filename|rawurlencode}{/capture}{/if}
-			{if $fileType}{capture append=linkParameters}&fileType={@$fileType|rawurlencode}{/capture}{/if}
-				
+			
 			{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
 	</div>

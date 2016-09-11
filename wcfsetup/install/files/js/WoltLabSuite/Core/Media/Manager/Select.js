@@ -6,8 +6,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Select
  */
-define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLabSuite/Core/File/Util', 'WoltLabSuite/Core/Media/Manager/Base'],
-	function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, FileUtil, MediaManagerBase) {
+define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLabSuite/Core/Media/Manager/Base'],
+	function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, MediaManagerBase) {
 	"use strict";
 	
 	/**
@@ -93,7 +93,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 					}
 					else {
 						displayElement.innerHTML = '<div class="box48" style="margin-bottom: 10px;">'
-							+ '<span class="icon icon48 ' + FileUtil.getIconClassByMimeType(media.fileType) + '"></span>'
+							+ '<span class="icon icon48 fa-file-o"></span>'
 							+ '<div class="containerHeadline">'
 								+ '<h3>' + media.filename + '</h3>'
 								+ '<p>' + media.formattedFilesize + '</p>'

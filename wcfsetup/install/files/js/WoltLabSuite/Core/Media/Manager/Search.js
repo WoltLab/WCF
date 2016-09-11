@@ -6,25 +6,23 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Search
  */
-define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Core/Media/Search', 'Ui/SimpleDropdown'], function(Ajax, Core, DomTraverse, DomUtil, Language, MediaSearch, UiSimpleDropdown) {
+define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, DomTraverse, DomUtil, Language, UiSimpleDropdown) {
 	"use strict";
 	
 	/**
 	 * @constructor
 	 */
 	function MediaManagerSearch(mediaManager) {
-		MediaSearch.call(this);
-		
 		this._mediaManager = mediaManager;
 		this._searchMode = false;
 		
-		this._input = elById(this._getIdPrefix() + 'SearchField');
+		this._input = elById('mediaManagerSearchField');
 		this._input.addEventListener('keypress', this._keyPress.bind(this));
 		
-		this._cancelButton = elById(this._getIdPrefix() + 'SearchCancelButton');
+		this._cancelButton = elById('mediaManagerSearchCancelButton');
 		this._cancelButton.addEventListener(WCF_CLICK_EVENT, this._cancelSearch.bind(this));
 	}
-	Core.inherit(MediaManagerSearch, MediaSearch, {
+	MediaManagerSearch.prototype = {
 		/**
 		 * Returns the data for Ajax to setup the Ajax/Request object.
 		 *
@@ -59,13 +57,6 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Co
 				this._mediaManager.resetMedia();
 				this.resetSearch();
 			}
-		},
-		
-		/**
-		 * @see	WoltLabSuite/Core/Media/Search#_getIdPrefix
-		 */
-		_getIdPrefix: function() {
-			return 'mediaManager';
 		},
 		
 		/**
@@ -110,8 +101,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Co
 			
 			Ajax.api(this, {
 				parameters: {
-					fileType: this._fileType,
-					fileTypeFilters: this._mediaManager.getOption('fileTypeFilters'),
+					imagesOnly: this._mediaManager.getOption('imagesOnly'),
 					mode: this._mediaManager.getMode(),
 					searchString: this._input.value
 				}
@@ -119,19 +109,10 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Co
 		},
 		
 		/**
-		 * @see	WoltLabSuite/Core/Media/Search#_selectFileType
-		 */
-		_selectFileType: function(event) {
-			MediaManagerSearch._super.prototype._selectFileType.call(this, event);
-			
-			this._search();
-		},
-		
-		/**
 		 * Hides the media search.
 		 */
 		hideSearch: function() {
-			elHide(elById(this._getIdPrefix() + 'Search'));
+			elHide(elById('mediaManagerSearch'));
 		},
 		
 		/**
@@ -139,7 +120,6 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Co
 		 */
 		resetSearch: function() {
 			this._input.value = '';
-			this._fileType = 'all';
 			
 			this._updateDropdownButtonLabel();
 		},
@@ -148,9 +128,9 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Co
 		 * Shows the media search.
 		 */
 		showSearch: function() {
-			elShow(elById(this._getIdPrefix() + 'Search'));
+			elShow(elById('mediaManagerSearch'));
 		}
-	});
+	};
 	
 	return MediaManagerSearch;
 });

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Media/List
  */
-define(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/Search', 'WoltLabSuite/Core/Media/List/Upload'], function(EventHandler, Clipboard, MediaEditor, MediaSearch, MediaListUpload) {
+define(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/List/Upload'], function(EventHandler, Clipboard, MediaEditor, MediaListUpload) {
 	"use strict";
 	
 	var _mediaEditor;
@@ -25,8 +25,6 @@ define(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/
 			});
 			
 			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
-			
-			new MediaSearch(options.fileType);
 			
 			new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
 			

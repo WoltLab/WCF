@@ -37,12 +37,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	public function validateUpload() {
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 		
-		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
-			throw new UserInputException('fileTypeFilters');
-		}
+		$this->readBoolean('imagesOnly', true);
 		
 		/** @noinspection PhpUndefinedMethodInspection */
-		$this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy(isset($this->parameters['fileTypeFilters']) ? $this->parameters['fileTypeFilters'] : []));
+		$this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy($this->parameters['imagesOnly']));
 	}
 	
 	/**
@@ -158,9 +156,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			throw new PermissionDeniedException();
 		}
 		
-		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
-			throw new UserInputException('fileTypeFilters');
-		}
+		$this->readBoolean('imagesOnly', true);
 		
 		$this->readString('mode');
 		if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
@@ -175,8 +171,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 */
 	public function getManagementDialog() {
 		$mediaList = new ViewableMediaList();
-		if (!empty($this->parameters['fileTypeFilters'])) {
-			$mediaList->addFileTypeFilters($this->parameters['fileTypeFilters']);
+		if ($this->parameters['imagesOnly']) {
+			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
 		$mediaList->readObjects();
 		
@@ -185,8 +181,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'media' => $this->getI18nMediaData($mediaList),
 			'template' => WCF::getTPL()->fetch('mediaManager', 'wcf', [
 				'mediaList' => $mediaList,
-				'mode' => $this->parameters['mode'],
-				'showFileTypeFilter' => empty($this->parameters['fileTypeFilters'])
+				'mode' => $this->parameters['mode']
 			])
 		];
 	}
@@ -397,9 +392,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			throw new UserInputException('searchString');
 		}
 		
-		if (isset($this->parameters['fileTypeFilters']) && !is_array($this->parameters['fileTypeFilters'])) {
-			throw new UserInputException('fileTypeFilters');
-		}
+		$this->readBoolean('imagesOnly', true);
 		
 		$this->readString('mode');
 		if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
@@ -413,11 +406,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	public function getSearchResultList() {
 		$mediaList = new MediaList();
 		$mediaList->addSearchConditions($this->parameters['searchString']);
-		if (!empty($this->parameters['fileType'])) {
-			$mediaList->addDefaultFileTypeFilter($this->parameters['fileType']);
-		}
-		if (!empty($this->parameters['fileTypeFilters'])) {
-			$mediaList->addFileTypeFilters($this->parameters['fileTypeFilters']);
+		if ($this->parameters['imagesOnly']) {
+			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
 		
 		$mediaList->readObjectIDs();

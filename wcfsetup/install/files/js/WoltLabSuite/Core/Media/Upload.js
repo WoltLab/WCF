@@ -9,13 +9,11 @@
 define(
 	[
 		'Core',                'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util',
-		'EventHandler',        'Language',           'Permission',   'Upload',
-		'WoltLabSuite/Core/File/Util'
+		'EventHandler',        'Language',           'Permission',   'Upload'
 	],
 	function(
 		Core,                   DomChangeListener,    DomTraverse,    DomUtil,
-		EventHandler,           Language,             Permission,     Upload,
-		FileUtil
+		EventHandler,           Language,             Permission,     Upload
 	)
 {
 	"use strict";
@@ -85,7 +83,7 @@ define(
 		_getParameters: function() {
 			if (this._mediaManager) {
 				return Core.extend(MediaUpload._super.prototype._getParameters.call(this), {
-					fileTypeFilters: this._mediaManager.getOption('fileTypeFilters')
+					imagesOnly: this._mediaManager.getOption('imagesOnly')
 				});
 			}
 			
@@ -120,7 +118,7 @@ define(
 					}
 					else {
 						fileIcon.classList.remove('fa-spinner');
-						fileIcon.classList.add(FileUtil.getIconClassByMimeType(media.fileType));
+						fileIcon.classList.add('fa-file-o');
 					}
 					
 					file.className = 'jsClipboardObject mediaFile';

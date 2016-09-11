@@ -28,9 +28,7 @@
 			
 			new MediaManagerSelect({
 				dialogTitle: '{lang}wcf.media.chooseImage{/lang}',
-				fileTypeFilters: {
-					isImage: 1
-				}
+				imagesOnly: 1
 			});
 		});
 	</script>

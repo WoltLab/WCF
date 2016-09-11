@@ -10,12 +10,12 @@ define(
 	[
 		'Ajax',                         'Core',                       'Dictionary',          'Dom/ChangeListener',
 		'Dom/Traverse',                 'Language',                   'Ui/Dialog',           'Ui/Notification',
-		'WoltLabSuite/Core/Language/Chooser', 'WoltLabSuite/Core/Language/Input', 'WoltLabSuite/Core/File/Util'
+		'WoltLabSuite/Core/Language/Chooser', 'WoltLabSuite/Core/Language/Input'
 	],
 	function(
 		Ajax,                            Core,                         Dictionary,            DomChangeListener,
 		DomTraverse,                     Language,                     UiDialog,              UiNotification,
-		LanguageChooser,                 LanguageInput,                FileUtil
+		LanguageChooser,                 LanguageInput
 	)
 {
 	"use strict";

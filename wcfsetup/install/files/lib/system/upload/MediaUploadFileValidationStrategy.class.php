@@ -12,18 +12,18 @@ namespace wcf\system\upload;
  */
 class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy {
 	/**
-	 * file type filters
-	 * @var	array
+	 * if `true`, only images are valid
+	 * @var	boolean
 	 */
-	protected $fileTypeFilters = [];
+	protected $imagesOnly = false;
 	
 	/**
 	 * Creates a new instance of MediaUploadFileValidationStrategy.
 	 * 
-	 * @param	array	$fileTypeFilters
+	 * @param	boolean		$imagesOnly
 	 */
-	public function __construct(array $fileTypeFilters) {
-		$this->fileTypeFilters = $fileTypeFilters;
+	public function __construct($imagesOnly) {
+		$this->imagesOnly = $imagesOnly;
 	}
 	
 	/**
@@ -35,25 +35,9 @@ class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy
 			return false;
 		}
 		
-		if (!empty($this->fileTypeFilters['isImage']) && $uploadFile->getImageData() === null) {
+		if ($this->imagesOnly && $uploadFile->getImageData() === null) {
 			$uploadFile->setValidationErrorType('noImage');
 			return false;
-		}
-		
-		if (isset($this->fileTypeFilters['fileTypes'])) {
-			foreach ($this->fileTypeFilters['fileTypes'] as $fileType) {
-				if (substr($fileType, -1) == '*') {
-					if (!preg_match('~^'.preg_quote(substr($fileType, 0, -1), '~').'~', $uploadFile->getMimeType())) {
-						return false;
-					}
-				}
-				else {
-					if ($uploadFile->getMimeType() != $fileType) {
-						$uploadFile->setValidationErrorType('noImage');
-						return false;
-					}
-				}
-			}
 		}
 		
 		return true;

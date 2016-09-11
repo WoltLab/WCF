@@ -3,7 +3,6 @@ namespace wcf\data\media;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -60,7 +59,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 			}
 		}
 		
-		return '<span class="icon icon'.$size.' '.FileUtil::getIconClassByMimeType($this->fileType).'"></span>';
+		return '<span class="icon icon'.$size.' fa-file-o"></span>';
 	}
 	
 	/**

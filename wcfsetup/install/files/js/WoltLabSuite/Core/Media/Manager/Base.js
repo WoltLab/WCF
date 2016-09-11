@@ -28,7 +28,7 @@ define(
 	function MediaManagerBase(options) {
 		this._options = Core.extend({
 			dialogTitle: Language.get('wcf.media.manager'),
-			fileTypeFilters: {},
+			imagesOnly: false,
 			minSearchLength: 3
 		}, options);
 		
@@ -173,7 +173,7 @@ define(
 						className: 'wcf\\data\\media\\MediaAction',
 						parameters: {
 							mode: this.getMode(),
-							fileTypeFilters: this._options.fileTypeFilters
+							imagesOnly: this._options.imagesOnly
 						}
 					}
 				}

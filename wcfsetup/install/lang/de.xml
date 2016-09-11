@@ -2601,12 +2601,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.media.manager"><![CDATA[Medien verwalten]]></item>
 		<item name="wcf.media.media"><![CDATA[Medien]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
-		<item name="wcf.media.search.filetype"><![CDATA[Dateityp]]></item>
-		<item name="wcf.media.search.filetype.all"><![CDATA[Alle]]></item>
-		<item name="wcf.media.search.filetype.image"><![CDATA[Bilder]]></item>
-		<item name="wcf.media.search.filetype.other"><![CDATA[Sonstige]]></item>
-		<item name="wcf.media.search.filetype.pdf"><![CDATA[PDF]]></item>
-		<item name="wcf.media.search.filetype.text"><![CDATA[Text]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
