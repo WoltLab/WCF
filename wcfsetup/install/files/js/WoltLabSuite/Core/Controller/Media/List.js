@@ -26,7 +26,8 @@ define(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/
 			
 			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
 			
-			new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
+			var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
+			deleteAction.setCallback(Clipboard.reload.bind(Clipboard));
 			
 			_mediaEditor = new MediaEditor();
 			

@@ -1665,6 +1665,12 @@ WCF.Action.Delete = Class.extend({
 	_buttonSelector: '',
 	
 	/**
+	 * callback function called prior to triggering the delete effect
+	 * @var	function
+	 */
+	_callback: null,
+	
+	/**
 	 * action class name
 	 * @var	string
 	 */
@@ -1693,6 +1699,7 @@ WCF.Action.Delete = Class.extend({
 		this._containerSelector = containerSelector;
 		this._className = className;
 		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsDeleteButton';
+		this._callback = null;
 		
 		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -1788,7 +1795,24 @@ WCF.Action.Delete = Class.extend({
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		if (this._callback) {
+			this._callback(data.objectIDs);
+		}
+		
 		this.triggerEffect(data.objectIDs);
+	},
+	
+	/**
+	 * Sets a callback function called prior to triggering the delete effect.
+	 * 
+	 * @param	{function}	callback
+	 */
+	setCallback: function(callback) {
+		if (typeof callback !== 'function') {
+			throw new TypeError("[WCF.Action.Delete] Expected a valid callback for '" + this._className + "'.");
+		}
+		
+		this._callback = callback;
 	},
 	
 	/**
