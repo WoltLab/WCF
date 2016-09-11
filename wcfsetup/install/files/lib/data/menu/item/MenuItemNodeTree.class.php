@@ -14,6 +14,12 @@ use wcf\system\request\RequestHandler;
  */
 class MenuItemNodeTree {
 	/**
+	 * if `false`, individual menu item visibilit will not be checked
+	 * @var	boolean
+	 */
+	public $checkVisibility;
+	
+	/**
 	 * menu id
 	 * @var	integer
 	 */
@@ -46,11 +52,13 @@ class MenuItemNodeTree {
 	/**
 	 * Creates a new MenuItemNodeTree object.
 	 * 
-	 * @param	integer		$menuID		menu id
-	 * @param	MenuItemList	$menuItemList	optional object to be provided when building the tree from cache
+	 * @param	integer		$menuID			menu id
+	 * @param	MenuItemList	$menuItemList		optional object to be provided when building the tree from cache
+	 * @param	boolean		$checkVisibility	if `false`, individual menu item visibilit will not be checked
 	 */
-	public function __construct($menuID, MenuItemList $menuItemList = null) {
+	public function __construct($menuID, MenuItemList $menuItemList = null, $checkVisibility = true) {
 		$this->menuID = $menuID;
+		$this->checkVisibility = $checkVisibility;
 		
 		// load menu items
 		if ($menuItemList === null) {
@@ -126,10 +134,14 @@ class MenuItemNodeTree {
 		$itemIDs = (isset($this->menuItemStructure[$parentID]) ? $this->menuItemStructure[$parentID] : []);
 		foreach ($itemIDs as $itemID) {
 			$menuItem = $this->menuItems[$itemID];
-			if (!$menuItem->isVisible()) continue;
+			
+			if ($this->checkVisibility && !$menuItem->isVisible()) {
+				continue;
+			}
+			
 			$node = new MenuItemNode($parentNode, $menuItem, ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0));
 			$nodes[] = $node;
-				
+			
 			// get children
 			$node->setChildren($this->generateNodeTree($itemID, $node));
 			

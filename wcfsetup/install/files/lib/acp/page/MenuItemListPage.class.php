@@ -63,7 +63,7 @@ class MenuItemListPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$this->menuItems = new MenuItemNodeTree($this->menuID);
+		$this->menuItems = new MenuItemNodeTree($this->menuID, null, false);
 	}
 	
 	/**

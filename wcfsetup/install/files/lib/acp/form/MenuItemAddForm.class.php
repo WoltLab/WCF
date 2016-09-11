@@ -281,7 +281,7 @@ class MenuItemAddForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
-		$this->menuItems = new MenuItemNodeTree($this->menuID);
+		$this->menuItems = new MenuItemNodeTree($this->menuID, null, false);
 	}
 	
 	/**
