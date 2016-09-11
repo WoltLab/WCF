@@ -27,7 +27,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode {
 		/** @var Media $media */
 		$media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
 		
-		if ($media !== null) {
+		if ($media !== null && $media->isAccessible()) {
 			if ($media->isImage) {
 				$thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
 				$float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
