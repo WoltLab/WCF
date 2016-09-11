@@ -13,7 +13,8 @@
 			'wcf.media.manager': '{lang}wcf.media.manager{/lang}',
 			'wcf.media.edit': '{lang}wcf.media.edit{/lang}',
 			'wcf.media.button.insert': '{lang}wcf.media.button.insert{/lang}',
-			'wcf.media.search.noResults': '{lang}wcf.media.search.noResults{/lang}'
+			'wcf.media.search.noResults': '{lang}wcf.media.search.noResults{/lang}',
+			'wcf.media.upload.success': '{lang}wcf.media.upload.success{/lang}'
 		});
 		
 		Permission.add('admin.content.cms.canManageMedia', {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}true{else}false{/if});
