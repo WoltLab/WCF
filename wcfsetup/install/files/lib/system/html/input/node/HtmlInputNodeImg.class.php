@@ -39,6 +39,9 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 			if (preg_match('~\bwoltlabAttachment\b~', $class)) {
 				$this->handleAttachment($element, $class);
 			}
+			else if (preg_match('~\bwoltlabSuiteMedia\b~', $class)) {
+				$this->handleMedium($element, $class);
+			}
 			else if (preg_match('~\bsmiley\b~', $class)) {
 				$this->handleSmiley($element);
 			}
@@ -70,6 +73,35 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		
 		$newElement = $element->ownerDocument->createElement('woltlab-metacode');
 		$newElement->setAttribute('data-name', 'attach');
+		$newElement->setAttribute('data-attributes', base64_encode(JSON::encode($attributes)));
+		DOMUtil::replaceElement($element, $newElement, false);
+	}
+	
+	protected function handleMedium(\DOMElement $element, $class) {
+		$mediumID = intval($element->getAttribute('data-media-id'));
+		if (!$mediumID) {
+			return;
+		}
+		
+		$float = 'none';
+		$thumbnail = null;
+		
+		if (preg_match('~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~', $element->getAttribute('src'), $matches)) {
+			$thumbnail = $matches['thumbnail'];
+		}
+		
+		if (preg_match('~\bmessageFloatObject(?P<float>Left|Right)\b~', $class, $matches)) {
+			$float = ($matches['float'] === 'Left') ? 'left' : 'right';
+		}
+		
+		$attributes = [
+			$mediumID,
+			$thumbnail,
+			$float
+		];
+		
+		$newElement = $element->ownerDocument->createElement('woltlab-metacode');
+		$newElement->setAttribute('data-name', 'wsm');
 		$newElement->setAttribute('data-attributes', base64_encode(JSON::encode($attributes)));
 		DOMUtil::replaceElement($element, $newElement, false);
 	}
