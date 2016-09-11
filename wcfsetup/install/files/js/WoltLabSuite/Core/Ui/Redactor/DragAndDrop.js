@@ -104,7 +104,7 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 					element.className = 'redactorDropArea';
 					elData(element, 'element-id', data.editor.$element[0].id);
 					elData(element, 'drop-here', Language.get('wcf.attachment.dragAndDrop.dropHere'));
-					elData(element, 'drop-now', Language.get('Drop now to upload'));
+					elData(element, 'drop-now', Language.get('wcf.attachment.dragAndDrop.dropNow'));
 					
 					element.addEventListener('dragover', function () { element.classList.add('active'); });
 					element.addEventListener('dragleave', function () { element.classList.remove('active'); });
