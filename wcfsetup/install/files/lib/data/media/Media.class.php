@@ -213,7 +213,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 * @return	string
 	 */
 	public static function getStorage() {
-		return WCF_DIR.'media/';
+		return WCF_DIR.'media_files/';
 	}
 	
 	/**
