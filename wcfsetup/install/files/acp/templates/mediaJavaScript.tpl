@@ -2,7 +2,7 @@
 	require(['Language', 'Permission'], function(Language, Permission) {
 		Language.addObject({
 			'wcf.global.button.insert': '{lang}wcf.global.button.insert{/lang}',
-			
+			'wcf.media.button.select': '{lang}wcf.media.button.select{/lang}',
 			'wcf.media.delete.confirmMessage': '{lang __encode=true __literal=true}wcf.media.delete.confirmMessage{/lang}',
 			'wcf.media.insert': '{lang}wcf.media.insert{/lang}',
 			'wcf.media.insert.imageSize': '{lang}wcf.media.insert.imageSize{/lang}',
