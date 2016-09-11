@@ -332,18 +332,31 @@
 }
 
 .redactorDropArea {
-	background-color: rgba(255, 255, 204, 1);
-	border: 5px dashed rgba(255, 204, 0);
-	box-sizing: border-box;
-	font-size: 1.4rem; // TODO
+	align-items: center;
+	background-color: $wcfStatusInfoBackground;
+	border: 5px dashed currentColor;
+	bottom: 0;
+	color: $wcfStatusInfoText;
+	display: flex;
+	justify-content: center;
+	left: 0;
 	position: absolute;
-	text-align: center;
-	vertical-align: middle;
+	right: 0;
 	z-index: 360;
 	
+	@include wcfFontSection;
+	
+	&::before {
+		content: attr(data-drop-here);
+	}
+	
 	&.active {
-		background-color: #CEF6CE;
-		border-color: #04B404;
+		background-color: $wcfStatusSuccessBackground;
+		color: $wcfStatusSuccessText;
+		
+		&::before {
+			content: attr(data-drop-now);
+		}
 	}
 }
 

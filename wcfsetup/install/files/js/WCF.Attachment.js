@@ -86,6 +86,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		if (this._editorId) {
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
 			
 			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach', (function(data) {
 				var images = this._getImageAttachments();
@@ -115,12 +116,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'submit_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'reset_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId);
 				
 				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach', metacodeAttachUuid);
 			}).bind(this));
-			
-			// TODO
-			//WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._editorId, $.proxy(this._editorUpload, this));
 		}
 	},
 	

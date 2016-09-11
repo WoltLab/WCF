@@ -17,6 +17,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabClean.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDragAndDrop.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFont.js?v={@LAST_UPDATE_TIME}',
@@ -50,6 +51,9 @@
 	], function () {
 		require(['Environment', 'Language', 'WoltLabSuite/Core/Ui/Redactor/Autosave', 'WoltLabSuite/Core/Ui/Redactor/Metacode'], function(Environment, Language, UiRedactorAutosave, UiRedactorMetacode) {
 			Language.addObject({
+				'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
+				'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}',
+				
 				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
 				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',
 				'wcf.editor.code.file.description': '{lang}wcf.editor.code.file.description{/lang}',
@@ -180,6 +184,7 @@
 					'WoltLabClean',
 					'WoltLabCode',
 					'WoltLabColor',
+					'WoltLabDragAndDrop',
 					'WoltLabDropdown',
 					'WoltLabFont',
 					'WoltLabImage',
