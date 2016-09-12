@@ -436,7 +436,7 @@ class StyleAddForm extends AbstractForm {
 		$this->colors = [
 			'wcfHeader' => ['background', 'text', 'link', 'linkActive'],
 			'wcfHeaderSearchBox' => ['background', 'text', 'placeholder', 'backgroundActive', 'textActive'],
-			'wcfHeaderMenu' => ['background', 'link', 'linkActive'],
+			'wcfHeaderMenu' => ['background', 'linkBackground', 'linkBackgroundActive', 'link', 'linkActive'],
 			'wcfHeaderMenuDropdown' => ['background', 'border', 'link', 'backgroundActive', 'linkActive'],
 			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
 			'wcfSidebar' => ['background', 'text', 'link', 'linkActive'],

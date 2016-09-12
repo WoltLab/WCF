@@ -469,28 +469,32 @@
 		{* colors *}
 		<div id="colors" class="tabMenuContent">
 			<div class="section">
-				<p class="error" style="margin-bottom: 20px">TODO: outdated!</p>
 				<div id="spWrapper">
 					<div id="spWindow">
+						<div id="spHeaderPanel" data-region="wcfHeaderMenu">
+							<div class="spBoundary">
+								<ol class="inlineList">
+									<li><a>Lorem</a></li>
+									<li><a>Ipsum Dolor</a></li>
+									<li><a>Sit Amet</a></li>
+									<li><a>Consetetur</a></li>
+									
+									<li class="active">
+										<a>Sadipscing</a>
+										<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
+											<li><a>Lorem</a></li>
+											<li><a>Ipsum</a></li>
+											<li class="active"><a>Dolor Sit</a></li>
+										</ol>
+									</li>
+								</ol>
+							</div>	
+						</div>
+						
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
 								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png"></div>
 								<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
-								<div id="spMenu">
-									<ol class="inlineList" data-region="wcfHeaderMenu">
-										<li><a>Lorem</a></li>
-										<li><a>Ipsum Dolor</a></li>
-										<li class="active">
-											<a>Sit Amet</a>
-											<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
-												<li><a>Lorem</a></li>
-												<li><a>Ipsum</a></li>
-												<li class="active"><a>Dolor Sit</a></li>
-											</ol>
-										</li>
-									</ol>
-								</div>
-								<div id="spUser"></div>
 							</div>
 						</div>
 						
@@ -508,7 +512,7 @@
 								<div id="spContentWrapper">
 									<div class="spHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
 									
-									<p data-region="wcfContent">
+									<div data-region="wcfContent">
 										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 									
 										<div id="spContentBorderInner"></div>
@@ -520,7 +524,7 @@
 										<div id="spContentDimmed" data-region="wcfContentDimmed">
 											Stet clita kasd gubergren, <a>no sea takimata</a> sanctus est Lorem ipsum dolor sit amet.
 										</div>
-									</p>
+									</div>
 									
 									<div class="spHeadline">Tabular Box</div>
 									
@@ -710,10 +714,11 @@
 				'wcfHeaderSearchBoxPlaceholder': '#spSearchBox::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:-ms-input-placeholder { color: VALUE; }',
 				'wcfHeaderSearchBoxBackgroundActive': '#spSearchBox:focus, #spSearchBox:hover { background-color: VALUE; }',
 				'wcfHeaderSearchBoxTextActive': '#spSearchBox:focus, #spSearchBox:hover { color: VALUE; }',
-				'wcfHeaderMenuBackground': '#spMenu > ol > li > a { background-color: VALUE; }',
-				'wcfHeaderMenuLink': '#spMenu > ol > li > a { color: VALUE; }',
-				'wcfHeaderMenuBackgroundActive': '#spMenu > ol > li.active > a, #spMenu > ol > li > a:hover { background-color: VALUE; }',
-				'wcfHeaderMenuLinkActive': '#spMenu > ol > li.active > a, #spMenu > ol > li > a:hover { color: VALUE; }',
+				'wcfHeaderMenuBackground': '#spHeaderPanel { background-color: VALUE; }',
+				'wcfHeaderMenuLinkBackground': '#spHeaderPanel ol.inlineList > li > a { background-color: VALUE; }',
+				'wcfHeaderMenuLinkBackgroundActive': '#spHeaderPanel ol.inlineList > li.active > a, #spHeaderPanel ol.inlineList > li > a:hover { background-color: VALUE; }',
+				'wcfHeaderMenuLink': '#spHeaderPanel ol.inlineList > li > a { color: VALUE; }',
+				'wcfHeaderMenuLinkActive': '#spHeaderPanel ol.inlineList > li.active > a, #spHeaderPanel ol.inlineList > li > a:hover { color: VALUE; }',
 				'wcfHeaderMenuDropdownBackground': '#spSubMenu { background-color: VALUE; }',
 				'wcfHeaderMenuDropdownBorder': '#spSubMenu { border-color: VALUE; }',
 				'wcfHeaderMenuDropdownLink': '#spSubMenu li > a { color: VALUE; }',

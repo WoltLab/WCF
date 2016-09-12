@@ -5,23 +5,21 @@
 .spBoundary { margin: 0 40px; }
 
 /* ### header ### */
-#spHeader > .spBoundary { display: flex; flex-wrap: wrap; padding: 15px 0; }
+#spHeader > .spBoundary { display: flex; flex-wrap: wrap; padding: 30px 0; }
 #spLogo { flex: 0 0 50%; }
 #spLogo > img { height: 40px; }
 #spSearch { flex: 0 0 50%; }
-#spSearchBox { border: 1px solid #fff; }
-#spMenu { flex: 0 0 50%; }
+#spSearchBox { border-width: 0; }
 #spUser { flex: 0 0 50%; }
-#spLogo, #spSearch, #spMenu, #spUser { align-items: center; display: flex; }
+#spLogo, #spSearch { align-items: center; display: flex; }
 #spSearch, #spUser { justify-content: flex-end; }
 
 /* ### menu ### */
-#spMenu > ol > li:not(:last-child) { margin-right: 10px; }
-#spMenu > ol > li > a { font-size: 14px; font-weight: 400; padding: 2px 7px; }
-#spMenu > ol > li.active > a { font-weight: 600; }
-#spMenu > ol > li.active > a::after { content: "\f0d7"; display: inline-block; font-family: FontAwesome; margin-left: 5px; }
-#spMenu > ol > li.active { position: relative; }
-#spSubMenu { border-bottom: 1px solid #fff; box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2); margin-top: 3px; padding: 3px 0; position: absolute; }
+#spHeaderPanel ol.inlineList > li { margin-right: 0; }
+#spHeaderPanel ol.inlineList > li > a { align-items: center; display: flex; font-size: 14px; font-weight: 400; height: 50px; padding: 0 15px; }
+#spHeaderPanel ol.inlineList > li.active > a::after { content: "\f107"; display: inline-block; font-family: FontAwesome; margin-left: 5px; }
+#spHeaderPanel ol.inlineList > li.active { position: relative; }
+#spSubMenu { border-bottom: 1px solid #fff; box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2); padding: 3px 0; position: absolute; }
 #spSubMenu > li > a { display: block; padding: 5px 20px; white-space: nowrap; width: 120px; }
 
 /* ### navigation ### */
@@ -44,9 +42,10 @@
 
 /* ### button ### */
 #spButton .button.disabled, #spButtonPrimary .button.disabled { cursor: default; }
+#spButtonPrimary { margin-top: 10px; }
 
 /* ### dropdown ### */
-#spDropdown { display: inline-block; float: none; position: relative; }
+#spDropdown { display: inline-block; float: none; position: relative; visibility: visible; }
 
 /* ### footer box ### */
 #spFooterBox > .spBoundary { display: flex; justify-content: space-between; padding: 15px 0; }
@@ -75,6 +74,7 @@
 .spSidebarBox.pointer { position: relative; }
 .spSidebarBox.pointer::before { border: 10px solid transparent; border-right-color: rgb(217, 237, 247); content: ""; display: block; left: -20px; position: absolute; }
 .spColor { align-items: center; }
+.spColor:not(:first-child) { margin-top: 5px; }
 .spColorBox { background-color: #fff; border: 1px solid #ccc; margin-right: 10px !important; padding: 1px; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
