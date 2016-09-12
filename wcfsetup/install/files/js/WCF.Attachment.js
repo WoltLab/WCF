@@ -54,6 +54,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	_editorId: '',
 	
 	/**
+	 * replace img element on load
+	 * @var Object
+	 */
+	_replaceOnLoad: {},
+	
+	/**
 	 * @see	WCF.Upload.init()
 	 */
 	init: function(buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, editorId) {
@@ -87,6 +93,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId, this._editorUpload.bind(this));
 			
 			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach', (function(data) {
 				var images = this._getImageAttachments();
@@ -117,6 +124,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'reset_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId);
+				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId);
 				
 				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach', metacodeAttachUuid);
 			}).bind(this));
@@ -129,7 +137,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param	object		data
 	 */
 	_editorUpload: function(data) {
-		var $uploadID;
+		var $uploadID, replace = null;
 		
 		// show tab
 		this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
@@ -139,9 +147,16 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		else {
 			$uploadID = this._upload(undefined, undefined, data.blob);
+			replace = data.replace || null;
 		}
 		
-		this._autoInsert.push($uploadID);
+		if (replace === null) {
+			this._autoInsert.push($uploadID);
+		}
+		else {
+			this._replaceOnLoad[$uploadID] = replace;
+		}
+		
 		data.uploadID = $uploadID;
 	},
 	
@@ -227,9 +242,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		if (!$listItems.length) {
-			setTimeout((function() {
-				this._fileListSelector.wcfBlindOut();
-			}).bind(this), 250);
+			this._fileListSelector.hide();
 		}
 		
 		if (this._editorId && data.button) {
@@ -374,6 +387,21 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 						$insertPlain.appendTo($buttonList).children('span.button').click($.proxy(this._insert, this));
 					}
 				}
+				
+				if (this._replaceOnLoad.hasOwnProperty(uploadID)) {
+					if (!$li.hasClass('uploadFailed')) {
+						var img = this._replaceOnLoad[uploadID];
+						if (img && img.parentNode) {
+							WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'replaceAttachment_' + this._editorId, {
+								attachmentId: attachmentData.attachmentID,
+								img: img,
+								src: (attachmentData.thumbnailURL) ? attachmentData.thumbnailURL : attachmentData.url
+							});
+						}
+					}
+					
+					this._replaceOnLoad[uploadID] = null;
+				}
 			}
 			else {
 				// upload icon
@@ -400,10 +428,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				this._autoInsert.splice(this._autoInsert.indexOf(uploadID), 1);
 				
 				if (!$li.hasClass('uploadFailed')) {
-					WCF.System.Event.fireEvent('com.woltlab.wcf.attachment', 'autoInsert_' + this._editorId, {
-						attachment: '[attach=' + data.returnValues.attachments[$internalFileID].attachmentID + '][/attach]',
-						uploadID: uploadID
-					});
+					var btn = $li.find('.jsButtonAttachmentInsertThumbnail');
+					if (!btn.length) btn = $li.find('.jsButtonAttachmentInsertFull');
+					
+					btn.trigger('click');
 				}
 			}
 		}

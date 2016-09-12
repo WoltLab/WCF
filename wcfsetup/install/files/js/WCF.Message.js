@@ -2154,12 +2154,6 @@ WCF.Message.UserMention = Class.extend({
  */
 $.widget('wcf.messageTabMenu', {
 	/**
-	 * pointer span
-	 * @var jQuery
-	 */
-	_span: null,
-	
-	/**
 	 * list of existing tabs and their containers
 	 * @var	array<object>
 	 */
@@ -2191,9 +2185,6 @@ $.widget('wcf.messageTabMenu', {
 			console.debug("[wcf.messageTabMenu] Amount of tabs does not equal amount of tab containers, aborting.");
 			return;
 		}
-		
-		// pointer span
-		this._span = $('<span />').appendTo($nav);
 		
 		var $preselect = this.element.data('preselect');
 		
@@ -2301,11 +2292,6 @@ $.widget('wcf.messageTabMenu', {
 				activeTab: $target
 			});
 		}
-		
-		this._span.css({
-			transform: 'translateX(' + $target.tab[0].offsetLeft + 'px)', 
-			width: $target.tab[0].clientWidth + 'px'
-		});
 		
 		$(window).trigger('resize');
 	},

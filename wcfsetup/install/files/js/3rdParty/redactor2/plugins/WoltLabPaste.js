@@ -36,6 +36,97 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			
 			// rebind paste event
 			this.core.editor().off('paste.redactor').on('paste.redactor', this.paste.init.bind(this));
+			
+			this.paste.detectClipboardUpload = (function (e) {
+				e = e.originalEvent || e;
+				
+				var clipboard = e.clipboardData;
+				
+				// WoltLab modification: allow Edge
+				if (this.detect.isIe() && (this.detect.isIe() !== 'edge' || document.documentMode))
+				{
+					return true;
+				}
+				
+				if (this.detect.isFirefox())
+				{
+					return false;
+				}
+				
+				// prevent safari fake url
+				var types = clipboard.types;
+				// WoltLab modification: `DataTransfer.types` is a `DOMStringList` in Edge
+				if (Array.isArray(types) && types.indexOf('public.tiff') !== -1)
+				{
+					e.preventDefault();
+					return false;
+				}
+				
+				
+				if (!clipboard.items || !clipboard.items.length)
+				{
+					return;
+				}
+				
+				var file = clipboard.items[0].getAsFile();
+				if (file === null)
+				{
+					return false;
+				}
+				
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = $.proxy(this.paste.insertFromClipboard, this);
+				
+				return true;
+			}).bind(this);
+			
+			this.paste.insertFromClipboard = (function (e) {
+				if (!window.FormData) {
+					return;
+				}
+				
+				this.buffer.set();
+				
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+					blob: this.utils.dataURItoBlob(e.target.result)
+				});
+			}).bind(this);
+			
+			this.paste.clipboardUpload = (function () {
+				elBySelAll('img', this.$editor[0], (function (img) {
+					if (!window.FormData || img.src.indexOf('data:image') !== 0) {
+						return;
+					}
+					
+					this.buffer.set();
+					
+					elHide(img);
+					
+					WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+						blob: this.utils.dataURItoBlob(img.src),
+						replace: img
+					});
+				}).bind(this));
+			}).bind(this);
+			
+			var mpInsert = this.paste.insert;
+			this.paste.insert = (function(html, data) {
+				if (!data.pre && !data.text) {
+					var div = elCreate('div');
+					div.innerHTML = html;
+					
+					elBySelAll('img', this.$editor[0], function (img) {
+						if (img.src.indexOf('data:image') === 0) {
+							elHide(img);
+						}
+					});
+					
+					html = div.innerHTML;
+				}
+				
+				mpInsert.call(this, html, data);
+			}).bind(this);
 		}
 	};
 };

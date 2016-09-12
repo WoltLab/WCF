@@ -4,8 +4,9 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 	return {
 		init: function() {
 			require(['EventHandler'], (function(EventHandler) {
-				EventHandler.add('com.woltlab.wcf.redactor2', 'insertAttachment_' + this.$element[0].id, this.WoltLabAttachment._insert.bind(this))
-				EventHandler.add('com.woltlab.wcf.redactor2', 'deleteAttachment_' + this.$element[0].id, this.WoltLabAttachment._delete.bind(this))
+				EventHandler.add('com.woltlab.wcf.redactor2', 'insertAttachment_' + this.$element[0].id, this.WoltLabAttachment._insert.bind(this));
+				EventHandler.add('com.woltlab.wcf.redactor2', 'deleteAttachment_' + this.$element[0].id, this.WoltLabAttachment._delete.bind(this));
+				EventHandler.add('com.woltlab.wcf.redactor2', 'replaceAttachment_' + this.$element[0].id, this.WoltLabAttachment._replaceAttachment.bind(this));
 			}).bind(this));
 		},
 		
@@ -21,6 +22,18 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 				// non-image attachment
 				this.insert.text('[attach=' + attachmentId + '][/attach]');
 			}
+			
+			this.buffer.set();
+		},
+		
+		_replaceAttachment: function (data) {
+			var img = elCreate('img');
+			img.className = 'woltlabAttachment';
+			img.src = data.src;
+			elData(img, 'attachment-id', data.attachmentId);
+			
+			data.img.parentNode.insertBefore(img, data.img);
+			elRemove(data.img);
 		},
 		
 		_delete: function(data) {

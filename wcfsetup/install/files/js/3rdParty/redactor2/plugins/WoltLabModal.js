@@ -12,7 +12,10 @@ $.Redactor.prototype.WoltLabModal = function() {
 		close: function() {
 			this.selection.restore();
 			
-			_uiDialog.close(this);
+			// avoid calling `close()` without any dialogs opened before
+			if (_uiDialog.getDialog(this)) {
+				_uiDialog.close(this);
+			}
 		},
 		
 		load: function(templateName, title) {

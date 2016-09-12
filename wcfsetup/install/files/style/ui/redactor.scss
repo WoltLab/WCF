@@ -109,6 +109,11 @@
 			// show cursor to indicate editing capability excluding smilies
 			cursor: pointer;
 		}
+		
+		/* prevent flicker from pasted images */
+		&[src^="data:image"] {
+			display: none !important;
+		}
 	}
 	
 	// TODO: this is somewhat out of sync
