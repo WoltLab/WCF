@@ -62,23 +62,30 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					return false;
 				}
 				
-				
 				if (!clipboard.items || !clipboard.items.length)
 				{
 					return;
 				}
 				
+				var isWebkitPaste = false;
 				var file = clipboard.items[0].getAsFile();
 				if (file === null)
 				{
-					return false;
+					if (this.detect.isWebkit() && clipboard.items.length > 1) {
+						file = clipboard.items[1].getAsFile();
+						isWebkitPaste = true;
+					}
+					
+					if (file === null) {
+						return false;
+					}
 				}
 				
 				var reader = new FileReader();
 				reader.readAsDataURL(file);
-				reader.onload = $.proxy(this.paste.insertFromClipboard, this);
+				reader.onload = this.paste.insertFromClipboard.bind(this);
 				
-				return true;
+				return (isWebkitPaste === false);
 			}).bind(this);
 			
 			this.paste.insertFromClipboard = (function (e) {
