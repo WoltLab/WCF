@@ -48,6 +48,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					return true;
 				}
 				
+				
 				if (this.detect.isFirefox())
 				{
 					return false;
@@ -67,13 +68,13 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					return;
 				}
 				
-				var isWebkitPaste = false;
+				var cancelPaste = false;
 				var file = clipboard.items[0].getAsFile();
 				if (file === null)
 				{
 					if (this.detect.isWebkit() && clipboard.items.length > 1) {
 						file = clipboard.items[1].getAsFile();
-						isWebkitPaste = true;
+						cancelPaste = true;
 					}
 					
 					if (file === null) {
@@ -85,7 +86,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				reader.readAsDataURL(file);
 				reader.onload = this.paste.insertFromClipboard.bind(this);
 				
-				return (isWebkitPaste === false);
+				return (cancelPaste === false);
 			}).bind(this);
 			
 			this.paste.insertFromClipboard = (function (e) {
@@ -100,40 +101,56 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				});
 			}).bind(this);
 			
-			this.paste.clipboardUpload = (function () {
-				elBySelAll('img', this.$editor[0], (function (img) {
-					if (!window.FormData || img.src.indexOf('data:image') !== 0) {
-						return;
-					}
-					
-					this.buffer.set();
-					
-					elHide(img);
-					
-					WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
-						blob: this.utils.dataURItoBlob(img.src),
-						replace: img
-					});
-				}).bind(this));
-			}).bind(this);
-			
+			var transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 			var mpInsert = this.paste.insert;
 			this.paste.insert = (function(html, data) {
+				var pastedImages = [];
+				
 				if (!data.pre && !data.text) {
 					var div = elCreate('div');
 					div.innerHTML = html;
 					
-					elBySelAll('img', this.$editor[0], function (img) {
-						if (img.src.indexOf('data:image') === 0) {
+					elBySelAll('img', div, (function(img) {
+						var src = img.src;
+						if (src.indexOf('data:image') === 0 && src !== transparentGif) {
+							img.src = transparentGif;
+							
+							var uuid = WCF.getUUID();
+							elData(img, 'uuid', uuid);
+							pastedImages.push({
+								src: src,
+								uuid: uuid
+							});
+							
 							elHide(img);
 						}
-					});
+					}).bind(this));
 					
 					html = div.innerHTML;
 				}
 				
 				mpInsert.call(this, html, data);
+				
+				if (pastedImages.length) {
+					window.setTimeout((function () {
+						var imgData, img;
+						for (var i = 0, length = pastedImages.length; i < length; i++) {
+							imgData = pastedImages[i];
+							img = elBySel('img[data-uuid="' + imgData.uuid + '"]', this.$editor[0]);
+							
+							if (img) {
+								WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+									blob: this.utils.dataURItoBlob(imgData.src),
+									replace: img
+								});
+							}
+						}
+					}).bind(this), 50);
+				}
+				
 			}).bind(this);
+			
+			this.paste.clipboardUpload = function () { /* not required, images are handled in `paste.insert()` below */ };
 		}
 	};
 };
