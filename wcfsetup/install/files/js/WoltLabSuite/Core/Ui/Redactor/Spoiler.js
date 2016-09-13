@@ -126,8 +126,29 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			}
 		},
 		
+		_delete: function (event) {
+			event.preventDefault();
+			
+			var caretEnd = this._spoiler.nextElementSibling || this._spoiler.previousElementSibling;
+			if (caretEnd === null && this._spoiler.parentNode !== this._editor.core.editor()[0]) {
+				caretEnd = this._spoiler.parentNode;
+			}
+			
+			if (caretEnd === null) {
+				this._editor.code.set('');
+				this._editor.focus.end();
+			}
+			else {
+				elRemove(this._spoiler);
+				this._editor.caret.end(caretEnd);
+			}
+			
+			UiDialog.close(this);
+		},
+		
 		_dialogSetup: function() {
 			var id = 'redactor-spoiler-' + this._elementId,
+			    idButtonDelete = id + '-button-delete',
 			    idButtonSave = id + '-button-save',
 			    idLabel = id + '-label';
 			
@@ -140,6 +161,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					
 					onSetup: (function() {
 						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
+						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
 					}).bind(this),
 					
 					onShow: (function() {
@@ -159,6 +181,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 				+ '</div>'
 				+ '<div class="formSubmit">'
 					+ '<button id="' + idButtonSave + '" class="buttonPrimary">' + Language.get('wcf.global.button.save') + '</button>'
+					+ '<button id="' + idButtonDelete + '">' + Language.get('wcf.global.button.delete') + '</button>'
 				+ '</div>'
 			};
 		}
