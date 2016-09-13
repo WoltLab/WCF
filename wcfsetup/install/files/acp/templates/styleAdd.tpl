@@ -651,6 +651,18 @@
 						
 						<div id="spFooter" data-region="wcfFooter">
 							<div class="spBoundary">
+								<div class="spFooterItem">
+									<div class="spFooterHeadline" data-region="wcfFooterHeadline">Lorem Ipsum <a>Dolor Sit Amet</a></div>
+									
+									<p>
+										Lorem ipsum dolor sit amet, consetetur <a>sadipscing elitr</a>, sed diam nonumy eirmod tempor <a>invidunt ut labore</a> et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+									</p>
+								</div>
+							</div>
+						</div>
+						
+						<div id="spFooterCopyright" data-region="wcfFooterCopyright">
+							<div class="spBoundary">
 								Copyright &copy; 1970-2038 <a>Example Company</a>
 							</div>
 						</div>
@@ -788,6 +800,13 @@
 				'wcfFooterText': '#spFooter { color: VALUE; }',
 				'wcfFooterLink': '#spFooter a { color: VALUE; }',
 				'wcfFooterLinkActive': '#spFooter a:active { color: VALUE; }',
+				'wcfFooterHeadlineText': '#spFooter .spFooterHeadline { color: VALUE; }',
+				'wcfFooterHeadlineLink': '#spFooter .spFooterHeadline a { color: VALUE; }',
+				'wcfFooterHeadlineLinkActive': '#spFooter .spFooterHeadline a:hover { color: VALUE; }',
+				'wcfFooterCopyrightBackground': '#spFooterCopyright { background-color: VALUE; }',
+				'wcfFooterCopyrightText': '#spFooterCopyright { color: VALUE; }',
+				'wcfFooterCopyrightLink': '#spFooterCopyright a { color: VALUE; }',
+				'wcfFooterCopyrightLinkActive': '#spFooterCopyright a:active { color: VALUE; }',
 				'wcfSidebarBackground': '#spContentSidebar .spContentSidebarBox { background-color: VALUE; }',
 				'wcfSidebarText': '#spContentSidebar .spContentSidebarBox { color: VALUE; }',
 				'wcfSidebarLink': '#spContentSidebar .spContentSidebarBox a { color: VALUE; }',

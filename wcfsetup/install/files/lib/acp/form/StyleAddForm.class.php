@@ -430,7 +430,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfDropdown' => 'wcfDropdown',
 			'wcfStatus' => ['wcfStatusInfo', 'wcfStatusSuccess', 'wcfStatusWarning', 'wcfStatusError'],
 			'wcfFooterBox' => ['wcfFooterBox', 'wcfFooterBoxHeadline'],
-			'wcfFooter' => 'wcfFooter'
+			'wcfFooter' => ['wcfFooter', 'wcfFooterHeadline', 'wcfFooterCopyright']
 		];
 		
 		$this->colors = [
@@ -458,7 +458,9 @@ class StyleAddForm extends AbstractForm {
 			'wcfStatusError' => ['background', 'border', 'text', 'link', 'linkActive'],
 			'wcfFooterBox' => ['background', 'text', 'link', 'linkActive'],
 			'wcfFooterBoxHeadline' => ['text', 'link', 'linkActive'],
-			'wcfFooter' => ['background', 'text', 'link', 'linkActive']
+			'wcfFooter' => ['background', 'text', 'link', 'linkActive'],
+			'wcfFooterHeadline' => ['text', 'link', 'linkActive'],
+			'wcfFooterCopyright' => ['background', 'text', 'link', 'linkActive']
 		];
 		
 		// set global variables
