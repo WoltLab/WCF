@@ -56,9 +56,11 @@ $wcfAcpMenuWidth: 150px;
 		}
 		
 		.pageHeaderSearch {
+			display: block;
 			flex: 0 0 auto;
 			margin-bottom: 0;
 			order: 3;
+			position: static;
 			
 			// force to take up the full available height
 			/*position: relative;
