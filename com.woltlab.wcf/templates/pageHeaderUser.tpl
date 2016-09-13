@@ -1,10 +1,5 @@
 <nav id="topMenu" class="userPanel">
 	<ul class="userPanelItems">
-		<!-- page search -->
-		<li class="jsOnly">
-			<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
-		</li>
-		
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu">
@@ -284,5 +279,10 @@
 			
 			{event name='menuItems'}
 		{/if}
+		
+		<!-- page search -->
+		<li class="jsOnly">
+			<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+		</li>
 	</ul>
 </nav>
