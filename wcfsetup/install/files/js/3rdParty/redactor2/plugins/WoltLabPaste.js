@@ -50,42 +50,42 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			this.paste.detectClipboardUpload = (function (e) {
 				e = e.originalEvent || e;
 				
-				var clipboard = e.clipboardData;
-				
+				var file;
 				if (isIe) {
-					return (window.clipboardData.files.length > 0);
-				}
-				
-				if (this.detect.isFirefox())
-				{
-					return false;
-				}
-				
-				// prevent safari fake url
-				var types = clipboard.types;
-				// WoltLab modification: `DataTransfer.types` is a `DOMStringList` in Edge
-				if (Array.isArray(types) && types.indexOf('public.tiff') !== -1)
-				{
-					e.preventDefault();
-					return false;
-				}
-				
-				if (!clipboard.items || !clipboard.items.length)
-				{
-					return;
-				}
-				
-				var cancelPaste = false;
-				var file = clipboard.items[0].getAsFile();
-				if (file === null)
-				{
-					if (this.detect.isWebkit() && clipboard.items.length > 1) {
-						file = clipboard.items[1].getAsFile();
-						cancelPaste = true;
+					if (!window.clipboardData.files.length) {
+						return false;
 					}
 					
-					if (file === null) {
+					file = window.clipboardData.files.item(0);
+				}
+				else if (this.detect.isFirefox()) {
+					return false;
+				}
+				else {
+					var clipboard = e.clipboardData;
+					
+					// prevent safari fake url
+					var types = clipboard.types;
+					if (Array.isArray(types) && types.indexOf('public.tiff') !== -1) {
+						e.preventDefault();
 						return false;
+					}
+					
+					if (!clipboard.items || !clipboard.items.length) {
+						return;
+					}
+					
+					var cancelPaste = false;
+					file = clipboard.items[0].getAsFile();
+					if (file === null) {
+						if (this.detect.isWebkit() && clipboard.items.length > 1) {
+							file = clipboard.items[1].getAsFile();
+							cancelPaste = true;
+						}
+						
+						if (file === null) {
+							return false;
+						}
 					}
 				}
 				
