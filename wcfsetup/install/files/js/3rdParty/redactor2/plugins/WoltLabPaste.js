@@ -5,11 +5,19 @@ $.Redactor.prototype.WoltLabPaste = function() {
 		init: function () {
 			var clipboardData = null;
 			
+			// IE 11
+			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
+			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
 				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre')) ? true : false;
 				if (isCode) {
-					clipboardData = e.originalEvent.clipboardData.getData('text/plain');
+					if (isIe) {
+						clipboardData = window.clipboardData.getData('Text');
+					}
+					else {
+						clipboardData = e.originalEvent.clipboardData.getData('text/plain');
+					}
 					
 					var mpCleanEncodeEntities = this.clean.encodeEntities;
 					this.clean.encodeEntities = (function(str) {
@@ -42,10 +50,8 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				
 				var clipboard = e.clipboardData;
 				
-				// WoltLab modification: allow Edge
-				if (this.detect.isIe() && (this.detect.isIe() !== 'edge' || document.documentMode))
-				{
-					return true;
+				if (isIe) {
+					return (window.clipboardData.files.length > 0);
 				}
 				
 				
