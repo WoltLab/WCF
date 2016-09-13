@@ -42,61 +42,6 @@
 			display: block;
 			margin-top: 0;
 		}
-		
-		.dropdownCaption {
-			cursor: pointer;
-			display: table-cell;
-			letter-spacing: -1px;
-			padding: 0 $wcfGapSmall 0 $wcfGapTiny;
-			vertical-align: middle;
-			width: 1%;
-			
-			&.button {
-				border-right-width: 0;
-				border-radius: 3px 0 0 3px;
-			}
-			
-			span {
-				margin-right: -1px;
-				padding-left: $wcfGapTiny;
-				white-space: nowrap;
-				word-wrap: normal;
-				
-				&.active::after {
-					content: $fa-var-caret-down;
-					font-family: FontAwesome;
-					font-size: 14px;
-					margin-left: 7px;
-				}
-			}
-		}
-		
-		.dropdownCaptionTextarea {
-			cursor: pointer;
-			margin: 0 0 -1px 0;
-			padding-left: $wcfGapSmall;
-			padding-right: $wcfGapSmall;
-			
-			&.button {
-				border-radius: 3px 3px 0 0;
-			}
-			
-			&~ .dropdownMenu {
-				top: 10%;
-			}
-			
-			span {
-				white-space: nowrap;
-				word-wrap: normal;
-				
-				&.active::after {
-					content: $fa-var-caret-down;
-					font-family: FontAwesome;
-					font-size: 14px;
-					margin-left: 7px;
-				}
-			}
-		}
 	}
 	
 	&.dropdownOpen {

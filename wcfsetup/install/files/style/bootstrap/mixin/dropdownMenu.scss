@@ -73,7 +73,7 @@
 		}
 		
 		&.dropdownText {
-			padding: $wcfGapTiny $wcfGapMedium;
+			padding: 5px 20px;
 			
 			@include wcfFontSmall;
 		}
@@ -82,21 +82,19 @@
 			padding-top: 2px;
 		}
 		
-		/*
-		// @TODO
 		&.missingValue > span {
+			padding-right: 40px;
 			position: relative;
 			
 			&:after {
-				color: @wcfWarningBackgroundColor;
-				content: @fa-var-exclamation-triangle;
+				color: $wcfStatusErrorText;
+				content: $fa-var-exclamation-triangle;
 				font-family: FontAwesome;
 				position: absolute;
-				right: @wcfGapMedium;
-				top: @wcfGapTiny;
+				right: 20px;
+				top: 5px;
 			}
 		}
-		*/
 		
 		> a,
 		> span {
