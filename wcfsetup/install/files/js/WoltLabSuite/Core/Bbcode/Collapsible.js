@@ -14,7 +14,7 @@ define([], function() {
 	/**
 	 * @exports	WoltLabSuite/Core/Bbcode/Collapsible
 	 */
-	var BbcodeCollapsible = {
+	return {
 		observe: function() {
 			var container, toggleButton;
 			while (_containers.length) {
@@ -28,9 +28,20 @@ define([], function() {
 				
 				(function(container, toggleButton) {
 					var toggle = function() {
-						var expand = container.classList.contains('collapsed');
-						container.classList[expand ? 'remove' : 'add']('collapsed');
-						toggleButton.textContent = elData(toggleButton, 'title-' + (expand ? 'collapse' : 'expand'));
+						if (container.classList.toggle('collapsed')) {
+							toggleButton.textContent = elData(toggleButton, 'title-expand');
+							
+							// negative top value means the upper boundary is not within the viewport
+							var top = container.getBoundingClientRect().top;
+							if (top < 0) {
+								var y = window.pageYOffset + (top - 100);
+								if (y < 0) y = 0;
+								window.scrollTo(window.pageXOffset, y);
+							}
+						}
+						else {
+							toggleButton.textContent = elData(toggleButton, 'title-collapse');
+						}
 					};
 					
 					toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
@@ -51,6 +62,4 @@ define([], function() {
 			}
 		}
 	};
-	
-	return BbcodeCollapsible;
 });
