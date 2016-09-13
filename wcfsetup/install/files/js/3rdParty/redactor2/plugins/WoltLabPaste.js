@@ -35,7 +35,9 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			this.paste.getPasteBoxCode = (function (pre) {
 				var returnValue = mpGetPasteBoxCode.call(this, pre);
 				
-				if (pre && !returnValue) {
+				// use clipboard data if paste box is flawed or when
+				// pasting in IE 11 where clipboard data is more reliable
+				if (pre && (!returnValue || isIe)) {
 					return clipboardData;
 				}
 				
@@ -53,7 +55,6 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				if (isIe) {
 					return (window.clipboardData.files.length > 0);
 				}
-				
 				
 				if (this.detect.isFirefox())
 				{
