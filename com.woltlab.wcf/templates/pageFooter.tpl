@@ -1,6 +1,10 @@
 <footer id="pageFooter" class="pageFooter">
 	{assign var=__boxesFooter value=$__wcf->getBoxHandler()->getBoxes('footer')}
-	{assign var=__showStyleChanger value=$__wcf->getStyleHandler()->showStyleChanger()}
+	{if $__wcf->getStyleHandler()->showStyleChanger() && $__wcf->getStyleHandler()->countStyles() > 1}
+		{assign var=__showStyleChanger value=true}
+	{else}
+		{assign var=__showStyleChanger value=false}
+	{/if}
 	
 	{if $__boxesFooter|count || $__showStyleChanger}
 		<div class="boxesFooter">
