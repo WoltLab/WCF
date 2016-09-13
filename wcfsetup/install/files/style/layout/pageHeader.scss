@@ -230,6 +230,10 @@
 					top: 4px;
 					z-index: 101;
 				}
+				
+				.icon {
+					color: $wcfHeaderMenuLink;
+				}
 			}
 			
 			&.dropdownOpen > a,
@@ -237,6 +241,10 @@
 			&:hover > a {
 				background: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
+				
+				.icon {
+					color: $wcfHeaderMenuLinkActive;
+				}
 			}
 			
 			/* ringing animation for notification icon */
