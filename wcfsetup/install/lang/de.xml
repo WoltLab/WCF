@@ -1663,6 +1663,18 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Breite des Seitenlogos]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Höhe des Seitenlogos]]></item>
+		<item name="wcf.acp.style.globals.pageLogoMobile"><![CDATA[Seitenlogo (mobile Version)]]></item>
+		<item name="wcf.acp.style.globals.pageLogoMobile.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo (mobile Version)]]></item>
+		<item name="wcf.acp.style.globals.fontSizeDefault"><![CDATA[Schriftgröße (Standard)]]></item>
+		<item name="wcf.acp.style.globals.fontSizeSmall"><![CDATA[Schriftgröße (klein)]]></item>
+		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Schriftgröße (Überschrift)]]></item>
+		<item name="wcf.acp.style.globals.fontSizeSection"><![CDATA[Schriftgröße (Sektions-Überschrift)]]></item>
+		<item name="wcf.acp.style.globals.fontSizeTitle"><![CDATA[Schriftgröße (Seiten-Titel)]]></item>
+		<item name="wcf.acp.style.globals.useGoogleFont"><![CDATA[Google-Schriftart aktivieren]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Schriftart]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
