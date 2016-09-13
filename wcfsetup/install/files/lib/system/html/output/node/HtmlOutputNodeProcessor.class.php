@@ -105,10 +105,10 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 						}
 					}
 					
-					for ($i = 0; $i < 2; $i++) {
+					//for ($i = 0; $i < 2; $i++) {
 						$br = $this->getDocument()->createElement('br');
 						$paragraph->appendChild($br);
-					}
+					//}
 				}
 				
 				DOMUtil::removeNode($paragraph, true);
