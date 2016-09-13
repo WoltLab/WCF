@@ -277,19 +277,16 @@
 
 /* SEARCH AREA */
 .pageHeaderSearch {
-	@include screen-lg {
-		flex: 0 0 50%;
-		text-align: right;
-		
-		.pageHeaderSearchLabel {
-			display: none;
-		}
-	}
+	display: none;
+	position: fixed;
+}
+
+.searchBarOpen .pageHeaderSearch {
+	display: block;
 }
 
 .pageHeaderSearchInputContainer {
-	display: inline-flex;
-	position: relative;
+	display: flex;
 	
 	.pageHeaderSearchType {
 		display: flex;
@@ -297,7 +294,7 @@
 		> .button {
 			align-items: center;
 			background-color: $wcfHeaderMenuLinkBackground;
-			border-radius: 2px 0 0 2px;
+			border-radius: 0 0 0 2px;
 			color: $wcfHeaderMenuLink;
 			display: flex;
 			max-width: 200px;
@@ -374,28 +371,13 @@
 	
 	.pageHeaderSearchInputButton {
 		background-color: $wcfHeaderMenuLinkBackground;
-		border-radius: 0 2px 2px 0;
+		border-radius: 0 0 2px 0;
 		color: $wcfHeaderMenuLink;
 		padding: 4px 9px;
 		
 		&:hover {
 			background: $wcfHeaderMenuLinkBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
-		}
-	}
-}
-
-@include screen-lg {
-	.searchBarOpen .pageHeaderSearchInputContainer {
-		position: fixed;
-		top: 50px !important;
-		
-		.pageHeaderSearchType > .button {
-			border-top-left-radius: 0;
-		}
-		
-		.pageHeaderSearchInputButton {
-			border-top-right-radius: 0;
 		}
 	}
 }
@@ -463,10 +445,8 @@
 	}
 	
 	.pageHeaderSearch {
-		left: 0;
-		position: fixed;
-		right: 0;
-		top: 50px !important;
+		left: 0 !important;
+		right: 0 !important;
 		
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;

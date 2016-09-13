@@ -9,8 +9,7 @@
 define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/Scroll', 'Ui/SimpleDropdown'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiScreen, UiScroll, UiSimpleDropdown) {
 	"use strict";
 	
-	var _callbackScroll = null;
-	var _pageHeader, _pageHeaderContainer, _searchInput, _searchInputContainer;
+	var _pageHeader, _pageHeaderContainer, _pageHeaderPanel, _pageHeaderSearch, _searchInput, _topMenu, _userPanelSearchButton;
 	var _isMobile = false;
 	
 	/**
@@ -41,64 +40,23 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		 * @protected
 		 */
 		_initSearchBar: function() {
-			var searchContainer = elById('pageHeaderSearch');
-			searchContainer.addEventListener(WCF_CLICK_EVENT, function(event) {
-				event.stopPropagation();
-			});
+			_pageHeaderSearch = elById('pageHeaderSearch');
+			_pageHeaderSearch.addEventListener(WCF_CLICK_EVENT, function(event) { event.stopPropagation(); });
 			
+			_pageHeaderPanel = elById('pageHeaderPanel');
 			_searchInput = elById('pageHeaderSearchInput');
+			_topMenu = elById('topMenu');
 			
-			var userPanelSearchButton = elById('userPanelSearchButton');
-			var pageHeaderFacade = elById('pageHeaderFacade');
-			
-			_searchInputContainer = elById('pageHeaderSearchInputContainer');
-			
-			var menu = elById('topMenu');
-			userPanelSearchButton.addEventListener(WCF_CLICK_EVENT, (function(event) {
+			_userPanelSearchButton = elById('userPanelSearchButton');
+			_userPanelSearchButton.addEventListener(WCF_CLICK_EVENT, (function(event) {
 				event.preventDefault();
 				event.stopPropagation();
 				
 				if (_pageHeader.classList.contains('searchBarOpen')) {
-					return this._closeSearchBar();
+					this._closeSearchBar();
 				}
-				
-				var facadeHeight = pageHeaderFacade.clientHeight;
-				var scrollTop = window.pageYOffset;
-				var skipScrollHandler = false;
-				var isVisible = !_isMobile && (facadeHeight > scrollTop);
-				
-				if (!isVisible && !_pageHeader.classList.contains('searchBarOpen')) {
-					UiAlignment.set(_searchInputContainer, menu, {
-						horizontal: 'right'
-					});
-					
-					_pageHeader.classList.add('searchBarOpen');
-					_searchInput.focus();
-				}
-				else if (!_isMobile) {
-					if (scrollTop) {
-						// setting focus could lead to the search bar to be
-						// hidden behind the fixed panel
-						UiScroll.element(elById('top'), function () {
-							_searchInput.focus();
-						});
-					}
-					else {
-						_searchInput.focus();
-					}
-					
-					skipScrollHandler = true;
-				}
-				
-				WCF.Dropdown.Interactive.Handler.closeAll();
-				
-				if (!skipScrollHandler && !_isMobile && _callbackScroll === null) {
-					_callbackScroll = (function () {
-						if (pageHeaderFacade.clientHeight > window.pageYOffset) {
-							this._closeSearchBar();
-						}
-					}).bind(this);
-					window.addEventListener('scroll', _callbackScroll);
+				else {
+					this._openSearchBar();
 				}
 			}).bind(this));
 			
@@ -112,24 +70,45 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 				if (data.identifier === 'com.woltlab.wcf.search') {
 					data.handler.close(true);
 					
-					Core.triggerEvent(elById('pageHeaderSearchInput'), WCF_CLICK_EVENT);
+					Core.triggerEvent(_userPanelSearchButton, WCF_CLICK_EVENT);
 				}
 			}).bind(this));
 		},
 		
+		/**
+		 * Opens the search bar.
+		 * 
+		 * @protected
+		 */
+		_openSearchBar: function() {
+			_pageHeader.classList.add('searchBarOpen');
+			_userPanelSearchButton.parentNode.classList.add('open');
+			
+			if (!_isMobile) {
+				// calculate value for `right` on desktop
+				UiAlignment.set(_pageHeaderSearch, _topMenu, {
+					horizontal: 'right'
+				});
+			}
+			
+			_pageHeaderSearch.style.setProperty('top', _pageHeaderPanel.clientHeight + 'px', '');
+			_searchInput.focus();
+		},
+		
+		/**
+		 * Closes the search bar.
+		 * 
+		 * @protected
+		 */
 		_closeSearchBar: function () {
 			_pageHeader.classList.remove('searchBarOpen');
+			_userPanelSearchButton.parentNode.classList.remove('open');
 			
 			['bottom', 'left', 'right', 'top'].forEach(function(propertyName) {
-				_searchInputContainer.style.removeProperty(propertyName);
+				_pageHeaderSearch.style.removeProperty(propertyName);
 			});
 			
 			_searchInput.blur();
-			
-			if (_callbackScroll !== null) {
-				window.removeEventListener('scroll', _callbackScroll);
-				_callbackScroll = null;
-			}
 		}
 	};
 });
