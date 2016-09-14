@@ -1714,7 +1714,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	_click: function() {
 		var editor = document.activeElement;
 		if (editor.classList.contains('redactor-editor')) {
-			$(editor.nextElementSibling).redactor('selection.save');
+			$('#' + elData(editor, 'element-id')).redactor('selection.save');
 		}
 		
 		if (this._hasTemplate) {

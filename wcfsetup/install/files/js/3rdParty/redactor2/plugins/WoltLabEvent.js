@@ -7,6 +7,7 @@ $.Redactor.prototype.WoltLabEvent = function() {
 		init: function() {
 			this._callbacks = [];
 			this._elementId = this.$element[0].id;
+			elData(this.$editor[0], 'element-id', this._elementId);
 			
 			require(['EventHandler'], (function(EventHandler) {
 				this.WoltLabEvent._setEvents(EventHandler);
