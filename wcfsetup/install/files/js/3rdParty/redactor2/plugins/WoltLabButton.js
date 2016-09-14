@@ -164,7 +164,12 @@ $.Redactor.prototype.WoltLabButton = function() {
 			_toggleButton.children[0].addEventListener('mousedown', (function (event) {
 				event.preventDefault();
 				
-				this.$toolbar[0].classList.toggle('redactorToolbarOverride');
+				if (this.$toolbar[0].classList.toggle('redactorToolbarOverride')) {
+					// this prevents mobile browser from refocusing another element
+					if (document.activeElement && document.activeElement !== this.$editor[0]) {
+						document.activeElement.blur();
+					}
+				}
 				
 				icon.classList.toggle('fa-caret-down');
 				icon.classList.toggle('fa-caret-up');
