@@ -1009,7 +1009,7 @@ WCF.Message.Quote.Handler = Class.extend({
 				}
 				
 				if (self._messageBodySelector) {
-					$container = $container.find(self._messageBodySelector).data('containerID', $containerID);
+					$container.data('body', $container.find(self._messageBodySelector).data('containerID', $containerID));
 				}
 				
 				$container.mousedown($.proxy(self._mouseDown, self));
@@ -1028,34 +1028,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	_mouseDown: function(event) {
 		// hide copy quote
 		this._copyQuote.removeClass('active');
-		
-		// store container ID
-		var $container = $(event.currentTarget);
-		
-		if (this._messageBodySelector) {
-			$container = this._containers[$container.data('containerID')];
-		}
-		
-		if ($container.hasClass('jsInvalidQuoteTarget')) {
-			this._activeContainerID = '';
-			
-			return;
-		}
-		else {
-			// check if mousedown occurred inside a <blockquote>
-			var $element = event.target;
-			while ($element !== $container[0]) {
-				if ($element.tagName === 'BLOCKQUOTE') {
-					this._activeContainerID = '';
-					
-					return;
-				}
-				
-				$element = $element.parentElement;
-			}
-		}
-		
-		this._activeContainerID = $container.wcfIdentify();
+		this._activeContainerID = event.currentTarget.id;
 	},
 	
 	/**
@@ -1127,13 +1100,35 @@ WCF.Message.Quote.Handler = Class.extend({
 	 */
 	_mouseUp: function(event) {
 		// ignore event
-		if (this._activeContainerID == '') {
+		if (this._activeContainerID === '') {
 			this._copyQuote.removeClass('active');
-			
+			return;
+		}
+		
+		var selection = window.getSelection();
+		if (selection.rangeCount !== 1 || selection.isCollapsed) {
+			this._copyQuote.removeClass('active');
 			return;
 		}
 		
 		var $container = this._containers[this._activeContainerID];
+		$container = $container.data('body') || $container;
+		
+		var anchorNode = selection.anchorNode;
+		while (anchorNode) {
+			if (anchorNode === $container[0]) {
+				break;
+			}
+			
+			anchorNode = anchorNode.parentNode;
+		}
+		
+		// selection spans unrelated nodes
+		if (anchorNode !== $container[0]) {
+			this._copyQuote.removeClass('active');
+			return;
+		}
+		
 		var $selection = this._getSelectedText();
 		var $text = $.trim($selection);
 		if ($text == '') {
@@ -1142,30 +1137,18 @@ WCF.Message.Quote.Handler = Class.extend({
 			return;
 		}
 		
-		var $messageBody = (this._messageBodySelector) ? $container.find(this._messageContentSelector)[0] : $container[0];
-		
-		// check if mouseup occurred within a <blockquote>
-		var $element = event.target;
-		while ($element !== $container[0]) {
-			if ($element === null || $element.tagName === 'BLOCKQUOTE') {
-				this._copyQuote.removeClass('active');
-				
-				return;
-			}
-			
-			$element = $element.parentElement;
-		}
-		
-		// check if selection starts and ends within the $messageBody element
-		var $range = window.getSelection().getRangeAt(0);
-		if (!this._elementInsideContainer($range.startContainer, $messageBody) || !this._elementInsideContainer($range.endContainer, $messageBody)) {
+		// check if mousedown/mouseup took place inside a blockquote
+		var range = selection.getRangeAt(0);
+		var startContainer = (range.startContainer.nodeType === Node.TEXT_NODE) ? range.startContainer.parentNode : range.startContainer;
+		var endContainer = (range.endContainer.nodeType === Node.TEXT_NODE) ? range.endContainer.parentNode : range.endContainer;
+		if (startContainer.closest('blockquote') || endContainer.closest('blockquote')) {
 			this._copyQuote.removeClass('active');
 			
 			return;
 		}
 		
 		// compare selection with message text of given container
-		var $messageText = this._getNodeText($messageBody);
+		var $messageText = this._getNodeText($container[0]);
 		
 		// selected text is not part of $messageText or contains text from unrelated nodes
 		if (this._normalize($messageText).indexOf(this._normalize($text)) === -1) {
