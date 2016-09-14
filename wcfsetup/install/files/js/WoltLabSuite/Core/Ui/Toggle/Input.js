@@ -64,6 +64,9 @@ define(['Core'], function(Core) {
 			}).bind(this));
 			
 			this._element.addEventListener('change', this._change.bind(this));
+			
+			this._handleElements(this._options.show, this._element.checked);
+			this._handleElements(this._options.hide, !this._element.checked);
 		},
 		
 		/**
