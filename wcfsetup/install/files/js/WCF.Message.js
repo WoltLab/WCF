@@ -1112,6 +1112,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		
 		var $container = this._containers[this._activeContainerID];
+		var $objectID = $container.data('objectID');
 		$container = $container.data('body') || $container;
 		
 		var anchorNode = selection.anchorNode;
@@ -1176,7 +1177,7 @@ WCF.Message.Quote.Handler = Class.extend({
 			if ($text != '') {
 				self._copyQuote.addClass('active');
 				self._message = $text;
-				self._objectID = $container.data('objectID');
+				self._objectID = $objectID;
 			}
 		}, 10);
 	},
