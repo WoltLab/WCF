@@ -2230,7 +2230,7 @@ $.widget('wcf.messageTabMenu', {
 			}
 		}
 		
-		if ($preselect === true && this._tabs.length) {
+		if ($preselect === true && this._tabs.length && !window.matchMedia('(max-width: 544px)').matches) {
 			// pick the first available tab
 			this._tabs[0].tab.children('a').trigger('click');
 		}
@@ -2259,7 +2259,7 @@ $.widget('wcf.messageTabMenu', {
 	 */
 	_showTab: function(event, index, forceOpen) {
 		var $index = (event === null) ? index : $(event.currentTarget).data('index');
-		forceOpen = (!this.options.collapsible || forceOpen === true) ? true : false;
+		forceOpen = (!this.options.collapsible || forceOpen === true);
 		
 		var $target = null;
 		for (var $i = 0; $i < this._tabs.length; $i++) {
