@@ -1267,7 +1267,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 					bottom: '',
 					left: '',
 					right: '',
-					top: elById('pageHeader').clientHeight + 'px'
+					top: elById('pageHeaderPanel').clientHeight + 'px'
 				});
 			}
 		}).bind(this));
