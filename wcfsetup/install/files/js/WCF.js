@@ -7013,7 +7013,12 @@ jQuery.fn.extend({
 					document.body.appendChild(this[0]);
 				}
 				
-				UiDialog.openStatic(id, null, (args.length === 1 && typeof args[0] === 'object') ? args[0] : {});
+				var options = (args.length === 1 && typeof args[0] === 'object') ? args[0] : {};
+				UiDialog.openStatic(id, null, options);
+				
+				if (options.hasOwnProperty('title')) {
+					UiDialog.setTitle(id, options.title);
+				}
 			}
 		}).bind(this));
 		
