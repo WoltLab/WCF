@@ -23,13 +23,13 @@
 	border: 1px solid $wcfContentBorder;
 	border-width: 1px 0;
 	margin-bottom: 10px ;
-	max-width: 50%;
 	min-width: 300px;
 	padding: 10px 0;
 	
 	@include screen-sm-up {
 		float: left;
 		margin-right: 20px;
+		max-width: 50%;
 	}
 	
 	h2 {
