@@ -31,9 +31,17 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode {
 		foreach ($elements as $element) {
 			switch ($this->outputType) {
 				case 'text/html':
+					$collapse = false;
+					
+					// try to predict long content
+					if ($element->getElementsByTagName('p')->length > 5 || $element->getElementsByTagName('br')->length > 5) {
+						$collapse = true;
+					}
+					
 					$nodeIdentifier = StringUtil::getRandomID();
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'author' => $element->getAttribute('data-author'),
+						'collapse' => $collapse,
 						'url' => $element->getAttribute('data-link')
 					]);
 					
@@ -79,6 +87,7 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode {
 		}
 		
 		WCF::getTPL()->assign([
+			'collapseQuote' => $data['collapse'],
 			'quoteLink' => $data['url'],
 			'quoteAuthor' => $data['author'],
 			'quoteAuthorObject' => $quoteAuthorObject,
