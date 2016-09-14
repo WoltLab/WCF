@@ -640,10 +640,10 @@
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Hauptkennwort erforderlich]]></item>
-		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löscht{else}löschen{/if}.]]></item>
+		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löschst{else}löschen{/if}.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
 		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Das Kennwort wurde als unsicher eingestuft. Das Kennwort sollte mindestens acht Zeichen lang sein, große und kleine lateinische Buchstaben, Zahlen und Sonderzeichen enthalten. Es darf nicht mit den Kennwörtern von anderen Administratoren übereinstimmen.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löscht{else}löschen{/if}.]]></item>
+		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Hauptkennwort vergessen haben {if LANGUAGE_USE_INFORMAL_VARIANT}solltest{else}sollten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} es zurücksetzen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> {if LANGUAGE_USE_INFORMAL_VARIANT}löschst{else}löschen{/if}.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Vorschlag]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
@@ -1740,7 +1740,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.acp.user.ban.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den/die Benutzer wirklich sperren?]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} Benutzer <span class="confirmationObject">{$user->username}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzer <span class="confirmationObject">{$user->username}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bearbeitest dein{else}Sie bearbeiten Ihr{/if} eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} aus der Administrationsoberfläche ausgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}wirst{else}werden{/if}. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sei{else}seien Sie{/if} entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
@@ -1886,24 +1886,24 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter <em>System -&gt; O
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
 ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
-erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort setzen, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
 
     {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} diese Nachricht erst nach dem {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} lesen, ist es
-aus Sicherheitsgründen erforderlich, dass Sie die Kennwort vergessen-Funktion [URL:{link controller='LostPassword' isEmail=true}{/link}] nutzen.]]></item>
+aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Kennwort vergessen-Funktion [URL:{link controller='LostPassword' isEmail=true}{/link}] {if LANGUAGE_USE_INFORMAL_VARIANT}nutzt{else}nutzen{/if}.]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
 <p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
-erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort setzen, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Neues Kennwort setzen]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} diese Nachricht erst nach dem {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime} lesen, ist es
-aus Sicherheitsgründen erforderlich, dass Sie die <a href="{link controller='LostPassword' isEmail=true}{/link}">Kennwort vergessen-Funktion</a> nutzen.</p>]]></item>
+aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die <a href="{link controller='LostPassword' isEmail=true}{/link}">Kennwort vergessen-Funktion</a> {if LANGUAGE_USE_INFORMAL_VARIANT}nutzt{else}nutzen{/if}.</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Neue Passwörter zusenden]]></item>
 		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Umgebung]]></item>
@@ -1917,7 +1917,7 @@ aus Sicherheitsgründen erforderlich, dass Sie die <a href="{link controller='Lo
 freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos nun in vollem Umfang nutzen.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Ihr{else}Dein{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] wurde von
+{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] wurde von
 einem Administrator freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if}
 Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
@@ -2108,7 +2108,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem{else}{#$count}{/if} Benutzer ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem Benutzer{else}{#$count} Benutzern{/if} ein neues Kennwort zusenden?]]></item>
 		
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if}]]></item>
@@ -2119,7 +2119,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Kommentar wirklich löschen?]]></item>
 		<item name="wcf.comment.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Drücke{else}Drücken Sie{/if} die Eingabetaste, um abzusenden oder Escape, um abzubrechen.]]></item>
-		<item name="wcf.comment.error.floodControl"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} bereits einen Kommentar innerhalb der letzten {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} Sekunden{else}Sekunde{/if} geschrieben. Sie können erst in {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} Sekunde{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}n{/if} einen neuen Kommentar erstellen.]]></item>
+		<item name="wcf.comment.error.floodControl"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} bereits einen Kommentar innerhalb der letzten {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} Sekunden{else}Sekunde{/if} geschrieben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} erst in {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} Sekunde{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}n{/if} einen neuen Kommentar erstellen.]]></item>
 		<item name="wcf.comment.more"><![CDATA[Weitere Kommentare]]></item>
 		<item name="wcf.comment.response.add"><![CDATA[Antworten …]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
