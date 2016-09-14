@@ -143,19 +143,16 @@ WCF.Poll.Management = Class.extend({
 	 * Handles key down events for option input field.
 	 * 
 	 * @param	object		event
-	 * @return	boolean
 	 */
 	_keyDown: function(event) {
 		// ignore every key except for [Enter]
 		if (event.which !== 13) {
-			return true;
+			return;
 		}
 		
-		$(event.currentTarget).prev('.sortableButtonContainer').children('.jsAddOption').trigger('click');
+		$(event.currentTarget).parent().children('.jsAddOption').trigger('click');
 		
 		event.preventDefault();
-		event.stopPropagation();
-		return false;
 	},
 	
 	/**
