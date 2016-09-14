@@ -50,6 +50,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * @param	integer		$userID
 	 * @param	mixed[]		$additionalData
 	 * @throws	InvalidObjectTypeException
+	 * @throws	SystemException
 	 */
 	public function fireEvent($objectType, $objectID, $userID = null, array $additionalData = []) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
