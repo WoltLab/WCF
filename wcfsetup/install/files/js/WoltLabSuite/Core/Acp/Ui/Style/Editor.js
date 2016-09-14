@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Style/Editor
  */
-define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictionary, DomUtil, EventHandler) {
+define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], function(Ajax, Core, Dictionary, DomUtil, EventHandler, UiScreen) {
 	"use strict";
 	
 	var _stylePreviewRegions = new Dictionary();
@@ -28,6 +28,12 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 			}
 			
 			this._initVisualEditor(options.styleRuleMap);
+			
+			UiScreen.on('screen-sm-down', {
+				match: this.hideVisualEditor.bind(this),
+				unmatch: this.showVisualEditor.bind(this),
+				setup: this.hideVisualEditor.bind(this)
+			});
 		},
 		
 		/**
@@ -262,6 +268,20 @@ define(['Ajax', 'Dictionary', 'Dom/Util', 'EventHandler'], function(Ajax, Dictio
 				
 				updateCSSRule(variableName, colorField.style.getPropertyValue('background-color'));
 			});
+		},
+		
+		hideVisualEditor: function() {
+			elHide(elById('spWindow'));
+			elById('spVariablesWrapper').style.removeProperty('transform');
+			elHide(elById('stylePreviewRegionMarker'));
+		},
+		
+		showVisualEditor: function() {
+			elShow(elById('spWindow'));
+			
+			window.setTimeout(function() {
+				Core.triggerEvent(elById('spCategories'), 'change');
+			}, 100);
 		}
 	};
 	

@@ -480,8 +480,7 @@
 								<ol class="inlineList">
 									<li><a>Lorem</a></li>
 									<li><a>Ipsum Dolor</a></li>
-									<li><a>Sit Amet</a></li>
-									<li><a>Consetetur</a></li>
+									<li><a>Sit Amet Lorem</a></li>
 									
 									<li class="active">
 										<a>Sadipscing</a>

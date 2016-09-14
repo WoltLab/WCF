@@ -73,14 +73,16 @@
 
 /* ### wrapper sidebar ### */
 .spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }
-.spSidebarBox.pointer { position: relative; }
-.spSidebarBox.pointer::before { border: 10px solid transparent; border-right-color: rgb(217, 237, 247); content: ""; display: block; left: -20px; position: absolute; }
 .spColor { align-items: center; }
 .spColor:not(:first-child) { margin-top: 5px; }
 .spColorBox { background-color: #fff; border: 1px solid #ccc; margin-right: 10px !important; padding: 1px; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
+@media (min-width: 769px) {
+	.spSidebarBox.pointer { position: relative; }
+	.spSidebarBox.pointer::before { border: 10px solid transparent; border-right-color: rgb(217, 237, 247); content: ""; display: block; left: -20px; position: absolute; }
+}
 
 /* ### style region marker ### */
 #stylePreviewRegionMarker { border: 3px solid rgba(255, 0, 0, .4); position: absolute; pointer-events: none; }
