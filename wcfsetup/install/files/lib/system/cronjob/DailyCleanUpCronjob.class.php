@@ -3,9 +3,7 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\visitTracker\VisitTracker;
-use wcf\system\Callback;
 use wcf\system\WCF;
-use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 
 /**
