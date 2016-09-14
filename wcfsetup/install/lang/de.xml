@@ -50,7 +50,7 @@
 	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
-		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} diese Einstellungen anpassen, sollte sich die Domain geändert haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du dir{else}Sollten Sie sich{/if} bei dem korrekten Wert nicht sicher sein, {if LANGUAGE_USE_INFORMAL_VARIANT}übernehme{else}übernehmen Sie{/if} bitte die exakte Angabe im Feld „Domain“.]]></item>
+		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} diese Einstellungen anpassen, sollte sich die Domain geändert haben. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du dir{else}Sollten Sie sich{/if} bei dem korrekten Wert nicht sicher sein, {if LANGUAGE_USE_INFORMAL_VARIANT}übernimm{else}übernehmen Sie{/if} bitte die exakte Angabe im Feld „Domain“.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.invalid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
