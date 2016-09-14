@@ -5,7 +5,7 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor'], function(AcpUiStyleImageUpload, AcpUiStyleEditor) {
+	require(['WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input'], function(AcpUiStyleImageUpload, AcpUiStyleEditor, UiToggleInput) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
@@ -13,6 +13,10 @@
 		});
 		
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
+		
+		new UiToggleInput('input[name="useGoogleFont"]', {
+			show: ['#wcfFontFamilyGoogleContainer']
+		});
 	});
 	
 	$(function() {
@@ -443,7 +447,7 @@
 						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
 					</label></dd>
 				</dl>
-				<dl>
+				<dl id="wcfFontFamilyGoogleContainer">
 					<dt><label for="wcfFontFamilyGoogle">{lang}wcf.acp.style.globals.fontFamilyGoogle{/lang}</label></dt>
 					<dd>
 						<input type="text" id="wcfFontFamilyGoogle" name="wcfFontFamilyGoogle" value="{$variables[wcfFontFamilyGoogle]}" class="medium">
