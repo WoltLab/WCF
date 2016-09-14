@@ -21,6 +21,10 @@ class SmileyCache extends SingletonFactory {
 	 */
 	protected $cachedSmilies = [];
 	
+	/**
+	 * cached smilies with smiley code as key
+	 * @var	Smiley[]
+	 */
 	protected $cachedSmileyByCode = [];
 	
 	/**
@@ -67,6 +71,12 @@ class SmileyCache extends SingletonFactory {
 		return $this->cachedSmilies;
 	}
 	
+	/**
+	 * Returns the smiley with the given smiley code or `null` if no such smiley exists.
+	 * 
+	 * @param	string		$code
+	 * @return	Smiley|null
+	 */
 	public function getSmileyByCode($code) {
 		if (isset($this->cachedSmileyByCode[$code])) {
 			return $this->cachedSmileyByCode[$code];
