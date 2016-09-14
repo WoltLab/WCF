@@ -212,10 +212,40 @@
 				}
 			}
 		}
-		
-		@include screen-xs {
+	}
+	
+	@include screen-xs {
+		&:not(.redactorToolbarOverride) > li {
 			&[data-show-on-mobile="false"] {
 				display: none;
+			}
+		}
+		
+		&.redactorToolbarOverride > .redactor-toolbar-separator {
+			position: relative;
+			
+			&::before {
+				bottom: 7px;
+				border-left: 1px solid $wcfHeaderMenuLink;
+				content: "";
+				left: 0;
+				opacity: .6;
+				position: absolute;
+				top: 7px;
+			}
+		}
+		
+		.redactorToolbarToggle {
+			position: relative;
+			
+			&::before {
+				bottom: 7px;
+				border-left: 1px solid $wcfHeaderMenuLink;
+				content: "";
+				left: 0;
+				opacity: .6;
+				position: absolute;
+				top: 7px;
 			}
 		}
 	}

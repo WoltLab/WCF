@@ -21,7 +21,7 @@ buttonOptions = {
 	woltlabSize: { icon: 'fa-text-height', title: '{lang}wcf.editor.button.size{/lang}' }
 };
 
-buttonMobile = ['format', 'bold', 'italic', 'underline', 'alignment', 'link', 'woltlabImage', 'woltlabMedia'];
+buttonMobile = ['format', 'bold', 'italic', 'underline', 'lists', 'link', 'woltlabImage'];
 
 buttons.push('html');
 buttons.push('undo');

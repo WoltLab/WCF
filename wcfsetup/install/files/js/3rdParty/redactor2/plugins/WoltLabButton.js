@@ -1,6 +1,8 @@
 $.Redactor.prototype.WoltLabButton = function() {
 	"use strict";
 	
+	var _toggleButton;
+	
 	return {
 		init: function() {
 			// add custom buttons
@@ -110,6 +112,14 @@ $.Redactor.prototype.WoltLabButton = function() {
 			});
 			
 			WCF.DOMNodeInsertedHandler.execute();
+			
+			require(['Ui/Screen'], (function (UiScreen) {
+				UiScreen.on('screen-xs', {
+					match: this.WoltLabButton._enableToggleButton.bind(this),
+					unmatch: this.WoltLabButton._disableToggleButton.bind(this),
+					setup: this.WoltLabButton._setupToggleButton.bind(this)
+				});
+			}).bind(this));
 		},
 		
 		_handleCustomButton: function (bbcode) {
@@ -129,6 +139,38 @@ $.Redactor.prototype.WoltLabButton = function() {
 					this.$editor[0].focus();
 				}
 			}).bind(this), 10);
+		},
+		
+		_enableToggleButton: function () {
+			if (_toggleButton.parentNode === null) {
+				this.$toolbar[0].appendChild(_toggleButton);
+			}
+		},
+		
+		_disableToggleButton: function () {
+			if (_toggleButton.parentNode !== null) {
+				this.$toolbar[0].removeChild(_toggleButton);
+			}
+		},
+		
+		_setupToggleButton: function () {
+			_toggleButton = elCreate('li');
+			_toggleButton.className = 'redactorToolbarToggle';
+			_toggleButton.innerHTML = '<a href="#"><span class="icon icon16 fa-caret-down"></span></a>';
+			elData(_toggleButton, 'show-on-mobile', true);
+			
+			var icon = _toggleButton.children[0].children[0];
+			
+			_toggleButton.children[0].addEventListener('mousedown', (function (event) {
+				event.preventDefault();
+				
+				this.$toolbar[0].classList.toggle('redactorToolbarOverride');
+				
+				icon.classList.toggle('fa-caret-down');
+				icon.classList.toggle('fa-caret-up');
+			}).bind(this));
+			
+			this.$toolbar[0].appendChild(_toggleButton);
 		}
 	};
 };

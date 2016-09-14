@@ -113,10 +113,11 @@
 			
 			var config = {
 				buttons: buttons,
-				clipboardImageUpload: false,
+				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 				direction: '{lang}wcf.global.pageDirection{/lang}',
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
+				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 				lang: 'wsc', // fake language to offload phrases
 				langs: {
 					wsc: {
@@ -165,7 +166,7 @@
 				linkify: false,
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
-				pasteImages: false,
+				pasteImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 				plugins: [
 					// Imperavi
 					'alignment',
