@@ -53,8 +53,8 @@ final class StyleUtil {
 		$contents = str_replace('wcf-border-left-style:', 'border-right-style:', $contents);
 		
 		// border-color
-		$contents = preg_replace('/border-color:\s*(rgba?\(.*?\))\s+(rgba?\(.*?\))\s+(rgba?\(.*?\))\s+(rgba?\(.*?\))/', 'border-color:\\1 \\4 \\3 \\2', $contents);
-		$contents = preg_replace('/border-color:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-color:\\1 \\4 \\3 \\2', $contents);
+		//$contents = preg_replace('/border-color:\s*(rgba?\(.*?\))\s+(rgba?\(.*?\))\s+(rgba?\(.*?\))\s+(rgba?\(.*?\))/', 'border-color:\\1 \\4 \\3 \\2', $contents);
+		//$contents = preg_replace('/border-color:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-color:\\1 \\4 \\3 \\2', $contents);
 		
 		// (border-left-color, border-right-color)
 		$contents = str_replace('border-left-color:', 'wcf-border-left-color:', $contents);

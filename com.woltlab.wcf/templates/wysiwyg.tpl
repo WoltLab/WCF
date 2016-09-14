@@ -114,6 +114,7 @@
 			var config = {
 				buttons: buttons,
 				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				direction: '{lang}wcf.global.pageDirection{/lang}',
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
 				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},

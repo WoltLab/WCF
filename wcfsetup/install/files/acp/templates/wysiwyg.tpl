@@ -114,6 +114,7 @@
 			var config = {
 				buttons: buttons,
 				clipboardImageUpload: false,
+				direction: '{lang}wcf.global.pageDirection{/lang}',
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
 				lang: 'wsc', // fake language to offload phrases
