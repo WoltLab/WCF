@@ -99,6 +99,11 @@ final class StyleUtil {
 		$contents = str_replace('border-bottom-right-radius:', 'border-bottom-left-radius:', $contents);
 		$contents = str_replace('wcf-border-bottom-left-radius:', 'border-bottom-right-radius:', $contents);
 		
+		// transform: translateX
+		$contents = preg_replace_callback('/transform:\s*translateX\((?P<negate>-)?(?P<number>\d+)(?P<unit>[^\s\)]+)\)/', function($matches) {
+			return 'transform: translateX(' . ($matches['negate'] ? '' : '-') . $matches['number'] . $matches['unit'] . ')';
+		}, $contents);
+		
 		return $contents;
 	}
 	
