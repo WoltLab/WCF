@@ -120,7 +120,7 @@ class PageEditForm extends PageAddForm {
 			}
 		}
 		else {
-			if (mb_strtolower($customURL) != mb_strtolower($this->page->getPageContents()[$languageID]->customURL)) {
+			if (isset($this->page->getPageContents()[$languageID]) && mb_strtolower($customURL) != mb_strtolower($this->page->getPageContents()[$languageID]->customURL)) {
 				parent::validateCustomUrl($languageID, $customURL);
 			}
 		}
