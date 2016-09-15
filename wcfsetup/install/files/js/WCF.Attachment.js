@@ -298,7 +298,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._initFile()
 	 */
 	_initFile: function(file) {
-		var $li = $('<li class="box64"><span class="icon icon48 fa-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
+		var $li = $('<li class="box64"><span class="icon icon64 fa-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
 		
