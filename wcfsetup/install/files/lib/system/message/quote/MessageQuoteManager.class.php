@@ -130,13 +130,11 @@ class MessageQuoteManager extends SingletonFactory {
 			$this->quoteData[$quoteID.'_pID'] = $parentObjectID;
 			
 			if (!empty($fullQuote)) {
-				// strip quotes container in full quote
 				$htmlInputProcessor = new HtmlInputProcessor();
 				$htmlInputProcessor->processIntermediate($fullQuote);
 				
-				$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-quote');
-				while ($elements->length) {
-					DOMUtil::removeNode($elements->item(0));
+				if (MESSAGE_MAX_QUOTE_DEPTH) {
+					$htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1);
 				}
 				
 				$this->quotes[$objectType][$objectID][$quoteID] = 1;

@@ -1083,6 +1083,8 @@
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Aktiviert die Funktion für das Taggen von Inhalten.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximale Tag-Länge]]></item>
+		<item name="wcf.acp.option.message_max_quote_depth"><![CDATA[Maximale Zitat-Tiefe]]></item>
+		<item name="wcf.acp.option.message_max_quote_depth.description"><![CDATA[Der Wert „1“ erlaubt nur direkte Zitate, aber keine Zitate in Zitaten. Bei „2“ oder mehr dürfen Zitate selbst Zitate enthalten bis zur angegebenen Tiefe. Mit dem Wert „0“ wird diese Funktion deaktiviert und es können beliebig oft Zitate ineinander verschachtelt werden.]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Suchfunktion]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Ergebnisse pro Seite]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Standardsortierung]]></item>

@@ -42,6 +42,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		// handle static converters
 		$this->invokeHtmlNode(new HtmlInputNodeWoltlabMetacode());
+		
+		if (MESSAGE_MAX_QUOTE_DEPTH) {
+			$this->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH);
+		}
+		
 		$this->invokeHtmlNode(new HtmlInputNodeImg());
 		
 		// dynamic node handlers
@@ -58,6 +63,39 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->processEmbeddedContent();
 		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
+	}
+	
+	public function enforceQuoteDepth($depth) {
+		$quotes = [];
+		/** @var \DOMElement $quote */
+		foreach ($this->getDocument()->getElementsByTagName('woltlab-quote') as $quote) {
+			$quotes[] = $quote;
+		}
+		
+		foreach ($quotes as $quote) {
+			if (!$quote->parentNode) {
+				continue;
+			}
+			
+			if ($depth === 0) {
+				DOMUtil::removeNode($quote);
+			}
+			else {
+				$level = 0;
+				$parent = $quote;
+				while ($parent = $parent->parentNode) {
+					if ($parent->nodeName === 'woltlab-quote') {
+						$level++;
+					}
+				}
+				
+				if ($level < $depth) {
+					continue;
+				}
+				
+				DOMUtil::removeNode($quote);
+			}
+		}
 	}
 	
 	/**

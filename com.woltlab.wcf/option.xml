@@ -1393,6 +1393,14 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<maxvalue>255</maxvalue>
 				<options>module_tagging</options>
 			</option>
+			
+			<option name="message_max_quote_depth">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
 			<!-- /message.general -->
 			
 			<option name="search_results_per_page">

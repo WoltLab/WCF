@@ -1092,6 +1092,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the use of tags for content.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Tag Length]]></item>
+		<item name="wcf.acp.option.message_max_quote_depth"><![CDATA[Maximum Quote Nesting]]></item>
+		<item name="wcf.acp.option.message_max_quote_depth.description"><![CDATA[The value “1” allows for direct quotes only, quotes contained within quotes will be removed. Setting this to “2” or more allows quotes to be nested up to the configured depth. You can disable this by setting the value to “0”, allowing for infinite quote nesting.]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Sort by]]></item>

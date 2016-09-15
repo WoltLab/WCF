@@ -105,6 +105,10 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		return $this->getHtmlInputNodeProcessor()->validate();
 	}
 	
+	public function enforceQuoteDepth($depth) {
+		$this->getHtmlInputNodeProcessor()->enforceQuoteDepth($depth);
+	}
+	
 	/**
 	 * Returns the parsed HTML ready to store.
 	 * 
