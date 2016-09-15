@@ -57,6 +57,13 @@
 
 .dropdownMenu {
 	@include dropdownMenu;
+	
+	@include screen-md-down {
+		&.dropdownMenuPageSearch {
+			left: 0 !important;
+			right: 0 !important;
+		}
+	}
 }
 
 .dropdownIndicator::after {
