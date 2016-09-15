@@ -90,7 +90,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			$groupValue = explode(',', StringUtil::unifyNewlines($groupValue));
 		}
 		
-		$newValue = array_unique(array_merge($defaultValue, $groupValue));
+		$newValue = array_intersect($defaultValue, $groupValue);
 		sort($newValue);
 		
 		return implode(',', $newValue);

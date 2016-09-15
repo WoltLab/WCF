@@ -184,6 +184,13 @@ class UserGroupOptionForm extends AbstractForm {
 				}
 			}
 		}
+		else if ($this->userGroupOption->optionType == 'BBCodeSelect') {
+			foreach ($this->groups as $groupID => $group) {
+				if (!isset($this->values[$groupID])) {
+					$this->values[$groupID] = '';
+				}
+			}
+		}
 		
 		if (!empty($this->errorType)) {
 			throw new UserInputException('optionValues', $this->errorType);
