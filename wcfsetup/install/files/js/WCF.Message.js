@@ -1028,7 +1028,8 @@ WCF.Message.Quote.Handler = Class.extend({
 	_mouseDown: function(event) {
 		// hide copy quote
 		this._copyQuote.removeClass('active');
-		this._activeContainerID = event.currentTarget.id;
+		
+		this._activeContainerID = (event.currentTarget.classList.contains('jsInvalidQuoteTarget')) ? '' : event.currentTarget.id;
 	},
 	
 	/**
