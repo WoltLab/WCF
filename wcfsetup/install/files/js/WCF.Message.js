@@ -1096,10 +1096,8 @@ WCF.Message.Quote.Handler = Class.extend({
 	
 	/**
 	 * Handles the mouse up event.
-	 * 
-	 * @param	{Event}		event
 	 */
-	_mouseUp: function(event) {
+	_mouseUp: function() {
 		// ignore event
 		if (this._activeContainerID === '') {
 			this._copyQuote.removeClass('active');
@@ -1184,27 +1182,6 @@ WCF.Message.Quote.Handler = Class.extend({
 	},
 	
 	/**
-	 * Returns true if given element is a child element of given container element.
-	 * 
-	 * @param	{Node}  	element
-	 * @param	{Element}	container
-	 * @return	{boolean}
-	 */
-	_elementInsideContainer: function(element, container) {
-		if (element.nodeType === Node.TEXT_NODE) element = element.parentNode;
-		
-		while (element) {
-			if (element === container) {
-				return true;
-			}
-			
-			element = element.parentNode;
-		}
-		
-		return false;
-	},
-	
-	/**
 	 * Normalizes a text for comparison.
 	 * 
 	 * @param	{string}	text
@@ -1212,33 +1189,6 @@ WCF.Message.Quote.Handler = Class.extend({
 	 */
 	_normalize: function(text) {
 		return text.replace(/\r?\n|\r/g, "\n").replace(/\s/g, ' ').replace(/\s{2,}/g, ' ');
-	},
-	
-	/**
-	 * Returns the left or right offset of the current text selection.
-	 * 
-	 * @param	{Range}		range
-	 * @param	{boolean}	before
-	 * @return	{Object}
-	 */
-	_getOffset: function(range, before) {
-		range.collapse(before);
-		
-		var $elementID = WCF.getRandomID();
-		var $element = document.createElement('span');
-		$element.innerHTML = '<span id="' + $elementID + '"></span>';
-		var $fragment = document.createDocumentFragment(), $node;
-		while ($node = $element.firstChild) {
-			$fragment.appendChild($node);
-		}
-		range.insertNode($fragment);
-		
-		$element = $('#' + $elementID);
-		var $position = $element.offset();
-		$position.top = $position.top - $(window).scrollTop();
-		$element.remove();
-		
-		return $position;
 	},
 	
 	/**
@@ -1261,66 +1211,6 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		
 		return $coordinates;
-	},
-	
-	/**
-	 * Saves current selection.
-	 * 
-	 * @see		http://stackoverflow.com/a/13950376
-	 * 
-	 * @param	{Element}	containerEl
-	 * @return	{Object}
-	 */
-	_saveSelection: function(containerEl) {
-		var range = window.getSelection().getRangeAt(0);
-		var preSelectionRange = range.cloneRange();
-		preSelectionRange.selectNodeContents(containerEl);
-		preSelectionRange.setEnd(range.startContainer, range.startOffset);
-		var start = preSelectionRange.toString().length;
-		
-		return {
-			start: start,
-			end: start + range.toString().length
-		};
-	},
-	
-	/**
-	 * Restores a selection.
-	 * 
-	 * @see		http://stackoverflow.com/a/13950376
-	 * 
-	 * @param	{Element}	containerEl
-	 * @param	{Object}	savedSel
-	 */
-	_restoreSelection: function(containerEl, savedSel) {
-		var charIndex = 0, range = document.createRange();
-		range.setStart(containerEl, 0);
-		range.collapse(true);
-		var nodeStack = [containerEl], node, foundStart = false, stop = false;
-		
-		while (!stop && (node = nodeStack.pop())) {
-			if (node.nodeType == Node.TEXT_NODE) {
-				var nextCharIndex = charIndex + node.length;
-				if (!foundStart && savedSel.start >= charIndex && savedSel.start <= nextCharIndex) {
-					range.setStart(node, savedSel.start - charIndex);
-					foundStart = true;
-				}
-				if (foundStart && savedSel.end >= charIndex && savedSel.end <= nextCharIndex) {
-					range.setEnd(node, savedSel.end - charIndex);
-					stop = true;
-				}
-				charIndex = nextCharIndex;
-			} else {
-				var i = node.childNodes.length;
-				while (i--) {
-					nodeStack.push(node.childNodes[i]);
-				}
-			}
-		}
-		
-		var sel = window.getSelection();
-		sel.removeAllRanges();
-		sel.addRange(range);
 	},
 	
 	/**
