@@ -2845,7 +2845,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
 		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
-		<item name="wcf.poll.multipleVotes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie können{/if} {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
+		<item name="wcf.poll.multipleVotes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
 		<item name="wcf.poll.options.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Antworten mittels Drücken und Festhalten in ihrer Reihenfolge ändern. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} {@POLL_MAX_OPTIONS} Antwortmöglichkeiten vorgeben.]]></item>
@@ -2930,7 +2930,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>
 		<item name="wcf.user.logout"><![CDATA[Abmelden]]></item>
-		<item name="wcf.user.logout.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} sich wirklich abmelden?]]></item>
+		<item name="wcf.user.logout.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dich{else}Wollen Sie sich{/if} sich wirklich abmelden?]]></item>
 		<item name="wcf.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Inhaltssprachen]]></item>
@@ -3098,7 +3098,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du blockierst{else}Sie blockieren{/if} derzeit keine Benutzer.]]></item>
 		<item name="wcf.user.following.noUsers"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du folgst{else}Sie folgen{/if} derzeit keinen Benutzern.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Individueller Benutzertitel]]></item>
-		<item name="wcf.user.userTitle.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} sich einen individuellen Benutzertitel geben.]]></item>
+		<item name="wcf.user.userTitle.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dir{else}Sie können sich{/if} einen individuellen Benutzertitel geben.]]></item>
 		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Der eingegebene Titel ist zu lang. Die maximal zulässige Gesamtlänge beträgt {#USER_TITLE_MAX_LENGTH} Zeichen.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzertitel eingegeben.]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Alter]]></item>
@@ -3167,7 +3167,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.register"><![CDATA[Registrierung]]></item>
 		
 		<!-- Need Activation -->
-		<item name="wcf.user.register.needActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto ist noch nicht aktiviert. {if LANGUAGE_USE_INFORMAL_VARIANT}du musst{else}Sie müssen{/if} den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
+		<item name="wcf.user.register.needActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto ist noch nicht aktiviert. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Aktivierung der Registrierung auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
@@ -3183,7 +3183,7 @@ dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-M
 
 vielen Dank für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Registrierung auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}].
 Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, ist es notwendig,
-dass Sie einmalig durch Klicken des Folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if}
+dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig durch Klicken des Folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if}
 E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:
 
     {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
@@ -3289,7 +3289,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto anmelden]]></item>
 		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung mit Twitter nicht möglich.]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} einen Account über <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. Geben Sie nun noch {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse an und Sie können sofort loslegen!]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} einen Account über &nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Twitter-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
@@ -3322,7 +3322,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} und maximal eine Dateigröße von {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Gravatar verwenden]]></item>
-		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Bei einem Gravatar handelt es sich um einen global verfügbaren Avatar (Global Recognized Avatar), welcher mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse („{$__wcf->user->email}“) verknüpft ist. Auf der folgenden Website können Sie einen Gravatar anlegen: <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a>]]></item>
+		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Bei einem Gravatar handelt es sich um einen global verfügbaren Avatar (Global Recognized Avatar), welcher mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse („{$__wcf->user->email}“) verknüpft ist. Auf der folgenden Website {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} einen Gravatar anlegen: <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a>]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Zu {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse konnte kein Gravatar gefunden werden.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Keinen Avatar verwenden]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Bereits hochgeladene Avatare werden bei Auswahl dieser Option gelöscht.]]></item>
