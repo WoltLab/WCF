@@ -2930,7 +2930,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>
 		<item name="wcf.user.logout"><![CDATA[Abmelden]]></item>
-		<item name="wcf.user.logout.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dich{else}Wollen Sie sich{/if} sich wirklich abmelden?]]></item>
+		<item name="wcf.user.logout.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dich{else}Wollen Sie sich{/if} wirklich abmelden?]]></item>
 		<item name="wcf.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Inhaltssprachen]]></item>
