@@ -126,10 +126,10 @@
 	position: relative;
 	
 	> input {
-		left: -4px;
+		bottom: 0;
+		left: 0;
 		opacity: 0;
-		padding: 4px;
 		position: absolute;
-		top: -2px;
+		top: 0;
 	}
 }
