@@ -291,6 +291,9 @@
 
 .searchBarOpen .pageHeaderSearch {
 	display: block;
+	
+	/* required for Edge */
+	z-index: 100;
 }
 
 .pageHeaderSearchInputContainer {
