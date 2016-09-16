@@ -32,6 +32,15 @@ $.Redactor.prototype.WoltLabFont = function() {
 				}
 			});
 			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'convertTags_' + this.$element[0].id, function (data) {
+				elBySelAll('woltlab-font', data.div, function (element) {
+					if (element.className.match(/^woltlab-font-([a-zA-Z]+)$/)) {
+						if (fonts.indexOf(RegExp.$1) !== -1) {
+							data.addToStorage(element, ['class']);
+						}
+					}
+				});
+			});
 		},
 		
 		setFont: function(key) {

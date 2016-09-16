@@ -39,6 +39,15 @@ $.Redactor.prototype.WoltLabColor = function() {
 				}
 			});
 			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'convertTags_' + this.$element[0].id, function (data) {
+				elBySelAll('woltlab-color', data.div, function (element) {
+					if (element.className.match(/^woltlab-color-([0-9A-F]{6})$/)) {
+						if (colors.indexOf(RegExp.$1) !== -1) {
+							data.addToStorage(element, ['class']);
+						}
+					}
+				});
+			});
 		},
 		
 		setColor: function(key) {

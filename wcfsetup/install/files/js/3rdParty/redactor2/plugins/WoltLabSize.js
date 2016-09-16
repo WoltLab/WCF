@@ -31,6 +31,16 @@ $.Redactor.prototype.WoltLabSize = function() {
 					link.parentNode.classList.add('woltlab-size-selection');
 				}
 			});
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'convertTags_' + this.$element[0].id, function (data) {
+				elBySelAll('woltlab-size', data.div, function (element) {
+					if (element.className.match(/^woltlab-size-(\d{1,2})$/)) {
+						if (sizes.indexOf(~~RegExp.$1) !== -1) {
+							data.addToStorage(element, ['class']);
+						}
+					}
+				});
+			});
 		},
 		
 		setSize: function(key) {
