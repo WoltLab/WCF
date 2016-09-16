@@ -108,7 +108,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var mpRestore = this.selection.restore;
 			this.selection.restore = (function () {
-				if (internalRange) {
+				if (internalRange && elBySel('.redactor-selection-marker', this.$editor[0]) === null) {
 					restoreRange();
 					
 					if (selection.rangeCount && this.utils.isRedactorParent(selection.getRangeAt(0).commonAncestorContainer)) {
