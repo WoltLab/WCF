@@ -317,3 +317,9 @@ $wcfAcpMenuWidth: 150px;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
 	border: 1px solid #ccc;
 }
+
+.selectedImagePreview {
+	img {
+		margin-bottom: 5px;
+	}
+}

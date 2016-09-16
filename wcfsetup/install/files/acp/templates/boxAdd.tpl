@@ -246,7 +246,7 @@
 						<dl{if $errorField == 'image'} class="formError"{/if}>
 							<dt><label for="image">{lang}wcf.acp.box.image{/lang}</label></dt>
 							<dd>
-								<div id="imageDisplay">
+								<div id="imageDisplay" class="selectedImagePreview">
 									{if $images[0]|isset}
 										{@$images[0]->getThumbnailTag('small')}
 									{/if}
@@ -319,7 +319,7 @@
 										<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
 											<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
 											<dd>
-												<div id="imageDisplay{@$availableLanguage->languageID}">
+												<div id="imageDisplay{@$availableLanguage->languageID}" class="selectedImagePreview">
 													{if $images[$availableLanguage->languageID]|isset}
 														{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}
 													{/if}

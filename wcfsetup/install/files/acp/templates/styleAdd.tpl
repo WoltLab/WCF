@@ -234,7 +234,9 @@
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
 					<dd>
-						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage">
+						<div class="selectedImagePreview">
+							<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage">
+						</div>
 						<div id="uploadImage"></div>
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
@@ -343,7 +345,9 @@
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
-						<img src="" alt="" id="styleLogo" style="max-width: 100%">
+						<div class="selectedImagePreview">
+							<img src="" alt="" id="styleLogo" style="max-width: 100%">
+						</div>
 						<div id="uploadLogo"></div>
 					</dd>
 					<dd>
@@ -368,7 +372,9 @@
 				<dl>
 					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
 					<dd>
-						<img src="" alt="" id="styleLogoMobile" style="max-width: 100%">
+						<div class="selectedImagePreview">
+							<img src="" alt="" id="styleLogoMobile" style="max-width: 100%">
+						</div>
 						<div id="uploadLogoMobile"></div>
 					</dd>
 					<dd>

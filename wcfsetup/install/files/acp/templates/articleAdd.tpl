@@ -157,7 +157,7 @@
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.article.image{/lang}</label></dt>
 					<dd>
-						<div id="imageDisplay">
+						<div id="imageDisplay" class="selectedImagePreview">
 							{if $images[0]|isset}
 								{@$images[0]->getThumbnailTag('small')}
 							{/if}
