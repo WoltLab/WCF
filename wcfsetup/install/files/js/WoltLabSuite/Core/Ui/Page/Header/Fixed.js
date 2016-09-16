@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Fixed
  */
-define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/Scroll', 'Ui/SimpleDropdown'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiScreen, UiScroll, UiSimpleDropdown) {
+define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiScreen) {
 	"use strict";
 	
 	var _pageHeader, _pageHeaderContainer, _pageHeaderPanel, _pageHeaderSearch, _searchInput, _topMenu, _userPanelSearchButton;
@@ -81,6 +81,8 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', 
 		 * @protected
 		 */
 		_openSearchBar: function() {
+			window.WCF.Dropdown.Interactive.Handler.closeAll();
+			
 			_pageHeader.classList.add('searchBarOpen');
 			_userPanelSearchButton.parentNode.classList.add('open');
 			
