@@ -1,6 +1,8 @@
 /* ### wrapper ### */
 #spWrapper { display: flex; }
-#spWindow { background-color: #eee; border: 1px solid rgb(52, 152, 219); flex: 1 1 auto; margin-right: 40px; padding: 1px; }
+#spWindow { background-color: #eee; border: 1px solid rgb(52, 152, 219); flex: 1 1 auto; padding: 1px; }
+html[dir="ltr"] #spWindow { margin-right: 40px; }
+html[dir="rtl"] #spWindow { margin-left: 40px; }
 #spSidebar { flex: 0 0 300px; }
 .spBoundary { margin: 0 40px; }
 
@@ -15,9 +17,12 @@
 #spSearch, #spUser { justify-content: flex-end; }
 
 /* ### menu ### */
-#spHeaderPanel ol.inlineList > li { margin-right: 0; }
+html[dir="ltr"] #spHeaderPanel ol.inlineList > li { margin-right: 0; }
+html[dir="rtl"] #spHeaderPanel ol.inlineList > li { margin-left: 0; }
 #spHeaderPanel ol.inlineList > li > a { align-items: center; display: flex; font-size: 14px; font-weight: 400; height: 50px; padding: 0 15px; }
-#spHeaderPanel ol.inlineList > li.active > a::after { content: "\f107"; display: inline-block; font-family: FontAwesome; margin-left: 5px; }
+#spHeaderPanel ol.inlineList > li.active > a::after { content: "\f107"; display: inline-block; font-family: FontAwesome; }
+html[dir="ltr"] #spHeaderPanel ol.inlineList > li.active > a::after { margin-left: 5px; }
+html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after { margin-right: 5px; }
 #spHeaderPanel ol.inlineList > li.active { position: relative; }
 #spSubMenu { border-bottom: 1px solid #fff; box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2); padding: 3px 0; position: absolute; }
 #spSubMenu > li > a { display: block; padding: 5px 20px; white-space: nowrap; width: 120px; }
@@ -25,7 +30,9 @@
 /* ### navigation ### */
 #spNavigation { font-size: 11px; padding: 7px 0; }
 #spNavigation li:first-child { position: relative; }
-#spNavigation li:first-child::after { content: "/"; display: inline-block; margin-left: 5px; }
+#spNavigation li:first-child::after { content: "/"; display: inline-block; }
+html[dir="ltr"] #spNavigation li:first-child::after { margin-left: 5px; }
+html[dir="rtl"] #spNavigation li:first-child::after { margin-right: 5px; }
 
 /* ### content ### */
 #spContent { padding: 20px 0; }
@@ -36,7 +43,9 @@
 
 /* ### tabular box ### */
 #spTable { border-bottom: 1px solid #000; border-spacing: 0; width: 100%; }
-#spTable th { border-bottom: 2px solid currentColor; font-size: 1.2rem; font-weight: 300; text-align: left; }
+#spTable th { border-bottom: 2px solid currentColor; font-size: 1.2rem; font-weight: 300; }
+html[dir="ltr"] #spTable th { text-align: left; }
+html[dir="rtl"] #spTable th { text-align: right; }
 #spTable th, #spTable td { padding: 10px; }
 #spTable tr:not(:last-child) > td { border-bottom: 1px solid #000; }
 
@@ -60,7 +69,9 @@
 /* ### content sidebar ### */
 #spContent > .spBoundary { display: flex; }
 #spContentWrapper { flex: 1 1 auto; }
-#spContentSidebar { flex: 0 0 250px; margin-left: 20px; }
+#spContentSidebar { flex: 0 0 250px; }
+html[dir="ltr"] #spContentSidebar { margin-left: 20px; }
+html[dir="rtl"] #spContentSidebar { margin-right: 20px; }
 #spContentSidebar .spContentSidebarBox { padding: 20px; }
 #spContentSidebar .spContentSidebarBox:not(:last-child) { margin-bottom: 20px; }
 #spContentSidebar .spContentSidebarHeadline { font-size: 1.2rem; font-weight: 300; margin-bottom: 10px; }
@@ -69,19 +80,25 @@
 #spStatus { display: flex; flex-wrap: wrap; justify-content: space-between; }
 #spStatus > li { flex: 0 0 auto; width: calc(50% - 10px); /* work-around for IE which does not support calc() for flex-basis */ }
 #spStatus > li:first-child { margin-bottom: 10px; }
-#spStatus > li > div { border-left: 5px solid #000; padding: 5px 10px; }
+#spStatus > li > div { padding: 5px 10px; }
+html[dir="ltr"] #spStatus > li > div { border-left: 5px solid #000; }
+html[dir="rtl"] #spStatus > li > div { border-right: 5px solid #000; }
 
 /* ### wrapper sidebar ### */
 .spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }
 .spColor { align-items: center; }
 .spColor:not(:first-child) { margin-top: 5px; }
-.spColorBox { background-color: #fff; border: 1px solid #ccc; margin-right: 10px !important; padding: 1px; }
+.spColorBox { background-color: #fff; border: 1px solid #ccc; padding: 1px; }
+html[dir="ltr"] .spColorBox { margin-right: 10px !important; }
+html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
 @media (min-width: 769px) {
 	.spSidebarBox.pointer { position: relative; }
-	.spSidebarBox.pointer::before { border: 10px solid transparent; border-right-color: rgb(217, 237, 247); content: ""; display: block; left: -20px; position: absolute; }
+	.spSidebarBox.pointer::before { border: 10px solid transparent;  content: ""; display: block; position: absolute; }
+	html[dir="ltr"] .spSidebarBox.pointer::before { border-right-color: rgb(217, 237, 247); left: -20px; }
+	html[dir="rtl"] .spSidebarBox.pointer::before { border-left-color: rgb(217, 237, 247); right: -20px; }
 }
 
 /* ### style region marker ### */
