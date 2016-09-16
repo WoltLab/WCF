@@ -867,7 +867,9 @@
 						<dl class="wide">
 							<dt></dt>
 							<dd>
-								<textarea id="individualScssCustom" rows="20" cols="40" name="individualScssCustom">{$variables[individualScssCustom]}</textarea>
+								<div dir="ltr">
+									<textarea id="individualScssCustom" rows="20" cols="40" name="individualScssCustom">{$variables[individualScssCustom]}</textarea>
+								</div>
 								<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 							</dd>
 						</dl>
@@ -879,7 +881,9 @@
 						<dl class="wide">
 							<dt></dt>
 							<dd>
-								<textarea id="overrideScssCustom" rows="20" cols="40" name="overrideScssCustom">{$variables[overrideScssCustom]}</textarea>
+								<div dir="ltr">
+									<textarea id="overrideScssCustom" rows="20" cols="40" name="overrideScssCustom">{$variables[overrideScssCustom]}</textarea>
+								</div>
 								{if $errorField == 'overrideScssCustom'}
 									<small class="innerError">
 										{lang}wcf.acp.style.advanced.overrideScss.error{/lang}
@@ -905,7 +909,9 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd>
-						<textarea id="individualScss" rows="20" cols="40" name="individualScss">{$variables[individualScss]}</textarea>
+						<div dir="ltr">
+							<textarea id="individualScss" rows="20" cols="40" name="individualScss">{$variables[individualScss]}</textarea>
+						</div>	
 						<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 					</dd>
 				</dl>
@@ -917,7 +923,9 @@
 				<dl class="wide">
 					<dt></dt>
 					<dd>
-						<textarea id="overrideScss" rows="20" cols="40" name="overrideScss">{$variables[overrideScss]}</textarea>
+						<div dir="ltr">
+							<textarea id="overrideScss" rows="20" cols="40" name="overrideScss">{$variables[overrideScss]}</textarea>
+						</div>
 						{if $errorField == 'overrideScss'}
 							<small class="innerError">
 								{lang}wcf.acp.style.advanced.overrideScss.error{/lang}

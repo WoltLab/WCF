@@ -58,7 +58,7 @@
 			
 			<dl class="wide">
 				<dt><label for="templateSource">{lang}wcf.acp.template.source{/lang}</label></dt>
-				<dd>
+				<dd dir="ltr">
 					<textarea id="templateSource" name="templateSource" cols="40" rows="20">{$templateSource}</textarea>
 					{include file='codemirror' codemirrorMode='smarty' codemirrorSelector='#templateSource'}
 				</dd>

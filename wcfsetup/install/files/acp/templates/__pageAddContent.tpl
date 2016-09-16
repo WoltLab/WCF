@@ -26,12 +26,13 @@
 	</script>
 {/if}
 
-<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
-          {if $pageType == 'text'}
-	          class="wysiwygTextarea" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
-          {/if}
->{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 {if $pageType == 'text'}
+	<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
+		{if $pageType == 'text'}
+			class="wysiwygTextarea" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
+		{/if}
+	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
+	
 	{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
 	{capture append='__redactorConfig'}
 		buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
@@ -42,8 +43,17 @@
 	{/capture}
 	
 	{include file='wysiwyg' wysiwygSelector=$__pageContentID}
-{elseif $pageType == 'html'}
-	{include file='codemirror' codemirrorMode='htmlmixed' codemirrorSelector='#content'|concat:$languageID}
-{elseif $pageType == 'tpl'}
-	{include file='codemirror' codemirrorMode='smartymixed' codemirrorSelector='#content'|concat:$languageID}
+{else}
+	<div dir="ltr">
+		<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
+			{if $pageType == 'text'}
+				class="wysiwygTextarea" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
+			{/if}
+		>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
+	</div>
+	{if $pageType == 'html'}
+		{include file='codemirror' codemirrorMode='htmlmixed' codemirrorSelector='#content'|concat:$languageID}
+	{elseif $pageType == 'tpl'}
+		{include file='codemirror' codemirrorMode='smartymixed' codemirrorSelector='#content'|concat:$languageID}
+	{/if}
 {/if}
