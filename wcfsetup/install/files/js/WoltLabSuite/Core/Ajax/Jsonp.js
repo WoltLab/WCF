@@ -12,7 +12,7 @@ define(['Core'], function(Core) {
 	/**
 	 * @exports	WoltLabSuite/Core/Ajax/Jsonp
 	 */
-	var AjaxJsonp = {
+	return {
 		/**
 		 * Issues a JSONP request.
 		 * 
@@ -39,17 +39,19 @@ define(['Core'], function(Core) {
 			var callbackName = 'wcf_jsonp_' + Core.getUuid().replace(/-/g, '').substr(0, 8);
 			
 			var timeout = window.setTimeout(function() {
-				window[callbackName] = function() {};
-				
 				if (typeof failure === 'function') {
 					failure();
 				}
+				
+				window[callbackName] = undefined;
 			}, (~~options.timeout || 10) * 1000);
 			
 			window[callbackName] = function() {
 				window.clearTimeout(timeout);
 				
 				success.apply(null, arguments);
+				
+				window[callbackName] = undefined;
 			};
 			
 			url += (url.indexOf('?') === -1) ? '?' : '&';
@@ -62,6 +64,4 @@ define(['Core'], function(Core) {
 			document.head.appendChild(script);
 		}
 	};
-	
-	return AjaxJsonp;
 });
