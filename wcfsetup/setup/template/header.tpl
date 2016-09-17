@@ -29,7 +29,7 @@
 	<div id="pageContainer" class="pageContainer">
 		<div id="pageHeaderContainer" class="pageHeaderContainer">
 			<header id="pageHeader" class="pageHeader">
-				<div>
+				<div id="pageHeaderFacade" class="pageHeaderFacade">
 					<div class="layoutBoundary">
 						<div id="pageHeaderLogo" class="pageHeaderLogo">
 							<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}woltlabSuite.png" alt="" style="height: 40px; width: 288px;">

@@ -56,6 +56,11 @@
 }
 
 .pageHeaderFacade {
+	&:first-child {
+		// page header without user-panel (during setup)
+		margin-top: -50px;
+	}
+	
 	> .layoutBoundary {
 		align-items: center;
 		display: flex;
