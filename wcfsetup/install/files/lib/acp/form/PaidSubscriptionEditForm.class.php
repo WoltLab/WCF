@@ -7,7 +7,6 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Shows the paid subscription edit form.
@@ -73,32 +72,6 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 			$this->groupIDs = explode(',', $this->subscription->groupIDs);
 			$this->excludedSubscriptionIDs = explode(',', $this->subscription->excludedSubscriptionIDs);
 		}
-	}
-	
-	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
-	 */
-	public function readFormParameters() {
-		parent::readFormParameters();
-		
-		// read i18n values
-		I18nHandler::getInstance()->readValues();
-		
-		// handle i18n plain input
-		if (I18nHandler::getInstance()->isPlainValue('description')) $this->description = I18nHandler::getInstance()->getValue('description');
-		if (I18nHandler::getInstance()->isPlainValue('title')) $this->title = I18nHandler::getInstance()->getValue('title');
-		
-		if (!empty($_POST['isDisabled'])) $this->isDisabled = 1;
-		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
-		if (isset($_POST['cost'])) $this->cost = floatval($_POST['cost']);
-		if (isset($_POST['currency'])) $this->currency = $_POST['currency'];
-		if (!empty($_POST['subscriptionLengthPermanent'])) $this->subscriptionLengthPermanent = 1;
-		if (!$this->subscriptionLengthPermanent) {
-			if (isset($_POST['subscriptionLength'])) $this->subscriptionLength = intval($_POST['subscriptionLength']);
-			if (isset($_POST['subscriptionLengthUnit'])) $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
-		}	
-		if (!empty($_POST['isRecurring'])) $this->isRecurring = 1;
-		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 	}
 	
 	/**
