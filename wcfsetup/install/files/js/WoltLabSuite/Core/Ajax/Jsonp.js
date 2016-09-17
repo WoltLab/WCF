@@ -37,6 +37,7 @@ define(['Core'], function(Core) {
 			}, options || {});
 			
 			var callbackName = 'wcf_jsonp_' + Core.getUuid().replace(/-/g, '').substr(0, 8);
+			var script;
 			
 			var timeout = window.setTimeout(function() {
 				if (typeof failure === 'function') {
@@ -44,6 +45,7 @@ define(['Core'], function(Core) {
 				}
 				
 				window[callbackName] = undefined;
+				elRemove(script);
 			}, (~~options.timeout || 10) * 1000);
 			
 			window[callbackName] = function() {
@@ -52,12 +54,13 @@ define(['Core'], function(Core) {
 				success.apply(null, arguments);
 				
 				window[callbackName] = undefined;
+				elRemove(script);
 			};
 			
 			url += (url.indexOf('?') === -1) ? '?' : '&';
 			url += options.parameterName + '=' + callbackName;
 			
-			var script = elCreate('script');
+			script = elCreate('script');
 			script.async = true;
 			elAttr(script, 'src', url);
 			
