@@ -190,9 +190,14 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				}
 			}
 			else if (align === 'right') {
-				right = windowWidth - (refOffsets.left + refDimensions.width);
-				if (right < 0) {
+				if (refOffsets.left + refDimensions.width < elDimensions.width) {
 					result = false;
+				}
+				else {
+					right = windowWidth - (refOffsets.left + refDimensions.width);
+					if (right < 0) {
+						result = false;
+					}
 				}
 			}
 			else {
