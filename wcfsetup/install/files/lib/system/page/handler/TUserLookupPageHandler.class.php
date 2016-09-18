@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page\handler;
+use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\system\cache\runtime\UserRuntimeCache;
 
@@ -32,7 +33,7 @@ trait TUserLookupPageHandler {
 		foreach ($userList as $user) {
 			$results[] = [
 				'image' => $user->getAvatar()->getImageTag(48),
-				'link' => $user->getLink(),
+				'link' => $this->getLink($user->userID),
 				'objectID' => $user->userID,
 				'title' => $user->username
 			];
