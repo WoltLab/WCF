@@ -82,7 +82,6 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="quote">
-			<classname>wcf\system\bbcode\QuoteBBCode</classname>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
@@ -92,7 +91,6 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="code">
-			<classname>wcf\system\bbcode\CodeBBCode</classname>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
@@ -104,7 +102,6 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="img">
-			<classname>wcf\system\bbcode\ImageBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -120,7 +117,6 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="url">
-			<classname>wcf\system\bbcode\URLBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -130,7 +126,6 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="list">
-			<classname>wcf\system\bbcode\ListBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
@@ -140,7 +135,6 @@
 		</bbcode>
 		
 		<bbcode name="table">
-			<classname>wcf\system\bbcode\TableBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="tr">
@@ -157,7 +151,6 @@
 			<sourcecode>1</sourcecode>
 		</bbcode>
 		<bbcode name="spoiler">
-			<classname>wcf\system\bbcode\SpoilerBBCode</classname>
 			<attributes>
 				<attribute name="0"></attribute>
 			</attributes>
