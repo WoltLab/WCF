@@ -187,8 +187,8 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		if (!$this->subscriptionLengthPermanent) {
 			if (isset($_POST['subscriptionLength'])) $this->subscriptionLength = intval($_POST['subscriptionLength']);
 			if (isset($_POST['subscriptionLengthUnit'])) $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
+			if (!empty($_POST['isRecurring'])) $this->isRecurring = 1;
 		}
-		if (!empty($_POST['isRecurring'])) $this->isRecurring = 1;
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 		if (isset($_POST['excludedSubscriptionIDs']) && is_array($_POST['excludedSubscriptionIDs'])) $this->excludedSubscriptionIDs = ArrayUtil::toIntegerArray($_POST['excludedSubscriptionIDs']);
 	}
