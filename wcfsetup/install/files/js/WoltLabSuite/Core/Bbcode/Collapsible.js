@@ -27,16 +27,18 @@ define([], function() {
 				}
 				
 				(function(container, toggleButton) {
-					var toggle = function() {
+					var toggle = function(event) {
 						if (container.classList.toggle('collapsed')) {
 							toggleButton.textContent = elData(toggleButton, 'title-expand');
 							
-							// negative top value means the upper boundary is not within the viewport
-							var top = container.getBoundingClientRect().top;
-							if (top < 0) {
-								var y = window.pageYOffset + (top - 100);
-								if (y < 0) y = 0;
-								window.scrollTo(window.pageXOffset, y);
+							if (event instanceof Event) {
+								// negative top value means the upper boundary is not within the viewport
+								var top = container.getBoundingClientRect().top;
+								if (top < 0) {
+									var y = window.pageYOffset + (top - 100);
+									if (y < 0) y = 0;
+									window.scrollTo(window.pageXOffset, y);
+								}
 							}
 						}
 						else {
@@ -45,14 +47,6 @@ define([], function() {
 					};
 					
 					toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
-					
-					// searching in a page causes Google Chrome to scroll
-					// the box if something inside it matches
-					// 
-					// expand the box in this case, to:
-					// a) Improve UX
-					// b) Hide an ugly misplaced "show all" button
-					container.addEventListener('scroll', toggle);
 					
 					// expand boxes that are initially scrolled
 					if (container.scrollTop !== 0) {
