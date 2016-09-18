@@ -1801,10 +1801,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.global.form.error"><![CDATA[Ihre Angaben sind ungültig. Bitte überprüfen Sie die markierten Eingabefelder.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Bitte füllen Sie dieses Eingabefeld aus.]]></item>
-		<item name="wcf.global.form.error.greaterThan"><![CDATA[Der eingebene Wert muss größer sein als {#$greaterThan}.]]></item>
-		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
-		<item name="wcf.global.form.error.lessThan"><![CDATA[Der eingebene Wert muss kleiner sein als {#$lessThan}.]]></item>
-		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.greaterThan"><![CDATA[Der eingegebene Wert muss größer sein als {#$greaterThan}.]]></item>
+		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.lessThan"><![CDATA[Der eingegebene Wert muss kleiner sein als {#$lessThan}.]]></item>
+		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte füllen Sie dieses Eingabefeld für jede Sprache aus.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Ihre Sitzung ist abgelaufen, bitte senden Sie das Formular erneut ab.]]></item>
 	</category>
