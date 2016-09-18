@@ -195,6 +195,16 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				return null;
 			}
 			
+			// check if we're inside code or quote blocks
+			var container = selection.anchorNode, editor = this._redactor.core.editor()[0];
+			while (container && container !== editor) {
+				if (['PRE', 'WOLTLAB-QUOTE'].indexOf(container.nodeName) !== -1) {
+					return null;
+				}
+				
+				container = container.parentNode;
+			}
+			
 			var range = selection.getRangeAt(0);
 			var endContainer = range.startContainer;
 			var endOffset = range.startOffset;
