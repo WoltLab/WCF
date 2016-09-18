@@ -864,7 +864,7 @@ WCF.Dropdown = {
 	 * @param	string		containerID
 	 */
 	removeDropdown: function(containerID) {
-		window.bc_wcfSimpleDropdown.remove(containerID);
+		window.bc_wcfSimpleDropdown.destroy(containerID);
 	},
 	
 	/**
