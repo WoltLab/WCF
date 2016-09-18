@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\article\category;
 use wcf\data\category\AbstractDecoratedCategory;
+use wcf\data\IAccessibleObject;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\ITitledLinkObject;
@@ -23,7 +24,7 @@ use wcf\system\WCF;
  * @method		ArticleCategory[]	getParentCategories()
  * @method static	ArticleCategory|null	getCategory($categoryID)
  */
-class ArticleCategory extends AbstractDecoratedCategory implements ITitledLinkObject {
+class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleObject, ITitledLinkObject {
 	/**
 	 * object type name of the article categories
 	 * @var	string
@@ -38,10 +39,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements ITitledLinkOb
 	protected $userPermissions = [];
 	
 	/**
-	 * Returns true if the category is accessible for the active user.
-	 * 
-	 * @param	User            $user
-	 * @return	boolean
+	 * @inheritDoc
 	 */
 	public function isAccessible(User $user = null) {
 		if ($this->getObjectType()->objectType != self::OBJECT_TYPE_NAME) return false;
@@ -84,6 +82,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements ITitledLinkOb
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('CategoryArticleList', [
+			'forceFrontend' => true,
 			'object' => $this->getDecoratedObject()
 		]);
 	}
