@@ -259,7 +259,7 @@
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP-Klassenname]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu {if LANGUAGE_USE_INFORMAL_VARIANT}erhälst du{else}erhalten Sie{/if} auf dieser Website: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
@@ -2414,7 +2414,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Link zu der Quelle an.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
 		
-		<item name="wcf.editor.source.error.active"><![CDATA[Bitte kehren Sie zum Absenden in die normale Ansicht zurück.]]></item>
+		<item name="wcf.editor.source.error.active"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}kehre{else}kehren Sie{/if} zum Absenden in die normale Ansicht zurück.]]></item>
 		
 		<item name="wcf.editor.spoiler.label"><![CDATA[Beschriftung]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Beschriftung für den Spoiler-Button ein.]]></item>
@@ -2603,7 +2603,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
-		<item name="wcf.media.delete.confirmMessage"><![CDATA[Möchten Sie die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
+		<item name="wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>
 		<item name="wcf.media.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Dateigröße]]></item>
@@ -2994,7 +2994,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.lostPassword"><![CDATA[Kennwort vergessen]]></item>
 		<item name="wcf.user.lostPassword.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du dein Kennwort vergessen hast, musst du entweder den Benutzernamen oder die E-Mail-Adresse angeben, die du in deinem Profil hinterlegt hast. Du kannst dabei nur eines der beiden Felder ausfüllen. Wenn du beide Daten nicht mehr weißt, wende dich bitte an den Administrator.{else}Wenn Sie Ihr Kennwort vergessen haben, müssen Sie entweder den Benutzernamen oder die E-Mail-Adresse angeben, die Sie in Ihrem Profil hinterlegt haben. Sie können dabei nur eines der beiden Felder ausfüllen. Wenn Sie beide Daten nicht mehr wissen, wenden Sie sich bitte an den Administrator.{/if}]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[Es wurde kein Benutzer mit der E-Mail-Adresse: „{$email}“ gefunden.]]></item>
-		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Das Kennwort für dieses Benutzerkonto wurde in den letzten 24 Stunden bereits einmal angefordert. Aus Sicherheitsgründen kann das Kennwort eines Benutzers nur einmal pro Tag angefordert werden. Sie können das Kennwort für dieses Benutzerkonto in {#$hours} Stunde{if $hours != 1}n{/if} erneut anfordern.]]></item>
+		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Das Kennwort für dieses Benutzerkonto wurde in den letzten 24 Stunden bereits einmal angefordert. Aus Sicherheitsgründen kann das Kennwort eines Benutzers nur einmal pro Tag angefordert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} das Kennwort für dieses Benutzerkonto in {#$hours} Stunde{if $hours != 1}n{/if} erneut anfordern.]]></item>
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Kennwort vergessen auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
@@ -3392,12 +3392,12 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.notification.mail.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.notification.mail.plaintext.outro"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
 		
-{if LANGUAGE_USE_INFORMAL_VARIANT}Besuchen Sie Ihre{else}Besuche deine{/if} Benachrichtigungseinstellungen [URL:{link controller='NotificationSettings' isEmail=true}{/link}], um die
+{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} Benachrichtigungseinstellungen [URL:{link controller='NotificationSettings' isEmail=true}{/link}], um die
 Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
 		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h2>Hallo {$mailbox->getUser()->username},</h2>]]></item>
-		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte antworten Sie nicht auf diese E-Mail</b>.</p>
+		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}antworte{else}antworten Sie{/if nicht auf diese E-Mail</b>.</p>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} <a href="{link controller='NotificationSettings' isEmail=true}{/link}">Benachrichtigungseinstellungen</a>, um die
 Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.</p>
