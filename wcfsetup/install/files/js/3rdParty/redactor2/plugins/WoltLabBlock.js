@@ -37,6 +37,8 @@ $.Redactor.prototype.WoltLabBlock = function() {
 					this.WoltLabBlock._paragraphize(replaced[i]);
 				}
 				
+				this.caret.end(replaced);
+				
 				return replaced;
 			}).bind(this);
 			
