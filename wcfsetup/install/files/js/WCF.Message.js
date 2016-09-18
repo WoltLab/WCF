@@ -2114,6 +2114,16 @@ $.widget('wcf.messageTabMenu', {
 		if ($collapsible !== undefined) {
 			this.options.collapsible = $collapsible;
 		}
+		
+		var wysiwygContainerId = elData(this.element[0], 'wysiwyg-container-id');
+		if (wysiwygContainerId) {
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + wysiwygContainerId, (function () {
+				for (var i = 0, length = this._tabs.length; i < length; i++) {
+					this._tabs[i].container.removeClass('active');
+					this._tabs[i].tab.removeClass('active');
+				}
+			}).bind(this));
+		}
 	},
 	
 	/**

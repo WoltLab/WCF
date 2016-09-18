@@ -160,9 +160,10 @@ $.Redactor.prototype.WoltLabButton = function() {
 			elData(_toggleButton, 'show-on-mobile', true);
 			
 			var icon = _toggleButton.children[0].children[0];
-			
-			_toggleButton.children[0].addEventListener('mousedown', (function (event) {
-				event.preventDefault();
+			var toggle = (function (event) {
+				if (event instanceof Event) {
+					event.preventDefault();
+				}
 				
 				if (this.$toolbar[0].classList.toggle('redactorToolbarOverride')) {
 					// this prevents mobile browser from refocusing another element
@@ -173,9 +174,17 @@ $.Redactor.prototype.WoltLabButton = function() {
 				
 				icon.classList.toggle('fa-caret-down');
 				icon.classList.toggle('fa-caret-up');
-			}).bind(this));
+			}).bind(this);
+			
+			_toggleButton.children[0].addEventListener('mousedown', toggle);
 			
 			this.$toolbar[0].appendChild(_toggleButton);
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this.$element[0].id, (function () {
+				if (this.$toolbar[0].classList.contains('redactorToolbarOverride')) {
+					toggle();
+				}
+			}).bind(this));
 		}
 	};
 };
