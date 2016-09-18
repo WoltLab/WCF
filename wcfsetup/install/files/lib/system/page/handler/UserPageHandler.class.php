@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page\handler;
+use wcf\system\cache\runtime\UserRuntimeCache;
 
 /**
  * Menu page handler for the user profile page.
@@ -10,6 +11,14 @@ namespace wcf\system\page\handler;
  * @package	WoltLabSuite\Core\System\Page\Handler
  * @since	3.0
  */
-class UserPageHandler extends AbstractMenuPageHandler implements IOnlineLocationPageHandler {
+class UserPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler {
 	use TUserOnlineLocationPageHandler;
+	use TUserLookupPageHandler;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink($objectID) {
+		return UserRuntimeCache::getInstance()->getObject($objectID)->getLink();
+	}
 }
