@@ -58,6 +58,9 @@ trait TDecoratedCategoryLookupPageHandler {
 		if (!is_subclass_of($className, AbstractDecoratedCategory::class)) {
 			throw new ParentClassException($className, AbstractDecoratedCategory::class);
 		}
+		if (!defined($className.'::OBJECT_TYPE_NAME')) {
+			throw new \LogicException("Class '{$className}' has no constant 'OBJECT_TYPE_NAME'.");
+		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('category.objectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', $className::OBJECT_TYPE_NAME)]);
