@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\page\handler;
 use wcf\data\category\AbstractDecoratedCategory;
-use wcf\data\ILinkableObject;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\ILinkableObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ParentClassException;
 use wcf\system\WCF;

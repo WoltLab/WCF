@@ -12,7 +12,7 @@ namespace wcf\system\page\handler;
  * @since	3.0
  */
 trait TDecoratedCategoryOnlineLocationLookupPageHandler {
-	use TDecoratedCategoryOnlineLocationPageHandler;
 	use TDecoratedCategoryLookupPageHandler;
 	use TDecoratedCategoryMenuPageHandler;
+	use TDecoratedCategoryOnlineLocationPageHandler;
 }

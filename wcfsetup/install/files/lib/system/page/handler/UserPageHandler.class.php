@@ -12,8 +12,8 @@ use wcf\system\cache\runtime\UserRuntimeCache;
  * @since	3.0
  */
 class UserPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler {
-	use TUserOnlineLocationPageHandler;
 	use TUserLookupPageHandler;
+	use TUserOnlineLocationPageHandler;
 	
 	/**
 	 * @inheritDoc
