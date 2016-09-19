@@ -111,12 +111,11 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 			var mpInsert = this.paste.insert;
 			this.paste.insert = (function(html, data) {
-				var pastedImages = [];
+				var div = elCreate('div');
+				div.innerHTML = html;
 				
+				var pastedImages = [];
 				if (!data.pre && !data.text) {
-					var div = elCreate('div');
-					div.innerHTML = html;
-					
 					elBySelAll('img', div, (function(img) {
 						var src = img.src;
 						if (src.indexOf('data:image') === 0 && src !== transparentGif) {
@@ -132,11 +131,19 @@ $.Redactor.prototype.WoltLabPaste = function() {
 							elHide(img);
 						}
 					}).bind(this));
-					
-					html = div.innerHTML;
 				}
 				
-				mpInsert.call(this, html, data);
+				// fix selection marker
+				elBySelAll('.redactor-selection-marker', div, elRemove);
+				div.appendChild(elCreate('woltlab-selection-marker'));
+				
+				mpInsert.call(this, div.innerHTML, data);
+				
+				var marker = elBySel('woltlab-selection-marker', this.$editor[0]);
+				if (marker) {
+					this.caret.end(marker.previousElementSibling);
+					elRemove(marker);
+				}
 				
 				if (pastedImages.length) {
 					window.setTimeout((function () {
