@@ -703,6 +703,23 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 		},
 		
 		/**
+		 * Returns the current value.
+		 * 
+		 * @param	{(Element|string)}	element		input element or id
+		 * @return	{string}		current date value
+		 */
+		getValue: function (element) {
+			element = this._getElement(element);
+			var data = _data.get(element);
+			
+			if (data) {
+				return data.shadow.value;
+			}
+			
+			return '';
+		},
+		
+		/**
 		 * Clears the date value of given element.
 		 * 
 		 * @param	{(HTMLInputElement|string)}	element		input element or id

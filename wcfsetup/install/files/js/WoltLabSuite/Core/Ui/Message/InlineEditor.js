@@ -699,12 +699,6 @@ define(
 		},
 		
 		/** @deprecated	3.0 - used only for backward compatibility with `WCF.Message.InlineEditor` */
-		legacyGetDropdownMenus: function() { return this._dropdownMenus; },
-		
-		/** @deprecated	3.0 - used only for backward compatibility with `WCF.Message.InlineEditor` */
-		legacyGetElements: function() { return this._elements; },
-		
-		/** @deprecated	3.0 - used only for backward compatibility with `WCF.Message.InlineEditor` */
 		legacyEdit: function(containerId) {
 			this._click(elById(containerId), null);
 		}

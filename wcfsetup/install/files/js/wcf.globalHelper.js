@@ -164,6 +164,20 @@
 	};
 	
 	/**
+	 * Toggles visibility of an element using the display style.
+	 * 
+	 * @param       {Element}       element         DOM element
+	 */
+	window.elToggle = function (element) {
+		if (element.style.getPropertyValue('display') === 'none') {
+			elShow(element);
+		}
+		else {
+			elHide(element);
+		}
+	};
+	
+	/**
 	 * Shorthand function to iterative over an array-like object, arguments passed are the value and the index second.
 	 * 
 	 * Do not use this function if a simple `for()` is enough or `list` is a plain object.

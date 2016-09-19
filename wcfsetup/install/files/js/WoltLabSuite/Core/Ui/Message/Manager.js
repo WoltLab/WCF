@@ -139,6 +139,29 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 			this.updateItems(objectIds, data);
 		},
 		
+		setNote: function (objectId, className, content) {
+			var element = this._elements.get(objectId);
+			if (element === undefined) {
+				throw new Error("Unknown object id '" + objectId + "' for selector '" + this._options.selector + "'");
+			}
+			
+			var messageFooterNotes = elBySel('.messageFooterNotes', element);
+			var note = elBySel('.' + className, messageFooterNotes);
+			if (content) {
+				if (note === null) {
+					note = elCreate('p');
+					note.className = 'messageFooterNote ' + className;
+					
+					messageFooterNotes.appendChild(note);
+				}
+				
+				note.textContent = content;
+			}
+			else if (note !== null) {
+				elRemove(note);
+			}
+		},
+		
 		/**
 		 * Updates a single property of a message element.
 		 * 
