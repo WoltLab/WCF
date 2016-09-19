@@ -111,6 +111,10 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 			var mpInsert = this.paste.insert;
 			this.paste.insert = (function(html, data) {
+				if (data.pre) {
+					return mpInsert.call(this, html, data);
+				}
+				
 				var div = elCreate('div');
 				div.innerHTML = html;
 				
