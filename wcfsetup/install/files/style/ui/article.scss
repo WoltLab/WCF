@@ -188,6 +188,27 @@
 	}
 }
 
+/* fix icons in rtl design */
+html[dir="rtl"] {
+	.articleNavigation {
+		.previousArticleButton {
+			> a {
+				&::before {
+					content: $fa-var-chevron-right;
+				}
+			}
+		}
+		
+		.nextArticleButton {
+			> a {
+				&::before {
+					content: $fa-var-chevron-left;
+				}
+			}
+		}
+	}
+}
+
 .articleList {
 	.articleListMetaData {
 		color: $wcfContentDimmedText;
