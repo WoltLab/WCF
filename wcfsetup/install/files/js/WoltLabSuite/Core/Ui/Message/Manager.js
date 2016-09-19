@@ -139,7 +139,14 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 			this.updateItems(objectIds, data);
 		},
 		
-		setNote: function (objectId, className, content) {
+		/**
+		 * Sets or removes a message note identified by its unique CSS class.
+		 * 
+		 * @param       {int}           objectId        message object id
+		 * @param       {string}        className       unique CSS class
+		 * @param       {string}        htmlContent     HTML content
+		 */
+		setNote: function (objectId, className, htmlContent) {
 			var element = this._elements.get(objectId);
 			if (element === undefined) {
 				throw new Error("Unknown object id '" + objectId + "' for selector '" + this._options.selector + "'");
@@ -147,7 +154,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 			
 			var messageFooterNotes = elBySel('.messageFooterNotes', element);
 			var note = elBySel('.' + className, messageFooterNotes);
-			if (content) {
+			if (htmlContent) {
 				if (note === null) {
 					note = elCreate('p');
 					note.className = 'messageFooterNote ' + className;
@@ -155,7 +162,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 					messageFooterNotes.appendChild(note);
 				}
 				
-				note.textContent = content;
+				note.innerHTML = htmlContent;
 			}
 			else if (note !== null) {
 				elRemove(note);
