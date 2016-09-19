@@ -76,6 +76,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 			
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
+				if (data.pre) {
+					return mpOnPaste.call(this, html, data, insert);
+				}
+				
 				var div = elCreate('div');
 				div.innerHTML = html;
 				
