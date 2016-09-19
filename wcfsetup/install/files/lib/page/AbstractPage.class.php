@@ -127,6 +127,7 @@ abstract class AbstractPage implements IPage {
 		WCF::getTPL()->assign([
 			'action' => $this->action,
 			'templateName' => $this->templateName,
+			'templateNameApplication' => $this->templateNameApplication,
 			'canonicalURL' => $this->canonicalURL
 		]);
 	}
