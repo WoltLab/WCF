@@ -1,13 +1,11 @@
 {include file='header' pageTitle='wcf.acp.notice.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\notice\\NoticeAction', '.jsNotice');
 		new WCF.Action.Toggle('wcf\\data\\notice\\NoticeAction', '.jsNotice');
 		new WCF.Sortable.List('noticeList', 'wcf\\data\\notice\\NoticeAction', {@$startIndex});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

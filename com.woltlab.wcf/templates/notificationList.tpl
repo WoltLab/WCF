@@ -112,7 +112,6 @@
 {/if}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
@@ -121,7 +120,6 @@
 		
 		new WCF.Notification.List();
 	});
-	//]]>
 </script>
 
 {include file='footer'}

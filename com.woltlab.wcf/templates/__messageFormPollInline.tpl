@@ -1,6 +1,5 @@
 {if $__showPoll|isset && $__showPoll}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.poll.button.addOption': '{lang}wcf.poll.button.addOption{/lang}',
@@ -16,7 +15,6 @@
 				'{$wysiwygSelector}'
 			);
 		});
-		//]]>
 	</script>
 	
 	<div class="jsOnly messageTabMenuContent">

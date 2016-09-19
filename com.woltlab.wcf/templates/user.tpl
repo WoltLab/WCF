@@ -49,7 +49,6 @@
 			});
 		{/if}
 		
-		//<![CDATA[
 		$(function() {
 			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
 				WCF.Language.addObject({
@@ -108,7 +107,6 @@
 			
 			{event name='javascriptInit'}
 		});
-		//]]>
 	</script>
 	
 	<noscript>

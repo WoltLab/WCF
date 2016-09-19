@@ -1,11 +1,9 @@
 {if ($__wcf->getUser()->userID || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
 	{assign var=__pollLoadedJavaScript value=true}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			new WCF.Poll.Manager('.pollContainer');
 		});
-		//]]>
 	</script>
 {/if}
 

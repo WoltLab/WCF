@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.group.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\group\\UserGroupAction', '.jsUserGroupRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

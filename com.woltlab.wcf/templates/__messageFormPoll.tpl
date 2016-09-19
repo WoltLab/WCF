@@ -1,6 +1,5 @@
 {if $__showPoll|isset && $__showPoll}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.poll.button.addOption': '{lang}wcf.poll.button.addOption{/lang}',
@@ -9,7 +8,6 @@
 			
 			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ], {@POLL_MAX_OPTIONS});
 		});
-		//]]>
 	</script>
 	
 	<div id="poll" class="jsOnly messageTabMenuContent">

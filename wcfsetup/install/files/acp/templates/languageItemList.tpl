@@ -2,11 +2,9 @@
 
 <script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.ACP.Language.ItemList();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

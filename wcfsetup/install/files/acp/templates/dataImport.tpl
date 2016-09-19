@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.dataImport'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		{if $queue|isset}
 			WCF.Language.addObject({
@@ -32,7 +31,6 @@
 			}
 		});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
@@ -65,7 +63,6 @@
 		{if $showMappingNotice}
 			<p class="warning">{lang}wcf.acp.dataImport.existingMapping.notice{/lang}</p>
 			<script data-relocate="true">
-				//<![CDATA[
 				$(function() {
 					$('#deleteMapping').click(function() {
 						WCF.System.Confirmation.show('{lang}wcf.acp.dataImport.existingMapping.confirmMessage{/lang}', function(action) {
@@ -85,7 +82,6 @@
 						return false;
 					});
 				});
-				//]]>
 			</script>
 		{/if}
 		

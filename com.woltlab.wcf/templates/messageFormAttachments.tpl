@@ -40,7 +40,6 @@
 </div>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.attachment.upload.error.invalidExtension': '{lang}wcf.attachment.upload.error.invalidExtension{/lang}',
@@ -67,7 +66,6 @@
 		);
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});
-	//]]>
 </script>
 
 <input type="hidden" name="tmpHash" value="{$tmpHash}">

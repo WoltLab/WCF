@@ -22,7 +22,6 @@
 					<dt><label>{lang}wcf.user.language{/lang}</label></dt>
 					<dd id="languageIDContainer">
 						<script data-relocate="true">
-							//<![CDATA[
 							$(function() {
 								var $languages = {
 									{implode from=$availableLanguages item=language}
@@ -35,7 +34,6 @@
 								
 								new WCF.Language.Chooser('languageIDContainer', 'languageID', {@$languageID}, $languages);
 							});
-							//]]>
 						</script>
 						<noscript>
 							<select name="languageID" id="languageID">
@@ -106,11 +104,9 @@
 </form>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Option.Handler();
 	});
-	//]]>
 </script>
 
 {include file='footer' __disableAds=true}

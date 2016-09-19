@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.activityPoint.option'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
 		
@@ -9,7 +8,6 @@
 			new WCF.ACP.Worker('events', 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker', '{lang}wcf.acp.user.activityPoint.updateEvents{/lang}');
 		});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

@@ -65,7 +65,6 @@
 </form>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.global.preview': '{lang}wcf.global.preview{/lang}'
@@ -73,7 +72,6 @@
 		
 		new WCF.User.SignaturePreview('wcf\\data\\user\\UserProfileAction', 'text', 'previewButton');
 	});
-	//]]>
 </script>
 
 {include file='wysiwyg'}

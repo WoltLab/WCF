@@ -1,6 +1,5 @@
 {if !$__imageViewerLoaded|isset}
 	<script data-relocate="true">
-		//<![CDATA[
 		var $imageViewer = null;
 		$(function() {
 			WCF.Language.addObject({
@@ -26,7 +25,6 @@
 				});
 			}
 		});
-		//]]>
 	</script>
 	
 	{assign var=__imageViewerLoaded value=true}

@@ -9,7 +9,6 @@
 	
 	{if !$lastStep|isset}
 		<style type="text/css">
-			/*<![CDATA[*/
 				@font-face {
 					font-family: 'FontAwesome';
 					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot');
@@ -18,7 +17,6 @@
 					font-weight: normal;
 					font-style: normal;
 				}
-			/*]]>*/
 		</style>
 	{/if}
 </head>

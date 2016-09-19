@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		$('#subscriptionLengthPermanent').change(function() {
 			if ($('#subscriptionLengthPermanent').is(':checked')) {
@@ -13,7 +12,6 @@
 		});
 		$('#subscriptionLengthPermanent').change();
 	});
-	//]]>
 </script>
 
 {include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}

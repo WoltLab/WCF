@@ -1,12 +1,10 @@
 {include file='header' pageTitle='wcf.acp.user.option.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\option\\UserOptionAction', '.jsOptionRow');
 		new WCF.Action.Toggle('wcf\\data\\user\\option\\UserOptionAction', $('.jsOptionRow'));
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

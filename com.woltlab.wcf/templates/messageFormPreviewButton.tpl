@@ -6,7 +6,6 @@
 <button id="{$previewButtonID}" class="jsOnly">{lang}wcf.global.button.preview{/lang}</button>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.global.preview': '{lang}wcf.global.preview{/lang}' 
@@ -19,5 +18,4 @@
 			messageObjectID: '{$previewMessageObjectID}'
 		});
 	});
-	//]]>
 </script>

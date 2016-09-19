@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.box.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\box\\BoxAction', '.jsBoxRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

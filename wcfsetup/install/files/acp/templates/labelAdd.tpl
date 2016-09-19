@@ -2,7 +2,6 @@
 
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acp.label.defaultValue': '{lang}wcf.acp.label.defaultValue{/lang}'
@@ -14,7 +13,6 @@
 			$(this).parents('li').find('input[type=radio]').click();
 		});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

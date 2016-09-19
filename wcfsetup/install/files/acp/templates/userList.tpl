@@ -8,7 +8,6 @@
 
 {event name='javascriptInclude'}
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		var actionObjects = { };
 		actionObjects['com.woltlab.wcf.user'] = { };
@@ -45,7 +44,6 @@
 		
 		{event name='javascriptInit'}
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

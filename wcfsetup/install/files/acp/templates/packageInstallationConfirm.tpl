@@ -2,7 +2,6 @@
 {include file='header'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
@@ -15,7 +14,6 @@
 		
 		new WCF.ACP.Package.Installation.Cancel({@$queue->queueID});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

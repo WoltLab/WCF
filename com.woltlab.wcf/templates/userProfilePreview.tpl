@@ -35,7 +35,6 @@
 		
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
 			<script data-relocate="true">
-				//<![CDATA[
 				$(function() {
 					WCF.Language.addObject({
 						'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
@@ -50,7 +49,6 @@
 						new WCF.User.Action.Ignore($('.userInformation'));
 					{/if}
 				});
-				//]]>
 			</script>
 		{/if}
 	</div>

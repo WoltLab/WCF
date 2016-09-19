@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.cronjob.log'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acp.cronjob.log.clear.confirm': '{lang}wcf.acp.cronjob.log.clear.confirm{/lang}',
@@ -10,7 +9,6 @@
 		
 		new WCF.ACP.Cronjob.LogList();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

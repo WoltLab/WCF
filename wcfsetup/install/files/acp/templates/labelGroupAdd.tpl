@@ -3,13 +3,11 @@
 {include file='aclPermissions'}
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Label.ACPList.Connect();
 		
 		WCF.TabMenu.init();
 	});
-	//]]>
 </script>
 
 {if !$groupID|isset}

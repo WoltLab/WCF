@@ -1,5 +1,4 @@
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.like.likes.more': '{lang}wcf.like.likes.more{/lang}',
@@ -14,7 +13,6 @@
 		
 		new WCF.User.LikeLoader({@$userID});
 	});
-	//]]>
 </script>
 
 <ul id="likeList" class="containerList recentActivityList likeList" data-last-like-time="{@$lastLikeTime}">

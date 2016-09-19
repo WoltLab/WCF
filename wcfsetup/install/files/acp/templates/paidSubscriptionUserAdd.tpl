@@ -1,12 +1,10 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.user.add'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 		new WCF.Search.User('#username');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

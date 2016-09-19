@@ -15,7 +15,6 @@
 	<a class="jsTodaysBirthdays button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 	
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			var $todaysBirthdays = null;
 			$('.jsTodaysBirthdays').click(function() {
@@ -25,6 +24,5 @@
 				$todaysBirthdays.open();
 			});
 		});
-		//]]>
 	</script>
 {/if}

@@ -10,7 +10,6 @@
 
 {if $mailID|isset}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
 			
@@ -18,7 +17,6 @@
 				mailID: {@$mailID}
 			});
 		});
-		//]]>
 	</script>
 {/if}
 

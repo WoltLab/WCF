@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.package.update.title'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acp.package.update.excludedPackages': '{lang}wcf.acp.package.update.excludedPackages{/lang}',
@@ -11,7 +10,6 @@
 		
 		new WCF.ACP.Package.Update.Manager();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

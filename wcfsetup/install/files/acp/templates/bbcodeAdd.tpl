@@ -38,7 +38,6 @@
 {/capture}
 
 <script data-relocate="true">
-//<![CDATA[
 	$(function() {
 		$('.jsDeleteButton').click(function (event) {
 			$(event.target).parent().parent().remove();
@@ -69,7 +68,6 @@
 		$showButton.change(toggleButtonSettings);
 		toggleButtonSettings();
 	});
-//]]>
 </script>
 
 <header class="contentHeader">

@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.group.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 		
@@ -21,7 +20,6 @@
 			new WCF.ACP.User.Group.Copy({@$groupID});
 		{/if}
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

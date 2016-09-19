@@ -22,7 +22,6 @@
 <div class="paginationBottom jsPagination"></div>
 
 <script data-relocate="true">
-	//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
@@ -34,5 +33,4 @@
 			new WCF.User.Action.Follow($('.jsGroupedUserList > li'));
 			new WCF.User.Action.Ignore($('.jsGroupedUserList > li'));
 		});
-	//]]>
 </script>

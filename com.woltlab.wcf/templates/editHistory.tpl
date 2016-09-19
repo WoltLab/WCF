@@ -103,11 +103,9 @@
 				{/foreach}
 			</tbody>
 			<script data-relocate="true">
-				//<![CDATA[
 				$(function () {
 					new WCF.Message.EditHistory($('input[name=oldID]'), $('input[name=newID]'), '.jsEditRow');
 				});
-				//]]>
 			</script>
 		</table>
 	</section>

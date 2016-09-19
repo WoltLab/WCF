@@ -2,12 +2,10 @@
 
 {if $objects|count}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\smiley\\SmileyAction', $('.smileyRow'));
 			new WCF.Sortable.List('smileyList', 'wcf\\data\\smiley\\SmileyAction', {@$startIndex});
 		});
-		//]]>
 	</script>
 {/if}
 

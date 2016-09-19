@@ -1,13 +1,11 @@
 {include file='header' pageTitle='wcf.acp.ad.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 		
 		new WCF.ACP.Ad.LocationHandler();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

@@ -7,12 +7,10 @@
 </script>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\article\\ArticleAction', '.jsArticleRow');
 		new WCF.Action.Toggle('wcf\\data\\article\\ArticleAction', '.jsArticleRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

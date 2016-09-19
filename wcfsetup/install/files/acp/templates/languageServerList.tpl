@@ -1,12 +1,10 @@
 {include file='header' pageTitle='wcf.acp.languageServer.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\language\\server\\LanguageServerAction', '.jsLanguageServerRow');
 		new WCF.Action.Toggle('wcf\\data\\language\\server\\LanguageServerAction', '.jsLanguageServerRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

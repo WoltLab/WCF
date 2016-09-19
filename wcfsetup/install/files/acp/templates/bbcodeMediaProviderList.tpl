@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.bbcode.mediaProvider.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\bbcode\\media\\provider\\BBCodeMediaProviderAction', '.jsMediaProviderRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

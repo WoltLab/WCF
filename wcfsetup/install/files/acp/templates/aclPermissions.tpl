@@ -1,6 +1,5 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acl.option.deny': '{lang}wcf.acl.option.deny{/lang}',
@@ -10,5 +9,4 @@
 			'wcf.acl.search.description': '{lang}wcf.acl.search.description{/lang}',
 		});
 	});
-	//]]>
 </script>

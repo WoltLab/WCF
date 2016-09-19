@@ -7,7 +7,6 @@
 </select>
 
 <script data-relocate="true">
-//<![CDATA[
 $(function() {
 	$('#search_{$option->optionName}').change(function(event) {
 		if ($(event.currentTarget).prop('checked')) {
@@ -18,5 +17,4 @@ $(function() {
 		}
 	});
 });
-//]]>
 </script>

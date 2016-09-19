@@ -2,7 +2,6 @@
 <input type="{@$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $inputClass} class="{@$inputClass}"{/if}{if !$searchOption} disabled{/if}>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		$('#search_{$option->optionName}').change(function(event) {
 			if ($(event.currentTarget).prop('checked')) {
@@ -25,5 +24,4 @@
 			$('#{$option->optionName}DatePicker').disable();
 		{/if}
 	});
-	//]]>
 </script>

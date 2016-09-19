@@ -12,12 +12,10 @@
 		<dl class="wide reCaptcha{if $errorField|isset && $errorField == 'recaptchaString'} formError{/if}">
 			{if !$ajaxCaptcha|isset || !$ajaxCaptcha}
 				<script data-relocate="true">
-					//<![CDATA[
 					var RecaptchaOptions = {
 						lang: '{@$recaptchaLanguageCode}',
 						theme : 'custom'
 					}
-					//]]>
 				</script>
 			{/if}
 			<dt class="jsOnly">
@@ -79,7 +77,6 @@
 				</noscript>
 			{else}
 				<script data-relocate="true">
-					//<![CDATA[
 					$.getScript('//www.google.com/recaptcha/api/js/recaptcha_ajax.js', function() {
 						Recaptcha.create("{$recaptchaPublicKey}", "recaptcha_image", {
 							lang: '{@$recaptchaLanguageCode}',
@@ -93,7 +90,6 @@
 							};
 						});
 					});
-					//]]>
 				</script>
 			{/if}
 		</dl>
@@ -135,7 +131,6 @@
 			</dd>
 		</dl>
 		<script data-relocate="true">
-		//<![CDATA[
 		if (!WCF.recaptcha) {
 			WCF.recaptcha = {
 				queue: [],
@@ -173,7 +168,6 @@
 		
 		// ensure recaptcha API is loaded at most once
 		if (!window.grecaptcha) $.getScript('https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback');
-		//]]>
 		</script>
 	</section>
 	{/if}

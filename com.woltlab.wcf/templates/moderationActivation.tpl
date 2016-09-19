@@ -77,7 +77,6 @@
 </section>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.moderation.activation.enableContent.confirmMessage': '{lang}wcf.moderation.activation.enableContent.confirmMessage{/lang}',
@@ -91,7 +90,6 @@
 		
 		new WCF.Moderation.Activation.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');
 	});
-	//]]>
 </script>
 
 {include file='footer'}

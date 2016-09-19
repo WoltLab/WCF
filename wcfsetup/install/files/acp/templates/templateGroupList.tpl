@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.template.group.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
 		
@@ -17,7 +16,6 @@
 		
 		new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

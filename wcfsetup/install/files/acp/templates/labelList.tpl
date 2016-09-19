@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.label.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\label\\LabelAction', '.jsLabelRow');
 		
@@ -24,7 +23,6 @@
 			}, true);
 		{/if}
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

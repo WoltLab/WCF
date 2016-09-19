@@ -77,7 +77,6 @@
 
 {if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
@@ -92,7 +91,6 @@
 				new WCF.User.Avatar.Upload();
 			{/if}
 		});
-		//]]>
 	</script>
 {/if}
 

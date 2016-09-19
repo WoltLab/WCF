@@ -107,7 +107,6 @@
 </section>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.moderation.assignedUser': '{lang}wcf.moderation.assignedUser{/lang}',
@@ -122,7 +121,6 @@
 		
 		new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');
 	});
-	//]]>
 </script>
 
 {include file='footer'}

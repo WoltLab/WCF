@@ -1,6 +1,5 @@
 {hascontent}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.user.recentActivity.more': '{lang}wcf.user.recentActivity.more{/lang}',
@@ -9,7 +8,6 @@
 			
 			new WCF.User.RecentActivityLoader({@$userID});
 		});
-		//]]>
 	</script>
 	
 	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}">

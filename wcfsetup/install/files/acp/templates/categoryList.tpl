@@ -2,7 +2,6 @@
 
 {if $categoryNodeList->hasChildren()}
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			{if $collapsibleObjectTypeID}
 				new WCF.ACP.Category.Collapsible('wcf\\data\\category\\CategoryAction', {@$collapsibleObjectTypeID});
@@ -62,7 +61,6 @@
 				}{/if});
 			{/if}
 		});
-		//]]>
 	</script>
 {/if}
 

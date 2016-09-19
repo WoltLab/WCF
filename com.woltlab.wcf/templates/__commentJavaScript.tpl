@@ -1,5 +1,4 @@
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.comment.add': '{lang}wcf.comment.add{/lang}',
@@ -66,7 +65,6 @@
 			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '.jsReportCommentResponse');
 		{/if}
 	});
-	//]]>
 </script>
 
 {event name='javascriptInclude'}

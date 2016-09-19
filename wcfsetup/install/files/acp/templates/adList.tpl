@@ -1,13 +1,11 @@
 {include file='header' pageTitle='wcf.acp.ad.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\ad\\AdAction', '.jsAd');
 		new WCF.Action.Toggle('wcf\\data\\ad\\AdAction', '.jsAd');
 		new WCF.Sortable.List('adList', 'wcf\\data\\ad\\AdAction', {@$startIndex});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.user.option.category.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\option\\category\\UserOptionCategoryAction', '.jsCategoryRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

@@ -1,12 +1,10 @@
 {include file='header' pageTitle='wcf.acp.page.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\page\\PageAction', '.jsPageRow');
 		new WCF.Action.Toggle('wcf\\data\\page\\PageAction', '.jsPageRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.package.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
@@ -33,7 +32,6 @@
 			new WCF.ACP.PluginStore.PurchasedItems.Search();
 		{/if}
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

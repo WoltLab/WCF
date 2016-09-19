@@ -51,11 +51,9 @@
 </form>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.User.Registration.LostPassword();
 	});
-	//]]>
 </script>
 
 {include file='footer' __disableAds=true}

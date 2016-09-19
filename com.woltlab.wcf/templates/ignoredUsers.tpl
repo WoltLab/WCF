@@ -56,11 +56,9 @@
 {/if}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\ignore\\UserIgnoreAction', '.jsIgnoredUser');
 	});
-	//]]>
 </script>
 
 {include file='footer'}

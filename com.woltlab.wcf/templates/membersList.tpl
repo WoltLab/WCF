@@ -121,7 +121,6 @@
 </footer>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
@@ -138,7 +137,6 @@
 			window.location = $link.replace('2147483646', data.objectID).replace('wcfTitlePlaceholder', data.label);
 		}, false, [ ], false);
 	});
-	//]]>
 </script>
 
 {include file='footer'}

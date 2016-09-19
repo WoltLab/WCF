@@ -1,12 +1,10 @@
 {include file='header' pageTitle='wcf.acp.updateServer.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');
 		new WCF.Action.Toggle('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

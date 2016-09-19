@@ -1,13 +1,11 @@
 {include file='header' pageTitle='wcf.acp.menu.item.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
 		new WCF.Action.Toggle('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsToggleButton');
 		new WCF.Sortable.List('menuItemList', 'wcf\\data\\menu\\item\\MenuItemAction', undefined, { protectRoot: true }, false, { menuID: '{@$menuID}' });
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

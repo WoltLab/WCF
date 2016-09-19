@@ -3,13 +3,11 @@
 	
 	{if ENABLE_DEBUG_MODE}
 		<script data-relocate="true">
-			//<![CDATA[
 			$(function() {
 				$('#benchmarkDetails > li > span').click(function() {
 					$(this).parent().children('pre').toggle();
 				});
 			});
-			//]]>
 		</script>
 		<ul id="benchmarkDetails" style="display: none;">
 			{foreach from=$__wcf->getBenchmark()->getItems() key=benchmarkIndex item=item}
@@ -25,7 +23,6 @@
 		</ul>
 		
 		<script data-relocate="true">
-			//<![CDATA[
 			$(function() {
 				$('#benchmark').click(function() {
 					$('#benchmarkDetails').wcfDialog({
@@ -33,7 +30,6 @@
 					});
 				});
 			});
-			//]]>
 		</script>
 	{/if}
 </div>

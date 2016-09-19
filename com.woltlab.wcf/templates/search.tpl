@@ -90,7 +90,6 @@
 				{include file=$objectType->getFormTemplateName() application=$objectType->getApplication()}
 				
 				<script data-relocate="true">
-					//<![CDATA[
 					$(function() {
 						$('#{@$__jsID}').click(function() {
 							if (this.checked) $('#{@$__jsID}Form').wcfFadeIn();
@@ -98,7 +97,6 @@
 						});
 						{if !$objectTypeName|in_array:$selectedObjectTypes}$('#{@$__jsID}Form').hide();{/if}
 					});
-					//]]>
 				</script>
 			</section>
 		{/if}
@@ -113,13 +111,11 @@
 </form>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Search.User($('#searchAuthor'), function(data) {
 			$('#searchAuthor').val(data.label);//.focus();
 		});
 	});
-	//]]>
 </script>
 
 {include file='footer' __disableAds=true}

@@ -22,9 +22,7 @@
 </div>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		$('.messageTabMenu').messageTabMenu();
 	});
-	//]]>
 </script>

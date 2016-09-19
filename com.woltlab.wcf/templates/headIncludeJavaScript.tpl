@@ -177,7 +177,6 @@ requirejs.config({
 </noscript>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.System.PageNavigation.init('.pagination');
 		WCF.User.Profile.ActivityPointList.init();
@@ -202,7 +201,6 @@ requirejs.config({
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 		{/if}
 	});
-	//]]>
 </script>
 
 {include file='imageViewer'}

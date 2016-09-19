@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.label.group.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\label\\group\\LabelGroupAction', '.jsLabelGroupRow');
 		
@@ -17,7 +16,6 @@
 		
 		new WCF.Table.EmptyTableHandler($('#labelGroupTableContainer'), 'jsLabelGroupRow', options);
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

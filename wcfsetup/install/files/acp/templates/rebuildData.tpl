@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.rebuildData'}
 
 <script data-relocate="true">
-	//<![CDATA[
 		$(function() {
 			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
 		});
-	//]]>
 </script>
 
 <header class="contentHeader">
@@ -39,13 +37,11 @@
 				<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
 				
 				<script data-relocate="true">
-					//<![CDATA[
 					$(function() {
 						$('#rebuildData{@$objectType->objectTypeID}').click(function () {
 							new WCF.ACP.Worker('cache', '{@$objectType->className|encodeJS}', '{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}');
 						});
 					});
-					//]]>
 				</script>
 			</dd>
 		</dl>

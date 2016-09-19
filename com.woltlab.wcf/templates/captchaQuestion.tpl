@@ -30,7 +30,6 @@
 	
 	{if !$ajaxCaptcha|empty}
 		<script data-relocate="true">
-			//<![CDATA[
 			$(function() {
 				WCF.System.Captcha.addCallback('{$captchaID}', function() {
 					return {
@@ -39,7 +38,6 @@
 					};
 				});
 			});
-			//]]>
 		</script>
 	{/if}
 {/if}

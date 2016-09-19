@@ -1,11 +1,9 @@
 {include file='header'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

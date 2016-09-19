@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.captcha.question.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\captcha\\question\\CaptchaQuestionAction', '.jsQuestionRow');
 		new WCF.Action.Toggle('wcf\\data\\captcha\\question\\CaptchaQuestionAction', '.jsQuestionRow');
@@ -18,7 +17,6 @@
 		
 		new WCF.Table.EmptyTableHandler($('#captchaQuestionTabelContainer'), 'jsQuestionRow', options);
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

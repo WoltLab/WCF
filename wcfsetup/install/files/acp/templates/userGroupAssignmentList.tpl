@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.group.assignment.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\group\\assignment\\UserGroupAssignmentAction', '.jsUserGroupAssignmentRow');
 		new WCF.Action.Toggle('wcf\\data\\user\\group\\assignment\\UserGroupAssignmentAction', '.jsUserGroupAssignmentRow');
@@ -18,7 +17,6 @@
 		
 		new WCF.Table.EmptyTableHandler($('#userGroupAssignmentTableContainer'), 'jsUserGroupAssignmentRow', options);
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

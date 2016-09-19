@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.masterPassword.init'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		$('#setPassword').click(function() {
 			$('input[type="password"]').val($.proxy(function(index, element) {
@@ -9,7 +8,6 @@
 			}, this));
 		});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

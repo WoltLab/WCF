@@ -2,7 +2,6 @@
 <script data-relocate="true" src="//maps.google.com/maps/api/js?{if GOOGLE_MAPS_API_KEY}key={@GOOGLE_MAPS_API_KEY}&amp;{/if}language={@$__wcf->language->getFixedLanguageCode()}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/oms.min.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.map.noLocationSuggestions': '{lang}wcf.map.noLocationSuggestions{/lang}',
@@ -26,5 +25,4 @@
 		
 		{event name='javascriptInit'}
 	});
-	//]]>
 </script>

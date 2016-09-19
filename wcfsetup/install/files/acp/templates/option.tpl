@@ -3,7 +3,6 @@
 {event name='javascriptInclude'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 		new WCF.Option.Handler();
@@ -21,7 +20,6 @@
 	});
 	
 	{event name='javascriptInit'}
-	//]]>
 </script>
 
 <header class="contentHeader">

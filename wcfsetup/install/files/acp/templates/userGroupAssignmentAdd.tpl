@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.group.assignment.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

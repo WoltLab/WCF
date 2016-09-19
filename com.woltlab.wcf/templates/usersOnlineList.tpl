@@ -226,7 +226,6 @@
 </footer>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
@@ -238,7 +237,6 @@
 		new WCF.User.Action.Follow($('.userList > li'));
 		new WCF.User.Action.Ignore($('.userList > li'));
 	});
-	//]]>
 </script>
 
 {include file='footer'}

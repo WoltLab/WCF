@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.tag.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.add('wcf.acp.tag.setAsSynonyms', '{lang}wcf.acp.tag.setAsSynonyms{/lang}');
 		
@@ -13,7 +12,6 @@
 		
 		new WCF.ACP.Tag.SetAsSynonymsHandler();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

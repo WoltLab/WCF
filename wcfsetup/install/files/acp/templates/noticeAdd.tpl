@@ -1,7 +1,6 @@
 {include file='header' pageTitle='wcf.acp.notice.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		$('input[name=cssClassName]').change(function() {
 			var $val = $('input[name=cssClassName]:checked').val();
@@ -19,7 +18,6 @@
 			$(this).parents('li').find('input[type=radio]').click();
 		});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

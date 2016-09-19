@@ -1,14 +1,12 @@
 {include file='header' pageTitle='wcf.acp.cronjob.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
 		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
 		
 		new WCF.ACP.Cronjob.ExecutionHandler();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

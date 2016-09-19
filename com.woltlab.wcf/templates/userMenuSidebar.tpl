@@ -2,14 +2,12 @@
 	{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 	
 	<script data-relocate="true">
-		//<![CDATA[
 		$(function() {
 			// mobile safari hover workaround
 			if ($(window).width() <= 800) {
 				$('.sidebar').addClass('mobileSidebar').hover(function() { });
 			}
 		});
-		//]]>
 	</script>
 	
 	<section class="box">

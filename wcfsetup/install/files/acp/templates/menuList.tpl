@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.menu.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\menu\\MenuAction', '.jsMenuRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

@@ -1,6 +1,5 @@
 {include file='header' pageTitle='wcf.acp.exceptionLog'}
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		{if $exceptionID}window.location.hash = '{$exceptionID|encodeJS}';{/if}
 		
@@ -17,7 +16,6 @@
 			$(this).select();
 		});
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

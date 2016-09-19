@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.user.'|concat:$action}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
@@ -196,7 +194,6 @@
 				</section>
 				
 				<script data-relocate="true">
-					//<![CDATA[
 					$('#banned').change(function() {
 						if ($('#banned').is(':checked')) {
 							$('#banReason').attr('readonly', false);
@@ -222,7 +219,6 @@
 					});
 					
 					$('#banNeverExpires').change();
-					//]]>
 				</script>
 			{/if}
 			
@@ -337,7 +333,6 @@
 					</section>
 					
 					<script data-relocate="true">
-						//<![CDATA[
 						$('#disableSignature').change(function() {
 							if ($('#disableSignature').is(':checked')) {
 								$('#disableSignatureReason').attr('readonly', false);
@@ -363,7 +358,6 @@
 						});
 						
 						$('#disableSignatureNeverExpires').change();
-						//]]>
 					</script>
 				{/if}
 
@@ -458,7 +452,6 @@
 					</section>
 					
 					<script data-relocate="true">
-						//<![CDATA[
 						$('#disableAvatar').change(function() {
 							if ($('#disableAvatar').is(':checked')) {
 								$('#disableAvatarReason').attr('readonly', false);
@@ -484,14 +477,12 @@
 						});
 						
 						$('#disableAvatarNeverExpires').change();
-						//]]>
 					</script>
 				{/if}
 				
 				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true">
-					//<![CDATA[
 					$(function() {
 						WCF.Language.addObject({
 							'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
@@ -504,7 +495,6 @@
 						
 						new WCF.User.Avatar.Upload({@$user->userID});
 					});
-					//]]>
 				</script>
 
 				{event name='avatarFieldsets'}

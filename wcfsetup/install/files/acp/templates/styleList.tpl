@@ -2,12 +2,10 @@
 
 <script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', '.buttonList');
 		new WCF.ACP.Style.List();
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

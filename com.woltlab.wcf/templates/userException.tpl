@@ -15,11 +15,9 @@
 </div>
 
 <script data-relocate="true">
-	//<![CDATA[
 	if (document.referrer) {
 		$('#errorMessage').append('<br><br><a href="' + document.referrer + '">{lang}wcf.page.error.backward{/lang}</a>');
 	}
-	//]]>
 </script>
 
 {if ENABLE_DEBUG_MODE}

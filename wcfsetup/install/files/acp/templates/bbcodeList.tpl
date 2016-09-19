@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.bbcode.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\bbcode\\BBCodeAction', '.jsBBCodeRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

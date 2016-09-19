@@ -189,7 +189,6 @@
 </form>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
@@ -209,7 +208,6 @@
 			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
 		}));
 	});
-	//]]>
 </script>
 
 {include file='footer' __disableAds=true}

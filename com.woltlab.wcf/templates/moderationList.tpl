@@ -126,12 +126,10 @@
 {/if}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Moderation.Queue.MarkAsRead();
 		new WCF.Moderation.Queue.MarkAllAsRead();
 	});
-	//]]>
 </script>
 
 {include file='footer'}

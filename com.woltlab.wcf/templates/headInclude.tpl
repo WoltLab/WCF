@@ -33,10 +33,8 @@
 <meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground')}">
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		{* DEPRECATED -- PLEASE USE javascriptInit@headIncludeJavaScript *}
 		{event name='javascriptInit'}
 	});
-	//]]>
 </script>

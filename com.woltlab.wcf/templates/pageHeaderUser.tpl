@@ -82,7 +82,6 @@
 					<a class="jsTooltip" href="{link controller='NotificationList'}{/link}" title="{lang}wcf.user.notification.notifications{/lang}"><span class="icon icon32 fa-bell-o"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeUpdate">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-							//<![CDATA[
 							$(function() {
 								new WCF.User.Panel.Notification({
 									markAllAsReadConfirmMessage: '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
@@ -92,7 +91,6 @@
 									title: '{lang}wcf.user.notification.notifications{/lang}'
 								});
 							});
-							//]]>
 						</script>
 					{/if}
 				</li>
@@ -235,7 +233,6 @@
 					</div>
 					
 					<script data-relocate="true">
-						//<![CDATA[
 						$(function() {
 							WCF.Language.addObject({
 								'wcf.user.button.login': '{lang}wcf.user.button.login{/lang}',
@@ -244,7 +241,6 @@
 							});
 							new WCF.User.Login(true);
 						});
-						//]]>
 					</script>
 				</li>
 			{/if}
@@ -260,7 +256,6 @@
 					</a>
 					{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 						<script data-relocate="true">
-							//<![CDATA[
 							$(function() {
 								new WCF.User.Panel.Moderation({
 									deletedContent: '{lang}wcf.moderation.showDeletedContent{/lang}',
@@ -271,7 +266,6 @@
 									title: '{lang}wcf.moderation.moderation{/lang}'
 								});
 							});
-							//]]>
 						</script>
 					{/if}
 				</li>

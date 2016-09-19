@@ -3,12 +3,10 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@LAST_UPDATE_TIME}"></script>
 {include file='imageViewer'}
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.jsAttachmentRow');
 		new WCF.Search.User('#username', null, false, [ ], true);
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

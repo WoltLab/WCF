@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.user.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\paid\\subscription\\user\\PaidSubscriptionUserAction', '.jsPaidSubscriptionUserRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
