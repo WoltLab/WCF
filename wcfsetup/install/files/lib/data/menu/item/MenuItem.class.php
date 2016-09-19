@@ -3,7 +3,7 @@ namespace wcf\data\menu\item;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
@@ -140,7 +140,7 @@ class MenuItem extends DatabaseObject {
 	 * Returns the page handler for this item.
 	 * 
 	 * @return	IMenuPageHandler|null
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	protected function getMenuPageHandler() {
 		$page = $this->getPage();
@@ -149,7 +149,7 @@ class MenuItem extends DatabaseObject {
 				$className = $this->getPage()->handler;
 				$this->handler = new $className;
 				if (!($this->handler instanceof IMenuPageHandler)) {
-					throw new SystemException("Expected a valid handler implementing '" . IMenuPageHandler::class . "'.");
+					throw new ImplementationException(get_class($this->handler), IMenuPageHandler::class);
 				}
 			}
 		}

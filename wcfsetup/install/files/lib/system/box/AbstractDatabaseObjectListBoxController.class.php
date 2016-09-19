@@ -8,7 +8,6 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -100,12 +99,12 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	/**
 	 * Creates a new instance of AbstractDynamicBoxController.
 	 * 
-	 * @throws	SystemException
+	 * @throws	\LogicException
 	 */
 	public function __construct() {
 		if ($this->conditionDefinition) {
 			if (ObjectTypeCache::getInstance()->getDefinitionByName($this->conditionDefinition) === null) {
-				throw new SystemException("Unknown object type definition '" . $this->conditionDefinition . "'");
+				throw new \LogicException("Unknown object type definition '" . $this->conditionDefinition . "'");
 			}
 			
 			$this->conditionObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes($this->conditionDefinition);
@@ -117,7 +116,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		
 		if ($this->defaultLimit !== null) {
 			if ($this->defaultLimit <= 0) {
-				throw new SystemException("The default limit may has to be positive.");
+				throw new \LogicException("The default limit may has to be positive.");
 			}
 			
 			$this->limit = $this->defaultLimit;

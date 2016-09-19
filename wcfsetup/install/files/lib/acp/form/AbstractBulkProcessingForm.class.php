@@ -4,7 +4,6 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -83,12 +82,12 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 		// read bulk processable object type
 		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.bulkProcessableObject', $this->objectTypeName);
 		if ($this->objectType === null) {
-			throw new SystemException("Unknown bulk processable object type '".$this->objectTypeName."'");
+			throw new \LogicException("Unknown bulk processable object type '".$this->objectTypeName."'");
 		}
 		
 		// read conditions
 		if (ObjectTypeCache::getInstance()->getDefinitionByName($this->objectType->getProcessor()->getConditionObjectTypeDefinition()) === null) {
-			throw new SystemException("Unknown condition object type definition '".$this->objectType->getProcessor()->getConditionObjectTypeDefinition()."'");
+			throw new \LogicException("Unknown condition object type definition '".$this->objectType->getProcessor()->getConditionObjectTypeDefinition()."'");
 		}
 		$conditionObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes($this->objectType->getProcessor()->getConditionObjectTypeDefinition());
 		if (empty($conditionObjectTypes)) {
@@ -110,13 +109,13 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 		
 		// read actions
 		if (ObjectTypeCache::getInstance()->getDefinitionByName($this->objectType->getProcessor()->getActionObjectTypeDefinition()) === null) {
-			throw new SystemException("Unknown action object type definition '".$this->objectType->getProcessor()->getActionObjectTypeDefinition()."'");
+			throw new \LogicException("Unknown action object type definition '".$this->objectType->getProcessor()->getActionObjectTypeDefinition()."'");
 		}
 		
 		$actions = ObjectTypeCache::getInstance()->getObjectTypes($this->objectType->getProcessor()->getActionObjectTypeDefinition());
 		foreach ($actions as $objectType) {
 			if (isset($this->actions[$objectType->action])) {
-				throw new SystemException("Duplicate action with name '".$objectType->action."'");
+				throw new \LogicException("Duplicate action with name '".$objectType->action."'");
 			}
 			
 			if ($objectType->validateOptions() && $objectType->validatePermissions()) {

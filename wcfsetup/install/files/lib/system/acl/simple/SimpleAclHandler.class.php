@@ -5,7 +5,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\system\cache\runtime\UserRuntimeCache;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -38,11 +37,11 @@ class SimpleAclHandler extends SingletonFactory {
 	 * 
 	 * @param       string          $objectType     object type name
 	 * @return      integer         object type id
-	 * @throws      SystemException
+	 * @throws      \InvalidArgumentException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->objectTypes[$objectType])) {
-			throw new SystemException("Unknown object type '" . $objectType . "'");
+			throw new \InvalidArgumentException("Unknown object type '" . $objectType . "'");
 		}
 		
 		return $this->objectTypes[$objectType]->objectTypeID;
@@ -107,14 +106,14 @@ class SimpleAclHandler extends SingletonFactory {
 	 * @param	string		$objectType	object type name
 	 * @param	integer		$objectID	object id
 	 * @param	array		$values		list of user and group ids
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	public function setValues($objectType, $objectID, array $values) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
 		// validate data of `$values`
 		if (empty($values['user']) && empty($values['group']) && !isset($values['allowAll'])) {
-			throw new SystemException("Missing ACL configuration values.");
+			throw new \InvalidArgumentException("Missing ACL configuration values.");
 		}
 		
 		// users

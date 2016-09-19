@@ -13,7 +13,7 @@ use wcf\system\condition\ConditionHandler;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\ImplementationException;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
@@ -397,7 +397,7 @@ class Box extends DatabaseObject {
 	 * Returns the IMenuPageHandler of the linked page.
 	 *
 	 * @return	IMenuPageHandler|null
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	protected function getLinkPageHandler() {
 		$page = $this->getLinkPage();
@@ -406,7 +406,7 @@ class Box extends DatabaseObject {
 				$className = $page->handler;
 				$this->linkPageHandler = new $className;
 				if (!($this->linkPageHandler instanceof IMenuPageHandler)) {
-					throw new SystemException("Expected a valid handler implementing '" . IMenuPageHandler::class . "'.");
+					throw new ImplementationException(get_class($this->linkPageHandler), IMenuPageHandler::class);
 				}
 			}
 		}

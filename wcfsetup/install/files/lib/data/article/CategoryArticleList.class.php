@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
-use wcf\system\exception\SystemException;
 
 /**
  * Represents a list of articles in a specific category.
@@ -19,7 +18,7 @@ class CategoryArticleList extends AccessibleArticleList {
 	 *
 	 * @param	integer         $categoryID
 	 * @param       boolean         $includeChildCategories
-	 * @throws      SystemException
+	 * @throws      \InvalidArgumentException
 	 */
 	public function __construct($categoryID, $includeChildCategories = false) {
 		ViewableArticleList::__construct();
@@ -28,7 +27,7 @@ class CategoryArticleList extends AccessibleArticleList {
 		if ($includeChildCategories) {
 			$category = ArticleCategory::getCategory($categoryID);
 			if ($category === null) {
-				throw new SystemException("invalid category id '".$categoryID."' given");
+				throw new \InvalidArgumentException("invalid category id '".$categoryID."' given");
 			}
 			foreach ($category->getChildCategories() as $category) {
 				if ($category->isAccessible()) {
