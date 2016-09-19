@@ -1965,6 +1965,8 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comments">{$article->getTitle()}</a> geantwortet.]]></item>
 		<item name="wcf.article.search.categories"><![CDATA[Folgende Kategorien durchsuchen]]></item>
 		<item name="wcf.article.articles"><![CDATA[Artikel]]></item>
+		<item name="wcf.article.comment"><![CDATA[Artikel-Kommentar]]></item>
+		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
 	</category>
 	
 	<category name="wcf.attachment">

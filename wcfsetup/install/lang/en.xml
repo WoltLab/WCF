@@ -1927,6 +1927,8 @@ full extend.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.search.categories"><![CDATA[Search in Categories]]></item>
 		<item name="wcf.article.articles"><![CDATA[Articles]]></item>
+		<item name="wcf.article.comment"><![CDATA[Article Comment]]></item>
+		<item name="wcf.article.commentResponse"><![CDATA[Reply to Article Comment]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
