@@ -2,8 +2,6 @@
 
 <script data-relocate="true">
 	$(function() {
-		WCF.TabMenu.init();
-		
 		new WCF.Option.Handler();
 		
 		{if $action == 'edit' && $group->groupType == 4 && $__wcf->session->getPermission('admin.user.canAddGroup')}

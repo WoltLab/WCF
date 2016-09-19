@@ -2,8 +2,6 @@
 
 <script data-relocate="true">
 	$(function() {
-		WCF.TabMenu.init();
-		
 		new WCF.ACP.Ad.LocationHandler();
 	});
 </script>

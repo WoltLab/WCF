@@ -12,8 +12,6 @@
 			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
 		});
 		
-		WCF.TabMenu.init();
-		
 		new WCF.ACP.Package.Search();
 	});
 </script>

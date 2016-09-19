@@ -4,7 +4,6 @@
 
 <script data-relocate="true">
 	$(function() {
-		WCF.TabMenu.init();
 		new WCF.Option.Handler();
 		
 		{if $optionName}

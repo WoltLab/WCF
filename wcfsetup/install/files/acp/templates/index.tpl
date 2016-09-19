@@ -1,11 +1,5 @@
 {include file='header'}
 
-<script data-relocate="true">
-	$(function() {
-		WCF.TabMenu.init();
-	});
-</script>
-
 <header class="contentHeader">
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>

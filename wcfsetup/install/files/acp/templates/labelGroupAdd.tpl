@@ -5,8 +5,6 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Label.ACPList.Connect();
-		
-		WCF.TabMenu.init();
 	});
 </script>
 

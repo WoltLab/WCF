@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.group.assignment.'|concat:$action}
 
-<script data-relocate="true">
-	$(function() {
-		WCF.TabMenu.init();
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.group.assignment.{$action}{/lang}</h1>
