@@ -116,7 +116,11 @@ a.button {
 		> li {
 			flex: 0 0 auto;
 			margin-bottom: 10px;
-			min-width: 10%;
+			width: 10%;
+			
+			&.lettersReset {
+				width: auto;
+			}
 			
 			> a {
 				display: block;
