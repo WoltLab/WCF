@@ -2793,6 +2793,9 @@ Errors are:
 		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>
 		<item name="wcf.page.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
+		<item name="wcf.page.objectID.com.woltlab.wcf.Article"><![CDATA[ID of the Article]]></item>
+		<item name="wcf.page.objectID.com.woltlab.wcf.CategoryArticleList"><![CDATA[ID of the Category]]></item>
+		<item name="wcf.page.objectID.com.woltlab.wcf.User"><![CDATA[ID of the User]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
@@ -2819,6 +2822,8 @@ Errors are:
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
+		<item name="wcf.acp.page.objectID"><![CDATA[Object ID]]></item>
+		<item name="wcf.acp.page.objectID.search"><![CDATA[Search ID]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>
 		<item name="wcf.acp.page.parentPage.none"><![CDATA[None]]></item>

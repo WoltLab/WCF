@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Box/Handler
  */
-define(['Dictionary', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], function(Dictionary, UiPageSearchHandler) {
+define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], function(Dictionary, Language, UiPageSearchHandler) {
 	"use strict";
 	
 	var _activePageId = 0;
@@ -119,9 +119,17 @@ define(['Dictionary', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], function(Dict
 				
 				return;
 			}
-				
+			
 			var newValue = ~~_cache.get(_activePageId);
 			_pageObjectId.value = (newValue) ? newValue : '';
+			
+			var pageIdentifier = elData(_pageId.options[_pageId.selectedIndex], 'identifier');
+			var languageItem = 'wcf.page.objectID.' + pageIdentifier;
+			if (Language.get(languageItem) === languageItem) {
+				languageItem = 'wcf.acp.page.objectID';
+			}
+			
+			elByTag('label', _containerPageObjectId)[0].textContent = Language.get(languageItem);
 			
 			elShow(_containerPageObjectId);
 		},

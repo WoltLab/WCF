@@ -3,6 +3,13 @@
 <script data-relocate="true">
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler'], function(Dictionary, Language, AcpUiMenuItemHandler) {
 		Language.addObject({
+			'wcf.acp.page.objectID': '{lang}wcf.acp.page.objectID{/lang}',
+			{foreach from=$pageNodeList item=pageNode}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.objectID.{@$pageNode->identifier}{/lang}{/capture}
+				{if $pageObjectIDLanguageItem}
+					'wcf.page.objectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+				{/if}
+			{/foreach}
 			'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
 			'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
 			'wcf.page.pageObjectID.search.results.description': '{lang}wcf.page.pageObjectID.search.results.description{/lang}',
@@ -118,7 +125,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'pageID'}
