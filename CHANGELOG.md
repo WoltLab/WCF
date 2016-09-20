@@ -60,6 +60,7 @@
 * Added rebuild polls worker
 * Added notification feed page
 * Added informal variant of german language
+* Options search in ACP also searches option categories.
 
 #### CMS
 

@@ -8,7 +8,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * ACP search provider implementation for options.
+ * ACP search provider implementation for options (and option categories).
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2016 WoltLab GmbH
@@ -33,27 +33,36 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		$conditions->add("languageItem LIKE ?", ['wcf.acp.option.%']);
 		$conditions->add("languageItemValue LIKE ?", ['%'.$query.'%']);
 		
-		$sql = "SELECT		languageItem, languageItemValue
+		$sql = "SELECT		languageItem
 			FROM		wcf".WCF_N."_language_item
 			".$conditions."
 			ORDER BY	languageItemValue ASC";
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
-		$languageItems = [];
-		$optionNames = [];
-		while ($row = $statement->fetchArray()) {
-			$optionName = preg_replace('~^([a-z]+)\.acp\.option\.~', '', $row['languageItem']);
+		$optionNames = $categoryNames = [];
+		while ($languageItem = $statement->fetchColumn()) {
+			$optionName = preg_replace('~^([a-z]+)\.acp\.option\.~', '', $languageItem);
 			
-			$languageItems[$optionName] = $row['languageItemValue'];
-			$optionNames[] = $optionName;
+			if (strpos($optionName, 'category.') === 0) {
+				// 9 = length of `category.`
+				$categoryNames[] = substr($optionName, 9);
+			}
+			else {
+				$optionNames[] = $optionName;
+			}
 		}
 		
-		if (empty($optionNames)) {
+		if (empty($optionNames) && empty($categoryNames)) {
 			return [];
 		}
 		
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("optionName IN (?)", [$optionNames]);
+		$conditions = new PreparedStatementConditionBuilder(true, 'OR');
+		if (!empty($categoryNames)) {
+			$conditions->add('categoryName IN (?)', [$categoryNames]);
+		}
+		if (!empty($optionNames)) {
+			$conditions->add('optionName IN (?)', [$optionNames]);
+		}
 		
 		$sql = "SELECT	optionName, categoryName, options, permissions, hidden
 			FROM	wcf".WCF_N."_option
@@ -74,7 +83,9 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 				continue;
 			}
 			
-			$link = LinkHandler::getInstance()->getLink('Option', ['id' => $this->getCategoryID($this->getTopCategory($option->categoryName)->parentCategoryName)], 'optionName='.$option->optionName.'#'.$this->getCategoryName($option->categoryName));
+			$link = LinkHandler::getInstance()->getLink('Option', [
+				'id' => $this->getCategoryID($this->getTopCategory($option->categoryName)->parentCategoryName)
+			], 'optionName='.$option->optionName.'#'.$this->getCategoryName($option->categoryName));
 			$categoryName = $option->categoryName;
 			$parentCategories = [];
 			while (isset($optionCategories[$categoryName])) {
@@ -83,9 +94,11 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 				$categoryName = $optionCategories[$categoryName]->parentCategoryName;
 			}
 			
-			$results[] = new ACPSearchResult($languageItems[$option->optionName], $link, WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', [
-				'pieces' => $parentCategories
-			]));
+			$results[] = new ACPSearchResult(
+				WCF::getLanguage()->get('wcf.acp.option.'.$option->optionName),
+				$link,
+				WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', ['pieces' => $parentCategories])
+			);
 		}
 		
 		return $results;
