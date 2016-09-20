@@ -45,6 +45,10 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 		
 		@include wcfFontSmall;
 	}
+	
+	small {
+		color: inherit;
+	}
 }
 
 button.buttonPrimary,
