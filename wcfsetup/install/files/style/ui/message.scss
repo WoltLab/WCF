@@ -25,6 +25,7 @@
 			}
 		}
 	}
+	
 	&.messageReducedList {
 		@include screen-md-up {
 			> li:not(:last-child) {
@@ -504,6 +505,15 @@
 					color: $wcfDropdownLink;
 					
 					@include wcfFontDefault;
+					
+					&.active {
+						background-color: $wcfDropdownBackgroundActive;
+						color: $wcfDropdownLinkActive;
+						
+						> a {
+							color: $wcfDropdownLinkActive;
+						}
+					}
 					
 					> .invisible {
 						display: inline;
