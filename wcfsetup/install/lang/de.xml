@@ -169,6 +169,16 @@
 		<item name="wcf.acp.box.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Box verwendet.]]></item>
 		<item name="wcf.acp.box.position"><![CDATA[Position]]></item>
 		<item name="wcf.acp.box.position.error.invalid"><![CDATA[Die ausgewählte Position ist ungültig.]]></item>
+		<item name="wcf.acp.box.position.hero"><![CDATA[Hero]]></item>
+		<item name="wcf.acp.box.position.headerBoxes"><![CDATA[Kopfzeile]]></item>
+		<item name="wcf.acp.box.position.top"><![CDATA[Über Inhaltsbereich]]></item>
+		<item name="wcf.acp.box.position.sidebarLeft"><![CDATA[Linke Seitenleiste]]></item>
+		<item name="wcf.acp.box.position.contentTop"><![CDATA[Im Inhaltsbereich oben]]></item>
+		<item name="wcf.acp.box.position.sidebarRight"><![CDATA[Rechte Seitenleiste]]></item>
+		<item name="wcf.acp.box.position.contentBottom"><![CDATA[Im Inhaltsbereich unten]]></item>
+		<item name="wcf.acp.box.position.bottom"><![CDATA[Unter Inhaltsbereich]]></item>
+		<item name="wcf.acp.box.position.footerBoxes"><![CDATA[Fußzeile]]></item>
+		<item name="wcf.acp.box.position.footer"><![CDATA[Seitenende]]></item>
 		<item name="wcf.acp.box.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.acp.box.settings.limit"><![CDATA[Maximale Anzahl]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Box-Titel anzeigen]]></item>

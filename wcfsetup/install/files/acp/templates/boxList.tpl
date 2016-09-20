@@ -52,7 +52,7 @@
 					<select name="position" id="boxPosition">
 						<option value="0">{lang}wcf.acp.box.position{/lang}</option>
 						{foreach from=$availablePositions item=availablePosition}
-							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
+							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 						{/foreach}
 					</select>
 				</dd>
@@ -126,7 +126,7 @@
 						<td class="columnID columnBoxID">{@$box->boxID}</td>
 						<td class="columnTitle columnName"><a href="{link controller='BoxEdit' id=$box->boxID}{/link}">{$box->name}</a></td>
 						<td class="columnText columnBoxType">{$box->boxType}</td>
-						<td class="columnText columnPosition">{$box->position}</td>
+						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$box->position}{/lang}</td>
 						
 						{event name='columns'}
 					</tr>
