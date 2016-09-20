@@ -3,7 +3,7 @@
 <script data-relocate="true">
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler'], function(Dictionary, Language, AcpUiMenuItemHandler) {
 		Language.addObject({
-			'wcf.acp.page.objectID': '{lang}wcf.acp.page.objectID{/lang}',
+			'wcf.page.pageObjectID': '{lang}wcf.page.pageObjectID{/lang}',
 			{foreach from=$pageNodeList item=pageNode}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{@$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
@@ -144,11 +144,11 @@
 		</dl>
 		
 		<dl id="pageObjectIDContainer"{if $errorField == 'pageObjectID'} class="formError"{/if}{if !$pageID || !$pageHandler[$pageID]|isset} style="display: none;"{/if}>
-			<dt><label for="pageObjectID">{lang}wcf.acp.page.objectID{/lang}</label></dt>
+			<dt><label for="pageObjectID">{lang}wcf.page.pageObjectID{/lang}</label></dt>
 			<dd>
 				<div class="inputAddon">
 					<input type="text" id="pageObjectID" name="pageObjectID" value="{$pageObjectID}" class="short">
-					<a href="#" id="searchPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.acp.page.objectID.search{/lang}"><span class="icon icon16 fa-search"></span></a>
+					<a href="#" id="searchPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}"><span class="icon icon16 fa-search"></span></a>
 				</div>
 				{if $errorField == 'pageObjectID'}
 					<small class="innerError">

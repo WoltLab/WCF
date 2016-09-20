@@ -109,7 +109,7 @@ define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], f
 			var pageIdentifier = elData(_pageId.options[_pageId.selectedIndex], 'identifier');
 			var languageItem = 'wcf.page.pageObjectID.' + pageIdentifier;
 			if (Language.get(languageItem) === languageItem) {
-				languageItem = 'wcf.acp.page.objectID';
+				languageItem = 'wcf.page.pageObjectID';
 			}
 			
 			elByTag('label', _containerPageObjectId)[0].textContent = Language.get(languageItem);
