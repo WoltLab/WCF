@@ -7,6 +7,8 @@ $.Redactor.prototype.WoltLabAutosave = function() {
 			if (this.opts.woltlab.autosave) {
 				//noinspection JSUnresolvedVariable
 				this.opts.woltlab.autosave.watch(this);
+				//noinspection JSUnresolvedVariable
+				this.opts.woltlab.autosave.createOverlay();
 				
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveDestroy_' + this.$element[0].id, this.WoltLabAutosave.destroy.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveReset_' + this.$element[0].id, this.WoltLabAutosave.reset.bind(this));

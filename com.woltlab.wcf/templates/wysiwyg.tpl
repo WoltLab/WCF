@@ -54,6 +54,8 @@
 				'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
 				'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}',
 				
+				'wcf.editor.autosave.restored': '{lang}wcf.editor.autosave.restored{/lang}',
+				
 				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
 				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',
 				'wcf.editor.code.file.description': '{lang}wcf.editor.code.file.description{/lang}',

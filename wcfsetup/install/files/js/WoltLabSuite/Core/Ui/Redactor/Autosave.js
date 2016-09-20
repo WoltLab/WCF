@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['Dom/Traverse'], function(DomTraverse) {
+define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 	"use strict";
 	
 	// time between save requests in seconds
@@ -28,10 +28,14 @@ define(['Dom/Traverse'], function(DomTraverse) {
 		 * @param       {Element}       element         textarea element
 		 */
 		init: function (element) {
+			this._container = null;
 			this._editor = null;
 			this._element = element;
 			this._key = _prefix + elData(this._element, 'autosave');
 			this._lastMessage = '';
+			this._originalMessage = '';
+			this._overlay = null;
+			this._restored = false;
 			this._timer = null;
 			
 			this._cleanup();
@@ -74,6 +78,10 @@ define(['Dom/Traverse'], function(DomTraverse) {
 					//noinspection JSUnresolvedVariable
 					return this._element.value;
 				}
+				
+				//noinspection JSUnresolvedVariable
+				this._originalMessage = this._element.value;
+				this._restored = true;
 				
 				return value.content;
 			}
@@ -126,6 +134,71 @@ define(['Dom/Traverse'], function(DomTraverse) {
 		},
 		
 		/**
+		 * Creates the autosave controls, used to keep or discard the restored draft.
+		 */
+		createOverlay: function () {
+			if (!this._restored) {
+				return;
+			}
+			
+			var container = elCreate('div');
+			container.className = 'redactorAutosaveRestored active';
+			
+			var title = elCreate('span');
+			title.textContent = Language.get('wcf.editor.autosave.restored');
+			container.appendChild(title);
+			
+			var button = elCreate('a');
+			button.href = '#';
+			button.innerHTML = '<span class="icon icon16 fa-check green"></span>';
+			button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+				event.preventDefault();
+				
+				this.hideOverlay();
+			}).bind(this));
+			container.appendChild(button);
+			
+			button = elCreate('a');
+			button.href = '#';
+			button.innerHTML = '<span class="icon icon16 fa-times red"></span>';
+			button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+				event.preventDefault();
+				
+				// remove from storage
+				this.clear();
+				
+				// set code
+				this._editor.code.start(this._originalMessage);
+				
+				// set value
+				this._editor.core.textarea().val(this._editor.clean.onSync(this._editor.$editor.html()));
+				
+				this.hideOverlay();
+			}).bind(this));
+			container.appendChild(button);
+			
+			this._editor.core.box()[0].appendChild(container);
+			
+			this._container = container;
+		},
+		
+		/**
+		 * Hides the autosave controls.
+		 */
+		hideOverlay: function () {
+			if (this._container !== null) {
+				this._container.classList.remove('active');
+				
+				window.setTimeout((function () {
+					elRemove(this._container);
+					
+					this._container = null;
+					this._originalMessage = '';
+				}).bind(this), 1000);
+			}
+		},
+		
+		/**
 		 * Saves the current message to storage unless there was no change.
 		 * 
 		 * @protected
@@ -148,6 +221,8 @@ define(['Dom/Traverse'], function(DomTraverse) {
 				}));
 				
 				this._lastMessage = content;
+				
+				this.hideOverlay();
 			}
 			catch (e) {
 				window.console.warn("Unable to write to local storage: " + e.message);

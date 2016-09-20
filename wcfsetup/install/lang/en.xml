@@ -2312,6 +2312,8 @@ Errors are:
 		<item name="wcf.editor.alignment.left"><![CDATA[Align left]]></item>
 		<item name="wcf.editor.alignment.right"><![CDATA[Align right]]></item>
 		
+		<item name="wcf.editor.autosave.restored"><![CDATA[Draft restored]]></item>
+		
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
