@@ -242,6 +242,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			
 			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(containerId);
 			var elementId = elData(elById(containerId), 'input-id');
+			var data = _elements.get(elementId);
 			var values = _values.get(elementId);
 			
 			var item, languageId;
@@ -250,7 +251,17 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				languageId = ~~elData(item, 'language-id');
 				
 				if (languageId) {
-					item.classList[(values.get(languageId) || !values.size ? 'remove' : 'add')]('missingValue');
+					var hasMissingValue = false;
+					if (data.languageId) {
+						if (languageId === data.languageId) {
+							hasMissingValue = (data.element.value.trim() === '');
+						}
+						else {
+							hasMissingValue = (!values.get(languageId));
+						}
+					}
+					
+					item.classList[(hasMissingValue ? 'add' : 'remove')]('missingValue');
 				}
 			}
 		},
