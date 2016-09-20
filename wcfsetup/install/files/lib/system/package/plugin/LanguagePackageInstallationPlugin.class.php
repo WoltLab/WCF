@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 use wcf\util\XML;
@@ -120,8 +120,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			if ($languageFile !== null) {
 				if ($xml = $this->readLanguage($languageFile)) {
 					// get language object
-					$language = LanguageFactory::getInstance()->getLanguageByCode($installedLanguage['languageCode']);
-					$languageEditor = new LanguageEditor($language);
+					$languageEditor = new LanguageEditor(new Language(null, $installedLanguage));
 					
 					// import xml
 					// don't update language files if package is an application
