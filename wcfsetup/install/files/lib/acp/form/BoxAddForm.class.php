@@ -500,7 +500,8 @@ class BoxAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->position = $this->cssClassName = $this->name = '';
+		$this->cssClassName = $this->name = '';
+		$this->position = 'contentTop';
 		$this->showOrder = $this->boxControllerID = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
 		$this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
