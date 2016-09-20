@@ -2796,6 +2796,9 @@ Errors are:
 		<item name="wcf.page.objectID.com.woltlab.wcf.Article"><![CDATA[ID of the Article]]></item>
 		<item name="wcf.page.objectID.com.woltlab.wcf.CategoryArticleList"><![CDATA[ID of the Category]]></item>
 		<item name="wcf.page.objectID.com.woltlab.wcf.User"><![CDATA[ID of the User]]></item>
+		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Search Article Titles]]></item>
+		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Search Category Titles]]></item>
+		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Search Usernames]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">

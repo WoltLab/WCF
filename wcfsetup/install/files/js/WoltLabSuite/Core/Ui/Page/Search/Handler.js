@@ -12,6 +12,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 	
 	var _callback = null;
 	var _searchInput = null;
+	var _searchInputLabel = null;
 	var _searchInputHandler = null;
 	var _resultList = null;
 	var _resultListContainer = null;
@@ -23,15 +24,23 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 		/**
 		 * Opens the lookup overlay for provided page id.
 		 * 
-		 * @param       {int}           pageId          page id
-		 * @param       {string}        title           dialog title
-		 * @param       {function}      callback        callback function provided with the user-selected object id
+		 * @param	{int}		pageId			page id
+		 * @param	{string}	title			dialog title
+		 * @param	{function}	callback		callback function provided with the user-selected object id
+		 * @param	{string?}	labelLanguageItem	optional language item name for the search input label
 		 */
-		open: function (pageId, title, callback) {
+		open: function (pageId, title, callback, labelLanguageItem) {
 			_callback = callback;
 			
 			UiDialog.open(this);
 			UiDialog.setTitle(this, title);
+			
+			if (labelLanguageItem) {
+				_searchInputLabel.textContent = Language.get(labelLanguageItem);
+			}
+			else {
+				_searchInputLabel.textContent = Language.get('wcf.page.pageObjectID.search.terms');
+			}
 			
 			this._getSearchInputHandler().setPageId(pageId);
 		},
@@ -139,6 +148,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 					onShow: function() {
 						if (_searchInput === null) {
 							_searchInput = elById('wcfUiPageSearchInput');
+							_searchInputLabel = _searchInput.parentNode.previousSibling.childNodes[0];
 							_resultList = elById('wcfUiPageSearchResultList');
 							_resultListContainer = elById('wcfUiPageSearchResultListContainer');
 						}
@@ -159,7 +169,6 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 							+ '<dt><label for="wcfUiPageSearchInput">' + Language.get('wcf.page.pageObjectID.search.terms') + '</label></dt>'
 							+ '<dd>'
 								+ '<input type="text" id="wcfUiPageSearchInput" class="long">'
-								+ '<small>' + Language.get('wcf.page.pageObjectID.search.terms.description') + '</small>'
 							+ '</dd>'
 						+ '</dl>'
 					+ '</div>'

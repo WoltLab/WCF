@@ -126,10 +126,17 @@ define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], f
 		_openSearch: function(event) {
 			event.preventDefault();
 			
+			var labelLanguageItem;
+			var pageIdentifier = elData(_pageId.options[_pageId.selectedIndex], 'identifier');
+			var languageItem = 'wcf.page.pageObjectID.search.' + pageIdentifier;
+			if (Language.get(languageItem) !== languageItem) {
+				labelLanguageItem = languageItem;
+			}
+			
 			UiPageSearchHandler.open(_activePageId, _pageId.options[_pageId.selectedIndex].textContent.trim(), function(objectId) {
 				_pageObjectId.value = objectId;
 				_cache.set(_activePageId, objectId);
-			});
+			}, labelLanguageItem);
 		}
 	};
 });

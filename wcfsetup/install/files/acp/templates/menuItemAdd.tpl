@@ -9,12 +9,15 @@
 				{if $pageObjectIDLanguageItem}
 					'wcf.page.objectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
 				{/if}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{@$pageNode->identifier}{/lang}{/capture}
+				{if $pageObjectIDLanguageItem}
+					'wcf.page.pageObjectID.search.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+				{/if}
 			{/foreach}
 			'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
 			'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
 			'wcf.page.pageObjectID.search.results.description': '{lang}wcf.page.pageObjectID.search.results.description{/lang}',
-			'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}',
-			'wcf.page.pageObjectID.search.terms.description': '{lang}wcf.page.pageObjectID.search.terms.description{/lang}'
+			'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}'
 		});
 		
 		var handlers = new Dictionary();
