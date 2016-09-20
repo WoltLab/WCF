@@ -121,11 +121,12 @@
 		margin-left: 0 !important;
 		
 		> li {
-			display: flex !important; /* jquery-ui sortable sometimes sets display:block */
+			display: flex;
 			flex: 0 0 100%;
 			margin-bottom: 20px;
 			
 			> .attachmentTinyThumbnail {
+				border-bottom-width: 0;
 				max-height: 64px;
 				max-width: 64px;
 			}

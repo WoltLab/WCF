@@ -421,9 +421,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				$li.addClass('uploadFailed');
 			}
 			
-			// fix webkit rendering bug
-			$li.css('display', 'block');
-			
 			if (WCF.inArray(uploadID, this._autoInsert)) {
 				this._autoInsert.splice(this._autoInsert.indexOf(uploadID), 1);
 				
@@ -501,6 +498,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				axis: false,
 				items: 'li.sortableAttachment',
 				toleranceElement: null,
+				start: function (event, ui) {
+					ui.placeholder[0].style.setProperty('height', ui.helper[0].offsetHeight + 'px', '');
+				},
 				update: function(event, ui) {
 					var $attachmentIDs = [ ];
 					self._fileListSelector.children('li:not(.uploadFailed)').each(function(index, listItem) {
