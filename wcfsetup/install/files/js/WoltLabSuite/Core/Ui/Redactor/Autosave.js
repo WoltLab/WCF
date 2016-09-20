@@ -149,7 +149,9 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 			container.appendChild(title);
 			
 			var button = elCreate('a');
+			button.className = 'jsTooltip';
 			button.href = '#';
+			button.title = Language.get('wcf.editor.autosave.keep');
 			button.innerHTML = '<span class="icon icon16 fa-check green"></span>';
 			button.addEventListener(WCF_CLICK_EVENT, (function (event) {
 				event.preventDefault();
@@ -159,7 +161,9 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 			container.appendChild(button);
 			
 			button = elCreate('a');
+			button.className = 'jsTooltip';
 			button.href = '#';
+			button.title = Language.get('wcf.editor.autosave.discard');
 			button.innerHTML = '<span class="icon icon16 fa-times red"></span>';
 			button.addEventListener(WCF_CLICK_EVENT, (function (event) {
 				event.preventDefault();
@@ -178,6 +182,13 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 			container.appendChild(button);
 			
 			this._editor.core.box()[0].appendChild(container);
+			
+			var callback = (function () {
+				this._editor.core.editor()[0].removeEventListener(WCF_CLICK_EVENT, callback);
+				
+				this.hideOverlay();
+			}).bind(this);
+			this._editor.core.editor()[0].addEventListener(WCF_CLICK_EVENT, callback);
 			
 			this._container = container;
 		},
@@ -221,8 +232,6 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 				}));
 				
 				this._lastMessage = content;
-				
-				this.hideOverlay();
 			}
 			catch (e) {
 				window.console.warn("Unable to write to local storage: " + e.message);
