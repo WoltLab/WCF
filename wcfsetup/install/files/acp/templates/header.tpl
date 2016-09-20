@@ -84,6 +84,7 @@
 				'wcf.global.form.error.multilingual': '{lang}wcf.global.form.error.multilingual{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
+				'wcf.global.select': '{lang}wcf.global.select{/lang}',
 				'wcf.page.jumpTo': '{lang}wcf.page.jumpTo{/lang}',
 				'wcf.page.jumpTo.description': '{lang}wcf.page.jumpTo.description{/lang}',
 				'wcf.global.page.pagination': '{lang}wcf.global.page.pagination{/lang}',
