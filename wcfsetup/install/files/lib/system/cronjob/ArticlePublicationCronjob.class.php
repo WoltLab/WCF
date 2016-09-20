@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\article\Article;
+use wcf\data\article\ArticleAction;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleList;
 use wcf\data\cronjob\Cronjob;
@@ -28,13 +29,15 @@ class ArticlePublicationCronjob extends AbstractCronjob {
 		$articleList->decoratorClassName = ArticleEditor::class;
 		$articleList->readObjects();
 		
-		foreach ($articleList as $editor) {
-			/** @var ArticleEditor $editor */
-			$editor->update([
-				'time' => $editor->publicationDate,
-				'publicationStatus' => Article::PUBLISHED,
-				'publicationDate' => 0
+		foreach ($articleList as $article) {
+			$action = new ArticleAction(array($article), 'update', [
+				'data' => [
+					'time' => $article->publicationDate,
+					'publicationStatus' => Article::PUBLISHED,
+					'publicationDate' => 0
+				]
 			]);
+			$action->executeAction();
 		}
 	}
 }
