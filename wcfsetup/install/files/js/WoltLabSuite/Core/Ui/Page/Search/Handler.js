@@ -60,7 +60,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 				item = data.returnValues[i];
 				image = item.image;
 				if (/^fa-/.test(image)) {
-					image = '<span class="icon icon48 ' + image + '"></span>';
+					image = '<span class="icon icon48 ' + image + ' pointer jsTooltip" title="' + Language.get('wcf.global.select') + '"></span>';
 				}
 				
 				listItem = elCreate('li');

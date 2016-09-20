@@ -2526,6 +2526,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> aus!]]></item>
 		<item name="wcf.global.search"><![CDATA[Suche]]></item>
+		<item name="wcf.global.select"><![CDATA[Auswählen]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
