@@ -2840,6 +2840,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Artikeltitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Kategorietitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Benutzernamen durchsuchen]]></item>
+		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[TODO]]></item>
+		<item name="wcf.page.pageObjectID.search.results"><![CDATA[Suchergebnisse]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

@@ -2801,6 +2801,8 @@ Errors are:
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Search Article Titles]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Search Category Titles]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Search Usernames]]></item>
+		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[TODO]]></item>
+		<item name="wcf.page.pageObjectID.search.results"><![CDATA[Search Results]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
