@@ -5,9 +5,9 @@
 		Language.addObject({
 			'wcf.acp.page.objectID': '{lang}wcf.acp.page.objectID{/lang}',
 			{foreach from=$pageNodeList item=pageNode}
-				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.objectID.{@$pageNode->identifier}{/lang}{/capture}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{@$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.objectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+					'wcf.page.pageObjectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
 				{/if}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{@$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}

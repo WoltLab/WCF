@@ -2834,9 +2834,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.jumpTo.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Wert zwischen „1“ und „#pages#“ ein.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Weiterleitung]]></item>
 		<item name="wcf.page.redirect.url"><![CDATA[Falls die automatische Weiterleitung nicht funktioniert, {if LANGUAGE_USE_INFORMAL_VARIANT}klicke{else}klicken Sie{/if} bitte hier!]]></item>
-		<item name="wcf.page.objectID.com.woltlab.wcf.Article"><![CDATA[ID des Artikels]]></item>
-		<item name="wcf.page.objectID.com.woltlab.wcf.CategoryArticleList"><![CDATA[ID der Kategorie]]></item>
-		<item name="wcf.page.objectID.com.woltlab.wcf.User"><![CDATA[ID des Benutzers]]></item>
+		<item name="wcf.page.pageObjectID.com.woltlab.wcf.Article"><![CDATA[ID des Artikels]]></item>
+		<item name="wcf.page.pageObjectID.com.woltlab.wcf.CategoryArticleList"><![CDATA[ID der Kategorie]]></item>
+		<item name="wcf.page.pageObjectID.com.woltlab.wcf.User"><![CDATA[ID des Benutzers]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Artikeltitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Kategorietitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Benutzernamen durchsuchen]]></item>
