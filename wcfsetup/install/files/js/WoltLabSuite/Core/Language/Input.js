@@ -1,10 +1,10 @@
 /**
  * I18n interface for input and textarea fields.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Language/Input
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/Language/Input
  */
 define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traverse', 'Dom/Util', 'Ui/SimpleDropdown'], function(Core, Dictionary, Language, ObjectMap, StringUtil, DomTraverse, DomUtil, UiSimpleDropdown) {
 	"use strict";
@@ -18,16 +18,16 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 	var _callbackSubmit = null;
 	
 	/**
-	 * @exports	WoltLabSuite/Core/Language/Input
+	 * @exports     WoltLabSuite/Core/Language/Input
 	 */
-	var LanguageInput = {
+	return {
 		/**
 		 * Initializes an input field.
 		 * 
-		 * @param	{string}			elementId		input element id
-		 * @param	{object<int, string>}		values			preset values per language id
-		 * @param	{object<int, string>}		availableLanguages	language names per language id
-		 * @param	{boolean}			forceSelection		require i18n input
+		 * @param       {string}        elementId               input element id
+		 * @param       {Object}        values                  preset values per language id
+		 * @param       {Object}        availableLanguages      language names per language id
+		 * @param       {boolean}       forceSelection          require i18n input
 		 */
 		init: function(elementId, values, availableLanguages, forceSelection) {
 			if (_values.has(elementId)) {
@@ -44,7 +44,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			// unescape values
 			var unescapedValues = new Dictionary();
 			for (var key in values) {
-				if (objOwns(values, key)) {
+				if (values.hasOwnProperty(key)) {
 					unescapedValues.set(~~key, StringUtil.unescapeHTML(values[key]));
 				}
 			}
@@ -68,17 +68,18 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Sets up DOM and event listeners for an input field.
 		 * 
-		 * @param	{string}			elementId		input element id
-		 * @param	{Element}			element			input or textarea element
-		 * @param	{Dictionary}			values			preset values per language id
-		 * @param	{object<int, string>}		availableLanguages	language names per language id
-		 * @param	{boolean}			forceSelection		require i18n input
+		 * @param       {string}        elementId               input element id
+		 * @param       {Element}       element                 input or textarea element
+		 * @param       {Dictionary}    values                  preset values per language id
+		 * @param       {Object}        availableLanguages      language names per language id
+		 * @param       {boolean}       forceSelection          require i18n input
 		 */
 		_initElement: function(elementId, element, values, availableLanguages, forceSelection) {
 			var container = element.parentNode;
 			if (!container.classList.contains('inputAddon')) {
 				container = elCreate('div');
 				container.className = 'inputAddon' + (element.nodeName === 'TEXTAREA' ? ' inputAddonTextarea' : '');
+				//noinspection JSCheckFunctionSignatures
 				elData(container, 'input-id', elementId);
 				
 				element.parentNode.insertBefore(container, element);
@@ -111,9 +112,10 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			}).bind(this);
 			
 			// build language dropdown
+			var listItem;
 			for (var languageId in availableLanguages) {
-				if (objOwns(availableLanguages, languageId)) {
-					var listItem = elCreate('li');
+				if (availableLanguages.hasOwnProperty(languageId)) {
+					listItem = elCreate('li');
 					elData(listItem, 'language-id', languageId);
 					
 					span = elCreate('span');
@@ -126,7 +128,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			}
 			
 			if (forceSelection !== true) {
-				var listItem = elCreate('li');
+				listItem = elCreate('li');
 				listItem.className = 'dropdownDivider';
 				dropdownMenu.appendChild(listItem);
 				
@@ -142,6 +144,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			var activeItem = null;
 			if (forceSelection === true || values.size) {
 				for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
+					//noinspection JSUnresolvedVariable
 					if (~~elData(dropdownMenu.children[i], 'language-id') === LANGUAGE_ID) {
 						activeItem = dropdownMenu.children[i];
 						break;
@@ -182,9 +185,9 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Selects a language or non-i18n from the dropdown list.
 		 * 
-		 * @param	{string}	elementId	input element id
-		 * @param	{int}		languageId	language id or `0` to disable i18n
-		 * @param	{boolean}	isInit		triggers pre-selection on init
+		 * @param       {string}        elementId       input element id
+		 * @param       {int}           languageId      language id or `0` to disable i18n
+		 * @param       {boolean}       isInit          triggers pre-selection on init
 		 */
 		_select: function(elementId, languageId, isInit) {
 			var data = _elements.get(elementId);
@@ -229,8 +232,8 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Callback for dropdowns being opened, flags items with a missing value for one or more languages.
 		 * 
-		 * @param	{string}	containerId	dropdown container id
-		 * @param	{string}	action		toggle action, can be `open` or `close`
+		 * @param       {string}        containerId     dropdown container id
+		 * @param       {string}        action          toggle action, can be `open` or `close`
 		 */
 		_dropdownToggle: function(containerId, action) {
 			if (action !== 'open') {
@@ -247,7 +250,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				languageId = ~~elData(item, 'language-id');
 				
 				if (languageId) {
-					item.classList[(values.has(languageId) || !values.size ? 'remove' : 'add')]('missingValue');
+					item.classList[(values.get(languageId) || !values.size ? 'remove' : 'add')]('missingValue');
 				}
 			}
 		},
@@ -255,7 +258,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Inserts hidden fields for i18n input on submit.
 		 * 
-		 * @param	{object}	event		event object
+		 * @param       {Object}        event           event object
 		 */
 		_submit: function(event) {
 			var elementIds = _forms.get(event.currentTarget);
@@ -292,8 +295,8 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Returns the values of an input field.
 		 * 
-		 * @param	{string}	elementId	input element id
-		 * @return	{Dictionary}	values stored for the different languages
+		 * @param       {string}        elementId       input element id
+		 * @return      {Dictionary}    values stored for the different languages
 		 */
 		getValues: function(elementId) {
 			var element = _elements.get(elementId);
@@ -312,8 +315,8 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Sets the values of an input field.
 		 * 
-		 * @param	{string}	elementId	input element id
-		 * @param	{Dictionary}	values		values for the different languages
+		 * @param       {string}        elementId       input element id
+		 * @param       {Dictionary}    values          values for the different languages
 		 */
 		setValues: function(elementId, values) {
 			var element = _elements.get(elementId);
@@ -335,13 +338,14 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			_values.set(elementId, values);
 			
 			element.languageId = 0;
+			//noinspection JSUnresolvedVariable
 			this._select(elementId, LANGUAGE_ID, true);
 		},
 		
 		/**
 		 * Disables the i18n interface for an input field.
 		 * 
-		 * @param	{string}	elementId	input element id
+		 * @param       {string}        elementId       input element id
 		 */
 		disable: function(elementId) {
 			var element = _elements.get(elementId);
@@ -354,6 +358,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			element.isEnabled = false;
 			
 			// hide language dropdown
+			//noinspection JSCheckFunctionSignatures
 			elHide(element.buttonLabel.parentNode);
 			var dropdownContainer = element.buttonLabel.parentNode.parentNode;
 			dropdownContainer.classList.remove('inputAddon');
@@ -363,7 +368,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Enables the i18n interface for an input field.
 		 * 
-		 * @param	{string}	elementId	input element id
+		 * @param       {string}        elementId       input element id
 		 */
 		enable: function(elementId) {
 			var element = _elements.get(elementId);
@@ -376,6 +381,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			element.isEnabled = true;
 			
 			// show language dropdown
+			//noinspection JSCheckFunctionSignatures
 			elShow(element.buttonLabel.parentNode);
 			var dropdownContainer = element.buttonLabel.parentNode.parentNode;
 			dropdownContainer.classList.add('inputAddon');
@@ -385,8 +391,8 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		/**
 		 * Returns true if i18n input is enabled for an input field.
 		 * 
-		 * @param	{string}	elementId	input element id
-		 * @return	{boolean}
+		 * @param       {string}        elementId       input element id
+		 * @return      {boolean}
 		 */
 		isEnabled: function(elementId) {
 			var element = _elements.get(elementId);
@@ -402,9 +408,9 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		 * 
 		 * If the element is disabled, true is returned.
 		 * 
-		 * @param	{string}	elementId		input element id
-		 * @param	{boolean}	permitEmptyValue	if true, input may be empty for all languages
-		 * @return	{boolean}	true if input is valid
+		 * @param       {string}        elementId               input element id
+		 * @param       {boolean}       permitEmptyValue        if true, input may be empty for all languages
+		 * @return      {boolean}       true if input is valid
 		 */
 		validate: function(elementId, permitEmptyValue) {
 			var element = _elements.get(elementId);
@@ -448,13 +454,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				}
 			}
 			
-			if (hasEmptyValue && !permitEmptyValue) {
-				return false;
-			}
-			
-			return true;
+			return (!hasEmptyValue || permitEmptyValue);
 		}
 	};
-	
-	return LanguageInput;
 });
