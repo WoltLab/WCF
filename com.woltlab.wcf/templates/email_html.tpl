@@ -5,13 +5,13 @@
 			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
 			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
-		html, h1, h2, h3 {
+		
+		html, body, h1, h2, h3 {
 			padding: 0;
 			margin: 0;
 		}
+		
 		body {
-			padding: 0;
-			margin: 0;
 			background-color: {$style->getVariable('wcfContentBackground', true)};
 		}
 		
@@ -97,6 +97,12 @@
 			margin: 0;
 			padding: 0;
 			font-weight: 400;
+			line-height: 1.28;
+			font-size: {$style->getVariable('wcfFontSizeHeadline')};
+		}
+
+		.containerHeadline h3 a {
+			font-size: {$style->getVariable('wcfFontSizeHeadline')};
 		}
 		</style>
 	</head>
