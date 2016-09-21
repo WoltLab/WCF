@@ -30,7 +30,7 @@ class ArticlePublicationCronjob extends AbstractCronjob {
 		$articleList->readObjects();
 		
 		foreach ($articleList as $article) {
-			$action = new ArticleAction(array($article), 'update', [
+			$action = new ArticleAction([$article], 'update', [
 				'data' => [
 					'time' => $article->publicationDate,
 					'publicationStatus' => Article::PUBLISHED,
