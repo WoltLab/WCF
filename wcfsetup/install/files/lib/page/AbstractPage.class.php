@@ -84,6 +84,12 @@ abstract class AbstractPage implements IPage {
 	public $useTemplate = true;
 	
 	/**
+	 * enables the branding of WoltLab GmbH within the footer
+	 * @var	boolean
+	 */
+	public $showWoltLabBranding = true;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public final function __construct() { }
@@ -128,7 +134,8 @@ abstract class AbstractPage implements IPage {
 			'action' => $this->action,
 			'templateName' => $this->templateName,
 			'templateNameApplication' => $this->templateNameApplication,
-			'canonicalURL' => $this->canonicalURL
+			'canonicalURL' => $this->canonicalURL,
+			'showWoltLabBranding' => $this->showWoltLabBranding
 		]);
 	}
 	
