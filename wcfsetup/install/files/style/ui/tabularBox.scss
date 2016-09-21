@@ -23,7 +23,7 @@
 	color: $wcfTabularBoxHeadline;
 	
 	& + li {
-		border-top-width: 0;
+		border-top-width: 0 !important;
 	}
 }
 
