@@ -7,8 +7,7 @@
 			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
 			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
 			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
-			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}',
-			'wcf.page.search.results.description': '{lang}wcf.page.search.results.description{/lang}'
+			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}'
 		});
 	})
 </script>

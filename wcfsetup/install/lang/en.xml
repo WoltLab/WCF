@@ -2341,6 +2341,7 @@ Errors are:
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[List]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Redo]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Font Size]]></item>
@@ -2603,6 +2604,7 @@ Errors are:
 		<item name="wcf.media.upload.success"><![CDATA[The file has been successfully uploaded.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Upload Date]]></item>
+		<item name="wcf.media.search.noResults"><![CDATA[The search returned no results.]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -2801,8 +2803,14 @@ Errors are:
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Search Article Titles]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Search Category Titles]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Search Usernames]]></item>
-		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[TODO]]></item>
+		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[The search returned no results.]]></item>
 		<item name="wcf.page.pageObjectID.search.results"><![CDATA[Search Results]]></item>
+		<item name="wcf.page.pageObjectID.search.terms"><![CDATA[Search]]></item>
+		<item name="wcf.page.search"><![CDATA[Search Pages]]></item>
+		<item name="wcf.page.search.error.noResults"><![CDATA[The search returned no results.]]></item>
+		<item name="wcf.page.search.error.tooShort"><![CDATA[The entered keyword is too short.]]></item>
+		<item name="wcf.page.search.name"><![CDATA[Search Page Names]]></item>
+		<item name="wcf.page.search.results"><![CDATA[Search Results]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">

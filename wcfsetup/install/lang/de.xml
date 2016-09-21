@@ -2379,6 +2379,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.link"><![CDATA[Link]]></item>
 		<item name="wcf.editor.button.lists"><![CDATA[Liste]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.editor.button.redo"><![CDATA[Wiederholen]]></item>
 		<item name="wcf.editor.button.size"><![CDATA[Schriftgröße]]></item>
@@ -2642,6 +2643,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
+		<item name="wcf.media.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -2840,8 +2842,14 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Artikeltitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Kategorietitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Benutzernamen durchsuchen]]></item>
-		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[TODO]]></item>
+		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 		<item name="wcf.page.pageObjectID.search.results"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.page.pageObjectID.search.terms"><![CDATA[Durchsuchen]]></item>
+		<item name="wcf.page.search"><![CDATA[Seiten durchsuchen]]></item>
+		<item name="wcf.page.search.error.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
+		<item name="wcf.page.search.error.tooShort"><![CDATA[Der Suchbegriff ist zu kurz.]]></item>
+		<item name="wcf.page.search.name"><![CDATA[Seitennamen durchsuchen]]></item>
+		<item name="wcf.page.search.results"><![CDATA[Suchergebnisse]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

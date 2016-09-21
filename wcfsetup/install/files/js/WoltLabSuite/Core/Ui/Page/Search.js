@@ -120,7 +120,6 @@ define(['Ajax', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], 
 				+ '<section id="wcfUiPageSearchResultContainer" class="section" style="display: none;">'
 					+ '<header class="sectionHeader">'
 						+ '<h2 class="sectionTitle">' + Language.get('wcf.page.search.results') + '</h2>'
-						+ '<p class="sectionDescription">' + Language.get('wcf.page.search.results.description') + '</p>'
 					+ '</header>'
 					+ '<ol id="wcfUiPageSearchResultList" class="containerList"></ol>'
 				+ '</section>'
