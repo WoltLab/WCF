@@ -42,7 +42,6 @@
 		.footer {
 			background-color: {$style->getVariable('wcfFooterBackground', true)};
 			color: {$style->getVariable('wcfFooterText', true)};
-			padding: 20px 40px;
 		}
 		h1 {
 			font-weight: 300;
