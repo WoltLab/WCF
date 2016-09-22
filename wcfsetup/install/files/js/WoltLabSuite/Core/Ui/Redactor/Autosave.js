@@ -72,18 +72,15 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 			}
 			
 			// check if storage is outdated
-			if (value !== null && typeof value === 'object') {
+			if (value !== null && typeof value === 'object' && value.content) {
 				var lastEditTime = ~~elData(this._element, 'autosave-last-edit-time');
-				if (lastEditTime * 1000 > value.timestamp) {
+				if (lastEditTime * 1000 <= value.timestamp) {
 					//noinspection JSUnresolvedVariable
-					return this._element.value;
+					this._originalMessage = this._element.value;
+					this._restored = true;
+					
+					return value.content;
 				}
-				
-				//noinspection JSUnresolvedVariable
-				this._originalMessage = this._element.value;
-				this._restored = true;
-				
-				return value.content;
 			}
 			
 			//noinspection JSUnresolvedVariable
@@ -223,6 +220,10 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 			if (this._lastMessage === content) {
 				// break if content hasn't changed
 				return;
+			}
+			
+			if (content === '') {
+				return this.clear();
 			}
 			
 			try {
