@@ -67,8 +67,8 @@
 		
 		@include screen-lg {
 			align-items: center;
-			padding-bottom: 40px;
-			padding-top: 40px;
+			padding-bottom: 30px;
+			padding-top: 30px;
 		}
 		
 		@include screen-md-down {
@@ -274,6 +274,11 @@
 		
 		.pageHeaderLogoSmall {
 			display: none;
+		}
+		
+		> a {
+			display: block;
+			padding: 10px 0;
 		}
 	}
 	
