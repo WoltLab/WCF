@@ -441,6 +441,8 @@
 		<div id="acl" class="tabMenuContent">
 			{include file='aclSimple'}
 		</div>
+		
+		{event name='tabMenuContents'}
 	</div>
 	
 	<div class="formSubmit">

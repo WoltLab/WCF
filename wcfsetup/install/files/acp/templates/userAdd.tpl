@@ -322,7 +322,7 @@
 								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
 							</dd>
 						</dl>
-
+						
 						{event name='disableSignatureFields'}
 					</section>
 					
@@ -407,7 +407,7 @@
 							</dd>
 						</dl>
 					{/if}
-
+					
 					{event name='avatarFields'}
 				</section>
 				
@@ -441,7 +441,7 @@
 								<small>{lang}wcf.acp.user.disableAvatar.expires.description{/lang}</small>
 							</dd>
 						</dl>
-
+						
 						{event name='disableAvatarFields'}
 					</section>
 					
@@ -490,12 +490,13 @@
 						new WCF.User.Avatar.Upload({@$user->userID});
 					});
 				</script>
-
+				
 				{event name='avatarFieldsets'}
 			</div>
 		{/if}
 		
-		{event name='tabMenuContent'}
+		{event name='tabMenuContent'} {* deprecated event *}
+		{event name='tabMenuContents'}
 	</div>
 	
 	<div class="formSubmit">
