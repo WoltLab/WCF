@@ -3432,7 +3432,7 @@ Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] n
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
 		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h2>Hallo {$mailbox->getUser()->username},</h2>]]></item>
-		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}antworte{else}antworten Sie{/if nicht auf diese E-Mail</b>.</p>
+		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}antworte{else}antworten Sie{/if} nicht auf diese E-Mail</b>.</p>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} <a href="{link controller='NotificationSettings' isEmail=true}{/link}">Benachrichtigungseinstellungen</a>, um die
 Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.</p>
