@@ -127,7 +127,7 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 					var banIcon = elBySel('.jsUserBanned', contentTitle);
 					if (data.actionName === 'ban') {
 						banIcon = elCreate('span');
-						banIcon.className = 'icon icon16 fa-lock jsUserBanned jsTooltip';
+						banIcon.className = 'icon icon24 fa-lock jsUserBanned jsTooltip';
 						banIcon.title = Language.get('wcf.user.banned');
 						contentTitle.appendChild(banIcon);
 					}
