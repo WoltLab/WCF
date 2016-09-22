@@ -33,6 +33,9 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	protected function getPurifier() {
 		if (self::$purifier === null) {
 			$config = \HTMLPurifier_Config::createDefault();
+			$config->set('HTML.ForbiddenAttributes', ['*@style', '*@lang', '*@xml:lang']);
+			$config->set('HTML.ForbiddenElements', ['span']);
+			
 			$this->setAttributeDefinitions($config);
 			self::$purifier = new \HTMLPurifier($config);
 		}
