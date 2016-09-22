@@ -29,7 +29,12 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			// built-in
 			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia'
 		],
-		'p' => [
+		'p' => 'text',
+		'td' => 'text',
+		
+		// not a valid tag, used for elements that are used to wrap text
+		// content such as <p> or <td>, avoid duplicate declarations
+		'text' => [
 			// text alignment
 			'text-center', 'text-justify', 'text-right',
 			
@@ -95,13 +100,16 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		// strip invalid class names
 		/** @var \DOMElement $element */
-		$before = htmlentities($this->getHtml());
 		foreach ($this->getXPath()->query('//*[@class]') as $element) {
 			$nodeName = $element->nodeName;
 			if (isset(self::$allowedClassNames[$nodeName])) {
 				$classNames = explode(' ', $element->getAttribute('class'));
 				$classNames = array_filter($classNames, function ($className) use ($nodeName) {
-					return  ($className && in_array($className, self::$allowedClassNames[$nodeName]));
+					if (self::$allowedClassNames[$nodeName] === 'text') {
+						return ($className && in_array($className, self::$allowedClassNames['text']));
+					}
+					
+					return ($className && in_array($className, self::$allowedClassNames[$nodeName]));
 				});
 				
 				if (!empty($classNames)) {
