@@ -145,6 +145,10 @@ class LanguageAddForm extends AbstractForm {
 		$languageEditor = new LanguageEditor($this->sourceLanguage);
 		$languageEditor->copy($this->language);
 		
+		// copy content
+		LanguageEditor::copyLanguageContent($this->sourceLanguage->languageID, $this->language->languageID);
+		
+		// reset caches
 		LanguageFactory::getInstance()->clearCache();
 		LanguageFactory::getInstance()->deleteLanguageCache();
 		

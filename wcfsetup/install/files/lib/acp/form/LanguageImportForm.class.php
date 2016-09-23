@@ -62,6 +62,15 @@ class LanguageImportForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		$this->languages = LanguageFactory::getInstance()->getLanguages();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
@@ -100,6 +109,11 @@ class LanguageImportForm extends AbstractForm {
 			
 			// import xml document
 			$this->language = LanguageEditor::importFromXML($xml, -1, $this->sourceLanguage);
+			
+			// copy content
+			if (!isset($this->languages[$this->language->languageID])) {
+				LanguageEditor::copyLanguageContent($this->sourceLanguage->languageID, $this->language->languageID);
+			}
 		}
 		catch (SystemException $e) {
 			throw new UserInputException('languageUpload', $e->getMessage());
@@ -118,15 +132,6 @@ class LanguageImportForm extends AbstractForm {
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readData() {
-		parent::readData();
-		
-		$this->languages = LanguageFactory::getInstance()->getLanguages();
 	}
 	
 	/**
