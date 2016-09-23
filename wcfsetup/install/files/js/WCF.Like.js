@@ -377,7 +377,7 @@ WCF.Like = Class.extend({
 			// update tooltip
 			var $likes = this._containerData[containerID].likes;
 			var $dislikes = this._containerData[containerID].dislikes;
-			$badge.data('tooltip', WCF.Language.get('wcf.like.tooltip', { likes: $likes, dislikes: $dislikes }));
+			$badge.attr('data-tooltip', WCF.Language.get('wcf.like.tooltip', { likes: $likes, dislikes: $dislikes }));
 		}
 	},
 	

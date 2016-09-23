@@ -2116,10 +2116,10 @@ WCF.User.Action.Follow = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.following) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
 				}
 				
 				button.data('following', data.returnValues.following);
@@ -2223,10 +2223,10 @@ WCF.User.Action.Ignore = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.isIgnoredUser) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
 				}
 				
 				button.data('ignored', data.returnValues.isIgnoredUser);
