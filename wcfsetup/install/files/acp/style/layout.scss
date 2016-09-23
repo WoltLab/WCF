@@ -16,18 +16,22 @@ $wcfAcpMenuWidth: 150px;
 .pageHeaderContainer {
 	@include screen-lg {
 		.pageHeader .layoutBoundary {
-			background-color: rgb(44, 62, 80);
+			background-color: rgb(50, 92, 132);
 			height: 50px;
-			padding: 0 10px 0 0;
+			padding: 0;
 		}
 		
 		.pageHeaderLogo {
-			background-color: rgb(52, 73, 94);
+			background-color: rgb(58, 109, 156);
 			flex: 0 0 $wcfAcpMenuWidth;
 			height: 50px;
 			margin: 0;
 			order: 1;
 			position: relative;
+			
+			&:last-child {
+				flex: 1 1 auto;
+			}
 			
 			.pageHeaderLogoLarge {
 				display: none;
@@ -112,6 +116,7 @@ $wcfAcpMenuWidth: 150px;
 		
 		.userPanel {
 			flex: 1 1 auto;
+			margin-right: 20px;
 			order: 4;
 		}
 	}
@@ -144,19 +149,26 @@ $wcfAcpMenuWidth: 150px;
 	}
 	
 	.acpPageMenu {
-		background-color: rgb(44, 62, 80);
+		background-color: rgb(50, 92, 132);
 		flex: 0 0 $wcfAcpMenuWidth;
 		text-align: center;
 		overflow: hidden;
 		
 		.acpPageMenuLink {
-			color: rgb(192, 192, 192);
+			//background-color: rgb(43, 79, 113);
+			color: rgba(255, 255, 255, .7);
 			display: block;
 			padding: 20px 10px;
 			
+			&:hover {
+				//background-color: rgb(36, 66, 95);
+				background-color: rgb(43, 79, 113);
+				color: rgba(255, 255, 255, 1);
+			}
+			
 			&.active {
-				background-color: rgb(34, 49, 63);
-				color: rgb(255, 255, 255);
+				background-color: rgb(36, 66, 95);
+				color: rgba(255, 255, 255, 1);
 				
 				> .icon {
 					transform: scale(1);
@@ -176,7 +188,7 @@ $wcfAcpMenuWidth: 150px;
 	}
 	
 	.acpPageSubMenu {
-		background-color: rgb(34, 49, 63);
+		background-color: rgb(36, 66, 95);
 		flex: 0 0 auto;
 	}
 	
@@ -194,7 +206,7 @@ $wcfAcpMenuWidth: 150px;
 			padding-left: 20px;
 			
 			> span {
-				color: rgb(169, 169, 169);
+				color: rgba(255, 255, 255, .5);
 				display: block;
 				padding: 5px 20px;
 				text-transform: uppercase;
@@ -237,7 +249,7 @@ $wcfAcpMenuWidth: 150px;
 		.acpPageSubMenuLink.active,
 		.acpPageSubMenuLink.active ~ .acpPageSubMenuIcon,
 		.acpPageSubMenuIcon.active {
-			background-color: rgb(255, 255, 255) !important;
+			background-color: rgb(250, 250, 250) !important;
 			color: rgb(44, 62, 80) !important;
 		}
 	}
@@ -274,8 +286,8 @@ $wcfAcpMenuWidth: 150px;
 	}
 }
 
-.pageFooter {
-	box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+.pageFooterCopyright {
+	background-color: rgb(58, 109, 156);
 }
 
 .codemirrorToolbar {
