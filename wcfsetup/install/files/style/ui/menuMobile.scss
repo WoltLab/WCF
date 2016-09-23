@@ -1,6 +1,6 @@
 /* menu container */
 .menuOverlayMobile {
-	background-color: rgb(52, 73, 94);
+	background-color: rgb(50, 92, 132);
 	bottom: 0;
 	display: none;
 	overflow: hidden;
@@ -134,7 +134,7 @@
 }
 
 .menuOverlayItemList {
-	background-color: rgb(52, 73, 94);
+	background-color: rgb(50, 92, 132);
 	height: 100%;
 	list-style-type: none;
 	margin: 0;
@@ -188,7 +188,7 @@
 
 .menuOverlayItemLink {
 	align-items: center;
-	background-color: rgb(44, 62, 80);
+	background-color: rgb(43, 79, 113);
 	display: flex;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -247,11 +247,11 @@
 
 .menuOverlayItemLink.active,
 .menuOverlayItemLinkIcon.active {
-	background-color: rgb(34, 49, 63);
+	background-color: rgb(36, 66, 95);
 }
 
 .menuOverlayTitle {
-	color: rgb(204, 204, 204);
+	color: rgba(255, 255, 255, .7);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -263,7 +263,7 @@
 
 /* icon link sharing the space with a link or (header only) the logo */
 .menuOverlayItemLinkIcon {
-	background-color: rgb(44, 62, 80);
+	background-color: rgb(43, 79, 113);
 	flex: 0 0 auto;
 	margin-left: 1px;
 	padding: 10px;
