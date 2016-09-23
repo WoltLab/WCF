@@ -1,6 +1,8 @@
 $.Redactor.prototype.WoltLabSmiley = function() {
 	"use strict";
 	
+	var _index = 0;
+	
 	return {
 		init: function() {
 			require(['EventHandler'], (function(EventHandler) {
@@ -11,7 +13,18 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 		_insert: function(data) {
 			this.buffer.set();
 			
-			this.insert.html(data.img.cloneNode().outerHTML);
+			var id = 'wscSmiley_' + this.uuid + '_' + _index++;
+			
+			var smiley = data.img.cloneNode();
+			smiley.id = id;
+			this.insert.html(smiley.outerHTML);
+			
+			// Firefox and Safari tend to ignore the `srcset` attribute, all though
+			// it is clearly present in the DOM. Overwriting the element with itself
+			// is somehow fixing that issue, yay!
+			smiley = elById(id);
+			//noinspection SillyAssignmentJS
+			smiley.outerHTML = smiley.outerHTML;
 		}
 	}
 };
