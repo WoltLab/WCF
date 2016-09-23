@@ -138,8 +138,12 @@
 			margin-right: -20px;
 			
 			> li {
-				flex: 0 0 calc(50% - 20px);
-				max-width: calc(50% - 20px); /* IE fix */
+				/* Safari sometimes trips over fractional values, causing two
+				   items to be exactly 1 pixel wider than the available space.
+				   Reserving 21px covers all sort of rounding errors, without
+				   being visually noticeable */
+				flex: 0 0 calc(50% - 21px);
+				max-width: calc(50% - 21px); /* IE fix */
 				margin-right: 20px;
 			}
 		}
