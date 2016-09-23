@@ -4,6 +4,7 @@ use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
+use wcf\data\page\PageEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\LanguageCacheBuilder;
@@ -586,5 +587,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			WHERE           languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $destinationLanguageID, $sourceLanguageID]);
+		
+		PageEditor::resetCache();
 	}
 }
