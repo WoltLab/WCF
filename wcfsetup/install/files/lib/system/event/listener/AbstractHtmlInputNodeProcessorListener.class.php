@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event\listener;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
@@ -95,7 +96,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 					
 					if (isset($objects[$objectID])) {
 						$object = $objects[$objectID];
-						if (!($object instanceof ITitledObject)) {
+						if (!($object instanceof ITitledObject) && !($object instanceof DatabaseObjectDecorator) && !($object->getDecoratedObject() instanceof ITitledObject)) {
 							throw new ImplementationException(get_class($object), ITitledObject::class);
 						}
 						
