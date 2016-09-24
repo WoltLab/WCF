@@ -121,6 +121,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			$element->removeAttribute('class');
 		}
 		
+		EventHandler::getInstance()->fireAction($this, 'beforeEmbeddedProcess');
+		
 		// extract embedded content
 		$this->processEmbeddedContent();
 		
