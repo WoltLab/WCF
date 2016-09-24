@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
- *        
+ * 
  * @property	ViewableUserActivityEventList   $objectList
  */
 class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxController {
