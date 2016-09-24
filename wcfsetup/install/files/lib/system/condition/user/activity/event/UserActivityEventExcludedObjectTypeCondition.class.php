@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\condition\user\activity\event;
-use wcf\data\DatabaseObjectList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\activity\event\UserActivityEventList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\condition\AbstractMultiSelectCondition;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\WCF;
