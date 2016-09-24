@@ -30,16 +30,16 @@
 		</smiley>
 		<smiley name="^^">
 			<title>grin</title>
-			<path>images/smilies/emojione/1f600.png</path>
-			<path2x>images/smilies/emojione/1f600@2x.png</path2x>
+			<path>images/smilies/emojione/1f604.png</path>
+			<path2x>images/smilies/emojione/1f604@2x.png</path2x>
 			<aliases><![CDATA[^.^
 ^_^
 ^-^]]></aliases>
 		</smiley>
 		<smiley name=":D">
 			<title>biggrin</title>
-			<path>images/smilies/emojione/1f601.png</path>
-			<path2x>images/smilies/emojione/1f601@2x.png</path2x>
+			<path>images/smilies/emojione/1f606.png</path>
+			<path2x>images/smilies/emojione/1f606@2x.png</path2x>
 			<aliases><![CDATA[:-D]]></aliases>
 		</smiley>
 		<smiley name=";(">
@@ -71,13 +71,13 @@
 		</smiley>
 		<smiley name="8o">
 			<title>w00t</title>
-			<path>images/smilies/emojione/1f62f.png</path>
-			<path2x>images/smilies/emojione/1f62f@2x.png</path2x>
+			<path>images/smilies/emojione/1f61c.png</path>
+			<path2x>images/smilies/emojione/1f61c@2x.png</path2x>
 		</smiley>
 		<smiley name="=O">
 			<title>scared</title>
-			<path>images/smilies/emojione/1f631.png</path>
-			<path2x>images/smilies/emojione/1f631@2x.png</path2x>
+			<path>images/smilies/emojione/1f628.png</path>
+			<path2x>images/smilies/emojione/1f628@2x.png</path2x>
 		</smiley>
 		<smiley name="&lt;X">
 			<title>sick</title>
@@ -96,8 +96,8 @@
 		</smiley>
 		<smiley name=":S">
 			<title>wacko</title>
-			<path>images/smilies/emojione/1f635.png</path>
-			<path2x>images/smilies/emojione/1f635@2x.png</path2x>
+			<path>images/smilies/emojione/1f643.png</path>
+			<path2x>images/smilies/emojione/1f643@2x.png</path2x>
 		</smiley>
 		<smiley name="X/">
 			<title>pinch</title>
@@ -111,8 +111,8 @@
 		</smiley>
 		<smiley name="?(">
 			<title>confused</title>
-			<path>images/smilies/emojione/1f614.png</path>
-			<path2x>images/smilies/emojione/1f614@2x.png</path2x>
+			<path>images/smilies/emojione/1f615.png</path>
+			<path2x>images/smilies/emojione/1f615@2x.png</path2x>
 		</smiley>
 		<smiley name=":huh:">
 			<title>Huh</title>
