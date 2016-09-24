@@ -51,6 +51,10 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		 * @protected
 		 */
 		_insertQuote: function (data) {
+			if (this._editor.WoltLabSource.isActive()) {
+				return;
+			}
+			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'showEditor');
 			
 			var editor = this._editor.core.editor()[0];

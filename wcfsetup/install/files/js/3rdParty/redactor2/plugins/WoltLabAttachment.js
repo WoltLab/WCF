@@ -11,6 +11,10 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 		},
 		
 		_insert: function(data) {
+			if (this.WoltLabSource.isActive()) {
+				return;
+			}
+			
 			var attachmentId = data.attachmentId;
 			
 			this.buffer.set();

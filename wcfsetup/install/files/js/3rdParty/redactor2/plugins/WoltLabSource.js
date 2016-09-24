@@ -40,6 +40,10 @@ $.Redactor.prototype.WoltLabSource = function() {
 					data.valid = false;
 				}
 			}).bind(this));
+		},
+		
+		isActive: function () {
+			return (this.$editor[0].style.getPropertyValue('display') === 'none');
 		}
 	};
 };

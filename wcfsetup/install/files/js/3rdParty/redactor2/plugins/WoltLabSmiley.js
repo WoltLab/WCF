@@ -11,6 +11,10 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 		},
 		
 		_insert: function(data) {
+			if (this.WoltLabSource.isActive()) {
+				return;
+			}
+			
 			this.buffer.set();
 			
 			var id = 'wscSmiley_' + this.uuid + '_' + _index++;
