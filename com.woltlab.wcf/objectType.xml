@@ -1089,6 +1089,14 @@
 		</type>
 		<!-- /article list box condition -->
 		
+		<!-- recent activity list box condition -->
+		<type>
+			<name>com.woltlab.wcf.excludedObjectType</name>
+			<definitionname>com.woltlab.wcf.box.recentActivityList.condition</definitionname>
+			<classname>wcf\system\condition\user\activity\event\UserActivityEventExcludedObjectTypeCondition</classname>
+		</type>
+		<!-- /recent activity box condition -->
+		
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

@@ -217,6 +217,10 @@
 			<name>com.woltlab.wcf.box.articleList.condition</name>
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
+		<definition>
+			<name>com.woltlab.wcf.box.recentActivityList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
 		<!-- /box conditions -->
 		
 		<!-- deprecated -->

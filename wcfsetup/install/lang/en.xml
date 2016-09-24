@@ -3301,6 +3301,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.likeableArticle.recentActivityEvent"><![CDATA[Like (Article)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.recentActivityEvent"><![CDATA[Comment (Article)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.response.recentActivityEvent"><![CDATA[Reply (Article)]]></item>
+		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Excluded Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
 	</category>

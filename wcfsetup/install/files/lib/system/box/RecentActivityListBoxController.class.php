@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
  * 
- * @property	ViewableUserActivityEventList   $objectList
+ * @property	ViewableUserActivityEventList	$objectList
  */
 class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
@@ -23,6 +23,11 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	 * @var	boolean
 	 */
 	public $canFilterByFollowedUsers = false;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $conditionDefinition = 'com.woltlab.wcf.box.recentActivityList.condition';
 	
 	/**
 	 * is true if the list of recent activity is filtered to only include
