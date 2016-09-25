@@ -23,6 +23,8 @@
 .articleContent {
 	.articleTeaser {
 		@include wcfFontBold;
+		
+		margin-bottom: 20px;
 	}
 	
 	.articleTagList,
