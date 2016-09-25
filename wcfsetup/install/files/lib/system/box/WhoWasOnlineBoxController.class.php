@@ -27,7 +27,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 	/**
 	 * @inheritDoc
 	 */
-	protected $sortFieldLanguageItemPrefix = 'wcf.user';
+	protected $sortFieldLanguageItemPrefix = 'wcf.user.sortField';
 	
 	/**
 	 * @inheritDoc
