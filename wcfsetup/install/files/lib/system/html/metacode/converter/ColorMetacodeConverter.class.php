@@ -31,7 +31,7 @@ class ColorMetacodeConverter extends AbstractMetacodeConverter {
 		}
 		
 		// validates if code is a valid (short) HEX color code
-		if (!preg_match('~^#[A-F0-9]{3}(?:[A-F0-9]{3})?$~i', $attributes[0])) {
+		if (!preg_match('~^\#[A-F0-9]{3}(?:[A-F0-9]{3})?$~i', $attributes[0])) {
 			return false;
 		}
 		
