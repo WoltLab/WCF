@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\page\handler;
-use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\system\cache\runtime\UserRuntimeCache;
 

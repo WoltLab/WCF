@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\page\handler;
 use wcf\data\article\category\ArticleCategory;
-use wcf\system\request\LinkHandler;
 
 /**
  * Menu page handler for the category article list page.

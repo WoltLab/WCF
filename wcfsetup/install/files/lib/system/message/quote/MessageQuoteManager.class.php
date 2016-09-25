@@ -8,7 +8,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\DOMUtil;
 
 /**
  * Manages message quotes.
