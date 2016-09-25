@@ -374,10 +374,16 @@ WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// @todo fix dropdown
+		// update dropdown
+		var dropdown = WCF.Dropdown.Interactive.Handler.getDropdown('outstandingModeration');
+		if (dropdown) {
+			dropdown.getLinkList().find('.interactiveDropdownItemMarkAllAsRead').remove();
+			dropdown.getItemList().find('.interactiveDropdownItemMarkAsRead').remove();
+		}
 		
-		// @todo remove badge in userpanel
-				
+		// remove badge in userpanel
+		$('#outstandingModeration .badgeUpdate').remove();
+		
 		// fix moderation list
 		var $moderationList = $('.moderationList');
 		$moderationList.find('.new').removeClass('new');

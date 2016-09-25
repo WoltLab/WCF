@@ -1071,6 +1071,16 @@ WCF.Dropdown.Interactive.Handler = {
 		}
 		
 		return null;
+	},
+	
+	/**
+	 * Returns the dropdown with given identifier or `undefined` if no such dropdown exists.
+	 * 
+	 * @param	string		identifier
+	 * @return	{WCF.Dropdown.Interactive.Instance?}
+	 */
+	getDropdown: function(identifier) {
+		return this._dropdownMenus[identifier];
 	}
 };
 
