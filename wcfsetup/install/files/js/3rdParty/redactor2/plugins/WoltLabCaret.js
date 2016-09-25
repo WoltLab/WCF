@@ -185,6 +185,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 		},
 		
 		_handleEditorClick: function (event) {
+			if (!this.selection.get().isCollapsed) {
+				// ignore text selection
+				return;
+			}
+			
 			var block = this.selection.block();
 			if (block === false) {
 				// check if the caret is now in a <p> before a <table>
