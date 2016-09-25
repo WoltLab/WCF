@@ -220,8 +220,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 					/** @var \DOMElement $node */
 					if ($node->nodeName === 'p') {
 						for ($i = 0, $length = $node->childNodes->length; $i < $length; $i++) {
-							/** @var \DOMNode $child */
-							$child = $node->childNodes[$i];
+							$child = $node->childNodes->item($i);
 							if ($child->nodeType === XML_TEXT_NODE) {
 								if (StringUtil::trim($child->textContent) !== '') {
 									// terminate for() and while()

@@ -249,7 +249,7 @@ final class DOMUtil {
 			}
 			else if ($node->hasChildNodes()) {
 				for ($i = 0, $length = $node->childNodes->length; $i < $length; $i++) {
-					if (!self::isEmpty($node->childNodes[$i])) {
+					if (!self::isEmpty($node->childNodes->item($i))) {
 						return false;
 					}
 				}
