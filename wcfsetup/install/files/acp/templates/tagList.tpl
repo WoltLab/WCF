@@ -1,12 +1,15 @@
 {include file='header' pageTitle='wcf.acp.tag.list'}
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.add('wcf.acp.tag.setAsSynonyms', '{lang}wcf.acp.tag.setAsSynonyms{/lang}');
+	require(['WoltLabSuite/Core/Controller/Clipboard', 'Language'], function(ControllerClipboard, Language) {
+		Language.add('wcf.acp.tag.setAsSynonyms', '{lang}wcf.acp.tag.setAsSynonyms{/lang}');
+		
+		var deleteAction = new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow');
+		deleteAction.setCallback(ControllerClipboard.reload.bind(ControllerClipboard));
 		
 		WCF.Clipboard.init('wcf\\acp\\page\\TagListPage', {@$hasMarkedItems}, {
 			'com.woltlab.wcf.tag': {
-				'delete': new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow')
+				'delete': deleteAction
 			}
 		});
 		
