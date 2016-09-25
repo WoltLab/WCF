@@ -21,7 +21,7 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $sortFieldLanguageItemPrefix = 'wcf.article';
+	protected $sortFieldLanguageItemPrefix = 'wcf.article.sortField';
 	
 	/**
 	 * @inheritDoc

@@ -33,7 +33,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected $sortFieldLanguageItemPrefix = 'wcf.user';
+	protected $sortFieldLanguageItemPrefix = 'wcf.user.sortField';
 	
 	/**
 	 * ids of the shown users loaded from cache

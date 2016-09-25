@@ -1977,6 +1977,10 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.article.comment"><![CDATA[Artikel-Kommentar]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
+		<item name="wcf.article.sortField.comments"><![CDATA[Kommentare]]></item>
+		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
+		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -2538,6 +2542,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> aus!]]></item>
 		<item name="wcf.global.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.select"><![CDATA[Auswählen]]></item>
+		<item name="wcf.global.sorting"><![CDATA[Sortierung]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -3184,6 +3189,10 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.boxList.description.likesReceived"><![CDATA[{#$boxUser->likesReceived} Like{if $boxUser->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
 		<item name="wcf.user.mostOnlineUsers"><![CDATA[Meiste Benutzer online]]></item>
+		<item name="wcf.user.sortField.activityPoints"><![CDATA[Punkte]]></item>
+		<item name="wcf.user.sortField.likesReceived"><![CDATA[Erhaltene Likes]]></item>
+		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registrierungsdatum]]></item>
+		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

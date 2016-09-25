@@ -57,10 +57,9 @@ class UserOnline extends UserProfile {
 	/**
 	 * Sets the location of the user. If no location is given, the method tries to
 	 * automatically determine the location.
-	 * Returns true if the location has been successfully set.
 	 * 
 	 * @param	string|null	$location
-	 * @return	boolean
+	 * @return	boolean		`true` if the location has been successfully set, otherwise `false`
 	 */
 	public function setLocation($location = null) {
 		if ($location === null) {
@@ -73,8 +72,7 @@ class UserOnline extends UserProfile {
 						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
 						return true;
 					}
-					else {
-						// TODO: check if active user may access the page
+					else if ($page->isAccessible()) {
 						$title = $page->getTitle();
 						if (!empty($title)) {
 							if ($page->pageType != 'system') {
