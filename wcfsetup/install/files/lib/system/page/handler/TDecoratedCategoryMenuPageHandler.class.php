@@ -35,7 +35,7 @@ trait TDecoratedCategoryMenuPageHandler {
 		}
 		
 		// check if access to category is restricted
-		if ($category instanceof IAccessibleObject && !$className->isAccessible()) {
+		if ($category instanceof IAccessibleObject && !$category->isAccessible()) {
 			return false;
 		}
 		
