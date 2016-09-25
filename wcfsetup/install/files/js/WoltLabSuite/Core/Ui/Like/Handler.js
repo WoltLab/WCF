@@ -261,6 +261,9 @@ define(
 			else {
 				elShow(data.badge);
 				
+				// remove old classes
+				data.badge.classList.remove('likeCounterLiked', 'likeCounterDisliked');
+				
 				// update like counter
 				var cumulativeLikes = data.likes - data.dislikes;
 				var content = '<span class="icon icon16 fa-thumbs-o-' + (cumulativeLikes < 0 ? 'down' : 'up' ) + '"></span><span class="wcfLikeValue">';
