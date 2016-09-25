@@ -14,7 +14,7 @@ use wcf\util\DOMUtil;
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
  */
-class HtmlInputNodeWoltlabTable extends AbstractHtmlInputNode {
+class HtmlInputNodeTable extends AbstractHtmlInputNode {
 	/**
 	 * @inheritDoc
 	 */
