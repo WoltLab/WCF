@@ -1,5 +1,4 @@
 .pageHeaderContainer {
-	background-color: $wcfHeaderBackground;
 	color: $wcfHeaderText;
 	z-index: 100;
 	
@@ -17,6 +16,10 @@
 	
 	/* reserved space for `.pageHeaderPanel` */
 	padding-top: 50px;
+	
+	@include screen-lg {
+		background-color: $wcfHeaderBackground;
+	}
 }
 
 .pageHeaderPanel {
@@ -490,12 +493,14 @@
 
 @include screen-xs {
 	.pageHeaderPanel,
-	.pageHeaderFacade {
+	.pageHeaderFacade > .layoutBoundary {
 		transition: transform .12s linear;
 	}
 	
-	.redactorActive .pageHeaderPanel,
-	.redactorActive .pageHeaderFacade {
-		transform: translateY(-120%);
+	.redactorActive {
+		.pageHeaderPanel,
+		.pageHeaderFacade > .layoutBoundary {
+			transform: translateY(-120%);
+		}
 	}
 }
