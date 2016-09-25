@@ -311,6 +311,18 @@ final class DOMUtil {
 	}
 	
 	/**
+	 * Nodes can get partially destroyed in which they're still an
+	 * actual DOM node (such as \DOMElement) but almost their entire
+	 * body is gone, including the `nodeType` attribute.
+	 * 
+	 * @param       \DOMNode        $node           node
+	 * @return      boolean         true if node has been destroyed
+	 */
+	public static function isRemoved(\DOMNode $node) {
+		return !isset($node->nodeType);
+	}
+	
+	/**
 	 * Returns true if provided element is a void element. Void elements are elements
 	 * that neither contain content nor have a closing tag, such as `<br>`.
 	 * 
