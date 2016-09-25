@@ -3,7 +3,7 @@
 		{foreach from=$whoWasOnlineList item=userOnline}
 			<li><a href="{link controller='User' object=$userOnline}{/link}" title="{$userOnline->username} ({@$userOnline->lastActivityTime|date:$whoWasOnlineTimeFormat})" class="jsTooltip">{@$userOnline->getAvatar()->getImageTag(48)}</a></li>
 		{/foreach}
-	</ul>	
+	</ul>
 {else}
 	<ul class="inlineList commaSeparated">
 		{foreach from=$whoWasOnlineList item=userOnline}

@@ -8,7 +8,7 @@
 									{@$box->render()}
 								{/foreach}
 							{/content}
-						</div>	
+						</div>
 					</div>
 				{/hascontent}
 				
@@ -16,7 +16,7 @@
 					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
 			</div>
-				
+			
 			{hascontent}
 				<aside class="sidebar boxesSidebarRight">
 					<div class="boxContainer">
@@ -40,12 +40,12 @@
 						
 							{event name='boxesSidebarRightBottom'}
 						{/content}
-					</div>	
+					</div>
 				</aside>
 			{/hascontent}
 		</div>
 	</section>
-				
+	
 	{hascontent}
 		<div class="boxesBottom">
 			<div class="boxContainer">
@@ -58,12 +58,12 @@
 						{@$box->render()}
 					{/foreach}
 				{/content}
-			</div>	
+			</div>
 		</div>
 	{/hascontent}
-		
+	
 	{hascontent}
-		<div class="boxesFooterBoxes">			
+		<div class="boxesFooterBoxes">
 			<div class="layoutBoundary">
 				<div class="boxContainer">
 					{content}
@@ -73,16 +73,16 @@
 							{@$box->render()}
 						{/foreach}
 					{/content}
-				</div>	
+				</div>
 			</div>
 		</div>
 	{/hascontent}
 	
 	{include file='pageFooter'}
 </div>
-				
+
 {include file='pageMenuMobile'}
-				
+
 {event name='footer'}
 
 <div class="pageFooterStickyNotice">
@@ -110,6 +110,6 @@
 {@FOOTER_CODE}
 
 <a id="bottom"></a>
-				
+
 </body>
 </html>

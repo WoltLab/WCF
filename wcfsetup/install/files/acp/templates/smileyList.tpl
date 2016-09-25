@@ -65,7 +65,7 @@
 					<p class="info">{lang}wcf.global.noItems{/lang}</p>
 				{/if}
 			</section>
-		</div>	
+		</div>
 	</div>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>

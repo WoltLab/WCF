@@ -56,7 +56,7 @@
 						</select>
 					</dd>
 				</dl>
-			</div>	
+			</div>
 		</section>
 		
 		<div class="formSubmit">

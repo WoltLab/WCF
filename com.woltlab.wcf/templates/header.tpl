@@ -41,7 +41,7 @@
 							{@$box->render()}
 						{/foreach}
 					{/content}
-				</div>	
+				</div>
 			</div>
 		</div>
 	{/hascontent}
@@ -60,7 +60,7 @@
 						{@$box->render()}
 					{/foreach}
 				{/content}
-			</div>	
+			</div>
 		</div>
 	{/hascontent}
 	
@@ -93,7 +93,7 @@
 							
 							{if MODULE_WCF_AD && $__disableAds|empty}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}{/if}
 						{/content}
-					</div>	
+					</div>
 				</aside>
 			{/hascontent}
 			

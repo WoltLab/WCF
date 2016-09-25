@@ -25,7 +25,7 @@
 							
 							<dl class="plain inlineDataList">
 								{include file='userInformationStatistics'}
-							</dl>	
+							</dl>
 						</div>
 					</div>
 				</li>

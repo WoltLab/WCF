@@ -24,7 +24,7 @@
 				<span class="icon icon24 fa-search"></span>
 				<span class="menuOverlayItemTitle">{lang}wcf.global.search{/lang}</span>
 			</a>
-		</li>			
+		</li>
 		<li class="menuOverlayItem" id="pageMainMenuMobilePageOptionsContainer">
 			<a href="#" class="menuOverlayItemLink box24">
 				<span class="icon icon24 fa-gears"></span>
@@ -44,7 +44,7 @@
 				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
 					<li class="menuOverlayItem">
 						<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
-							<span{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 20}px" {/if} class="box24"> 
+							<span{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 20}px" {/if} class="box24">
 								<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
 								<span class="menuOverlayItemTitle">{$breadcrumb->getLabel()}</span>
 							</span>

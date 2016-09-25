@@ -12,7 +12,7 @@
 									<a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->canDownload()} class="jsImageViewer" title="{$attachment->filename}"{/if}>
 								{/if}
 								
-								<div class="attachmentThumbnailContainer">		
+								<div class="attachmentThumbnailContainer">
 									<span class="attachmentThumbnailImage">
 										{if $attachment->hasThumbnail()}
 											<img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" {if $attachment->thumbnailWidth >= ATTACHMENT_THUMBNAIL_WIDTH && $attachment->thumbnailHeight >= ATTACHMENT_THUMBNAIL_HEIGHT} class="attachmentThumbnailImageScalable"{/if}>
@@ -25,7 +25,7 @@
 										<span class="attachmentFilename">{$attachment->filename}</span>
 									</span>
 								</div>
-										
+								
 								<ul class="attachmentMetaData inlineList">
 									<li>
 										<span class="icon icon16 fa-file-text-o"></span>
@@ -39,8 +39,8 @@
 										<span class="icon icon16 fa-eye"></span>
 										{#$attachment->downloads}
 									</li>
-								</ul>		
-										
+								</ul>
+								
 								{if $attachment->hasThumbnail()}
 									</a>
 								{/if}

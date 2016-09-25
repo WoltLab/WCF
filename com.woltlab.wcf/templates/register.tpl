@@ -1,5 +1,5 @@
 {capture assign='headContent'}
-	<style type="text/css">	
+	<style type="text/css">
 		#fieldset1 {
 			display: none;
 		}

@@ -18,5 +18,5 @@
 {hascontentelse}
 	<div class="section">
 		<p class="info">{lang}wcf.user.profile.content.about.noPublicData{/lang}</p>
-	</div>	
+	</div>
 {/hascontent}

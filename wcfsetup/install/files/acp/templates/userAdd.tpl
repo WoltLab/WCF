@@ -159,7 +159,7 @@
 						<dt></dt>
 						<dd>
 							<label><input type="checkbox" id="banned" name="banned" value="1"{if $banned == 1} checked{/if}> {lang}wcf.acp.user.banUser{/lang}</label>
-							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>	
+							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>
 						</dd>
 					</dl>
 					

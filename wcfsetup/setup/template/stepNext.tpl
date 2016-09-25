@@ -5,7 +5,7 @@
 		<h2 class="sectionTitle">{lang}wcf.global.next{/lang}</h2>
 		<p class="sectionDescription">{lang}wcf.global.next.description{/lang}</p>
 	</header>
-</section>	
+</section>
 
 <form method="post" action="install.php?step={@$nextStep}">
 	<div class="formSubmit">

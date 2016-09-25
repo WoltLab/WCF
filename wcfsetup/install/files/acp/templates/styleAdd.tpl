@@ -497,7 +497,7 @@
 										</ol>
 									</li>
 								</ol>
-							</div>	
+							</div>
 						</div>
 						
 						<div id="spHeader" data-region="wcfHeader">
@@ -721,7 +721,7 @@
 						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
 		
 		<script>
@@ -911,7 +911,7 @@
 					<dd>
 						<div dir="ltr">
 							<textarea id="individualScss" rows="20" cols="40" name="individualScss">{$variables[individualScss]}</textarea>
-						</div>	
+						</div>
 						<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 					</dd>
 				</dl>

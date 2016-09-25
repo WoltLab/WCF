@@ -33,7 +33,7 @@
 							{@$box->render()}
 						{/foreach}
 					{/content}
-				</div>	
+				</div>
 			</div>
 		</div>
 	{/hascontent}

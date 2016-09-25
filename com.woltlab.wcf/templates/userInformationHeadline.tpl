@@ -9,7 +9,7 @@
 			{/if}
 		{/if}
 	</h3>
-</div>	
+</div>
 <ul class="inlineList commaSeparated">
 	{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && $user->isAccessible('canViewProfile')}
 		{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}

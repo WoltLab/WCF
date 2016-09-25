@@ -42,9 +42,9 @@
 				{/foreach}
 				{if !$letter|empty}<li class="lettersReset"><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}{/if}" class="button small">{lang}wcf.user.members.sort.letters.all{/lang}</a></li>{/if}
 			</ul>
-		</div>	
+		</div>
 	</section>
-
+	
 	<section class="box">
 		<form method="post" action="{if $searchID}{link controller='MembersList' id=$searchID}{/link}{else}{link controller='MembersList'}{/link}{/if}">
 			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
