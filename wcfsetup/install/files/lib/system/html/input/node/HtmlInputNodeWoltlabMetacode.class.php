@@ -66,6 +66,12 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 		
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
+			if ($element->parentNode === null) {
+				// ignore elements that existed, but have been removed
+				// from the DOM due to action taken by a converter
+				continue;
+			}
+			
 			$name = $element->getAttribute('data-name');
 			if ($name === 'abstract') {
 				continue;
