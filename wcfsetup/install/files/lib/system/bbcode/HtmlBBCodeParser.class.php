@@ -71,11 +71,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 					while (($previousTag = end($openTagStack)) != $tag['name']) {
 						$nextIndex = count($newTagArray);
 						
-						// mark as invalid and do not flag as opened tag
-						$newTag = $this->buildTag('[/'.end($openTagStack).']');
-						$newTag['invalid'] = true;
-						
-						$newTagArray[$nextIndex] = $newTag;
+						$newTagArray[$nextIndex] = $this->buildTag('[/'.end($openTagStack).']');
 						if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
 						$newTextArray[$nextIndex] .= $this->textArray[$i];
 						$this->textArray[$i] = '';
@@ -127,11 +123,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 		while (end($openTagStack)) {
 			$nextIndex = count($newTagArray);
 			
-			// mark as invalid
-			$newTag = $this->buildTag('[/'.end($openTagStack).']');
-			$newTag['invalid'] = true;
-			
-			$newTagArray[$nextIndex] = $newTag;
+			$newTagArray[$nextIndex] = $this->buildTag('[/'.end($openTagStack).']');
 			if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
 			array_pop($openTagStack);
 			array_pop($openTagDataStack);
