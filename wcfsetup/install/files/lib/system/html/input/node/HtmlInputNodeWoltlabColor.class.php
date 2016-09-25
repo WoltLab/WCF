@@ -1,11 +1,8 @@
 <?php
 namespace wcf\system\html\input\node;
-use wcf\data\bbcode\BBCodeCache;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\html\metacode\converter\IMetacodeConverter;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
-use wcf\util\StringUtil;
 
 /**
  * Processes `<woltlab-color>` to check for valid color arguments.
