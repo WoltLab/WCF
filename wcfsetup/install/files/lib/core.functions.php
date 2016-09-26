@@ -215,6 +215,8 @@ EXPLANATION;
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<style>
 				.exceptionBody {
+					background-color: rgb(250, 250, 250);
+					color: rgb(44, 62, 80);
 					margin: 0;
 					padding: 0;
 				}
@@ -228,14 +230,13 @@ EXPLANATION;
 				
 				.exceptionContainer * {
 					box-sizing: inherit;
-					color: #000;
 					line-height: 1.5em;
 					margin: 0;
 					padding: 0;
 				}
 				
 				.exceptionHeader {
-					background-color: rgb(44, 62, 80);
+					background-color: rgb(58, 109, 156);
 					padding: 30px 0;
 				}
 				
@@ -261,7 +262,6 @@ EXPLANATION;
 				
 				.exceptionSubtitle {
 					border-bottom: 1px solid rgb(238, 238, 238);
-					color: rgb(44, 62, 80);
 					font-size: 24px;
 					font-weight: 300;
 					margin-bottom: 15px;
