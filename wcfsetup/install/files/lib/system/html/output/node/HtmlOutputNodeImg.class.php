@@ -4,8 +4,10 @@ use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\util\DOMUtil;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
+use wcf\util\StringUtil;
 
 /**
  * Processes images.
@@ -52,8 +54,30 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 			}
 			else if (MODULE_IMAGE_PROXY) {
 				$src = $element->getAttribute('src');
-				if ($src) {
-					$element->setAttribute('src', $this->getProxyLink($src));
+				if (!$src) {
+					DOMUtil::removeNode($element);
+					continue;
+				}
+				
+				$element->setAttribute('src', $this->getProxyLink($src));
+				
+				$srcset = $element->getAttribute('srcset');
+				if ($srcset) {
+					// simplified regex to check if it appears to be a valid list of sources
+					if (!preg_match('~^[^\s]+\s+[0-9\.]+[wx](,\s*[^\s]+\s+[0-9\.]+[wx])*~', $srcset)) {
+						$element->removeAttribute('srcset');
+						continue;
+					}
+					
+					$sources = explode(',', $srcset);
+					$srcset = '';
+					foreach ($sources as $source) {
+						$tmp = preg_split('~\s+~', StringUtil::trim($source));
+						if (!empty($srcset)) $srcset .= ', ';
+						$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+					}
+					
+					$element->setAttribute('srcset', $srcset);
 				}
 			}
 		}
