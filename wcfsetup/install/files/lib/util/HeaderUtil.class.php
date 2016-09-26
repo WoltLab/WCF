@@ -106,7 +106,7 @@ final class HeaderUtil {
 	public static function parseOutput($output) {
 		self::$output = $output;
 		
-		if (PACKAGE_ID && RequestHandler::getInstance()->isACPRequest()) {
+		if (!PACKAGE_ID || RequestHandler::getInstance()->isACPRequest()) {
 			// force javascript relocation
 			self::$output = preg_replace('~<script([^>]*)>~', '<script data-relocate="true"\\1>', self::$output);
 		}
