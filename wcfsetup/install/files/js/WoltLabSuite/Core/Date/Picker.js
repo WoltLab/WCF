@@ -76,7 +76,9 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				// handle birthday input
 				if (element.classList.contains('birthday')) {
 					elData(element, 'min-date', '100');
-					elData(element, 'max-date', 'now');
+					
+					// do not use 'now' here, all though it makes sense, it causes bad UX 
+					elData(element, 'max-date', new Date().getFullYear() + '-12-31');
 				}
 				else {
 					if (element.min) elData(element, 'min-date', element.min);
