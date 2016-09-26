@@ -88,6 +88,13 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 						opacity: 1;
 					}
 					
+					&.wcfImageViewerSlideshowButtonFull,
+					&.wcfImageViewerSlideshowButtonNext,
+					&.wcfImageViewerSlideshowButtonPrevious {
+						/* places buttons above images at all times */
+						z-index: 30;
+					}
+					
 					&.wcfImageViewerSlideshowButtonPrevious {
 						left: 10px;
 						
