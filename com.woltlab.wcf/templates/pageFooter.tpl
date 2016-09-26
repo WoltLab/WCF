@@ -34,12 +34,12 @@
 					{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 					
 					{include file='pageFooterCopyright'}
+				
+					{if MODULE_WCF_AD && $__disableAds|empty}
+						{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
+					{/if}
 				{/content}
 			</div>
 		</div>
 	{/hascontent}
-	
-	{if MODULE_WCF_AD && $__disableAds|empty}
-		{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}
-	{/if}
 </footer>

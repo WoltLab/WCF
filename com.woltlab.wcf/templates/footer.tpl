@@ -21,6 +21,14 @@
 				<aside class="sidebar boxesSidebarRight">
 					<div class="boxContainer">
 						{content}
+							{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
+								<div class="box boxBorderless">
+									<div class="boxContent">
+										{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
+									</div>
+								</div>
+							{/if}
+							
 							{event name='boxesSidebarRightTop'}
 													
 							{* WCF2.1 Fallback *}
@@ -39,6 +47,14 @@
 							{/foreach}
 						
 							{event name='boxesSidebarRightBottom'}
+						
+							{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
+								<div class="box boxBorderless">
+									<div class="boxContent">
+										{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
+									</div>
+								</div>
+							{/if}	
 						{/content}
 					</div>
 				</aside>

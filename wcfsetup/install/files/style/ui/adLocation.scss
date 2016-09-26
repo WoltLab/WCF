@@ -1,0 +1,35 @@
+.wcfAdLocation {
+	overflow: hidden;
+}
+
+.wcfAdLocationLogo {
+	@include screen-lg {
+		float: right;
+		margin-left: 30px;
+	}
+	
+	@include screen-md-down {
+		display: none;
+	}
+}
+
+.wcfAdLocationHeaderContent {
+	margin-bottom: 20px;
+}
+
+.wcfAdLocationFooterContent {
+	margin-top: 20px;
+}
+
+.wcfAdLocationHeaderContent,
+.wcfAdLocationFooterContent,
+.wcfAdLocationFooterBottom,
+.wcfAdLocationSidebarTop,
+.wcfAdLocationSidebarBottom {
+	text-align: center;
+	
+	> div {
+		display: inline-block;
+		text-align: left;
+	}
+}
