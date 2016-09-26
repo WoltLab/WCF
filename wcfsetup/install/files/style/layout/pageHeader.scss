@@ -255,7 +255,7 @@
 /* LOGO */
 .pageHeaderLogo {
 	@include screen-lg {
-		flex: 0 0 50%;
+		flex: 1 1 auto;
 		
 		.pageHeaderLogoLarge {
 			max-width: 100%;
