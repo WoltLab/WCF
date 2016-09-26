@@ -79,30 +79,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	 * @return      array                           filtered groups without source bbcodes
 	 */
 	protected function revertMarkerInsideCodeBlocks(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		$isInsideCode = function(\DOMElement $element) {
-			$parent = $element;
-			while ($parent = $parent->parentNode) {
-				$nodeName = $parent->nodeName;
-				
-				if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
-					return true;
-				}
-				else if ($nodeName === 'woltlab-metacode') {
-					$name = $parent->getAttribute('data-name');
-					if ($name === 'code' || $name === 'tt') {
-						return true;
-					}
-				}
-			}
-			
-			return false;
-		};
-		
 		foreach ($groups as $name => $pairs) {
 			$needsReindex = false;
 			for ($i = 0, $length = count($pairs); $i < $length; $i++) {
 				$pair = $pairs[$i];
-				if ($isInsideCode($pair['open']) || $isInsideCode($pair['close'])) {
+				if ($this->isInsideCode($pair['open']) || $this->isInsideCode($pair['close'])) {
 					$pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
 					$this->convertToBBCode($name, $pair);
 					
@@ -122,6 +103,25 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		}
 		
 		return $groups;
+	}
+	
+	protected function isInsideCode(\DOMElement $element) {
+		$parent = $element;
+		while ($parent = $parent->parentNode) {
+			$nodeName = $parent->nodeName;
+			
+			if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
+				return true;
+			}
+			else if ($nodeName === 'woltlab-metacode') {
+				$name = $parent->getAttribute('data-name');
+				if ($name === 'code' || $name === 'tt') {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -222,25 +222,31 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	 */
 	protected function convertSourceGroups(array $groups) {
 		foreach ($this->sourceElements as $name) {
-			if (in_array($name, $this->blockElements)) {
-				if (isset($groups[$name])) {
-					for ($i = 0, $length = count($groups[$name]); $i < $length; $i++) {
-						$data = $groups[$name][$i];
-						$this->convertBlockElement($name, $data['open'], $data['close'], $data['attributes']);
-					}
-					
-					unset($groups[$name]);
+			if (!isset($groups[$name])) {
+				continue;
+			}
+			
+			for ($i = 0, $length = count($groups[$name]); $i < $length; $i++) {
+				$data = $groups[$name][$i];
+				if ($this->isInsideCode($data['open']) || $this->isInsideCode($data['close'])) {
+					continue;
 				}
+				
+				if (in_array($name, $this->blockElements)) {
+					$this->convertBlockElement($name, $data['open'], $data['close'], $data['attributes']);
+				}
+				else {
+					$this->convertInlineElement($name, $data['open'], $data['close'], $data['attributes']);
+				}
+				
+				unset($groups[$name][$i]);
+			}
+			
+			if (empty($groups[$name])) {
+				unset($groups[$name]);
 			}
 			else {
-				if (isset($groups[$name])) {
-					for ($i = 0, $length = count($groups[$name]); $i < $length; $i++) {
-						$data = $groups[$name][$i];
-						$this->convertInlineElement($name, $data['open'], $data['close'], $data['attributes']);
-					}
-					
-					unset($groups[$name]);
-				}
+				$groups[$name] = array_values($groups[$name]);
 			}
 		}
 		
