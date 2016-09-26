@@ -104,9 +104,15 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					_scrollOffsetFrom = 'documentElement';
 				}
 				
+				var pageContainer = elById('pageContainer');
+				
 				// setting translateY causes Mobile Safari to snap
-				if (Environment.platform() !== 'ios') {
-					elById('pageContainer').style.setProperty('transform', 'translateY(-' + _scrollTop + 'px)', '');
+				if (Environment.platform() === 'ios') {
+					pageContainer.style.setProperty('position', 'relative', '');
+					pageContainer.style.setProperty('top', '-' + _scrollTop + 'px', '');
+				}
+				else {
+					pageContainer.style.setProperty('transform', 'translateY(-' + _scrollTop + 'px)', '');
 				}
 				
 				document.documentElement.classList.add('disableScrolling');
@@ -125,12 +131,17 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 				if (_scrollDisableCounter === 0) {
 					document.documentElement.classList.remove('disableScrolling');
 					
-					if (_scrollTop) {
-						document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;
+					var pageContainer = elById('pageContainer');
+					if (Environment.platform() === 'ios') {
+						pageContainer.style.removeProperty('position');
+						pageContainer.style.removeProperty('top');
+					}
+					else {
+						pageContainer.style.removeProperty('transform');
 					}
 					
-					if (Environment.platform() !== 'ios') {
-						elById('pageContainer').style.removeProperty('transform');
+					if (_scrollTop) {
+						document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;
 					}
 				}
 			}
