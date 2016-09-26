@@ -10,12 +10,12 @@ define(
 	[
 		'enquire',      'Ajax',       'Core',      'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
-		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/SimpleDropdown'
+		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
-		DomTraverse,    DomUtil,      UiConfirmation, UiSimpleDropdown
+		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown
 	)
 {
 	"use strict";
@@ -227,7 +227,23 @@ define(
 				this._createDialog(id, html, options);
 			}
 			
-			return _dialogs.get(id);
+			var data = _dialogs.get(id);
+			
+			// iOS breaks `position: fixed` when input elements or `contenteditable`
+			// are focused, this will freeze the screen and force Safari to scroll
+			// to the input field
+			if (Environment.platform() === 'ios') {
+				UiScreen.scrollDisable();
+				
+				window.setTimeout((function () {
+					var input = elBySel('input, textarea', data.content);
+					if (input !== null) {
+						input.focus();
+					}
+				}).bind(this), 200);
+			}
+			
+			return data;
 		},
 		
 		/**
@@ -556,6 +572,10 @@ define(
 			else {
 				data = _dialogs.get(_activeDialog);
 				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+			}
+			
+			if (Environment.platform() === 'ios') {
+				UiScreen.scrollEnable();
 			}
 		},
 		
