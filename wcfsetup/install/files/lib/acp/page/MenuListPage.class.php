@@ -38,7 +38,7 @@ class MenuListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['menuID', 'title', 'position', 'items'];
+	public $validSortFields = ['menuID', 'title', 'position', 'items', 'showOrder'];
 	
 	/**
 	 * @inheritDoc
@@ -51,6 +51,6 @@ class MenuListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects .= '(SELECT COUNT(*) FROM wcf'.WCF_N.'_menu_item WHERE menuID = menu.menuID) AS items, (SELECT position FROM wcf'.WCF_N.'_box WHERE menuID = menu.menuID) AS position';
+		$this->objectList->sqlSelects .= '(SELECT COUNT(*) FROM wcf'.WCF_N.'_menu_item WHERE menuID = menu.menuID) AS items, (SELECT position FROM wcf'.WCF_N.'_box WHERE menuID = menu.menuID) AS position, (SELECT showOrder FROM wcf'.WCF_N.'_box WHERE menuID = menu.menuID) AS showOrder';
 	}
 }

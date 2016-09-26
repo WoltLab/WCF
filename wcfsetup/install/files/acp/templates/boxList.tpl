@@ -105,6 +105,7 @@
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnText columnBoxType{if $sortField == 'boxType'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxType&sortOrder={if $sortField == 'boxType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.type{/lang}</a></th>
 					<th class="columnText columnPosition{if $sortField == 'position'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=position&sortOrder={if $sortField == 'position' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.box.position{/lang}</a></th>
+					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -127,6 +128,7 @@
 						<td class="columnTitle columnName"><a href="{link controller='BoxEdit' id=$box->boxID}{/link}">{$box->name}</a></td>
 						<td class="columnText columnBoxType">{$box->boxType}</td>
 						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$box->position}{/lang}</td>
+						<td class="columnDigits columnShowOrder">{#$box->showOrder}</td>
 						
 						{event name='columns'}
 					</tr>
