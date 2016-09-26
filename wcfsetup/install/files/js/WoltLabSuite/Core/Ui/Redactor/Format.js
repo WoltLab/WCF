@@ -31,7 +31,7 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			var range = selection.getRangeAt(0);
-			var tmpElement = null;
+			var markerStart = null, markerEnd = null, tmpElement = null;
 			if (range.collapsed) {
 				tmpElement = elCreate('strike');
 				tmpElement.textContent = '\u200B';
@@ -39,6 +39,30 @@ define(['Dom/Util'], function(DomUtil) {
 				
 				range = document.createRange();
 				range.selectNodeContents(tmpElement);
+				
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+			else {
+				// removing existing format causes the selection to vanish,
+				// these markers are used to restore it afterwards
+				markerStart = elCreate('woltlab-tmp-marker');
+				markerEnd = elCreate('woltlab-tmp-marker');
+				
+				var tmpRange = range.cloneRange();
+				tmpRange.collapse(true);
+				tmpRange.insertNode(markerStart);
+				
+				tmpRange = range.cloneRange();
+				tmpRange.collapse(false);
+				tmpRange.insertNode(markerEnd);
+				
+				// remove existing format before applying new one
+				this.removeFormat(editorElement, tagName);
+				
+				range = document.createRange();
+				range.setStartAfter(markerStart);
+				range.setEndBefore(markerEnd);
 				
 				selection.removeAllRanges();
 				selection.addRange(range);
@@ -88,6 +112,11 @@ define(['Dom/Util'], function(DomUtil) {
 				
 				selection.removeAllRanges();
 				selection.addRange(range);
+			}
+			
+			if (markerStart !== null) {
+				elRemove(markerStart);
+				elRemove(markerEnd);
 			}
 		},
 		
@@ -186,6 +215,19 @@ define(['Dom/Util'], function(DomUtil) {
 				// remove strike element itself
 				DomUtil.unwrapChildNodes(strikeElement);
 			}
+			
+			// search for tags that are still floating around, but are completely empty
+			elBySelAll(tagName, editorElement, function (element) {
+				if (element.parentNode && !element.textContent.length) {
+					if (element.childElementCount === 1 && element.children[0].nodeName === 'WOLTLAB-TMP-MARKER') {
+						element.parentNode.insertBefore(element.children[0], element);
+					}
+					
+					if (element.childElementCount === 0) {
+						elRemove(element);
+					}
+				}
+			});
 		},
 		
 		/**
