@@ -530,6 +530,9 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 	updateBadge: function(count) {
 		count = parseInt(count) || 0;
 		
+		// update data attribute
+		$('#userNotifications').attr('data-count', count);
+		
 		if (this._favico !== null) {
 			this._favico.badge(count);
 		}
