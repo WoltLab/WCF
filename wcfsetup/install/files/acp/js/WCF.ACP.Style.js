@@ -248,7 +248,7 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 		else {
 			// no logo defined, fallback to application logo
 			$src = WCF_PATH + 'images/default-logo.png';
-			$('#pageLogoWidth').val(288);
+			$('#pageLogoWidth').val(281);
 			$('#pageLogoHeight').val(40);
 		}
 		
