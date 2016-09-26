@@ -48,7 +48,7 @@
 				<dd>
 					<select name="position" id="position">
 						{foreach from=$availablePositions item=availablePosition}
-							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{@$availablePosition}</option>
+							<option value="{@$availablePosition}"{if $availablePosition == $position} selected{/if}>{lang}wcf.acp.box.position.{@$availablePosition}{/lang}</option>
 						{/foreach}
 					</select>
 					

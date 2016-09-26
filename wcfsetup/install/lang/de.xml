@@ -179,6 +179,7 @@
 		<item name="wcf.acp.box.position.bottom"><![CDATA[Unter Inhaltsbereich]]></item>
 		<item name="wcf.acp.box.position.footerBoxes"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.box.position.footer"><![CDATA[Seitenende]]></item>
+		<item name="wcf.acp.box.position.mainMenu"><![CDATA[Hauptmenü]]></item>
 		<item name="wcf.acp.box.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.acp.box.settings.limit"><![CDATA[Maximale Anzahl]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Box-Titel anzeigen]]></item>

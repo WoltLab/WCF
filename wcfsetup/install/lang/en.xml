@@ -178,6 +178,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.position.bottom"><![CDATA[TODO: Unter Inhaltsbereich]]></item>
 		<item name="wcf.acp.box.position.footerBoxes"><![CDATA[TODO: Fußzeile]]></item>
 		<item name="wcf.acp.box.position.footer"><![CDATA[TODO: Seitenende]]></item>
+		<item name="wcf.acp.box.position.mainMenu"><![CDATA[Main Menu]]></item>
 		<item name="wcf.acp.box.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.box.settings.limit"><![CDATA[Maximum Number of Items]]></item>
 		<item name="wcf.acp.box.showHeader"><![CDATA[Show box title]]></item>
