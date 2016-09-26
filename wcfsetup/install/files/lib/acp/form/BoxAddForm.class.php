@@ -386,6 +386,18 @@ class BoxAddForm extends AbstractForm {
 			}
 		}
 		
+		// box title
+		if ($this->showHeader) {
+			if ($this->boxType == 'system' || $this->isMultilingual) {
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					if (empty($this->title[$language->languageID])) throw new UserInputException('title'.$language->languageID);
+				}
+			}
+			else {
+				if (empty($this->title[0])) throw new UserInputException('title');
+			}
+		}
+		
 		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
 			$this->boxController->getProcessor()->validateConditions();
 		}
