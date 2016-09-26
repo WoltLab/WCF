@@ -4,9 +4,9 @@ use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
-use wcf\util\DOMUtil;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
