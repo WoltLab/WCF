@@ -449,7 +449,7 @@
 				<dl>
 					<dt></dt>
 					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if $variables[useGoogleFont]} checked{/if}>
+						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if !$variables[useGoogleFont]|empty} checked{/if}>
 						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
 					</label></dd>
 				</dl>
