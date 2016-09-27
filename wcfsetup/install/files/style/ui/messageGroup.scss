@@ -74,8 +74,15 @@
 		&::before {
 			display: block;
 			font-family: FontAwesome;
-			font-size: 42px;
 			position: absolute;
+			
+			@include screen-md-up {
+				font-size: 42px;
+			}
+			
+			@include screen-sm-down {
+				font-size: 28px;
+			}
 		}
 		
 		> div {
@@ -88,13 +95,31 @@
 		content: $fa-var-trash-o;
 		left: 17px;
 		top: -2px;
+		
+		@include screen-md-up {
+			left: 17px;
+			top: -2px;
+		}
+		
+		@include screen-sm-down {
+			left: 7px;
+			top: -4px;
+		}
 	}
 	
 	.messageDisabled .columnAvatar::before {
 		color: rgb(0, 140, 0);
 		content: $fa-var-eye-slash;
-		left: 13px;
-		top: -2px;
+		
+		@include screen-md-up {
+			left: 13px;
+			top: -2px;
+		}
+		
+		@include screen-sm-down {
+			left: 3px;
+			top: -4px;
+		}
 	}
 	
 	.columnAvatar {
