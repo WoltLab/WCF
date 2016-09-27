@@ -36,7 +36,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition {
 	 */
 	protected function getDescriptionElement() {
 		if ($this->description) {
-			return '<small>'.WCF::getLanguage()->get($this->description).'</small>';
+			return '<small>'.WCF::getLanguage()->getDynamicVariable($this->description).'</small>';
 		}
 		
 		return '';
