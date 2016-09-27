@@ -31,15 +31,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		],
 		'p' => ['text-center', 'text-justify', 'text-right'],
 		'td' => ['text-center', 'text-justify', 'text-right'],
-		'woltlab-color' => [
-			'woltlab-color-000000', 'woltlab-color-000080', 'woltlab-color-0000CD', 'woltlab-color-0000FF', 'woltlab-color-006400', 'woltlab-color-008000',
-			'woltlab-color-008080', 'woltlab-color-00FF00', 'woltlab-color-00FFFF', 'woltlab-color-2F4F4F', 'woltlab-color-40E0D0', 'woltlab-color-4B0082',
-			'woltlab-color-696969', 'woltlab-color-800000', 'woltlab-color-800080', 'woltlab-color-808080', 'woltlab-color-8B4513', 'woltlab-color-A52A2A',
-			'woltlab-color-A9A9A9', 'woltlab-color-ADD8E6', 'woltlab-color-AFEEEE', 'woltlab-color-B22222', 'woltlab-color-D3D3D3', 'woltlab-color-DAA520',
-			'woltlab-color-DDA0DD', 'woltlab-color-E6E6FA', 'woltlab-color-EE82EE', 'woltlab-color-F0F8FF', 'woltlab-color-F0FFF0', 'woltlab-color-F0FFFF',
-			'woltlab-color-FAEBD7', 'woltlab-color-FF0000', 'woltlab-color-FF8C00', 'woltlab-color-FFA07A', 'woltlab-color-FFA500', 'woltlab-color-FFD700',
-			'woltlab-color-FFF0F5', 'woltlab-color-FFFF00', 'woltlab-color-FFFFE0', 'woltlab-color-FFFFFF'
-		],
+		'woltlab-color' => '*',
 		'woltlab-font' => [
 			'woltlab-font-arial', 'woltlab-font-comicSansMs', 'woltlab-font-courierNew', 'woltlab-font-georgia', 'woltlab-font-lucidaSansUnicode',
 			'woltlab-font-tahoma', 'woltlab-font-timesNewRoman', 'woltlab-font-trebuchetMs', 'woltlab-font-verdana'
@@ -94,6 +86,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		foreach ($this->getXPath()->query('//*[@class]') as $element) {
 			$nodeName = $element->nodeName;
 			if (isset(self::$allowedClassNames[$nodeName])) {
+				if (self::$allowedClassNames[$nodeName] === '*') {
+					continue;
+				}
+				
 				$classNames = explode(' ', $element->getAttribute('class'));
 				$classNames = array_filter($classNames, function ($className) use ($nodeName) {
 					return ($className && in_array($className, self::$allowedClassNames[$nodeName]));
