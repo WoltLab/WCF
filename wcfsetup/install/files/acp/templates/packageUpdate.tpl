@@ -17,7 +17,7 @@
 </header>
 
 {foreach from=$availableUpdates item=update}
-	<section class="section" class="jsPackageUpdate" data-package="{$update[package]}">
+	<section class="section jsPackageUpdate" data-package="{$update[package]}">
 		<header class="sectionHeader">
 			<h2 class="sectionTitle"><label>
 				<input type="checkbox" value="1" checked>
