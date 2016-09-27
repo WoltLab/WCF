@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\avatar\UserAvatar;
-use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\system\exception\SystemException;
+use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -34,7 +34,7 @@ class UserAvatarImporter extends AbstractImporter {
 		$data['width'] = $imageData[0];
 		$data['height'] = $imageData[1];
 		// check min size
-		if ($data['width'] < 48 || $data['height'] < 48) return 0;
+		if ($data['width'] < UserAvatar::AVATAR_SIZE || $data['height'] < UserAvatar::AVATAR_SIZE) return 0;
 		
 		// check image type
 		if ($imageData[2] != IMAGETYPE_GIF && $imageData[2] != IMAGETYPE_JPEG && $imageData[2] != IMAGETYPE_PNG) return 0;
@@ -62,9 +62,18 @@ class UserAvatarImporter extends AbstractImporter {
 				throw new SystemException();
 			}
 			
-			// create thumbnails
-			$action = new UserAvatarAction([$avatar], 'generateThumbnails');
-			$action->executeAction();
+			// enforces dimensions
+			if ($data['width'] > UserAvatar::AVATAR_SIZE || $data['height'] > UserAvatar::AVATAR_SIZE) {
+				try {
+					$adapter = ImageHandler::getInstance()->getAdapter();
+					$adapter->loadFile($avatar->getLocation());
+					$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
+					$adapter->writeImage($thumbnail, $avatar->getLocation());
+				}
+				catch (SystemException $e) {
+					throw new SystemException();
+				}
+			}
 			
 			// update owner
 			$sql = "UPDATE	wcf".WCF_N."_user
