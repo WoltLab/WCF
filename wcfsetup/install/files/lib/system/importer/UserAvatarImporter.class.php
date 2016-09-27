@@ -64,15 +64,10 @@ class UserAvatarImporter extends AbstractImporter {
 			
 			// enforces dimensions
 			if ($data['width'] > UserAvatar::AVATAR_SIZE || $data['height'] > UserAvatar::AVATAR_SIZE) {
-				try {
-					$adapter = ImageHandler::getInstance()->getAdapter();
-					$adapter->loadFile($avatar->getLocation());
-					$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
-					$adapter->writeImage($thumbnail, $avatar->getLocation());
-				}
-				catch (SystemException $e) {
-					throw new SystemException();
-				}
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($avatar->getLocation());
+				$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
+				$adapter->writeImage($thumbnail, $avatar->getLocation());
 			}
 			
 			// update owner
