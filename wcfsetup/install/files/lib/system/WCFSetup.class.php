@@ -517,7 +517,10 @@ class WCFSetup extends WCF {
 			// resolve path relative to document root
 			$relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
 			foreach ($packages as $application => $packageData) {
-				self::$directories[$application] = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
+				$dir = $relativePath . ($application === 'wcf' ? '' : $packageData['directory'] . '/');
+				if (mb_strpos($dir, './') === 0) $dir = mb_substr($dir, 1);
+				
+				self::$directories[$application] = $dir;
 			}
 		}
 		
