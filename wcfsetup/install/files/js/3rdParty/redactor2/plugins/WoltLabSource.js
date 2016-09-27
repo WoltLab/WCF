@@ -52,20 +52,62 @@ $.Redactor.prototype.WoltLabSource = function() {
 			var blockTags = this.block.tags.join('|').toLowerCase();
 			blockTags += '|ul|ol|li';
 			
-			html = html.replace(new RegExp('<(' + blockTags + ')([^>]*)>\s*', 'g'), '<$1$2>\n\t');
-			html = html.replace(new RegExp('\s*</(' + blockTags + ')>', 'g'), '\n</$1>');
+			var patternTagAttributes = '[^\'">]*(?:(?:"[^"]*"|\'[^\']*\')[^\'">]*)*';
 			
-			html = html.replace(/\s*<li>/g, '\n<li>');
-			html = html.replace(/<\/li>\s*/g, '</li>\n');
-			html = html.replace(/<li>([\s\S]*?)<\/li>/g, function(match, content) {
-				var parts = content.trim().split('\n');
-				return '<li>\n\t' + parts.join('\n\t') + '\n</li>';
+			// protect <pre> from changes
+			var backup = [];
+			html = html.replace(new RegExp('<pre' + patternTagAttributes + '>[\s\S]*?<\/pre>', 'g'), function(match) {
+				backup.push(match);
+				
+				return '@@@WCF_PRE_BACKUP_' + (backup.length - 1) + '@@@';
 			});
 			
-			html = html.replace(/\s*<\/p>\s*/g, '\n</p>\n');
-			html = html.replace(/<p>\s*<br>\s*<\/p>/g, '<p><br></p>');
+			// normalize whitespace before and after block tags
+			html = html.replace(new RegExp('\\s*</(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), '\n</$1$2>');
+			html = html.replace(new RegExp('\\s*<(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), '\n<$1$2>\n');
 			
-			return html.replace(/^\s+/, '');
+			// lists have additional whitespace inside
+			html = html.replace(new RegExp('<(ol|ul)(' + patternTagAttributes + ')>\\s*', 'g'), '<$1$2>\n');
+			
+			// split by line break
+			var parts = html.split(/\n/);
+			var depth = 0;
+			var i, length, line;
+			var reIsBlockStart = new RegExp('^<(?:' + blockTags + ')');
+			var reIsBlockEnd = new RegExp('^</(?:' + blockTags + ')>$');
+			var increaseDepth = false;
+			for (i = 0, length = parts.length; i < length; i++) {
+				line = parts[i];
+				increaseDepth = false;
+				
+				if (line.match(reIsBlockStart)) {
+					increaseDepth = true;
+				}
+				else if (line.match(reIsBlockEnd)) {
+					depth--;
+				}
+				
+				if (depth > 0) {
+					var indent = depth;
+					parts[i] = '';
+					while (indent--) {
+						parts[i] += "\t";
+					}
+					
+					parts[i] += line;
+				}
+				
+				if (increaseDepth) depth++;
+			}
+			
+			html = parts.join("\n");
+			
+			// reinsert <pre>
+			for (i = 0, length = backup.length; i < length; i++) {
+				html = html.replace('@@@WCF_PRE_BACKUP_' + i + '@@@', backup[i]);
+			}
+			
+			return html.trim();
 		}
 	};
 };
