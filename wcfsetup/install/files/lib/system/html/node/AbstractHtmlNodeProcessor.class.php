@@ -56,6 +56,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// strip UTF-8 zero-width whitespace
 		$html = preg_replace('~\x{200B}~u', '', $html);
 		
+		// work-around for a libxml bug that causes a single space between
+		// some inline elements to be dropped 
+		$html = str_replace('> <', '>&#xE000;&#xEFFF;&#xE000;<', $html);
+		
 		// Ignore all errors when loading the HTML string, because DOMDocument does not
 		// provide a proper way to add custom HTML elements (even though explicitly allowed
 		// in HTML5) and the input HTML has already been sanitized by HTMLPurifier.
@@ -95,6 +99,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 			}, $html);
 			
 		}
+		
+		// work-around for a libxml bug that causes a single space between
+		// some inline elements to be dropped
+		$html = preg_replace('~>\x{E000}\x{EFFF}\x{E000}<~u', '> <', $html);
 		
 		return $html;
 	}
