@@ -452,7 +452,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 */
 	protected function buildClosingTag(array $tag) {
 		$name = strtolower($tag['name']);
-		if (!$this->isValidBBCodeName($name)) {
+		if (!$this->isValidBBCodeName($name) || empty($this->openTagIdentifiers)) {
 			return $tag['source'];
 		}
 		
