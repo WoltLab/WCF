@@ -464,6 +464,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		$data = array_pop($this->openTagIdentifiers);
+		if ($data === '_BUFFER_PLACEHOLDER_') {
+			$data = array_pop($this->openTagIdentifiers);
+		}
+		
 		if ($data['name'] !== $name) {
 			// check if this is a source code tag as some people
 			// love to nest the same source bbcode
