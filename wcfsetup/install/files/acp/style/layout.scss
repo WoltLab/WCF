@@ -6,9 +6,9 @@ $wcfAcpMenuWidth: 150px;
 	min-width: 0;
 }
 
-.pageContainer {
-	@include screen-lg {
-		min-width: 1240px;
+@include screen-lg {
+	.tabularBox {
+		overflow: auto;
 	}
 }
 
