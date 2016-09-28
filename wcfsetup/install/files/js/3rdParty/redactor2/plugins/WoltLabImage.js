@@ -67,11 +67,13 @@ $.Redactor.prototype.WoltLabImage = function() {
 					image.classList.add('messageFloatObject' + WCF.String.ucfirst(float));
 				}
 				
-				mpUpdate();
+				mpUpdate.call(this);
 				
 				// remove alt/title attribute again (not supported)
 				image.removeAttribute('alt');
 				image.removeAttribute('title');
+				
+				this.caret.after(image);
 			}).bind(this);
 			
 			// overwrite modal template
