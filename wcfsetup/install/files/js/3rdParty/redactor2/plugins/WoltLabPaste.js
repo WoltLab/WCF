@@ -106,6 +106,8 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
 					blob: this.utils.dataURItoBlob(e.target.result)
 				});
+				
+				this.rtePaste = false;
 			}).bind(this);
 			
 			var transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
@@ -166,6 +168,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}).bind(this), 50);
 				}
 				
+				this.rtePaste = false;
 			}).bind(this);
 			
 			this.paste.clipboardUpload = function () { /* not required, images are handled in `paste.insert()` below */ };
