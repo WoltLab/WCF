@@ -25,12 +25,14 @@
 					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
 				</li>
 				
-				<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-					<span class="icon icon16 fa-comments"></span>
-					<span>{lang}wcf.article.articleComments{/lang}</span>
-					<meta itemprop="interactionType" content="http://schema.org/CommentAction">
-					<meta itemprop="userInteractionCount" content="{@$article->comments}">
-				</li>
+				{if $article->enableComments}
+					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+						<span class="icon icon16 fa-comments"></span>
+						<span>{lang}wcf.article.articleComments{/lang}</span>
+						<meta itemprop="interactionType" content="http://schema.org/CommentAction">
+						<meta itemprop="userInteractionCount" content="{@$article->comments}">
+					</li>
+				{/if}
 				
 				<li>
 					<span class="icon icon16 fa-eye"></span>
