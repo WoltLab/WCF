@@ -231,7 +231,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 							if (submit) {
 								data.cancel = true;
 								
-								Core.triggerEvent(submitButton, WCF_CLICK_EVENT);
+								if (typeof submitButton.click === 'function') {
+									submitButton.click();
+								}
+								else {
+									Core.triggerEvent(submitButton, WCF_CLICK_EVENT);
+								}
 							}
 						}
 					}).bind(this));
