@@ -66,7 +66,6 @@ define('IMAGE_ADAPTER_TYPE', 'gd');
 define('SEARCH_ENGINE', 'mysql');
 define('EXCEPTION_PRIVACY', 'public');
 define('COOKIE_PREFIX', 'wcf21_');
-define('HTTP_ENABLE_NO_CACHE_HEADERS', 0);
 define('HTTP_SEND_X_FRAME_OPTIONS', 1);
 define('HTTP_ENABLE_GZIP', 1);
 define('PACKAGE_SERVER_AUTH_CODE', '');

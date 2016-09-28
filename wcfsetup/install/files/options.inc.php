@@ -12,7 +12,6 @@ define('COOKIE_PREFIX', 'wsc30_');
 define('COOKIE_PATH', '');
 define('COOKIE_DOMAIN', '');
 
-define('HTTP_ENABLE_NO_CACHE_HEADERS', 0);
 define('HTTP_ENABLE_GZIP', 0);
 define('HTTP_GZIP_LEVEL', 1);
 define('HTTP_SEND_X_FRAME_OPTIONS', 0);

@@ -534,11 +534,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<!-- /general.system.cookie-->
 			
 			<!-- general.system.http -->
-			<option name="http_enable_no_cache_headers">
-				<categoryname>general.system.http</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="http_send_x_frame_options">
 				<categoryname>general.system.http</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1550,6 +1545,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	
 	<delete>
 		<option name="cache_source_memcached_use_pconnect" />
+		<option name="http_enable_no_cache_headers" />
 		<option name="http_gzip_level" />
 		<option name="enable_pluginstore_widget" />
 		<option name="mail_use_formatted_address" />

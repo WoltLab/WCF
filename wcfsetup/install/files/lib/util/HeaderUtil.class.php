@@ -55,12 +55,8 @@ final class HeaderUtil {
 		@header('Content-Type: text/html; charset=UTF-8');
 		
 		// send no cache headers
-		if (HTTP_ENABLE_NO_CACHE_HEADERS && !WCF::getSession()->spiderID) {
+		if (!WCF::getSession()->spiderID) {
 			self::sendNoCacheHeaders();
-		}
-		else if (!empty($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox') !== false) {
-			// Firefox serves pages from cache, causing certain HTML elements to stay in an outdated state
-			@header('Cache-Control: no-store');
 		}
 		
 		if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
@@ -93,7 +89,7 @@ final class HeaderUtil {
 	public static function sendNoCacheHeaders() {
 		@header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		@header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-		@header('Cache-Control: no-cache, must-revalidate');
+		@header('Cache-Control: max-age=0, no-cache, no-store, must-revalidate');
 		@header('Pragma: no-cache');
 	}
 	
