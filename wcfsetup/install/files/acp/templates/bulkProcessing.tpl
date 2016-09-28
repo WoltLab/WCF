@@ -38,7 +38,7 @@
 	<p class="success">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.success{/lang}</p>
 {/if}
 
-<form id="formContainer" method="post" action="{link controller=$controller}{/link}">
+<form id="formContainer" method="post" action="{link controller=$controller application=$controllerApplication}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}{$objectType->getProcessor()->getLanguageItemPrefix()}.action{/lang}</h2>
 		

@@ -70,6 +70,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 			'actions' => $this->actions,
 			'affectedObjectCount' => $this->affectedObjectCount,
 			'controller' => str_replace('Form', '', array_pop($classParts)),
+			'controllerApplication' => $classParts[0],
 			'conditions' => $this->conditions,
 			'objectType' => $this->objectType
 		]);
