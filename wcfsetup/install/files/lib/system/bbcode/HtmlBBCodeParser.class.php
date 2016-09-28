@@ -298,6 +298,11 @@ class HtmlBBCodeParser extends BBCodeParser {
 				if ($this->needBuffering($tag)) {
 					// start buffering
 					$tag['buffer'] = '';
+					
+					// reserve spot to ensure correct tag order
+					$tag['bufferPlaceholder'] = count($this->openTagIdentifiers);
+					$this->openTagIdentifiers[] = '_BUFFER_PLACEHOLDER_';
+					
 					$bufferedTagStack[] = $tag;
 					$buffer =& $bufferedTagStack[count($bufferedTagStack) - 1]['buffer'];
 				}
@@ -423,8 +428,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 			return $tag['source'];
 		}
 		
+		$index = (isset($tag['bufferPlaceholder'])) ? $index = $tag['bufferPlaceholder'] : count($this->openTagIdentifiers);
+		
 		$uuid = StringUtil::getUUID();
-		$this->openTagIdentifiers[] = [
+		$this->openTagIdentifiers[$index] = [
 			'name' => $name,
 			'uuid' => $uuid
 		];
