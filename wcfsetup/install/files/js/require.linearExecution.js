@@ -3,7 +3,7 @@
 	var queue = [];
 	var counter = 0;
 	
-	window.require = function(dependencies, callback) {
+	window.require = function(dependencies, callback, errBack) {
 		if (!Array.isArray(dependencies)) {
 			return orgRequire.apply(window, arguments);
 		}
@@ -11,13 +11,30 @@
 		var i = counter++;
 		queue.push(i);
 		
-		orgRequire(dependencies, function() {
-			var args = arguments;
-			
-			queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
-			
-			executeCallbacks();
-		});
+		if (errBack) {
+			orgRequire(dependencies, function() {
+				var args = arguments;
+				
+				queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
+				
+				executeCallbacks();
+			}, function() {
+				var args = arguments;
+				
+				queue[queue.indexOf(i)] = function() { errBack.apply(window, args); };
+				
+				executeCallbacks();
+			});
+		}
+		else {
+			orgRequire(dependencies, function() {
+				var args = arguments;
+				
+				queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
+				
+				executeCallbacks();
+			});
+		}
 	};
 	window.require.config = orgRequire.config;
 	
