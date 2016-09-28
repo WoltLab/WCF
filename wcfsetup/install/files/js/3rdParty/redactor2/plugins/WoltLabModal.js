@@ -13,8 +13,8 @@ $.Redactor.prototype.WoltLabModal = function() {
 			this.selection.restore();
 			
 			// avoid calling `close()` without any dialogs opened before
-			if (_uiDialog.getDialog(this)) {
-				_uiDialog.close(this);
+			if (_uiDialog.getDialog('redactorOverlay-' + this.uuid)) {
+				_uiDialog.close('redactorOverlay-' + this.uuid);
 			}
 		},
 		
