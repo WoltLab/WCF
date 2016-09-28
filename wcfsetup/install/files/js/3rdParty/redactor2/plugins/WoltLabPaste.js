@@ -145,7 +145,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				
 				var marker = elBySel('woltlab-selection-marker', this.$editor[0]);
 				if (marker) {
-					this.caret.end(marker.previousElementSibling);
+					this.caret.end(marker.previousElementSibling || marker.parentNode);
 					elRemove(marker);
 				}
 				
