@@ -8,6 +8,7 @@ use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
@@ -77,6 +78,22 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());
 			}
+			
+			// update signatures
+			$htmlInputProcessor = new HtmlInputProcessor();
+			WCF::getDB()->beginTransaction();
+			/** @var UserEditor $user */
+			foreach ($users as $user) {
+				if (!$user->signatureEnableHtml) {
+					$htmlInputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID, true);
+					
+					$user->update([
+						'signature' => $htmlInputProcessor->getHtml(),
+						'signatureEnableHtml' => 1
+					]);
+				}
+			}
+			WCF::getDB()->commitTransaction();
 			
 			// update old avatars
 			$avatarList = new UserAvatarList();
