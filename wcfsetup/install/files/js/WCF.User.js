@@ -2321,9 +2321,11 @@ WCF.User.Action.Follow = Class.extend({
 				// toogle icon title
 				if (data.returnValues.following) {
 					button.data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('icon-plus').addClass('icon-minus');
+					button.children('.invisible').text(WCF.Language.get('wcf.user.button.unfollow'));
 				}
 				else {
 					button.data('tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('icon-minus').addClass('icon-plus');
+					button.children('.invisible').text(WCF.Language.get('wcf.user.button.follow'));
 				}
 				
 				button.data('following', data.returnValues.following);
@@ -2434,9 +2436,11 @@ WCF.User.Action.Ignore = Class.extend({
 				// toogle icon title
 				if (data.returnValues.isIgnoredUser) {
 					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
+					button.children('.invisible').text(WCF.Language.get('wcf.user.button.unignore'));
 				}
 				else {
 					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
+					button.children('.invisible').text(WCF.Language.get('wcf.user.button.ignore'));
 				}
 				
 				button.data('ignored', data.returnValues.isIgnoredUser);
