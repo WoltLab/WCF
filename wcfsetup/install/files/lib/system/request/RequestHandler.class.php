@@ -222,7 +222,7 @@ class RequestHandler extends SingletonFactory {
 			// force a redirect
 			HeaderUtil::redirect($data['redirect'], true, false);
 		}
-		else if ($data['application'] !== $application) {
+		else if (!empty($data['application']) && $data['application'] !== $application) {
 			HeaderUtil::redirect(
 				LinkHandler::getInstance()->getLink(
 					ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],

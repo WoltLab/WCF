@@ -3,6 +3,7 @@ namespace wcf\system\request;
 use wcf\page\CmsPage;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -238,6 +239,15 @@ class ControllerMap extends SingletonFactory {
 		// lookup custom urls first
 		if (isset($this->customUrls['lookup'][$application], $this->customUrls['lookup'][$application][$controller])) {
 			$controller = $this->customUrls['lookup'][$application][$controller];
+			if (preg_match('~^(?P<controller>__WCF_CMS__\d+)(?:-(?P<languageID>\d+))?$~', $controller, $matches)) {
+				if ($matches['languageID'] && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()) {
+					return false;
+				}
+				else {
+					$controller = $matches['controller'];
+				}
+			}
+			
 			if (strpos($controller, '__WCF_CMS__') !== false) {
 				// remove language id component
 				$controller = preg_replace('~\-\d+$~', '', $controller);
