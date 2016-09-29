@@ -167,7 +167,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		// text array always holds one more item for the content after the last tag
-		$newTextArray[] = $this->textArray[count($this->textArray) - 1];
+		$newTextArray[] = $buffer . $this->textArray[count($this->textArray) - 1];
 		
 		$this->tagArray = $newTagArray;
 		$this->textArray = $newTextArray;
