@@ -134,8 +134,6 @@ define(
 					mediaManager: this
 				});
 				
-				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
-				
 				var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.mediaFile');
 				deleteAction._didTriggerEffect = function(element) {
 					this.removeMedia(elData(element[0], 'object-id'), true);
@@ -143,6 +141,8 @@ define(
 			}
 			
 			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
+				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
+				
 				Clipboard.setup({
 					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
 					pageClassName: 'menuManagerDialog-' + this.getMode()
