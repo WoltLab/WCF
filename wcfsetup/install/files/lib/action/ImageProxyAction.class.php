@@ -61,7 +61,9 @@ class ImageProxyAction extends AbstractAction {
 				try {
 					// download image
 					try {
-						$request = new HTTPRequest($url);
+						$request = new HTTPRequest($url, [
+							'maxLength' => 10 * (1 << 20) // download at most 10 MiB
+						]);
 						$request->execute();
 					}
 					catch (SystemException $e) {
