@@ -159,10 +159,10 @@ class ArticleAddForm extends AbstractForm {
 		
 		if (isset($_REQUEST['categoryID'])) $this->categoryID = intval($_REQUEST['categoryID']);
 		
-		$this->readMultilingualSetting();
-		
 		// get available languages
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
+		
+		$this->readMultilingualSetting();
 	}
 	
 	/**
@@ -172,7 +172,7 @@ class ArticleAddForm extends AbstractForm {
 		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
 		
 		// work-around to force adding article via dialog overlay
-		if (empty($_POST) && !isset($_REQUEST['isMultilingual'])) {
+		if (count($this->availableLanguages) > 1 && empty($_POST) && !isset($_REQUEST['isMultilingual'])) {
 			$parameters = ['showArticleAddDialog' => 1];
 			if ($this->categoryID) $parameters['categoryID'] = $this->categoryID;
 			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('ArticleList', $parameters));

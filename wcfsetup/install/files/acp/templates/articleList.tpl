@@ -20,7 +20,11 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			{if $availableLanguages|count > 1}
+				<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			{else}
+				<li><a href="{link controller='ArticleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			{/if}
 			
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -171,7 +175,11 @@
 		
 		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				{if $availableLanguages|count > 1}
+					<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				{else}
+					<li><a href="{link controller='ArticleAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				{/if}
 				
 				{event name='contentFooterNavigation'}
 			</ul>

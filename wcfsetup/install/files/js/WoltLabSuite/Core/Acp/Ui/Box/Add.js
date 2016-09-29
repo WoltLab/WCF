@@ -9,7 +9,7 @@
 define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 	"use strict";
 	
-	var _link;
+	var _languages, _link;
 	
 	/**
 	 * @exports     WoltLabSuite/Core/Acp/Ui/Box/Add
@@ -19,8 +19,10 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 		 * Initializes the box add handler.
 		 * 
 		 * @param       {string}        link    redirect URL
+		 * @param       {int}           languages       number of available languages
 		 */
-		init: function(link) {
+		init: function(link, languages) {
+			_languages = languages;
 			_link = link;
 			
 			var buttons = elBySelAll('.jsButtonBoxAdd');
@@ -52,7 +54,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 							
 							var boxType = elBySel('input[name="boxType"]:checked', content).value;
 							var isMultilingual = 0;
-							if (boxType !== 'system') isMultilingual = elBySel('input[name="isMultilingual"]:checked', content).value;
+							if (boxType !== 'system' && _languages > 1) isMultilingual = elBySel('input[name="isMultilingual"]:checked', content).value;
 							
 							window.location = _link.replace(/{\$boxType}/, boxType).replace(/{\$isMultilingual}/, isMultilingual);
 						});

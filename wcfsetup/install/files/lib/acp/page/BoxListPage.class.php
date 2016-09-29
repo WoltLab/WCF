@@ -3,6 +3,7 @@ namespace wcf\acp\page;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\page\SortablePage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -137,6 +138,7 @@ class BoxListPage extends SortablePage {
 			'boxType' => $this->boxType,
 			'position' => $this->position,
 			'availablePositions' => Box::$availablePositions,
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'showBoxAddDialog' => $this->showBoxAddDialog
 		]);
 	}

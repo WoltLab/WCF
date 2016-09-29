@@ -6,6 +6,7 @@ use wcf\data\article\ViewableArticleList;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\user\User;
 use wcf\page\SortablePage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -145,6 +146,7 @@ class ArticleListPage extends SortablePage {
 			'title' => $this->title,
 			'content' => $this->content,
 			'showArticleAddDialog' => $this->showArticleAddDialog,
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator()
 		]);
 	}
