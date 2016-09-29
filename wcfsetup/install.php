@@ -124,7 +124,7 @@ class SystemException extends \Exception implements IPrintableException {
 		}
 		
 		.exceptionHeader {
-			background-color: rgb(44, 62, 80);
+			background-color: rgb(58, 109, 156);
 			padding: 30px 0;
 		}
 		
@@ -140,7 +140,7 @@ class SystemException extends \Exception implements IPrintableException {
 		}
 		
 		.exceptionErrorCode .exceptionInlineCode {
-			background-color: rgb(52, 73, 94);
+			background-color: rgb(43, 79, 113);
 			border-radius: 3px;
 			color: #fff;
 			font-family: monospace;

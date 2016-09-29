@@ -252,7 +252,7 @@ EXPLANATION;
 				}
 				
 				.exceptionErrorCode .exceptionInlineCode {
-					background-color: rgb(52, 73, 94);
+					background-color: rgb(43, 79, 113);
 					border-radius: 3px;
 					color: #fff;
 					font-family: monospace;
