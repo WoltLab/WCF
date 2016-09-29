@@ -148,13 +148,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 */
 	public function getLanguageVariable($name, $optional = false) {
 		if ($this->langVarPrefix) {
-			$value = WCF::getLanguage()->get($this->langVarPrefix.'.'.$name, true);
+			$value = WCF::getLanguage()->getDynamicVariable($this->langVarPrefix.'.'.$name, [], true);
 			if ($value) {
 				return $value;
 			}
 		}
 		
-		return WCF::getLanguage()->get('wcf.category.'.$name, $optional);
+		return WCF::getLanguage()->getDynamicVariable('wcf.category.'.$name, [], $optional);
 	}
 	
 	/**
