@@ -6,9 +6,12 @@ kbd {
 	color: rgba(68, 68, 68, 1) !important;
 	display: inline-block;
 	font-family: Consolas, 'Courier New', monospace;
+	font-style: normal;
+	font-weight: normal;
 	margin: 0 2px;
 	overflow: auto;
 	padding: 0 4px;
+	text-decoration: none;
 	vertical-align: middle;
 	word-break: break-all;
 	word-wrap: break-word;
