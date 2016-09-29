@@ -41,12 +41,9 @@ class HtmlBBCodeParser extends BBCodeParser {
 		// difference to the original implementation: sourcecode bbcodes are handled too
 		$this->buildTagArray(false);
 		
-		// difference to the original implementation: we don't care for unclosed tags,
-		// they'll be marked as invalid and removed at the end, leaving lonely opening
-		// tags that will eventually be removed within the marker processor
-		$this->buildXMLStructure();
+		$this->ignoreUnclosedTags();
 		
-		$this->handleSourceBBCodes();
+		$this->buildXMLStructure();
 		
 		$this->buildParsedString();
 		
@@ -54,265 +51,126 @@ class HtmlBBCodeParser extends BBCodeParser {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * Reverts tags to their source representation if they either
+	 * have no matching counter part (such as opening tags without
+	 * closing one), or if they're inside code bbcodes.
 	 */
-	public function buildXMLStructure() {
-		// stack for open tags
-		$openTagStack = $openTagDataStack = [];
-		$newTagArray = [];
-		$newTextArray = [];
+	protected function ignoreUnclosedTags() {
+		$length = count($this->tagArray);
 		
-		$i = -1;
-		foreach ($this->tagArray as $i => $tag) {
-			if ($tag['closing']) {
-				// closing tag
-				if (in_array($tag['name'], $openTagStack) && $this->isAllowed($openTagStack, $tag['name'], true)) {
-					// close unclosed tags
-					while (($previousTag = end($openTagStack)) != $tag['name']) {
-						$nextIndex = count($newTagArray);
-						
-						$newTagArray[$nextIndex] = $this->buildTag('[/'.end($openTagStack).']');
-						if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
-						$newTextArray[$nextIndex] .= $this->textArray[$i];
-						$this->textArray[$i] = '';
-						array_pop($openTagStack);
-						array_pop($openTagDataStack);
-					}
-					
-					$nextIndex = count($newTagArray);
-					$newTagArray[$nextIndex] = $tag;
-					array_pop($openTagStack);
-					array_pop($openTagDataStack);
-					if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
-					$newTextArray[$nextIndex] .= $this->textArray[$i];
-				}
-				else {
-					// no such tag open
-					// handle as plain text
-					$this->textArray[$i] .= $tag['source'];
-					$last = count($newTagArray);
-					if (!isset($newTextArray[$last])) $newTextArray[$last] = '';
-					$newTextArray[$last] .= $this->textArray[$i];
-				}
-			}
-			else {
-				// opening tag
-				if ($this->isAllowed($openTagStack, $tag['name']) && $this->isValidTag($tag)) {
-					$openTagStack[] = $tag['name'];
-					$openTagDataStack[] = $tag;
-					$nextIndex = count($newTagArray);
-					$newTagArray[$nextIndex] = $tag;
-					if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
-					$newTextArray[$nextIndex] .= $this->textArray[$i];
-				}
-				else {
-					// tag not allowed
-					$this->textArray[$i] .= $tag['source'];
-					$last = count($newTagArray);
-					if (!isset($newTextArray[$last])) $newTextArray[$last] = '';
-					$newTextArray[$last] .= $this->textArray[$i];
-				}
-			}
-		}
-		
-		$last = count($newTagArray);
-		if (!isset($newTextArray[$last])) $newTextArray[$last] = '';
-		$newTextArray[$last] .= $this->textArray[$i + 1];
-		
-		// close unclosed open tags
-		while (end($openTagStack)) {
-			$nextIndex = count($newTagArray);
-			
-			$newTagArray[$nextIndex] = $this->buildTag('[/'.end($openTagStack).']');
-			if (!isset($newTextArray[$nextIndex])) $newTextArray[$nextIndex] = '';
-			array_pop($openTagStack);
-			array_pop($openTagDataStack);
-		}
-		
-		$this->tagArray = $newTagArray;
-		$this->textArray = $newTextArray;
-	}
-	
-	/**
-	 * Flags bbcodes inside code bbcodes for reversal, turning them back
-	 * into their source state (= textual representation).
-	 */
-	protected function handleSourceBBCodes() {
+		// step 1) validate source bbcodes
+		$inSource = null;
 		$sourceBBCodes = $this->getSourceBBCodes();
-		
-		$inCode = '';
-		$openTagStack = [];
-		
-		for ($i = 0, $length = count($this->tagArray); $i < $length; $i++) {
-			$tag = $this->tagArray[$i];
-			
-			if (!empty($tag['invalid'])) {
-				continue;
-			}
-			
+		foreach ($this->tagArray as $i => &$tag) {
 			$name = $tag['name'];
+			$tag['valid'] = true;
 			
 			if ($tag['closing']) {
-				if ($inCode) {
-					// matches opening code tag
-					if ($inCode === $name) {
-						$inCode = '';
-						array_pop($openTagStack);
-					}
-					else {
-						// unrelated tag, flag as invalid
-						$this->tagArray[$i]['inCode'] = true;
-					}
-					
+				if ($inSource === null) {
 					continue;
 				}
 				
-				array_pop($openTagStack);
+				if ($name === $inSource['name']) {
+					$inSource = null;
+				}
+				else {
+					$tag['valid'] = false;
+				}
 			}
 			else {
-				if ($inCode) {
-					// inside code block, flag as invalid
-					$this->tagArray[$i]['inCode'] = true;
+				if ($inSource !== null) {
+					$tag['valid'] = false;
 					continue;
 				}
 				
-				// starts a new code block
 				if (in_array($name, $sourceBBCodes)) {
-					// look ahead to see if there is a valid closing tag
+					// look ahead to see if there is a closing tag
 					$hasClosingTag = false;
 					for ($j = $i + 1; $j < $length; $j++) {
-						if ($this->tagArray[$j]['name'] === $name && empty($this->tagArray[$j]['invalid'])) {
+						if ($this->tagArray[$j]['closing'] && $this->tagArray[$j]['name'] === $name) {
 							$hasClosingTag = true;
 							break;
 						}
 					}
 					
 					if ($hasClosingTag) {
-						$inCode = $name;
+						$inSource = $tag;
 					}
 					else {
-						// no closing tag, flag as invalid to avoid the
-						// entire content afterwards being treated as code
-						$this->tagArray[$i]['inCode'] = true;
+						$tag['valid'] = false;
 					}
 				}
-				
-				$openTagStack[] = $name;
 			}
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function buildParsedString() {
-		// reset parsed text
-		$this->parsedText = '';
+		unset($tag);
 		
-		// reset identifiers for open tags
-		$this->openTagIdentifiers = [];
-		
-		// create text buffer
-		$buffer =& $this->parsedText;
-		
-		// stack of buffered tags
-		$bufferedTagStack = [];
-		
-		// loop through the tags
-		$i = -1;
-		foreach ($this->tagArray as $i => $tag) {
-			// append text to buffer
-			$buffer .= $this->textArray[$i];
+		// step 2) check if tags are properly opened and closed, incorrect nesting doen't matter here
+		foreach ($this->tagArray as $i => &$tag) {
+			if (!$tag['valid']) {
+				continue;
+			}
 			
 			if ($tag['closing']) {
-				if (!empty($tag['invalid'])) {
-					// drop invalid closing tag
-					continue;
-				}
-				else if (!empty($tag['inCode'])) {
-					// revert bbcodes inside code
-					$buffer .= $tag['source'];
-					continue;
-				}
-				
-				// get buffered opening tag
-				$openingTag = end($bufferedTagStack);
-				
-				// closing tag
-				if ($openingTag && $openingTag['name'] == $tag['name']) {
-					$hideBuffer = false;
-					// insert buffered content as attribute value
-					foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-						if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
-							$openingTag['attributes'][$attribute->attributeNo] = $buffer;
-							$hideBuffer = true;
-							break;
-						}
-					}
-					
-					// validate tag attributes again
-					if ($this->isValidTag($openingTag)) {
-						// build tag
-						if ($this->bbcodes[$tag['name']]->className) {
-							// difference to the original implementation: use the custom HTML element than to process them directly
-							$parsedTag = $this->compileTag($openingTag, $buffer, $tag);
-						}
-						else {
-							// build tag
-							$parsedTag = $this->buildOpeningTag($openingTag);
-							$closingTag = $this->buildClosingTag($tag);
-							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $buffer.$closingTag;
-						}
-					}
-					else {
-						$parsedTag = $openingTag['source'].$buffer.$tag['source'];
-					}
-					
-					// close current buffer
-					array_pop($bufferedTagStack);
-					
-					// open previous buffer
-					if (count($bufferedTagStack) > 0) {
-						$bufferedTag =& $bufferedTagStack[count($bufferedTagStack) - 1];
-						$buffer =& $bufferedTag['buffer'];
-					}
-					else {
-						$buffer =& $this->parsedText;
-					}
-					
-					// append parsed tag
-					$buffer .= $parsedTag;
-				}
-				else {
-					$buffer .= $this->buildClosingTag($tag);
+				if (!isset($tag['matching'])) {
+					$tag['valid'] = false;
 				}
 			}
 			else {
-				if (!empty($tag['inCode'])) {
-					// revert bbcodes inside code
-					$buffer .= $tag['source'];
-					continue;
+				$name = $tag['name'];
+				
+				// find matching closing tag
+				$hasClosingTag = false;
+				$badTags = [];
+				for ($j = $i + 1; $j < $length; $j++) {
+					$sibling = $this->tagArray[$j];
+					if ($sibling['name'] === $name) {
+						if (!$sibling['closing']) {
+							// disallow the same tag opened again
+							$badTags[] = $j;
+						}
+						else if (!isset($sibling['matching'])) {
+							$this->tagArray[$j]['matching'] = true;
+							$hasClosingTag = true;
+							break;
+						}
+					}
 				}
 				
-				// opening tag
-				if ($this->needBuffering($tag)) {
-					// start buffering
-					$tag['buffer'] = '';
-					
-					// reserve spot to ensure correct tag order
-					$tag['bufferPlaceholder'] = count($this->openTagIdentifiers);
-					$this->openTagIdentifiers[] = '_BUFFER_PLACEHOLDER_';
-					
-					$bufferedTagStack[] = $tag;
-					$buffer =& $bufferedTagStack[count($bufferedTagStack) - 1]['buffer'];
+				if ($hasClosingTag) {
+					foreach ($badTags as $j) {
+						$this->tagArray[$j]['valid'] = false;
+					}
 				}
 				else {
-					$buffer .= $this->buildOpeningTag($tag);
+					$tag['valid'] = false;
 				}
 			}
 		}
+		unset($tag);
 		
-		if (isset($this->textArray[$i + 1])) $this->parsedText .= $this->textArray[$i + 1];
+		// rebuild tag array
+		$newTagArray = $newTextArray = [];
+		$buffer = '';
+		foreach ($this->tagArray as $i => $tag) {
+			if ($tag['valid']) {
+				// cleanup
+				unset($tag['matching']);
+				unset($tag['valid']);
+				
+				$newTagArray[] = $tag;
+				$newTextArray[] = $buffer . $this->textArray[$i];
+				$buffer = '';
+			}
+			else {
+				$buffer .= $this->textArray[$i] . $tag['source'];
+			}
+		}
+		
+		// text array always holds one more item for the content after the last tag
+		$newTextArray[] = $this->textArray[count($this->textArray) - 1];
+		
+		$this->tagArray = $newTagArray;
+		$this->textArray = $newTextArray;
 	}
 	
 	/**
@@ -464,10 +322,6 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		$data = array_pop($this->openTagIdentifiers);
-		if ($data === '_BUFFER_PLACEHOLDER_') {
-			$data = array_pop($this->openTagIdentifiers);
-		}
-		
 		if ($data['name'] !== $name) {
 			// check if this is a source code tag as some people
 			// love to nest the same source bbcode
