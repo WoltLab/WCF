@@ -21,6 +21,6 @@ class EmailBBCode extends AbstractBBCode {
 		}
 		$email = StringUtil::decodeHTML($email);
 		
-		return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . $content . '</a>';
+		return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . StringUtil::encodeHTML($email) . '</a>';
 	}
 }

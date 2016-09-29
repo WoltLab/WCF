@@ -104,7 +104,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		unset($tag);
 		
-		// step 2) check if tags are properly opened and closed, incorrect nesting doen't matter here
+		// step 2) check if tags are properly opened and closed, incorrect nesting doesn't matter here
 		foreach ($this->tagArray as $i => &$tag) {
 			if (!$tag['valid']) {
 				continue;
