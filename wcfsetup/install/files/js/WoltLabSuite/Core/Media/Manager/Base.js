@@ -37,6 +37,7 @@ define(
 		this._mediaCache = null;
 		this._mediaManagerMediaList = null;
 		this._search = null;
+		this._forceClipboard = false;
 		
 		if (Permission.get('admin.content.cms.canManageMedia')) {
 			this._mediaEditor = new MediaEditor(this);
@@ -98,7 +99,7 @@ define(
 		 */
 		_dialogClose: function() {
 			// only show media clipboard if editor is open
-			if (Permission.get('admin.content.cms.canManageMedia')) {
+			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
 				Clipboard.hideEditor('com.woltlab.wcf.media');
 			}
 		},
@@ -133,17 +134,22 @@ define(
 					mediaManager: this
 				});
 				
-				Clipboard.setup({
-					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
-					pageClassName: 'menuManagerDialog-' + this.getMode()
-				});
-				
 				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
 				
 				var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.mediaFile');
 				deleteAction._didTriggerEffect = function(element) {
 					this.removeMedia(elData(element[0], 'object-id'), true);
 				}.bind(this);
+			}
+			
+			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
+				Clipboard.setup({
+					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
+					pageClassName: 'menuManagerDialog-' + this.getMode()
+				});
+			}
+			else {
+				this._removeClipboardCheckboxes();
 			}
 			
 			this._search = new MediaManagerSearch(this);
@@ -189,7 +195,7 @@ define(
 			if (!this._mediaManagerMediaList) return;
 			
 			// only show media clipboard if editor is open
-			if (Permission.get('admin.content.cms.canManageMedia')) {
+			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
 				Clipboard.showEditor('com.woltlab.wcf.media');
 			}
 		},
@@ -238,6 +244,16 @@ define(
 		},
 		
 		/**
+		 * Removes all media clipboard checkboxes.
+		 */
+		_removeClipboardCheckboxes: function() {
+			var checkboxes = elByClass('mediaCheckbox', this._mediaManagerMediaList);
+			while (checkboxes.length) {
+				elRemove(checkboxes[0]);
+			}
+		},
+		
+		/**
 		 * Sets the displayed media (after a search).
 		 * 
 		 * @param	{Dictionary}	media		media to be set as active
@@ -282,7 +298,12 @@ define(
 			
 			DomChangeListener.trigger();
 			
-			Clipboard.reload();
+			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
+				Clipboard.reload();
+			}
+			else {
+				this._removeClipboardCheckboxes();
+			}
 		},
 		
 		/**

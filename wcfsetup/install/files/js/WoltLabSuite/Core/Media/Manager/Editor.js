@@ -20,6 +20,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		
 		MediaManagerBase.call(this, options);
 		
+		this._forceClipboard = true;
 		this._activeButton = null;
 		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton');
 		for (var i = 0, length = this._buttons.length; i < length; i++) {
