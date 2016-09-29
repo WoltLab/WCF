@@ -98,7 +98,9 @@ define(
 		 */
 		_dialogClose: function() {
 			// only show media clipboard if editor is open
-			Clipboard.hideEditor('com.woltlab.wcf.media');
+			if (Permission.get('admin.content.cms.canManageMedia')) {
+				Clipboard.hideEditor('com.woltlab.wcf.media');
+			}
 		},
 		
 		/**
@@ -187,7 +189,9 @@ define(
 			if (!this._mediaManagerMediaList) return;
 			
 			// only show media clipboard if editor is open
-			Clipboard.showEditor('com.woltlab.wcf.media');
+			if (Permission.get('admin.content.cms.canManageMedia')) {
+				Clipboard.showEditor('com.woltlab.wcf.media');
+			}
 		},
 		
 		/**
