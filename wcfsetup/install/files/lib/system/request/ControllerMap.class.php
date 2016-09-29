@@ -195,7 +195,8 @@ class ControllerMap extends SingletonFactory {
 	 * @throws	SystemException
 	 */
 	public function lookupDefaultController($application) {
-		$controller = $this->landingPages[$application][1];
+		$data = $this->landingPages[$application];
+		$controller = $data[1];
 		
 		if ($application === 'wcf' && empty($controller)) {
 			return null;
@@ -221,7 +222,7 @@ class ControllerMap extends SingletonFactory {
 		}
 		
 		return [
-			'application' => $application,
+			'application' => mb_substr($data[2], 0, mb_strpos($data[2], '\\')),
 			'controller' => $controller
 		];
 	}

@@ -222,6 +222,15 @@ class RequestHandler extends SingletonFactory {
 			// force a redirect
 			HeaderUtil::redirect($data['redirect'], true, false);
 		}
+		else if ($data['application'] !== $application) {
+			HeaderUtil::redirect(
+				LinkHandler::getInstance()->getLink(
+					ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
+					['application' => $data['application']]
+				)
+			);
+			exit;
+		}
 		
 		// copy route data
 		foreach ($data as $key => $value) {
