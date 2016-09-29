@@ -142,7 +142,7 @@
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="td">
-			<classname>wcf\system\bbcode\TdBBcode</classname>
+			<classname>wcf\system\bbcode\TdBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		
