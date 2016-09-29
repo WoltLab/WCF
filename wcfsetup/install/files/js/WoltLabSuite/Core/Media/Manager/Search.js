@@ -120,8 +120,6 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdo
 		 */
 		resetSearch: function() {
 			this._input.value = '';
-			
-			this._updateDropdownButtonLabel();
 		},
 		
 		/**
