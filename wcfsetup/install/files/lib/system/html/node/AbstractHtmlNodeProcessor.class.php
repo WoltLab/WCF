@@ -58,7 +58,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped 
-		$html = str_replace('> <', '>&#xE000;&#xEFFF;&#xE000;<', $html);
+		$html = str_replace('> <', '>&nbsp;<', $html);
 		
 		// Ignore all errors when loading the HTML string, because DOMDocument does not
 		// provide a proper way to add custom HTML elements (even though explicitly allowed
@@ -102,7 +102,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped
-		$html = preg_replace('~>\x{E000}\x{EFFF}\x{E000}<~u', '> <', $html);
+		$html = str_replace('&nbsp;', ' ', $html);
 		
 		return $html;
 	}

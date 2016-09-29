@@ -26,13 +26,13 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	public function apply($html) {
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped 
-		$html = str_replace('> <', '>&#xE000;&#xEFFF;&#xE000;<', $html);
+		$html = str_replace('> <', '>&nbsp;<', $html);
 		
 		$html = $this->getPurifier()->purify($html);
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped
-		$html = preg_replace('~>\x{E000}\x{EFFF}\x{E000}<~u', '> <', $html);
+		$html = str_replace('&nbsp;', ' ', $html);
 		
 		return $html;
 	}
