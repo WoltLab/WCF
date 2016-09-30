@@ -23,7 +23,7 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	 * @inheritDoc
 	 */
 	public function __construct($message, $parameters, \PDOException $previous = null) {
-		\Exception::__construct($message, 0, $previous);
+		parent::__construct($message, $previous);
 		
 		$this->parameters = $parameters;
 	}
