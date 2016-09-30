@@ -113,14 +113,13 @@ class StyleEditForm extends StyleAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		// TODO: how should this actually work?
-		/*if (!$this->style->isTainted) {
+		if (!$this->style->isTainted) {
 			$this->variables['individualScss'] = Style::joinLessVariables($this->variables['individualScss'], $this->variables['individualScssCustom']);
 			$this->variables['overrideScss'] = Style::joinLessVariables($this->variables['overrideScss'], $this->variables['overrideScssCustom']);
 			
 			unset($this->variables['individualScssCustom']);
 			unset($this->variables['overrideScssCustom']);
-		}*/
+		}
 		
 		$this->objectAction = new StyleAction([$this->style], 'update', [
 			'data' => array_merge($this->additionalFields, [
@@ -149,6 +148,16 @@ class StyleEditForm extends StyleAddForm {
 		// reload style object to update preview image
 		$this->style = new Style($this->style->styleID);
 		
+		if (!$this->style->isTainted) {
+			$tmp = Style::splitLessVariables($this->variables['individualScss']);
+			$this->variables['individualScss'] = $tmp['preset'];
+			$this->variables['individualScssCustom'] = $tmp['custom'];
+			
+			$tmp = Style::splitLessVariables($this->variables['overrideScss']);
+			$this->variables['overrideScss'] = $tmp['preset'];
+			$this->variables['overrideScssCustom'] = $tmp['custom'];
+		}
+		
 		WCF::getTPL()->assign('success', true);
 	}
 	
@@ -162,6 +171,7 @@ class StyleEditForm extends StyleAddForm {
 		
 		WCF::getTPL()->assign([
 			'action' => 'edit',
+			'isTainted' => $this->style->isTainted,
 			'style' => $this->style,
 			'styleID' => $this->styleID
 		]);
