@@ -151,7 +151,13 @@ parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
     } else {
-        throw new Error(str);
+        function _parseError (msg, hash) {
+            this.message = msg;
+            this.hash = hash;
+        }
+        _parseError.prototype = Error;
+
+        throw new _parseError(str, hash);
     }
 },
 parse: function parse(input) {
@@ -184,14 +190,14 @@ parse: function parse(input) {
         lstack.length = lstack.length - n;
     }
     _token_stack:
-        function lex() {
+        var lex = function () {
             var token;
             token = lexer.lex() || EOF;
             if (typeof token !== 'number') {
                 token = self.symbols_[token] || token;
             }
             return token;
-        }
+        };
     var symbol, preErrorSymbol, state, action, a, r, yyval = {}, p, len, newState, expected;
     while (true) {
         state = stack[stack.length - 1];
@@ -692,7 +698,7 @@ case 34:return 11;
 break;
 }
 },
-rules: [/^(?:\{\*.*\*\})/,/^(?:\{literal\}.*?\{\/literal\})/,/^(?:"([^"]|\\\.)*")/,/^(?:'([^']|\\\.)*')/,/^(?:\$)/,/^(?:[_a-zA-Z][_a-zA-Z0-9]*)/,/^(?:\.)/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:=)/,/^(?:\{ldelim\})/,/^(?:\{rdelim\})/,/^(?:\{#)/,/^(?:\{@)/,/^(?:\{if )/,/^(?:\{else if )/,/^(?:\{elseif )/,/^(?:\{else\})/,/^(?:\{\/if\})/,/^(?:\{lang\})/,/^(?:\{\/lang\})/,/^(?:\{include )/,/^(?:\{implode )/,/^(?:\{\/implode\})/,/^(?:\{foreach )/,/^(?:\{foreachelse\})/,/^(?:\{\/foreach\})/,/^(?:\{)/,/^(?:\})/,/^(?:\})/,/^(?:\s+)/,/^(?:$)/,/^(?:[^{])/],
+rules: [/^(?:\{\*[\s\S]*?\*\})/,/^(?:\{literal\}[\s\S]*?\{\/literal\})/,/^(?:"([^"]|\\\.)*")/,/^(?:'([^']|\\\.)*')/,/^(?:\$)/,/^(?:[_a-zA-Z][_a-zA-Z0-9]*)/,/^(?:\.)/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:=)/,/^(?:\{ldelim\})/,/^(?:\{rdelim\})/,/^(?:\{#)/,/^(?:\{@)/,/^(?:\{if )/,/^(?:\{else if )/,/^(?:\{elseif )/,/^(?:\{else\})/,/^(?:\{\/if\})/,/^(?:\{lang\})/,/^(?:\{\/lang\})/,/^(?:\{include )/,/^(?:\{implode )/,/^(?:\{\/implode\})/,/^(?:\{foreach )/,/^(?:\{foreachelse\})/,/^(?:\{\/foreach\})/,/^(?:\{)/,/^(?:\})/,/^(?:\})/,/^(?:\s+)/,/^(?:$)/,/^(?:[^{])/],
 conditions: {"command":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34],"inclusive":true},"INITIAL":{"rules":[0,1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32,33,34],"inclusive":true}}
 });
 return lexer;

@@ -15,8 +15,8 @@
 %s command
 %%
 
-\{\*.*\*\} /* comment */
-\{literal\}.*?\{\/literal\} { yytext = yytext.substring(9, yytext.length - 10); return 'T_LITERAL'; }
+\{\*[\s\S]*?\*\} /* comment */
+\{literal\}[\s\S]*?\{\/literal\} { yytext = yytext.substring(9, yytext.length - 10); return 'T_LITERAL'; }
 <command>\"([^"]|\\\.)*\" return 'T_QUOTED_STRING';
 <command>\'([^']|\\\.)*\' return 'T_QUOTED_STRING';
 \$ return 'T_VARIABLE';
