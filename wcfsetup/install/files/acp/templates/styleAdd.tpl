@@ -900,7 +900,7 @@
 				</div>
 				
 				{* original declarations / tainted style *}
-				<div id="advanced-original">
+				<div id="advanced-original" class="tabMenuContent">
 			{/if}
 			
 			<section class="section">
