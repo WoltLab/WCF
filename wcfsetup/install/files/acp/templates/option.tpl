@@ -54,13 +54,14 @@
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+					{capture assign=__categoryName}category_{$categoryLevel1[object]->categoryName}{/capture}
+					<li><a href="{@$__wcf->getAnchor($__categoryName)}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
+			<div id="category_{@$categoryLevel1[object]->categoryName}" class="hidden tabMenuContent">
 				{if $categoryLevel1[options]|count}
 					<div class="section">
 						{include file='optionFieldList' options=$categoryLevel1[options] langPrefix='wcf.acp.option.'}
