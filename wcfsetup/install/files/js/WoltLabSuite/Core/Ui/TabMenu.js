@@ -132,11 +132,15 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 		_scrollEnable: function (isSetup) {
 			_enableTabScroll = true;
 			
-			if (!isSetup) {
-				_tabMenus.forEach((function (tabMenu) {
-					this.scrollToTab(tabMenu.getActiveTab());
-				}).bind(this));
-			}
+			_tabMenus.forEach((function (tabMenu) {
+				var activeTab = tabMenu.getActiveTab();
+				if (isSetup) {
+					this._rebuildMenuOverflow(activeTab.closest('.menu, .tabMenu'));
+				}
+				else {
+					this.scrollToTab(activeTab);
+				}
+			}).bind(this));
 		},
 		
 		_scrollDisable: function () {
