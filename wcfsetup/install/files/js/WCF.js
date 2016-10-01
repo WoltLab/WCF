@@ -6300,6 +6300,7 @@ WCF.Sortable.List = Class.extend({
 			doNotClear: true,
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
+			handle: '',
 			helper: 'clone',
 			items: 'li:not(.sortableNoSorting)',
 			opacity: .6,

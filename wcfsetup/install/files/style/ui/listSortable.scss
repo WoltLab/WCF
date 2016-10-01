@@ -20,6 +20,7 @@
 .sortableNodeLabel {
 	align-items: center;
 	cursor: move;
+	overflow: hidden;
 	padding: 10px;
 	
 	/* `display:flex` acts weird inside lists with a visible list-style */
@@ -32,14 +33,24 @@
 	
 	> .icon,
 	> a {
-		flex: 0 0 auto;
 		margin-right: 5px;
+	}
+	
+	> .icon {
+		flex: 0 0 auto;
+	}
+	
+	> a {
+		flex: 0 1 auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	
 	> .statusDisplay {
 		align-items: center;
 		display: flex;
-		flex: 1 1 auto;
+		flex: 1 0 auto;
 		justify-content: flex-end;
 		
 		> a,
@@ -61,5 +72,16 @@
 		background-color: $wcfStatusErrorBackground;
 		border-color: $wcfStatusErrorBorder;
 		color: $wcfStatusErrorText;
+	}
+}
+
+@include screen-xs {
+	.sortableNodeHandle {
+		display: none;
+	}
+}
+@include screen-lg {
+	.sortableNodeHandle {
+		display: none;
 	}
 }
