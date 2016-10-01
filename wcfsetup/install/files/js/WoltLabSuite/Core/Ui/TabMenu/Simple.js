@@ -270,6 +270,11 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					window.location.href.replace(/#[^#]+$/, '') + '#' + name
 				);
 			}
+			
+			require(['WoltLabSuite/Core/Ui/TabMenu'], function (UiTabMenu) {
+				//noinspection JSUnresolvedFunction
+				UiTabMenu.scrollToTab(tab);
+			});
 		},
 		
 		/**

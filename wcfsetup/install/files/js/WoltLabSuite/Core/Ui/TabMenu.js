@@ -6,11 +6,13 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/TabMenu
  */
-define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', './TabMenu/Simple'], function(Dictionary, DomChangeListener, DomUtil, UiCloseOverlay, SimpleTabMenu) {
+define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', 'Ui/Screen', './TabMenu/Simple'], function(Dictionary, EventHandler, DomChangeListener, DomUtil, UiCloseOverlay, UiScreen, SimpleTabMenu) {
 	"use strict";
 	
 	var _activeList = null;
+	var _enableTabScroll = false;
 	var _tabMenus = new Dictionary();
+	var _scrollListenerUuid = null;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/TabMenu
@@ -30,6 +32,13 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', './Ta
 					
 					_activeList = null;
 				}
+			});
+			
+			//noinspection JSUnresolvedVariable
+			UiScreen.on('screen-sm-down', {
+				enable: this._scrollEnable.bind(this, false),
+				disable: this._scrollDisable.bind(this),
+				setup: this._scrollEnable.bind(this, true)
 			});
 		},
 		
@@ -75,6 +84,21 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', './Ta
 							}
 						});
 					})(list);
+					
+					// bind scroll listener
+					elBySelAll('.tabMenu, .menu', container, (function(menu) {
+						var callback = this._rebuildMenuOverflow.bind(this, menu);
+						
+						var timeout = null;
+						elBySel('ul', menu).addEventListener('scroll', function () {
+							if (timeout !== null) {
+								window.clearTimeout(timeout);
+							}
+							
+							// slight delay to avoid calling this function too often
+							timeout = window.setTimeout(callback, 10);
+						});
+					}).bind(this));
 				}
 			}
 		},
@@ -103,6 +127,139 @@ define(['Dictionary', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', './Ta
 		 */
 		getTabMenu: function(containerId) {
 			return _tabMenus.get(containerId);
+		},
+		
+		_scrollEnable: function (isSetup) {
+			_enableTabScroll = true;
+			
+			if (!isSetup) {
+				_tabMenus.forEach((function (tabMenu) {
+					this.scrollToTab(tabMenu.getActiveTab());
+				}).bind(this));
+			}
+		},
+		
+		_scrollDisable: function () {
+			_enableTabScroll = false;
+		},
+		
+		scrollToTab: function (tab) {
+			if (!_enableTabScroll) {
+				return;
+			}
+			
+			var list = tab.closest('ul');
+			var width = list.clientWidth;
+			var scrollLeft = list.scrollLeft;
+			var scrollWidth = list.scrollWidth;
+			if (width === scrollWidth) {
+				// no overflow, ignore
+				return;
+			}
+			
+			// check if tab is currently visible
+			var left = tab.offsetLeft;
+			var shouldScroll = false;
+			if (left < scrollLeft) {
+				shouldScroll = true;
+			}
+			
+			var paddingRight = false;
+			if (!shouldScroll) {
+				var visibleWidth = width - (left - scrollLeft);
+				var virtualWidth = tab.clientWidth;
+				if (tab.nextElementSibling !== null) {
+					paddingRight = true;
+					virtualWidth += 20;
+				}
+				
+				if (visibleWidth < virtualWidth) {
+					shouldScroll = true;
+				}
+			}
+			
+			if (shouldScroll) {
+				// allow some padding to indicate overflow
+				if (paddingRight) {
+					left -= 15;
+				}
+				else if (left > 0) {
+					left -= 15;
+				}
+				
+				if (left < 0) {
+					left = 0;
+				}
+				else {
+					// ensure that our left value is always within the boundaries
+					left = Math.min(left, scrollWidth - width);
+				}
+				
+				if (scrollLeft === left) {
+					return;
+				}
+				
+				list.classList.add('enableAnimation');
+				
+				// new value is larger, we're scrolling towards the end
+				if (scrollLeft < left) {
+					list.firstElementChild.style.setProperty('margin-left', (scrollLeft - left) + 'px', '');
+				}
+				else {
+					// new value is smaller, we're scrolling towards the start
+					list.style.setProperty('padding-left', (scrollLeft - left) + 'px', '');
+				}
+				
+				setTimeout(function () {
+					list.classList.remove('enableAnimation');
+					
+					list.firstElementChild.style.removeProperty('margin-left');
+					list.style.removeProperty('padding-left');
+					
+					list.scrollLeft = left;
+				}, 300);
+			}
+		},
+		
+		_rebuildMenuOverflow: function (menu) {
+			if (!_enableTabScroll) {
+				return;
+			}
+			
+			var width = menu.clientWidth;
+			var list = elBySel('ul', menu);
+			var scrollLeft = list.scrollLeft;
+			var scrollWidth = list.scrollWidth;
+			
+			var overflowLeft = (scrollLeft > 0);
+			var overlayLeft = elBySel('.tabMenuOverlayLeft', menu);
+			if (overflowLeft) {
+				if (overlayLeft === null) {
+					overlayLeft = elCreate('span');
+					overlayLeft.className = 'tabMenuOverlayLeft icon icon24 fa-angle-left';
+					menu.insertBefore(overlayLeft, menu.firstChild);
+				}
+				
+				overlayLeft.classList.add('active');
+			}
+			else if (overlayLeft !== null) {
+				overlayLeft.classList.remove('active');
+			}
+			
+			var overflowRight = (width + scrollLeft < scrollWidth);
+			var overlayRight = elBySel('.tabMenuOverlayRight', menu);
+			if (overflowRight) {
+				if (overlayRight === null) {
+					overlayRight = elCreate('span');
+					overlayRight.className = 'tabMenuOverlayRight icon icon24 fa-angle-right';
+					menu.appendChild(overlayRight);
+				}
+				
+				overlayRight.classList.add('active');
+			}
+			else if (overlayRight !== null) {
+				overlayRight.classList.remove('active');
+			}
 		}
 	};
 });
