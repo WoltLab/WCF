@@ -20,14 +20,20 @@
 				width: 0;
 			}
 			
-			&.active::before {
-				left: 0;
-				transition: left .12s linear, width .12s linear;
-				width: 100%;
-			}
-			
-			&.active > a {
-				cursor: default;
+			&.active{
+				// this causes the item to stand above the fade-effect caused
+				// by the overflow overlays
+				z-index: 100;
+				
+				&::before {
+					left: 0;
+					transition: left .12s linear, width .12s linear;
+					width: 100%;
+				}
+				
+				> a {
+					cursor: default;
+				}
 			}
 			
 			> a {
@@ -109,7 +115,7 @@
 	top: 0;
 	transition: opacity .24s linear, visibility 0s linear .24s;
 	visibility: hidden;
-	width: 15px;
+	width: 30px;
 	z-index: 50;
 	
 	&.active {
@@ -124,10 +130,12 @@
 }
 
 .tabMenuOverlayLeft {
+	background: linear-gradient(to left, transparentize($wcfContentBackground, 100%) 0%, $wcfContentBackground 50%);
 	left: 0;
 }
 
 .tabMenuOverlayRight {
+	background: linear-gradient(to right, transparentize($wcfContentBackground, 100%) 0%, $wcfContentBackground 50%);
 	justify-content: flex-end;
 	right: 0;
 }
