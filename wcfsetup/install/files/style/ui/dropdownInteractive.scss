@@ -142,8 +142,14 @@
 	
 	.loading,
 	.noItems {
+		align-items: center;
+		display: flex;
+		justify-content: center;
 		padding: 20px 10px;
-		text-align: center;
+		
+		> .fa-spinner {
+			margin-right: 5px;
+		}
 		
 		@include wcfFontHeadline;
 	}
