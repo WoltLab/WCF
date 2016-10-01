@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\box\Box;
-use wcf\data\box\BoxAction;
+use wcf\data\condition\ConditionAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
@@ -126,9 +126,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	}
 	
 	/**
-	 * Returns the additional data saved with the box..
-	 * 
-	 * @return	array
+	 * @inheritDoc
 	 */
 	protected function getAdditionalData() {
 		return [
@@ -205,13 +203,13 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	protected function loadContent() {
 		$this->objectList = $this->getObjectList();
 		
-		if ($this->box->limit) {
+		if ($this->limit) {
 			$this->objectList->sqlLimit = $this->box->limit;
 		}
 		
-		if ($this->box->sortOrder && $this->box->sortField) {
+		if ($this->sortOrder && $this->sortField) {
 			$alias = $this->objectList->getDatabaseTableAlias();
-			$this->objectList->sqlOrderBy = $this->box->sortField . ' ' . $this->box->sortOrder . ", " . ($alias ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->box->sortOrder;
+			$this->objectList->sqlOrderBy = $this->sortField . ' ' . $this->sortOrder . ", " . ($alias ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
 		}
 		
 		if ($this->conditionDefinition) {
@@ -252,19 +250,17 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	/**
 	 * @inheritDoc
 	 */
-	public function saveConditions() {
-		if (($this->sortField && $this->sortOrder) || $this->limit) {
-			(new BoxAction([$this->box], 'update', [
-				'data' => [
-					'additionalData' => serialize(array_merge($this->box->additionalData, $this->getAdditionalData()))
-				]
-			]))->executeAction();
-		}
+	public function saveAdditionalData() {
+		parent::saveAdditionalData();
 		
 		if ($this->conditionDefinition) {
 			// do not use Box::getConditions() here to avoid setting box data by internally calling
 			// Box::getController()
-			ConditionHandler::getInstance()->updateConditions($this->box->boxID, ConditionHandler::getInstance()->getConditions($this->conditionDefinition, $this->box->boxID), $this->conditionObjectTypes);
+			ConditionHandler::getInstance()->updateConditions(
+				$this->box->boxID,
+				ConditionHandler::getInstance()->getConditions($this->conditionDefinition, $this->box->boxID),
+				$this->conditionObjectTypes
+			);
 		}
 	}
 	
@@ -279,9 +275,14 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		parent::setBox($box);
 		
 		if ($setConditionData) {
-			$this->limit = $this->box->limit;
-			$this->sortOrder = $this->box->sortOrder;
-			$this->sortField = $this->box->sortField;
+			if ($this->defaultLimit !== null) {
+				$this->limit = $this->box->limit;
+			}
+			
+			if (!empty($this->validSortFields)) {
+				$this->sortOrder = $this->box->sortOrder;
+				$this->sortField = $this->box->sortField;
+			}
 			
 			if ($this->conditionDefinition) {
 				$conditions = [];

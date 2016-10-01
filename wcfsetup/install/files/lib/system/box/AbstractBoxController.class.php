@@ -1,6 +1,9 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\box\Box;
+use wcf\data\box\BoxAction;
+use wcf\data\condition\Condition;
+use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 
 /**
@@ -95,6 +98,26 @@ abstract class AbstractBoxController implements IBoxController {
 	 */
 	public function setBox(Box $box) {
 		$this->box = $box;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saveAdditionalData() {
+		// always write additional data to make sure that the additional data of the previous box controller
+		// are properly overwritten
+		(new BoxAction([$this->box], 'update', [
+			'data' => ['additionalData' => serialize($this->getAdditionalData())]
+		]))->executeAction();
+	}
+	
+	/**
+	 * Returns the additional data of the box.
+	 * 
+	 * @return	array
+	 */
+	protected function getAdditionalData() {
+		return [];
 	}
 	
 	/**

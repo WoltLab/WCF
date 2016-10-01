@@ -500,9 +500,15 @@ class BoxAddForm extends AbstractForm {
 			'identifier' => 'com.woltlab.wcf.genericBox'.$boxEditor->boxID
 		]);
 		
-		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
-			$this->boxController->getProcessor()->setBox($box, false);
-			$this->boxController->getProcessor()->saveConditions();
+		if ($this->boxController) {
+			if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
+				$this->boxController->getProcessor()->setBox($box, false);
+			}
+			else {
+				$this->boxController->getProcessor()->setBox($box);
+			}
+			
+			$this->boxController->getProcessor()->saveAdditionalData();
 		}
 		
 		// save acl

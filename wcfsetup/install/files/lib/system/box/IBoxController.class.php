@@ -65,6 +65,11 @@ interface IBoxController {
 	public function setBox(Box $box);
 	
 	/**
+	 * Saves additional box data for box set via `setBox()`.
+	 */
+	public function saveAdditionalData();
+	
+	/**
 	 * Returns a list of supported box positions.
 	 * 
 	 * @return	string[]

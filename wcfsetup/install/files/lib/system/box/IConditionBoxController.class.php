@@ -39,11 +39,6 @@ interface IConditionBoxController extends IBoxController {
 	public function readConditions();
 	
 	/**
-	 * Saves the conditions for the box.
-	 */
-	public function saveConditions();
-	
-	/**
 	 * Validates the read conditions for the box.
 	 */
 	public function validateConditions();

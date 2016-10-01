@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IConditionBoxController;
+use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -117,9 +118,22 @@ class BoxEditForm extends BoxAddForm {
 		$this->objectAction = new BoxAction([$this->box], 'update', ['data' => array_merge($this->additionalFields, $data), 'content' => $content, 'pageIDs' => $this->pageIDs]);
 		$this->objectAction->executeAction();
 		
-		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
-			$this->boxController->getProcessor()->setBox($this->box, false);
-			$this->boxController->getProcessor()->saveConditions();
+		// delete old conditions
+		if ($this->box->getController() && $this->box->getController() instanceof IConditionBoxController && $this->box->getController()->getConditionDefinition() && (!$this->boxController || (!($this->boxController->getProcessor() instanceof IConditionBoxController)) || !$this->boxController->getProcessor()->getConditionDefinition())) {
+			ConditionHandler::getInstance()->deleteConditions($this->box->getController()->getConditionDefinition(), [$this->box->boxID]);
+		}
+		
+		if ($this->boxController) {
+			// pass updated box to box controller as in `BoxAddForm::save()`
+			$box = new Box($this->box->boxID);
+			if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
+				$this->boxController->getProcessor()->setBox($box, false);
+			}
+			else {
+				$this->boxController->getProcessor()->setBox($box);
+			}
+			
+			$this->boxController->getProcessor()->saveAdditionalData();
 		}
 		
 		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->box->boxID, $this->aclValues);
