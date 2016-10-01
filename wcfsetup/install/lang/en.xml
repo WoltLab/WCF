@@ -3186,6 +3186,7 @@ not register with us.]]></item>
 		<item name="wcf.user.sortField.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Username]]></item>
+		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

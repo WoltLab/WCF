@@ -3192,6 +3192,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.likesReceived"><![CDATA[Erhaltene Likes]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
+		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
