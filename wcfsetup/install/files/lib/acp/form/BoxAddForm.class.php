@@ -281,6 +281,10 @@ class BoxAddForm extends AbstractForm {
 			
 			$this->readBoxImages();
 		}
+		
+		if ($this->boxType === 'system') {
+			$this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
+		}
 	}
 	
 	/**
@@ -312,7 +316,6 @@ class BoxAddForm extends AbstractForm {
 		
 		// validate controller
 		if ($this->boxType === 'system') {
-			$this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
 			if ($this->boxController === null || $this->boxController->getDefinition()->definitionName != 'com.woltlab.wcf.boxController') {
 				throw new UserInputException('boxController');
 			}
@@ -365,16 +368,8 @@ class BoxAddForm extends AbstractForm {
 			$this->externalURL = '';
 		}
 		
-		// validate page ids
-		if (!empty($this->pageIDs)) {
-			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
-			$sql = "SELECT	pageID
-				FROM	wcf".WCF_N."_page
-				" . $conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditionBuilder->getParameters());
-			$this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
+			$this->boxController->getProcessor()->validateConditions();
 		}
 		
 		// validate images
@@ -398,10 +393,6 @@ class BoxAddForm extends AbstractForm {
 			}
 		}
 		
-		if ($this->boxController && $this->boxController->getProcessor() instanceof IConditionBoxController) {
-			$this->boxController->getProcessor()->validateConditions();
-		}
-		
 		if ($this->boxType == 'text') {
 			if ($this->isMultilingual) {
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -413,6 +404,18 @@ class BoxAddForm extends AbstractForm {
 				$this->htmlInputProcessors[0] = new HtmlInputProcessor();
 				$this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''), 'com.woltlab.wcf.box.content');
 			}
+		}
+		
+		// validate page ids
+		if (!empty($this->pageIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
+			$sql = "SELECT	pageID
+				FROM	wcf".WCF_N."_page
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		}
 	}
 	
