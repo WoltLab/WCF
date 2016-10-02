@@ -170,3 +170,9 @@
 		}
 	}
 }
+
+/* embedded images */
+.embeddedAttachmentLink img {
+	border: 1px solid $wcfContentBorderInner;
+	padding: 2px;
+}
