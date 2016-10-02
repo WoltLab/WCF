@@ -186,20 +186,16 @@ define(
 					});
 					
 					var quickOptions = elBySel('.messageQuickOptions', message);
-					if (quickOptions) {
-						if (navigation.childElementCount) {
-							quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
-								if (_enabled) {
-									event.preventDefault();
-									event.stopPropagation();
-									
-									navigation.classList.toggle('open');
-								}
-							});
-						}
-						else {
-							elHide(quickOptions);
-						}
+					if (quickOptions && navigation.childElementCount) {
+						quickOptions.classList.add('active');
+						quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
+							if (_enabled) {
+								event.preventDefault();
+								event.stopPropagation();
+								
+								navigation.classList.toggle('open');
+							}
+						});
 					}
 				}
 				
