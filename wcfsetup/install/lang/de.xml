@@ -251,19 +251,19 @@
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[„Zeitgesteuerte Aufgaben“]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
-		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen der Cronjob ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
 		<item name="wcf.acp.cronjob.startDow"><![CDATA[Tag der Woche]]></item>
-		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Tage der Woche (0 - 6 mit Sonntag = 0, oder mon - sun), an welchen der Cronjob ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Tage der Woche (0 - 6 mit Sonntag = 0, oder mon - sun), an denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDowShort"><![CDATA[DoW]]></item>
 		<item name="wcf.acp.cronjob.startHour"><![CDATA[Stunde]]></item>
-		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Stunden (0 - 23), zu welchen der Cronjob ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Stunden (0 - 23), in denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startHourShort"><![CDATA[h]]></item>
 		<item name="wcf.acp.cronjob.startMinute"><![CDATA[Minute]]></item>
-		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minuten (0 - 59), zu welchen der Cronjob ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minuten (0 - 59), in denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Monat]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an welchen der Cronjob ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an denen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
@@ -434,7 +434,7 @@
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Mindestzeit zwischen zwei Kommentaren]]></item>
-		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentare oder Antworten vergehen muss. [Zeit in Sekunden, 0 für unbeschränkt]]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentaren oder Antworten vergehen muss. [Zeit in Sekunden, 0 für unbeschränkt]]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Kann Benutzerränge verwalten]]></item>
@@ -499,7 +499,7 @@
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Automatische Zuordnung hinzufügen]]></item>
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatische Zuordnungen auflisten]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Benutzer müssen die folgenden Bedingungen erfüllen um automatisch der Benutzergruppe hinzugefügt zu werden]]></item>
+		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Benutzer müssen die folgenden Bedingungen erfüllen, um automatisch der Benutzergruppe hinzugefügt zu werden]]></item>
 		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die automatische Benutzergruppen-Zuordnung <span class="confirmationObject">{$assignment->title}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Automatische Benutzergruppen-Zuordnung bearbeiten]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Bedingungen ausgewählt.]]></item>
@@ -879,7 +879,7 @@
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		<item name="wcf.acp.option.exception_privacy"><![CDATA[Privatsphäre]]></item>
-		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Gibt an, wie detailliert die Fehlermeldungen sind. Privat versteckt Fehler vollständig, gekürzt versucht private Informationen zu verstecken und öffentlich (nur bei aktivem Debug-Modus) zeigt alle Informationen an.]]></item>
+		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Gibt an, wie detailliert die Fehlermeldungen sind. „Privat“ versteckt Fehler vollständig, „Gekürzt“ versucht private Informationen zu verstecken und „Öffentlich“ (nur bei aktivem Debug-Modus) zeigt alle Informationen an.]]></item>
 		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Öffentlich]]></item>
 		<item name="wcf.acp.option.exception_privacy.reduced"><![CDATA[Gekürzt]]></item>
 		<item name="wcf.acp.option.exception_privacy.private"><![CDATA[Privat]]></item>
@@ -898,7 +898,7 @@
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
@@ -927,7 +927,7 @@
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
 		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. {if LANGUAGE_USE_INFORMAL_VARIANT}Probiere{else}Probieren Sie{/if} in diesem Falle die Option zu deaktivieren.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. {if LANGUAGE_USE_INFORMAL_VARIANT}Versuche{else}Versuchen Sie{/if} in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
@@ -996,7 +996,7 @@
 		<item name="wcf.acp.option.module_edit_history"><![CDATA[Bearbeitungsverlauf aktivieren]]></item>
 		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Speichert die alten Versionen von Benutzerinhalten.]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [0 um die Entfernung gänzlich zu deaktivieren]]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} Client ID und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -1071,7 +1071,7 @@
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Seite automatisch neu laden]]></item>
-		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Zeitraum nachdem die Seite automatisch neu geladen wird. [0 um Neuladen abzuschalten]]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Zeitraum nachdem die Seite automatisch neu geladen wird. [0, um Neuladen abzuschalten]]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Zeitraum nach dem Benachrichtigungen automatisch verworfen werden.]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Letzte Aktivitäten]]></item>
@@ -1573,7 +1573,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Es wurde keine Datei unter dem angegebenen Pfad gefunden]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley-Datei]]></item>
 		<item name="wcf.acp.smiley.smileyFile2x"><![CDATA[Smiley-Datei (HD)]]></item>
-		<item name="wcf.acp.smiley.smileyFile2x.description"><![CDATA[Optionale Grafik die auf hochauflösenden Bildschirmen (z.B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet wird, diese muss doppelt so groß sein wie die normale Grafik.]]></item>
+		<item name="wcf.acp.smiley.smileyFile2x.description"><![CDATA[Optionale Grafik, die auf hochauflösenden Bildschirmen (z.B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet wird. Diese muss doppelt so groß sein wie die normale Grafik.]]></item>
 		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Smiley hochladen]]></item>
 		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier die Bilddatei des Smileys hoch.]]></item>
 		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[Bei der hochgeladenen Datei handelt es sich um keine Bilddatei.]]></item>
