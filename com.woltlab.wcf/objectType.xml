@@ -304,6 +304,31 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\SmileyCategoryImporter</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article.category</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ArticleCategoryImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ArticleImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\MediaImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.comment</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ArticleCommentImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.comment.response</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ArticleCommentResponseImporter</classname>
+		</type>
 		<!-- /importers -->
 		
 		<!-- rebuild data workers -->
