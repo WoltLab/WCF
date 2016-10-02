@@ -27,10 +27,10 @@ class MenuItemEditForm extends MenuItemAddForm {
 	public $itemID = 0;
 	
 	/**
-	 * menu object
-	 * @var	Menu
+	 * menu item object
+	 * @var	MenuItem
 	 */
-	public $menuItem = null;
+	public $menuItem;
 	
 	/**
 	 * @inheritDoc

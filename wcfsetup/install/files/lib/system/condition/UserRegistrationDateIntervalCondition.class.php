@@ -48,10 +48,15 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->greaterThan !== null && $user->registrationDate >= TIME_NOW - $condition->greaterThan * 86400) {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$greaterThan = $condition->greaterThan;
+		if ($greaterThan !== null && $user->registrationDate >= TIME_NOW - $greaterThan * 86400) {
 			return false;
 		}
-		if ($condition->lessThan !== null && $user->registrationDate <= TIME_NOW - $condition->lessThan * 86400) {
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$lessThan = $condition->lessThan;
+		if ($lessThan !== null && $user->registrationDate <= TIME_NOW - $lessThan * 86400) {
 			return false;
 		}
 		

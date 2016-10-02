@@ -212,6 +212,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		foreach ($usedCategories as $categoryName => $categoryID) {
 			if ($categoryID) continue;
 			
+			/** @var LanguageCategory $category */
 			$category = LanguageCategoryEditor::create([
 				'languageCategory' => $categoryName
 			]);

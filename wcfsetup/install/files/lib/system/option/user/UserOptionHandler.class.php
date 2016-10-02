@@ -2,6 +2,7 @@
 namespace wcf\system\option\user;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
+use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
@@ -19,6 +20,10 @@ use wcf\util\MessageUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User
+ * 
+ * @property	UserOptionCategory	$cachedCategories
+ * @property	UserOption[]		$cachedOptions
+ * @property	UserOption[]		$options
  */
 class UserOptionHandler extends OptionHandler {
 	/**
@@ -198,6 +203,8 @@ class UserOptionHandler extends OptionHandler {
 	 * @inheritDoc
 	 */
 	protected function validateOption(Option $option) {
+		/** @var UserOption $option */
+		
 		parent::validateOption($option);
 		
 		if ($option->required && $option->optionType != 'boolean' && empty($this->optionValues[$option->optionName])) {

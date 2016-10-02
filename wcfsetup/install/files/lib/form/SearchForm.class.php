@@ -379,6 +379,7 @@ class SearchForm extends AbstractCaptchaForm {
 		$application = 'wcf';
 		if (count($this->selectedObjectTypes) == 1) {
 			$objectType = SearchEngine::getInstance()->getObjectType(reset($this->selectedObjectTypes));
+			/** @noinspection PhpUndefinedFieldInspection */
 			if ($tmp = ApplicationHandler::getInstance()->getAbbreviation($objectType->packageID)) {
 				$application = $tmp;
 			}

@@ -143,6 +143,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		
 		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->saveFiles($saveStrategy);
+		
+		/** @var Attachment[] $attachments */
 		$attachments = $saveStrategy->getObjects();
 		
 		// return result

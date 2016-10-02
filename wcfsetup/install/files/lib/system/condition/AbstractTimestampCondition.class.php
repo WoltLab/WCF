@@ -172,11 +172,16 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		if ($condition->endTime) {
-			$this->endTime = $condition->endTime;
+		/** @noinspection PhpUndefinedFieldInspection */
+		$endTime = $condition->endTime;
+		if ($endTime) {
+			$this->endTime = $endTime;
 		}
-		if ($condition->startTime) {
-			$this->startTime = $condition->startTime;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$startTime = $condition->startTime;
+		if ($startTime) {
+			$this->startTime = $startTime;
 		}
 	}
 	

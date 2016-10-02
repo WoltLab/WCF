@@ -63,6 +63,8 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 			ORDER BY	showOrder";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
+		
+		/** @var Option $option */
 		while ($option = $statement->fetchObject($this->optionClassName)) {
 			$data['options'][$option->optionName] = $option;
 			if (!isset($data['optionToCategories'][$option->categoryName])) {

@@ -12,6 +12,8 @@ use wcf\data\DatabaseObjectDecorator;
  * 
  * @method	Tag	getDecoratedObject()
  * @mixin	Tag
+ * 
+ * @property-read	integer|null	$counter	number of the times the tag has been used for a certain object type or `null`
  */
 class TagCloudTag extends DatabaseObjectDecorator {
 	/**

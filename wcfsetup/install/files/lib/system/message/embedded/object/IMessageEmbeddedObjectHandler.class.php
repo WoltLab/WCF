@@ -10,6 +10,8 @@ use wcf\system\html\input\HtmlInputProcessor;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
+ * 
+ * @property-read	integer		$objectTypeID	id of the embedded object type
  */
 interface IMessageEmbeddedObjectHandler {
 	/**

@@ -73,15 +73,19 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->userIsBanned !== null && $user->banned != $condition->userIsBanned) {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$userIsBanned = $condition->userIsBanned;
+		if ($userIsBanned !== null && $user->banned != $userIsBanned) {
 			return false;
 		}
 		
-		if ($condition->userIsEnabled !== null) {
-			if ($condition->userIsEnabled && $user->activationCode) {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$userIsEnabled = $condition->userIsEnabled;
+		if ($userIsEnabled !== null) {
+			if ($userIsEnabled && $user->activationCode) {
 				return false;
 			}
-			else if (!$condition->userIsEnabled && !$user->activationCode) {
+			else if (!$userIsEnabled && !$user->activationCode) {
 				return false;
 			}
 		}
@@ -171,13 +175,18 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$userIsBanned = $condition->userIsBanned;
 		if ($condition->userIsBanned !== null) {
-			$this->userIsBanned = $condition->userIsBanned;
-			$this->userIsNotBanned = !$condition->userIsBanned;
+			$this->userIsBanned = $userIsBanned;
+			$this->userIsNotBanned = !$userIsBanned;
 		}
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$userIsEnabled = $condition->userIsEnabled;
 		if ($condition->userIsEnabled !== null) {
-			$this->userIsEnabled = $condition->userIsEnabled;
-			$this->userIsDisabled = !$condition->userIsEnabled;
+			$this->userIsEnabled = $userIsEnabled;
+			$this->userIsDisabled = !$userIsEnabled;
 		}
 	}
 	

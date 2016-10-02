@@ -55,10 +55,15 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->registrationDateStart !== null && $user->registrationDate < strtotime($condition->registrationDateStart)) {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$registrationDateStart = $condition->registrationDateStart;
+		if ($registrationDateStart !== null && $user->registrationDate < strtotime($registrationDateStart)) {
 			return false;
 		}
-		if ($condition->registrationDateEnd !== null && $user->registrationDate >= strtotime($condition->registrationDateEnd) + 86400) {
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$registrationDateEnd = $condition->registrationDateEnd;
+		if ($registrationDateEnd !== null && $user->registrationDate >= strtotime($registrationDateEnd) + 86400) {
 			return false;
 		}
 		
@@ -118,11 +123,16 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		if ($condition->registrationDateEnd) {
-			$this->registrationDateEnd = $condition->registrationDateEnd;
+		/** @noinspection PhpUndefinedFieldInspection */
+		$registrationDateEnd = $condition->registrationDateEnd;
+		if ($registrationDateEnd) {
+			$this->registrationDateEnd = $registrationDateEnd;
 		}
-		if ($condition->registrationDateStart) {
-			$this->registrationDateStart = $condition->registrationDateStart;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$registrationDateStart = $condition->registrationDateStart;
+		if ($registrationDateStart) {
+			$this->registrationDateStart = $registrationDateStart;
 		}
 	}
 	

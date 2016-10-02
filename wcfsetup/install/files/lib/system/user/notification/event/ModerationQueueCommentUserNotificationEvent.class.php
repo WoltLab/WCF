@@ -6,6 +6,7 @@ use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
 use wcf\system\email\Email;
 use wcf\system\moderation\queue\IModerationQueueHandler;
+use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\WCF;
 
@@ -17,6 +18,8 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since	3.0
+ * 
+ * @method	CommentUserNotificationObject	getUserNotificationObject()
  */
 class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
@@ -127,7 +130,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
 		parent::setObject($notification, $object, $author, $additionalData);
 		
 		// if the active user has no access, $this->moderationQueue is null
-		$this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue($this->userNotificationObject->objectID);
+		$this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue($this->getUserNotificationObject()->objectID);
 		
 		if ($this->moderationQueue) {
 			/** @var IModerationQueueHandler $moderationHandler */

@@ -186,6 +186,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	public function getLabel() {
 		$definition = ObjectTypeCache::getInstance()->getDefinition(ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->definitionID);
 		
+		/** @noinspection PhpUndefinedFieldInspection */
 		if ($definition->definitionName == 'com.woltlab.wcf.moderation.activation' && $this->getAffectedObject()->enableTime) {
 			return WCF::getLanguage()->get('wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed');
 		}

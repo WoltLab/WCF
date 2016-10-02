@@ -130,14 +130,22 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		if ($condition->endTime) {
-			$this->endTime = $condition->endTime;
+		/** @noinspection PhpUndefinedFieldInspection */
+		$endTime = $condition->endTime;
+		if ($endTime) {
+			$this->endTime = $endTime;
 		}
-		if ($condition->startTime) {
-			$this->startTime = $condition->startTime;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$startTime = $condition->startTime;
+		if ($startTime) {
+			$this->startTime = $startTime;
 		}
-		if ($condition->timezone) {
-			$this->timezone = $condition->timezone;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$timezone = $condition->timezone;
+		if ($timezone) {
+			$this->timezone = $timezone;
 		}
 	}
 	
@@ -188,19 +196,25 @@ HTML;
 	 */
 	public function showContent(Condition $condition) {
 		$timezone = WCF::getUser()->getTimeZone();
-		if ($condition->timezone) {
-			$timezone = new \DateTimeZone($condition->timezone);
+		/** @noinspection PhpUndefinedFieldInspection */
+		$conditionTimezone = $condition->timezone;
+		if ($conditionTimezone) {
+			$timezone = new \DateTimeZone($conditionTimezone);
 		}
 		
-		if ($condition->startTime) {
-			$dateTime = \DateTime::createFromFormat('H:i', $condition->startTime, $timezone);
+		/** @noinspection PhpUndefinedFieldInspection */
+		$startTime = $condition->startTime;
+		if ($startTime) {
+			$dateTime = \DateTime::createFromFormat('H:i', $startTime, $timezone);
 			if ($dateTime->getTimestamp() > TIME_NOW) {
 				return false;
 			}
 		}
 		
-		if ($condition->endTime) {
-			$dateTime = \DateTime::createFromFormat('H:i', $condition->endTime, $timezone);
+		/** @noinspection PhpUndefinedFieldInspection */
+		$endTime = $condition->endTime;
+		if ($endTime) {
+			$dateTime = \DateTime::createFromFormat('H:i', $endTime, $timezone);
 			if ($dateTime->getTimestamp() < TIME_NOW) {
 				return false;
 			}

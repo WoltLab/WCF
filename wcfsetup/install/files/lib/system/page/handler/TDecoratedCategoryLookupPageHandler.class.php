@@ -84,6 +84,7 @@ trait TDecoratedCategoryLookupPageHandler {
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
+		/** @noinspection PhpUndefinedFieldInspection */
 		$conditionBuilder->add('category.objectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', $className::OBJECT_TYPE_NAME)]);
 		$conditionBuilder->add('(category.title LIKE ? OR language_item.languageItemValue LIKE ?)', ['%' . $searchString . '%', '%' . $searchString . '%']);
 		$sql = "SELECT		DISTINCT categoryID

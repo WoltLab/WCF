@@ -7,6 +7,7 @@ use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\email\Email;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\WCF;
 
 /**
@@ -17,6 +18,8 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since	3.0
+ *
+ * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
 class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
@@ -57,7 +60,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
+		$comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
 		if ($comment->userID) {
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
@@ -116,7 +119,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			]);
 		}
 		
-		$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
+		$comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
 		if ($comment->userID) {
 			$commentAuthor = UserProfileRuntimeCache::getInstance()->getObject($comment->userID);
 		}
@@ -139,7 +142,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 */
 	public function getModerationQueue() {
 		if (!$this->moderationQueueLoaded) {
-			$comment = CommentRuntimeCache::getInstance()->getObject($this->userNotificationObject->commentID);
+			$comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
 			
 			$this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue($comment->objectID);
 			$this->moderationQueueLoaded = true;
@@ -182,7 +185,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 * @inheritDoc
 	 */
 	protected function prepare() {
-		CommentRuntimeCache::getInstance()->cacheObjectID($this->userNotificationObject->commentID);
+		CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
 		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['userID']);
 	}
 }

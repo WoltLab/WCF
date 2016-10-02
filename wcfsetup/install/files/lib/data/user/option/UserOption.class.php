@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Option
  * 
+ * @property-read	string		$defaultValue		default value of the user option
  * @property-read	integer		$required		is `1` if the user option has to be filled out, otherwise `0`
  * @property-read	integer		$askDuringRegistration	is `1` if the user option will be shown during registration to be filled out, otherwise `0`
  * @property-read	integer		$editable		setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants

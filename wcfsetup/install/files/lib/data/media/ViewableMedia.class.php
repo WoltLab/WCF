@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @method	Media	getDecoratedObject()
  * @mixin	Media
  * @property-read	string|null	$title		title of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
- * @property-read	string|null	$description	description of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
+ * @property-read	string|null	$caption	caption of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
  * @property-read	string|null	$altText	alternative text of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
  */
 class ViewableMedia extends DatabaseObjectDecorator {

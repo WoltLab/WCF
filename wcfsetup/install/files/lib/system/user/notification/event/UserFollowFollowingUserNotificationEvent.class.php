@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 
 /**
  * Notification event for followers.
@@ -9,6 +10,8 @@ use wcf\system\request\LinkHandler;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	UserFollowUserNotificationObject	getUserNotificationObject()
  */
 class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
@@ -68,6 +71,6 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 * @inheritDoc
 	 */
 	public function getEventHash() {
-		return sha1($this->eventID . '-' . $this->userNotificationObject->followUserID);
+		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->followUserID);
 	}
 }

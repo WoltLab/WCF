@@ -49,6 +49,7 @@ class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IConte
 		$date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
 		$date->setTimezone(WCF::getUser()->getTimeZone());
 		
+		/** @noinspection PhpUndefinedFieldInspection */
 		return in_array($date->format('w'), $condition->daysOfWeek);
 	}
 }

@@ -226,12 +226,14 @@ class ClipboardHandler extends SingletonFactory {
 			}
 			
 			if (!isset($data[$objectType->objectType])) {
-				if ($objectType->listclassname == '') {
+				/** @noinspection PhpUndefinedFieldInspection */
+				$listClassName = $objectType->listclassname;
+				if ($listClassName == '') {
 					throw new SystemException("Missing list class for object type '".$objectType->objectType."'");
 				}
 				
 				$data[$objectType->objectType] = [
-					'className' => $objectType->listclassname,
+					'className' => $listClassName,
 					'objectIDs' => []
 				];
 			}

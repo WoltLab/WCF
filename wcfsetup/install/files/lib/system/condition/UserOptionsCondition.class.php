@@ -60,6 +60,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
+		/** @noinspection PhpUndefinedFieldInspection */
 		$optionValues = $condition->optionValues;
 		
 		$checkSuccess = true;

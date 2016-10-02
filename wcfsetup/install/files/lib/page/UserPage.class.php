@@ -176,6 +176,7 @@ class UserPage extends AbstractPage {
 			$editor->updateCounters(['profileHits' => 1]);
 			
 			// save visitor
+			/** @noinspection PhpUndefinedFieldInspection */
 			if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
 				if (($visitor = UserProfileVisitor::getObject($this->user->userID, WCF::getUser()->userID)) !== null) {
 					$editor = new UserProfileVisitorEditor($visitor);

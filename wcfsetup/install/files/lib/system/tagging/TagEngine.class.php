@@ -174,10 +174,12 @@ class TagEngine extends SingletonFactory {
 		
 		$tags = [];
 		while ($tag = $statement->fetchObject(Tag::class)) {
-			if (!isset($tags[$tag->objectID])) {
-				$tags[$tag->objectID] = [];
+			/** @noinspection PhpUndefinedFieldInspection */
+			$objectID = $tag->objectID;
+			if (!isset($tags[$objectID])) {
+				$tags[$objectID] = [];
 			}
-			$tags[$tag->objectID][$tag->tagID] = $tag;
+			$tags[$objectID][$tag->tagID] = $tag;
 		}
 		
 		return $tags;
