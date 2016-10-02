@@ -40,6 +40,7 @@ trait TDecoratedCategoryOnlineLocationPageHandler {
 		}
 		
 		/** @var AbstractDecoratedCategory $category */
+		/** @noinspection PhpUndefinedMethodInspection */
 		$category = $className::getCategory($user->pageObjectID);
 		if ($category === null) {
 			return '';

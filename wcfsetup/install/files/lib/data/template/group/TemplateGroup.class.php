@@ -23,6 +23,9 @@ class TemplateGroup extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'templateGroupID';
 	
+	/**
+	 * @var	TemplateGroup[][]
+	 */
 	protected static $templateGroupStructure = null;
 	protected static $selectList = null;
 	

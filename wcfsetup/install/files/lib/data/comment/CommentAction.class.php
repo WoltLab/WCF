@@ -16,6 +16,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
@@ -273,6 +274,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 				}
 			}
 			else {
+				/** @var ICommentUserNotificationObjectType $notificationObjectType */
+				
 				$userID = $notificationObjectType->getOwnerID($this->createdComment->commentID);
 				if ($userID != WCF::getUser()->userID) {
 					UserNotificationHandler::getInstance()->fireEvent(
@@ -405,6 +408,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 				}
 			}
 			else {
+				/** @var ICommentUserNotificationObjectType $notificationObjectType */
+				
 				$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
 				
 				if ($this->comment->userID != WCF::getUser()->userID) {

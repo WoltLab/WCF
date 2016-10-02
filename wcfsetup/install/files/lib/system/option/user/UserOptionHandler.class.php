@@ -186,7 +186,10 @@ class UserOptionHandler extends OptionHandler {
 	 * @inheritDoc
 	 */
 	protected function getFormElement($type, Option $option) {
-		if ($this->searchMode) return $this->getTypeObject($type)->getSearchFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
+		if ($this->searchMode) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			return $this->getTypeObject($type)->getSearchFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
+		}
 		
 		return parent::getFormElement($type, $option);
 	}

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\upload;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\DatabaseObjectEditor;
 use wcf\data\IDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
@@ -174,7 +175,9 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 									
 									// update width, height and filesize of the object
 									if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
-										(new $this->editorClassName($object))->update([
+										/** @var DatabaseObjectEditor $editor */
+										$editor = new $this->editorClassName($object);
+										$editor->update([
 											'height' => $object->width,
 											'width' => $object->height,
 											'filesize' => filesize($object->getLocation())
@@ -189,11 +192,15 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 				$this->objects[$uploadFile->getInternalFileID()] = $object;
 			}
 			catch (SystemException $e) {
-				(new $this->editorClassName($object))->delete();
+				/** @var DatabaseObjectEditor $editor */
+				$editor = new $this->editorClassName($object);
+				$editor->delete();
 			}
 		}
 		else {
-			(new $this->editorClassName($object))->delete();
+			/** @var DatabaseObjectEditor $editor */
+			$editor = new $this->editorClassName($object);
+			$editor->delete();
 		}
 		
 		if ($object->isImage && !empty($this->options['generateThumbnails']) && $object instanceof IThumbnailFile) {
@@ -201,7 +208,9 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 				$this->generateThumbnails($object);
 			}
 			catch (SystemException $e) {
-				(new $this->editorClassName($object))->delete();
+				/** @var DatabaseObjectEditor $editor */
+				$editor = new $this->editorClassName($object);
+				$editor->delete();
 			}
 		}
 	}

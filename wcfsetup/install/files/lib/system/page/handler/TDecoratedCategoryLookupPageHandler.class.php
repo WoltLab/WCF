@@ -4,6 +4,7 @@ use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\ILinkableObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\WCF;
 
@@ -32,6 +33,9 @@ trait TDecoratedCategoryLookupPageHandler {
 	 */
 	public function getLink($objectID) {
 		$className = $this->getDecoratedCategoryClass();
+		
+		/** @var AbstractDecoratedCategory $category */
+		/** @noinspection PhpUndefinedMethodInspection */
 		$category = $className::getCategory($objectID);
 		
 		if ($category instanceof ILinkableObject) {
@@ -47,6 +51,7 @@ trait TDecoratedCategoryLookupPageHandler {
 	public function isValid($objectID = null) {
 		$className = $this->getDecoratedCategoryClass();
 		
+		/** @noinspection PhpUndefinedMethodInspection */
 		return $className::getCategory($objectID)->isAccessible();
 	}
 	
@@ -57,6 +62,9 @@ trait TDecoratedCategoryLookupPageHandler {
 		$className = $this->getDecoratedCategoryClass();
 		if (!is_subclass_of($className, AbstractDecoratedCategory::class)) {
 			throw new ParentClassException($className, AbstractDecoratedCategory::class);
+		}
+		if (!is_subclass_of($className, ILinkableObject::class)) {
+			throw new ImplementationException($className, ILinkableObject::class);
 		}
 		if (!defined($className.'::OBJECT_TYPE_NAME')) {
 			throw new \LogicException("Class '{$className}' has no constant 'OBJECT_TYPE_NAME'.");
@@ -74,7 +82,8 @@ trait TDecoratedCategoryLookupPageHandler {
 		$statement->execute($conditionBuilder->getParameters());
 		$results = [];
 		while ($categoryID = $statement->fetchColumn()) {
-			/** @var AbstractDecoratedCategory $category */
+			/** @var AbstractDecoratedCategory|ILinkableObject $category */
+			/** @noinspection PhpUndefinedMethodInspection */
 			$category = $className::getCategory($categoryID);
 			
 			// build hierarchy

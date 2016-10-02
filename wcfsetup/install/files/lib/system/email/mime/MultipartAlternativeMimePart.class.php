@@ -22,6 +22,8 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart {
 	 * @inheritDoc
 	 */
 	protected function getConcatenatedParts($parts) {
+		/** @var \SplObjectStorage $parts */
+		
 		$sortedParts = new \SplPriorityQueue();
 		
 		$parts->rewind();
