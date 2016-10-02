@@ -3386,6 +3386,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.groupIDs"><![CDATA[User in User Group(s)]]></item>
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[User is a member of the selected user group(s).]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Language(s)]]></item>
+		<item name="wcf.user.condition.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile Device or Desktop]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile device]]></item>
