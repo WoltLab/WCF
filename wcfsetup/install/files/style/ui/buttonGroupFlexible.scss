@@ -33,8 +33,9 @@
 		
 		> a,
 		> label {
-			background-color: rgb(242, 242, 242);
+			background-color: rgb(207, 216, 220);
 			border: 1px solid transparent;
+			color: rgb(33, 33, 33);
 			cursor: pointer;
 			padding: 5px 10px;
 			
@@ -42,19 +43,8 @@
 				color: inherit;
 			}
 			
-			&.green {
-				color: rgb(54, 125, 54);
-			}
-			
-			&.red {
-				color: rgb(201, 48, 44);
-			}
-			
-			&.yellow {
-				color: rgb(236, 151, 31);
-			}
-			
 			> .icon {
+				color: inherit !important;
 				cursor: pointer !important;
 			}
 		}
@@ -65,19 +55,15 @@
 			color: #fff;
 			
 			&.green {
-				background-color: rgb(148, 170, 114);
+				background-color: rgb(46, 125, 50);
 			}
 			
 			&.red {
-				background-color: rgb(232, 151, 149);
+				background-color: rgb(198, 40, 40);
 			}
 			
 			&.yellow {
-				background-color: rgb(203, 172, 91);
-			}
-			
-			> .icon {
-				color: #fff;
+				background-color: rgb(239, 108, 0);
 			}
 		}
 		
