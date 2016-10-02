@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleEditor;
-use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
