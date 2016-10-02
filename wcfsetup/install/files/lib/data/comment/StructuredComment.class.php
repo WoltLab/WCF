@@ -163,7 +163,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	 * @see	\Iterator::key()
 	 */
 	public function key() {
-		return $this->postition;
+		return $this->position;
 	}
 	
 	/**
