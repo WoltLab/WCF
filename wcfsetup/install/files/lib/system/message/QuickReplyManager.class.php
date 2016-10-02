@@ -217,6 +217,7 @@ class QuickReplyManager extends SingletonFactory {
 			// calculate start index
 			$startIndex = $count - (count($messageList) - 1);
 			
+			/** @noinspection PhpUndefinedMethodInspection */
 			WCF::getTPL()->assign([
 				'attachmentList' => $messageList->getAttachmentList(),
 				'container' => $this->container,

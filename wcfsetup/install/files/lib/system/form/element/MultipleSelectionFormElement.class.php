@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\element;
+use wcf\system\form\container\MultipleSelectionFormElementContainer;
 use wcf\util\StringUtil;
 
 /**
@@ -9,6 +10,8 @@ use wcf\util\StringUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Element
+ * 
+ * @method	MultipleSelectionFormElementContainer	getParent()
  */
 class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	/**
