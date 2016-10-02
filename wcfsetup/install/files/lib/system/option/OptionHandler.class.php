@@ -403,7 +403,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * Initializes active options.
+	 * @inheritDoc
 	 */
 	public function init() {
 		if (!$this->didInit) {

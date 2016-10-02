@@ -64,4 +64,9 @@ interface IOptionHandler {
 	 * @return	array
 	 */
 	public function save($categoryName = null, $optionPrefix = null);
+	
+	/**
+	 * Initializes active options.
+	 */
+	public function init();
 }
