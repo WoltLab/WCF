@@ -100,6 +100,8 @@
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
+						{elseif $errorType == 'invalid'}
+							{lang}wcf.user.email.error.invalid{/lang}
 						{else}
 							{lang}wcf.acp.user.sendMail.subject.from.{@$errorType}{/lang}
 						{/if}

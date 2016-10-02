@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\email\EmailGrammar;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -119,6 +120,9 @@ class UserMailForm extends AbstractForm {
 		
 		if (empty($this->from)) {
 			throw new UserInputException('from');
+		}
+		else if (!preg_match('(^'.EmailGrammar::getGrammar('addr-spec').'$)', $this->from)) {
+			throw new UserInputException('from', 'invalid');
 		}
 	}
 	
