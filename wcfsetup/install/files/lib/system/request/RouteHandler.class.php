@@ -264,7 +264,9 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public static function getPath(array $removeComponents = []) {
 		if (empty(self::$path)) {
-			self::$path = FileUtil::addTrailingSlash(dirname($_SERVER['SCRIPT_NAME']));
+			// dirname return a single backslash on Windows if there are no parent directories 
+			$dir = dirname($_SERVER['SCRIPT_NAME']);
+			self::$path = ($dir === '\\') ? '/' : FileUtil::addTrailingSlash($dir);
 		}
 		
 		if (!empty($removeComponents)) {

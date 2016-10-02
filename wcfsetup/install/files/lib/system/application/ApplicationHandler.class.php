@@ -95,7 +95,7 @@ class ApplicationHandler extends SingletonFactory {
 			
 			return new Application(null, [
 				'domainName' => $host,
-				'domainPath' => RouteHandler::getPath(),
+				'domainPath' => RouteHandler::getPath(['acp']),
 				'cookieDomain' => $host,
 				'cookiePath' => RouteHandler::getPath(['acp'])
 			]);
