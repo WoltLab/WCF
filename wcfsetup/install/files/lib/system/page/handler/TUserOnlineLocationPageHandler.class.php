@@ -18,6 +18,11 @@ trait TUserOnlineLocationPageHandler {
 	use TOnlineLocationPageHandler;
 	
 	/**
+	 * Returns the textual description if a user is currently online viewing this page.
+	 *
+	 * @param	Page		$page		visited page
+	 * @param	UserOnline	$user		user online object with request data
+	 * @return	string
 	 * @see	IOnlineLocationPageHandler::getOnlineLocation()
 	 */
 	public function getOnlineLocation(Page $page, UserOnline $user) {
@@ -34,6 +39,11 @@ trait TUserOnlineLocationPageHandler {
 	}
 	
 	/**
+	 * Prepares fetching all necessary data for the textual description if a user is currently online
+	 * viewing this page.
+	 *
+	 * @param	Page		$page		visited page
+	 * @param	UserOnline	$user		user online object with request data
 	 * @see	IOnlineLocationPageHandler::prepareOnlineLocation()
 	 */
 	public function prepareOnlineLocation(/** @noinspection PhpUnusedParameterInspection */Page $page, UserOnline $user) {

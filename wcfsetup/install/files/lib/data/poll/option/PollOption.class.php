@@ -27,7 +27,7 @@ class PollOption extends DatabaseObject {
 	/**
 	 * Returns relative amount of votes for this option.
 	 * 
-	 * @param	Poll
+	 * @param	Poll	$poll
 	 * @return	integer
 	 */
 	public function getRelativeVotes(Poll $poll) {

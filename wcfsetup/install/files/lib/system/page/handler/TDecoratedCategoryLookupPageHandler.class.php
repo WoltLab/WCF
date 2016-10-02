@@ -29,6 +29,10 @@ trait TDecoratedCategoryLookupPageHandler {
 	abstract protected function getDecoratedCategoryClass();
 	
 	/**
+	 * Returns the link for a page with an object id.
+	 * 
+	 * @param	integer		$objectID	page object id
+	 * @return	string		page url
 	 * @see	ILookupPageHandler::getLink()
 	 */
 	public function getLink($objectID) {
@@ -46,6 +50,10 @@ trait TDecoratedCategoryLookupPageHandler {
 	}
 	
 	/**
+	 * Returns true if provided object id exists and is valid.
+	 * 
+	 * @param	integer		$objectID	page object id
+	 * @return	boolean		true if object id is valid
 	 * @see	ILookupPageHandler::isValid()
 	 */
 	public function isValid($objectID = null) {
@@ -56,6 +64,11 @@ trait TDecoratedCategoryLookupPageHandler {
 	}
 	
 	/**
+	 * Performs a search for pages using a query string, returning an array containing
+	 * an `objectID => title` relation.
+	 * 
+	 * @param	string		$searchString	search string
+	 * @return	string[]
 	 * @see	ILookupPageHandler::lookup()
 	 */
 	public function lookup($searchString) {

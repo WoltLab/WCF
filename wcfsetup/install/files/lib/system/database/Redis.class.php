@@ -38,6 +38,8 @@ class Redis {
 	
 	/**
 	 * Connects to the redis server given by the DSN.
+	 * 
+	 * @param	string		$dsn
 	 */
 	public function __construct($dsn) {
 		if (!class_exists('Redis')) {
@@ -80,6 +82,10 @@ class Redis {
 	
 	/**
 	 * Passes all method calls down to the underlying Redis connection.
+	 * 
+	 * @param	string		$name
+	 * @param	array		$arguments
+	 * @return	mixed
 	 */
 	public function __call($name, array $arguments) {
 		switch ($name) {

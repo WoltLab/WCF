@@ -21,6 +21,11 @@ trait TDecoratedCategoryMenuPageHandler {
 	abstract protected function getDecoratedCategoryClass();
 	
 	/**
+	 * Returns false if this page should be hidden from menus, but does not control the accessibility
+	 * of the page itself. The visibility can optionally be scoped to the given object id.
+	 *
+	 * @param	integer|null	$objectID	optional page object id
+	 * @return	boolean		false if the page should be hidden from menus
 	 * @see	IMenuPageHandler::isVisible()
 	 */
 	public function isVisible($objectID = null) {

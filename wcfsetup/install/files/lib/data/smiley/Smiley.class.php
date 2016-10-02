@@ -36,6 +36,11 @@ class Smiley extends DatabaseObject {
 		return WCF::getPath().$this->smileyPath;
 	}
 	
+	/**
+	 * Returns the url to the 2x version of the smiley.
+	 * 
+	 * @return	string
+	 */
 	public function getURL2x() {
 		return ($this->smileyPath2x) ? WCF::getPath().$this->smileyPath2x : '';
 	}
@@ -51,6 +56,11 @@ class Smiley extends DatabaseObject {
 		return explode("\n", StringUtil::unifyNewlines($this->aliases));
 	}
 	
+	/**
+	 * Returns the height of the smiley.
+	 * 
+	 * @return	integer
+	 */
 	public function getHeight() {
 		if ($this->height === null) {
 			$this->height = 0;
@@ -68,6 +78,11 @@ class Smiley extends DatabaseObject {
 		return $this->height;
 	}
 	
+	/**
+	 * Returns the html code to render the smiley.
+	 * 
+	 * @return	string
+	 */
 	public function getHtml() {
 		$srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
 		$height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';

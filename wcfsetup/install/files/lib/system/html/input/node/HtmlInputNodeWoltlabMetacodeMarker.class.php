@@ -105,6 +105,12 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		return $groups;
 	}
 	
+	/**
+	 * Returns `true` if the given element is inside a code element.
+	 * 
+	 * @param	\DOMElement	$element
+	 * @return	boolean
+	 */
 	protected function isInsideCode(\DOMElement $element) {
 		$parent = $element;
 		while ($parent = $parent->parentNode) {

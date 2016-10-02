@@ -27,6 +27,11 @@ trait TDecoratedCategoryOnlineLocationPageHandler {
 	abstract protected function getDecoratedCategoryClass();
 	
 	/**
+	 * Returns the textual description if a user is currently online viewing this page.
+	 *
+	 * @param	Page		$page		visited page
+	 * @param	UserOnline	$user		user online object with request data
+	 * @return	string
 	 * @see	IOnlineLocationPageHandler::getOnlineLocation()
 	 */
 	public function getOnlineLocation(Page $page, UserOnline $user) {

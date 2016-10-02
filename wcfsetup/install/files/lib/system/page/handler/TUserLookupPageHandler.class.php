@@ -14,6 +14,10 @@ use wcf\system\cache\runtime\UserRuntimeCache;
  */
 trait TUserLookupPageHandler {
 	/**
+	 * Returns true if provided object id exists and is valid.
+	 *
+	 * @param	integer		$objectID	page object id
+	 * @return	boolean		true if object id is valid
 	 * @see	ILookupPageHandler::isValid()
 	 */
 	public function isValid($objectID) {
@@ -21,6 +25,11 @@ trait TUserLookupPageHandler {
 	}
 	
 	/**
+	 * Performs a search for pages using a query string, returning an array containing
+	 * an `objectID => title` relation.
+	 *
+	 * @param	string		$searchString	search string
+	 * @return	string[]
 	 * @see	ILookupPageHandler::lookup()
 	 */
 	public function lookup($searchString) {

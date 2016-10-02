@@ -68,6 +68,12 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		}
 	}
 	
+	/**
+	 * Replaces image element with attachment metacode element. 
+	 * 
+	 * @param	\DOMElement	$element
+	 * @param	string		$class
+	 */
 	protected function handleAttachment(\DOMElement $element, $class) {
 		$attachmentID = intval($element->getAttribute('data-attachment-id'));
 		if (!$attachmentID) {
@@ -97,6 +103,12 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		DOMUtil::replaceElement($element, $newElement, false);
 	}
 	
+	/**
+	 * Replaces image element with media metacode element.
+	 * 
+	 * @param	\DOMElement	$element
+	 * @param	string		$class
+	 */
 	protected function handleMedium(\DOMElement $element, $class) {
 		$mediumID = intval($element->getAttribute('data-media-id'));
 		if (!$mediumID) {
@@ -126,6 +138,11 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		DOMUtil::replaceElement($element, $newElement, false);
 	}
 	
+	/**
+	 * Replaces image element with smiley metacode element.
+	 * 
+	 * @param	\DOMElement	$element
+	 */
 	protected function handleSmiley(\DOMElement $element) {
 		$code = $element->getAttribute('alt');
 		

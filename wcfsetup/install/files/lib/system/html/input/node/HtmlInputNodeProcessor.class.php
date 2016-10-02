@@ -112,6 +112,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
 	}
 	
+	/**
+	 * Enforces the maximum depth of nested quotes.
+	 * 
+	 * @param	integer		$depth
+	 */
 	public function enforceQuoteDepth($depth) {
 		$quotes = [];
 		/** @var \DOMElement $quote */

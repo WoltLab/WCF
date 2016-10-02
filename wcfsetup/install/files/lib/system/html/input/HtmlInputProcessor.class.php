@@ -105,6 +105,11 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		return $this->getHtmlInputNodeProcessor()->validate();
 	}
 	
+	/**
+	 * Enforces the maximum depth of nested quotes.
+	 *
+	 * @param	integer		$depth
+	 */
 	public function enforceQuoteDepth($depth) {
 		$this->getHtmlInputNodeProcessor()->enforceQuoteDepth($depth);
 	}

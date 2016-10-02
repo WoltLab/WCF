@@ -41,6 +41,9 @@ class SimpleEmail {
 	}
 	
 	/**
+	 * Sets the email's 'Subject'.
+	 *
+	 * @param	string	$subject
 	 * @see	Email::setSubject()
 	 */
 	public function setSubject($subject) {
