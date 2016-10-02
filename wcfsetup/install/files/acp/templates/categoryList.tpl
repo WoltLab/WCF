@@ -17,48 +17,56 @@
 				sortableNodes.each(function(index, node) {
 					$(node).wcfIdentify();
 				});
-				
-				new WCF.Sortable.List('categoryList', 'wcf\\data\\category\\CategoryAction', 0{if $objectType->getProcessor()->getMaximumNestingLevel() != -1}, {
-					/**
-					 * Updates the sortable nodes after a sorting is started with
-					 * regard to their possibility to have child the currently sorted
-					 * category as a child category.
-					 */
-					start: function(event, ui) {
-						var sortedListItem = $(ui.item);
-						var itemNestingLevel = sortedListItem.find('.sortableList:has(.sortableNode)').length;
-						
-						sortableNodes.each(function(index, node) {
-							node = $(node);
-							
-							if (node.attr('id') != sortedListItem.attr('id')) {
-								if (node.parents('.sortableList').length + itemNestingLevel >= {@$objectType->getProcessor()->getMaximumNestingLevel() + 1}) {
-									node.addClass('sortableNoNesting');
+			
+				require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+					new UiSortableList({
+						containerId: 'categoryList',
+						className: 'wcf\\data\\category\\CategoryAction',
+						options: {
+							{if $objectType->getProcessor()->getMaximumNestingLevel() != -1}
+								/**
+								 * Updates the sortable nodes after a sorting is started with
+								 * regard to their possibility to have child the currently sorted
+								 * category as a child category.
+								 */
+								start: function(event, ui) {
+									var sortedListItem = $(ui.item);
+									var itemNestingLevel = sortedListItem.find('.sortableList:has(.sortableNode)').length;
+									
+									sortableNodes.each(function(index, node) {
+										node = $(node);
+										
+										if (node.attr('id') != sortedListItem.attr('id')) {
+											if (node.parents('.sortableList').length + itemNestingLevel >= {@$objectType->getProcessor()->getMaximumNestingLevel() + 1}) {
+												node.addClass('sortableNoNesting');
+											}
+											else if (node.hasClass('sortableNoNesting')) {
+												node.removeClass('sortableNoNesting');
+											}
+										}
+									});
+								},
+								
+								/**
+								 * Updates the sortable nodes after a sorting is completed with
+								 * regard to their possibility to have child categories.
+								 */
+								stop: function(event, ui) {
+									sortableNodes.each(function(index, node) {
+										node = $(node);
+										
+										if (node.parents('.sortableList').length == {@$objectType->getProcessor()->getMaximumNestingLevel() + 1}) {
+											node.addClass('sortableNoNesting');
+										}
+										else if (node.hasClass('sortableNoNesting')) {
+											node.removeClass('sortableNoNesting');
+										}
+									});
 								}
-								else if (node.hasClass('sortableNoNesting')) {
-									node.removeClass('sortableNoNesting');
-								}
-							}
-						});
-					},
-					
-					/**
-					 * Updates the sortable nodes after a sorting is completed with
-					 * regard to their possibility to have child categories.
-					 */
-					stop: function(event, ui) {
-						sortableNodes.each(function(index, node) {
-							node = $(node);
-							
-							if (node.parents('.sortableList').length == {@$objectType->getProcessor()->getMaximumNestingLevel() + 1}) {
-								node.addClass('sortableNoNesting');
-							}
-							else if (node.hasClass('sortableNoNesting')) {
-								node.removeClass('sortableNoNesting');
-							}
-						});
-					}
-				}{/if});
+							{/if}
+						}
+					});
+				});
 			{/if}
 		});
 	</script>
@@ -103,6 +111,8 @@
 							</span>
 							
 							<span class="statusDisplay buttons">
+								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+								
 								{if $objectType->getProcessor()->canEditCategory()}
 									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 								{/if}

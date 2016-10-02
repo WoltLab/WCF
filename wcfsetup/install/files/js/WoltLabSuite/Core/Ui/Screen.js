@@ -193,10 +193,11 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					// discard all setup callbacks after execution
 					queryObject.callbacksSetup = new Dictionary();
 				}
-				
-				queryObject.callbacksMatch.forEach(function(callback) {
-					callback();
-				});
+				else {
+					queryObject.callbacksMatch.forEach(function (callback) {
+						callback();
+					});
+				}
 			}
 			else {
 				queryObject.callbacksUnmatch.forEach(function(callback) {
