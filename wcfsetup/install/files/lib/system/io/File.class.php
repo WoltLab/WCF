@@ -26,6 +26,7 @@ use wcf\system\exception\SystemException;
  * @method	integer		filesize()
  * @method	string		gets($length = null)
  * @method	resource	open($mode, $use_include_path = false, $context = null)
+ * @method	integer		puts($string, $length = null)		alias of `write`
  * @method	string		read($length)
  * @method	integer		seek($offset, $whence = SEEK_SET)
  * @method	array		stat()

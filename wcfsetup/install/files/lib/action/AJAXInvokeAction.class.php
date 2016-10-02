@@ -263,6 +263,8 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		
 		// execute request
 		$className = get_called_class();
+		
+		/** @var AJAXInvokeAction $actionObject */
 		$actionObject = new $className();
 		$actionObject->enableDebugMode();
 		$actionObject->__run();
