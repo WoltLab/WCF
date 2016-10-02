@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\box;
 use wcf\data\box\Box;
-use wcf\data\condition\ConditionAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;

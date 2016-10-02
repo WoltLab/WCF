@@ -2,8 +2,6 @@
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
-use wcf\data\condition\Condition;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 
 /**
