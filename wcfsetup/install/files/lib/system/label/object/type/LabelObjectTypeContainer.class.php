@@ -12,12 +12,6 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class LabelObjectTypeContainer implements \Countable, \Iterator {
 	/**
-	 * true if container represents only a boolean option
-	 * @var	boolean
-	 */
-	public $isBooleanOption = false;
-	
-	/**
 	 * list of object types
 	 * @var	LabelObjectType[]
 	 */
@@ -30,12 +24,6 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	public $objectTypeID = 0;
 	
 	/**
-	 * option value if container is a boolean option itself
-	 * @var	boolean
-	 */
-	public $optionValue = false;
-	
-	/**
 	 * iterator position
 	 * @var	integer
 	 */
@@ -45,13 +33,9 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	 * Creates a new LabelObjectTypeContainer object.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @param	boolean		$isBooleanOption
-	 * @param	boolean		$optionValue
 	 */
-	public function __construct($objectTypeID, $isBooleanOption = false, $optionValue = false) {
+	public function __construct($objectTypeID) {
 		$this->objectTypeID = $objectTypeID;
-		$this->isBooleanOption = $isBooleanOption;
-		$this->optionValue = $optionValue;
 	}
 	
 	/**
@@ -79,24 +63,6 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	 */
 	public function getObjectTypeName() {
 		return ObjectTypeCache::getInstance()->getObjectType($this->getObjectTypeID())->objectType;
-	}
-	
-	/**
-	 * Returns true, if container represents only a boolean option.
-	 * 
-	 * @return	boolean
-	 */
-	public function isBooleanOption() {
-		return $this->isBooleanOption;
-	}
-	
-	/**
-	 * Returns option value.
-	 * 
-	 * @return	boolean
-	 */
-	public function getOptionValue() {
-		return $this->optionValue;
 	}
 	
 	/**

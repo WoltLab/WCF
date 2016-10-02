@@ -273,27 +273,15 @@ class LabelGroupAddForm extends AbstractForm {
 			$data = &$this->objectTypes;
 		}
 		
-		// no data provided and no POST data exists
-		/*if ($data === null || !is_array($data)) {
-			// nothing to do here
-			return;
-		}*/
-		
 		foreach ($this->labelObjectTypeContainers as $objectTypeID => $container) {
-			if ($container->isBooleanOption()) {
-				$optionValue = isset($data[$objectTypeID]) ? 1 : 0;
-				$container->setOptionValue($optionValue);
-			}
-			else {
-				$hasData = isset($data[$objectTypeID]);
-				foreach ($container as $object) {
-					if (!$hasData) {
-						$object->setOptionValue(0);
-					}
-					else {
-						$optionValue = in_array($object->getObjectID(), $data[$objectTypeID]) ? 1 : 0;
-						$object->setOptionValue($optionValue);
-					}
+			$hasData = isset($data[$objectTypeID]);
+			foreach ($container as $object) {
+				if (!$hasData) {
+					$object->setOptionValue(0);
+				}
+				else {
+					$optionValue = in_array($object->getObjectID(), $data[$objectTypeID]) ? 1 : 0;
+					$object->setOptionValue($optionValue);
 				}
 			}
 		}
