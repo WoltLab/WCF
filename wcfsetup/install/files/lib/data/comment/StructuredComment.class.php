@@ -170,7 +170,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	 * @inheritDoc
 	 */
 	public function key() {
-		return $this->postition;
+		return $this->position;
 	}
 	
 	/**
