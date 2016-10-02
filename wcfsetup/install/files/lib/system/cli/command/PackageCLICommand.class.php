@@ -49,7 +49,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 		$this->argv->parse();
 		
 		if (count($this->argv->getRemainingArgs()) !== 2) {
-			throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
+			throw new ArgvException('', $this->getUsage());
 		}
 		
 		list($action, $package) = $this->argv->getRemainingArgs();
@@ -65,7 +65,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			break;
 			
 			default:
-				throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
+				throw new ArgvException('', $this->getUsage());
 			break;
 		}
 	}
