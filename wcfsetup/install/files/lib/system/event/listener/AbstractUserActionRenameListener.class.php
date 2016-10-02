@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event\listener;
+use wcf\data\user\UserAction;
 use wcf\system\WCF;
 
 /**
@@ -29,6 +30,8 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
 	 * @inheritDoc
 	 */
 	public function execute($eventObj, $className, $eventName, array &$parameters) {
+		/** @var UserAction $eventObj */
+		
 		$userID = $eventObj->getObjects()[0]->userID;
 		$username = $eventObj->getParameters()['data']['username'];
 		

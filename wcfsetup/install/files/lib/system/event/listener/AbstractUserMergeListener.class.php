@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event\listener;
+use wcf\acp\form\UserMergeForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -33,6 +34,8 @@ abstract class AbstractUserMergeListener implements IParameterizedEventListener 
 	 * @inheritDoc
 	 */
 	public function execute($eventObj, $className, $eventName, array &$parameters) {
+		/** @var UserMergeForm $eventObj */
+		
 		foreach ($this->databaseTables as $databaseTable) {
 			if (!is_array($databaseTable)) {
 				$databaseTable = ['name' => $databaseTable];
