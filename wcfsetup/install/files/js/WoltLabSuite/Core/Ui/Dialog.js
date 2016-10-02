@@ -242,6 +242,9 @@ define(
 					}
 				}).bind(this), 200);
 			}
+			else if (Environment.platform() !== 'desktop') {
+				UiScreen.scrollDisable();
+			}
 			
 			return data;
 		},
@@ -574,7 +577,7 @@ define(
 				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 			}
 			
-			if (Environment.platform() === 'ios') {
+			if (Environment.platform() !== 'desktop') {
 				UiScreen.scrollEnable();
 			}
 		},
