@@ -175,18 +175,6 @@ define(
 				}
 				
 				var navigation = elBySel('.jsMobileNavigation', message);
-				var quickOptions = elBySel('.messageQuickOptions', message);
-				
-				if (quickOptions) {
-					quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
-						if (_enabled) {
-							event.preventDefault();
-							event.stopPropagation();
-							
-							navigation.classList.toggle('open');
-						}
-					});
-				}
 				if (navigation) {
 					navigation.addEventListener(WCF_CLICK_EVENT, function(event) {
 						event.stopPropagation();
@@ -196,6 +184,23 @@ define(
 							navigation.classList.remove('open');
 						}, 10);
 					});
+					
+					var quickOptions = elBySel('.messageQuickOptions', message);
+					if (quickOptions) {
+						if (navigation.childElementCount) {
+							quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
+								if (_enabled) {
+									event.preventDefault();
+									event.stopPropagation();
+									
+									navigation.classList.toggle('open');
+								}
+							});
+						}
+						else {
+							elHide(quickOptions);
+						}
+					}
 				}
 				
 				_knownMessages.add(message);
