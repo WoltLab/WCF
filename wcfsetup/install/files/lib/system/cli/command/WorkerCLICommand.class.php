@@ -128,7 +128,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		}
 		$progressbar->update($progress);
 		
-		$progressbar->getAdapter()->finish();
+		$progressbar->finish();
 	}
 	
 	/**

@@ -334,7 +334,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			$progressbar->update($progress, $currentAction);
 		}
 		
-		$progressbar->getAdapter()->finish();
+		$progressbar->finish();
 	}
 	
 	/**
@@ -431,7 +431,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			$progressbar->update($progress, $currentAction);
 		}
 		
-		$progressbar->getAdapter()->finish();
+		$progressbar->finish();
 	}
 	
 	/**

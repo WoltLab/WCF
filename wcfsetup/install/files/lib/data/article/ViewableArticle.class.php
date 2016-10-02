@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\article;
+use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\media\ViewableMedia;
 use wcf\data\user\User;
@@ -16,7 +17,8 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
  *
- * @method	Article	getDecoratedObject()
+ * @method	Article					getDecoratedObject()
+ * @method	ArticleContent|ViewableArticleContent	getArticleContent()
  * @mixin	Article
  */
 class ViewableArticle extends DatabaseObjectDecorator {

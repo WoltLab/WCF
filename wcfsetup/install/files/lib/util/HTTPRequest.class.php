@@ -170,6 +170,7 @@ final class HTTPRequest {
 				if (!empty($this->postParameters)) {
 					$iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->postParameters), \RecursiveIteratorIterator::SELF_FIRST);
 					foreach ($iterator as $k => $v) {
+						/** @noinspection PhpUndefinedMethodInspection */
 						if (!$iterator->hasChildren()) {
 							$key = '';
 							for ($i = 0, $max = $iterator->getDepth(); $i <= $max; $i++) {
@@ -186,6 +187,7 @@ final class HTTPRequest {
 				
 				$iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->files), \RecursiveIteratorIterator::SELF_FIRST);
 				foreach ($iterator as $k => $v) {
+					/** @noinspection PhpUndefinedMethodInspection */
 					if (!$iterator->hasChildren()) {
 						$key = '';
 						for ($i = 0, $max = $iterator->getDepth(); $i <= $max; $i++) {

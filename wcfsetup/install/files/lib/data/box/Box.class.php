@@ -46,6 +46,9 @@ use wcf\system\WCF;
  * @property-read	integer		$linkPageObjectID	id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked 
  * @property-read	string		$externalURL		external link used to for the box image and box title or empty if no external link is set
  * @property-read	array		$additionalData		array with additional data of the box
+ * @property-read	integer|null	$limit			number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read	string|null	$sortField		sort field of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read	string|null	$sortOrder		sort order of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  */
 class Box extends DatabaseObject {
 	/**

@@ -96,8 +96,11 @@ class CLIWCF extends WCF {
 	 */
 	public static function destruct() {
 		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
-			self::getReader()->getHistory()->save();
-			self::getReader()->getHistory()->autoSave = false;
+			/** @var DatabaseCLICommandHistory $history */
+			$history = self::getReader()->getHistory();
+			
+			$history->save();
+			$history->autoSave = false;
 		}
 		
 		self::getSession()->delete();

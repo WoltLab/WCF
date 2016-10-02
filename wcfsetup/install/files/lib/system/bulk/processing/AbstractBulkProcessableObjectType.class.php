@@ -42,7 +42,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
 	 */
 	public function getActionObjectTypeDefinition() {
 		if (empty($this->actionObjectTypeDefinition)) {
-			$this->actionObjectTypeDefinition = $this->object->objectType.'.action';
+			$this->actionObjectTypeDefinition = $this->getDecoratedObject()->objectType.'.action';
 		}
 		
 		return $this->actionObjectTypeDefinition;
@@ -60,7 +60,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
 	 */
 	public function getConditionObjectTypeDefinition() {
 		if (empty($this->conditionObjectTypeDefinition)) {
-			$this->conditionObjectTypeDefinition = $this->object->objectType.'.condition';
+			$this->conditionObjectTypeDefinition = $this->getDecoratedObject()->objectType.'.condition';
 		}
 		
 		return $this->conditionObjectTypeDefinition;
@@ -72,7 +72,7 @@ abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProce
 	public function getLanguageItemPrefix() {
 		if (empty($this->languageItemPrefix)) {
 			$application = explode('\\', get_class($this))[0];
-			$objectTypePieces = explode('.', $this->object->objectType);
+			$objectTypePieces = explode('.', $this->getDecoratedObject()->objectType);
 			
 			$this->languageItemPrefix = $application.'.acp.'.end($objectTypePieces).'.bulkProcessing';
 		}

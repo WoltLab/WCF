@@ -4,6 +4,7 @@ use wcf\acp\form\UserOptionListForm;
 use wcf\data\search\SearchEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\user\UserOptionHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -17,6 +18,8 @@ use wcf\util\StringUtil;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
+ * 
+ * @property	UserOptionHandler	$optionHandler
  */
 class UserSearchForm extends UserOptionListForm {
 	/**

@@ -3,6 +3,7 @@ namespace wcf\system\user\notification\event;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\email\Email;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for profile comment responses.
@@ -11,6 +12,8 @@ use wcf\system\email\Email;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
 class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
@@ -100,6 +103,6 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @inheritDoc
 	 */
 	public function getEventHash() {
-		return sha1($this->eventID . '-' . $this->userNotificationObject->commentID);
+		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
 	}
 }

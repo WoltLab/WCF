@@ -201,6 +201,7 @@ final class DirectoryUtil {
 			
 			foreach ($it as $filename => $obj) {
 				// ignore . and ..
+				/** @noinspection PhpUndefinedMethodInspection */
 				if ($it->isDot()) continue;
 				
 				$this->files[FileUtil::unifyDirSeparator($filename)] = FileUtil::unifyDirSeparator($filename);
@@ -231,6 +232,7 @@ final class DirectoryUtil {
 			
 			foreach ($it as $filename => $obj) {
 				// ignore . and ..
+				/** @noinspection PhpUndefinedMethodInspection */
 				if ($it->isDot()) continue;
 				
 				$this->fileObjects[FileUtil::unifyDirSeparator($filename)] = $obj;
