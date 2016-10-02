@@ -28,7 +28,9 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected function initObjectList() {}
+	protected function initObjectList() {
+		// does nothing
+	}
 	
 	/**
 	 * @inheritDoc

@@ -12,6 +12,8 @@ use wcf\system\WCF;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
+ * 
+ * @method	LikeList	getObjectList()
  */
 class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
