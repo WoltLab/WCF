@@ -21,7 +21,13 @@
 <script>
 requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js'
+	{hascontent}
+	, paths: {
+		{content}{event name='requirePaths'}{/content}
+	}
+	{/hascontent}
 });
+{event name='requireConfig'}
 </script>
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/BootstrapFrontend', 'User'], function(Language, BootstrapFrontend, User) {

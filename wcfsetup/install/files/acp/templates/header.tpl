@@ -32,8 +32,14 @@
 	{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true'}
 	<script>
 		requirejs.config({
-			baseUrl: '{@$__wcf->getPath()}js'
+			baseUrl: '{@$__wcf->getPath()}js',
+			{hascontent}
+			, paths: {
+				{content}{event name='requirePaths'}{/content}
+			}
+			{/hascontent}
 		});
+		{event name='requireConfig'}
 	</script>
 	<script>
 		require(['Language', 'WoltLabSuite/Core/Acp/Bootstrap', 'User'], function(Language, AcpBootstrap, User) {
