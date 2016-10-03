@@ -210,6 +210,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Mitglieder]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Benutzer online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Wer war online]]></item>
+		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -787,6 +788,7 @@
 		<item name="wcf.acp.menu.item.list"><![CDATA[Menüpunkte]]></item>
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Sonstiges]]></item>
+		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
