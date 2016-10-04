@@ -96,9 +96,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 			// remove marker elements
 			$markers = $element->getElementsByTagName('woltlab-list-item');
 			while ($markers->length) {
-				/** @var \DOMElement $marker */
-				$marker = $markers[0];
-				$marker->parentNode->removeChild($marker);
+				DOMUtil::removeNode($markers->item(0));
 			}
 			
 			$childNodes = [];
