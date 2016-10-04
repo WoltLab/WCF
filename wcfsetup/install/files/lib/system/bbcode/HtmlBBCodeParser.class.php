@@ -174,6 +174,94 @@ class HtmlBBCodeParser extends BBCodeParser {
 	}
 	
 	/**
+	 * Builds the parsed string.
+	 */
+	public function buildParsedString() {
+		// reset parsed text
+		$this->parsedText = '';
+		
+		// create text buffer
+		$buffer =& $this->parsedText;
+		
+		// stack of buffered tags
+		$bufferedTagStack = [];
+		
+		// loop through the tags
+		$i = -1;
+		foreach ($this->tagArray as $i => $tag) {
+			// append text to buffer
+			$buffer .= $this->textArray[$i];
+			
+			if ($tag['closing']) {
+				// get buffered opening tag
+				$openingTag = end($bufferedTagStack);
+				
+				// closing tag
+				if ($openingTag && $openingTag['name'] == $tag['name']) {
+					$hideBuffer = false;
+					// insert buffered content as attribute value
+					foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
+						if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
+							$openingTag['attributes'][$attribute->attributeNo] = $buffer;
+							$hideBuffer = true;
+							break;
+						}
+					}
+					
+					// validate tag attributes again
+					if ($this->isValidTag($openingTag)) {
+						if ($this->bbcodes[$tag['name']]->className) {
+							// difference to the original implementation: use the custom HTML element than to process them directly
+							$parsedTag = $this->compileTag($openingTag, $buffer, $tag);
+						}
+						else {
+							// build tag
+							$parsedTag = $this->buildOpeningTag($openingTag);
+							$closingTag = $this->buildClosingTag($tag);
+							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $buffer.$closingTag;
+						}
+					}
+					else {
+						$parsedTag = $openingTag['source'].$buffer.$tag['source'];
+					}
+					
+					// close current buffer
+					array_pop($bufferedTagStack);
+					
+					// open previous buffer
+					if (count($bufferedTagStack) > 0) {
+						$bufferedTag =& $bufferedTagStack[count($bufferedTagStack) - 1];
+						$buffer =& $bufferedTag['buffer'];
+					}
+					else {
+						$buffer =& $this->parsedText;
+					}
+					
+					// append parsed tag
+					$buffer .= $parsedTag;
+				}
+				else {
+					$buffer .= $this->buildClosingTag($tag);
+				}
+			}
+			else {
+				// opening tag
+				if ($this->needBuffering($tag)) {
+					// start buffering
+					$tag['buffer'] = '';
+					$bufferedTagStack[] = $tag;
+					$buffer =& $bufferedTagStack[count($bufferedTagStack) - 1]['buffer'];
+				}
+				else {
+					$buffer .= $this->buildOpeningTag($tag);
+				}
+			}
+		}
+		
+		if (isset($this->textArray[$i + 1])) $this->parsedText .= $this->textArray[$i + 1];
+	}
+	
+	/**
 	 * Builds the bbcode output.
 	 * 
 	 * @param	string		$name		bbcode identifier
