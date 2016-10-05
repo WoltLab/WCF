@@ -55,6 +55,16 @@ class LabelEditForm extends LabelAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validateGroup() {
+		// groupID is immutable because altering it would cause issues with objects that are
+		// assigned to them, but the new group is not allowed at their current position
+		
+		// we're not saving the value anyway, therefore we can simply skip the checks
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 		
@@ -87,6 +97,8 @@ class LabelEditForm extends LabelAddForm {
 		
 		// reset values if non-custom value was choosen
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
+		
+		$this->groupID = $this->labelObj->groupID;
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
