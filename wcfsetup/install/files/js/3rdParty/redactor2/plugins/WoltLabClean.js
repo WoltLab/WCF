@@ -9,13 +9,26 @@ $.Redactor.prototype.WoltLabClean = function() {
 			
 			var mpOnSet = this.clean.onSet;
 			this.clean.onSet = (function (html) {
-				return mpOnSet.call(this, html.replace(/\u200B/g, ''));
+				html = html.replace(/\u200B/g, '');
+				
+				// fix ampersands being replaced
+				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				
+				html = mpOnSet.call(this, html);
+				
+				// restore ampersands
+				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				
+				return html;
 			}).bind(this);
 			
 			var mpOnSync = this.clean.onSync;
 			this.clean.onSync = (function (html) {
 				var div = elCreate('div');
 				var replacements = {};
+				
+				// fix ampersands being replaced
+				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
 				
 				if (html.indexOf('<pre') !== -1) {
 					div.innerHTML = html;
@@ -33,6 +46,9 @@ $.Redactor.prototype.WoltLabClean = function() {
 				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
 				
 				html = mpOnSync.call(this, html);
+				
+				// restore ampersands
+				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
 				
 				div.innerHTML = html;
 				
