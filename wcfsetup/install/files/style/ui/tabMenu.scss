@@ -23,7 +23,7 @@
 			&.active{
 				// this causes the item to stand above the fade-effect caused
 				// by the overflow overlays
-				z-index: 100;
+				z-index: 60;
 				
 				&::before {
 					left: 0;
