@@ -35,9 +35,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 				var div = elCreate('div');
 				var replacements = {};
 				
-				// fix ampersands being replaced
-				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
-				
 				if (html.indexOf('<pre') !== -1) {
 					div.innerHTML = html;
 					
@@ -52,6 +49,9 @@ $.Redactor.prototype.WoltLabClean = function() {
 				}
 				
 				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
+				
+				// fix ampersands being replaced
+				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
 				
 				html = mpOnSync.call(this, html);
 				
