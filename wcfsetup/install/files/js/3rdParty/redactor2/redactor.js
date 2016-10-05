@@ -1,11 +1,11 @@
 /*
 	Redactor II
-	Version 1.2.6
-	Updated: September 3, 2015
+	Version 1.2.7
+	Updated: October 4, 2016
 
 	http://imperavi.com/redactor/
 
-	Copyright (c) 2009-2016, Imperavi LLC.
+	Copyright (c) 2009-2016, Imperavi Oy.
 	License: http://imperavi.com/redactor/license/
 
 	Usage: $('#content').redactor();
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '1.2.6';
+	$.Redactor.VERSION = '1.2.7';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -876,7 +876,7 @@
 					{
 						var currentTag = blocks[i].tagName.toLowerCase();
 
-						if ($.inArray(currentTag, this.block.tags) !== -1)
+						if ($.inArray(currentTag, this.block.tags) !== -1 && currentTag !== 'figure')
 						{
 							var block = this.utils.replaceToTag(blocks[i], tag);
 
@@ -2539,6 +2539,13 @@
                         html = html.replace(/<b\sid="internal-source-marker(.*?)">([\w\W]*?)<\/b>/gi, "$2");
     					html = html.replace(/<b(.*?)id="docs-internal-guid(.*?)">([\w\W]*?)<\/b>/gi, "$3");
 
+                        // google docs styles
+                        html = html.replace(/<span[^>]*(font-style: italic; font-weight: bold|font-weight: bold; font-style: italic)[^>]*>([\w\W]*?)<\/span>/gi, '<b><i>$2</i></b>');
+                        html = html.replace(/<span[^>]*(font-style: italic; font-weight: 700|font-weight: 700; font-style: italic)[^>]*>([\w\W]*?)<\/span>/gi, '<b><i>$2</i></b>');
+                        html = html.replace(/<span[^>]*font-style: italic[^>]*>([\w\W]*?)<\/span>/gi, '<i>$1</i>');
+                        html = html.replace(/<span[^>]*font-weight: bold[^>]*>([\w\W]*?)<\/span>/gi, '<b>$1</b>');
+                        html = html.replace(/<span[^>]*font-weight: 700[^>]*>([\w\W]*?)<\/span>/gi, '<b>$1</b>');
+
 						var msword = this.clean.isHtmlMsWord(html);
 						if (msword)
 						{
@@ -2722,6 +2729,72 @@
 					html = html.replace(/\n/g, " ");
 					html = html.replace(/<br\s?\/?>|<\/p>|<\/div>|<\/li>|<\/td>/gi, '\n\n');
 
+					// lists
+					var $div = $("<div/>").html(html);
+
+					var lastList = false;
+					var lastLevel = 1;
+					var listsIds = [];
+
+					$div.find("p[style]").each(function()
+					{
+						var matches = $(this).attr('style').match(/mso\-list\:l([0-9]+)\slevel([0-9]+)/);
+
+						if (matches)
+						{
+							var currentList = parseInt(matches[1]);
+							var currentLevel = parseInt(matches[2]);
+							var listType = $(this).html().match(/^[\w]+\./) ? "ol" : "ul";
+
+							var $li = $("<li/>").html($(this).html());
+
+							$li.html($li.html().replace(/^([\w\.]+)</, '<'));
+							$li.find("span:first").remove();
+
+							if (currentLevel == 1 && $.inArray(currentList, listsIds) == -1)
+							{
+								var $list = $("<" + listType + "/>").attr({"data-level": currentLevel, "data-list": currentList}).html($li);
+								$(this).replaceWith($list);
+
+								lastList = currentList;
+								listsIds.push(currentList);
+							}
+							else
+							{
+								if (currentLevel > lastLevel)
+								{
+									var $prevList = $div.find('[data-level="' + lastLevel + '"][data-list="' + lastList + '"]');
+									var $lastList = $prevList;
+
+									for(var i = lastLevel; i < currentLevel; i++)
+									{
+										$list = $("<" + listType + "/>");
+										$list.appendTo($lastList.find("li").last());
+
+										$lastList = $list;
+									}
+
+									$lastList.attr({"data-level": currentLevel, "data-list": currentList}).html($li);
+
+								}
+								else
+								{
+									var $prevList = $div.find('[data-level="' + currentLevel + '"][data-list="' + currentList + '"]').last();
+
+									$prevList.append($li);
+								}
+
+								lastLevel = currentLevel;
+								lastList = currentList;
+
+								$(this).remove();
+							}
+						}
+					});
+
+					$div.find('[data-level][data-list]').removeAttr('data-level data-list');
+					html = $div.html();
+
 					return html;
 				},
 				replaceNbspToSpaces: function(html)
@@ -2738,7 +2811,6 @@
 				},
 				convertTags: function(html, data)
 				{
-
                     var $div = $('<div>').html(html);
 
                     // remove iframe
@@ -3074,9 +3146,18 @@
 					this.observe.load();
 					this.events.startDetectChanges();
 				},
-				set: function(html)
+				set: function(html, options)
 				{
 					html = $.trim(html);
+
+
+                    options = options || {};
+
+                    // start
+                    if (options.start)
+                    {
+                        this.start = options.start;
+                    }
 
 					// clean
 					if (this.opts.type === 'textarea')
@@ -5185,7 +5266,8 @@
 							}
 							else
 							{
-								html = $(html).append(this.marker.get());
+    							var $last = $(html).children().last();
+								$last.append(this.marker.get());
 
 								if (breaked.type === 'start')
 								{
@@ -6039,7 +6121,8 @@
 						return true;
 					}
 
-					if (this.utils.isEmpty(this.code.get()) && this.opts.tabAsSpaces === false)
+					var isList = (this.keydown.block && this.keydown.block.tagName === 'LI')
+					if (this.utils.isEmpty(this.code.get()) || (!isList && !this.keydown.pre && this.opts.tabAsSpaces === false))
 					{
 						return true;
 					}
@@ -6047,8 +6130,9 @@
 					e.preventDefault();
 					this.buffer.set();
 
-                    var isListStart = (this.keydown.block && this.keydown.block.tagName === 'LI' && this.utils.isStartOfElement(this.keydown.block));
+                    var isListStart = (isList && this.utils.isStartOfElement(this.keydown.block));
 					var node;
+
 					if (this.keydown.pre && !e.shiftKey)
 					{
 						node = (this.opts.preSpaces) ? document.createTextNode(Array(this.opts.preSpaces + 1).join('\u00a0')) : document.createTextNode('\t');
@@ -6669,7 +6753,7 @@
 					var re5 = new RegExp('^tel:(.*?)', 'i');
 
 					// add protocol
-					if (url.search(re1) === -1 && url.search(re2) !== -1)
+					if (url.search(re1) === -1 && url.search(re2) !== -1 && url.search(re3) === -1)
 					{
 						url = 'http://' + url;
 					}
@@ -8168,7 +8252,7 @@
 				},
 				createPasteBox: function(pre)
 				{
-					var css = { position: 'fixed', width: 0, top: 0, left: '-9999px' };
+					var css = { position: 'fixed', width: '1px', top: 0, left: '-9999px' };
 
 					this.$pasteBox = (pre) ? $('<textarea>').css(css) : $('<div>').attr('contenteditable', 'true').css(css);
 					this.paste.appendPasteBox();
