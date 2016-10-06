@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\box;
-use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\Article;
 use wcf\data\comment\ViewableCommentList;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
