@@ -242,6 +242,28 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 				}
 			}
 		}
+		
+		// trim <p>...</p>
+		/** @var \DOMElement $paragraph */
+		foreach ($this->getDocument()->getElementsByTagName('p') as $paragraph) {
+			DOMUtil::normalize($paragraph);
+			
+			if ($paragraph->firstChild && $paragraph->firstChild->nodeType === XML_TEXT_NODE) {
+				$oldNode = $paragraph->firstChild;
+				$newNode = $paragraph->ownerDocument->createTextNode(preg_replace('/^(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+/', '', $oldNode->textContent));
+				$paragraph->insertBefore($newNode, $oldNode);
+				$paragraph->removeChild($oldNode);
+				
+			}
+			
+			if ($paragraph->lastChild && $paragraph->lastChild->nodeType === XML_TEXT_NODE) {
+				$oldNode = $paragraph->lastChild;
+				$newNode = $paragraph->ownerDocument->createTextNode(preg_replace('/(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+$/', '', $oldNode->textContent));
+				$paragraph->insertBefore($newNode, $oldNode);
+				$paragraph->removeChild($oldNode);
+				
+			}
+		}
 	}
 	
 	/**

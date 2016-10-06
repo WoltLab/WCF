@@ -383,6 +383,37 @@ final class DOMUtil {
 	}
 	
 	/**
+	 * Normalizes an element by joining adjacent text nodes.
+	 * 
+	 * @param       \DOMElement     $element        target element
+	 */
+	public static function normalize(\DOMElement $element) {
+		$childNodes = DOMUtil::getChildNodes($element);
+		/** @var \DOMNode $lastTextNode */
+		$lastTextNode = null;
+		foreach ($childNodes as $childNode) {
+			if ($childNode->nodeType !== XML_TEXT_NODE) {
+				$lastTextNode = null;
+				continue;
+			}
+			
+			if ($lastTextNode === null) {
+				$lastTextNode = $childNode;
+			}
+			else {
+				// merge with last text node
+				$newTextNode = $childNode->ownerDocument->createTextNode($lastTextNode->textContent . $childNode->textContent);
+				$element->insertBefore($newTextNode, $lastTextNode);
+				
+				$element->removeChild($lastTextNode);
+				$element->removeChild($childNode);
+				
+				$lastTextNode = $newTextNode;
+			}
+		}
+	}
+	
+	/**
 	 * Prepends a node to provided element.
 	 * 
 	 * @param	\DOMNode	$node		node
