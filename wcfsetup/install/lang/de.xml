@@ -196,6 +196,7 @@
 		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Box auf ausgewählten Seiten <strong>explizit anzeigen</strong>]]></item>
 		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Box auf ausgewählten Seiten <strong>nicht anzeigen</strong>]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCategories"><![CDATA[Artikel-Kategorien]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCommentList"><![CDATA[Artikel-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleList"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Benutzer online, denen der aktive Nutzer folgt]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Seiten-Kommentare]]></item>

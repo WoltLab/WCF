@@ -193,6 +193,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.visibilityException.visible"><![CDATA[Choose Where the Box Will be Explicitly <strong>Visible</strong>]]></item>
 		<item name="wcf.acp.box.visibilityException.hidden"><![CDATA[Choose Where the Box Will be Explicitly <strong>Hidden</strong>]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCategories"><![CDATA[Article Categories]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCommentList"><![CDATA[Article Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleList"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Users Online Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Page Comments]]></item>

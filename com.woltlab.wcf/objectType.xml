@@ -1085,6 +1085,11 @@
 			<classname>wcf\system\box\ArticleListBoxController</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.articleCommentList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\ArticleCommentListBoxController</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.whoWasOnline</name>
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\WhoWasOnlineBoxController</classname>
