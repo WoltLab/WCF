@@ -1198,6 +1198,7 @@ class WCFSetup extends WCF {
 		SessionHandler::getInstance()->register('masterPassword', 1);
 		SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
 		SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
+		SessionHandler::getInstance()->unregister('__changeSessionID');
 		SessionHandler::getInstance()->update();
 		
 		// print page
