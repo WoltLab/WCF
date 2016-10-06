@@ -33,20 +33,33 @@ $.Redactor.prototype.WoltLabClean = function() {
 			var mpOnSync = this.clean.onSync;
 			this.clean.onSync = (function (html) {
 				var div = elCreate('div');
+				div.innerHTML = html;
 				var replacements = {};
 				
-				if (html.indexOf('<pre') !== -1) {
-					div.innerHTML = html;
+				elBySelAll('pre', div, function (pre) {
+					var uuid = WCF.getUUID();
 					
-					elBySelAll('pre', div, function (pre) {
-						var uuid = WCF.getUUID();
-						
-						replacements[uuid] = pre.textContent;
-						pre.textContent = uuid;
-					});
-					
-					html = div.innerHTML;
-				}
+					replacements[uuid] = pre.textContent;
+					pre.textContent = uuid;
+				});
+				
+				// handle <p> with trailing `<br>\u200B`
+				elBySelAll('p', div, function (p) {
+					var br = p.lastElementChild;
+					if (br && br.nodeName === 'BR') {
+						// check if there is only whitespace afterwards
+						if (br.nextSibling && br.nextSibling.textContent.match(/^[\s\u200B]+$/)) {
+							var newP = elCreate('p');
+							newP.innerHTML = '<br>';
+							p.parentNode.insertBefore(newP, p.nextSibling);
+							
+							p.removeChild(br.nextSibling);
+							p.removeChild(br);
+						}
+					}
+				});
+				
+				html = div.innerHTML;
 				
 				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
 				
