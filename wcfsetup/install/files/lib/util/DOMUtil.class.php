@@ -388,7 +388,7 @@ final class DOMUtil {
 	 * @param       \DOMElement     $element        target element
 	 */
 	public static function normalize(\DOMElement $element) {
-		$childNodes = DOMUtil::getChildNodes($element);
+		$childNodes = self::getChildNodes($element);
 		/** @var \DOMNode $lastTextNode */
 		$lastTextNode = null;
 		foreach ($childNodes as $childNode) {
