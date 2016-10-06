@@ -793,7 +793,13 @@ class PackageInstallationDispatcher {
 				}
 				
 				$documentRoot = substr(FileUtil::unifyDirSeparator(WCF_DIR), 0, -strlen(FileUtil::unifyDirSeparator($wcfDomainPath)));
-				$domainPath = FileUtil::addLeadingSlash(FileUtil::getRelativePath($documentRoot, $packageDir));
+				$domainPath = FileUtil::getRelativePath($documentRoot, $packageDir);
+				if ($domainPath === './') {
+					// `FileUtil::getRelativePath()` returns `./` if both paths lead to the same directory
+					$domainPath = '/';
+				}
+				
+				$domainPath = FileUtil::addLeadingSlash($domainPath);
 				
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
