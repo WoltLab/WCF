@@ -4,9 +4,12 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\exception\SystemException;
+use wcf\system\io\File;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\util\FileUtil;
 
 /**
  * Handles multi-application environments.
@@ -92,12 +95,21 @@ class ApplicationHandler extends SingletonFactory {
 		// work-around during WCFSetup
 		if (!PACKAGE_ID) {
 			$host = str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
+			$documentRoot = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(realpath($_SERVER['DOCUMENT_ROOT'])));
+			
+			// always use the core directory
+			if (empty($_POST['directories']) || empty($_POST['directories']['wcf'])) {
+				// within ACP
+				$_POST['directories'] = ['wcf' => $documentRoot . FileUtil::removeLeadingSlash(RouteHandler::getPath(['acp']))];
+			}
+			
+			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(FileUtil::getRelativePath($documentRoot, $_POST['directories']['wcf']))));
 			
 			return new Application(null, [
 				'domainName' => $host,
-				'domainPath' => RouteHandler::getPath(['acp']),
+				'domainPath' => $path,
 				'cookieDomain' => $host,
-				'cookiePath' => RouteHandler::getPath(['acp'])
+				'cookiePath' => $path
 			]);
 		}
 		else if (isset($this->cache['application'][PACKAGE_ID])) {
