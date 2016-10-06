@@ -47,6 +47,12 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	public $defaultSortField;
 	
 	/**
+	 * default sort order
+	 * @var	string
+	 */
+	public $defaultSortOrder;
+	
+	/**
 	 * limit value for the maximum number of shown database objects
 	 * @var	integer
 	 */
@@ -111,6 +117,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		
 		if (!empty($this->validSortFields)) {
 			$this->sortField = $this->defaultSortField;
+			$this->sortOrder = $this->defaultSortOrder;
 		}
 		
 		if ($this->defaultLimit !== null) {
