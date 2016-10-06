@@ -403,7 +403,6 @@ class PackageInstallationDispatcher {
 					'domainName' => $host,
 					'domainPath' => $path,
 					'cookieDomain' => $host,
-					'cookiePath' => $path,
 					'packageID' => $package->packageID
 				]);
 			}
@@ -799,10 +798,7 @@ class PackageInstallationDispatcher {
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
 				$applicationEditor = new ApplicationEditor($application);
-				$applicationEditor->update([
-					'domainPath' => $domainPath,
-					'cookiePath' => $domainPath
-				]);
+				$applicationEditor->update(['domainPath' => $domainPath]);
 				
 				// create directory and set permissions
 				@mkdir($packageDir, 0777, true);

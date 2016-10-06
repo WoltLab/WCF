@@ -149,7 +149,6 @@ CREATE TABLE wcf1_application (
 	domainName VARCHAR(255) NOT NULL,
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
-	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
 	isTainted TINYINT(1) NOT NULL DEFAULT 0
 );
 

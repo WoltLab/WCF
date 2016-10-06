@@ -33,7 +33,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	public $applicationEditor;
 	
 	/**
-	 * Assigns a list of applications to a group and computes cookie domain and path.
+	 * Assigns a list of applications to a group and computes cookie domain.
 	 */
 	public function rebuild() {
 		if (empty($this->objects)) {
@@ -41,60 +41,23 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$sql = "UPDATE	wcf".WCF_N."_application
-			SET	cookieDomain = ?,
-				cookiePath = ?
+			SET	cookieDomain = ?
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		// calculate cookie path
-		$domains = [];
+		// calculate cookie domain
 		$regex = new Regex(':[0-9]+');
+		WCF::getDB()->beginTransaction();
 		foreach ($this->getObjects() as $application) {
 			$domainName = $application->domainName;
 			if (StringUtil::endsWith($regex->replace($domainName, ''), $application->cookieDomain)) {
 				$domainName = $application->cookieDomain;
 			}
 			
-			if (!isset($domains[$domainName])) {
-				$domains[$domainName] = [];
-			}
-			
-			$domains[$domainName][$application->packageID] = explode('/', FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($application->domainPath)));
-		}
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($domains as $domainName => $data) {
-			$path = null;
-			foreach ($data as $domainPath) {
-				if ($path === null) {
-					$path = $domainPath;
-				}
-				else {
-					foreach ($path as $i => $part) {
-						if (!isset($domainPath[$i]) || $domainPath[$i] != $part) {
-							// remove all following elements including current one
-							foreach ($path as $j => $innerPart) {
-								if ($j >= $i) {
-									unset($path[$j]);
-								}
-							}
-							
-							// skip to next domain
-							continue 2;
-						}
-					}
-				}
-			}
-			
-			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(implode('/', $path)));
-			
-			foreach (array_keys($data) as $packageID) {
-				$statement->execute([
-					$domainName,
-					$path,
-					$packageID
-				]);
-			}
+			$statement->execute([
+				$domainName,
+				$application->packageID
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
