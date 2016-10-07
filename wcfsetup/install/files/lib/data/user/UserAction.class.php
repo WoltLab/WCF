@@ -227,6 +227,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		);
 		
 		$this->unmarkItems();
+		
+		$firstUser = new User(reset($this->objectIDs));
+		return WCF::getLanguage()->getDynamicVariable('wcf.user.banned', ['user' => $firstUser]);
 	}
 	
 	/**
