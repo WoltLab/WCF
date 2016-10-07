@@ -83,11 +83,12 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$html = preg_replace('~^<body>~', '', $html);
 		$html = preg_replace('~</body>$~', '', $html);
 		
-		/** @var IHtmlNode $obj */
 		foreach ($this->nodeData as $data) {
-			$obj = $data['object'];
-			$string = $obj->replaceTag($data['data']);
-			$html = preg_replace_callback('~<wcfNode-' . $data['identifier'] . '>(?P<content>[\s\S]*)</wcfNode-' . $data['identifier'] . '>~', function($matches) use ($string) {
+			$html = preg_replace_callback('~<wcfNode-' . $data['identifier'] . '>(?P<content>[\s\S]*)</wcfNode-' . $data['identifier'] . '>~', function($matches) use ($data) {
+				/** @var IHtmlNode $obj */
+				$obj = $data['object'];
+				$string = $obj->replaceTag($data['data']);
+				
 				if (mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
 					return str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
 				}
