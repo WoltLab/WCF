@@ -9,6 +9,7 @@
 define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environment) {
 	"use strict";
 	
+	var _dialogContainer = null;
 	var _mql = new Dictionary();
 	var _scrollDisableCounter = 0;
 	var _scrollOffsetFrom = null;
@@ -113,6 +114,11 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 				}
 				else {
 					pageContainer.style.setProperty('transform', 'translateY(-' + _scrollTop + 'px)', '');
+					
+					if (_dialogContainer !== null) {
+						// the same value for `pageContainer` but in reverse
+						_dialogContainer.style.setProperty('transform', 'translateY(' + _scrollTop + 'px)', '');
+					}
 				}
 				
 				document.documentElement.classList.add('disableScrolling');
@@ -138,6 +144,10 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					}
 					else {
 						pageContainer.style.removeProperty('transform');
+						
+						if (_dialogContainer !== null) {
+							_dialogContainer.style.removeProperty('transform');
+						}
 					}
 					
 					if (_scrollTop) {
@@ -145,6 +155,17 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					}
 				}
 			}
+		},
+		
+		/**
+		 * Sets the dialog container element. This method is used to
+		 * circumvent a possible circular dependency, due to `Ui/Dialog`
+		 * requiring the `Ui/Screen` module itself.
+		 * 
+		 * @param       {Element}       container       dialog container element
+		 */
+		setDialogContainer: function (container) {
+			_dialogContainer = container;
 		},
 		
 		/**

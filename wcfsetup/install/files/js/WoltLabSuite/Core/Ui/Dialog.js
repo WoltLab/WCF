@@ -72,6 +72,8 @@ define(
 			
 			this._initStaticDialogs();
 			DomChangeListener.add('Ui/Dialog', this._initStaticDialogs.bind(this));
+			
+			UiScreen.setDialogContainer(_container);
 		},
 		
 		_initStaticDialogs: function() {
