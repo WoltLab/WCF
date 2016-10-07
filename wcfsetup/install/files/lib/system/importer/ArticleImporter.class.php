@@ -81,6 +81,9 @@ class ArticleImporter extends AbstractImporter {
 		}
 		$data['categoryID'] = $categoryID;
 		
+		// comments
+		if (!isset($data['enableComments'])) $data['enableComments'] = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE ? 1 : 0;
+		
 		// save article
 		$article = ArticleEditor::create($data);
 		
