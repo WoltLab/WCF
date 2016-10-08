@@ -401,16 +401,16 @@
 
 /* alignment plugin */
 .text-center {
-	text-align: center;
+	text-align: center !important;
 }
 
 .text-right {
-	text-align: right;
+	text-align: right !important;
 }
 
 /* alignment plugin / custom value */
 .text-justify {
-	text-align: justify;
+	text-align: justify !important;
 	
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
