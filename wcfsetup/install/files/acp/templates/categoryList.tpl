@@ -129,10 +129,7 @@
 							</span>
 						</span>
 						
-						<ol class="categoryList sortableList" data-object-id="{@$category->categoryID}">
-					{if !$categoryNodeList->current()->hasChildren()}
-						</ol></li>
-					{/if}
+						<ol class="categoryList sortableList" data-object-id="{@$category->categoryID}">{if !$categoryNodeList->current()->hasChildren()}</ol></li>{/if}
 					{assign var=oldDepth value=$categoryNodeList->getDepth()}
 				{/foreach}
 				{section name=i loop=$oldDepth}</ol></li>{/section}
