@@ -292,6 +292,16 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 		},
 		
 		/**
+		 * Returns true if this tab menu has a tab with provided name.
+		 * 
+		 * @param       {string}        name    tab name
+		 * @return      {boolean}       true if tab name matches
+		 */
+		hasTab: function (name) {
+			return this._tabs.has(name);
+		},
+		
+		/**
 		 * Handles clicks on a tab.
 		 * 
 		 * @param	{object}	event	event object

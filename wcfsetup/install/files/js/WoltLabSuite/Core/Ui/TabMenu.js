@@ -40,6 +40,18 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 				disable: this._scrollDisable.bind(this),
 				setup: this._scrollEnable.bind(this, true)
 			});
+			
+			window.addEventListener('hashchange', function () {
+				var hash = window.location.hash.replace(/^#/, '');
+				var element = (hash) ? elById(hash) : null;
+				if (element !== null && element.classList.contains('tabMenuContent')) {
+					_tabMenus.forEach(function (tabMenu) {
+						if (tabMenu.hasTab(hash)) {
+							tabMenu.select(hash);
+						}
+					});
+				}
+			});
 		},
 		
 		/**
