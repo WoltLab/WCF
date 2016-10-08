@@ -111,7 +111,6 @@
 	</section>
 	
 	<div class="formSubmit">
-		{@SID_INPUT_TAG}
 		<input type="hidden" name="objectID" value="{$objectID}">
 		<input type="hidden" name="objectType" value="{$objectType->objectType}">
 		<button class="button buttonPrimary" data-type="submit">{lang}wcf.edit.button.compare{/lang}</button>
