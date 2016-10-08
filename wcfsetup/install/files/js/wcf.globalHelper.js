@@ -210,4 +210,37 @@
 	Object.defineProperty(window, 'WCF_CLICK_EVENT', {
 		value: 'click' //clickEvent
 	});
+	
+	/* Overwrites any history states after 'initial' with 'skip' on initial page load.
+	   This is done, as the necessary DOM of other history states may not exist any more.
+	   On forward navigation these 'skip' states are automatically skipped, otherwise the
+	   user might have to press the forward button several times.
+	   Note: A 'skip' state cannot be hit in the 'popstate' event when navigation backwards,
+	         because the history already is left of all the 'skip' states for the current page.
+	 */
+	(function() {
+		var stateDepth = 0;
+		function check() {
+			if (window.history.state && window.history.state.name && window.history.state.name !== 'initial') {
+				window.history.replaceState({
+					name: 'skip',
+					depth: ++stateDepth
+				}, '', '');
+				window.history.back();
+				
+				// window.history does not update in this iteration of the event loop
+				setTimeout(check, 1);
+			}
+			else {
+				window.history.replaceState({name: 'initial'}, '', '');
+			}
+		}
+		check();
+		
+		window.addEventListener('popstate', function(event) {
+			if (event.state && event.state.name && event.state.name === 'skip') {
+				window.history.go(event.state.depth);
+			}
+		});
+	})();
 })(window, document);

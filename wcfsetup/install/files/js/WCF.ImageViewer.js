@@ -311,6 +311,19 @@ $.widget('ui.wcfImageViewer', {
 		this._ui = { };
 		
 		this.element.click($.proxy(this.open, this));
+
+		window.addEventListener('popstate', (function(event) {
+			if (event.state.name === 'imageViewer') {
+				if (event.state.container === this._eventNamespace) {
+					this.open(event);
+					this.showImage(event.state.image);
+					
+					return;
+				}
+			}
+			
+			this.close(event);
+		}).bind(this));
 	},
 	
 	/**
@@ -325,6 +338,13 @@ $.widget('ui.wcfImageViewer', {
 		
 		if (this._isOpen) {
 			return false;
+		}
+		
+		// add history item for the image viewer
+		if (!event || event.type !== 'popstate') {
+			window.history.pushState({
+				name: 'imageViewer'
+			}, '', '');
 		}
 		
 		if (this.options.staticViewer) {
@@ -379,6 +399,12 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	close: function(event) {
 		if (event) event.preventDefault();
+		
+		// clear history item of the image viewer
+		if (!event || event.type !== 'popstate') {
+			window.history.back();
+			return;
+		}
 		
 		if (!this._isOpen) {
 			return false;
@@ -648,6 +674,14 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		this._active = index;
+		
+		// store latest image in history entry
+		window.history.replaceState({
+			name: 'imageViewer',
+			container: this._eventNamespace,
+			image: this._active
+		}, '', '');
+		
 		var $image = this._images[index];
 		
 		this._ui.imageList.children('li').removeClass('active');
