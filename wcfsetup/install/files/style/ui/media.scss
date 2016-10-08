@@ -80,6 +80,12 @@
 			box-sizing: border-box;
 			
 			@include wcfFontSmall;
+			
+			.mediaTitle {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 		}
 		
 		> .buttonGroupNavigation {

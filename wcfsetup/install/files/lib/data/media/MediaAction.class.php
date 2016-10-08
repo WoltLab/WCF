@@ -174,6 +174,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
+		$mediaList->sqlOrderBy = 'media.uploadTime DESC';
+		$mediaList->sqlLimit = 50;
 		$mediaList->readObjects();
 		
 		return [
@@ -409,7 +411,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
-		
+		$mediaList->sqlOrderBy = 'media.uploadTime DESC';
+		$mediaList->sqlLimit = 50;
 		$mediaList->readObjectIDs();
 		
 		if (empty($mediaList->getObjectIDs())) {
