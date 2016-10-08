@@ -1,10 +1,13 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\content\ArticleContentList;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 
@@ -29,6 +32,11 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 	 * @inheritDoc
 	 */
 	protected $limit = 100;
+	
+	/**
+	 * @var HtmlInputProcessor
+	 */
+	protected $htmlInputProcessor;
 	
 	/**
 	 * @inheritDoc
@@ -86,6 +94,19 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 				$articleContent->languageID,
 				$articleContent->teaser
 			);
+			
+			// update embedded objects
+			$this->getHtmlInputProcessor()->processEmbeddedContent($articleContent->content, 'com.woltlab.wcf.article.content', $articleContent->articleContentID);
+			
+			$hasEmbeddedObjects = 0;
+			if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor())) {
+				$hasEmbeddedObjects = 1;
+			}
+			
+			if ($hasEmbeddedObjects != $articleContent->hasEmbeddedObjects) {
+				$articleContentEditor = new ArticleContentEditor($articleContent);
+				$articleContentEditor->update(['hasEmbeddedObjects' => $hasEmbeddedObjects]);
+			}
 		}
 		
 		// fetch cumulative likes
@@ -113,5 +134,16 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 			// update data
 			$editor->update($data);
 		}
+	}
+	
+	/**
+	 * @return HtmlInputProcessor
+	 */
+	protected function getHtmlInputProcessor() {
+		if ($this->htmlInputProcessor === null) {
+			$this->htmlInputProcessor = new HtmlInputProcessor();
+		}
+		
+		return $this->htmlInputProcessor;
 	}
 }
