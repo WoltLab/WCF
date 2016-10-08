@@ -2,9 +2,16 @@
 
 {if $objects|count}
 	<script data-relocate="true">
+		require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+			new UiSortableList({
+				containerId: 'smileyList',
+				className: 'wcf\\data\\smiley\\SmileyAction',
+				offset: {@$startIndex}
+			});
+		});
+		
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\smiley\\SmileyAction', $('.smileyRow'));
-			new WCF.Sortable.List('smileyList', 'wcf\\data\\smiley\\SmileyAction', {@$startIndex});
 		});
 	</script>
 {/if}
@@ -48,6 +55,7 @@
 									<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}">{@$smiley->getHtml()} {lang}{$smiley->smileyTitle}{/lang}</a> <span class="badge">{$smiley->smileyCode}</span>{foreach from=$smiley->getAliases() item='alias'} <span class="badge" style="margin-left: 5px">{$alias}</span>{/foreach}
 									
 									<span class="statusDisplay sortableButtonContainer">
+										<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
 										<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$smiley->smileyID}" data-confirm-message-html="{lang __encode=true}wcf.acp.smiley.delete.sure{/lang}">
 										

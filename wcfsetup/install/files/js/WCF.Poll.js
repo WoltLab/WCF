@@ -73,9 +73,14 @@ WCF.Poll.Management = Class.extend({
 		}
 		
 		// init sorting
-		new WCF.Sortable.List(containerID, '', undefined, {
-			toleranceElement: '> div'
-		}, true);
+		require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+			new UiSortableList({
+				containerId: containerID,
+				options: {
+					toleranceElement: '> div'
+				}
+			});
+		});
 	},
 	
 	/**
@@ -115,6 +120,7 @@ WCF.Poll.Management = Class.extend({
 		
 		// insert buttons
 		var $container = $('<div class="pollOptionInput" />').appendTo($listItem);
+		$('<span class="icon icon16 fa-arrows sortableNodeHandle" />').appendTo($container);
 		$('<span class="icon icon16 fa-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($container);
 		$('<span class="icon icon16 fa-times jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($container);
 		
