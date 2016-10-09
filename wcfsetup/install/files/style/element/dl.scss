@@ -90,6 +90,7 @@ dl {
 	&.inlineDataList {
 		> dt {
 			display: inline-block;
+			vertical-align: middle;
 			
 			&:after {
 				content: ":";
@@ -99,6 +100,7 @@ dl {
 		
 		> dd {
 			display: inline-block;
+			vertical-align: middle;
 			
 			&:not(:last-of-type):after {
 				content: ",";
