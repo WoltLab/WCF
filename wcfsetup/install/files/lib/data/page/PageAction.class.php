@@ -152,6 +152,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'metaKeywords' => $content['metaKeywords'],
 							'customURL' => $content['customURL']
 						]);
+						$pageContent = PageContent::getPageContent($page->pageID, ($languageID ?: null));
 					}
 					else {
 						/** @var PageContent $pageContent */
