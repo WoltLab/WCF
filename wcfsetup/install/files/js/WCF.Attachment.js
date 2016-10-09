@@ -493,37 +493,40 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		if (!this._fileListSelector.hasClass('sortableList')) {
 			this._fileListSelector.addClass('sortableList');
 			
-			var self = this;
-			new WCF.Sortable.List(this._fileListSelector.parent().wcfIdentify(), '', 0, {
-				axis: false,
-				items: 'li.sortableAttachment',
-				toleranceElement: null,
-				start: function (event, ui) {
-					ui.placeholder[0].style.setProperty('height', ui.helper[0].offsetHeight + 'px', '');
-				},
-				update: function(event, ui) {
-					var $attachmentIDs = [ ];
-					self._fileListSelector.children('li:not(.uploadFailed)').each(function(index, listItem) {
-						$attachmentIDs.push($(listItem).data('objectID'));
-					});
-					
-					if ($attachmentIDs.length) {
-						new WCF.Action.Proxy({
-							autoSend: true,
-							data: {
-								actionName: 'updatePosition',
-								className: 'wcf\\data\\attachment\\AttachmentAction',
-								parameters: {
-									attachmentIDs: $attachmentIDs,
-									objectID: self._objectID,
-									objectType: self._objectType,
-									tmpHash: self._tmpHash
-								}
+			require(['Environment'], (function (Environment) {
+				if (Environment.platform() === 'desktop') {
+					new WCF.Sortable.List(this._fileListSelector.parent().wcfIdentify(), '', 0, {
+						axis: false,
+						items: 'li.sortableAttachment',
+						toleranceElement: null,
+						start: function (event, ui) {
+							ui.placeholder[0].style.setProperty('height', ui.helper[0].offsetHeight + 'px', '');
+						},
+						update: (function() {
+							var $attachmentIDs = [ ];
+							this._fileListSelector.children('li:not(.uploadFailed)').each(function(index, listItem) {
+								$attachmentIDs.push($(listItem).data('objectID'));
+							});
+							
+							if ($attachmentIDs.length) {
+								new WCF.Action.Proxy({
+									autoSend: true,
+									data: {
+										actionName: 'updatePosition',
+										className: 'wcf\\data\\attachment\\AttachmentAction',
+										parameters: {
+											attachmentIDs: $attachmentIDs,
+											objectID: this._objectID,
+											objectType: this._objectType,
+											tmpHash: this._tmpHash
+										}
+									}
+								});
 							}
-						});
-					}
+						}).bind(this)
+					}, true);
 				}
-			}, true);
+			}).bind(this));
 		}
 	}
 });
