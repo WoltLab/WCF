@@ -67,6 +67,7 @@ input[type="text"] {
 textarea {
 	border-width: 1px;
 	font-weight: 400;
+	vertical-align: top;
 	width: 100%;
 	
 	@include wcfFontDefault;
