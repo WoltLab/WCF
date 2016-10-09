@@ -167,6 +167,9 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 		 */
 		_initializeAndroid: function() {
 			var appearsAt, backdrop, touchStart;
+			/** @const */ var AT_EDGE = 20;
+			/** @const */ var MOVED_HORIZONTALLY = 5;
+			/** @const */ var MOVED_VERTICALLY = 10;
 			
 			// specify on which side of the page the menu appears
 			switch (this._menu.id) {
@@ -193,12 +196,12 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				
 				// check whether we touch the edges of the menu
 				if (appearsAt === 'left') {
-					isLeftEdge = !isOpen && (touches[0].clientX < 20);
-					isRightEdge = isOpen && (Math.abs(this._menu.offsetWidth - touches[0].clientX) < 20);
+					isLeftEdge = !isOpen && (touches[0].clientX < AT_EDGE);
+					isRightEdge = isOpen && (Math.abs(this._menu.offsetWidth - touches[0].clientX) < AT_EDGE);
 				}
 				else if (appearsAt === 'right') {
-					isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this._menu.offsetWidth - touches[0].clientX) < 20);
-					isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].clientX) < 20);
+					isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this._menu.offsetWidth - touches[0].clientX) < AT_EDGE);
+					isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].clientX) < AT_EDGE);
 				}
 				
 				// abort if more than one touch
@@ -288,9 +291,9 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 				// check whether the user started moving in the correct direction
 				// this avoids false positives, in case the user just wanted to tap
 				var movedFromEdge = false, movedVertically = false;
-				if (_androidTouching === 'left') movedFromEdge = touches[0].clientX > (touchStart.x + 5);
-				if (_androidTouching === 'right') movedFromEdge = touches[0].clientX < (touchStart.x - 5);
-				movedVertically = Math.abs(touches[0].clientY - touchStart.y) > 30;
+				if (_androidTouching === 'left') movedFromEdge = touches[0].clientX > (touchStart.x + MOVED_HORIZONTALLY);
+				if (_androidTouching === 'right') movedFromEdge = touches[0].clientX < (touchStart.x - MOVED_HORIZONTALLY);
+				movedVertically = Math.abs(touches[0].clientY - touchStart.y) > MOVED_VERTICALLY;
 				
 				var isOpen = this._menu.classList.contains('open');
 				
