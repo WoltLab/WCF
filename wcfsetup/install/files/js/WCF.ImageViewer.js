@@ -53,6 +53,11 @@ WCF.ImageViewer = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		// ignore clicks while ctrl key is being pressed
+		if (event.ctrlKey) {
+			return;
+		}
+		
 		event.preventDefault();
 		event.stopPropagation();
 		// skip if element is in a popover
