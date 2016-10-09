@@ -33,6 +33,7 @@
 	<script data-relocate="true">
 		elById('name').addEventListener('blur', function() {
 			var name = this.value;
+			if (!name) return;
 			name = name.replace(/ /g, '-');
 			name = name.replace(/[^a-z0-9-]/gi, '');
 			
