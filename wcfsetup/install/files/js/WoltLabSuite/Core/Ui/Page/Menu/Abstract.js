@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/Abstract
  */
-define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen'], function(Core, Environment, EventHandler, ObjectMap, DomTraverse, DomUtil, UiScreen) {
+define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen'], function(Core, Environment, EventHandler, Language, ObjectMap, DomTraverse, DomUtil, UiScreen) {
 	"use strict";
 	
 	var _pageContainer = elById('pageContainer');
@@ -534,7 +534,13 @@ define(['Core', 'Environment', 'EventHandler', 'ObjectMap', 'Dom/Traverse', 'Dom
 		_updateDepth: function(increase) {
 			this._depth += (increase) ? 1 : -1;
 			
-			this._menu.children[0].style.setProperty('transform', 'translateX(' + (this._depth * -100) + '%)', '');
+			var offset = this._depth * -100;
+			if (Language.get('wcf.global.pageDirection') === 'rtl') {
+				// reverse logic for RTL
+				offset *= -1;
+			}
+			
+			this._menu.children[0].style.setProperty('transform', 'translateX(' + offset + '%)', '');
 		},
 		
 		_updateButtonState: function() {
