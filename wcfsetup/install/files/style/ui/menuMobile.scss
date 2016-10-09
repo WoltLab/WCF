@@ -241,6 +241,11 @@
 	}
 }
 
+/* fix icons in rtl design */
+html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
+	content: $fa-var-angle-left;
+}
+
 .pageUserMenuMobile .menuOverlayItemBadge:last-child {
 	padding-right: 10px !important;
 }
