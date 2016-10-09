@@ -104,6 +104,8 @@ WCF.ACL.List = Class.extend({
 		var $aclList = $('<ul class="aclList containerList" />').appendTo($elementContainer);
 		var $searchInput = $('<input type="text" class="long" placeholder="' + WCF.Language.get('wcf.acl.search.' + (!includeUserGroups ? 'user.' : '') + 'description') + '" />').appendTo($elementContainer);
 		var $permissionList = $('<ul class="aclPermissionList containerList" />').hide().appendTo($elementContainer);
+		elData($permissionList[0], 'grant', WCF.Language.get('wcf.acl.option.grant'));
+		elData($permissionList[0], 'deny', WCF.Language.get('wcf.acl.option.deny'));
 		
 		// set elements
 		this._containerElements = {

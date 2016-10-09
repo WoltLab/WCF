@@ -34,6 +34,28 @@
 /* permissions per object */
 .aclPermissionList {
 	margin-top: 40px;
+	position: relative;
+	
+	&::after,
+	&::before {
+		min-width: 60px;
+		position: absolute;
+		text-align: center;
+		top: -5px;
+		transform: translateY(-100%);
+		
+		@include wcfFontSmall;
+	}
+	
+	&::after {
+		content: attr(data-deny);
+		right: 0;
+	}
+	
+	&::before {
+		content: attr(data-grant);
+		right: 80px;
+	}
 	
 	> li {
 		&.aclCategory {
