@@ -76,7 +76,7 @@ class StyleCompiler extends SingletonFactory {
 				$file = WCF_DIR."style/{$file}/";
 				if ($innerHandle = opendir($file)) {
 					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z]+\.scss$~', $innerFile)) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z0-9]+\.scss$~', $innerFile)) {
 							continue;
 						}
 						
