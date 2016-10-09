@@ -239,13 +239,14 @@ class Box extends DatabaseObject {
 		
 		if ($boxContent !== null) {
 			if ($this->boxType == 'text') {
-				$processor = new HtmlOutputProcessor();
-				$processor->process($boxContent->content, 'com.woltlab.wcf.box.content', $boxContent->boxContentID);
-				
-				return $processor->getHtml();
+				return $boxContent->getFormattedContent();
 			}
-			
-			return $boxContent->content;
+			else if ($this->boxType == 'html') {
+				return $boxContent->getParsedContent();
+			}
+			else if ($this->boxType == 'tpl') {
+				return $boxContent->getParsedTemplate($this->getTplName(WCF::getLanguage()->languageID));
+			}
 		}
 		return '';
 	}

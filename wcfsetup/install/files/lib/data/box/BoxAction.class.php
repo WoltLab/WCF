@@ -8,6 +8,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 
@@ -89,6 +90,9 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						$boxContentEditor->update(['hasEmbeddedObjects' => 1]);
 					}
 				}
+				else if ($box->boxType == 'html' || $box->boxType == 'tpl') {
+					HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content);
+				}
 			}
 		}
 		
@@ -145,6 +149,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 							'content' => $content['content'],
 							'imageID' => $content['imageID']
 						]);
+						$boxContent = BoxContent::getBoxContent($box->boxID, ($languageID ?: null));
 					}
 					else {
 						/** @var BoxContent $boxContent */
@@ -165,6 +170,9 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						if ($boxContent->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($content['htmlInputProcessor'])) {
 							$boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
 						}
+					}
+					else if ($box->boxType == 'html' || $box->boxType == 'tpl') {
+						HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content);
 					}
 				}
 				

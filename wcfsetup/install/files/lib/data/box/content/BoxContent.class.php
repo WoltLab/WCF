@@ -2,6 +2,9 @@
 namespace wcf\data\box\content;
 use wcf\data\media\ViewableMedia;
 use wcf\data\DatabaseObject;
+use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\html\simple\HtmlSimpleParser;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 
 /**
@@ -92,5 +95,49 @@ class BoxContent extends DatabaseObject {
 	 */
 	public function setImage(ViewableMedia $image) {
 		$this->image = $image;
+	}
+	
+	/**
+	 * Returns the box's formatted content.
+	 *
+	 * @return      string
+	 */
+	public function getFormattedContent() {
+		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content', [$this->boxContentID]);
+		
+		$processor = new HtmlOutputProcessor();
+		$processor->process($this->content, 'com.woltlab.wcf.box.content', $this->boxContentID);
+		
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * Parses simple placeholders embedded in raw html.
+	 *
+	 * @return      string          parsed content
+	 */
+	public function getParsedContent() {
+		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content', [$this->boxContentID]);
+		
+		return HtmlSimpleParser::getInstance()->replaceTags('com.woltlab.wcf.box.content', $this->boxContentID, $this->content);
+	}
+	
+	/**
+	 * Parses simple placeholders embedded in HTML with template scripting.
+	 *
+	 * @param       string          $templateName           content template name
+	 * @return      string          parsed template
+	 */
+	public function getParsedTemplate($templateName) {
+		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content', [$this->boxContentID]);
+		HtmlSimpleParser::getInstance()->setContext('com.woltlab.wcf.box.content', $this->boxContentID);
+		
+		WCF::getTPL()->registerPrefilter(['simpleEmbeddedObject']);
+		
+		$returnValue = WCF::getTPL()->fetch($templateName);
+		
+		WCF::getTPL()->removePrefilter('simpleEmbeddedObject');
+		
+		return $returnValue;
 	}
 }
