@@ -364,6 +364,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				
 				WCF::getDB()->beginTransaction();
 				
+				// update article
+				$sql = "UPDATE	wcf".WCF_N."_article
+					SET	username = ?
+					WHERE	userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([$username, $userID]);
+				
 				// update comments
 				$sql = "UPDATE	wcf".WCF_N."_comment
 					SET	username = ?
