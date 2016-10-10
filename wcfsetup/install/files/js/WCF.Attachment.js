@@ -95,7 +95,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId, this._editorUpload.bind(this));
 			
-			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach', (function(data) {
+			var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, (function(data) {
 				var images = this._getImageAttachments();
 				var attachmentId = data.attributes[0] || 0;
 				if (images.hasOwnProperty(attachmentId)) {
@@ -126,7 +126,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId);
 				
-				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach', metacodeAttachUuid);
+				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
 			}).bind(this));
 		}
 	},

@@ -22,7 +22,7 @@ define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 			element.textContent = this.convertFromHtml(element.textContent);
 		},
 		
-		convertFromHtml: function (html) {
+		convertFromHtml: function (editorId, html) {
 			var div = elCreate('div');
 			div.innerHTML = html;
 			
@@ -37,7 +37,8 @@ define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 					cancel: false,
 					metacode: metacode
 				};
-				EventHandler.fire('com.woltlab.wcf.redactor2', 'metacode_' + name, data);
+				
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'metacode_' + name + '_' + editorId, data);
 				if (data.cancel === true) {
 					continue;
 				}

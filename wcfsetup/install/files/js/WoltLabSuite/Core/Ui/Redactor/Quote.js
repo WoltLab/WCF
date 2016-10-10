@@ -85,7 +85,8 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 				content = content.replace(/\n/g, '<br>');
 			}
 			else {
-				content = UiRedactorMetacode.convertFromHtml(content);
+				//noinspection JSUnresolvedFunction
+				content = UiRedactorMetacode.convertFromHtml(this._editor.$element[0].id, content);
 			}
 			
 			// bypass the editor as `insert.html()` doesn't like us

@@ -107,7 +107,6 @@
 			{include file='mediaJavaScript'}
 			
 			var element = elById('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
-			UiRedactorMetacode.convert(element);
 			
 			var autosave = elData(element, 'autosave') || null;
 			if (autosave) {
@@ -215,7 +214,8 @@
 					buttons: buttonOptions,
 					buttonMobile: buttonMobile,
 					customButtons: customButtons,
-					highlighters: highlighters
+					highlighters: highlighters,
+					mediaUrl: '{link controller='Media' id=-123456789 thumbnail='void' forceFrontend=true}{/link}'
 				}
 			};
 			
@@ -248,6 +248,8 @@
 					if (content === '' && Environment.platform() === 'ios') {
 						content = '<p><br></p>';
 					}
+					
+					content = UiRedactorMetacode.convertFromHtml(element.id, content);
 					
 					var redactor = $(element).data('redactor');
 					
