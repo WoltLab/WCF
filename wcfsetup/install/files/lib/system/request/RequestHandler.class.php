@@ -227,7 +227,7 @@ class RequestHandler extends SingletonFactory {
 				LinkHandler::getInstance()->getLink(
 					ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
 					['application' => $data['application']]
-				)
+				), true, true
 			);
 			exit;
 		}
