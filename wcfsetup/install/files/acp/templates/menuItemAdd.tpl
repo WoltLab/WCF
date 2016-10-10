@@ -127,7 +127,9 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$pageNodeList item=pageNode}
-						<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+						{if !$pageNode->requireObjectID || $pageHandlers[$pageNode->pageID]|isset}
+							<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $pageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+						{/if}
 					{/foreach}
 				</select>
 				{if $errorField == 'pageID'}

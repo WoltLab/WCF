@@ -197,15 +197,21 @@ class MenuItemAddForm extends AbstractForm {
 			}
 			
 			// validate page object id
-			if (isset($this->pageHandlers[$page->pageID])) {
-				if ($this->pageHandlers[$page->pageID] && !$this->pageObjectID) {
-					throw new UserInputException('pageObjectID');
+			if ($page->requireObjectID) {
+				if (isset($this->pageHandlers[$page->pageID])) {
+					if ($this->pageHandlers[$page->pageID] && !$this->pageObjectID) {
+						throw new UserInputException('pageObjectID');
+					}
+					
+					/** @var ILookupPageHandler $handler */
+					$handler = $page->getHandler();
+					if ($this->pageObjectID && !$handler->isValid($this->pageObjectID)) {
+						throw new UserInputException('pageObjectID', 'invalid');
+					}
 				}
-				
-				/** @var ILookupPageHandler $handler */
-				$handler = $page->getHandler();
-				if ($this->pageObjectID && !$handler->isValid($this->pageObjectID)) {
-					throw new UserInputException('pageObjectID', 'invalid');
+				else {
+					// page requires an object id, but no handler is registered
+					throw new UserInputException('pageID', 'invalid');
 				}
 			}
 		}
