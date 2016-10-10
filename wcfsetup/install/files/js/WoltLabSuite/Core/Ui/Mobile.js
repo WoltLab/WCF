@@ -119,17 +119,35 @@ define(
 			var _searchBar = elById('pageHeaderSearch');
 			var _searchInput = elById('pageHeaderSearchInput');
 			
+			var scrollTop = null;
+			
 			EventHandler.add('com.woltlab.wcf.MainMenuMobile', 'more', function(data) {
 				if (data.identifier === 'com.woltlab.wcf.search') {
+					data.handler.close(true);
+					
+					if (Environment.platform() === 'ios') {
+						scrollTop = document.body.scrollTop;
+						UiScreen.scrollDisable();
+					}
+					
 					_searchBar.style.setProperty('top', elById('pageHeader').offsetHeight + 'px', '');
 					_searchBar.classList.add('open');
 					_searchInput.focus();
 					
-					data.handler.close(true);
+					if (Environment.platform() === 'ios') {
+						document.body.scrollTop = 0;
+					}
 				}
 			});
 			
-			_main.addEventListener(WCF_CLICK_EVENT, function() { _searchBar.classList.remove('open'); });
+			_main.addEventListener(WCF_CLICK_EVENT, function() {
+				_searchBar.classList.remove('open');
+				
+				if (Environment.platform() === 'ios') {
+					UiScreen.scrollEnable();
+					document.body.scrollTop = scrollTop; 
+				}
+			});
 		},
 		
 		_initButtonGroupNavigation: function() {
