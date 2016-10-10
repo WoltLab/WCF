@@ -169,7 +169,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 			var appearsAt, backdrop, touchStart;
 			/** @const */ var AT_EDGE = 20;
 			/** @const */ var MOVED_HORIZONTALLY = 5;
-			/** @const */ var MOVED_VERTICALLY = 10;
+			/** @const */ var MOVED_VERTICALLY = 20;
 			
 			// specify on which side of the page the menu appears
 			switch (this._menu.id) {
