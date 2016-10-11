@@ -2825,7 +2825,7 @@ Errors are:
 		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.acp.page.customURL"><![CDATA[Custom URL]]></item>
-		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[URL is invalid. TODO: add description]]></item>
+		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[URL is invalid. You may use letters a-z/A-Z, numbers, dashes, underscores and forward slashes.]]></item>
 		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[URL is already in use.]]></item>
 		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[Do you really want to delete the page <span class="confirmationObject">{$page->name}</span>?]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Edit Page]]></item>

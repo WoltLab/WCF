@@ -1369,7 +1369,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.page.customURL"><![CDATA[Individuelle URL]]></item>
-		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige URL eingegeben. TODO: add description]]></item>
+		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige URL eingegeben. Erlaubte Zeichen sind Buchstaben, Nummern, Bindestrich, Unterstrich und Schrägstrich.]]></item>
 		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[Diese URL wird bereits von einer anderen Seite verwendet.]]></item>
 		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Seite <span class="confirmationObject">{$page->name}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Seite bearbeiten]]></item>

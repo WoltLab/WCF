@@ -201,16 +201,6 @@
 			</attributes>
 		</bbcode>
 		
-		<bbcode name="wsmg">
-			<classname>wcf\system\bbcode\WoltLabSuiteMediaGalleryBBCode</classname>
-			<attributes>
-				<attribute name="0">
-					<validationpattern>^\d+(,\d+)*$</validationpattern>
-					<required>1</required>
-				</attribute>
-			</attributes>
-		</bbcode>
-		
 		<bbcode name="wsp">
 			<classname>wcf\system\bbcode\WoltLabSuitePageBBCode</classname>
 			<attributes>
