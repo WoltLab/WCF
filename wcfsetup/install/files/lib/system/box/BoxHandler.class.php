@@ -37,13 +37,20 @@ class BoxHandler extends SingletonFactory {
 	protected $boxesByPosition = [];
 	
 	/**
+	 * @var bool
+	 */
+	protected $disablePageLayout = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
 		// get active page id
 		$pageID = 0;
-		if (($request = RequestHandler::getInstance()->getActiveRequest()) !== null) {
-			$pageID = $request->getPageID();
+		if (!$this->disablePageLayout) {
+			if (($request = RequestHandler::getInstance()->getActiveRequest()) !== null) {
+				$pageID = $request->getPageID();
+			}
 		}
 		
 		// load box layout for active page
@@ -191,5 +198,12 @@ class BoxHandler extends SingletonFactory {
 				$statement->execute([$box->boxID, $page->pageID, $visible ? 1 : 0]);
 			}
 		}
+	}
+	
+	/**
+	 * Disables the loading of the box layout for the active page.
+	 */
+	public function disablePageLayout() {
+		$this->disablePageLayout = true;
 	}
 }
