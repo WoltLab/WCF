@@ -123,7 +123,7 @@ class Style extends DatabaseObject {
 	}
 	
 	/**
-	 * TODO: add documentation
+	 * Splits the less variables string.
 	 * 
 	 * @param	string		$variables
 	 * @return	array
@@ -139,7 +139,7 @@ class Style extends DatabaseObject {
 	}
 	
 	/**
-	 * TODO: add documentation
+	 * Joins the less variables.
 	 * 
 	 * @param	string		$preset
 	 * @param	string		$custom

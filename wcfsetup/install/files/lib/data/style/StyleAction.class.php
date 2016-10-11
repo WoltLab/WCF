@@ -719,7 +719,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * TODO: add documentation
+	 * Validates the mark as tainted action.
+	 * 
 	 * @since	3.0
 	 */
 	public function validateMarkAsTainted() {
@@ -731,7 +732,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	}
 	
 	/**
-	 * TODO: add documentation
+	 * Marks a style as tainted.
+	 * 
 	 * @since	3.0
 	 */
 	public function markAsTainted() {

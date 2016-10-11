@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @property-read	string		$avatarExtension	extension of the avatar file
  * @property-read	integer		$width			width of the user avatar image
  * @property-read	integer		$height			height of the user avatar image
- * @property-read	integer|null	$userID			id of the user to which the user avatar belongs or null if TODO
+ * @property-read	integer|null	$userID			id of the user to which the user avatar belongs or null
  * @property-read	string		$fileHash		SHA1 hash of the original avatar file
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar {

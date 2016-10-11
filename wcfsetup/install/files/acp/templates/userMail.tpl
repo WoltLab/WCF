@@ -107,7 +107,6 @@
 						{/if}
 					</small>
 				{/if}
-				{* TODO: Add field for Human readable name for new mail system *}
 				<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
 			</dd>
 		</dl>
