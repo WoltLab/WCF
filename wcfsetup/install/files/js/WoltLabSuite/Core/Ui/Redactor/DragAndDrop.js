@@ -187,8 +187,7 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 		 * @protected
 		 */
 		_setup: function () {
-			// discard garbage events
-			window.addEventListener('dragstart', function (event) { event.preventDefault(); });
+			// discard garbage event
 			window.addEventListener('dragend', function (event) { event.preventDefault(); });
 			
 			window.addEventListener('dragover', this._dragOver.bind(this));
