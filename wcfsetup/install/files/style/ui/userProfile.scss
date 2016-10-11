@@ -91,6 +91,12 @@
 	}
 }
 
+.userTitleBadge {
+	max-width: 154px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .userAvatarImage {
 	background-color: #fff;
 	border-radius: 50%;
