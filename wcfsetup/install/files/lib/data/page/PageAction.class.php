@@ -191,7 +191,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 		}
 		
 		// save box to page assignments
-		if (!empty($this->parameters['boxToPage'])) {
+		if (isset($this->parameters['boxToPage'])) {
 			$sql = "DELETE FROM	wcf".WCF_N."_box_to_page
 				WHERE		pageID = ?";
 			$deleteStatement = WCF::getDB()->prepareStatement($sql);
@@ -204,13 +204,15 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 			foreach ($this->getObjects() as $page) {
 				$deleteStatement->execute([$page->pageID]);
 				
-				foreach ($this->parameters['boxToPage'] as $boxData) {
-					$insertStatement->execute([
-						$boxData['boxID'],
-						$page->pageID,
-						$boxData['visible']
-					]);
-				}
+				if (!empty($this->parameters['boxToPage'])) {
+					foreach ($this->parameters['boxToPage'] as $boxData) {
+						$insertStatement->execute([
+							$boxData['boxID'],
+							$page->pageID,
+							$boxData['visible']
+						]);
+					}
+				}	
 			}
 		}
 	}
