@@ -78,8 +78,6 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		}
 		
 		// drop index.php
-		if (!URL_LEGACY_MODE) {
-			$this->url = preg_replace('~index\.php~', '', $this->url);
-		}
+		$this->url = preg_replace('~index\.php~', '', $this->url);
 	}
 }

@@ -454,8 +454,6 @@ class WCF {
 		// register WCF as application
 		self::$applications['wcf'] = ApplicationHandler::getInstance()->getApplicationByID(1);
 		
-		// TODO: what exactly should the base href represent and how should it be calculated, also because
-		// defining it here eventually breaks the ACP due to tpl initialization occurs first
 		if (!class_exists(WCFACP::class, false)) {
 			static::getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
 		}
@@ -529,8 +527,6 @@ class WCF {
 		if (class_exists($className) && is_subclass_of($className, IApplication::class)) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
-			
-			// TODO: this should be done during update instead, remove this before any public release
 			if (!file_exists($configPath)) {
 				Package::writeConfigFile($package->packageID);
 			}
@@ -838,34 +834,7 @@ class WCF {
 	 * @return	string
 	 */
 	public static function getRequestURI() {
-		if (URL_LEGACY_MODE) {
-			// resolve path and query components
-			$scriptName = $_SERVER['SCRIPT_NAME'];
-			$pathInfo = RouteHandler::getPathInfo();
-			if (empty($pathInfo)) {
-				// bug fix if URL omits script name and path
-				$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
-			}
-			
-			$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
-			if (!StringUtil::isUTF8($path)) {
-				$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
-			}
-			$path = FileUtil::removeLeadingSlash($path);
-			$baseHref = self::getTPL()->get('baseHref');
-			
-			if (!empty($path) && mb_strpos($path, '?') !== 0) {
-				$baseHref .= 'index.php/';
-			}
-			
-			return $baseHref . $path;
-		}
-		else {
-			$url = preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1', self::getTPL()->get('baseHref'));
-			$url .= $_SERVER['REQUEST_URI'];
-			
-			return $url;
-		}
+		return preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1', self::getTPL()->get('baseHref')) . $_SERVER['REQUEST_URI'];
 	}
 	
 	/**

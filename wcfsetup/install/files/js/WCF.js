@@ -788,10 +788,6 @@ $.extend(WCF, {
 	 * @return	string
 	 */
 	convertLegacyURL: function(url) {
-		if (URL_LEGACY_MODE) {
-			return url;
-		}
-		
 		return url.replace(/^index\.php\/(.*?)\/\?/, function(match, controller) {
 			var $parts = controller.split(/([A-Z][a-z0-9]+)/);
 			var $controller = '';

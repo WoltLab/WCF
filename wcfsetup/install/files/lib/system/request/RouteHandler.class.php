@@ -296,50 +296,21 @@ class RouteHandler extends SingletonFactory {
 		if (self::$pathInfo === null) {
 			self::$pathInfo = '';
 			
-			if (!URL_LEGACY_MODE || RequestHandler::getInstance()->isACPRequest()) {
-				// WCF 2.1: ?Foo/Bar/
-				if (!empty($_SERVER['QUERY_STRING'])) {
-					// don't use parse_str as it replaces dots with underscores
-					$components = explode('&', $_SERVER['QUERY_STRING']);
-					for ($i = 0, $length = count($components); $i < $length; $i++) {
-						$component = $components[$i];
-						
-						$pos = mb_strpos($component, '=');
-						if ($pos !== false && $pos + 1 === mb_strlen($component)) {
-							$component = mb_substr($component, 0, -1);
-							$pos = false;
-						}
-						
-						if ($pos === false) {
-							self::$pathInfo = urldecode($component);
-							break;
-						}
+			if (!empty($_SERVER['QUERY_STRING'])) {
+				// don't use parse_str as it replaces dots with underscores
+				$components = explode('&', $_SERVER['QUERY_STRING']);
+				for ($i = 0, $length = count($components); $i < $length; $i++) {
+					$component = $components[$i];
+					
+					$pos = mb_strpos($component, '=');
+					if ($pos !== false && $pos + 1 === mb_strlen($component)) {
+						$component = mb_substr($component, 0, -1);
+						$pos = false;
 					}
-				}
-			}
-			
-			// WCF 2.0: index.php/Foo/Bar/
-			if ((URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) || (RequestHandler::getInstance()->isACPRequest() && empty(self::$pathInfo))) {
-				if (isset($_SERVER['PATH_INFO'])) {
-					self::$pathInfo = $_SERVER['PATH_INFO'];
-				}
-				else if (isset($_SERVER['ORIG_PATH_INFO'])) {
-					self::$pathInfo = $_SERVER['ORIG_PATH_INFO'];
-						
-					// in some configurations ORIG_PATH_INFO contains the path to the file
-					// if the intended PATH_INFO component is empty
-					if (!empty(self::$pathInfo)) {
-						if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
-							self::$pathInfo = '';
-						}
-						
-						if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
-							self::$pathInfo = '';
-						}
-						
-						if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
-							self::$pathInfo = '';
-						}
+					
+					if ($pos === false) {
+						self::$pathInfo = urldecode($component);
+						break;
 					}
 				}
 			}

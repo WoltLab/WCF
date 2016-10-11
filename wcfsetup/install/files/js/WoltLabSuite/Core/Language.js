@@ -49,9 +49,6 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 			var value = _languageItems.get(key);
 			
 			if (value === undefined) {
-				// TODO
-				//console.warn("Attempt to retrieve unknown phrase '" + key + "'.");
-				//console.warn(new Error().stack);
 				return key;
 			}
 			

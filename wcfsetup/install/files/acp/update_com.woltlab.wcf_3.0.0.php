@@ -8,3 +8,5 @@
 // see: https://github.com/WoltLab/WCF/commit/e1b6d09d705d6c153612bb36c70efbdb3d42871e
 // 4. Generate signature_secret
 // see: https://github.com/WoltLab/WCF/commit/9fe8b50cc6011628e2ac72d6e80c9561312503f4
+// 5. add application configs
+// if (!file_exists($appConfig)) { Package::writeConfigFile($appPackageID); }

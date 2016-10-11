@@ -16,7 +16,6 @@
 			</div>
 		</div>
 		
-		{* TODO: this should be moved somewhere else and turned into an option *}
 		<script data-relocate="true">
 			require(['WoltLabSuite/Core/Ui/Page/Header/Fixed'], function(UiPageHeaderFixed) {
 				UiPageHeaderFixed.init();

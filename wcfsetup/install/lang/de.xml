@@ -1144,12 +1144,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Link-Umschreibungen aktivieren]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „http://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fblog.woltlab.com%2Fentry%2F68-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
-		<item name="wcf.acp.option.url_legacy_mode"><![CDATA[Kompatibilitätsmodus für Links aktivieren]]></item>
-		<item name="wcf.acp.option.url_legacy_mode.description"><![CDATA[Die Aktivierung dieses Modus erzwingt die URL-Struktur von WoltLab Community Framework 2.0 und sollte nur aus Kompatibilitätsgründen zur Beibehaltung der Link-Gültigkeit aktiviert werden:
-<ul class="nativeList">
-	<li>WCF 2.0: „index.php/Thread/123-Title/“</li>
-	<li>WCF 2.1+: „index.php?thread/123-title/“</li>
-</ul>]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
