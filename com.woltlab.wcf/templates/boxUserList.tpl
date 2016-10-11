@@ -8,7 +8,6 @@
 				{capture assign='__boxUserLanguageItem'}{lang __optional=true}wcf.user.boxList.description.{$boxSortField}{/lang}{/capture}
 				{if $__boxUserLanguageItem}
 					<small>{@$__boxUserLanguageItem}</small>
-				{* TODO: else? *}
 				{/if}
 			</div>
 		</li>

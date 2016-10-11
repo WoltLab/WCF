@@ -1437,17 +1437,17 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="media_small_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>280</defaultvalue> <!-- TODO: temporary value -->
-				<minvalue>145</minvalue> <!-- TODO: temporary value -->
-				<maxvalue>400</maxvalue> <!-- TODO: temporary value -->
+				<defaultvalue>280</defaultvalue>
+				<minvalue>145</minvalue>
+				<maxvalue>400</maxvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="media_small_thumbnail_height">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>210</defaultvalue> <!-- TODO: temporary value -->
-				<minvalue>145</minvalue> <!-- TODO: temporary value -->
-				<maxvalue>300</maxvalue> <!-- TODO: temporary value -->
+				<defaultvalue>210</defaultvalue>
+				<minvalue>145</minvalue>
+				<maxvalue>300</maxvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="media_small_thumbnail_retain_dimensions">
@@ -1458,17 +1458,17 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="media_medium_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>560</defaultvalue> <!-- TODO: temporary value -->
-				<minvalue>400</minvalue> <!-- TODO: temporary value -->
-				<maxvalue>900</maxvalue> <!-- TODO: temporary value -->
+				<defaultvalue>560</defaultvalue>
+				<minvalue>400</minvalue>
+				<maxvalue>900</maxvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="media_medium_thumbnail_height">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>420</defaultvalue> <!-- TODO: temporary value -->
-				<minvalue>300</minvalue> <!-- TODO: temporary value -->
-				<maxvalue>700</maxvalue> <!-- TODO: temporary value -->
+				<defaultvalue>420</defaultvalue>
+				<minvalue>300</minvalue>
+				<maxvalue>700</maxvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="media_medium_thumbnail_retain_dimensions">
@@ -1479,15 +1479,15 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="media_large_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>1200</defaultvalue> <!-- TODO: temporary value -->
-				<minvalue>900</minvalue> <!-- TODO: temporary value -->
+				<defaultvalue>1200</defaultvalue>
+				<minvalue>900</minvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="media_large_thumbnail_height">
 				<categoryname>cms.media.thumbnail</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>900</defaultvalue> <!-- TODO: temporary value -->
-				<minvalue>700</minvalue> <!-- TODO: temporary value -->
+				<defaultvalue>900</defaultvalue>
+				<minvalue>700</minvalue>
 				<suffix>pixel</suffix>
 			</option>
 			<option name="media_large_thumbnail_retain_dimensions">
