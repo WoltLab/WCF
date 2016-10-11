@@ -8,6 +8,7 @@ use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -151,13 +152,19 @@ class MenuAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$boxName = $this->title;
+		if (!I18nHandler::getInstance()->isPlainValue('title')) {
+			$values = I18nHandler::getInstance()->getValues('title');
+			$boxName = $values[LanguageFactory::getInstance()->getDefaultLanguageID()];
+		}
+		
 		// save label
 		$this->objectAction = new MenuAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'packageID' => 1,
 			'identifier' => ''
 		]), 'boxData' => [
-			'name' => $this->title,
+			'name' => $boxName,
 			'boxType' => 'menu',
 			'position' => $this->position,
 			'visibleEverywhere' => $this->visibleEverywhere ? 1 : 0,

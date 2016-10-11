@@ -6,6 +6,7 @@ use wcf\data\menu\MenuAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -62,7 +63,13 @@ class MenuEditForm extends MenuAddForm {
 	 */
 	public function save() {
 		AbstractForm::save();
-	
+		
+		$boxName = $this->title;
+		if (!I18nHandler::getInstance()->isPlainValue('title')) {
+			$values = I18nHandler::getInstance()->getValues('title');
+			$boxName = $values[LanguageFactory::getInstance()->getDefaultLanguageID()];
+		}
+		
 		$this->title = 'wcf.menu.menu'.$this->menu->menuID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
 			I18nHandler::getInstance()->remove($this->title);
@@ -85,7 +92,8 @@ class MenuEditForm extends MenuAddForm {
 				'visibleEverywhere' => $this->visibleEverywhere ? 1 : 0,
 				'showHeader' => $this->showHeader ? 1 : 0,
 				'showOrder' => $this->showOrder,
-				'cssClassName' => $this->cssClassName
+				'cssClassName' => $this->cssClassName,
+				'name' => $boxName
 			]), 'pageIDs' => $this->pageIDs]);
 			$boxAction->executeAction();
 		}
