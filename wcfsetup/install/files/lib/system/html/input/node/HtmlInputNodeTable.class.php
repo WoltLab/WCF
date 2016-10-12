@@ -41,7 +41,12 @@ class HtmlInputNodeTable extends AbstractHtmlInputNode {
 			
 			// check if each `<tr>` has at least one `<td>`
 			foreach ($trs as $tr) {
-				if ($tr->getElementsByTagName('td')->length === 0) {
+				$childTagName = 'td';
+				if ($tr->parentNode->nodeName === 'thead') {
+					$childTagName = 'th';
+				}
+				
+				if ($tr->getElementsByTagName($childTagName)->length === 0) {
 					DOMUtil::removeNode($tr);
 				}
 			}
