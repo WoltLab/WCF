@@ -9,23 +9,16 @@ use wcf\util\StringUtil;
  * Represents a captcha question.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.captcha.question
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Captcha\Question
+ * 
+ * @property-read	integer		$questionID	unique id of the captcha question
+ * @property-read	string		$question	question of the captcha or name of language item which contains the question
+ * @property-read	string		$answers	newline-separated list of answers or name of language item which contains the answers
+ * @property-read	integer		$isDisabled	is `1` if the captcha question is disabled and thus not offered to answer, otherwise `0`
  */
 class CaptchaQuestion extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'captcha_question';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'questionID';
-	
 	/**
 	 * Returns true if the given user input is an answer to this question.
 	 * 

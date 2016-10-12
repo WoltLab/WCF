@@ -11,16 +11,14 @@ use wcf\system\WCF;
  * Shows the form to edit an existing automatic user group assignment.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	/**
 	 * edited automatic user group assignment
-	 * @var	\wcf\data\user\group\assignment\UserGroupAssignment
+	 * @var	UserGroupAssignment
 	 */
 	public $assignment = null;
 	
@@ -31,19 +29,19 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	public $assignmentID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'assignment' => $this->assignment
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -54,13 +52,14 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 			
 			$conditions = $this->assignment->getConditions();
 			foreach ($conditions as $condition) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$this->conditions[$condition->getObjectType()->conditiongroup][$condition->objectTypeID]->getProcessor()->setData($condition);
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -73,22 +72,22 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new UserGroupAssignmentAction(array($this->assignment), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserGroupAssignmentAction([$this->assignment], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'groupID' => $this->groupID,
 				'isDisabled' => $this->isDisabled,
 				'title' => $this->title
-			))
-		));
-		$returnValues = $this->objectAction->executeAction();
+			])
+		]);
+		$this->objectAction->executeAction();
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->conditions as $groupedObjectTypes) {
 			$conditions = array_merge($conditions, $groupedObjectTypes);
 		}

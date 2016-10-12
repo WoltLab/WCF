@@ -7,11 +7,9 @@ use wcf\system\WCF;
  * A phpline history that saves the items in database.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class DatabaseCLICommandHistory extends MemoryHistory {
 	/**
@@ -30,7 +28,7 @@ class DatabaseCLICommandHistory extends MemoryHistory {
 			$sql = "DELETE FROM	wcf".WCF_N."_cli_history
 				WHERE		userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(WCF::getUser()->userID));
+			$statement->execute([WCF::getUser()->userID]);
 		}
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_cli_history (userID, command)
@@ -39,7 +37,7 @@ class DatabaseCLICommandHistory extends MemoryHistory {
 		WCF::getDB()->beginTransaction();
 		
 		foreach ($this as $item) {
-			$statement->execute(array(WCF::getUser()->userID, $item));
+			$statement->execute([WCF::getUser()->userID, $item]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -52,7 +50,7 @@ class DatabaseCLICommandHistory extends MemoryHistory {
 			FROM	wcf".WCF_N."_cli_history
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(WCF::getUser()->userID));
+		$statement->execute([WCF::getUser()->userID]);
 		
 		while ($row = $statement->fetchArray()) {
 			$this->add($row['command']);

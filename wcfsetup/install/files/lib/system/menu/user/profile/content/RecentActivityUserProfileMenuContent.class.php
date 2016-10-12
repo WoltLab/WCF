@@ -9,38 +9,40 @@ use wcf\system\WCF;
  * Handles user activity events.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.menu.user.profile.content
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Menu\User\Profile\Content
  */
 class RecentActivityUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent {
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent($userID) {
 		$eventList = new ViewableUserActivityEventList();
-		$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", array($userID));
+		
+		// load more items than necessary to avoid empty list if some items are invisible for current user
+		$eventList->sqlLimit = 60;
+		
+		$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$userID]);
 		$eventList->readObjects();
 		
-		$lastEventTime = $eventList->getLastEventTime();
-		if ($lastEventTime) {
-			UserActivityEventHandler::validateEvents($eventList);
-		}
+		UserActivityEventHandler::validateEvents($eventList);
 		
-		WCF::getTPL()->assign(array(
+		// remove unused items
+		$eventList->truncate(20);
+		
+		WCF::getTPL()->assign([
 			'eventList' => $eventList,
-			'lastEventTime' => $lastEventTime,
+			'lastEventTime' => $eventList->getLastEventTime(),
 			'placeholder' => WCF::getLanguage()->get('wcf.user.profile.content.recentActivity.noEntries'),
 			'userID' => $userID
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('recentActivities');
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible($userID) {
 		return true;

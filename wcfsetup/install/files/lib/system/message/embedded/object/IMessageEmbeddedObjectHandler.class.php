@@ -1,31 +1,35 @@
 <?php
 namespace wcf\system\message\embedded\object;
+use wcf\data\DatabaseObject;
+use wcf\system\html\input\HtmlInputProcessor;
 
 /**
  * Default interface of embedded object handler.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.message.embedded.object
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Message\Embedded\Object
+ * 
+ * @property-read	integer		$objectTypeID	id of the embedded object type
  */
 interface IMessageEmbeddedObjectHandler {
 	/**
-	 * Parses the given message to extract embedded objects.
-	 * Returns the IDs of found embedded objects.
+	 * Processes embedded data and optionally accesses the current
+	 * document to extract additional data. Returns the IDs of found
+	 * embedded objects.
 	 * 
-	 * @param	string		$message
-	 * @return	array<integer>
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor holding the current document
+	 * @param       mixed[]                 $embeddedData           list of found embedded data with attributes
+	 * @return      integer[]               ids of found embedded objects
 	 */
-	public function parseMessage($message);
+	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData);
 	
 	/**
 	 * Loads and returns embedded objects.
 	 * 
 	 * @param	array		$objectIDs
-	 * @return	array<\wcf\data\DatabaseObject>
+	 * @return	DatabaseObject[]
 	 */
 	public function loadObjects(array $objectIDs);
 }

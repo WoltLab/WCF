@@ -8,40 +8,42 @@ use wcf\system\search\acp\ACPSearchHandler;
  * Executes ACP search provider-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.acp.search.provider
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Acp\Search\Provider
+ * 
+ * @method	ACPSearchProvider		create()
+ * @method	ACPSearchProviderEditor[]	getObjects()
+ * @method	ACPSearchProviderEditor		getSingleObject()
  */
 class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('getSearchResultList');
+	protected $requireACP = ['getSearchResultList'];
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		$this->readString('searchString', false, 'data');
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::getSearchResultList()
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
-		$data = array();
-		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString']);
+		$data = [];
+		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString'], 10, (!empty($this->parameters['data']['providerName']) ? $this->parameters['data']['providerName'] : ''));
 		
 		foreach ($results as $resultList) {
-			$items = array();
+			$items = [];
 			foreach ($resultList as $item) {
-				$items[] = array(
+				$items[] = [
 					'link' => $item->getLink(),
 					'subtitle' => $item->getSubtitle(),
 					'title' => $item->getTitle()
-				);
+				];
 			}
 			
 			foreach ($items as $key => &$item) {
@@ -59,10 +61,10 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 			}
 			unset($item);
 			
-			$data[] = array(
+			$data[] = [
 				'items' => $items,
 				'title' => $resultList->getTitle()
-			);
+			];
 		}
 		
 		return $data;

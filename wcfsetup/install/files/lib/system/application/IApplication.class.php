@@ -2,14 +2,12 @@
 namespace wcf\system\application;
 
 /**
- * Default interface for all applications for the community framework.
+ * Default interface for all applications for the WoltLab Suite.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.application
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Application
  */
 interface IApplication {
 	/**

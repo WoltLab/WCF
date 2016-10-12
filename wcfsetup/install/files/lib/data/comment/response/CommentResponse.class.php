@@ -3,6 +3,7 @@ namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
+use wcf\data\TUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\comment\CommentHandler;
 use wcf\util\StringUtil;
@@ -11,31 +12,28 @@ use wcf\util\StringUtil;
  * Represents a comment response.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment.response
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment\Response
+ *
+ * @property-read	integer		$responseID	unique id of the comment response
+ * @property-read	integer		$commentID	id of the comment the comment response belongs to
+ * @property-read	integer		$time		timestamp at which the comment response has been written
+ * @property-read	integer|null	$userID		id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
+ * @property-read	string		$username	name of the user or guest who wrote the comment response
+ * @property-read	string		$message	comment response message
  */
 class CommentResponse extends DatabaseObject implements IMessage {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'comment_response';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'responseID';
+	use TUserContent;
 	
 	/**
 	 * comment object
-	 * @var	\wcf\data\comment\Comment
+	 * @var	Comment
 	 */
 	protected $comment = null;
 	
 	/**
-	 * @see	\wcf\data\IMessage::getFormattedMessage()
+	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
 		return SimpleMessageParser::getInstance()->parse($this->message);
@@ -44,7 +42,7 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	/**
 	 * Returns comment object related to this response.
 	 * 
-	 * @return	\wcf\data\comment\Comment
+	 * @return	Comment
 	 */
 	public function getComment() {
 		if ($this->comment === null) {
@@ -57,7 +55,7 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	/**
 	 * Sets related comment object.
 	 * 
-	 * @param	\wcf\data\comment\Comment
+	 * @param	Comment		$comment
 	 */
 	public function setComment(Comment $comment) {
 		if ($this->commentID == $comment->commentID) {
@@ -66,63 +64,42 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getExcerpt()
+	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
 		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		return $this->message;
 	}
 	
 	/**
-	 * @see	\wcf\data\IUserContent::getTime()
-	 */
-	public function getTime() {
-		return $this->time;
-	}
-	
-	/**
-	 * @see	\wcf\data\IUserContent::getUserID()
-	 */
-	public function getUserID() {
-		return $this->userID;
-	}
-	
-	/**
-	 * @see	\wcf\data\IUserContent::getUsername()
-	 */
-	public function getUsername() {
-		return $this->username;
-	}
-	
-	/**
-	 * @see	\wcf\data\ILinkableObject::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
 		return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getLink($this->getComment()->objectTypeID, $this->getComment()->objectID);
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle($this->getComment()->objectTypeID, $this->getComment()->objectID, true);
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\data\IMessage::__toString()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();

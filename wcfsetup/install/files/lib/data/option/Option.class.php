@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\option;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -8,25 +10,33 @@ use wcf\util\StringUtil;
  * Represents an option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Option
+ *
+ * @property-read	integer		$optionID		unique id of the option
+ * @property-read	integer		$packageID		id of the package the which delivers the option
+ * @property-read	string		$optionName		name and textual identifier of the option
+ * @property-read	string		$categoryName		name of the option category the option belongs to
+ * @property-read	string		$optionType		textual identifier of the option (corresponds to a class implementing `wcf\system\option\IOptionType`)
+ * @property-read	string		$optionValue		value of the option
+ * @property-read	string		$validationPattern	regular expression used to validate the option's value or empty if no such regular expression exists
+ * @property-read	string		$selectOptions		newline-separated list of selectable options for a selectable option type (line pattern: `{value}:{language item name}`)
+ * @property-read	string		$enableOptions		list of options that are enabled based on the option's value (simple comma-separated list of boolean options, otherwise newline-separated list with line pattern: `{select value}:{comma-separated list}`)
+ * @property-read	integer		$showOrder		position of the option in relation to the other option in the option category
+ * @property-read	integer		$hidden			is `1` if the option is hidden and thus cannot be explicitly set by in the acp, otherwise `0`
+ * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to set the option value
+ * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the option to be editable
+ * @property-read	integer		$supportI18n		is `1` if the option supports different values for all available languages, otherwise `0`
+ * @property-read	integer		$requireI18n		is `1` if `$supportI18n = 1` and the option's value has to explicily set for all values so that the `monolingual` option is not available, otherwise `0`
+ * @property-read	array		$additionalData		array with additional data of the option
  */
 class Option extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'option';
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'optionID';
-	
-	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -42,19 +52,19 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
 		
 		// unserialize additional data
-		$this->data['additionalData'] = (empty($data['additionalData']) ? array() : @unserialize($data['additionalData']));
+		$this->data['additionalData'] = (empty($data['additionalData']) ? [] : @unserialize($data['additionalData']));
 	}
 	
 	/**
 	 * Returns a list of options.
 	 * 
-	 * @return	array<\wcf\data\option\Option>
+	 * @return	Option[]
 	 */
 	public static function getOptions() {
 		$sql = "SELECT	*
@@ -62,7 +72,7 @@ class Option extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$options = array();
+		$options = [];
 		while ($row = $statement->fetchArray()) {
 			$option = new Option(null, $row);
 			$options[$option->getConstantName()] = $option;
@@ -95,10 +105,10 @@ class Option extends DatabaseObject {
 			}
 		}
 		
-		return array(
+		return [
 			'disableOptions' => $disableOptions,
 			'enableOptions' => $enableOptions
-		);
+		];
 	}
 	
 	/**
@@ -107,7 +117,7 @@ class Option extends DatabaseObject {
 	 * @return	array
 	 */
 	public function parseSelectOptions() {
-		$result = array();
+		$result = [];
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
@@ -129,7 +139,7 @@ class Option extends DatabaseObject {
 	 * @return	array
 	 */
 	public function parseMultipleEnableOptions() {
-		$result = array();
+		$result = [];
 		if (!empty($this->enableOptions)) {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->enableOptions)));
 			$key = -1;
@@ -161,7 +171,7 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'option_table';

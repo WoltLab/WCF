@@ -6,20 +6,14 @@ use wcf\data\DatabaseObject;
  * Represents a clipboard action.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.clipboard.action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Clipboard\Action
+ *
+ * @property-read	integer		$actionID		unique id of the clipboard action
+ * @property-read	integer		$packageID		id of the package which delivers the clipboard action
+ * @property-read	string		$actionName		name and textual identifier of the clipboard action 
+ * @property-read	string		$actionClassName	PHP class name implementing `wcf\system\clipboard\action\IClipboardAction`
+ * @property-read	integer		$showOrder		position of the clipboard action in relation to the other clipboard actions
  */
-class ClipboardAction extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'clipboard_action';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'actionID';
-}
+class ClipboardAction extends DatabaseObject {}

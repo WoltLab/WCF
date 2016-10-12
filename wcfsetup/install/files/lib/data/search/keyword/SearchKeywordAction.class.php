@@ -8,35 +8,37 @@ use wcf\system\WCF;
  * Executes keyword-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.search.keyword
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Search\Keyword
+ * 
+ * @method	SearchKeyword		create()
+ * @method	SearchKeywordEditor[]	getObjects()
+ * @method	SearchKeywordEditor	getSingleObject()
  */
 class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\search\keyword\SearchKeywordEditor';
+	protected $className = SearchKeywordEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getSearchResultList');
+	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		$this->readString('searchString', false, 'data');
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::getSearchResultList()
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
-		$list = array();
+		$list = [];
 		
 		// find users
 		$sql = "SELECT		*
@@ -44,12 +46,12 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 			WHERE		keyword LIKE ?
 			ORDER BY	searches DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 10);
-		$statement->execute(array($this->parameters['data']['searchString'].'%'));
+		$statement->execute([$this->parameters['data']['searchString'].'%']);
 		while ($row = $statement->fetchArray()) {
-			$list[] = array(
+			$list[] = [
 				'label' => $row['keyword'],
 				'objectID' => $row['keywordID']
-			);
+			];
 		}
 		
 		return $list;

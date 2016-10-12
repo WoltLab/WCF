@@ -6,11 +6,9 @@ use wcf\util\StringUtil;
  * Handles meta tags.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.message
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Message
  */
 class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	/**
@@ -21,24 +19,30 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $indexToObject = null;
+	protected $indexToObject = [];
 	
 	/**
 	 * list of meta tags
 	 * @var	array
 	 */
-	protected $objects = array();
+	protected $objects = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// set default tags
-		$this->addTag('description', 'description', WCF::getLanguage()->get(META_DESCRIPTION));
-		$this->addTag('keywords', 'keywords', WCF::getLanguage()->get(META_KEYWORDS));
-		$this->addTag('og:site_name', 'og:site_name', WCF::getLanguage()->get(PAGE_TITLE), true);
+		if ($value = WCF::getLanguage()->get(META_DESCRIPTION)) {
+			$this->addTag('description', 'description', $value);
+		}
+		if ($value = WCF::getLanguage()->get(META_KEYWORDS)) {
+			$this->addTag('keywords', 'keywords', $value);
+		}
+		if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
+			$this->addTag('og:site_name', 'og:site_name', $value, true);
+		}
 	}
 	
 	/**
@@ -54,16 +58,16 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 			$this->indexToObject[] = $identifier;
 		}
 		
-		$this->objects[$identifier] = array(
+		$this->objects[$identifier] = [
 			'isProperty' => $isProperty,
 			'name' => $name,
 			'value' => $value
-		);
+		];
 		
 		// replace description if Open Graph Protocol tag was given
 		if ($name == 'og:description') {
-			$this->objects['description']['value'] = $value;
-		}		
+			$this->addTag('description', 'description', $value);
+		}
 	}
 	
 	/**
@@ -80,19 +84,19 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->objects);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$tag = $this->objects[$this->indexToObject[$this->index]];
 		
-		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . StringUtil::encodeHTML($tag['value']) . '" />';
+		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . StringUtil::encodeHTML($tag['value']) . '">';
 	}
 	
 	/**
@@ -106,21 +110,21 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);

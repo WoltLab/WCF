@@ -1,0 +1,236 @@
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"],
+select,
+textarea {
+	margin: 0; /* safari fix */
+	@include input;
+}
+
+/* set placeholder color */
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"] {
+	&::-webkit-input-placeholder { /* WebKit browsers */
+		color: $wcfInputPlaceholder;
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: $wcfInputPlaceholder;
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: $wcfInputPlaceholder;
+	}
+	
+	&:focus,
+	&:hover {
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfInputPlaceholderActive;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfInputPlaceholderActive;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfInputPlaceholderActive;
+		}
+	}
+}
+
+input[type="search"],
+input[type="text"] {
+	-webkit-appearance: none;
+}
+
+.iOS {
+	input[type="date"],
+	input[type="datetime"],
+	input[type="email"],
+	input[type="number"],
+	input[type="password"],
+	input[type="search"],
+	input[type="text"],
+	input[type="url"],
+	textarea {
+		font-size: 16px;
+	}
+}
+
+textarea {
+	border-width: 1px;
+	font-weight: 400;
+	vertical-align: top;
+	width: 100%;
+	
+	@include wcfFontDefault;
+	
+	&[disabled],
+	&[readonly] {
+		background-color: $wcfInputDisabledBackground !important;
+		border-color: $wcfInputDisabledBorder !important;
+		color: $wcfInputDisabledText !important;
+	}
+}
+
+select {
+	// The width is determined by the browser based upon the longest <option> contained,
+	// but this can cause the <select> to overflow the parent container. This is acceptable
+	// to some extent, but on mobile it can cause the entire site to have a horizontal
+	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
+	// boundaries and nicely wrap the displayed value instead.
+	max-width: 100%;
+}
+
+.formSubmit {
+	text-align: center;
+	
+	&:not(:first-child) {
+		margin-top: 30px;
+	}
+	
+	@include screen-xs {
+		> .button,
+		> button,
+		> input {
+			display: block;
+			padding: 7px 10px;
+			width: 100%;
+			
+			&:not(:first-child) {
+				margin-top: 10px;
+			}
+		}
+	}
+	
+	@include screen-sm-up {
+		> :not(:first-child) {
+			margin-left: 10px;
+		}
+	}
+}
+
+.inputAddon {
+	display: flex;
+	
+	&:not(:last-child) {
+		margin-bottom: 5px;
+	}
+	
+	> .inputPrefix,
+	> .inputSuffix {
+		align-items: center;
+		display: flex;
+		flex: 0 0 auto;
+		
+		&.button {
+			border-radius: 0;
+		}
+		
+		&:not(.button) {
+			background-color: $wcfButtonBackground;
+			border: 1px solid $wcfButtonBorder;
+			color: $wcfButtonText;
+			cursor: default;
+			padding: 3px 5px;
+		}
+	}
+	
+	> .inputPrefix {
+		margin-right: 5px;
+	}
+	
+	> .inputSuffix {
+		margin-left: 5px;
+	}
+	
+	input {
+		flex: 1 auto;
+		
+		& + .inputPrefix {
+			margin-left: 5px;
+		}
+	}
+}
+
+.inputAddonTextarea {
+	flex-wrap: wrap;
+	
+	> .inputPrefix.button {
+		border-bottom-width: 0;
+		border-radius: 0;
+	}
+	
+	> textarea {
+		flex: 0 0 100%;
+	}
+}
+
+.inputAddon input,
+input {
+	&.tiny {
+		flex-grow: 0;
+		width: 80px;
+	}
+	
+	&.long {
+		min-width: 150px;
+		width: 100%;
+	}
+	
+	@include screen-xs {
+		&.short {
+			flex-grow: 0;
+			width: 150px;
+		}
+		
+		&.medium {
+			min-width: 150px;
+			width: 100%;
+		}
+	}
+	
+	@include screen-sm-up {
+		&.short {
+			flex-grow: 0;
+			min-width: 80px;
+			width: 10%;
+		}
+		
+		&.medium {
+			flex-grow: 0;
+			min-width: 150px;
+			width: 30%;
+		}
+	}
+}
+
+.formError {
+	dt {
+		color: rgba(204, 0, 1, 1) !important;
+	}
+	
+	input,
+	select,
+	textarea {
+		border-color: rgba(204, 0, 1, 1) !important;
+	}
+}
+
+/* grid-based form controls */
+.formGrid {
+	dt {
+		display: none;
+	}
+	
+	select {
+		width: 100%;
+	}
+}

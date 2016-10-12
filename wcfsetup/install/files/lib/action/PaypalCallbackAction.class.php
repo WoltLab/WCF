@@ -1,6 +1,5 @@
 <?php
 namespace wcf\action;
-use wcf\action\AbstractAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
 use wcf\system\payment\type\IPaymentType;
@@ -11,15 +10,13 @@ use wcf\util\StringUtil;
  * Handles Paypal callbacks.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 class PaypalCallbackAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -28,6 +25,7 @@ class PaypalCallbackAction extends AbstractAction {
 		$processor = null;
 		try {
 			// post back to paypal to validate 
+			/** @noinspection PhpUnusedLocalVariableInspection */
 			$content = '';
 			try {
 				$url = 'https://www.paypal.com/cgi-bin/webscr';
@@ -36,7 +34,7 @@ class PaypalCallbackAction extends AbstractAction {
 					$url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 				}
 				
-				$request = new HTTPRequest($url, array(), array_merge(array('cmd' => '_notify-validate'), $_POST));
+				$request = new HTTPRequest($url, [], array_merge(['cmd' => '_notify-validate'], $_POST));
 				$request->execute();
 				$reply = $request->getReply();
 				$content = $reply['body'];

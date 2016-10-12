@@ -8,15 +8,13 @@ use wcf\system\WCF;
  * A missing or invalid token will be result in a throw of a IllegalLinkException.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
  */
 abstract class AbstractSecurePage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();

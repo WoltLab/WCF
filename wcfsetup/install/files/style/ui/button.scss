@@ -1,0 +1,170 @@
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+a.button { // a.button is required to override link formatting, such as drop-down buttons
+	background-color: $wcfButtonBackground;
+	border-radius: 2px;
+	border-width: 0;
+	color: $wcfButtonText;
+	cursor: pointer;
+	display: inline-block;
+	font-weight: 400;
+	margin: 0;
+	padding: 8px 18px;
+	text-decoration: none;
+	
+	// input elements do not inherit font family, size and line-height from body
+	font-family: $wcfFontFamily;
+	@include wcfFontDefault;
+	@include wcfLineHeight;
+	
+	// removes UA styling enforced by Safari on iOS
+	-webkit-appearance: none;
+	
+	@include userSelectNone;
+	
+	.icon {
+		color: inherit;
+	}
+	
+	&.active,
+	&:hover {
+		background-color: $wcfButtonBackgroundActive;
+		color: $wcfButtonTextActive;
+		text-decoration: none;
+	}
+	
+	&:not(.inputPrefix) {
+		text-transform: uppercase;
+	}
+	
+	&.small {
+		padding: 6px 8px;
+		text-transform: none;
+		
+		@include wcfFontSmall;
+	}
+	
+	small {
+		color: inherit;
+	}
+}
+
+button.buttonPrimary,
+input[type="button"].buttonPrimary,
+input[type="submit"],
+.button.buttonPrimary,
+a.button.buttonPrimary { // a.button is required to override link formatting, such as dropdown buttons
+	background-color: $wcfButtonPrimaryBackground;
+	color: $wcfButtonPrimaryText;
+	
+	&.active,
+	&:hover {
+		background-color: $wcfButtonPrimaryBackgroundActive;
+		color: $wcfButtonPrimaryTextActive;
+	}
+}
+
+/* disabled state */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+a.button {
+	&:disabled,
+	&.disabled {
+		background-color: $wcfButtonDisabledBackground !important;
+		color: $wcfButtonDisabledText !important;
+		cursor: not-allowed !important;
+	}
+}
+
+/* force active state for buttons toggling a dropdown */
+.dropdownOpen {
+	> button,
+	> input[type="button"],
+	> input[type="reset"],
+	> input[type="submit"],
+	> .button,
+	> a.button {
+		background-color: $wcfButtonBackgroundActive;
+		color: $wcfButtonTextActive;
+	}
+	
+	> button.buttonPrimary,
+	> input[type="button"].buttonPrimary,
+	> input[type="submit"],
+	> .button.buttonPrimary,
+	> a.button.buttonPrimary {
+		background-color: $wcfButtonPrimaryBackgroundActive;
+		color: $wcfButtonPrimaryTextActive;
+	}
+}
+
+.buttonList {
+	@include inlineList;
+	
+	&.smallButtons .button {
+		padding: 6px 8px;
+		text-transform: none;
+		
+		@include wcfFontSmall;
+	}
+	
+	/* members list */
+	&.letters {
+		margin-bottom: -10px;
+		
+		> li {
+			flex: 0 0 auto;
+			margin-bottom: 10px;
+			width: 10%;
+			
+			&.lettersReset {
+				width: auto;
+			}
+			
+			> a {
+				display: block;
+				min-width: min-content;
+				text-align: center;
+			}
+		}
+	}
+}
+
+.buttonGroupNavigation > ul {
+	@include inlineList;
+}
+
+.buttonGroup {
+	margin-bottom: -1px;
+	
+	@include inlineList;
+	
+	> li {
+		margin-bottom: 1px;
+		
+		&:not(:last-child) {
+			margin-right: 1px;
+		}
+		
+		&:first-child .button {
+			border-top-left-radius: 2px;
+			border-bottom-left-radius: 2px;
+		}
+		
+		&:last-child .button {
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
+		}
+		
+		.button {
+			border-radius: 0;
+			border-width: 0;
+		}
+	}
+}

@@ -4,6 +4,7 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\WCF;
 
@@ -11,21 +12,21 @@ use wcf\system\WCF;
  * Condition implementation for the options of a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
-class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IUserCondition {
-	/**
-	 * user option handler object
-	 * @var	\wcf\system\option\user\UserOptionHandler
-	 */
-	protected $optionHandler = null;
+class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::__construct()
+	 * user option handler object
+	 * @var	UserOptionHandler
+	 */
+	protected $optionHandler;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
@@ -36,24 +37,30 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @inheritDoc
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		$optionValues = $condition->optionValues;
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+		}
+		
+		$optionValues = $conditionData['optionValues'];
 		
 		foreach ($this->optionHandler->getCategoryOptions('profile') as $option) {
 			$option = $option['object'];
 			
 			if (isset($optionValues[$option->optionName])) {
-				$this->optionHandler->getTypeObject($option->optionType)->addCondition($userList, $option, $optionValues[$option->optionName]);
+				/** @noinspection PhpUndefinedMethodInspection */
+				$this->optionHandler->getTypeObject($option->optionType)->addCondition($objectList, $option, $optionValues[$option->optionName]);
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
+		/** @noinspection PhpUndefinedFieldInspection */
 		$optionValues = $condition->optionValues;
 		
 		$checkSuccess = true;
@@ -61,6 +68,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 			$option = $option['object'];
 			
 			if (isset($optionValues[$option->optionName])) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				if (!$this->optionHandler->getTypeObject($option->optionType)->checkUser($user, $option, $optionValues[$option->optionName])) {
 					$checkSuccess = false;
 					break;
@@ -72,16 +80,17 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		$optionValues = $this->optionHandler->getOptionValues();
 		
-		$data = array();
+		$data = [];
 		foreach ($this->optionHandler->getCategoryOptions('profile') as $option) {
 			$option = $option['object'];
 			
 			if (isset($optionValues[$option->optionName])) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$conditionData = $this->optionHandler->getTypeObject($option->optionType)->getConditionData($option, $optionValues[$option->optionName]);
 				if ($conditionData !== null) {
 					$data[$option->optionName] = $conditionData;
@@ -90,46 +99,46 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 		}
 		
 		if (!empty($data)) {
-			return array(
+			return [
 				'optionValues' => $data
-			);
+			];
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
-		return WCF::getTPL()->fetch('userOptionsCondition', 'wcf', array(
+		return WCF::getTPL()->fetch('userOptionsCondition', 'wcf', [
 			'optionTree' => $this->optionHandler->getOptionTree('profile')
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		$this->optionHandler->readUserInput($_POST);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->optionHandler->setOptionValues(array());
+		$this->optionHandler->setOptionValues([]);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		$this->optionHandler->setOptionValues($condition->conditionData['optionValues']);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;

@@ -12,21 +12,19 @@ use wcf\util\FileUtil;
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.source
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Source
  */
 class DiskCacheSource implements ICacheSource {
 	/**
 	 * up-to-date directory util object for the cache folder
-	 * @var	\wcf\util\DirectoryUtil
+	 * @var	DirectoryUtil
 	 */
 	protected $directoryUtil = null;
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -38,7 +36,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		$this->getDirectoryUtil()->removePattern(new Regex('.*\.php$'));
@@ -47,7 +45,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$filename = $this->getFilename($cacheName);
@@ -65,7 +63,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$writer = new AtomicWriter($this->getFilename($cacheName));
@@ -110,7 +108,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * Determines wheater the cache needs to be rebuild or not.
+	 * Determines whether the cache needs to be rebuild or not.
 	 * 
 	 * @param	string		$filename
 	 * @param	integer		$maxLifetime
@@ -147,6 +145,7 @@ class DiskCacheSource implements ICacheSource {
 	 * @param	string		$cacheName
 	 * @param	string		$filename
 	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	protected function readCache($cacheName, $filename) {
 		// get file contents
@@ -173,7 +172,7 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * Returns an up-to-date directory util object for the cache folder.
 	 * 
-	 * @return	\wcf\util\DirectoryUtil
+	 * @return	DirectoryUtil
 	 */
 	protected function getDirectoryUtil() {
 		if ($this->directoryUtil === null) {

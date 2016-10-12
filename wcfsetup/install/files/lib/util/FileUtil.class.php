@@ -8,11 +8,9 @@ use wcf\system\io\GZipFile;
  * Contains file-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class FileUtil {
 	/**
@@ -37,6 +35,7 @@ final class FileUtil {
 	 * Tries to find the temp folder.
 	 * 
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getTempFolder() {
 		try {
@@ -198,7 +197,7 @@ final class FileUtil {
 					
 					break;
 				}
-			}	
+			}
 			// go up one level
 			else if (isset($current[$i]) && !isset($target[$i])) {
 				$relPath .= '../';
@@ -321,7 +320,7 @@ final class FileUtil {
 	public static function getRealPath($path) {
 		$path = self::unifyDirSeparator($path);
 		
-		$result = array();
+		$result = [];
 		$pathA = explode('/', $path);
 		if ($pathA[0] === '') {
 			$result[] = '';
@@ -425,7 +424,7 @@ final class FileUtil {
 	 * @deprecated	This method currently only is a wrapper around \wcf\util\HTTPRequest. Please use
 	 * 		HTTPRequest from now on, as this method may be removed in the future.
 	 */
-	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
+	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = [], array $postParameters = [], &$headers = []) {
 		$request = new HTTPRequest($httpUrl, $options, $postParameters);
 		$request->execute();
 		$reply = $request->getReply();
@@ -519,6 +518,7 @@ final class FileUtil {
 	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 * 
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public static function makeWritable($filename) {
 		if (!file_exists($filename)) {
@@ -527,7 +527,7 @@ final class FileUtil {
 		
 		if (self::$mode === null) {
 			// WCFSetup
-			if (defined('INSTALL_SCRIPT')) {
+			if (defined('INSTALL_SCRIPT') && file_exists(INSTALL_SCRIPT)) {
 				// do not use PHP_OS here, as this represents the system it was built on != running on
 				// php_uname() is forbidden on some strange hosts; PHP_EOL is reliable 
 				if (PHP_EOL == "\r\n") {
@@ -638,5 +638,10 @@ final class FileUtil {
 		return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (memory_get_usage() + $neededMemory);
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of FileUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

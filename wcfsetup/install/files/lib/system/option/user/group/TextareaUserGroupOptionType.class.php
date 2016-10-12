@@ -9,19 +9,17 @@ use wcf\util\StringUtil;
  * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User\Group
  */
 class TextareaUserGroupOptionType extends TextareaOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
-		$defaultValue = empty($defaultValue) ? array() : explode("\n", StringUtil::unifyNewlines($defaultValue));
-		$groupValue = empty($groupValue) ? array() : explode("\n", StringUtil::unifyNewlines($groupValue));
+		$defaultValue = empty($defaultValue) ? [] : explode("\n", StringUtil::unifyNewlines($defaultValue));
+		$groupValue = empty($groupValue) ? [] : explode("\n", StringUtil::unifyNewlines($groupValue));
 		
 		return implode("\n", array_unique(array_merge($defaultValue, $groupValue)));
 	}

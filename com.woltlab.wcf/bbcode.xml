@@ -4,36 +4,29 @@
 		<bbcode name="b">
 			<htmlopen>b</htmlopen>
 			<htmlclose>b</htmlclose>
-			<allowedchildren>all^b</allowedchildren>
 		</bbcode>
 		<bbcode name="i">
 			<htmlopen>i</htmlopen>
 			<htmlclose>i</htmlclose>
-			<allowedchildren>all^i</allowedchildren>
 		</bbcode>
 		<bbcode name="u">
 			<htmlopen>span style="text-decoration: underline"</htmlopen>
 			<htmlclose>span</htmlclose>
-			<allowedchildren>all^u</allowedchildren>
 		</bbcode>
 		<bbcode name="s">
 			<htmlopen>s</htmlopen>
 			<htmlclose>s</htmlclose>
-			<allowedchildren>all^s</allowedchildren>
 		</bbcode>
 		<bbcode name="sub">
 			<htmlopen>sub</htmlopen>
 			<htmlclose>sub</htmlclose>
-			<allowedchildren>all^sub</allowedchildren>
 		</bbcode>
 		<bbcode name="sup">
 			<htmlopen>sup</htmlopen>
 			<htmlclose>sup</htmlclose>
-			<allowedchildren>all^sup</allowedchildren>
 		</bbcode>
 		<bbcode name="email">
-			<classname><![CDATA[wcf\system\bbcode\EmailBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
+			<classname>wcf\system\bbcode\EmailBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -86,19 +79,18 @@
 					<required>1</required>
 				</attribute>
 			</attributes>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="quote">
-			<classname><![CDATA[wcf\system\bbcode\QuoteBBCode]]></classname>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
 			</attributes>
 			<wysiwygicon>fa-quote-left</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.quote</buttonlabel>
+			<buttonlabel>wcf.editor.button.quote</buttonlabel>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="code">
-			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
-			<allowedchildren>none</allowedchildren>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
@@ -106,11 +98,10 @@
 			</attributes>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-code</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.code</buttonlabel>
+			<buttonlabel>wcf.editor.button.code</buttonlabel>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="img">
-			<classname><![CDATA[wcf\system\bbcode\ImageBBCode]]></classname>
-			<allowedchildren>none</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -126,8 +117,6 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="url">
-			<classname><![CDATA[wcf\system\bbcode\URLBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font,attach</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<required>1</required>
@@ -137,41 +126,48 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="list">
-			<classname><![CDATA[wcf\system\bbcode\ListBBCode]]></classname>
-			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font,list,url,email,attach,tt</allowedchildren>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
 				</attribute>
 			</attributes>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
+		
 		<bbcode name="table">
-			<classname><![CDATA[wcf\system\bbcode\TableBBCode]]></classname>
-			<allowedchildren>all^table</allowedchildren>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
+		<bbcode name="tr">
+			<classname>wcf\system\bbcode\TrBBCode</classname>
+			<isBlockElement>1</isBlockElement>
+		</bbcode>
+		<bbcode name="td">
+			<classname>wcf\system\bbcode\TdBBCode</classname>
+			<isBlockElement>1</isBlockElement>
+		</bbcode>
+		
 		<bbcode name="media">
-			<classname><![CDATA[wcf\system\bbcode\MediaBBCode]]></classname>
+			<classname>wcf\system\bbcode\MediaBBCode</classname>
 			<sourcecode>1</sourcecode>
 		</bbcode>
 		<bbcode name="spoiler">
-			<classname><![CDATA[wcf\system\bbcode\SpoilerBBCode]]></classname>
 			<attributes>
 				<attribute name="0"></attribute>
 			</attributes>
 			<wysiwygicon>fa-eye-slash</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.spoiler</buttonlabel>
+			<buttonlabel>wcf.editor.button.spoiler</buttonlabel>
+			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="tt">
-			<htmlopen>code class="inlineCode"</htmlopen>
-			<htmlclose>code</htmlclose>
-			<allowedchildren>none</allowedchildren>
+			<htmlopen>kbd</htmlopen>
+			<htmlclose>kbd</htmlclose>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-terminal</wysiwygicon>
-			<buttonlabel>wcf.bbcode.button.inlineCode</buttonlabel>
+			<buttonlabel>wcf.editor.button.inlineCode</buttonlabel>
 		</bbcode>
 		
 		<bbcode name="attach">
-			<classname><![CDATA[wcf\system\bbcode\AttachmentBBCode]]></classname>
+			<classname>wcf\system\bbcode\AttachmentBBCode</classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^\d+$</validationpattern>
@@ -182,7 +178,45 @@
 					<validationpattern>^(left|right|none)$</validationpattern>
 				</attribute>
 				<attribute name="2">
+					<!-- "\d+" is only matched for backward compatibility -->
+					<validationpattern>^(\d+|true|false)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		
+		<bbcode name="wsm">
+			<classname>wcf\system\bbcode\WoltLabSuiteMediaBBCode</classname>
+			<isBlockElement>1</isBlockElement>
+			<attributes>
+				<attribute name="0">
 					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
+				</attribute>
+				<attribute name="1">
+					<validationpattern>^(small|medium|large|original)$</validationpattern>
+				</attribute>
+				<attribute name="2">
+					<validationpattern>^(left|right|none)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		
+		<bbcode name="wsp">
+			<classname>wcf\system\bbcode\WoltLabSuitePageBBCode</classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
+		
+		<bbcode name="user">
+			<classname>wcf\system\bbcode\UserBBCode</classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
 				</attribute>
 			</attributes>
 		</bbcode>

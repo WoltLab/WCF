@@ -1,32 +1,43 @@
 <?php
 namespace wcf\data\comment;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Represents a list of decorated comment objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment
+ *
+ * @method	ViewableComment		current()
+ * @method	ViewableComment[]	getObjects()
+ * @method	ViewableComment|null	search($objectID)
+ * @property	ViewableComment[]	$objects
  */
 class ViewableCommentList extends CommentList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\comment\ViewableComment';
+	public $decoratorClassName = ViewableComment::class;
 	
 	/**
-	 * Creates a new ViewableCommentList object.
+	 * @inheritDoc
 	 */
-	public function __construct() {
-		parent::__construct();
+	public function readObjects() {
+		parent::readObjects();
 		
-		// get avatars
-		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
-		$this->sqlSelects .= "user_avatar.*, user_table.*";
-		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = comment.userID)";
-		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user_avatar user_avatar ON (user_avatar.avatarID = user_table.avatarID)";
+		if (!empty($this->objects)) {
+			$userIDs = [];
+			foreach ($this->objects as $comment) {
+				if ($comment->userID) {
+					$userIDs[] = $comment->userID;
+				}
+			}
+			
+			if (!empty($userIDs)) {
+				UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
+			}
+		}
 	}
 }

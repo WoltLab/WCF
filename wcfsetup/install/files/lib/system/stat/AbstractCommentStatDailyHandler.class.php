@@ -8,11 +8,9 @@ use wcf\system\WCF;
  * Abstract implementation of a comment stat handler.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.stat
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Stat
  */
 abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler {
 	/**
@@ -22,7 +20,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 	protected $objectType = '';
 	
 	/**
-	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
+	 * @inheritDoc
 	 */
 	public function getData($date) {
 		$objectTypeID = CommentHandler::getInstance()->getObjectTypeID($this->objectType);
@@ -44,14 +42,14 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 						AND comment_response.time BETWEEN ? AND ?
 			)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$date,
 			$date + 86399,
 			$objectTypeID,
 			$date,
 			$date + 86399
-		));
+		]);
 		$counter = $statement->fetchColumn();
 		
 		$sql = "SELECT (
@@ -68,17 +66,17 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 						AND comment_response.time < ?
 			)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$date + 86400,
 			$objectTypeID,
 			$date + 86400
-		));
+		]);
 		$total = $statement->fetchColumn();
 		
-		return array(
+		return [
 			'counter' => $counter,
 			'total' => $total
-		);
+		];
 	}
 }

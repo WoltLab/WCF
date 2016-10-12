@@ -12,19 +12,17 @@ use wcf\system\template\TemplateScriptingCompiler;
  * 	{fetch file='x.html' assign=var}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @inheritDoc
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['file'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'file' argument in fetch tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+			throw new SystemException($compiler::formatSyntaxError("missing 'file' argument in fetch tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		
 		if (isset($tagArgs['assign'])) {
@@ -36,9 +34,9 @@ class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @inheritDoc
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
-		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+		throw new SystemException($compiler::formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 	}
 }

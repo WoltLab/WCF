@@ -7,17 +7,19 @@ use wcf\system\WCF;
  * Provides functions to edit cronjob logs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.language.item
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Language\Item
+ * 
+ * @method static	CronjobLog	create(array $parameters = [])
+ * @method		CronjobLog	getDecoratedObject()
+ * @mixin		CronjobLog
  */
 class CronjobLogEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\cronjob\log\CronjobLog';
+	protected static $baseClass = CronjobLog::class;
 	
 	/**
 	 * Deletes all cronjob logs.

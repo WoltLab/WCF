@@ -5,22 +5,20 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of java source code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class JavaHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array("(", ")", "{", "}", "[", "]", ";", ".", ",", "<", ">");
+	protected $separators = ["(", ")", "{", "}", "[", "]", ";", ".", ",", "<", ">"];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'package',
 		'abstract',
 		'break',
@@ -72,12 +70,12 @@ class JavaHighlighter extends Highlighter {
 		'static',
 		'void',
 		'import'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'Boolean',
 		'Float',
 		'Character',
@@ -100,5 +98,5 @@ class JavaHighlighter extends Highlighter {
 		'HashMap',
 		'List',
 		'ArrayList'
-	);
+	];
 }

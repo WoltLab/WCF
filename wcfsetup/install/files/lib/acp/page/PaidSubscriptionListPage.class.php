@@ -1,45 +1,46 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\paid\subscription\PaidSubscriptionList;
 use wcf\page\SortablePage;
 
 /**
  * Shows the list of paid subscriptions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	PaidSubscriptionList	$objectList
  */
 class PaidSubscriptionListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'showOrder';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('subscriptionID', 'title', 'showOrder', 'cost', 'subscriptionLength');
+	public $validSortFields = ['subscriptionID', 'title', 'showOrder', 'cost', 'subscriptionLength'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\paid\subscription\PaidSubscriptionList';
+	public $objectListClassName = PaidSubscriptionList::class;
 }

@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes core object-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.core.object
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Core\Object
+ * 
+ * @method	CoreObject		create()
+ * @method	CoreObjectEditor[]	getObjects()
+ * @method	CoreObjectEditor	getSingleObject()
  */
 class CoreObjectAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\core\object\CoreObjectEditor';
+	protected $className = CoreObjectEditor::class;
 }

@@ -1,39 +1,39 @@
 <?php
 namespace wcf\data\user\ignore;
+use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 
 /**
  * Represents a list of ignored users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.ignore
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Ignore
  */
 class ViewableUserIgnoreList extends UserIgnoreList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\ignore\UserIgnore';
+	public $className = UserIgnore::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\user\UserProfile';
+	public $decoratorClassName = UserProfile::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$objectClassName
+	 * @inheritDoc
 	 */
-	public $objectClassName = 'wcf\data\user\User';
+	public $objectClassName = User::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
+	 * @inheritDoc
 	 */
 	public $useQualifiedShorthand = false;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();

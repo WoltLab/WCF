@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
-use wcf\system\io\File;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -10,22 +9,34 @@ use wcf\util\FileUtil;
  * Represents a package.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Package
+ *
+ * @property-read	integer		$packageID		unique id of the package
+ * @property-read	string		$package		unique textual identifier of the package
+ * @property-read	string		$packageDir		relative directory to Core in which the application is installed or empty if package is no application or Core
+ * @property-read	string		$packageName		name of the package or name of language item which contains the name
+ * @property-read	string		$packageDescription	description of the package or name of language item which contains the description
+ * @property-read	string		$packageVersion		installed version of package
+ * @property-read	integer		$packageDate		timestamp at which the installed package version has been released
+ * @property-read	integer		$installDate		timestamp at which the package has been installed
+ * @property-read	integer		$updateDate		timestamp at which the package has been updated or installed if it has not been updated yet
+ * @property-read	string		$packageURL		external url to website with more information about the package
+ * @property-read	integer		$isApplication		is `1` if the package delivers an application, otherwise `0`
+ * @property-read	string		$author			author of the package
+ * @property-read	string		$authorURL		external url to the website of the package author
  */
 class Package extends DatabaseObject {
 	/**
 	 * list of packages that this package requires
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected $dependencies = null;
 	
 	/**
 	 * list of packages that require this package
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected $dependentPackages = null;
 	
@@ -37,23 +48,13 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * list of packages that were given as required packages during installation
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
 	protected $requiredPackages = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'package';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'packageID';
-	
-	/**
 	 * list of ids of packages which are required by another package
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected static $requiredPackageIDs = null;
 	
@@ -97,7 +98,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\package\Package::getName()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getName();
@@ -119,13 +120,13 @@ class Package extends DatabaseObject {
 	 * returned packages are the packages given in the <requiredpackages> tag
 	 * in the package.xml of this package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
 			self::loadRequirements();
 			
-			$this->requiredPackages = array();
+			$this->requiredPackages = [];
 			if (isset(self::$requirements[$this->packageID])) {
 				foreach (self::$requirements[$this->packageID] as $packageID) {
 					$this->requiredPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
@@ -142,7 +143,7 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function canUninstall() {
-		if (!WCF::getSession()->getPermission('admin.system.package.canUninstallPackage')) {
+		if (!WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')) {
 			return false;
 		}
 		
@@ -152,7 +153,7 @@ class Package extends DatabaseObject {
 		}
 		
 		// check if package is required by another package
-		if (self::isRequired($this->packageID)) {
+		if ($this->isRequired()) {
 			return false;
 		}
 		
@@ -162,13 +163,13 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of packages dependent from current package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getDependentPackages() {
 		if ($this->dependentPackages === null) {
 			self::loadRequirements();
 			
-			$this->dependentPackages = array();
+			$this->dependentPackages = [];
 			foreach (self::$requirements as $packageID => $requiredPackageIDs) {
 				if (in_array($this->packageID, $requiredPackageIDs)) {
 					$this->dependentPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
@@ -200,11 +201,11 @@ class Package extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 			
-			self::$requiredPackageIDs = array();
-			self::$requirements = array();
+			self::$requiredPackageIDs = [];
+			self::$requirements = [];
 			while ($row = $statement->fetchArray()) {
 				if (!isset(self::$requirements[$row['packageID']])) {
-					self::$requirements[$row['packageID']] = array();
+					self::$requirements[$row['packageID']] = [];
 				}
 				
 				self::$requirements[$row['packageID']][] = $row['requirement'];
@@ -223,14 +224,13 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function isAlreadyInstalled($package) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($package));
-		$row = $statement->fetchArray();
+		$statement->execute([$package]);
 		
-		return ($row['count'] ? true : false);
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
@@ -239,6 +239,8 @@ class Package extends DatabaseObject {
 	 * A valid package name begins with at least one alphanumeric character
 	 * or an underscore, followed by a dot, followed by at least one alphanumeric
 	 * character or an underscore and the same again, possibly repeatedly.
+	 * The package name cannot be any longer than 191 characters in total due to
+	 * internal database character encoding limitations.
 	 * Example:
 	 * 	com.woltlab.wcf
 	 * 
@@ -250,6 +252,10 @@ class Package extends DatabaseObject {
 	 * @return	boolean		isValid
 	 */
 	public static function isValidPackageName($packageName) {
+		if (mb_strlen($packageName) < 3 || mb_strlen($packageName) > 191) {
+			return false;
+		}
+		
 		return preg_match('%^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$%', $packageName);
 	}
 	
@@ -283,17 +289,17 @@ class Package extends DatabaseObject {
 	 * @param	string		$fromVersion
 	 * @return	boolean
 	 */
-	public static function checkFromversion($currentVersion, $fromversion) {
-		if (mb_strpos($fromversion, '*') !== false) {
+	public static function checkFromversion($currentVersion, $fromVersion) {
+		if (mb_strpos($fromVersion, '*') !== false) {
 			// from version with wildcard
 			// use regular expression
-			$fromversion = str_replace('\*', '.*', preg_quote($fromversion, '!'));
-			if (preg_match('!^'.$fromversion.'$!i', $currentVersion)) {
+			$fromVersion = str_replace('\*', '.*', preg_quote($fromVersion, '!'));
+			if (preg_match('!^'.$fromVersion.'$!i', $currentVersion)) {
 				return true;
 			}
 		}
 		else {
-			if (self::compareVersion($currentVersion, $fromversion, '=')) {
+			if (self::compareVersion($currentVersion, $fromVersion, '=')) {
 				return true;
 			}
 		}
@@ -346,23 +352,28 @@ class Package extends DatabaseObject {
 	public static function writeConfigFile($packageID) {
 		$package = new Package($packageID);
 		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
-		$file = new File($packageDir.PackageInstallationDispatcher::CONFIG_FILE);
-		$file->write("<?php\n");
+		
 		$prefix = strtoupper(self::getAbbreviation($package->package));
 		
-		$file->write("// ".$package->package." (packageID ".$package->packageID.")\n");
-		$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', dirname(__FILE__).'/');\n");
-		$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', '');\n");
-		$file->write("\n");
+		$content = "<?php\n";
+		$content .= "// {$package->package} (packageID {$packageID})\n";
+		$content .= "if (!defined('{$prefix}_DIR')) define('{$prefix}_DIR', __DIR__.'/');\n";
+		$content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
+		$content .= "if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '" . addcslashes($package->getName(), "'") . "');\n";
+		$content .= "if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '{$package->packageVersion}');\n";
 		
-		// write general information
-		$file->write("// general info\n");
-		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$prefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
-		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$packageID.");\n");
-		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
-		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
+		if ($packageID != 1) {
+			$content .= "\n";
+			$content .= "// helper constants for applications\n";
+			$content .= "if (!defined('RELATIVE_{$prefix}_DIR')) define('RELATIVE_{$prefix}_DIR', '');\n";
+			$content .= "if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_{$prefix}_DIR.'" . FileUtil::getRelativePath($packageDir, WCF_DIR) . "');\n";
+		}
 		
-		// write end
-		$file->close();
+		file_put_contents($packageDir . PackageInstallationDispatcher::CONFIG_FILE, $content);
+		
+		// add legacy config.inc.php file for backward compatibility
+		if ($packageID != 1 && !file_exists($packageDir.'config.inc.php')) {
+			file_put_contents($packageDir.'config.inc.php', "<?php" . "\n" . "require_once('".PackageInstallationDispatcher::CONFIG_FILE."');\n");
+		}
 	}
 }

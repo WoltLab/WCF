@@ -9,22 +9,20 @@ use wcf\util\PasswordUtil;
  * Default user authentication implementation that uses the username to identify users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.authentication
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Authentication
  */
 class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
+	 * @inheritDoc
 	 */
 	public function supportsPersistentLogins() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::storeAccessData()
+	 * @inheritDoc
 	 */
 	public function storeAccessData(User $user, $username, $password) {
 		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
@@ -32,9 +30,9 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::loginManually()
+	 * @inheritDoc
 	 */
-	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
+	public function loginManually($username, $password, $userClassname = User::class) {
 		$user = $this->getUserByLogin($username);
 		$userSession = (get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
 		
@@ -51,9 +49,9 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see	\wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
+	 * @inheritDoc
 	 */
-	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
+	public function loginAutomatically($persistent = false, $userClassname = User::class) {
 		if (!$persistent) return null;
 		
 		$user = null;
@@ -72,8 +70,8 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * Returns a user object by given login name.
 	 * 
-	 * @param	string			$login
-	 * @return	\wcf\data\user\User
+	 * @param	string		$login
+	 * @return	User
 	 */
 	protected function getUserByLogin($login) {
 		return User::getUserByUsername($login);
@@ -85,9 +83,9 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * @param	integer		$userID
 	 * @param	string		$password
 	 * @param	string		$userClassname
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
-	protected function getUserAutomatically($userID, $password, $userClassname = 'wcf\data\user\User') {
+	protected function getUserAutomatically($userID, $password, $userClassname = User::class) {
 		$user = new $userClassname($userID);
 		if (!$user->userID || !$this->checkCookiePassword($user, $password)) {
 			$user = null;
@@ -99,8 +97,8 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * Validates the cookie password.
 	 * 
-	 * @param	\wcf\data\user\User	$user
-	 * @param	string			$password
+	 * @param	User		$user
+	 * @param	string		$password
 	 * @return	boolean
 	 */
 	protected function checkCookiePassword($user, $password) {

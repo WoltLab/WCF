@@ -5,22 +5,20 @@ namespace wcf\system\template;
  * Loads and displays template during the setup process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template
  */
 class SetupTemplateEngine extends TemplateEngine {
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::loadTemplateGroupCache()
+	 * @inheritDoc
 	 */
 	protected function loadTemplateGroupCache() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getCompiler()
+	 * @inheritDoc
 	 */
 	public function getCompiler() {
 		if ($this->compilerObj === null) {
@@ -31,21 +29,21 @@ class SetupTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getSourceFilename()
+	 * @inheritDoc
 	 */
 	public function getSourceFilename($templateName, $application) {
 		return $this->compileDir.'setup/template/'.$templateName.'.tpl';
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getCompiledFilename()
+	 * @inheritDoc
 	 */
 	public function getCompiledFilename($templateName, $application) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getMetaDataFilename()
+	 * @inheritDoc
 	 */
 	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.meta.php';

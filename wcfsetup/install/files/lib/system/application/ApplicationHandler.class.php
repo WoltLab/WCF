@@ -1,33 +1,36 @@
 <?php
 namespace wcf\system\application;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\exception\SystemException;
+use wcf\system\io\File;
+use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\util\FileUtil;
 
 /**
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.application
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Application
  */
 class ApplicationHandler extends SingletonFactory {
 	/**
 	 * application cache
-	 * @var	array<array>
+	 * @var	Application[]
 	 */
-	protected $cache = null;
+	protected $cache;
 	
 	/**
 	 * list of page URLs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $pageURLs = array();
+	protected $pageURLs = [];
 	
 	/**
 	 * Initializes cache.
@@ -37,31 +40,14 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the primary application.
-	 * 
-	 * @return	\wcf\data\application\Application
-	 */
-	public function getPrimaryApplication() {
-		$packageID = ($this->cache['primary']) ?: PACKAGE_ID;
-		
-		if (isset($this->cache['application'][$packageID])) {
-			return $this->cache['application'][$packageID];
-		}
-		
-		return $this->cache['wcf'];
-	}
-	
-	/**
 	 * Returns an application based upon it's abbreviation. Will return the
-	 * primary application if $abbreviation equals to 'wcf'
+	 * primary application if the abbreviation is `wcf` or `null` if no such
+	 * application exists.
 	 * 
-	 * @return	\wcf\data\application\Application
+	 * @param	string		$abbreviation	package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
+	 * @return	Application|null
 	 */
 	public function getApplication($abbreviation) {
-		if ($abbreviation == 'wcf') {
-			return $this->getPrimaryApplication();
-		}
-		
 		if (isset($this->cache['abbreviation'][$abbreviation])) {
 			$packageID = $this->cache['abbreviation'][$abbreviation];
 			
@@ -74,23 +60,59 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns an application delivered by the package with the given id or `null`
+	 * if no such application exists.
+	 * 
+	 * @param	integer			$packageID	package id
+	 * @return	Application|null	application object
+	 * @since	3.0
+	 */
+	public function getApplicationByID($packageID) {
+		if (isset($this->cache['application'][$packageID])) {
+			return $this->cache['application'][$packageID];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns pseudo-application representing WCF used for special cases,
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
-	 * @return	\wcf\data\application\Application
+	 * @return	Application
+	 * @deprecated  3.0 please use `getApplication()` instead
 	 */
 	public function getWCF() {
-		return $this->cache['wcf'];
+		return $this->getApplicationByID(1);
 	}
 	
 	/**
 	 * Returns the currently active application.
 	 * 
-	 * @return	\wcf\data\application\Application
+	 * @return	Application
 	 */
 	public function getActiveApplication() {
 		// work-around during WCFSetup
-		if (isset($this->cache['application'][PACKAGE_ID])) {
+		if (!PACKAGE_ID) {
+			$host = str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
+			$documentRoot = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(realpath($_SERVER['DOCUMENT_ROOT'])));
+			
+			// always use the core directory
+			if (empty($_POST['directories']) || empty($_POST['directories']['wcf'])) {
+				// within ACP
+				$_POST['directories'] = ['wcf' => $documentRoot . FileUtil::removeLeadingSlash(RouteHandler::getPath(['acp']))];
+			}
+			
+			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(FileUtil::getRelativePath($documentRoot, $_POST['directories']['wcf']))));
+			
+			return new Application(null, [
+				'domainName' => $host,
+				'domainPath' => $path,
+				'cookieDomain' => $host,
+				'cookiePath' => $path
+			]);
+		}
+		else if (isset($this->cache['application'][PACKAGE_ID])) {
 			return $this->cache['application'][PACKAGE_ID];
 		}
 		
@@ -100,7 +122,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of dependent applications.
 	 * 
-	 * @return	array<\wcf\data\application\Application>
+	 * @return	Application[]
 	 */
 	public function getDependentApplications() {
 		$applications = $this->getApplications();
@@ -117,16 +139,17 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all active applications.
 	 * 
-	 * @return	array<\wcf\data\application\Application>
+	 * @return	Application[]
 	 */
 	public function getApplications() {
 		return $this->cache['application'];
 	}
 	
 	/**
-	 * Returns abbreviation for a given package id or null if application is unknown.
+	 * Returns abbreviation for a given package id or `null` if application is unknown.
 	 * 
-	 * @return	string
+	 * @param	integer		$packageID	unique package id
+	 * @return	string|null
 	 */
 	public function getAbbreviation($packageID) {
 		foreach ($this->cache['abbreviation'] as $abbreviation => $applicationID) {

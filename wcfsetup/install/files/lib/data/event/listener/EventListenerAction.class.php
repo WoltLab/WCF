@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes event listener-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.event.listener
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Event\Listener
+ * 
+ * @method	EventListener		create()
+ * @method	EventListenerEditor[]	getObjects()
+ * @method	EventListenerEditor	getSingleObject()
  */
 class EventListenerAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\event\listener\EventListenerEditor';
+	protected $className = EventListenerEditor::class;
 }

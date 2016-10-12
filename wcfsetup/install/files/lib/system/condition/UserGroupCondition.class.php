@@ -4,6 +4,7 @@ use wcf\data\condition\Condition;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -13,61 +14,65 @@ use wcf\util\ArrayUtil;
  * of and the user groups a user may not be a member of.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
-class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IUserCondition {
+class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$descriptions
+	 * @inheritDoc
 	 */
-	protected $descriptions = array(
+	protected $descriptions = [
 		'groupIDs' => 'wcf.user.condition.groupIDs.description',
 		'notGroupIDs' => 'wcf.user.condition.notGroupIDs.description'
-	);
+	];
 	
 	/**
 	 * ids of the selected user groups the user has to be member of
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $groupIDs = array();
+	protected $groupIDs = [];
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$labels
+	 * @inheritDoc
 	 */
-	protected $labels = array(
+	protected $labels = [
 		'groupIDs' => 'wcf.user.condition.groupIDs',
 		'notGroupIDs' => 'wcf.user.condition.notGroupIDs'
-	);
+	];
 	
 	/**
 	 * ids of the selected user groups the user may not be member of
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $notGroupIDs = array();
+	protected $notGroupIDs = [];
 	
 	/**
 	 * selectable user groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
-	protected $userGroups = null;
+	protected $userGroups;
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @inheritDoc
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->groupIDs !== null) {
-			$userList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', array($condition->groupIDs, count($condition->groupIDs)));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
-		if ($condition->notGroupIDs !== null) {
-			$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?))', array($condition->notGroupIDs));
+		
+		if (isset($conditionData['groupIDs'])) {
+			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['groupIDs'], count($conditionData['groupIDs'])]);
+		}
+		if (isset($conditionData['notGroupIDs'])) {
+			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?))', [$conditionData['notGroupIDs']]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
 		$groupIDs = $user->getGroupIDs();
@@ -83,10 +88,10 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		
 		if (!empty($this->groupIDs)) {
 			$data['groupIDs'] = $this->groupIDs;
@@ -103,7 +108,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		return <<<HTML
@@ -137,7 +142,8 @@ HTML;
 		
 		$returnValue = "";
 		foreach ($userGroups as $userGroup) {
-			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$userGroup->groupID."\"".(in_array($userGroup->groupID, $this->$identifier) ? ' checked="checked"' : "")." /> ".$userGroup->getName()."</label>";
+			/** @noinspection PhpVariableVariableInspection */
+			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$userGroup->groupID."\"".(in_array($userGroup->groupID, $this->$identifier) ? ' checked' : "")."> ".$userGroup->getName()."</label>";
 		}
 		
 		return $returnValue;
@@ -146,19 +152,19 @@ HTML;
 	/**
 	 * Returns the selectable user groups.
 	 * 
-	 * @return	array<\wcf\data\user\group\UserGroup>
+	 * @return	UserGroup[]
 	 */
 	protected function getUserGroups() {
 		if ($this->userGroups == null) {
-			$invalidGroupTypes = array(
+			$invalidGroupTypes = [
 				UserGroup::EVERYONE,
 				UserGroup::USERS
-			);
+			];
 			if (!$this->includeguests) {
 				$invalidGroupTypes[] = UserGroup::GUESTS;
 			}
 			
-			$this->userGroups = UserGroup::getAccessibleGroups(array(), $invalidGroupTypes);
+			$this->userGroups = UserGroup::getAccessibleGroups([], $invalidGroupTypes);
 			
 			uasort($this->userGroups, function(UserGroup $groupA, UserGroup $groupB) {
 				return strcmp($groupA->getName(), $groupB->getName());
@@ -169,7 +175,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
@@ -177,15 +183,15 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->groupIDs = array();
-		$this->notGroupIDs = array();
+		$this->groupIDs = [];
+		$this->notGroupIDs = [];
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
 		if ($condition->groupIDs !== null) {
@@ -197,7 +203,16 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * Sets the selectable user groups.
+	 * 
+	 * @param	UserGroup[]	$userGroups
+	 */
+	public function setUserGroups(array $userGroups) {
+		$this->userGroups = $userGroups;
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$userGroups = $this->getUserGroups();
@@ -224,7 +239,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		return $this->checkUser($condition, WCF::getUser());

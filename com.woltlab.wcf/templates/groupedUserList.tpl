@@ -1,27 +1,27 @@
 {foreach from=$groupedUsers item=group}
 	{if $group}
-		<header class="boxHeadline">
-			<h1>{$group}</h1>
-		</header>
+		<section class="section sectionContainerList">
+			<h2 class="sectionTitle">{$group}</h2>
 	{/if}
 	
 	{if $group|count}
-		<div class="container marginTop">
-			<ol class="containerList jsGroupedUserList">
-				{foreach from=$group item=user}
-					{include file='userListItem'}
-				{/foreach}
-			</ol>
-		</div>
+		<ol class="containerList jsGroupedUserList">
+			{foreach from=$group item=user}
+				{include file='userListItem'}
+			{/foreach}
+		</ol>
 	{else}
-		<p class="marginTop">{$group->getNoUsersMessage()}</p>
+		<p>{$group->getNoUsersMessage()}</p>
+	{/if}
+	
+	{if $group}
+		</section>
 	{/if}
 {/foreach}
 
-<div class="contentNavigation"><div class="jsPagination"></div></div>
+<div class="paginationBottom jsPagination"></div>
 
 <script data-relocate="true">
-	//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
@@ -33,5 +33,4 @@
 			new WCF.User.Action.Follow($('.jsGroupedUserList > li'));
 			new WCF.User.Action.Ignore($('.jsGroupedUserList > li'));
 		});
-	//]]>
 </script>

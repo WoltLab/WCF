@@ -5,11 +5,9 @@ namespace wcf\data;
  * Every feed entry should implement this interface.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 interface IFeedEntry extends IMessage {
 	/**
@@ -22,7 +20,7 @@ interface IFeedEntry extends IMessage {
 	/**
 	 * Returns a list of category names.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getCategories();
 }

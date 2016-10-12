@@ -5,20 +5,19 @@ namespace wcf\data\user\follow;
  * Represents a list of following users.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.follow
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Follow
  */
 class UserFollowingList extends UserFollowerList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
+	 * @inheritDoc
 	 */
 	public $useQualifiedShorthand = false;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		UserFollowList::__construct();

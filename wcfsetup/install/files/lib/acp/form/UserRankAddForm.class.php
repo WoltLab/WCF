@@ -14,27 +14,25 @@ use wcf\util\StringUtil;
  * Shows the user rank add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class UserRankAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.rank.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.rank.canManageRank');
+	public $neededPermissions = ['admin.user.rank.canManageRank'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_USER_RANK');
+	public $neededModules = ['MODULE_USER_RANK'];
 	
 	/**
 	 * rank group id
@@ -86,9 +84,9 @@ class UserRankAddForm extends AbstractForm {
 	
 	/**
 	 * list of pre-defined css class names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $availableCssClassNames = array(
+	public $availableCssClassNames = [
 		'yellow',
 		'orange',
 		'brown',
@@ -101,10 +99,10 @@ class UserRankAddForm extends AbstractForm {
 		
 		'none', /* not a real value */
 		'custom' /* not a real value */
-	);
+	];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -113,7 +111,7 @@ class UserRankAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -131,7 +129,7 @@ class UserRankAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -152,7 +150,7 @@ class UserRankAddForm extends AbstractForm {
 		}
 		$userGroup = UserGroup::getGroupByID($this->groupID);
 		if ($userGroup === null || $userGroup->groupType == UserGroup::GUESTS || $userGroup->groupType == UserGroup::EVERYONE) {
-			throw new UserInputException('groupID', 'notValid');
+			throw new UserInputException('groupID', 'invalid');
 		}
 		
 		// css class name
@@ -160,11 +158,11 @@ class UserRankAddForm extends AbstractForm {
 			throw new UserInputException('cssClassName', 'empty');
 		}
 		else if (!in_array($this->cssClassName, $this->availableCssClassNames)) {
-			throw new UserInputException('cssClassName', 'notValid');
+			throw new UserInputException('cssClassName', 'invalid');
 		}
 		else if ($this->cssClassName == 'custom') {
 			if (!empty($this->customCssClassName) && !Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)) {
-				throw new UserInputException('cssClassName', 'notValid');
+				throw new UserInputException('cssClassName', 'invalid');
 			}
 		}
 		
@@ -175,21 +173,21 @@ class UserRankAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new UserRankAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserRankAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'rankTitle' => $this->rankTitle,
-			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
+			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 			'groupID' => $this->groupID,
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
 			'requiredGender' => $this->requiredGender
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('rankTitle')) {
@@ -199,9 +197,9 @@ class UserRankAddForm extends AbstractForm {
 			
 			// update name
 			$rankEditor = new UserRankEditor($returnValues['returnValues']);
-			$rankEditor->update(array(
+			$rankEditor->update([
 				'rankTitle' => 'wcf.user.rank.userRank'.$rankID
-			));
+			]);
 		}
 		$this->saved();
 		
@@ -212,32 +210,30 @@ class UserRankAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->reset();
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'availableCssClassNames' => $this->availableCssClassNames,
 			'cssClassName' => $this->cssClassName,
 			'customCssClassName' => $this->customCssClassName,
 			'groupID' => $this->groupID,
 			'rankTitle' => $this->rankTitle,
-			'availableGroups' => UserGroup::getGroupsByType(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE)),
+			'availableGroups' => UserGroup::getGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
 			'requiredGender' => $this->requiredGender
-		));
+		]);
 	}
 }

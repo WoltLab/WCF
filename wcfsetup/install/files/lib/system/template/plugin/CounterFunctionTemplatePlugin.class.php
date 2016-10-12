@@ -10,21 +10,19 @@ use wcf\system\template\TemplateEngine;
  * 	{counter start=10 skip=2}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * counter data
 	 * @var	array
 	 */
-	protected $counters = array();
+	protected $counters = [];
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (!isset($tagArgs['name'])) {
@@ -32,13 +30,13 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 		
 		if (!isset($this->counters[$tagArgs['name']])) {
-			$this->counters[$tagArgs['name']] = array(
+			$this->counters[$tagArgs['name']] = [
 				'skip' => isset($tagArgs['skip']) ? $tagArgs['skip'] : 1,
 				'direction' => isset($tagArgs['direction']) ? $tagArgs['direction'] : 'up',
 				'assign' => (isset($tagArgs['assign']) && !empty($tagArgs['assign'])) ? $tagArgs['assign'] : null,
 				'print' => isset($tagArgs['print']) ? $tagArgs['print'] : false,
 				'count' => isset($tagArgs['start']) ? $tagArgs['start'] : 1
-			);
+			];
 		}
 		
 		$counter =& $this->counters[$tagArgs['name']];

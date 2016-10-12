@@ -8,15 +8,13 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
  * Moderation queue comment manager implementation.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.comment.manager
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Comment\Manager
  */
 class ModerationQueueCommentManager extends AbstractCommentManager {
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::isAccessible()
+	 * @inheritDoc
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		$entry = new ModerationQueue($objectID);
@@ -24,7 +22,7 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink($objectTypeID, $objectID) {
 		$entry = new ViewableModerationQueue(new ModerationQueue($objectID));
@@ -32,28 +30,28 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		return '';
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::updateCounter()
+	 * @inheritDoc
 	 */
 	public function updateCounter($objectID, $value) {
 		$entry = new ModerationQueue($objectID);
 		$editor = new ModerationQueueEditor($entry);
-		$editor->updateCounters(array(
+		$editor->updateCounters([
 			'comments' => $value
-		));
-		$editor->update(array(
+		]);
+		$editor->update([
 			'lastChangeTime' => TIME_NOW
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::canAdd()
+	 * @inheritDoc
 	 */
 	public function canAdd($objectID) {
 		if (!$this->isAccessible($objectID, true)) {
@@ -64,28 +62,28 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::canEdit()
+	 * @inheritDoc
 	 */
 	protected function canEdit($isOwner) {
 		return $isOwner;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\AbstractCommentManager::canDelete()
+	 * @inheritDoc
 	 */
 	protected function canDelete($isOwner) {
 		return $isOwner;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::supportsLike()
+	 * @inheritDoc
 	 */
 	public function supportsLike() {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\comment\manager\ICommentManager::supportsReport()
+	 * @inheritDoc
 	 */
 	public function supportsReport() {
 		return false;

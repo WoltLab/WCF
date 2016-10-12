@@ -6,22 +6,20 @@ use wcf\system\SingletonFactory;
  * Basic implementation for poll handlers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.poll
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Poll
  */
 abstract class AbstractPollHandler extends SingletonFactory implements IPollHandler {
 	/**
-	 * @see	\wcf\system\poll\IPollHandler::canStartPublicPoll()
+	 * @inheritDoc
 	 */
 	public function canStartPublicPoll() {
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\poll\IPollHandler::canVote()
+	 * @inheritDoc
 	 */
 	public function canVote() {
 		return true;

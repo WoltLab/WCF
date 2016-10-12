@@ -7,40 +7,19 @@ use wcf\system\WCF;
  * Represents a user option category.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.option.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Option\Category
+ *
+ * @property-read	integer		$categoryID		unique id of the user option category
+ * @property-read	integer		$packageID		id of the package which delivers the user option category
+ * @property-read	string		$categoryName		name and textual identifier of the user option category
+ * @property-read	string		$parentCategoryName	name of the user option category's parent category or empty if it has no parent category
+ * @property-read	integer		$showOrder		position of the user option category in relation to its siblings
+ * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to see the user option category
+ * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the user option category to be shown
  */
 class UserOptionCategory extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'user_option_category';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'categoryID';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::__construct()
-	 */
-	public function __construct($categoryID, $row = null, UserOptionCategory $category = null) {
-		if ($categoryID !== null) {
-			$sql = "SELECT	option_category.*,
-					(SELECT COUNT(DISTINCT optionName) FROM wcf".WCF_N."_user_option WHERE categoryName = option_category.categoryName) AS options
-				FROM	wcf".WCF_N."_user_option_category option_category
-				WHERE	option_category.categoryID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($categoryID));
-			$row = $statement->fetchArray();
-		}
-		
-		parent::__construct(null, $row, $category);
-	}
-	
 	/**
 	 * Returns the title of this category.
 	 * 
@@ -54,14 +33,14 @@ class UserOptionCategory extends DatabaseObject {
 	 * Returns an instance of UserOptionCategory by name.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	\wcf\data\user\option\category\UserOptionCategory
+	 * @return	UserOptionCategory
 	 */
 	public static function getCategoryByName($categoryName) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_option_category
 			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($categoryName));
+		$statement->execute([$categoryName]);
 		$row = $statement->fetchArray();
 		if ($row === false) return null;
 		

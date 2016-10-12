@@ -6,18 +6,16 @@ use phpline\console\completer\Completer;
  * Completes commands.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cli.command
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cli\Command
  */
 class CLICommandNameCompleter implements Completer {
 	/**
 	 * names of all available commands
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	private $commands = array();
+	private $commands = [];
 	
 	/**
 	 * Creates a new instance of CLICommandNameCompleter.
@@ -27,7 +25,7 @@ class CLICommandNameCompleter implements Completer {
 	}
 	
 	/**
-	 * @see	\phpline\console\completer\Completer::complete()
+	 * @inheritDoc
 	 */
 	public function complete($buffer, $cursor, array &$candidates) {
 		if ($buffer === null) {

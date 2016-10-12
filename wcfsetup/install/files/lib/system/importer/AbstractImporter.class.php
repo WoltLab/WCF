@@ -5,11 +5,9 @@ namespace wcf\system\importer;
  * Basic implementation of IImporter.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 abstract class AbstractImporter implements IImporter {
 	/**
@@ -19,7 +17,7 @@ abstract class AbstractImporter implements IImporter {
 	protected $className = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::getClassName()
+	 * @inheritDoc
 	 */
 	public function getClassName() {
 		return $this->className;

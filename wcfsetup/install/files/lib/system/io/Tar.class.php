@@ -15,11 +15,9 @@ use wcf\util\FileUtil;
  * }
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Io
  */
 class Tar implements IArchive {
 	/**
@@ -32,7 +30,7 @@ class Tar implements IArchive {
 	 * content of the tar file
 	 * @var	array
 	 */
-	protected $contentList = array();
+	protected $contentList = [];
 	
 	/**
 	 * indicates if tar file is opened
@@ -48,7 +46,7 @@ class Tar implements IArchive {
 	
 	/**
 	 * file object
-	 * @var	\wcf\system\io\File
+	 * @var	File
 	 */
 	protected $file = null;
 	
@@ -75,6 +73,7 @@ class Tar implements IArchive {
 	 * archiveName must be tarball or gzipped tarball
 	 * 
 	 * @param	string		$archiveName
+	 * @throws	SystemException
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -126,7 +125,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getContentList()
+	 * @inheritDoc
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -137,7 +136,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getFileInfo()
+	 * @inheritDoc
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -151,7 +150,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
+	 * @inheritDoc
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -163,7 +162,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extractToString()
+	 * @inheritDoc
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -188,14 +187,14 @@ class Tar implements IArchive {
 		}
 		if (($header['size'] % 512) != 0) {
 			$buffer = $this->file->read(512);
-			$content .= substr($buffer, 0, ($header['size'] % 512));
+			$content .= substr($buffer, 0, $header['size'] % 512);
 		}
 		
 		return $content;
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extract()
+	 * @inheritDoc
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -244,7 +243,7 @@ class Tar implements IArchive {
 	 * This does not get the entire to memory but only parts of it.
 	 */
 	protected function readContent() {
-		$this->contentList = array();
+		$this->contentList = [];
 		$this->read = true;
 		$i = 0;
 		
@@ -264,12 +263,7 @@ class Tar implements IArchive {
 				$longFilename = null;
 			}
 			if ($header['typeflag'] == 'L') {
-				if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-					$format = 'Z'.$header['size'].'filename';
-				}
-				else {
-					$format = 'a'.$header['size'].'filename';
-				}
+				$format = 'Z'.$header['size'].'filename';
 				
 				$fileData = unpack($format, $this->file->read(512));
 				$longFilename = $fileData['filename'];
@@ -282,7 +276,7 @@ class Tar implements IArchive {
 				$i++;
 			}
 			
-			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
+			$this->file->seek($this->file->tell() + (512 * ceil($header['size'] / 512)));
 		}
 	}
 	
@@ -290,14 +284,14 @@ class Tar implements IArchive {
 	 * Unpacks file header for one file entry.
 	 * 
 	 * @param	string		$binaryData
-	 * @return	array		$fileheader
+	 * @return	array|boolean
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
 			return false;
 		}
 		
-		$header = array();
+		$header = [];
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {
@@ -314,24 +308,19 @@ class Tar implements IArchive {
 		}
 		
 		// extract values
-		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
-		}
-		else {
-			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
-		}
+		$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
 		
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octDec(trim($data['checksum']));
+		$header['checksum'] = octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
-			$header['mode'] = octDec(trim($data['mode']));
-			$header['uid'] = octDec(trim($data['uid']));
-			$header['gid'] = octDec(trim($data['gid']));
-			$header['size'] = octDec(trim($data['size']));
-			$header['mtime'] = octDec(trim($data['mtime']));
+			$header['mode'] = octdec(trim($data['mode']));
+			$header['uid'] = octdec(trim($data['uid']));
+			$header['gid'] = octdec(trim($data['gid']));
+			$header['size'] = octdec(trim($data['size']));
+			$header['mtime'] = octdec(trim($data['mtime']));
 			$header['prefix'] = trim($data['prefix']);
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];

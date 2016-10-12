@@ -9,7 +9,7 @@
 				<small class="innerError">
 					{if $errorType[$option->optionName] == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
-					{else}	
+					{else}
 						{lang}{@$langPrefix}error.{$errorType[$option->optionName]}{/lang}
 					{/if}
 				</small>

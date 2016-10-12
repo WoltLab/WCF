@@ -5,11 +5,9 @@ namespace wcf\system\option;
  * Every option handler has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 interface IOptionHandler {
 	/**
@@ -66,4 +64,9 @@ interface IOptionHandler {
 	 * @return	array
 	 */
 	public function save($categoryName = null, $optionPrefix = null);
+	
+	/**
+	 * Initializes active options.
+	 */
+	public function init();
 }

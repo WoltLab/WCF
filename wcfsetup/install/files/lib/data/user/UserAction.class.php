@@ -2,17 +2,19 @@
 namespace wcf\data\user;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -21,42 +23,43 @@ use wcf\util\UserRegistrationUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User
+ * 
+ * @method	UserEditor[]	getObjects()
+ * @method	UserEditor	getSingleObject()
  */
 class UserAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\UserEditor';
+	public $className = UserEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getSearchResultList');
+	protected $allowGuestAccess = ['getSearchResultList'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.user.canAddUser');
+	protected $permissionsCreate = ['admin.user.canAddUser'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.user.canDeleteUser');
+	protected $permissionsDelete = ['admin.user.canDeleteUser'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.user.canEditUser');
+	protected $permissionsUpdate = ['admin.user.canEditUser'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'disable', 'enable');
+	protected $requireACP = ['create', 'delete'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -69,6 +72,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates accessible groups.
 	 * 
 	 * @param	boolean		$ignoreOwnUser
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	protected function __validateAccessibleGroups($ignoreOwnUser = true) {
 		if ($ignoreOwnUser) {
@@ -87,18 +92,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// validate groups
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($this->objectIDs));
+		$conditions->add("userID IN (?)", [$this->objectIDs]);
 		
 		$sql = "SELECT	DISTINCT groupID
 			FROM	wcf".WCF_N."_user_to_group
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		
-		$groupIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$groupIDs[] = $row['groupID'];
-		}
+		$groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		if (!UserGroup::isAccessibleGroup($groupIDs)) {
 			throw new PermissionDeniedException();
@@ -116,7 +117,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -124,8 +125,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		// delete avatars
-		$avatarIDs = array();
-		foreach ($this->objects as $user) {
+		$avatarIDs = [];
+		foreach ($this->getObjects() as $user) {
 			if ($user->avatarID) $avatarIDs[] = $user->avatarID;
 		}
 		if (!empty($avatarIDs)) {
@@ -138,9 +139,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $this->objectIDs);
 		}
 		
-		$returnValue = parent::delete();
-		
-		return $returnValue;
+		return parent::delete();
 	}
 	
 	/**
@@ -192,7 +191,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the unban action.
 	 */
 	public function validateUnban() {
-		WCF::getSession()->checkPermissions(array('admin.user.canBanUser'));
+		WCF::getSession()->checkPermissions(['admin.user.canBanUser']);
 		
 		$this->__validateAccessibleGroups();
 	}
@@ -204,13 +203,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$banExpires = $this->parameters['banExpires'];
 		if ($banExpires) {
 			$banExpires = strtotime($banExpires);
+			if ($banExpires > 2147483647) $banExpires = 2147483647;
 		}
 		else {
 			$banExpires = 0;
 		}
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('userID IN (?)', array($this->objectIDs));
+		$conditionBuilder->add('userID IN (?)', [$this->objectIDs]);
 		
 		$sql = "UPDATE	wcf".WCF_N."_user
 			SET	banned = ?,
@@ -219,14 +219,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(
-			array_merge(array(
+			array_merge([
 				1,
 				$this->parameters['banReason'],
 				$banExpires
-			), $conditionBuilder->getParameters())
+			], $conditionBuilder->getParameters())
 		);
 		
 		$this->unmarkItems();
+		
+		$firstUser = new User(reset($this->objectIDs));
+		return WCF::getLanguage()->getDynamicVariable('wcf.user.banned', ['user' => $firstUser]);
 	}
 	
 	/**
@@ -234,7 +237,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function unban() {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('userID IN (?)', array($this->objectIDs));
+		$conditionBuilder->add('userID IN (?)', [$this->objectIDs]);
 		
 		$sql = "UPDATE	wcf".WCF_N."_user
 			SET	banned = ?,
@@ -242,23 +245,19 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(
-			array_merge(array(
+			array_merge([
 				0,
 				0
-			), $conditionBuilder->getParameters())
+			], $conditionBuilder->getParameters())
 		);
 	}
 	
 	/**
-	 * Creates a new user.
-	 * 
+	 * @inheritDoc
 	 * @return	User
 	 */
 	public function create() {
-		if (!isset($this->parameters['data']['socialNetworkPrivacySettings'])) {
-			$this->parameters['data']['socialNetworkPrivacySettings'] = '';
-		}
-		
+		/** @var User $user */
 		$user = parent::create();
 		$userEditor = new UserEditor($user);
 		
@@ -268,14 +267,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		// insert user groups
-		$addDefaultGroups = (isset($this->parameters['addDefaultGroups'])) ? $this->parameters['addDefaultGroups'] : true;
-		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : array();
+		$addDefaultGroups = isset($this->parameters['addDefaultGroups']) ? $this->parameters['addDefaultGroups'] : true;
+		$groupIDs = isset($this->parameters['groups']) ? $this->parameters['groups'] : [];
 		$userEditor->addToGroups($groupIDs, false, $addDefaultGroups);
 		
 		// insert visible languages
 		if (!isset($this->parameters['languageIDs'])) {
 			// using the 'languages' key is deprecated since WCF 2.1, please use 'languageIDs' instead
-			$this->parameters['languageIDs'] = (!empty($this->parameters['languages'])) ? $this->parameters['languages'] : array();
+			$this->parameters['languageIDs'] = (!empty($this->parameters['languages'])) ? $this->parameters['languages'] : [];
 		}
 		$userEditor->addToLanguages($this->parameters['languageIDs'], false);
 		
@@ -287,15 +286,15 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				FROM		wcf".WCF_N."_user_notification_event
 				WHERE		preset = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($user->userID, 1));
+			$statement->execute([$user->userID, 1]);
 			
 			// update user rank
 			if (MODULE_USER_RANK) {
-				$action = new UserProfileAction(array($userEditor), 'updateUserRank');
+				$action = new UserProfileAction([$userEditor], 'updateUserRank');
 				$action->executeAction();
 			}
 			// update user online marking
-			$action = new UserProfileAction(array($userEditor), 'updateUserOnlineMarking');
+			$action = new UserProfileAction([$userEditor], 'updateUserOnlineMarking');
 			$action->executeAction();
 		}
 		
@@ -303,14 +302,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (isset($this->parameters['data']) || isset($this->parameters['counters'])) { 
 			parent::update();
 			
 			if (isset($this->parameters['data']['languageID'])) {
-				foreach ($this->objects as $object) {
+				foreach ($this->getObjects() as $object) {
 					if ($object->userID == WCF::getUser()->userID) {
 						if ($this->parameters['data']['languageID'] != WCF::getUser()->languageID) {
 							WCF::setLanguage($this->parameters['data']['languageID']);
@@ -327,27 +326,27 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 		
-		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : array();
-		$languageIDs = (isset($this->parameters['languageIDs'])) ? $this->parameters['languageIDs'] : array();
-		$removeGroups = (isset($this->parameters['removeGroups'])) ? $this->parameters['removeGroups'] : array();
-		$userOptions = (isset($this->parameters['options'])) ? $this->parameters['options'] : array();
+		$groupIDs = isset($this->parameters['groups']) ? $this->parameters['groups'] : [];
+		$languageIDs = isset($this->parameters['languageIDs']) ? $this->parameters['languageIDs'] : [];
+		$removeGroups = isset($this->parameters['removeGroups']) ? $this->parameters['removeGroups'] : [];
+		$userOptions = isset($this->parameters['options']) ? $this->parameters['options'] : [];
 		
 		if (!empty($groupIDs)) {
-			$action = new UserAction($this->objects, 'addToGroups', array(
+			$action = new UserAction($this->objects, 'addToGroups', [
 				'groups' => $groupIDs,
 				'addDefaultGroups' => false
-			));
+			]);
 			$action->executeAction();
 		}
 		
 		if (!empty($removeGroups)) {
-			$action = new UserAction($this->objects, 'removeFromGroups', array(
+			$action = new UserAction($this->objects, 'removeFromGroups', [
 				'groups' => $removeGroups
-			));
+			]);
 			$action->executeAction();
 		}
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			if (!empty($userOptions)) {
 				$userEditor->updateUserOptions($userOptions);
 			}
@@ -365,25 +364,40 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				
 				WCF::getDB()->beginTransaction();
 				
+				// update article
+				$sql = "UPDATE	wcf".WCF_N."_article
+					SET	username = ?
+					WHERE	userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([$username, $userID]);
+				
 				// update comments
 				$sql = "UPDATE	wcf".WCF_N."_comment
 					SET	username = ?
 					WHERE	userID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($username, $userID));
+				$statement->execute([$username, $userID]);
 				
+				// update comment responses
 				$sql = "UPDATE	wcf".WCF_N."_comment_response
 					SET	username = ?
 					WHERE	userID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($username, $userID));
+				$statement->execute([$username, $userID]);
 				
-				// modification log
+				// update media
+				$sql = "UPDATE	wcf".WCF_N."_media
+					SET	username = ?
+					WHERE	userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([$username, $userID]);
+				
+				// update modification log
 				$sql = "UPDATE	wcf".WCF_N."_modification_log
 					SET	username = ?
 					WHERE	userID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($username, $userID));
+				$statement->execute([$username, $userID]);
 				
 				WCF::getDB()->commitTransaction();
 				
@@ -403,12 +417,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$groupIDs = $this->parameters['groups'];
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->removeFromGroups($groupIDs);
 		}
 		
 		//reread objects
-		$this->objects = array();
+		$this->objects = [];
 		UserEditor::resetCache();
 		$this->readObjects();
 		
@@ -435,12 +449,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (isset($this->parameters['deleteOldGroups'])) $deleteOldGroups = $this->parameters['deleteOldGroups'];
 		if (isset($this->parameters['addDefaultGroups'])) $addDefaultGroups = $this->parameters['addDefaultGroups'];
 		
-		foreach ($this->objects as $userEditor) {
+		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
 		
 		//reread objects
-		$this->objects = array();
+		$this->objects = [];
 		UserEditor::resetCache();
 		$this->readObjects();
 		
@@ -455,7 +469,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
 		$this->readBoolean('includeUserGroups', false, 'data');
@@ -467,15 +481,15 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	\wcf\data\ISearchAction::getSearchResultList()
+	 * @inheritDoc
 	 */
 	public function getSearchResultList() {
 		$searchString = $this->parameters['data']['searchString'];
-		$excludedSearchValues = array();
+		$excludedSearchValues = [];
 		if (isset($this->parameters['data']['excludedSearchValues'])) {
 			$excludedSearchValues = $this->parameters['data']['excludedSearchValues'];
 		}
-		$list = array();
+		$list = [];
 		
 		if ($this->parameters['data']['includeUserGroups']) {
 			$accessibleGroups = UserGroup::getAccessibleGroups();
@@ -484,11 +498,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				if (!in_array($groupName, $excludedSearchValues)) {
 					$pos = mb_strripos($groupName, $searchString);
 					if ($pos !== false && $pos == 0) {
-						$list[] = array(
+						$list[] = [
 							'label' => $groupName,
 							'objectID' => $group->groupID,
 							'type' => 'group'
-						);
+						];
 					}
 				}
 			}
@@ -496,34 +510,34 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// find users
 		$userProfileList = new UserProfileList();
-		$userProfileList->getConditionBuilder()->add("username LIKE ?", array($searchString.'%'));
+		$userProfileList->getConditionBuilder()->add("username LIKE ?", [$searchString.'%']);
 		if (!empty($excludedSearchValues)) {
-			$userProfileList->getConditionBuilder()->add("username NOT IN (?)", array($excludedSearchValues));
+			$userProfileList->getConditionBuilder()->add("username NOT IN (?)", [$excludedSearchValues]);
 		}
 		$userProfileList->sqlLimit = 10;
 		$userProfileList->readObjects();
 		
 		foreach ($userProfileList as $userProfile) {
-			$list[] = array(
+			$list[] = [
 				'icon' => $userProfile->getAvatar()->getImageTag(16),
 				'label' => $userProfile->username,
 				'objectID' => $userProfile->userID,
 				'type' => 'user'
-			);
+			];
 		}
 		
 		return $list;
 	}
 	
 	/**
-	 * @see	\wcf\data\IClipboardAction::validateUnmarkAll()
+	 * @inheritDoc
 	 */
 	public function validateUnmarkAll() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\data\IClipboardAction::unmarkAll()
+	 * @inheritDoc
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
@@ -532,9 +546,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Unmarks users.
 	 * 
-	 * @param	array<integer>		$userIDs
+	 * @param	integer[]	$userIDs
 	 */
-	protected function unmarkItems(array $userIDs = array()) {
+	protected function unmarkItems(array $userIDs = []) {
 		if (empty($userIDs)) {
 			$userIDs = $this->objectIDs;
 		}
@@ -548,7 +562,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the enable action.
 	 */
 	public function validateEnable() {
-		WCF::getSession()->checkPermissions(array('admin.user.canEnableUser'));
+		WCF::getSession()->checkPermissions(['admin.user.canEnableUser']);
 		
 		$this->__validateAccessibleGroups();
 	}
@@ -566,27 +580,31 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function enable() {
 		if (empty($this->objects)) $this->readObjects();
 		
-		$action = new UserAction($this->objects, 'update', array(
-			'data' => array(
+		$action = new UserAction($this->objects, 'update', [
+			'data' => [
 				'activationCode' => 0
-			),
-			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS))
-		));
+			],
+			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS])
+		]);
 		$action->executeAction();
-		$action = new UserAction($this->objects, 'addToGroups', array(
-			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
+		$action = new UserAction($this->objects, 'addToGroups', [
+			'groups' => UserGroup::getGroupIDsByType([UserGroup::USERS]),
 			'deleteOldGroups' => false,
 			'addDefaultGroups' => false
-		));
+		]);
 		$action->executeAction();
 		
 		// send e-mail notification
 		if (empty($this->parameters['skipNotification'])) {
-			foreach ($this->objects as $user) {
-				$mail = new Mail(array($user->username => $user->email), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail', array(
-					'username' => $user->username
-				)));
-				$mail->send();
+			foreach ($this->getObjects() as $user) {
+				$email = new Email();
+				$email->addRecipient(new UserMailbox($user->getDecoratedObject()));
+				$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'));
+				$email->setBody(new MimePartFacade([
+					new RecipientAwareTextMimePart('text/html', 'email_adminActivation'),
+					new RecipientAwareTextMimePart('text/plain', 'email_adminActivation')
+				]));
+				$email->send();
 			}
 		}
 		
@@ -599,25 +617,25 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function disable() {
 		if (empty($this->objects)) $this->readObjects();
 		
-		$action = new UserAction($this->objects, 'update', array(
-			'data' => array(
+		$action = new UserAction($this->objects, 'update', [
+			'data' => [
 				'activationCode' => UserRegistrationUtil::getActivationCode()
-			),
-			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
-		));
+			],
+			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS])
+		]);
 		$action->executeAction();
-		$action = new UserAction($this->objects, 'addToGroups', array(
-			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS)),
+		$action = new UserAction($this->objects, 'addToGroups', [
+			'groups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS]),
 			'deleteOldGroups' => false,
 			'addDefaultGroups' => false
-		));
+		]);
 		$action->executeAction();
 		
 		$this->unmarkItems();
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		if (empty($this->objectIDs)) {
@@ -625,7 +643,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		// get base class
-		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+		$baseClass = call_user_func([$this->className, 'getBaseClass']);
 		
 		// get objects
 		$sql = "SELECT		user_option_value.*, user_table.*
@@ -666,12 +684,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$disableSignatureExpires = 0;
 		}
 		
-		foreach ($this->objects as $userEditor) {
-			$userEditor->update(array(
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
 				'disableSignature' => 1,
 				'disableSignatureReason' => $this->parameters['disableSignatureReason'],
 				'disableSignatureExpires' => $disableSignatureExpires
-			));
+			]);
 		}
 	}
 	
@@ -679,7 +697,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the 'enableSignature' action.
 	 */
 	public function validateEnableSignature() {
-		WCF::getSession()->checkPermissions(array('admin.user.canDisableSignature'));
+		WCF::getSession()->checkPermissions(['admin.user.canDisableSignature']);
 		
 		$this->__validateAccessibleGroups();
 		
@@ -700,10 +718,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $userEditor) {
-			$userEditor->update(array(
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
 				'disableSignature' => 0
-			));
+			]);
 		}
 	}
 	
@@ -733,12 +751,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$disableAvatarExpires = 0;
 		}
 		
-		foreach ($this->objects as $userEditor) {
-			$userEditor->update(array(
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
 				'disableAvatar' => 1,
 				'disableAvatarReason' => $this->parameters['disableAvatarReason'],
 				'disableAvatarExpires' => $disableAvatarExpires
-			));
+			]);
 		}
 	}
 	
@@ -746,7 +764,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the 'enableAvatar' action.
 	 */
 	public function validateEnableAvatar() {
-		WCF::getSession()->checkPermissions(array('admin.user.canDisableAvatar'));
+		WCF::getSession()->checkPermissions(['admin.user.canDisableAvatar']);
 		
 		$this->__validateAccessibleGroups();
 		
@@ -767,65 +785,42 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $userEditor) {
-			$userEditor->update(array(
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
 				'disableAvatar' => 0
-			));
+			]);
 		}
 	}
 	
 	/**
 	 * Validates parameters to retrieve the social network privacy settings.
+	 * @deprecated 3.0
 	 */
-	public function validateGetSocialNetworkPrivacySettings() { /* does nothing */ }
+	public function validateGetSocialNetworkPrivacySettings() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns the social network privacy settings.
-	 * 
-	 * @return	array<string>
+	 * @deprecated 3.0
 	 */
 	public function getSocialNetworkPrivacySettings() {
-		$settings = @unserialize(WCF::getUser()->socialNetworkPrivacySettings);
-		if (!is_array($settings)) {
-			$settings = array(
-				'facebook' => false,
-				'google' => false,
-				'reddit' => false,
-				'twitter' => false
-			);
-		}
-		
-		WCF::getTPL()->assign(array(
-			'settings' => $settings
-		));
-		
-		return array(
-			'template' => WCF::getTPL()->fetch('shareButtonsPrivacySettings')
-		);
+		// does nothing
 	}
 	
+	/**
+	 * Validates the 'saveSocialNetworkPrivacySettings' action.
+	 * @deprecated 3.0
+	 */
 	public function validateSaveSocialNetworkPrivacySettings() {
-		$this->readBoolean('facebook', true);
-		$this->readBoolean('google', true);
-		$this->readBoolean('reddit', true);
-		$this->readBoolean('twitter', true);
+		// does nothing
 	}
 	
+	/**
+	 * Saves the social network privacy settings.
+	 * @deprecated 3.0
+	 */
 	public function saveSocialNetworkPrivacySettings() {
-		$settings = array(
-			'facebook' => $this->parameters['facebook'],
-			'google' => $this->parameters['google'],
-			'reddit' => $this->parameters['reddit'],
-			'twitter' => $this->parameters['twitter']
-		);
-		
-		$userEditor = new UserEditor(WCF::getUser());
-		$userEditor->update(array(
-			'socialNetworkPrivacySettings' => serialize($settings)
-		));
-		
-		return array(
-			'settings' => $settings
-		);
+		// does nothing
 	}
 }

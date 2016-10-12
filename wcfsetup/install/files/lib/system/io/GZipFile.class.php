@@ -6,11 +6,12 @@ use wcf\system\exception\SystemException;
  * The File class handles all file operations on a gzip file.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Io
+ * 
+ * @method	resource	open($mode, $use_include_path = 0)
+ * @method	boolean		rewind()
  */
 class GZipFile extends File {
 	/**
@@ -20,18 +21,21 @@ class GZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a gzip file.
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
-			self::$gzopen64 = (function_exists('gzopen64'));
+			self::$gzopen64 = function_exists('gzopen64');
 		}
 		
 		$this->filename = $filename;
+		/** @noinspection PhpUndefinedFunctionInspection */
 		$this->resource = (self::$gzopen64 ? gzopen64($filename, $mode) : gzopen($filename, $mode));
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename);
@@ -43,6 +47,8 @@ class GZipFile extends File {
 	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {
@@ -85,7 +91,7 @@ class GZipFile extends File {
 		}
 		
 		if ($this->seek($eof) == -1) $eof--;
-				
+		
 		$this->rewind();
 		return $eof - $correction;
 	}

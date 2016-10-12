@@ -9,22 +9,20 @@ use wcf\util\DateUtil;
  * Shows daily statistics.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
  */
 class StatPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.log.stat';
+	public $activeMenuItem = 'wcf.acp.menu.link.stat.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
 	 * start date (yyyy-mm-dd)
@@ -42,10 +40,10 @@ class StatPage extends AbstractPage {
 	 * available object type
 	 * @var	array
 	 */
-	public $availableObjectTypes = array();
+	public $availableObjectTypes = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -61,7 +59,7 @@ class StatPage extends AbstractPage {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler');
 		foreach ($objectTypes as $objectType) {
 			if (!isset($this->availableObjectTypes[$objectType->categoryname])) {
-				$this->availableObjectTypes[$objectType->categoryname] = array();
+				$this->availableObjectTypes[$objectType->categoryname] = [];
 			}
 			
 			$this->availableObjectTypes[$objectType->categoryname][] = $objectType;
@@ -69,15 +67,15 @@ class StatPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'endDate' => $this->endDate,
 			'startDate' => $this->startDate,
 			'availableObjectTypes' => $this->availableObjectTypes
-		));
+		]);
 	}
 }

@@ -9,21 +9,19 @@ use wcf\system\WCF;
  * Handles user profile information content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.menu.user.profile.content
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Menu\User\Profile\Content
  */
 class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent {
 	/**
 	 * user option handler object
-	 * @var	\wcf\system\option\user\UserOptionHandler
+	 * @var	UserOptionHandler
 	 */
 	public $optionHandler = null;
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent($userID) {
 		if ($this->optionHandler === null) {
@@ -35,16 +33,16 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
 		$user = new User($userID);
 		$this->optionHandler->setUser($user);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'options' => $this->optionHandler->getOptionTree(),
-			'userID' => $user->userID,
-		));
+			'userID' => $user->userID
+		]);
 		
 		return WCF::getTPL()->fetch('userProfileAbout');
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible($userID) {
 		return true;

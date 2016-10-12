@@ -9,15 +9,13 @@ use wcf\system\WCF;
  * File handler implementation for the installation of regular files.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class FilesFileHandler extends PackageInstallationFileHandler {
 	/**
-	 * @see	\wcf\system\setup\IFileHandler::checkFiles()
+	 * @inheritDoc
 	 */
 	public function checkFiles(array $files) {
 		if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
@@ -25,19 +23,16 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 				// get registered files of other packages for the
 				// same application
 				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add('packageID <> ?', array($this->packageInstallation->getPackageID()));
-				$conditions->add('filename IN (?)', array($files));
-				$conditions->add('application = ?', array($this->application));
+				$conditions->add('packageID <> ?', [$this->packageInstallation->getPackageID()]);
+				$conditions->add('filename IN (?)', [$files]);
+				$conditions->add('application = ?', [$this->application]);
 				
 				$sql = "SELECT	filename, packageID
 					FROM	wcf".WCF_N."_package_installation_file_log
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				$lockedFiles = array();
-				while ($row = $statement->fetchArray()) {
-					$lockedFiles[$row['filename']] = $row['packageID'];
-				}
+				$lockedFiles = $statement->fetchMap('filename', 'packageID');
 				
 				// check delivered files
 				if (!empty($lockedFiles)) {
@@ -54,7 +49,7 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\setup\IFileHandler::logFiles()
+	 * @inheritDoc
 	 */
 	public function logFiles(array $files) {
 		if (empty($files)) {
@@ -68,11 +63,11 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($files as $file) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->packageInstallation->getPackageID(),
 				$file,
 				$this->application
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

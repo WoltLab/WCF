@@ -10,15 +10,13 @@ use wcf\system\WCF;
  * Shows the moderation activation form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 class ModerationActivationForm extends AbstractModerationForm {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -30,14 +28,14 @@ class ModerationActivationForm extends AbstractModerationForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disabledContent' => ModerationQueueActivationManager::getInstance()->getDisabledContent($this->queue),
 			'queueManager' => ModerationQueueActivationManager::getInstance()
-		));
+		]);
 	}
 }

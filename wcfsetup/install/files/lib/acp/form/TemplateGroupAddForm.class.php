@@ -12,22 +12,20 @@ use wcf\util\StringUtil;
  * Shows the form for adding new template groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class TemplateGroupAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template.group.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.template.canManageTemplate');
+	public $neededPermissions = ['admin.template.canManageTemplate'];
 	
 	/**
 	 * template group name
@@ -51,10 +49,10 @@ class TemplateGroupAddForm extends AbstractForm {
 	 * available template groups
 	 * @var	array
 	 */
-	public $availableTemplateGroups = array();
+	public $availableTemplateGroups = [];
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -68,7 +66,7 @@ class TemplateGroupAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -77,7 +75,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		$this->validateFolderName();
 		
 		if ($this->parentTemplateGroupID && !isset($this->availableTemplateGroups[$this->parentTemplateGroupID])) {
-			throw new UserInputException('parentTemplateGroupID', 'notValid');
+			throw new UserInputException('parentTemplateGroupID', 'invalid');
 		}
 	}
 	
@@ -89,13 +87,13 @@ class TemplateGroupAddForm extends AbstractForm {
 			throw new UserInputException('templateGroupName');
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->templateGroupName));
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		$statement->execute([$this->templateGroupName]);
+		
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('templateGroupName', 'notUnique');
 		}
 	}
@@ -109,31 +107,31 @@ class TemplateGroupAddForm extends AbstractForm {
 		}
 		
 		if (!preg_match('/^[a-z0-9_\- ]+\/$/i', $this->templateGroupFolderName)) {
-			throw new UserInputException('templateGroupFolderName', 'notValid');
+			throw new UserInputException('templateGroupFolderName', 'invalid');
 		}
 		
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupFolderName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->templateGroupFolderName));
-		$row = $statement->fetchArray();
-		if ($row['count']) {
+		$statement->execute([$this->templateGroupFolderName]);
+		
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('templateGroupFolderName', 'notUnique');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new TemplateGroupAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new TemplateGroupAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
-			'parentTemplateGroupID' => ($this->parentTemplateGroupID ?: null)
-		))));
+			'parentTemplateGroupID' => $this->parentTemplateGroupID ?: null
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -141,33 +139,31 @@ class TemplateGroupAddForm extends AbstractForm {
 		$this->templateGroupName = $this->templateGroupFolderName = '';
 		$this->parentTemplateGroupID = 0;
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
-		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
-
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([-1], 1);
+		
 		parent::readData();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
 			'parentTemplateGroupID' => $this->parentTemplateGroupID,
 			'availableTemplateGroups' => $this->availableTemplateGroups
-		));
+		]);
 	}
 }

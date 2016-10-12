@@ -1,53 +1,62 @@
 <?php
 namespace wcf\data\comment\response;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\TLegacyUserPropertyAccess;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Represents a viewable comment response.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment.response
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment\Response
+ * 
+ * @method	CommentResponse		getDecoratedObject()
+ * @mixin	CommentResponse
  */
 class ViewableCommentResponse extends DatabaseObjectDecorator {
-	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
-	 */
-	protected static $baseClass = 'wcf\data\comment\response\CommentResponse';
+	use TLegacyUserPropertyAccess;
 	
 	/**
-	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * @inheritDoc
+	 */
+	protected static $baseClass = CommentResponse::class;
+	
+	/**
+	 * user profile of the comment author
+	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
 	
 	/**
 	 * Returns the user profile object.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {
-			$this->userProfile = new UserProfile(new User(null, $this->getDecoratedObject()->data));
+			if ($this->userID) {
+				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			}
+			else {
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
+			}
 		}
 		
 		return $this->userProfile;
 	}
 	
 	/**
-	 * Gets a specific comment response decorated as viewable comment response.
+	 * Returns a specific comment response decorated as viewable comment response.
 	 * 
 	 * @param	integer		$responseID
-	 * @return	\wcf\data\comment\response\ViewableCommentResponse
+	 * @return	ViewableCommentResponse
 	 */
 	public static function getResponse($responseID) {
 		$list = new ViewableCommentResponseList();
-		$list->setObjectIDs(array($responseID));
+		$list->setObjectIDs([$responseID]);
 		$list->readObjects();
 		$objects = $list->getObjects();
 		if (isset($objects[$responseID])) return $objects[$responseID];

@@ -1,35 +1,44 @@
 <?php
 namespace wcf\data\user\follow;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 
 /**
  * Represents a list of followers.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.follow
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Follow
+ *
+ * @method	UserProfile		current()
+ * @method	UserProfile[]		getObjects()
+ * @method	UserProfile|null	search($objectID)
+ * @property	UserProfile[]		$objects
  */
 class UserFollowerList extends UserFollowList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\follow\UserFollow';
+	public $className = UserFollow::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$objectClassName
+	 * @inheritDoc
 	 */
-	public $objectClassName = 'wcf\data\user\User';
+	public $decoratorClassName = UserProfile::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
+	 */
+	public $objectClassName = User::class;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_follow.time DESC';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -39,16 +48,5 @@ class UserFollowerList extends UserFollowList {
 		
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = user_follow.userID)";
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user_avatar user_avatar ON (user_avatar.avatarID = user_table.avatarID)";
-	}
-	
-	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
-	 */
-	public function readObjects() {
-		parent::readObjects();
-		
-		foreach ($this->objects as &$object) {
-			$object = new UserProfile($object);
-		}
 	}
 }

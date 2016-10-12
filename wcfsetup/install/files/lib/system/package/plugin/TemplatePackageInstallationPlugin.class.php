@@ -11,20 +11,18 @@ use wcf\system\WCF;
  * Installs, updates and deletes templates.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'template';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -64,18 +62,19 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 			ON		(template_group.templateGroupID = template.templateGroupID)
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
+		$statement->execute([$this->installation->getPackageID()]);
 		
-		$templates = array();
+		$templates = [];
 		while ($row = $statement->fetchArray()) {
 			if (!isset($templates[$row['application']])) {
-				$templates[$row['application']] = array();
+				$templates[$row['application']] = [];
 			}
 			
 			$templates[$row['application']][] = 'templates/'.$row['templateGroupFolderName'].$row['templateName'].'.tpl';
 		}
 		
 		foreach ($templates as $application => $templateNames) {
+			/** @noinspection PhpUndefinedMethodInspection */
 			$this->installation->deleteFiles(Application::getDirectory($application), $templateNames, false, $this->installation->getPackage()->isApplication);
 			
 			// delete log entries
@@ -84,9 +83,21 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	3.0
+	 */
+	public static function getDefaultFilename() {
+		return 'templates.tar';
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
+		if (!$instruction) {
+			$instruction = static::getDefaultFilename();
+		}
+		
 		if (preg_match('~\.(tar(\.gz)?|tgz)$~', $instruction)) {
 			// check if file actually exists
 			try {

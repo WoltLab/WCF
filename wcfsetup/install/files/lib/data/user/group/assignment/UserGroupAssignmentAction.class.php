@@ -8,30 +8,32 @@ use wcf\system\condition\ConditionHandler;
  * Executes user group assignment-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.group.assignment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Group\Assignment
+ * 
+ * @method	UserGroupAssignment		create()
+ * @method	UserGroupAssignmentEditor[]	getObjects()
+ * @method	UserGroupAssignmentEditor	getSingleObject()
  */
 class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.user.canManageGroupAssignment');
+	protected $permissionsDelete = ['admin.user.canManageGroupAssignment'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.user.canManageGroupAssignment');
+	protected $permissionsUpdate = ['admin.user.canManageGroupAssignment'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.userGroupAssignment', $this->objectIDs);
@@ -40,18 +42,18 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $assignment) {
-			$assignment->update(array(
+		foreach ($this->getObjects() as $assignment) {
+			$assignment->update([
 				'isDisabled' => $assignment->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();

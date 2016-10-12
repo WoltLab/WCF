@@ -10,22 +10,20 @@ use wcf\system\WCF;
  * Shows the BBCode media provider edit form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * id of the edited media provider
@@ -35,12 +33,12 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	
 	/**
 	 * edited media provider object
-	 * @var	\wcf\data\bbcode\media\provider\BBCodeMediaProvider
+	 * @var	BBCodeMediaProvider
 	 */
 	public $mediaProvider = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -53,29 +51,27 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
 		// update media-provider
-		$this->objectAction = new BBCodeMediaProviderAction(array($this->providerID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new BBCodeMediaProviderAction([$this->providerID], 'update', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -88,14 +84,14 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'mediaProvider' => $this->mediaProvider,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

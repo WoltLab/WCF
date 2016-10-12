@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\core\object\CoreObjectEditor;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\WCF;
 
@@ -7,20 +8,18 @@ use wcf\system\WCF;
  * Installs, updates and deletes core objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\core\object\CoreObjectEditor';
+	public $className = CoreObjectEditor::class;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -28,43 +27,43 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
-			$statement->execute(array(
+			$statement->execute([
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		return [
 			'objectName' => $data['elements']['objectname']
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	objectName = ?
 				AND packageID = ?";
-		$parameters = array(
+		$parameters = [
 			$data['objectName'],
 			$this->installation->getPackageID()
-		);
+		];
 		
-		return array(
+		return [
 			'sql' => $sql,
 			'parameters' => $parameters
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @inheritDoc
 	 */
 	protected function cleanup() {
 		CoreObjectCacheBuilder::getInstance()->reset();

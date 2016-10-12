@@ -8,38 +8,59 @@ use wcf\util\StringUtil;
  * Represents a template group. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.template.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Template\Group
+ *
+ * @property-read	integer		$templateGroupID		unique id of the template group
+ * @property-read	integer|null	$parentTemplateGroupID		id of the template group's parent template group or `null` if the template group has no parent template group
+ * @property-read	string		$templateGroupName		name of the template group
+ * @property-read	string		$templateGroupFolderName	name of the folder containing the modified templates (relative to the normal template folder)
  */
 class TemplateGroup extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'template_group';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'templateGroupID';
 	
+	/**
+	 * @var	TemplateGroup[][]
+	 */
 	protected static $templateGroupStructure = null;
 	protected static $selectList = null;
 	
 	/**
+	 * Returns whether the template group is immutable (i.e. whether it's the email
+	 * template group).
+	 * 
+	 * @return	boolean
+	 */
+	public function isImmutable() {
+		return $this->templateGroupFolderName === '_wcf_email/';
+	}
+	
+	/**
+	 * Returns the localized name of the template group.
+	 * 
+	 * @return	string
+	 */
+	public function getName() {
+		return WCF::getLanguage()->get($this->templateGroupName);
+	}
+	
+	/**
 	 * Creates a select list of all template groups.
 	 * 
-	 * @param	array<integer>	$ignore		Array of template group ids that should be excluded with all of their children
+	 * @param	integer[]	$ignore		Array of template group ids that should be excluded with all of their children.
+	 * 						-1 denotes that all immutable groups should be ignored.
 	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */
-	public static function getSelectList($ignore = array(), $initialDepth = 0) {
+	public static function getSelectList($ignore = [], $initialDepth = 0) {
 		if (self::$templateGroupStructure === null) {
-			self::$templateGroupStructure = array();
+			self::$templateGroupStructure = [];
 			
-			$sql = "SELECT		templateGroupID, templateGroupName, parentTemplateGroupID
+			$sql = "SELECT		*
 				FROM		wcf".WCF_N."_template_group
 				ORDER BY	templateGroupName ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -49,7 +70,7 @@ class TemplateGroup extends DatabaseObject {
 			}
 		}
 		
-		self::$selectList = array();
+		self::$selectList = [];
 		self::makeSelectList(0, $initialDepth, $ignore);
 		
 		return self::$selectList;
@@ -62,14 +83,15 @@ class TemplateGroup extends DatabaseObject {
 	 * @param	integer		$depth			current list depth
 	 * @param	array		$ignore			list of template group ids to ignore in result
 	 */
-	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = array()) {
+	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = []) {
 		if (!isset(self::$templateGroupStructure[$parentID ?: 0])) return;
 		
 		foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {
 			if (!empty($ignore) && in_array($templateGroup->templateGroupID, $ignore)) continue;
+			if (in_array(-1, $ignore) && $templateGroup->isImmutable()) continue;
 			
 			// we must encode html here because the htmloptions plugin doesn't do it
-			$title = StringUtil::encodeHTML($templateGroup->templateGroupName);
+			$title = StringUtil::encodeHTML($templateGroup->getName());
 			if ($depth > 0) $title = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $depth). ' ' . $title;
 			
 			self::$selectList[$templateGroup->templateGroupID] = $title;

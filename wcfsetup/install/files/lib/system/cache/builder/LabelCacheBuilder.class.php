@@ -9,30 +9,25 @@ use wcf\system\acl\ACLHandler;
  * Caches labels and groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class LabelCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$data = array(
-			'options' => array(),
-			'groups' => array()
-		);
+		$data = [
+			'options' => [],
+			'groups' => []
+		];
 		
 		// get label groups
 		$groupList = new LabelGroupList();
+		$groupList->decoratorClassName = ViewableLabelGroup::class;
 		$groupList->readObjects();
-		$groups = $groupList->getObjects();
-		foreach ($groups as &$group) {
-			$data['groups'][$group->groupID] = new ViewableLabelGroup($group);
-		}
-		unset($group);
+		$data['groups'] = $groupList->getObjects();
 		
 		// get permissions for groups
 		$permissions = ACLHandler::getInstance()->getPermissions(
@@ -41,9 +36,11 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		);
 		
 		// store options
+		/** @noinspection PhpUndefinedMethodInspection */
 		$data['options'] = $permissions['options']->getObjects();
 		
 		// assign permissions for each label group
+		/** @var ViewableLabelGroup $group */
 		foreach ($data['groups'] as $groupID => $group) {
 			// group permissions
 			if (isset($permissions['group'][$groupID])) {
@@ -59,9 +56,9 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		if (count($groupList)) {
 			// get labels
 			$labelList = new LabelList();
-			$labelList->sqlOrderBy = 'label';
 			$labelList->readObjects();
 			foreach ($labelList as $label) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$data['groups'][$label->groupID]->addLabel($label);
 			}
 		}

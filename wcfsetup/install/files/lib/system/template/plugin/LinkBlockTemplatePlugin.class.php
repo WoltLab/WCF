@@ -11,11 +11,9 @@ use wcf\util\StringUtil;
  * 	{link application='wcf'}index.php{/link}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	/**
@@ -25,7 +23,7 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	protected $counter = 0;
 	
 	/**
-	 * @see	\wcf\system\template\IBlockTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
 		if (!array_key_exists('controller', $tagArgs)) {
@@ -49,14 +47,14 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\IBlockTemplatePlugin::init()
+	 * @inheritDoc
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj) {
 		$this->counter = 0;
 	}
 	
 	/**
-	 * @see	\wcf\system\template\IBlockTemplatePlugin::next()
+	 * @inheritDoc
 	 */
 	public function next(TemplateEngine $tplObj) {
 		if ($this->counter == 0) {

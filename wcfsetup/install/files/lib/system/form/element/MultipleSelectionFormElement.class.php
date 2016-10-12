@@ -1,15 +1,17 @@
 <?php
 namespace wcf\system\form\element;
+use wcf\system\form\container\MultipleSelectionFormElementContainer;
+use wcf\util\StringUtil;
 
 /**
  * Provides a checkbox form element.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.form.element
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Form\Element
+ * 
+ * @method	MultipleSelectionFormElementContainer	getParent()
  */
 class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	/**
@@ -19,14 +21,14 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	protected $disabledMessage = '';
 	
 	/**
-	 * @see	\wcf\system\form\element\AbstractNamedFormElement::setValue()
+	 * @inheritDoc
 	 */
 	public function setValue($value) {
 		if (!is_array($value)) {
 			parent::setValue($value);
 		}
 		else {
-			$this->value = array_map(array('wcf\util\StringUtil', 'trim'), $value);
+			$this->value = array_map([StringUtil::class, 'trim'], $value);
 		}
 	}
 	
@@ -40,7 +42,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	}
 	
 	/**
-	 * @see	\wcf\system\form\element\AbstractNamedFormElement::getDescription()
+	 * @inheritDoc
 	 */
 	public function getDescription() {
 		if ($this->disabledMessage) {
@@ -51,16 +53,16 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	}
 	
 	/**
-	 * @see	\wcf\system\form\IFormElement::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML($formName) {
 		$disabled = '';
 		if ($this->disabledMessage) {
-			$disabled = ' disabled="disabled"';
+			$disabled = ' disabled';
 		}
 		
 		return <<<HTML
-<label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}"{$disabled} /> {$this->getLabel()}</label>
+<label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}"{$disabled}> {$this->getLabel()}</label>
 <small>{$this->getDescription()}</small>
 HTML;
 	}

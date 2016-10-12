@@ -10,47 +10,59 @@ use wcf\system\WCF;
  * Executes smiley-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.smiley
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Smiley
+ * 
+ * @method	SmileyEditor[]	getObjects()
+ * @method	SmileyEditor	getSingleObject()
  */
 class SmileyAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\smiley\SmileyEditor';
+	protected $className = SmileyEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.smiley.canManageSmiley');
+	protected $permissionsDelete = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.smiley.canManageSmiley');
+	protected $permissionsUpdate = ['admin.content.smiley.canManageSmiley'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('delete', 'update', 'updatePosition');
+	protected $requireACP = ['delete', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	Smiley
 	 */
 	public function create() {
+		/** @var Smiley $smiley */
 		$smiley = parent::create();
 		
+		$data = [];
 		if (!empty($this->parameters['fileLocation'])) {
 			$smileyFilename = 'smiley'.$smiley->smileyID.'.'.mb_strtolower(mb_substr($this->parameters['fileLocation'], mb_strrpos($this->parameters['fileLocation'], '.') + 1));
 			@rename($this->parameters['fileLocation'], WCF_DIR.'images/smilies/'.$smileyFilename);
 			
+			$data['smileyPath'] = 'images/smilies/'.$smileyFilename;
+		}
+		if (!empty($this->parameters['fileLocation2x'])) {
+			$smileyFilename2x = 'smiley'.$smiley->smileyID.'@2x.'.mb_strtolower(mb_substr($this->parameters['fileLocation2x'], mb_strrpos($this->parameters['fileLocation2x'], '.') + 1));
+			@rename($this->parameters['fileLocation2x'], WCF_DIR.'images/smilies/'.$smileyFilename2x);
+			
+			$data['smileyPath2x'] = 'images/smilies/'.$smileyFilename2x;
+		}
+		
+		if (!empty($data)) {
 			$smileyEditor = new SmileyEditor($smiley);
-			$smileyEditor->update(array(
-				'smileyPath' => 'images/smilies/'.$smileyFilename
-			));
+			$smileyEditor->update($data);
 			
 			$smiley = new Smiley($smiley->smileyID);
 		}
@@ -59,26 +71,35 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
-		if (count($this->objects) == 1 && !empty($this->parameters['fileLocation'])) {
-			$smiley = reset($this->objects);
-			$smileyFilename = 'smiley'.$smiley->smileyID.'.'.mb_strtolower(mb_substr($this->parameters['fileLocation'], mb_strrpos($this->parameters['fileLocation'], '.') + 1));
-			@rename($this->parameters['fileLocation'], WCF_DIR.'images/smilies/'.$smileyFilename);
-			
-			$this->parameters['data']['smileyPath'] = 'images/smilies/'.$smileyFilename;
+		if (count($this->objects) == 1) {
+			if (!empty($this->parameters['fileLocation'])) {
+				$smiley = reset($this->objects);
+				$smileyFilename = 'smiley' . $smiley->smileyID . '.' . mb_strtolower(mb_substr($this->parameters['fileLocation'], mb_strrpos($this->parameters['fileLocation'], '.') + 1));
+				@rename($this->parameters['fileLocation'], WCF_DIR . 'images/smilies/' . $smileyFilename);
+				
+				$this->parameters['data']['smileyPath'] = 'images/smilies/' . $smileyFilename;
+			}
+			if (!empty($this->parameters['fileLocation2x'])) {
+				$smiley = reset($this->objects);
+				$smileyFilename2x = 'smiley' . $smiley->smileyID . '@2x.' . mb_strtolower(mb_substr($this->parameters['fileLocation2x'], mb_strrpos($this->parameters['fileLocation2x'], '.') + 1));
+				@rename($this->parameters['fileLocation2x'], WCF_DIR . 'images/smilies/' . $smileyFilename2x);
+				
+				$this->parameters['data']['smileyPath2x'] = 'images/smilies/' . $smileyFilename2x;
+			}
 		}
 		
 		parent::update();
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
@@ -97,7 +118,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::updatePosition()
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$smileyList = new SmileyList();
@@ -110,7 +131,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 			if ($smiley === null) continue;
 			
 			$editor = new SmileyEditor($smiley);
-			$editor->update(array('showOrder' => $i++));
+			$editor->update(['showOrder' => $i++]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

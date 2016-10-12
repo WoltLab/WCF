@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\event\EventHandler;
 use wcf\util\StringUtil;
@@ -9,24 +10,22 @@ use wcf\util\StringUtil;
  * Parses bbcode tags, smilies etc. in messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class MessageParser extends BBCodeParser {
 	/**
 	 * list of smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
-	protected $smilies = array();
+	protected $smilies = [];
 	
 	/**
 	 * cached bbcodes
 	 * @var	array
 	 */
-	protected $cachedCodes = array();
+	protected $cachedCodes = [];
 	
 	/**
 	 * currently parsed message
@@ -35,7 +34,7 @@ class MessageParser extends BBCodeParser {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -47,9 +46,10 @@ class MessageParser extends BBCodeParser {
 			foreach ($smilies as $categoryID => $categorySmilies) {
 				if ($categories[$categoryID ?: null]->isDisabled) continue;
 				
+				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
 					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'" />';
+						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'">';
 					}
 				}
 			}
@@ -68,7 +68,7 @@ class MessageParser extends BBCodeParser {
 	 * @return	string		parsed message
 	 */
 	public function parse($message, $enableSmilies = true, $enableHtml = false, $enableBBCodes = true, $doKeywordHighlighting = true) {
-		$this->cachedCodes = array();
+		$this->cachedCodes = [];
 		$this->message = $message;
 		
 		// call event
@@ -83,9 +83,9 @@ class MessageParser extends BBCodeParser {
 			// encode html
 			$this->message = StringUtil::encodeHTML($this->message);
 			
-			// converts newlines to <br />'s
+			// converts newlines to <br>'s
 			if ($this->getOutputType() == 'text/html') {
-				$this->message = nl2br($this->message);
+				$this->message = nl2br($this->message, false);
 			}
 		}
 		else {
@@ -115,8 +115,8 @@ class MessageParser extends BBCodeParser {
 		}
 		
 		// replace bad html tags (script etc.)
-		$badSearch = array('/(javascript):/i', '/(about):/i', '/(vbscript):/i');
-		$badReplace = array('$1<b></b>:', '$1<b></b>:', '$1<b></b>:');
+		$badSearch = ['/(javascript):/i', '/(about):/i', '/(vbscript):/i'];
+		$badReplace = ['$1<b></b>:', '$1<b></b>:', '$1<b></b>:'];
 		$this->message = preg_replace($badSearch, $badReplace, $this->message);
 		
 		// call event
@@ -129,12 +129,13 @@ class MessageParser extends BBCodeParser {
 	 * Parses smiley codes.
 	 * 
 	 * @param	string		$text
-	 * @return	string		text
+	 * @param	boolean		$enableHtml
+	 * @return	string
 	 */
 	protected function parseSmilies($text, $enableHtml = false) {
 		foreach ($this->smilies as $code => $html) {
 			//$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
-			$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />' : '').')~', $html, $text);
+			$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />|<br>' : '').')~', $html, $text);
 		}
 		
 		return $text;
@@ -154,7 +155,7 @@ class MessageParser extends BBCodeParser {
 					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
 				)?\])
 				(.*?)
-				(?:\[/\\2\])~six", array($this, 'cacheCodesCallback'), $text);
+				(?:\[/\\2\])~six", [$this, 'cacheCodesCallback'], $text);
 		}
 		return $text;
 	}
@@ -202,7 +203,7 @@ class MessageParser extends BBCodeParser {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\BBCodeParser::isValidTagAttribute()
+	 * @inheritDoc
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
 		if (!parent::isValidTagAttribute($tagAttributes, $definedTagAttribute)) {
@@ -225,7 +226,7 @@ class MessageParser extends BBCodeParser {
 	 */
 	public function stripHTML($message) {
 		// remove img tags (smilies)
-		$message = preg_replace('~<img src="[^"]+" alt="([^"]+)" />~', '\\1', $message);
+		$message = preg_replace('~<img src="[^"]+" alt="([^"]+)"(?: /)?>~', '\\1', $message);
 		
 		// strip other HTML tags
 		$message = StringUtil::stripHTML($message);

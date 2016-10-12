@@ -6,19 +6,17 @@ use wcf\data\notice\NoticeList;
  * Caches the enabled notices.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class NoticeCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$noticeList = new NoticeList();
-		$noticeList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$noticeList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$noticeList->sqlOrderBy = 'showOrder ASC';
 		$noticeList->readObjects();
 		

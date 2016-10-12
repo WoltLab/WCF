@@ -1,10 +1,9 @@
 <?php
 /**
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @category	Community Framework
+ * @package	WoltLabSuite\Core
  */
 // @codingStandardsIgnoreFile
 // get url
@@ -21,7 +20,7 @@ if (strpos($testURL, 'script:') !== false || !preg_match('~^https?://~', $testUR
 <html dir="ltr" lang="en">
 <head>
 	<title>Dereferer</title>
-	<meta http-equiv="refresh" content="0;URL=<?php echo $url; ?>" />
+	<meta http-equiv="refresh" content="0;URL=<?php echo $url; ?>">
 </head>
 <body>
 	<p><a href="<?php echo $url; ?>"><?php echo $url; ?></a></p>

@@ -9,16 +9,14 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class MediaBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
-		$content = StringUtil::trim($content);
+		$content = StringUtil::trim($openingTag['attributes'][0]);
 		
 		if ($parser->getOutputType() == 'text/html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
@@ -27,7 +25,7 @@ class MediaBBCode extends AbstractBBCode {
 				}
 			}
 		}
-		if ($parser->getOutputType() == 'text/simplified-html') {
+		else if ($parser->getOutputType() == 'text/simplified-html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
 					return StringUtil::getAnchorTag($content);

@@ -2,7 +2,6 @@
 	{assign var='__categoryNameStart' value=$categoryName|substr:0:-1}
 {/if}
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		{if $aclValues[$objectTypeID]|isset}
 			var initialPermissions = {
@@ -90,5 +89,4 @@
 		{/if}
 		new {if $aclListClassName|isset}{@$aclListClassName}{else}WCF.ACL.List{/if}($('#{@$containerID}'), {@$objectTypeID}, {if $categoryName|isset}'{@$categoryName}'{else}null{/if}, {if $objectID|isset}{@$objectID}{else}0{/if}, {if !$includeUserGroups|isset || $includeUserGroups}true{else}false{/if}{if $aclValues[$objectTypeID]|isset}, initialPermissions{/if});
 	});
-	//]]>
 </script>

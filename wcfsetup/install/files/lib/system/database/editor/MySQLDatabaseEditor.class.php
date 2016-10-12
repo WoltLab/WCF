@@ -6,18 +6,16 @@ use wcf\system\Regex;
  * Database editor implementation for MySQL4.1 or higher.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database.editor
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Database\Editor
  */
 class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::getTableNames()
+	 * @inheritDoc
 	 */
 	public function getTableNames() {
-		$existingTables = array();
+		$existingTables = [];
 		$sql = "SHOW TABLES FROM `".$this->dbObj->getDatabaseName()."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
@@ -28,10 +26,10 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::getColumns()
+	 * @inheritDoc
 	 */
 	public function getColumns($tableName) {
-		$columns = array();
+		$columns = [];
 		$regex = new Regex('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE);
 		
 		$sql = "SHOW COLUMNS FROM `".$tableName."`";
@@ -41,24 +39,24 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$regex->match($row['Type']);
 			$typeMatches = $regex->getMatches();
 			
-			$columns[] = array('name' => $row['Field'], 'data' => array(
-				'type' => ((empty($typeMatches)) ? $row['Type'] : $typeMatches[1]),
-				'length' => ((empty($typeMatches)) ? '' : $typeMatches[2]),
-				'notNull' => (($row['Null'] == 'YES') ? false : true),
-				'key' => (($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : '')),
+			$columns[] = ['name' => $row['Field'], 'data' => [
+				'type' => empty($typeMatches) ? $row['Type'] : $typeMatches[1],
+				'length' => empty($typeMatches) ? '' : $typeMatches[2],
+				'notNull' => ($row['Null'] == 'YES') ? false : true,
+				'key' => ($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : ''),
 				'default' => $row['Default'],
-				'autoIncrement' => ($row['Extra'] == 'auto_increment' ? true : false)
-			));
+				'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false
+			]];
 		}
 		
 		return $columns;
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::getIndices()
+	 * @inheritDoc
 	 */
 	public function getIndices($tableName) {
-		$indices = array();
+		$indices = [];
 		$sql = "SHOW INDEX FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
@@ -70,9 +68,9 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::createTable()
+	 * @inheritDoc
 	 */
-	public function createTable($tableName, $columns, $indices = array()) {
+	public function createTable($tableName, $columns, $indices = []) {
 		$columnDefinition = $indexDefinition = '';
 		
 		// build column definition
@@ -94,13 +92,13 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				".$columnDefinition."
 				".(!empty($indexDefinition) ? ',' : '')."
 				".$indexDefinition."
-			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropTable()
+	 * @inheritDoc
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS `".$tableName."`";
@@ -109,7 +107,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::addColumn()
+	 * @inheritDoc
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE `".$tableName."` ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -118,7 +116,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::alterColumn()
+	 * @inheritDoc
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		$sql = "ALTER TABLE `".$tableName."` CHANGE COLUMN `".$oldColumnName."` ".$this->buildColumnDefinition($newColumnName, $newColumnData);
@@ -127,7 +125,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropColumn()
+	 * @inheritDoc
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE `".$tableName."` DROP COLUMN `".$columnName."`";
@@ -136,7 +134,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @inheritDoc
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE `".$tableName."` ADD ".$this->buildIndexDefinition($indexName, $indexData);
@@ -145,7 +143,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @inheritDoc
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE `".$tableName."` ADD";
@@ -172,7 +170,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropIndex()
+	 * @inheritDoc
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "ALTER TABLE `".$tableName."` DROP INDEX `".$indexName."`";
@@ -181,7 +179,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropPrimaryKey()
+	 * @inheritDoc
 	 */
 	public function dropPrimaryKey($tableName) {
 		$sql = "ALTER TABLE ".$tableName." DROP PRIMARY KEY";
@@ -190,7 +188,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	\wcf\system\database\editor\DatabaseEditor::dropForeignKey()
+	 * @inheritDoc
 	 */
 	public function dropForeignKey($tableName, $indexName) {
 		$sql = "ALTER TABLE `".$tableName."` DROP FOREIGN KEY `".$indexName."`";
@@ -203,7 +201,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * 
 	 * @param	string		$columnName
 	 * @param	array		$columnData
-	 * @param	string
+	 * @return	string
 	 */
 	protected function buildColumnDefinition($columnName, $columnData) {
 		// column name
@@ -235,7 +233,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * 
 	 * @param	string		$indexName
 	 * @param	array		$indexData
-	 * @param	string
+	 * @return	string
 	 */
 	protected function buildIndexDefinition($indexName, $indexData) {
 		// index type

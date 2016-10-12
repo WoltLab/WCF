@@ -7,46 +7,44 @@ namespace wcf\system\bbcode\highlighter;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class PythonHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array('(', ')',/* from __future__ import braces '{', '}', */'[', ']', ';', '.', ',', ':');
+	protected $separators = ['(', ')',/* from __future__ import braces '{', '}', */'[', ']', ';', '.', ',', ':'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
-	protected $singleLineComment = array('#');
+	protected $singleLineComment = ['#'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @inheritDoc
 	 */
-	protected $commentStart = array();
+	protected $commentStart = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @inheritDoc
 	 */
-	protected $commentEnd = array();
+	protected $commentEnd = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
-	protected $operators = array('+=', '-=', '**=', '*=', '//=', '/=', '%=', '~=', '+', '-', '**', '*', '//', '/', '%', 
-					'&=', '<<=', '>>=', '^=', '~', '&', '^', '|', '<<', '>>', '=', '!=', '<', '>', '<=', '>=');
+	protected $operators = ['+=', '-=', '**=', '*=', '//=', '/=', '%=', '~=', '+', '-', '**', '*', '//', '/', '%', 
+					'&=', '<<=', '>>=', '^=', '~', '&', '^', '|', '<<', '>>', '=', '!=', '<', '>', '<=', '>='];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
-	protected $quotes = array(array("r'", "'"), array("u'", "'"), array('r"', '"'), array('u"', '"'), "'", '"');
+	protected $quotes = [["r'", "'"], ["u'", "'"], ['r"', '"'], ['u"', '"'], "'", '"'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'print',
 		'del',
 		'str',
@@ -59,12 +57,12 @@ class PythonHighlighter extends Highlighter {
 		'continue',
 		'break',
 		'return'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'if',
 		'elif',
 		'else',
@@ -74,23 +72,23 @@ class PythonHighlighter extends Highlighter {
 		'for',
 		'in',
 		'while'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'from',
 		'import',
 		'as',
 		'class',
 		'def'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @inheritDoc
 	 */
-	protected $keywords4 = array(
+	protected $keywords4 = [
 		'__name__',
 		'__init__',
 		'__str__',
@@ -103,5 +101,5 @@ class PythonHighlighter extends Highlighter {
 		'or',
 		'not',
 		'is'
-	);
+	];
 }

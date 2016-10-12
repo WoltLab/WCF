@@ -8,28 +8,30 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.bbcode.media.provider
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
+ * 
+ * @method	BBCodeMediaProvider		create()
+ * @method	BBCodeMediaProviderEditor[]	getObjects()
+ * @method	BBCodeMediaProviderEditor	getSingleObject()
  */
 class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor';
+	protected $className = BBCodeMediaProviderEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsDelete = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.bbcode.canManageBBCode');
+	protected $permissionsUpdate = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('delete', 'update');
+	protected $requireACP = ['delete', 'update'];
 }

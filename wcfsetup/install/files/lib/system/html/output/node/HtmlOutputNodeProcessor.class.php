@@ -1,0 +1,253 @@
+<?php
+namespace wcf\system\html\output\node;
+use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\bbcode\KeywordHighlighter;
+use wcf\system\html\node\AbstractHtmlNodeProcessor;
+use wcf\system\html\node\IHtmlNode;
+use wcf\util\DOMUtil;
+use wcf\util\StringUtil;
+
+/**
+ * Processes a HTML string and renders the final output for display.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2016 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Output\Node
+ * @since       3.0
+ */
+class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
+	/**
+	 * @inheritDoc
+	 */
+	protected $nodeInterface = IHtmlOutputNode::class;
+	
+	/**
+	 * desired output type
+	 * @var string
+	 */
+	protected $outputType = 'text/html';
+	
+	/**
+	 * enables keyword highlighting
+	 * @var boolean
+	 */
+	protected $keywordHighlighting = true;
+	
+	/**
+	 * @var string[]
+	 */
+	protected $sourceBBCodes = [];
+	
+	/**
+	 * HtmlOutputNodeProcessor constructor.
+	 */
+	public function __construct() {
+		$this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
+	}
+	
+	/**
+	 * Sets the desired output type.
+	 * 
+	 * @param       string          $outputType     desired output type
+	 */
+	public function setOutputType($outputType) {
+		$this->outputType = $outputType;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function process() {
+		// highlight keywords
+		$this->highlightKeywords();
+		
+		$this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
+		
+		// dynamic node handlers
+		$this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
+		
+		if ($this->outputType !== 'text/html') {
+			// convert `<p>...</p>` into `...<br><br>`
+			$paragraphs = $this->getDocument()->getElementsByTagName('p');
+			while ($paragraphs->length) {
+				$paragraph = $paragraphs->item(0);
+				
+				$isLastNode = true;
+				$sibling = $paragraph;
+				while ($sibling = $sibling->nextSibling) {
+					if ($sibling->nodeType === XML_ELEMENT_NODE) {
+						if ($sibling->nodeName !== 'br') {
+							$isLastNode = false;
+							break;
+						}
+					}
+					else if ($sibling->nodeType === XML_TEXT_NODE) {
+						if (StringUtil::trim($sibling->textContent) !== '') {
+							$isLastNode = false;
+							break;
+						}
+					}
+				}
+				
+				if (!$isLastNode) {
+					// check if paragraph only contains <br>
+					if (StringUtil::trim($paragraph->textContent) === '') {
+						// get last element
+						$element = $paragraph->firstChild;
+						while ($element && $element->nodeType !== XML_ELEMENT_NODE) {
+							$element = $element->nextSibling;
+						}
+						
+						if ($element && $element->nodeName === 'br') {
+							DOMUtil::removeNode($paragraph, true);
+							continue;
+						}
+					}
+					
+					//for ($i = 0; $i < 2; $i++) {
+						$br = $this->getDocument()->createElement('br');
+						$paragraph->appendChild($br);
+					//}
+				}
+				
+				DOMUtil::removeNode($paragraph, true);
+			}
+			
+			if ($this->outputType === 'text/plain') {
+				// remove all `\n` first
+				$nodes = [];
+				/** @var \DOMText $node */
+				foreach ($this->getXPath()->query('//text()') as $node) {
+					if (strpos($node->textContent, "\n") !== false) {
+						$nodes[] = $node;
+					}
+				}
+				foreach ($nodes as $node) {
+					$textNode = $this->getDocument()->createTextNode(preg_replace('~\r?\n~', '', $node->textContent));
+					$node->parentNode->insertBefore($textNode, $node);
+					$node->parentNode->removeChild($node);
+				}
+				
+				// convert `<br>` into `\n`
+				$brs = $this->getDocument()->getElementsByTagName('br');
+				while ($brs->length) {
+					$br = $brs->item(0);
+					
+					$newline = $this->getDocument()->createTextNode("\n");
+					$br->parentNode->insertBefore($newline, $br);
+					DOMUtil::removeNode($br);
+				}
+				
+				// remove all other elements
+				$elements = $this->getDocument()->getElementsByTagName('*');
+				while ($elements->length) {
+					DOMUtil::removeNode($elements->item(0), true);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtml() {
+		$html = parent::getHtml();
+		
+		if ($this->outputType === 'text/plain') {
+			$html = StringUtil::trim($html);
+			$html = StringUtil::decodeHTML($html);
+		}
+		
+		return $html;
+	}
+	
+	/**
+	 * Enables the keyword highlighting.
+	 * 
+	 * @param       boolean         $enable
+	 */
+	public function enableKeywordHighlighting($enable = true) {
+		$this->keywordHighlighting = $enable;
+	}
+	
+	/**
+	 * Executes the keyword highlighting.
+	 */
+	protected function highlightKeywords() {
+		if (!$this->keywordHighlighting) return;
+		if (!count(KeywordHighlighter::getInstance()->getKeywords())) return;
+		$keywordPattern = '('.implode('|', KeywordHighlighter::getInstance()->getKeywords()).')';
+		
+		$nodes = [];
+		foreach ($this->getXPath()->query('//text()') as $node) {
+			$value = StringUtil::trim($node->textContent);
+			if (empty($value)) {
+				// skip empty nodes
+				continue;
+			}
+			
+			// check if node is within a code element or link
+			if ($this->hasCodeParent($node)) {
+				continue;
+			}
+			
+			$nodes[] = $node;
+		}
+		foreach ($nodes as $node) {
+			$split = preg_split('+'.$keywordPattern.'+i', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE);
+			$count = count($split);
+			if ($count == 1) return;
+			
+			for ($i = 0; $i < $count; $i++) {
+				// text
+				if ($i % 2 == 0) {
+					$node->parentNode->insertBefore($node->ownerDocument->createTextNode($split[$i]), $node);
+				}
+				// match
+				else {
+					/** @var \DOMElement $element */
+					$element = $node->ownerDocument->createElement('span');
+					$element->setAttribute('class', 'highlight');
+					$element->appendChild($node->ownerDocument->createTextNode($split[$i]));
+					$node->parentNode->insertBefore($element, $node);
+				}
+			}
+			
+			DOMUtil::removeNode($node);
+		}
+	}
+	
+	/**
+	 * Returns true if text node is inside a code element, suppresing any
+	 * auto-detection of content.
+	 *
+	 * @param       \DOMText        $text           text node
+	 * @return      boolean         true if text node is inside a code element
+	 */
+	protected function hasCodeParent(\DOMText $text) {
+		$parent = $text;
+		/** @var \DOMElement $parent */
+		while ($parent = $parent->parentNode) {
+			$nodeName = $parent->nodeName;
+			if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
+				return true;
+			}
+			else if ($nodeName === 'woltlab-metacode' && in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function invokeHtmlNode(IHtmlNode $htmlNode) {
+		/** @var IHtmlOutputNode $htmlNode */
+		$htmlNode->setOutputType($this->outputType);
+		
+		parent::invokeHtmlNode($htmlNode);
+	}
+}

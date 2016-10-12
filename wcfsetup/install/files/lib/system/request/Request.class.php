@@ -1,15 +1,14 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\page\PageCache;
 
 /**
  * Represents a page request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Request
  */
 class Request {
 	/**
@@ -17,6 +16,23 @@ class Request {
 	 * @var	string
 	 */
 	protected $className = '';
+	
+	/**
+	 * @var boolean
+	 */
+	protected $isLandingPage = false;
+	
+	/**
+	 * request meta data
+	 * @var	string[]
+	 */
+	protected $metaData;
+	
+	/**
+	 * current page id
+	 * @var integer
+	 */
+	protected $pageID;
 	
 	/**
 	 * page name
@@ -34,19 +50,28 @@ class Request {
 	 * request object
 	 * @var	object
 	 */
-	protected $requestObject = null;
+	protected $requestObject;
 	
 	/**
 	 * Creates a new request object.
 	 * 
-	 * @param	string		$className
-	 * @param	string		$pageName
-	 * @param	string		$pageType
+	 * @param	string		$className	fully qualified name
+	 * @param	string		$pageName	class name
+	 * @param	string		$pageType	can be 'action', 'form' or 'page'
+	 * @param	string[]	$metaData	additional meta data
 	 */
-	public function __construct($className, $pageName, $pageType) {
+	public function __construct($className, $pageName, $pageType, array $metaData) {
 		$this->className = $className;
+		$this->metaData = $metaData;
 		$this->pageName = $pageName;
 		$this->pageType = $pageType;
+	}
+	
+	/**
+	 * Marks this request as landing page.
+	 */
+	public function setIsLandingPage() {
+		$this->isLandingPage = true;
 	}
 	
 	/**
@@ -69,12 +94,31 @@ class Request {
 	}
 	
 	/**
+	 * Returns true if this request represents the landing page.
+	 * 
+	 * @return boolean
+	 */
+	public function isLandingPage() {
+		return $this->isLandingPage;
+	}
+	
+	/**
 	 * Returns the page class name of this request.
 	 * 
 	 * @return	string
 	 */
 	public function getClassName() {
 		return $this->className;
+	}
+	
+	/**
+	 * Returns request meta data.
+	 * 
+	 * @return	string[]
+	 * @since	3.0
+	 */
+	public function getMetaData() {
+		return $this->metaData;
 	}
 	
 	/**
@@ -105,7 +149,7 @@ class Request {
 	}
 	
 	/**
-	 * Returns true if the requested page is avaiable during the offline mode.
+	 * Returns true if the requested page is available during the offline mode.
 	 * 
 	 * @return	boolean
 	 */
@@ -115,5 +159,29 @@ class Request {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns the current page id.
+	 * 
+	 * @return	integer		current page id or `0` if unknown
+	 */
+	public function getPageID() {
+		if ($this->pageID === null) {
+			if (isset($this->metaData['cms'])) {
+				$this->pageID = $this->metaData['cms']['pageID'];
+			}
+			else {
+				$page = PageCache::getInstance()->getPageByController($this->className);
+				if ($page !== null) {
+					$this->pageID = $page->pageID;
+				}
+				else {
+					$this->pageID = 0;
+				}
+			}
+		}
+		
+		return $this->pageID;
 	}
 }

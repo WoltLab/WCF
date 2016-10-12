@@ -16,19 +16,9 @@
 	});
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.pluginStore.purchasedItems{/lang}</h1>
+<header class="contentHeader">
+	<h1 class="contentTitle">{lang}wcf.acp.pluginStore.purchasedItems{/lang}</h1>
 </header>
-
-{*<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='PageMenuItemAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtonsTop'}
-		</ul>
-	</nav>
-</div>*}
 
 {foreach from=$wcfMajorReleases item=wcfMajorRelease}
 	{if !$productData[$wcfMajorRelease]|empty}
@@ -40,11 +30,7 @@
 			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate{/lang}</p>
 		{/if}
 		
-		<div class="tabularBox tabularBoxTitle marginTop">
-			<header>
-				<h2>{lang}wcf.acp.pluginStore.purchasedItems.wcfMajorRelease{/lang} <span class="badge badgeInverse">{#$productData[$wcfMajorRelease]|count}</span></h2>
-			</header>
-			
+		<div class="section tabularBox">
 			<table class="table">
 				<thead>
 					<tr>
@@ -60,7 +46,7 @@
 						<tr>
 							<td class="columnIcon">
 								{if $product[status] == 'install'}
-									<a class="jsButtonPackageInstall" data-confirm-message="{lang}wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage{/lang}" data-package="{$product[package]}" data-package-version="{$product[version][available]}"><span class="icon icon16 fa-plus jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}"></span></a>
+									<a class="jsButtonPackageInstall" data-confirm-message="{lang __encode=true}wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage{/lang}" data-package="{$product[package]}" data-package-version="{$product[version][available]}"><span class="icon icon16 fa-plus jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}"></span></a>
 								{else if $product[status] == 'update'}
 									<a class="jsButtonPackageUpdate"><span class="icon icon16 fa-refresh jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.update{/lang}"></span></a>
 								{else if $product[status] == 'upToDate'}
@@ -82,15 +68,5 @@
 		</div>
 	{/if}
 {/foreach}
-
-{*<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='PageMenuItemAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtonsBottom'}
-		</ul>
-	</nav>
-</div>*}
 
 {include file='footer'}

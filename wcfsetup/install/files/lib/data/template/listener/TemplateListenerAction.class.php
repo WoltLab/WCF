@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes template listener-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.template.listener
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Template\Listener
+ * 
+ * @method	TemplateListener		create()
+ * @method	TemplateListenerEditor[]	getObjects()
+ * @method	TemplateListenerEditor		getSingleObject()
  */
 class TemplateListenerAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\template\listener\TemplateListenerEditor';
+	protected $className = TemplateListenerEditor::class;
 }

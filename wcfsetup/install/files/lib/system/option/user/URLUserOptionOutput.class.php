@@ -8,15 +8,13 @@ use wcf\util\StringUtil;
  * User option output implementation for the output of an url.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User
  */
 class URLUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value) || $value == 'http://') return '';

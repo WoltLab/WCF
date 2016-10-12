@@ -9,36 +9,72 @@ use wcf\system\WCF;
  * Option type implementation for selecting a captcha type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class CaptchaSelectOptionType extends AbstractOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
+		/** @noinspection PhpUndefinedFieldInspection */
 		if ($option->allowemptyvalue) {
 			$selectOptions = array_merge(
-				array(
-					'' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')
-				),
+				['' => WCF::getLanguage()->get('wcf.captcha.useNoCaptcha')],
 				$selectOptions
 			);
 		}
 		
-		return WCF::getTPL()->fetch('selectOptionType', 'wcf', array(
+		$options = $this->parseEnableOptions($option);
+		
+		return WCF::getTPL()->fetch('selectOptionType', 'wcf', [
+			'disableOptions' => $options['disableOptions'],
+			'enableOptions' => $options['enableOptions'],
 			'selectOptions' => $selectOptions,
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * Prepares JSON-encoded values for disabling or enabling dependent options.
+	 *
+	 * @param	Option	$option
+	 * @return	array
+	 * @see	SelectOptionType::parseEnableOptions()
+	 */
+	protected function parseEnableOptions(Option $option) {
+		$disableOptions = $enableOptions = '';
+		
+		if (!empty($option->enableOptions)) {
+			$options = $option->parseMultipleEnableOptions();
+			
+			foreach ($options as $key => $optionData) {
+				$tmp = explode(',', $optionData);
+				
+				foreach ($tmp as $item) {
+					if ($item{0} == '!') {
+						if (!empty($disableOptions)) $disableOptions .= ',';
+						$disableOptions .= "{ value: '".$key."', option: '".mb_substr($item, 1)."' }";
+					}
+					else {
+						if (!empty($enableOptions)) $enableOptions .= ',';
+						$enableOptions .= "{ value: '".$key."', option: '".$item."' }";
+					}
+				}
+			}
+		}
+		
+		return [
+			'disableOptions' => $disableOptions,
+			'enableOptions' => $enableOptions
+		];
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!$newValue) return;

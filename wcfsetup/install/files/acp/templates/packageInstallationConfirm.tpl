@@ -2,7 +2,6 @@
 {include file='header'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
@@ -15,12 +14,13 @@
 		
 		new WCF.ACP.Package.Installation.Cancel({@$queue->queueID});
 	});
-	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
-	<p>{$archive->getLocalizedPackageInfo('packageDescription')}</p>
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
+		<p class="contentHeaderDescription">{$archive->getLocalizedPackageInfo('packageDescription')}</p>
+	</div>
 </header>
 
 {if !$validationPassed}
@@ -31,43 +31,41 @@
 	<p class="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</p>
 {/if}
 
-<div class="container containerPadding marginTop">
-	<fieldset>
-		<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
-		
+<section class="section">
+	<h2 class="sectionTitle">{lang}wcf.acp.package.information.properties{/lang}</h2>
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
+		<dd>{$archive->getPackageInfo('name')}</dd>
+	</dl>
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.version{/lang}</dt>
+		<dd>{$archive->getPackageInfo('version')}</dd>
+	</dl>
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
+		<dd>{@$archive->getPackageInfo('date')|date}</dd>
+	</dl>
+	
+	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
-			<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
-			<dd>{$archive->getPackageInfo('name')}</dd>
+			<dt>{lang}wcf.acp.package.url{/lang}</dt>
+			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
-		
-		<dl>
-			<dt>{lang}wcf.acp.package.version{/lang}</dt>
-			<dd>{$archive->getPackageInfo('version')}</dd>
-		</dl>
-		
-		<dl>
-			<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
-			<dd>{@$archive->getPackageInfo('date')|date}</dd>
-		</dl>
-		
-		{if $archive->getPackageInfo('packageURL') != ''}
-			<dl>
-				<dt>{lang}wcf.acp.package.url{/lang}</dt>
-				<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
-			</dl>
-		{/if}
-		
-		<dl>
-			<dt>{lang}wcf.acp.package.author{/lang}</dt>
-			<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
-		</dl>
-		
-		{event name='propertyFields'}
-	</fieldset>
-</div>
+	{/if}
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.author{/lang}</dt>
+		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
+	</dl>
+	
+	{event name='propertyFields'}
+</section>
 
 {if !$validationPassed}
-	<div class="tabularBox tabularBoxTitle marginTop">
+	<div class="section tabularBox tabularBoxTitle">
 		<header>
 			<h2>{lang}wcf.acp.package.validation{/lang}</h2>
 		</header>
@@ -101,9 +99,9 @@
 {/if}
 
 <div class="formSubmit">
-	<input type="button" id="backButton" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
+	<input type="button" id="backButton" value="{lang}wcf.global.button.back{/lang}" accesskey="c">
 	{if $validationPassed}
-		<input type="button" class="buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
+		<input type="button" class="default buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" accesskey="s">
 	{/if}
 </div>
 

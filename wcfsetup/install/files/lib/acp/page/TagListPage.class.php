@@ -1,6 +1,8 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\tag\TagList;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -8,42 +10,42 @@ use wcf\util\StringUtil;
  * Shows a list of tags.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	TagList		$objectList
  */
 class TagListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.tag.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.tag.canManageTag');
+	public $neededPermissions = ['admin.content.tag.canManageTag'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_TAGGING');
+	public $neededModules = ['MODULE_TAGGING'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'name';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('tagID', 'languageID', 'name', 'usageCount');
+	public $validSortFields = ['tagID', 'languageID', 'name', 'usageCount'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\tag\TagList';
+	public $objectListClassName = TagList::class;
 	
 	/**
 	 * search-query
@@ -52,18 +54,19 @@ class TagListPage extends SortablePage {
 	public $search = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.tag')),
 			'search' => $this->search
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +75,7 @@ class TagListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -85,7 +88,7 @@ class TagListPage extends SortablePage {
 		$this->objectList->sqlJoins .= " LEFT JOIN wcf".WCF_N."_tag synonym ON tag.synonymFor = synonym.tagID";
 		
 		if ($this->search !== '') {
-			$this->objectList->getConditionBuilder()->add('tag.name LIKE ?', array($this->search.'%'));
+			$this->objectList->getConditionBuilder()->add('tag.name LIKE ?', [$this->search.'%']);
 		}
 	}
 }

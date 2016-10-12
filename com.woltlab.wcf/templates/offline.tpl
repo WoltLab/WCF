@@ -1,13 +1,3 @@
-{include file='documentHeader'}
-
-<head>
-	<title>{PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
 {include file='header' skipBreadcrumbs=true}
 
 <div class="warning">
@@ -16,6 +6,3 @@
 </div>
 
 {include file='footer'}
-
-</body>
-</html>

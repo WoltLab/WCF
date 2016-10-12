@@ -1,30 +1,31 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\group\assignment\UserGroupAssignmentList;
 use wcf\page\MultipleLinkPage;
 
 /**
  * Lists the available automatic user group assignments.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	UserGroupAssignmentList		$objectList
  */
 class UserGroupAssignmentListPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group.assignment';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canManageGroupAssignment');
+	public $neededPermissions = ['admin.user.canManageGroupAssignment'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\group\assignment\UserGroupAssignmentList';
+	public $objectListClassName = UserGroupAssignmentList::class;
 }

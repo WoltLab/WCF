@@ -1,24 +1,23 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\user\option\UserOption;
 
 /**
  * Caches user options and categories
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class UserOptionCacheBuilder extends OptionCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$optionClassName
+	 * @inheritDoc
 	 */
-	protected $optionClassName = 'wcf\data\user\option\UserOption';
+	protected $optionClassName = UserOption::class;
 	
 	/**
-	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$tableName
+	 * @inheritDoc
 	 */
 	protected $tableName = 'user_option';
 }

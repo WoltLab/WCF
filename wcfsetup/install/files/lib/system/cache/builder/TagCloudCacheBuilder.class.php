@@ -10,27 +10,25 @@ use wcf\system\WCF;
  * Caches the tag cloud.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of tags
-	 * @var	array<\wcf\data\tag\TagCloudTag>
+	 * @var	TagCloudTag[]
 	 */
-	protected $tags = array();
+	protected $tags = [];
 	
 	/**
 	 * language ids
 	 * @var	integer
 	 */
-	protected $languageIDs = array();
+	protected $languageIDs = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @inheritDoc
 	 */
 	protected $maxLifetime = 3600;
 	
@@ -38,10 +36,10 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	 * object type ids
 	 * @var	integer
 	 */
-	protected $objectTypeIDs = array();
+	protected $objectTypeIDs = [];
 	
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$this->languageIDs = $this->parseLanguageIDs($parameters);
@@ -61,14 +59,14 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Parses a list of language ids. If one given language id evaluates to '0' all ids will be discarded.
 	 * 
-	 * @param	array<integer>		$parameters
-	 * @return	array<integer>
+	 * @param	integer[]		$parameters
+	 * @return	integer[]
 	 */
 	protected function parseLanguageIDs(array $parameters) {
 		// handle special '0' value
 		if (in_array(0, $parameters)) {
 			// discard all language ids
-			$parameters = array();
+			$parameters = [];
 		}
 		
 		return $parameters;
@@ -78,14 +76,13 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	 * Reads associated tags.
 	 */
 	protected function getTags() {
-		$this->tags = array();
+		$this->tags = [];
 		
 		if (!empty($this->objectTypeIDs)) {
 			// get tag ids
-			$tagIDs = array();
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('object.objectTypeID IN (?)', array($this->objectTypeIDs));
-			$conditionBuilder->add('object.languageID IN (?)', array($this->languageIDs));
+			$conditionBuilder->add('object.objectTypeID IN (?)', [$this->objectTypeIDs]);
+			$conditionBuilder->add('object.languageID IN (?)', [$this->languageIDs]);
 			$sql = "SELECT		COUNT(*) AS counter, object.tagID
 				FROM		wcf".WCF_N."_tag_to_object object
 				".$conditionBuilder."
@@ -93,9 +90,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 				ORDER BY	counter DESC";
 			$statement = WCF::getDB()->prepareStatement($sql, 500);
 			$statement->execute($conditionBuilder->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$tagIDs[$row['tagID']] = $row['counter'];
-			}
+			$tagIDs = $statement->fetchMap('tagID', 'counter');
 			
 			// get tags
 			if (!empty($tagIDs)) {
@@ -110,7 +105,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 				}
 				
 				// sort by counter
-				uasort($this->tags, array('self', 'compareTags'));
+				uasort($this->tags, ['self', 'compareTags']);
 			}
 		}
 	}
@@ -118,8 +113,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Compares the weight between two tags.
 	 * 
-	 * @param	\wcf\data\tag\TagCloudTag	$tagA
-	 * @param	\wcf\data\tag\TagCloudTag	$tagB
+	 * @param	TagCloudTag	$tagA
+	 * @param	TagCloudTag	$tagB
 	 * @return	integer
 	 */
 	protected static function compareTags($tagA, $tagB) {

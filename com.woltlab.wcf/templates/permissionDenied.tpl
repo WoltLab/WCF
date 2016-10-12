@@ -1,16 +1,11 @@
-{include file="documentHeader"}
-
-<head>
-	<title>{lang}wcf.global.error.permissionDenied.title{/lang} - {lang}{PAGE_TITLE}{/lang}</title>
-	
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
+{capture assign='pageTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
+{capture assign='contentTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
 
 {include file='header' __disableAds=true}
 
-<p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
+<div class="section">
+	<p>{lang}wcf.page.error.permissionDenied{/lang}</p>
+</div>
 
 {event name='content'}
 
@@ -22,7 +17,4 @@
 	-->
 {/if}
 
-{include file='footer'}
-
-</body>
-</html>
+{include file='footer' __disableAds=true}

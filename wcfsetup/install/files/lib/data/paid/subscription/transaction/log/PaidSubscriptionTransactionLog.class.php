@@ -10,32 +10,30 @@ use wcf\system\WCF;
  * Represents a paid subscription transaction log entry.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.paid.subscription.transaction.log
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Paid\Subscription\Transaction\Log
+ * 
+ * @property-read	integer		$logID				unique id of the paid subscription transaction log entry
+ * @property-read	integer|null	$subscriptionUserID		id of the paid subscription-user-association or `null` if no such association exists
+ * @property-read	integer|null	$userID				id of the user who caused the paid subscription transaction log entry or `null` if the user does not exist anymore
+ * @property-read	integer		$subscriptionID			id of the paid subscription
+ * @property-read	integer		$paymentMethodObjectTypeID	id of the `com.woltlab.wcf.payment.method` object type
+ * @property-read	integer		$logTime			timestamp at which the log has been created
+ * @property-read	string		$transactionID			identifier of the paid subscription transaction
+ * @property-read	string		$transactionDetails		serialized defailts of the paid subscription transaction
+ * @property-read	string		$logMessage			log message describing the status of the paid subscription transaction
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'paid_subscription_transaction_log';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
-	 */
-	protected static $databaseTableIndexName = 'logID';
-	
-	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	protected $user = null;
 	
 	/**
 	 * paid subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	protected $subscription = null;
 	
@@ -61,7 +59,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
 	 * Returns the user of this transaction.
 	 * 
-	 * @return	\wcf\data\user\User
+	 * @return	User
 	 */
 	public function getUser() {
 		if ($this->user === null) {
@@ -74,7 +72,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
 	 * Returns the paid subscription of this transaction.
 	 * 
-	 * @return	\wcf\data\paid\subscription\PaidSubscription
+	 * @return	PaidSubscription
 	 */
 	public function getSubscription() {
 		if ($this->subscription === null) {
@@ -85,11 +83,11 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets a transaction log entry by transaction id.
+	 * Returns the transaction log entry by transaction id or `null` if no such entry exists.
 	 * 
 	 * @param	integer		$paymentMethodObjectTypeID
 	 * @param	string		$transactionID
-	 * @return	\wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog
+	 * @return	PaidSubscriptionTransactionLog|null
 	 */
 	public static function getLogByTransactionID($paymentMethodObjectTypeID, $transactionID) {
 		$sql = "SELECT	*
@@ -97,7 +95,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 			WHERE	paymentMethodObjectTypeID = ?
 				AND transactionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($paymentMethodObjectTypeID, $transactionID));
+		$statement->execute([$paymentMethodObjectTypeID, $transactionID]);
 		$row = $statement->fetchArray();
 		if ($row !== false) {
 			return new PaidSubscriptionTransactionLog(null, $row);

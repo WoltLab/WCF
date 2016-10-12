@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes spider-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.spider
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Spider
+ * 
+ * @method	Spider		create()
+ * @method	SpiderEditor[]	getObjects()
+ * @method	SpiderEditor	getSingleObject()
  */
 class SpiderAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\spider\SpiderEditor';
+	protected $className = SpiderEditor::class;
 }

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\like\object\LikeObjectList;
 use wcf\data\like\Like;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -8,25 +9,25 @@ use wcf\system\WCF;
  * Worker implementation for updating like users.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
+ * 
+ * @method	LikeObjectList	getObjectList()
  */
 class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\like\object\LikeObjectList';
+	protected $objectListClassName = LikeObjectList::class;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 100;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -35,7 +36,7 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -55,15 +56,15 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 					AND likeValue = ?
 			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 3);
-		$userData = $userIDs = array();
+		$userData = $userIDs = [];
 		foreach ($this->objectList as $likeObject) {
-			$userData[$likeObject->likeObjectID] = array();
+			$userData[$likeObject->likeObjectID] = [];
 			
-			$statement->execute(array(
+			$statement->execute([
 				$likeObject->objectID,
 				$likeObject->objectTypeID,
 				Like::LIKE
-			));
+			]);
 			while ($row = $statement->fetchArray()) {
 				$userData[$likeObject->likeObjectID][] = $row['userID'];
 				$userIDs[] = $row['userID'];
@@ -76,16 +77,13 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 		
 		// fetch usernames
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
+		$conditions->add("userID IN (?)", [$userIDs]);
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$usernames = array();
-		while ($row = $statement->fetchArray()) {
-			$usernames[$row['userID']] = $row['username'];
-		}
+		$usernames = $statement->fetchMap('userID', 'username');
 		
 		// update like objects
 		$sql = "UPDATE	wcf".WCF_N."_like_object
@@ -96,17 +94,17 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 		WCF::getDB()->beginTransaction();
 		foreach ($userData as $likeObjectID => $data) {
 			foreach ($data as &$value) {
-				$value = array(
+				$value = [
 					'userID' => $value,
 					'username' => $usernames[$value]
-				);
+				];
 			}
 			unset($value);
 			
-			$statement->execute(array(
+			$statement->execute([
 				serialize($data),
 				$likeObjectID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}

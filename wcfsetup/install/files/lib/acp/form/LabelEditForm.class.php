@@ -12,22 +12,20 @@ use wcf\system\WCF;
  * Shows the label edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class LabelEditForm extends LabelAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
 	 * label id
@@ -37,12 +35,12 @@ class LabelEditForm extends LabelAddForm {
 	
 	/**
 	 * label object
-	 * @var	\wcf\data\label\Label
+	 * @var	Label
 	 */
-	public $labelObj = null;
+	public $labelObj;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +53,17 @@ class LabelEditForm extends LabelAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
+	 */
+	protected function validateGroup() {
+		// groupID is immutable because altering it would cause issues with objects that are
+		// assigned to them, but the new group is not allowed at their current position
+		
+		// we're not saving the value anyway, therefore we can simply skip the checks
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -70,11 +78,14 @@ class LabelEditForm extends LabelAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new LabelAction(array($this->labelID), 'update', array('data' => array_merge($this->additionalFields, array(
+		
+		// groupID is immutable because altering it would cause issues with objects that are
+		// assigned to them, but the new group is not allowed at their current position  
+		$this->objectAction = new LabelAction([$this->labelID], 'update', ['data' => array_merge($this->additionalFields, [
 			'label' => $this->label,
-			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
-			'groupID' => $this->groupID
-		))));
+			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
+			'showOrder' => $this->showOrder
+		])]);
 		$this->objectAction->executeAction();
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
@@ -87,14 +98,14 @@ class LabelEditForm extends LabelAddForm {
 		// reset values if non-custom value was choosen
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		$this->groupID = $this->labelObj->groupID;
+		
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -110,20 +121,21 @@ class LabelEditForm extends LabelAddForm {
 			}
 			
 			$this->groupID = $this->labelObj->groupID;
+			$this->showOrder = $this->labelObj->showOrder;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'label' => $this->labelObj,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

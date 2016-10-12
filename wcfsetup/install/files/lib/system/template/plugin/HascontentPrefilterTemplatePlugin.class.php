@@ -19,21 +19,19 @@ use wcf\util\StringUtil;
  * 	{/hascontent}
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\IPrefilterTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
 		
-		$sourceContent = preg_replace_callback("~{$ldq}hascontent( assign='(?P<assign>.*)')?{$rdq}(?P<before>.*){$ldq}content{$rdq}(?P<content>.*){$ldq}\/content{$rdq}(?P<after>.*)({$ldq}hascontentelse{$rdq}(?P<else>.*))?{$ldq}\/hascontent{$rdq}~sU", array('self', 'replaceContentCallback'), $sourceContent);
+		$sourceContent = preg_replace_callback("~{$ldq}hascontent( assign='(?P<assign>.*)')?{$rdq}(?P<before>.*){$ldq}content{$rdq}(?P<content>.*){$ldq}\/content{$rdq}(?P<after>.*)({$ldq}hascontentelse{$rdq}(?P<else>.*))?{$ldq}\/hascontent{$rdq}~sU", ['self', 'replaceContentCallback'], $sourceContent);
 		
 		return $sourceContent;
 	}
@@ -41,7 +39,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
 	 * Reorders content to provide a logical order. In fact the content of
 	 * '{content}' is moved outside the if-condition in order to capture
-	 * the content during runtime, safely determining wether content is empty
+	 * the content during runtime, safely determining whether content is empty
 	 * or not.
 	 * 
 	 * @param	array		$matches
@@ -51,7 +49,7 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 		$beforeContent = $matches['before'];
 		$content = $matches['content'];
 		$afterContent = $matches['after'];
-		$elseContent = (isset($matches['else'])) ? $matches['else'] : '';
+		$elseContent = isset($matches['else']) ? $matches['else'] : '';
 		$assignContent = (isset($matches['assign']) && !empty($matches['assign'])) ? $matches['assign'] : '';
 		$variable = 'hascontent_' . StringUtil::getRandomID();
 		

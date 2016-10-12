@@ -1,20 +1,19 @@
 <?php
 namespace wcf\page;
+use wcf\data\DatabaseObjectList;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\ClassUtil;
 
 /**
  * Provides default implementations for a multiple link page.
  * Handles the page number parameter automatically.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
  */
 abstract class MultipleLinkPage extends AbstractPage {
 	/**
@@ -55,7 +54,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * DatabaseObjectList object
-	 * @var	\wcf\data\DatabaseObjectList
+	 * @var	DatabaseObjectList
 	 */
 	public $objectList = null;
 	
@@ -78,22 +77,22 @@ abstract class MultipleLinkPage extends AbstractPage {
 	public $sortOrder = '';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 0;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOffset
+	 * @inheritDoc
 	 */
 	public $sqlOffset = '';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -103,7 +102,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -139,8 +138,8 @@ abstract class MultipleLinkPage extends AbstractPage {
 			throw new SystemException('DatabaseObjectList class name not specified.');
 		}
 		
-		if (!ClassUtil::isInstanceOf($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
-			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
+		if (!is_subclass_of($this->objectListClassName, DatabaseObjectList::class)) {
+			throw new ParentClassException($this->objectListClassName, DatabaseObjectList::class);
 		}
 		
 		$this->objectList = new $this->objectListClassName();
@@ -213,13 +212,13 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		// assign page parameters
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'pageNo' => $this->pageNo,
 			'pages' => $this->pages,
 			'items' => $this->items,
@@ -227,6 +226,6 @@ abstract class MultipleLinkPage extends AbstractPage {
 			'startIndex' => $this->startIndex,
 			'endIndex' => $this->endIndex,
 			'objects' => $this->objectList
-		));
+		]);
 	}
 }

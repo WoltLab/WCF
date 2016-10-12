@@ -1,45 +1,46 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\style\StyleList;
 use wcf\page\MultipleLinkPage;
 
 /**
  * Shows the style list page.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	StyleList	$objectList
  */
 class StyleListPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
+	public $neededPermissions = ['admin.style.canManageStyle'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\style\StyleList';
+	public $objectListClassName = StyleList::class;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortField
+	 * @inheritDoc
 	 */
 	public $sortField = 'style.isDefault DESC, style.styleName';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
+	 * @inheritDoc
 	 */
 	public $sortOrder = 'ASC';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	public function initObjectList() {
 		parent::initObjectList();

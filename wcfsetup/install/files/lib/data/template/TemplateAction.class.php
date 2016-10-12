@@ -7,42 +7,45 @@ use wcf\system\language\LanguageFactory;
  * Executes template-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.template
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Template
+ * 
+ * @method	TemplateEditor[]	getObjects()
+ * @method	TemplateEditor		getSingleObject()
  */
 class TemplateAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\template\TemplateEditor';
+	protected $className = TemplateEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.template.canManageTemplate');
+	protected $permissionsCreate = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.template.canManageTemplate');
+	protected $permissionsDelete = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.template.canManageTemplate');
+	protected $permissionsUpdate = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	Template
 	 */
 	public function create() {
+		/** @var Template $template */
 		$template = parent::create();
 		
 		if (isset($this->parameters['source'])) {
@@ -54,7 +57,7 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$count = parent::delete();
@@ -65,12 +68,12 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
 		
-		foreach ($this->objects as $template) {
+		foreach ($this->getObjects() as $template) {
 			// rename file
 			$templateName = (isset($this->parameters['data']['templateName']) ? $this->parameters['data']['templateName'] : $template->templateName);
 			$templateGroupID = (isset($this->parameters['data']['templateGroupID']) ? $this->parameters['data']['templateGroupID'] : $template->templateGroupID);

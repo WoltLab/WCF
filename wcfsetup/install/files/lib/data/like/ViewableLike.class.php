@@ -3,22 +3,24 @@ namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Provides methods for viewable likes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.like
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Like
+ * 
+ * @method	Like	getDecoratedObject()
+ * @mixin	Like
  */
 class ViewableLike extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	public static $baseClass = 'wcf\data\like\Like';
+	public static $baseClass = Like::class;
 	
 	/**
 	 * event text
@@ -40,7 +42,7 @@ class ViewableLike extends DatabaseObjectDecorator {
 	
 	/**
 	 * user profile
-	 * @var	\wcf\data\user\UserProfile
+	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
 	
@@ -63,7 +65,8 @@ class ViewableLike extends DatabaseObjectDecorator {
 	/**
 	 * Sets user profile.
 	 * 
-	 * @param	\wcf\data\user\UserProfile	$userProfile
+	 * @param	UserProfile	$userProfile
+	 * @deprecated	3.0
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;
@@ -72,9 +75,13 @@ class ViewableLike extends DatabaseObjectDecorator {
 	/**
 	 * Returns user profile.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
+		if ($this->userProfile === null) {
+			$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+		}
+		
 		return $this->userProfile;
 	}
 	

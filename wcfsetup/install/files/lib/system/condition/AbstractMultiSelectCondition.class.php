@@ -8,38 +8,35 @@ use wcf\util\ArrayUtil;
  * Abstract implementation of a condition with multi select options.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
 abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	/**
-	 * @see	\wcf\system\condition\AbstractSelectCondition::$fieldValue
+	 * selected values
+	 * @var	array
 	 */
-	protected $fieldValue = array();
+	protected $fieldValue = [];
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		if (!empty($this->fieldValue)) {
-			return array(
-				$this->fieldName => $this->fieldValue
-			);
+			return [$this->fieldName => $this->fieldValue];
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
 		$options = $this->getOptions();
 		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple="multiple" size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options)).'">';
+		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options)).'">';
 		foreach ($options as $key => $value) {
 			if (is_array($value)) {
 				$fieldElement .= $this->getOptGroupCode($key, $value);
@@ -54,28 +51,28 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSelectCondition::getOptionCode()
+	 * @inheritDoc
 	 */
 	protected function getOptionCode($value, $label) {
-		return '<option value="'.$value.'"'.(in_array($value, $this->fieldValue) ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
+		return '<option value="'.$value.'"'.(in_array($value, $this->fieldValue) ? ' selected' : '').'>'.WCF::getLanguage()->get($label).'</option>';
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST[$this->fieldName]) && is_array($_POST[$this->fieldName])) $this->fieldValue = ArrayUtil::toIntegerArray($_POST[$this->fieldName]);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->fieldValue = array();
+		$this->fieldValue = [];
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$options = $this->getOptions();

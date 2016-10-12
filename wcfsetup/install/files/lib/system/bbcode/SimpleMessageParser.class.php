@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
@@ -9,11 +10,9 @@ use wcf\util\StringUtil;
  * Parses urls and smilies in simple messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class SimpleMessageParser extends SingletonFactory {
 	/**
@@ -24,21 +23,21 @@ class SimpleMessageParser extends SingletonFactory {
 	
 	/**
 	 * list of smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
-	protected $smilies = array();
+	protected $smilies = [];
 	
 	/**
 	 * cached URLs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $cachedURLs = array();
+	protected $cachedURLs = [];
 	
 	/**
 	 * cached e-mails
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $cachedEmails = array();
+	protected $cachedEmails = [];
 	
 	/**
 	 * currently parsed message
@@ -47,7 +46,7 @@ class SimpleMessageParser extends SingletonFactory {
 	public $message = '';
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
@@ -59,9 +58,10 @@ class SimpleMessageParser extends SingletonFactory {
 			foreach ($smilies as $categoryID => $categorySmilies) {
 				if ($categories[$categoryID ?: null]->isDisabled) continue;
 				
+				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
 					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = '<img src="'.$smiley->getURL().'" alt="'.StringUtil::encodeHTML($smiley->smileyCode).'" />';
+						$this->smilies[$smileyCode] = $smiley->getHtml();
 					}
 				}
 			}
@@ -79,7 +79,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 */
 	public function parse($message, $parseURLs = true, $parseSmilies = true) {
 		$this->message = $message;
-		$this->cachedURLs = $this->cachedEmails = array();
+		$this->cachedURLs = $this->cachedEmails = [];
 		
 		// call event
 		EventHandler::getInstance()->fireAction($this, 'beforeParsing');
@@ -92,8 +92,8 @@ class SimpleMessageParser extends SingletonFactory {
 		// encode html
 		$this->message = StringUtil::encodeHTML($this->message);
 		
-		// converts newlines to <br />'s
-		$this->message = nl2br($this->message);
+		// converts newlines to <br>'s
+		$this->message = nl2br($this->message, false);
 		
 		// parse urls
 		if ($parseURLs) {
@@ -106,8 +106,8 @@ class SimpleMessageParser extends SingletonFactory {
 		}
 		
 		// replace bad html tags (script etc.)
-		$badSearch = array('/(javascript):/i', '/(about):/i', '/(vbscript):/i');
-		$badReplace = array('$1<b></b>:', '$1<b></b>:', '$1<b></b>:');
+		$badSearch = ['/(javascript):/i', '/(about):/i', '/(vbscript):/i'];
+		$badReplace = ['$1<b></b>:', '$1<b></b>:', '$1<b></b>:'];
 		$this->message = preg_replace($badSearch, $badReplace, $this->message);
 		
 		// call event
@@ -152,11 +152,11 @@ class SimpleMessageParser extends SingletonFactory {
 			~ix';
 		
 		// parse urls
-		$text = preg_replace_callback($urlPattern, array($this, 'cacheURLsCallback'), $text);
+		$text = preg_replace_callback($urlPattern, [$this, 'cacheURLsCallback'], $text);
 		
 		// parse emails
 		if (mb_strpos($text, '@') !== false) {
-			$text = preg_replace_callback($emailPattern, array($this, 'cacheEmailsCallback'), $text);
+			$text = preg_replace_callback($emailPattern, [$this, 'cacheEmailsCallback'], $text);
 		}
 		
 		return $text;
@@ -222,7 +222,7 @@ class SimpleMessageParser extends SingletonFactory {
 	public function parseSmilies($text) {
 		foreach ($this->smilies as $code => $html) {
 			//$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote(StringUtil::encodeHTML($code), '~').'(?![^<]*>)~', $html, $text);
-			$text = preg_replace('~(?<=^|\s)'.preg_quote(StringUtil::encodeHTML($code), '~').'(?=$|\s|<br />)~', $html, $text);
+			$text = preg_replace('~(?<=^|\s)'.preg_quote(StringUtil::encodeHTML($code), '~').'(?=$|\s|<br />|<br>)~', $html, $text);
 		}
 		
 		return $text;

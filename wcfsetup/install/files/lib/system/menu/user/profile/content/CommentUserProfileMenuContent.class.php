@@ -8,11 +8,9 @@ use wcf\system\WCF;
  * Handles user profile comment content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.menu.user.profile.content
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Menu\User\Profile\Content
  */
 class CommentUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent {
 	/**
@@ -28,7 +26,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
 	public $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
+	 * @inheritDoc
 	 */
 	public function getContent($userID) {
 		if ($this->commentManager === null) {
@@ -40,20 +38,20 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
 		$commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->objectTypeID, $userID);
 		
 		// assign variables
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'commentCanAdd' => $this->commentManager->canAdd($userID),
 			'commentList' => $commentList,
 			'commentObjectTypeID' => $this->objectTypeID,
 			'userID' => $userID,
 			'lastCommentTime' => $commentList->getMinCommentTime(),
-			'likeData' => (MODULE_LIKE ? $commentList->getLikeData() : array())
-		));
+			'likeData' => MODULE_LIKE ? $commentList->getLikeData() : []
+		]);
 		
 		return WCF::getTPL()->fetch('userProfileCommentList');
 	}
 	
 	/**
-	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
+	 * @inheritDoc
 	 */
 	public function isVisible($userID) {
 		return true;

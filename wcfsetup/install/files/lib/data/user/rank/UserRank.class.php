@@ -8,23 +8,20 @@ use wcf\util\StringUtil;
  * Represents a user rank.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.rank
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Rank
+ *
+ * @property-read	integer		$rankID			unique id of the user rank
+ * @property-read	integer		$groupID		id of the user group to which the user rank belongs
+ * @property-read	integer		$requiredPoints		minimum number of user activity points required for a user to get the user rank
+ * @property-read	string		$rankTitle		title of the user rank or name of the language item which contains the rank
+ * @property-read	string		$cssClassName		css class name used when displaying the user rank
+ * @property-read	string		$rankImage		(WCF relative) path to the image displayed next to the rank or empty if no rank image exists
+ * @property-read	integer		$repeatImage		number of times the rank image is displayed
+ * @property-read	integer		$requiredGender		numeric representation of the user's genered required for the user rank (see `UserProfile::GENDER_*` constants) or 0 if no specific gender is required
  */
 class UserRank extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'user_rank';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'rankID';
-	
 	/**
 	 * Returns the image of this user rank.
 	 * 
@@ -32,7 +29,7 @@ class UserRank extends DatabaseObject {
 	 */
 	public function getImage() {
 		if ($this->rankImage) {
-			$image = '<img src="'.(!preg_match('~^(/|https?://)~i', $this->rankImage) ? WCF::getPath() : '').StringUtil::encodeHTML($this->rankImage).'" alt="" />';
+			$image = '<img src="'.(!preg_match('~^(/|https?://)~i', $this->rankImage) ? WCF::getPath() : '').StringUtil::encodeHTML($this->rankImage).'" alt="">';
 			if ($this->repeatImage > 1) $image = str_repeat($image, $this->repeatImage);
 			return $image;
 		}

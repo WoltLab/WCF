@@ -1,36 +1,34 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\paid\\subscription\\PaidSubscriptionAction', '.jsPaidSubscriptionRow');
 		new WCF.Action.Toggle('wcf\\data\\paid\\subscription\\PaidSubscriptionAction', '.jsPaidSubscriptionRow');
 	});
-	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.paidSubscription.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='PaidSubscriptionList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.list{/lang}</h1>
+	</div>
 	
-	<nav>
+	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
+			<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
 			
-			{event name='contentNavigationButtonsTop'}
+			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller='PaidSubscriptionList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.paidSubscription.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -38,7 +36,7 @@
 					<th class="columnTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}</a></th>
 					<th class="columnDigits columnCost{if $sortField == 'cost'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=cost&sortOrder={if $sortField == 'cost' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.paidSubscription.cost{/lang}</a></th>
 					<th class="columnDigits columnSubscriptionLength{if $sortField == 'subscriptionLength'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=subscriptionLength&sortOrder={if $sortField == 'subscriptionLength' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.paidSubscription.subscriptionLength{/lang}</a></th>
-					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.paidSubscription.showOrder{/lang}</a></th>
+					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -48,10 +46,10 @@
 				{foreach from=$objects item=subscription}
 					<tr class="jsPaidSubscriptionRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-check{if $subscription->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$subscription->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$subscription->subscriptionID}"></span>
-							<a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscription->subscriptionID}" data-confirm-message="{lang}wcf.acp.paidSubscription.delete.confirmMessage{/lang}"></span>
-							<a href="{link controller='PaidSubscriptionUserAdd' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.user.add{/lang}" class="jsTooltip"><span class="icon icon16 icon-plus"></span></a>
+							<span class="icon icon16 fa-{if !$subscription->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$subscription->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$subscription->subscriptionID}"></span>
+							<a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscription->subscriptionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.paidSubscription.delete.confirmMessage{/lang}"></span>
+							<a href="{link controller='PaidSubscriptionUserAdd' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.user.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
 							
 							{event name='itemButtons'}
 						</td>
@@ -68,17 +66,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
-		<nav>
+		<nav class="contentFooterNavigation">
 			<ul>
-				<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
-			
-				{event name='contentNavigationButtonsBottom'}
+				<li><a href="{link controller='PaidSubscriptionAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.paidSubscription.add{/lang}</span></a></li>
+				
+				{event name='contentFooterNavigation'}
 			</ul>
 		</nav>
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

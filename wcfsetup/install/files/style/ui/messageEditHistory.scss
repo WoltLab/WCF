@@ -1,0 +1,32 @@
+/* edit history */
+.editHistoryDiff {
+	> .sideBySide:first-child {
+		margin-bottom: 20px;
+		text-align: center;
+	}
+	
+	.sideBySide {
+		display: flex;
+		
+		> div {
+			flex: 0 0 50%;
+			
+			&:first-child {
+				padding-right: 10px;
+			}
+			
+			&:last-child {
+				padding-left: 10px;
+			}
+		}
+	}
+}
+
+@include screen-sm-down {
+	.editHistoryVersionList {
+		.columnUser,
+		.columnEditReason {
+			display: none;
+		}
+	}
+}

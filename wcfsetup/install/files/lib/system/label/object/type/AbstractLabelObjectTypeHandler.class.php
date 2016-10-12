@@ -6,16 +6,14 @@ use wcf\system\SingletonFactory;
  * Abstract implementation of a label object type handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.label.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Label\Object\Type
  */
 abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implements ILabelObjectTypeHandler {
 	/**
 	 * label object type container
-	 * @var	\wcf\system\label\object\type\LabelObjectTypeContainer
+	 * @var	LabelObjectTypeContainer
 	 */
 	public $container = null;
 	
@@ -26,21 +24,21 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
 	public $objectTypeID = 0;
 	
 	/**
-	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::setObjectTypeID()
+	 * @inheritDoc
 	 */
 	public function setObjectTypeID($objectTypeID) {
 		$this->objectTypeID = $objectTypeID;
 	}
 	
 	/**
-	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::getObjectTypeID()
+	 * @inheritDoc
 	 */
 	public function getObjectTypeID() {
 		return $this->objectTypeID;
 	}
 	
 	/**
-	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::getContainer()
+	 * @inheritDoc
 	 */
 	public function getContainer() {
 		return $this->container;

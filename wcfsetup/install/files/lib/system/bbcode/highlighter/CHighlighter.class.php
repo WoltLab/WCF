@@ -5,29 +5,27 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of c / c++ source code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class CHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array('(', ')', '{', '}', '[', ']', ';', '.', ',');
+	protected $separators = ['(', ')', '{', '}', '[', ']', ';', '.', ','];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
-	protected $operators = array('=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
+	protected $operators = ['=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
 		'&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%', '<<', '>>', '>>>', '+=', '-=', '*=',
-		'/=', '&=', '|=', '^=', '%=', '<<=', '>>=', '>>>=');
+		'/=', '&=', '|=', '^=', '%=', '<<=', '>>=', '>>>='];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'and',
 		'and_eq',
 		'asm',
@@ -71,12 +69,12 @@ class CHighlighter extends Highlighter {
 		'while',
 		'xor',
 		'xor_eq'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'auto',
 		'bool',
 		'char',
@@ -107,17 +105,17 @@ class CHighlighter extends Highlighter {
 		'void',
 		'volatile',
 		'wchar_t'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'#include',
 		'#define',
 		'#if',
 		'#else',
 		'#ifdef',
 		'#endif'
-	);
+	];
 }

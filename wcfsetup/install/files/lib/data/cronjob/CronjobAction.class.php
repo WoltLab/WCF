@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\cronjob\ICronjob;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -13,50 +14,52 @@ use wcf\util\DateUtil;
  * Executes cronjob-related actions.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.cronjob
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Cronjob
+ * 
+ * @method	Cronjob			create()
+ * @method	CronjobEditor[]		getObjects()
+ * @method	CronjobEditor		getSingleObject()
  */
 class CronjobAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\cronjob\CronjobEditor';
+	protected $className = CronjobEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.system.canManageCronjob');
+	protected $permissionsCreate = ['admin.management.canManageCronjob'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.system.canManageCronjob');
+	protected $permissionsDelete = ['admin.management.canManageCronjob'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.system.canManageCronjob');
+	protected $permissionsUpdate = ['admin.management.canManageCronjob'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('executeCronjobs');
+	protected $allowGuestAccess = ['executeCronjobs'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update', 'toggle', 'execute');
+	protected $requireACP = ['create', 'delete', 'update', 'toggle', 'execute'];
 	
 	/**
-	 * @see	\wcf\data\IDeleteAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			if (!$cronjob->isDeletable()) {
 				throw new PermissionDeniedException();
 			}
@@ -64,12 +67,12 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseAction::validateUpdate()
+	 * @inheritDoc
 	 */
 	public function validateUpdate() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			if (!$cronjob->isEditable()) {
 				throw new PermissionDeniedException();
 			}
@@ -77,12 +80,12 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			if (!$cronjob->canBeDisabled()) {
 				throw new PermissionDeniedException();
 			}
@@ -90,13 +93,13 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $cronjob) {
-			$cronjob->update(array(
+		foreach ($this->getObjects() as $cronjob) {
+			$cronjob->update([
 				'isDisabled' => $cronjob->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
@@ -111,40 +114,49 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 * Executes cronjobs.
 	 */
 	public function execute() {
-		$return = array();
+		$return = [];
 		
-		foreach ($this->objects as $key => $cronjob) {
+		foreach ($this->getObjects() as $key => $cronjob) {
 			// mark them as pending
-			$cronjob->update(array('state' => Cronjob::PENDING));
+			$cronjob->update(['state' => Cronjob::PENDING]);
 		}
 		
-		foreach ($this->objects as $cronjob) {
+		foreach ($this->getObjects() as $cronjob) {
 			// it now time for executing
-			$cronjob->update(array('state' => Cronjob::EXECUTING));
+			$cronjob->update(['state' => Cronjob::EXECUTING]);
 			$className = $cronjob->className;
+			
+			/** @var ICronjob $executable */
 			$executable = new $className();
 			
 			// execute cronjob
 			$exception = null;
-			try {
-				$executable->execute(new Cronjob($cronjob->cronjobID));
-			}
-			catch (\Exception $exception) { }
 			
-			CronjobLogEditor::create(array(
+			// check if all required options are set for cronjob to be executed
+			// note: a general log is created to avoid confusion why a cronjob
+			// apparently is not executed while that is indeed the correct internal
+			// behavior
+			if ($cronjob->validateOptions()) {
+				try {
+					$executable->execute(new Cronjob($cronjob->cronjobID));
+				}
+				catch (\Exception $exception) { }
+			}
+			
+			CronjobLogEditor::create([
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => ($exception ? 0 : 1),
-				'error' => ($exception ? $exception->getMessage() : '')
-			));
+				'success' => $exception ? 0 : 1,
+				'error' => $exception ? $exception->getMessage() : ''
+			]);
 			
 			// calculate next exec-time
 			$nextExec = $cronjob->getNextExec();
-			$data = array(
+			$data = [
 				'lastExec' => TIME_NOW,
 				'nextExec' => $nextExec, 
-				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
-			);
+				'afterNextExec' => $cronjob->getNextExec($nextExec + 120)
+			];
 			
 			// cronjob failed
 			if ($exception) {
@@ -173,7 +185,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			// build the return value
 			if ($exception === null && !$cronjob->isDisabled) {
 				$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
-				$return[$cronjob->cronjobID] = array(
+				$return[$cronjob->cronjobID] = [
 					'time' => $nextExec,
 					'formatted' => str_replace(
 						'%time%', 
@@ -184,11 +196,11 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 							WCF::getLanguage()->get('wcf.date.dateTimeFormat')
 						)
 					)
-				);
+				];
 			}
 			
 			// we are finished
-			$cronjob->update(array('state' => Cronjob::READY));
+			$cronjob->update(['state' => Cronjob::READY]);
 			
 			// throw exception again to show error message
 			if ($exception) {
@@ -211,7 +223,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 */
 	public function executeCronjobs() {
 		// switch session owner to 'system' during execution of cronjobs
-		WCF::getSession()->changeUser(new User(null, array('userID' => 0, 'username' => 'System')), true);
+		WCF::getSession()->changeUser(new User(null, ['userID' => 0, 'username' => 'System']), true);
 		WCF::getSession()->disableUpdate();
 		
 		CronjobScheduler::getInstance()->executeCronjobs();

@@ -6,11 +6,9 @@ use wcf\data\condition\Condition;
  * Every implementation for content conditions needs to implements this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
 interface IContentCondition extends ICondition {
 	/**
@@ -19,7 +17,7 @@ interface IContentCondition extends ICondition {
 	 * All necessary data to check the condition needs to be globally available
 	 * like the active user object via WCF::getUser().
 	 * 
-	 * @param	\wcf\data\condition\Condition	$condition
+	 * @param	Condition	$condition
 	 * @return	boolean
 	 */
 	public function showContent(Condition $condition);

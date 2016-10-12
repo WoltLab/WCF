@@ -9,20 +9,18 @@ use wcf\util\HeaderUtil;
  * Does the user logout in the admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Action
  */
 class LogoutAction extends AbstractSecureAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();

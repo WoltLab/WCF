@@ -11,15 +11,13 @@ use wcf\util\StringUtil;
  * Shows the BBCode media provider add form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class BBCodeMediaProviderAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode.mediaProvider.add';
 	
@@ -30,12 +28,12 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public $html = '';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'bbcodeMediaProviderAdd';
 	
@@ -52,7 +50,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public $regex = '';
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -63,7 +61,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -82,45 +80,43 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		$lines = explode("\n", StringUtil::unifyNewlines($this->regex));
 		
 		foreach ($lines as $line) {
-			if (!Regex::compile($line)->isValid()) throw new UserInputException('regex', 'notValid');
+			if (!Regex::compile($line)->isValid()) throw new UserInputException('regex', 'invalid');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save media provider
-		$this->objectAction = new BBCodeMediaProviderAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new BBCodeMediaProviderAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values
 		$this->title = $this->regex = $this->html = '';
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		));
+		]);
 	}
 }

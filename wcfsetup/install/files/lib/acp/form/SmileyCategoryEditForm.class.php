@@ -5,30 +5,28 @@ namespace wcf\acp\form;
  * Shows the category edit form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class SmileyCategoryEditForm extends AbstractCategoryEditForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.category.list';
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::$objectTypeName
+	 * @inheritDoc
 	 */
 	public $objectTypeName = 'com.woltlab.wcf.bbcode.smiley';
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractCategoryAddForm::$pageTitle
+	 * @inheritDoc
 	 */
 	public $pageTitle = 'wcf.acp.smiley.category.edit';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_SMILEY');
+	public $neededModules = ['MODULE_SMILEY'];
 }

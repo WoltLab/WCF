@@ -6,35 +6,37 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes language category-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.language.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Language\Category
+ * 
+ * @method	LanguageCategory		create()
+ * @method	LanguageCategoryEditor[]	getObjects()
+ * @method	LanguageCategoryEditor		getSingleObject()
  */
 class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\language\category\LanguageCategoryEditor';
+	protected $className = LanguageCategoryEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.language.canManageLanguage');
+	protected $permissionsCreate = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.language.canManageLanguage');
+	protected $permissionsDelete = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.language.canManageLanguage');
+	protected $permissionsUpdate = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 }

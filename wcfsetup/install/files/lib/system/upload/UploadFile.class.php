@@ -5,11 +5,9 @@ namespace wcf\system\upload;
  * Represents a file upload.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.upload
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Upload
  */
 class UploadFile {
 	/**
@@ -162,19 +160,17 @@ class UploadFile {
 	}
 	
 	/**
-	 * Gets image data.
+	 * Returns the image data of the file or `null` if the file is no image.
 	 * 
-	 * @return	array
+	 * @return	array|null
 	 */
 	public function getImageData() {
-		if (strpos($this->getMimeType(), 'image/') == 0) {
-			if (($imageData = @getImageSize($this->getLocation())) !== false) {
-				return array(
-					'width' => $imageData[0],
-					'height' => $imageData[1],
-					'mimeType' => $imageData['mime'],
-				);
-			}
+		if (($imageData = @getimagesize($this->getLocation())) !== false) {
+			return [
+				'width' => $imageData[0],
+				'height' => $imageData[1],
+				'mimeType' => $imageData['mime']
+			];
 		}
 		
 		return null;

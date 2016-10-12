@@ -6,21 +6,20 @@ use wcf\system\exception\SystemException;
  * Provides methods for JSON.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class JSON {
 	/**
 	 * Returns the JSON representation of a value.
 	 * 
 	 * @param	mixed		$data
+	 * @param	integer		$options
 	 * @return	string
 	 */
-	public static function encode($data) {
-		return json_encode($data);
+	public static function encode($data, $options = 0) {
+		return json_encode($data, $options);
 	}
 	
 	/**
@@ -29,6 +28,7 @@ final class JSON {
 	 * @param	string		$json
 	 * @param	boolean		$asArray
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	public static function decode($json, $asArray = true) {
 		// decodes JSON
@@ -50,5 +50,10 @@ final class JSON {
 		return json_last_error();
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of JSON objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -6,11 +6,9 @@ use wcf\system\WCF;
  * Represents a list of ACP search results.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search.acp
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search\Acp
  */
 class ACPSearchResultList implements \Countable, \Iterator {
 	/**
@@ -27,9 +25,9 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	
 	/**
 	 * result list
-	 * @var	array<\wcf\system\search\acp\ACPSearchResult>
+	 * @var	ACPSearchResult[]
 	 */
-	protected $results = array();
+	protected $results = [];
 	
 	/**
 	 * Creates a new ACPSearchResultList.
@@ -43,7 +41,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	/**
 	 * Adds a result to the collection.
 	 * 
-	 * @param	\wcf\system\search\acp\ACPSearchResult	$result
+	 * @param	ACPSearchResult		$result
 	 */
 	public function addResult(ACPSearchResult $result) {
 		$this->results[] = $result;
@@ -58,7 +56,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	public function reduceResults($count) {
 		// more results than available should be whiped, just set it to 0
 		if ($count >= count($this->results)) {
-			$this->results = array();
+			$this->results = [];
 		}
 		else {
 			while ($count > 0) {
@@ -89,7 +87,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	 * Sorts results by title.
 	 */
 	public function sort() {
-		usort($this->results, function($a, $b) {
+		usort($this->results, function(ACPSearchResult $a, ACPSearchResult $b) {
 			return strcmp($a->getTitle(), $b->getTitle());
 		});
 	}
@@ -104,49 +102,49 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\wcf\system\search\acp\ACPSearchResultList::getTitle()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->title;
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->results);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->results[$this->index];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->results[$this->index]);

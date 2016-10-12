@@ -8,17 +8,14 @@
 
 <form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
 	<div class="formSubmit">
-		{@SID_INPUT_TAG}
-		<input type="hidden" name="action" value="WCFSetup" />
+		<input type="hidden" name="action" value="WCFSetup">
 	</div>
 </form>
 
 <script data-relocate="true">
-	//<![CDATA[
 	window.onload = function() {
 		document.forms[0].submit();
 	}
-	//]]>
 </script>
 
 {include file='footer'}

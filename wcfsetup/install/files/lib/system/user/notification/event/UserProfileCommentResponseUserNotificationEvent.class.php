@@ -1,54 +1,54 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\system\comment\CommentDataHandler;
-use wcf\system\request\LinkHandler;
+use wcf\system\cache\runtime\CommentRuntimeCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\email\Email;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
- * User notification event for profile commment responses.
+ * User notification event for profile comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
 class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
+	 * @inheritDoc
 	 */
 	protected $stackable = true;
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::prepare()
+	 * @inheritDoc
 	 */
 	protected function prepare() {
-		CommentDataHandler::getInstance()->cacheCommentID($this->userNotificationObject->commentID);
-		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['objectID']);
-		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['userID']);
+		CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
+		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['objectID']);
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		$count = count($this->getAuthors());
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.title.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.title.stacked', [
 				'count' => $count,
 				'timesTriggered' => $this->notification->timesTriggered
-			));
+			]);
 		}
 		
 		return $this->getLanguage()->get('wcf.user.notification.commentResponse.title');
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
-		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
-		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
+		$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		
 		$authors = $this->getAuthors();
 		if (count($authors) > 1) {
@@ -57,69 +57,52 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 			}
 			$count = count($authors);
 			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', [
 				'authors' => array_values($authors),
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $owner,
 				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			));
+			]);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message', array(
+		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message', [
 			'author' => $this->author,
 			'owner' => $owner
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
-		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
+		$comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
+		$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		
-		$authors = $this->getAuthors();
-		if (count($authors) > 1) {
-			if (isset($authors[0])) {
-				unset($authors[0]);
-			}
-			$count = count($authors);
-			
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail.stacked', array(
-				'author' => $this->author,
-				'authors' => array_values($authors),
-				'count' => $count,
-				'notificationType' => $notificationType,
-				'others' => $count - 1,
-				'owner' => $owner,
-				'response' => $this->userNotificationObject,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
-			));
-		}
+		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail', array(
-			'response' => $this->userNotificationObject,
-			'author' => $this->author,
-			'owner' => $owner,
-			'notificationType' => $notificationType
-		));
+		return [
+			'template' => 'email_notification_userProfileCommentResponse',
+			'application' => 'wcf',
+			'in-reply-to' => [$messageID],
+			'references' => [$messageID],
+			'variables' => [
+				'owner' => $owner
+			]
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
-		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
-		$user = CommentDataHandler::getInstance()->getUser($comment->objectID);
-		
-		return LinkHandler::getInstance()->getLink('User', array('object' => $user), '#wall');
+		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall';
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 * @inheritDoc
 	 */
 	public function getEventHash() {
-		return sha1($this->eventID . '-' . $this->userNotificationObject->commentID);
+		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
 	}
 }

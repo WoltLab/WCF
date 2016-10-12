@@ -2,24 +2,36 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpSearchProvider.xsd">
 	<import>
 		<acpsearchprovider name="com.woltlab.wcf.menuItem">
-			<classname><![CDATA[wcf\system\search\acp\MenuItemACPSearchResultProvider]]></classname>
+			<classname>wcf\system\search\acp\MenuItemACPSearchResultProvider</classname>
 			<showorder>1</showorder>
 		</acpsearchprovider>
 		<acpsearchprovider name="com.woltlab.wcf.option">
-			<classname><![CDATA[wcf\system\search\acp\OptionACPSearchResultProvider]]></classname>
+			<classname>wcf\system\search\acp\OptionACPSearchResultProvider</classname>
 			<showorder>2</showorder>
 		</acpsearchprovider>
 		<acpsearchprovider name="com.woltlab.wcf.user">
-			<classname><![CDATA[wcf\system\search\acp\UserACPSearchResultProvider]]></classname>
+			<classname>wcf\system\search\acp\UserACPSearchResultProvider</classname>
 			<showorder>3</showorder>
 		</acpsearchprovider>
 		<acpsearchprovider name="com.woltlab.wcf.userGroupOption">
-			<classname><![CDATA[wcf\system\search\acp\UserGroupOptionACPSearchResultProvider]]></classname>
+			<classname>wcf\system\search\acp\UserGroupOptionACPSearchResultProvider</classname>
 			<showorder>4</showorder>
 		</acpsearchprovider>
 		<acpsearchprovider name="com.woltlab.wcf.package">
-			<classname><![CDATA[wcf\system\search\acp\PackageACPSearchResultProvider]]></classname>
+			<classname>wcf\system\search\acp\PackageACPSearchResultProvider</classname>
 			<showorder>5</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.page">
+			<classname>wcf\system\search\acp\PageACPSearchResultProvider</classname>
+			<showorder>6</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.box">
+			<classname>wcf\system\search\acp\BoxACPSearchResultProvider</classname>
+			<showorder>7</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.article">
+			<classname>wcf\system\search\acp\ArticleACPSearchResultProvider</classname>
+			<showorder>8</showorder>
 		</acpsearchprovider>
 	</import>
 </data>

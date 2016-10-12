@@ -7,55 +7,53 @@ namespace wcf\system\bbcode\highlighter;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class BashHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array(';', '=');
+	protected $separators = [';', '='];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
-	protected $quotes = array('"', "'", '`');
+	protected $quotes = ['"', "'", '`'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
-	protected $singleLineComment = array('#');
+	protected $singleLineComment = ['#'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @inheritDoc
 	 */
-	protected $commentStart = array();
+	protected $commentStart = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @inheritDoc
 	 */
-	protected $commentEnd = array();
+	protected $commentEnd = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
-	protected $operators = array('||', '&&', '&', '|', '<<=', '>>=', '<<', '+=', '-=', '*=', '/=', '%=',
+	protected $operators = ['||', '&&', '&', '|', '<<=', '>>=', '<<', '+=', '-=', '*=', '/=', '%=',
 					'-gt', '-lt', '-n', '-a', '-o',
-					'+', '-', '*', '/', '%', '<', '?', ':', '==', '!=', '=', '!', '>', '2>', '>>');
+					'+', '-', '*', '/', '%', '<', '?', ':', '==', '!=', '=', '!', '>', '2>', '>>'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'true',
 		'false'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'if',
 		'then',
 		'else',
@@ -68,12 +66,12 @@ class BashHighlighter extends Highlighter {
 		'case',
 		'in',
 		'esac'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @inheritDoc
 	 */
-	protected $keywords3 = array(
+	protected $keywords3 = [
 		'echo',
 		'exit',
 		'unset',
@@ -83,12 +81,12 @@ class BashHighlighter extends Highlighter {
 		'sed',
 		'grep',
 		'awk'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @inheritDoc
 	 */
-	protected $keywords4 = array(
+	protected $keywords4 = [
 		'$?'
-	);
+	];
 }

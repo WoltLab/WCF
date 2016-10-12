@@ -12,11 +12,9 @@ use wcf\util\StringUtil;
  * Option type implementation for radio buttons.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class RadioButtonOptionType extends AbstractOptionType implements ISearchableConditionUserOption {
 	/**
@@ -26,14 +24,14 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	public $templateName = 'radioButtonOptionType';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		$availableOptions = $option->parseMultipleEnableOptions();
-		$options = array(
-			'disableOptions' => array(),
-			'enableOptions' => array()
-		);
+		$options = [
+			'disableOptions' => [],
+			'enableOptions' => []
+		];
 		
 		foreach ($availableOptions as $key => $enableOptions) {
 			$optionData = Option::parseEnableOptions($enableOptions);
@@ -42,18 +40,18 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 			$options['enableOptions'][$key] = $optionData['enableOptions'];
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch($this->templateName);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!empty($newValue)) {
@@ -65,7 +63,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$this->templateName = 'radioButtonSearchableOptionType';
@@ -75,31 +73,31 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", array(StringUtil::trim($value)));
+		$conditions->add("option_value.userOption".$option->optionID." = ?", [StringUtil::trim($value)]);
 		return true;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
-		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(StringUtil::trim($value)));
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', [StringUtil::trim($value)]);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		return mb_strtolower($user->getUserOption($option->optionName)) == mb_strtolower(StringUtil::trim($value));
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
@@ -108,8 +106,8 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	/**
 	 * Returns the select options for the given option.
 	 * 
-	 * @param	\wcf\dat\option\Option		$option
-	 * @return	array<string>
+	 * @param	Option		$option
+	 * @return	string[]
 	 */
 	protected function getSelectOptions(Option $option) {
 		return $option->parseSelectOptions();

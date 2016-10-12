@@ -8,11 +8,9 @@ use Zend\Console\Getopt as ArgvParser;
  * Executes cronjobs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cli.command
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cli\Command
  */
 class CronjobCLICommand implements IArgumentedCLICommand {
 	/**
@@ -25,11 +23,11 @@ class CronjobCLICommand implements IArgumentedCLICommand {
 	 * Initializes the argument parser.
 	 */
 	public function __construct() {
-		$this->argv = new ArgvParser(array());
+		$this->argv = new ArgvParser([]);
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		$this->argv->setArguments($parameters);
@@ -44,14 +42,14 @@ class CronjobCLICommand implements IArgumentedCLICommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 * @inheritDoc
 	 */
 	public function getUsage() {
 		return str_replace($_SERVER['argv'][0].' [ options ]', 'cronjob [ options ] execute', $this->argv->getUsageMessage());
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return true;

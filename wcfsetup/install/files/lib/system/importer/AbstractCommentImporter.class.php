@@ -1,22 +1,21 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\comment\Comment;
 use wcf\data\comment\CommentEditor;
 
 /**
  * Imports comments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 class AbstractCommentImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\comment\Comment';
+	protected $className = Comment::class;
 	
 	/**
 	 * object type id for comments
@@ -31,12 +30,12 @@ class AbstractCommentImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
-		$comment = CommentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$comment = CommentEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $comment->commentID);
 		

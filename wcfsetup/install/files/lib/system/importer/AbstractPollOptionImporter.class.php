@@ -1,22 +1,21 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\poll\option\PollOption;
 use wcf\data\poll\option\PollOptionEditor;
 
 /**
  * Imports poll votes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 class AbstractPollOptionImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\option\PollOption';
+	protected $className = PollOption::class;
 	
 	/**
 	 * option object type name
@@ -31,9 +30,9 @@ class AbstractPollOptionImporter extends AbstractImporter {
 	protected $pollObjectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		$data['pollID'] = ImportHandler::getInstance()->getNewID($this->pollObjectTypeName, $data['pollID']);
 		if (!$data['pollID']) return 0;
 		

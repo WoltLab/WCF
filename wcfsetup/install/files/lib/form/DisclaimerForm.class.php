@@ -10,11 +10,9 @@ use wcf\util\HeaderUtil;
  * Shows the disclaimer.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 class DisclaimerForm extends AbstractForm {
 	/**
@@ -24,7 +22,7 @@ class DisclaimerForm extends AbstractForm {
 	public $accept = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -36,7 +34,7 @@ class DisclaimerForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -45,7 +43,7 @@ class DisclaimerForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -54,7 +52,7 @@ class DisclaimerForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();

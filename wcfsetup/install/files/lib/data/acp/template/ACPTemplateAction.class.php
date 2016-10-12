@@ -6,35 +6,37 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes ACP templates-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.acp.template
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Acp\Template
+ * 
+ * @method	ACPTemplate		create()
+ * @method	ACPTemplateEditor[]	getObjects()
+ * @method	ACPTemplateEditor	getSingleObject()
  */
 class ACPTemplateAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\acp\template\ACPTemplateEditor';
+	protected $className = ACPTemplateEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.template.canAddTemplate');
+	protected $permissionsCreate = ['admin.template.canAddTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.template.canDeleteTemplate');
+	protected $permissionsDelete = ['admin.template.canDeleteTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.template.canUpdateTemplate');
+	protected $permissionsUpdate = ['admin.template.canUpdateTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 }

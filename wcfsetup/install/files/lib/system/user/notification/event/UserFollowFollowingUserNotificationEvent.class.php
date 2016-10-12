@@ -1,85 +1,76 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 
 /**
  * Notification event for followers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	UserFollowUserNotificationObject	getUserNotificationObject()
  */
 class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
+	 * @inheritDoc
 	 */
 	protected $stackable = true;
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		$count = count($this->getAuthors());
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.title.stacked', array('count' => $count));
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.title.stacked', ['count' => $count]);
 		}
 		
 		return $this->getLanguage()->get('wcf.user.notification.follow.title');
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
+	 * @inheritDoc
 	 */
 	public function getMessage() {
 		$authors = array_values($this->getAuthors());
 		$count = count($authors);
 		
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message.stacked', [
 				'author' => $this->author,
 				'authors' => $authors,
 				'count' => $count,
 				'others' => $count - 1
-			));
+			]);
 		}
 		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message', array('author' => $this->author));
+		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message', ['author' => $this->author]);
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @inheritDoc
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$authors = array_values($this->getAuthors());
-		$count = count($authors);
-		
-		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail.stacked', array(
-				'author' => $this->author,
-				'authors' => $authors,
-				'count' => $count,
-				'others' => $count - 1,
-				'notificationType' => $notificationType
-			));
-		}
-		
-		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail', array('author' => $this->author));
+		return [
+			'template' => 'email_notification_userFollowFollowing',
+			'application' => 'wcf'
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
+	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', array('object' => $this->author));
+		return LinkHandler::getInstance()->getLink('User', ['object' => $this->author]);
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 * @inheritDoc
 	 */
 	public function getEventHash() {
-		return sha1($this->eventID . '-' . $this->userNotificationObject->followUserID);
+		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->followUserID);
 	}
 }

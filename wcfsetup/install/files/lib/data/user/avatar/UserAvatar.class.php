@@ -8,40 +8,45 @@ use wcf\system\WCF;
  * Represents a user's avatar.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.avatar
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Avatar
+ * 
+ * @property-read	integer		$avatarID		unique id of the user avatar
+ * @property-read	string		$avatarName		name of the original avatar file
+ * @property-read	string		$avatarExtension	extension of the avatar file
+ * @property-read	integer		$width			width of the user avatar image
+ * @property-read	integer		$height			height of the user avatar image
+ * @property-read	integer|null	$userID			id of the user to which the user avatar belongs or null
+ * @property-read	string		$fileHash		SHA1 hash of the original avatar file
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar {
 	/**
 	 * needed avatar thumbnail sizes
-	 * @var	array<integer>
+	 * @var	integer[]
+	 * @deprecated 3.0
 	 */
-	public static $avatarThumbnailSizes = array(32, 96, 128);
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'user_avatar';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'avatarID';
+	public static $avatarThumbnailSizes = [32, 96, 128, 256];
 	
 	/**
 	 * maximum thumbnail size
 	 * @var	integer
+	 * @deprecated 3.0
 	 */
 	public static $maxThumbnailSize = 128;
 	
 	/**
 	 * minimum height and width of an uploaded avatar
 	 * @var	integer
+	 * @deprecated 3.0
 	 */
 	const MIN_AVATAR_SIZE = 96;
+	
+	/**
+	 * minimum height and width of an uploaded avatar
+	 * @var	integer
+	 */
+	const AVATAR_SIZE = 128;
 	
 	/**
 	 * Returns the physical location of this avatar.
@@ -60,115 +65,48 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * @return	string
 	 */
 	public function getFilename($size = null) {
-		switch ($size) {
-			case 16:
-			case 24:
-				$size = 32;
-			break;
-			
-			case 48:
-			case 64:
-				if ($this->width > 96 || $this->height > 96) {
-					$size = 96;
-				}
-				else {
-					$size = null;
-				}
-			break;
-		}
-		
-		return substr($this->fileHash, 0, 2) . '/' . ($this->avatarID) . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
+		return substr($this->fileHash, 0, 2) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
-		if ($size !== null && $size !== 'resized') {
-			if ($size >= $this->width || $size >= $this->height) $size = null;
-		}
-		
-		return WCF::getPath() . 'images/avatars/' . $this->getFilename($size);
+		return WCF::getPath() . 'images/avatars/' . $this->getFilename();
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
-		$width = $this->width;
-		$height = $this->height;
-		if ($size !== null) {
-			if ($this->width > $size && $this->height > $size) {
-				$width = $height = $size;
-			}
-			else if ($this->width > $size || $this->height > $size) {
-				$widthFactor = $size / $this->width;
-				$heightFactor = $size / $this->height;
-				
-				if ($widthFactor < $heightFactor) {
-					$width = $size;
-					$height = round($this->height * $widthFactor, 0);
-				}
-				else {
-					$width = round($this->width * $heightFactor, 0);
-					$height = $size;
-				}
-			}
-		}
-		
-		$retinaSize = null;
-		switch ($size) {
-			case 16:
-				$retinaSize = 32;
-			break;
-			
-			case 24:
-			case 32:
-			case 48:
-				$retinaSize = 96;
-			break;
-			
-			case 64:
-			case 96:
-				if ($this->width >= 128 && $this->height >= 128) {
-					$retinaSize = 128;
-				}
-			break;
-		}
-		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$width.'px; height: '.$height.'px" alt="" class="userAvatarImage" />';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage">';
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 * @inheritDoc
 	 */
 	public function getCropImageTag($size = null) {
-		$imageTag = $this->getImageTag($size);
-		
-		// append CSS classes and append title
-		$title = StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.avatar.type.custom.crop'));
-		
-		return str_replace('class="userAvatarImage"', 'class="userAvatarImage userAvatarCrop jsTooltip" title="'.$title.'"', $imageTag);
+		return '';
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @inheritDoc
 	 */
 	public function canCrop() {
-		return $this->width != $this->height && $this->width > self::$maxThumbnailSize && $this->height > self::$maxThumbnailSize;
+		return false;
 	}
 }

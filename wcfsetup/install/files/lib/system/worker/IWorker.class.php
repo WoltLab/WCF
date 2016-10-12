@@ -5,11 +5,9 @@ namespace wcf\system\worker;
  * Every worker has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
  */
 interface IWorker {
 	/**
@@ -27,8 +25,8 @@ interface IWorker {
 	public function setLoopCount($loopCount);
 	
 	/**
-	 * Gets current process, integer between 0 and 100. If the progress
-	 * hits 100 the worker will terminate.
+	 * Returns current process of the worker, an integer between 0 and 100.
+	 * If the progress hits 100, the worker will terminate.
 	 * 
 	 * @return	integer
 	 */

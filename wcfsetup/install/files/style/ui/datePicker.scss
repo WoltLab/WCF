@@ -1,0 +1,119 @@
+.inputAddon > .inputDatePicker {
+	cursor: pointer;
+	flex: 0 1 200px;
+	min-width: 200px;
+}
+
+.datePicker {
+	background-color: $wcfDropdownBackground;
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	color: $wcfDropdownText;
+	display: none;
+	position: absolute;
+	width: 240px;
+	z-index: 450;
+	
+	&.active {
+		display: block;
+	}
+	
+	&.datePickerTime {
+		&.datePickerTimeOnly {
+			> header,
+			> ul {
+				display: none;
+			}
+			
+			> footer {
+				border-top-width: 0;
+			}
+		}
+		
+		> footer {
+			display: block;
+		}
+	}
+	
+	> header {
+		align-items: center;
+		display: flex;
+		
+		> a {
+			display: block;
+			flex: 0 0 auto;
+			padding: 10px;
+			
+			&:not(.active) {
+				visibility: hidden;
+			}
+		}
+		
+		> span {
+			display: block;
+			flex: 1 1 auto;
+			padding: 10px 0;
+			text-align: center;
+		}
+	}
+	
+	select.year {
+		margin-left: 5px;
+	}
+	
+	> ul > li {
+		border-top: 1px solid $wcfDropdownBorderInner;
+		display: flex;
+		
+		&.weekdays,
+		&.weekdays + li {
+			border-top-color: $wcfDropdownBorder;
+		}
+		
+		> a,
+		> span {
+			display: block;
+			flex: 1;
+			padding: 5px 0;
+			text-align: center;
+			
+			&:not(:last-child) {
+				border-right: 1px solid $wcfDropdownBorderInner;
+			}
+		}
+		
+		> a {
+			color: $wcfDropdownLink;
+			
+			&:hover {
+				text-decoration: none;
+			}
+			
+			&.active,
+			&:not(.otherMonth):hover {
+				background-color: $wcfDropdownBackgroundActive;
+				color: $wcfDropdownLinkActive;
+			}
+			
+			&.otherMonth {
+				color: $wcfContentDimmedText;
+				cursor: default;
+			}
+		}
+		
+		> span {
+			color: $wcfContentDimmedText;
+			text-transform: uppercase;
+			
+			@include wcfFontSmall;
+		}
+	}
+	
+	> footer {
+		border-top: 1px solid $wcfDropdownBorder;
+		display: none;
+		padding: 10px;
+		position: relative;
+		text-align: center;
+	}
+}

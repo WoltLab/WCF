@@ -1,0 +1,52 @@
+/* #### Labels #### */
+/* label list */
+.labelList {
+	@include inlineList;
+	
+	display: inline-flex;
+	
+	> li {
+		&:not(:first-child) {
+			.label {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+		
+		&:not(:last-child) {
+			margin-right: 1px;
+			
+			.label {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+		
+		.label {
+			top: -1px;
+		}
+	}
+}
+
+/* ACP label list */
+#labelList > li {
+	flex-basis: 30%;
+	margin-bottom: 10px;
+	
+	&.labelCustomClass {
+		display: flex;
+		
+		> input[type='radio'] {
+			flex: 0 0 auto;
+			margin-right: 7px;
+		}
+		
+		> span {
+			flex: 1 1 auto;
+		}
+	}
+}
+
+.labelChooser > .dropdownToggle > span {
+	cursor: pointer;
+}

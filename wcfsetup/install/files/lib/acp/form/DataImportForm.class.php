@@ -14,34 +14,32 @@ use wcf\util\StringUtil;
  * Provides the data import form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class DataImportForm extends AbstractForm {
 	/**
 	 * additional data
 	 * @var	array
 	 */
-	public $additionalData = array();
+	public $additionalData = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.import';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canImportData');
+	public $neededPermissions = ['admin.management.canImportData'];
 	
 	/**
 	 * list of available exporters
 	 * @var	array
 	 */
-	public $exporters = array();
+	public $exporters = [];
 	
 	/**
 	 * exporter name
@@ -57,21 +55,21 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * list of available importers
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $importers = array();
+	public $importers = [];
 	
 	/**
 	 * list of supported data types
 	 * @var	array
 	 */
-	public $supportedData = array();
+	public $supportedData = [];
 	
 	/**
 	 * selected data types
 	 * @var	array
 	 */
-	public $selectedData = array();
+	public $selectedData = [];
 	
 	/**
 	 * database host name
@@ -128,7 +126,7 @@ class DataImportForm extends AbstractForm {
 	public $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -174,7 +172,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -192,7 +190,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::submit()
+	 * @inheritDoc
 	 */
 	public function submit() {
 		if (!isset($_POST['sourceSelection'])) {
@@ -201,7 +199,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -238,7 +236,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -247,7 +245,7 @@ class DataImportForm extends AbstractForm {
 		$queue = $this->exporter->getQueue();
 		
 		// save import data
-		WCF::getSession()->register('importData', array(
+		WCF::getSession()->register('importData', [
 			'exporterName' => $this->exporterName,
 			'dbHost' => $this->dbHost,
 			'dbUser' => $this->dbUser,
@@ -257,13 +255,13 @@ class DataImportForm extends AbstractForm {
 			'fileSystemPath' => $this->fileSystemPath,
 			'userMergeMode' => $this->userMergeMode,
 			'additionalData' => $this->additionalData
-		));
+		]);
 		
 		WCF::getTPL()->assign('queue', $queue);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -272,13 +270,12 @@ class DataImportForm extends AbstractForm {
 		
 		if (empty($_POST)) {
 			if (!$this->exporterName) {
-				$sql = "SELECT	COUNT(*) AS count
+				$sql = "SELECT	COUNT(*)
 					FROM	wcf".WCF_N."_import_mapping";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute();
-				$row = $statement->fetchArray();
 				
-				if ($row['count']) {
+				if ($statement->fetchSingleColumn()) {
 					$this->showMappingNotice = true;
 				}
 			}
@@ -294,12 +291,12 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'exporter' => $this->exporter,
 			'importers' => $this->importers,
 			'exporterName' => $this->exporterName,
@@ -316,6 +313,6 @@ class DataImportForm extends AbstractForm {
 			'showInnoDBWarning' => $this->showInnoDBWarning,
 			'showMappingNotice' => $this->showMappingNotice,
 			'additionalData' => $this->additionalData
-		));
+		]);
 	}
 }

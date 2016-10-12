@@ -13,11 +13,9 @@ use wcf\util\StringUtil;
  * Creates a logical node-based installation tree.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageInstallationNodeBuilder {
 	/**
@@ -28,7 +26,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * active package installation dispatcher
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
@@ -46,9 +44,9 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * list of requirements to be checked before package installation
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
-	public $requirements = array();
+	public $requirements = [];
 	
 	/**
 	 * current sequence number within one node
@@ -58,9 +56,9 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * list of packages about to be installed
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected static $pendingPackages = array();
+	protected static $pendingPackages = [];
 	
 	/**
 	 * Creates a new instance of PackageInstallationNodeBuilder
@@ -123,10 +121,10 @@ class PackageInstallationNodeBuilder {
 			WHERE	processNo = ?
 				AND parentNode = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->processNo,
 			$parentNode
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
@@ -147,7 +145,7 @@ class PackageInstallationNodeBuilder {
 			FROM	wcf".WCF_N."_package_installation_queue
 			WHERE	queueID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($queueID));
+		$statement->execute([$queueID]);
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
@@ -168,7 +166,7 @@ class PackageInstallationNodeBuilder {
 			FROM	wcf".WCF_N."_package_installation_queue
 			WHERE	queueID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($queueID));
+		$statement->execute([$queueID]);
 		$row = $statement->fetchArray();
 		
 		return $row['action'];
@@ -187,16 +185,12 @@ class PackageInstallationNodeBuilder {
 					AND node = ?
 			ORDER BY	sequenceNo ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->processNo,
 			$node
-		));
-		$data = array();
-		while ($row = $statement->fetchArray()) {
-			$data[] = $row;
-		}
+		]);
 		
-		return $data;
+		return $statement->fetchAll(\PDO::FETCH_ASSOC);
 	}
 	
 	/**
@@ -210,10 +204,10 @@ class PackageInstallationNodeBuilder {
 			WHERE	processNo = ?
 				AND node = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->processNo,
 			$node
-		));
+		]);
 	}
 	
 	/**
@@ -225,16 +219,16 @@ class PackageInstallationNodeBuilder {
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_node
 			WHERE		processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->processNo
-		));
+		]);
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_form
 			WHERE		queueID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->queueID
-		));
+		]);
 	}
 	
 	/**
@@ -244,18 +238,18 @@ class PackageInstallationNodeBuilder {
 	 * @return	integer
 	 */
 	public function calculateProgress($node) {
-		$progress = array(
+		$progress = [
 			'done' => 0,
 			'outstanding' => 0
-		);
+		];
 		
 		$sql = "SELECT	done
 			FROM	wcf".WCF_N."_package_installation_node
 			WHERE	processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->processNo
-		));
+		]);
 		while ($row = $statement->fetchArray()) {
 			if ($row['done']) {
 				$progress['done']++;
@@ -292,11 +286,11 @@ class PackageInstallationNodeBuilder {
 			WHERE	parentNode = ?
 				AND processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$newNode,
 			$node,
 			$this->installation->queue->processNo
-		));
+		]);
 		
 		// create a copy of current node (prevents empty nodes)
 		$sql = "SELECT	nodeType, nodeData, done
@@ -305,18 +299,18 @@ class PackageInstallationNodeBuilder {
 				AND processNo = ?
 				AND sequenceNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$node,
 			$this->installation->queue->processNo,
 			$sequenceNo
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData, done)
 			VALUES		(?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			0,
@@ -325,7 +319,7 @@ class PackageInstallationNodeBuilder {
 			$row['nodeType'],
 			$row['nodeData'],
 			$row['done']
-		));
+		]);
 		
 		// move other child-nodes greater than $sequenceNo into new node
 		$sql = "UPDATE	wcf".WCF_N."_package_installation_node
@@ -336,14 +330,14 @@ class PackageInstallationNodeBuilder {
 				AND processNo = ?
 				AND sequenceNo > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$node,
 			$newNode,
 			$sequenceNo,
 			$node,
 			$this->installation->queue->processNo,
 			$sequenceNo
-		));
+		]);
 	}
 	
 	/**
@@ -351,8 +345,8 @@ class PackageInstallationNodeBuilder {
 	 * nodes to provide to be descendants of the new node. If you intend
 	 * to insert more than a single node, you should prefer shiftNodes().
 	 * 
-	 * @param	string			$beforeNode
-	 * @param	\wcf\system\Callback	$callback
+	 * @param	string		$beforeNode
+	 * @param	Callback	$callback
 	 */
 	public function insertNode($beforeNode, Callback $callback) {
 		$newNode = $this->getToken();
@@ -363,11 +357,11 @@ class PackageInstallationNodeBuilder {
 			WHERE	parentNode = ?
 				AND processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$newNode,
 			$beforeNode,
 			$this->installation->queue->processNo
-		));
+		]);
 		
 		// execute callback
 		$callback($beforeNode, $newNode);
@@ -385,11 +379,11 @@ class PackageInstallationNodeBuilder {
 			WHERE	parentNode = ?
 				AND processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$newParentNode,
 			$oldParentNode,
 			$this->installation->queue->processNo
-		));
+		]);
 	}
 	
 	/**
@@ -408,14 +402,14 @@ class PackageInstallationNodeBuilder {
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			$this->sequenceNo,
 			$this->node,
 			$this->parentNode,
 			'package',
-			serialize(array(
+			serialize([
 				'package' => $this->installation->getArchive()->getPackageInfo('name'),
 				'packageName' => $this->installation->getArchive()->getLocalizedPackageInfo('packageName'),
 				'packageDescription' => $this->installation->getArchive()->getLocalizedPackageInfo('packageDescription'),
@@ -428,14 +422,15 @@ class PackageInstallationNodeBuilder {
 				'installDate' => TIME_NOW,
 				'updateDate' => TIME_NOW,
 				'requirements' => $this->requirements
-			))
-		));
+			])
+		]);
 	}
 	
 	/**
 	 * Builds nodes for required packages, whereas each has it own node.
 	 * 
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	protected function buildRequirementNodes() {
 		$queue = $this->installation->queue;
@@ -453,10 +448,10 @@ class PackageInstallationNodeBuilder {
 				}
 				
 				// requirements will be checked once package is about to be installed
-				$this->requirements[$packageName] = array(
-					'minVersion' => (isset($package['minversion'])) ? $package['minversion'] : '',
+				$this->requirements[$packageName] = [
+					'minVersion' => isset($package['minversion']) ? $package['minversion'] : '',
 					'packageID' => $package['packageID']
-				);
+				];
 				
 				continue;
 			}
@@ -498,7 +493,7 @@ class PackageInstallationNodeBuilder {
 				FROM	wcf".WCF_N."_package
 				WHERE	package = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($archive->getPackageInfo('name')));
+			$statement->execute([$archive->getPackageInfo('name')]);
 			$row = $statement->fetchArray();
 			$packageID = ($row === false) ? null : $row['packageID'];
 			
@@ -512,13 +507,11 @@ class PackageInstallationNodeBuilder {
 					// the new delivered required version of the package has a
 					// higher version number, thus update/replace the existing
 					// package installation queue
-					
-					// todo
 				}
 			}
 			
 			// create new queue
-			$queue = PackageInstallationQueueEditor::create(array(
+			$queue = PackageInstallationQueueEditor::create([
 				'parentQueueID' => $queue->queueID,
 				'processNo' => $queue->processNo,
 				'userID' => WCF::getUser()->userID,
@@ -526,8 +519,8 @@ class PackageInstallationNodeBuilder {
 				'packageID' => $packageID,
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'archive' => $fileName,
-				'action' => ($packageID ? 'update' : 'install')
-			));
+				'action' => $packageID ? 'update' : 'install'
+			]);
 			
 			self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');
 			
@@ -562,7 +555,7 @@ class PackageInstallationNodeBuilder {
 		
 		$this->node = $this->getToken();
 		
-		$pluginNodes = array();
+		$pluginNodes = [];
 		
 		$this->emptyNode = true;
 		$instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
@@ -578,12 +571,12 @@ class PackageInstallationNodeBuilder {
 					$this->node = $this->getToken();
 					$this->sequenceNo = 0;
 				}
-				$pluginNodes[] = array(
+				$pluginNodes[] = [
 					'data' => $pip,
 					'node' => $this->node,
 					'parentNode' => $this->parentNode,
 					'sequenceNo' => $this->sequenceNo
-				);
+				];
 				
 				// create a new node for following PIPs, unless it is the last one
 				if ($i < $count) {
@@ -597,12 +590,12 @@ class PackageInstallationNodeBuilder {
 			else {
 				$this->sequenceNo++;
 				
-				$pluginNodes[] = array(
+				$pluginNodes[] = [
 					'data' => $pip,
 					'node' => $this->node,
 					'parentNode' => $this->parentNode,
 					'sequenceNo' => $this->sequenceNo
-				);
+				];
 				
 				$this->emptyNode = false;
 			}
@@ -616,7 +609,7 @@ class PackageInstallationNodeBuilder {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($pluginNodes as $index => $nodeData) {
-				$statement->execute(array(
+				$statement->execute([
 					$this->installation->queue->queueID,
 					$this->installation->queue->processNo,
 					$nodeData['sequenceNo'],
@@ -624,7 +617,7 @@ class PackageInstallationNodeBuilder {
 					$nodeData['parentNode'],
 					'pip',
 					serialize($nodeData['data'])
-				));
+				]);
 			}
 		}
 	}
@@ -635,7 +628,7 @@ class PackageInstallationNodeBuilder {
 	 * not really matter at this point).
 	 */
 	protected function buildOptionalNodes() {
-		$packages = array();
+		$packages = [];
 		
 		$optionalPackages = $this->installation->getArchive()->getOptionals();
 		foreach ($optionalPackages as $package) {
@@ -659,8 +652,8 @@ class PackageInstallationNodeBuilder {
 			
 			// check if all requirements are met
 			$isInstallable = true;
-			foreach ($archive->getOpenRequirements() as $packageName => $package) {
-				if (!isset($package['file'])) {
+			foreach ($archive->getOpenRequirements() as $packageName => $requiredPackage) {
+				if (!isset($requiredPackage['file'])) {
 					// requirement is neither installed nor shipped, check if it is about to be installed
 					if (!isset(self::$pendingPackages[$packageName])) {
 						$isInstallable = false;
@@ -680,14 +673,14 @@ class PackageInstallationNodeBuilder {
 				$isInstallable = false;
 			}
 			
-			$packages[] = array(
+			$packages[] = [
 				'archive' => $fileName,
 				'isInstallable' => $isInstallable,
 				'package' => $archive->getPackageInfo('name'),
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'packageDescription' => $archive->getLocalizedPackageInfo('packageDescription'),
 				'selected' => 0
-			);
+			];
 			
 			self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');
 		}
@@ -701,7 +694,7 @@ class PackageInstallationNodeBuilder {
 						(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 				VALUES		(?, ?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->queue->queueID,
 				$this->installation->queue->processNo,
 				$this->sequenceNo,
@@ -709,7 +702,7 @@ class PackageInstallationNodeBuilder {
 				$this->parentNode,
 				'optionalPackages',
 				serialize($packages)
-			));
+			]);
 		}
 	}
 	
@@ -718,7 +711,7 @@ class PackageInstallationNodeBuilder {
 	 */
 	protected function buildChildQueues() {
 		$queueList = new PackageInstallationQueueList();
-		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
+		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", [$this->installation->queue->queueID]);
 		$queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (SELECT queueID FROM wcf".WCF_N."_package_installation_node)");
 		$queueList->readObjects();
 		
@@ -727,10 +720,10 @@ class PackageInstallationNodeBuilder {
 			
 			// work-around for iterative package updates
 			if ($this->installation->queue->action == 'update' && $queue->package == $this->installation->queue->package) {
-				$installation->setPreviousPackage(array(
+				$installation->setPreviousPackage([
 					'package' => $this->installation->getArchive()->getPackageInfo('name'),
 					'packageVersion' => $this->installation->getArchive()->getPackageInfo('version')
-				));
+				]);
 			}
 			
 			$installation->nodeBuilder->setParentNode($this->node);
@@ -761,10 +754,10 @@ class PackageInstallationNodeBuilder {
 			WHERE	processNo = ?
 				AND node = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$processNo,
 			$node
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		return $row['queueID'];

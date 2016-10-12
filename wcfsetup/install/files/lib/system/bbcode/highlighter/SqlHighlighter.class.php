@@ -8,40 +8,38 @@ use wcf\util\StringUtil;
  * Highlights syntax of sql queries.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class SqlHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
+	 * @inheritDoc
 	 */
 	protected $allowsNewslinesInQuotes = true;
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
-	protected $quotes = array("'", '"');
+	protected $quotes = ["'", '"'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
-	protected $singleLineComment = array('#', '--');
+	protected $singleLineComment = ['#', '--'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array('(', ')', ',', ';');
+	protected $separators = ['(', ')', ',', ';'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
-	protected $operators = array('<>', '~=', '!=', '^=', '=', '<', '<=', '>', '>=', '*', '/', '+', '-', '||', '@', '%', '&', '?', '\$');
+	protected $operators = ['<>', '~=', '!=', '^=', '=', '<', '<=', '>', '>=', '*', '/', '+', '-', '||', '@', '%', '&', '?', '\$'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheComments()
+	 * @inheritDoc
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
@@ -68,7 +66,7 @@ class SqlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
+	 * @inheritDoc
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
@@ -81,9 +79,9 @@ class SqlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		'action',
 		'add',
 		'aggregate',
@@ -316,12 +314,12 @@ class SqlHighlighter extends Highlighter {
 		'year',
 		'year_month',
 		'zerofill'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		'ABS',
 		'ACOS',
 		'ADDDATE',
@@ -430,5 +428,5 @@ class SqlHighlighter extends Highlighter {
 		'WEEK',
 		'WEEKDAY',
 		'YEAR'
-	);
+	];
 }

@@ -6,17 +6,15 @@ use wcf\data\category\CategoryEditor;
  * Every category type has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Category
  */
 interface ICategoryType {
 	/**
 	 * Is called right after the given category is deleted.
 	 * 
-	 * @param	\wcf\data\category\CategoryEditor	$categoryEditor
+	 * @param	CategoryEditor	$categoryEditor
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor);
 	
@@ -55,6 +53,8 @@ interface ICategoryType {
 	 * 		newParentCategoryID => 2
 	 * 	],
 	 * ]
+	 * 
+	 * @param	array		$categoryData
 	 */
 	public function changedParentCategories(array $categoryData);
 	
@@ -74,11 +74,10 @@ interface ICategoryType {
 	
 	/**
 	 * Returns the name of the object type of the definition with the given
-	 * name for categories of this type. If categories of this type are no
-	 * object of the relevant type, null is returned.
+	 * name for categories of this type or `null` if no such object type exists.
 	 * 
 	 * @param	string		$definitionName
-	 * @return	string
+	 * @return	string|null
 	 */
 	public function getObjectTypeName($definitionName);
 	

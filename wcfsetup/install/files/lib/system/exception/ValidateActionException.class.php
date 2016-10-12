@@ -6,11 +6,9 @@ use wcf\system\WCF;
  * Simple exception for AJAX-driven requests.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.exception
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Exception
  */
 class ValidateActionException extends \Exception {
 	/**
@@ -26,9 +24,9 @@ class ValidateActionException extends \Exception {
 	protected $fieldName = '';
 	
 	/**
-	 * @see	\Exception::__construct()
+	 * @inheritDoc
 	 */
-	public function __construct($fieldName, $errorMessage = 'empty', array $variables = array()) {
+	public function __construct($fieldName, $errorMessage = 'empty', array $variables = []) {
 		$this->errorMessage = $errorMessage;
 		if (mb_strpos($this->errorMessage, '.') === false) {
 			$this->errorMessage = WCF::getLanguage()->get('wcf.global.form.error.'.$this->errorMessage);
@@ -38,7 +36,7 @@ class ValidateActionException extends \Exception {
 		}
 		
 		$this->fieldName = $fieldName;
-		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.invalidParameter', array('fieldName' => $this->fieldName));
+		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.invalidParameter', ['fieldName' => $this->fieldName]);
 	}
 	
 	/**
@@ -60,7 +58,7 @@ class ValidateActionException extends \Exception {
 	}
 	
 	/**
-	 * @see	\Exception::__toString()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->message;

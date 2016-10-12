@@ -2,118 +2,141 @@
 
 <script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
-		new WCF.ACP.Language.ItemList({@$count}, {@$pageNo});
+		new WCF.ACP.Language.ItemList();
 	});
-	//]]>
 </script>
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.language.item.list{/lang}</h1>
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.language.item.list{/lang}</h1>
+	</div>
+	
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}{event name='contentHeaderNavigation'}{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='formError'}
 
 <form method="post" action="{link controller='LanguageItemList'}{/link}" id="languageItemSearchForm">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.global.filter{/lang}</legend>
-			
-			<dl>
-				<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
-				<dd>
-					<select name="id" id="languageID">
-						{foreach from=$availableLanguages item=availableLanguage}
-							<option value="{@$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected="selected"{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="languageCategoryID">{lang}wcf.acp.language.category{/lang}</label></dt>
-				<dd>
-					<select name="languageCategoryID" id="languageCategoryID">
-						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-						{foreach from=$availableLanguageCategories item=availableLanguageCategory}
-							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected="selected"{/if}>{$availableLanguageCategory->languageCategory}</option>
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="languageItem">{lang}wcf.global.name{/lang}</label></dt>
-				<dd>
-					<input type="text" id="languageItem" name="languageItem" value="{$languageItem}" class="long" />
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt><label for="languageItemValue">{lang}wcf.acp.language.item.value{/lang}</label></dt>
-				<dd>
-					<input type="text" id="languageItemValue" name="languageItemValue" value="{$languageItemValue}" class="long" />
-				</dd>
-			</dl>
-			
-			<dl>
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="hasCustomValue" value="1" {if $hasCustomValue == 1}checked="checked" {/if}/> {lang}wcf.acp.language.item.customValues{/lang}</label>
+					<select name="languageID" id="languageID">
+						<option value="0">{lang}wcf.user.language{/lang}</option>
+						{foreach from=$availableLanguages item=availableLanguage}
+							<option value="{@$availableLanguage->languageID}"{if $availableLanguage->languageID == $languageID} selected{/if}>{$availableLanguage->languageName} ({$availableLanguage->languageCode})</option>
+						{/foreach}
+					</select>
 				</dd>
 			</dl>
-		</fieldset>
-	</div>
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="languageCategoryID" id="languageCategoryID">
+						<option value="0">{lang}wcf.acp.language.category{/lang}</option>
+						{foreach from=$availableLanguageCategories item=availableLanguageCategory}
+							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected{/if}>{$availableLanguageCategory->languageCategory}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="languageItem" name="languageItem" value="{$languageItem}" placeholder="{lang}wcf.global.name{/lang}" class="long">
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="languageItemValue" name="languageItemValue" value="{$languageItemValue}" placeholder="{lang}wcf.acp.language.item.value{/lang}" class="long">
+					<label><input type="checkbox" name="hasCustomValue" value="1"{if $hasCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.customValues{/lang}</label>
+					<label><input type="checkbox" name="hasDisabledCustomValue" value="1"{if $hasDisabledCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.disabledCustomValues{/lang}</label>
+				</dd>
+			</dl>
+			
+			{event name='filterFields'}
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
+	</section>
 </form>
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			{content}
-				<ul>
-					{event name='contentNavigationButtonsTop'}
-				</ul>
-			{/content}
-		</nav>
-	{/hascontent}
-</div>
+{hascontent}
+	<div class="paginationTop">
+		{content}
+			{assign var='linkParameters' value=''}
+			{if $languageID}{capture append=linkParameters}&languageID={@$languageID}{/capture}{/if}
+			{if $languageCategoryID}{capture append=linkParameters}&languageCategoryID={@$languageCategoryID}{/capture}{/if}
+			{if $languageItem}{capture append=linkParameters}&languageItem={@$languageItem|rawurlencode}{/capture}{/if}
+			{if $languageItemValue}{capture append=linkParameters}&languageItemValue={@$languageItemValue|rawurlencode}{/capture}{/if}
+			{if $hasCustomValue}{capture append=linkParameters}&hasCustomValue=1{/capture}{/if}
+			
+			{pages print=true assign=pagesLinks controller="LanguageItemList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
-	<div class="container marginTop">
-		<ol class="containerList">
-			{foreach from=$objects item=item}
-				<li>
-					<div>
-						<div class="details">
-							<div class="containerHeadline">
-								<h3><a class="jsLanguageItem" data-language-item-id="{@$item->languageItemID}">{$item->languageItem}</a>{if $item->languageCustomItemValue !== null} <span class="icon icon16 icon-bookmark jsTooltip" title="{lang}wcf.acp.language.item.hasCustomValue{/lang}"></span>{/if}</h3>
-							</div>
-							
-							<p>{if $item->languageUseCustomValue}{$item->languageCustomItemValue|truncate:255}{else}{$item->languageItemValue|truncate:255}{/if}</p>
-						</div>
-					</div>
-				</li>
-			{/foreach}
-		</ol>
+	<div class="section tabularBox">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="columnTitle columnLanguageItem{if $sortField == 'languageItem'} active {@$sortOrder}{/if}"><a href="{link controller='LanguageItemList'}pageNo={@$pageNo}&sortField=languageItem&sortOrder={if $sortField == 'languageItem' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.name{/lang}</a></th>
+					<th class="columnText columnLanguageItemValue">{lang}wcf.acp.language.item.value{/lang}</th>
+					<th class="columnText columnLanguageCustomItemValue">{lang}wcf.acp.language.item.customValue{/lang}</th>
+					
+					{event name='columnHeads'}
+				</tr>
+			</thead>
+			
+			<tbody>
+				{foreach from=$objects item=item}
+					<tr>
+						<td class="columnTitle columnLanguageItem"><a class="jsLanguageItem" data-language-item-id="{@$item->languageItemID}">{$item->languageItem}</a></td>
+						<td class="columnText columnLanguageItemValue">{$item->languageItemValue|truncate:255}</td>
+						<td class="columnText columnLanguageCustomItemValue">{if !$item->languageUseCustomValue}<s>{/if}{$item->languageCustomItemValue|truncate:255}{if !$item->languageUseCustomValue}</s>{/if}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
+			</tbody>
+		</table>
 	</div>
 	
-	<div class="contentNavigation">
+	<footer class="contentFooter">
 		{hascontent}
-			<nav>
-				{content}
-					<ul>
-						{event name='contentNavigationButtonsBottom'}
-					</ul>
-				{/content}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
+		
+		{hascontent}
+			<nav class="contentFooterNavigation">
+				<ul>
+					{content}
+						{event name='contentFooterNavigation'}
+					{/content}
+				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}

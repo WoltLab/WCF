@@ -1,0 +1,10 @@
+{
+    "config": {
+        "vendor-dir": "./"
+    },
+    "require": {
+        "ezyang/htmlpurifier": "4.7.*",
+        "erusev/parsedown": "1.6.*",
+        "pelago/emogrifier": "1.0.*"
+    }
+}

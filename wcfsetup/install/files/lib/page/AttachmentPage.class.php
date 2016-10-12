@@ -11,16 +11,14 @@ use wcf\util\FileReader;
 /**
  * Shows an attachment.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @author	Joshua Ruesweg, Marcel Werk
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
  */
 class AttachmentPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\IPage::$useTemplate
+	 * @inheritDoc
 	 */
 	public $useTemplate = false;
 	
@@ -32,7 +30,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * attachment object
-	 * @var	\wcf\data\attachment\Attachment
+	 * @var	Attachment
 	 */
 	public $attachment = null;
 	
@@ -50,18 +48,24 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * file reader object
-	 * @var	\wcf\util\FileReader
+	 * @var	FileReader
 	 */
 	public $fileReader = null;
 	
 	/**
 	 * list of mime types which belong to files that are displayed inline
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
+	public static $inlineMimeTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg'];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * etag for this attachment
+	 * @var	string
+	 */ 
+	public $eTag = null;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +76,7 @@ class AttachmentPage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 		
-		$parameters = array('object' => $this->attachment);
+		$parameters = ['object' => $this->attachment];
 		if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) {
 			$this->tiny = intval($_REQUEST['tiny']);
 			$parameters['tiny'] = $this->tiny;
@@ -86,7 +90,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions() {
 		parent::checkPermissions();
@@ -110,7 +114,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -120,49 +124,57 @@ class AttachmentPage extends AbstractPage {
 			$mimeType = $this->attachment->tinyThumbnailType;
 			$filesize = $this->attachment->tinyThumbnailSize;
 			$location = $this->attachment->getTinyThumbnailLocation();
+			$this->eTag = 'TINY_'.$this->attachmentID;
 		}
 		else if ($this->thumbnail) {
 			$mimeType = $this->attachment->thumbnailType;
 			$filesize = $this->attachment->thumbnailSize;
 			$location = $this->attachment->getThumbnailLocation();
+			$this->eTag = 'THUMB_'.$this->attachmentID;
 		}
 		else {
 			$mimeType = $this->attachment->fileType;
 			$filesize = $this->attachment->filesize;
 			$location = $this->attachment->getLocation();
+			$this->eTag = $this->attachmentID;
 		}
 		
 		// init file reader
-		$this->fileReader = new FileReader($location, array(
+		$this->fileReader = new FileReader($location, [
 			'filename' => $this->attachment->filename,
 			'mimeType' => $mimeType,
 			'filesize' => $filesize,
-			'showInline' => (in_array($mimeType, self::$inlineMimeTypes)),
-			'enableRangeSupport' => (!$this->tiny && !$this->thumbnail),
+			'showInline' => in_array($mimeType, self::$inlineMimeTypes),
+			'enableRangeSupport' => !$this->tiny && !$this->thumbnail,
 			'lastModificationTime' => $this->attachment->uploadTime,
 			'expirationDate' => TIME_NOW + 31536000,
 			'maxAge' => 31536000
-		));
+		]);
 		
-		// add etag for non-thumbnail
-		if (!$this->thumbnail && !$this->tiny) {
-			$this->fileReader->addHeader('ETag', '"'.$this->attachmentID.'"');
+		if ($this->eTag !== null) {
+			$this->fileReader->addHeader('ETag', '"'.$this->eTag.'"');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		parent::show();
 		
+		// etag caching
+		if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"'.$this->eTag.'"') {
+			@header('HTTP/1.1 304 Not Modified');
+			exit;
+		}
+		
 		if (!$this->tiny && !$this->thumbnail) {
 			// update download count
 			$editor = new AttachmentEditor($this->attachment);
-			$editor->update(array(
+			$editor->update([
 				'downloads' => $this->attachment->downloads + 1,
 				'lastDownloadTime' => TIME_NOW
-			));
+			]);
 		}
 		
 		// send file to client

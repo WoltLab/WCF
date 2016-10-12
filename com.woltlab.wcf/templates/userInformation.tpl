@@ -1,5 +1,7 @@
 {include file='userInformationHeadline'}
 
-{include file='userInformationButtons'}
+{if !$disableUserInformationButtons|isset || $disableUserInformationButtons != true}{include file='userInformationButtons'}{/if}
 
-{include file='userInformationStatistics'}
+<dl class="plain inlineDataList small">
+	{include file='userInformationStatistics'}
+</dl>

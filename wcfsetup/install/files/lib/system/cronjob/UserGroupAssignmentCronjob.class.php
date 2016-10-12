@@ -11,22 +11,20 @@ use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
  * @author	Matthias Schmidt
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cronjob
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cronjob
  */
 class UserGroupAssignmentCronjob extends AbstractCronjob {
 	/**
-	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
 		$assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
-		$usersToGroup = array();
+		$usersToGroup = [];
 		foreach ($assignments as $assignment) {
 			if (!isset($usersToGroup[$assignment->groupID])) {
-				$usersToGroup[$assignment->groupID] = array();
+				$usersToGroup[$assignment->groupID] = [];
 			}
 			
 			$usersToGroup[$assignment->groupID] = array_merge($usersToGroup[$assignment->groupID], UserGroupAssignmentHandler::getInstance()->getUsers($assignment));
@@ -34,11 +32,11 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 		
 		foreach ($usersToGroup as $groupID => $users) {
 			if (!empty($users)) {
-				$userAction = new UserAction(array_unique($users), 'addToGroups', array(
+				$userAction = new UserAction(array_unique($users), 'addToGroups', [
 					'addDefaultGroups' => false,
 					'deleteOldGroups' => false,
-					'groups' => array($groupID)
-				));
+					'groups' => [$groupID]
+				]);
 				$userAction->executeAction();
 			}
 		}

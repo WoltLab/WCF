@@ -10,11 +10,13 @@ use wcf\system\WCF;
  * Executes watched object-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.object.watch
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Object\Watch
+ * 
+ * @method	UserObjectWatch			create()
+ * @method	UserObjectWatchEditor[]		getObjects()
+ * @method	UserObjectWatchEditor		getSingleObject()
  */
 class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	/**
@@ -25,7 +27,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * user object watch object
-	 * @var	\wcf\data\user\object\watch\UserObjectWatch
+	 * @var	UserObjectWatch
 	 */
 	protected $userObjectWatch = null;
 	
@@ -55,15 +57,16 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function manageSubscription() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'objectType' => $this->objectType,
 			'userObjectWatch' => $this->userObjectWatch
-		));
+		]);
 		
-		return array(
+		return [
 			'objectID' => $this->parameters['objectID'],
+			'objectType' => $this->parameters['objectType'],
 			'template' => WCF::getTPL()->fetch('manageSubscription')
-		);
+		];
 	}
 	
 	/**
@@ -84,23 +87,23 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 		if ($this->parameters['subscribe']) {
 			// newly subscribed
 			if ($this->userObjectWatch === null) {
-				UserObjectWatchEditor::create(array(
-					'notification' => ($this->parameters['enableNotification'] ? 1 : 0),
+				UserObjectWatchEditor::create([
+					'notification' => $this->parameters['enableNotification'] ? 1 : 0,
 					'objectID' => $this->parameters['objectID'],
 					'objectTypeID' => $this->objectType->objectTypeID,
 					'userID' => WCF::getUser()->userID
-				));
+				]);
 			}
 			else if ($this->userObjectWatch->notification != $this->parameters['enableNotification']) {
 				// update notification type
 				$editor = new UserObjectWatchEditor($this->userObjectWatch);
-				$editor->update(array(
-					'notification' => ($this->parameters['enableNotification'] ? 1 : 0)
-				));
+				$editor->update([
+					'notification' => $this->parameters['enableNotification'] ? 1 : 0
+				]);
 			}
 			
 			// reset user storage
-			$this->objectType->getProcessor()->resetUserStorage(array(WCF::getUser()->userID));
+			$this->objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
 		}
 		else if ($this->userObjectWatch !== null) {
 			// unsubscribe
@@ -108,13 +111,14 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 			$editor->delete();
 			
 			// reset user storage
-			$this->objectType->getProcessor()->resetUserStorage(array(WCF::getUser()->userID));
+			$this->objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
 		}
 		
-		return array(
+		return [
 			'objectID' => $this->parameters['objectID'],
+			'objectType' => $this->parameters['objectType'],
 			'subscribe' => $this->parameters['subscribe']
-		);
+		];
 	}
 	
 	/**
@@ -123,15 +127,15 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	public function subscribe() {
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $this->parameters['data']['objectType']);
 		
-		UserObjectWatchEditor::create(array(
+		UserObjectWatchEditor::create([
 			'userID' => WCF::getUser()->userID,
 			'objectID' => intval($this->parameters['data']['objectID']),
 			'objectTypeID' => $objectType->objectTypeID,
-			'notification' => (!empty($this->parameters['enableNotification']) ? 1 : 0)
-		));
+			'notification' => !empty($this->parameters['enableNotification']) ? 1 : 0
+		]);
 		
 		// reset user storage
-		$objectType->getProcessor()->resetUserStorage(array(WCF::getUser()->userID));
+		$objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
 	}
 	
 	/**
@@ -148,7 +152,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 		$editor->delete();
 		
 		// reset user storage
-		$objectType->getProcessor()->resetUserStorage(array(WCF::getUser()->userID));
+		$objectType->getProcessor()->resetUserStorage([WCF::getUser()->userID]);
 	}
 	
 	/**

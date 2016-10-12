@@ -4,7 +4,7 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
-use wcf\util\PasswordUtil;
+use wcf\util\CryptoUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -12,15 +12,13 @@ use wcf\util\StringUtil;
  * A missing token will be ignored, an invalid token results in a throw of a IllegalLinkException.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
  */
 abstract class AbstractAuthedPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -37,7 +35,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			list($userID, $token) = array_pad(explode('-', StringUtil::trim($_REQUEST['at']), 2), 2, null);
 			
 			if (WCF::getUser()->userID) {
-				if ($userID == WCF::getUser()->userID && PasswordUtil::secureCompare(WCF::getUser()->accessToken, $token)) {
+				if ($userID == WCF::getUser()->userID && CryptoUtil::secureCompare(WCF::getUser()->accessToken, $token)) {
 					// everything is fine, but we are already logged in
 					return;
 				}
@@ -48,7 +46,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			}
 			else {
 				$user = new User($userID);
-				if (PasswordUtil::secureCompare($user->accessToken, $token)) {
+				if (CryptoUtil::secureCompare($user->accessToken, $token)) {
 					// token is valid -> change user
 					SessionHandler::getInstance()->changeUser($user, true);
 				}

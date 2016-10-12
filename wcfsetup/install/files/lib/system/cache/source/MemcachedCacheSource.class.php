@@ -9,11 +9,9 @@ use wcf\util\StringUtil;
  * MemcachedCacheSource is an implementation of CacheSource that uses a Memcached server to store cached variables.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.source
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Source
  */
 class MemcachedCacheSource implements ICacheSource {
 	/**
@@ -58,7 +56,7 @@ class MemcachedCacheSource implements ICacheSource {
 		
 		// add servers
 		$tmp = explode("\n", StringUtil::unifyNewlines(CACHE_SOURCE_MEMCACHED_HOST));
-		$servers = array();
+		$servers = [];
 		$defaultWeight = floor(100 / count($tmp));
 		$regex = new Regex('^\[([a-z0-9\:\.]+)\](?::([0-9]{1,5}))?(?::([0-9]{1,3}))?$', Regex::CASE_INSENSITIVE);
 		
@@ -93,7 +91,7 @@ class MemcachedCacheSource implements ICacheSource {
 					}
 				}
 				
-				$servers[] = array($host, $port, $weight);
+				$servers[] = [$host, $port, $weight];
 			}
 		}
 		$this->memcached->addServers($servers);
@@ -107,7 +105,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flush()
+	 * @inheritDoc
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -119,7 +117,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
+	 * @inheritDoc
 	 */
 	public function flushAll() {
 		// increment flush counter to nuke all data
@@ -128,7 +126,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::get()
+	 * @inheritDoc
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$value = $this->memcached->get($this->getCacheName($cacheName));
@@ -144,7 +142,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	\wcf\system\cache\source\ICacheSource::set()
+	 * @inheritDoc
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$this->memcached->set($this->getCacheName($cacheName), $value, $this->getTTL($maxLifetime));

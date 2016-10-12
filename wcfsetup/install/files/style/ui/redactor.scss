@@ -1,0 +1,655 @@
+.redactor-box {
+	position: relative;
+	
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+	
+	& + .messageTabMenu {
+		padding: 0;
+	}
+	
+	& + .innerError,
+	> .innerError {
+		border-radius: 0;
+		box-shadow: none;
+		display: block;
+		margin-top: -1px;
+	}
+	
+	> .innerError {
+		margin: -1px;
+	}
+}
+
+.redactor-editor {
+	border: 1px solid $wcfContentBorderInner;
+	border-top-width: 0;
+	max-height: 500px;
+	padding: 10px;
+	position: relative;
+	outline: none;
+	overflow: auto;
+	
+	* {
+		// setting min-width to "0" inside contenteditable causes
+		// IE11 to do all sort of funny things
+		min-width: auto;
+	}
+	
+	&.redactor-placeholder::after {
+		color: $wcfContentDimmedText;
+		content: attr(placeholder);
+		display: block;
+		pointer-events: none;
+		position: absolute;
+	}
+	
+	& + textarea {
+		border-width: 0;
+		box-shadow: none;
+		outline: none;
+		padding: 10px;
+		resize: vertical;
+		
+		&:focus {
+			box-shadow: none;
+		}
+	}
+	
+	// enforce styles used in messages
+	@extend .htmlContent;
+	
+	> :not(p) {
+		&:first-child {
+			margin-top: 10px !important;
+		}
+		
+		&:last-child {
+			margin-bottom: 20px !important;
+		}
+	}
+	
+	// remove margin top for the first paragraph in the editor to avoid a weird looking offset a the top
+	> p:first-child {
+		margin-top: 0;
+	}
+	
+	img {
+		max-width: 100%;
+		
+		&:not(.smiley) {
+			// show cursor to indicate editing capability excluding smilies
+			cursor: pointer;
+		}
+		
+		/* prevent flicker from pasted images */
+		&[src^="data:image"] {
+			display: none !important;
+		}
+	}
+	
+	// TODO: this is somewhat out of sync
+	table {
+		border-collapse: collapse;
+		//font-size: 14px; TODO
+		line-height: 1.6em;
+		
+		th {
+			border: 1px solid #ddd;
+			border-bottom: 2px solid currentColor;
+		}
+		
+		td {
+			border: 1px solid #ddd;
+			padding: 5px;
+			vertical-align: top;
+			
+			&::before {
+				content: "";
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.redactor-dropdown {
+	> .dropdownMenu {
+		display: block;
+		position: relative;
+		visibility: visible;
+		
+		@include screen-lg {
+			top: 1px;
+		}
+		
+		> li:hover {
+			background-color: transparent !important;
+		}
+		
+		a:hover {
+			background-color: $wcfDropdownBackgroundActive;
+		}
+	}
+	
+	.redactor-dropdown-link-inactive {
+		cursor: default;
+		opacity: .6;
+		
+		&:hover {
+			background-color: transparent !important;
+			color: $wcfDropdownText !important;
+		}
+	}
+}
+
+/* disable auto zoom in mobile safari */
+@include screen-md-down {
+	.redactor-editor {
+		font-size: 16px;
+		max-height: 500px;
+	}
+}
+
+.redactor-toolbar {
+	background-color: $wcfHeaderBackground;
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		flex: 0 0 auto;
+		margin-bottom: 1px;
+		
+		> a {
+			color: $wcfHeaderMenuLink;
+			display: block;
+			outline: none;
+			padding: 10px;
+			text-align: center;
+			
+			@include wcfFontSmall;
+			
+			&.redactor-button-disabled {
+				background-color: transparent !important;
+				color: $wcfButtonDisabledText !important;
+				cursor: default;
+			}
+			
+			&.redactor-act,
+			&.dropact {
+				background-color: $wcfHeaderMenuLinkBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
+			}
+			
+			.icon {
+				color: inherit;
+				cursor: inherit !important;
+			}
+			
+			@include screen-lg {
+				// hover-styles on mobile are misleading as they stay much longer
+				// due to the click-like behavior
+				&:hover {
+					background-color: $wcfHeaderMenuLinkBackgroundActive;
+					color: $wcfHeaderMenuLinkActive;
+				}
+			}
+		}
+		
+		@include screen-sm-up {
+			&.redactor-toolbar-separator {
+				margin-left: 11px;
+				position: relative;
+				
+				&::before {
+					bottom: 7px;
+					border-left: 1px solid $wcfHeaderMenuLink;
+					content: "";
+					left: -6px;
+					opacity: .6;
+					position: absolute;
+					top: 7px;
+				}
+			}
+		}
+	}
+	
+	@include screen-xs {
+		&:not(.redactorToolbarOverride) > li {
+			&[data-show-on-mobile="false"] {
+				display: none;
+			}
+		}
+		
+		&.redactorToolbarOverride > .redactor-toolbar-separator {
+			position: relative;
+			
+			&::before {
+				bottom: 7px;
+				border-left: 1px solid $wcfHeaderMenuLink;
+				content: "";
+				left: 0;
+				opacity: .6;
+				position: absolute;
+				top: 7px;
+			}
+		}
+		
+		.redactorToolbarToggle {
+			position: relative;
+			
+			&::before {
+				bottom: 7px;
+				border-left: 1px solid $wcfHeaderMenuLink;
+				content: "";
+				left: 0;
+				opacity: .6;
+				position: absolute;
+				top: 7px;
+			}
+		}
+	}
+}
+
+.redactor-toolbar-tooltip {
+	@extend .balloonTooltip;
+	
+	opacity: 1;
+	visibility: visible;
+	
+	&:before {
+		// TODO: border-color: $wcfTooltipBackgroundColor transparent;
+		border-style: solid;
+		border-width: 0 5px 5px;
+		content: "";
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: -5px;
+		transform: translateX(-50%);
+	}
+}
+
+#redactor-image-box {
+	border: 1px dashed rgba(0, 0, 0, .5);
+	display: inline-block;
+	line-height: 0;
+	max-width: 100%;
+	position: relative;
+	
+	> img {
+		border-width: 0;
+		opacity: .5;
+	}
+}
+
+#redactor-image-editter {
+	@extend .balloonTooltip;
+	
+	cursor: pointer;
+	left: 50%;
+	// TODO: line-height: $wcfSmallFontSize;
+	margin-top: -13px;
+	opacity: 1;
+	top: 50%;
+	visibility: visible;
+	z-index: 5;
+}
+
+#redactor-image-resizer {
+	background-color: rgba(0, 0, 0, 1);
+	border: 1px solid rgba(255, 255, 255, 1);
+	bottom: -4px;
+	cursor: nw-resize;
+	height: 8px;
+	line-height: 1;
+	position: absolute;
+	right: -5px;
+	width: 8px;
+	z-index: 10;
+}
+
+.redactorAttachmentContainer {
+	background-color: rgba(255, 255, 255, 1);
+	border: 1px solid rgba(238, 238, 238, 1);
+	border-top-width: 0;
+	padding: 7px 14px 7px;
+}
+
+.redactor-dropdown-box-fontcolor {
+	width: 200px;
+	
+	> li.redactorColorPallet {
+		padding: 0 4px;
+		
+		&:hover {
+			background-color: $wcfDropdownBackground !important;
+		}
+		
+		> a {
+			border: 2px solid rgba(255, 255, 255, 1);
+			border-bottom-width: 0;
+			display: inline-block;
+			font-size: 0; // TODO
+			height: 20px;
+			padding: 0;
+			margin: 0;
+			width: 20px;
+		}
+	}
+}
+
+.redactorDropArea {
+	align-items: center;
+	background-color: $wcfStatusInfoBackground;
+	border: 5px dashed currentColor;
+	bottom: 0;
+	color: $wcfStatusInfoText;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	right: 0;
+	z-index: 360;
+	
+	@include wcfFontSection;
+	
+	&::before {
+		content: attr(data-drop-here);
+	}
+	
+	&.active {
+		background-color: $wcfStatusSuccessBackground;
+		color: $wcfStatusSuccessText;
+		
+		&::before {
+			content: attr(data-drop-now);
+		}
+	}
+}
+
+.redactor-link-tooltip {
+	background-color: $wcfTooltipBackground;
+	border-radius: 2px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	color: $wcfTooltipText;
+	padding: 5px 10px 7px;
+	position: absolute;
+	z-index: 800;
+	
+	> a {
+		color: $wcfTooltipText;
+	}
+}
+
+.redactor-voice-label {
+	display: none;
+}
+
+/* format */
+.redactor-dropdown-h2 {
+	@include wcfFontSection;
+}
+
+.redactor-dropdown-h3 {
+	@include wcfFontHeadline;
+}
+
+.redactor-dropdown-h4 {
+	// TODO: add styling
+}
+
+/* alignment plugin */
+.text-center {
+	text-align: center !important;
+}
+
+.text-right {
+	text-align: right !important;
+}
+
+/* alignment plugin / custom value */
+.text-justify {
+	text-align: justify !important;
+	
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+}
+
+/* text color */
+.woltlab-color-000000 { color: #000000 !important; }
+.woltlab-color-000080 { color: #000080 !important; }
+.woltlab-color-0000CD { color: #0000CD !important; }
+.woltlab-color-0000FF { color: #0000FF !important; }
+.woltlab-color-006400 { color: #006400 !important; }
+.woltlab-color-008000 { color: #008000 !important; }
+.woltlab-color-008080 { color: #008080 !important; }
+.woltlab-color-00FF00 { color: #00FF00 !important; }
+.woltlab-color-00FFFF { color: #00FFFF !important; }
+.woltlab-color-2F4F4F { color: #2F4F4F !important; }
+.woltlab-color-40E0D0 { color: #40E0D0 !important; }
+.woltlab-color-4B0082 { color: #4B0082 !important; }
+.woltlab-color-696969 { color: #696969 !important; }
+.woltlab-color-800000 { color: #800000 !important; }
+.woltlab-color-800080 { color: #800080 !important; }
+.woltlab-color-808080 { color: #808080 !important; }
+.woltlab-color-8B4513 { color: #8B4513 !important; }
+.woltlab-color-A52A2A { color: #A52A2A !important; }
+.woltlab-color-A9A9A9 { color: #A9A9A9 !important; }
+.woltlab-color-ADD8E6 { color: #ADD8E6 !important; }
+.woltlab-color-AFEEEE { color: #AFEEEE !important; }
+.woltlab-color-B22222 { color: #B22222 !important; }
+.woltlab-color-D3D3D3 { color: #D3D3D3 !important; }
+.woltlab-color-DAA520 { color: #DAA520 !important; }
+.woltlab-color-DDA0DD { color: #DDA0DD !important; }
+.woltlab-color-E6E6FA { color: #E6E6FA !important; }
+.woltlab-color-EE82EE { color: #EE82EE !important; }
+.woltlab-color-F0F8FF { color: #F0F8FF !important; }
+.woltlab-color-F0FFF0 { color: #F0FFF0 !important; }
+.woltlab-color-F0FFFF { color: #F0FFFF !important; }
+.woltlab-color-FAEBD7 { color: #FAEBD7 !important; }
+.woltlab-color-FF0000 { color: #FF0000 !important; }
+.woltlab-color-FF8C00 { color: #FF8C00 !important; }
+.woltlab-color-FFA07A { color: #FFA07A !important; }
+.woltlab-color-FFA500 { color: #FFA500 !important; }
+.woltlab-color-FFD700 { color: #FFD700 !important; }
+.woltlab-color-FFF0F5 { color: #FFF0F5 !important; }
+.woltlab-color-FFFF00 { color: #FFFF00 !important; }
+.woltlab-color-FFFFE0 { color: #FFFFE0 !important; }
+.woltlab-color-FFFFFF { color: #FFFFFF !important; }
+
+/* text color selection */
+.redactor-dropdown-box-woltlabColor {
+	> ul {
+		display: flex !important;
+		flex-wrap: wrap;
+		width: 272px;
+		
+		> li:first-child {
+			flex: 0 0 100%;
+			margin-bottom: 10px;
+		}
+	}
+	
+	.woltlab-color-selection {
+		flex: 0 0 30px;
+		margin: 2px;
+		overflow: hidden;
+		
+		> a {
+			background-color: currentColor !important;
+			color: inherit !important;
+			display: block;
+			height: 30px;
+			width: 30px;
+		}
+	}
+}
+
+/* font size */
+.woltlab-size-8 { font-size: 8pt; }
+.woltlab-size-10 { font-size: 10pt; }
+.woltlab-size-12 { font-size: 12pt; }
+.woltlab-size-14 { font-size: 14pt; }
+.woltlab-size-18 { font-size: 18pt; }
+.woltlab-size-24 { font-size: 24pt; }
+.woltlab-size-36 { font-size: 36pt; }
+
+/* font family */
+.woltlab-font-arial { font-family: Arial, Helvetica, sans-serif; }
+.woltlab-font-comicSansMs { font-family: "Comic Sans MS", "Marker Felt", cursive; }
+.woltlab-font-courierNew { font-family: Consolas, "Courier New", Courier, monospace; /* Kumamon */ }
+.woltlab-font-georgia { font-family: Georgia, serif; }
+.woltlab-font-lucidaSansUnicode { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+.woltlab-font-tahoma { font-family: Tahoma, Geneva, sans-serif; }
+.woltlab-font-timesNewRoman { font-family: "Times New Roman", Times, serif; }
+.woltlab-font-trebuchetMs { font-family: "Trebuchet MS", Helvetica, sans-serif; }
+.woltlab-font-verdana { font-family: Verdana, Geneva, sans-serif; }
+
+
+/* image float */
+.messageFloatObjectLeft {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.messageFloatObjectRight {
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
+.smiley,
+.jsSmiley > img {
+	&[src$="_emojione.png"] {
+		max-height: 20px;
+	}
+}
+
+.smiley {
+	margin: 0 1px;
+}
+
+@include screen-md-down {
+	.jsSmiley {
+		display: inline-block;
+		padding: 10px;
+	}
+}
+
+.wysiwygTextarea {
+	background-color: transparent !important;
+	border: 1px solid $wcfContentBorderInner !important;
+	color: transparent !important;
+	display: block;
+	height: 238px;
+	width: 100%;
+}
+
+.messageQuickReplyCollapsed {
+	border-bottom-width: 0 !important;
+	
+	@include screen-sm-down {
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+	
+	.messageSidebar {
+		display: none;
+	}
+	
+	.messageQuickReplyContent {
+		background-color: $wcfSidebarBackground;
+		cursor: pointer;
+		display: inline-block !important;
+		margin: 0 !important;
+		max-width: 100% !important;
+		overflow: hidden;
+		padding: 10px 20px;
+		position: relative;
+		width: 100% !important;
+		
+		@include screen-md-up {
+			border-radius: 2px;
+		}
+		
+		&::before {
+			color: $wcfSidebarText;
+			content: $fa-var-reply;
+			font-family: FontAwesome;
+			font-size: 28px;
+			height: 32px;
+			line-height: 32px;
+			margin-right: 10px;
+			width: 32px;
+			vertical-align: -5px;
+		}
+		
+		&::after {
+			color: $wcfSidebarText;
+			content: attr(data-placeholder);
+			
+			@include screen-sm-up {
+				@include wcfFontSection;
+			}
+		}
+		
+		> .messageBody {
+			left: 200%;
+			position: absolute;
+			top: -100%;
+		}
+		
+		> .messageFooter {
+			display: none;
+		}
+	}
+}
+
+.redactorAutosaveRestored {
+	background-color: $wcfContentBackground;
+	border-top: 1px solid $wcfContentBorderInner;
+	bottom: 1px;
+	display: flex;
+	opacity: 0;
+	position: absolute;
+	right: 1px;
+	transition: opacity .12s linear, visibility 0s linear .12s;
+	visibility: hidden;
+	
+	&.active {
+		opacity: 1;
+		transition-delay: 0s;
+		visibility: visible;
+	}
+	
+	> a {
+		border-left: 1px solid $wcfContentBorderInner;
+		flex: 0 0 auto;
+		padding: 10px;
+	}
+	
+	> span {
+		color: $wcfContentDimmedText;
+		flex: 1 1 auto;
+		padding: 10px;
+	}
+	
+	@include screen-sm-up {
+		border-left: 1px solid $wcfContentBorderInner;
+		border-top-left-radius: 2px;
+		
+		> span {
+			padding: 10px 20px;
+		}
+	}
+	
+	@include screen-xs {
+		left: 1px;
+		
+		> span {
+			text-align: center;
+		}
+	}
+}

@@ -6,19 +6,17 @@ use wcf\data\paid\subscription\PaidSubscriptionList;
  * Caches the paid subscriptions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class PaidSubscriptionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
 		$subscriptionList = new PaidSubscriptionList();
-		$subscriptionList->getConditionBuilder()->add('isDisabled = ?', array(0));
+		$subscriptionList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$subscriptionList->sqlOrderBy = 'showOrder';
 		$subscriptionList->readObjects();
 		

@@ -15,27 +15,25 @@ use wcf\util\StringUtil;
  * Shows the user subscription add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class PaidSubscriptionUserAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
 	 * subscription id
@@ -45,7 +43,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	
 	/**
 	 * subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	public $subscription = null;
 	
@@ -57,7 +55,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	
@@ -74,7 +72,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	public $endDateTime = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -87,7 +85,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -97,7 +95,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -119,29 +117,28 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		$userSubscription = PaidSubscriptionUser::getSubscriptionUser($this->subscriptionID, $this->user->userID);
-		$data = array();
+		$data = [];
 		if ($this->subscription->subscriptionLength) {
 			$data['endDate'] = $this->endDateTime->getTimestamp();
 		}
 		if ($userSubscription === null) {
 			// create new subscription
-			$action = new PaidSubscriptionUserAction(array(), 'create', array(
+			$action = new PaidSubscriptionUserAction([], 'create', [
 				'user' => $this->user,
 				'subscription' => $this->subscription,
 				'data' => $data
-			));
-			$returnValues = $action->executeAction();
-			$userSubscription = $returnValues['returnValues'];
+			]);
+			$action->executeAction();
 		}
 		else {
 			// extend existing subscription
-			$action = new PaidSubscriptionUserAction(array($userSubscription), 'extend', array('data' => $data));
+			$action = new PaidSubscriptionUserAction([$userSubscription], 'extend', ['data' => $data]);
 			$action->executeAction();
 		}
 		$this->saved();
@@ -149,14 +146,12 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 		// reset values
 		$this->username = $this->endDate = '';
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -171,16 +166,16 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'subscriptionID' => $this->subscriptionID,
 			'subscription' => $this->subscription,
 			'username' => $this->username,
 			'endDate' => $this->endDate
-		));
+		]);
 	}
 }

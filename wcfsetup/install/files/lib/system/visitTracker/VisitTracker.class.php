@@ -10,11 +10,9 @@ use wcf\system\WCF;
  * Handles object visit tracking.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.visitTracker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\VisitTracker
  */
 class VisitTracker extends SingletonFactory {
 	/**
@@ -27,7 +25,7 @@ class VisitTracker extends SingletonFactory {
 	 * list of available object types
 	 * @var	array
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
 	 * user visits
@@ -36,7 +34,7 @@ class VisitTracker extends SingletonFactory {
 	protected $userVisits = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types
@@ -48,6 +46,7 @@ class VisitTracker extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
@@ -58,7 +57,7 @@ class VisitTracker extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the last visit time for a whole object type.
+	 * Returns the last visit time for a whole object type.
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
@@ -72,15 +71,12 @@ class VisitTracker extends SingletonFactory {
 				
 				// cache does not exist or is outdated
 				if ($data === null) {
-					$this->userVisits = array();
 					$sql = "SELECT	objectTypeID, visitTime
 						FROM	wcf".WCF_N."_tracked_visit_type
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(WCF::getUser()->userID));
-					while ($row = $statement->fetchArray()) {
-						$this->userVisits[$row['objectTypeID']] = $row['visitTime'];
-					}
+					$statement->execute([WCF::getUser()->userID]);
+					$this->userVisits = $statement->fetchMap('objectTypeID', 'visitTime');
 					
 					// update storage data
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'trackedUserVisits', serialize($this->userVisits));
@@ -94,7 +90,7 @@ class VisitTracker extends SingletonFactory {
 			}
 			
 			if (!$this->userVisits) {
-				$this->userVisits = array();
+				$this->userVisits = [];
 			}
 		}
 		
@@ -124,7 +120,7 @@ class VisitTracker extends SingletonFactory {
 					AND objectID = ?
 					AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID));
+			$statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID]);
 			$row = $statement->fetchArray();
 			if ($row) return $row['visitTime'];
 		}
@@ -148,7 +144,7 @@ class VisitTracker extends SingletonFactory {
 				WHERE		objectTypeID = ?
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->getObjectTypeID($objectType), WCF::getUser()->userID));
+			$statement->execute([$this->getObjectTypeID($objectType), WCF::getUser()->userID]);
 		}
 	}
 	
@@ -166,7 +162,7 @@ class VisitTracker extends SingletonFactory {
 						(objectTypeID, objectID, userID, visitTime)
 				VALUES		(?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID, $time));
+			$statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID, $time]);
 		}
 		else {
 			WCF::getSession()->register('trackedUserVisit_'.$this->getObjectTypeID($objectType).'_'.$objectID, $time);
@@ -186,7 +182,7 @@ class VisitTracker extends SingletonFactory {
 						(objectTypeID, userID, visitTime)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->getObjectTypeID($objectType), WCF::getUser()->userID, $time));
+			$statement->execute([$this->getObjectTypeID($objectType), WCF::getUser()->userID, $time]);
 			
 			// delete obsolete object visits
 			$sql = "DELETE FROM	wcf".WCF_N."_tracked_visit
@@ -194,10 +190,10 @@ class VisitTracker extends SingletonFactory {
 						AND userID = ?
 						AND visitTime <= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->getObjectTypeID($objectType), WCF::getUser()->userID, $time));
+			$statement->execute([$this->getObjectTypeID($objectType), WCF::getUser()->userID, $time]);
 			
 			// reset storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'trackedUserVisits');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'trackedUserVisits');
 		}
 		else {
 			$this->getVisitTime($objectType);

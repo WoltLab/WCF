@@ -3,7 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
-
+	
 	<!-- data element -->
 	<xs:element name="data">
 		<xs:complexType>
@@ -13,21 +13,21 @@
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
-
+	
 	<!-- import element -->
 	<xs:complexType name="import">
 		<xs:sequence>
 			<xs:element name="type" type="type_import" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-
+	
 	<!-- import element -->
 	<xs:complexType name="delete">
 		<xs:sequence>
 			<xs:element name="type" type="type_delete" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-
+	
 	<!-- import element type -->
 	<xs:complexType name="type_import">
 		<xs:all>
@@ -45,7 +45,7 @@
 			<xs:element name="nicevalue" type="xs:integer" minOccurs="0" />
 		</xs:all>
 	</xs:complexType>
-
+	
 	<!-- delete element type -->
 	<xs:complexType name="type_delete">
 		<xs:all>

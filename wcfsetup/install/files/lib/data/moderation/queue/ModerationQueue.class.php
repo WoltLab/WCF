@@ -8,23 +8,23 @@ use wcf\system\WCF;
  * Represents a moderation queue entry.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.moderation.queue
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Moderation\Queue
+ *
+ * @property-read	integer		$queueID		unique id of the moderation queue entry
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.moderation.type` object type
+ * @property-read	integer		$objectID		id of the object of the object type with id `$objectTypeID` to which the moderation queue entry belongs to
+ * @property-read	integer		$containerID		id of the object's container object to which the modification log entry belongs to or `0` if no such container object exists or is logged
+ * @property-read	integer|null	$userID			id of the user who created the moderation queue entry or `null` if the user does not exist anymore or if the moderation queue entry has been created by a guest
+ * @property-read	integer		$time			timestamp at which the moderation queue entry has been created
+ * @property-read	integer|null	$assignedUserID		id of the user to which the moderation queue entry is assigned or `null` if it is not assigned to any user
+ * @property-read	integer		$status			status of the moderation queue entry (see `ModerationQueue::STATUS_*` constants)
+ * @property-read	integer		$comments		number of comments on the moderation queue entry
+ * @property-read	integer		$lastChangeTime		timestamp at which the moderation queue entry has been changed the last time
+ * @property-read	array		$additionalData		array with additional data of the moderation queue entry
  */
 class ModerationQueue extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'moderation_queue';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
-	 */
-	protected static $databaseTableIndexName = 'queueID';
-	
 	// states of column 'status'
 	const STATUS_OUTSTANDING = 0;
 	const STATUS_PROCESSING = 1;
@@ -33,7 +33,7 @@ class ModerationQueue extends DatabaseObject {
 	const STATUS_CONFIRMED = 4;
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -49,14 +49,14 @@ class ModerationQueue extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
 		
 		$this->data['additionalData'] = @unserialize($this->data['additionalData']);
 		if (!is_array($this->data['additionalData'])) {
-			$this->data['additionalData'] = array();
+			$this->data['additionalData'] = [];
 		}
 	}
 	
@@ -71,10 +71,10 @@ class ModerationQueue extends DatabaseObject {
 			WHERE	queueID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->queueID,
 			WCF::getUser()->userID
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		return ($row !== false && $row['isAffected']);

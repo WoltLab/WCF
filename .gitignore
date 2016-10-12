@@ -50,7 +50,7 @@ nbactions.xml
 # Textmate
 *.tmproj 
 
-# Community Framework
+# WoltLab Suite
 # Ignore packages build directly in the workspace. They can however be added manually via git add, if wanted.
 *.tar
 *.tar.gz

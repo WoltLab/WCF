@@ -1,40 +1,41 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\ad\AdList;
 use wcf\page\MultipleLinkPage;
 
 /**
  * Lists the available ads.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	AdList		$objectList
  */
 class AdListPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.ad.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.ad.canManageAd');
+	public $neededPermissions = ['admin.ad.canManageAd'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_WCF_AD');
+	public $neededModules = ['MODULE_WCF_AD'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\ad\AdList';
+	public $objectListClassName = AdList::class;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'ad.showOrder';
 }

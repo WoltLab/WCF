@@ -1,0 +1,63 @@
+.pagination {
+	@include screen-xs {
+		text-align: center;
+	}
+	
+	> ul {
+		display: inline-flex;
+		flex-wrap: wrap;
+		
+		> li {
+			display: flex;
+			flex: 0 0 auto;
+			
+			> .invisible {
+				display: none;
+			}
+			
+			> a,
+			> span {
+				color: $wcfContentText;
+				padding: 2px 8px 0;
+			}
+			
+			&.disabled > span {
+				color: $wcfContentDimmedText;
+			}
+			
+			&.active > a,
+			&.active > span,
+			> a:hover {
+				background-color: $wcfButtonBackgroundActive;
+				color: $wcfButtonTextActive;
+			}
+			
+			> .icon {
+				height: auto;
+				line-height: inherit;
+				width: auto;
+			}
+			
+			&:not(:last-child) {
+				margin-right: 1px;
+			}
+			
+			&:not(.skip) {
+				> a,
+				> span {
+					padding: 4px 8px;
+				}
+			}
+			
+			&:first-child {
+				> a,
+				> span {
+					&::before {
+						left: -1px;
+						position: relative;
+					}
+				}
+			}
+		}
+	}
+}

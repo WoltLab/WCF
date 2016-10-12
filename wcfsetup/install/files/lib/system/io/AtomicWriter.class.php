@@ -14,11 +14,9 @@ use wcf\util\FileUtil;
  * Note: The AtomicWriter only supports a small number of whitelisted (write) operations.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Io
  */
 class AtomicWriter extends File {
 	/**
@@ -37,6 +35,7 @@ class AtomicWriter extends File {
 	 * Opens a new file. The file is always opened in binary mode.
 	 * 
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public function __construct($filename) {
 		$this->targetFilename = $filename;
@@ -59,7 +58,7 @@ class AtomicWriter extends File {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\AtomicWriter::close()
+	 * @inheritDoc
 	 */
 	public function __destruct() {
 		$this->close();
@@ -108,7 +107,7 @@ class AtomicWriter extends File {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\File::__call($function, $arguments)
+	 * @inheritDoc
 	 */
 	public function __call($function, $arguments) {
 		if ($this->isFlushed) {

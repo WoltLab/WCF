@@ -5,11 +5,9 @@ namespace wcf\data;
  * Default interface for actions implementing quick reply with extended mode.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 interface IExtendedMessageQuickReplyAction extends IMessageQuickReplyAction {
 	/**

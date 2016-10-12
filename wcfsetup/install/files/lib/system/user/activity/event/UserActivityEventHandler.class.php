@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\activity\event;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\activity\event\UserActivityEventAction;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
@@ -12,21 +13,19 @@ use wcf\system\WCF;
  * User activity event handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.activity.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
 class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * cached object types
-	 * @var	array<\wcf\data\object\type\ObjectType>
+	 * @var	ObjectType[]
 	 */
-	protected $objectTypes = array();
+	protected $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// load object types
@@ -40,8 +39,8 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Returns an object type by id.
 	 * 
-	 * @param	integer				$objectTypeID
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @param	integer		$objectTypeID
+	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypes['objects'][$objectTypeID])) {
@@ -73,10 +72,11 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * @param	integer		$languageID
 	 * @param	integer		$userID
 	 * @param	integer		$time
-	 * @param	array		$additonalData
+	 * @param	array		$additionalData
 	 * @return	\wcf\data\user\activity\event\UserActivityEvent
+	 * @throws	SystemException
 	 */
-	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additonalData = array()) {
+	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additionalData = []) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		if ($objectTypeID === null) {
 			throw new SystemException("Unknown recent activity event '".$objectType."'");
@@ -84,16 +84,16 @@ class UserActivityEventHandler extends SingletonFactory {
 		
 		if ($userID === null) $userID = WCF::getUser()->userID;
 		
-		$eventAction = new UserActivityEventAction(array(), 'create', array(
-			'data' => array(
+		$eventAction = new UserActivityEventAction([], 'create', [
+			'data' => [
 				'objectTypeID' => $objectTypeID,
 				'objectID' => $objectID,
 				'languageID' => $languageID,
 				'userID' => $userID,
 				'time' => $time,
-				'additionalData' => serialize($additonalData)
-			)
-		));
+				'additionalData' => serialize($additionalData)
+			]
+		]);
 		$returnValues = $eventAction->executeAction();
 		
 		return $returnValues['returnValues'];
@@ -103,7 +103,8 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * Removes activity events.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
+	 * @throws	SystemException
 	 */
 	public function removeEvents($objectType, array $objectIDs) {
 		if (empty($objectIDs)) return;
@@ -114,8 +115,8 @@ class UserActivityEventHandler extends SingletonFactory {
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectTypeID = ?", array($objectTypeID));
-		$conditions->add("objectID IN (?)", array($objectIDs));
+		$conditions->add("objectTypeID = ?", [$objectTypeID]);
+		$conditions->add("objectID IN (?)", [$objectIDs]);
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_activity_event
 			".$conditions;
@@ -126,7 +127,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Validates an event list and removes orphaned events.
 	 * 
-	 * @param	\wcf\data\user\activity\event\ViewableUserActivityEventList	$eventList
+	 * @param	ViewableUserActivityEventList	$eventList
 	 */
 	public static function validateEvents(ViewableUserActivityEventList $eventList) {
 		$eventIDs = $eventList->validateEvents();
@@ -138,7 +139,7 @@ class UserActivityEventHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($eventIDs as $eventID) {
-				$statement->execute(array($eventID));
+				$statement->execute([$eventID]);
 			}
 		}
 	}

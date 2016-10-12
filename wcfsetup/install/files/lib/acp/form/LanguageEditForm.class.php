@@ -11,11 +11,9 @@ use wcf\system\WCF;
  * Shows the language edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class LanguageEditForm extends LanguageAddForm {
 	/**
@@ -25,7 +23,7 @@ class LanguageEditForm extends LanguageAddForm {
 	public $languageID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -38,7 +36,7 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\LanguageAddForm::validateLanguageCode()
+	 * @inheritDoc
 	 */
 	protected function validateLanguageCode() {
 		if ($this->language->languageCode != mb_strtolower($this->languageCode)) {
@@ -47,22 +45,22 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\LanguageAddForm::validateSource()
+	 * @inheritDoc
 	 */
 	protected function validateSource() {}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
 		$editor = new LanguageEditor($this->language);
-		$editor->update(array(
+		$editor->update([
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
-			'languageCode' => mb_strtolower($this->languageCode)		
-		));
+			'languageCode' => mb_strtolower($this->languageCode)
+		]);
 		LanguageFactory::getInstance()->clearCache();
 		$this->saved();
 		
@@ -71,7 +69,7 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -84,15 +82,15 @@ class LanguageEditForm extends LanguageAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languageID' => $this->languageID,
 			'language' => $this->language,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

@@ -1,50 +1,51 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\rank\UserRankList;
 use wcf\page\SortablePage;
 
 /**
  * Lists available user ranks.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	UserRankList	$objectList
  */
 class UserRankListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.rank.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.rank.canManageRank');
+	public $neededPermissions = ['admin.user.rank.canManageRank'];
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_USER_RANK');
+	public $neededModules = ['MODULE_USER_RANK'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\rank\UserRankList';
+	public $objectListClassName = UserRankList::class;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'rankTitle';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('rankID', 'groupID', 'requiredPoints', 'rankTitle', 'rankImage', 'requiredGender');
+	public $validSortFields = ['rankID', 'groupID', 'requiredPoints', 'rankTitle', 'rankImage', 'requiredGender'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::show()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();

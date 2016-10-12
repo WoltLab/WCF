@@ -1,8 +1,7 @@
 <?php
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\CommentList;
-use wcf\data\user\UserProfileList;
-use wcf\system\user\activity\event\IUserActivityEvent;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -10,42 +9,37 @@ use wcf\system\WCF;
  * User activity event implementation for profile comments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.activity.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
 class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**
-	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
 		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
 			return;
 		}
 		
-		$comments = $commentIDs = array();
+		$commentIDs = [];
 		foreach ($events as $event) {
 			$commentIDs[] = $event->objectID;
 		}
 		
 		// fetch comments
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->setObjectIDs($commentIDs);
 		$commentList->readObjects();
 		$comments = $commentList->getObjects();
 		
 		// fetch users
-		$userIDs = $users = array();
+		$userIDs = $users = [];
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->objectID;
 		}
 		if (!empty($userIDs)) {
-			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
-			$userList->readObjects();
-			$users = $userList->getObjects();
+			$users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 		}
 		
 		// set message
@@ -58,7 +52,7 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 						$event->setIsAccessible();
 						
 						$user = $users[$comment->objectID];
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', array('user' => $user));
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', ['user' => $user]);
 						$event->setTitle($text);
 						
 						// output

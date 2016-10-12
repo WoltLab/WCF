@@ -5,11 +5,9 @@ namespace wcf\system\label\object\type;
  * Every label object type handler has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.label.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Label\Object\Type
  */
 interface ILabelObjectTypeHandler {
 	/**
@@ -29,7 +27,7 @@ interface ILabelObjectTypeHandler {
 	/**
 	 * Returns a label object type container.
 	 * 
-	 * @return	\wcf\system\label\object\type\LabelObjectTypeContainer
+	 * @return	LabelObjectTypeContainer
 	 */
 	public function getContainer();
 	

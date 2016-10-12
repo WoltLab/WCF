@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\LabelGroupEditor;
 use wcf\system\WCF;
 
@@ -7,22 +8,20 @@ use wcf\system\WCF;
  * Imports label groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 class LabelGroupImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\label\group\LabelGroup';
+	protected $className = LabelGroup::class;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// save label group
 		$labelGroup = LabelGroupEditor::create($data);
 		
@@ -35,7 +34,7 @@ class LabelGroupImporter extends AbstractImporter {
 			
 			foreach ($additionalData['objects'] as $objectTypeID => $objectIDs) {
 				foreach ($objectIDs as $objectID) {
-					$statement->execute(array($labelGroup->groupID, $objectTypeID, $objectID));
+					$statement->execute([$labelGroup->groupID, $objectTypeID, $objectID]);
 				}
 			}
 		}

@@ -6,22 +6,20 @@ use wcf\system\Regex;
  * Highlights syntax of PHP sourcecode.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class PhpHighlighter extends Highlighter {
-	public static $colorToClass = array();
+	public static $colorToClass = [];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
 		
-		$types = array('default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes');
+		$types = ['default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes'];
 		
 		self::$colorToClass['<span style="color: '.ini_get('highlight.html').'">'] = '<span>';
 		foreach ($types as $type => $class) {
@@ -30,7 +28,7 @@ class PhpHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($code) {
 		// add starting php tag
@@ -65,6 +63,7 @@ class PhpHighlighter extends Highlighter {
 		// remove breaks
 		$highlightedCode = str_replace("\n", "", $highlightedCode);
 		$highlightedCode = str_replace('<br />', "\n", $highlightedCode);
+		$highlightedCode = str_replace('<br>', "\n", $highlightedCode);
 		
 		// get tabs back
 		$highlightedCode = str_replace('&nbsp;&nbsp;&nbsp;&nbsp;', "\t", $highlightedCode);

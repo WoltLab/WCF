@@ -6,15 +6,17 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit package update versions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.package.update.version
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Package\Update\Version
+ * 
+ * @method static	PackageUpdateVersion	create(array $parameters = [])
+ * @method		PackageUpdateVersion	getDecoratedObject()
+ * @mixin		PackageUpdateVersion
  */
 class PackageUpdateVersionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\package\update\version\PackageUpdateVersion';
+	protected static $baseClass = PackageUpdateVersion::class;
 }

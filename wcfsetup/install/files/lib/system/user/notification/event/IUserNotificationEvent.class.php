@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\data\language\Language;
+use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserProfile;
 use wcf\data\IDatabaseObjectProcessor;
@@ -10,11 +11,11 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * This interface should be implemented by every event which is fired by the notification system.
  * 
  * @author	Marcel Werk, Oliver Kliebisch
- * @copyright	2001-2015 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2016 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @mixin	UserNotificationEvent
  */
 interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
@@ -48,8 +49,27 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the message for this notification event.
 	 * 
+	 * If $notificationType is 'instant' this method should either:
+	 * - Return a string to be inserted into a text/plain email (deprecated)
+	 * - Return an ['template' => ...,
+	 *             'application' => ...,
+	 *             'variables' => ...,
+	 *             'message-id' => ...,
+	 *             'in-reply-to' => [...],
+	 *             'references' => [...]]
+	 *   array to be included into the notification email.
+	 *   message-id, in-reply-to and references refer to the respective headers
+	 *   of an email and are optional. You MUST NOT generate a message-id if you
+	 *   cannot ensure that it will *never* repeat.
+	 * 
+	 * If $notificationType is 'daily' this method should either:
+	 * - Return a string to be inserted into the summary email (deprecated)
+	 * - Return an ['template' => ..., 'application' => ..., 'variables' => ...] array
+	 *   to be included into the summary email.
+	 * 
 	 * @param	string		$notificationType
-	 * @return	string
+	 * @return	mixed
+	 * @see		\wcf\system\email\Email
 	 */
 	public function getEmailMessage($notificationType = 'instant');
 	
@@ -63,14 +83,14 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the author for this notification event.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getAuthor();
 	
 	/**
 	 * Returns a list of authors for stacked notifications sorted by time.
 	 * 
-	 * @return	array<\wcf\data\user\UserProfile>
+	 * @return	UserProfile[]
 	 */
 	public function getAuthors();
 	
@@ -84,7 +104,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets a list of authors for stacked notifications.
 	 * 
-	 * @param	array<\wcf\data\user\UserProfile>	$authors
+	 * @param	UserProfile[]	$authors
 	 */
 	public function setAuthors(array $authors);
 	
@@ -98,17 +118,17 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets the object for the event.
 	 * 
-	 * @param	\wcf\data\user\notification\UserNotification			$notification
-	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
-	 * @param	\wcf\data\user\UserProfile					$author
-	 * @param	array<mixed>							$additionalData
+	 * @param	UserNotification		$notification
+	 * @param	IUserNotificationObject		$object
+	 * @param	UserProfile			$author
+	 * @param	array				$additionalData
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array());
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []);
 	
 	/**
 	 * Sets the language for the event
 	 * 
-	 * @param	\wcf\data\language\Language	$language
+	 * @param	Language	$language
 	 */
 	public function setLanguage(Language $language);
 	
@@ -152,7 +172,14 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the underlying notification object.
 	 * 
-	 * @return	\wcf\data\user\notification\UserNotification
+	 * @return	UserNotification
 	 */
 	public function getNotification();
+	
+	/**
+	 * Returns the underlying user notification object.
+	 * 
+	 * @return	IUserNotificationObject
+	 */
+	public function getUserNotificationObject();
 }

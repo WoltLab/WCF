@@ -9,15 +9,13 @@ use wcf\util\OptionUtil;
  * User option output implementation for the output of select options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User
  */
 class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$result = self::getResult($option, $value);
@@ -27,7 +25,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 		else if (is_array($result)) {
 			$output = '';
 			foreach ($result as $resultValue) {
-				if (!empty($output)) $output .= "<br />\n";
+				if (!empty($output)) $output .= "<br>\n";
 				$output .= WCF::getLanguage()->get($resultValue);
 			}
 			
@@ -41,8 +39,8 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 	/**
 	 * Returns the selected option value(s) for output.
 	 * 
-	 * @param	\wcf\data\user\option\UserOption		$option
-	 * @param	string					$value
+	 * @param	UserOption	$option
+	 * @param	string		$value
 	 * @return	mixed
 	 */
 	protected static function getResult(UserOption $option, $value) {
@@ -51,7 +49,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 		// multiselect
 		if (mb_strpos($value, "\n") !== false) {
 			$values = explode("\n", $value);
-			$result = array();
+			$result = [];
 			foreach ($values as $value) {
 				if (isset($options[$value])) {
 					$result[] = $options[$value];

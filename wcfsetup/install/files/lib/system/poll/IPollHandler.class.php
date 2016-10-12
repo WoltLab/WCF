@@ -6,11 +6,9 @@ use wcf\data\poll\Poll;
  * Provides methods to create and manage polls.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.poll
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Poll
  */
 interface IPollHandler {
 	/**
@@ -30,7 +28,7 @@ interface IPollHandler {
 	/**
 	 * Returns related object for given poll object.
 	 * 
-	 * @param	\wcf\data\poll\Poll	$poll
+	 * @param	Poll	$poll
 	 */
 	public function getRelatedObject(Poll $poll);
 }

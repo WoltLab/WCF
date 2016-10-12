@@ -6,30 +6,28 @@ use wcf\system\WCF;
  * Abstract implementation of a condition for multiple fields.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
 abstract class AbstractMultipleFieldsCondition extends AbstractCondition {
 	/**
 	 * language items of the input element descriptions
-	 * @var	string
+	 * @var	string[]
 	 */
-	protected $descriptions = array();
+	protected $descriptions = [];
 	
 	/**
 	 * error messages if the validation failed
-	 * @var	string
+	 * @var	string[]
 	 */
-	protected $errorMessages = array();
+	protected $errorMessages = [];
 	
 	/**
 	 * language items of the input element labels
-	 * @var	string
+	 * @var	string[]
 	 */
-	protected $labels = array();
+	protected $labels = [];
 	
 	/**
 	 * Returns the description element for the HTML output.

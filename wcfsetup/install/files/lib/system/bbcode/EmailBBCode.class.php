@@ -6,15 +6,13 @@ use wcf\util\StringUtil;
  * Parses the [email] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class EmailBBCode extends AbstractBBCode {
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		$email = '';
@@ -23,6 +21,6 @@ class EmailBBCode extends AbstractBBCode {
 		}
 		$email = StringUtil::decodeHTML($email);
 		
-		return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . $content . '</a>';
+		return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . StringUtil::encodeHTML($email) . '</a>';
 	}
 }

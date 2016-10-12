@@ -4,8 +4,10 @@
  * Like support for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * 
+ * @deprecated	3.0 - please use `WoltLabSuite/Core/Ui/Like/Handler` instead
  */
 WCF.Like = Class.extend({
 	/**
@@ -204,8 +206,8 @@ WCF.Like = Class.extend({
 	 * @param	integer		containerID
 	 */
 	_createWidget: function(containerID) {
-		var $likeButton = $('<li class="wcfLikeButton"><a href="#" title="'+WCF.Language.get('wcf.like.button.like')+'" class="jsTooltip"><span class="icon icon16 icon-thumbs-up-alt" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.like')+'</span></a></li>');
-		var $dislikeButton = $('<li class="wcfDislikeButton"><a href="#" title="'+WCF.Language.get('wcf.like.button.dislike')+'" class="jsTooltip"><span class="icon icon16 icon-thumbs-down-alt" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.dislike')+'</span></a></li>');
+		var $likeButton = $('<li class="wcfLikeButton"><a href="#" title="'+WCF.Language.get('wcf.like.button.like')+'" class="jsTooltip"><span class="icon icon16 fa-thumbs-o-up" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.like')+'</span></a></li>');
+		var $dislikeButton = $('<li class="wcfDislikeButton"><a href="#" title="'+WCF.Language.get('wcf.like.button.dislike')+'" class="jsTooltip"><span class="icon icon16 fa-thumbs-o-down" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.dislike')+'</span></a></li>');
 		if (!this._enableDislikes) $dislikeButton.hide();
 		
 		if (!this._allowForOwnContent && (WCF.User.userID == this._containers[containerID].data('userID'))) {
@@ -375,7 +377,7 @@ WCF.Like = Class.extend({
 			// update tooltip
 			var $likes = this._containerData[containerID].likes;
 			var $dislikes = this._containerData[containerID].dislikes;
-			$badge.data('tooltip', WCF.Language.get('wcf.like.tooltip', { likes: $likes, dislikes: $dislikes }));
+			$badge.attr('data-tooltip', WCF.Language.get('wcf.like.tooltip', { likes: $likes, dislikes: $dislikes }));
 		}
 	},
 	

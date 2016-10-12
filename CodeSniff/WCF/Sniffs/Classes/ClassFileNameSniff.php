@@ -7,8 +7,7 @@
  * 
  * @author	Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @category	Community Framework
+ * @package	WoltLabSuite\Core
  */
 class WCF_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff {
 	/**
@@ -20,6 +19,7 @@ class WCF_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff {
 		return array(
 			T_CLASS,
 			T_INTERFACE,
+			T_TRAIT,
 		);
 	}
 	

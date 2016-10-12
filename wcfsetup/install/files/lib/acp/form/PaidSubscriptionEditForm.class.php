@@ -12,11 +12,9 @@ use wcf\system\WCF;
  * Shows the paid subscription edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	/**
@@ -27,12 +25,12 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	
 	/**
 	 * edited subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	public $subscription = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->subscriptionID = intval($_REQUEST['id']);
@@ -46,14 +44,14 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	
 	protected function getAvailableSubscriptions() {
 		$subscriptionList = new PaidSubscriptionList();
-		$subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', array($this->subscriptionID));
+		$subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', [$this->subscriptionID]);
 		$subscriptionList->sqlOrderBy = 'title';
 		$subscriptionList->readObjects();
 		$this->availableSubscriptions = $subscriptionList->getObjects();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -75,7 +73,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -101,7 +99,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 		}
 		
 		// save subscription
-		$this->objectAction = new PaidSubscriptionAction(array($this->subscription), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PaidSubscriptionAction([$this->subscription], 'update', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'description' => $this->description,
 			'isDisabled' => $this->isDisabled,	
@@ -113,29 +111,27 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 			'isRecurring' => $this->isRecurring,
 			'groupIDs' => implode(',', $this->groupIDs),
 			'excludedSubscriptionIDs' => implode(',', $this->excludedSubscriptionIDs)
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$useRequestData = (empty($_POST)) ? false : true;
+		$useRequestData = empty($_POST) ? false : true;
 		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'subscriptionID' => $this->subscriptionID,
 			'subscription' => $this->subscription
-		));
+		]);
 	}
 }

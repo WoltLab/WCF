@@ -1,16 +1,16 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\DatabaseObject;
+use wcf\system\clipboard\ClipboardEditorItem;
 
 /**
  * Basic interface for all clipboard editor actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.clipboard.action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Clipboard\Action
  */
 interface IClipboardAction {
 	/**
@@ -21,24 +21,14 @@ interface IClipboardAction {
 	public function getTypeName();
 	
 	/**
-	 * Returns editor item for the clipboard action with the given name or null
+	 * Returns the editor item for the clipboard action with the given name or `null`
 	 * if the action is not applicable to the given objects.
 	 * 
-	 * @param	array<\wcf\data\DatabaseObject>			$objects
-	 * @param	\wcf\data\clipboard\action\ClipboardAction	$action
-	 * @return	\wcf\system\clipboard\ClipboardEditorItem
+	 * @param	DatabaseObject[]	$objects
+	 * @param	ClipboardAction		$action
+	 * @return	ClipboardEditorItem|null
 	 */
 	public function execute(array $objects, ClipboardAction $action);
-	
-	/**
-	 * Filters the given objects by the given type data and returns the filtered
-	 * list.
-	 * 
-	 * @param	array		$objects
-	 * @param	array		$typeData
-	 * @return	array
-	 */
-	public function filterObjects(array $objects, array $typeData);
 	
 	/**
 	 * Returns action class name.

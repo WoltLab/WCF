@@ -2,27 +2,26 @@
 namespace wcf\acp\form;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\OptionHandler;
 
 /**
  * This class provides default implementations for a list of options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 abstract class AbstractOptionListForm extends AbstractForm {
 	/**
-	 * @see	\wcf\form\AbstractForm::$errorField
+	 * @inheritDoc
 	 */
-	public $errorField = array();
+	public $errorField = [];
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::$errorType
+	 * @inheritDoc
 	 */
-	public $errorType = array();
+	public $errorType = [];
 	
 	/**
 	 * name of the active option category
@@ -46,7 +45,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * option handler class name
 	 * @var	string
 	 */
-	public $optionHandlerClassName = 'wcf\system\option\OptionHandler';
+	public $optionHandlerClassName = OptionHandler::class;
 	
 	/**
 	 * true if option supports i18n
@@ -55,7 +54,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $supportI18n = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +71,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -81,7 +80,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$this->errorType = array_merge($this->optionHandler->validate(), $this->errorType);
@@ -94,7 +93,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();

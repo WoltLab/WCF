@@ -5,15 +5,13 @@ namespace wcf\system\payment\method;
  * Abstract implementation of a payment method.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.payment.method
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Payment\Method
  */
 abstract class AbstractPaymentMethod implements IPaymentMethod {
 	/**
-	 * @see	\wcf\system\payment\method\IPaymentMethod::supportsRecurringPayments()
+	 * @inheritDoc
 	 */
 	public function supportsRecurringPayments() {
 		return false;

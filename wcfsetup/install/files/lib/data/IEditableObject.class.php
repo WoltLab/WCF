@@ -5,34 +5,32 @@ namespace wcf\data;
  * Abstract class for all data holder classes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 interface IEditableObject extends IStorableObject {
 	/**
 	 * Creates a new object.
 	 * 
-	 * @param	array		$parameters
-	 * @return	\wcf\data\IStorableObject
+	 * @param	array	$parameters
+	 * @return	IStorableObject
 	 */
-	public static function create(array $parameters = array());
+	public static function create(array $parameters = []);
 	
 	/**
 	 * Updates this object.
 	 * 
-	 * @param	array		$parameters
+	 * @param	array	$parameters
 	 */
-	public function update(array $parameters = array());
+	public function update(array $parameters = []);
 	
 	/**
 	 * Updates the counters of this object.
 	 * 
-	 * @param	array		$counters
+	 * @param	array	$counters
 	 */
-	public function updateCounters(array $counters = array());
+	public function updateCounters(array $counters = []);
 	
 	/**
 	 * Deletes this object.
@@ -43,8 +41,8 @@ interface IEditableObject extends IStorableObject {
 	 * Deletes all objects with the given ids and returns the number of deleted
 	 * objects.
 	 * 
-	 * @param	array		$objectIDs
+	 * @param	array	$objectIDs
 	 * @return	integer
 	 */
-	public static function deleteAll(array $objectIDs = array());
+	public static function deleteAll(array $objectIDs = []);
 }

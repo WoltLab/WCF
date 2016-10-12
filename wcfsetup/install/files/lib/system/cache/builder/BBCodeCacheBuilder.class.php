@@ -1,51 +1,53 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
-use wcf\data\bbcode\BBCode;
+use wcf\data\bbcode\BBCodeList;
 use wcf\system\WCF;
 
 /**
  * Caches the bbcodes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class BBCodeCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		$attributes = array();
-		$data = array('bbcodes' => array(), 'highlighters' => array());
+		$attributes = [];
+		$data = ['bbcodes' => [], 'highlighters' => []];
 		
 		// get attributes
 		$sql = "SELECT		attribute.*, bbcode.bbcodeTag
 			FROM		wcf".WCF_N."_bbcode_attribute attribute
 			LEFT JOIN	wcf".WCF_N."_bbcode bbcode
 			ON		(bbcode.bbcodeID = attribute.bbcodeID)
-			WHERE		bbcode.isDisabled = 0
 			ORDER BY	attribute.attributeNo";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			if (!isset($attributes[$row['bbcodeTag']])) $attributes[$row['bbcodeTag']] = array();
+			if (!isset($attributes[$row['bbcodeTag']])) $attributes[$row['bbcodeTag']] = [];
 			
 			$attributes[$row['bbcodeTag']][$row['attributeNo']] = new BBCodeAttribute(null, $row);
 		}
 		
 		// get bbcodes
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_bbcode
-			WHERE	isDisabled = 0";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$row['attributes'] = (isset($attributes[$row['bbcodeTag']]) ? $attributes[$row['bbcodeTag']] : array());
-			$data['bbcodes'][$row['bbcodeTag']] = new BBCode(null, $row);
+		$bbcodeList = new BBCodeList();
+		$bbcodeList->readObjects();
+		foreach ($bbcodeList as $bbcode) {
+			if (isset($attributes[$bbcode->bbcodeTag])) {
+				$bbcode->setAttributes($attributes[$bbcode->bbcodeTag]);
+			}
+			else {
+				// set an empty array, because the internal default value of a bbcode's
+				// attributes is null, this avoid an infinite loop
+				$bbcode->setAttributes([]);
+			}
+			
+			$data['bbcodes'][$bbcode->bbcodeTag] = $bbcode;
 		}
 		
 		// get code highlighters

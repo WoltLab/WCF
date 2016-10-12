@@ -12,15 +12,13 @@ use wcf\system\WCF;
  * Shows the moderation report form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 class ModerationReportForm extends AbstractModerationForm {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -32,17 +30,17 @@ class ModerationReportForm extends AbstractModerationForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		$reportUser = UserProfile::getUserProfile($this->queue->userID);
-		if ($reportUser === null) $reportUser = new UserProfile(new User(null, array()));
-		WCF::getTPL()->assign(array(
+		if ($reportUser === null) $reportUser = new UserProfile(new User(null, []));
+		WCF::getTPL()->assign([
 			'reportedContent' => ModerationQueueReportManager::getInstance()->getReportedContent($this->queue),
 			'queueManager' => ModerationQueueReportManager::getInstance(),
 			'reportUser' => $reportUser
-		));
+		]);
 	}
 }

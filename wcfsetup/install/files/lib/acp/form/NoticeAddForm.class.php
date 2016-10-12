@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\notice\NoticeAction;
 use wcf\data\notice\NoticeEditor;
@@ -15,30 +16,28 @@ use wcf\util\StringUtil;
  * Shows the form to create a new notice.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class NoticeAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.notice.add';
 	
 	/**
 	 * list pf pre-defined CSS class names
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $availableCssClassNames = array(
+	public $availableCssClassNames = [
 		'info',
 		'success',
 		'warning',
 		'error',
 		
 		'custom'
-	);
+	];
 	
 	/**
 	 * name of the chosen CSS class name
@@ -54,9 +53,9 @@ class NoticeAddForm extends AbstractForm {
 	
 	/**
 	 * grouped notice condition object types
-	 * @var	array
+	 * @var	ObjectType[][]
 	 */
-	public $groupedConditionObjectTypes = array();
+	public $groupedConditionObjectTypes = [];
 	
 	/**
 	 * 1 if the notice is disabled
@@ -71,9 +70,9 @@ class NoticeAddForm extends AbstractForm {
 	public $isDismissible = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.notice.canManageNotice');
+	public $neededPermissions = ['admin.notice.canManageNotice'];
 	
 	/**
 	 * name of the notice
@@ -94,14 +93,14 @@ class NoticeAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'add',
 			'availableCssClassNames' => $this->availableCssClassNames,
 			'cssClassName' => $this->cssClassName,
@@ -112,11 +111,11 @@ class NoticeAddForm extends AbstractForm {
 			'noticeName' => $this->noticeName,
 			'noticeUseHtml' => $this->noticeUseHtml,
 			'showOrder' => $this->showOrder
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.notice');
@@ -124,12 +123,12 @@ class NoticeAddForm extends AbstractForm {
 			if (!$objectType->conditionobject) continue;
 			
 			if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
-				$this->groupedConditionObjectTypes[$objectType->conditionobject] = array();
+				$this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
 			}
 			
 			if ($objectType->conditiongroup) {
 				if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
-					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = array();
+					$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
 				}
 				
 				$this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
@@ -143,7 +142,7 @@ class NoticeAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -173,7 +172,7 @@ class NoticeAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -182,13 +181,13 @@ class NoticeAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new NoticeAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new NoticeAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
@@ -196,8 +195,8 @@ class NoticeAddForm extends AbstractForm {
 				'noticeName' => $this->noticeName,
 				'noticeUseHtml' => $this->noticeUseHtml,
 				'showOrder' => $this->showOrder
-			))
-		));
+			])
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('notice')) {
@@ -205,13 +204,13 @@ class NoticeAddForm extends AbstractForm {
 			
 			// update notice name
 			$noticeEditor = new NoticeEditor($returnValues['returnValues']);
-			$noticeEditor->update(array(
+			$noticeEditor->update([
 				'notice' => 'wcf.notice.notice.notice'.$returnValues['returnValues']->noticeID
-			));
+			]);
 		}
 		
 		// transform conditions array into one-dimensional array
-		$conditions = array();
+		$conditions = [];
 		foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
 			foreach ($groupedObjectTypes as $objectTypes) {
 				if (is_array($objectTypes)) {
@@ -245,7 +244,7 @@ class NoticeAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -268,14 +267,14 @@ class NoticeAddForm extends AbstractForm {
 			throw new UserInputException('cssClassName');
 		}
 		else if (!in_array($this->cssClassName, $this->availableCssClassNames)) {
-			throw new UserInputException('cssClassName', 'notValid');
+			throw new UserInputException('cssClassName', 'invalid');
 		}
 		else if ($this->cssClassName == 'custom') {
 			if (empty($this->cssClassName)) {
 				throw new UserInputException('cssClassName');
 			}
 			if (!Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)) {
-				throw new UserInputException('cssClassName', 'notValid');
+				throw new UserInputException('cssClassName', 'invalid');
 			}
 		}
 		

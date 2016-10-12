@@ -5,11 +5,9 @@ namespace wcf\data;
  * Interface for enhanced iteration support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 interface ITraversableObject extends \SeekableIterator {
 	/**
@@ -21,10 +19,10 @@ interface ITraversableObject extends \SeekableIterator {
 	
 	/**
 	 * Searches a specific object by object id and setting internal iterator
-	 * pointer to found item. Returns null if object id is not found.
+	 * pointer to found item. Returns `null` if object id is not found.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject|null
 	 */
 	public function search($objectID);
 }

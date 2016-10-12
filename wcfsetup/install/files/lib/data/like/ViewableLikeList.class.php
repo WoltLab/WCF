@@ -1,72 +1,74 @@
 <?php
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 
 /**
  * Represents a list of viewable likes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.like
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Like
+ *
+ * @method	ViewableLike		current()
+ * @method	ViewableLike[]		getObjects()
+ * @method	ViewableLike|null	search($objectID)
+ * @property	ViewableLike[]		$objects
  */
 class ViewableLikeList extends LikeList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\like\Like';
+	public $className = Like::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
+	 */
+	public $decoratorClassName = ViewableLike::class;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 20;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'like_table.time DESC';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
-		$userIDs = array();
-		$likeGroups = array();
-		foreach ($this->objects as &$like) {
+		$userIDs = [];
+		$likeGroups = [];
+		foreach ($this->objects as $like) {
 			$userIDs[] = $like->userID;
-			$like = new ViewableLike($like);
 			
 			if (!isset($likeGroups[$like->objectTypeID])) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($like->objectTypeID);
-				$likeGroups[$like->objectTypeID] = array(
+				$likeGroups[$like->objectTypeID] = [
 					'provider' => $objectType->getProcessor(),
-					'objects' => array()
-				);
+					'objects' => []
+				];
 			}
 			
 			$likeGroups[$like->objectTypeID]['objects'][] = $like;
 		}
-		unset($like);
 		
 		// set user profiles
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $like) {
-				$like->setUserProfile($users[$like->userID]);
-			}
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 		
 		// parse like
 		foreach ($likeGroups as $likeData) {
 			if ($likeData['provider'] instanceof IViewableLikeProvider) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$likeData['provider']->prepare($likeData['objects']);
 			}
 		}

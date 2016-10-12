@@ -12,7 +12,7 @@
 			{/content}
 		</ul>
 	{hascontentelse}
-		<div class="containerPadding">
+		<div class="section">
 			{lang}wcf.user.profile.content.wall.noEntries{/lang}
 		</div>
 	{/hascontent}

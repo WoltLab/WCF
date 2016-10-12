@@ -7,25 +7,18 @@ use wcf\data\DatabaseObject;
  * Represents a condition.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Condition
+ *
+ * @property-read	integer		$conditionID		unique id of the condition
+ * @property-read	integer		$objectTypeID		id of the condition object type (of different condition object type definitions)
+ * @property-read	integer		$objectID		id of the conditioned object of the object type represented by `$objectTypeID`
+ * @property-read	array		$conditionData		array with the condition data with is processed by the condition object type's processor
  */
 class Condition extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'conditionID';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'condition';
-	
-	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -48,7 +41,7 @@ class Condition extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -56,12 +49,12 @@ class Condition extends DatabaseObject {
 		// handle condition data
 		$this->data['conditionData'] = @unserialize($data['conditionData']);
 		if (!is_array($this->data['conditionData'])) {
-			$this->data['conditionData'] = array();
+			$this->data['conditionData'] = [];
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'condition_table';

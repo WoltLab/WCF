@@ -10,13 +10,14 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
+use wcf\data\user\User;
 use wcf\system\application\ApplicationHandler;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container\GroupFormElementContainer;
 use wcf\system\form\container\MultipleSelectionFormElementContainer;
@@ -25,14 +26,15 @@ use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
-use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
-use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\setup\IFileHandler;
 use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -41,11 +43,9 @@ use wcf\util\StringUtil;
  * PackageInstallationDispatcher handles the whole installation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageInstallationDispatcher {
 	/**
@@ -56,50 +56,44 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * instance of PackageArchive
-	 * @var	\wcf\system\package\PackageArchive
+	 * @var	PackageArchive
 	 */
-	public $archive = null;
+	public $archive;
 	
 	/**
 	 * instance of PackageInstallationNodeBuilder
-	 * @var	\wcf\system\package\PackageInstallationNodeBuilder
+	 * @var	PackageInstallationNodeBuilder
 	 */
-	public $nodeBuilder = null;
+	public $nodeBuilder;
 	
 	/**
 	 * instance of Package
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
-	public $package = null;
+	public $package;
 	
 	/**
 	 * instance of PackageInstallationQueue
-	 * @var	\wcf\system\package\PackageInstallationQueue
+	 * @var	PackageInstallationQueue
 	 */
-	public $queue = null;
+	public $queue;
 	
 	/**
 	 * default name of the config file
 	 * @var	string
 	 */
-	const CONFIG_FILE = 'config.inc.php';
-	
-	/**
-	 * holds state of structuring version tables
-	 * @var	boolean
-	 */
-	protected $requireRestructureVersionTables = false;
+	const CONFIG_FILE = 'app.config.inc.php';
 	
 	/**
 	 * data of previous package in queue
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $previousPackageData = null;
+	protected $previousPackageData;
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
 	 * 
-	 * @param	\wcf\data\package\installation\queue\PackageInstallationQueue	$queue
+	 * @param	PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
 		$this->queue = $queue;
@@ -111,7 +105,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Sets data of previous package in queue.
 	 * 
-	 * @param	array<string>	$packageData
+	 * @param	string[]	$packageData
 	 */
 	public function setPreviousPackage(array $packageData) {
 		$this->previousPackageData = $packageData;
@@ -121,12 +115,13 @@ class PackageInstallationDispatcher {
 	 * Installs node components and returns next node.
 	 * 
 	 * @param	string		$node
-	 * @return	\wcf\system\package\PackageInstallationStep
+	 * @return	PackageInstallationStep
 	 */
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
 		
 		// invoke node-specific actions
+		$step = null;
 		foreach ($nodes as $data) {
 			$nodeData = unserialize($data['nodeData']);
 			
@@ -158,7 +153,6 @@ class PackageInstallationDispatcher {
 		$this->nodeBuilder->completeNode($node);
 		
 		// assign next node
-		$tmp = $node;
 		$node = $this->nodeBuilder->getNextNode($node);
 		$step->setNode($node);
 		
@@ -169,10 +163,10 @@ class PackageInstallationDispatcher {
 				SET	optionValue = ?
 				WHERE	optionName = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				TIME_NOW,
 				'last_update_time'
-			));
+			]);
 			
 			// update options.inc.php
 			OptionEditor::resetCache();
@@ -190,16 +184,49 @@ class PackageInstallationDispatcher {
 						WHERE	optionName = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					
-					$statement->execute(array(
+					$statement->execute([
 						StringUtil::getUUID(),
 						'wcf_uuid'
-					));
+					]);
+					
+					$user = new User(1);
+					$statement->execute([
+						$user->username,
+						'mail_from_name'
+					]);
+					$statement->execute([
+						$user->email,
+						'mail_from_address'
+					]);
+					$statement->execute([
+						$user->email,
+						'mail_admin_address'
+					]);
+					
+					try {
+						$statement->execute([
+							bin2hex(CryptoUtil::randomBytes(20)),
+							'signature_secret'
+						]);
+					}
+					catch (CryptoException $e) {
+						// ignore, the secret will stay empty and crypto operations
+						// depending on it will fail
+					}
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
-						$statement->execute(array(
+						$statement->execute([
 							1,
 							'enable_debug_mode'
-						));
+						]);
+						$statement->execute([
+							'public',
+							'exception_privacy'
+						]);
+						$statement->execute([
+							'debug',
+							'mail_send_method'
+						]);
 					}
 					
 					// update options.inc.php
@@ -208,7 +235,6 @@ class PackageInstallationDispatcher {
 				
 				// rebuild application paths
 				ApplicationHandler::rebuild();
-				ApplicationEditor::setup();
 			}
 			
 			// remove template listener cache
@@ -230,14 +256,12 @@ class PackageInstallationDispatcher {
 						wcf".WCF_N."_package package
 				WHERE		queue.processNo = ?
 						AND package.packageID = queue.packageID
-						AND package.packageID <> ?
 						AND package.isApplication = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->queue->processNo,
-				1,
 				1
-			));
+			]);
 			while ($row = $statement->fetchArray()) {
 				Package::writeConfigFile($row['packageID']);
 			}
@@ -249,7 +273,7 @@ class PackageInstallationDispatcher {
 				FROM	wcf".WCF_N."_package_installation_queue
 				WHERE	processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->queue->processNo));
+			$statement->execute([$this->queue->processNo]);
 			while ($row = $statement->fetchArray()) {
 				@unlink($row['archive']);
 			}
@@ -258,11 +282,7 @@ class PackageInstallationDispatcher {
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->queue->processNo));
-		}
-		
-		if ($this->requireRestructureVersionTables) {
-			$this->restructureVersionTables();
+			$statement->execute([$this->queue->processNo]);
 		}
 		
 		return $step;
@@ -271,11 +291,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package archive.
 	 * 
-	 * @return	\wcf\system\package\PackageArchive
+	 * @return	PackageArchive
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
-			$package = $this->getPackage();
 			// check if we're doing an iterative update of the same package
 			if ($this->previousPackageData !== null && $this->getPackage()->package == $this->previousPackageData['package']) {
 				if (Package::compareVersion($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
@@ -291,9 +310,7 @@ class PackageInstallationDispatcher {
 				// package_installation_queue with this value
 				$archive = $this->archive->downloadArchive();
 				$queueEditor = new PackageInstallationQueueEditor($this->queue);
-				$queueEditor->update(array(
-					'archive' => $archive
-				));
+				$queueEditor->update(['archive' => $archive]);
 			}
 			
 			$this->archive->openArchive();
@@ -305,7 +322,9 @@ class PackageInstallationDispatcher {
 	/**
 	 * Installs current package.
 	 * 
-	 * @param	array		$nodeData
+	 * @param	mixed[]		$nodeData
+	 * @return	PackageInstallationStep
+	 * @throws	SystemException
 	 */
 	protected function installPackage(array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -319,7 +338,7 @@ class PackageInstallationDispatcher {
 						FROM	wcf".WCF_N."_package
 						WHERE	packageID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($requirementData['packageID']));
+					$statement->execute([$requirementData['packageID']]);
 				}
 				else {
 					// try to find matching package
@@ -327,7 +346,7 @@ class PackageInstallationDispatcher {
 						FROM	wcf".WCF_N."_package
 						WHERE	package = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($package));
+					$statement->execute([$package]);
 				}
 				$row = $statement->fetchArray();
 				
@@ -355,13 +374,13 @@ class PackageInstallationDispatcher {
 			$sql = "DELETE FROM	wcf".WCF_N."_package_exclusion
 				WHERE		packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->queue->packageID));
+			$statement->execute([$this->queue->packageID]);
 			
 			// delete old requirements and dependencies
 			$sql = "DELETE FROM	wcf".WCF_N."_package_requirement
 				WHERE		packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->queue->packageID));
+			$statement->execute([$this->queue->packageID]);
 		}
 		else {
 			// create package entry
@@ -369,9 +388,7 @@ class PackageInstallationDispatcher {
 			
 			// update package id for current queue
 			$queueEditor = new PackageInstallationQueueEditor($this->queue);
-			$queueEditor->update(array(
-				'packageID' => $package->packageID
-			));
+			$queueEditor->update(['packageID' => $package->packageID]);
 			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
@@ -379,16 +396,15 @@ class PackageInstallationDispatcher {
 			
 			if ($package->isApplication) {
 				$host = str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
-				$path = RouteHandler::getPath(array('acp'));
+				$path = RouteHandler::getPath(['acp']);
 				
 				// insert as application
-				ApplicationEditor::create(array(
+				ApplicationEditor::create([
 					'domainName' => $host,
 					'domainPath' => $path,
 					'cookieDomain' => $host,
-					'cookiePath' => $path,
 					'packageID' => $package->packageID
-				));
+				]);
 			}
 		}
 		
@@ -400,7 +416,11 @@ class PackageInstallationDispatcher {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
-				$statement->execute(array($this->queue->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
+				$statement->execute([
+					$this->queue->packageID,
+					$excludedPackage['name'],
+					!empty($excludedPackage['version']) ? $excludedPackage['version'] : ''
+				]);
 			}
 		}
 		
@@ -415,7 +435,10 @@ class PackageInstallationDispatcher {
 			foreach ($requirements as $identifier => $possibleRequirements) {
 				$requirement = array_shift($possibleRequirements);
 				
-				$statement->execute(array($this->queue->packageID, $requirement['packageID']));
+				$statement->execute([
+					$this->queue->packageID,
+					$requirement['packageID']
+				]);
 			}
 		}
 		
@@ -434,9 +457,7 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Saves the localized package infos.
-	 * 
-	 * @todo	license and readme
+	 * Saves the localized package info.
 	 */
 	protected function saveLocalizedPackageInfos() {
 		$package = new Package($this->queue->packageID);
@@ -457,8 +478,8 @@ class PackageInstallationDispatcher {
 				FROM	wcf".WCF_N."_language_category
 				WHERE	languageCategory = ?";
 			$statement2 = WCF::getDB()->prepareStatement($sql);
-			$statement2->execute(array('wcf.acp.package'));
-			$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+			$statement2->execute(['wcf.acp.package']);
+			$languageCategory = $statement2->fetchObject(LanguageCategory::class);
 		}
 		else {
 			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.acp.package');
@@ -472,20 +493,20 @@ class PackageInstallationDispatcher {
 		
 		// update description and name
 		$packageEditor = new PackageEditor($package);
-		$packageEditor->update(array(
+		$packageEditor->update([
 			'packageDescription' => 'wcf.acp.package.packageDescription.package'.$this->queue->packageID,
 			'packageName' => 'wcf.acp.package.packageName.package'.$this->queue->packageID
-		));
+		]);
 	}
 	
 	/**
 	 * Saves a localized package info.
 	 * 
-	 * @param	\wcf\system\database\statement\PreparedStatement		$statement
-	 * @param	\wcf\data\language\LanguageList				$languageList
-	 * @param	\wcf\data\language\category\LanguageCategory		$languageCategory
-	 * @param	\wcf\data\package\Package				$package
-	 * @param	string							$infoName
+	 * @param	PreparedStatement	$statement
+	 * @param	LanguageList		$languageList
+	 * @param	LanguageCategory	$languageCategory
+	 * @param	Package			$package
+	 * @param	string			$infoName
 	 */
 	protected function saveLocalizedPackageInfo(PreparedStatement $statement, $languageList, LanguageCategory $languageCategory, Package $package, $infoName) {
 		$infoValues = $this->getArchive()->getPackageInfo($infoName);
@@ -514,21 +535,22 @@ class PackageInstallationDispatcher {
 				$value = $infoValues[$language->languageCode];
 			}
 			
-			$statement->execute(array(
+			$statement->execute([
 				$language->languageID,
 				'wcf.acp.package.'.$infoName.'.package'.$package->packageID,
 				$value,
 				$languageCategory->languageCategoryID,
 				1
-			));
+			]);
 		}
 	}
 	
 	/**
 	 * Executes a package installation plugin.
 	 * 
-	 * @param	array		step
-	 * @return	boolean
+	 * @param	mixed[]		$nodeData
+	 * @return	PackageInstallationStep
+	 * @throws	SystemException
 	 */
 	protected function executePIP(array $nodeData) {
 		$step = new PackageInstallationStep();
@@ -539,9 +561,7 @@ class PackageInstallationDispatcher {
 			FROM	wcf".WCF_N."_package_installation_plugin
 			WHERE	pluginName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$nodeData['pip']
-		));
+		$statement->execute([$nodeData['pip']]);
 		$row = $statement->fetchArray();
 		
 		// PIP is unknown
@@ -555,14 +575,18 @@ class PackageInstallationDispatcher {
 			throw new SystemException("unable to find class '".$className."'");
 		}
 		
+		// set default value
+		if (empty($nodeData['value'])) {
+			$defaultValue = call_user_func([$className, 'getDefaultFilename']);
+			if ($defaultValue) {
+				$nodeData['value'] = $defaultValue;
+			}
+		}
+		
 		$plugin = new $className($this, $nodeData);
 		
 		if (!($plugin instanceof IPackageInstallationPlugin)) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\package\plugin\IPackageInstallationPlugin'");
-		}
-		
-		if ($plugin instanceof SQLPackageInstallationPlugin || $plugin instanceof ObjectTypePackageInstallationPlugin) {
-			$this->requireRestructureVersionTables = true;
+			throw new ImplementationException($className, IPackageInstallationPlugin::class);
 		}
 		
 		// execute PIP
@@ -587,7 +611,7 @@ class PackageInstallationDispatcher {
 	 * 
 	 * @param	string		$currentNode
 	 * @param	array		$nodeData
-	 * @return	\wcf\system\package\PackageInstallationStep
+	 * @return	PackageInstallationStep
 	 */
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -616,7 +640,7 @@ class PackageInstallationDispatcher {
 						$shiftNodes = true;
 					}
 					
-					$queue = PackageInstallationQueueEditor::create(array(
+					$queue = PackageInstallationQueueEditor::create([
 						'parentQueueID' => $queue->queueID,
 						'processNo' => $this->queue->processNo,
 						'userID' => WCF::getUser()->userID,
@@ -624,7 +648,7 @@ class PackageInstallationDispatcher {
 						'packageName' => $package['packageName'],
 						'archive' => $package['archive'],
 						'action' => $queue->action
-					));
+					]);
 					
 					$installation = new PackageInstallationDispatcher($queue);
 					$installation->nodeBuilder->setParentNode($node);
@@ -649,10 +673,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Extracts files from .tar(.gz) archive and installs them
 	 * 
-	 * @param	string			$targetDir
-	 * @param	string			$sourceArchive
-	 * @param	FileHandler		$fileHandler
-	 * @return	\wcf\system\setup\Installer
+	 * @param	string		$targetDir
+	 * @param	string		$sourceArchive
+	 * @param	IFileHandler	$fileHandler
+	 * @return	Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
 		return new Installer($targetDir, $sourceArchive, $fileHandler);
@@ -674,28 +698,49 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
 	 * 
-	 * @return	\wcf\system\form\FormDocument
+	 * @return	FormDocument
 	 */
 	protected function promptPackageDir() {
-		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
-			
+		// check for pre-defined directories originating from WCFSetup
+		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
+		if ($directory !== null) {
+			$abbreviation = Package::getAbbreviation($this->getPackage()->package);
+			$directory = isset($directory[$abbreviation]) ? $directory[$abbreviation] : null;
+		}
+		
+		if ($directory === null && !PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
 			$container = new GroupFormElementContainer();
 			$packageDir = new TextInputFormElement($container);
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(dirname(WCF_DIR)));
-			// check if there is already an application
-			$sql = "SELECT	COUNT(*) AS count
-				FROM	wcf".WCF_N."_package
-				WHERE	packageDir = ?";
+			// check if there are packages installed in a parent
+			// directory of WCF, or if packages are below it
+			$sql = "SELECT  packageDir
+				FROM    wcf".WCF_N."_package
+				WHERE   packageDir <> ''";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array('../'));
-			$row = $statement->fetchArray();
-			if ($row['count']) {
-				// use abbreviation
-				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
+			$statement->execute();
+			
+			$isParent = null;
+			while ($column = $statement->fetchColumn()) {
+				if ($isParent !== null) {
+					continue;
+				}
+				
+				if (preg_match('~^\.\./[^\.]~', $column)) {
+					$isParent = false;
+				}
+				else if (mb_strpos($column, '.') !== 0) {
+					$isParent = true;
+				}
 			}
+			
+			$defaultPath = WCF_DIR;
+			if ($isParent === false) {
+				$defaultPath = dirname(WCF_DIR);
+			}
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . Package::getAbbreviation($this->getPackage()->package) . '/';
 			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
@@ -707,23 +752,29 @@ class PackageInstallationDispatcher {
 			return $document;
 		}
 		else {
-			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
-			$document->handleRequest();
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator($document->getValue('packageDir'))));
-			if ($packageDir === '/') $packageDir = '';
+			if ($directory !== null) {
+				$document = null;
+				$packageDir = $directory;
+			}
+			else {
+				$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
+				$document->handleRequest();
+				$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator($document->getValue('packageDir'))));
+				if ($packageDir === '/') $packageDir = '';
+			}
 			
 			if ($packageDir !== null) {
 				// validate package dir
-				if (file_exists($packageDir . 'global.php')) {
+				if ($document !== null && file_exists($packageDir . 'global.php')) {
 					$document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
 					return $document;
 				}
 				
 				// set package dir
 				$packageEditor = new PackageEditor($this->getPackage());
-				$packageEditor->update(array(
+				$packageEditor->update([
 					'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir)
-				));
+				]);
 				
 				// determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
 				// faked and differ from the real filesystem path
@@ -735,22 +786,25 @@ class PackageInstallationDispatcher {
 						FROM	wcf".WCF_N."_application
 						WHERE	packageID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(1));
+					$statement->execute([1]);
 					$row = $statement->fetchArray();
 					
 					$wcfDomainPath = $row['domainPath'];
 				}
 				
-				$documentRoot = str_replace($wcfDomainPath, '', FileUtil::unifyDirSeparator(WCF_DIR));
-				$domainPath = str_replace($documentRoot, '', $packageDir);
+				$documentRoot = substr(FileUtil::unifyDirSeparator(WCF_DIR), 0, -strlen(FileUtil::unifyDirSeparator($wcfDomainPath)));
+				$domainPath = FileUtil::getRelativePath($documentRoot, $packageDir);
+				if ($domainPath === './') {
+					// `FileUtil::getRelativePath()` returns `./` if both paths lead to the same directory
+					$domainPath = '/';
+				}
+				
+				$domainPath = FileUtil::addLeadingSlash($domainPath);
 				
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
 				$applicationEditor = new ApplicationEditor($application);
-				$applicationEditor->update(array(
-					'domainPath' => $domainPath,
-					'cookiePath' => $domainPath
-				));
+				$applicationEditor->update(['domainPath' => $domainPath]);
 				
 				// create directory and set permissions
 				@mkdir($packageDir, 0777, true);
@@ -764,6 +818,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts a selection of optional packages.
 	 * 
+	 * @param	string[][]	$packages
 	 * @return	mixed
 	 */
 	protected function promptOptionalPackages(array $packages) {
@@ -810,6 +865,16 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
+	 * Returns current package name.
+	 * 
+	 * @return	string		package name
+	 * @since	3.0
+	 */
+	public function getPackageName() {
+		return $this->queue->packageName;
+	}
+	
+	/**
 	 * Returns current package installation type.
 	 * 
 	 * @return	string
@@ -827,10 +892,10 @@ class PackageInstallationDispatcher {
 	 */
 	public static function openQueue($parentQueueID = 0, $processNo = 0) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID = ?", array(WCF::getUser()->userID));
-		$conditions->add("parentQueueID = ?", array($parentQueueID));
-		if ($processNo != 0) $conditions->add("processNo = ?", array($processNo));
-		$conditions->add("done = ?", array(0));
+		$conditions->add("userID = ?", [WCF::getUser()->userID]);
+		$conditions->add("parentQueueID = ?", [$parentQueueID]);
+		if ($processNo != 0) $conditions->add("processNo = ?", [$processNo]);
+		$conditions->add("done = ?", [0]);
 		
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_package_installation_queue
@@ -846,7 +911,7 @@ class PackageInstallationDispatcher {
 			exit;
 		}
 		else {
-			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'queueID='.$packageInstallation['queueID']);
+			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', [], 'queueID='.$packageInstallation['queueID']);
 			HeaderUtil::redirect($url);
 			exit;
 		}
@@ -865,7 +930,7 @@ class PackageInstallationDispatcher {
 					AND done = 0
 			ORDER BY	queueID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(WCF::getUser()->userID));
+		$statement->execute([WCF::getUser()->userID]);
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
@@ -884,7 +949,7 @@ class PackageInstallationDispatcher {
 			FROM	wcf".WCF_N."_package_installation_queue
 			WHERE	processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->queue->processNo));
+		$statement->execute([$this->queue->processNo]);
 		while ($row = $statement->fetchArray()) {
 			@unlink($row['archive']);
 		}
@@ -893,7 +958,7 @@ class PackageInstallationDispatcher {
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 			WHERE		processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->queue->processNo));
+		$statement->execute([$this->queue->processNo]);
 		
 		// clear language files once whole installation is completed
 		LanguageEditor::deleteLanguageFiles();
@@ -908,9 +973,9 @@ class PackageInstallationDispatcher {
 	public function updatePackage() {
 		if (empty($this->queue->packageName)) {
 			$queueEditor = new PackageInstallationQueueEditor($this->queue);
-			$queueEditor->update(array(
+			$queueEditor->update([
 				'packageName' => $this->getArchive()->getLocalizedPackageInfo('packageName')
-			));
+			]);
 			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
@@ -921,10 +986,10 @@ class PackageInstallationDispatcher {
 	 * Validates specific php requirements.
 	 * 
 	 * @param	array		$requirements
-	 * @return	array<array>
+	 * @return	mixed[][]
 	 */
 	public static function validatePHPRequirements(array $requirements) {
-		$errors = array();
+		$errors = [];
 		
 		// validate php version
 		if (isset($requirements['version'])) {
@@ -934,22 +999,22 @@ class PackageInstallationDispatcher {
 			}
 			
 			if (!$passed) {
-				$errors['version'] = array(
+				$errors['version'] = [
 					'required' => $requirements['version'],
 					'installed' => PHP_VERSION
-				);
+				];
 			}
 		}
 		
 		// validate extensions
 		if (isset($requirements['extensions'])) {
 			foreach ($requirements['extensions'] as $extension) {
-				$passed = (extension_loaded($extension)) ? true : false;
+				$passed = extension_loaded($extension) ? true : false;
 				
 				if (!$passed) {
-					$errors['extension'][] = array(
+					$errors['extension'][] = [
 						'extension' => $extension
-					);
+					];
 				}
 			}
 		}
@@ -961,11 +1026,11 @@ class PackageInstallationDispatcher {
 				
 				$passed = self::compareSetting($setting, $value, $iniValue);
 				if (!$passed) {
-					$errors['setting'][] = array(
+					$errors['setting'][] = [
 						'setting' => $setting,
 						'required' => $value,
 						'installed' => ($iniValue === false) ? '(unknown)' : $iniValue
-					);
+					];
 				}
 			}
 		}
@@ -977,9 +1042,9 @@ class PackageInstallationDispatcher {
 				
 				$passed = self::functionExists($function);
 				if (!$passed) {
-					$errors['function'][] = array(
+					$errors['function'][] = [
 						'function' => $function
-					);
+					];
 				}
 			}
 		}
@@ -999,9 +1064,9 @@ class PackageInstallationDispatcher {
 				}
 				
 				if (!$passed) {
-					$errors['class'][] = array(
+					$errors['class'][] = [
 						'class' => $class
-					);
+					];
 				}
 			}
 				
@@ -1047,12 +1112,12 @@ class PackageInstallationDispatcher {
 		if ($compareValue === false) return false;
 		
 		$value = mb_strtolower($value);
-		$trueValues = array('1', 'on', 'true');
-		$falseValues = array('0', 'off', 'false');
+		$trueValues = ['1', 'on', 'true'];
+		$falseValues = ['0', 'off', 'false'];
 		
 		// handle values considered as 'true'
 		if (in_array($value, $trueValues)) {
-			return ($compareValue) ? true : false;
+			return $compareValue ? true : false;
 		}
 		// handle values considered as 'false'
 		else if (in_array($value, $falseValues)) {
@@ -1095,93 +1160,6 @@ class PackageInstallationDispatcher {
 			default:
 				return $value;
 			break;
-		}
-	}
-	
-	/**
-	 * Restructure version tables.
-	 * 
-	 * @deprecated	2.1 - will be removed with WCF 2.2
-	 */
-	protected function restructureVersionTables() {
-		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionableObject');
-		
-		if (empty($objectTypes)) {
-			return;
-		}
-		
-		// base structure of version tables
-		$versionTableBaseColumns = array();
-		$versionTableBaseColumns[] = array('name' => 'versionID', 'data' => array('type' => 'INT', 'length' => 10, 'key' => 'PRIMARY', 'autoIncrement' => 'AUTO_INCREMENT'));
-		$versionTableBaseColumns[] = array('name' => 'versionUserID', 'data' => array('type' => 'INT', 'length' => 10));
-		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
-		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT', 'length' => 10));
-		
-		foreach ($objectTypes as $objectType) {
-			if (!class_exists($objectType->className)) {
-				// versionable database object isn't available anymore
-				// the object type gets deleted later on during the uninstallation
-				continue;
-			}
-			$baseTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseTableName')));
-			
-			// remove primary key from base table columns
-			foreach ($baseTableColumns as $key => $column) {
-				if ($column['data']['key'] == 'PRIMARY') {
-					$baseTableColumns[$key]['data']['key'] = '';
-				}
-				$baseTableColumns[$key]['data']['autoIncrement'] = false;
-			}
-			
-			// get structure of version table
-			$versionTableColumns = array();
-			try {
-				$versionTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')));
-			}
-			catch (\Exception $e) { }
-			
-			if (empty($versionTableColumns)) {
-				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
-				WCF::getDB()->getEditor()->createTable(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columns);
-				
-				// add version table to plugin
-				$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
-							(packageID, sqlTable)
-					VALUES		(?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
-					$this->queue->packageID,
-					call_user_func(array($objectType->className, 'getDatabaseVersionTableName'))
-				));
-			}
-			else {
-				$baseTableColumnNames = $versionTableColumnNames = $versionTableBaseColumnNames = array();
-				foreach ($baseTableColumns as $column) {
-					$baseTableColumnNames[] = $column['name'];
-				}
-				foreach ($versionTableColumns as $column) {
-					$versionTableColumnNames[] = $column['name'];
-				}
-				foreach ($versionTableBaseColumns as $column) {
-					$versionTableBaseColumnNames[] = $column['name'];
-				}
-				
-				// check garbage columns in versioned table
-				foreach ($versionTableColumns as $columnData) {
-					if (!in_array($columnData['name'], $baseTableColumnNames) && !in_array($columnData['name'], $versionTableBaseColumnNames)) {
-						// delete column
-						WCF::getDB()->getEditor()->dropColumn(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columnData['name']);
-					}
-				}
-				
-				// check new columns for versioned table
-				foreach ($baseTableColumns as $columnData) {
-					if (!in_array($columnData['name'], $versionTableColumnNames)) {
-						// add colum
-						WCF::getDB()->getEditor()->addColumn(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columnData['name'], $columnData['data']);
-					}
-				}
-			}
 		}
 	}
 }

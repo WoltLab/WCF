@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
 
@@ -7,33 +8,31 @@ use wcf\system\SingletonFactory;
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class BBCodeHandler extends SingletonFactory {
 	/**
-	 * list of BBCodes allowed for usage
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * list of BBCodes displayed as buttons
+	 * @var	BBCode[]
 	 */
-	protected $allowedBBCodes = array();
+	protected $buttonBBCodes = [];
 	
 	/**
-	 * list of BBCodes displayed as buttons
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * list of BBCodes disallowed for usage
+	 * @var	BBCode[]
 	 */
-	protected $buttonBBCodes = array();
+	protected $disallowedBBCodes = [];
 	
 	/**
 	 * list of BBCodes which contain raw code (disabled BBCode parsing)
-	 * @var	array<\wcf\data\bbcode\BBCode>
+	 * @var	BBCode[]
 	 */
 	protected $sourceBBCodes = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
@@ -50,29 +49,32 @@ class BBCodeHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function isAvailableBBCode($bbCodeTag) {
-		$bbCode = BBCodeCache::getInstance()->getBBCodeByTag($bbCodeTag);
-		if ($bbCode === null || $bbCode->isDisabled) {
-			return false;
-		}
-		
-		if (in_array('all', $this->allowedBBCodes)) {
-			return true;
-		}
-		else if (in_array('none', $this->allowedBBCodes)) {
-			return false;
-		}
-		
-		return in_array($bbCodeTag, $this->allowedBBCodes);
+		return !in_array($bbCodeTag, $this->disallowedBBCodes);
+	}
+	
+	/**
+	 * Returns all bbcodes.
+	 * 
+	 * @return	BBCode[]
+	 */
+	public function getBBCodes() {
+		return BBCodeCache::getInstance()->getBBCodes();
 	}
 	
 	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @param       boolean         $excludeCoreBBCodes     do not return bbcodes that are available by default
+	 * @return	BBCode[]
 	 */
-	public function getButtonBBCodes() {
-		$buttons = array();
+	public function getButtonBBCodes($excludeCoreBBCodes = false) {
+		$buttons = [];
+		$coreBBCodes = ['align', 'b', 'color', 'i', 'img', 'list', 's', 'size', 'sub', 'sup', 'quote', 'table', 'u', 'url'];
 		foreach ($this->buttonBBCodes as $bbcode) {
+			if ($excludeCoreBBCodes && in_array($bbcode->bbcodeTag, $coreBBCodes)) {
+				continue;
+			}
+			
 			if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
 				$buttons[] = $bbcode;
 			}
@@ -82,26 +84,34 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * @param string[] $bbcodes
+	 * @deprecated 3.0 - please use setDisallowedBBCodes() instead
+	 */
+	public function setAllowedBBCodes(array $bbcodes) {
+		throw new \RuntimeException("setAllowedBBCodes() is no longer supported, please use setDisallowedBBCodes() instead.");
+	}
+	
+	/**
 	 * Sets the allowed BBCodes.
 	 * 
-	 * @param	array<string>
+	 * @param	string[]	$bbCodes
 	 */
-	public function setAllowedBBCodes(array $bbCodes) {
-		$this->allowedBBCodes = $bbCodes;
+	public function setDisallowedBBCodes(array $bbCodes) {
+		$this->disallowedBBCodes = $bbCodes;
 	}
 	
 	/**
 	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
 	 * 
-	 * @return	array<\wcf\data\bbcode\BBCode>
+	 * @return	BBCode[]
 	 */
 	public function getSourceBBCodes() {
 		if (empty($this->allowedBBCodes)) {
-			return array();
+			return [];
 		}
 		
 		if ($this->sourceBBCodes === null) {
-			$this->sourceBBCodes = array();
+			$this->sourceBBCodes = [];
 			
 			foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
 				if (!$bbcode->isSourceCode) {
@@ -120,7 +130,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of known highlighters.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getHighlighters() {
 		return BBCodeCache::getInstance()->getHighlighters();

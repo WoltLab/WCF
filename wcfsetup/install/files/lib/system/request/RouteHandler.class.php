@@ -3,6 +3,9 @@ namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\route\DynamicRequestRoute;
+use wcf\system\request\route\IRequestRoute;
+use wcf\system\request\route\LookupRequestRoute;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -14,11 +17,9 @@ use wcf\util\FileUtil;
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.request
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Request
  */
 class RouteHandler extends SingletonFactory {
 	/**
@@ -53,7 +54,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of application abbreviation and default controller name
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $defaultControllers = null;
 	
@@ -65,9 +66,9 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	array<\wcf\system\request\IRoute>
+	 * @var	IRequestRoute[]
 	 */
-	protected $routes = array();
+	protected $routes = [];
 	
 	/**
 	 * parsed route data
@@ -76,56 +77,44 @@ class RouteHandler extends SingletonFactory {
 	protected $routeData = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * Sets default routes.
 	 */
 	protected function init() {
-		$this->addDefaultRoutes();
+		$route = new DynamicRequestRoute();
+		$route->setIsACP(true);
+		$this->addRoute($route);
+		
+		$route = new DynamicRequestRoute();
+		$this->addRoute($route);
+		
+		$route = new LookupRequestRoute();
+		$this->addRoute($route);
 		
 		// fire event
 		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
 	
 	/**
-	 * Adds default routes.
-	 */
-	protected function addDefaultRoutes() {
-		$acpRoute = new FlexibleRoute(true);
-		$this->addRoute($acpRoute);
-		
-		if (URL_LEGACY_MODE) {
-			$defaultRoute = new Route('default');
-			$defaultRoute->setSchema('/{controller}/{id}');
-			$defaultRoute->setParameterOption('controller', null, null, true);
-			$defaultRoute->setParameterOption('id', null, '\d+', true);
-			$this->addRoute($defaultRoute);
-		}
-		else {
-			$defaultRoute = new FlexibleRoute(false);
-			$this->addRoute($defaultRoute);
-		}
-	}
-	
-	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	\wcf\system\request\IRoute	$route
+	 * @param	IRequestRoute   $route
 	 */
-	public function addRoute(IRoute $route) {
+	public function addRoute(IRequestRoute $route) {
 		array_unshift($this->routes, $route);
 	}
 	
 	/**
 	 * Returns all registered routes. 
 	 * 
-	 * @return	array<\wcf\system\request\IRoute>
+	 * @return	IRequestRoute[]
 	 **/
 	public function getRoutes() {
-		return $this->routes; 
+		return $this->routes;
 	}
 	
 	/**
 	 * Returns true if a route matches. Please bear in mind, that the
-	 * first route which is able to consume all path components is used,
+	 * first route that is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
 	 * @return	boolean
@@ -182,12 +171,15 @@ class RouteHandler extends SingletonFactory {
 	 * Builds a route based upon route components, this is nothing
 	 * but a reverse lookup.
 	 * 
+	 * @param	string		$application	application identifier
 	 * @param	array		$components
 	 * @param	boolean		$isACP
 	 * @return	string
+	 * @throws	SystemException
 	 */
-	public function buildRoute(array $components, $isACP = null) {
+	public function buildRoute($application, array $components, $isACP = null) {
 		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
+		$components['application'] = $application;
 		
 		foreach ($this->routes as $route) {
 			if ($isACP != $route->isACP()) {
@@ -200,6 +192,25 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		throw new SystemException("Unable to build route, no available route is satisfied.");
+	}
+	
+	/**
+	 * Returns true if `$customUrl` contains only the letters a-z/A-Z, numbers, dashes,
+	 * underscores and forward slashes.
+	 * 
+	 * All other characters including those from the unicode range are potentially unsafe,
+	 * especially when dealing with url rewriting and resulting encoding issues with some
+	 * webservers.
+	 * 
+	 * This heavily limits the abilities for end-users to define appealing urls, but at
+	 * the same time this ensures a sufficient level of stability.
+	 * 
+	 * @param	string	$customUrl	url to perform sanity checks on
+	 * @return	bool	true if `$customUrl` passes the sanity check
+	 * @since	3.0
+	 */
+	public static function isValidCustomUrl($customUrl) {
+		return preg_match('~^[a-z0-9\-_/]+$~', $customUrl) === 1;
 	}
 	
 	/**
@@ -251,9 +262,11 @@ class RouteHandler extends SingletonFactory {
 	 * @param	array		$removeComponents
 	 * @return	string
 	 */
-	public static function getPath(array $removeComponents = array()) {
+	public static function getPath(array $removeComponents = []) {
 		if (empty(self::$path)) {
-			self::$path = FileUtil::addTrailingSlash(dirname($_SERVER['SCRIPT_NAME']));
+			// dirname return a single backslash on Windows if there are no parent directories 
+			$dir = dirname($_SERVER['SCRIPT_NAME']);
+			self::$path = ($dir === '\\') ? '/' : FileUtil::addTrailingSlash($dir);
 		}
 		
 		if (!empty($removeComponents)) {
@@ -268,7 +281,7 @@ class RouteHandler extends SingletonFactory {
 				}
 			}
 			
-			return '/' . implode('/', $path) . '/';
+			return FileUtil::addTrailingSlash('/' . implode('/', $path));
 		}
 		
 		return self::$path;
@@ -283,50 +296,21 @@ class RouteHandler extends SingletonFactory {
 		if (self::$pathInfo === null) {
 			self::$pathInfo = '';
 			
-			if (!URL_LEGACY_MODE || RequestHandler::getInstance()->isACPRequest()) {
-				// WCF 2.1: ?Foo/Bar/
-				if (!empty($_SERVER['QUERY_STRING'])) {
-					// don't use parse_str as it replaces dots with underscores
-					$components = explode('&', $_SERVER['QUERY_STRING']);
-					for ($i = 0, $length = count($components); $i < $length; $i++) {
-						$component = $components[$i];
-						
-						$pos = mb_strpos($component, '=');
-						if ($pos !== false && $pos + 1 === mb_strlen($component)) {
-							$component = mb_substr($component, 0, -1);
-							$pos = false;
-						}
-						
-						if ($pos === false) {
-							self::$pathInfo = urldecode($component);
-							break;
-						}
+			if (!empty($_SERVER['QUERY_STRING'])) {
+				// don't use parse_str as it replaces dots with underscores
+				$components = explode('&', $_SERVER['QUERY_STRING']);
+				for ($i = 0, $length = count($components); $i < $length; $i++) {
+					$component = $components[$i];
+					
+					$pos = mb_strpos($component, '=');
+					if ($pos !== false && $pos + 1 === mb_strlen($component)) {
+						$component = mb_substr($component, 0, -1);
+						$pos = false;
 					}
-				}
-			}
-			
-			// WCF 2.0: index.php/Foo/Bar/
-			if ((URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) || (RequestHandler::getInstance()->isACPRequest() && empty(self::$pathInfo))) {
-				if (isset($_SERVER['PATH_INFO'])) {
-					self::$pathInfo = $_SERVER['PATH_INFO'];
-				}
-				else if (isset($_SERVER['ORIG_PATH_INFO'])) {
-					self::$pathInfo = $_SERVER['ORIG_PATH_INFO'];
-						
-					// in some configurations ORIG_PATH_INFO contains the path to the file
-					// if the intended PATH_INFO component is empty
-					if (!empty(self::$pathInfo)) {
-						if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
-							self::$pathInfo = '';
-						}
-						
-						if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
-							self::$pathInfo = '';
-						}
-						
-						if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
-							self::$pathInfo = '';
-						}
+					
+					if ($pos === false) {
+						self::$pathInfo = urldecode($component);
+						break;
 					}
 				}
 			}
@@ -356,7 +340,7 @@ class RouteHandler extends SingletonFactory {
 	 */
 	protected function loadDefaultControllers() {
 		if ($this->defaultControllers === null) {
-			$this->defaultControllers = array();
+			$this->defaultControllers = [];
 			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				$app = WCF::getApplicationObject($application);

@@ -7,17 +7,20 @@ use wcf\system\WCF;
  * Executes user notification event-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.notification.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Notification\Event
+ * 
+ * @method	UserNotificationEventEditor[]	getObjects()
+ * @method	UserNotificationEventEditor	getSingleObject()
  */
 class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create();
+	 * @inheritDoc
+	 * @return	UserNotificationEvent
 	 */
 	public function create() {
+		/** @var UserNotificationEvent $event */
 		$event = parent::create();
 		
 		if ($event->preset) {

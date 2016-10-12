@@ -6,15 +6,13 @@ use wcf\system\WCF;
  * Creates a logical node-based uninstallation tree.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	/**
-	 * @see	\wcf\system\package\PackageInstallationNodeBuilder::buildNodes()
+	 * @inheritDoc
 	 */
 	public function buildNodes() {
 		if (!empty($this->parentNode)) {
@@ -29,7 +27,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	}
 	
 	/**
-	 * @see	\wcf\system\package\PackageInstallationNodeBuilder::buildPluginNodes()
+	 * @inheritDoc
 	 */
 	protected function buildPluginNodes() {
 		if (empty($this->node)) {
@@ -37,16 +35,13 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		}
 		
 		// fetch ordered pips
-		$pips = array();
 		$sql = "SELECT		pluginName, className,
 					CASE pluginName WHEN 'packageinstallationplugin' THEN 1 WHEN 'file' THEN 2 ELSE 0 END AS pluginOrder
 			FROM		wcf".WCF_N."_package_installation_plugin
 			ORDER BY	pluginOrder, priority";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$pips[] = $row;
-		}
+		$pips = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		// insert pips
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
@@ -56,25 +51,25 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		$sequenceNo = 0;
 		
 		foreach ($pips as $pip) {
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->queue->queueID,
 				$this->installation->queue->processNo,
 				$sequenceNo,
 				$this->node,
 				$this->parentNode,
 				'pip',
-				serialize(array(
+				serialize([
 					'pluginName' => $pip['pluginName'],
 					'className' => $pip['className']
-				))
-			));
+				])
+			]);
 			
 			$sequenceNo++;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\package\PackageInstallationNodeBuilder::buildPackageNode()
+	 * @inheritDoc
 	 */
 	protected function buildPackageNode() {
 		$this->parentNode = $this->node;
@@ -84,7 +79,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			0,
@@ -92,6 +87,6 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 			$this->parentNode,
 			'package',
 			'a:0:{}'
-		));
+		]);
 	}
 }

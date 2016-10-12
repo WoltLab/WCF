@@ -8,18 +8,16 @@ use wcf\system\Regex;
  * Provides functions to send files to the client via PHP.
  * 
  * @author	Sebastian Oettl, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 class FileReader {
 	/**
 	 * http options
 	 * @var	array
 	 */
-	protected $options = array(
+	protected $options = [
 		'filename' => '',
 		'mimeType' => 'application/octet-stream',
 		'filesize' => 0,
@@ -28,13 +26,13 @@ class FileReader {
 		'lastModificationTime' => 0,
 		'expirationDate' => 0,
 		'maxAge' => 0
-	);
+	];
 	
 	/**
 	 * list of header items
 	 * @var	array
 	 */
-	protected $headers = array();
+	protected $headers = [];
 	
 	/**
 	 * start byte
@@ -59,6 +57,7 @@ class FileReader {
 	 * 
 	 * @param	string		$location
 	 * @param	array		$options
+	 * @throws	SystemException
 	 */
 	public function __construct($location, array $options) {
 		$this->location = $location;
@@ -154,7 +153,7 @@ class FileReader {
 			}
 			
 			// send file size
-			$this->addHeader('Content-Length', ($this->endByte + 1 - $this->startByte));
+			$this->addHeader('Content-Length', $this->endByte + 1 - $this->startByte);
 			
 			// cache headers
 			if ($this->options['maxAge']) {

@@ -8,17 +8,15 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * Provides a default implementation for objects sharing common data.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Event
  */
 abstract class AbstractSharedUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
+	 * @inheritDoc
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []) {
 		parent::setObject($notification, $object, $author, $additionalData);
 		
 		$this->prepare();

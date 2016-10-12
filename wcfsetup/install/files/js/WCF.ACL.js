@@ -9,7 +9,7 @@ WCF.ACL = { };
  * ACL support for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ACL.List = Class.extend({
@@ -101,9 +101,11 @@ WCF.ACL.List = Class.extend({
 		
 		// insert container elements
 		var $elementContainer = this._container.children('dd');
-		var $aclList = $('<ul class="aclList container" />').appendTo($elementContainer);
+		var $aclList = $('<ul class="aclList containerList" />').appendTo($elementContainer);
 		var $searchInput = $('<input type="text" class="long" placeholder="' + WCF.Language.get('wcf.acl.search.' + (!includeUserGroups ? 'user.' : '') + 'description') + '" />').appendTo($elementContainer);
-		var $permissionList = $('<ul class="aclPermissionList container" />').hide().appendTo($elementContainer);
+		var $permissionList = $('<ul class="aclPermissionList containerList" />').hide().appendTo($elementContainer);
+		elData($permissionList[0], 'grant', WCF.Language.get('wcf.acl.option.grant'));
+		elData($permissionList[0], 'deny', WCF.Language.get('wcf.acl.option.deny'));
 		
 		// set elements
 		this._containerElements = {
@@ -205,9 +207,9 @@ WCF.ACL.List = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(objectID, label, type) {
-		var $listItem = $('<li><span class="icon icon16 icon-' + (type === 'group' ? 'group' : 'user') + '" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
+		var $listItem = $('<li><span class="icon icon16 fa-user' + (type === 'group' ? 's' : '') + '" /> <span class="aclLabel">' + label + '</span></li>').appendTo(this._containerElements.aclList);
 		$listItem.data('objectID', objectID).data('type', type).data('label', label).click($.proxy(this._click, this));
-		$('<span class="icon icon16 icon-remove jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		$('<span class="icon icon16 fa-times jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 		
 		return $listItem;
 	},

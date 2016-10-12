@@ -9,15 +9,13 @@ use wcf\util\DateUtil;
  * Worker implementation for updating daily statistics.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
  */
 class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 30;
 	
@@ -28,12 +26,14 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	protected $startDate = 0;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList()
+	 * @inheritDoc
 	 */
-	protected function initObjectList() {}
+	protected function initObjectList() {
+		// does nothing
+	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$this->getStartDate();
@@ -42,7 +42,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		EventHandler::getInstance()->fireAction($this, 'execute');
@@ -73,7 +73,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 			// get object types
 			foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler') as $objectType) {
 				$data = $objectType->getProcessor()->getData($d->getTimestamp());
-				$statement->execute(array($objectType->objectTypeID, $d->format('Y-m-d'), $data['counter'], $data['total']));
+				$statement->execute([$objectType->objectTypeID, $d->format('Y-m-d'), $data['counter'], $data['total']]);
 			}
 			
 			$d->add(new \DateInterval('P1D'));
@@ -81,12 +81,11 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * Gets the start timestamp.
-	 * 
-	 * @return	integer
+	 * Determines the start timestamp.
 	 */
 	protected function getStartDate() {
 		if ($this->startDate) return;
+		
 		$sql = "SELECT	MIN(registrationDate)
 			FROM	wcf".WCF_N."_user";
 		$statement = WCF::getDB()->prepareStatement($sql);

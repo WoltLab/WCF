@@ -1,40 +1,41 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\captcha\question\CaptchaQuestionList;
 use wcf\page\MultipleLinkPage;
 
 /**
  * Lists the available captcha questions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	CaptchaQuestionList	$objectList
  */
 class CaptchaQuestionListPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.captcha.question.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.captcha.canManageCaptchaQuestion');
+	public $neededPermissions = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\captcha\question\CaptchaQuestionList';
+	public $objectListClassName = CaptchaQuestionList::class;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortField
+	 * @inheritDoc
 	 */
 	public $sortField = 'questionID';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
+	 * @inheritDoc
 	 */
 	public $sortOrder = 'ASC';
 }

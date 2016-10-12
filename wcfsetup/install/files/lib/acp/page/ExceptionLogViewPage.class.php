@@ -14,25 +14,23 @@ use wcf\util\StringUtil;
  * Shows the exception log.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
  */
 class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.exception';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = ['admin.management.canViewLog'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @inheritDoc
 	 */
 	public $itemsPerPage = 10;
 	
@@ -50,18 +48,18 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	
 	/**
 	 * available logfiles
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $logFiles = array();
+	public $logFiles = [];
 	
 	/**
 	 * exceptions shown
 	 * @var	array
 	 */
-	public $exceptions = array();
+	public $exceptions = [];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -71,7 +69,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		AbstractPage::readData();
@@ -120,7 +118,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		try {
 			$this->exceptions = call_user_func_array('array_merge', array_map(
 				function($v) {
-					return array($v[0] => $v[1]);
+					return [$v[0] => $v[1]];
 				},
 				array_chunk($contents, 2)
 			));
@@ -134,18 +132,25 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\n".
-"Message: (?P<message>.*?)\n".
-"File: (?P<file>.*?) \((?P<line>\d+)\)\n".
-"PHP version: (?P<phpVersion>.*?)\n".
-"WCF version: (?P<wcfVersion>.*?)\n".
-"Request URI: (?P<requestURI>.*?)\n".
-"Referrer: (?P<referrer>.*?)\n".
-"User-Agent: (?P<userAgent>.*?)\n".
-"Information: (?P<information>.*?)\n".
-"Stacktrace: \n".
-"(?P<stacktrace>.*)", Regex::DOT_ALL);
-		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
+		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*\n".
+"Message: (?P<message>.*?)\s*\n".
+"PHP version: (?P<phpVersion>.*?)\s*\n".
+"WCF version: (?P<wcfVersion>.*?)\s*\n".
+"Request URI: (?P<requestURI>.*?)\s*\n".
+"Referrer: (?P<referrer>.*?)\s*\n".
+"User Agent: (?P<userAgent>.*?)\s*\n".
+"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*\n".
+"(?<chain>======\n".
+".*)", Regex::DOT_ALL);
+		$chainRegex = new Regex("======\n".
+"Error Class: (?P<class>.*?)\s*\n".
+"Error Message: (?P<message>.*?)\s*\n".
+"Error Code: (?P<code>\d+)\s*\n".
+"File: (?P<file>.*?) \((?P<line>\d+)\)\s*\n".
+"Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
+"Stack Trace: (?P<stack>\[[^\n]+\])", Regex::DOT_ALL);
+		
+		$isPhp7 = version_compare(PHP_VERSION, '7.0.0') >= 0;
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
 			if ($i < $this->startIndex || $i > $this->endIndex) {
@@ -157,15 +162,32 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 				unset($this->exceptions[$key]);
 				continue;
 			}
+			$matches = $exceptionRegex->getMatches();
+			$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
 			
-			$this->exceptions[$key] = $exceptionRegex->getMatches();
-			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace(StringUtil::encodeHTML($this->exceptions[$key]['stacktrace']), '<strong>\\1</strong>'));
-			$this->exceptions[$key]['information'] = JSON::decode($this->exceptions[$key]['information']);
+			$chainMatches = array_map(function ($item) use ($isPhp7) {
+				if ($item['information'] === '-') $item['information'] = null;
+				else {
+					if ($isPhp7) {
+						$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
+					}
+					else {
+						$item['information'] = unserialize(base64_decode($item['information']));
+					}
+				}
+				
+				$item['stack'] = JSON::decode($item['stack']);
+				
+				return $item;
+			}, $chainRegex->getMatches());
+			
+			$matches['chain'] = $chainMatches;
+			$this->exceptions[$key] = $matches;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::countItems()
+	 * @inheritDoc
 	 */
 	public function countItems() {
 		// call countItems event
@@ -191,16 +213,16 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'exceptionID' => $this->exceptionID,
 			'logFiles' => array_flip(array_map('basename', $this->logFiles)),
 			'logFile' => $this->logFile,
 			'exceptions' => $this->exceptions
-		));
+		]);
 	}
 }

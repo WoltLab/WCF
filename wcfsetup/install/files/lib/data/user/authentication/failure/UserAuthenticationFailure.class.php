@@ -8,23 +8,19 @@ use wcf\system\WCF;
  * Represents a user authentication failure.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.authentication.failure
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Authentication\Failure
+ *
+ * @property-read	integer		$failureID		unique if of the user authentication failure
+ * @property-read	string		$environment		environment in which the user authentication failure occurred, possible values: 'user' or 'admin'
+ * @property-read	integer|null	$userID			id of the user using an incorrect password or null if the provided username or email address is not associated with any registered user
+ * @property-read	string		$username		user name or email address used to login
+ * @property-read	integer		$time			timestamp at which the user authentication failure has occurred
+ * @property-read	string		$ipAddress		ip address of the user trying to login in
+ * @property-read	string		$userAgent		user agent of the user trying to login in
  */
 class UserAuthenticationFailure extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'user_authentication_failure';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'failureID';
-	
 	/**
 	 * Returns the ip address and attempts to convert into IPv4.
 	 * 
@@ -41,12 +37,13 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function countIPFailures($ipAddress) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_authentication_failure
 			WHERE	ipAddress = ?
 				AND time > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT));
+		$statement->execute([$ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
+		
 		return $statement->fetchColumn();
 	}
 	
@@ -57,12 +54,13 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function countUserFailures($userID) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_user_authentication_failure
 			WHERE	userID = ?
 				AND time > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT));
+		$statement->execute([$userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
+		
 		return $statement->fetchColumn();
 	}
 }

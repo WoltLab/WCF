@@ -5,11 +5,9 @@ namespace wcf\system\breadcrumb;
  * Represents a breadcrumb.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.breadcrumb
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Breadcrumb
  */
 class Breadcrumb {
 	/**
@@ -45,23 +43,13 @@ class Breadcrumb {
 	}
 	
 	/**
-	 * Sets the target url, by default appends appropriate session id.
+	 * Sets the target url.
 	 * May be left empty to disable url functionality.
 	 * 
 	 * @param	string		$url
-	 * @param	boolean		$appendSession
+	 * @param	boolean		$appendSession	This parameter is unused as of version 3.0
 	 */
 	public function setURL($url, $appendSession = false) {
-		// append session id
-		if ($appendSession) {
-			if (mb_strpos($url, '?') === false) {
-				$url .= SID_ARG_1ST;
-			}
-			else {
-				$url .= SID_ARG_2ND_NOT_ENCODED;
-			}
-		}
-		
 		$this->url = $url;
 	}
 	

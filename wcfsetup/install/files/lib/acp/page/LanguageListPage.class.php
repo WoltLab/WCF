@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\language\LanguageList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 
@@ -7,40 +8,40 @@ use wcf\system\WCF;
  * Shows a list of all installed languages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	LanguageList	$objectList
  */
 class LanguageListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.list';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'languageName';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\language\LanguageList';
+	public $objectListClassName = LanguageList::class;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('languageID', 'languageCode', 'languageName', 'users', 'variables', 'customVariables');
+	public $validSortFields = ['languageID', 'languageCode', 'languageName', 'users', 'variables', 'customVariables'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	public function initObjectList() {
 		parent::initObjectList();
@@ -51,13 +52,13 @@ class LanguageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'languages' => $this->objectList->getObjects()
-		));
+		]);
 	}
 }

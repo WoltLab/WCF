@@ -1,33 +1,42 @@
 <?php
 namespace wcf\data\user\profile\menu\item;
+use wcf\system\exception\ImplementationException;
+use wcf\system\exception\ParentClassException;
+use wcf\system\menu\user\profile\content\IUserProfileMenuContent;
 use wcf\data\DatabaseObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
+use wcf\system\SingletonFactory;
 
 /**
  * Represents an user profile menu item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.profile.menu.item
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Profile\Menu\Item
+ *
+ * @property-read	integer		$menuItemID		unique id of the user profile menu item
+ * @property-read	integer		$packageID		id of the package which delivers the user profile menu item
+ * @property-read	string		$menuItem		textual identifier of the user profile menu item
+ * @property-read	integer		$showOrder		position of the user profile menu item in relation to its siblings
+ * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to see the user profile menu item
+ * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the user profile menu item to be shown
+ * @property-read	string		$className		name of the PHP class implementing `wcf\system\menu\user\profile\content\IUserProfileMenuContent` handling outputing the content of the user profile tab
  */
 class UserProfileMenuItem extends DatabaseObject {
+	use TDatabaseObjectOptions;
+	use TDatabaseObjectPermissions;
+	
 	/**
 	 * content manager
-	 * @var	\wcf\system\menu\user\profile\content\IUserProfileContent
+	 * @var	IUserProfileMenuContent
 	 */
 	protected $contentManager = null;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'user_profile_menu_item';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
@@ -43,7 +52,8 @@ class UserProfileMenuItem extends DatabaseObject {
 	/**
 	 * Returns the content manager for this menu item.
 	 * 
-	 * @return	\wcf\system\menu\user\profile\content\IUserProfileMenuContent
+	 * @return	IUserProfileMenuContent
+	 * @throws	SystemException
 	 */
 	public function getContentManager() {
 		if ($this->contentManager === null) {
@@ -51,15 +61,15 @@ class UserProfileMenuItem extends DatabaseObject {
 				throw new SystemException("Unable to find class '".$this->className."'");
 			}
 			
-			if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
-				throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
+			if (!is_subclass_of($this->className, SingletonFactory::class)) {
+				throw new ParentClassException($this->className, SingletonFactory::class);
 			}
 			
-			if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\menu\user\profile\content\IUserProfileMenuContent')) {
-				throw new SystemException("'".$this->className."' does not implement 'wcf\system\menu\user\profile\content\IUserProfileMenuContent'");
+			if (!is_subclass_of($this->className, IUserProfileMenuContent::class)) {
+				throw new ImplementationException($this->className, IUserProfileMenuContent::class);
 			}
 			
-			$this->contentManager = call_user_func(array($this->className, 'getInstance'));
+			$this->contentManager = call_user_func([$this->className, 'getInstance']);
 		}
 		
 		return $this->contentManager;

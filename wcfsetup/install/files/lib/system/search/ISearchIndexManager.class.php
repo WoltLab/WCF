@@ -5,13 +5,26 @@ namespace wcf\system\search;
  * Default interface for search index managers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search
  */
 interface ISearchIndexManager {
+	/**
+	 * Adds or updates an entry.
+	 * 
+	 * @param	string		$objectType
+	 * @param	integer		$objectID
+	 * @param	string		$message
+	 * @param	string		$subject
+	 * @param	integer		$time
+	 * @param	integer		$userID
+	 * @param	string		$username
+	 * @param	integer		$languageID
+	 * @param	string		$metaData
+	 */
+	public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
+	
 	/**
 	 * Adds a new entry.
 	 * 
@@ -24,6 +37,7 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
+	 * @deprecated  3.0 - please use `set()` instead
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	
@@ -39,6 +53,7 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
+	 * @deprecated  3.0 - please use `set() instead`
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	
@@ -46,7 +61,7 @@ interface ISearchIndexManager {
 	 * Deletes search index entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public function delete($objectType, array $objectIDs);
 	

@@ -8,16 +8,15 @@ use wcf\util\StringUtil;
  * Sends a Mail with a connection to a smtp server.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.mail
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Mail
+ * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.
  */
 class SMTPMailSender extends MailSender {
 	/**
 	 * smtp connection
-	 * @var	\wcf\system\io\RemoteFile
+	 * @var	RemoteFile
 	 */
 	protected $connection = null;
 	
@@ -37,7 +36,7 @@ class SMTPMailSender extends MailSender {
 	 * mail recipients
 	 * @var	array
 	 */
-	protected $recipients = array();
+	protected $recipients = [];
 	
 	/**
 	 * Creates a new SMTPMailSender object.
@@ -64,7 +63,7 @@ class SMTPMailSender extends MailSender {
 			throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
 		}
 		
-		$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : '';
+		$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 		if (empty($host)) {
 			$host = gethostname();
 			if ($host === false) {
@@ -156,10 +155,10 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * @see	\wcf\system\mail\MailSender::sendMail()
+	 * @inheritDoc
 	 */
 	public function sendMail(Mail $mail) {
-		$this->recipients = array();
+		$this->recipients = [];
 		if (count($mail->getTo()) > 0) $this->recipients = $mail->getTo();
 		if (count($mail->getCC()) > 0) $this->recipients = array_merge($this->recipients, $mail->getCC());
 		if (count($mail->getBCC())> 0) $this->recipients = array_merge($this->recipients, $mail->getBCC());
@@ -204,7 +203,7 @@ class SMTPMailSender extends MailSender {
 			throw new SystemException($this->formatError("smtp error"));
 		}
 		
-		$serverName = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '';
+		$serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
 		if (empty($serverName)) {
 			$serverName = gethostname();
 			if ($serverName === false) {
@@ -254,7 +253,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * Reads the Information wich the Server sends back.
+	 * Reads the Information which the Server sends back.
 	 * 
 	 * @return	string
 	 */
@@ -278,7 +277,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * Gets error code and message from a server message.
+	 * Extracts error code and message from a server message.
 	 * 
 	 * @param	string		$data
 	 */

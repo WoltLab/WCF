@@ -4,7 +4,7 @@
  * Namespace for moderation related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Moderation = { };
@@ -93,7 +93,7 @@ WCF.Moderation.Management = Class.extend({
 		
 		$(this._buttonSelector).click($.proxy(this._click, this));
 		
-		$('<a>' + WCF.Language.get('wcf.moderation.assignedUser.change') + '</a>').click($.proxy(this._clickAssignedUser, this)).insertAfter($('#moderationAssignedUserContainer > dd > span'));
+		$('#moderationAssignUser').click($.proxy(this._clickAssignedUser, this));
 	},
 	
 	/**
@@ -374,10 +374,16 @@ WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// @todo fix dropdown
+		// update dropdown
+		var dropdown = WCF.Dropdown.Interactive.Handler.getDropdown('outstandingModeration');
+		if (dropdown) {
+			dropdown.getLinkList().find('.interactiveDropdownItemMarkAllAsRead').remove();
+			dropdown.getItemList().find('.interactiveDropdownItemMarkAsRead').remove();
+		}
 		
-		// @todo remove badge in userpanel
-				
+		// remove badge in userpanel
+		$('#outstandingModeration .badgeUpdate').remove();
+		
 		// fix moderation list
 		var $moderationList = $('.moderationList');
 		$moderationList.find('.new').removeClass('new');
@@ -572,10 +578,10 @@ WCF.Moderation.Report.Content = Class.extend({
 	_submit: function() {
 		var $text = this._dialog.find('.jsReportMessage').val();
 		if ($.trim($text) == '') {
-			this._dialog.find('fieldset > dl').addClass('formError');
+			this._dialog.find('.section > dl').addClass('formError');
 			
 			if (!this._dialog.find('.innerError').length) {
-				this._dialog.find('.jsReportMessage').after($('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + "</small>"));;
+				this._dialog.find('.jsReportMessage').after($('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + "</small>"));
 			}
 			
 			return;
@@ -609,7 +615,7 @@ WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
 		
 		this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
 		
-		this._confirmationTemplate.removeContent = $('<fieldset><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></fieldset>');
+		this._confirmationTemplate.removeContent = $('<div class="section"><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></div>');
 	}
 });
 
@@ -626,6 +632,14 @@ WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 		options.enableMarkAsRead = true;
 		
 		this._super($('#outstandingModeration'), 'outstandingModeration', options);
+		
+		require(['EventHandler'], (function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
+				if (data.identifier === 'com.woltlab.wcf.moderation') {
+					this.toggle();
+				}
+			}).bind(this));
+		}).bind(this));
 	},
 	
 	/**
@@ -634,7 +648,7 @@ WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 	_initDropdown: function() {
 		var $dropdown = this._super();
 		
-		$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon16 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
+		$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon24 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
 		
 		return $dropdown;
 	},

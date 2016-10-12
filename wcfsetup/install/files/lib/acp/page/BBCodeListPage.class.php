@@ -1,45 +1,46 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\bbcode\BBCodeList;
 use wcf\page\SortablePage;
 
 /**
  * Lists the available BBCodes.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	BBCodeList	$objectList
  */
 class BBCodeListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode.list';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'bbcodeTag';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\bbcode\BBCodeList';
+	public $objectListClassName = BBCodeList::class;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'bbcodeList';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('bbcodeID', 'bbcodeTag', 'className');
+	public $validSortFields = ['bbcodeID', 'bbcodeTag', 'className'];
 }

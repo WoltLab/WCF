@@ -5,16 +5,15 @@ namespace wcf\system\mail;
  * Mailsender sends emails.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.mail
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Mail
+ * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.
  */
 abstract class MailSender {
 	/**
 	 * unique mail server instance
-	 * @var	\wcf\system\mail\MailSender
+	 * @var	MailSender
 	 */
 	protected static $instance = null;
 	
@@ -46,7 +45,7 @@ abstract class MailSender {
 	/**
 	 * Sends an e-mail.
 	 * 
-	 * @param	\wcf\system\mail\Mail	$mail
+	 * @param	Mail	$mail
 	 */
 	abstract public function sendMail(Mail $mail);
 }

@@ -5,36 +5,31 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Represents a paid subscription user.
+ * Represents an association between a paid subscription and a user.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.paid.subscription.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Paid\Subscription\User
+ * 
+ * @property-read	integer		$subscriptionUserID	unique id of the paid subscription-user-association
+ * @property-read	integer		$subscriptionID		id of the paid subscription the paid subscription-user-association belongs to
+ * @property-read	integer		$userID			id of the user the paid subscription-user-association belongs to
+ * @property-read	integer		$startDate		timestamp at which the paid subscription started
+ * @property-read	integer		$endDate		timestamp at which the paid subscription ended or will end
+ * @property-read	integer		$isActive		is `1` if the user's paid subscription is currently active and thus not expired, otherwise `0`
  */
 class PaidSubscriptionUser extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'paid_subscription_user';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
-	 */
-	protected static $databaseTableIndexName = 'subscriptionUserID';
-	
-	/**
 	 * paid subscription object
-	 * @var	\wcf\data\paid\subscription\PaidSubscription
+	 * @var	PaidSubscription
 	 */
 	protected $subscription = null;
 	
 	/**
-	 * Gets the paid subscription object.
+	 * Returns the paid subscription object.
 	 * 
-	 * @return	\wcf\data\paid\subscription\PaidSubscription
+	 * @return	PaidSubscription
 	 */
 	public function getSubscription() {
 		if ($this->subscription === null) {
@@ -47,18 +42,18 @@ class PaidSubscriptionUser extends DatabaseObject {
 	/**
 	 * Sets the paid subscription object.
 	 * 
-	 * @param	\wcf\data\paid\subscription\PaidSubscription		$subscription
+	 * @param	PaidSubscription	$subscription
 	 */
 	public function setSubscription(PaidSubscription $subscription) {
 		$this->subscription = $subscription;
 	}
 	
 	/**
-	 * Gets a specific subscription user.
+	 * Returns a specific subscription user or `null` if such a user does not exist.
 	 * 
 	 * @param	integer		$subscriptionID
 	 * @param	integer		$userID
-	 * @return	\wcf\data\paid\subscription\user\PaidSubscriptionUser
+	 * @return	PaidSubscriptionUser|null
 	 */
 	public static function getSubscriptionUser($subscriptionID, $userID) {
 		$sql = "SELECT	*
@@ -66,7 +61,7 @@ class PaidSubscriptionUser extends DatabaseObject {
 			WHERE	subscriptionID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($subscriptionID, $userID));
+		$statement->execute([$subscriptionID, $userID]);
 		$row = $statement->fetchArray();
 		if ($row !== false) {
 			return new PaidSubscriptionUser(null, $row);

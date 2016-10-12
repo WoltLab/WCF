@@ -7,11 +7,9 @@ use wcf\util\JSON;
  * AJAXException provides JSON-encoded exceptions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.exception
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Exception
  */
 class AJAXException extends LoggedException {
 	/**
@@ -54,26 +52,25 @@ class AJAXException extends LoggedException {
 	 * Throws a JSON-encoded error message
 	 * 
 	 * @param	string		$message
-	 * @param	boolean		$isDoomsday
+	 * @param	integer		$errorType
 	 * @param	string		$stacktrace
-	 * @param	array		$returnValues
+	 * @param	mixed[]		$returnValues
 	 * @param	string		$exceptionID
-	 * @param	array<mixed>	$returnValues
 	 */
-	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = array(), $exceptionID = '') {
+	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = [], $exceptionID = '') {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
-		$responseData = array(
+		$responseData = [
 			'code' => $errorType,
 			'message' => $message,
 			'returnValues' => $returnValues
-		);
+		];
 		
 		// include a stacktrace if:
 		// - debug mode is enabled
 		// - within ACP and a SystemException was thrown
 		if (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR) {
-			$responseData['stacktrace'] = nl2br($stacktrace);
+			$responseData['stacktrace'] = nl2br($stacktrace, false);
 		}
 		
 		$statusHeader = '';
@@ -107,7 +104,7 @@ class AJAXException extends LoggedException {
 				$responseData['code'] = self::INTERNAL_ERROR;
 				$responseData['exceptionID'] = $exceptionID;
 				if (!WCF::debugModeIsEnabled()) {
-					$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.internalError');
+					$responseData['message'] = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.internalError');
 				}
 			break;
 		}

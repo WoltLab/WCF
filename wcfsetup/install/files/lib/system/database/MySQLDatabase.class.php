@@ -1,36 +1,36 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\database\editor\MySQLDatabaseEditor;
+use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 
 /**
- * This is the database implementation for MySQL4.1 or higher using PDO.
+ * This is the database implementation for MySQL 5.1 or higher using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Database
  */
 class MySQLDatabase extends Database {
 	/**
-	 * @see	\wcf\system\database\Database::$editorClassName
+	 * @inheritDoc
 	 */
-	protected $editorClassName = 'wcf\system\database\editor\MySQLDatabaseEditor';
+	protected $editorClassName = MySQLDatabaseEditor::class;
 	
 	/**
-	 * @see	\wcf\system\database\Database::connect()
+	 * @inheritDoc
 	 */
 	public function connect() {
 		if (!$this->port) $this->port = 3306; // mysql default port
 		
 		try {
-			$driverOptions = array(
-				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"
-			);
+			$driverOptions = [
+				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'"
+			];
 			if (!$this->failsafeTest) {
-				$driverOptions = array(
-					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'"
-				);
+				$driverOptions = [
+					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'"
+				];
 			}
 			
 			// disable prepared statement emulation since MySQL 5.1.17 is the minimum required version
@@ -43,34 +43,36 @@ class MySQLDatabase extends Database {
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Connecting to MySQL server '".$this->host."' failed:\n".$e->getMessage(), $this);
+			throw new GenericDatabaseException("Connecting to MySQL server '".$this->host."' failed", $e);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\database\Database::isSupported()
+	 * @inheritDoc
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_mysql'));
 	}
 	
 	/**
-	 * @see	\wcf\system\database\Database::handleLimitParameter()
-	 */
-	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
-		if ($limit != 0) {
-			if ($offset > 0) $query .= " LIMIT " . $offset . ", " . $limit;
-			else $query .= " LIMIT " . $limit;
-		}
-		
-		return $query;
-	}
-	
-	/**
-	 * @see	\wcf\system\database\PDODatabase::setAttributes()
+	 * @inheritDoc
 	 */
 	protected function setAttributes() {
 		parent::setAttributes();
 		$this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getVersion() {
+		try {
+			$statement = $this->prepareStatement('SELECT VERSION()');
+			$statement->execute();
+			return $statement->fetchSingleColumn();
+		}
+		catch (\PDOException $e) {}
+		
+		return 'unknown';
 	}
 }

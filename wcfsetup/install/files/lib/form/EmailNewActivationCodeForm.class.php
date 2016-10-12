@@ -2,8 +2,11 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -13,15 +16,13 @@ use wcf\util\UserRegistrationUtil;
  * Shows the new email activation code form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -50,7 +51,7 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -59,21 +60,26 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		$activationCode = UserRegistrationUtil::getActivationCode();
 		
 		// save user
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'reactivationCode' => $activationCode
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		
+		// reload user object
+		$this->user = new User($this->user->userID);
+		
 		// send activation mail
-		$messageData = array(
-			'username' => $this->user->username,
-			'userID' => $this->user->userID,
-			'activationCode' => $activationCode
-		);
-		$mail = new Mail(array($this->user->username => $this->user->newEmail), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
-		$mail->send();
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($this->user));
+		$email->setSubject($this->user->getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_changeEmailNeedReactivation'),
+			new RecipientAwareTextMimePart('text/plain', 'email_changeEmailNeedReactivation')
+		]));
+		$email->send();
+		
 		$this->saved();
 		
 		// forward to index page

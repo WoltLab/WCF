@@ -10,31 +10,29 @@ use wcf\system\template\TemplateScriptingCompiler;
  * 	{append var=name value="foo"}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @inheritDoc
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'var' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+			throw new SystemException($compiler::formatSyntaxError("missing 'var' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		if (!isset($tagArgs['value'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'value' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+			throw new SystemException($compiler::formatSyntaxError("missing 'value' argument in append tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
-				
+		
 		return "<?php \$this->append(".$tagArgs['var'].", ".$tagArgs['value']."); ?>";
 	}
 	
 	/**
-	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @inheritDoc
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
-		throw new SystemException($compiler->formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+		throw new SystemException($compiler::formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 	}
 }

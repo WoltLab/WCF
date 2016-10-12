@@ -8,11 +8,9 @@ use wcf\system\WCF;
  * Abstract implementation of a form using captcha.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 abstract class AbstractCaptchaForm extends AbstractForm {
 	/**
@@ -28,28 +26,34 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	public $captchaObjectTypeName = CAPTCHA_TYPE;
 	
 	/**
-	 * true if recaptcha is used
+	 * true if captcha is used
 	 * @var	boolean
 	 */
 	public $useCaptcha = true;
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * true to force captcha usage
+	 * @var	boolean
+	 */
+	public $forceCaptcha = false;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'captchaObjectType' => $this->captchaObjectType,
 			'useCaptcha' => $this->useCaptcha
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
-		if (!WCF::getUser()->userID && $this->useCaptcha && $this->captchaObjectTypeName) {
+		if ((!WCF::getUser()->userID || $this->forceCaptcha) && $this->useCaptcha && $this->captchaObjectTypeName) {
 			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
 			if ($this->captchaObjectType === null) {
 				throw new SystemException("Unknown captcha object type with name '".$this->captchaObjectTypeName."'");
@@ -64,7 +68,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -75,7 +79,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -86,7 +90,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();

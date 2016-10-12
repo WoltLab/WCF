@@ -5,11 +5,9 @@ namespace wcf\system\database\util;
  * Builds a sql query 'where' condition.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database.util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Database\Util
  */
 class ConditionBuilder {
 	/**
@@ -47,7 +45,7 @@ class ConditionBuilder {
 	 * @param	mixed		$conditions
 	 */
 	public function add($conditions) {
-		if (!is_array($conditions)) $conditions = array($conditions);
+		if (!is_array($conditions)) $conditions = [$conditions];
 		
 		foreach ($conditions as $condition) {
 			if (!empty($this->conditions)) $this->conditions .= $this->concat;

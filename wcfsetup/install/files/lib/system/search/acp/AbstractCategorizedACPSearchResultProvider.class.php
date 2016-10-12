@@ -1,24 +1,23 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 
 /**
  * Abstract implementation of a ACP search result provider with nested categories.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search.acp
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search\Acp
  */
 abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSearchResultProvider {
 	/**
 	 * list of categories
-	 * @var	array<\wcf\data\DatabaseObject>
+	 * @var	DatabaseObject[]
 	 */
-	protected $categories = array();
+	protected $categories = [];
 	
 	/**
 	 * class name for category list
@@ -28,9 +27,9 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	
 	/**
 	 * list of top category names (level 1 and 2)
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $topCategories = array();
+	protected $topCategories = [];
 	
 	/**
 	 * Creates a new categorized ACP search result provider.
@@ -46,9 +45,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * @return	integer
 	 */
 	protected function getCategoryID($categoryName) {
-		$category = $this->getTopCategory($categoryName);
-		
-		return $category->categoryID;
+		return $this->getTopCategory($categoryName)->categoryID;
 	}
 	
 	/**
@@ -58,16 +55,15 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * @return	string
 	 */
 	protected function getCategoryName($categoryName) {
-		$category = $this->getTopCategory($categoryName);
-		
-		return $category->categoryName;
+		return $this->getTopCategory($categoryName)->categoryName;
 	}
 	
 	/**
 	 * Returns a level 1 or 2 category for given category name.
 	 * 
 	 * @param	string			$categoryName
-	 * @return	\wcf\data\DatabaseObject
+	 * @return	DatabaseObject
+	 * @throws	SystemException
 	 */
 	protected function getTopCategory($categoryName) {
 		if (!$this->isValid($categoryName)) {
@@ -88,11 +84,12 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 */
 	protected function loadCategories() {
 		// validate list class name
-		if (empty($this->listClassName) || !ClassUtil::isInstanceOf($this->listClassName, 'wcf\data\DatabaseObjectList')) {
+		if (empty($this->listClassName) || !is_subclass_of($this->listClassName, DatabaseObjectList::class)) {
 			throw new SystemException("Given class '".$this->listClassName."' is empty or invalid");
 		}
 		
 		// read categories
+		/** @var DatabaseObjectList $categoryList */
 		$categoryList = new $this->listClassName();
 		$categoryList->readObjects();
 		
@@ -111,7 +108,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 		}
 		
 		// create level 2 categories
-		$topCategories = array();
+		$topCategories = [];
 		foreach ($this->categories as $category) {
 			if ($category->parentCategoryName && in_array($category->parentCategoryName, $this->topCategories)) {
 				$topCategories[] = $category->categoryName;

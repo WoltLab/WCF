@@ -13,16 +13,14 @@ use wcf\util\StringUtil;
  * Shows the option edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class OptionForm extends AbstractOptionListForm {
 	/**
 	 * category option
-	 * @var	\wcf\data\option\category\OptionCategory
+	 * @var	OptionCategory
 	 */
 	public $category = null;
 	
@@ -42,15 +40,15 @@ class OptionForm extends AbstractOptionListForm {
 	 * the option tree
 	 * @var	array
 	 */
-	public $optionTree = array();
+	public $optionTree = [];
 	
 	/**
-	 * @see	\wcf\acp\form\AbstractOptionListForm::$languageItemPattern
+	 * @inheritDoc
 	 */
 	protected $languageItemPattern = 'wcf.acp.option.option\d+';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
@@ -66,26 +64,26 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save options
 		$saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-		$this->objectAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
+		$this->objectAction = new OptionAction([], 'updateAll', ['data' => $saveOptions]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset styles to make sure the updated option values are used
 		StyleHandler::resetStylesheets();
 		
-		// show succes message
+		// show success message
 		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -102,27 +100,27 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'optionName' => $this->optionName,
 			'optionTree' => $this->optionTree
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active menu item
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.option.category.'.$this->category->categoryName);
 		
 		// check permission
-		WCF::getSession()->checkPermissions(array('admin.system.canEditOption'));
+		WCF::getSession()->checkPermissions(['admin.configuration.canEditOption']);
 		
 		if ($this->category->categoryName == 'module') {
 			// check master password

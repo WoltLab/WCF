@@ -10,21 +10,19 @@ use wcf\system\template\TemplateEngine;
  * 	{cycle values="#eee,#fff"}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template\Plugin
  */
 class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * cycle data
 	 * @var	array
 	 */
-	protected $cycles = array();
+	protected $cycles = [];
 	
 	/**
-	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get params

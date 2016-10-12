@@ -5,15 +5,13 @@ namespace wcf\system\template;
  * Compiles template source into valid PHP code.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template
  */
 class SetupTemplateCompiler extends TemplateCompiler {
 	/**
-	 * @see	\wcf\system\template\TemplateScriptingCompiler::compileOutputTag()
+	 * @inheritDoc
 	 */
 	protected function compileOutputTag($tag) {
 		$encodeHTML = false;

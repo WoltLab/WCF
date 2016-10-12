@@ -1,5 +1,5 @@
 {hascontent}
-	<fieldset id="settings_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}" class="container containerPadding">
+	<div id="settings_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}" class="messageTabMenuContent">
 		{content}
 			{event name='beforeSettings'}
 			
@@ -7,14 +7,14 @@
 			{assign var='__messageFormSettingsInlineSettings' value=$__messageFormSettingsInlineSettings|trim}
 			
 			{if $__messageFormSettingsInlineSettings}
-				<dl class="condensed">
+				<dl>
 					{@$__messageFormSettingsInlineSettings}
 				</dl>
 			{/if}
 			
 			{event name='afterSettings'}
 		{/content}
-	</fieldset>
+	</div>
 	<script data-relocate="true">
 		$(function() {
 			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'submit_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}', function(parameters) {

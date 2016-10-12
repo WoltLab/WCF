@@ -5,17 +5,17 @@ namespace wcf\util;
  * Contains user registration related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class UserRegistrationUtil {
 	/**
-	 * Disables creation of objects of this class.
+	 * Forbid creation of StringUtil objects.
 	 */
-	private function __construct() { }
+	private function __construct() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns true if the given name is a valid username.
@@ -51,6 +51,7 @@ final class UserRegistrationUtil {
 	/**
 	 * Returns false if the given name is a forbidden username.
 	 * 
+	 * @param	string		$name
 	 * @return	boolean
 	 */
 	public static function checkForbiddenUsernames($name) {
@@ -60,6 +61,7 @@ final class UserRegistrationUtil {
 	/**
 	 * Returns false if the given email is a forbidden email.
 	 * 
+	 * @param	string		$email
 	 * @return	boolean
 	 */
 	public static function checkForbiddenEmails($email) {

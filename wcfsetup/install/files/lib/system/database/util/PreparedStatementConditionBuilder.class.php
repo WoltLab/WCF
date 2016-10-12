@@ -6,18 +6,16 @@ use wcf\system\exception\SystemException;
  * Builds a sql query 'where' condition for prepared statements.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database.util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Database\Util
  */
 class PreparedStatementConditionBuilder extends ConditionBuilder {
 	/**
 	 * input parameters
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * Adds a new condition. The parameters array has to be a numbered array.
@@ -25,7 +23,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	 * @param	string		$condition
 	 * @param	array		$parameters
 	 */
-	public function add($condition, array $parameters = array()) {
+	public function add($condition, array $parameters = []) {
 		if (!empty($parameters)) {
 			$count = 0;
 			$callback = function ($matches) use (&$count, $parameters, $condition) {

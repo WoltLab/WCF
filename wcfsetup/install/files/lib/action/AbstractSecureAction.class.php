@@ -8,21 +8,21 @@ use wcf\system\WCF;
  * A missing or invalid token will be result in a throw of a IllegalLinkException.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 abstract class AbstractSecureAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
-		// check security token
-		$this->checkSecurityToken();
+		// check security token (unless it is a guest)
+		if (WCF::getSession()->userID) {
+			$this->checkSecurityToken();
+		}
 	}
 	
 	/**

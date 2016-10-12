@@ -1,42 +1,43 @@
 <?php
 namespace wcf\system\search;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
+use wcf\system\search\mysql\MysqlSearchIndexManager;
 use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
  * Manages the search index.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search
  */
 class SearchIndexManager extends SingletonFactory implements ISearchIndexManager {
 	/**
 	 * list of available object types
 	 * @var	array
 	 */
-	protected $availableObjectTypes = array();
+	protected $availableObjectTypes = [];
 	
 	/**
 	 * list of application packages
-	 * @var	array<\wcf\data\package\Package>
+	 * @var	Package[]
 	 */
-	protected static $packages = array();
+	protected static $packages = [];
 	
 	/**
 	 * search index manager object
-	 * @var	\wcf\system\search\ISearchIndexManager
+	 * @var	ISearchIndexManager
 	 */
 	protected $searchIndexManager = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get available object types
@@ -48,6 +49,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 * 
 	 * @param	string		$objectType
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
@@ -61,7 +63,8 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 * Returns the the object type with the given name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	\wcf\data\object\type\ObjectType
+	 * @return	ObjectType
+	 * @throws	SystemException
 	 */
 	public function getObjectType($objectType) {
 		if (!isset($this->availableObjectTypes[$objectType])) {
@@ -74,7 +77,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * Returns the search index manager object.
 	 * 
-	 * @return	\wcf\system\search\ISearchIndexManager
+	 * @return	ISearchIndexManager
 	 */
 	protected function getSearchIndexManager() {
 		if ($this->searchIndexManager === null) {
@@ -88,66 +91,71 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 			
 			// fallback to MySQL
 			if (empty($className)) {
-				$className = 'wcf\system\search\mysql\MysqlSearchIndexManager';
+				$className = MysqlSearchIndexManager::class;
 			}
 			
-			$this->searchIndexManager = call_user_func(array($className, 'getInstance'));
+			$this->searchIndexManager = call_user_func([$className, 'getInstance']);
 		}
 		
 		return $this->searchIndexManager;
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::add()
+	 * @inheritDoc
+	 */
+	public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		// strip html; remove whitespace from beginning and end of the message
+		$message = StringUtil::trim(StringUtil::stripHTML($message));
+		
+		$this->getSearchIndexManager()->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @deprecated  3.0 - please use `set() instead`
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
-		$this->getSearchIndexManager()->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+		$this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::update()
+	 * @inheritDoc
+	 * @deprecated  3.0 - please use `set() instead`
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
-		$this->getSearchIndexManager()->update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+		$this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::delete()
+	 * @inheritDoc
 	 */
 	public function delete($objectType, array $objectIDs) {
 		$this->getSearchIndexManager()->delete($objectType, $objectIDs);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::reset()
+	 * @inheritDoc
 	 */
 	public function reset($objectType) {
 		$this->getSearchIndexManager()->reset($objectType);
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::createSearchIndices()
+	 * @inheritDoc
 	 */
 	public function createSearchIndices() {
 		$this->getSearchIndexManager()->createSearchIndices();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::supportsBulkInsert()
-	 */
-	public function supportsBulkInsert() {
-		return $this->getSearchIndexManager()->supportsBulkInsert();
-	}
-	
-	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::beginBulkOperation()
+	 * @inheritDoc
 	 */
 	public function beginBulkOperation() {
 		$this->getSearchIndexManager()->beginBulkOperation();
 	}
 	
 	/**
-	 * @see	\wcf\system\search\ISearchIndexManager::commitBulkOperation()
+	 * @inheritDoc
 	 */
 	public function commitBulkOperation() {
 		$this->getSearchIndexManager()->commitBulkOperation();
@@ -156,11 +164,10 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * Returns the database table name for the object type's search index.
 	 * 
-	 * @param	mixed				$objectType
-	 * @param	\wcf\data\package\Package	$package
+	 * @param	mixed		$objectType
 	 * @return	string
 	 */
-	public static function getTableName($objectType, $package = null) {
+	public static function getTableName($objectType) {
 		if (is_string($objectType)) {
 			$objectType = self::getInstance()->getObjectType($objectType);
 		}
@@ -171,7 +178,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 			if (!empty($tableName)) {
 				if (empty(self::$packages)) {
 					$packageList = new PackageList();
-					$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+					$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
 					$packageList->readObjects();
 					
 					self::$packages = $packageList->getObjects();

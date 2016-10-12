@@ -22,22 +22,20 @@ use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
 // set exception handler
-set_exception_handler(array('wcf\system\CLIWCF', 'handleCLIException'));
+set_exception_handler([CLIWCF::class, 'handleCLIException']);
 
 /**
  * Extends WCF class with functions for CLI.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class CLIWCF extends WCF {
 	/**
 	 * instance of ConsoleReader
-	 * @var	\phpline\console\ConsoleReader
+	 * @var	ConsoleReader
 	 */
 	protected static $consoleReader = null;
 	
@@ -47,6 +45,7 @@ class CLIWCF extends WCF {
 	 */
 	protected static $argvParser = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Calls all init functions of the WCF class.
 	 */
@@ -60,12 +59,12 @@ class CLIWCF extends WCF {
 		// register additional autoloaders
 		require_once(WCF_DIR.'lib/system/api/phpline/phpline.phar');
 		require_once(WCF_DIR.'lib/system/api/zend/Loader/StandardAutoloader.php');
-		$zendLoader = new ZendLoader(array(ZendLoader::AUTOREGISTER_ZF => true));
+		$zendLoader = new ZendLoader([ZendLoader::AUTOREGISTER_ZF => true]);
 		$zendLoader->register();
 		
-		$argv = new ArgvParser(array(
+		$argv = new ArgvParser([
 			'packageID=i' => ''
-		));
+		]);
 		$argv->setOption(ArgvParser::CONFIG_FREEFORM_FLAGS, true);
 		$argv->parse();
 		define('PACKAGE_ID', $argv->packageID ?: 1);
@@ -83,7 +82,7 @@ class CLIWCF extends WCF {
 		$this->initApplications();
 		
 		// the destructor registered in core.functions.php will only call the destructor of the parent class
-		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
+		register_shutdown_function([self::class, 'destruct']);
 		
 		$this->initArgv();
 		$this->initPHPLine();
@@ -93,19 +92,22 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::destruct()
+	 * @inheritDoc
 	 */
 	public static function destruct() {
 		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
-			self::getReader()->getHistory()->save();
-			self::getReader()->getHistory()->autoSave = false;
+			/** @var DatabaseCLICommandHistory $history */
+			$history = self::getReader()->getHistory();
+			
+			$history->save();
+			$history->autoSave = false;
 		}
 		
 		self::getSession()->delete();
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::handleException()
+	 * @inheritDoc
 	 */
 	public static final function handleCLIException(\Exception $e) {
 		die($e->getMessage()."\n".$e->getTraceAsString());
@@ -116,7 +118,7 @@ class CLIWCF extends WCF {
 	 */
 	protected function initArgv() {
 		// initialise ArgvParser
-		self::$argvParser = new ArgvParser(array(
+		self::$argvParser = new ArgvParser([
 			'language=s' => WCF::getLanguage()->get('wcf.cli.help.language'),
 			'v' => WCF::getLanguage()->get('wcf.cli.help.v'),
 			'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
@@ -125,11 +127,11 @@ class CLIWCF extends WCF {
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
 			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID')
-		));
-		self::getArgvParser()->setOptions(array(
+		]);
+		self::getArgvParser()->setOptions([
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
 			ArgvParser::CONFIG_DASHDASH => false
-		));
+		]);
 		
 		// parse arguments
 		EventHandler::getInstance()->fireAction($this, 'beforeArgumentParsing');
@@ -154,7 +156,7 @@ class CLIWCF extends WCF {
 			$help = WCF::getLanguage()->get('wcf.cli.help.'.self::getArgvParser()->help.'.description', true);
 			if ($help) echo $help.PHP_EOL;
 			else {
-				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.help.noLongHelp', array('topic' => self::getArgvParser()->help)).PHP_EOL;
+				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.help.noLongHelp', ['topic' => self::getArgvParser()->help]).PHP_EOL;
 			}
 			exit;
 		}
@@ -167,7 +169,7 @@ class CLIWCF extends WCF {
 			// set language
 			$language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->language);
 			if ($language === null) {
-				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.error.language.notFound', array('languageCode' => self::getArgvParser()->language)).PHP_EOL;
+				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.error.language.notFound', ['languageCode' => self::getArgvParser()->language]).PHP_EOL;
 				exit;
 			}
 			self::setLanguage($language->languageID);
@@ -193,13 +195,13 @@ class CLIWCF extends WCF {
 	 */
 	protected function initPHPLine() {
 		$terminal = TerminalFactory::get();
-		self::$consoleReader = new ConsoleReader("WoltLab Community Framework", null, null, $terminal);
+		self::$consoleReader = new ConsoleReader("WoltLab Suite", null, null, $terminal);
 		
 		// don't expand events, as the username and password will follow
 		self::getReader()->setExpandEvents(false);
 		
 		if (VERBOSITY >= 0) {
-			$headline = str_pad("WoltLab (r) Community Framework (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
+			$headline = str_pad("WoltLab Suite (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
 			self::getReader()->println($headline);
 		}
 	}
@@ -207,7 +209,7 @@ class CLIWCF extends WCF {
 	/**
 	 * Returns ConsoleReader.
 	 * 
-	 * @return	\phpline\console\ConsoleReader
+	 * @return	ConsoleReader
 	 */
 	public static function getReader() {
 		return self::$consoleReader;
@@ -246,7 +248,7 @@ class CLIWCF extends WCF {
 			WCF::getSession()->changeUser($user);
 		}
 		catch (UserInputException $e) {
-			$message = WCF::getLanguage()->getDynamicVariable('wcf.user.'.$e->getField().'.error.'.$e->getType(), array('username' => $username));
+			$message = WCF::getLanguage()->getDynamicVariable('wcf.user.'.$e->getField().'.error.'.$e->getType(), ['username' => $username]);
 			self::getReader()->println($message);
 			exit(1);
 		}
@@ -281,8 +283,8 @@ class CLIWCF extends WCF {
 				$command->execute(CLICommandHandler::getParameters($line));
 			}
 			catch (IllegalLinkException $e) {
-				Log::error('notFound:'.JSON::encode(array('command' => $line)));
-				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $line)));
+				Log::error('notFound:'.JSON::encode(['command' => $line]));
+				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', ['command' => $line]));
 				
 				if (self::getArgvParser()->exitOnFail) {
 					exit(1);
@@ -291,7 +293,7 @@ class CLIWCF extends WCF {
 			}
 			catch (PermissionDeniedException $e) {
 				Log::error('permissionDenied');
-				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.error.permissionDenied'));
+				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied'));
 				
 				if (self::getArgvParser()->exitOnFail) {
 					exit(1);
@@ -325,26 +327,26 @@ class CLIWCF extends WCF {
 	 * @return	string
 	 */
 	public function checkForUpdates() {
-		if (WCF::getSession()->getPermission('admin.system.package.canUpdatePackage') && VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
+		if (WCF::getSession()->getPermission('admin.configuration.package.canUpdatePackage') && VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
 			$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 			if (!empty($updates)) {
-				$return = self::getReader()->println(count($updates) . ' update' . (count($updates) > 1 ? 's are' : ' is') . ' available');
+				self::getReader()->println(count($updates) . ' update' . (count($updates) > 1 ? 's are' : ' is') . ' available');
 				
 				if (VERBOSITY >= 1) {
-					$table = array(
-						array(
+					$table = [
+						[
 							WCF::getLanguage()->get('wcf.acp.package.name'),
 							WCF::getLanguage()->get('wcf.acp.package.version'),
 							WCF::getLanguage()->get('wcf.acp.package.newVersion')
-						)
-					);
+						]
+					];
 					
 					foreach ($updates as $update) {
-						$row = array(
+						$row = [
 							WCF::getLanguage()->get($update['packageName']),
 							$update['packageVersion'],
 							$update['version']['packageVersion']
-						);
+						];
 						
 						$table[] = $row;
 					}

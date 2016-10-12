@@ -2,7 +2,7 @@
  * ACP Style related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ACP.Style = { };
@@ -29,7 +29,7 @@ WCF.ACP.Style.CopyStyle = Class.extend({
 		
 		var self = this;
 		$('.jsCopyStyle').click(function() {
-			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.style.copyStyle.confirmMessage'), $.proxy(self._copy, self));
+			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.style.copyStyle.confirmMessage'), $.proxy(self._copy, self), undefined, undefined, true);
 		});
 	},
 	
@@ -69,6 +69,7 @@ WCF.ACP.Style.CopyStyle = Class.extend({
  * 
  * @param	integer		styleID
  * @param	string		tmpHash
+ * @deprecated	use WoltLabSuite/Core/Acp/Ui/Style/Image/Upload
  */
 WCF.ACP.Style.ImageUpload = WCF.Upload.extend({
 	/**
@@ -246,7 +247,156 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 		}
 		else {
 			// no logo defined, fallback to application logo
-			$src = $('#logo > a > img').prop('src');
+			$src = WCF_PATH + 'images/default-logo.png';
+			$('#pageLogoWidth').val(281);
+			$('#pageLogoHeight').val(40);
+		}
+		
+		this._image.attr('src', $src + '?timestamp=' + Date.now());
+	},
+	
+	/**
+	 * @see	WCF.Upload._initFile()
+	 */
+	_initFile: function(file) {
+		return this._image;
+	},
+	
+	/**
+	 * @see	WCF.Upload._getParameters()
+	 */
+	_getParameters: function() {
+		return {
+			tmpHash: this._tmpHash
+		};
+	},
+	
+	/**
+	 * @see	WCF.Upload._success()
+	 */
+	_success: function(uploadID, data) {
+		if (data.returnValues.url) {
+			// show image
+			this._image.attr('src', data.returnValues.url + '?timestamp=' + Date.now());
+			this._pageLogo.val(data.returnValues.url);
+			
+			// hide error
+			this._button.next('.innerError').remove();
+			
+			$('#pageLogoWidth').val(data.returnValues.width);
+			$('#pageLogoHeight').val(data.returnValues.height);
+			
+			// show success message
+			var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
+			$notification.show();
+		}
+		else if (data.returnValues.errorType) {
+			// show error
+			this._getInnerErrorElement().text(WCF.Language.get('wcf.acp.style.image.error.' + data.returnValues.errorType));
+		}
+	},
+	
+	/**
+	 * Returns error display element.
+	 * 
+	 * @return	jQuery
+	 */
+	_getInnerErrorElement: function() {
+		var $span = this._button.next('.innerError');
+		if (!$span.length) {
+			$span = $('<small class="innerError" />').insertAfter(this._button);
+		}
+		
+		return $span;
+	}
+});
+
+/**
+ * Handles the mobile logo upload.
+ *
+ * @param	string		tmpHash
+ */
+WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
+	/**
+	 * upload button
+	 * @var	jQuery
+	 */
+	_button: null,
+	
+	/**
+	 * image path
+	 * @var	jQuery
+	 */
+	_imagePath: null,
+	
+	/**
+	 * logo
+	 * @var	jQuery
+	 */
+	_logo: null,
+	
+	/**
+	 * page logo input field
+	 * @var	jQuery
+	 */
+	_pageLogo: null,
+	
+	/**
+	 * tmp hash
+	 * @var	string
+	 */
+	_tmpHash: '',
+	
+	/**
+	 * absolute path to WCF directory
+	 * @var	string
+	 */
+	_wcfPath: '',
+	
+	/**
+	 * @see	WCF.Upload.init()
+	 */
+	init: function(tmpHash, wcfPath) {
+		this._tmpHash = tmpHash;
+		this._wcfPath = wcfPath;
+		
+		this._button = $('#uploadLogoMobile');
+		this._image = $('#styleLogoMobile');
+		this._imagePath = $('#imagePathMobile');
+		this._pageLogo = $('#pageLogoMobile');
+		
+		this._super(this._button, undefined, 'wcf\\data\\style\\StyleAction', { action: 'uploadLogoMobile' });
+		
+		if (!this._image.attr('src').length) {
+			this._updateLogo();
+		}
+		
+		this._pageLogo.blur($.proxy(this._updateLogo, this));
+	},
+	
+	/**
+	 * Updates the logo preview.
+	 */
+	_updateLogo: function() {
+		var $src = this._pageLogo.val();
+		if ($src.length) {
+			if (!$src.match(/^https?:\/\//)) {
+				var $path = this._imagePath.val();
+				if (!$path) {
+					$path = 'images/';
+				}
+				
+				$path = this._wcfPath + $path.replace(/^\/?images\/?/, '');
+				if ($path.substr(-1) !== '/') {
+					$path += '/';
+				}
+				
+				$src = $path + $src;
+			}
+		}
+		else {
+			// no logo defined, fallback to application logo
+			$src = WCF_PATH + 'images/default-logo-small.png';
 		}
 		
 		this._image.attr('src', $src + '?timestamp=' + Date.now());
@@ -292,7 +442,7 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 	
 	/**
 	 * Returns error display element.
-	 * 
+	 *
 	 * @return	jQuery
 	 */
 	_getInnerErrorElement: function() {
@@ -355,14 +505,14 @@ WCF.ACP.Style.List = Class.extend({
 	 * @param	integer		styleID
 	 */
 	_delete: function(event, styleID) {
-		var $confirmMessage = $(event.currentTarget).data('confirmMessage');
+		var $confirmMessage = $(event.currentTarget).data('confirmMessageHtml');
 		if ($confirmMessage) {
 			var self = this;
 			WCF.System.Confirmation.show($confirmMessage, function(action) {
 				if (action === 'confirm') {
 					self._click('delete', styleID);
 				}
-			});
+			}, undefined, undefined, true);
 		}
 		else {
 			// invoke action directly

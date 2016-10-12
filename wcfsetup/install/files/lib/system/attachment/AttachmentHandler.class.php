@@ -11,11 +11,9 @@ use wcf\system\WCF;
  * Handles uploaded attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.attachment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Attachment
  */
 class AttachmentHandler implements \Countable {
 	/**
@@ -26,7 +24,7 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * object type
-	 * @var	\wcf\system\attachment\IAttachmentObjectType
+	 * @var	IAttachmentObjectType
 	 */
 	protected $processor = null;
 	
@@ -50,7 +48,7 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * list of attachments
-	 * @var	\wcf\data\attachment\AttachmentList
+	 * @var	AttachmentList
 	 */
 	protected $attachmentList = null;
 	
@@ -60,6 +58,8 @@ class AttachmentHandler implements \Countable {
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
 	 * @param	string		$tmpHash
+	 * @param	integer		$parentObjectID
+	 * @throws	SystemException
 	 */
 	public function __construct($objectType, $objectID, $tmpHash = '', $parentObjectID = 0) {
 		if (!$objectID && !$tmpHash) {
@@ -76,18 +76,18 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns a list of attachments.
 	 * 
-	 * @return	\wcf\data\attachment\AttachmentList
+	 * @return	AttachmentList
 	 */
 	public function getAttachmentList() {
 		if ($this->attachmentList === null) {
 			$this->attachmentList = new AttachmentList();
 			$this->attachmentList->sqlOrderBy = 'attachment.showOrder';
-			$this->attachmentList->getConditionBuilder()->add('objectTypeID = ?', array($this->objectType->objectTypeID));
+			$this->attachmentList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
 			if ($this->objectID) {
-				$this->attachmentList->getConditionBuilder()->add('objectID = ?', array($this->objectID));
+				$this->attachmentList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
 			}
 			else {
-				$this->attachmentList->getConditionBuilder()->add('tmpHash = ?', array($this->tmpHash));
+				$this->attachmentList->getConditionBuilder()->add('tmpHash = ?', [$this->tmpHash]);
 			}
 			$this->attachmentList->readObjects();
 		}
@@ -96,7 +96,7 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->getAttachmentList());
@@ -114,7 +114,7 @@ class AttachmentHandler implements \Countable {
 			WHERE	objectTypeID = ?
 				AND tmpHash = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectID, $this->objectType->objectTypeID, $this->tmpHash));
+		$statement->execute([$objectID, $this->objectType->objectTypeID, $this->tmpHash]);
 	}
 	
 	/**
@@ -122,12 +122,12 @@ class AttachmentHandler implements \Countable {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$newObjectID
-	 * @param	array<integer>	$oldObjectIDs
+	 * @param	integer[]	$oldObjectIDs
 	 */
 	public static function transferAttachments($objectType, $newObjectID, array $oldObjectIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectTypeID = ?", array(ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType)->objectTypeID));
-		$conditions->add("objectID IN (?)", array($oldObjectIDs));
+		$conditions->add("objectTypeID = ?", [ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType)->objectTypeID]);
+		$conditions->add("objectID IN (?)", [$oldObjectIDs]);
 		$parameters = $conditions->getParameters();
 		array_unshift($parameters, $newObjectID);
 		
@@ -142,12 +142,12 @@ class AttachmentHandler implements \Countable {
 	 * Removes all attachments for given object ids by type.
 	 * 
 	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	integer[]	$objectIDs
 	 */
 	public static function removeAttachments($objectType, array $objectIDs) {
 		$attachmentList = new AttachmentList();
-		$attachmentList->getConditionBuilder()->add("objectTypeID = ?", array(ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType)->objectTypeID));
-		$attachmentList->getConditionBuilder()->add("objectID IN (?)", array($objectIDs));
+		$attachmentList->getConditionBuilder()->add("objectTypeID = ?", [ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType)->objectTypeID]);
+		$attachmentList->getConditionBuilder()->add("objectID IN (?)", [$objectIDs]);
 		$attachmentList->readObjects();
 		
 		if (count($attachmentList)) {
@@ -157,14 +157,14 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxSize()
+	 * @inheritDoc
 	 */
 	public function getMaxSize() {
 		return $this->processor->getMaxSize();
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getAllowedExtensions()
+	 * @inheritDoc
 	 */
 	public function getAllowedExtensions() {
 		return $this->processor->getAllowedExtensions();
@@ -173,7 +173,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns a formatted list of the allowed file extensions.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public function getFormattedAllowedExtensions() {
 		$extensions = $this->getAllowedExtensions();
@@ -197,7 +197,7 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxCount()
+	 * @inheritDoc
 	 */
 	public function getMaxCount() {
 		return $this->processor->getMaxCount();
@@ -215,7 +215,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns the object type processor.
 	 * 
-	 * @return	\wcf\system\attachment\IAttachmentObjectType
+	 * @return	IAttachmentObjectType
 	 */
 	public function getProcessor() {
 		return $this->processor;

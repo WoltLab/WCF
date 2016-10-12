@@ -7,11 +7,9 @@ use wcf\util\StringUtil;
  * Image adapter for bundled GD imaging library.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.image.adapter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Image\Adapter
  */
 class GDImageAdapter implements IImageAdapter {
 	/**
@@ -24,7 +22,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * red, green, blue data of the active color
 	 * @var	array
 	 */
-	protected $colorData = array();
+	protected $colorData = [];
 	
 	/**
 	 * image height
@@ -59,7 +57,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
+	 * @inheritDoc
 	 */
 	public function load($image, $type = '') {
 		if (!is_resource($image)) {
@@ -73,31 +71,31 @@ class GDImageAdapter implements IImageAdapter {
 		$this->image = $image;
 		$this->type = $type;
 		
-		$this->height = imageSY($this->image);
-		$this->width = imageSX($this->image);
+		$this->height = imagesy($this->image);
+		$this->width = imagesx($this->image);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::loadFile()
+	 * @inheritDoc
 	 */
 	public function loadFile($file) {
-		list($this->width, $this->height, $this->type) = getImageSize($file);
+		list($this->width, $this->height, $this->type) = getimagesize($file);
 		
 		switch ($this->type) {
 			case IMAGETYPE_GIF:
-				$this->image = imageCreateFromGif($file);
+				$this->image = imagecreatefromgif($file);
 			break;
 			
 			case IMAGETYPE_JPEG:
 				// suppress warnings and properly handle errors
-				$this->image = @imageCreateFromJpeg($file);
+				$this->image = @imagecreatefromjpeg($file);
 				if ($this->image === false) {
 					throw new SystemException("Could not read jpeg image '".$file."'.");
 				}
 			break;
 			
 			case IMAGETYPE_PNG:
-				$this->image = imageCreateFromPng($file);
+				$this->image = imagecreatefrompng($file);
 			break;
 			
 			default:
@@ -107,20 +105,20 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 * @inheritDoc
 	 */
 	public function createEmptyImage($width, $height) {
-		$this->image = imageCreate($width, $height);
+		$this->image = imagecreate($width, $height);
 		$this->type = IMAGETYPE_PNG;
 		$this->setColor(0xFF, 0xFF, 0xFF);
 		$this->color = null;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::createThumbnail()
+	 * @inheritDoc
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
-		$width = $height = $x = $y = 0;
+		$x = $y = 0;
 		$sourceWidth = $this->width;
 		$sourceHeight = $this->height;
 		
@@ -151,53 +149,53 @@ class GDImageAdapter implements IImageAdapter {
 		}
 		
 		// resize image
-		$image = imageCreateTrueColor($width, $height);
-		imageAlphaBlending($image, false);
-		imageCopyResampled($image, $this->image, 0, 0, $x, $y, $width, $height, $sourceWidth, $sourceHeight);
-		imageSaveAlpha($image, true);
+		$image = imagecreatetruecolor($width, $height);
+		imagealphablending($image, false);
+		imagecopyresampled($image, $this->image, 0, 0, $x, $y, $width, $height, $sourceWidth, $sourceHeight);
+		imagesavealpha($image, true);
 		
 		return $image;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::clip()
+	 * @inheritDoc
 	 */
 	public function clip($originX, $originY, $width, $height) {
-		$image = imageCreateTrueColor($width, $height);
-		imageAlphaBlending($image, false);
+		$image = imagecreatetruecolor($width, $height);
+		imagealphablending($image, false);
 		
-		imageCopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
-		imageSaveAlpha($image, true);
+		imagecopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
+		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
 		$this->load($image, $this->type);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
+	 * @inheritDoc
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth = 0, $targetHeight = 0) {
-		$image = imageCreateTrueColor($targetWidth, $targetHeight);
-		imageAlphaBlending($image, false);
+		$image = imagecreatetruecolor($targetWidth, $targetHeight);
+		imagealphablending($image, false);
 		
-		imageCopyResampled($image, $this->image, 0, 0, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
-		imageSaveAlpha($image, true);
+		imagecopyresampled($image, $this->image, 0, 0, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
+		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
 		$this->load($image, $this->type);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawRectangle()
+	 * @inheritDoc
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY) {
-		imageFilledRectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
+		imagefilledrectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
+	 * @inheritDoc
 	 */
-	public function drawText($text, $x, $y, $font, $size, $opacity = 1) {
+	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		// set opacity
 		$color = imagecolorallocatealpha($this->image, $this->colorData['red'], $this->colorData['green'], $this->colorData['blue'], (1 - $opacity) * 127);
 		
@@ -206,9 +204,9 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
+	 * @inheritDoc
 	 */
-	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1) {
+	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
 		// split text into multiple lines
 		$lines = explode("\n", StringUtil::unifyNewlines($text));
 		
@@ -267,7 +265,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::textFitsImage()
+	 * @inheritDoc
 	 */
 	public function textFitsImage($text, $margin, $font, $size) {
 		$box = imagettfbbox($size, 0, $font, $text);
@@ -279,45 +277,45 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::adjustFontSize()
+	 * @inheritDoc
 	 */
 	public function adjustFontSize($text, $margin, $font, $size) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @inheritDoc
 	 */
 	public function setColor($red, $green, $blue) {
-		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
+		$this->color = imagecolorallocate($this->image, $red, $green, $blue);
 		
 		// save data of the color
-		$this->colorData = array(
+		$this->colorData = [
 			'red' => $red,
 			'green' => $green,
 			'blue' => $blue
-		);
+		];
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::hasColor()
+	 * @inheritDoc
 	 */
 	public function hasColor() {
 		return ($this->color !== null);
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @inheritDoc
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		if ($this->type == IMAGETYPE_PNG) {
 			$color = imagecolorallocate($this->image, $red, $green, $blue);
-			imageColorTransparent($this->image, $color);
+			imagecolortransparent($this->image, $color);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::writeImage()
+	 * @inheritDoc
 	 */
 	public function writeImage($image, $filename) {
 		if (!is_resource($image)) {
@@ -327,13 +325,13 @@ class GDImageAdapter implements IImageAdapter {
 		ob_start();
 		
 		if ($this->type == IMAGETYPE_GIF) {
-			imageGIF($image);
+			imagegif($image);
 		}
 		else if ($this->type == IMAGETYPE_PNG) {
-			imagePNG($image);
+			imagepng($image);
 		}
 		else if (function_exists('imageJPEG')) {
-			imageJPEG($image, null, 90);
+			imagejpeg($image, null, 90);
 		}
 		
 		$stream = ob_get_contents();
@@ -343,43 +341,43 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getType()
+	 * @inheritDoc
 	 */
 	public function getType() {
 		return $this->type;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @inheritDoc
 	 */
 	public function getImage() {
 		return $this->image;
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 * @inheritDoc
 	 */
 	public function rotate($degrees) {
 		// imagerotate interpretes degrees as counter-clockwise
-		return imagerotate($this->image, (360.0 - $degrees), ($this->color ?: 0));
+		return imagerotate($this->image, 360.0 - $degrees, ($this->color ?: 0));
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 * @inheritDoc
 	 */
 	public function overlayImage($file, $x, $y, $opacity) {
 		$overlayImage = new self();
@@ -394,14 +392,14 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImageRelative()
+	 * @inheritDoc
 	 */
 	public function overlayImageRelative($file, $position, $margin, $opacity) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
+	 * @inheritDoc
 	 */
 	public static function isSupported() {
 		return true;

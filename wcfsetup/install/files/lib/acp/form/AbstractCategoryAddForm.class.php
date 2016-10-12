@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\category\CategoryAction;
 use wcf\data\category\CategoryEditor;
 use wcf\data\category\UncachedCategoryNodeTree;
+use wcf\data\object\type\ObjectType;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
@@ -18,11 +19,9 @@ use wcf\util\ArrayUtil;
  * Abstract implementation of a form to create categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 abstract class AbstractCategoryAddForm extends AbstractForm {
 	/**
@@ -41,11 +40,11 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	 * additional category data
 	 * @var	array
 	 */
-	public $additionalData = array();
+	public $additionalData = [];
 	
 	/**
 	 * tree with the category nodes
-	 * @var	\wcf\data\category\CategoryNodeTree
+	 * @var	UncachedCategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	
@@ -69,7 +68,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * category object type object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType = null;
 	
@@ -89,7 +88,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	 * language item with the page title
 	 * @var	string
 	 */
-	public $pageTitle = '';
+	public $pageTitle = 'wcf.category.add';
 	
 	/**
 	 * id of the parent category id
@@ -104,12 +103,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'categoryAdd';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
@@ -117,20 +116,20 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		
 		// autoset controllers
 		if (empty($this->addController)) {
-			$this->addController = str_replace(array('AddForm', 'EditForm'), 'Add', $className);
+			$this->addController = str_replace(['AddForm', 'EditForm'], 'Add', $className);
 		}
 		if (empty($this->editController)) {
-			$this->editController = str_replace(array('AddForm', 'EditForm'), 'Edit', $className);
+			$this->editController = str_replace(['AddForm', 'EditForm'], 'Edit', $className);
 		}
 		if (empty($this->listController)) {
-			$this->listController = str_replace(array('AddForm', 'EditForm'), 'List', $className);
+			$this->listController = str_replace(['AddForm', 'EditForm'], 'List', $className);
 		}
 		
 		parent::__run();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -140,7 +139,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			ACLHandler::getInstance()->assignVariables($this->aclObjectTypeID);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'aclObjectTypeID' => $this->aclObjectTypeID,
 			'action' => 'add',
 			'addController' => $this->addController,
@@ -152,7 +151,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			'objectType' => $this->objectType,
 			'parentCategoryID' => $this->parentCategoryID,
 			'showOrder' => $this->showOrder
-		));
+		]);
 		
 		if ($this->pageTitle) {
 			WCF::getTPL()->assign('pageTitle', $this->pageTitle);
@@ -176,7 +175,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
@@ -209,7 +208,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -231,13 +230,13 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new CategoryAction(array(), 'create', array(
-			'data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new CategoryAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
 				'additionalData' => serialize($this->additionalData),
 				'description' => ($this->objectType->getProcessor()->hasDescription() && I18nHandler::getInstance()->isPlainValue('description')) ? I18nHandler::getInstance()->getValue('description') : '',
 				'isDisabled' => $this->isDisabled,
@@ -245,15 +244,15 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder > 0 ? $this->showOrder : null,
 				'title' => I18nHandler::getInstance()->isPlainValue('title') ? I18nHandler::getInstance()->getValue('title') : ''
-			))
-		));
+			])
+		]);
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		
 		if (($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->isPlainValue('description')) || !I18nHandler::getInstance()->isPlainValue('title')) {
 			$categoryID = $returnValues['returnValues']->categoryID;
 			
-			$updateData = array();
+			$updateData = [];
 			if ($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->isPlainValue('description')) {
 				$updateData['description'] = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$categoryID;
 				I18nHandler::getInstance()->save('description', $updateData['description'], $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
@@ -282,7 +281,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		// reset values
 		$this->parentCategoryID = 0;
 		$this->showOrder = 0;
-		$this->additionalData = array();
+		$this->additionalData = [];
 		
 		$this->saved();
 		
@@ -294,7 +293,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -321,7 +320,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * Validates the parent category.
+	 * @inheritDoc
 	 */
 	protected function validateParentCategory() {
 		if ($this->parentCategoryID) {
@@ -332,12 +331,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			
 			$category = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
 			if ($category === null) {
-				throw new UserInputException('parentCategoryID', 'notValid');
+				throw new UserInputException('parentCategoryID', 'invalid');
 			}
 			
 			if ($this->objectType->getProcessor()->getMaximumNestingLevel() != -1) {
 				if (count($category->getParentCategories()) + 1 > $this->objectType->getProcessor()->getMaximumNestingLevel()) {
-					throw new UserInputException('parentCategoryID', 'notValid');
+					throw new UserInputException('parentCategoryID', 'invalid');
 				}
 			}
 		}

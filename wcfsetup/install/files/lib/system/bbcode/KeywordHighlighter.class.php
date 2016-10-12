@@ -8,24 +8,22 @@ use wcf\util\StringUtil;
  * Highlights keywords in text messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class KeywordHighlighter extends SingletonFactory {
 	/**
 	 * search keywords
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $keywords = array();
+	protected $keywords = [];
 	
 	/**
 	 * search query parameters
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected static $searchQueryKeys = array(
+	protected static $searchQueryKeys = [
 		'q',		// google, msn, altavista
 		'p',		// yahoo
 		'query',	// lycos, fireball
@@ -55,10 +53,10 @@ class KeywordHighlighter extends SingletonFactory {
 		//'k',
 		//'t',
 		'va'
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// take keywords from request
@@ -110,12 +108,12 @@ class KeywordHighlighter extends SingletonFactory {
 			$keywordString = StringUtil::trim(mb_substr($keywordString, 1, -1));
 			
 			if (!empty($keywordString)) {
-				$this->keywords = array_merge($this->keywords, array(StringUtil::encodeHTML($keywordString)));
+				$this->keywords = array_merge($this->keywords, [StringUtil::encodeHTML($keywordString)]);
 			}
 		}
 		else {
 			// replace word delimiters by space
-			$keywordString = str_replace(array('.', ','), ' ', $keywordString);
+			$keywordString = str_replace(['.', ','], ' ', $keywordString);
 			
 			$keywords = ArrayUtil::encodeHTML(ArrayUtil::trim(explode(' ', $keywordString)));
 			if (!empty($keywords)) {
@@ -136,5 +134,14 @@ class KeywordHighlighter extends SingletonFactory {
 		$keywordPattern = '('.implode('|', $this->keywords).')';
 		$keywordPattern = str_replace('\*', '\w*', $keywordPattern);
 		return preg_replace('+(?<!&|&\w{1}|&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6})'.$keywordPattern.'(?![^<]*>)+i', '<span class="highlight">\\1</span>', $text);
+	}
+	
+	/**
+	 * Returns search keywords
+	 * 
+	 * @return	string[]
+	 */
+	public function getKeywords() {
+		return $this->keywords;
 	}
 }

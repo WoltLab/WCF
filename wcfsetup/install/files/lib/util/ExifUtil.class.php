@@ -5,11 +5,9 @@ namespace wcf\util;
  * Provides exif-related functions.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class ExifUtil {
 	/**
@@ -68,7 +66,12 @@ final class ExifUtil {
 	 */
 	const ORIENTATION_270_ROTATE = 8;
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of ExifUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns the exif data of the image at the given location or an empty
@@ -85,7 +88,7 @@ final class ExifUtil {
 			}
 		}
 		
-		return array();
+		return [];
 	}
 	
 	/**
@@ -188,7 +191,7 @@ final class ExifUtil {
 	 * @return	array
 	 */
 	public static function getFormattedExifData(array $rawExifData) {
-		$exifData = array();
+		$exifData = [];
 		
 		// unit is second (unsigned rational)
 		if (isset($rawExifData['ExposureTime']) && is_string($rawExifData['ExposureTime'])) {

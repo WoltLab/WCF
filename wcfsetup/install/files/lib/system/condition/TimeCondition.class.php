@@ -10,11 +10,9 @@ use wcf\util\StringUtil;
  * Condition implementation for the current time.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
 class TimeCondition extends AbstractMultipleFieldsCondition implements IContentCondition {
 	/**
@@ -24,12 +22,12 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	protected $endTime = '00:00';
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$label
+	 * @inheritDoc
 	 */
-	protected $labels = array(
+	protected $labels = [
 		'time' => 'wcf.date.time',
 		'timezone' => 'wcf.date.timezone'
-	);
+	];
 	
 	/**
 	 * start time
@@ -44,10 +42,10 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	protected $timezone = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
-		$data = array();
+		$data = [];
 		
 		if ($this->startTime) {
 			$data['startTime'] = $this->startTime;
@@ -68,7 +66,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML() {
 		$start = WCF::getLanguage()->get('wcf.date.period.start');
@@ -78,8 +76,8 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 <dl>
 	<dt>{$this->getLabel('time')}</dt>
 	<dd>
-		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="startTime" name="startTime" value="{$this->startTime}" placeholder="{$start}" />
-		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="endTime" name="endTime" value="{$this->endTime}" placeholder="{$end}" />
+		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="startTime" name="startTime" value="{$this->startTime}" placeholder="{$start}">
+		<input type="datetime" data-ignore-timezone="1" data-time-only="1" id="endTime" name="endTime" value="{$this->endTime}" placeholder="{$end}">
 		{$this->getDescriptionElement('time')}
 		{$this->getErrorMessageElement('time')}
 	</dd>
@@ -95,10 +93,15 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 HTML;
 	}
 	
+	/**
+	 * Returns the select element with all available timezones.
+	 * 
+	 * @return	string
+	 */
 	protected function getTimezoneFieldElement() {
-		$fieldElement = '<select name="timezone" id="timezone"><option value="0"'.($this->timezone ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get('wcf.date.timezone.user').'</option>';
+		$fieldElement = '<select name="timezone" id="timezone"><option value="0"'.($this->timezone ? ' selected' : '').'>'.WCF::getLanguage()->get('wcf.date.timezone.user').'</option>';
 		foreach (DateUtil::getAvailableTimezones() as $timezone) {
-			$fieldElement .= '<option value="'.$timezone.'"'.($this->timezone === $timezone ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get('wcf.date.timezone.'.str_replace('/', '.', strtolower($timezone))).'</option>';
+			$fieldElement .= '<option value="'.$timezone.'"'.($this->timezone === $timezone ? ' selected' : '').'>'.WCF::getLanguage()->get('wcf.date.timezone.'.str_replace('/', '.', strtolower($timezone))).'</option>';
 		}
 		$fieldElement .= '</select>';
 		
@@ -106,7 +109,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		if (isset($_POST['endTime'])) $this->endTime = StringUtil::trim($_POST['endTime']);
@@ -115,7 +118,7 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::reset()
+	 * @inheritDoc
 	 */
 	public function reset() {
 		$this->endTime = '00:00';
@@ -124,22 +127,30 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::setData()
+	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		if ($condition->endTime) {
-			$this->endTime = $condition->endTime;
+		/** @noinspection PhpUndefinedFieldInspection */
+		$endTime = $condition->endTime;
+		if ($endTime) {
+			$this->endTime = $endTime;
 		}
-		if ($condition->startTime) {
-			$this->startTime = $condition->startTime;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$startTime = $condition->startTime;
+		if ($startTime) {
+			$this->startTime = $startTime;
 		}
-		if ($condition->timezone) {
-			$this->timezone = $condition->timezone;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$timezone = $condition->timezone;
+		if ($timezone) {
+			$this->timezone = $timezone;
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\ICondition::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if ($this->startTime == '00:00' && $this->endTime == '00:00') {
@@ -151,22 +162,22 @@ HTML;
 		if ($this->startTime) {
 			$startDateTime = \DateTime::createFromFormat('H:i', $this->startTime);
 			if ($startDateTime === false) {
-				$this->errorMessages['time'] = 'wcf.date.startTime.error.notValid';
+				$this->errorMessages['time'] = 'wcf.date.startTime.error.invalid';
 				
-				throw new UserInputException('startTime', 'notValid');
+				throw new UserInputException('startTime', 'invalid');
 			}
 		}
 		if ($this->endTime) {
 			$endDateTime = \DateTime::createFromFormat('H:i', $this->endTime);
 			if ($endDateTime === false) {
-				$this->errorMessages['time'] = 'wcf.date.endTime.error.notValid';
+				$this->errorMessages['time'] = 'wcf.date.endTime.error.invalid';
 				
-				throw new UserInputException('endTime', 'notValid');
+				throw new UserInputException('endTime', 'invalid');
 			}
 		}
 		
 		if ($startDateTime !== null && $endDateTime !== null) {
-			if ($startDateTime->getTimestamp() >= $endDateTime->getTimeStamp()) {
+			if ($startDateTime->getTimestamp() >= $endDateTime->getTimestamp()) {
 				$this->errorMessages['time'] = 'wcf.date.endTime.error.beforeStartTime';
 				
 				throw new UserInputException('endTime', 'beforeStartTime');
@@ -174,30 +185,36 @@ HTML;
 		}
 		
 		if ($this->timezone && !in_array($this->timezone, DateUtil::getAvailableTimezones())) {
-			$this->errorMessages['timezone'] = 'wcf.global.form.error.notValidSelection';
+			$this->errorMessages['timezone'] = 'wcf.global.form.error.noValidSelection';
 			
-			throw new UserInputException('timezone', 'notValidSelection');
+			throw new UserInputException('timezone', 'noValidSelection');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		$timezone = WCF::getUser()->getTimeZone();
-		if ($condition->timezone) {
-			$timezone = new \DateTimeZone($condition->timezone);
+		/** @noinspection PhpUndefinedFieldInspection */
+		$conditionTimezone = $condition->timezone;
+		if ($conditionTimezone) {
+			$timezone = new \DateTimeZone($conditionTimezone);
 		}
 		
-		if ($condition->startTime) {
-			$dateTime = \DateTime::createFromFormat('H:i', $condition->startTime, $timezone);
+		/** @noinspection PhpUndefinedFieldInspection */
+		$startTime = $condition->startTime;
+		if ($startTime) {
+			$dateTime = \DateTime::createFromFormat('H:i', $startTime, $timezone);
 			if ($dateTime->getTimestamp() > TIME_NOW) {
 				return false;
 			}
 		}
 		
-		if ($condition->endTime) {
-			$dateTime = \DateTime::createFromFormat('H:i', $condition->endTime, $timezone);
+		/** @noinspection PhpUndefinedFieldInspection */
+		$endTime = $condition->endTime;
+		if ($endTime) {
+			$dateTime = \DateTime::createFromFormat('H:i', $endTime, $timezone);
 			if ($dateTime->getTimestamp() < TIME_NOW) {
 				return false;
 			}

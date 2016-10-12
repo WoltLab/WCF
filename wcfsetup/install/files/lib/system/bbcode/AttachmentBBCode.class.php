@@ -9,16 +9,14 @@ use wcf\util\StringUtil;
  * Parses the [attach] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode
  */
 class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * list of attachments
-	 * @var	\wcf\data\attachment\GroupedAttachmentList
+	 * @var	GroupedAttachmentList
 	 * @deprecated
 	 */
 	protected static $attachmentList = null;
@@ -31,7 +29,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	protected static $objectID = 0;
 	
 	/**
-	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @inheritDoc
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		// get attachment id
@@ -55,40 +53,50 @@ class AttachmentBBCode extends AbstractBBCode {
 		}
 		
 		if ($attachment !== null) {
-			if ($attachment->showAsImage() && $attachment->canViewPreview() && $parser->getOutputType() == 'text/html') {
+			if ($attachment->showAsImage() && $attachment->canViewPreview() && ($parser->getOutputType() == 'text/html' || $parser->getOutputType() == 'text/simplified-html')) {
 				// image
 				$alignment = (isset($openingTag['attributes'][1]) ? $openingTag['attributes'][1] : '');
-				$width = (isset($openingTag['attributes'][2]) ? $openingTag['attributes'][2] : 0);
+				$thumbnail = (isset($openingTag['attributes'][2]) ? $openingTag['attributes'][2] : false);
 				
-				// check if width is valid and the original is accessible by viewer
-				if ($width > 0) {
-					if ($attachment->canDownload()) {
-						// check if width exceeds image width
-						if ($width > $attachment->width) {
-							$width = $attachment->width;
-						}
+				// backward compatibility, check if width is larger than thumbnail's width to display full version
+				if (is_int($thumbnail)) {
+					if ($thumbnail == 0) {
+						$thumbnail = true;
 					}
 					else {
-						$width = 0;
+						// true if supplied width is smaller or equal to thumbnail's width
+						$thumbnail = ($attachment->thumbnailWidth >= $thumbnail) ? true : false;
 					}
 				}
+				else if ($thumbnail !== false) {
+					$thumbnail = true;
+				}
 				
-				$result = '';
-				if ($width > 0) {
+				// always use thumbnail in simplified version
+				if ($parser->getOutputType() == 'text/simplified-html') {
+					$thumbnail = true;
+				}
+				
+				// check if width is valid and the original is accessible by viewer
+				if (!$thumbnail && !$attachment->canDownload()) {
+					$thumbnail = false;
+				}
+				
+				if (!$thumbnail) {
 					$class = '';
 					if ($alignment == 'left' || $alignment == 'right') {
 						$class = 'messageFloatObject'.ucfirst($alignment);
 					}
 					
-					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment)));
+					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
-					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" style="width: '.$width.'px" alt="" /></a>';
+					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '"><img src="' . $source . '" alt=""></a>';
 				}
 				else {
-					$linkParameters = array(
+					$linkParameters = [
 						'object' => $attachment
-					);
+					];
 					if ($attachment->hasThumbnail()) $linkParameters['thumbnail'] = 1;
 					
 					$class = '';
@@ -105,9 +113,9 @@ class AttachmentBBCode extends AbstractBBCode {
 						$imageClasses .= ' '.$class;
 					}
 					
-					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="" />';
+					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="">';
 					if ($attachment->hasThumbnail() && $attachment->canDownload()) {
-						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment))).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
+						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
 					}
 				}
 				
@@ -115,22 +123,22 @@ class AttachmentBBCode extends AbstractBBCode {
 			}
 			else {
 				// file
-				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', array(
+				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
 					'object' => $attachment
-				)), ((!empty($content) && $content != $attachmentID) ? $content : $attachment->filename));
+				]), ((!empty($content) && $content != $attachmentID) ? $content : $attachment->filename));
 			}
 		}
 		
 		// fallback
-		return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', array(
+		return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
 			'id' => $attachmentID
-		)));
+		]));
 	}
 	
 	/**
 	 * Sets the attachment list.
 	 * 
-	 * @param	\wcf\data\attachment\GroupedAttachmentList	$attachments
+	 * @param	GroupedAttachmentList	$attachmentList
 	 * @deprecated
 	 */
 	public static function setAttachmentList(GroupedAttachmentList $attachmentList) {

@@ -1,23 +1,24 @@
 <?php
 namespace wcf\system\form\element;
+use wcf\system\form\container\SingleSelectionFormElementContainer;
 
 /**
  * Provides a radio form element.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.form.element
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Form\Element
+ * 
+ * @method	SingleSelectionFormElementContainer	getParent()
  */
 class SingleSelectionFormElement extends AbstractNamedFormElement {
 	/**
-	 * @see	\wcf\system\form\IFormElement::getHTML()
+	 * @inheritDoc
 	 */
 	public function getHTML($formName) {
 		return <<<HTML
-<label><input type="radio" name="{$formName}{$this->getParent()->getName()}" value="{$this->getValue()}" /> {$this->getLabel()}</label>
+<label><input type="radio" name="{$formName}{$this->getParent()->getName()}" value="{$this->getValue()}"> {$this->getLabel()}</label>
 HTML;
 	}
 }

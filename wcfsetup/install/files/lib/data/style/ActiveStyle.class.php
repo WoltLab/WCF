@@ -7,17 +7,18 @@ use wcf\system\WCF;
  * Represents the active user style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.style
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Style
+ *
+ * @method	Style	getDecoratedObject()
+ * @mixin	Style
  */
 class ActiveStyle extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\style\Style';
+	protected static $baseClass = Style::class;
 	
 	/**
 	 * Returns full path to specified image.
@@ -43,10 +44,23 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getPageLogo() {
-		if ($this->object->getVariable('pageLogo')) {
-			return $this->getImage($this->object->getVariable('pageLogo'));
+		if ($this->getDecoratedObject()->getVariable('pageLogo')) {
+			return $this->getImage($this->getDecoratedObject()->getVariable('pageLogo'));
 		}
 		
-		return '';
+		return WCF::getPath() . 'images/default-logo.png';
+	}
+	
+	/**
+	 * Returns mobile page logo.
+	 *
+	 * @return	string
+	 */
+	public function getPageLogoMobile() {
+		if ($this->getDecoratedObject()->getVariable('pageLogoMobile')) {
+			return $this->getImage($this->getDecoratedObject()->getVariable('pageLogoMobile'));
+		}
+		
+		return WCF::getPath() . 'images/default-logo-small.png';
 	}
 }

@@ -5,11 +5,9 @@ namespace wcf\system\setup;
  * Deletes files and directories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.setup
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Setup
  */
 class Uninstaller {
 	/**
@@ -20,7 +18,7 @@ class Uninstaller {
 	
 	/**
 	 * files to delete
-	 * @var	array<string>
+	 * @var	string[]
 	 */
 	protected $files;
 	
@@ -97,7 +95,7 @@ class Uninstaller {
 	protected function uninstall() {
 		if ($this->checkTargetDir()) {
 			// delete all files
-			$directories = array();
+			$directories = [];
 			foreach ($this->files as $file) {
 				$this->deleteFile($this->targetDir.$file);
 				

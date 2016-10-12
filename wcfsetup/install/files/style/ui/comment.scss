@@ -1,0 +1,56 @@
+.commentList {
+	> li {
+		&:hover {
+			background-color: transparent;
+			
+			.buttonGroupNavigation {
+				opacity: 0;
+			}
+		}
+	}
+	
+	.commentContent {
+		&:hover {
+			.buttonGroupNavigation {
+				opacity: 1;
+			}
+		}
+		
+		+ .commentOptionContainer {
+			.commentResponseAdd {
+				border-top: 1px solid $wcfContentBorderInner;
+				padding-top: 20px;
+				margin-top: 20px;
+			}
+		}
+		
+		.wcfLikeCounter {
+			@include wcfFontSmall;
+		}
+	}
+	
+	.commentResponseList {
+		&:not(:empty) {
+			margin-top: 20px;
+		}
+		
+		> li {
+			&:first-child,
+			&:last-child {
+				border-color: $wcfContentBorderInner;
+			}
+		}
+	}
+	
+	.commentOptionContainer {
+		margin-top: 10px;
+	}
+	
+	.commentResponseAdd {
+		padding: 10px 20px 0 20px;
+	}
+	
+	textarea + button {
+		margin-top: 2px;
+	}
+}

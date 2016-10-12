@@ -1,0 +1,9 @@
+.userMention {
+	background-color: $wcfSidebarBackground;
+	border-radius: 2px;
+	padding: 2px 5px;
+	
+	&::before {
+		content: '@';
+	}
+}

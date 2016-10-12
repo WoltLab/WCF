@@ -1,15 +1,14 @@
 <?php
 namespace wcf\data\object\type;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Abstract implementation of an object type provider.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Object\Type
  */
 abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	/**
@@ -31,7 +30,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	public $listClassName = '';
 	
 	/**
-	 * @see	\wcf\data\object\type\IObjectTypeProvider::getObjectByID()
+	 * @inheritDoc
 	 */
 	public function getObjectByID($objectID) {
 		$object = new $this->className($objectID);
@@ -43,17 +42,18 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	}
 	
 	/**
-	 * @see	\wcf\data\object\type\IObjectTypeProvider::getObjectsByIDs()
+	 * @inheritDoc
 	 */
 	public function getObjectsByIDs(array $objectIDs) {
-		$tableAlias = call_user_func(array($this->className, 'getDatabaseTableAlias'));
-		$tableIndex = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		$tableAlias = call_user_func([$this->className, 'getDatabaseTableAlias']);
+		$tableIndex = call_user_func([$this->className, 'getDatabaseTableIndexName']);
 		
+		/** @var DatabaseObjectList $objectList */
 		$objectList = new $this->listClassName();
 		if ($this->decoratorClassName) {
 			$objectList->decoratorClassName = $this->decoratorClassName;
 		}
-		$objectList->getConditionBuilder()->add($tableAlias.".".$tableIndex." IN (?)", array($objectIDs));
+		$objectList->getConditionBuilder()->add($tableAlias.".".$tableIndex." IN (?)", [$objectIDs]);
 		$objectList->readObjects();
 		
 		return $objectList->getObjects();

@@ -7,40 +7,42 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes label group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.label.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Label\Group
+ * 
+ * @method	LabelGroup		create()
+ * @method	LabelGroupEditor[]	getObjects()
+ * @method	LabelGroupEditor	getSingleObject()
  */
 class LabelGroupAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\label\group\LabelGroupEditor';
+	protected $className = LabelGroupEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.content.label.canManageLabel');
+	protected $permissionsCreate = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.content.label.canManageLabel');
+	protected $permissionsDelete = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.content.label.canManageLabel');
+	protected $permissionsUpdate = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$count = parent::delete();

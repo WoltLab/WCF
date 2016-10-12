@@ -1,50 +1,51 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\page\SortablePage;
 
 /**
  * Shows a list of user option categories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	UserOptionCategoryList		$objectList
  */
 class UserOptionCategoryListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option.category.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOption');
+	public $neededPermissions = ['admin.user.canManageUserOption'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'showOrder';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\option\category\UserOptionCategoryList';
+	public $objectListClassName = UserOptionCategoryList::class;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('categoryID', 'categoryName', 'showOrder', 'userOptions');
+	public $validSortFields = ['categoryID', 'categoryName', 'showOrder', 'userOptions'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
 		$this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf".WCF_N."_user_option WHERE categoryName = user_option_category.categoryName) AS userOptions";
-		$this->objectList->getConditionBuilder()->add('user_option_category.parentCategoryName = ?', array('profile'));
+		$this->objectList->getConditionBuilder()->add('user_option_category.parentCategoryName = ?', ['profile']);
 	}
 }

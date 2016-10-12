@@ -5,11 +5,9 @@ namespace wcf\system\cli\command;
  * Represents a command with arguments.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cli.command
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cli\Command
  */
 interface IArgumentedCLICommand extends ICLICommand {
 	/**

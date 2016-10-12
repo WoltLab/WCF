@@ -1,53 +1,62 @@
 <?php
 namespace wcf\data\comment;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\TLegacyUserPropertyAccess;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Represents a viewable comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment
+ * 
+ * @method	Comment		getDecoratedObject()
+ * @mixin	Comment
  */
 class ViewableComment extends DatabaseObjectDecorator {
-	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
-	 */
-	protected static $baseClass = 'wcf\data\comment\Comment';
+	use TLegacyUserPropertyAccess;
 	
 	/**
-	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * @inheritDoc
+	 */
+	protected static $baseClass = Comment::class;
+	
+	/**
+	 * user profile of the comment author
+	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
 	
 	/**
 	 * Returns the user profile object.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {
-			$this->userProfile = new UserProfile(new User(null, $this->getDecoratedObject()->data));
+			if ($this->userID) {
+				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			}
+			else {
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
+			}
 		}
 		
 		return $this->userProfile;
 	}
 	
 	/**
-	 * Gets a specific comment decorated as comment entry.
+	 * Returns a specific comment decorated as comment entry.
 	 * 
 	 * @param	integer		$commentID
-	 * @return	\wcf\data\comment\ViewableComment
+	 * @return	ViewableComment
 	 */
 	public static function getComment($commentID) {
 		$list = new ViewableCommentList();
-		$list->setObjectIDs(array($commentID));
+		$list->setObjectIDs([$commentID]);
 		$list->readObjects();
 		$objects = $list->getObjects();
 		if (isset($objects[$commentID])) return $objects[$commentID];

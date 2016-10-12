@@ -10,49 +10,62 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
-use wcf\system\package\PackageUpdateUnauthorizedException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
+use wcf\util\JSON;
 use wcf\util\XML;
 
 /**
  * Provides functions to manage package updates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageUpdateDispatcher extends SingletonFactory {
+	protected $hasAuthCode = false;
+	protected $purchasedVersions = [
+		'woltlab' => [],
+		'pluginstore' => []
+	];
+	
 	/**
 	 * Refreshes the package database.
 	 * 
-	 * @param	array<integer>		$packageUpdateServerIDs
+	 * @param	integer[]		$packageUpdateServerIDs
 	 * @param	boolean			$ignoreCache
 	 */
-	public function refreshPackageDatabase(array $packageUpdateServerIDs = array(), $ignoreCache = false) {
+	public function refreshPackageDatabase(array $packageUpdateServerIDs = [], $ignoreCache = false) {
 		// get update server data
 		$tmp = PackageUpdateServer::getActiveUpdateServers($packageUpdateServerIDs);
 		
 		// loop servers
-		$updateServers = array();
+		$updateServers = [];
 		$foundWoltLabServer = false;
+		$requirePurchasedVersions = false;
 		foreach ($tmp as $updateServer) {
 			if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
-				// try to queue a woltlab.com update server first to probe for SSL support
-				if (!$foundWoltLabServer && preg_match('~^https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
-					array_unshift($updateServers, $updateServer);
-					$foundWoltLabServer = true;
+				if (preg_match('~^https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
+					$requirePurchasedVersions = true;
 					
-					continue;
+					// move a woltlab.com update server to the front of the queue to probe for SSL support
+					if (!$foundWoltLabServer) {
+						array_unshift($updateServers, $updateServer);
+						$foundWoltLabServer = true;
+						
+						continue;
+					}
 				}
 				
 				$updateServers[] = $updateServer;
 			}
-		} 
+		}
+		
+		if ($requirePurchasedVersions && PACKAGE_SERVER_AUTH_CODE) {
+			$this->getPurchasedVersions();
+		}
 		
 		// loop servers
 		$refreshedPackageLists = false;
@@ -74,10 +87,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			if ($errorMessage) {
 				// save error status
 				$updateServerEditor = new PackageUpdateServerEditor($updateServer);
-				$updateServerEditor->update(array(
+				$updateServerEditor->update([
 					'status' => 'offline',
 					'errorMessage' => $errorMessage
-				));
+				]);
 			}
 		}
 		
@@ -86,14 +99,43 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 	}
 	
+	protected function getPurchasedVersions() {
+		if (!RemoteFile::supportsSSL()) {
+			return;
+		}
+		
+		$request = new HTTPRequest(
+			'https://api.woltlab.com/1.0/customer/license/list.json',
+			['timeout' => 5],
+			['authCode' => PACKAGE_SERVER_AUTH_CODE]
+		);
+		
+		try {
+			$request->execute();
+			$reply = JSON::decode($request->getReply()['body']);
+			if ($reply['status'] == 200) {
+				$this->hasAuthCode = true;
+				$this->purchasedVersions = [
+					'woltlab' => (isset($reply['woltlab']) ? $reply['woltlab'] : []),
+					'pluginstore' => (isset($reply['pluginstore']) ? $reply['pluginstore'] : [])
+				];
+			}
+		}
+		catch (SystemException $e) {
+			// ignore
+		}
+	}
+	
 	/**
-	 * Gets the package_update.xml from an update server.
+	 * Fetches the package_update.xml from an update server.
 	 * 
-	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
-	 * @param	boolean							$forceHTTP
+	 * @param	PackageUpdateServer	$updateServer
+	 * @param	boolean			$forceHTTP
+	 * @throws	PackageUpdateUnauthorizedException
+	 * @throws	SystemException
 	 */
 	protected function getPackageUpdateXML(PackageUpdateServer $updateServer, $forceHTTP = false) {
-		$settings = array();
+		$settings = [];
 		$authData = $updateServer->getAuthData();
 		if ($authData) $settings['auth'] = $authData;
 		
@@ -118,7 +160,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		catch (SystemException $e) {
 			$reply = $request->getReply();
 			
-			$statusCode = (is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode'];
+			$statusCode = is_array($reply['statusCode']) ? reset($reply['statusCode']) : $reply['statusCode'];
 			// status code 0 is a connection timeout
 			if (!$statusCode && $secureConnection) {
 				if (preg_match('~https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
@@ -137,14 +179,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		// parse given package update xml
 		$allNewPackages = false;
 		if ($updateServer->apiVersion == '2.0' || $reply['statusCode'] != 304) {
-			$allNewPackages = $this->parsePackageUpdateXML($reply['body']);
+			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
 		}
 		
-		$data = array(
+		$data = [
 			'lastUpdateTime' => TIME_NOW,
 			'status' => 'online',
 			'errorMessage' => ''
-		);
+		];
 		
 		// check if server indicates support for a newer API
 		if ($updateServer->apiVersion == '2.0' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
@@ -154,7 +196,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			}
 		}
 		
-		$metaData = array();
+		$metaData = [];
 		if ($updateServer->apiVersion == '2.1' || (isset($data['apiVersion']) && $data['apiVersion'] == '2.1')) {
 			if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
 				throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
@@ -163,7 +205,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				throw new SystemException("Missing required HTTP header 'wcf-update-server-ssl'.");
 			}
 			
-			$metaData['list'] = array();
+			$metaData['list'] = [];
 			if (!empty($reply['httpHeaders']['etag'])) $metaData['list']['etag'] = reset($reply['httpHeaders']['etag']);
 			if (!empty($reply['httpHeaders']['last-modified'])) $metaData['list']['lastModified'] = reset($reply['httpHeaders']['last-modified']);
 			
@@ -178,7 +220,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$sql = "DELETE FROM	wcf".WCF_N."_package_update
 				WHERE		packageUpdateServerID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($updateServer->packageUpdateServerID));
+			$statement->execute([$updateServer->packageUpdateServerID]);
 			
 			// save packages
 			if (!empty($allNewPackages)) {
@@ -195,43 +237,48 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Parses a stream containing info from a packages_update.xml.
 	 * 
-	 * @param	string		$content
-	 * @return	array		$allNewPackages
+	 * @param       PackageUpdateServer     $updateServer
+	 * @param       string                  $content
+	 * @return      array
+	 * @throws      SystemException
 	 */
-	protected function parsePackageUpdateXML($content) {
+	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content) {
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
 		$xpath = $xml->xpath();
 		
-		$allNewPackages = array();
+		$allNewPackages = [];
 		$packages = $xpath->query('/ns:section/ns:package');
+		/** @var \DOMElement $package */
 		foreach ($packages as $package) {
 			if (!Package::isValidPackageName($package->getAttribute('name'))) {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
-			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($xpath, $package);
+			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package);
 		}
 		
 		return $allNewPackages;
 	}
 	
 	/**
-	 * Parses the xml stucture from a packages_update.xml.
+	 * Parses the xml structure from a packages_update.xml.
 	 * 
-	 * @param	\DOMXPath	$xpath
-	 * @param	\DOMNode	$package
+	 * @param       PackageUpdateServer     $updateServer
+	 * @param       \DOMXPath               $xpath
+	 * @param       \DOMElement             $package
+	 * @return      array
 	 */
-	protected function parsePackageUpdateXMLBlock(\DOMXPath $xpath, \DOMNode $package) {
+	protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package) {
 		// define default values
-		$packageInfo = array(
+		$packageInfo = [
 			'author' => '',
 			'authorURL' => '',
 			'isApplication' => 0,
 			'packageDescription' => '',
-			'versions' => array()
-		);
+			'versions' => []
+		];
 		
 		// parse package information
 		$elements = $xpath->query('./ns:packageinformation/*', $package);
@@ -265,16 +312,42 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			}
 		}
 		
+		$key = '';
+		if ($this->hasAuthCode) {
+			if (preg_match('~^https?://update\.woltlab\.com~', $updateServer->serverURL)) {
+				$key = 'woltlab';
+			}
+			else if (preg_match('~^https?://store\.woltlab\.com~', $updateServer->serverURL)) {
+				$key = 'pluginstore';
+			}
+		}
+		
 		// parse versions
 		$elements = $xpath->query('./ns:versions/ns:version', $package);
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$versionNo = $element->getAttribute('name');
-			$packageInfo['versions'][$versionNo] = array(
-				'isAccessible' => ($element->getAttribute('accessible') == 'true' ? true : false),
-				'isCritical' => ($element->getAttribute('critical') == 'true' ? true : false)
-			);
+			
+			$isAccessible = ($element->getAttribute('accessible') == 'true') ? 1 : 0;
+			if ($key && $element->getAttribute('requireAuth') == 'true') {
+				$packageName = $package->getAttribute('name');
+				if (isset($this->purchasedVersions[$key][$packageName])) {
+					if ($this->purchasedVersions[$key][$packageName] == '*') {
+						$isAccessible = 1;
+					}
+					else {
+						$isAccessible = (Package::compareVersion($versionNo, $this->purchasedVersions[$key][$packageName] . '99', '<=') ? 1 : 0);
+					}
+				}
+				else {
+					$isAccessible = 0;
+				}
+			}
+			
+			$packageInfo['versions'][$versionNo] = ['isAccessible' => $isAccessible];
 			
 			$children = $xpath->query('child::*', $element);
+			/** @var \DOMElement $child */
 			foreach ($children as $child) {
 				switch ($child->tagName) {
 					case 'fromversions':
@@ -294,11 +367,13 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					
 					case 'requiredpackages':
 						$requiredPackages = $xpath->query('child::*', $child);
+						
+						/** @var \DOMElement $requiredPackage */
 						foreach ($requiredPackages as $requiredPackage) {
 							$minVersion = $requiredPackage->getAttribute('minversion');
 							$required = $requiredPackage->nodeValue;
 							
-							$packageInfo['versions'][$versionNo]['requiredPackages'][$required] = array();
+							$packageInfo['versions'][$versionNo]['requiredPackages'][$required] = [];
 							if (!empty($minVersion)) {
 								$packageInfo['versions'][$versionNo]['requiredPackages'][$required]['minversion'] = $minVersion;
 							}
@@ -306,7 +381,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					break;
 					
 					case 'optionalpackages':
-						$packageInfo['versions'][$versionNo]['optionalPackages'] = array();
+						$packageInfo['versions'][$versionNo]['optionalPackages'] = [];
 						
 						$optionalPackages = $xpath->query('child::*', $child);
 						foreach ($optionalPackages as $optionalPackage) {
@@ -316,11 +391,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					
 					case 'excludedpackages':
 						$excludedpackages = $xpath->query('child::*', $child);
+						/** @var \DOMElement $excludedPackage */
 						foreach ($excludedpackages as $excludedPackage) {
 							$exclusion = $excludedPackage->nodeValue;
 							$version = $excludedPackage->getAttribute('version');
 							
-							$packageInfo['versions'][$versionNo]['excludedPackages'][$exclusion] = array();
+							$packageInfo['versions'][$versionNo]['excludedPackages'][$exclusion] = [];
 							if (!empty($version)) {
 								$packageInfo['versions'][$versionNo]['excludedPackages'][$exclusion]['version'] = $version;
 							}
@@ -328,10 +404,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					break;
 					
 					case 'license':
-						$packageInfo['versions'][$versionNo]['license'] = array(
+						$packageInfo['versions'][$versionNo]['license'] = [
 							'license' => $child->nodeValue,
-							'licenseURL' => ($child->hasAttribute('url') ? $child->getAttribute('url') : '')
-						);
+							'licenseURL' => $child->hasAttribute('url') ? $child->getAttribute('url') : ''
+						];
 					break;
 				}
 			}
@@ -348,11 +424,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 */
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
 		// insert updates
-		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = array();
+		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = [];
 		WCF::getDB()->beginTransaction();
 		foreach ($allNewPackages as $identifier => $packageData) {
 			// create new database entry
-			$packageUpdate = PackageUpdateEditor::create(array(
+			$packageUpdate = PackageUpdateEditor::create([
 				'packageUpdateServerID' => $packageUpdateServerID,
 				'package' => $identifier,
 				'packageName' => $packageData['packageName'],
@@ -360,7 +436,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				'author' => $packageData['author'],
 				'authorURL' => $packageData['authorURL'],
 				'isApplication' => $packageData['isApplication']
-			));
+			]);
 			
 			$packageUpdateID = $packageUpdate->packageUpdateID;
 			
@@ -371,58 +447,57 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					else $packageFile = '';
 					
 					// create new database entry
-					$version = PackageUpdateVersionEditor::create(array(
+					$version = PackageUpdateVersionEditor::create([
 						'filename' => $packageFile,
-						'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
-						'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
-						'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
-						'isCritical' => ($versionData['isCritical'] ? 1 : 0),
+						'license' => isset($versionData['license']['license']) ? $versionData['license']['license'] : '',
+						'licenseURL' => isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : '',
+						'isAccessible' => $versionData['isAccessible'] ? 1 : 0,
 						'packageDate' => $versionData['packageDate'],
 						'packageUpdateID' => $packageUpdateID,
 						'packageVersion' => $packageVersion
-					));
+					]);
 					
 					$packageUpdateVersionID = $version->packageUpdateVersionID;
 					
 					// register requirement(s) of this update package version.
 					if (isset($versionData['requiredPackages'])) {
 						foreach ($versionData['requiredPackages'] as $requiredIdentifier => $required) {
-							$requirementInserts[] = array(
+							$requirementInserts[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'package' => $requiredIdentifier,
-								'minversion' => (isset($required['minversion']) ? $required['minversion'] : '')
-							);
+								'minversion' => isset($required['minversion']) ? $required['minversion'] : ''
+							];
 						}
 					}
 					
 					// register optional packages of this update package version
 					if (isset($versionData['optionalPackages'])) {
 						foreach ($versionData['optionalPackages'] as $optionalPackage) {
-							$optionalInserts[] = array(
+							$optionalInserts[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'package' => $optionalPackage
-							);
+							];
 						}
 					}
 					
 					// register excluded packages of this update package version.
 					if (isset($versionData['excludedPackages'])) {
 						foreach ($versionData['excludedPackages'] as $excludedIdentifier => $exclusion) {
-							$excludedPackagesParameters[] = array(
+							$excludedPackagesParameters[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'excludedPackage' => $excludedIdentifier,
-								'excludedPackageVersion' => (isset($exclusion['version']) ? $exclusion['version'] : '')
-							);
+								'excludedPackageVersion' => isset($exclusion['version']) ? $exclusion['version'] : ''
+							];
 						}
 					}
 					
 					// register fromversions of this update package version.
 					if (isset($versionData['fromversions'])) {
 						foreach ($versionData['fromversions'] as $fromversion) {
-							$fromversionInserts[] = array(
+							$fromversionInserts[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'fromversion' => $fromversion
-							);
+							];
 						}
 					}
 				}
@@ -439,11 +514,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($requirementInserts as $requirement) {
-				$statement->execute(array(
+				$statement->execute([
 					$requirement['packageUpdateVersionID'],
 					$requirement['package'],
 					$requirement['minversion']
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -456,10 +531,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($optionalInserts as $requirement) {
-				$statement->execute(array(
+				$statement->execute([
 					$requirement['packageUpdateVersionID'],
 					$requirement['package']
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -472,11 +547,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($excludedPackagesParameters as $excludedPackage) {
-				$statement->execute(array(
+				$statement->execute([
 					$excludedPackage['packageUpdateVersionID'],
 					$excludedPackage['excludedPackage'],
 					$excludedPackage['excludedPackageVersion']
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -489,10 +564,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			WCF::getDB()->beginTransaction();
 			foreach ($fromversionInserts as $fromversion) {
-				$statement->execute(array(
+				$statement->execute([
 					$fromversion['packageUpdateVersionID'],
 					$fromversion['fromversion']
-				));
+				]);
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -506,7 +581,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @return	array
 	 */
 	public function getAvailableUpdates($removeRequirements = true, $removeOlderMinorReleases = false) {
-		$updates = array();
+		$updates = [];
 		
 		// get update server data
 		$updateServers = PackageUpdateServer::getActiveUpdateServers();
@@ -514,7 +589,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		if (empty($packageUpdateServerIDs)) return $updates;
 		
 		// get existing packages and their versions
-		$existingPackages = array();
+		$existingPackages = [];
 		$sql = "SELECT	packageID, package, packageDescription, packageName,
 				packageVersion, packageDate, author, authorURL, isApplication
 			FROM	wcf".WCF_N."_package";
@@ -527,11 +602,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		// get all update versions
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("pu.packageUpdateServerID IN (?)", array($packageUpdateServerIDs));
+		$conditions->add("pu.packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
 		$conditions->add("package IN (SELECT DISTINCT package FROM wcf".WCF_N."_package)");
 		
 		$sql = "SELECT		pu.packageUpdateID, pu.packageUpdateServerID, pu.package,
-					puv.packageUpdateVersionID, puv.isCritical, puv.packageDate, puv.filename, puv.packageVersion
+					puv.packageUpdateVersionID, puv.packageDate, puv.filename, puv.packageVersion
 			FROM		wcf".WCF_N."_package_update pu
 			LEFT JOIN	wcf".WCF_N."_package_update_version puv
 			ON		(puv.packageUpdateID = pu.packageUpdateID AND puv.isAccessible = 1)
@@ -544,27 +619,26 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				if (Package::compareVersion($existingVersion['packageVersion'], $row['packageVersion'], '<')) {
 					// package data
 					if (!isset($updates[$existingVersion['packageID']])) {
-						$existingVersion['versions'] = array();
+						$existingVersion['versions'] = [];
 						$updates[$existingVersion['packageID']] = $existingVersion;
 					}
 					
 					// version data
 					if (!isset($updates[$existingVersion['packageID']]['versions'][$row['packageVersion']])) {
-						$updates[$existingVersion['packageID']]['versions'][$row['packageVersion']] = array(
-							'isCritical' => $row['isCritical'],
+						$updates[$existingVersion['packageID']]['versions'][$row['packageVersion']] = [
 							'packageDate' => $row['packageDate'],
 							'packageVersion' => $row['packageVersion'],
-							'servers' => array()
-						);
+							'servers' => []
+						];
 					}
 					
 					// server data
-					$updates[$existingVersion['packageID']]['versions'][$row['packageVersion']]['servers'][] = array(
+					$updates[$existingVersion['packageID']]['versions'][$row['packageVersion']]['servers'][] = [
 						'packageUpdateID' => $row['packageUpdateID'],
 						'packageUpdateServerID' => $row['packageUpdateServerID'],
 						'packageUpdateVersionID' => $row['packageUpdateVersionID'],
 						'filename' => $row['filename']
-					);
+					];
 				}
 			}
 		}
@@ -572,7 +646,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		// sort package versions
 		// and remove old versions
 		foreach ($updates as $packageID => $data) {
-			uksort($updates[$packageID]['versions'], array('wcf\data\package\Package', 'compareVersion'));
+			uksort($updates[$packageID]['versions'], ['wcf\data\package\Package', 'compareVersion']);
 			$updates[$packageID]['version'] = end($updates[$packageID]['versions']);
 		}
 		
@@ -590,7 +664,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		// remove older minor releases from list, e.g. only display 1.0.2, even if 1.0.1 is available
 		if ($removeOlderMinorReleases) {
 			foreach ($updates as &$updateData) {
-				$highestVersions = array();
+				$highestVersions = [];
 				foreach ($updateData['versions'] as $versionNumber => $dummy) {
 					if (preg_match('~^(\d+\.\d+)\.~', $versionNumber, $matches)) {
 						$major = $matches[1];
@@ -631,7 +705,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			ON		(p.package = pur.package)
 			WHERE		pur.packageUpdateVersionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageUpdateVersionID));
+		$statement->execute([$packageUpdateVersionID]);
 		while ($row = $statement->fetchArray()) {
 			if (isset($updates[$row['packageID']])) {
 				$updates = $this->removeUpdateRequirements($updates, $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
@@ -647,19 +721,20 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Creates a new package installation scheduler.
 	 * 
-	 * @param	array			$selectedPackages
-	 * @return	\wcf\system\package\PackageInstallationScheduler
+	 * @param	array	$selectedPackages
+	 * @return	PackageInstallationScheduler
 	 */
 	public function prepareInstallation(array $selectedPackages) {
 		return new PackageInstallationScheduler($selectedPackages);
 	}
 	
 	/**
-	 * Gets package update versions of a package.
+	 * Returns package update versions of the specified package.
 	 * 
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
 	 * @return	array		package update versions
+	 * @throws	SystemException
 	 */
 	public function getPackageUpdateVersions($package, $version = '') {
 		// get newest package version
@@ -668,7 +743,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// get versions
-		$versions = array();
 		$sql = "SELECT		puv.*, pu.*, pus.loginUsername, pus.loginPassword
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
@@ -679,14 +753,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					AND puv.packageVersion = ?
 					AND pus.isDisabled = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$package,
 			$version,
 			0
-		));
-		while ($row = $statement->fetchArray()) {
-			$versions[] = $row;
-		}
+		]);
+		$versions = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		if (empty($versions)) {
 			throw new SystemException("Cannot find package '".$package."' in version '".$version."'");
@@ -703,7 +775,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 */
 	public function getNewestPackageVersion($package) {
 		// get all versions
-		$versions = array();
+		$versions = [];
 		$sql = "SELECT	packageVersion
 			FROM	wcf".WCF_N."_package_update_version
 			WHERE	packageUpdateID IN (
@@ -712,13 +784,13 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					WHERE	package = ?
 				)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($package));
+		$statement->execute([$package]);
 		while ($row = $statement->fetchArray()) {
 			$versions[$row['packageVersion']] = $row['packageVersion'];
 		}
 		
 		// sort by version number
-		usort($versions, array('wcf\data\package\Package', 'compareVersion'));
+		usort($versions, [Package::class, 'compareVersion']);
 		
 		// take newest (last)
 		return array_pop($versions);
@@ -734,7 +806,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	public function cacheDownload($package, $version, $filename) {
 		$cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');
 		if (!is_array($cachedDownloads)) {
-			$cachedDownloads = array();
+			$cachedDownloads = [];
 		}
 		
 		// store in session

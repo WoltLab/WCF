@@ -2,7 +2,10 @@
 namespace wcf\system;
 use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
+use wcf\data\menu\Menu;
+use wcf\data\menu\MenuCache;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
@@ -18,13 +21,24 @@ use wcf\util\HeaderUtil;
  * Extends WCF class with functions for the ACP.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class WCFACP extends WCF {
+	/**
+	 * rescue mode
+	 * @var	boolean
+	 */
+	protected static $inRescueMode;
+	
+	/**
+	 * URL to WCF within rescue mode
+	 * @var	string
+	 */
+	protected static $rescueModePageURL;
+	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Calls all init functions of the WCF and the WCFACP class. 
 	 */
@@ -36,7 +50,6 @@ class WCFACP extends WCF {
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
-		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
 		$this->initPackage();
@@ -58,17 +71,77 @@ class WCFACP extends WCF {
 	}
 	
 	/**
+	 * Returns the main menu object.
+	 * 
+	 * @return	Menu|null	menu object
+	 * @since	3.0
+	 */
+	public function getFrontendMenu() {
+		return MenuCache::getInstance()->getMainMenu();
+	}
+	
+	/**
+	 * Returns true if ACP is currently in rescue mode.
+	 * 
+	 * @return	boolean
+	 */
+	public static function inRescueMode() {
+		if (self::$inRescueMode === null) {
+			self::$inRescueMode = false;
+			
+			if (PACKAGE_ID && isset($_SERVER['HTTP_HOST'])) {
+				self::$inRescueMode = true;
+				
+				foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+					if ($application->domainName === $_SERVER['HTTP_HOST']) {
+						self::$inRescueMode = false;
+						break;
+					}
+				}
+				
+				if (self::$inRescueMode) {
+					self::$rescueModePageURL = RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . RouteHandler::getPath(['acp']);
+				}
+			}
+		}
+		
+		return self::$inRescueMode;
+	}
+	
+	/**
+	 * Returns URL for rescue mode page.
+	 * 
+	 * @return	string
+	 */
+	public static function getRescueModePageURL() {
+		if (self::inRescueMode()) {
+			return self::$rescueModePageURL;
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * Does the user authentication.
 	 */
 	protected function initAuth() {
 		// this is a work-around since neither RequestHandler
 		// nor RouteHandler are populated right now
 		$pathInfo = RouteHandler::getPathInfo();
-		if (empty($pathInfo) || !preg_match('~^/?(acp-?captcha|login|logout)/~i', $pathInfo)) {
+		
+		if (self::inRescueMode()) {
+			if (!preg_match('~^/?rescue-mode/~', $pathInfo)) {
+				$redirectURI =  self::$rescueModePageURL . 'acp/index.php?rescue-mode/';
+				
+				HeaderUtil::redirect($redirectURI);
+				exit;
+			}
+		}
+		else if (empty($pathInfo) || !preg_match('~^/?(acp-?captcha|login|logout)/~i', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
+					throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
 				}
 				
 				// build redirect path
@@ -77,18 +150,10 @@ class WCFACP extends WCF {
 					throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
 				}
 				
-				// fallback for unknown host (rescue mode)
-				if ($application->domainName != $_SERVER['HTTP_HOST']) {
-					$pageURL = RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . RouteHandler::getPath(array('acp'));
-				}
-				else {
-					$pageURL = $application->getPageURL();
-				}
-				
 				// drop session id
 				$redirectURI = preg_replace('~[&\?]s=[a-f0-9]{40}(&|$)~', '', WCF::getSession()->requestURI);
 				
-				$path = $pageURL . 'acp/index.php?login/' . SID_ARG_2ND_NOT_ENCODED . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
+				$path = $application->getPageURL() . 'acp/index.php?login/&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
 				
 				HeaderUtil::redirect($path);
 				exit;
@@ -97,14 +162,14 @@ class WCFACP extends WCF {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 					try {
-						WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+						WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
 					}
 					catch (PermissionDeniedException $e) {
-						throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+						throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 					}
 				}
 				else {
-					WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+					WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
 				}
 				
 				// force debug mode if in ACP and authenticated
@@ -114,17 +179,20 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::initSession()
+	 * @inheritDoc
 	 */
 	protected function initSession() {
+		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setCookieSuffix('_acp');
+		
 		$factory = new ACPSessionFactory();
 		$factory->load();
 		
-		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::initTPL()
+	 * @inheritDoc
 	 */
 	protected function initTPL() {
 		self::$tplObj = ACPTemplateEngine::getInstance();
@@ -133,7 +201,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::assignDefaultTemplateVariables()
+	 * @inheritDoc
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();
@@ -142,9 +210,17 @@ class WCFACP extends WCF {
 		$host = RouteHandler::getHost();
 		$path = RouteHandler::getPath();
 		
-		self::getTPL()->assign(array(
-			'baseHref' => $host . $path
-		));
+		// available acp search providers
+		$availableAcpSearchProviders = [];
+		foreach (ACPSearchProviderCacheBuilder::getInstance()->getData() as $searchProvider) {
+			$availableAcpSearchProviders[$searchProvider->providerName] = self::getLanguage()->get('wcf.acp.search.provider.'.$searchProvider->providerName);
+		}
+		asort($availableAcpSearchProviders);
+		
+		self::getTPL()->assign([
+			'baseHref' => $host . $path,
+			'availableAcpSearchProviders' => $availableAcpSearchProviders
+		]);
 	}
 	
 	/**

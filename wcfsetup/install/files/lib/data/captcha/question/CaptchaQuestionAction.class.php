@@ -7,36 +7,38 @@ use wcf\data\IToggleAction;
  * Executes captcha question-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.captcha.question
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Captcha\Question
+ * 
+ * @method	CaptchaQuestion			create()
+ * @method	CaptchaQuestionEditor[]		getObjects()
+ * @method	CaptchaQuestionEditor		getSingleObject()
  */
 class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.captcha.canManageCaptchaQuestion');
+	protected $permissionsDelete = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.captcha.canManageCaptchaQuestion');
+	protected $permissionsUpdate = ['admin.captcha.canManageCaptchaQuestion'];
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $question) {
-			$question->update(array(
+		foreach ($this->getObjects() as $question) {
+			$question->update([
 				'isDisabled' => $question->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();

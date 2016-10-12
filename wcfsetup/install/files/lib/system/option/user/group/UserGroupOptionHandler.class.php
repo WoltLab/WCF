@@ -2,31 +2,29 @@
 namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
-use wcf\system\exception\SystemException;
+use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
+use wcf\system\exception\ImplementationException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
-use wcf\util\ClassUtil;
 use wcf\system\WCF;
 
 /**
  * Handles user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User\Group
  */
 class UserGroupOptionHandler extends OptionHandler {
 	/**
-	 * @see	\wcf\system\option\OptionHandler::$cacheClass
+	 * @inheritDoc
 	 */
-	protected $cacheClass = 'wcf\system\cache\builder\UserGroupOptionCacheBuilder';
+	protected $cacheClass = UserGroupOptionCacheBuilder::class;
 	
 	/**
 	 * user group object
-	 * @var	\wcf\data\user\group\UserGroup
+	 * @var	UserGroup
 	 */
 	protected $group = null;
 	
@@ -39,14 +37,27 @@ class UserGroupOptionHandler extends OptionHandler {
 	/**
 	 * Sets current user group.
 	 * 
-	 * @param	\wcf\data\user\group\UserGroup	$group
+	 * @param	UserGroup	$group
 	 */
 	public function setUserGroup(UserGroup $group) {
 		$this->group = $group;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::checkOption()
+	 * @inheritDoc
+	 */
+	public function getTypeObject($type) {
+		$objectType = parent::getTypeObject($type);
+		
+		if ($this->group !== null && $objectType instanceof IUserGroupGroupOptionType) {
+			$objectType->setUserGroup($this->group);
+		}
+		
+		return $objectType;
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	protected function checkOption(Option $option) {
 		if (parent::checkOption($option)) {
@@ -62,7 +73,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::getClassName()
+	 * @inheritDoc
 	 */
 	protected function getClassName($type) {
 		$className = 'wcf\system\option\user\group\\'.ucfirst($type).'UserGroupOptionType';
@@ -71,15 +82,15 @@ class UserGroupOptionHandler extends OptionHandler {
 		if (!class_exists($className)) {
 			return null;
 		}
-		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
-			throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
+		if (!is_subclass_of($className, IUserGroupOptionType::class)) {
+			throw new ImplementationException($className, IUserGroupOptionType::class);
 		}
 		
 		return $className;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionHandler::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
@@ -117,7 +128,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\OptionHandler::validateOption()
+	 * @inheritDoc
 	 */
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);

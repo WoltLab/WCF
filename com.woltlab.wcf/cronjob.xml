@@ -1,10 +1,215 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/cronjob.xsd">
 	<import>
+		<cronjob name="com.woltlab.wcf.refreshPackageUpdates">
+			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
+			<description>Updates package information</description>
+			<description language="de">Aktualisiert Paket-Informationen</description>
+			<startminute>0</startminute>
+			<starthour>2</starthour>
+			<startdom>*/2</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
+			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
+			<description>Refreshes list of search robots</description>
+			<description language="de">Aktualisiert die Liste der Suchroboter</description>
+			<startminute>0</startminute>
+			<starthour>3</starthour>
+			<startdom>1</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.dailyCleanUp">
+			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
+			<description>Executes daily Cleanup</description>
+			<description language="de">Führt tägliche Aufräumarbeiten aus</description>
+			<startminute>0</startminute>
+			<starthour>1</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.hourlyCleanUp">
+			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
+			<description>Executes hourly Cleanup</description>
+			<description language="de">Führt stündliche Aufräumarbeiten aus</description>
+			<startminute>0</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.sessionCleanUp">
+			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
+			<description>Deletes expired sessions</description>
+			<description language="de">Löscht abgelaufene Sessions</description>
+			<startminute>*/30</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.attachmentCleanUp">
+			<classname>wcf\system\cronjob\AttachmentCleanUpCronjob</classname>
+			<description>Deletes orphaned attachments</description>
+			<description language="de">Löscht verwaiste Dateianhänge</description>
+			<startminute>0</startminute>
+			<starthour>2</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.backgroundQueueCleanUp">
+			<classname>wcf\system\cronjob\BackgroundQueueCleanUpCronjob</classname>
+			<description>Requeues stuck queue items</description>
+			<description language="de">Räumt Hintergrundaufgaben auf</description>
+			<startminute>*/10</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.lastActivityUpdate">
+			<classname>wcf\system\cronjob\LastActivityCronjob</classname>
+			<description>Updates last activity timestamp</description>
+			<description language="de">Aktualisiert Zeitpunkt der letzten Aktivität</description>
+			<startminute>*/5</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.userQuit">
+			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
+			<description>Deletes canceled user accounts</description>
+			<description language="de">Löscht gekündigte Benutzer-Accounts</description>
+			<startminute>0</startminute>
+			<starthour>0</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.dailyMailNotification">
+			<classname>wcf\system\cronjob\DailyMailNotificationCronjob</classname>
+			<description>Sends daily mail notifications</description>
+			<description language="de">Versendet tägliche E-Mail-Benachrichtigungen</description>
+			<startminute>*/30</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.moderationQueueCleanup">
+			<classname>wcf\system\cronjob\ModerationQueueCronjob</classname>
+			<description>Moderation queue cleanup</description>
+			<description language="de">Löscht veraltete Einträge in der Moderation</description>
+			<startminute>0</startminute>
+			<starthour>1</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.statDailyBuilder">
+			<classname>wcf\system\cronjob\StatDailyBuilderCronjob</classname>
+			<description>Builds the daily statistics</description>
+			<description language="de">Generiert die täglichen Statistiken</description>
+			<startminute>0</startminute>
+			<starthour>1</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.userGroupAssignment">
+			<classname>wcf\system\cronjob\UserGroupAssignmentCronjob</classname>
+			<description>Automatically assigns users to user groups</description>
+			<description language="de">Ordnet Benutzer automatisch Benutzergruppen zu</description>
+			<startminute>*/30</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.userBan">
+			<classname>wcf\system\cronjob\UserBanCronjob</classname>
+			<description>Unbans users and enables disabled avatars and disabled signatures</description>
+			<description language="de">Entsperrt gesperrte Benutzer, Avatare und Signaturen</description>
+			<startminute>0</startminute>
+			<starthour>1</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.articlePublication">
+			<classname>wcf\system\cronjob\ArticlePublicationCronjob</classname>
+			<description>Publishes delayed articles</description>
+			<description language="de">Veröffentlicht Artikel</description>
+			<startminute>*/5</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+	</import>
+	
+	<delete>
+		<!-- cronjobs with names now -->
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\GetUpdateInfoCronjob]]></classname>
-			<description><![CDATA[Updates package information]]></description>
-			<description language="de"><![CDATA[Aktualisiert Paket-Informationen]]></description>
+			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
+			<description>Updates package information</description>
+			<description language="de">Aktualisiert Paket-Informationen</description>
 			<startminute>0</startminute>
 			<starthour>2</starthour>
 			<startdom>*/2</startdom>
@@ -15,9 +220,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\RefreshSearchRobotsCronjob]]></classname>
-			<description><![CDATA[Refreshes list of search robots]]></description>
-			<description language="de"><![CDATA[Aktualisiert die Liste der Suchroboter]]></description>
+			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
+			<description>Refreshes list of search robots</description>
+			<description language="de">Aktualisiert die Liste der Suchroboter</description>
 			<startminute>0</startminute>
 			<starthour>3</starthour>
 			<startdom>1</startdom>
@@ -28,9 +233,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\DailyCleanUpCronjob]]></classname>
-			<description><![CDATA[Executes daily Cleanup]]></description>
-			<description language="de"><![CDATA[Führt tägliche Aufräumarbeiten aus]]></description>
+			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
+			<description>Executes daily Cleanup</description>
+			<description language="de">Führt tägliche Aufräumarbeiten aus</description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>
@@ -41,9 +246,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\HourlyCleanUpCronjob]]></classname>
-			<description><![CDATA[Executes hourly Cleanup]]></description>
-			<description language="de"><![CDATA[Führt stündliche Aufräumarbeiten aus]]></description>
+			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
+			<description>Executes hourly Cleanup</description>
+			<description language="de">Führt stündliche Aufräumarbeiten aus</description>
 			<startminute>0</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
@@ -54,9 +259,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\SessionCleanUpCronjob]]></classname>
-			<description><![CDATA[Deletes expired sessions]]></description>
-			<description language="de"><![CDATA[Löscht abgelaufene Sessions]]></description>
+			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
+			<description>Deletes expired sessions</description>
+			<description language="de">Löscht abgelaufene Sessions</description>
 			<startminute>*/30</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
@@ -67,9 +272,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\AttachmentCleanUpCronjob]]></classname>
-			<description><![CDATA[Deletes orphaned attachments]]></description>
-			<description language="de"><![CDATA[Löscht verwaiste Dateianhänge]]></description>
+			<classname>wcf\system\cronjob\AttachmentCleanUpCronjob</classname>
+			<description>Deletes orphaned attachments</description>
+			<description language="de">Löscht verwaiste Dateianhänge</description>
 			<startminute>0</startminute>
 			<starthour>2</starthour>
 			<startdom>*</startdom>
@@ -80,9 +285,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\LastActivityCronjob]]></classname>
-			<description><![CDATA[Updates last activity timestamp]]></description>
-			<description language="de"><![CDATA[Aktualisiert Zeitpunkt der letzten Aktivität]]></description>
+			<classname>wcf\system\cronjob\LastActivityCronjob</classname>
+			<description>Updates last activity timestamp</description>
+			<description language="de">Aktualisiert Zeitpunkt der letzten Aktivität</description>
 			<startminute>*/5</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
@@ -94,9 +299,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\UserQuitCronjob]]></classname>
-			<description><![CDATA[Deletes canceled user accounts]]></description>
-			<description language="de"><![CDATA[Löscht gekündigte Benutzer-Accounts]]></description>
+			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
+			<description>Deletes canceled user accounts</description>
+			<description language="de">Löscht gekündigte Benutzer-Accounts</description>
 			<startminute>0</startminute>
 			<starthour>0</starthour>
 			<startdom>*</startdom>
@@ -108,9 +313,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\DailyMailNotificationCronjob]]></classname>
-			<description><![CDATA[Sends daily mail notifications]]></description>
-			<description language="de"><![CDATA[Versendet tägliche E-Mail-Benachrichtigungen]]></description>
+			<classname>wcf\system\cronjob\DailyMailNotificationCronjob</classname>
+			<description>Sends daily mail notifications</description>
+			<description language="de">Versendet tägliche E-Mail-Benachrichtigungen</description>
 			<startminute>*/30</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
@@ -122,9 +327,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\ModerationQueueCronjob]]></classname>
-			<description><![CDATA[Moderation queue cleanup]]></description>
-			<description language="de"><![CDATA[Löscht veraltete Einträge in der Moderation]]></description>
+			<classname>wcf\system\cronjob\ModerationQueueCronjob</classname>
+			<description>Moderation queue cleanup</description>
+			<description language="de">Löscht veraltete Einträge in der Moderation</description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>
@@ -136,9 +341,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\StatDailyBuilderCronjob]]></classname>
-			<description><![CDATA[Builds the daily statistics]]></description>
-			<description language="de"><![CDATA[Generiert die täglichen Statistiken]]></description>
+			<classname>wcf\system\cronjob\StatDailyBuilderCronjob</classname>
+			<description>Builds the daily statistics</description>
+			<description language="de">Generiert die täglichen Statistiken</description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>
@@ -150,9 +355,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\UserGroupAssignmentCronjob]]></classname>
-			<description><![CDATA[Automatically assigns users to user groups]]></description>
-			<description language="de"><![CDATA[Ordnet Benutzer automatisch Benutzergruppen zu]]></description>
+			<classname>wcf\system\cronjob\UserGroupAssignmentCronjob</classname>
+			<description>Automatically assigns users to user groups</description>
+			<description language="de">Ordnet Benutzer automatisch Benutzergruppen zu</description>
 			<startminute>*/30</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
@@ -164,9 +369,9 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname><![CDATA[wcf\system\cronjob\UserBanCronjob]]></classname>
-			<description><![CDATA[Unbans users and enables disabled avatars and disabled signatures]]></description>
-			<description language="de"><![CDATA[Entsperrt gesperrte Benutzer, Avatare und Signaturen]]></description>
+			<classname>wcf\system\cronjob\UserBanCronjob</classname>
+			<description>Unbans users and enables disabled avatars and disabled signatures</description>
+			<description language="de">Entsperrt gesperrte Benutzer, Avatare und Signaturen</description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>
@@ -176,5 +381,6 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
-	</import>
+		<!-- /cronjobs with names now -->
+	</delete>
 </data>

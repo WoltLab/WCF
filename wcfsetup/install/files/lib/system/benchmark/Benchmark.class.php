@@ -7,11 +7,9 @@ use wcf\util\FileUtil;
  * Provides functions to do a benchmark.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.benchmark
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Benchmark
  */
 class Benchmark extends SingletonFactory {
 	const TYPE_SQL_QUERY = 1;
@@ -27,7 +25,7 @@ class Benchmark extends SingletonFactory {
 	 * benchmark items
 	 * @var	array
 	 */
-	protected $items = array();
+	protected $items = [];
 	
 	/**
 	 * number of executed sql queries
@@ -61,7 +59,7 @@ class Benchmark extends SingletonFactory {
 		$this->items[$newIndex]['type']	= $type;
 		$this->items[$newIndex]['before'] = self::getMicrotime();
 		$this->items[$newIndex]['start'] = self::compareMicrotimes($this->startTime, $this->items[$newIndex]['before']);
-		$this->items[$newIndex]['trace'] = (defined('DEBUG_BACKTRACE_IGNORE_ARGS')) ? debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) : debug_backtrace();
+		$this->items[$newIndex]['trace'] = defined('DEBUG_BACKTRACE_IGNORE_ARGS') ? debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) : debug_backtrace();
 		return $newIndex;
 	}
 	
@@ -91,7 +89,7 @@ class Benchmark extends SingletonFactory {
 	 * @return	float
 	 */
 	public function getExecutionTime() {
-		return $this->compareMicrotimes($this->startTime, self::getMicrotime());
+		return self::compareMicrotimes($this->startTime, self::getMicrotime());
 	}
 	
 	/**

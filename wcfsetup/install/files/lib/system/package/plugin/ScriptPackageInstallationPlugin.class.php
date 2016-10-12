@@ -9,15 +9,13 @@ use wcf\util\FileUtil;
  * Executes individual PHP scripts during installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -53,10 +51,10 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 				WHERE		packageID = ?
 						AND filename = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
+			$statement->execute([
 				$this->installation->getPackageID(),
 				$this->instruction['value']
-			));
+			]);
 		}
 	}
 	
@@ -70,7 +68,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function hasUninstall() {
 		// scripts can't be uninstalled
@@ -78,7 +76,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// does nothing

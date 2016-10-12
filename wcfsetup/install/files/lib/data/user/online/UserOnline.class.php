@@ -1,7 +1,10 @@
 <?php
 namespace wcf\data\user\online;
+use wcf\data\page\PageCache;
+use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -10,11 +13,14 @@ use wcf\util\UserUtil;
  * Represents a user who is online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.online
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Online
+ *
+ * @property-read	integer|null	$pageID			id of the last visited page
+ * @property-read	integer|null	$pageObjectID		id of the object the last visited page belongs to
+ * @property-read	integer|null	$parentPageObjectID	id of the parent of the object the last visited page belongs to
+ * @property-read	string|null	$userOnlineMarking	HTML code used to print the formatted name of a user group member
  */
 class UserOnline extends UserProfile {
 	/**
@@ -25,7 +31,7 @@ class UserOnline extends UserProfile {
 	
 	/**
 	 * spider object
-	 * @var	\wcf\data\spider\Spider
+	 * @var	Spider
 	 */
 	protected $spider = null;
 	
@@ -49,12 +55,45 @@ class UserOnline extends UserProfile {
 	}
 	
 	/**
-	 * Sets the location of the user.
+	 * Sets the location of the user. If no location is given, the method tries to
+	 * automatically determine the location.
 	 * 
-	 * @param	string		$location
+	 * @param	string|null	$location
+	 * @return	boolean		`true` if the location has been successfully set, otherwise `false`
 	 */
-	public function setLocation($location) {
+	public function setLocation($location = null) {
+		if ($location === null) {
+			if ($this->pageID) {
+				$page = PageCache::getInstance()->getPage($this->pageID);
+				if ($page !== null) {
+					if ($page->getHandler() !== null && $page->getHandler() instanceof IOnlineLocationPageHandler) {
+						// refer to page handler
+						/** @noinspection PhpUndefinedMethodInspection */
+						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
+						return true;
+					}
+					else if ($page->isAccessible()) {
+						$title = $page->getTitle();
+						if (!empty($title)) {
+							if ($page->pageType != 'system') {
+								$this->location = '<a href="' . StringUtil::encodeHTML($page->getLink()) . '">' . StringUtil::encodeHTML($title) . '</a>';
+							}
+							else {
+								$this->location = StringUtil::encodeHTML($title);
+							}
+						}
+						
+						return ($this->location != '');
+					}
+				}
+			}
+			
+			$this->location = '';
+			return false;
+		}
+		
 		$this->location = $location;
+		return true;
 	}
 	
 	/**
@@ -251,7 +290,7 @@ class UserOnline extends UserProfile {
 	/**
 	 * Returns the spider object
 	 * 
-	 * @return	\wcf\data\spider\Spider
+	 * @return	Spider
 	 */
 	public function getSpider() {
 		if (!$this->spiderID) return null;

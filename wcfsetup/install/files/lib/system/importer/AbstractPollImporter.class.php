@@ -1,22 +1,21 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\poll\Poll;
 use wcf\data\poll\PollEditor;
 
 /**
  * Imports polls.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 class AbstractPollImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\Poll';
+	protected $className = Poll::class;
 	
 	/**
 	 * object type id for poll
@@ -31,10 +30,10 @@ class AbstractPollImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
-		$poll = PollEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+	public function import($oldID, array $data, array $additionalData = []) {
+		$poll = PollEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $poll->pollID);
 		

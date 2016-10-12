@@ -9,11 +9,9 @@ use wcf\util\StringUtil;
  * Handels form documents associated with a queue.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Form
  */
 abstract class PackageInstallationFormManager {
 	/**
@@ -22,7 +20,7 @@ abstract class PackageInstallationFormManager {
 	 * @param	PackageInstallationQueue	$queue
 	 */
 	public static function handleRequest(PackageInstallationQueue $queue) {
-		$formName = (isset($_REQUEST['formName'])) ? StringUtil::trim($_REQUEST['formName']) : '';
+		$formName = isset($_REQUEST['formName']) ? StringUtil::trim($_REQUEST['formName']) : '';
 		
 		// ignore request
 		if (empty($formName) || !self::findForm($queue, $formName)) return;
@@ -57,18 +55,17 @@ abstract class PackageInstallationFormManager {
 	 * @return	boolean
 	 */
 	public static function findForm(PackageInstallationQueue $queue, $formName) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package_installation_form
 			WHERE	queueID = ?
 				AND formName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$queue->queueID,
 			$formName
-		));
-		$row = $statement->fetchArray();
+		]);
 		
-		return (bool)$row['count'];
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
@@ -82,11 +79,11 @@ abstract class PackageInstallationFormManager {
 					(queueID, formName, document)
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$queue->queueID,
 			$document->getName(),
 			base64_encode(serialize($document))
-		));
+		]);
 	}
 	
 	/**
@@ -101,11 +98,11 @@ abstract class PackageInstallationFormManager {
 			WHERE	queueID = ?
 				AND formName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			base64_encode(serialize($document)),
 			$queue->queueID,
-			$document->formName
-		));
+			$document->getName()
+		]);
 	}
 	
 	/**
@@ -117,7 +114,7 @@ abstract class PackageInstallationFormManager {
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_form
 			WHERE		queueID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($queue->queueID));
+		$statement->execute([$queue->queueID]);
 	}
 	
 	/**
@@ -133,15 +130,14 @@ abstract class PackageInstallationFormManager {
 			WHERE	queueID = ?
 				AND formName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$queue->queueID,
 			$formName
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if ($row) {
-			$document = unserialize(base64_decode($row['document']));
-			return $document;
+			return unserialize(base64_decode($row['document']));
 		}
 		
 		return null;

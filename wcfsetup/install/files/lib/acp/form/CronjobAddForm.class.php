@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\form\AbstractForm;
@@ -14,22 +15,20 @@ use wcf\util\StringUtil;
  * Shows the cronjob add form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class CronjobAddForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.add';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.system.canManageCronjob');
+	public $neededPermissions = ['admin.management.canManageCronjob'];
 	
 	/**
 	 * cronjob class name
@@ -80,7 +79,7 @@ class CronjobAddForm extends AbstractForm {
 	public $startDow = '*';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +88,7 @@ class CronjobAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -106,7 +105,7 @@ class CronjobAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -140,42 +139,46 @@ class CronjobAddForm extends AbstractForm {
 				$fieldName = $match[1];
 			}
 			
-			throw new UserInputException($fieldName, 'notValid');
+			throw new UserInputException($fieldName, 'invalid');
 		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save cronjob
-		$data = array_merge($this->additionalFields, array(
+		$data = array_merge($this->additionalFields, [
 			'className' => $this->className,
 			'packageID' => $this->packageID,
+			'cronjobName' => 'com.woltlab.wcf.cronjob',
 			'description' => $this->description,
 			'startMinute' => $this->startMinute,
 			'startHour' => $this->startHour,
 			'startDom' => $this->startDom,
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow
-		));
+		]);
 		
-		$this->objectAction = new CronjobAction(array(), 'create', array('data' => $data));
-		$this->objectAction->executeAction();
+		$this->objectAction = new CronjobAction([], 'create', ['data' => $data]);
+		/** @var Cronjob $cronjob */
+		$cronjob = $this->objectAction->executeAction()['returnValues'];
+		$cronjobID = $cronjob->cronjobID;
+		
+		// update `cronjobName`
+		$data = ['cronjobName' => 'com.woltlab.wcf.cronjob' . $cronjobID];
 		
 		if (!I18nHandler::getInstance()->isPlainValue('description')) {
-			$returnValues = $this->objectAction->getReturnValues();
-			$cronjobID = $returnValues['returnValues']->cronjobID;
 			I18nHandler::getInstance()->save('description', 'wcf.acp.cronjob.description.cronjob'.$cronjobID, 'wcf.acp.cronjob', $this->packageID);
 			
 			// update group name
-			$cronjobEditor = new CronjobEditor($returnValues['returnValues']);
-			$cronjobEditor->update(array(
-				'description' => 'wcf.acp.cronjob.description.cronjob'.$cronjobID
-			));
+			$data['description'] = 'wcf.acp.cronjob.description.cronjob' . $cronjobID;
 		}
+		
+		$cronjobEditor = new CronjobEditor($cronjob);
+		$cronjobEditor->update($data);
 		
 		$this->saved();
 		
@@ -184,21 +187,19 @@ class CronjobAddForm extends AbstractForm {
 		$this->startMinute = $this->startHour = $this->startDom = $this->startMonth = $this->startDow = '*';
 		I18nHandler::getInstance()->reset();
 		
-		// show success.
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'className' => $this->className,
 			'description' => $this->description,
 			'startMinute' => $this->startMinute,
@@ -207,6 +208,6 @@ class CronjobAddForm extends AbstractForm {
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow,
 			'action' => 'add'
-		));
+		]);
 	}
 }

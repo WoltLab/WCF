@@ -14,36 +14,38 @@ use wcf\system\WCF;
  * Executes poll-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.poll
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Poll
+ * 
+ * @method	PollEditor[]	getObjects()
+ * @method	PollEditor	getSingleObject()
  */
 class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList');
+	protected $allowGuestAccess = ['getGroupedUserList'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\PollEditor';
+	protected $className = PollEditor::class;
 	
 	/**
 	 * poll object
-	 * @var	\wcf\data\poll\Poll
+	 * @var	Poll
 	 */
 	protected $poll = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	Poll
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['time'])) $this->parameters['data']['time'] = TIME_NOW;
 		
-		// create poll
+		/** @var Poll $poll */
 		$poll = parent::create();
 		
 		// create options
@@ -54,11 +56,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['options'] as $showOrder => $option) {
-			$statement->execute(array(
+			$statement->execute([
 				$poll->pollID,
 				$option['optionValue'],
 				$showOrder
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -66,7 +68,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -76,31 +78,31 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		
 		// get current options
 		$optionList = new PollOptionList();
-		$optionList->getConditionBuilder()->add("poll_option.pollID = ?", array($pollEditor->pollID));
+		$optionList->getConditionBuilder()->add("poll_option.pollID = ?", [$pollEditor->pollID]);
 		$optionList->sqlOrderBy = "poll_option.showOrder ASC";
 		$optionList->readObjects();
 		$options = $optionList->getObjects();
 		
-		$newOptions = $updateOptions = array();
+		$newOptions = $updateOptions = [];
 		foreach ($this->parameters['options'] as $showOrder => $option) {
 			// check if editing an existing option
 			if ($option['optionID']) {
 				// check if an update is required
 				if ($options[$option['optionID']]->showOrder != $showOrder || $options[$option['optionID']]->optionValue != $option['optionValue']) {
-					$updateOptions[$option['optionID']] = array(
+					$updateOptions[$option['optionID']] = [
 						'optionValue' => $option['optionValue'],
 						'showOrder' => $showOrder
-					);
+					];
 				}
 				
 				// remove option
 				unset($options[$option['optionID']]);
 			}
 			else {
-				$newOptions[] = array(
+				$newOptions[] = [
 					'optionValue' => $option['optionValue'],
 					'showOrder' => $showOrder
-				);
+				];
 			}
 		}
 		
@@ -114,11 +116,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				foreach ($newOptions as $option) {
-					$statement->execute(array(
+					$statement->execute([
 						$pollEditor->pollID,
 						$option['optionValue'],
 						$option['showOrder']
-					));
+					]);
 				}
 			}
 			
@@ -130,11 +132,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 					WHERE	optionID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				foreach ($updateOptions as $optionID => $option) {
-					$statement->execute(array(
+					$statement->execute([
 						$option['optionValue'],
 						$option['showOrder'],
 						$optionID
-					));
+					]);
 				}
 			}
 			
@@ -144,7 +146,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 					WHERE		optionID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				foreach ($options as $option) {
-					$statement->execute(array($option->optionID));
+					$statement->execute([$option->optionID]);
 				}
 			}
 			
@@ -167,16 +169,12 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE	pollID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$poll->pollID,
 			WCF::getUser()->userID
-		));
-		$alreadyVoted = false;
-		$optionIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$alreadyVoted = true;
-			$optionIDs[] = $row['optionID'];
-		}
+		]);
+		$optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+		$alreadyVoted = !empty($optionIDs);
 		
 		// calculate the difference
 		foreach ($this->parameters['optionIDs'] as $index => $optionID) {
@@ -195,11 +193,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($this->parameters['optionIDs'] as $optionID) {
-				$statement->execute(array(
+				$statement->execute([
 					$poll->pollID,
 					$optionID,
 					WCF::getUser()->userID
-				));
+				]);
 			}
 			
 			// increase votes per option
@@ -208,7 +206,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				WHERE	optionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($this->parameters['optionIDs'] as $optionID) {
-				$statement->execute(array($optionID));
+				$statement->execute([$optionID]);
 			}
 		}
 		
@@ -219,10 +217,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($optionIDs as $optionID) {
-				$statement->execute(array(
+				$statement->execute([
 					$optionID,
 					WCF::getUser()->userID
-				));
+				]);
 			}
 			
 			// decrease votes per option
@@ -231,7 +229,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				WHERE	optionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($optionIDs as $optionID) {
-				$statement->execute(array($optionID));
+				$statement->execute([$optionID]);
 			}
 		}
 		
@@ -242,7 +240,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pollID');
@@ -258,7 +256,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @inheritDoc
 	 */
 	public function getGroupedUserList() {
 		// get options
@@ -267,8 +265,8 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE		pollID = ?
 			ORDER BY	".($this->poll->sortByVotes ? "votes DESC" : "showOrder ASC");
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->poll->pollID));
-		$options = array();
+		$statement->execute([$this->poll->pollID]);
+		$options = [];
 		while ($row = $statement->fetchArray()) {
 			$options[$row['optionID']] = new GroupedUserList($row['optionValue'], 'wcf.poll.noVotes');
 		}
@@ -278,15 +276,8 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			FROM	wcf".WCF_N."_poll_option_vote
 			WHERE	pollID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->poll->pollID));
-		$voteData = array();
-		while ($row = $statement->fetchArray()) {
-			if (!isset($voteData[$row['optionID']])) {
-				$voteData[$row['optionID']] = array();
-			}
-			
-			$voteData[$row['optionID']][] = $row['userID'];
-		}
+		$statement->execute([$this->poll->pollID]);
+		$voteData = $statement->fetchMap('optionID', 'userID', false);
 		
 		// assign user ids
 		foreach ($voteData as $optionID => $userIDs) {
@@ -296,14 +287,14 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		// load user profiles
 		GroupedUserList::loadUsers();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'groupedUsers' => $options
-		));
+		]);
 		
-		return array(
+		return [
 			'pageCount' => 1,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
-		);
+		];
 	}
 	
 	/**
@@ -323,28 +314,28 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$sourceObjectType->objectTypeID,
 			$this->parameters['sourceObjectID']
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if ($row === false) {
-			return array(
+			return [
 				'pollID' => null
-			);
+			];
 		}
 		
 		// get options
 		$pollOptionList = new PollOptionList();
-		$pollOptionList->getConditionBuilder()->add("poll_option.pollID = ?", array($row['pollID']));
+		$pollOptionList->getConditionBuilder()->add("poll_option.pollID = ?", [$row['pollID']]);
 		$pollOptionList->readObjects();
 		
 		//
 		// step 2) copy
 		//
 		
-		// cretae poll
+		// create poll
 		$pollData = $row;
 		$pollData['objectTypeID'] = $targetObjectType->objectTypeID;
 		$pollData['objectID'] = $this->parameters['targetObjectID'];
@@ -353,14 +344,14 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		$newPoll = PollEditor::create($pollData);
 		
 		// create options
-		$newOptionIDs = array();
+		$newOptionIDs = [];
 		foreach ($pollOptionList as $pollOption) {
-			$newOption = PollOptionEditor::create(array(
+			$newOption = PollOptionEditor::create([
 				'pollID' => $newPoll->pollID,
 				'optionValue' => $pollOption->optionValue,
 				'votes' => $pollOption->votes,
 				'showOrder' => $pollOption->showOrder
-			));
+			]);
 			
 			$newOptionIDs[$pollOption->optionID] = $newOption->optionID;
 		}
@@ -374,12 +365,12 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				FROM		wcf".WCF_N."_poll_option_vote
 				WHERE		optionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($oldOptionID));
+			$statement->execute([$oldOptionID]);
 		}
 		WCF::getDB()->commitTransaction();
 		
-		return array(
+		return [
 			'pollID' => $newPoll->pollID
-		);
+		];
 	}
 }

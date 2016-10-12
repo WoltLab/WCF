@@ -6,18 +6,16 @@ use wcf\util\StringUtil;
  * FormDocument holds the page structure based upon form element containers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Form
  */
 class FormDocument {
 	/**
 	 * list of FormElementContainer objects
-	 * @var	array<\wcf\system\form\IFormElementContainer>
+	 * @var	IFormElementContainer[]
 	 */
-	protected $containers = array();
+	protected $containers = [];
 	
 	/**
 	 * form document name
@@ -46,7 +44,7 @@ class FormDocument {
 	/**
 	 * Appends a FormElementContainer object.
 	 * 
-	 * @param	\wcf\system\form\IFormElementContainer		$container
+	 * @param	IFormElementContainer		$container
 	 */
 	public function appendContainer(IFormElementContainer $container) {
 		$this->containers[] = $container;
@@ -55,7 +53,7 @@ class FormDocument {
 	/**
 	 * Prepends a FormElementContainer object.
 	 * 
-	 * @param	\wcf\system\form\IFormElementContainer		$container
+	 * @param	IFormElementContainer		$container
 	 */
 	public function prependContainer(IFormElementContainer $container) {
 		array_unshift($this->containers, $container);
@@ -64,7 +62,7 @@ class FormDocument {
 	/**
 	 * Returns assigned FormElementContainer objects.
 	 * 
-	 * @return	array<\wcf\system\form\IFormElementContainer>
+	 * @return	IFormElementContainer[]
 	 */
 	public function getContainers() {
 		return $this->containers;
@@ -106,7 +104,7 @@ class FormDocument {
 	 * Handles request input variables.
 	 */
 	public function handleRequest() {
-		$variables = array();
+		$variables = [];
 		
 		foreach ($_REQUEST as $key => $value) {
 			if (mb_strpos($key, $this->getName().'_') !== false) {

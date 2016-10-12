@@ -1,10 +1,12 @@
 <?php
 namespace wcf\data\category;
+use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
 use wcf\data\IPermissionObject;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\category\ICategoryType;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
@@ -13,35 +15,43 @@ use wcf\system\WCF;
  * Represents a category.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Category
+ * 
+ * @property-read	integer		$categoryID		unique id of the category
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.category` object type
+ * @property-read	integer		$parentCategoryID	id of the category's parent category or `0` if it has no parent category
+ * @property-read	string		$title			title of the category or name of language item which contains the title
+ * @property-read	string		$description		description of the category or name of language item which contains the description
+ * @property-read	integer		$showOrder		position of the category in relation to its siblings
+ * @property-read	integer		$time			timestamp at which the comment has been created
+ * @property-read	integer		$isDisabled		is `1` if the category is disabled and thus neither accessible nor selectable, otherwise `0`
+ * @property-read	array		$additionalData		array with additional data of the category
  */
 class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController {
 	/**
 	 * list of all child categories of this category
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $childCategories = null;
 	
 	/**
 	 * list of all parent category generations of this category
-	 * @var	array<\wcf\data\category\Category>
+	 * @var	Category[]
 	 */
 	protected $parentCategories = null;
 	
 	/**
 	 * parent category of this category
-	 * @var	\wcf\data\category\Category
+	 * @var	Category
 	 */
 	protected $parentCategory = null;
 	
 	/**
 	 * acl permissions of this category for the active user
 	 * @deprecated
-	 * @var	array<boolean>
+	 * @var	boolean[]
 	 */
 	protected $permissions = null;
 	
@@ -50,7 +60,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	 * belong to
 	 * @var	array
 	 */
-	protected $userPermissions = array();
+	protected $userPermissions = [];
 	
 	/**
 	 * fallback return value used in Category::getPermission()
@@ -59,22 +69,12 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	protected $defaultPermission = false;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
-	protected static $databaseTableIndexName = 'categoryID';
+	protected static $processorInterface = ICategoryType::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'category';
-	
-	/**
-	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
-	 */
-	protected static $processorInterface = 'wcf\system\category\ICategoryType';
-	
-	/**
-	 * @see	\wcf\data\IStorableObject::__get()
+	 * @inheritDoc
 	 */
 	public function __get($name) {
 		// forward 'className' property requests to object type
@@ -95,7 +95,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	\wcf\data\IPermissionObject::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions(array $permissions) {
 		foreach ($permissions as $permission) {
@@ -108,7 +108,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the category object type of the category.
 	 * 
-	 * @return	\wcf\data\category\Category
+	 * @return	ObjectType
 	 */
 	public function getObjectType() {
 		return CategoryHandler::getInstance()->getObjectType($this->objectTypeID);
@@ -117,7 +117,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the child categories of this category.
 	 * 
-	 * @return	array<\wcf\data\category\Category>
+	 * @return	Category[]
 	 */
 	public function getChildCategories() {
 		if ($this->childCategories === null) {
@@ -128,9 +128,9 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * Returns the parent category of this category.
+	 * Returns the parent category of the category or `null` if the category has no parent category.
 	 * 
-	 * @return	\wcf\data\category\Category
+	 * @return	Category|null
 	 */
 	public function getParentCategory() {
 		if ($this->parentCategoryID && $this->parentCategory === null) {
@@ -143,14 +143,14 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the parent categories of this category.
 	 * 
-	 * @return	array<\wcf\data\category\Category>
+	 * @return	Category[]
 	 */
 	public function getParentCategories() {
 		if ($this->parentCategories === null) {
-			$this->parentCategories = array();
-			$parentCaregory = $this;
-			while ($parentCaregory = $parentCaregory->getParentCategory()) {
-				$this->parentCategories[] = $parentCaregory;
+			$this->parentCategories = [];
+			$parentCategory = $this;
+			while ($parentCategory = $parentCategory->getParentCategory()) {
+				$this->parentCategories[] = $parentCategory;
 			}
 			
 			$this->parentCategories = array_reverse($this->parentCategories);
@@ -162,7 +162,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns true if given category is a parent category of this category.
 	 * 
-	 * @param	\wcf\data\category\Category	$category
+	 * @param	Category	$category
 	 * @return	boolean
 	 */
 	public function isParentCategory(Category $category) {
@@ -170,7 +170,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	\wcf\data\IPermissionObject::getPermission()
+	 * @inheritDoc
 	 */
 	public function getPermission($permission, User $user = null) {
 		if ($user === null) {
@@ -201,7 +201,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);
@@ -218,20 +218,20 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData()
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		// handle additional data
 		$data['additionalData'] = @unserialize($data['additionalData']);
 		if (!is_array($data['additionalData'])) {
-			$data['additionalData'] = array();
+			$data['additionalData'] = [];
 		}
 		
 		parent::handleData($data);
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->getTitle();

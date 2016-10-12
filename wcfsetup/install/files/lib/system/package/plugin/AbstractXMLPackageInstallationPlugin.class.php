@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
@@ -12,11 +13,9 @@ use wcf\util\XML;
  * Abstract implementation of a package installation plugin using a XML file.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -32,14 +31,14 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $tagName = '';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
-	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
+	public function __construct(PackageInstallationDispatcher $installation, $instruction = []) {
 		parent::__construct($installation, $instruction);
 		
 		// autoset 'tableName' property
 		if (empty($this->tableName) && !empty($this->className)) {
-			$this->tableName = call_user_func(array($this->className, 'getDatabaseTableAlias'));
+			$this->tableName = call_user_func([$this->className, 'getDatabaseTableAlias']);
 		}
 		
 		// autoset 'tagName' property
@@ -49,7 +48,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -71,7 +70,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		parent::uninstall();
@@ -87,13 +86,13 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:delete/ns:'.$this->tagName);
-		$items = array();
+		$items = [];
 		foreach ($elements as $element) {
-			$data = array(
-				'attributes' => array(),
-				'elements' => array(),
+			$data = [
+				'attributes' => [],
+				'elements' => [],
 				'value' => $element->nodeValue
-			);
+			];
 			
 			// get attributes
 			$attributes = $xpath->query('attribute::*', $element);
@@ -124,11 +123,11 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function importItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
 		foreach ($elements as $element) {
-			$data = array(
-				'attributes' => array(),
-				'elements' => array(),
+			$data = [
+				'attributes' => [],
+				'elements' => [],
 				'nodeValue' => ''
-			);
+			];
 			
 			// fetch attributes
 			$attributes = $xpath->query('attribute::*', $element);
@@ -165,7 +164,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			}
 			
 			// ensure a valid parameter for import()
-			if ($row === false) $row = array();
+			if ($row === false) $row = [];
 			
 			// import items
 			$this->import($row, $data);
@@ -187,6 +186,63 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
+	 * Returns i18n values by validating each value against the list of installed
+	 * languages, optionally returning only the best matching value.
+	 * 
+	 * @param	string[]	$values			list of values by language code
+	 * @param	boolean		$singleValueOnly	true to return only the best matching value
+	 * @return	string[]|string	matching i18n values controller by `$singleValueOnly`
+	 * @since	3.0
+	 */
+	protected function getI18nValues(array $values, $singleValueOnly = false) {
+		if (empty($values)) {
+			return $singleValueOnly ? '' : [];
+		}
+		
+		// check for a value with an empty language code and treat it as 'en' unless 'en' exists
+		if (isset($values[''])) {
+			if (!isset($values['en'])) {
+				$values['en'] = $values[''];
+			}
+			
+			unset($values['']);
+		}
+		
+		$matchingValues = [];
+		foreach ($values as $languageCode => $value) {
+			if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+				$matchingValues[$languageCode] = $value;
+			}
+		}
+		
+		// no matching value found
+		if (empty($matchingValues)) {
+			if (isset($values['en'])) {
+				// safest route: pick English
+				$matchingValues['en'] = $values['en'];
+			}
+			else if (isset($values[''])) {
+				// fallback: use the value w/o a language code
+				$matchingValues[''] = $values[''];
+			}
+			else {
+				// failsafe: just use the first found value in whatever language
+				$matchingValues = array_splice($values, 0, 1);
+			}
+		}
+		
+		if ($singleValueOnly) {
+			if (isset($matchingValues[LanguageFactory::getInstance()->getDefaultLanguage()->languageCode])) {
+				return $matchingValues[LanguageFactory::getInstance()->getDefaultLanguage()->languageCode];
+			}
+			
+			return array_shift($matchingValues);
+		}
+		
+		return $matchingValues;
+	}
+	
+	/**
 	 * Inserts or updates new items.
 	 * 
 	 * @param	array		$row
@@ -198,12 +254,13 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			// create new item
 			$this->prepareCreate($data);
 			
-			return call_user_func(array($this->className, 'create'), $data);
+			return call_user_func([$this->className, 'create'], $data);
 		}
 		else {
 			// update existing item
-			$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+			$baseClass = call_user_func([$this->className, 'getBaseClass']);
 			
+			/** @var \wcf\data\DatabaseObjectEditor $itemEditor */
 			$itemEditor = new $this->className(new $baseClass(null, $row));
 			$itemEditor->update($data);
 			
@@ -242,10 +299,11 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function validateImport(array $data) { }
 	
 	/**
-	 * Find an existing item for updating, should return sql query.
+	 * Returns an array with a sql query and its parameters to find an existing item for updating
+	 * or `null` if updates are not supported.
 	 * 
-	 * @param	array	$data
-	 * @return	array
+	 * @param	array		$data
+	 * @return	array|null
 	 */
 	abstract protected function findExistingItem(array $data);
 	
@@ -271,6 +329,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * 
 	 * @param	string		$filename
 	 * @return	XML		$xml
+	 * @throws	SystemException
 	 */
 	protected function getXML($filename = '') {
 		if (empty($filename)) {
@@ -318,7 +377,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 		if ($showOrder === null) {
 			// get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
-			if ($columnName !== null) $conditions->add($columnName." = ?", array($parentName));
+			if ($columnName !== null) $conditions->add($columnName." = ?", [$parentName]);
 			
 			$sql = "SELECT	MAX(showOrder) AS showOrder
 				FROM	".$this->application.WCF_N."_".$this->tableName.$tableNameExtension."
@@ -336,7 +395,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 				".($columnName !== null ? "AND ".$columnName." = ?" : "");
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
-			$data = array($showOrder);
+			$data = [$showOrder];
 			if ($columnName !== null) $data[] = $parentName;
 			
 			$statement->execute($data);
@@ -347,9 +406,26 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @since	3.0
+	 */
+	public static function getDefaultFilename() {
+		$classParts = explode('\\', get_called_class());
+		
+		return lcfirst(str_replace('PackageInstallationPlugin', '', array_pop($classParts))).'.xml';
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
+		if (!$instruction) {
+			$defaultFilename = static::getDefaultFilename();
+			if ($defaultFilename) {
+				$instruction = $defaultFilename;
+			}
+		}
+		
 		if (preg_match('~\.xml$~', $instruction)) {
 			// check if file actually exists
 			try {

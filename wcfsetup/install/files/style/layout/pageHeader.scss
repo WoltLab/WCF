@@ -1,0 +1,506 @@
+.pageHeaderContainer {
+	color: $wcfHeaderText;
+	z-index: 100;
+	
+	a {
+		color: $wcfHeaderLink;
+		
+		&:hover {
+			color: $wcfHeaderLinkActive;
+		}
+	}
+	
+	.icon {
+		color: $wcfHeaderText;
+	}
+	
+	/* reserved space for `.pageHeaderPanel` */
+	padding-top: 50px;
+	
+	@include screen-lg {
+		background-color: $wcfHeaderBackground;
+	}
+}
+
+.pageHeaderPanel {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 300;
+	
+	> .layoutBoundary {
+		display: flex;
+	}
+	
+	@include screen-md-down {
+		background-color: $wcfHeaderBackground;
+		
+		> .layoutBoundary {
+			padding: 9px 10px;
+		}
+	}
+	
+	@include screen-lg {
+		background-color: $wcfHeaderMenuBackground;
+	}
+}
+
+.pageHeaderFacade {
+	&:first-child {
+		// page header without user-panel (during setup)
+		margin-top: -50px;
+	}
+	
+	> .layoutBoundary {
+		align-items: center;
+		display: flex;
+		
+		@include screen-lg {
+			align-items: center;
+			padding-bottom: 30px;
+			padding-top: 30px;
+		}
+		
+		@include screen-md-down {
+			height: 50px;
+			justify-content: center;
+			left: 60px;
+			padding: 9px 0;
+			position: fixed;
+			right: 60px;
+			top: 0;
+			width: auto;
+			z-index: 301;
+		}
+	}
+}
+
+/* MAIN MENU */
+.mainMenu {
+	flex: 1 1 auto;
+	
+	.boxMenu {
+		display: flex;
+		flex-wrap: wrap;
+		
+		> li {
+			flex: 0 0 auto;
+			
+			> a {
+				background: $wcfHeaderMenuLinkBackground;
+				align-items: center;
+				color: $wcfHeaderMenuLink;
+				display: flex;
+				height: 50px;
+				padding: 0 15px;
+				
+				> span {
+					flex: 0 0 auto;
+				}
+				
+				> .boxMenuLinkOutstandingItems {
+					background-color: rgb(255, 255, 255);
+					color: rgb(192, 57, 43);
+					margin-left: 5px;
+				}
+			}
+			
+			> span {
+				cursor: default;
+			}
+			
+			&.active > a,
+			&:hover > a {
+				background: $wcfHeaderMenuLinkBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
+			}
+		}
+		
+		> .boxMenuHasChildren {
+			position: relative;
+			
+			&:hover .boxMenuDepth1 {
+				visibility: visible;
+			}
+			
+			> a {
+				&::after {
+					content: $fa-var-angle-down;
+					display: block;
+					font-family: 'FontAwesome';
+					font-size: 14px;
+					height: 24px;
+					line-height: 24px;
+					margin-left: 5px;
+					width: 10px;
+				}
+			}
+		}
+		
+		.boxMenuDepth1 {
+			background-color: $wcfHeaderMenuDropdownBackground;
+			border-radius: 0 0 3px 3px;
+			padding: 5px 0;
+			position: absolute;
+			visibility: hidden;
+			
+			@include wcfFontDefault;
+			
+			> li {
+				
+				> a {
+					color: $wcfHeaderMenuDropdownLink;
+				}
+				
+				> a,
+				> span {
+					display: block;
+					padding: 7px 20px;
+					white-space: nowrap;
+				}
+				
+				&.active > a,
+				> a:hover {
+					background-color: $wcfHeaderMenuDropdownBackgroundActive;
+					color: $wcfHeaderMenuDropdownLinkActive;
+					text-decoration: none;
+				}
+			}
+		}
+		
+		.boxMenuDepth2 li {
+			> a {
+				color: $wcfHeaderMenuDropdownLink;
+				display: block;
+				padding: 5px 20px 5px 40px;
+				white-space: nowrap;
+			}
+			
+			&.active > a,
+			> a:hover {
+				background-color: $wcfHeaderMenuDropdownBackgroundActive;
+				color: $wcfHeaderMenuDropdownLinkActive;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+/* user panel */
+.userPanel {
+	flex: 0 0 auto;
+	
+	> ul {
+		display: flex;
+		justify-content: flex-end;
+		
+		> li {
+			align-items: center;
+			display: flex;
+			flex: 0 0 auto;
+			
+			> a {
+				align-items: center;
+				background: $wcfHeaderMenuLinkBackground;
+				color: $wcfHeaderMenuLink;
+				display: flex;
+				flex: 0 0 auto;
+				height: 50px;
+				padding: 0 15px;
+				position: relative;
+				
+				/* hide icon label */
+				> span:not(.icon):not(.badge) {
+					display: none;
+				}
+				
+				/* special styling for update badge */
+				> .badgeUpdate {
+					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
+					left: 31px;
+					padding: 1px 6px;
+					position: absolute;
+					top: 4px;
+					z-index: 101;
+				}
+				
+				.icon {
+					color: $wcfHeaderMenuLink;
+				}
+			}
+			
+			&.dropdownOpen > a,
+			&.open > a,
+			&:hover > a {
+				background: $wcfHeaderMenuLinkBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
+				
+				.icon {
+					color: $wcfHeaderMenuLinkActive;
+				}
+			}
+			
+			/* ringing animation for notification icon */
+			&#userNotifications:not([data-count="0"]) {
+				> a > .icon {
+					animation: fa-bell-ring 5s ease 10s 6;
+					transform-origin: 50% 0;
+				}
+			}
+		}
+	}
+}
+
+/* LOGO */
+.pageHeaderLogo {
+	@include screen-lg {
+		flex: 1 1 auto;
+		
+		.pageHeaderLogoLarge {
+			max-width: 100%;
+		}
+		
+		.pageHeaderLogoSmall {
+			display: none;
+		}
+		
+		> a {
+			display: block;
+			padding: 10px 0;
+		}
+	}
+	
+	@include screen-md-down {
+		.pageHeaderLogoLarge {
+			display: none;
+		}
+		
+		.pageHeaderLogoSmall {
+			max-height: 30px;
+		}
+	}
+}
+
+/* SEARCH AREA */
+.pageHeaderSearch {
+	display: none;
+	position: fixed;
+}
+
+.searchBarOpen .pageHeaderSearch {
+	display: block;
+	
+	/* required for Edge */
+	z-index: 100;
+}
+
+.pageHeaderSearchInputContainer {
+	display: flex;
+	
+	.pageHeaderSearchType {
+		display: flex;
+		
+		> .button {
+			align-items: center;
+			background-color: $wcfHeaderMenuLinkBackground;
+			border-radius: 0 0 0 2px;
+			color: $wcfHeaderMenuLink;
+			display: flex;
+			max-width: 200px;
+			min-width: 140px;
+			overflow: hidden;
+			padding: 4px 24px 4px 8px;
+			position: relative;
+			text-align: left;
+			text-overflow: ellipsis;
+			text-transform: none;
+			white-space: nowrap;
+			
+			&::after {
+				color: inherit;
+				content: $fa-var-caret-down;
+				font-family: FontAwesome;
+				position: absolute;
+				right: 8px;
+			}
+		}
+		
+		> .button:hover,
+		&.dropdownOpen > .button {
+			background: $wcfHeaderMenuLinkBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+	
+	.pageHeaderSearchInput {
+		background-color: $wcfHeaderSearchBoxBackground;
+		border-width: 0;
+		color: $wcfHeaderSearchBoxText;
+		padding-bottom: 8px;
+		padding-top: 8px;
+		width: 250px;
+		
+		&:focus,
+		&:hover {
+			background-color: $wcfHeaderSearchBoxBackgroundActive;
+			color: $wcfHeaderSearchBoxTextActive;
+			
+			/* set placeholder color, do not chain these with a comma
+			   as an unrecognized value causes the instruction to be
+			   discarded in entirety */
+			&::-webkit-input-placeholder { /* WebKit browsers */
+				color: $wcfHeaderSearchBoxPlaceholderActive;
+			}
+			&::-moz-placeholder { /* Mozilla Firefox 19+ */
+				color: $wcfHeaderSearchBoxPlaceholderActive;
+			}
+			&:-ms-input-placeholder { /* Internet Explorer 10+ */
+				color: $wcfHeaderSearchBoxPlaceholderActive;
+			}
+		}
+		
+		/* set placeholder color, do not chain these with a comma
+		   as an unrecognized value causes the instruction to be
+		   discarded in entirety */
+		&::-webkit-input-placeholder { /* WebKit browsers */
+			color: $wcfHeaderSearchBoxPlaceholder;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: $wcfHeaderSearchBoxPlaceholder;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			color: $wcfHeaderSearchBoxPlaceholder;
+		}
+		
+		/* remove broken cancel-button (webkit) */
+		&::-webkit-search-cancel-button {
+			display: none;
+		}
+	}
+	
+	.pageHeaderSearchInputButton {
+		background-color: $wcfHeaderMenuLinkBackground;
+		border-radius: 0 0 2px 0;
+		color: $wcfHeaderMenuLink;
+		padding: 4px 9px;
+		
+		&:hover {
+			background: $wcfHeaderMenuLinkBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+}
+
+@include screen-md-down {
+	.pageHeaderPanel > .layoutBoundary {
+		/* pushes buttons to the left / right corner */
+		justify-content: space-between;
+	}
+	
+	.userPanel {
+		flex: 0 0 auto;
+		
+		&::before {
+			content: $fa-var-user;
+		}
+		
+		> .userPanelItems {
+			display: none;
+		}
+	}
+	
+	.mainMenu {
+		flex: 0 0 auto;
+		
+		&::before {
+			content: $fa-var-bars;
+		}
+		
+		> .boxContent {
+			display: none;
+		}
+	}
+	
+	.mainMenu,
+	.userPanel {
+		position: relative;
+		
+		&::before {
+			background-color: $wcfHeaderMenuBackground;
+			border-radius: 2px;
+			color: $wcfHeaderMenuLink;
+			font-family: FontAwesome;
+			font-size: 28px;
+			line-height: 32px;
+			padding: 5px 10px;
+		}
+		
+		&:hover::before {
+			background-color: $wcfHeaderMenuLinkBackgroundActive;
+			color: $wcfHeaderMenuLinkActive;
+		}
+		
+		&.pageMenuMobileButtonHasContent::after {
+			background-color: rgb(244, 67, 54);
+			border: 2px solid $wcfHeaderBackground;
+			border-radius: 50%;
+			content: "";
+			height: 14px;
+			position: absolute;
+			right: -5px;
+			top: -8px;
+			width: 14px;
+		}
+	}
+	
+	.pageHeaderSearch {
+		left: 0 !important;
+		right: 0 !important;
+		
+		.pageHeaderSearchInputContainer {
+			border-radius: 0;
+			display: flex;
+			flex-wrap: wrap;
+			
+			.pageHeaderSearchType {
+				flex: 0 0 100%;
+				
+				> .button {
+					border-radius: 0;
+					max-width: unset;
+					min-width: unset;
+					padding-bottom: 8px;
+					padding-top: 8px;
+					width: 100%;
+				}
+			}
+			
+			.pageHeaderSearchInput {
+				flex: 1 1 auto;
+			}
+			
+			.pageHeaderSearchInputButton {
+				border-radius: 0;
+			}
+		}
+		
+		&:not(.open) {
+			display: none;
+		}
+	}
+}
+
+@include screen-xs {
+	.pageHeaderPanel,
+	.pageHeaderFacade > .layoutBoundary {
+		transition: transform .12s linear;
+	}
+	
+	.redactorActive {
+		.pageHeaderPanel,
+		.pageHeaderFacade > .layoutBoundary {
+			transform: translateY(-120%);
+		}
+	}
+}

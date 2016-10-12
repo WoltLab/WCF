@@ -1,29 +1,30 @@
 <?php
 namespace wcf\system\user\notification\object\type;
+use wcf\data\like\Like;
+use wcf\data\like\LikeList;
+use wcf\system\user\notification\object\LikeUserNotificationObject;
 
 /**
  * User notification object type implementation for likes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
  */
 class LikeUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
+	 * @inheritDoc
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\LikeUserNotificationObject';
+	protected static $decoratorClassName = LikeUserNotificationObject::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
+	 * @inheritDoc
 	 */
-	protected static $objectClassName = 'wcf\data\like\Like';
+	protected static $objectClassName = Like::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected static $objectListClassName = 'wcf\data\like\LikeList';
+	protected static $objectListClassName = LikeList::class;
 }

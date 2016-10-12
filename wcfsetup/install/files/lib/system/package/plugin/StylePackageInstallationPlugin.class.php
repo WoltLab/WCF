@@ -3,25 +3,24 @@ namespace wcf\system\package\plugin;
 use wcf\data\style\StyleEditor;
 use wcf\data\style\StyleList;
 use wcf\system\event\EventHandler;
+use wcf\system\style\StyleHandler;
 
 /**
  * Installs, updates and deletes styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\style\StyleEditor';
+	public $className = StyleEditor::class;
 	
-	/** 
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	/**
+	 * @inheritDoc
 	 */
 	public function install() {
 		parent::install();
@@ -29,8 +28,11 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// extract style tar
 		$filename = $this->installation->getArchive()->extractTar($this->instruction['value'], 'style_');
 		
+		// searches for non-tainted style for updating
+		$styleEditor = StyleHandler::getInstance()->getStyleByName($this->installation->getPackageName(), false);
+		
 		// import style
-		$style = StyleEditor::import($filename, $this->installation->getPackageID());
+		$style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor);
 		
 		// set style as default
 		if (isset($this->instruction['attributes']['default'])) {
@@ -41,8 +43,8 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		@unlink($filename);
 	}
 	
-	/** 
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	/**
+	 * @inheritDoc
 	 */
 	public function uninstall() {
 		// call uninstall event
@@ -51,7 +53,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// get all style of this package
 		$isDefault = false;
 		$styleList = new StyleList();
-		$styleList->getConditionBuilder()->add("packageID = ?", array($this->installation->getPackageID()));
+		$styleList->getConditionBuilder()->add("packageID = ?", [$this->installation->getPackageID()]);
 		$styleList->readObjects();
 		
 		foreach ($styleList->getObjects() as $style) {

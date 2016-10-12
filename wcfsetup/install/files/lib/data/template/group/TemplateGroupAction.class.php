@@ -6,35 +6,37 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes template group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.template.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Template\Group
+ * 
+ * @method	TemplateGroup		create()
+ * @method	TemplateGroupEditor[]	getObjects()
+ * @method	TemplateGroupEditor	getSingleObject()
  */
 class TemplateGroupAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\template\group\TemplateGroupEditor';
+	protected $className = TemplateGroupEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.template.canManageTemplate');
+	protected $permissionsCreate = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.template.canManageTemplate');
+	protected $permissionsDelete = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.template.canManageTemplate');
+	protected $permissionsUpdate = ['admin.template.canManageTemplate'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 }

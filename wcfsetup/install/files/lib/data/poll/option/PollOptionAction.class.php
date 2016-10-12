@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes poll option-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.poll.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Poll\Option
+ * 
+ * @method	PollOption		create()
+ * @method	PollOptionEditor[]	getObjects()
+ * @method	PollOptionEditor	getSingleObject()
  */
 class PollOptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\poll\option\PollOptionEditor';
+	protected $className = PollOptionEditor::class;
 }

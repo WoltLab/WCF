@@ -4,8 +4,7 @@
  * 
  * @author	Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @category	Community Framework
+ * @package	WoltLabSuite\Core
  */
 class WCF_Sniffs_Namespaces_ClassMustBeImportedSniff implements PHP_CodeSniffer_Sniff {
 	/**
@@ -59,6 +58,21 @@ class WCF_Sniffs_Namespaces_ClassMustBeImportedSniff implements PHP_CodeSniffer_
 					if ($tClass !== false) {
 						$newClass = $phpcsFile->findNext(T_STRING, $tClass);
 						if ($tokens[$newClass]['content'] == $tokens[$end - 1]['content']) return;
+					}
+					$pos = $prevNonClassPart - 1;
+					while ($tokens[$pos]['code'] === T_WHITESPACE) $pos--;
+					$tNew = $tokens[$pos]['code'] === T_NEW;
+					
+					// are we trying to create a new object?
+					if ($tNew === false) {
+						// no
+						$parenthesis = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $end);
+						$nonParenthesis = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $end, null, true);
+						// are we accessing something that's static?
+						if ($parenthesis !== false && $parenthesis < $nonParenthesis) {
+							// no -> this looks like a function call of a namespaced function
+							return;
+						}
 					}
 					
 					$error = 'Namespaced classes (%s) must be imported with use.';

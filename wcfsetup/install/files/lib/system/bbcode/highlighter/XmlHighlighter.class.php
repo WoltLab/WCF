@@ -9,52 +9,50 @@ use wcf\util\StringUtil;
  * Highlights syntax of xml sourcecode.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class XmlHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
+	 * @inheritDoc
 	 */
 	protected $allowsNewslinesInQuotes = true;
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @inheritDoc
 	 */
-	protected $quotes = array('"');
+	protected $quotes = ['"'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @inheritDoc
 	 */
-	protected $singleLineComment = array();
+	protected $singleLineComment = [];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @inheritDoc
 	 */
-	protected $commentStart = array("<!--");
+	protected $commentStart = ["<!--"];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @inheritDoc
 	 */
-	protected $commentEnd = array("-->");
+	protected $commentEnd = ["-->"];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array("<", ">");
+	protected $separators = ["<", ">"];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
-	protected $operators = array();
+	protected $operators = [];
 	
 	const XML_ATTRIBUTE_NAME = '[a-z0-9](?:(?:(?<!-)-)?[a-z0-9])*';
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()
+	 * @inheritDoc
 	 */
 	protected function highlightKeywords($string) {
 		$string = parent::highlightKeywords($string);
@@ -72,7 +70,7 @@ class XmlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
+	 * @inheritDoc
 	 */
 	protected function cacheQuotes($string) {
 		$string = parent::cacheQuotes($string);
@@ -86,14 +84,14 @@ class XmlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightQuotes()
+	 * @inheritDoc
 	 */
 	protected function highlightQuotes($string) {
 		return StringStack::reinsertStrings(parent::highlightQuotes($string), 'highlighterQuotes');
 	}
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightNumbers()
+	 * @inheritDoc
 	 */
 	protected function highlightNumbers($string) {
 		// do not highlight numbers

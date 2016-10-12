@@ -1,16 +1,18 @@
 {include file='header' pageTitle='wcf.acp.user.'|concat:$action}
 
-<script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		WCF.TabMenu.init();
-	});
-	//]]>
-</script>
-
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
-	{if $action == 'edit'}<p>{$user->username}</p>{/if}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.user.{@$action}{/lang}</h1>
+		{if $action == 'edit'}<p class="contentHeaderDescription">{$user->username}</p>{/if}
+	</div>
+	
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -23,18 +25,8 @@
 	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			
-			{event name='contentNavigationButtons'}
-		</ul>
-	</nav>
-</div>
-
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit' id=$userID}{/link}{/if}">
-	<div class="tabMenuContainer">
+	<div class="section tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="{@$__wcf->getAnchor('__essentials')}">{lang}wcf.global.form.data{/lang}</a></li>
@@ -55,14 +47,12 @@
 			</ul>
 		</nav>
 		
-		<div id="__essentials" class="container containerPadding tabMenuContent hidden">
-			<fieldset>
-				<legend>{lang}wcf.acp.user.general{/lang}</legend>
-				
+		<div id="__essentials" class="tabMenuContent hidden">
+			<div class="section">
 				<dl{if $errorType.username|isset} class="formError"{/if}>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 					<dd>
-						<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
+						<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus class="medium">
 						{if $errorType.username|isset}
 							<small class="innerError">
 								{if $errorType.username == 'empty'}
@@ -87,16 +77,16 @@
 				{/if}
 				
 				{event name='generalFields'}
-			</fieldset>
+			</div>
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-				<fieldset>
-					<legend>{lang}wcf.user.email{/lang}</legend>
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
 					
 					<dl{if $errorType.email|isset} class="formError"{/if}>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 						<dd>
-							<input type="email" id="email" name="email" value="{$email}" class="medium" />
+							<input type="email" id="email" name="email" value="{$email}" class="medium">
 							{if $errorType.email|isset}
 								<small class="innerError">
 									{if $errorType.email == 'empty'}
@@ -112,7 +102,7 @@
 					<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
 						<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
 						<dd>
-							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
+							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium">
 							{if $errorType.confirmEmail|isset}
 								<small class="innerError">
 									{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
@@ -122,17 +112,17 @@
 					</dl>
 					
 					{event name='emailFields'}
-				</fieldset>
+				</section>
 			{/if}
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
-				<fieldset>
-					<legend>{lang}wcf.user.password{/lang}</legend>
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
 					
 					<dl{if $errorType.password|isset} class="formError"{/if}>
 						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 						<dd>
-							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off" />
+							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off">
 							{if $errorType.password|isset}
 								<small class="innerError">
 									{if $errorType.password == 'empty'}
@@ -148,7 +138,7 @@
 					<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 						<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 						<dd>
-							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off" />
+							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off">
 							{if $errorType.confirmPassword|isset}
 								<small class="innerError">
 									{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
@@ -158,18 +148,18 @@
 					</dl>
 					
 					{event name='passwordFields'}
-				</fieldset>
+				</section>
 			{/if}
 			
 			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser') && $__wcf->user->userID != $userID}
-				<fieldset>
-					<legend>{lang}wcf.acp.user.banUser{/lang}</legend>
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.acp.user.banUser{/lang}</h2>
 					
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="checkbox" id="banned" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.banUser{/lang}</label>
-							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>	
+							<label><input type="checkbox" id="banned" name="banned" value="1"{if $banned == 1} checked{/if}> {lang}wcf.acp.user.banUser{/lang}</label>
+							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>
 						</dd>
 					</dl>
 					
@@ -183,22 +173,21 @@
 					
 					<dl>
 						<dt></dt>
-						<dd><label><input type="checkbox" id="banNeverExpires" name="banNeverExpires" value="1" {if !$banExpires}checked="checked" {/if}/> {lang}wcf.acp.user.ban.neverExpires{/lang}</label></dd>
+						<dd><label><input type="checkbox" id="banNeverExpires" name="banNeverExpires" value="1"{if !$banExpires} checked{/if}> {lang}wcf.acp.user.ban.neverExpires{/lang}</label></dd>
 					</dl>
 					
 					<dl id="banExpiresSetting">
 						<dt><label for="banExpires">{lang}wcf.acp.user.ban.expires{/lang}</label></dt>
 						<dd>
-							<input type="date" name="banExpires" id="banExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $banExpires} value="{$banExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true" />
+							<input type="date" name="banExpires" id="banExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $banExpires} value="{$banExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true">
 							<small>{lang}wcf.acp.user.ban.expires.description{/lang}</small>
 						</dd>
 					</dl>
 					
 					{event name='banFields'}
-				</fieldset>
+				</section>
 				
 				<script data-relocate="true">
-					//<![CDATA[
 					$('#banned').change(function() {
 						if ($('#banned').is(':checked')) {
 							$('#banReason').attr('readonly', false);
@@ -224,18 +213,17 @@
 					});
 					
 					$('#banNeverExpires').change();
-					//]]>
 				</script>
 			{/if}
 			
-			{event name='fieldsets'}
+			{event name='sections'}
 		</div>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContent hidden">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContent hidden">
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-					<fieldset>
-						<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
 						
 						{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
 							<dl>
@@ -252,7 +240,7 @@
 									</dt>
 									<dd>
 										{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-											<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
+											<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {@$availableLanguage}</label>
 										{/foreach}
 									</dd>
 								</dl>
@@ -263,7 +251,7 @@
 							<dl>
 								<dt><label for="userTitle">{lang}wcf.user.userTitle{/lang}</label></dt>
 								<dd>
-									<input type="text" id="userTitle" name="userTitle" value="{$userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}" />
+									<input type="text" id="userTitle" name="userTitle" value="{$userTitle}" class="long" maxlength="{@USER_TITLE_MAX_LENGTH}">
 									{if $errorType[userTitle]|isset}
 										<small class="innerError">
 											{lang}wcf.user.userTitle.error.{@$errorType[userTitle]}{/lang}
@@ -283,43 +271,35 @@
 								{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.user.option.'}
 							{/foreach}
 						{/if}
-					</fieldset>
+					</section>
 				{/foreach}
 			</div>
 		{/foreach}
 		
 		{if MODULE_USER_SIGNATURE}
-			<div id="signatureManagement" class="container containerPadding tabMenuContent hidden">
-				<fieldset>
-					<legend>{lang}wcf.user.signature{/lang}</legend>
+			<div id="signatureManagement" class="tabMenuContent hidden">
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.signature{/lang}</h2>
 					
 					<dl>
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
 							<textarea name="signature" id="signature" cols="40" rows="10">{$signature}</textarea>
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt>{lang}wcf.message.settings{/lang}</dt>
-						<dd>
-							<label><input id="signatureEnableSmilies" name="signatureEnableSmilies" type="checkbox" value="1"{if $signatureEnableSmilies} checked="checked"{/if} /> {lang}wcf.message.settings.enableSmilies{/lang}</label>
-							<label><input id="signatureEnableBBCodes" name="signatureEnableBBCodes" type="checkbox" value="1"{if $signatureEnableBBCodes} checked="checked"{/if} /> {lang}wcf.message.settings.enableBBCodes{/lang}</label>
-							<label><input id="signatureEnableHtml" name="signatureEnableHtml" type="checkbox" value="1"{if $signatureEnableHtml} checked="checked"{/if} /> {lang}wcf.message.settings.enableHtml{/lang}</label>
+							{include file='wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>
 					
 					{event name='signatureFields'}
-				</fieldset>
+				</section>
 				
 				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-					<fieldset>
-						<legend>{lang}wcf.acp.user.disableSignature{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.user.disableSignature{/lang}</h2>
 						
 						<dl>
 							<dt></dt>
 							<dd>
-								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1" {if $disableSignature == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature{/lang}</label>
+								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1"{if $disableSignature == 1} checked{/if}> {lang}wcf.acp.user.disableSignature{/lang}</label>
 							</dd>
 						</dl>
 						
@@ -332,22 +312,21 @@
 						
 						<dl>
 							<dt></dt>
-							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1" {if !$disableSignatureExpires}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
+							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1"{if !$disableSignatureExpires} checked{/if}> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
 						</dl>
 						
 						<dl id="disableSignatureExpiresSetting">
 							<dt><label for="disableSignatureExpiresExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
 							<dd>
-								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true" />
+								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true">
 								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
 							</dd>
 						</dl>
-
+						
 						{event name='disableSignatureFields'}
-					</fieldset>
+					</section>
 					
 					<script data-relocate="true">
-						//<![CDATA[
 						$('#disableSignature').change(function() {
 							if ($('#disableSignature').is(':checked')) {
 								$('#disableSignatureReason').attr('readonly', false);
@@ -373,7 +352,6 @@
 						});
 						
 						$('#disableSignatureNeverExpires').change();
-						//]]>
 					</script>
 				{/if}
 
@@ -382,34 +360,27 @@
 		{/if}
 		
 		{if $action == 'edit'}
-			<div id="avatarForm" class="container containerPadding tabMenuContent hidden">
-				<fieldset>
-					<legend>{lang}wcf.user.avatar{/lang}</legend>
+			<div id="avatarForm" class="tabMenuContent hidden">
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
 					
 					<dl>
 						<dt></dt>
 						<dd>
-							<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
+							<label><input type="radio" name="avatarType" value="none"{if $avatarType == 'none'} checked{/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
 						</dd>
 					</dl>
 					
 					<dl class="jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
-						<dt class="framed">
+						<dt>
 							{if $avatarType == 'custom'}
-								{assign var='__customAvatar' value=$userAvatar->getImageTag(96)}
-								{if $userAvatar->canCrop()}
-									{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
-									{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
-									{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'" />'}
-								{/if}
-								
-								{@$__customAvatar}
+								{@$userAvatar->getImageTag(96)}
 							{else}
-								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
+								<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage icon96">
 							{/if}
 						</dt>
 						<dd>
-							<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
+							<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
 							
 							{* placeholder for upload button: *}
 							<div></div>
@@ -424,9 +395,9 @@
 					
 					{if MODULE_GRAVATAR}
 						<dl{if $errorType[gravatar]|isset} class="formError"{/if}>
-							<dt class="framed"><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="icon96" /></dt>
+							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
 							<dd>
-								<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
+								<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 								
 								{if $errorType[gravatar]|isset}
 									<small class="innerError">
@@ -436,18 +407,18 @@
 							</dd>
 						</dl>
 					{/if}
-
+					
 					{event name='avatarFields'}
-				</fieldset>
+				</section>
 				
 				{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-					<fieldset>
-						<legend>{lang}wcf.acp.user.disableAvatar{/lang}</legend>
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.user.disableAvatar{/lang}</h2>
 						
 						<dl>
 							<dt></dt>
 							<dd>
-								<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1" {if $disableAvatar == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar{/lang}</label>
+								<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1"{if $disableAvatar == 1} checked{/if}> {lang}wcf.acp.user.disableAvatar{/lang}</label>
 							</dd>
 						</dl>
 						
@@ -460,22 +431,21 @@
 						
 						<dl>
 							<dt></dt>
-							<dd><label><input type="checkbox" id="disableAvatarNeverExpires" name="disableAvatarNeverExpires" value="1" {if !$disableAvatarExpires}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar.neverExpires{/lang}</label></dd>
+							<dd><label><input type="checkbox" id="disableAvatarNeverExpires" name="disableAvatarNeverExpires" value="1"{if !$disableAvatarExpires} checked{/if}> {lang}wcf.acp.user.disableAvatar.neverExpires{/lang}</label></dd>
 						</dl>
 						
 						<dl id="disableAvatarExpiresSetting">
 							<dt><label for="disableAvatarExpiresExpires">{lang}wcf.acp.user.disableAvatar.expires{/lang}</label></dt>
 							<dd>
-								<input type="date" name="disableAvatarExpires" id="disableAvatarExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableAvatarExpires} value="{$disableAvatarExpires|date:'Y-m-d'}"{/if} class="medium" />
+								<input type="date" name="disableAvatarExpires" id="disableAvatarExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableAvatarExpires} value="{$disableAvatarExpires|date:'Y-m-d'}"{/if} class="medium">
 								<small>{lang}wcf.acp.user.disableAvatar.expires.description{/lang}</small>
 							</dd>
 						</dl>
-
+						
 						{event name='disableAvatarFields'}
-					</fieldset>
+					</section>
 					
 					<script data-relocate="true">
-						//<![CDATA[
 						$('#disableAvatar').change(function() {
 							if ($('#disableAvatar').is(':checked')) {
 								$('#disableAvatarReason').attr('readonly', false);
@@ -501,17 +471,14 @@
 						});
 						
 						$('#disableAvatarNeverExpires').change();
-						//]]>
 					</script>
 				{/if}
 				
 				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true">
-					//<![CDATA[
 					$(function() {
 						WCF.Language.addObject({
-							'wcf.user.avatar.type.custom.crop': '{lang}wcf.user.avatar.type.custom.crop{/lang}',
 							'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
 							'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
 							'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
@@ -520,24 +487,20 @@
 							'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}'
 						});
 						
-						{if $userAvatar && $userAvatar->canCrop()}
-							new WCF.User.Avatar.Upload({@$user->userID}, new WCF.User.Avatar.Crop({@$userAvatar->avatarID}));
-						{else}
-							new WCF.User.Avatar.Upload({@$user->userID});
-						{/if}
+						new WCF.User.Avatar.Upload({@$user->userID});
 					});
-					//]]>
 				</script>
-
+				
 				{event name='avatarFieldsets'}
 			</div>
 		{/if}
 		
-		{event name='tabMenuContent'}
+		{event name='tabMenuContent'} {* deprecated event *}
+		{event name='tabMenuContents'}
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>

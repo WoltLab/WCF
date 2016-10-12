@@ -8,11 +8,9 @@ use wcf\system\WCF;
  * Contains string-related functions.
  * 
  * @author	Oliver Kliebisch, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class StringUtil {
 	const HTML_PATTERN = '~</?[a-z]+[1-6]?
@@ -92,9 +90,6 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeHTML($string) {
-		if (is_object($string)) 
-			$string = $string->__toString();
-		
 		return @htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 	}
 	
@@ -105,8 +100,6 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeJS($string) {
-		if (is_object($string)) $string = $string->__toString();
-		
 		// unify newlines
 		$string = self::unifyNewlines($string);
 		
@@ -156,7 +149,7 @@ final class StringUtil {
 	/**
 	 * Formats a numeric.
 	 * 
-	 * @param	numeric		$numeric
+	 * @param	number		$numeric
 	 * @return	string
 	 */
 	public static function formatNumeric($numeric) {
@@ -247,92 +240,10 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Sorts an array of strings and maintain index association.
-	 * 
-	 * @param	array		$strings
-	 * @return	boolean
-	 * 
-	 * @deprecated
-	 */
-	public static function sort(array &$strings) {
-		return asort($strings, SORT_LOCALE_STRING);
-	}
-	
-	/**
-	 * Alias to php mb_strlen() function.
-	 * 
-	 * @deprecated use mb_strlen() instead
-	 */
-	public static function length($string) {
-		return mb_strlen($string);
-	}
-	
-	/**
-	 * Alias to php mb_strpos() function.
-	 * 
-	 * @deprecated use mb_strpos() instead
-	 */
-	public static function indexOf($hayStack, $needle, $offset = 0) {
-		return mb_strpos($hayStack, $needle, $offset);
-	}
-	
-	/**
-	 * Alias to php mb_stripos() function.
-	 * 
-	 * @deprecated use mb_stripos() instead
-	 */
-	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
-		return mb_stripos($hayStack, $needle, $offset);
-	}
-	
-	/**
-	 * Alias to php mb_strrpos() function.
-	 * 
-	 * @deprecated use mb_strrpos() instead
-	 */
-	public static function lastIndexOf($hayStack, $needle) {
-		return mb_strrpos($hayStack, $needle);
-	}
-	
-	/**
-	 * Alias to php mb_substr() function.
-	 * 
-	 * @deprecated use mb_substr() instead
-	 */
-	public static function substring($string, $start, $length = null) {
-		if ($length !== null) return mb_substr($string, $start, $length);
-		return mb_substr($string, $start);
-	}
-	
-	/**
-	 * Alias to php mb_strtolower() function.
-	 * 
-	 * @deprecated use mb_strtolower() instead
-	 */
-	public static function toLowerCase($string) {
-		return mb_strtolower($string);
-	}
-	
-	/**
-	 * Alias to php mb_strtoupper() function.
-	 * 
-	 * @deprecated use mb_strtoupper() instead
-	 */
-	public static function toUpperCase($string) {
-		return mb_strtoupper($string);
-	}
-	
-	/**
-	 * Alias to php substr_count() function.
-	 * 
-	 * @deprecated use mb_substr_count() instead
-	 */
-	public static function countSubstring($hayStack, $needle) {
-		return mb_substr_count($hayStack, $needle);
-	}
-	
-	/**
 	 * Alias to php ucfirst() function with multibyte support.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function firstCharToUpperCase($string) {
 		return mb_strtoupper(mb_substr($string, 0, 1)).mb_substr($string, 1);
@@ -340,6 +251,9 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php lcfirst() function with multibyte support.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function firstCharToLowerCase($string) {
 		return mb_strtolower(mb_substr($string, 0, 1)).mb_substr($string, 1);
@@ -347,18 +261,12 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_convert_case() function.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function wordsToUpperCase($string) {
 		return mb_convert_case($string, MB_CASE_TITLE);
-	}
-	
-	/**
-	 * Alias to php str_replace() function.
-	 * 
-	 * @deprecated please use str_replace() instead
-	 */
-	public static function replace($search, $replace, $subject, &$count = null) {
-		return str_replace($search, $replace, $subject, $count);
 	}
 	
 	/**
@@ -366,6 +274,12 @@ final class StringUtil {
 	 * 
 	 * This function is considered to be slow, if $search contains
 	 * only ASCII characters, please use str_ireplace() instead.
+	 * 
+	 * @param	string		$search
+	 * @param	string		$replace
+	 * @param	string		$subject
+	 * @param	integer		$count
+	 * @return	string
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
 		$startPos = mb_strpos(mb_strtolower($subject), mb_strtolower($search));
@@ -382,10 +296,10 @@ final class StringUtil {
 	 * 
 	 * @param	string		$string
 	 * @param	integer		$length
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function split($string, $length = 1) {
-		$result = array();
+		$result = [];
 		for ($i = 0, $max = mb_strlen($string); $i < $max; $i += $length) {
 			$result[] = mb_substr($string, $i, $length);
 		}
@@ -393,7 +307,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Checks wether $haystack starts with $needle, or not.
+	 * Checks whether $haystack starts with $needle, or not.
 	 * 
 	 * @param	string		$haystack	The string to be checked for starting with $needle
 	 * @param	string		$needle		The string to be found at the start of $haystack
@@ -430,8 +344,14 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php str_pad function with multibyte support.
+	 * 
+	 * @param	string		$input
+	 * @param	integer		$padLength
+	 * @param	string		$padString
+	 * @param	integer		$padType
+	 * @return	string
 	 */
-	public static function pad($input, $padLength, $padString=' ', $padType=STR_PAD_RIGHT) {
+	public static function pad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT) {
 		$additionalPadding = strlen($input) - mb_strlen($input);
 		return str_pad($input, $padLength + $additionalPadding, $padString, $padType);
 	}
@@ -653,10 +573,10 @@ final class StringUtil {
 		if (mb_strlen(self::stripHTML($string)) <= $length) {
 			return $string;
 		}
-		$openTags = array();
+		$openTags = [];
 		$truncatedString = '';
 		
-		// initalize length counter with the ending length
+		// initialize length counter with the ending length
 		$totalLength = mb_strlen($etc);
 		
 		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);
@@ -806,5 +726,43 @@ final class StringUtil {
 		return $result;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Shortens numbers larger than 1000 by using unit prefixes.
+	 * 
+	 * @param       integer         $number
+	 * @return      string
+	 */
+	public static function getShortUnit($number) {
+		$unitPrefix = '';
+		
+		if ($number >= 1000000) {
+			$number /= 1000000;
+			if ($number > 10) {
+				$number = floor($number);
+			}
+			else {
+				$number = round($number, 1);
+			}
+			$unitPrefix = 'M';
+		}
+		else if ($number >= 1000) {
+			$number /= 1000;
+			if ($number > 10) {
+				$number = floor($number);
+			}
+			else {
+				$number = round($number, 1);
+			}
+			$unitPrefix = 'k';
+		}
+		
+		return self::formatNumeric($number) . $unitPrefix;
+	}
+	
+	/**
+	 * Forbid creation of StringUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -9,37 +9,39 @@ use wcf\system\WCF;
  * Represents a liked object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.like.object
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Like\Object
+ *
+ * @property-read	integer		$likeObjectID		unique id of the liked object
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
+ * @property-read	integer		$objectID		id of the liked object
+ * @property-read	integer|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
+ * @property-read	integer		$likes			number of likes of the liked object
+ * @property-read	integer		$dislikes		number of dislikes of the liked object
+ * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting +1) and dislikes (counting -1)
+ * @property-read	string		$cachedUsers		serialized array with the ids and names of the three users who liked (+1) the object last
  */
 class LikeObject extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'like_object';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'likeObjectID';
 	
 	/**
 	 * liked object
-	 * @var	\wcf\data\like\object\ILikeObject
+	 * @var	ILikeObject
 	 */
 	protected $likedObject = null;
 	
 	/**
 	 * list of users who liked this object
-	 * @var	array<\wcf\data\user\User>
+	 * @var	User[]
 	 */
-	protected $users = array();
+	protected $users = [];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::handleData();
+	 * @inheritDoc
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -58,9 +60,9 @@ class LikeObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Gets the first 3 users who liked this object.
+	 * Returns the first 3 users who liked this object.
 	 * 
-	 * @return	array<\wcf\data\user\User>
+	 * @return	User[]
 	 */
 	public function getUsers() {
 		return $this->users;
@@ -69,7 +71,7 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Returns the liked object.
 	 * 
-	 * @return	\wcf\data\like\object\ILikeObject
+	 * @return	ILikeObject
 	 */
 	public function getLikedObject() {
 		if ($this->likedObject === null) {
@@ -82,18 +84,18 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Sets the liked object.
 	 * 
-	 * @param	\wcf\data\like\object\ILikeObject	$likeObject
+	 * @param	ILikeObject	$likedObject
 	 */
 	public function setLikedObject(ILikeObject $likedObject) {
 		$this->likedObject = $likedObject;
 	}
 	
 	/**
-	 * Gets a like object by type and object id.
+	 * Returns the like object with the given type and object id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\like\object\LikeObject
+	 * @return	LikeObject
 	 */
 	public static function getLikeObject($objectTypeID, $objectID) {
 		$sql = "SELECT	*
@@ -101,14 +103,14 @@ class LikeObject extends DatabaseObject {
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$objectID
-		));
+		]);
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
-			$row = array();
+			$row = [];
 		}
 		
 		return new LikeObject(null, $row);

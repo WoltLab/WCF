@@ -1,34 +1,33 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\user\menu\item\UserMenuItemEditor;
 
 /**
  * Installs, updates and deletes user menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\menu\item\UserMenuItemEditor';
+	public $className = UserMenuItemEditor::class;
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @inheritDoc
 	 */
 	public $tableName = 'user_menu_item';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @inheritDoc
 	 */
 	public $tagName = 'usermenuitem';
 	
 	/**
-	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
 		$result = parent::prepareImport($data);

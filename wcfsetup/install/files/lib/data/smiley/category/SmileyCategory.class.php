@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\smiley\category;
 use wcf\data\category\AbstractDecoratedCategory;
+use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\data\ITraversableObject;
 use wcf\system\exception\SystemException;
@@ -10,11 +11,14 @@ use wcf\system\WCF;
  * Represents a smiley category.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.smiley.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Smiley\Category
+ * 
+ * @method		SmileyCategory[]	getChildCategories()
+ * @method		SmileyCategory		getParentCategory()
+ * @method		SmileyCategory[]	getParentCategories()
+ * @method static	SmileyCategory|null	getCategory($categoryID)
  */
 class SmileyCategory extends AbstractDecoratedCategory implements \Countable, ITraversableObject {
 	/**
@@ -25,13 +29,13 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
 	/**
 	 * list of assigned smilies
-	 * @var	array<\wcf\data\smiley\Smiley>
+	 * @var	Smiley[]
 	 */
 	public $smilies = null;
 	
@@ -46,14 +50,15 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->smilies);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
+	 * @return	Smiley
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -71,28 +76,28 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);
 	}
 	
 	/**
-	 * @see	\SeekableIterator::seek()
+	 * @inheritDoc
 	 */
 	public function seek($index) {
 		$this->index = $index;
@@ -103,7 +108,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::seekTo()
+	 * @inheritDoc
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -114,7 +119,8 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	}
 	
 	/**
-	 * @see	\wcf\data\ITraversableObject::search()
+	 * @inheritDoc
+	 * @return	Smiley|null
 	 */
 	public function search($objectID) {
 		try {

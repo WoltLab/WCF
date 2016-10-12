@@ -10,11 +10,9 @@ use wcf\util\StringUtil;
  * Manages transparent cache access.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache
  */
 class CacheHandler extends SingletonFactory {
 	/**
@@ -52,8 +50,8 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Flush cache for given resource.
 	 * 
-	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
-	 * @param	array						$parameters
+	 * @param	ICacheBuilder	$cacheBuilder
+	 * @param	array		$parameters
 	 */
 	public function flush(ICacheBuilder $cacheBuilder, array $parameters) {
 		$this->getCacheSource()->flush($this->getCacheName($cacheBuilder, $parameters), empty($parameters));
@@ -69,8 +67,8 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Returns cached value for given resource, false if no cache exists.
 	 * 
-	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
-	 * @param	array						$parameters
+	 * @param	ICacheBuilder	$cacheBuilder
+	 * @param	array		$parameters
 	 * @return	mixed
 	 */
 	public function get(ICacheBuilder $cacheBuilder, array $parameters) {
@@ -80,9 +78,9 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Caches a value for given resource,
 	 * 
-	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
-	 * @param	array						$parameters
-	 * @param	array						$data
+	 * @param	ICacheBuilder	$cacheBuilder
+	 * @param	array		$parameters
+	 * @param	array		$data
 	 */
 	public function set(ICacheBuilder $cacheBuilder, array $parameters, array $data) {
 		$this->getCacheSource()->set($this->getCacheName($cacheBuilder, $parameters), $data, $cacheBuilder->getMaxLifetime());
@@ -101,11 +99,11 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Builds cache name.
 	 * 
-	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
-	 * @param	array						$parameters
+	 * @param	ICacheBuilder	$cacheBuilder
+	 * @param	array		$parameters
 	 * @return	string
 	 */
-	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = array()) {
+	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = []) {
 		$className = explode('\\', get_class($cacheBuilder));
 		$application = array_shift($className);
 		$cacheName = str_replace('CacheBuilder', '', array_pop($className));

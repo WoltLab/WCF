@@ -1,40 +1,41 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\notice\NoticeList;
 use wcf\page\SortablePage;
 
 /**
  * Lists the available notices.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	NoticeList	$objectList
  */
 class NoticeListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.notice.list';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'showOrder';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.notice.canManageNotice');
+	public $neededPermissions = ['admin.notice.canManageNotice'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\notice\NoticeList';
+	public $objectListClassName = NoticeList::class;
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('noticeID', 'noticeName', 'showOrder');
+	public $validSortFields = ['noticeID', 'noticeName', 'showOrder'];
 }

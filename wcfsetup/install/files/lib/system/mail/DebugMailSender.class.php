@@ -1,23 +1,21 @@
 <?php
 namespace wcf\system\mail;
 use wcf\system\io\File;
-use wcf\util\FileUtil;
 
 /**
  * DebugMailSender is a debug implementation of mailsender which writes emails in
  * a log file.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.mail
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Mail
+ * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.
  */
 class DebugMailSender extends MailSender {
 	/**
 	 * log file
-	 * @var	\wcf\system\io\File
+	 * @var	File
 	 */
 	protected $log = null;
 	
@@ -28,24 +26,17 @@ class DebugMailSender extends MailSender {
 	 */
 	public function sendMail(Mail $mail) {
 		if ($this->log === null) {
-			$logFilePath = '';
-			if (MAIL_DEBUG_LOGFILE_PATH) {
-				$logFilePath = FileUtil::addTrailingSlash(MAIL_DEBUG_LOGFILE_PATH);
-			}
-			else {
-				$logFilePath = WCF_DIR . 'log/';
-			}
-			
+			$logFilePath = WCF_DIR . 'log/';
 			$this->log = new File($logFilePath . 'mail.log', 'ab');
 		}
 		
-		$this->log->write($this->printMail($mail));
+		$this->log->write(self::printMail($mail));
 	}
 	
 	/**
 	 * Prints the given mail.
 	 * 
-	 * @param	\wcf\system\mail\Mail	$mail
+	 * @param	Mail	$mail
 	 * @return	string
 	 */
 	protected static function printMail(Mail $mail) {

@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes ACP menu item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.acp.menu.item
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Acp\Menu\Item
+ * 
+ * @method	ACPMenuItem		create()
+ * @method	ACPMenuItemEditor[]	getObjects()
+ * @method	ACPMenuItemEditor	getSingleObject()
  */
 class ACPMenuItemAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
+	protected $className = ACPMenuItemEditor::class;
 }

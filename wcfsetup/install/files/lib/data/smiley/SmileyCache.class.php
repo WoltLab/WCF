@@ -10,47 +10,52 @@ use wcf\system\SingletonFactory;
  * Manages the smiley cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.smiley
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Smiley
  */
 class SmileyCache extends SingletonFactory {
 	/**
 	 * cached smilies
-	 * @var	array
+	 * @var	Smiley[][]
 	 */
-	protected $cachedSmilies = array();
+	protected $cachedSmilies = [];
+	
+	/**
+	 * cached smilies with smiley code as key
+	 * @var	Smiley[]
+	 */
+	protected $cachedSmileyByCode = [];
 	
 	/**
 	 * cached smiley categories
-	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @var	SmileyCategory[]
 	 */
-	protected $cachedCategories = array();
+	protected $cachedCategories = [];
 	
 	/**
 	 * enabled smiley categories with at least one smiley
-	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @var	SmileyCategory[]
 	 */
 	protected $visibleCategories = null;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// get smiley cache
-		$this->cachedSmilies = SmileyCacheBuilder::getInstance()->getData(array(), 'smilies');
+		$this->cachedSmilies = SmileyCacheBuilder::getInstance()->getData([], 'smilies');
+		$this->cachedSmileyByCode = SmileyCacheBuilder::getInstance()->getData([], 'codes');
 		$smileyCategories = CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.bbcode.smiley');
 		
-		$this->cachedCategories[null] = new SmileyCategory(new Category(null, array(
+		$this->cachedCategories[null] = new SmileyCategory(new Category(null, [
 			'categoryID' => null,
 			'parentCategoryID' => 0,
 			'title' => 'wcf.acp.smiley.categoryID.default',
 			'description' => '',
 			'showOrder' => -1,
 			'isDisabled' => 0
-		)));
+		]));
 		
 		foreach ($smileyCategories as $key => $smileyCategory) {
 			$this->cachedCategories[$key] = new SmileyCategory($smileyCategory);
@@ -60,16 +65,30 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Returns all smilies.
 	 * 
-	 * @return	array
+	 * @return	Smiley[][]
 	 */
 	public function getSmilies() {
 		return $this->cachedSmilies;
 	}
 	
 	/**
+	 * Returns the smiley with the given smiley code or `null` if no such smiley exists.
+	 * 
+	 * @param	string		$code
+	 * @return	Smiley|null
+	 */
+	public function getSmileyByCode($code) {
+		if (isset($this->cachedSmileyByCode[$code])) {
+			return $this->cachedSmileyByCode[$code];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns all smiley categories.
 	 * 
-	 * @return	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @return	SmileyCategory[]
 	 */
 	public function getCategories() {
 		return $this->cachedCategories;
@@ -78,11 +97,11 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Returns all enabled smiley categories with at least one smiley.
 	 * 
-	 * @return	array<\wcf\data\smiley\category\SmileyCategory>
+	 * @return	SmileyCategory[]
 	 */
 	public function getVisibleCategories() {
 		if ($this->visibleCategories === null) {
-			$this->visibleCategories = array();
+			$this->visibleCategories = [];
 			
 			foreach ($this->cachedCategories as $key => $category) {
 				if (!$category->isDisabled) {
@@ -107,6 +126,6 @@ class SmileyCache extends SingletonFactory {
 	public function getCategorySmilies($categoryID = null) {
 		if (isset($this->cachedSmilies[$categoryID])) return $this->cachedSmilies[$categoryID];
 		
-		return array();
+		return [];
 	}
 }

@@ -20,22 +20,20 @@ use wcf\util\StringUtil;
  * Shows the user edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class UserEditForm extends UserAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canEditUser');
+	public $neededPermissions = ['admin.user.canEditUser'];
 	
 	/**
 	 * user id
@@ -45,7 +43,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user editor object
-	 * @var	\wcf\data\user\UserEditor
+	 * @var	UserEditor
 	 */
 	public $user = null;
 	
@@ -69,7 +67,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user avatar object
-	 * @var	\wcf\data\user\avatar\UserAvatar
+	 * @var	UserAvatar
 	 */
 	public $userAvatar = null;
 	
@@ -98,7 +96,7 @@ class UserEditForm extends UserAddForm {
 	public $disableAvatarExpires = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
@@ -116,14 +114,15 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @inheritDoc
 	 */
 	protected function initOptionHandler() {
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->setUser($this->user->getDecoratedObject());
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -155,7 +154,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		if (empty($_POST)) {
@@ -175,14 +174,14 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * Gets the selected languages.
+	 * Sets the selected languages.
 	 */
 	protected function readVisibleLanguages() {
 		$this->visibleLanguages = $this->user->getLanguageIDs();
 	}
 	
 	/**
-	 * Gets the default values.
+	 * Sets the default values.
 	 */
 	protected function readDefaultValues() {
 		$this->username = $this->user->username;
@@ -195,9 +194,6 @@ class UserEditForm extends UserAddForm {
 		$this->userTitle = $this->user->userTitle;
 		
 		$this->signature = $this->user->signature;
-		$this->signatureEnableBBCodes = $this->user->signatureEnableBBCodes;
-		$this->signatureEnableSmilies = $this->user->signatureEnableSmilies;
-		$this->signatureEnableHtml = $this->user->signatureEnableHtml;
 		$this->disableSignature = $this->user->disableSignature;
 		$this->disableSignatureReason = $this->user->disableSignatureReason;
 		$this->disableSignatureExpires = $this->user->disableSignatureExpires;
@@ -210,12 +206,12 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'userID' => $this->user->userID,
 			'action' => 'edit',
 			'url' => '',
@@ -229,11 +225,11 @@ class UserEditForm extends UserAddForm {
 			'disableAvatarExpires' => $this->disableAvatarExpires,
 			'userAvatar' => $this->userAvatar,
 			'banExpires' => $this->banExpires
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -242,36 +238,38 @@ class UserEditForm extends UserAddForm {
 		if ($this->avatarType != 'custom') {
 			// delete custom avatar
 			if ($this->user->avatarID) {
-				$action = new UserAvatarAction(array($this->user->avatarID), 'delete');
+				$action = new UserAvatarAction([$this->user->avatarID], 'delete');
 				$action->executeAction();
 			}
 		}
+		
+		$avatarData = [];
 		switch ($this->avatarType) {
 			case 'none':
-				$avatarData = array(
+				$avatarData = [
 					'avatarID' => null,
 					'enableGravatar' => 0
-				);
+				];
 			break;
 			
 			case 'custom':
-				$avatarData = array(
+				$avatarData = [
 					'enableGravatar' => 0
-				);
+				];
 			break;
 			
 			case 'gravatar':
-				$avatarData = array(
+				$avatarData = [
 					'avatarID' => null,
 					'enableGravatar' => 1
-				);
+				];
 			break;
 		}
 		
 		$this->additionalFields = array_merge($this->additionalFields, $avatarData);
 		
 		// add default groups
-		$defaultGroups = UserGroup::getAccessibleGroups(array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		$defaultGroups = UserGroup::getAccessibleGroups([UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		$oldGroupIDs = $this->user->getGroupIDs();
 		foreach ($oldGroupIDs as $oldGroupID) {
 			if (isset($defaultGroups[$oldGroupID])) {
@@ -283,22 +281,19 @@ class UserEditForm extends UserAddForm {
 		// save user
 		$saveOptions = $this->optionHandler->save();
 
-		$data = array(
-			'data' => array_merge($this->additionalFields, array(
+		$data = [
+			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
 				'email' => $this->email,
 				'password' => $this->password,
 				'languageID' => $this->languageID,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->signature,
-				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
-				'signatureEnableSmilies' => $this->signatureEnableSmilies,
-				'signatureEnableHtml' => $this->signatureEnableHtml
-			)),
+				'signature' => $this->htmlInputProcessor->getHtml()
+			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
-		);
+		];
 
 		// handle ban
 		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
@@ -342,17 +337,17 @@ class UserEditForm extends UserAddForm {
 			$data['data']['disableAvatarExpires'] = $this->disableAvatarExpires;
 		}
 		
-		$this->objectAction = new UserAction(array($this->userID), 'update', $data);
+		$this->objectAction = new UserAction([$this->userID], 'update', $data);
 		$this->objectAction->executeAction();
 		
 		// update user rank
 		$editor = new UserEditor(new User($this->userID));
 		if (MODULE_USER_RANK) {
-			$action = new UserProfileAction(array($editor), 'updateUserRank');
+			$action = new UserProfileAction([$editor], 'updateUserRank');
 			$action->executeAction();
 		}
 		if (MODULE_USERS_ONLINE) {
-			$action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
+			$action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 			$action->executeAction();
 		}
 		
@@ -360,7 +355,7 @@ class UserEditForm extends UserAddForm {
 		$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue_to_user
 			WHERE		userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->user->userID));
+		$statement->execute([$this->user->userID]);
 		
 		// reset moderation count
 		ModerationQueueManager::getInstance()->resetModerationCount($this->user->userID);
@@ -374,7 +369,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validateUsername()
+	 * @inheritDoc
 	 */
 	protected function validateUsername($username) {
 		if (mb_strtolower($this->user->username) != mb_strtolower($username)) {
@@ -383,7 +378,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validateEmail()
+	 * @inheritDoc
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		// check confirm input
@@ -397,7 +392,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\UserAddForm::validatePassword()
+	 * @inheritDoc
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!empty($password) || !empty($confirmPassword)) {
@@ -437,7 +432,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		$this->validateAvatar();

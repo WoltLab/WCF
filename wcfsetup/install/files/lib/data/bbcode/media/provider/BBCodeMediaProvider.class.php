@@ -12,31 +12,29 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.bbcode.media.provider
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
+ *
+ * @property-read	integer		$providerID	unique id of the bbcode media provider
+ * @property-read	string		$title		title of the bbcode media provider (shown in acp)
+ * @property-read	string		$regex		regular expression to recognize media elements/element urls
+ * @property-read	string		$html		html code used to render media elements
  */
 class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'bbcode_media_provider';
 	
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'providerID';
-	
-	/**
 	 * cached providers
-	 * @var	array<\wcf\data\bbcode\media\MediaProvider>
+	 * @var	BBCodeMediaProvider[]
 	 */
 	protected static $cache = null;
 	
 	/**
 	 * Loads the provider cache.
 	 * 
-	 * @return	array<\wcf\data\bbcode\media\MediaProvider>
+	 * @return	BBCodeMediaProvider[]
 	 */
 	public static function getCache() {
 		if (self::$cache === null) {
@@ -102,7 +100,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->title;

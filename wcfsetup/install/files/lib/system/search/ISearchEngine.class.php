@@ -6,11 +6,9 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * Default interface for search engines.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.search
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Search
  */
 interface ISearchEngine {
 	/**
@@ -30,12 +28,12 @@ interface ISearchEngine {
 	 * 	'sql' => $sql
 	 * );
 	 * 
-	 * @param	string								$objectTypeName
-	 * @param	string								$q
-	 * @param	boolean								$subjectOnly
-	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
-	 * @param	string								$orderBy
-	 * @param	integer								$limit
+	 * @param	string					$objectTypeName
+	 * @param	string					$q
+	 * @param	boolean					$subjectOnly
+	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	string					$orderBy
+	 * @param	integer					$limit
 	 * @return	array
 	 */
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000);
@@ -50,14 +48,14 @@ interface ISearchEngine {
 	/**
 	 * Searches for the given string and returns the data of the found messages.
 	 * 
-	 * @param	string								$q
-	 * @param	array								$objectTypes
-	 * @param	boolean								$subjectOnly
-	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
-	 * @param	array								$additionalConditions
-	 * @param	string								$orderBy
-	 * @param	integer								$limit
+	 * @param	string					$q
+	 * @param	array					$objectTypes
+	 * @param	boolean					$subjectOnly
+	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	array					$additionalConditions
+	 * @param	string					$orderBy
+	 * @param	integer					$limit
 	 * @return	array
 	 */
-	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000);
+	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000);
 }

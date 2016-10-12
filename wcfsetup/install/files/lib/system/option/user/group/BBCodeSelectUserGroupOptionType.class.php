@@ -11,51 +11,47 @@ use wcf\util\StringUtil;
  * User group option type implementation for BBCode select lists.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
 	/**
 	 * available BBCodes
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $bbCodes = null;
+	protected $bbCodes;
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * list of bbcode tags that are always available
+	 * @var string[]
+	 */
+	protected static $alwaysAvailable = ['align', 'attach', 'b', 'code', 'i', 'list', 'quote', 's', 'sub', 'sup', 'table', 'td', 'tr', 'tt', 'u', 'user', 'wsm', 'wsmg', 'wsp'];
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) {
-			$newValue = array();
+			$newValue = [];
 		}
 		
 		return implode(',', $newValue);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		if ($this->bbCodes === null) {
 			$this->loadBBCodeSelection();
 		}
 		
-		$selectedBBCodes = array();
-		if ($value == 'all') {
-			$selectedBBCodes = $this->bbCodes;
-		}
-		else {
-			$selectedBBCodes = explode(',', $value);
-		}
-		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'bbCodes' => $this->bbCodes,
 			'option' => $option,
-			'selectedBBCodes' => $selectedBBCodes
-		));
+			'selectedBBCodes' => explode(',', $value)
+		]);
 		
 		return WCF::getTPL()->fetch('bbCodeSelectOptionType');
 	}
@@ -63,52 +59,49 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	/**
 	 * Loads the list of BBCodes for the HTML select element.
 	 * 
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	protected function loadBBCodeSelection() {
 		$this->bbCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());
+		$this->bbCodes = array_diff($this->bbCodes, self::$alwaysAvailable);
+		
 		asort($this->bbCodes);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($this->bbCodes === null) {
 			$this->loadBBCodeSelection();
 		}
 		
-		if ($defaultValue == 'all') {
-			$defaultValue = $this->bbCodes;
-		}
-		else if (empty($defaultValue) || $defaultValue == 'none') {
-			$defaultValue = array();
+		if (empty($defaultValue)) {
+			$defaultValue = [];
 		}
 		else {
 			$defaultValue = explode(',', StringUtil::unifyNewlines($defaultValue));
 		}
-		if ($groupValue == 'all') {
-			$groupValue = $this->bbCodes;
-		}
-		else if (empty($groupValue) || $groupValue == 'none') {
-			$groupValue = array();
+		
+		if (empty($groupValue)) {
+			$groupValue = [];
 		}
 		else {
 			$groupValue = explode(',', StringUtil::unifyNewlines($groupValue));
 		}
 		
-		$newValue = array_unique(array_merge($defaultValue, $groupValue));
+		$newValue = array_intersect($defaultValue, $groupValue);
 		sort($newValue);
 		
 		return implode(',', $newValue);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) {
-			$newValue = array();
+			$newValue = [];
 		}
 		
 		if ($this->bbCodes === null) {
@@ -123,10 +116,10 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
-		// handle special case where no allowed BBCodes have been set
+		// handle special case where no disallowed BBCodes have been set
 		if (empty($value1)) {
 			if (empty($value2)) {
 				return 0;
@@ -141,26 +134,13 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 		$value1 = explode(',', $value1);
 		$value2 = explode(',', $value2);
 		
-		// handle special 'all' value
-		if (in_array('all', $value1)) {
-			if (in_array('all', $value2)) {
-				return 0;
-			}
-			else {
-				return 1;
-			}
-		}
-		else if (in_array('all', $value2)) {
-			return -1;
-		}
-		
-		// check if value1 contains more BBCodes than value2
+		// check if value1 disallows more BBCodes than value2
 		$diff = array_diff($value1, $value2);
 		if (!empty($diff)) {
 			return 1;
 		}
 		
-		// check if value1 contains less BBCodes than value2
+		// check if value1 disallows less BBCodes than value2
 		$diff = array_diff($value2, $value1);
 		if (!empty($diff)) {
 			return -1;

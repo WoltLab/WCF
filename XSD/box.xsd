@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for xml-files which install, update or delete pages. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data element -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- import element -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="box" type="box_import" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- delete element -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="box" type="box_delete" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- deleted box -->
+	<xs:complexType name="box_delete">
+		<xs:attribute name="identifier" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
+	<!-- imported/updated box -->
+	<xs:complexType name="box_import">
+		<xs:complexContent>
+			<xs:extension base="box_delete">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="boxType" minOccurs="1">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="system" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="objectType" type="xs:string" minOccurs="0" />
+					<xs:element name="position" type="xs:string" minOccurs="0" />
+					<xs:element name="cssClassName" type="xs:string" minOccurs="0" />
+					<xs:element name="showHeader" type="woltlab_boolean" minOccurs="1" />
+					<xs:element name="visibleEverywhere" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="visibilityExceptions" type="visibilityExceptions_element" minOccurs="0" />
+					<xs:element name="sortField" type="xs:string" minOccurs="0" />
+					<xs:element name="sortOrder" minOccurs="1">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="ASC" />
+								<xs:enumeration value="DESC" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="limit" type="xs:integer" minOccurs="0" />
+					<xs:element name="content" type="content_element" minOccurs="1" />
+					<xs:element name="name" type="name_element" minOccurs="1" />
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="content_element">
+			<xs:all>
+				<xs:element name="title" type="woltlab_varchar" minOccurs="1" />
+			</xs:all>
+			<xs:attribute name="language" type="woltlab_varchar" use="optional" />
+	</xs:complexType>
+	
+	<xs:complexType name="visibilityExceptions_element">
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="page" type="xs:string" minOccurs="1" />
+			</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="name_element">
+		<xs:simpleContent>
+			<xs:extension base="woltlab_varchar">
+				<xs:attribute name="language" type="woltlab_varchar" use="required" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

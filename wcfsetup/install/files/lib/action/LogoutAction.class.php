@@ -8,17 +8,15 @@ use wcf\util\HeaderUtil;
  * Does the user logout.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 class LogoutAction extends \wcf\acp\action\LogoutAction {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractSecureAction::execute();
@@ -37,7 +35,7 @@ class LogoutAction extends \wcf\acp\action\LogoutAction {
 		$this->executed();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->get('wcf.user.logout.redirect'));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
 		exit;
 	}
 }

@@ -5,17 +5,16 @@ namespace wcf\system\breadcrumb;
  * Interface for breadcrumb provider.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.breadcrumb
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Breadcrumb
+ * @deprecated  3.0
  */
 interface IBreadcrumbProvider {
 	/**
 	 * Returns a Breadcrumb object.
 	 * 
-	 * @return	\wcf\system\breadcrumb\Breadcrumb
+	 * @return	Breadcrumb
 	 */
 	public function getBreadcrumb();
 }

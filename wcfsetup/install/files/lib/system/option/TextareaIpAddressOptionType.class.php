@@ -12,15 +12,13 @@ use wcf\util\UserUtil;
  * IPv4 whenever applicable.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class TextareaIpAddressOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
 		if (!empty($value)) {
@@ -33,15 +31,15 @@ class TextareaIpAddressOptionType extends TextOptionType {
 			$value = implode("\n", $ips);
 		}
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textareaOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::validate()
+	 * @inheritDoc
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!empty($newValue)) {
@@ -58,7 +56,7 @@ class TextareaIpAddressOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!empty($newValue)) {

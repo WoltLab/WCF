@@ -2,8 +2,6 @@
 namespace wcf\data\application;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -14,31 +12,28 @@ use wcf\util\StringUtil;
  * Executes application-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.application
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Application
+ * 
+ * @method	Application		create()
+ * @method	ApplicationEditor[]	getObjects()
+ * @method	ApplicationEditor	getSingleObject()
  */
 class ApplicationAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\application\ApplicationEditor';
+	protected $className = ApplicationEditor::class;
 	
 	/**
 	 * application editor object
-	 * @var	\wcf\data\application\ApplicationEditor
+	 * @var	ApplicationEditor
 	 */
-	public $applicationEditor = null;
+	public $applicationEditor;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
-	 */
-	protected $requireACP = array('setAsPrimary');
-	
-	/**
-	 * Assigns a list of applications to a group and computes cookie domain and path.
+	 * Assigns a list of applications to a group and computes cookie domain.
 	 */
 	public function rebuild() {
 		if (empty($this->objects)) {
@@ -46,60 +41,23 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$sql = "UPDATE	wcf".WCF_N."_application
-			SET	cookieDomain = ?,
-				cookiePath = ?
+			SET	cookieDomain = ?
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		// calculate cookie path
-		$domains = array();
+		// calculate cookie domain
 		$regex = new Regex(':[0-9]+');
-		foreach ($this->objects as $application) {
+		WCF::getDB()->beginTransaction();
+		foreach ($this->getObjects() as $application) {
 			$domainName = $application->domainName;
 			if (StringUtil::endsWith($regex->replace($domainName, ''), $application->cookieDomain)) {
 				$domainName = $application->cookieDomain;
 			}
 			
-			if (!isset($domains[$domainName])) {
-				$domains[$domainName] = array();
-			}
-			
-			$domains[$domainName][$application->packageID] = explode('/', FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($application->domainPath)));
-		}
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($domains as $domainName => $data) {
-			$path = null;
-			foreach ($data as $domainPath) {
-				if ($path === null) {
-					$path = $domainPath;
-				}
-				else {
-					foreach ($path as $i => $part) {
-						if (!isset($domainPath[$i]) || $domainPath[$i] != $part) {
-							// remove all following elements including current one
-							foreach ($path as $j => $innerPart) {
-								if ($j >= $i) {
-									unset($path[$j]);
-								}
-							}
-							
-							// skip to next domain
-							continue 2;
-						}
-					}
-				}
-			}
-			
-			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(implode('/', $path)));
-			
-			foreach (array_keys($data) as $packageID) {
-				$statement->execute(array(
-					$domainName,
-					$path,
-					$packageID
-				));
-			}
+			$statement->execute([
+				$domainName,
+				$application->packageID
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -111,24 +69,12 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates parameters to set an application as primary.
+	 * Marks an application as tainted, prevents loading it during uninstallation.
 	 */
-	public function validateSetAsPrimary() {
-		WCF::getSession()->checkPermissions(array('admin.system.canManageApplication'));
+	public function markAsTainted() {
+		$applicationEditor = $this->getSingleObject();
+		$applicationEditor->update(['isTainted' => 1]);
 		
-		$this->applicationEditor = $this->getSingleObject();
-		if (!$this->applicationEditor->packageID || $this->applicationEditor->packageID == 1) {
-			throw new UserInputException('objectIDs');
-		}
-		else if ($this->applicationEditor->isPrimary) {
-			throw new PermissionDeniedException();
-		}
-	}
-	
-	/**
-	 * Sets an application as primary.
-	 */
-	public function setAsPrimary() {
-		$this->applicationEditor->setAsPrimary();
+		ApplicationCacheBuilder::getInstance()->reset();
 	}
 }

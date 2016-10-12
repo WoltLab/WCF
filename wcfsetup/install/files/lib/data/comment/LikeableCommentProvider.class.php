@@ -10,32 +10,35 @@ use wcf\system\like\IViewableLikeProvider;
  * Object type provider for comments
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment
+ *
+ * @method	LikeableComment		getObjectByID($objectID)
+ * @method	LikeableComment[]	getObjectsByIDs(array $objectIDs)
  */
 class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider, IViewableLikeProvider {
 	/**
-	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\comment\Comment';
+	public $className = Comment::class;
 	
 	/**
-	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$decoratorClassName
+	 * @inheritDoc
 	 */
-	public $decoratorClassName = 'wcf\data\comment\LikeableComment';
+	public $decoratorClassName = LikeableComment::class;
 	
 	/**
-	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$listClassName
+	 * @inheritDoc
 	 */
-	public $listClassName = 'wcf\data\comment\CommentList';
+	public $listClassName = CommentList::class;
 	
 	/**
-	 * @see	\wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
+	 * @inheritDoc
 	 */
 	public function checkPermissions(ILikeObject $comment) {
+		/** @var Comment $comment */
+		
 		if (!$comment->commentID) return false;
 		
 		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
@@ -43,26 +46,26 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 	}
 	
 	/**
-	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $likes) {
-		$commentIDs = array();
+		$commentIDs = [];
 		foreach ($likes as $like) {
 			$commentIDs[] = $like->objectID;
 		}
 		
 		// fetch comments
 		$commentList = new CommentList();
-		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->setObjectIDs($commentIDs);
 		$commentList->readObjects();
 		$comments = $commentList->getObjects();
 		
 		// group likes by object type id
-		$likeData = array();
+		$likeData = [];
 		foreach ($likes as $like) {
 			if (isset($comments[$like->objectID])) {
 				if (!isset($likeData[$comments[$like->objectID]->objectTypeID])) {
-					$likeData[$comments[$like->objectID]->objectTypeID] = array();
+					$likeData[$comments[$like->objectID]->objectTypeID] = [];
 				}
 				$likeData[$comments[$like->objectID]->objectTypeID][] = $like;
 			}
@@ -71,6 +74,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 		foreach ($likeData as $objectTypeID => $likes) {
 			$objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
 			if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				CommentHandler::getInstance()->getCommentManager($objectType->objectType)->prepare($likes);
 			}
 		}

@@ -1,22 +1,21 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;
 
 /**
  * Imports categories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 class AbstractCategoryImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\category\Category';
+	protected $className = Category::class;
 	
 	/**
 	 * object type id for categories
@@ -31,12 +30,12 @@ class AbstractCategoryImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		if (!empty($data['parentCategoryID'])) $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);
 		
-		$category = CategoryEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$category = CategoryEditor::create(array_merge($data, ['objectTypeID' => $this->objectTypeID]));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $category->categoryID);
 		

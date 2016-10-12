@@ -12,11 +12,9 @@ use wcf\util\StringUtil;
  * Handles message quotes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 class MessageQuoteAction extends AJAXProxyAction {
 	/**
@@ -28,18 +26,18 @@ class MessageQuoteAction extends AJAXProxyAction {
 	
 	/**
 	 * list of quote ids
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $quoteIDs = array();
+	public $quoteIDs = [];
 	
 	/**
 	 * list of object types
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $objectTypes = array();
+	public $objectTypes = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractSecureAction::readParameters();
@@ -60,7 +58,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		AbstractAction::execute();
@@ -68,15 +66,15 @@ class MessageQuoteAction extends AJAXProxyAction {
 		$returnValues = null;
 		switch ($this->actionName) {
 			case 'count':
-				$returnValues = array(
+				$returnValues = [
 					'count' => $this->count()
-				);
+				];
 			break;
 			
 			case 'getQuotes':
-				$returnValues = array(
+				$returnValues = [
 					'template' => $this->getQuotes()
-				);
+				];
 			break;
 			
 			case 'markForRemoval':
@@ -84,15 +82,15 @@ class MessageQuoteAction extends AJAXProxyAction {
 			break;
 			
 			case 'remove':
-				$returnValues = array(
+				$returnValues = [
 					'count' => $this->remove()
-				);
+				];
 			break;
 			
 			case 'removeMarkedQuotes':
-				$returnValues = array(
+				$returnValues = [
 					'count' => $this->removeMarkedQuotes()
-				);
+				];
 			break;
 			
 			default:
@@ -134,7 +132,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * @return	string
 	 */
 	protected function getQuotes() {
-		$supportPaste = (isset($_POST['supportPaste'])) ? (bool)$_POST['supportPaste'] : false;
+		$supportPaste = isset($_POST['supportPaste']) ? (bool)$_POST['supportPaste'] : false;
 		
 		return MessageQuoteManager::getInstance()->getQuotes($supportPaste);
 	}
@@ -152,6 +150,8 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * Removes a list of quotes from storage and returns the remaining count.
 	 * 
 	 * @return	integer
+	 * @throws	SystemException
+	 * @throws	UserInputException
 	 */
 	protected function remove() {
 		if (empty($this->quoteIDs)) {
@@ -182,6 +182,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	 * Returns a list of full quotes by object ids for given object types.
 	 * 
 	 * @return	array<array>
+	 * @throws	UserInputException
 	 */
 	protected function getFullQuoteObjectIDs() {
 		if (empty($this->objectTypes)) {

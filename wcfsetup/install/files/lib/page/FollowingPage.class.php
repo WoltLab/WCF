@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\user\follow\UserFollowingList;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 
@@ -7,39 +8,39 @@ use wcf\system\WCF;
  * Shows a list with all users the active user is following.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
+ * 
+ * @property	UserFollowingList	$objectList
  */
 class FollowingPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\follow\UserFollowingList';
+	public $objectListClassName = UserFollowingList::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_follow.time DESC';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readData()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("user_follow.userID = ?", array(WCF::getUser()->userID));
+		$this->objectList->getConditionBuilder()->add("user_follow.userID = ?", [WCF::getUser()->userID]);
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab

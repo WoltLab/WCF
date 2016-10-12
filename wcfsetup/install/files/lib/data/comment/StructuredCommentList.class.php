@@ -2,7 +2,8 @@
 namespace wcf\data\comment;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
-use wcf\data\user\UserProfile;
+use wcf\data\like\object\LikeObject;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
 
@@ -10,16 +11,19 @@ use wcf\system\like\LikeHandler;
  * Provides a structured comment list fetching last responses for every comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment
+ *
+ * @method	StructuredComment		current()
+ * @method	StructuredComment[]		getObjects()
+ * @method	StructuredComment|null		search($objectID)
+ * @property	StructuredComment[]		$objects
  */
 class StructuredCommentList extends CommentList {
 	/**
 	 * comment manager object
-	 * @var	\wcf\system\comment\manager\ICommentManager
+	 * @var	ICommentManager
 	 */
 	public $commentManager = null;
 	
@@ -43,26 +47,31 @@ class StructuredCommentList extends CommentList {
 	
 	/**
 	 * ids of the responses of the comments in the list
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $responseIDs = array();
+	public $responseIDs = [];
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
+	 */
+	public $decoratorClassName = StructuredComment::class;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 30;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'comment.time DESC';
 	
 	/**
 	 * Creates a new structured comment list.
 	 * 
-	 * @param	\wcf\system\comment\manager\ICommentManager	$commentManager
-	 * @param	integer						$objectTypeID
-	 * @param	integer						$objectID
+	 * @param	ICommentManager		$commentManager
+	 * @param	integer			$objectTypeID
+	 * @param	integer			$objectID
 	 */
 	public function __construct(ICommentManager $commentManager, $objectTypeID, $objectID) {
 		parent::__construct();
@@ -71,20 +80,20 @@ class StructuredCommentList extends CommentList {
 		$this->objectTypeID = $objectTypeID;
 		$this->objectID = $objectID;
 		
-		$this->getConditionBuilder()->add("comment.objectTypeID = ?", array($objectTypeID));
-		$this->getConditionBuilder()->add("comment.objectID = ?", array($objectID));
+		$this->getConditionBuilder()->add("comment.objectTypeID = ?", [$objectTypeID]);
+		$this->getConditionBuilder()->add("comment.objectID = ?", [$objectID]);
 		$this->sqlLimit = $this->commentManager->getCommentsPerPage();
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
 		// fetch response ids
-		$responseIDs = $userIDs = array();
-		foreach ($this->objects as &$comment) {
+		$responseIDs = $userIDs = [];
+		foreach ($this->objects as $comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
 			$commentResponseIDs = $comment->getResponseIDs();
 			foreach ($commentResponseIDs as $responseID) {
@@ -96,16 +105,14 @@ class StructuredCommentList extends CommentList {
 				$userIDs[] = $comment->userID;
 			}
 			
-			$comment = new StructuredComment($comment);
 			$comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
 			$comment->setIsEditable($this->commentManager->canEditComment($comment->getDecoratedObject()));
 		}
-		unset($comment);
 		
 		// fetch last responses
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
-			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array(array_keys($responseIDs)));
+			$responseList->setObjectIDs(array_keys($responseIDs));
 			$responseList->readObjects();
 			
 			foreach ($responseList as $response) {
@@ -122,34 +129,21 @@ class StructuredCommentList extends CommentList {
 			}
 		}
 		
-		// fetch user data and avatars
+		// cache user ids
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $comment) {
-				if ($comment->userID && isset($users[$comment->userID])) {
-					$comment->setUserProfile($users[$comment->userID]);
-				}
-				
-				foreach ($comment as $response) {
-					if ($response->userID && isset($users[$response->userID])) {
-						$response->setUserProfile($users[$response->userID]);
-					}
-				}
-			}
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 	}
 	
 	/**
 	 * Fetches the like data.
 	 * 
-	 * @return	array
+	 * @return	LikeObject[][]
 	 */
 	public function getLikeData() {
-		if (empty($this->objectIDs)) return array();
+		if (empty($this->objectIDs)) return [];
 		
-		$likeData = array();
+		$likeData = [];
 		$commentObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
 		LikeHandler::getInstance()->loadLikeObjects($commentObjectType, $this->getObjectIDs());
 		$likeData['comment'] = LikeHandler::getInstance()->getLikeObjects($commentObjectType);
@@ -175,7 +169,7 @@ class StructuredCommentList extends CommentList {
 	/**
 	 * Returns the comment manager object.
 	 * 
-	 * @return	\wcf\system\comment\manager\ICommentManager
+	 * @return	ICommentManager
 	 */
 	public function getCommentManager() {
 		return $this->commentManager;

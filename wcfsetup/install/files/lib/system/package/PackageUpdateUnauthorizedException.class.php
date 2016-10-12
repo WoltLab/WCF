@@ -9,39 +9,37 @@ use wcf\util\HTTPRequest;
  * Credentials for update server are either missing or invalid.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageUpdateUnauthorizedException extends UserException {
 	/**
 	 * package update version
 	 * @var	array
 	 */
-	protected $packageUpdateVersion = array();
+	protected $packageUpdateVersion = [];
 	
 	/**
 	 * HTTP request object
-	 * @var	\wcf\util\HTTPRequest
+	 * @var	HTTPRequest
 	 */
 	protected $request = null;
 	
 	/**
 	 * package update server object
-	 * @var	\wcf\data\package\update\server\PackageUpdateServer
+	 * @var	PackageUpdateServer
 	 */
 	protected $updateServer = null;
 	
 	/**
 	 * Creates a new PackageUpdateUnauthorizedException object.
 	 * 
-	 * @param	\wcf\util\HTTPRequest					$request
-	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
-	 * @param	array							$packageUpdateVersion
+	 * @param	HTTPRequest		$request
+	 * @param	PackageUpdateServer	$updateServer
+	 * @param	array			$packageUpdateVersion
 	 */
-	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = array()) {
+	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = []) {
 		$this->request = $request;
 		$this->updateServer = $updateServer;
 		$this->packageUpdateVersion = $packageUpdateVersion;
@@ -53,11 +51,11 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * @return	string
 	 */
 	public function getRenderedTemplate() {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'packageUpdateVersion' => $this->packageUpdateVersion,
 			'request' => $this->request,
 			'updateServer' => $this->updateServer
-		));
+		]);
 		
 		return WCF::getTPL()->fetch('packageUpdateUnauthorized');
 	}
@@ -74,7 +72,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	/**
 	 * Returns the HTTP request object.
 	 * 
-	 * @return	\wcf\util\HTTPRequest
+	 * @return	HTTPRequest
 	 */
 	public function getRequest() {
 		return $this->request;
@@ -83,7 +81,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	/**
 	 * Returns package update server object.
 	 * 
-	 * @return	\wcf\data\package\update\server\PackageUpdateServer
+	 * @return	PackageUpdateServer
 	 */
 	public function getUpdateServer() {
 		return $this->updateServer;

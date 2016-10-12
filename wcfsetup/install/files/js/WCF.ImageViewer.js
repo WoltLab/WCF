@@ -4,7 +4,7 @@
  * Enhanced image viewer for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ImageViewer = Class.extend({
@@ -53,8 +53,15 @@ WCF.ImageViewer = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		// ignore clicks while ctrl key is being pressed
+		if (event.ctrlKey) {
+			return;
+		}
+		
 		event.preventDefault();
 		event.stopPropagation();
+		// skip if element is in a popover
+		if ($(event.currentTarget).closest('.popover').length) return;
 		
 		this._triggerElement.wcfImageViewer('open', null, $(event.currentTarget).wcfIdentify());
 	},
@@ -309,6 +316,19 @@ $.widget('ui.wcfImageViewer', {
 		this._ui = { };
 		
 		this.element.click($.proxy(this.open, this));
+
+		window.addEventListener('popstate', (function(event) {
+			if (event.state.name === 'imageViewer') {
+				if (event.state.container === this._eventNamespace) {
+					this.open(event);
+					this.showImage(event.state.image);
+					
+					return;
+				}
+			}
+			
+			this.close(event);
+		}).bind(this));
 	},
 	
 	/**
@@ -323,6 +343,13 @@ $.widget('ui.wcfImageViewer', {
 		
 		if (this._isOpen) {
 			return false;
+		}
+		
+		// add history item for the image viewer
+		if (!event || event.type !== 'popstate') {
+			window.history.pushState({
+				name: 'imageViewer'
+			}, '', '');
 		}
 		
 		if (this.options.staticViewer) {
@@ -365,6 +392,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._bindListener();
 		
+		document.documentElement.classList.add('pageOverlayActive');
+		
 		return true;
 	},
 	
@@ -375,6 +404,12 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	close: function(event) {
 		if (event) event.preventDefault();
+		
+		// clear history item of the image viewer
+		if (!event || event.type !== 'popstate') {
+			window.history.back();
+			return;
+		}
 		
 		if (!this._isOpen) {
 			return false;
@@ -391,6 +426,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		WCF.System.DisableScrolling.enable();
 		WCF.System.DisableZoom.enable();
+		
+		document.documentElement.classList.remove('pageOverlayActive');
 		
 		return true;
 	},
@@ -421,7 +458,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._slideshowEnabled = true;
 		
-		this._ui.slideshow.toggle.children('span').removeClass('icon-play').addClass('icon-pause');
+		this._ui.slideshow.toggle.children('span').removeClass('fa-play').addClass('fa-pause');
 		
 		return true;
 	},
@@ -439,7 +476,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._timer.stop();
 		if (disableSlideshow) {
-			this._ui.slideshow.toggle.children('span').removeClass('icon-pause').addClass('icon-play');
+			this._ui.slideshow.toggle.children('span').removeClass('fa-pause').addClass('fa-play');
 		}
 		
 		this._slideshowEnabled = false;
@@ -642,6 +679,14 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		this._active = index;
+		
+		// store latest image in history entry
+		window.history.replaceState({
+			name: 'imageViewer',
+			container: this._eventNamespace,
+			image: this._active
+		}, '', '');
+		
 		var $image = this._images[index];
 		
 		this._ui.imageList.children('li').removeClass('active');
@@ -810,18 +855,18 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._container = $('<div class="wcfImageViewer' + (this.options.staticViewer ? ' wcfImageViewerStatic' : '') + '" />').appendTo(document.body);
 		var $imageContainer = $('<div><img /><img /></div>').appendTo(this._container);
-		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious icon icon-double-angle-left" /><div><ul /></div><span class="wcfImageViewerButtonNext icon icon-double-angle-right" /></footer>').appendTo(this._container);
+		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious icon fa-angle-double-left" /><div><ul /></div><span class="wcfImageViewerButtonNext icon fa-angle-double-right" /></footer>').appendTo(this._container);
 		var $slideshowContainer = $('<ul />').appendTo($imageContainer);
-		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><span class="icon icon48 icon-angle-left" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><span class="icon icon48 icon-play" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><span class="icon icon48 icon-angle-right" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><span class="icon icon48 icon-resize-full" /></li>').appendTo($slideshowContainer);
-		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><span class="icon icon48 icon-external-link" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonPrevious = $('<li class="wcfImageViewerSlideshowButtonPrevious"><span class="icon icon48 fa-angle-left" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonToggle = $('<li class="wcfImageViewerSlideshowButtonToggle pointer"><span class="icon icon48 fa-play" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonNext = $('<li class="wcfImageViewerSlideshowButtonNext"><span class="icon icon48 fa-angle-right" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonEnlarge = $('<li class="wcfImageViewerSlideshowButtonEnlarge pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.enlarge') + '"><span class="icon icon48 fa-expand" /></li>').appendTo($slideshowContainer);
+		var $slideshowButtonFull = $('<li class="wcfImageViewerSlideshowButtonFull pointer jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.button.full') + '"><span class="icon icon48 fa-external-link" /></li>').appendTo($slideshowContainer);
 		
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
 			buttonPrevious: $imageList.children('span.wcfImageViewerButtonPrevious'),
-			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="framed jsTooltip"><img /></a>' ) + '<h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
+			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="jsTooltip"><img /></a>' ) + '<h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
 			imageContainer: $imageContainer,
 			images: [
 				$imageContainer.children('img:eq(0)').on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() { $(this).removeClass('animateTransformation'); }),
@@ -860,7 +905,7 @@ $.widget('ui.wcfImageViewer', {
 		$slideshowButtonFull.click(function(event) { window.location = $(event.currentTarget).data('link'); });
 		
 		// close button
-		$('<span class="wcfImageViewerButtonClose icon icon48 icon-remove pointer jsTooltip" title="' + WCF.Language.get('wcf.global.button.close') + '" />').appendTo(this._ui.header).click($.proxy(this.close, this));
+		$('<span class="wcfImageViewerButtonClose icon icon48 fa-times pointer jsTooltip" title="' + WCF.Language.get('wcf.global.button.close') + '" />').appendTo(this._ui.header).click($.proxy(this.close, this));
 		
 		if (!$.browser.mobile) {
 			// clicking on the inner container should close the dialog, but it should not be available on mobile due to
@@ -874,7 +919,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		WCF.DOMNodeInsertedHandler.execute();
 		
-		enquire.register('screen and (max-width: 800px)', {
+		enquire.register('(max-width: 767px)', {
 			match: $.proxy(this._enableMobileView, this),
 			unmatch: $.proxy(this._disableMobileView, this)
 		});
@@ -930,7 +975,7 @@ $.widget('ui.wcfImageViewer', {
 	_toggleView: function() {
 		this._ui.images[this._activeImage].addClass('animateTransformation');
 		this._container.toggleClass('maximized');
-		this._ui.slideshow.enlarge.toggleClass('active').children('span').toggleClass('icon-resize-full').toggleClass('icon-resize-small');
+		this._ui.slideshow.enlarge.toggleClass('active').children('span').toggleClass('fa-expand').toggleClass('fa-compress');
 		
 		this._renderImage(null, undefined, null);
 	},
@@ -1213,17 +1258,17 @@ $.widget('ui.wcfImageViewer', {
 		
 		$(this.options.imageSelector).each(function(index, link) {
 			var $link = $(link);
-			var $thumbnail = $link.children('img');
+			var $thumbnail = $link.find('> img, .attachmentThumbnailImage > img').first();
 			if (!$thumbnail.length) {
 				$thumbnail = $link.parentsUntil('.formAttachmentList').last().find('.attachmentTinyThumbnail');
 			}
 			
 			$images.push({
 				image: {
-					fullURL: $link.prop('href'),
+					fullURL: $thumbnail.data('source') ? $thumbnail.data('source').replace(/\\\//g, '/') : $link.prop('href'),
 					link: '',
 					title: $link.prop('title'),
-					url: $link.prop('href'),
+					url: $link.prop('href')
 				},
 				series: null,
 				thumbnail: {

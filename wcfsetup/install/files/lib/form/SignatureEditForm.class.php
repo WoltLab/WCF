@@ -3,6 +3,7 @@ namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\WCF;
@@ -11,66 +12,49 @@ use wcf\system\WCF;
  * Shows the signature edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 class SignatureEditForm extends MessageForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$enableTracking
+	 * @inheritDoc
 	 */
-	public $enableTracking = true;
+	public $disallowedBBCodesPermission = 'user.signature.disallowedBBCodes';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_USER_SIGNATURE');
+	public $messageObjectType = 'com.woltlab.wcf.user.signature';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
-	public $templateName = 'signatureEdit';
+	public $neededModules = ['MODULE_USER_SIGNATURE'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $showSignatureSetting = false;
 	
 	/**
 	 * parsed signature cache
 	 * @var	string
 	 */
-	public $signatureCache = null;
+	public $signatureCache;
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$allowedBBCodesPermission
+	 * @inheritDoc
 	 */
-	public $allowedBBCodesPermission = 'user.signature.allowedBBCodes';
+	public $templateName = 'signatureEdit';
 	
 	/**
-	 * @see	\wcf\form\MessageForm::$permissionCanUseSmilies
-	 */
-	public $permissionCanUseSmilies = 'user.signature.canUseSmilies';
-	
-	/**
-	 * @see	\wcf\form\MessageForm::$permissionCanUseHtml
-	 */
-	public $permissionCanUseHtml = 'user.signature.canUseHtml';
-	
-	/**
-	 * @see	\wcf\form\MessageForm::$permissionCanUseBBCodes
-	 */
-	public $permissionCanUseBBCodes = 'user.signature.canUseBBCodes';
-	
-	/**
-	 * @see	\wcf\form\MessageForm::$showSignatureSetting
-	 */
-	public $showSignatureSetting = false;
-	
-	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -80,7 +64,7 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		if (WCF::getUser()->disableSignature) throw new PermissionDeniedException();
@@ -90,39 +74,39 @@ class SignatureEditForm extends MessageForm {
 		if (!empty($this->text)) {
 			$this->validateText();
 		}
+		else {
+			$this->htmlInputProcessor = new HtmlInputProcessor();
+			$this->htmlInputProcessor->process($this->text, $this->messageObjectType, WCF::getUser()->userID);
+		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
 		// default values
 		if (empty($_POST)) {
-			$this->enableBBCodes = WCF::getUser()->signatureEnableBBCodes;
-			$this->enableHtml = WCF::getUser()->signatureEnableHtml;
-			$this->enableSmilies = WCF::getUser()->signatureEnableSmilies;
 			$this->text = WCF::getUser()->signature;
-			$this->preParse = true;
 		}
 		
 		$this->signatureCache = SignatureCache::getInstance()->getSignature(WCF::getUser());
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'signatureCache' => $this->signatureCache
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab
@@ -132,19 +116,17 @@ class SignatureEditForm extends MessageForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
-				'signature' => $this->text,
-				'signatureEnableBBCodes' => $this->enableBBCodes,
-				'signatureEnableHtml' => $this->enableHtml,
-				'signatureEnableSmilies' => $this->enableSmilies
-			))
-		));
+		$this->objectAction = new UserAction([WCF::getUser()], 'update', [
+			'data' => array_merge($this->additionalFields, [
+				'signature' => $this->htmlInputProcessor->getHtml(),
+				'signatureEnableHtml' => 1
+			])
+		]);
 		$this->objectAction->executeAction();
 		SignatureCache::getInstance()->getSignature(new User(WCF::getUser()->userID));
 		$this->saved();

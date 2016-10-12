@@ -14,7 +14,7 @@
 {assign var='dummy' value=$items->rewind()}
 		<lastBuildDate>{if $items->valid()}{'r'|gmdate:$items->current()->getTime()}{else}{'r'|gmdate:TIME_NOW}{/if}</lastBuildDate>
 		<ttl>60</ttl>
-		<generator><![CDATA[WoltLab Community Framework{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}]]></generator>
+		<generator><![CDATA[WoltLab Suite{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}]]></generator>
 		<atom:link href="{$__wcf->getRequestURI()}" rel="self" type="application/rss+xml" />{*
 		*}{event name='channelFields'}
 {*		*}{foreach from=$items item='item'}
@@ -29,6 +29,7 @@
 				<category><![CDATA[{@$category|escapeCDATA}]]></category>
 			{/foreach}
 			{hascontent}<content:encoded><![CDATA[{content}{@$item->getFormattedMessage()|escapeCDATA}{/content}]]></content:encoded>{/hascontent}
+			{if $supportsEnclosure && $item->getEnclosure()}<enclosure length="{@$item->getEnclosure()->getLength()}" type="{$item->getEnclosure()->getType()}" url="{$item->getEnclosure()->getURL()}" />{/if}
 			<slash:comments><![CDATA[{@$item->getComments()|escapeCDATA}]]></slash:comments>{*
 			*}{event name='itemFields'}
 		</item>

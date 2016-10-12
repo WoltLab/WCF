@@ -5,11 +5,9 @@ namespace wcf\data;
  * Default interface for DatabaseObject-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 interface IDatabaseObjectAction {
 	/**
@@ -32,14 +30,14 @@ interface IDatabaseObjectAction {
 	/**
 	 * Returns DatabaseObject-related object ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function getObjectIDs();
 	
 	/**
 	 * Returns action-related parameters.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[]
 	 */
 	public function getParameters();
 	

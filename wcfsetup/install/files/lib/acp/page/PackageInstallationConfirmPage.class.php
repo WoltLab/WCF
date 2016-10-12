@@ -12,27 +12,25 @@ use wcf\system\WCFACP;
  * Shows a confirmation page prior to start installing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
  */
 class PackageInstallationConfirmPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
 	/**
 	 * package installation dispatcher object
-	 * @var	\wcf\system\package\PackageInstallationDispatcher
+	 * @var	PackageInstallationDispatcher
 	 */
 	public $packageInstallationDispatcher = null;
 	
 	/**
 	 * package installation queue object
-	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	PackageInstallationQueue
 	 */
 	public $queue = null;
 	
@@ -56,7 +54,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public $installingImportedStyle = false;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -68,10 +66,10 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		}
 		
 		if ($this->queue->action == 'install') {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+			WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 		}
 		else {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+			WCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);
 		}
 		
 		$this->installingImportedStyle = WCF::getSession()->getVar('stylePackageImportLocation') !== null;
@@ -81,7 +79,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -93,22 +91,22 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'archive' => $this->packageInstallationDispatcher->getArchive(),
 			'packageValidationArchives' => PackageValidationManager::getInstance()->getPackageValidationArchiveList(),
 			'queue' => $this->queue,
 			'validationPassed' => $this->validationPassed,
 			'installingImportedStyle' => $this->installingImportedStyle
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// check master password

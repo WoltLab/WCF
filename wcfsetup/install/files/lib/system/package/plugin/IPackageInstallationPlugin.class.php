@@ -6,11 +6,9 @@ use wcf\system\package\PackageArchive;
  * Every PackageInstallationPlugin has to implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package.plugin
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 interface IPackageInstallationPlugin {
 	/**
@@ -37,11 +35,20 @@ interface IPackageInstallationPlugin {
 	public function uninstall();
 	
 	/**
+	 * Returns the default file name containing the instructions or `null` if no default
+	 * file name is supported.
+	 * 
+	 * @return	string
+	 * @since	3.0
+	 */
+	public static function getDefaultFilename();
+	
+	/**
 	 * Validates if the passed instruction is valid for this package installation plugin. If anything is
 	 * wrong with it, this method should return false.
 	 * 
-	 * @param	\wcf\system\package\PackageArchive	$packageArchive
-	 * @param	string					$instruction
+	 * @param	PackageArchive	$packageArchive
+	 * @param	string		$instruction
 	 * @return	boolean
 	 */
 	public static function isValid(PackageArchive $packageArchive, $instruction);

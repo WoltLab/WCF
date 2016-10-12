@@ -6,30 +6,39 @@ use wcf\data\IMessage;
  * Wrapper class for quoted messages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.message.quote
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Message\Quote
+ * 
+ * Note: We cannot use mixin here as that causes errors about methods not being implemented.
+ * @method	string		getExcerpt($maxLength = 255)
+ * @method	string		getFormattedMessage()
+ * @method	string		getLink()
+ * @method	string		getMessage()
+ * @method	integer		getTime()
+ * @method	string		getTitle()
+ * @method	integer		getUserID()
+ * @method	string		getUsername()
+ * @method	boolean		isVisible()
  */
 class QuotedMessage implements \Countable, \Iterator {
 	/**
 	 * list of full quotes for insertation
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public $fullQuotes = array();
+	public $fullQuotes = [];
 	
 	/**
 	 * quotable database object
-	 * @var	\wcf\data\IQuotableDatabaseObject
+	 * @var	IMessage
 	 */
 	public $object = null;
 	
 	/**
-	 * list of quotes (shortend)
-	 * @var	array<string>
+	 * list of quotes (shortened)
+	 * @var	string[]
 	 */
-	public $quotes = array();
+	public $quotes = [];
 	
 	/**
 	 * current iterator index
@@ -39,14 +48,14 @@ class QuotedMessage implements \Countable, \Iterator {
 	
 	/**
 	 * list of index to object relation
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	protected $indexToObject = null;
 	
 	/**
 	 * Creates a new QuotedMessage object.
 	 * 
-	 * @param	\wcf\data\IMessage	$object
+	 * @param	IMessage	$object
 	 */
 	public function __construct(IMessage $object) {
 		$this->object = $object;
@@ -66,7 +75,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function __toString() {
 		return $this->object->getTitle();
@@ -113,14 +122,14 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->quotes);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		$objectID = $this->indexToObject[$this->index];
@@ -138,21 +147,21 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		++$this->index;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->indexToObject[$this->index]);

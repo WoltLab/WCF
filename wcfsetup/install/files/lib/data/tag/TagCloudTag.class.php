@@ -6,39 +6,61 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a tag in a tag cloud.
  * 
  * @author	Marcel Werk
- * @copyright	2009-2013 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.tag
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Tag
+ * 
+ * @method	Tag	getDecoratedObject()
+ * @mixin	Tag
+ * 
+ * @property-read	integer|null	$counter	number of the times the tag has been used for a certain object type or `null`
  */
 class TagCloudTag extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	protected static $baseClass = 'wcf\data\tag\Tag';
+	protected static $baseClass = Tag::class;
 	
 	/**
-	 * size of the tag in a weighted list
-	 * @var	double
+	 * weight of the tag in a weighted list
+	 * @var	integer
 	 */
-	protected $size = 0.0;
+	protected $weight = 1;
 	
+	/**
+	 * Sets the weight of the tag.
+	 *
+	 * @param	double		$weight
+	 * @deprecated  3.0
+	 */
+	public function setWeight($weight) {
+		$this->weight = $weight;
+	}
+	
+	/**
+	 * Returns the weight of the tag.
+	 *
+	 * @return	integer
+	 */
+	public function getWeight() {
+		return $this->weight;
+	}
+		
 	/**
 	 * Sets the size of the tag.
 	 * 
 	 * @param	double		$size
+	 * @deprecated  3.0
 	 */
-	public function setSize($size) {
-		$this->size = $size;
-	}
+	public function setSize($size) {}
 	
 	/**
 	 * Returns the size of the tag.
 	 * 
 	 * @return	double
+	 * @deprecated  3.0
 	 */
 	public function getSize() {
-		return $this->size;
+		return (($this->weight - 1) / 6) * 85 + 85;
 	}
 }

@@ -6,23 +6,21 @@ use wcf\system\database\Database;
  * Abstract implementation of a database editor.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.database.editor
- * @category Community Framework
+ * @package	WoltLabSuite\Core\System\Database\Editor
  */
 abstract class DatabaseEditor {
 	/**
 	 * database object
-	 * @var	\wcf\system\database\Database
+	 * @var	Database
 	 */
 	protected $dbObj = null;
 	
 	/**
 	 * Creates a new DatabaseEditor object.
 	 * 
-	 * @param	\wcf\system\database\Database	$dbObj
+	 * @param	Database	$dbObj
 	 */
 	public function __construct(Database $dbObj) {
 		$this->dbObj = $dbObj;
@@ -58,7 +56,7 @@ abstract class DatabaseEditor {
 	 * @param	array		$columns
 	 * @param	array		$indices
 	 */
-	abstract public function createTable($tableName, $columns, $indices = array());
+	abstract public function createTable($tableName, $columns, $indices = []);
 	
 	/**
 	 * Drops a database table.

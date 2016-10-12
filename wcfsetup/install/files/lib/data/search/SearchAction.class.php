@@ -6,15 +6,17 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes search-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.search
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Search
+ * 
+ * @method	Search		create()
+ * @method	SearchEditor[]	getObjects()
+ * @method	SearchEditor	getSingleObject()
  */
 class SearchAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\search\SearchEditor';
+	protected $className = SearchEditor::class;
 }

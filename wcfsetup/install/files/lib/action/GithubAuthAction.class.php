@@ -17,20 +17,18 @@ use wcf\util\StringUtil;
  * Handles github auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 class GithubAuthAction extends AbstractAction {
 	/**
-	 * @see	\wcf\action\AbstractAction::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY');
+	public $neededModules = ['GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY'];
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
@@ -39,19 +37,18 @@ class GithubAuthAction extends AbstractAction {
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://github.com/login/oauth/access_token', array(), array(
+				$request = new HTTPRequest('https://github.com/login/oauth/access_token', [], [
 					'client_id' => StringUtil::trim(GITHUB_PUBLIC_KEY),
 					'client_secret' => StringUtil::trim(GITHUB_PRIVATE_KEY),
 					'code' => $_GET['code']
-				));
+				]);
 				$request->execute();
 				$reply = $request->getReply();
 				
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
-				// force logging
-				$e->getExceptionID();
+				\wcf\functions\exception\logThrowable($e);
 				throw new IllegalLinkException();
 			}
 			
@@ -72,17 +69,16 @@ class GithubAuthAction extends AbstractAction {
 				$userData = JSON::decode(StringUtil::trim($reply['body']));
 			}
 			catch (SystemException $e) {
-				// force logging
-				$e->getExceptionID();
+				\wcf\functions\exception\logThrowable($e);
 				throw new IllegalLinkException();
 			}
 			
 			// check whether a user is connected to this github account
-			$user = $this->getUser($userData['id']);
+			$user = User::getUserByAuthData('github:'.$userData['id']);
 			if (!$user->userID) {
-				$user = $this->getUser($data['access_token']);
+				$user = User::getUserByAuthData('github:'.$data['access_token']);
 				$userEditor = new UserEditor($user);
-				$userEditor->update(array('authData' => 'github:'.$userData['id']));
+				$userEditor->update(['authData' => 'github:'.$userData['id']]);
 			}
 			
 			if ($user->userID) {
@@ -95,7 +91,7 @@ class GithubAuthAction extends AbstractAction {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
 						$password = StringUtil::getRandomID();
 						$userEditor = new UserEditor($user);
-						$userEditor->update(array('password' => $password));
+						$userEditor->update(['password' => $password]);
 						
 						// reload user to retrieve salt
 						$user = new User($user->userID);
@@ -165,27 +161,5 @@ class GithubAuthAction extends AbstractAction {
 		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
 		$this->executed();
 		exit;
-	}
-	
-	/**
-	 * Fetches the User with the given identifier.
-	 * 
-	 * @param	string			$identifier
-	 * @return	\wcf\data\user\User
-	 */
-	public function getUser($identifier) {
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user
-			WHERE	authData = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('github:'.$identifier));
-		$row = $statement->fetchArray();
-		
-		if ($row === false) {
-			$row = array('userID' => 0);
-		}
-		
-		$user = new User($row['userID']);
-		return $user;
 	}
 }

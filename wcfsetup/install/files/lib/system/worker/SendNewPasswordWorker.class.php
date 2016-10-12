@@ -1,66 +1,82 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\exception\SystemException;
-use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\PasswordUtil;
+use wcf\util\exception\CryptoException;
+use wcf\util\CryptoUtil;
 
 /**
  * Worker implementation for sending new passwords.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
  */
 class SendNewPasswordWorker extends AbstractWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
-	protected $limit = 50;
+	protected $limit = 20;
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::countObjects()
+	 * @inheritDoc
 	 */
 	public function countObjects() {
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add('user_table.userID IN (?)', array($this->parameters['userIDs']));
+		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
 		
 		return $userList->countObjects();
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		$userList = new UserList();
-		$userList->decoratorClassName = 'wcf\data\user\UserEditor';
-		$userList->getConditionBuilder()->add('user_table.userID IN (?)', array($this->parameters['userIDs']));
+		$userList->decoratorClassName = UserEditor::class;
+		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
 		$userList->sqlLimit = $this->limit;
 		$userList->sqlOffset = $this->limit * $this->loopCount;
 		$userList->readObjects();
 		
+		/** @var UserEditor $userEditor */
 		foreach ($userList as $userEditor) {
-			$this->sendNewPassword($userEditor);
+			$this->resetPassword($userEditor);
+		}
+		
+		$userList = new UserList();
+		$userList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->parameters['userIDs']]);
+		$userList->sqlLimit = $this->limit;
+		$userList->sqlOffset = $this->limit * $this->loopCount;
+		$userList->readObjects();
+		
+		/** @var User $user */
+		foreach ($userList as $user) {
+			$this->sendLink($user);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserList');
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$progress = parent::getProgress();
@@ -74,33 +90,53 @@ class SendNewPasswordWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * Sends a new password to the given user.
+	 * Resets the password of the given user.
 	 * 
-	 * @param	\wcf\data\user\UserEditor	$userEditor
+	 * @param	UserEditor	$userEditor
 	 */
-	protected function sendNewPassword(UserEditor $userEditor) {
-		$newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
-		
-		$userAction = new UserAction(array($userEditor), 'update', array(
-			'data' => array(
-				'password' => $newPassword
-			)
-		));
+	protected function resetPassword(UserEditor $userEditor) {
+		try {
+			$lostPasswordKey = bin2hex(CryptoUtil::randomBytes(20));
+			$lastLostPasswordRequestTime = TIME_NOW;
+		}
+		catch (CryptoException $e) {
+			$lostPasswordKey = null;
+			$lastLostPasswordRequestTime = 0;
+		}
+		$userAction = new UserAction([$userEditor], 'update', [
+			'data' => [
+				'password' => null,
+				'lostPasswordKey' => $lostPasswordKey,
+				'lastLostPasswordRequestTime' => $lastLostPasswordRequestTime
+			]
+		]);
 		$userAction->executeAction();
-		
-		// send mail
-		$mail = new Mail(array($userEditor->username => $userEditor->email), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'), $userEditor->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail', array(
-			'password' => $newPassword,
-			'username' => $userEditor->username,
-		)));
-		$mail->send();
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * Send links.
+	 * 
+	 * @param	User	$user
+	 */
+	protected function sendLink(User $user) {
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($user));
+		$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_sendNewPassword'),
+			new RecipientAwareTextMimePart('text/plain', 'email_sendNewPassword')
+		]));
+		$jobs = $email->getJobs();
+		foreach ($jobs as $job) {
+			BackgroundQueueHandler::getInstance()->performJob($job);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.user.canEditPassword'));
+		WCF::getSession()->checkPermissions(['admin.user.canEditPassword']);
 		
 		if (!isset($this->parameters['userIDs']) || !is_array($this->parameters['userIDs']) || empty($this->parameters['userIDs'])) {
 			throw new SystemException("'userIDs' parameter is missing or invalid");

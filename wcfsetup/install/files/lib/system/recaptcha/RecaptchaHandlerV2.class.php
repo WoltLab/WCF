@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\recaptcha;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -12,17 +11,16 @@ use wcf\util\UserUtil;
  * Handles reCAPTCHA V2 support.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.recaptcha
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Recaptcha
  */
 class RecaptchaHandlerV2 extends SingletonFactory {
 	/**
 	 * Validates response.
 	 * 
 	 * @param	string		$response
+	 * @throws	UserInputException
 	 */
 	public function validate($response) {
 		// fail if response is empty to avoid sending api requests
@@ -30,7 +28,7 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 			throw new UserInputException('recaptchaString', 'false');
 		}
 		
-		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode(RECAPTCHA_PRIVATEKEY).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), array('timeout' => 10));
+		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode(RECAPTCHA_PRIVATEKEY).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
 		
 		try {
 			$request->execute();
@@ -44,9 +42,9 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 				throw new UserInputException('recaptchaString', 'false');
 			}
 		}
-		catch (SystemException $e) {
+		catch (\Exception $e) {
 			// log error, but accept captcha
-			$e->getExceptionID();
+			\wcf\functions\exception\logThrowable($e);
 		}
 		
 		WCF::getSession()->register('recaptchaDone', true);

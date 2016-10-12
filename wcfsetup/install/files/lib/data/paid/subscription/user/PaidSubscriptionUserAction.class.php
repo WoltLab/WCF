@@ -12,30 +12,32 @@ use wcf\util\DateUtil;
  * Executes paid subscription user-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.paid.subscription.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Paid\Subscription\User
+ * 
+ * @method	PaidSubscriptionUserEditor[]	getObjects()
+ * @method	PaidSubscriptionUserEditor	getSingleObject()
  */
 class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsDelete = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsUpdate = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'update');
+	protected $requireACP = ['create', 'delete', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	PaidSubscriptionUser
 	 */
 	public function create() {
 		$this->parameters['data']['subscriptionID'] = $this->parameters['subscription']->subscriptionID;
@@ -47,23 +49,25 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			}
 			else {
 				$d = DateUtil::getDateTimeByTimestamp($this->parameters['data']['startDate']);
+				/** @noinspection PhpUndefinedMethodInspection */
 				$d->add($this->parameters['subscription']->getDateInterval());
 				$this->parameters['data']['endDate'] = $d->getTimestamp();
 			}
 		}
 		if (!isset($this->parameters['data']['isActive'])) $this->parameters['data']['isActive'] = 1;
 		
+		/** @var PaidSubscriptionUser $subscriptionUser */
 		$subscriptionUser = parent::create();
 		
 		// update group memberships
-		$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'addGroupMemberships');
+		$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 		$action->executeAction();
 		
 		return $subscriptionUser;
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateCreate()
+	 * @inheritDoc
 	 */
 	public function validateCreate() {
 		parent::validateCreate();
@@ -84,7 +88,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			$endDate = 0;
 			if (!isset($this->parameters['data']['endDate'])) {
 				$subscription = $subscriptionUser->getSubscription();
@@ -98,21 +102,21 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 				$endDate = $this->parameters['data']['endDate'];
 			}
 			
-			$subscriptionUser->update(array(
+			$subscriptionUser->update([
 				'endDate' => $endDate,
 				'isActive' => 1
-			));
+			]);
 			
 			if (!$subscriptionUser->isActive) {
 				// update group memberships
-				$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'addGroupMemberships');
+				$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 				$action->executeAction();
 			}
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$this->revoke();
@@ -128,11 +132,11 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
-			$subscriptionUser->update(array('isActive' => 0));
+		foreach ($this->getObjects() as $subscriptionUser) {
+			$subscriptionUser->update(['isActive' => 0]);
 			
 			// update group memberships
-			$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'removeGroupMemberships');
+			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'removeGroupMemberships');
 			$action->executeAction();
 		}
 	}
@@ -145,7 +149,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			if (!$subscriptionUser->isActive) {
 				throw new UserInputException('objectIDs');
 			}
@@ -160,11 +164,11 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
-			$subscriptionUser->update(array('isActive' => 1));
-				
+		foreach ($this->getObjects() as $subscriptionUser) {
+			$subscriptionUser->update(['isActive' => 1]);
+			
 			// update group memberships
-			$action = new PaidSubscriptionUserAction(array($subscriptionUser), 'addGroupMemberships');
+			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'addGroupMemberships');
 			$action->executeAction();
 		}
 	}
@@ -177,7 +181,7 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
+		foreach ($this->getObjects() as $subscriptionUser) {
 			if ($subscriptionUser->isActive) {
 				throw new UserInputException('objectIDs');
 			}
@@ -192,19 +196,19 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
-			$groupIDs = array();
+		foreach ($this->getObjects() as $subscriptionUser) {
+			$groupIDs = [];
 			foreach (explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
 				if (UserGroup::getGroupByID($groupID) !== null) {
 					$groupIDs[] = $groupID;
 				}
 			}
 			if (!empty($groupIDs)) {
-				$action = new UserAction(array($subscriptionUser->userID), 'addToGroups', array(
+				$action = new UserAction([$subscriptionUser->userID], 'addToGroups', [
 					'groups' => $groupIDs,
 					'deleteOldGroups' => false,
 					'addDefaultGroups' => false
-				));
+				]);
 				$action->executeAction();
 			}
 		}
@@ -218,17 +222,17 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $subscriptionUser) {
-			$groupIDs = array();
+		foreach ($this->getObjects() as $subscriptionUser) {
+			$groupIDs = [];
 			foreach (explode(',', $subscriptionUser->getSubscription()->groupIDs) as $groupID) {
 				if (UserGroup::getGroupByID($groupID) !== null) {
 					$groupIDs[] = $groupID;
 				}
 			}
 			if (!empty($groupIDs)) {
-				$action = new UserAction(array($subscriptionUser->userID), 'removeFromGroups', array(
-					'groups' => $groupIDs,
-				));
+				$action = new UserAction([$subscriptionUser->userID], 'removeFromGroups', [
+					'groups' => $groupIDs
+				]);
 				$action->executeAction();
 			}
 		}

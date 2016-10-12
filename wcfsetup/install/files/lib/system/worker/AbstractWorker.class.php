@@ -5,11 +5,9 @@ namespace wcf\system\worker;
  * Abstract implementation of a worker.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
  */
 abstract class AbstractWorker implements IWorker {
 	/**
@@ -34,17 +32,17 @@ abstract class AbstractWorker implements IWorker {
 	 * list of additional parameters
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::__construct()
+	 * @inheritDoc
 	 */
 	public function __construct(array $parameters) {
 		$this->parameters = $parameters;
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getLoopCount()
+	 * @inheritDoc
 	 */
 	public function setLoopCount($loopCount) {
 		$this->loopCount = $loopCount;
@@ -56,7 +54,7 @@ abstract class AbstractWorker implements IWorker {
 	abstract protected function countObjects();
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$this->countObjects();
@@ -71,14 +69,14 @@ abstract class AbstractWorker implements IWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getParameters()
+	 * @inheritDoc
 	 */
 	public function getParameters() {
 		return $this->parameters;
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::finalize()
+	 * @inheritDoc
 	 */
 	public function finalize() {
 		// does nothing

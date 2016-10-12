@@ -7,17 +7,17 @@
  *  - Chrome sometimes does not properly cache fonts, resulting in strange rendering bugs
  * 
  * @author	Alexander Ebert, Sascha Greuel
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
 // list of known font types
-$types = array(
+$types = [
 	'eot' => 'application/vnd.ms-fontobject',
 	'ttf' => 'application/octet-stream',
 	'woff' => 'application/x-woff', // best supported, but this is not the right one according to http://www.w3.org/TR/WOFF/#appendix-b
 	'woff2' => 'font/woff2' // the specs at http://dev.w3.org/webfonts/WOFF2/spec/ are not perfectly clear, but font/woff2 seems to be the most sane one and is currently used by Google Fonts
-);
+];
 
 // get parameters
 $type = $_GET['type'];

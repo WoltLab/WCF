@@ -11,21 +11,19 @@ use wcf\system\WCF;
  * Shows the style edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class StyleEditForm extends StyleAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	
 	/**
 	 * style object
-	 * @var	\wcf\data\style\Style
+	 * @var	Style
 	 */
 	public $style = null;
 	
@@ -36,7 +34,7 @@ class StyleEditForm extends StyleAddForm {
 	public $styleID = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->styleID = intval($_REQUEST['id']);
@@ -49,7 +47,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\StyleAddForm::readStyleVariables()
+	 * @inheritDoc
 	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
@@ -61,10 +59,32 @@ class StyleEditForm extends StyleAddForm {
 			}
 		}
 		unset($variableValue);
+		
+		if (!$this->style->isTainted) {
+			$tmp = Style::splitLessVariables($this->variables['individualScss']);
+			$this->variables['individualScss'] = $tmp['preset'];
+			$this->variables['individualScssCustom'] = $tmp['custom'];
+			
+			$tmp = Style::splitLessVariables($this->variables['overrideScss']);
+			$this->variables['overrideScss'] = $tmp['preset'];
+			$this->variables['overrideScssCustom'] = $tmp['custom'];
+		}
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
+	 */
+	protected function setVariables() {
+		parent::setVariables();
+		
+		if (!$this->style->isTainted) {
+			$this->specialVariables[] = 'individualScssCustom';
+			$this->specialVariables[] = 'overrideScssCustom';
+		}
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -76,7 +96,9 @@ class StyleEditForm extends StyleAddForm {
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
 			$this->imagePath = $this->style->imagePath;
+			$this->isTainted = $this->style->isTainted;
 			$this->license = $this->style->license;
+			$this->packageName = $this->style->packageName;
 			$this->styleDate = $this->style->styleDate;
 			$this->styleDescription = $this->style->styleDescription;
 			$this->styleName = $this->style->styleName;
@@ -86,26 +108,35 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new StyleAction(array($this->style), 'update', array(
-			'data' => array_merge($this->additionalFields, array(
+		if (!$this->style->isTainted) {
+			$this->variables['individualScss'] = Style::joinLessVariables($this->variables['individualScss'], $this->variables['individualScssCustom']);
+			$this->variables['overrideScss'] = Style::joinLessVariables($this->variables['overrideScss'], $this->variables['overrideScssCustom']);
+			
+			unset($this->variables['individualScssCustom']);
+			unset($this->variables['overrideScssCustom']);
+		}
+		
+		$this->objectAction = new StyleAction([$this->style], 'update', [
+			'data' => array_merge($this->additionalFields, [
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
 				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
+				'packageName' => $this->packageName,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL
-			)),
+			]),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
-		));
+		]);
 		$this->objectAction->executeAction();
 		
 		// save description
@@ -117,21 +148,32 @@ class StyleEditForm extends StyleAddForm {
 		// reload style object to update preview image
 		$this->style = new Style($this->style->styleID);
 		
+		if (!$this->style->isTainted) {
+			$tmp = Style::splitLessVariables($this->variables['individualScss']);
+			$this->variables['individualScss'] = $tmp['preset'];
+			$this->variables['individualScssCustom'] = $tmp['custom'];
+			
+			$tmp = Style::splitLessVariables($this->variables['overrideScss']);
+			$this->variables['overrideScss'] = $tmp['preset'];
+			$this->variables['overrideScssCustom'] = $tmp['custom'];
+		}
+		
 		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'action' => 'edit',
+			'isTainted' => $this->style->isTainted,
 			'style' => $this->style,
 			'styleID' => $this->styleID
-		));
+		]);
 	}
 }

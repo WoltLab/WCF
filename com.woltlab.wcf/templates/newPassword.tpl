@@ -1,84 +1,48 @@
-{include file='documentHeader'}
-
-<head>
-	<title>{lang}wcf.user.newPassword{/lang} - {PAGE_TITLE|language}</title>
-	{include file='headInclude'}
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
-{include file='header'}
-
-<header class="boxHeadline">
-	<h1>{lang}wcf.user.newPassword{/lang}</h1>
-</header>
-
-{include file='userNotice'}
+{include file='header' __disableAds=true}
 
 {include file='formError'}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
+<p class="info">{lang}wcf.user.newPassword.info{/lang}</p>
 
 <form method="post" action="{link controller='NewPassword'}{/link}">
-	<div class="container containerPadding marginTop">
-		<fieldset>
-			<legend>{lang}wcf.user.newPassword{/lang}</legend>
-			
-			<dl{if $errorField == 'userID'} class="formError"{/if}>
-				<dt>
-					<label for="userID">{lang}wcf.user.userID{/lang}</label>
-				</dt>
-				<dd>
-					<input type="text" id="userID" name="u" value="{@$userID}" required="required" class="medium" />
-					{if $errorField == 'userID'}
-						<small class="innerError">
-							{lang}wcf.user.userID.error.{$errorType}{/lang}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			<dl{if $errorField == 'lostPasswordKey'} class="formError"{/if}>
-				<dt>
-					<label for="lostPasswordKey">{lang}wcf.user.lostPasswordKey{/lang}</label>
-				</dt>
-				<dd>
-					<input type="text" id="lostPasswordKey" name="k" value="{$lostPasswordKey}" required="required" class="medium" />
-					{if $errorField == 'lostPasswordKey'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.user.lostPasswordKey.error.{$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			{event name='fields'}
-		</fieldset>
+	<div class="section">
+		<dl{if $errorField == 'newPassword'} class="formError"{/if}>
+			<dt><label for="newPassword">{lang}wcf.user.newPassword{/lang}</label></dt>
+			<dd>
+				<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium">
+					
+				{if $errorField == 'newPassword'}
+					<small class="innerError">
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						{if $errorType == 'notSecure'}{lang}wcf.user.password.error.notSecure{/lang}{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
 		
-		{event name='fieldsets'}
+		<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
+			<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
+			<dd>
+				<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium">
+					
+				{if $errorField == 'confirmNewPassword'}
+					<small class="innerError">
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						{if $errorType == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
+		
+		{event name='fields'}
 	</div>
+	
+	{event name='sections'}
 		
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 
-{include file='footer'}
-
-</body>
-</html>
+{include file='footer' __disableAds=true}

@@ -9,11 +9,9 @@ use wcf\data\ITitledObject;
  * Any likeable object should implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.like.object
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Like\Object
  */
 interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	/**
@@ -38,9 +36,9 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	public function getObjectID();
 	
 	/**
-	 * Gets the object type.
+	 * Returns the object type.
 	 * 
-	 * @return	\wcf\data\like\object\type\LikeObjectType
+	 * @return	ObjectType
 	 */
 	public function getObjectType();
 	
@@ -54,21 +52,21 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	/**
 	 * Sets the object type.
 	 * 
-	 * @param	\wcf\data\object\type\ObjectType
+	 * @param	ObjectType	$objectType
 	 */
 	public function setObjectType(ObjectType $objectType);
 	
 	/**
 	 * Sends a notification for this like.
 	 * 
-	 * @param	\wcf\data\like\Like	$like
+	 * @param	Like	$like
 	 */
 	public function sendNotification(Like $like);
 	
 	/**
-	 * Returns the language id of this object or its parent.
+	 * Returns the language id of this object or its parent or `null` if no explicit language is set.
 	 * 
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getLanguageID();
 }

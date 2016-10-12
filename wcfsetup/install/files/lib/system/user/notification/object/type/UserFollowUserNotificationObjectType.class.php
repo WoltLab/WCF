@@ -1,29 +1,30 @@
 <?php
 namespace wcf\system\user\notification\object\type;
+use wcf\data\user\follow\UserFollow;
+use wcf\data\user\follow\UserFollowList;
+use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 
 /**
  * Represents a following user as a notification object type.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.notification.object.type
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
  */
 class UserFollowUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
+	 * @inheritDoc
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\UserFollowUserNotificationObject';
+	protected static $decoratorClassName = UserFollowUserNotificationObject::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
+	 * @inheritDoc
 	 */
-	protected static $objectClassName = 'wcf\data\user\follow\UserFollow';
+	protected static $objectClassName = UserFollow::class;
 	
 	/**
-	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected static $objectListClassName = 'wcf\data\user\follow\UserFollowList';
+	protected static $objectListClassName = UserFollowList::class;
 }

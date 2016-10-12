@@ -8,38 +8,34 @@ use wcf\system\WCF;
  * Represents a language.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.language
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Language
+ * 
+ * @property-read	integer		$languageID		unique id of the language
+ * @property-read	string		$languageCode		code of the language according to ISO 639-1
+ * @property-read	string		$languageName		name of the language within the language itself
+ * @property-read	string		$countryCode		code of the country using the language according to ISO 3166-1, used to determine the language's country flag  
+ * @property-read	integer		$isDefault		is `1` if the language is the default language, otherwise `0`
+ * @property-read	integer		$hasContent		is `1` if the language can be selected when creating language-specific content, otherwise `0`
+ * @property-read	integer		$isDisabled		is `1` if the language is disabled and thus not selectable, otherwise `0`
  */
 class Language extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'language';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'languageID';
-	
-	/**
 	 * list of language items
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $items = array();
+	protected $items = [];
 	
 	/**
 	 * list of dynamic language items
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $dynamicItems = array();
+	protected $dynamicItems = [];
 	
 	/**
 	 * instance of LanguageEditor
-	 * @var	\wcf\data\language\LanguageEditor
+	 * @var	LanguageEditor
 	 */
 	private $editor = null;
 	
@@ -120,7 +116,7 @@ class Language extends DatabaseObject {
 	 * @param	boolean		$optional
 	 * @return	string		result
 	 */
-	public function getDynamicVariable($item, array $variables = array(), $optional = false) {
+	public function getDynamicVariable($item, array $variables = [], $optional = false) {
 		$staticItem = $this->get($item, $optional);
 		if (!$staticItem) return '';
 		
@@ -192,7 +188,7 @@ class Language extends DatabaseObject {
 	/**
 	 * Returns a list of available languages.
 	 * 
-	 * @return	array<\wcf\data\language\Language>
+	 * @return	Language[]
 	 */
 	public function getLanguages() {
 		return LanguageFactory::getInstance()->getLanguages();

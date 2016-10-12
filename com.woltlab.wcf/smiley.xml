@@ -3,158 +3,188 @@
 	<import>
 		<smiley name=":)">
 			<title>smile</title>
-			<path>images/smilies/smile.png</path>
+			<path>images/smilies/emojione/263a.png</path>
+			<path2x>images/smilies/emojione/263a@2x.png</path2x>
 			<aliases><![CDATA[:-)
 (:]]></aliases>
 		</smiley>
 		<smiley name=":(">
 			<title>sad</title>
-			<path>images/smilies/sad.png</path>
+			<path>images/smilies/emojione/2639.png</path>
+			<path2x>images/smilies/emojione/2639@2x.png</path2x>
 			<aliases><![CDATA[:-(
 ):]]></aliases>
 		</smiley>
 		<smiley name=";)">
 			<title>wink</title>
-			<path>images/smilies/wink.png</path>
+			<path>images/smilies/emojione/1f609.png</path>
+			<path2x>images/smilies/emojione/1f609@2x.png</path2x>
 			<aliases><![CDATA[;-)
 (;]]></aliases>
 		</smiley>
 		<smiley name=":P">
 			<title>tongue</title>
-			<path>images/smilies/tongue.png</path>
+			<path>images/smilies/emojione/1f61b.png</path>
+			<path2x>images/smilies/emojione/1f61b@2x.png</path2x>
 			<aliases><![CDATA[:-P]]></aliases>
 		</smiley>
 		<smiley name="^^">
 			<title>grin</title>
-			<path>images/smilies/grin.png</path>
+			<path>images/smilies/emojione/1f604.png</path>
+			<path2x>images/smilies/emojione/1f604@2x.png</path2x>
 			<aliases><![CDATA[^.^
 ^_^
 ^-^]]></aliases>
 		</smiley>
 		<smiley name=":D">
 			<title>biggrin</title>
-			<path>images/smilies/biggrin.png</path>
+			<path>images/smilies/emojione/1f606.png</path>
+			<path2x>images/smilies/emojione/1f606@2x.png</path2x>
 			<aliases><![CDATA[:-D]]></aliases>
 		</smiley>
 		<smiley name=";(">
 			<title>crying</title>
-			<path>images/smilies/crying.png</path>
+			<path>images/smilies/emojione/1f62d.png</path>
+			<path2x>images/smilies/emojione/1f62d@2x.png</path2x>
 			<aliases><![CDATA[;-(
 :'(
 ;_;]]></aliases>
 		</smiley>
 		<smiley name="X(">
 			<title>angry</title>
-			<path>images/smilies/angry.png</path>
+			<path>images/smilies/emojione/1f620.png</path>
+			<path2x>images/smilies/emojione/1f620@2x.png</path2x>
 			<aliases><![CDATA[>.<
 >_<]]></aliases>
 		</smiley>
 		<smiley name=":*">
 			<title>kiss</title>
-			<path>images/smilies/kiss.png</path>
+			<path>images/smilies/emojione/1f618.png</path>
+			<path2x>images/smilies/emojione/1f618@2x.png</path2x>
 			<aliases><![CDATA[:-*
 *:]]></aliases>
 		</smiley>
 		<smiley name=":|">
 			<title>mellow</title>
-			<path>images/smilies/mellow.png</path>
+			<path>images/smilies/emojione/1f610.png</path>
+			<path2x>images/smilies/emojione/1f610@2x.png</path2x>
 		</smiley>
 		<smiley name="8o">
 			<title>w00t</title>
-			<path>images/smilies/w00t.png</path>
+			<path>images/smilies/emojione/1f61c.png</path>
+			<path2x>images/smilies/emojione/1f61c@2x.png</path2x>
 		</smiley>
 		<smiley name="=O">
 			<title>scared</title>
-			<path>images/smilies/scared.png</path>
+			<path>images/smilies/emojione/1f628.png</path>
+			<path2x>images/smilies/emojione/1f628@2x.png</path2x>
 		</smiley>
 		<smiley name="&lt;X">
 			<title>sick</title>
-			<path>images/smilies/sick.png</path>
+			<path>images/smilies/emojione/1f922.png</path>
+			<path2x>images/smilies/emojione/1f922@2x.png</path2x>
 		</smiley>
 		<smiley name="||">
 			<title>tired</title>
-			<path>images/smilies/tired.png</path>
+			<path>images/smilies/emojione/1f62b.png</path>
+			<path2x>images/smilies/emojione/1f62b@2x.png</path2x>
 		</smiley>
 		<smiley name=":/">
 			<title>unsure</title>
-			<path>images/smilies/unsure.png</path>
+			<path>images/smilies/emojione/1f914.png</path>
+			<path2x>images/smilies/emojione/1f914@2x.png</path2x>
 		</smiley>
 		<smiley name=":S">
 			<title>wacko</title>
-			<path>images/smilies/wacko.png</path>
+			<path>images/smilies/emojione/1f643.png</path>
+			<path2x>images/smilies/emojione/1f643@2x.png</path2x>
 		</smiley>
 		<smiley name="X/">
 			<title>pinch</title>
-			<path>images/smilies/pinch.png</path>
+			<path>images/smilies/emojione/1f612.png</path>
+			<path2x>images/smilies/emojione/1f612@2x.png</path2x>
 		</smiley>
 		<smiley name="8)">
 			<title>cool</title>
-			<path>images/smilies/cool.png</path>
+			<path>images/smilies/emojione/1f60e.png</path>
+			<path2x>images/smilies/emojione/1f60e@2x.png</path2x>
 		</smiley>
 		<smiley name="?(">
 			<title>confused</title>
-			<path>images/smilies/confused.png</path>
+			<path>images/smilies/emojione/1f615.png</path>
+			<path2x>images/smilies/emojione/1f615@2x.png</path2x>
 		</smiley>
 		<smiley name=":huh:">
 			<title>Huh</title>
-			<path>images/smilies/huh.png</path>
+			<path>images/smilies/emojione/1f62e.png</path>
+			<path2x>images/smilies/emojione/1f62e@2x.png</path2x>
 		</smiley>
 		<smiley name=":rolleyes:">
 			<title>rolleyes</title>
-			<path>images/smilies/rolleyes.png</path>
+			<path>images/smilies/emojione/1f644.png</path>
+			<path2x>images/smilies/emojione/1f644@2x.png</path2x>
 		</smiley>
 		<smiley name=":love:">
 			<title>love</title>
-			<path>images/smilies/love.png</path>
+			<path>images/smilies/emojione/1f60d.png</path>
+			<path2x>images/smilies/emojione/1f60d@2x.png</path2x>
 		</smiley>
 		<smiley name="8|">
 			<title>blink</title>
-			<path>images/smilies/blink.png</path>
+			<path>images/smilies/emojione/1f632.png</path>
+			<path2x>images/smilies/emojione/1f632@2x.png</path2x>
 			<aliases><![CDATA[o.O]]></aliases>
 		</smiley>
 		<smiley name=":cursing:">
 			<title>cursing</title>
-			<path>images/smilies/cursing.png</path>
+			<path>images/smilies/emojione/1f621.png</path>
+			<path2x>images/smilies/emojione/1f621@2x.png</path2x>
 		</smiley>
 		<smiley name=":thumbdown:">
 			<title>thumbdown</title>
-			<path>images/smilies/thumbdown.png</path>
-		</smiley>
-		<smiley name=":thumbsup:">
-			<title>thumbsup</title>
-			<path>images/smilies/thumbsup.png</path>
+			<path>images/smilies/emojione/1f44e.png</path>
+			<path2x>images/smilies/emojione/1f44e@2x.png</path2x>
 		</smiley>
 		<smiley name=":thumbup:">
 			<title>thumbup</title>
-			<path>images/smilies/thumbup.png</path>
+			<path>images/smilies/emojione/1f44d.png</path>
+			<path2x>images/smilies/emojione/1f44d@2x.png</path2x>
+			<aliases><![CDATA[:thumbsup:]]></aliases>
 		</smiley>
 		<smiley name=":sleeping:">
 			<title>sleeping</title>
-			<path>images/smilies/sleeping.png</path>
+			<path>images/smilies/emojione/1f634.png</path>
+			<path2x>images/smilies/emojione/1f634@2x.png</path2x>
 		</smiley>
 		<smiley name=":whistling:">
 			<title>whistling</title>
-			<path>images/smilies/whistling.png</path>
+			<path>images/smilies/emojione/1f617.png</path>
+			<path2x>images/smilies/emojione/1f617@2x.png</path2x>
 		</smiley>
 		<smiley name=":evil:">
 			<title>evil</title>
-			<path>images/smilies/evil.png</path>
+			<path>images/smilies/emojione/1f608.png</path>
+			<path2x>images/smilies/emojione/1f608@2x.png</path2x>
 		</smiley>
 		<smiley name=":saint:">
 			<title>saint</title>
-			<path>images/smilies/saint.png</path>
+			<path>images/smilies/emojione/1f607.png</path>
+			<path2x>images/smilies/emojione/1f607@2x.png</path2x>
 		</smiley>
 		<smiley name="&lt;3">
 			<title>heart</title>
-			<path>images/smilies/heart.png</path>
+			<path>images/smilies/emojione/2764.png</path>
+			<path2x>images/smilies/emojione/2764@2x.png</path2x>
 		</smiley>
 		<smiley name=":!:">
 			<title>attention</title>
-			<path>images/smilies/attention.png</path>
+			<path>images/smilies/emojione/2757.png</path>
+			<path2x>images/smilies/emojione/2757@2x.png</path2x>
 		</smiley>
 		<smiley name=":?:">
 			<title>question</title>
-			<path>images/smilies/question.png</path>
+			<path>images/smilies/emojione/2753.png</path>
+			<path2x>images/smilies/emojione/2753@2x.png</path2x>
 		</smiley>
 	</import>
 </data>

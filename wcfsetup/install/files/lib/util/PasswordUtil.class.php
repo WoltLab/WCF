@@ -7,11 +7,9 @@ use wcf\system\Regex;
  * Provides functions to compute password hashes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class PasswordUtil {
 	/**
@@ -28,9 +26,9 @@ final class PasswordUtil {
 	
 	/**
 	 * list of supported encryption type by software identifier
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	private static $supportedEncryptionTypes = array(
+	private static $supportedEncryptionTypes = [
 		'ipb2',		// Invision Power Board 2.x
 		'ipb3',		// Invision Power Board 3.x
 		'mybb1',	// MyBB 1.x
@@ -43,7 +41,7 @@ final class PasswordUtil {
 		'vb5',		// vBulletin 5.x
 		'wbb2',		// WoltLab Burning Board 2.x
 		'wcf1',		// WoltLab Community Framework 1.x
-		'wcf2',		// WoltLab Community Framework 2.x
+		'wcf2',		// WoltLab Suite 3.x / WoltLab Community Framework 2.x
 		'xf1',		// XenForo 1.0 / 1.1
 		'xf12',		// XenForo 1.2+
 		'joomla1',	// Joomla 1.x
@@ -52,7 +50,7 @@ final class PasswordUtil {
 		'phpfox3',	// phpFox 3.x
 		'cryptMD5',
 		'invalid',	// Never going to match anything
-	);
+	];
 	
 	/**
 	 * blowfish cost factor
@@ -118,6 +116,7 @@ final class PasswordUtil {
 	 * @param	string		$password
 	 * @param	string		$dbHash
 	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public static function checkPassword($username, $password, $dbHash) {
 		$type = self::detectEncryption($dbHash);
@@ -219,49 +218,35 @@ final class PasswordUtil {
 	public static function getRandomPassword($length = 12) {
 		$charset = self::PASSWORD_CHARSET;
 		$password = '';
-
+		
 		for ($i = 0, $maxIndex = (strlen($charset) - 1); $i < $length; $i++) {
 			$password .= $charset[self::secureRandomNumber(0, $maxIndex)];
 		}
-
+		
 		return $password;
 	}
 	
 	/**
-	 * Compares two password hashes. This function is protected against timing attacks.
-	 * 
-	 * @see		http://codahale.com/a-lesson-in-timing-attacks/
-	 * 
+	 * Compares two strings in a constant time manner.
+	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
+	 *
 	 * @param	string		$hash1
 	 * @param	string		$hash2
 	 * @return	boolean
+	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
 	 */
 	public static function secureCompare($hash1, $hash2) {
-		$hash1 = (string)$hash1;
-		$hash2 = (string)$hash2;
-		
-		if (strlen($hash1) !== strlen($hash2)) {
-			return false;
-		}
-		
-		$result = 0;
-		for ($i = 0, $length = strlen($hash1); $i < $length; $i++) {
-			$result |= ord($hash1[$i]) ^ ord($hash2[$i]);
-		}
-		
-		return ($result === 0);
+		return CryptoUtil::secureCompare($hash1, $hash2);
 	}
 	
 	/**
 	 * Generates secure random numbers using OpenSSL.
 	 * 
-	 * This method forces mt_rand() if PHP versions below 5.4.0 are used due to a bug
-	 * causing up to 15 seconds delay until the bytes are returned.
-	 * 
 	 * @see		http://de1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
 	 * @param	integer		$min
 	 * @param	integer		$max
 	 * @return	integer
+	 * @throws	SystemException
 	 */
 	public static function secureRandomNumber($min, $max) {
 		$range = $max - $min;
@@ -271,7 +256,7 @@ final class PasswordUtil {
 		}
 		
 		// fallback to mt_rand() if OpenSSL is not available
-		if (version_compare(PHP_VERSION, '5.4.0-dev', '<') || !function_exists('openssl_random_pseudo_bytes')) {
+		if (!function_exists('openssl_random_pseudo_bytes')) {
 			return mt_rand($min, $max);
 		}
 		
@@ -323,7 +308,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function ipb3($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
+		return CryptoUtil::secureCompare($dbHash, md5(md5($salt) . md5($password)));
 	}
 	
 	/**
@@ -336,7 +321,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function mybb1($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
+		return CryptoUtil::secureCompare($dbHash, md5(md5($salt) . md5($password)));
 	}
 	/**
 	 * Validates the password hash for phpBB 3.x (phpbb3).
@@ -362,7 +347,7 @@ final class PasswordUtil {
 	 */
 	protected static function phpass($username, $password, $salt, $dbHash) {
 		if (mb_strlen($dbHash) !== 34) {
-			return self::secureCompare(md5($password), $dbHash);
+			return CryptoUtil::secureCompare(md5($password), $dbHash);
 		}
 		
 		$hash_crypt_private = function ($password, $setting) {
@@ -435,7 +420,7 @@ final class PasswordUtil {
 			return $output;
 		};
 		
-		return self::secureCompare($hash_crypt_private($password, $dbHash), $dbHash);
+		return CryptoUtil::secureCompare($hash_crypt_private($password, $dbHash), $dbHash);
 	}
 	
 	/**
@@ -448,7 +433,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function smf1($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, sha1(mb_strtolower($username) . $password));
+		return CryptoUtil::secureCompare($dbHash, sha1(mb_strtolower($username) . $password));
 	}
 	
 	/**
@@ -474,7 +459,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function vb3($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, md5(md5($password) . $salt));
+		return CryptoUtil::secureCompare($dbHash, md5(md5($password) . $salt));
 	}
 	
 	/**
@@ -513,10 +498,10 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wbb2($username, $password, $salt, $dbHash) {
-		if (self::secureCompare($dbHash, md5($password))) {
+		if (CryptoUtil::secureCompare($dbHash, md5($password))) {
 			return true;
 		}
-		else if (self::secureCompare($dbHash, sha1($password))) {
+		else if (CryptoUtil::secureCompare($dbHash, sha1($password))) {
 			return true;
 		}
 		
@@ -533,7 +518,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf1($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, sha1($salt . sha1($salt . sha1($password))));
+		return CryptoUtil::secureCompare($dbHash, sha1($salt . sha1($salt . sha1($password))));
 	}
 	
 	/**
@@ -543,6 +528,7 @@ final class PasswordUtil {
 	 * @param	string		$password
 	 * @param	string		$salt
 	 * @param	string		$dbHash
+	 * @return	boolean
 	 */
 	protected static function wcf1e($type, $password, $salt, $dbHash) {
 		preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches);
@@ -589,11 +575,11 @@ final class PasswordUtil {
 		}
 		$hash = $encryptionMethod($salt . $hash);
 		
-		return self::secureCompare($dbHash, $hash);
+		return CryptoUtil::secureCompare($dbHash, $hash);
 	}
 	
 	/**
-	 * Validates the password hash for WoltLab Community Framework 2.x (wcf2).
+	 * Validates the password hash for Woltlab Suite 3.x / WoltLab Community Framework 2.x (wcf2).
 	 * 
 	 * @param	string		$username
 	 * @param	string		$password
@@ -602,7 +588,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf2($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, self::getDoubleSaltedHash($password, $salt));
+		return CryptoUtil::secureCompare($dbHash, self::getDoubleSaltedHash($password, $salt));
 	}
 	
 	/**
@@ -615,14 +601,11 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function xf1($username, $password, $salt, $dbHash) {
-		if (self::secureCompare($dbHash, sha1(sha1($password) . $salt))) {
+		if (CryptoUtil::secureCompare($dbHash, sha1(sha1($password) . $salt))) {
 			return true;
 		}
-		else if (extension_loaded('hash')) {
-			return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
-		}
 		
-		return false;
+		return CryptoUtil::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
 	}
 	
 	/**
@@ -635,7 +618,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function xf12($username, $password, $salt, $dbHash) {
-		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
+		if (CryptoUtil::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
 			return true;
 		}
 		
@@ -652,7 +635,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function joomla1($username, $password, $salt, $dbHash) {
-		if (self::secureCompare($dbHash, md5($password . $salt))) {
+		if (CryptoUtil::secureCompare($dbHash, md5($password . $salt))) {
 			return true;
 		}
 		
@@ -697,7 +680,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	 protected static function phpfox3($username, $password, $salt, $dbHash) {
-		 if (self::secureCompare($dbHash, md5(md5($password) . md5($salt)))) {
+		 if (CryptoUtil::secureCompare($dbHash, md5(md5($password) . md5($salt)))) {
 			 return true;
 		 }
 		 
@@ -714,7 +697,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function cryptMD5($username, $password, $salt, $dbHash) {
-		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
+		if (CryptoUtil::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
 			return true;
 		}
 		
@@ -734,5 +717,10 @@ final class PasswordUtil {
 		return false;
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of PasswordUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

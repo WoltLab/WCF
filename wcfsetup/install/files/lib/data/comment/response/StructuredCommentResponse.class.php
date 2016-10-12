@@ -1,24 +1,25 @@
 <?php
 namespace wcf\data\comment\response;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Provides methods to handle response data.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment.response
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment\Response
+ * 
+ * @method	CommentResponse		getDecoratedObject()
+ * @mixin	CommentResponse
  */
 class StructuredCommentResponse extends DatabaseObjectDecorator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	public static $baseClass = 'wcf\data\comment\response\CommentResponse';
+	public static $baseClass = CommentResponse::class;
 	
 	/**
 	 * deletable by current user
@@ -33,15 +34,16 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	public $editable = false;
 	
 	/**
-	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * user profile of the comment response author
+	 * @var	UserProfile
 	 */
 	public $userProfile = null;
 	
 	/**
 	 * Sets the user's profile.
 	 * 
-	 * @param	\wcf\data\user\UserProfile	$userProfile
+	 * @param	UserProfile	$userProfile
+	 * @deprecated	3.0
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;
@@ -50,11 +52,16 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	/**
 	 * Returns the user's profile.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {
-			$this->userProfile = new UserProfile(new User(null, $this->data));
+			if ($this->userID) {
+				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			}
+			else {
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
+			}
 		}
 		
 		return $this->userProfile;
@@ -64,7 +71,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	 * Returns a structured response.
 	 * 
 	 * @param	integer		$responseID
-	 * @return	\wcf\data\comment\response\StructuredCommentResponse
+	 * @return	StructuredCommentResponse
 	 */
 	public static function getResponse($responseID) {
 		$response = new CommentResponse($responseID);
@@ -75,9 +82,10 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 		// prepare structured response
 		$response = new StructuredCommentResponse($response);
 		
-		// add user profile
-		$userProfile = UserProfile::getUserProfile($response->userID);
-		$response->setUserProfile($userProfile);
+		// cache user profile
+		if ($response->userID) {
+			UserProfileRuntimeCache::getInstance()->cacheObjectID($response->userID);
+		}
 		
 		return $response;
 	}

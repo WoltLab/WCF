@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\user\ignore\ViewableUserIgnoreList;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 
@@ -7,39 +8,39 @@ use wcf\system\WCF;
  * Shows a list with all users the active user ignores.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
+ * 
+ * @property	ViewableUserIgnoreList	$objectList
  */
 class IgnoredUsersPage extends MultipleLinkPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @inheritDoc
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\ignore\ViewableUserIgnoreList';
+	public $objectListClassName = ViewableUserIgnoreList::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_ignore.time DESC';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readData()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("user_ignore.userID = ?", array(WCF::getUser()->userID));
+		$this->objectList->getConditionBuilder()->add("user_ignore.userID = ?", [WCF::getUser()->userID]);
 	}
 	
 	/**
-	 * @see	\wcf\page\Page::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		// set active tab

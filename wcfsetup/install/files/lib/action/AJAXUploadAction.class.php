@@ -7,15 +7,13 @@ use wcf\util\JSON;
  * Default implementation for file uploads using the AJAX-API.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 class AJAXUploadAction extends AJAXProxyAction {
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -24,7 +22,7 @@ class AJAXUploadAction extends AJAXProxyAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\AJAXInvokeAction::sendResponse()
+	 * @inheritDoc
 	 */
 	protected function sendResponse() {
 		if (!isset($_POST['isFallback'])) {

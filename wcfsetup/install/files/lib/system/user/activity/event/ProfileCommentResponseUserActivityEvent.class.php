@@ -2,8 +2,7 @@
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentList;
-use wcf\data\user\UserProfileList;
-use wcf\system\user\activity\event\IUserActivityEvent;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -11,55 +10,50 @@ use wcf\system\WCF;
  * User activity event implementation for profile comment responses.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.activity.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
 class ProfileCommentResponseUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**
-	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
+	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
 		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
 			return;
 		}
 		
-		$responses = $responseIDs = array();
+		$responseIDs = [];
 		foreach ($events as $event) {
 			$responseIDs[] = $event->objectID;
 		}
 		
 		// fetch responses
 		$responseList = new CommentResponseList();
-		$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array($responseIDs));
+		$responseList->setObjectIDs($responseIDs);
 		$responseList->readObjects();
 		$responses = $responseList->getObjects();
 		
 		// fetch comments
-		$commentIDs = $comments = array();
+		$commentIDs = $comments = [];
 		foreach ($responses as $response) {
 			$commentIDs[] = $response->commentID;
 		}
 		if (!empty($commentIDs)) {
 			$commentList = new CommentList();
-			$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+			$commentList->setObjectIDs($commentIDs);
 			$commentList->readObjects();
 			$comments = $commentList->getObjects();
 		}
 		
 		// fetch users
-		$userIDs = $users = array();
+		$userIDs = $users = [];
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->objectID;
 			$userIDs[] = $comment->userID;
 		}
 		if (!empty($userIDs)) {
-			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
-			$userList->readObjects();
-			$users = $userList->getObjects();
+			$users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 		}
 		
 		// set message
@@ -72,10 +66,10 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 						$event->setIsAccessible();
 						
 						// title
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileCommentResponse', array(
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileCommentResponse', [
 							'commentAuthor' => $users[$comment->userID],
 							'user' => $users[$comment->objectID]
-						));
+						]);
 						$event->setTitle($text);
 						
 						// description

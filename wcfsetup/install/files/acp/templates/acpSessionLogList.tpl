@@ -1,29 +1,27 @@
 {include file='header' pageTitle='wcf.acp.sessionLog.list'}
 
-<header class="boxHeadline">
-	<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
-</header>
-
-<div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="ACPSessionLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+<header class="contentHeader">
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.sessionLog.list{/lang}</h1>
+	</div>
 	
 	{hascontent}
-		<nav>
+		<nav class="contentHeaderNavigation">
 			<ul>
-				{content}
-					{event name='contentNavigationButtonsTop'}
-				{/content}
+				{content}{event name='contentHeaderNavigation'}{/content}
 			</ul>
 		</nav>
 	{/hascontent}
-</div>
+</header>
+
+{hascontent}
+	<div class="paginationTop">
+		{content}{pages print=true assign=pagesLinks controller="ACPSessionLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+	</div>
+{/hascontent}
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
-		</header>
-		
+	<div class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -44,7 +42,7 @@
 					<tr>
 						<td class="columnID columnSessionLogID">{@$sessionLog->sessionLogID}</td>
 						<td class="columnTitle columnUsername"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></td>
-						<td class="columnSmallText columnIpAddress"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</td>
+						<td class="columnSmallText columnIpAddress"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</td>
 						<td class="columnSmallText columnUserAgent" title="{$sessionLog->userAgent}"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->userAgent|truncate:75|tableWordwrap}</a></td>
 						<td class="columnDate columnTime">{@$sessionLog->time|time}</td>
 						<td class="columnDate columnLastActivityTime">{@$sessionLog->lastActivityTime|time}</td>
@@ -57,19 +55,21 @@
 		</table>
 	</div>
 	
-	<div class="contentNavigation">
-		{@$pagesLinks}
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
 		
 		{hascontent}
-			<nav>
+			<nav class="contentFooterNavigation">
 				<ul>
-					{content}
-						{event name='contentNavigationButtonsBottom'}
-					{/content}
+					{content}{event name='contentFooterNavigation'}{/content}
 				</ul>
 			</nav>
 		{/hascontent}
-	</div>
+	</footer>
 {/if}
 
 {include file='footer'}

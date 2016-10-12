@@ -15,11 +15,13 @@ use wcf\system\WCF;
  * Executes category-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.category
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Category
+ * 
+ * @method	Category		create()
+ * @method	CategoryEditor[]	getObjects()
+ * @method	CategoryEditor		getSingleObject()
  */
 class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction {
 	/**
@@ -29,18 +31,18 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	protected $objectType = null;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
 		$returnValue = parent::delete();
 		
 		// call category types
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			$categoryEditor->getProcessor()->afterDeletion($categoryEditor);
 		}
 		
@@ -48,21 +50,21 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $categoryEditor) {
-			$categoryEditor->update(array(
+		foreach ($this->getObjects() as $categoryEditor) {
+			$categoryEditor->update([
 				'isDisabled' => 1 - $categoryEditor->isDisabled
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleContainerAction::toggleContainer()
+	 * @inheritDoc
 	 */
 	public function toggleContainer() {
-		$collapsibleObjectTypeName = $this->objects[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
+		$collapsibleObjectTypeName = $this->getObjects()[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
 		if ($collapsibleObjectTypeName === null) {
 			throw new SystemException("Categories of this type don't support collapsing");
 		}
@@ -80,13 +82,14 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		// check if showOrder needs to be recalculated
 		if (count($this->objects) == 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
-			if ($this->objects[0]->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $this->objects[0]->showOrder != $this->parameters['data']['showOrder']) {
-				$this->parameters['data']['showOrder'] = $this->objects[0]->updateShowOrder($this->parameters['data']['parentCategoryID'], $this->parameters['data']['showOrder']);
+			$categoryEditor = $this->getObjects()[0];
+			if ($categoryEditor->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $categoryEditor->showOrder != $this->parameters['data']['showOrder']) {
+				$this->parameters['data']['showOrder'] = $categoryEditor->updateShowOrder($this->parameters['data']['parentCategoryID'], $this->parameters['data']['showOrder']);
 			}
 		}
 		
@@ -94,18 +97,18 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		
 		if (isset($this->parameters['data']['parentCategoryID'])) {
 			$objectType = null;
-			$parentUpdates = array();
+			$parentUpdates = [];
 			
-			foreach ($this->objects as $category) {
+			foreach ($this->getObjects() as $category) {
 				if ($objectType === null) {
 					$objectType = $category->getObjectType();
 				}
 				
 				if ($category->parentCategoryID != $this->parameters['data']['parentCategoryID']) {
-					$parentUpdates[$category->categoryID] = array(
+					$parentUpdates[$category->categoryID] = [
 						'oldParentCategoryID' => $category->parentCategoryID,
 						'newParentCategoryID' => $this->parameters['data']['parentCategoryID']
-					);
+					];
 				}
 			}
 			
@@ -116,11 +119,11 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::updatePosition()
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$objectType = null;
-		$parentUpdates = array();
+		$parentUpdates = [];
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
@@ -132,16 +135,16 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 				}
 				
 				if ($category->parentCategoryID != $parentCategoryID) {
-					$parentUpdates[$categoryID] = array(
+					$parentUpdates[$categoryID] = [
 						'oldParentCategoryID' => $category->parentCategoryID,
 						'newParentCategoryID' => $parentCategoryID
-					);
+					];
 				}
 				
-				$this->objects[$categoryID]->update(array(
+				$this->objects[$categoryID]->update([
 					'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->categoryID : 0,
 					'showOrder' => $showOrder++
-				));
+				]);
 			}
 		}
 		WCF::getDB()->commitTransaction();
@@ -152,14 +155,14 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateCreate() {
 		$this->readInteger('objectTypeID', false, 'data');
 		
 		$objectType = CategoryHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
 		if ($objectType === null) {
-			throw new UserInputException('objectTypeID', 'notValid');
+			throw new UserInputException('objectTypeID', 'invalid');
 		}
 		if (!$objectType->getProcessor()->canAddCategory()) {
 			throw new PermissionDeniedException();
@@ -167,7 +170,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		// read objects
@@ -179,7 +182,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 			}
 		}
 		
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			if (!$categoryEditor->getProcessor()->canDeleteCategory()) {
 				throw new PermissionDeniedException();
 			}
@@ -187,21 +190,21 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleContainerAction::validateToggleContainer()
+	 * @inheritDoc
 	 */
 	public function validateToggleContainer() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateUpdate()
+	 * @inheritDoc
 	 */
 	public function validateUpdate() {
 		// read objects
@@ -213,7 +216,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 			}
 		}
 		
-		foreach ($this->objects as $categoryEditor) {
+		foreach ($this->getObjects() as $categoryEditor) {
 			if (!$categoryEditor->getProcessor()->canEditCategory()) {
 				throw new PermissionDeniedException();
 			}
@@ -221,7 +224,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		// validate 'structure' parameter

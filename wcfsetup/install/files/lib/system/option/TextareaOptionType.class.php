@@ -8,38 +8,36 @@ use wcf\util\StringUtil;
  * Option type implementation for textareas.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class TextareaOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textareaOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
 			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
 			'value' => $value
-		));
+		]);
 		return WCF::getTPL()->fetch('textareaSearchableOptionType');
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = StringUtil::unifyNewlines(parent::getData($option, $newValue));
@@ -56,7 +54,7 @@ class TextareaOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		$value1 = explode("\n", StringUtil::unifyNewlines($value1));

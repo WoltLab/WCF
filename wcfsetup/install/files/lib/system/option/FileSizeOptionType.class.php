@@ -10,18 +10,16 @@ use wcf\util\FileUtil;
  * @author	Tim Duesterhus
  * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class FileSizeOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputClass
+	 * @inheritDoc
 	 */
 	protected $inputClass = 'short textRight';
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getData()
+	 * @inheritDoc
 	 */
 	public function getData(Option $option, $newValue) {
 		$number = str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
@@ -32,19 +30,25 @@ class FileSizeOptionType extends TextOptionType {
 		$number = $matches[0];
 		if (preg_match('/[kmgt]i?b$/i', $newValue, $multiplier)) {
 			switch (mb_strtolower($multiplier[0])) {
+				/** @noinspection PhpMissingBreakStatementInspection */
 				case 'tb':
 					$number *= 1000;
+				/** @noinspection PhpMissingBreakStatementInspection */
 				case 'gb':
 					$number *= 1000;
+				/** @noinspection PhpMissingBreakStatementInspection */
 				case 'mb':
 					$number *= 1000;
 				case 'kb':
 					$number *= 1000;
 				break;
+				/** @noinspection PhpMissingBreakStatementInspection */
 				case 'tib':
 					$number *= 1024;
+				/** @noinspection PhpMissingBreakStatementInspection */
 				case 'gib':
 					$number *= 1024;
+				/** @noinspection PhpMissingBreakStatementInspection */
 				case 'mib':
 					$number *= 1024;
 				case 'kib':
@@ -57,15 +61,15 @@ class FileSizeOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::getFormElement()
+	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
-		$value = FileUtil::formatFileSize($value);
+		$value = FileUtil::formatFilesize($value);
 		return parent::getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see	\wcf\system\option\IOptionType::compare()
+	 * @inheritDoc
 	 */
 	public function compare($value1, $value2) {
 		if ($value1 == $value2) {

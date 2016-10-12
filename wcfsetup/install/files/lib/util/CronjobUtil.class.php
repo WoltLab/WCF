@@ -8,11 +8,9 @@ use wcf\system\exception\SystemException;
  * does not support using nicknames (prefixed by the '@' character).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class CronjobUtil {
 	/**
@@ -29,9 +27,9 @@ final class CronjobUtil {
 	
 	/**
 	 * result date
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected static $result = array();
+	protected static $result = [];
 	
 	/**
 	 * time base used as reference for finding the next execution time
@@ -42,15 +40,15 @@ final class CronjobUtil {
 	/**
 	 * valid ranges for each known field (range for 'day of month' is missing
 	 * since it varies from month to month)
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public static $ranges = array(
-		'minute' => array(0, 59),
-		'hour' => array(0, 23),
-		'dom' => array(1, 31),
-		'month' => array(1, 12),
-		'dow' => array(0, 6)
-	);
+	public static $ranges = [
+		'minute' => [0, 59],
+		'hour' => [0, 23],
+		'dom' => [1, 31],
+		'month' => [1, 12],
+		'dow' => [0, 6]
+	];
 	
 	/**
 	 * Calculates timestamp for next execution based on cron-like expressions and a given time base.
@@ -66,30 +64,30 @@ final class CronjobUtil {
 	public static function calculateNextExec($minute, $hour, $dom, $month, $dow, $timeBase = TIME_NOW) {
 		// initialize fields
 		self::$timeBase = $timeBase;
-		self::$result = array(
+		self::$result = [
 			'minute' => 0,
 			'hour' => 0,
 			'day' => 0,
 			'month' => 0,
 			'year' => 0
-		);
+		];
 		
-		$fields = array(
+		$fields = [
 			'minute' => $minute,
 			'hour' => $hour,
 			'dom' => $dom,
 			'month' => $month,
 			'dow' => $dow
-		);
+		];
 		
 		self::$domRestricted = ($dom != '*') ? true : false;
 		self::$dowRestricted = ($dow != '*') ? true : false;
 		
-		$dayNames = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
-		$monthNames = array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
+		$dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+		$monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 		
 		// calculate values based upon each expression
-		$values = array();
+		$values = [];
 		foreach ($fields as $fieldName => $fieldValue) {
 			$fieldValue = mb_strtolower($fieldValue);
 			
@@ -143,8 +141,7 @@ final class CronjobUtil {
 		// calculation starts with month, thus start with
 		// month of $time (if within values)
 		$currentMonth = gmdate('n', self::$timeBase);
-		$currentYear = gmdate('Y', self::$timeBase);
-		$index = self::findKey($currentMonth, $values['month']);
+		self::findKey($currentMonth, $values['month']);
 		
 		self::calculateDay($values);
 	}
@@ -213,7 +210,7 @@ final class CronjobUtil {
 			
 		}
 		
-		// compare day, month and year wether we have to recalculate hour and minute
+		// compare day, month and year whether we have to recalculate hour and minute
 		if (($day != self::$result['day']) || ($month != self::$result['month']) || ($year != self::$result['year'])) {
 			// calculate new time base
 			$timeBase = gmmktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);
@@ -239,11 +236,11 @@ final class CronjobUtil {
 			$dow = gmdate('w', gmmktime(0, 0, 1, $month, $i, $year));
 			
 			if (in_array($dow, $values['dow'])) {
-				return array(
+				return [
 					'day' => $i,
 					'month' => $month,
 					'year' => $year
-				);
+				];
 			}
 		}
 		
@@ -265,11 +262,11 @@ final class CronjobUtil {
 		
 		for ($i = $day; $i <= $days; $i++) {
 			if (in_array($i, $values['dom'])) {
-				return array(
+				return [
 					'day' => $i,
 					'month' => $month,
 					'year' => $year
-				);
+				];
 			}
 		}
 		
@@ -323,6 +320,7 @@ final class CronjobUtil {
 	 * 
 	 * @param	array		$values
 	 * @param	integer		$timeBase
+	 * @param	boolean		$addAnDay
 	 * @return	boolean
 	 */
 	protected static function calculateMinute(array &$values, &$timeBase, $addAnDay) {
@@ -386,7 +384,7 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function calculateValue($fieldName, $fieldValue) {
-		$values = array();
+		$values = [];
 		
 		// examinate first char
 		$char = mb_substr($fieldValue, 0, 1);
@@ -427,7 +425,7 @@ final class CronjobUtil {
 			return explode(',', $fieldValue);
 		}
 		
-		return array($fieldValue);
+		return [$fieldValue];
 	}
 	
 	/**
@@ -439,7 +437,7 @@ final class CronjobUtil {
 	protected static function getRanges($value) {
 		// this is a single value
 		if (mb_strpos($value, '-') === false) {
-			return array($value);
+			return [$value];
 		}
 		
 		$step = 1;
@@ -463,7 +461,7 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function calculateRange($startValue, $endValue, $step = 1) {
-		$values = array();
+		$values = [];
 		
 		for ($i = $startValue; $i <= $endValue; $i = $i + $step) {
 			$values[] = $i;
@@ -494,6 +492,7 @@ final class CronjobUtil {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$value
+	 * @throws	SystemException
 	 */
 	protected static function validateAttribute($name, $value) {
 		if ($value === '') {
@@ -504,7 +503,7 @@ final class CronjobUtil {
 		$step = '[1-9]?[0-9]';
 		$months = 'jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec';
 		$days = 'mon|tue|wed|thu|fri|sat|sun';
-		$namesArr = array();
+		$namesArr = [];
 		
 		switch ($name) {
 			// check if startMinute is a valid minute or a list of valid minutes.
@@ -572,5 +571,10 @@ final class CronjobUtil {
 		}
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of CronjobUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

@@ -1,31 +1,32 @@
 <?php
 namespace wcf\data\comment;
 use wcf\data\comment\response\StructuredCommentResponse;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Provides methods to handle responses for this comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.comment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Comment
+ * 
+ * @method	Comment		getDecoratedObject()
+ * @mixin	Comment
  */
 class StructuredComment extends DatabaseObjectDecorator implements \Countable, \Iterator {
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @inheritDoc
 	 */
-	public static $baseClass = 'wcf\data\comment\Comment';
+	public static $baseClass = Comment::class;
 	
 	/**
 	 * list of ordered responses
-	 * @var	array<\wcf\data\comment\response\StructuredCommentResponse>
+	 * @var	StructuredCommentResponse[]
 	 */
-	protected $responses = array();
+	protected $responses = [];
 	
 	/**
 	 * deletable by current user
@@ -46,15 +47,15 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	private $position = 0;
 	
 	/**
-	 * user profile object
-	 * @var	\wcf\data\user\UserProfile
+	 * user profile object of the comment author
+	 * @var	UserProfile
 	 */
 	public $userProfile = null;
 	
 	/**
 	 * Adds an response
 	 * 
-	 * @param	\wcf\data\comment\response\StructuredCommentResponse	$response
+	 * @param	StructuredCommentResponse	$response
 	 */
 	public function addResponse(StructuredCommentResponse $response) {
 		$this->responses[] = $response;
@@ -63,7 +64,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns the last responses for this comment.
 	 * 
-	 * @return	array<\wcf\data\comment\response\StructuredCommentResponse>
+	 * @return	StructuredCommentResponse[]
 	 */
 	public function getResponses() {
 		return $this->responses;
@@ -90,7 +91,8 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Sets the user's profile.
 	 * 
-	 * @param	\wcf\data\user\UserProfile	$userProfile
+	 * @param	UserProfile	$userProfile
+	 * @deprecated	3.0
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;
@@ -99,11 +101,16 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns the user's profile.
 	 * 
-	 * @return	\wcf\data\user\UserProfile
+	 * @return	UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->userProfile === null) {
-			$this->userProfile = new UserProfile(new User(null, $this->data));
+			if ($this->userID) {
+				$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			}
+			else {
+				$this->userProfile = UserProfile::getGuestUserProfile($this->username);
+			}
 		}
 		
 		return $this->userProfile;
@@ -146,42 +153,42 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	}
 	
 	/**
-	 * @see	\Countable::count()
+	 * @inheritDoc
 	 */
 	public function count() {
 		return count($this->responses);
 	}
 	
 	/**
-	 * @see	\Iterator::current()
+	 * @inheritDoc
 	 */
 	public function current() {
 		return $this->responses[$this->position];
 	}
 	
 	/**
-	 * @see	\Iterator::key()
+	 * @inheritDoc
 	 */
 	public function key() {
 		return $this->position;
 	}
 	
 	/**
-	 * @see	\Iterator::next()
+	 * @inheritDoc
 	 */
 	public function next() {
 		$this->position++;
 	}
 	
 	/**
-	 * @see	\Iterator::rewind()
+	 * @inheritDoc
 	 */
 	public function rewind() {
 		$this->position = 0;
 	}
 	
 	/**
-	 * @see	\Iterator::valid()
+	 * @inheritDoc
 	 */
 	public function valid() {
 		return isset($this->responses[$this->position]);

@@ -1,35 +1,43 @@
 <?php
 namespace wcf\system\user\signature;
 use wcf\data\user\User;
-use wcf\system\bbcode\MessageParser;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\SingletonFactory;
 
 /**
  * Caches parsed user signatures.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.user.signature
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\User\Signature
  */
 class SignatureCache extends SingletonFactory {
+	/**
+	 * @var HtmlOutputProcessor
+	 */
+	protected $htmlOutputProcessor;
+	
 	/**
 	 * cached signatures
 	 * @var	string
 	 */
-	protected $signatures = array();
+	protected $signatures = [];
 	
 	/**
 	 * Returns a parsed user signature.
 	 * 
-	 * @param	\wcf\data\user\User	$user
-	 * @return	string
+	 * @param	User	        $user           user object
+	 * @return	string          parsed signature
 	 */
 	public function getSignature(User $user) {
 		if (!isset($this->signatures[$user->userID])) {
-			$this->signatures[$user->userID] = MessageParser::getInstance()->parse($user->signature, $user->signatureEnableSmilies, $user->signatureEnableHtml, $user->signatureEnableBBCodes, false);
+			if ($this->htmlOutputProcessor === null) {
+				$this->htmlOutputProcessor = new HtmlOutputProcessor();
+			}
+			
+			$this->htmlOutputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
+			$this->signatures[$user->userID] = $this->htmlOutputProcessor->getHtml();
 		}
 		
 		return $this->signatures[$user->userID];

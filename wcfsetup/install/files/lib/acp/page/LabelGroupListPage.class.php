@@ -1,40 +1,41 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\label\group\LabelGroupList;
 use wcf\page\SortablePage;
 
 /**
  * Lists available label groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	LabelGroupList		$objectList
  */
 class LabelGroupListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label.group.list';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'showOrder';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'groupDescription', 'showOrder');
+	public $validSortFields = ['groupID', 'groupName', 'groupDescription', 'showOrder'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.label.canManageLabel');
+	public $neededPermissions = ['admin.content.label.canManageLabel'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\label\group\LabelGroupList';
+	public $objectListClassName = LabelGroupList::class;
 }

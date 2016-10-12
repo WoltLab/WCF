@@ -8,15 +8,13 @@ use wcf\system\option\FileSizeOptionType;
  * The merge of option values returns the highest value.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user.group
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User\Group
  */
 class FileSizeUserGroupOptionType extends FileSizeOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	\wcf\system\option\user.group\IUserGroupOptionType::merge()
+	 * @inheritDoc
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($groupValue > $defaultValue) {

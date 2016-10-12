@@ -3,7 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
-
+	
 	<!-- data element -->
 	<xs:element name="data">
 		<xs:complexType>
@@ -13,39 +13,47 @@
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
-
+	
 	<!-- import element type -->
 	<xs:complexType name="import">
 		<xs:sequence>
-			<xs:element name="cronjob" type="cronjob" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="cronjob" type="cronjob_import" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-
+	
 	<!-- delete element type -->
 	<xs:complexType name="delete">
 		<xs:sequence>
-			<xs:element name="cronjob" type="cronjob" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="cronjob" type="cronjob_delete" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-
+	
 	<!-- cronjob element type -->
-	<xs:complexType name="cronjob">
-		 <xs:choice maxOccurs="unbounded" minOccurs="0">
-			<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
-			<xs:element name="description" type="description_element" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="startminute" type="woltlab_varchar" minOccurs="1" />
-			<xs:element name="starthour" type="woltlab_varchar" minOccurs="1" />
-			<xs:element name="startdom" type="woltlab_varchar" minOccurs="1" />
-			<xs:element name="startmonth" type="woltlab_varchar" minOccurs="1" />
-			<xs:element name="startdow" type="woltlab_varchar" minOccurs="1" />
-			<xs:element name="execmultiple" type="woltlab_boolean" minOccurs="0" default="0" />
-			<xs:element name="canbeedited" type="woltlab_boolean" minOccurs="0" default="1" />
-			<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" default="1" />
-			<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" default="0" />
-			<xs:element name="active" type="woltlab_boolean" minOccurs="0" default="1" />
-		</xs:choice>
+	<xs:complexType name="cronjob_import">
+		<xs:complexContent>
+			<xs:extension base="cronjob_delete">
+				 <xs:choice maxOccurs="unbounded" minOccurs="0">
+					<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="description" type="description_element" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="startminute" type="woltlab_varchar" minOccurs="1" />
+					<xs:element name="starthour" type="woltlab_varchar" minOccurs="1" />
+					<xs:element name="startdom" type="woltlab_varchar" minOccurs="1" />
+					<xs:element name="startmonth" type="woltlab_varchar" minOccurs="1" />
+					<xs:element name="startdow" type="woltlab_varchar" minOccurs="1" />
+					<xs:element name="execmultiple" type="woltlab_boolean" minOccurs="0" default="0" />
+					<xs:element name="canbeedited" type="woltlab_boolean" minOccurs="0" default="1" />
+					<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" default="1" />
+					<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" default="0" />
+					<xs:element name="active" type="woltlab_boolean" minOccurs="0" default="1" />
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
-
+	
+	<xs:complexType name="cronjob_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
 	<xs:complexType name="description_element">
 		<xs:simpleContent>
 			<xs:extension base="woltlab_varchar">

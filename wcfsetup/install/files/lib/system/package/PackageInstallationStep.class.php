@@ -6,16 +6,14 @@ use wcf\system\form\FormDocument;
  * Represents step information within an installation node.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageInstallationStep {
 	/**
 	 * form document object
-	 * @var	\wcf\system\form\FormDocument
+	 * @var	FormDocument
 	 */
 	protected $document = null;
 	

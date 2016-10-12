@@ -10,11 +10,9 @@ use wcf\util\StringUtil;
  * Worker implementation for data import.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
  */
 class ImportWorker extends AbstractWorker {
 	/**
@@ -30,10 +28,10 @@ class ImportWorker extends AbstractWorker {
 	protected $exporter = null;
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermissions(array('admin.system.canImportData'));
+		WCF::getSession()->checkPermissions(['admin.management.canImportData']);
 		
 		if (!isset($this->parameters['objectType'])) {
 			throw new SystemException("parameter 'objectType' missing");
@@ -60,14 +58,14 @@ class ImportWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::countObjects()
+	 * @inheritDoc
 	 */
 	protected function countObjects() {
 		$this->count = $this->exporter->countLoops($this->parameters['objectType']);
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProgress()
+	 * @inheritDoc
 	 */
 	public function getProgress() {
 		$this->countObjects();
@@ -82,7 +80,7 @@ class ImportWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		if (!$this->count) {
@@ -98,7 +96,7 @@ class ImportWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::getProceedURL()
+	 * @inheritDoc
 	 */
 	public function getProceedURL() {
 		return '';

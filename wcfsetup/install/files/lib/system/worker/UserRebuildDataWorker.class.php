@@ -1,9 +1,15 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\like\Like;
+use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\avatar\UserAvatarEditor;
+use wcf\data\user\avatar\UserAvatarList;
 use wcf\data\user\UserEditor;
+use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\image\ImageHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
@@ -11,25 +17,25 @@ use wcf\system\WCF;
  * Worker implementation for updating users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.worker
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Worker
+ * 
+ * @method	UserList	getObjectList()
  */
 class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
+	 * @inheritDoc
 	 */
-	protected $objectListClassName = 'wcf\data\user\UserList';
+	protected $objectListClassName = UserList::class;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractWorker::$limit
+	 * @inheritDoc
 	 */
 	protected $limit = 50;
 	
 	/**
-	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -38,12 +44,12 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * @see	\wcf\system\worker\IWorker::execute()
+	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
 		
-		$users = $userIDs = array();
+		$users = $userIDs = [];
 		foreach ($this->getObjectList() as $user) {
 			$users[] = new UserEditor($user);
 			$userIDs[] = $user->userID;
@@ -62,7 +68,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			// update like counter
 			if (MODULE_LIKE) {
 				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('user_table.userID IN (?)', array($userIDs));
+				$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
 				$sql = "UPDATE	wcf".WCF_N."_user user_table
 					SET	likesReceived = (
 							SELECT	COUNT(*)
@@ -73,6 +79,53 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					".$conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());
+			}
+			
+			// update signatures
+			$htmlInputProcessor = new HtmlInputProcessor();
+			WCF::getDB()->beginTransaction();
+			/** @var UserEditor $user */
+			foreach ($users as $user) {
+				if (!$user->signatureEnableHtml) {
+					$htmlInputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID, true);
+					
+					$user->update([
+						'signature' => $htmlInputProcessor->getHtml(),
+						'signatureEnableHtml' => 1
+					]);
+				}
+			}
+			WCF::getDB()->commitTransaction();
+			
+			// update old avatars
+			$avatarList = new UserAvatarList();
+			$avatarList->getConditionBuilder()->add('user_avatar.userID IN (?)', [$userIDs]);
+			$avatarList->getConditionBuilder()->add('(user_avatar.width <> ? OR user_avatar.height <> ?)', [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]);
+			$avatarList->readObjects();
+			foreach ($avatarList as $avatar) {
+				$width = $avatar->width;
+				$height = $avatar->height;
+				if ($width != $height) {
+					$width = $height = min($width, $height, UserAvatar::AVATAR_SIZE);
+					$adapter = ImageHandler::getInstance()->getAdapter();
+					$adapter->loadFile($avatar->getLocation());
+					$thumbnail = $adapter->createThumbnail($width, $height, false);
+					$adapter->writeImage($thumbnail, $avatar->getLocation());
+				}
+				
+				if ($width < UserAvatar::AVATAR_SIZE || $height < UserAvatar::AVATAR_SIZE) {
+					$adapter = ImageHandler::getInstance()->getAdapter();
+					$adapter->loadFile($avatar->getLocation());
+					$adapter->resize(0, 0, $width, $height, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
+					$adapter->writeImage($adapter->getImage(), $avatar->getLocation());
+					$width = $height = UserAvatar::AVATAR_SIZE;
+				}
+				
+				$editor = new UserAvatarEditor($avatar);
+				$editor->update([
+					'width' => $width,
+					'height' => $height
+				]);
 			}
 		}
 	}

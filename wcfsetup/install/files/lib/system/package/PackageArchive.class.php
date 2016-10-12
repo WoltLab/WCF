@@ -13,11 +13,9 @@ use wcf\util\XML;
  * Represents the archive of a package.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageArchive {
 	/**
@@ -28,13 +26,13 @@ class PackageArchive {
 	
 	/**
 	 * package object of an existing package
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * tar archive object
-	 * @var	\wcf\system\io\Tar
+	 * @var	Tar
 	 */
 	protected $tar = null;
 	
@@ -42,46 +40,40 @@ class PackageArchive {
 	 * general package information
 	 * @var	array
 	 */
-	protected $packageInfo = array();
+	protected $packageInfo = [];
 	
 	/**
 	 * author information
 	 * @var	array
 	 */
-	protected $authorInfo = array();
+	protected $authorInfo = [];
 	
 	/**
 	 * list of requirements
 	 * @var	array
 	 */
-	protected $requirements = array();
+	protected $requirements = [];
 	
 	/**
 	 * list of optional packages
 	 * @var	array
 	 */
-	protected $optionals = array();
+	protected $optionals = [];
 	
 	/**
 	 * list of excluded packages
 	 * @var	array
 	 */
-	protected $excludedPackages = array();
+	protected $excludedPackages = [];
 	
 	/**
 	 * list of instructions
-	 * @var	array<array>
+	 * @var	mixed[][]
 	 */
-	protected $instructions = array(
-		'install' => array(),
-		'update' => array()
-	);
-	
-	/**
-	 * list of php requirements
-	 * @var	array<array>
-	 */
-	protected $phpRequirements = array();
+	protected $instructions = [
+		'install' => [],
+		'update' => []
+	];
 	
 	/**
 	 * default name of the package.xml file
@@ -104,7 +96,7 @@ class PackageArchive {
 	/**
 	 * Sets associated package object.
 	 * 
-	 * @param	\wcf\data\package\Package	$package
+	 * @param	Package		$package
 	 */
 	public function setPackage(Package $package) {
 		$this->package = $package;
@@ -122,7 +114,7 @@ class PackageArchive {
 	/**
 	 * Returns the object of the package archive.
 	 * 
-	 * @return	\wcf\system\io\Tar
+	 * @return	Tar
 	 */
 	public function getTar() {
 		return $this->tar;
@@ -134,7 +126,7 @@ class PackageArchive {
 	public function openArchive() {
 		// check whether archive exists and is a TAR archive
 		if (!file_exists($this->archive)) {
-			throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, array('archive' => $this->archive));
+			throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, ['archive' => $this->archive]);
 		}
 		
 		// open archive and read package information
@@ -149,7 +141,7 @@ class PackageArchive {
 		// search package.xml in package archive
 		// throw error message if not found
 		if ($this->tar->getIndexByFilename(self::INFO_FILE) === false) {
-			throw new PackageValidationException(PackageValidationException::MISSING_PACKAGE_XML, array('archive' => $this->archive));
+			throw new PackageValidationException(PackageValidationException::MISSING_PACKAGE_XML, ['archive' => $this->archive]);
 		}
 		
 		// extract package.xml, parse XML
@@ -164,13 +156,14 @@ class PackageArchive {
 		
 		// parse xml
 		$xpath = $xml->xpath();
+		/** @var \DOMElement $package */
 		$package = $xpath->query('/ns:package')->item(0);
 		
 		// package name
 		$packageName = $package->getAttribute('name');
 		if (!Package::isValidPackageName($packageName)) {
 			// package name is not a valid package identifier
-			throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $packageName));
+			throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $packageName]);
 		}
 		
 		$this->packageInfo['name'] = $packageName;
@@ -178,13 +171,14 @@ class PackageArchive {
 		// get package information
 		$packageInformation = $xpath->query('./ns:packageinformation', $package)->item(0);
 		$elements = $xpath->query('child::*', $packageInformation);
+		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			switch ($element->tagName) {
 				case 'packagename':
 				case 'packagedescription':
 				case 'readme':
 				case 'license':
-					if (!isset($this->packageInfo[$element->tagName])) $this->packageInfo[$element->tagName] = array();
+					if (!isset($this->packageInfo[$element->tagName])) $this->packageInfo[$element->tagName] = [];
 					
 					$languageCode = 'default';
 					if ($element->hasAttribute('language')) {
@@ -203,13 +197,19 @@ class PackageArchive {
 					$this->packageInfo['isApplication'] = intval($element->nodeValue);
 				break;
 				
+				case 'applicationdirectory':
+					if (preg_match('~^[a-z0-9\-\_]+$~', $element->nodeValue)) {
+						$this->packageInfo['applicationDirectory'] = $element->nodeValue;
+					}
+				break;
+				
 				case 'packageurl':
 					$this->packageInfo['packageURL'] = $element->nodeValue;
 				break;
 				
 				case 'version':
 					if (!Package::isValidVersion($element->nodeValue)) {
-						throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_VERSION, array('packageVersion' => $element->nodeValue));
+						throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_VERSION, ['packageVersion' => $element->nodeValue]);
 					}
 					
 					$this->packageInfo['version'] = $element->nodeValue;
@@ -235,11 +235,11 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $element->nodeValue));
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $element->nodeValue]);
 			}
 			
 			// read attributes
-			$data = array('name' => $element->nodeValue);
+			$data = ['name' => $element->nodeValue];
 			$attributes = $xpath->query('attribute::*', $element);
 			foreach ($attributes as $attribute) {
 				$data[$attribute->name] = $attribute->value;
@@ -252,11 +252,11 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $element->nodeValue));
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $element->nodeValue]);
 			}
 			
 			// read attributes
-			$data = array('name' => $element->nodeValue);
+			$data = ['name' => $element->nodeValue];
 			$attributes = $xpath->query('attribute::*', $element);
 			foreach ($attributes as $attribute) {
 				$data[$attribute->name] = $attribute->value;
@@ -269,11 +269,11 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $element->nodeValue));
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $element->nodeValue]);
 			}
 			
 			// read attributes
-			$data = array('name' => $element->nodeValue);
+			$data = ['name' => $element->nodeValue];
 			$attributes = $xpath->query('attribute::*', $element);
 			foreach ($attributes as $attribute) {
 				$data[$attribute->name] = $attribute->value;
@@ -285,20 +285,21 @@ class PackageArchive {
 		// get instructions
 		$elements = $xpath->query('./ns:instructions', $package);
 		foreach ($elements as $element) {
-			$instructionData = array();
+			$instructionData = [];
 			$instructions = $xpath->query('./ns:instruction', $element);
+			/** @var \DOMElement $instruction */
 			foreach ($instructions as $instruction) {
-				$data = array();
+				$data = [];
 				$attributes = $xpath->query('attribute::*', $instruction);
 				foreach ($attributes as $attribute) {
 					$data[$attribute->name] = $attribute->value;
 				}
 				
-				$instructionData[] = array(
+				$instructionData[] = [
 					'attributes' => $data,
 					'pip' => $instruction->getAttribute('type'),
 					'value' => $instruction->nodeValue
-				);
+				];
 			}
 			
 			$fromVersion = $element->getAttribute('fromversion');
@@ -312,38 +313,9 @@ class PackageArchive {
 			}
 		}
 		
-		// get php requirements
-		/*$requirements = $xpath->query('./ns:phprequirements', $package);
-		foreach ($requirements as $requirement) {
-			$elements = $xpath->query('child::*', $requirement);
-			foreach ($elements as $element) {
-				switch ($element->tagName) {
-					case 'version':
-						$this->phpRequirements['version'] = $element->nodeValue;
-					break;
-					
-					case 'setting':
-						$this->phpRequirements['settings'][$element->getAttribute('name')] = $element->nodeValue;
-					break;
-					
-					case 'extension':
-						$this->phpRequirements['extensions'][] = $element->nodeValue;
-					break;
-					
-					case 'function':
-						$this->phpRequirements['functions'][] = $element->nodeValue;
-					break;
-					
-					case 'class':
-						$this->phpRequirements['classes'][] = $element->nodeValue;
-					break;
-				}
-			}
-		}*/
-		
 		// add com.woltlab.wcf to package requirements
 		if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {
-			$this->requirements['com.woltlab.wcf'] = array('name' => 'com.woltlab.wcf');
+			$this->requirements['com.woltlab.wcf'] = ['name' => 'com.woltlab.wcf'];
 		}
 		
 		if ($this->package != null) {
@@ -368,7 +340,7 @@ class PackageArchive {
 		}
 		
 		if ($validFromVersion === null) {
-			$this->instructions['update'] = array();
+			$this->instructions['update'] = [];
 		}
 		else {
 			$this->instructions['update'] = $this->instructions['update'][$validFromVersion];
@@ -416,8 +388,8 @@ class PackageArchive {
 	 * Checks if the new package is compatible with
 	 * the package that is about to be updated.
 	 * 
-	 * @param	\wcf\data\package\Package	$package
-	 * @return	boolean				isValidUpdate
+	 * @param	Package		$package
+	 * @return	boolean		isValidUpdate
 	 */
 	public function isValidUpdate(Package $package = null) {
 		if ($this->package === null && $package !== null) {
@@ -454,18 +426,17 @@ class PackageArchive {
 	 * @return	boolean
 	 */
 	public function isAlreadyInstalled() {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->packageInfo['name']));
-		$row = $statement->fetchArray();
+		$statement->execute([$this->packageInfo['name']]);
 		
-		return ($row['count'] > 0) ? true : false;
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
-	 * Returns true if the package is an application and has an unique abbrevation.
+	 * Returns true if the package is an application and has an unique abbreviation.
 	 * 
 	 * @return	boolean
 	 */
@@ -479,12 +450,12 @@ class PackageArchive {
 			WHERE	isApplication = ?
 				AND package LIKE ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			1,
 			'%.'.Package::getAbbreviation($this->packageInfo['name'])
-		));
+		]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**
@@ -582,8 +553,8 @@ class PackageArchive {
 	 * @return	array
 	 */
 	public function getAllExistingRequirements() {
-		$existingRequirements = array();
-		$existingPackages = array();
+		$existingRequirements = [];
+		$existingPackages = [];
 		if ($this->package !== null) {
 			$sql = "SELECT		package.*
 				FROM		wcf".WCF_N."_package_requirement requirement
@@ -591,18 +562,18 @@ class PackageArchive {
 				ON		(package.packageID = requirement.requirement)
 				WHERE		requirement.packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->package->packageID));
+			$statement->execute([$this->package->packageID]);
 			while ($row = $statement->fetchArray()) {
 				$existingRequirements[$row['package']] = $row;
 			}
 		}
 		
 		// build sql
-		$packageNames = array();
+		$packageNames = [];
 		$requirements = $this->getRequirements();
 		foreach ($requirements as $requirement) {
 			if (isset($existingRequirements[$requirement['name']])) {
-				$existingPackages[$requirement['name']] = array();
+				$existingPackages[$requirement['name']] = [];
 				$existingPackages[$requirement['name']][$existingRequirements[$requirement['name']]['packageID']] = $existingRequirements[$requirement['name']];
 			}
 			else {
@@ -613,7 +584,7 @@ class PackageArchive {
 		// check whether the required packages do already exist
 		if (!empty($packageNames)) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package.package IN (?)", array($packageNames));
+			$conditions->add("package.package IN (?)", [$packageNames]);
 			
 			$sql = "SELECT	package.*
 				FROM	wcf".WCF_N."_package package
@@ -627,7 +598,7 @@ class PackageArchive {
 				}
 				
 				if (!isset($existingPackages[$row['package']])) {
-					$existingPackages[$row['package']] = array();
+					$existingPackages[$row['package']] = [];
 				}
 				
 				$existingPackages[$row['package']][$row['packageID']] = $row;
@@ -645,16 +616,16 @@ class PackageArchive {
 	 */
 	public function getExistingRequirements() {
 		// build sql
-		$packageNames = array();
+		$packageNames = [];
 		foreach ($this->requirements as $requirement) {
 			$packageNames[] = $requirement['name'];
 		}
 		
 		// check whether the required packages do already exist
-		$existingPackages = array();
+		$existingPackages = [];
 		if (!empty($packageNames)) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package IN (?)", array($packageNames));
+			$conditions->add("package IN (?)", [$packageNames]);
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
@@ -663,7 +634,7 @@ class PackageArchive {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				if (!isset($existingPackages[$row['package']])) {
-					$existingPackages[$row['package']] = array();
+					$existingPackages[$row['package']] = [];
 				}
 				
 				$existingPackages[$row['package']][$row['packageVersion']] = $row;
@@ -671,7 +642,7 @@ class PackageArchive {
 			
 			// sort multiple packages by version number
 			foreach ($existingPackages as $packageName => $instances) {
-				uksort($instances, array('wcf\data\package\Package', 'compareVersion'));
+				uksort($instances, [Package::class, 'compareVersion']);
 				
 				// get package with highest version number (get last package)
 				$existingPackages[$packageName] = array_pop($instances);
@@ -691,7 +662,7 @@ class PackageArchive {
 		$existingPackages = $this->getExistingRequirements();
 		
 		// check for open requirements
-		$openRequirements = array();
+		$openRequirements = [];
 		foreach ($this->requirements as $requirement) {
 			if (isset($existingPackages[$requirement['name']])) {
 				// package does already exist
@@ -733,15 +704,16 @@ class PackageArchive {
 	 * @param	string		$filename
 	 * @param	string		$tempPrefix
 	 * @return	string
+	 * @throws	PackageValidationException
 	 */
 	public function extractTar($filename, $tempPrefix = 'package_') {
 		// search the requested tar archive in our package archive.
 		// throw error message if not found.
 		if (($fileIndex = $this->tar->getIndexByFilename($filename)) === false) {
-			throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, array(
+			throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, [
 				'archive' => $this->archive,
 				'targetArchive' => $filename
-			));
+			]);
 		}
 		
 		// requested tar archive was found
@@ -776,17 +748,17 @@ class PackageArchive {
 	/**
 	 * Returns a list of packages which exclude this package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getConflictedExcludingPackages() {
-		$conflictedPackages = array();
+		$conflictedPackages = [];
 		$sql = "SELECT		package.*, package_exclusion.*
 			FROM		wcf".WCF_N."_package_exclusion package_exclusion
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = package_exclusion.packageID)
 			WHERE		excludedPackage = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->packageInfo['name']));
+		$statement->execute([$this->packageInfo['name']]);
 		while ($row = $statement->fetchArray()) {
 			if (!empty($row['excludedPackageVersion'])) {
 				if (Package::compareVersion($this->packageInfo['version'], $row['excludedPackageVersion'], '<')) {
@@ -803,18 +775,18 @@ class PackageArchive {
 	/**
 	 * Returns a list of packages which are excluded by this package.
 	 * 
-	 * @return	array<\wcf\data\package\Package>
+	 * @return	Package[]
 	 */
 	public function getConflictedExcludedPackages() {
-		$conflictedPackages = array();
+		$conflictedPackages = [];
 		if (!empty($this->excludedPackages)) {
-			$excludedPackages = array();
+			$excludedPackages = [];
 			foreach ($this->excludedPackages as $excludedPackageData) {
 				$excludedPackages[$excludedPackageData['name']] = $excludedPackageData['version'];
 			}
 			
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package IN (?)", array(array_keys($excludedPackages)));
+			$conditions->add("package IN (?)", [array_keys($excludedPackages)]);
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
@@ -853,9 +825,10 @@ class PackageArchive {
 	/**
 	 * Returns a list of php requirements for current package.
 	 * 
-	 * @return	array<array>
+	 * @return	mixed[][]
+	 * @deprecated  3.0
 	 */
 	public function getPhpRequirements() {
-		return $this->phpRequirements;
+		return [];
 	}
 }

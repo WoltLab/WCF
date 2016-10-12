@@ -1,12 +1,11 @@
 {if !$__imageViewerLoaded|isset}
 	<script data-relocate="true">
-		//<![CDATA[
 		var $imageViewer = null;
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.imageViewer.button.enlarge': '{lang}wcf.imageViewer.button.enlarge{/lang}',
 				'wcf.imageViewer.button.full': '{lang}wcf.imageViewer.button.full{/lang}',
-				'wcf.imageViewer.seriesIndex': '{lang}wcf.imageViewer.seriesIndex{/lang}',
+				'wcf.imageViewer.seriesIndex': '{lang __literal=true}wcf.imageViewer.seriesIndex{/lang}',
 				'wcf.imageViewer.counter': '{lang}wcf.imageViewer.counter{/lang}',
 				'wcf.imageViewer.close': '{lang}wcf.imageViewer.close{/lang}',
 				'wcf.imageViewer.enlarge': '{lang}wcf.imageViewer.enlarge{/lang}',
@@ -26,7 +25,6 @@
 				});
 			}
 		});
-		//]]>
 	</script>
 	
 	{assign var=__imageViewerLoaded value=true}

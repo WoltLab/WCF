@@ -7,28 +7,26 @@ use wcf\system\WCF;
  * Shows the paid subscription return message.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
  */
 class PaidSubscriptionReturnPage extends AbstractPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'redirect';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'message' => WCF::getLanguage()->get('wcf.paidSubscription.returnMessage'),
 			'wait' => 60,
 			'url' => LinkHandler::getInstance()->getLink()
-		));
+		]);
 	}
 }

@@ -9,11 +9,10 @@ use wcf\util\StringUtil;
  * This class represents an e-mail.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.mail
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Mail
+ * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.
  */
 class Mail {
 	/**
@@ -42,9 +41,9 @@ class Mail {
 	
 	/**
 	 * mail recipients
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $to = array();
+	protected $to = [];
 	
 	/**
 	 * mail subject
@@ -66,21 +65,21 @@ class Mail {
 	
 	/**
 	 * mail carbon copy
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $cc = array();
+	protected $cc = [];
 	
 	/**
 	 * mail blind carbon copy
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $bcc = array();
+	protected $bcc = [];
 	
 	/**
 	 * mail attachments
 	 * @var	array
 	 */
-	protected $attachments = array();
+	protected $attachments = [];
 	
 	/**
 	 * priority of the mail
@@ -96,7 +95,7 @@ class Mail {
 	
 	/**
 	 * mail language
-	 * @var	\wcf\data\language\Language
+	 * @var	Language
 	 */
 	protected $language = null;
 	
@@ -110,13 +109,13 @@ class Mail {
 	 * @param	string		$cc
 	 * @param	string		$bcc
 	 * @param	array		$attachments
-	 * @param	integer		$priority
+	 * @param	integer|string	$priority
 	 * @param	string		$header
 	 */
-	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = array(), $priority = '', $header = '') {
+	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '') {
 		$this->setBoundary();
 		
-		if (empty($from)) $from = array(MAIL_FROM_NAME => MAIL_FROM_ADDRESS);
+		if (empty($from)) $from = [MAIL_FROM_NAME => MAIL_FROM_ADDRESS];
 		if (empty($priority)) $priority = 3;
 		
 		$this->setFrom($from);
@@ -144,7 +143,7 @@ class Mail {
 		
 		$this->header .=
 			'X-Priority: 3'.self::$lineEnding
-			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding
+			.'X-Mailer: WoltLab Suite Mail Package'.self::$lineEnding
 			.'From: '.$this->getFrom().self::$lineEnding
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
 			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');
@@ -159,11 +158,7 @@ class Mail {
 			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$lineEnding;
 		}
 		
-		// until PHP 5.3.4 mb_send_mail() appends an extra MIME-Version header
-		// @see: https://bugs.php.net/bug.php?id=52681
-		if (MAIL_SEND_METHOD != 'php' || version_compare(PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION, '5.3.4', '>=')) {
-			$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
-		}
+		$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
 		
 		return $this->header;
 	}
@@ -245,11 +240,6 @@ class Mail {
 	 * @return	string
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
-		if (!empty($name) && MAIL_USE_FORMATTED_ADDRESS) {
-			if ($encodeName) $name = self::encodeMIMEHeader($name);
-			if (!preg_match('/^[a-z0-9 ]*$/i', $name)) return '"'.str_replace('"', '\"', $name).'" <'.$email.'>';
-			else return $name . ' <'.$email.'>';
-		}
 		return $email;
 	}
 	
@@ -345,7 +335,7 @@ class Mail {
 	}
 	
 	/**
-	 * Gets the sender of this mail.
+	 * Returns the sender of this mail.
 	 * 
 	 * @return	string
 	 */
@@ -446,7 +436,7 @@ class Mail {
 	 * @param	string		$name		filename
 	 */
 	public function addAttachment($path, $name = '') {
-		$this->attachments[] = array('path' => $path, 'name' => ($name ?: basename($path)));
+		$this->attachments[] = ['path' => $path, 'name' => $name ?: basename($path)];
 	}
 	
 	/**
@@ -515,7 +505,7 @@ class Mail {
 	/**
 	 * Sets the mail language.
 	 * 
-	 * @param	\wcf\data\language\Language	$language
+	 * @param	Language	$language
 	 */
 	public function setLanguage(Language $language) {
 		$this->language = $language;
@@ -524,7 +514,7 @@ class Mail {
 	/**
 	 * Returns the mail language.
 	 * 
-	 * @return	\wcf\data\language\Language
+	 * @return	Language
 	 */
 	public function getLanguage() {
 		if ($this->language === null) return WCF::getLanguage();
@@ -534,6 +524,9 @@ class Mail {
 	
 	/**
 	 * Encodes string for MIME header.
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function encodeMIMEHeader($string) {
 		if (function_exists('mb_encode_mimeheader')) {

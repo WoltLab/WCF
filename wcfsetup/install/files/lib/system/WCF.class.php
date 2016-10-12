@@ -5,26 +5,35 @@ use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
+use wcf\data\page\Page;
+use wcf\data\page\PageCache;
+use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\application\IApplication;
+use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\database\MySQLDatabase;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\ErrorException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\Request;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
+use wcf\system\template\EmailTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\util\ArrayUtil;
-use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -37,8 +46,8 @@ if (!@ini_get('date.timezone')) {
 	@date_default_timezone_set('Europe/London');
 }
 
-// define current wcf version
-define('WCF_VERSION', '2.1.11 (Typhoon)');
+// define current woltlab suite version
+define('WCF_VERSION', '3.0.0 Beta 2');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -46,53 +55,52 @@ define('TIME_NOW', time());
 // wcf imports
 if (!defined('NO_IMPORTS')) {
 	require_once(WCF_DIR.'lib/core.functions.php');
+	require_once(WCF_DIR.'lib/system/api/autoload.php');
 }
 
 /**
- * WCF is the central class for the community framework.
+ * WCF is the central class for the WoltLab Suite Core.
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var	array<\wcf\data\application\Application>
+	 * @var	Application[]
 	 */
-	protected static $applications = array();
+	protected static $applications = [];
 	
 	/**
 	 * list of currently loaded application objects
-	 * @var	array<\wcf\system\application\IApplication>
+	 * @var	IApplication[]
 	 */
-	protected static $applicationObjects = array();
+	protected static $applicationObjects = [];
 	
 	/**
 	 * list of autoload directories
 	 * @var	array
 	 */
-	protected static $autoloadDirectories = array();
+	protected static $autoloadDirectories = [];
 	
 	/**
 	 * list of unique instances of each core object
-	 * @var	array<\wcf\system\SingletonFactory>
+	 * @var	SingletonFactory[]
 	 */
-	protected static $coreObject = array();
+	protected static $coreObject = [];
 	
 	/**
 	 * list of cached core objects
-	 * @var	array<array>
+	 * @var	string[]
 	 */
-	protected static $coreObjectCache = array();
+	protected static $coreObjectCache = [];
 	
 	/**
 	 * database object
-	 * @var	\wcf\system\database\Database
+	 * @var	MySQLDatabase
 	 */
 	protected static $dbObj = null;
 	
@@ -110,13 +118,13 @@ class WCF {
 	
 	/**
 	 * session object
-	 * @var	\wcf\system\session\SessionHandler
+	 * @var	SessionHandler
 	 */
 	protected static $sessionObj = null;
 	
 	/**
 	 * template object
-	 * @var	\wcf\system\template\TemplateEngine
+	 * @var	TemplateEngine
 	 */
 	protected static $tplObj = null;
 	
@@ -137,7 +145,6 @@ class WCF {
 		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
-		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
 		$this->initSession();
@@ -152,22 +159,24 @@ class WCF {
 	}
 	
 	/**
-	 * Replacement of the "__destruct()" method.
-	 * Seems that under specific conditions (windows) the destructor is not called automatically.
-	 * So we use the php register_shutdown_function to register an own destructor method.
-	 * Flushs the output, closes caches and updates the session.
+	 * Flushes the output, closes the session, performs background tasks and more.
+	 * 
+	 * You *must* not create output in here under normal circumstances, as it might get eaten
+	 * when gzip is enabled.
 	 */
 	public static function destruct() {
 		try {
 			// database has to be initialized
 			if (!is_object(self::$dbObj)) return;
 			
-			// flush output
-			if (ob_get_level() && ini_get('output_handler')) {
-				ob_flush();
-			}
-			else {
+			$debug = self::debugModeIsEnabled(true);
+			if (!$debug) {
+				// flush output
+				if (ob_get_level()) ob_end_flush();
 				flush();
+				
+				// close connection if using FPM
+				if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
 			}
 			
 			// update session
@@ -184,41 +193,6 @@ class WCF {
 	}
 	
 	/**
-	 * Removes slashes in superglobal gpc data arrays if 'magic quotes gpc' is enabled.
-	 */
-	protected function initMagicQuotes() {
-		if (function_exists('get_magic_quotes_gpc')) {
-			if (@get_magic_quotes_gpc()) {
-				if (!empty($_REQUEST)) {
-					$_REQUEST = ArrayUtil::stripslashes($_REQUEST);
-				}
-				if (!empty($_POST)) {
-					$_POST = ArrayUtil::stripslashes($_POST);
-				}
-				if (!empty($_GET)) {
-					$_GET = ArrayUtil::stripslashes($_GET);
-				}
-				if (!empty($_COOKIE)) {
-					$_COOKIE = ArrayUtil::stripslashes($_COOKIE);
-				}
-				if (!empty($_FILES)) {
-					foreach ($_FILES as $name => $attributes) {
-						foreach ($attributes as $key => $value) {
-							if ($key != 'tmp_name') {
-								$_FILES[$name][$key] = ArrayUtil::stripslashes($value);
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		if (function_exists('set_magic_quotes_runtime')) {
-			@set_magic_quotes_runtime(0);
-		}
-	}
-	
-	/**
 	 * Returns the database object.
 	 * 
 	 * @return	\wcf\system\database\Database
@@ -230,7 +204,7 @@ class WCF {
 	/**
 	 * Returns the session object.
 	 * 
-	 * @return	\wcf\system\session\SessionHandler
+	 * @return	SessionHandler
 	 */
 	public static final function getSession() {
 		return self::$sessionObj;
@@ -257,7 +231,7 @@ class WCF {
 	/**
 	 * Returns the template object.
 	 * 
-	 * @return	\wcf\system\template\TemplateEngine
+	 * @return	TemplateEngine
 	 */
 	public static final function getTPL() {
 		return self::$tplObj;
@@ -269,45 +243,54 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		if (ob_get_level()) {
+			// discard any output generated before the exception occured, prevents exception
+			// being hidden inside HTML elements and therefore not visible in browser output
+			ob_clean();
+		}
+		
+		// backwards compatibility
+		if ($e instanceof IPrintableException) {
+			$e->show();
+			exit;
+		}
+		
+		@header('HTTP/1.1 503 Service Unavailable');
 		try {
-			if (!($e instanceof \Exception)) throw $e;
-			
-			if ($e instanceof IPrintableException) {
-				$e->show();
-				exit;
-			}
-			
-			// repack Exception
-			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
+			\wcf\functions\exception\printThrowable($e);
 		}
-		catch (\Throwable $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $exception->getTraceAsString()));
+		catch (\Throwable $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
+			echo "\n\nwas thrown while:\n\n";
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
-		catch (\Exception $exception) {
-			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $exception->getTraceAsString()));
+		catch (\Exception $e2) {
+			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
+			echo "\n\nwas thrown while:\n\n";
+			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
+			echo "\n\nwas handled.</pre>";
+			exit;
 		}
 	}
 	
 	/**
-	 * Catches php errors and throws instead a system exception.
+	 * Turns PHP errors into an ErrorException.
 	 * 
-	 * @param	integer		$errorNo
+	 * @param	integer		$severity
 	 * @param	string		$message
-	 * @param	string		$filename
-	 * @param	integer		$lineNo
+	 * @param	string		$file
+	 * @param	integer		$line
+	 * @throws	ErrorException
 	 */
-	public static final function handleError($errorNo, $message, $filename, $lineNo) {
-		if (error_reporting() != 0) {
-			$type = 'error';
-			switch ($errorNo) {
-				case 2: $type = 'warning';
-					break;
-				case 8: $type = 'notice';
-					break;
-			}
-			
-			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
-		}
+	public static final function handleError($severity, $message, $file, $line) {
+		// this is necessary for the shut-up operator
+		if (error_reporting() == 0) return;
+		
+		throw new ErrorException($message, 0, $severity, $file, $line);
 	}
 	
 	/**
@@ -317,11 +300,10 @@ class WCF {
 		// get configuration
 		$dbHost = $dbUser = $dbPassword = $dbName = '';
 		$dbPort = 0;
-		$dbClass = 'wcf\system\database\MySQLDatabase';
 		require(WCF_DIR.'config.inc.php');
 		
 		// create database connection
-		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+		self::$dbObj = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
 	}
 	
 	/**
@@ -335,6 +317,24 @@ class WCF {
 			OptionEditor::rebuild();
 		}
 		require_once($filename);
+		
+		// check if option file is complete and writable
+		if (PACKAGE_ID) {
+			if (!is_writable($filename)) {
+				FileUtil::makeWritable($filename);
+				
+				if (!is_writable($filename)) {
+					throw new SystemException("The option file '" . $filename . "' is not writable.");
+				}
+			}
+			
+			// check if a previous write operation was incomplete and force rebuilding
+			if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) {
+				OptionEditor::rebuild();
+				
+				require_once($filename);
+			}
+		}
 	}
 	
 	/**
@@ -345,6 +345,7 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
+		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
@@ -383,7 +384,8 @@ class WCF {
 			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		StyleHandler::getInstance()->changeStyle(self::getSession()->getStyleID());
+		$styleHandler = StyleHandler::getInstance();
+		$styleHandler->changeStyle(self::getSession()->getStyleID());
 	}
 	
 	/**
@@ -395,7 +397,7 @@ class WCF {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
 			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(self::getSession()->ipAddress), BLACKLIST_IP_ADDRESSES)) {
 				if ($isAjax) {
-					throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
 				else {
 					throw new PermissionDeniedException();
@@ -403,7 +405,7 @@ class WCF {
 			}
 			else if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
 				if ($isAjax) {
-					throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
 				else {
 					throw new PermissionDeniedException();
@@ -413,7 +415,7 @@ class WCF {
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
 			if (!StringUtil::executeWordFilter(self::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
 				if ($isAjax) {
-					throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
 				else {
 					throw new PermissionDeniedException();
@@ -423,7 +425,7 @@ class WCF {
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
 			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
 				if ($isAjax) {
-					throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
 				else {
 					throw new PermissionDeniedException();
@@ -447,49 +449,61 @@ class WCF {
 	 */
 	protected function initApplications() {
 		// step 1) load all applications
-		$loadedApplications = array();
+		$loadedApplications = [];
 		
 		// register WCF as application
-		self::$applications['wcf'] = ApplicationHandler::getInstance()->getWCF();
+		self::$applications['wcf'] = ApplicationHandler::getInstance()->getApplicationByID(1);
 		
-		if (PACKAGE_ID == 1) {
-			return;
+		if (!class_exists(WCFACP::class, false)) {
+			static::getTPL()->assign('baseHref', self::$applications['wcf']->getPageURL());
 		}
 		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$loadedApplications[] = $this->loadApplication($application);
-		
-		// register primary application
-		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		self::$applications[$abbreviation] = $application;
+		if ($application->packageID != 1) {
+			$loadedApplications[] = $this->loadApplication($application);
+			
+			// register primary application
+			$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+			self::$applications[$abbreviation] = $application;
+		}
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
+			if ($application->packageID == 1) {
+				// ignore WCF
+				continue;
+			}
+			else if ($application->isTainted) {
+				// ignore apps flagged for uninstallation
+				continue;
+			}
+			
 			$loadedApplications[] = $this->loadApplication($application, true);
 		}
 		
 		// step 2) run each application
 		if (!class_exists('wcf\system\WCFACP', false)) {
+			/** @var IApplication $application */
 			foreach ($loadedApplications as $application) {
 				$application->__run();
 			}
 			
 			// refresh the session 1 minute before it expires
-			self::getTPL()->assign('__sessionKeepAlive', (SESSION_TIMEOUT - 60));
+			self::getTPL()->assign('__sessionKeepAlive', SESSION_TIMEOUT - 60);
 		}
 	}
 	
 	/**
 	 * Loads an application.
 	 * 
-	 * @param	\wcf\data\application\Application		$application
-	 * @param	boolean						$isDependentApplication
-	 * @return	\wcf\system\application\IApplication
+	 * @param	Application		$application
+	 * @param	boolean			$isDependentApplication
+	 * @return	IApplication
+	 * @throws	SystemException
 	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
-		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		// package cache might be outdated
 		if ($package === null) {
@@ -504,15 +518,19 @@ class WCF {
 				throw new SystemException("application identified by package id '".$application->packageID."' is unknown");
 			}
 		}
-			
+		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
-		if (class_exists($className) && ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
+		if (class_exists($className) && is_subclass_of($className, IApplication::class)) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
+			if (!file_exists($configPath)) {
+				Package::writeConfigFile($package->packageID);
+			}
+			
 			if (file_exists($configPath)) {
 				require_once($configPath);
 			}
@@ -523,25 +541,27 @@ class WCF {
 			// register template path if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
 				// add template path and abbreviation
-				$this->getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
+				static::getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
 			}
+			EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
 			
 			// init application and assign it as template variable
-			self::$applicationObjects[$application->packageID] = call_user_func(array($className, 'getInstance'));
-			$this->getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
+			self::$applicationObjects[$application->packageID] = call_user_func([$className, 'getInstance']);
+			static::getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
+			EmailTemplateEngine::getInstance()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
+			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement '".IApplication::class."'.");
 		}
 		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
+			static::getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag
-			$this->getTPL()->assign('baseHref', $application->getPageURL());
+			static::getTPL()->assign('baseHref', $application->getPageURL());
 		}
 		
 		// register application
@@ -553,8 +573,8 @@ class WCF {
 	/**
 	 * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
 	 * 
-	 * @param	\wcf\data\application\Application	$application
-	 * @return	\wcf\system\application\IApplication
+	 * @param	Application	$application
+	 * @return	IApplication
 	 */
 	public static function getApplicationObject(Application $application) {
 		if (isset(self::$applicationObjects[$application->packageID])) {
@@ -596,11 +616,15 @@ class WCF {
 	 * Assigns some default variables to the template engine.
 	 */
 	protected function assignDefaultTemplateVariables() {
-		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
-		self::getTPL()->assign(array(
+		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang']);
+		self::getTPL()->assign([
 			'__wcf' => $this,
-			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated since 2.1, use LAST_UPDATE_TIME directly
-		));
+			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
+		]);
+		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
+		EmailTemplateEngine::getInstance()->assign([
+			'__wcf' => $this
+		]);
 	}
 	
 	/**
@@ -608,6 +632,7 @@ class WCF {
 	 * 
 	 * @param	string		$name
 	 * @return	mixed		value
+	 * @throws	SystemException
 	 */
 	public function __get($name) {
 		$method = 'get'.ucfirst($name);
@@ -619,13 +644,25 @@ class WCF {
 	}
 	
 	/**
+	 * Returns true if current application (WCF) is treated as active and was invoked directly.
+	 *
+	 * @return	boolean
+	 */
+	public function isActiveApplication() {
+		return (ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1);
+	}
+	
+	/**
 	 * Changes the active language.
 	 * 
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
+		if (!$languageID) $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+		
 		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
+		EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
 	}
 	
 	/**
@@ -651,7 +688,7 @@ class WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\WCF::__callStatic()
+	 * @inheritDoc
 	 */
 	public final function __call($name, array $arguments) {
 		// bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020
@@ -667,6 +704,8 @@ class WCF {
 	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
+	 * @return	object
+	 * @throws	SystemException
 	 */
 	public static final function __callStatic($name, array $arguments) {
 		$className = preg_replace('~^get~', '', $name);
@@ -681,11 +720,11 @@ class WCF {
 		}
 		
 		if (class_exists($objectName)) {
-			if (!(ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
-				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
+			if (!is_subclass_of($objectName, SingletonFactory::class)) {
+				throw new ParentClassException($objectName, SingletonFactory::class);
 			}
 			
-			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));
+			self::$coreObject[$className] = call_user_func([$objectName, 'getInstance']);
 			return self::$coreObject[$className];
 		}
 	}
@@ -763,39 +802,39 @@ class WCF {
 	}
 	
 	/**
+	 * Returns the currently active page or null if unknown.
+	 * 
+	 * @return Page|null
+	 */
+	public static function getActivePage() {
+		if (self::getActiveRequest() === null) {
+			return null;
+		}
+		
+		if (self::getActiveRequest()->getClassName() === CmsPage::class) {
+			$metaData = self::getActiveRequest()->getMetaData();
+			return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
+		}
+		
+		return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());
+	}
+	
+	/**
+	 * Returns the currently active request.
+	 * 
+	 * @return Request
+	 */
+	public static function getActiveRequest() {
+		return RequestHandler::getInstance()->getActiveRequest();
+	}
+	
+	/**
 	 * Returns the URI of the current page.
 	 * 
 	 * @return	string
 	 */
 	public static function getRequestURI() {
-		if (URL_LEGACY_MODE) {
-			// resolve path and query components
-			$scriptName = $_SERVER['SCRIPT_NAME'];
-			$pathInfo = RouteHandler::getPathInfo();
-			if (empty($pathInfo)) {
-				// bug fix if URL omits script name and path
-				$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
-			}
-			
-			$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
-			if (!StringUtil::isUTF8($path)) {
-				$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
-			}
-			$path = FileUtil::removeLeadingSlash($path);
-			$baseHref = self::getTPL()->get('baseHref');
-			
-			if (!empty($path) && mb_strpos($path, '?') !== 0) {
-				$baseHref .= 'index.php/';
-			}
-			
-			return $baseHref . $path;
-		}
-		else {
-			$url = preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1', self::getTPL()->get('baseHref'));
-			$url .= $_SERVER['REQUEST_URI'];
-			
-			return $url;
-		}
+		return preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1', self::getTPL()->get('baseHref')) . $_SERVER['REQUEST_URI'];
 	}
 	
 	/**
@@ -826,10 +865,20 @@ class WCF {
 	/**
 	 * Returns style handler.
 	 * 
-	 * @return	\wcf\system\style\StyleHandler
+	 * @return	StyleHandler
 	 */
 	public function getStyleHandler() {
 		return StyleHandler::getInstance();
+	}
+	
+	/**
+	 * Returns box handler.
+	 *
+	 * @return	BoxHandler
+	 * @since	3.0
+	 */
+	public function getBoxHandler() {
+		return BoxHandler::getInstance();
 	}
 	
 	/**
@@ -858,9 +907,9 @@ class WCF {
 	 */
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$wcf = ApplicationHandler::getInstance()->getWCF();
 		
-		if ($activeApplication->domainName != $primaryApplication->domainName) {
+		if ($activeApplication->domainName !== $wcf->domainName) {
 			if (file_exists(WCF_DIR.'images/favicon.ico')) {
 				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
 				
@@ -872,11 +921,24 @@ class WCF {
 	}
 	
 	/**
+	 * Returns true if currently active request represents the landing page.
+	 * 
+	 * @return	boolean
+	 */
+	public static function isLandingPage() {
+		if (self::getActiveRequest() === null) {
+			return false;
+		}
+		
+		return self::getActiveRequest()->isLandingPage();
+	}
+	
+	/**
 	 * Initialises the cronjobs.
 	 */
 	protected function initCronjobs() {
 		if (PACKAGE_ID) {
-			self::getTPL()->assign('executeCronjobs', (CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && !OFFLINE));
+			self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && !OFFLINE);
 		}
 	}
 }

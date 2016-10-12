@@ -6,6 +6,10 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.acl.simple</name>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.collapsibleContent</name>
 		</definition>
 		
@@ -15,7 +19,7 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.category</name>
-			<interfacename><![CDATA[wcf\system\category\ICategoryType]]></interfacename>
+			<interfacename>wcf\system\category\ICategoryType</interfacename>
 		</definition>
 		
 		<definition>
@@ -23,22 +27,18 @@
 		</definition>
 		
 		<definition>
-			<name>com.woltlab.wcf.versionableObject</name>
-		</definition>
-		
-		<definition>
 			<name>com.woltlab.wcf.attachment.objectType</name>
-			<interfacename><![CDATA[wcf\system\attachment\IAttachmentObjectType]]></interfacename>
+			<interfacename>wcf\system\attachment\IAttachmentObjectType</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.message.quote</name>
-			<interfacename><![CDATA[wcf\system\message\IMessageQuoteHandler]]></interfacename>
+			<interfacename>wcf\system\message\IMessageQuoteHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.user.recentActivityEvent</name>
-			<interfacename><![CDATA[wcf\system\user\activity\event\IUserActivityEvent]]></interfacename>
+			<interfacename>wcf\system\user\activity\event\IUserActivityEvent</interfacename>
 		</definition>
 		
 		<definition>
@@ -47,125 +47,116 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.notification.notificationType</name>
-			<interfacename><![CDATA[wcf\system\user\notification\type\IUserNotificationType]]></interfacename>
+			<interfacename>wcf\system\user\notification\type\IUserNotificationType</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.notification.objectType</name>
-			<interfacename><![CDATA[wcf\system\user\notification\object\type\IUserNotificationObjectType]]></interfacename>
-		</definition>
-		
-		<definition>
-			<name>com.woltlab.wcf.user.dashboardContainer</name>
-		</definition>
-		
-		<definition>
-			<name>com.woltlab.wcf.user.online.location</name>
-			<interfacename><![CDATA[wcf\system\user\online\location\IUserOnlineLocation]]></interfacename>
+			<interfacename>wcf\system\user\notification\object\type\IUserNotificationObjectType</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.user.objectWatch</name>
-			<interfacename><![CDATA[wcf\system\user\object\watch\IUserObjectWatch]]></interfacename>
+			<interfacename>wcf\system\user\object\watch\IUserObjectWatch</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.visitTracker.objectType</name>
-			<!-- <interfacename><![CDATA[wcf\system\visitTracker\IVisitTrackerObjectType]]></interfacename>-->
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.moderation.type</name>
-			<interfacename><![CDATA[wcf\system\moderation\queue\IModerationQueueManager]]></interfacename>
+			<interfacename>wcf\system\moderation\queue\IModerationQueueManager</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.moderation.activation</name>
-			<interfacename><![CDATA[wcf\system\moderation\queue\activation\IModerationQueueActivationHandler]]></interfacename>
+			<interfacename>wcf\system\moderation\queue\activation\IModerationQueueActivationHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.moderation.report</name>
-			<interfacename><![CDATA[wcf\system\moderation\queue\report\IModerationQueueReportHandler]]></interfacename>
+			<interfacename>wcf\system\moderation\queue\report\IModerationQueueReportHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.like.likeableObject</name>
-			<interfacename><![CDATA[wcf\data\like\ILikeObjectTypeProvider]]></interfacename>
+			<interfacename>wcf\data\like\ILikeObjectTypeProvider</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.edit.historySavingObject</name>
-			<interfacename><![CDATA[wcf\system\edit\IHistorySavingObjectTypeProvider]]></interfacename>
+			<interfacename>wcf\system\edit\IHistorySavingObjectTypeProvider</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.comment.commentableContent</name>
-			<interfacename><![CDATA[wcf\system\comment\manager\ICommentManager]]></interfacename>
+			<interfacename>wcf\system\comment\manager\ICommentManager</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.label.object</name>
-			<interfacename><![CDATA[wcf\system\label\object\ILabelObjectHandler]]></interfacename>
+			<interfacename>wcf\system\label\object\ILabelObjectHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.label.objectType</name>
-			<interfacename><![CDATA[wcf\system\label\object\type\ILabelObjectTypeHandler]]></interfacename>
+			<interfacename>wcf\system\label\object\type\ILabelObjectTypeHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.tagging.taggableObject</name>
-			<interfacename><![CDATA[wcf\system\tagging\ITaggable]]></interfacename>
+			<interfacename>wcf\system\tagging\ITaggable</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.deletedContent</name>
-			<interfacename><![CDATA[wcf\system\moderation\IDeletedContentProvider]]></interfacename>
+			<interfacename>wcf\system\moderation\IDeletedContentProvider</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.searchableObjectType</name>
-			<interfacename><![CDATA[wcf\system\search\ISearchableObjectType]]></interfacename>
+			<interfacename>wcf\system\search\ISearchableObjectType</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.poll</name>
-			<interfacename><![CDATA[wcf\system\poll\IPollHandler]]></interfacename>
+			<interfacename>wcf\system\poll\IPollHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.importer</name>
-			<interfacename><![CDATA[wcf\system\importer\IImporter]]></interfacename>
+			<interfacename>wcf\system\importer\IImporter</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.exporter</name>
-			<interfacename><![CDATA[wcf\system\exporter\IExporter]]></interfacename>
+			<interfacename>wcf\system\exporter\IExporter</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.rebuildData</name>
-			<interfacename><![CDATA[wcf\system\worker\IRebuildDataWorker]]></interfacename>
+			<interfacename>wcf\system\worker\IRebuildDataWorker</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.statDailyHandler</name>
-			<interfacename><![CDATA[wcf\system\stat\IStatDailyHandler]]></interfacename>
+			<interfacename>wcf\system\stat\IStatDailyHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.condition.userGroupAssignment</name>
-			<interfacename><![CDATA[wcf\system\condition\IUserCondition]]></interfacename>
-		</definition>
-		
-		<definition>
-			<name>com.woltlab.wcf.page</name>
+			<interfacename>wcf\system\condition\IUserCondition</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.condition.notice</name>
-			<interfacename><![CDATA[wcf\system\condition\IContentCondition]]></interfacename>
+			<interfacename>wcf\system\condition\IContentCondition</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.condition.userSearch</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		
 		<definition>
@@ -174,17 +165,17 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.condition.ad</name>
-			<interfacename><![CDATA[wcf\system\condition\IContentCondition]]></interfacename>
+			<interfacename>wcf\system\condition\IContentCondition</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.captcha</name>
-			<interfacename><![CDATA[wcf\system\captcha\ICaptchaHandler]]></interfacename>
+			<interfacename>wcf\system\captcha\ICaptchaHandler</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.message.embeddedObject</name>
-			<interfacename><![CDATA[wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler]]></interfacename>
+			<interfacename>wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler</interfacename>
 		</definition>
 		
 		<definition>
@@ -193,12 +184,58 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.payment.method</name>
-			<interfacename><![CDATA[wcf\system\payment\method\IPaymentMethod]]></interfacename>
+			<interfacename>wcf\system\payment\method\IPaymentMethod</interfacename>
 		</definition>
 		
 		<definition>
 			<name>com.woltlab.wcf.payment.type</name>
-			<interfacename><![CDATA[wcf\system\payment\type\IPaymentType]]></interfacename>
+			<interfacename>wcf\system\payment\type\IPaymentType</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessableObject</name>
+			<interfacename>wcf\system\bulk\processing\IBulkProcessableObjectType</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessing.user.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.bulkProcessing.user.action</name>
+			<interfacename>wcf\system\bulk\processing\IBulkProcessingAction</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.boxController</name>
+			<interfacename>wcf\system\box\IBoxController</interfacename>
+		</definition>
+		
+		<!-- box conditions -->
+		<definition>
+			<name>com.woltlab.wcf.box.articleList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+		<definition>
+			<name>com.woltlab.wcf.box.recentActivityList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+		<!-- /box conditions -->
+		
+		<!-- deprecated -->
+		<definition>
+			<name>com.woltlab.wcf.page</name>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.online.location</name>
+			<interfacename>wcf\system\user\online\location\IUserOnlineLocation</interfacename>
+		</definition>
+		<!-- /deprecated -->
 	</import>
+	
+	<delete>
+		<definition name="com.woltlab.wcf.versionableObject" />
+	</delete>
 </data>

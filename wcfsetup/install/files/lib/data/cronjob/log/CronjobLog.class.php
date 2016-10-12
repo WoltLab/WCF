@@ -3,23 +3,22 @@ namespace wcf\data\cronjob\log;
 use wcf\data\DatabaseObject;
 
 /**
- * Represents a croniob log.
+ * Represents a cronjob execution log.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.cronjob.log
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Cronjob\Log
+ *
+ * @property-read	integer		$cronjobLogID	unique id of the cronjob execution log
+ * @property-read	integer		$cronjobID	id of the cronjob the log belongs to
+ * @property-read	integer		$execTime	timestamp at which the cronjob has been executed
+ * @property-read	integer		$success	is `1` if the cronjob has been successfully executed, otherwise `0`
+ * @property-read	string		$error		error message if the cronjob did not execute successfully, otherwise empty
  */
 class CronjobLog extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'cronjob_log';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'cronjobLogID';
 }

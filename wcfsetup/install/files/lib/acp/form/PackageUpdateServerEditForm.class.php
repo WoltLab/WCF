@@ -10,11 +10,9 @@ use wcf\system\WCF;
  * Shows the server edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	/**
@@ -25,12 +23,12 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	
 	/**
 	 * active package update server
-	 * @var	\wcf\data\package\update\server\PackageUpdateServer
+	 * @var	PackageUpdateServer
 	 */
 	public $updateServer = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -43,17 +41,17 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array_merge($this->additionalFields, array(
+		$this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update', ['data' => array_merge($this->additionalFields, [
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -62,7 +60,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -75,15 +73,15 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 			
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'packageUpdateServerID' => $this->packageUpdateServerID,
 			'packageUpdateServer' => $this->updateServer,
 			'action' => 'edit'
-		));
+		]);
 	}
 }

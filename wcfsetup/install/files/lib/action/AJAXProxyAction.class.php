@@ -1,21 +1,18 @@
 <?php
 namespace wcf\action;
-use wcf\data\IStorableObject;
-use wcf\system\exception\SystemException;
+use wcf\data\IDatabaseObjectAction;
+use wcf\system\exception\ImplementationException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
  * Default implementation for object-actions using the AJAX-API.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	action
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Action
  */
 class AJAXProxyAction extends AJAXInvokeAction {
 	/**
@@ -26,24 +23,24 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * object action
-	 * @var	\wcf\data\IDatabaseObjectAction
+	 * @var	IDatabaseObjectAction
 	 */
 	protected $objectAction = null;
 	
 	/**
 	 * list of object ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	protected $objectIDs = array();
+	protected $objectIDs = [];
 	
 	/**
 	 * additional parameters
-	 * @var	array<mixed>
+	 * @var	mixed[]
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
-	 * @see	\wcf\action\IAction::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -54,16 +51,16 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * @see	\wcf\action\IAction::execute()
+	 * @inheritDoc
 	 */
 	protected function invoke() {
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {
-			throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectAction'");
+		if (!is_subclass_of($this->className, IDatabaseObjectAction::class)) {
+			throw new ImplementationException($this->className, IDatabaseObjectAction::class);
 		}
 		
 		if (!empty($this->interfaceName)) {
-			if (!ClassUtil::isInstanceOf($this->className, $this->interfaceName)) {
-				throw new SystemException("'".$this->className."' does not implement '".$this->interfaceName."'");
+			if (!is_subclass_of($this->className, $this->interfaceName)) {
+				throw new ImplementationException($this->className, $this->interfaceName);
 			}
 		}
 		
@@ -75,44 +72,25 @@ class AJAXProxyAction extends AJAXInvokeAction {
 		
 		// execute action
 		$this->response = $this->objectAction->executeAction();
-		if (isset($this->response['returnValues'])) {
-			$this->response['returnValues'] = $this->getData($this->response['returnValues']);
-		}
 	}
 	
 	/**
-	 * @deprecated	This function makes it too easy to accidentally expose private information.
-	 * 		It will be removed in Community Framework 2.2.
-	 * 		Consider using \JsonSerializable beginning with Community Framework 2.2.
-	 */
-	protected function getData($response) {
-		if ($response instanceof IStorableObject) {
-			return $response->getData();
-		}
-		if (is_array($response)) {
-			foreach ($response as &$object) {
-				$object = $this->getData($object);
-			}
-			unset($object);
-		}
-		return $response;
-	}
-	
-	/**
-	 * @see	\wcf\action\AJAXInvokeAction::sendResponse()
+	 * @inheritDoc
 	 */
 	protected function sendResponse() {
 		// add benchmark and debug data
 		if (ENABLE_BENCHMARK) {
-			$this->response['benchmark'] = array(
+			/** @noinspection PhpUndefinedMethodInspection */
+			$this->response['benchmark'] = [
 				'executionTime' => WCF::getBenchmark()->getExecutionTime().'s',
 				'memoryUsage' => WCF::getBenchmark()->getMemoryUsage(),
 				'phpExecution' => StringUtil::formatNumeric((WCF::getBenchmark()->getExecutionTime() - WCF::getBenchmark()->getQueryExecutionTime()) / WCF::getBenchmark()->getExecutionTime() * 100).'%',
 				'sqlExecution' => StringUtil::formatNumeric(WCF::getBenchmark()->getQueryExecutionTime() / WCF::getBenchmark()->getExecutionTime() * 100).'%',
 				'sqlQueries' => WCF::getBenchmark()->getQueryCount()
-			);
+			];
 			
 			if (ENABLE_DEBUG_MODE) {
+				/** @noinspection PhpUndefinedMethodInspection */
 				$this->response['benchmark']['items'] = WCF::getBenchmark()->getItems();
 			}
 		}

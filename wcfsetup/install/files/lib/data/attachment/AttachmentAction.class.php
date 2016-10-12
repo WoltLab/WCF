@@ -2,44 +2,47 @@
 namespace wcf\data\attachment;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISortableAction;
+use wcf\data\IUploadAction;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
+use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 
 /**
  * Executes attachment-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.attachment
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Attachment
+ * 
+ * @method	Attachment		create()
+ * @method	AttachmentEditor[]	getObjects()
+ * @method	AttachmentEditor	getSingleObject()
  */
-class AttachmentAction extends AbstractDatabaseObjectAction {
+class AttachmentAction extends AbstractDatabaseObjectAction implements ISortableAction, IUploadAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = array('delete', 'updatePosition', 'upload');
+	protected $allowGuestAccess = ['delete', 'updatePosition', 'upload'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\attachment\AttachmentEditor';
+	protected $className = AttachmentEditor::class;
 	
 	/**
 	 * current attachment object, used to communicate with event listeners
-	 * @var	\wcf\data\attachment\Attachment
+	 * @var	Attachment
 	 */
 	public $eventAttachment = null;
 	
@@ -47,10 +50,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	 * current data, used to communicate with event listeners.
 	 * @var	array
 	 */
-	public $eventData = array();
+	public $eventData = [];
 	
 	/**
-	 * Validates the delete action.
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		// read objects
@@ -62,7 +65,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		foreach ($this->objects as $attachment) {
+		foreach ($this->getObjects() as $attachment) {
 			if ($attachment->tmpHash) {
 				if ($attachment->userID != WCF::getUser()->userID) {
 					throw new PermissionDeniedException();
@@ -75,15 +78,15 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates the upload action.
+	 * @inheritDoc
 	 */
 	public function validateUpload() {
 		// IE<10 fallback
 		if (isset($_POST['isFallback'])) {
-			$this->parameters['objectType'] = (isset($_POST['objectType'])) ? $_POST['objectType'] : '';
-			$this->parameters['objectID'] = (isset($_POST['objectID'])) ? $_POST['objectID'] : 0;
-			$this->parameters['parentObjectID'] = (isset($_POST['parentObjectID'])) ? $_POST['parentObjectID'] : 0;
-			$this->parameters['tmpHash'] = (isset($_POST['tmpHash'])) ? $_POST['tmpHash'] : '';
+			$this->parameters['objectType'] = isset($_POST['objectType']) ? $_POST['objectType'] : '';
+			$this->parameters['objectID'] = isset($_POST['objectID']) ? $_POST['objectID'] : 0;
+			$this->parameters['parentObjectID'] = isset($_POST['parentObjectID']) ? $_POST['parentObjectID'] : 0;
+			$this->parameters['tmpHash'] = isset($_POST['tmpHash']) ? $_POST['tmpHash'] : '';
 		}
 		
 		// read variables
@@ -108,163 +111,47 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		
 		// check max count of uploads
 		$handler = new AttachmentHandler($this->parameters['objectType'], intval($this->parameters['objectID']), $this->parameters['tmpHash']);
+		/** @noinspection PhpUndefinedMethodInspection */
 		if ($handler->count() + count($this->parameters['__files']->getFiles()) > $processor->getMaxCount()) {
-			throw new UserInputException('files', 'exceededQuota', array(
+			throw new UserInputException('files', 'exceededQuota', [
 				'current' => $handler->count(),
 				'quota' => $processor->getMaxCount()
-			));
+			]);
 		}
 		
 		// check max filesize, allowed file extensions etc.
+		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy($processor->getMaxSize(), $processor->getAllowedExtensions()));
 	}
 	
 	/**
-	 * Handles uploaded attachments.
+	 * @inheritDoc
 	 */
 	public function upload() {
 		// get object type
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $this->parameters['objectType']);
 		
 		// save files
-		$thumbnails = $attachments = $failedUploads = array();
-		$files = $this->parameters['__files']->getFiles();
-		foreach ($files as $file) {
-			if ($file->getValidationErrorType()) {
-				$failedUploads[] = $file;
-				continue;
-			}
-			
-			$data = array(
-				'objectTypeID' => $objectType->objectTypeID,
-				'objectID' => intval($this->parameters['objectID']),
-				'userID' => (WCF::getUser()->userID ?: null),
-				'tmpHash' => (!$this->parameters['objectID'] ? $this->parameters['tmpHash'] : ''),
-				'filename' => $file->getFilename(),
-				'filesize' => $file->getFilesize(),
-				'fileType' => $file->getMimeType(),
-				'fileHash' => sha1_file($file->getLocation()),
-				'uploadTime' => TIME_NOW
-			);
-			
-			// get image data
-			if (($imageData = $file->getImageData()) !== null) {
-				$data['width'] = $imageData['width'];
-				$data['height'] = $imageData['height'];
-				$data['fileType'] = $imageData['mimeType'];
-				
-				if (preg_match('~^image/(gif|jpe?g|png)$~i', $data['fileType'])) {
-					$data['isImage'] = 1;
-				}
-			}
-			
-			// create attachment
-			$attachment = AttachmentEditor::create($data);
-			
-			// check attachment directory
-			// and create subdirectory if necessary
-			$dir = dirname($attachment->getLocation());
-			if (!@file_exists($dir)) {
-				FileUtil::makePath($dir, 0777);
-			}
-			
-			// move uploaded file
-			if (@move_uploaded_file($file->getLocation(), $attachment->getLocation())) {
-				try {
-					if ($attachment->isImage) {
-						// rotate image based on the exif data
-						$neededMemory = $attachment->width * $attachment->height * ($attachment->fileType == 'image/png' ? 4 : 3) * 2.1;
-						if (FileUtil::getMemoryLimit() == -1 || FileUtil::getMemoryLimit() > (memory_get_usage() + $neededMemory)) {
-							$exifData = ExifUtil::getExifData($attachment->getLocation());
-							if (!empty($exifData)) {
-								$orientation = ExifUtil::getOrientation($exifData);
-								if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
-									$adapter = ImageHandler::getInstance()->getAdapter();
-									$adapter->loadFile($attachment->getLocation());
-									
-									$newImage = null;
-									switch ($orientation) {
-										case ExifUtil::ORIENTATION_180_ROTATE:
-											$newImage = $adapter->rotate(180);
-										break;
-										
-										case ExifUtil::ORIENTATION_90_ROTATE:
-											$newImage = $adapter->rotate(90);
-										break;
-										
-										case ExifUtil::ORIENTATION_270_ROTATE:
-											$newImage = $adapter->rotate(270);
-										break;
-										
-										case ExifUtil::ORIENTATION_HORIZONTAL_FLIP:
-										case ExifUtil::ORIENTATION_VERTICAL_FLIP:
-										case ExifUtil::ORIENTATION_VERTICAL_FLIP_270_ROTATE:
-										case ExifUtil::ORIENTATION_HORIZONTAL_FLIP_270_ROTATE:
-											// unsupported
-										break;
-									}
-									
-									if ($newImage !== null) {
-										$adapter->load($newImage, $adapter->getType());
-									}
-									
-									$adapter->writeImage($attachment->getLocation());
-									
-									if ($newImage !== null) {
-										// update width, height and filesize of the attachment
-										if ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE) {
-											$attachmentEditor = new AttachmentEditor($attachment);
-											$attachmentEditor->update(array(
-												'height' => $attachment->width,
-												'width' => $attachment->height,
-												'filesize' => filesize($attachment->getLocation())
-											));
-										}
-									}
-								}
-							}
-						}
-						
-						$thumbnails[] = $attachment;
-					}
-					else {
-						// check whether we can create thumbnails for this file
-						$this->eventAttachment = $attachment;
-						$this->eventData = array('hasThumbnail' => false);
-						EventHandler::getInstance()->fireAction($this, 'checkThumbnail');
-						if ($this->eventData['hasThumbnail']) $thumbnails[] = $attachment;
-					}
-					$attachments[$file->getInternalFileID()] = $attachment;
-				}
-				catch (SystemException $e) {
-					// processing failed; delete attachment
-					$editor = new AttachmentEditor($attachment);
-					$editor->delete();
-					
-					// log error
-					$e->getExceptionID();
-				}
-			}
-			else {
-				// moving failed; delete attachment
-				$editor = new AttachmentEditor($attachment);
-				$editor->delete();
-			}
-		}
+		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
+			'generateThumbnails' => ATTACHMENT_ENABLE_THUMBNAILS,
+			'rotateImages' => true
+		], [
+			'objectID' => intval($this->parameters['objectID']),
+			'objectTypeID' => $objectType->objectTypeID,
+			'tmpHash' => !$this->parameters['objectID'] ? $this->parameters['tmpHash'] : ''
+		]);
 		
-		// generate thumbnails
-		if (ATTACHMENT_ENABLE_THUMBNAILS) {
-			if (!empty($thumbnails)) {
-				$action = new AttachmentAction($thumbnails, 'generateThumbnails');
-				$action->executeAction();
-			}
-		}
+		/** @noinspection PhpUndefinedMethodInspection */
+		$this->parameters['__files']->saveFiles($saveStrategy);
+		
+		/** @var Attachment[] $attachments */
+		$attachments = $saveStrategy->getObjects();
 		
 		// return result
-		$result = array('attachments' => array(), 'errors' => array());
+		$result = ['attachments' => [], 'errors' => []];
 		if (!empty($attachments)) {
 			// get attachment ids
-			$attachmentIDs = $attachmentToFileID = array();
+			$attachmentIDs = $attachmentToFileID = [];
 			foreach ($attachments as $internalFileID => $attachment) {
 				$attachmentIDs[] = $attachment->attachmentID;
 				$attachmentToFileID[$attachment->attachmentID] = $internalFileID;
@@ -272,31 +159,36 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			
 			// get attachments from database (check thumbnail status)
 			$attachmentList = new AttachmentList();
-			$attachmentList->getConditionBuilder()->add('attachment.attachmentID IN (?)', array($attachmentIDs));
+			$attachmentList->setObjectIDs($attachmentIDs);
 			$attachmentList->readObjects();
 			
 			foreach ($attachmentList as $attachment) {
-				$result['attachments'][$attachmentToFileID[$attachment->attachmentID]] = array(
+				$result['attachments'][$attachmentToFileID[$attachment->attachmentID]] = [
 					'filename' => $attachment->filename,
 					'filesize' => $attachment->filesize,
 					'formattedFilesize' => FileUtil::formatFilesize($attachment->filesize),
 					'isImage' => $attachment->isImage,
 					'attachmentID' => $attachment->attachmentID,
-					'tinyURL' => ($attachment->tinyThumbnailType ? LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment), 'tiny=1') : ''),
-					'thumbnailURL' => ($attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment), 'thumbnail=1') : ''),
-					'url' => LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment)),
+					'tinyURL' => $attachment->tinyThumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'tiny=1') : '',
+					'thumbnailURL' => $attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'thumbnail=1') : '',
+					'url' => LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]),
 					'height' => $attachment->height,
 					'width' => $attachment->width
-				);
+				];
 			}
 		}
 		
-		foreach ($failedUploads as $failedUpload) {
-			$result['errors'][$failedUpload->getInternalFileID()] = array(
-				'filename' => $failedUpload->getFilename(),
-				'filesize' => $failedUpload->getFilesize(),
-				'errorType' => $failedUpload->getValidationErrorType()
-			);
+		/** @noinspection PhpUndefinedMethodInspection */
+		/** @var UploadFile[] $files */
+		$files = $this->parameters['__files']->getFiles();
+		foreach ($files as $file) {
+			if ($file->getValidationErrorType()) {
+				$result['errors'][$file->getInternalFileID()] = [
+					'filename' => $file->getFilename(),
+					'filesize' => $file->getFilesize(),
+					'errorType' => $file->getValidationErrorType()
+				];
+			}
 		}
 		
 		return $result;
@@ -310,11 +202,13 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $attachment) {
+		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class);
+		
+		foreach ($this->getObjects() as $attachment) {
 			if (!$attachment->isImage) {
 				// create thumbnails for every file that isn't an image
 				$this->eventAttachment = $attachment;
-				$this->eventData = array();
+				$this->eventData = [];
 				
 				EventHandler::getInstance()->fireAction($this, 'generateThumbnail');
 				
@@ -325,68 +219,12 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				continue;
 			}
 			
-			if ($attachment->width <= 144 && $attachment->height < 144) {
-				continue; // image smaller than thumbnail size; skip
-			}
-			
-			$adapter = ImageHandler::getInstance()->getAdapter();
-			
-			// check memory limit
-			$neededMemory = $attachment->width * $attachment->height * ($attachment->fileType == 'image/png' ? 4 : 3) * 2.1;
-			if (FileUtil::getMemoryLimit() != -1 && FileUtil::getMemoryLimit() < (memory_get_usage() + $neededMemory)) {
-				continue;
-			}
-			
-			$adapter->loadFile($attachment->getLocation());
-			$updateData = array();
-			// remove / reset old thumbnails
-			if ($attachment->tinyThumbnailType) {
-				@unlink($attachment->getTinyThumbnailLocation());
-				$updateData['tinyThumbnailType'] = '';
-				$updateData['tinyThumbnailSize'] = 0;
-				$updateData['tinyThumbnailWidth'] = 0;
-				$updateData['tinyThumbnailHeight'] = 0;
-			}
-			if ($attachment->thumbnailType) {
-				@unlink($attachment->getThumbnailLocation());
-				$updateData['thumbnailType'] = '';
-				$updateData['thumbnailSize'] = 0;
-				$updateData['thumbnailWidth'] = 0;
-				$updateData['thumbnailHeight'] = 0;
-			}
-			
-			// create tiny thumbnail
-			$tinyThumbnailLocation = $attachment->getTinyThumbnailLocation();
-			$thumbnail = $adapter->createThumbnail(144, 144, false);
-			$adapter->writeImage($thumbnail, $tinyThumbnailLocation);
-			if (file_exists($tinyThumbnailLocation) && ($imageData = @getImageSize($tinyThumbnailLocation)) !== false) {
-				$updateData['tinyThumbnailType'] = $imageData['mime'];
-				$updateData['tinyThumbnailSize'] = @filesize($tinyThumbnailLocation);
-				$updateData['tinyThumbnailWidth'] = $imageData[0];
-				$updateData['tinyThumbnailHeight'] = $imageData[1];
-			}
-			
-			// create standard thumbnail
-			if ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT) {
-				$thumbnailLocation = $attachment->getThumbnailLocation();
-				$thumbnail = $adapter->createThumbnail(ATTACHMENT_THUMBNAIL_WIDTH, ATTACHMENT_THUMBNAIL_HEIGHT, ATTACHMENT_RETAIN_DIMENSIONS);
-				$adapter->writeImage($thumbnail, $thumbnailLocation);
-				if (file_exists($thumbnailLocation) && ($imageData = @getImageSize($thumbnailLocation)) !== false) {
-					$updateData['thumbnailType'] = $imageData['mime'];
-					$updateData['thumbnailSize'] = @filesize($thumbnailLocation);
-					$updateData['thumbnailWidth'] = $imageData[0];
-					$updateData['thumbnailHeight'] = $imageData[1];
-				}
-			}
-			
-			if (!empty($updateData)) {
-				$attachment->update($updateData);
-			}
+			$saveStrategy->generateThumbnails($attachment->getDecoratedObject());
 		}
 	}
 	
 	/**
-	 * Validates parameters to update the attachments show order.
+	 * @inheritDoc
 	 */
 	public function validateUpdatePosition() {
 		$this->readInteger('objectID', true);
@@ -417,16 +255,15 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		$this->parameters['attachmentIDs'] = ArrayUtil::toIntegerArray($this->parameters['attachmentIDs']);
 		
 		// check attachment ids
-		$attachmentIDs = array();
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("attachmentID IN (?)", array($this->parameters['attachmentIDs']));
-		$conditions->add("objectTypeID = ?", array($objectType->objectTypeID));
+		$conditions->add("attachmentID IN (?)", [$this->parameters['attachmentIDs']]);
+		$conditions->add("objectTypeID = ?", [$objectType->objectTypeID]);
 		
 		if (!empty($this->parameters['objectID'])) {
-			$conditions->add("objectID = ?", array($this->parameters['objectID']));
+			$conditions->add("objectID = ?", [$this->parameters['objectID']]);
 		}
 		else {
-			$conditions->add("tmpHash = ?", array($this->parameters['tmpHash']));
+			$conditions->add("tmpHash = ?", [$this->parameters['tmpHash']]);
 		}
 		
 		$sql = "SELECT	attachmentID
@@ -434,9 +271,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$attachmentIDs[] = $row['attachmentID'];
-		}
+		$attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		foreach ($this->parameters['attachmentIDs'] as $attachmentID) {
 			if (!in_array($attachmentID, $attachmentIDs)) {
@@ -446,7 +281,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Updates the attachments show order.
+	 * @inheritDoc
 	 */
 	public function updatePosition() {
 		$sql = "UPDATE	wcf".WCF_N."_attachment
@@ -457,10 +292,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		WCF::getDB()->beginTransaction();
 		$showOrder = 1;
 		foreach ($this->parameters['attachmentIDs'] as $attachmentID) {
-			$statement->execute(array(
+			$statement->execute([
 				$showOrder++,
 				$attachmentID
-			));
+			]);
 		}
 		WCF::getDB()->commitTransaction();
 	}
@@ -473,13 +308,13 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		$targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $this->parameters['targetObjectType']);
 		
 		$attachmentList = new AttachmentList();
-		$attachmentList->getConditionBuilder()->add("attachment.objectTypeID = ?", array($sourceObjectType->objectTypeID));
-		$attachmentList->getConditionBuilder()->add("attachment.objectID = ?", array($this->parameters['sourceObjectID']));
+		$attachmentList->getConditionBuilder()->add("attachment.objectTypeID = ?", [$sourceObjectType->objectTypeID]);
+		$attachmentList->getConditionBuilder()->add("attachment.objectID = ?", [$this->parameters['sourceObjectID']]);
 		$attachmentList->readObjects();
 		
-		$newAttachmentIDs = array();
+		$newAttachmentIDs = [];
 		foreach ($attachmentList as $attachment) {
-			$newAttachment = AttachmentEditor::create(array(
+			$newAttachment = AttachmentEditor::create([
 				'objectTypeID' => $targetObjectType->objectTypeID,
 				'objectID' => $this->parameters['targetObjectID'],
 				'userID' => $attachment->userID,
@@ -502,7 +337,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				'lastDownloadTime' => $attachment->lastDownloadTime,
 				'uploadTime' => $attachment->uploadTime,
 				'showOrder' => $attachment->showOrder
-			));
+			]);
 			
 			// copy attachment
 			@copy($attachment->getLocation(), $newAttachment->getLocation());
@@ -517,8 +352,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			$newAttachmentIDs[$attachment->attachmentID] = $newAttachment->attachmentID;
 		}
 		
-		return array(
+		return [
 			'attachmentIDs' => $newAttachmentIDs
-		);
+		];
 	}
 }

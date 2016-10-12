@@ -1,0 +1,39 @@
+.redactor-editor woltlab-spoiler {
+	background-color: $wcfContentBackground;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	border-radius: 2px;
+	display: block;
+	margin: 1em 0;
+	padding: 10px 20px;
+	position: relative;
+	
+	&:not(.redactorCalcHeight)::before {
+		color: $wcfContentLink;
+		content: attr(data-title);
+		cursor: pointer;
+		display: block;
+		margin-bottom: 20px;
+		
+		@include wcfFontHeadline;
+	}
+}
+
+.spoilerBox {
+	clear: both;
+	margin: 1em 0;
+	
+	> .spoilerBoxContent {
+		background-color: $wcfContentBackground;
+		box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+		padding: 10px 20px;
+		margin-top: 10px;
+		
+		> p:first-child {
+			margin-top: 0;
+		}
+		
+		> p:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

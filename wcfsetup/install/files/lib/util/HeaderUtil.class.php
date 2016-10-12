@@ -2,6 +2,7 @@
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
@@ -9,11 +10,9 @@ use wcf\system\WCF;
  * Contains header-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Util
  */
 final class HeaderUtil {
 	/**
@@ -36,12 +35,16 @@ final class HeaderUtil {
 	
 	/**
 	 * Alias to php setcookie() function.
+	 * 
+	 * @param	string		$name
+	 * @param	string		$value
+	 * @param	integer		$expire
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		$addDomain = (mb_strpos($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
 		
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path='.$application->cookiePath.($addDomain ? '; domain='.$application->cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
+		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$application->cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
 	}
 	
 	/**
@@ -52,12 +55,8 @@ final class HeaderUtil {
 		@header('Content-Type: text/html; charset=UTF-8');
 		
 		// send no cache headers
-		if (HTTP_ENABLE_NO_CACHE_HEADERS && !WCF::getSession()->spiderID) {
+		if (!PACKAGE_ID || !WCF::getSession()->spiderID) {
 			self::sendNoCacheHeaders();
-		}
-		else if (!empty($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox') !== false) {
-			// Firefox serves pages from cache, causing certain HTML elements to stay in an outdated state
-			@header('Cache-Control: no-store');
 		}
 		
 		if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
@@ -81,7 +80,7 @@ final class HeaderUtil {
 			@header('X-Frame-Options: SAMEORIGIN');
 		}
 		
-		ob_start(array('wcf\util\HeaderUtil', 'parseOutput'));
+		ob_start([self::class, 'parseOutput']);
 	}
 	
 	/**
@@ -90,7 +89,7 @@ final class HeaderUtil {
 	public static function sendNoCacheHeaders() {
 		@header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		@header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-		@header('Cache-Control: no-cache, must-revalidate');
+		@header('Cache-Control: max-age=0, no-cache, no-store, must-revalidate');
 		@header('Pragma: no-cache');
 	}
 	
@@ -103,12 +102,17 @@ final class HeaderUtil {
 	public static function parseOutput($output) {
 		self::$output = $output;
 		
+		if (!PACKAGE_ID || RequestHandler::getInstance()->isACPRequest()) {
+			// force javascript relocation
+			self::$output = preg_replace('~<script([^>]*)>~', '<script data-relocate="true"\\1>', self::$output);
+		}
+		
 		// move script tags to the bottom of the page
-		$javascript = array();
-		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?)</script>(?P<conditionAfter>\s*<!\[ENDIF]-->)?~s', function($matches) use (&$javascript) {
+		$javascript = [];
+		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?</script>\s*)(?P<conditionAfter><!\[ENDIF]-->\s*)?~s', function($matches) use (&$javascript) {
 			$match = '';
 			if (isset($matches['conditionBefore'])) $match .= $matches['conditionBefore'];
-			$match .= '<script' . $matches['script'] . '</script>';
+			$match .= '<script' . $matches['script'];
 			if (isset($matches['conditionAfter'])) $match .= $matches['conditionAfter'];
 			
 			$javascript[] = $match;
@@ -120,7 +124,7 @@ final class HeaderUtil {
 		// 3rd party plugins may differ the actual output before it is sent to the browser
 		// please be aware, that $eventObj is not available here due to this being a static
 		// class. Use HeaderUtil::$output to modify it.
-		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction('wcf\util\HeaderUtil', 'parseOutput');
+		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
 		
 		// gzip compression
 		if (self::$enableGzipCompression) {
@@ -139,14 +143,18 @@ final class HeaderUtil {
 	}
 	
 	/**
-	 * Redirects the user agent.
+	 * Redirects the user agent to given location.
 	 * 
 	 * @param	string		$location
 	 * @param	boolean		$sendStatusCode
+	 * @param	boolean		$temporaryRedirect 
 	 */
-	public static function redirect($location, $sendStatusCode = false) {
-		//if ($sendStatusCode) @header('HTTP/1.0 301 Moved Permanently');
-		if ($sendStatusCode) @header('HTTP/1.1 307 Temporary Redirect');
+	public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true) {
+		if ($sendStatusCode) {
+			if ($temporaryRedirect) @header('HTTP/1.1 307 Temporary Redirect');
+			else @header('HTTP/1.0 301 Moved Permanently');
+		}
+		
 		header('Location: '.$location);
 	}
 	
@@ -159,16 +167,21 @@ final class HeaderUtil {
 	 * @param	string		$status
 	 */
 	public static function delayedRedirect($location, $message, $delay = 5, $status = 'success') {
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'url' => $location,
 			'message' => $message,
 			'wait' => $delay,
 			'templateName' => 'redirect',
 			'templateNameApplication' => 'wcf',
 			'status' => $status
-		));
+		]);
 		WCF::getTPL()->display('redirect');
 	}
 	
-	private function __construct() { }
+	/**
+	 * Forbid creation of HeaderUtil objects.
+	 */
+	private function __construct() {
+		// does nothing
+	}
 }

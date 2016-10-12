@@ -6,15 +6,13 @@ use wcf\system\WCF;
  * Caches clipboard pages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.builder
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Builder
  */
 class ClipboardPageCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
 		$sql = "SELECT	pageClassName, actionID
@@ -22,15 +20,6 @@ class ClipboardPageCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$data = array();
-		while ($row = $statement->fetchArray()) {
-			if (!isset($data[$row['pageClassName']])) {
-				$data[$row['pageClassName']] = array();
-			}
-			
-			$data[$row['pageClassName']][] = $row['actionID'];
-		}
-		
-		return $data;
+		return $statement->fetchMap('pageClassName', 'actionID', false);
 	}
 }

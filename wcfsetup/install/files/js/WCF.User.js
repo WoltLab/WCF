@@ -4,7 +4,7 @@
  * User-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -183,6 +183,7 @@ WCF.User.Panel.Abstract = Class.extend({
 		});
 		
 		this._triggerElement.click($.proxy(this.toggle, this));
+		
 		if (this._options.showAllLink) {
 			this._triggerElement.dblclick($.proxy(this._dblClick, this));
 		}
@@ -201,11 +202,13 @@ WCF.User.Panel.Abstract = Class.extend({
 	/**
 	 * Toggles the interactive dropdown.
 	 * 
-	 * @param	object		event
-	 * @return	boolean
+	 * @param	{Event?}	event
+	 * @return	{boolean}
 	 */
 	toggle: function(event) {
-		event.preventDefault();
+		if (event instanceof Event) {
+			event.preventDefault();
+		}
 		
 		if (this._dropdown === null) {
 			this._dropdown = this._initDropdown();
@@ -281,7 +284,7 @@ WCF.User.Panel.Abstract = Class.extend({
 			if (this._options.enableMarkAsRead) {
 				var $outstandingItems = this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding');
 				if (this._markAllAsReadLink === null && $outstandingItems.length && this._options.markAllAsReadConfirmMessage) {
-					var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon16 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
+					var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon24 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
 					$button.click((function(event) {
 						this._dropdown.close();
 						
@@ -328,7 +331,7 @@ WCF.User.Panel.Abstract = Class.extend({
 					}
 					
 					if ($item.data('linkReplaceAll')) {
-						$item.find('> .box32 a:not(.userLink)').prop('href', $link);
+						$item.find('> .box48 a:not(.userLink)').prop('href', $link);
 					}
 				}
 			});
@@ -382,7 +385,7 @@ WCF.User.Panel.Abstract = Class.extend({
 		
 		if (count) {
 			if (this._badge === null) {
-				this._badge = $('<span class="badge badgeInverse" />').appendTo(this._triggerElement.children('a'));
+				this._badge = $('<span class="badge badgeUpdate" />').appendTo(this._triggerElement.children('a'));
 				this._badge.before(' ');
 			}
 			
@@ -399,6 +402,11 @@ WCF.User.Panel.Abstract = Class.extend({
 				this._markAllAsReadLink = null;
 			}
 		}
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.userMenu', 'updateBadge', {
+			count: count,
+			identifier: this._identifier
+		});
 	},
 	
 	/**
@@ -449,6 +457,14 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 		}
 		
 		WCF.System.PushNotification.addCallback('userNotificationCount', $.proxy(this.updateUserNotificationCount, this));
+		
+		require(['EventHandler'], (function(EventHandler) {
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
+				if (data.identifier === 'com.woltlab.wcf.notifications') {
+					this.toggle();
+				}
+			}).bind(this));
+		}).bind(this));
 	},
 	
 	/**
@@ -457,7 +473,7 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 	_initDropdown: function() {
 		var $dropdown = this._super();
 		
-		$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon16 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
+		$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon24 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
 		
 		return $dropdown;
 	},
@@ -514,6 +530,9 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 	updateBadge: function(count) {
 		count = parseInt(count) || 0;
 		
+		// update data attribute
+		$('#userNotifications').attr('data-count', count);
+		
 		if (this._favico !== null) {
 			this._favico.badge(count);
 		}
@@ -557,68 +576,42 @@ WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
  */
 WCF.User.QuickLogin = {
 	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * login message container
-	 * @var	jQuery
-	 */
-	_loginMessage: null,
-	
-	/**
 	 * Initializes the quick login box
 	 */
 	init: function() {
-		$('.loginLink').click($.proxy(this._render, this));
-		
-		// prepend protocol and hostname
-		$('#loginForm input[name=url]').val(function(index, value) {
-			return window.location.protocol + '//' + window.location.host + value;
-		});
-	},
-	
-	/**
-	 * Displays the quick login box with a info message
-	 * 
-	 * @param	string	message
-	 */
-	show: function(message) {
-		if (message) {
-			if (this._loginMessage === null) {
-				this._loginMessage = $('<p class="info" />').hide().prependTo($('#loginForm > form'));
+		require(['EventHandler', 'Ui/Dialog'], function(EventHandler, UiDialog) {
+			var loginForm = document.getElementById('loginForm');
+			var callbackOpen = function(event) {
+				if (event instanceof Event) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+				
+				loginForm.style.removeProperty('display');
+				
+				UiDialog.openStatic('loginForm', null, {
+					title: WCF.Language.get('wcf.user.login')
+				});
+			};
+			
+			var links = document.getElementsByClassName('loginLink');
+			for (var i = 0, length = links.length; i < length; i++) {
+				links[i].addEventListener(WCF_CLICK_EVENT, callbackOpen);
 			}
 			
-			this._loginMessage.show().text(message);
-		}
-		else if (this._loginMessage !== null) {
-			this._loginMessage.hide();
-		}
-		
-		this._render();
-	},
-	
-	/**
-	 * Renders the dialog
-	 * 
-	 * @param	jQuery.Event	event
-	 */
-	_render: function(event) {
-		if (event !== undefined) {
-			event.preventDefault();
-		}
-		
-		if (this._dialog === null) {
-			this._dialog = $('#loginForm').wcfDialog({
-				title: WCF.Language.get('wcf.user.login')
+			var input = loginForm.querySelector('#loginForm input[name=url]');
+			if (input !== null) {
+				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
+			}
+			
+			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', function(data) {
+				if (data.identifier === 'com.woltlab.wcf.login') {
+					data.handler.close(true);
+					
+					callbackOpen();
+				}
 			});
-			this._dialog.find('#username').focus();
-		}
-		else {
-			this._dialog.wcfDialog('open');
-		}
+		});
 	}
 };
 
@@ -737,208 +730,6 @@ WCF.User.Profile.ActivityPointList = {
 };
 
 /**
- * Provides methods to follow an user.
- * 
- * @param	integer		userID
- * @param	boolean		following
- */
-WCF.User.Profile.Follow = Class.extend({
-	/**
-	 * follow button
-	 * @var	jQuery
-	 */
-	_button: null,
-	
-	/**
-	 * true if following current user
-	 * @var	boolean
-	 */
-	_following: false,
-	
-	/**
-	 * action proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * user id
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Creates a new follow object.
-	 * 
-	 * @param	integer		userID
-	 * @param	boolean		following
-	 */
-	init: function (userID, following) {
-		this._following = following;
-		this._userID = userID;
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		this._createButton();
-		this._showButton();
-	},
-	
-	/**
-	 * Creates the (un-)follow button
-	 */
-	_createButton: function () {
-		this._button = $('<li id="followUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'"><span class="icon icon16 icon-plus"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'</span></a></li>').prependTo($('#profileButtonContainer'));
-		this._button.click($.proxy(this._execute, this));
-	},
-	
-	/**
-	 * Follows or unfollows an user.
-	 */
-	_execute: function (event) {
-		event.preventDefault();
-		var $actionName = (this._following) ? 'unfollow' : 'follow';
-		this._proxy.setOption('data', {
-			'actionName': $actionName,
-			'className': 'wcf\\data\\user\\follow\\UserFollowAction',
-			'parameters': {
-				data: {
-					userID: this._userID
-				}
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Displays current follow state.
-	 */
-	_showButton: function () {
-		if (this._following) {
-			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).addClass('active').children('.icon').removeClass('icon-plus').addClass('icon-minus');
-		}
-		else {
-			this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.follow')).removeClass('active').children('.icon').removeClass('icon-minus').addClass('icon-plus');
-		}
-	},
-	
-	/**
-	 * Update object state on success.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function (data, textStatus, jqXHR) {
-		this._following = data.returnValues.following;
-		this._showButton();
-		
-		var $notification = new WCF.System.Notification();
-		$notification.show();
-	}
-});
-
-/**
- * Provides methods to manage ignored users.
- * 
- * @param	integer		userID
- * @param	boolean		isIgnoredUser
- */
-WCF.User.Profile.IgnoreUser = Class.extend({
-	/**
-	 * ignore button
-	 * @var	jQuery
-	 */
-	_button: null,
-	
-	/**
-	 * ignore state
-	 * @var	boolean
-	 */
-	_isIgnoredUser: false,
-	
-	/**
-	 * ajax proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * target user id
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Initializes methods to manage an ignored user.
-	 * 
-	 * @param	integer		userID
-	 * @param	boolean		isIgnoredUser
-	 */
-	init: function(userID, isIgnoredUser) {
-		this._userID = userID;
-		this._isIgnoredUser = isIgnoredUser;
-		
-		// initialize proxy
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		// handle button
-		this._updateButton();
-		this._button.click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Handle clicks, might cause 'ignore' or 'unignore' to be triggered.
-	 */
-	_click: function(event) {
-		event.preventDefault();
-		var $action = (this._isIgnoredUser) ? 'unignore' : 'ignore';
-		
-		this._proxy.setOption('data', {
-			actionName: $action,
-			className: 'wcf\\data\\user\\ignore\\UserIgnoreAction',
-			parameters: {
-				data: {
-					ignoreUserID: this._userID
-				}
-			}
-		});
-		
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Updates button label and function upon successful request.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		this._isIgnoredUser = data.returnValues.isIgnoredUser;
-		this._updateButton();
-		
-		var $notification = new WCF.System.Notification();
-		$notification.show();
-	},
-	
-	/**
-	 * Updates button label and inserts it if not exists.
-	 */
-	_updateButton: function() {
-		if (this._button === null) {
-			this._button = $('<li id="ignoreUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'"><span class="icon icon16 icon-ban-circle"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
-		}
-		
-		this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.' + (this._isIgnoredUser ? 'un' : '') + 'ignore'));
-		if (this._isIgnoredUser) this._button.find('.button').addClass('active').children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
-		else this._button.find('.button').removeClass('active').children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
-	}
-});
-
-/**
  * Provides methods to load tab menu content upon request.
  */
 WCF.User.Profile.TabMenu = Class.extend({
@@ -1013,6 +804,14 @@ WCF.User.Profile.TabMenu = Class.extend({
 				}
 			}, this));
 		}
+		
+		$('.userProfileUser .contentDescription a[href$="#likes"]').click((function (event) {
+			event.preventDefault();
+			
+			require(['Ui/TabMenu'], function (UiTabMenu) {
+				UiTabMenu.getTabMenu('profileContent').select('likes');
+			})
+		}).bind(this))
 	},
 	
 	/**
@@ -1052,12 +851,13 @@ WCF.User.Profile.TabMenu = Class.extend({
 		var $containerID = data.returnValues.containerID;
 		this._hasContent[$containerID] = true;
 		
-		// insert content
-		var $content = this._profileContent.find('#' + $containerID);
-		$('<div>' + data.returnValues.template + '</div>').hide().appendTo($content);
-		
-		// slide in content
-		$content.children('div').wcfBlindIn();
+		// insert content, uses non jQuery because DomUtil.insertHtml() moves <script> elements
+		// to the bottom of the element by default which is exactly what is required here
+		require(['Dom/ChangeListener', 'Dom/Util'], function(DomChangeListener, DomUtil) {
+			DomUtil.insertHtml(data.returnValues.template, elById($containerID), 'append');
+			
+			DomChangeListener.trigger();
+		});
 	}
 });
 
@@ -1131,20 +931,22 @@ WCF.User.Profile.Editor = Class.extend({
 	 * Initializes interface buttons.
 	 */
 	_initButtons: function() {
-		var $buttonContainer = $('#profileButtonContainer');
-		
 		// create buttons
 		this._buttons = {
-			beginEdit: $('<li><a class="button"><span class="icon icon16 icon-pencil" /> <span>' + WCF.Language.get('wcf.user.editProfile') + '</span></a></li>').click($.proxy(this._beginEdit, this)).appendTo($buttonContainer)
+			beginEdit: $('.jsButtonEditProfile:eq(0)').click(this._beginEdit.bind(this))
 		};
 	},
 	
 	/**
 	 * Begins editing.
+	 * 
+	 * @param       {Event?}         event   event object
 	 */
-	_beginEdit: function() {
+	_beginEdit: function(event) {
+		if (event) event.preventDefault();
+		
 		this._actionName = 'beginEdit';
-		this._buttons.beginEdit.hide();
+		this._buttons.beginEdit.parent().addClass('active');
 		$('#profileContent').wcfTabs('select', 'about');
 		
 		// load form
@@ -1180,7 +982,7 @@ WCF.User.Profile.Editor = Class.extend({
 				
 				case 'textarea':
 					if ($element.data('redactor')) {
-						$value = $element.redactor('wutil.getText');
+						$value = $element.redactor('code.get');
 					}
 				break;
 			}
@@ -1220,7 +1022,7 @@ WCF.User.Profile.Editor = Class.extend({
 	 */
 	_restore: function() {
 		this._actionName = 'restore';
-		this._buttons.beginEdit.show();
+		this._buttons.beginEdit.parent().removeClass('active');
 		
 		this._destroyEditor();
 		
@@ -1549,7 +1351,7 @@ WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.ext
 	_validateOptions: function() {
 		var $value = this._element.val();
 		if ($value.length < this._options.minlength || $value.length > this._options.maxlength) {
-			this._showError(this._element, WCF.Language.get('wcf.user.username.error.notValid'));
+			this._showError(this._element, WCF.Language.get('wcf.user.username.error.invalid'));
 			return false;
 		}
 		
@@ -1709,7 +1511,7 @@ WCF.User.Registration.LostPassword = Class.extend({
  * Notification system for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Notification = { };
@@ -1733,7 +1535,7 @@ WCF.Notification.List = Class.extend({
 		});
 		
 		// handle 'mark all as confirmed' buttons
-		$('.contentNavigation .jsMarkAllAsConfirmed').click(function() {
+		$('.contentHeaderNavigation .jsMarkAllAsConfirmed').click(function() {
 			WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function(action) {
 				if (action === 'confirm') {
 					new WCF.Action.Proxy({
@@ -1827,7 +1629,7 @@ WCF.User.SignaturePreview = WCF.Message.Preview.extend({
 		// get preview container
 		var $preview = $('#previewContainer');
 		if (!$preview.length) {
-			$preview = $('<fieldset id="previewContainer"><legend>' + WCF.Language.get('wcf.global.preview') + '</legend><div></div></fieldset>').insertBefore($('#signatureContainer')).wcfFadeIn();
+			$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
 		}
 		
 		$preview.children('div').first().html(data.returnValues.message);
@@ -1891,13 +1693,11 @@ WCF.User.RecentActivityLoader = Class.extend({
 		});
 		
 		if (this._container.children('li').length) {
-			// todo: remove recentActivitiesMore in 2.2
-			this._loadButton = $('<li class="recentActivitiesMore showMore"><button class="small">' + WCF.Language.get('wcf.user.recentActivity.more') + '</button></li>').appendTo(this._container);
+			this._loadButton = $('<li class="showMore"><button class="small">' + WCF.Language.get('wcf.user.recentActivity.more') + '</button></li>').appendTo(this._container);
 			this._loadButton = this._loadButton.children('button').click($.proxy(this._click, this));
 		}
 		else {
-			// todo: remove recentActivitiesMore in 2.2
-			$('<li class="recentActivitiesMore showMore"><small>' + WCF.Language.get('wcf.user.recentActivity.noMoreEntries') + '</small></li>').appendTo(this._container);
+			$('<li class="showMore"><small>' + WCF.Language.get('wcf.user.recentActivity.noMoreEntries') + '</small></li>').appendTo(this._container);
 		}
 		
 		if (WCF.User.userID) {
@@ -2040,8 +1840,7 @@ WCF.User.LikeLoader = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		// todo: remove recentActivitiesMore in 2.2
-		var $container = $('<li class="likeListMore recentActivitiesMore showMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
+		var $container = $('<li class="likeListMore showMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
 		this._loadButton = $container.children('button').click($.proxy(this._click, this));
 		this._noMoreEntries = $container.children('small').hide();
 		
@@ -2320,11 +2119,11 @@ WCF.User.Action.Follow = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.following) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('icon-plus').addClass('icon-minus');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
 					button.children('.invisible').text(WCF.Language.get('wcf.user.button.unfollow'));
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('icon-minus').addClass('icon-plus');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
 					button.children('.invisible').text(WCF.Language.get('wcf.user.button.follow'));
 				}
 				
@@ -2336,12 +2135,6 @@ WCF.User.Action.Follow = Class.extend({
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show();
-		
-		// force rebuilding of popover cache
-		var self = this;
-		WCF.System.ObjectStore.invoke('WCF.User.ProfilePreview', function(profilePreview) {
-			profilePreview.purge(self._userID);
-		});
 	}
 });
 
@@ -2412,7 +2205,7 @@ WCF.User.Action.Ignore = Class.extend({
 			'className': 'wcf\\data\\user\\ignore\\UserIgnoreAction',
 			'parameters': {
 				data: {
-					ignoreUserID: this._userID
+					userID: this._userID
 				}
 			}
 		});
@@ -2435,11 +2228,11 @@ WCF.User.Action.Ignore = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.isIgnoredUser) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
 					button.children('.invisible').text(WCF.Language.get('wcf.user.button.unignore'));
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
+					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
 					button.children('.invisible').text(WCF.Language.get('wcf.user.button.ignore'));
 				}
 				
@@ -2466,201 +2259,11 @@ WCF.User.Action.Ignore = Class.extend({
 WCF.User.Avatar = {};
 
 /**
- * Handles cropping an avatar.
- */
-WCF.User.Avatar.Crop = Class.extend({
-	/**
-	 * current crop setting in x-direction
-	 * @var	integer
-	 */
-	_cropX: 0,
-	
-	/**
-	 * current crop setting in y-direction
-	 * @var	integer
-	 */
-	_cropY: 0,
-	
-	/**
-	 * avatar crop dialog
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * action proxy to send the crop AJAX requests
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * maximum size of thumbnails
-	 * @var	integer
-	 */
-	MAX_THUMBNAIL_SIZE: 128,
-	
-	/**
-	 * Creates a new instance of WCF.User.Avatar.Crop.
-	 * 
-	 * @param	integer		avatarID
-	 */
-	init: function(avatarID) {
-		this._avatarID = avatarID;
-		
-		if (this._dialog) {
-			this.destroy();
-		}
-		this._dialog = null;
-		
-		// check if object already had been initialized
-		if (!this._proxy) {
-			this._proxy = new WCF.Action.Proxy({
-				success: $.proxy(this._success, this)
-			});
-		}
-		
-		$('.userAvatarCrop').click($.proxy(this._showCropDialog, this));
-	},
-	
-	/**
-	 * Destroys the avatar crop interface.
-	 */
-	destroy: function() {
-		this._dialog.remove();
-	},
-	
-	/**
-	 * Sends AJAX request to crop avatar.
-	 * 
-	 * @param	object		event
-	 */
-	_crop: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'cropAvatar',
-			className: 'wcf\\data\\user\\avatar\\UserAvatarAction',
-			objectIDs: [ this._avatarID ],
-			parameters: {
-				cropX: this._cropX,
-				cropY: this._cropY
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Initializes the dialog after a successful 'getCropDialog' request.
-	 * 
-	 * @param	object		data
-	 */
-	_getCropDialog: function(data) {
-		if (!this._dialog) {
-			this._dialog = $('<div />').hide().appendTo(document.body);
-			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.user.avatar.type.custom.crop')
-			});
-		}
-		
-		this._dialog.html(data.returnValues.template);
-		this._dialog.find('button[data-type="save"]').click($.proxy(this._crop, this));
-		
-		this._cropX = data.returnValues.cropX;
-		this._cropY = data.returnValues.cropY;
-		
-		var $image = $('#userAvatarCropSelection > img');
-		$('#userAvatarCropSelection').css({
-			height: $image.height() + 'px',
-			width: $image.width() + 'px'
-		});
-		$('#userAvatarCropOverlaySelection').css({
-			'background-image': 'url(' + $image.attr('src') + ')',
-			'background-position': -this._cropX + 'px ' + -this._cropY + 'px',
-			'left': this._cropX + 'px',
-			'top': this._cropY + 'px'
-		}).draggable({
-			containment: 'parent',
-			drag : $.proxy(this._updateSelection, this),
-			stop : $.proxy(this._updateSelection, this)
-		});
-		
-		this._dialog.find('button[data-type="save"]').click($.proxy(this._save, this));
-		
-		this._dialog.wcfDialog('render');
-	},
-	
-	/**
-	 * Shows the cropping dialog.
-	 */
-	_showCropDialog: function() {
-		if (!this._dialog) {
-			this._proxy.setOption('data', {
-				actionName: 'getCropDialog',
-				className: 'wcf\\data\\user\\avatar\\UserAvatarAction',
-				objectIDs: [ this._avatarID ]
-			});
-			this._proxy.sendRequest();
-		}
-		else {
-			this._dialog.wcfDialog('open');
-		}
-	},
-	
-	/**
-	 * Handles successful AJAX request.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		switch (data.actionName) {
-			case 'getCropDialog':
-				this._getCropDialog(data);
-			break;
-			
-			case 'cropAvatar':
-				$('#avatarUpload > dt > img').replaceWith($('<img src="' + data.returnValues.url + '" alt="" class="userAvatarCrop jsTooltip" title="' + WCF.Language.get('wcf.user.avatar.type.custom.crop') + '" />').css({
-					width: '96px',
-					height: '96px'
-				}).click($.proxy(this._showCropDialog, this)));
-				
-				WCF.DOMNodeInsertedHandler.execute();
-				
-				this._dialog.wcfDialog('close');
-				
-				var $notification = new WCF.System.Notification();
-				$notification.show();
-			break;
-		}
-	},
-	
-	/**
-	 * Updates the current crop selection if the selection overlay is dragged.
-	 * 
-	 * @param	object		event
-	 * @param	object		ui
-	 */
-	_updateSelection: function(event, ui) {
-		this._cropX = ui.position.left;
-		this._cropY = ui.position.top;
-		
-		$('#userAvatarCropOverlaySelection').css({
-			'background-position': -ui.position.left + 'px ' + -ui.position.top + 'px'
-		});
-	}
-});
-
-/**
  * Avatar upload function
  * 
  * @see	WCF.Upload
  */
 WCF.User.Avatar.Upload = WCF.Upload.extend({
-	/**
-	 * handles cropping the avatar
-	 * @var	WCF.User.Avatar.Crop
-	 */
-	_avatarCrop: null,
-	
 	/**
 	 * user id of avatar owner
 	 * @var	integer
@@ -2671,12 +2274,10 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 	 * Initalizes a new WCF.User.Avatar.Upload object.
 	 * 
 	 * @param	integer			userID
-	 * @param	WCF.User.Avatar.Crop	avatarCrop
 	 */
-	init: function(userID, avatarCrop) {
+	init: function(userID) {
 		this._super($('#avatarUpload > dd > div'), undefined, 'wcf\\data\\user\\avatar\\UserAvatarAction');
 		this._userID = userID || 0;
-		this._avatarCrop = avatarCrop;
 		
 		$('#avatarForm input[type=radio]').change(function() {
 			if ($(this).val() == 'custom') {
@@ -2703,20 +2304,7 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 	 */
 	_success: function(uploadID, data) {
 		if (data.returnValues.url) {
-			this._updateImage(data.returnValues.url, data.returnValues.canCrop);
-			
-			if (data.returnValues.canCrop) {
-				if (!this._avatarCrop) {
-					this._avatarCrop = new WCF.User.Avatar.Crop(data.returnValues.avatarID);
-				}
-				else {
-					this._avatarCrop.init(data.returnValues.avatarID);
-				}
-			}
-			else if (this._avatarCrop) {
-				this._avatarCrop.destroy();
-				this._avatarCrop = null;
-			}
+			this._updateImage(data.returnValues.url);
 			
 			// hide error
 			$('#avatarUpload > dd > .innerError').remove();
@@ -2735,20 +2323,15 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 	 * Updates the displayed avatar image.
 	 * 
 	 * @param	string		url
-	 * @param	boolean		canCrop
 	 */
-	_updateImage: function(url, canCrop) {
+	_updateImage: function(url) {
 		$('#avatarUpload > dt > img').remove();
-		var $image = $('<img src="' + url + '" alt="" />').css({
+		var $image = $('<img src="' + url + '" class="userAvatarImage" alt="" />').css({
 			'height': 'auto',
 			'max-height': '96px',
 			'max-width': '96px',
 			'width': 'auto'
 		});
-		if (canCrop) {
-			$image.addClass('userAvatarCrop').addClass('jsTooltip');
-			$image.attr('title', WCF.Language.get('wcf.user.avatar.type.custom.crop'));
-		}
 		
 		$('#avatarUpload > dt').prepend($image);
 		
@@ -2777,7 +2360,7 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 		return {
 			userID: this._userID
 		};
-	},
+	}
 });
 
 /**
@@ -2901,6 +2484,9 @@ WCF.User.List = Class.extend({
 					maxPage: this._pageCount
 				}).on('wcfpagesswitched', $.proxy(this._showPage, this));
 			}
+			else {
+				this._dialog.find('.jsPagination').hide();
+			}
 			
 			// show dialog
 			if ($dialogCreated) {
@@ -3002,8 +2588,15 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		// bind event listeners
 		$(this._buttonSelector).each($.proxy(function(index, button) {
 			var $button = $(button);
+			$button.addClass('pointer');
+			var $objectType = $button.data('objectType');
 			var $objectID = $button.data('objectID');
-			this._buttons[$objectID] = $button.click($.proxy(this._click, this));
+			
+			if (this._buttons[$objectType] === undefined) {
+				this._buttons[$objectType] = {};
+			}
+			
+			this._buttons[$objectType][$objectID] = $button.click($.proxy(this._click, this));
 		}, this));
 		
 		WCF.System.Event.addListener('com.woltlab.wcf.objectWatch', 'update', $.proxy(this._updateSubscriptionStatus, this));
@@ -3050,7 +2643,7 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 			}
 			
 			// bind event listener
-			this._dialog.find('.formSubmit > .jsButtonSave').data('objectID', data.returnValues.objectID).click($.proxy(this._save, this));
+			this._dialog.find('.formSubmit > .jsButtonSave').data('objectID', data.returnValues.objectID).data('objectType', data.returnValues.objectType).click($.proxy(this._save, this));
 			var $enableNotification = this._dialog.find('input[name=enableNotification]').disable();
 			
 			// toggle subscription
@@ -3094,7 +2687,7 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 	 * @param	object		event
 	 */
 	_save: function(event) {
-		var $button = this._buttons[$(event.currentTarget).data('objectID')];
+		var $button = this._buttons[$(event.currentTarget).data('objectType')][$(event.currentTarget).data('objectID')];
 		var $subscribe = this._dialog.find('input[name=subscribe]:checked').val();
 		var $enableNotification = (this._dialog.find('input[name=enableNotification]').is(':checked')) ? 1 : 0;
 		
@@ -3120,12 +2713,17 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		var $button = $(this._buttonSelector + '[data-object-id=' + data.objectID + ']');
 		var $icon = $button.children('.icon');
 		if (data.isSubscribed) {
-			$icon.removeClass('icon-bookmark-empty').addClass('icon-bookmark');
+			$icon.removeClass('fa-bookmark-o').addClass('fa-bookmark');
 			$button.data('isSubscribed', true);
 		}
 		else {
-			$icon.removeClass('icon-bookmark').addClass('icon-bookmark-empty');
-			$button.data('isSubscribed', false);
+			if ($button.data('removeOnUnsubscribe')) {
+				$button.parent().remove();
+			}
+			else {
+				$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
+				$button.data('isSubscribed', false);
+			}
 			
 			if (this._reloadOnUnsubscribe) {
 				window.location.reload();
@@ -3134,365 +2732,5 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		}
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.objectWatch', 'updatedSubscription', data);
-	}
-});
-
-/**
- * Handles inline editing of users.
- */
-WCF.User.InlineEditor = WCF.InlineEditor.extend({
-	/**
-	 * data of additional options
-	 * @var	object
-	 */
-	_additionalOptions: { },
-	
-	/**
-	 * dialog object
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * list of permissions
-	 * @var	object
-	 */
-	_permissions: { },
-	
-	/**
-	 * @see	WCF.InlineEditor.init()
-	 */
-	init: function(elementSelector) {
-		this._super(elementSelector);
-		
-		WCF.System.ObjectStore.add('WCF.User.InlineEditor', this);
-	},
-	
-	/**
-	 * @see	WCF.InlineEditor._execute()
-	 */
-	_execute: function(elementID, optionName) {
-		if (!this._validate(elementID, optionName)) {
-			return false;
-		}
-		
-		var $data = { };
-		var $element = $('#' + elementID);
-		if (this._additionalOptions[optionName] !== undefined) {
-			this._additionalOptions[optionName].callback(elementID);
-		}
-		else {
-			switch (optionName) {
-				case 'unban':
-				case 'enableAvatar':
-				case 'enableSignature':
-					switch (optionName) {
-						case 'unban':
-							$data.banned = 0;
-						break;
-						
-						case 'enableAvatar':
-							$data.disableAvatar = 0;
-						break;
-						
-						case 'enableSignature':
-							$data.disableSignature = 0;
-						break;
-					}
-					
-					this._proxy.setOption('data', {
-						actionName: optionName,
-						className: 'wcf\\data\\user\\UserAction',
-						objectIDs: [ $element.data('objectID') ]
-					});
-					this._proxy.sendRequest();
-				break;
-				
-				case 'ban':
-				case 'disableAvatar':
-				case 'disableSignature':
-					if (optionName == 'ban') {
-						$data.banned = 1;
-					}
-					else {
-						$data[optionName] = 1;
-					}
-					
-					this._showReasonDialog($element.data('objectID'), optionName);
-				break;
-				
-				case 'advanced':
-					window.location = this._getTriggerElement($element).attr('href');
-				break;
-			}
-		}
-		
-		if ($.getLength($data)) {
-			this._updateData.push({
-				data: $data,
-				elementID: elementID,
-			});
-		}
-	},
-	
-	/**
-	 * Executes an action with a reason.
-	 * 
-	 * @param	integer		userID
-	 * @param	string		optionName
-	 * @param	string		reason
-	 */
-	_executeReasonAction: function(userID, optionName, reason) {
-		var $optionName = this._dialog.data('optionName');
-		
-		this._dialog.find('.innerError').remove();
-		
-		var $banExpires = '';
-		if (!$('#' + $optionName + 'NeverExpires').is(':checked')) {
-			$banExpires = $('#' + $optionName + 'ExpiresDatePicker').val();
-			if (!$banExpires) {
-				this._dialog.find('#' + $optionName + 'ExpiresSettings > dd > small').prepend($('<small class="innerError" />').text(WCF.Language.get('wcf.global.form.error.empty')));
-				return
-			}
-		}
-		
-		var $parameters = { };
-		$parameters[$optionName + 'Reason'] = $('#' + $optionName + 'Reason').val();
-		$parameters[$optionName + 'Expires'] = $banExpires;
-		
-		this._proxy.setOption('data', {
-			actionName: $optionName,
-			className: 'wcf\\data\\user\\UserAction',
-			objectIDs: [ this._dialog.data('userID') ],
-			parameters: $parameters
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Returns a specific permission.
-	 * 
-	 * @param	string		permission
-	 * @return	integer
-	 */
-	_getPermission: function(permission) {
-		if (this._permissions[permission]) {
-			return this._permissions[permission];
-		}
-		
-		return 0;
-	},
-	
-	/**
-	 * @see	WCF.InlineEditor._getTriggerElement()
-	 */
-	_getTriggerElement: function(element) {
-		return element.find('.jsUserInlineEditor');
-	},
-	
-	/**
-	 * @see	WCF.InlineEditor._setOptions()
-	 */
-	_setOptions: function() {
-		this._options = [
-			// banning
-			{ label: WCF.Language.get('wcf.user.ban'), optionName: 'ban' },
-			{ label: WCF.Language.get('wcf.user.unban'), optionName: 'unban' },
-			
-			// disabling avatar
-			{ label: WCF.Language.get('wcf.user.disableAvatar'), optionName: 'disableAvatar' },
-			{ label: WCF.Language.get('wcf.user.enableAvatar'), optionName: 'enableAvatar' },
-			
-			// disabling signature
-			{ label: WCF.Language.get('wcf.user.disableSignature'), optionName: 'disableSignature' },
-			{ label: WCF.Language.get('wcf.user.enableSignature'), optionName: 'enableSignature' }
-		];
-		
-		for (var $optionName in this._additionalOptions) {
-			this._options.push({ label: this._additionalOptions[$optionName].label, optionName: $optionName });
-		}
-		
-		// divider
-		this._options.push({ optionName: 'divider' });
-		
-		// redirect to ACP
-		this._options.push({ label: WCF.Language.get('wcf.user.edit'), optionName: 'advanced' });
-	},
-	
-	/**
-	 * @see	WCF.InlineEditor._show()
-	 */
-	_show: function(event) {
-		var $element = $(event.currentTarget);
-		var $elementID = $element.data('elementID');
-		
-		if (!this._dropdowns[$elementID]) {
-			var $dropdownMenu = $element.next('.dropdownMenu');
-			
-			if ($dropdownMenu) {
-				this._dropdowns[$elementID] = $dropdownMenu;
-				WCF.Dropdown.initDropdown(this._getTriggerElement(this._elements[$elementID]), true);
-			}
-		}
-		
-		return this._super(event);
-	},
-	
-	/**
-	 * Shows the dialog to enter a reason for executing the option with the
-	 * given name.
-	 * 
-	 * @param	string		optionName
-	 */
-	_showReasonDialog: function(userID, optionName) {
-		if (this._dialog) {
-			this._dialog.remove();
-		}
-		
-		// create dialog
-		this._dialog = $('<div />').hide().appendTo(document.body);
-		this._dialog.append($('<fieldset><dl><dt><label for="' + optionName + 'Reason">' + WCF.Language.get('wcf.global.reason') + '</label></dt><dd><textarea id="' + optionName + 'Reason" cols="40" rows="3" />' + (WCF.Language.get('wcf.user.' + optionName + '.reason.description') != 'wcf.user.' + optionName + '.reason.description' ? '<small>' + WCF.Language.get('wcf.user.' + optionName + '.reason.description') + '</small>' : '') + '</dd></dl><dl><dt></dt><dd><label for="' + optionName + 'NeverExpires"><input type="checkbox" name="' + optionName + 'NeverExpires" id="' + optionName + 'NeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.user.' + optionName + '.neverExpires') + '</label></dd></dl><dl id="' + optionName + 'ExpiresSettings" style="display: none;"><dt><label for="' + optionName + 'Expires">' + WCF.Language.get('wcf.user.' + optionName + '.expires') + '</label></dt><dd><input type="date" name="' + optionName + 'Expires" id="' + optionName + 'Expires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.user.' + optionName + '.expires.description') + '</small></dd></dl></fieldset>'));
-		this._dialog.append($('<div class="formSubmit"><button class="buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
-		
-		this._dialog.data('optionName', optionName).data('userID', userID);
-		
-		this._dialog.find('#' + optionName + 'NeverExpires').change(function() {
-			$('#' + optionName + 'ExpiresSettings').toggle();
-		});
-		
-		this._dialog.find('button').click($.proxy(this._executeReasonAction, this));
-		
-		this._dialog.wcfDialog({
-			title: WCF.Language.get('wcf.user.' + optionName + '.confirmMessage')
-		});
-	},
-	
-	/**
-	 * @see	WCF.InlineEditor._updateState()
-	 */
-	_updateState: function(data) {
-		this._notification.show();
-		
-		for (var $i = 0, $length = this._updateData.length; $i < $length; $i++) {
-			var $data = this._updateData[$i];
-			var $element = $('#' + $data.elementID);
-			
-			for (var $property in $data.data) {
-				$element.data($property, $data.data[$property]);
-			}
-		}
-		
-		if (data.actionName == 'ban' || data.actionName == 'disableAvatar' || data.actionName == 'disableSignature') {
-			this._dialog.wcfDialog('close');
-		}
-		
-		if (data.actionName == 'unban') {
-			$('.userHeadline .jsUserBanned').remove();
-		}
-	},
-	
-	/**
-	 * @see	WCF.InlineEditor._validate()
-	 */
-	_validate: function(elementID, optionName) {
-		var $user = $('#' + elementID);
-		
-		if (this._additionalOptions[optionName] !== undefined) {
-			return true;
-		}
-		
-		switch (optionName) {
-			case 'ban':
-			case 'unban':
-				if (!this._getPermission('canBanUser')) {
-					return false;
-				}
-				
-				if (optionName == 'ban') {
-					return !$user.data('banned');
-				}
-				else {
-					return $user.data('banned');
-				}
-			break;
-			
-			case 'disableAvatar':
-			case 'enableAvatar':
-				if (!this._getPermission('canDisableAvatar')) {
-					return false;
-				}
-				
-				if (optionName == 'disableAvatar') {
-					return !$user.data('disableAvatar');
-				}
-				else {
-					return $user.data('disableAvatar');
-				}
-			break;
-			
-			case 'disableSignature':
-			case 'enableSignature':
-				if (!this._getPermission('canDisableSignature')) {
-					return false;
-				}
-				
-				if (optionName == 'disableSignature') {
-					return !$user.data('disableSignature');
-				}
-				else {
-					return $user.data('disableSignature');
-				}
-			break;
-			
-			case 'advanced':
-				return this._getPermission('canEditUser');
-			break;
-		}
-		
-		return false;
-	},
-	
-	/**
-	 * Adds an additional option.
-	 * 
-	 * @param	string		label
-	 * @param	string		optionName
-	 * @param	function	callback
-	 */
-	addOption: function(label, optionName, callback) {
-		if (!$.isFunction(callback)) {
-			console.debug('[WCF.User.InlineEditor] Missing callback');
-		}
-		if (this._additionalOptions[optionName] !== undefined) {
-			console.debug('[WCF.User.InlineEditor] Additional option with name "' + optionName + "' already exists");
-		}
-		
-		this._additionalOptions[optionName] = {
-			callback: callback,
-			label: label
-		};
-		
-		this._setOptions();
-	},
-	
-	/**
-	 * Sets a permission.
-	 * 
-	 * @param	string		permission
-	 * @param	integer		value
-	 */
-	setPermission: function(permission, value) {
-		this._permissions[permission] = value;
-	},
-	
-	/**
-	 * Sets permissions.
-	 * 
-	 * @param	object		permissions
-	 */
-	setPermissions: function(permissions) {
-		for (var $permission in permissions) {
-			this.setPermission($permission, permissions[$permission]);
-		}
 	}
 });

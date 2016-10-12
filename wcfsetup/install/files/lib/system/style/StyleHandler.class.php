@@ -2,6 +2,7 @@
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
 use wcf\data\style\Style;
+use wcf\data\style\StyleEditor;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -11,27 +12,25 @@ use wcf\system\WCF;
  * Handles styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.style
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Style
  */
 class StyleHandler extends SingletonFactory {
 	/**
 	 * style information cache
 	 * @var	array
 	 */
-	protected $cache = array();
+	protected $cache = [];
 	
 	/**
 	 * active style object
-	 * @var	\wcf\data\style\ActiveStyle
+	 * @var	ActiveStyle
 	 */
 	protected $style = null;
 	
 	/**
-	 * @see	\wcf\system\exception\SystemException::init()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		// load cache
@@ -41,10 +40,10 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all for the current user available styles.
 	 * 
-	 * @return	array<\wcf\data\style\Style>
+	 * @return	Style[]
 	 */
 	public function getAvailableStyles() {
-		$styles = array();
+		$styles = [];
 		
 		foreach ($this->cache['styles'] as $styleID => $style) {
 			if (!$style->isDisabled || WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
@@ -58,7 +57,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all styles.
 	 * 
-	 * @return	array<\wcf\data\style\Style>
+	 * @return	Style[]
 	 */
 	public function getStyles() {
 		return $this->cache['styles'];
@@ -67,7 +66,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns the active style.
 	 * 
-	 * @return	\wcf\data\style\ActiveStyle
+	 * @return	ActiveStyle
 	 */
 	public function getStyle() {
 		if ($this->style === null) {
@@ -82,6 +81,7 @@ class StyleHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$styleID
 	 * @param	boolean		$ignorePermissions
+	 * @throws	SystemException
 	 */
 	public function changeStyle($styleID = 0, $ignorePermissions = false) {
 		// check permission
@@ -134,13 +134,13 @@ class StyleHandler extends SingletonFactory {
 			}
 		}
 		
-		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'?m='.filemtime(WCF_DIR.$filename).'" />';
+		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'?m='.filemtime(WCF_DIR.$filename).'">';
 	}
 	
 	/**
 	 * Resets stylesheet for given style.
 	 * 
-	 * @param	\wcf\data\style\Style	$style
+	 * @param	Style	$style
 	 */
 	public function resetStylesheet(Style $style) {
 		$stylesheets = glob(WCF_DIR.'style/style-'.$style->styleID.'*.css');
@@ -179,5 +179,34 @@ class StyleHandler extends SingletonFactory {
 				@unlink($stylesheet);
 			}
 		}
+	}
+	
+	/**
+	 * Returns a style by package name, optionally filtering tainted styles.
+	 * 
+	 * @param	string		$packageName	style package name
+	 * @param	boolean		$skipTainted	ignore tainted styles
+	 * @return	StyleEditor|null
+	 * @since	3.0
+	 */
+	public function getStyleByName($packageName, $skipTainted = false) {
+		foreach ($this->cache['styles'] as $style) {
+			if ($style->packageName === $packageName) {
+				if (!$skipTainted || !$style->isTainted) {
+					return new StyleEditor($style);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns true if there is more than one available style and the changer is to be displayed.
+	 * 
+	 * @return      boolean         true if style changer should be displayed
+	 */
+	public function showStyleChanger() {
+		return ($this->countStyles() && SHOW_STYLE_CHANGER);
 	}
 }

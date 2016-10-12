@@ -7,60 +7,56 @@ use wcf\util\StringUtil;
  * Represents a default avatar.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.avatar
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Avatar
  */
 class DefaultAvatar implements IUserAvatar {
 	/**
 	 * image size
 	 * @var	integer
 	 */
-	public $size = 150;
+	public $size = UserAvatar::AVATAR_SIZE;
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @inheritDoc
 	 */
 	public function getURL($size = null) {
-		if ($size === null) $size = $this->size;
-		
 		return WCF::getPath().'images/avatars/avatar-default.svg';
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
 		if ($size === null) $size = $this->size;
 		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage" />';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage">';
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getWidth()
+	 * @inheritDoc
 	 */
 	public function getWidth() {
 		return $this->size;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getHeight()
+	 * @inheritDoc
 	 */
 	public function getHeight() {
 		return $this->size;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @inheritDoc
 	 */
 	public function canCrop() {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 * @inheritDoc
 	 */
 	public function getCropImageTag($size = null) {
 		return '';

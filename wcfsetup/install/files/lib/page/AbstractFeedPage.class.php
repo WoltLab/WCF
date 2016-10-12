@@ -7,15 +7,13 @@ use wcf\util\ArrayUtil;
  * Generates RSS 2-Feeds.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Page
  */
 abstract class AbstractFeedPage extends AbstractAuthedPage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'rssFeed';
 	
@@ -26,19 +24,19 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	public $application = 'wcf';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$useTemplate
+	 * @inheritDoc
 	 */
 	public $useTemplate = false;
 	
 	/**
 	 * parsed contents of $_REQUEST['id']
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $objectIDs = array();
+	public $objectIDs = [];
 	
 	/**
-	 * list of feed-entries for the current page
-	 * @var	\wcf\data\DatabaseObjectList
+	 * list of feed-entries for the current page object must be an \Iterator with \wcf\data\IFeedEntry-Elements
+	 * @var	\Iterator
 	 */
 	public $items = null;
 	
@@ -49,19 +47,20 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	public $title = '';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'items' => $this->items,
-			'title' => $this->title
-		));
+			'title' => $this->title,
+			'supportsEnclosure' => false
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -79,7 +78,7 @@ abstract class AbstractFeedPage extends AbstractAuthedPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		parent::show();

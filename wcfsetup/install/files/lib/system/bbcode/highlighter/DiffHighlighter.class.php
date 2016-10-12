@@ -8,40 +8,38 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class DiffHighlighter extends Highlighter {
 	/**
 	 * keywords for an added line, the + is used in unified diffs, the > in
 	 * normal diffs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $add = array("+", ">");
+	protected $add = ["+", ">"];
 	
 	/**
 	 * keywords for an deleted line, the - is used in unified diff, the < in
 	 * normal diffs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $delete = array("-", "<");
+	protected $delete = ["-", "<"];
 	
 	/**
 	 * splitter in changes for normal diff
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $splitter = array("---");
+	protected $splitter = ["---"];
 	
 	/**
 	 * keywords for the line info, the @ is used in unified diffs, the numbers
 	 * in normal diffs
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	protected $info = array("@", '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+	protected $info = ["@", '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @inheritDoc
 	 */
 	public function highlight($data) {
 		$lines = explode("\n", $data);
@@ -60,7 +58,6 @@ class DiffHighlighter extends Highlighter {
 			}
 		}
 		
-		$data = implode("\n", $lines);
-		return $data;
+		return implode("\n", $lines);
 	}
 }

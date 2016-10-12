@@ -6,20 +6,22 @@ use wcf\data\DatabaseObject;
  * Represents a package update version.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.package.update.version
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Package\Update\Version
+ *
+ * @property-read	integer		$packageUpdateVersionID		unique id of the package update version
+ * @property-read	integer		$packageUpdateID		id of the package update the package update version belongs to
+ * @property-read	string		$packageVersion			version number of the package update version
+ * @property-read	integer		$packageDate			date of the package update version
+ * @property-read	string		$filename			location of the package update version file or empty if no file is given
+ * @property-read	string		$license			name of the license of the package update version or empty if no license is given
+ * @property-read	string		$licenseURL			link to the license of the package update version or empty if no license or license link is given
+ * @property-read	integer		$isAccessible			is `1` if the package update version is accessible and thus can be installed, otherwise `0`
  */
 class PackageUpdateVersion extends DatabaseObject {
 	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'package_update_version';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'packageUpdateVersionID';
 }

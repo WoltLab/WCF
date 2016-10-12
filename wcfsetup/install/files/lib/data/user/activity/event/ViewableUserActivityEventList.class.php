@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\user\activity\event;
-use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
@@ -9,76 +9,77 @@ use wcf\system\WCF;
  * Represents a list of viewable user activity events.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.activity.event
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Activity\Event
+ *
+ * @method	ViewableUserActivityEvent		current()
+ * @method	ViewableUserActivityEvent[]		getObjects()
+ * @method	ViewableUserActivityEvent|null		search($objectID)
+ * @property	ViewableUserActivityEvent[]		$objects
  */
 class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$className
+	 * @inheritDoc
 	 */
-	public $className = 'wcf\data\user\activity\event\UserActivityEvent';
+	public $className = UserActivityEvent::class;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
+	 * @inheritDoc
+	 */
+	public $decoratorClassName = ViewableUserActivityEvent::class;
+	
+	/**
+	 * @inheritDoc
 	 */
 	public $sqlLimit = 20;
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @inheritDoc
 	 */
 	public $sqlOrderBy = 'user_activity_event.time DESC, user_activity_event.eventID DESC';
 	
 	/**
-	 * Creates a new ViewableUserActivityEventList object.
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct();
 		
 		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$this->getConditionBuilder()->add('(user_activity_event.languageID IN (?) OR user_activity_event.languageID IS NULL)', array(WCF::getUser()->getLanguageIDs()));
+			$this->getConditionBuilder()->add('(user_activity_event.languageID IN (?) OR user_activity_event.languageID IS NULL)', [WCF::getUser()->getLanguageIDs()]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectList::readObjects()
+	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
-		$userIDs = array();
-		$eventGroups = array();
-		foreach ($this->objects as &$event) {
+		$userIDs = [];
+		$eventGroups = [];
+		foreach ($this->objects as $event) {
 			$userIDs[] = $event->userID;
-			$event = new ViewableUserActivityEvent($event);
 			
 			if (!isset($eventGroups[$event->objectTypeID])) {
 				$objectType = UserActivityEventHandler::getInstance()->getObjectType($event->objectTypeID);
-				$eventGroups[$event->objectTypeID] = array(
+				$eventGroups[$event->objectTypeID] = [
 					'className' => $objectType->className,
-					'objects' => array()
-				);
+					'objects' => []
+				];
 			}
 			
 			$eventGroups[$event->objectTypeID]['objects'][] = $event;
 		}
-		unset($event);
 		
 		// set user profiles
 		if (!empty($userIDs)) {
-			$userIDs = array_unique($userIDs);
-			
-			$users = UserProfile::getUserProfiles($userIDs);
-			foreach ($this->objects as $event) {
-				$event->setUserProfile($users[$event->userID]);
-			}
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 		
 		// parse events
 		foreach ($eventGroups as $eventData) {
-			$eventClass = call_user_func(array($eventData['className'], 'getInstance'));
+			$eventClass = call_user_func([$eventData['className'], 'getInstance']);
 			$eventClass->prepare($eventData['objects']);
 		}
 	}
@@ -104,10 +105,10 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
 	 * Validates event permissions and returns a list of orphaned event ids.
 	 * 
-	 * @return	array<integer>
+	 * @return	integer[]
 	 */
 	public function validateEvents() {
-		$orphanedEventIDs = array();
+		$orphanedEventIDs = [];
 		
 		foreach ($this->objects as $index => $event) {
 			if ($event->isOrphaned()) {
@@ -121,5 +122,15 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 		$this->indexToObject = array_keys($this->objects);
 		
 		return $orphanedEventIDs;
+	}
+	
+	/**
+	 * Truncates the items in object list to given number of items.
+	 * 
+	 * @param       integer         $limit
+	 */
+	public function truncate($limit) {
+		$this->objects = array_slice($this->objects, 0, $limit, true);
+		$this->indexToObject = array_keys($this->objects);
 	}
 }

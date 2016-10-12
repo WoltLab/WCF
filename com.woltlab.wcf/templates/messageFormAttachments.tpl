@@ -1,11 +1,11 @@
-<div class="jsOnly formAttachmentContent container containerPadding" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
+<div class="jsOnly formAttachmentContent messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
-			<li class="box64" data-object-id="{@$attachment->attachmentID}" data-height="{@$attachment->height}" data-width="{@$attachment->width}">
+			<li class="box64" data-object-id="{@$attachment->attachmentID}" data-height="{@$attachment->height}" data-width="{@$attachment->width}" data-is-image="{@$attachment->isImage}">
 				{if $attachment->tinyThumbnailType}
-					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail" />
+					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail">
 				{else}
-					<span class="icon icon48 icon-paper-clip"></span>
+					<span class="icon icon64 fa-paperclip"></span>
 				{/if}
 				
 				<div>
@@ -17,8 +17,8 @@
 					<ul class="buttonGroup">
 						<li><span class="button small jsDeleteButton" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}">{lang}wcf.global.button.delete{/lang}</span></li>
 						{if $attachment->isImage}
-							<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}">{lang}wcf.attachment.insertThumbnail{/lang}</span></li>
-							<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="{@$attachment->attachmentID}">{lang}wcf.attachment.insertFull{/lang}</span></li>
+							{if $attachment->thumbnailType}<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}" data-url="{link controller='Attachment' object=$attachment}thumbnail=1{/link}">{lang}wcf.attachment.insertThumbnail{/lang}</span></li>{/if}
+							<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="{@$attachment->attachmentID}" data-url="{link controller='Attachment' object=$attachment}{/link}">{lang}wcf.attachment.insertFull{/lang}</span></li>
 						{else}
 							<li><span class="button small jsButtonInsertAttachment" data-object-id="{@$attachment->attachmentID}">{lang}wcf.attachment.insert{/lang}</span></li>
 						{/if}
@@ -40,7 +40,6 @@
 </div>
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.attachment.upload.error.invalidExtension': '{lang}wcf.attachment.upload.error.invalidExtension{/lang}',
@@ -55,10 +54,18 @@
 			'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
 		});
 		
-		new WCF.Attachment.Upload($('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > dl > dd > div'), $('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > ul'), '{@$attachmentObjectType}', '{@$attachmentObjectID}', '{$tmpHash|encodeJS}', '{@$attachmentParentObjectID}', {@$attachmentHandler->getMaxCount()}, '{@$wysiwygContainerID}');
+		new WCF.Attachment.Upload(
+			$('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > dl > dd > div'),
+			$('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > ul'),
+			'{@$attachmentObjectType}',
+			'{@$attachmentObjectID}',
+			'{$tmpHash|encodeJS}',
+			'{@$attachmentParentObjectID}',
+			{@$attachmentHandler->getMaxCount()},
+			'{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}'
+		);
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});
-	//]]>
 </script>
 
-<input type="hidden" name="tmpHash" value="{$tmpHash}" />
+<input type="hidden" name="tmpHash" value="{$tmpHash}">

@@ -10,23 +10,24 @@ use wcf\system\WCF;
  * Represents a poll.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.poll
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Poll
+ *
+ * @property-read	integer		$pollID			unique id of the poll
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.poll` object type
+ * @property-read	integer		$objectID		id of the poll container object the poll belongs to
+ * @property-read	string		$question		question of the poll
+ * @property-read	integer		$time			timestamp at which the poll has been created
+ * @property-read	integer		$endTime		timestamp at which the poll has been/will be closed
+ * @property-read	integer		$isChangeable		is `1` if participants can change their vote, otherwise `0`
+ * @property-read	integer		$isPublic		is `1` if the result of the poll is public, otherwise `0`
+ * @property-read	integer		$sortByVotes		is `1` if the results will be sorted by votes, otherwise `0`
+ * @property-read	integer		$resultsRequireVote	is `1` if a user has to have voted to see the results, otherwise `0`
+ * @property-read	integer		$maxVotes		maximum number of options the user can select
+ * @property-read	integer		$votes			number of votes in the poll
  */
 class Poll extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'poll';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
-	 */
-	protected static $databaseTableIndexName = 'pollID';
-	
 	/**
 	 * participation status
 	 * @var	boolean
@@ -35,25 +36,26 @@ class Poll extends DatabaseObject {
 	
 	/**
 	 * list of poll options
-	 * @var	array<\wcf\data\poll\option\PollOption>
+	 * @var	PollOption[]
 	 */
-	protected $options = array();
+	protected $options = [];
 	
 	/**
 	 * related object
-	 * @var	\wcf\data\IPollObject
+	 * @var	IPollObject
 	 */
 	protected $relatedObject = null;
 	
 	/**
 	 * Adds an option to current poll.
 	 * 
-	 * @param	\wcf\data\poll\option\PollOption		$option
+	 * @param	PollOption	$option
 	 */
 	public function addOption(PollOption $option) {
 		if ($option->pollID == $this->pollID) {
 			$this->options[$option->optionID] = $option;
 			
+			/** @noinspection PhpUndefinedFieldInspection */
 			if ($option->voted) {
 				$this->isParticipant = true;
 			}
@@ -64,7 +66,7 @@ class Poll extends DatabaseObject {
 	 * Returns a list of poll options.
 	 * 
 	 * @param	boolean		$isResultDisplay
-	 * @return	array<\wcf\data\poll\option\PollOption>
+	 * @return	PollOption[]
 	 */
 	public function getOptions($isResultDisplay = false) {
 		$this->loadOptions();
@@ -107,10 +109,11 @@ class Poll extends DatabaseObject {
 			return;
 		}
 		
-		$optionList = PollManager::getInstance()->getPollOptions(array($this->pollID));
+		$optionList = PollManager::getInstance()->getPollOptions([$this->pollID]);
 		foreach ($optionList as $option) {
 			$this->options[$option->optionID] = $option;
 			
+			/** @noinspection PhpUndefinedFieldInspection */
 			if ($option->voted) {
 				$this->isParticipant = true;
 			}
@@ -187,7 +190,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Sets related object for this poll.
 	 * 
-	 * @param	\wcf\data\IPollObject		$object
+	 * @param	IPollObject	$object
 	 */
 	public function setRelatedObject(IPollObject $object) {
 		$this->relatedObject = $object;
@@ -196,7 +199,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns related object.
 	 * 
-	 * @return	\wcf\data\IPollObject
+	 * @return	IPollObject
 	 */
 	public function getRelatedObject() {
 		return $this->relatedObject;

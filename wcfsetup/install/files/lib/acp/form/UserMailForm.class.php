@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\email\EmailGrammar;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -15,11 +16,9 @@ use wcf\util\StringUtil;
  * Shows the user mail form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class UserMailForm extends AbstractForm {
 	/**
@@ -36,20 +35,20 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $groupIDs = array();
+	public $groupIDs = [];
 	
 	/**
 	 * list of groups
-	 * @var	array<\wcf\data\user\group\UserGroup>
+	 * @var	UserGroup[]
 	 */
-	public $groups = array();
+	public $groups = [];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canMailUser');
+	public $neededPermissions = ['admin.user.canMailUser'];
 	
 	/**
 	 * message subject
@@ -65,18 +64,18 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * list of user ids
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
-	public $userIDs = array();
+	public $userIDs = [];
 	
 	/**
 	 * list of users
-	 * @var	\wcf\data\user\UserList
+	 * @var	UserList
 	 */
 	public $userList = null;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -85,7 +84,7 @@ class UserMailForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -99,7 +98,7 @@ class UserMailForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -122,19 +121,22 @@ class UserMailForm extends AbstractForm {
 		if (empty($this->from)) {
 			throw new UserInputException('from');
 		}
+		else if (!preg_match('(^'.EmailGrammar::getGrammar('addr-spec').'$)', $this->from)) {
+			throw new UserInputException('from', 'invalid');
+		}
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		// save config in session
 		$userMailData = WCF::getSession()->getVar('userMailData');
-		if ($userMailData === null) $userMailData = array();
+		if ($userMailData === null) $userMailData = [];
 		$mailID = count($userMailData);
-		$userMailData[$mailID] = array(
+		$userMailData[$mailID] = [
 			'action' => $this->action,
 			'userIDs' => $this->userIDs,
 			'groupIDs' => $this->groupIDs,
@@ -142,7 +144,7 @@ class UserMailForm extends AbstractForm {
 			'text' => $this->text,
 			'from' => $this->from,
 			'enableHTML' => $this->enableHTML
-		);
+		];
 		WCF::getSession()->register('userMailData', $userMailData);
 		$this->saved();
 		
@@ -150,7 +152,7 @@ class UserMailForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -174,31 +176,26 @@ class UserMailForm extends AbstractForm {
 				$this->userIDs = array_keys($users);
 			}
 			
-			if (MAIL_USE_FORMATTED_ADDRESS) {
-				$this->from = MAIL_FROM_NAME.' <'.MAIL_FROM_ADDRESS.'>';
-			}
-			else {
-				$this->from = MAIL_FROM_ADDRESS;
-			}
+			$this->from = MAIL_FROM_ADDRESS;
 		}
 		
 		if (!empty($this->userIDs)) {
 			$this->userList = new UserList();
-			$this->userList->getConditionBuilder()->add("user_table.userID IN (?)", array($this->userIDs));
+			$this->userList->getConditionBuilder()->add("user_table.userID IN (?)", [$this->userIDs]);
 			$this->userList->sqlOrderBy = "user_table.username ASC";
 			$this->userList->readObjects();
 		}
 		
-		$this->groups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE));
+		$this->groups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'enableHTML' => $this->enableHTML,
 			'from' => $this->from,
 			'groupIDs' => $this->groupIDs,
@@ -207,6 +204,6 @@ class UserMailForm extends AbstractForm {
 			'text' => $this->text,
 			'userIDs' => $this->userIDs,
 			'userList' => $this->userList
-		));
+		]);
 	}
 }

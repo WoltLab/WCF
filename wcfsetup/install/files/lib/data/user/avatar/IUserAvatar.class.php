@@ -5,17 +5,16 @@ namespace wcf\data\user\avatar;
  * Any displayable avatar type should implement this class.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.avatar
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Avatar
  */
 interface IUserAvatar {
 	/**
 	 * Returns true if this avatar can be cropped.
 	 * 
 	 * @return	boolean
+	 * @deprecated  3.0
 	 */
 	public function canCrop();
 	
@@ -40,6 +39,7 @@ interface IUserAvatar {
 	 * 
 	 * @param	integer		$size
 	 * @return	string
+	 * @deprecated  3.0
 	 */
 	public function getCropImageTag($size = null);
 	

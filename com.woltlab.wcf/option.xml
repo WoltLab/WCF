@@ -12,7 +12,7 @@
 				<category name="module.user">
 					<parent>module</parent>
 				</category>
-				<category name="module.display">
+				<category name="module.customization">
 					<parent>module</parent>
 				</category>
 				<category name="module.content">
@@ -42,6 +42,9 @@
 					<parent>general</parent>
 					<showorder>3</showorder>
 				</category>
+					<category name="general.system.error">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.cookie">
 						<parent>general.system</parent>
 					</category>
@@ -87,6 +90,9 @@
 						<parent>general.cache</parent>
 					</category>
 					<category name="general.cache.memcached">
+						<parent>general.cache</parent>
+					</category>
+					<category name="general.cache.redis">
 						<parent>general.cache</parent>
 					</category>
 				<category name="general.payment">
@@ -159,6 +165,10 @@
 					<category name="security.general.authentication">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.secrets">
+						<parent>security.general</parent>
+						<showorder>15</showorder>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -201,6 +211,9 @@
 					<category name="message.general.edit">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.image">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -221,16 +234,23 @@
 				<category name="dashboard.content">
 					<parent>dashboard</parent>
 				</category>
-					<category name="dashboard.content.recentActivities">
-						<parent>dashboard.content</parent>
-					</category>
 				
 				<category name="dashboard.sidebar">
 					<parent>dashboard</parent>
 				</category>
-					<category name="dashboard.sidebar.recentActivities">
-						<parent>dashboard.sidebar</parent>
-					</category>
+			
+			<!-- cms -->
+			<category name="cms"></category>
+			<category name="cms.media">
+				<parent>cms</parent>
+			</category>
+			<category name="cms.media.thumbnail">
+				<parent>cms.media</parent>
+			</category>
+			<category name="cms.article">
+				<parent>cms</parent>
+			</category>
+			<!-- /cms -->
 		</categories>
 		
 		<options>
@@ -245,6 +265,13 @@
 				<categoryname>general</categoryname>
 				<optiontype>string</optiontype>
 				<defaultvalue>bd096261-15f4-5dc1-9767-01ce08d7c80b</defaultvalue> <!-- automatically replaced during WCFSetup -->
+				<hidden>1</hidden>
+			</option>
+			
+			<option name="woltlab_branding">
+				<categoryname>general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1</defaultvalue>
 				<hidden>1</hidden>
 			</option>
 			
@@ -293,14 +320,14 @@
 				<hidden>1</hidden>
 			</option>
 			
-			<option name="module_privacy_policy_page">
+			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
-			<option name="module_cookie_policy_page">
-				<categoryname>module.system</categoryname>
+			<option name="module_article">
+				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -312,7 +339,7 @@
 			</option>
 			
 			<option name="module_smiley">
-				<categoryname>module.content</categoryname>
+				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -347,11 +374,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="module_dashboard_page">
-				<categoryname>module.display</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			
 			<option name="module_like">
 				<categoryname>module.community</categoryname>
@@ -378,7 +400,7 @@
 			</option>
 			
 			<option name="module_wcf_ad">
-				<categoryname>module.display</categoryname>
+				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
@@ -388,6 +410,7 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
+				<defaultvalue>WoltLab Suite</defaultvalue>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
@@ -407,11 +430,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="show_clock">
-				<categoryname>general.page</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="external_link_rel_nofollow">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -422,31 +440,38 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
+			<option name="show_update_notice_frontend">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="language_use_informal_variant">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<hidden>1</hidden>
+			</option>
+			<option name="show_style_changer">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="footer_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
 			
+			<!-- legacy option, no longer used -->
 			<option name="url_legacy_mode">
-				<categoryname>general.page.seo</categoryname>
+				<categoryname>hidden</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>!url_controller_replacement</enableoptions>
 			</option>
+			<!-- /legacy option, no longer used -->
+			
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="url_controller_replacement">
-				<categoryname>general.page.seo</categoryname>
-				<optiontype>urlControllerReplacement</optiontype>
 			</option>
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
@@ -458,7 +483,7 @@
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
+				<enableoptions>offline_message,offline_message_allow_html</enableoptions>
 			</option>
 			<option name="offline_message">
 				<categoryname>general.offline</categoryname>
@@ -475,10 +500,9 @@
 			<option name="image_adapter_type">
 				<categoryname>general.system.image</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[gd]]></defaultvalue>
-				<selectoptions>
-					<![CDATA[gd:wcf.acp.option.image_adapter_type.gd
-imagick:wcf.acp.option.image_adapter_type.imagick]]>
+				<defaultvalue>gd</defaultvalue>
+				<selectoptions>gd:wcf.acp.option.image_adapter_type.gd
+imagick:wcf.acp.option.image_adapter_type.imagick
 				</selectoptions>
 			</option>
 			<!-- /general.system.image -->
@@ -487,26 +511,32 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<option name="search_engine">
 				<categoryname>general.system.search</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[mysql]]></defaultvalue>
-				<selectoptions><![CDATA[mysql:wcf.acp.option.search_engine.mysql]]></selectoptions>
+				<defaultvalue>mysql</defaultvalue>
+				<selectoptions>mysql:wcf.acp.option.search_engine.mysql</selectoptions>
 			</option>
 			<!-- /general.system.search -->
+			
+			<!-- general.system.error -->
+			<option name="exception_privacy">
+				<categoryname>general.system.error</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>reduced</defaultvalue>
+				<selectoptions>public:wcf.acp.option.exception_privacy.public
+reduced:wcf.acp.option.exception_privacy.reduced
+private:wcf.acp.option.exception_privacy.private</selectoptions>
+			</option>
+			<!-- /general.system.error-->
 			
 			<!-- general.system.cookie -->
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wcf21_</defaultvalue>
+				<defaultvalue>wsc30_</defaultvalue>
 				<validationpattern>.+</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
 			
 			<!-- general.system.http -->
-			<option name="http_enable_no_cache_headers">
-				<categoryname>general.system.http</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
 			<option name="http_send_x_frame_options">
 				<categoryname>general.system.http</categoryname>
 				<optiontype>boolean</optiontype>
@@ -523,7 +553,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<option name="package_server_auth_code">
 				<categoryname>general.system.packageServer</categoryname>
 				<optiontype>text</optiontype>
-				<hidden>1</hidden>
 			</option>
 			<!-- /general.system.packageServer -->
 			
@@ -541,12 +570,14 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>1800</defaultvalue>
 				<minvalue>600</minvalue>
 				<maxvalue>86400</maxvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user_online_timeout">
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>900</defaultvalue>
 				<minvalue>1</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="session_validate_ip_address">
 				<categoryname>security.general.session</categoryname>
@@ -578,6 +609,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>7200</defaultvalue>
 				<minvalue>300</minvalue>
 				<maxvalue>86400</maxvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user_authentication_failure_ip_captcha">
 				<categoryname>security.general.authentication</categoryname>
@@ -603,8 +635,19 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>30</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /security.general.authentication -->
+			
+			<!-- security.general.secrets -->
+			<option name="signature_secret">
+				<categoryname>security.general.secrets</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+				<allowempty>0</allowempty>
+				<validationpattern>^.{15,}$</validationpattern>
+			</option>
+			<!-- /security.general.secrets -->
 			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
@@ -627,30 +670,27 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>captchaSelect</optiontype>
 				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
 				<allowemptyvalue>1</allowemptyvalue>
+				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!profile_mail_use_captcha,!search_use_captcha</enableoptions>
 			</option>
 			<option name="register_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<option name="lost_password_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<option name="profile_mail_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
 			</option>
 			<option name="search_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<options>captcha_type</options>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /security.antispam.captcha -->
 			
@@ -666,7 +706,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^[^/]*$</validationpattern>
-				<!-- wcf-recaptcha.woltlab.com global key -->
 				<defaultvalue></defaultvalue>
 				<showorder>2</showorder>
 			</option>
@@ -702,7 +741,7 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>13</defaultvalue>
-				<selectoptions><![CDATA[1
+				<selectoptions>1
 2
 3
 4
@@ -718,16 +757,16 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 14
 15
 16
-17]]></selectoptions>
+17</selectoptions>
 			</option>
 			<option name="google_maps_type">
 				<categoryname>general.system.googleMaps</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>hybrid</defaultvalue>
-				<selectoptions><![CDATA[map:wcf.acp.option.google_maps_type.map
+				<selectoptions>map:wcf.acp.option.google_maps_type.map
 satellite:wcf.acp.option.google_maps_type.satellite
 hybrid:wcf.acp.option.google_maps_type.hybrid
-physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
+physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 			</option>
 			<option name="google_maps_enable_scale_control">
 				<categoryname>general.system.googleMaps</categoryname>
@@ -770,22 +809,22 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 			<option name="mail_from_name">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_from_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_admin_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_signature">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>textareaI18n</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
+				<defaultvalue></defaultvalue>
 				<supporti18n>1</supporti18n>
 			</option>
 			<!-- /general.mail.general -->
@@ -794,17 +833,13 @@ physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
 			<option name="mail_send_method">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[php]]></defaultvalue>
-				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
+				<defaultvalue>php</defaultvalue>
+				<selectoptions>php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
-debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
-				<enableoptions><![CDATA[php:mail_use_f_param,!mail_debug_logfile_path,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
-smtp:!mail_debug_logfile_path,!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
-debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
-			</option>
-			<option name="mail_debug_logfile_path">
-				<categoryname>general.mail.send</categoryname>
-				<optiontype>text</optiontype>
+debug:wcf.acp.option.mail_send_method.debug</selectoptions>
+				<enableoptions>php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -817,6 +852,14 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<minvalue>0</minvalue>
 				<maxvalue>65535</maxvalue>
 			</option>
+			<option name="mail_smtp_starttls">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>may</defaultvalue>
+				<selectoptions>none:wcf.acp.option.mail_smtp_starttls.none
+may:wcf.acp.option.mail_smtp_starttls.may
+encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
+			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>text</optiontype>
@@ -828,10 +871,7 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 			<option name="mail_use_f_param">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>boolean</optiontype>
-			</option>
-			<option name="mail_use_formatted_address">
-				<categoryname>general.mail.send</categoryname>
-				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.mail.send -->
 			
@@ -839,16 +879,22 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 			<option name="cache_source_type">
 				<categoryname>general.cache.general</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[disk]]></defaultvalue>
-				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
-memcached:wcf.acp.option.cache_source_type.memcached]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcached_host
-memcached:cache_source_memcached_host]]></enableoptions>
+				<defaultvalue>disk</defaultvalue>
+				<selectoptions>disk:wcf.acp.option.cache_source_type.disk
+memcached:wcf.acp.option.cache_source_type.memcached
+redis:wcf.acp.option.cache_source_type.redis</selectoptions>
+				<enableoptions>disk:!cache_source_memcached_host,!cache_source_redis_host
+memcached:cache_source_memcached_host,!cache_source_redis_host
+redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
 			</option>
 			
 			<option name="cache_source_memcached_host">
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
+			</option>
+			<option name="cache_source_redis_host">
+				<categoryname>general.cache.redis</categoryname>
+				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.cache -->
 			
@@ -871,7 +917,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<option name="paid_subscription_enable_tos_confirmation">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[paid_subscription_tos_url]]></enableoptions>
+				<enableoptions>paid_subscription_tos_url</enableoptions>
 			</option>
 			
 			<option name="paid_subscription_tos_url">
@@ -887,54 +933,28 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<option name="attachment_enable_thumbnails">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 				<enableoptions>attachment_retain_dimensions,attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
 			</option>
 			<option name="attachment_retain_dimensions">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[0]]></defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="attachment_thumbnail_height">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[210]]></defaultvalue>
+				<defaultvalue>198</defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[280]]></defaultvalue>
+				<defaultvalue>352</defaultvalue>
 				<minvalue>96</minvalue>
+				<suffix>pixel</suffix>
 			</option>
-			
-			<!-- message.general -->
-			<option name="enable_bbcodes_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="enable_html_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="enable_smilies_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="pre_parse_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="show_signature_default_value">
-				<categoryname>message.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<!-- /message.general -->
 			
 			<!-- message.general.edit -->
 			<option name="module_edit_history">
@@ -948,6 +968,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>90</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /message.general.edit -->
 			
@@ -956,20 +977,50 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<categoryname>message.general.share</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<enableoptions><![CDATA[share_buttons_show_count]]></enableoptions>
 			</option>
-			<option name="share_buttons_show_count">
+			<option name="share_buttons_providers">
 				<categoryname>message.general.share</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<optiontype>checkboxes</optiontype>
+				<selectoptions>Facebook
+Twitter
+Google
+Reddit
+WhatsApp
+LinkedIn
+Pinterest
+XING</selectoptions>
+				<defaultvalue>Facebook
+Twitter
+Google
+Reddit
+LinkedIn
+Pinterest</defaultvalue>
 			</option>
+			
 			<!-- /message.general.share -->
+			
+			<!-- message.general.image -->
+			<option name="module_image_proxy">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>image_proxy_secret</enableoptions>
+			</option>
+			<option name="image_proxy_expiration">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>14</defaultvalue>
+				<maxvalue>30</maxvalue>
+				<minvalue>7</minvalue>
+				<suffix>days</suffix>
+			</option>
+			<!-- /message.general.image -->
 			
 			<!-- message.censorship -->
 			<option name="enable_censorship">
 				<categoryname>message.censorship</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[censored_words]]></enableoptions>
+				<enableoptions>censored_words</enableoptions>
 			</option>
 			<option name="censored_words">
 				<categoryname>message.censorship</categoryname>
@@ -980,33 +1031,33 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<option name="register_enable_password_security_check">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char]]></enableoptions>
+				<enableoptions>register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char</enableoptions>
 			</option>
 			<option name="register_password_min_length">
 				<categoryname>user.password</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[8]]></defaultvalue>
+				<defaultvalue>8</defaultvalue>
 				<minvalue>0</minvalue>
 			</option>
 			<option name="register_password_must_contain_lower_case">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_password_must_contain_upper_case">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_password_must_contain_digit">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_password_must_contain_special_char">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.password -->
 			
@@ -1029,12 +1080,12 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<option name="register_disabled">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions><![CDATA[!register_enable_disclaimer,!register_admin_notification,!register_activation_method]]></enableoptions>
+				<enableoptions>!register_enable_disclaimer,!register_admin_notification,!register_activation_method</enableoptions>
 			</option>
 			<option name="register_enable_disclaimer">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="register_admin_notification">
 				<categoryname>user.register</categoryname>
@@ -1043,24 +1094,24 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<option name="register_activation_method">
 				<categoryname>user.register</categoryname>
 				<optiontype>radioButton</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<selectoptions><![CDATA[0:wcf.acp.option.register_activation_method.disabled
+				<defaultvalue>1</defaultvalue>
+				<selectoptions>0:wcf.acp.option.register_activation_method.disabled
 1:wcf.acp.option.register_activation_method.byUser
-2:wcf.acp.option.register_activation_method.byAdmin]]></selectoptions>
+2:wcf.acp.option.register_activation_method.byAdmin</selectoptions>
 			</option>
 			<option name="register_username_min_length">
 				<categoryname>user.register</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>3</defaultvalue>
 				<minvalue>3</minvalue>
-				<maxvalue>255</maxvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			<option name="register_username_max_length">
 				<categoryname>user.register</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>25</defaultvalue>
 				<minvalue>3</minvalue>
-				<maxvalue>255</maxvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			<option name="register_username_force_ascii">
 				<categoryname>user.register</categoryname>
@@ -1072,6 +1123,7 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>years</suffix>
 			</option>
 			<!-- /user.register -->
 			
@@ -1122,25 +1174,13 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<option name="gravatar_default_type">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[404]]></defaultvalue>
-				<selectoptions><![CDATA[404:wcf.acp.option.gravatar_default_type.404
+				<defaultvalue>404</defaultvalue>
+				<selectoptions>404:wcf.acp.option.gravatar_default_type.404
 identicon:wcf.acp.option.gravatar_default_type.identicon
 wavatar:wcf.acp.option.gravatar_default_type.wavatar
 monsterid:wcf.acp.option.gravatar_default_type.monsterid
-retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
+retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<options>module_gravatar</options>
-			</option>
-			<option name="max_avatar_width">
-				<categoryname>user.avatar</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>192</defaultvalue>
-				<minvalue>96</minvalue>
-			</option>
-			<option name="max_avatar_height">
-				<categoryname>user.avatar</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>192</defaultvalue>
-				<minvalue>96</minvalue>
 			</option>
 			<!-- /user.avatar -->
 			
@@ -1150,6 +1190,7 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>150</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<!-- /user.signature -->
 			
@@ -1174,6 +1215,7 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>182</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="profile_enable_visitors">
 				<categoryname>user.profile</categoryname>
@@ -1193,19 +1235,19 @@ retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
 			<option name="members_list_default_sort_field">
 				<categoryname>user.list.members</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[username]]></defaultvalue>
-				<selectoptions><![CDATA[username:wcf.user.username
+				<defaultvalue>username</defaultvalue>
+				<selectoptions>username:wcf.user.username
 registrationDate:wcf.user.registrationDate
 activityPoints:wcf.user.activityPoint
 likesReceived:wcf.like.likesReceived
-lastActivityTime:wcf.user.usersOnline.lastActivity]]></selectoptions>
+lastActivityTime:wcf.user.usersOnline.lastActivity</selectoptions>
 			</option>
 			<option name="members_list_default_sort_order">
 				<categoryname>user.list.members</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[DESC]]></defaultvalue>
-				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
-DESC:wcf.global.sortOrder.descending]]></selectoptions>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			<!-- /user.list.members -->
 			
@@ -1223,23 +1265,24 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="users_online_default_sort_field">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[lastActivityTime]]></defaultvalue>
-				<selectoptions><![CDATA[username:wcf.user.username
+				<defaultvalue>lastActivityTime</defaultvalue>
+				<selectoptions>username:wcf.user.username
 lastActivityTime:wcf.user.usersOnline.lastActivity
-requestURI:wcf.user.usersOnline.location]]></selectoptions>
+requestURI:wcf.user.usersOnline.location</selectoptions>
 			</option>
 			<option name="users_online_default_sort_order">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>select</optiontype>
-				<defaultvalue><![CDATA[DESC]]></defaultvalue>
-				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
-DESC:wcf.global.sortOrder.descending]]></selectoptions>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			<option name="users_online_page_refresh">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="users_online_record_no_guests">
 				<categoryname>user.list.online</categoryname>
@@ -1271,50 +1314,35 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>14</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="user_cleanup_activity_event_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>60</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<option name="user_cleanup_profile_visitor_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>60</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /user.cleanup -->
-			
-			<!-- dashboard -->
-			<option name="recent_activity_items">
-				<categoryname>dashboard.content.recentActivities</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>10</defaultvalue>
-				<minvalue>5</minvalue>
-				<maxvalue>100</maxvalue>
-			</option>
-			
-			<option name="recent_activity_sidebar_items">
-				<categoryname>dashboard.sidebar.recentActivities</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>5</defaultvalue>
-				<minvalue>5</minvalue>
-				<maxvalue>50</maxvalue>
-			</option>
-			<!-- /dashboard -->
 			
 			<option name="like_allow_for_own_content">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
 			</option>
 			
 			<option name="like_enable_dislike">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
 			</option>
 			
@@ -1326,22 +1354,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
 			
 			<option name="message_sidebar_enable_online_status">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="message_sidebar_enable_rank">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<options>module_user_rank</options>
-			</option>
-			<option name="message_sidebar_enable_avatar">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="message_sidebar_enable_message_group_starter_icon">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -1367,6 +1379,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
 				<defaultvalue></defaultvalue>
+				<issortable>1</issortable>
 			</option>
 			
 			<!-- message.general -->
@@ -1377,6 +1390,14 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<minvalue>1</minvalue>
 				<maxvalue>255</maxvalue>
 				<options>module_tagging</options>
+			</option>
+			
+			<option name="message_max_quote_depth">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>255</maxvalue>
 			</option>
 			<!-- /message.general -->
 			
@@ -1391,18 +1412,18 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="search_default_sort_field">
 				<categoryname>message.search</categoryname>
 				<optiontype>select</optiontype>
-				<selectoptions><![CDATA[relevance:wcf.search.sortBy.relevance
+				<selectoptions>relevance:wcf.search.sortBy.relevance
 subject:wcf.global.subject
 time:wcf.search.sortBy.time
-username:wcf.search.sortBy.username]]></selectoptions>
-				<defaultvalue><![CDATA[time]]></defaultvalue>
+username:wcf.search.sortBy.username</selectoptions>
+				<defaultvalue>time</defaultvalue>
 			</option>
 			<option name="search_default_sort_order">
 				<categoryname>message.search</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>DESC</defaultvalue>
-				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
-DESC:wcf.global.sortOrder.descending]]></selectoptions>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			
 			<!-- message.general.poll -->
@@ -1414,12 +1435,134 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>100</maxvalue>
 			</option>
 			<!-- /message.general.poll -->
+			
+			<!-- cms.media.thumbnail -->
+			<option name="media_small_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>280</defaultvalue>
+				<minvalue>145</minvalue>
+				<maxvalue>400</maxvalue>
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>210</defaultvalue>
+				<minvalue>145</minvalue>
+				<maxvalue>300</maxvalue>
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_small_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_medium_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>560</defaultvalue>
+				<minvalue>400</minvalue>
+				<maxvalue>900</maxvalue>
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>420</defaultvalue>
+				<minvalue>300</minvalue>
+				<maxvalue>700</maxvalue>
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_medium_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="media_large_thumbnail_width">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1200</defaultvalue>
+				<minvalue>900</minvalue>
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_height">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>900</defaultvalue>
+				<minvalue>700</minvalue>
+				<suffix>pixel</suffix>
+			</option>
+			<option name="media_large_thumbnail_retain_dimensions">
+				<categoryname>cms.media.thumbnail</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /cms.media.thumbnail -->
+			
+			<!-- cms.article -->
+			<option name="article_show_about_author">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
+			</option>
+			<option name="article_enable_comments_default_value">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
+			<option name="article_enable_like">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
+			<option name="articles_per_page">
+				<categoryname>cms.article</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>20</defaultvalue>
+				<options>module_article</options>
+				<minvalue>1</minvalue>
+			</option>
+			<option name="article_related_articles">
+				<categoryname>cms.article</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<options>module_article</options>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="article_related_articles_match_threshold">
+				<categoryname>cms.article</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>50</defaultvalue>
+				<options>module_article</options>
+				<minvalue>1</minvalue>
+				<maxvalue>100</maxvalue>
+				<suffix>percent</suffix>
+			</option>
+			<!-- /cms.article -->
 		</options>
 	</import>
 	
 	<delete>
 		<option name="cache_source_memcached_use_pconnect" />
+		<option name="http_enable_no_cache_headers" />
 		<option name="http_gzip_level" />
 		<option name="enable_pluginstore_widget" />
+		<option name="mail_use_formatted_address" />
+		<option name="mail_debug_logfile_path" />
+		<option name="recent_activity_items" />
+		<option name="recent_activity_sidebar_items" />
+		
+		<option name="enable_bbcodes_default_value" />
+		<option name="enable_html_default_value" />
+		<option name="enable_smilies_default_value" />
+		<option name="pre_parse_default_value" />
+		<option name="show_signature_default_value" />
+		
+		<optioncategory name="dashboard.content.recentActivities" />
+		<optioncategory name="dashboard.sidebar.recentActivities" />
 	</delete>
 </data>

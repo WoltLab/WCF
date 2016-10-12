@@ -7,30 +7,32 @@ use wcf\data\IToggleAction;
  * Executes paid subscription-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.paid.subscription
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Paid\Subscription
+ * 
+ * @method	PaidSubscriptionEditor[]	getObjects()
+ * @method	PaidSubscriptionEditor		getSingleObject()
  */
 class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsDelete = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.paidSubscription.canManageSubscription');
+	protected $permissionsUpdate = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 * @inheritDoc
+	 * @return	PaidSubscription
 	 */
 	public function create() {
 		$showOrder = 0;
@@ -39,6 +41,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 			unset($this->parameters['data']['showOrder']);
 		}
 		
+		/** @var PaidSubscription $subscription */
 		$subscription = parent::create();
 		$editor = new PaidSubscriptionEditor($subscription);
 		$editor->setShowOrder($showOrder);
@@ -47,7 +50,7 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	}
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 * @inheritDoc
 	 */
 	public function update() {
 		parent::update();
@@ -58,18 +61,18 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $object) {
-			$object->update(array(
+		foreach ($this->getObjects() as $object) {
+			$object->update([
 				'isDisabled' => $object->isDisabled ? 0 : 1
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();

@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\user\avatar\UserAvatarAction;
+use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\system\exception\SystemException;
+use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -10,22 +11,20 @@ use wcf\util\FileUtil;
  * Imports user avatars.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.importer
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Importer
  */
 class UserAvatarImporter extends AbstractImporter {
 	/**
-	 * @see	\wcf\system\importer\AbstractImporter::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\avatar\UserAvatar';
+	protected $className = UserAvatar::class;
 	
 	/**
-	 * @see	\wcf\system\importer\IImporter::import()
+	 * @inheritDoc
 	 */
-	public function import($oldID, array $data, array $additionalData = array()) {
+	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location
 		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
@@ -35,7 +34,7 @@ class UserAvatarImporter extends AbstractImporter {
 		$data['width'] = $imageData[0];
 		$data['height'] = $imageData[1];
 		// check min size
-		if ($data['width'] < 48 || $data['height'] < 48) return 0;
+		if ($data['width'] < UserAvatar::AVATAR_SIZE || $data['height'] < UserAvatar::AVATAR_SIZE) return 0;
 		
 		// check image type
 		if ($imageData[2] != IMAGETYPE_GIF && $imageData[2] != IMAGETYPE_JPEG && $imageData[2] != IMAGETYPE_PNG) return 0;
@@ -54,7 +53,7 @@ class UserAvatarImporter extends AbstractImporter {
 		// and create subdirectory if necessary
 		$dir = dirname($avatar->getLocation());
 		if (!@file_exists($dir)) {
-			FileUtil::makePath($dir, 0777);
+			FileUtil::makePath($dir);
 		}
 		
 		// copy file
@@ -63,16 +62,20 @@ class UserAvatarImporter extends AbstractImporter {
 				throw new SystemException();
 			}
 			
-			// create thumbnails
-			$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
-			$action->executeAction();
+			// enforces dimensions
+			if ($data['width'] > UserAvatar::AVATAR_SIZE || $data['height'] > UserAvatar::AVATAR_SIZE) {
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($avatar->getLocation());
+				$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
+				$adapter->writeImage($thumbnail, $avatar->getLocation());
+			}
 			
 			// update owner
 			$sql = "UPDATE	wcf".WCF_N."_user
 				SET	avatarID = ?
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($avatar->avatarID, $data['userID']));
+			$statement->execute([$avatar->avatarID, $data['userID']]);
 			
 			return $avatar->avatarID;
 		}

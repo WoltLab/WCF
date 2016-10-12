@@ -6,19 +6,17 @@ use wcf\system\WCF;
  * Basic implementation for object editors following the decorator pattern.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data
  */
 abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableObject {
 	/**
-	 * @see	\wcf\data\IEditableObject::create()
+	 * @inheritDoc
 	 */
-	public static function create(array $parameters = array()) {
+	public static function create(array $parameters = []) {
 		$keys = $values = '';
-		$statementParameters = array();
+		$statementParameters = [];
 		foreach ($parameters as $key => $value) {
 			if (!empty($keys)) {
 				$keys .= ',';
@@ -48,13 +46,13 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
+	 * @inheritDoc
 	 */
-	public function update(array $parameters = array()) {
+	public function update(array $parameters = []) {
 		if (empty($parameters)) return;
 		
 		$updateSQL = '';
-		$statementParameters = array();
+		$statementParameters = [];
 		foreach ($parameters as $key => $value) {
 			if (!empty($updateSQL)) $updateSQL .= ', ';
 			$updateSQL .= $key . ' = ?';
@@ -70,13 +68,13 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::updateCounters()
+	 * @inheritDoc
 	 */
-	public function updateCounters(array $counters = array()) {
+	public function updateCounters(array $counters = []) {
 		if (empty($counters)) return;
 		
 		$updateSQL = '';
-		$statementParameters = array();
+		$statementParameters = [];
 		foreach ($counters as $key => $value) {
 			if (!empty($updateSQL)) $updateSQL .= ', ';
 			$updateSQL .= $key . ' = ' . $key . ' + ?';
@@ -92,16 +90,16 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::delete()
+	 * @inheritDoc
 	 */
 	public function delete() {
-		static::deleteAll(array($this->getObjectID()));
+		static::deleteAll([$this->getObjectID()]);
 	}
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::deleteAll()
+	 * @inheritDoc
 	 */
-	public static function deleteAll(array $objectIDs = array()) {
+	public static function deleteAll(array $objectIDs = []) {
 		$sql = "DELETE FROM	".static::getDatabaseTableName()."
 			WHERE		".static::getDatabaseTableIndexName()." = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -109,7 +107,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 		$affectedCount = 0;
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectID));
+			$statement->execute([$objectID]);
 			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();

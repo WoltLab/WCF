@@ -5,29 +5,27 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of JavaScript code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class JsHighlighter extends Highlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @inheritDoc
 	 */
-	protected $separators = array("(", ")", "{", "}", "[", "]", ";", ".", ",");
+	protected $separators = ["(", ")", "{", "}", "[", "]", ";", ".", ","];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @inheritDoc
 	 */
-	protected $operators = array("=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!=",
+	protected $operators = ["=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!=",
 		"&&", "||", "++", "--", "+", "-", "*", "/", "&", "|", "^", "%", "<<", ">>", ">>>", "+=", "-=", "*=",
-		"/=", "&=", "|=", "^=", "%=", "<<=", ">>=", ">>>=");
+		"/=", "&=", "|=", "^=", "%=", "<<=", ">>=", ">>>="];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @inheritDoc
 	 */
-	protected $keywords1 = array(
+	protected $keywords1 = [
 		"String",
 		"Array",
 		"RegExp",
@@ -62,12 +60,12 @@ class JsHighlighter extends Highlighter {
 		"onSelect",
 		"onSubmit",
 		"onUnload"
-	);
+	];
 	
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @inheritDoc
 	 */
-	protected $keywords2 = array(
+	protected $keywords2 = [
 		"break",
 		"continue",
 		"do",
@@ -128,5 +126,5 @@ class JsHighlighter extends Highlighter {
 		"true",
 		"try",
 		"volatile"
-	);
+	];
 }

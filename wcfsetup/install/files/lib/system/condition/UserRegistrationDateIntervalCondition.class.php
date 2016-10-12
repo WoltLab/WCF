@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
@@ -10,43 +11,52 @@ use wcf\system\WCF;
  * a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
-class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IUserCondition {
+class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$languageItemPrefix
+	 * @inheritDoc
 	 */
 	protected $label = 'wcf.user.condition.registrationDateInterval';
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::$minValue
+	 * @inheritDoc
 	 */
 	protected $minValue = 0;
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @inheritDoc
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->greaterThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(TIME_NOW - $condition->greaterThan * 86400));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
-		if ($condition->lessThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate > ?', array(TIME_NOW - $condition->lessThan * 86400));
+		
+		if ($conditionData['greaterThan'] !== null) {
+			$objectList->getConditionBuilder()->add('user_table.registrationDate < ?', [TIME_NOW - $conditionData['greaterThan'] * 86400]);
+		}
+		if ($conditionData['lessThan'] !== null) {
+			$objectList->getConditionBuilder()->add('user_table.registrationDate > ?', [TIME_NOW - $conditionData['lessThan'] * 86400]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->greaterThan !== null && $user->registrationDate >= TIME_NOW - $condition->greaterThan * 86400) {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$greaterThan = $condition->greaterThan;
+		if ($greaterThan !== null && $user->registrationDate >= TIME_NOW - $greaterThan * 86400) {
 			return false;
 		}
-		if ($condition->lessThan !== null && $user->registrationDate <= TIME_NOW - $condition->lessThan * 86400) {
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$lessThan = $condition->lessThan;
+		if ($lessThan !== null && $user->registrationDate <= TIME_NOW - $lessThan * 86400) {
 			return false;
 		}
 		
@@ -54,14 +64,14 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::getIdentifier()
+	 * @inheritDoc
 	 */
 	protected function getIdentifier() {
 		return 'user_registrationDateInterval';
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;

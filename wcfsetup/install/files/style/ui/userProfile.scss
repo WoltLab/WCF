@@ -1,0 +1,187 @@
+.userProfileUser {
+	.contentHeaderIcon {
+		position: relative;
+		
+		a {
+			display: block;
+		}
+		
+		.badgeOnline {
+			left: 0;
+			pointer-events: none;
+			position: absolute;
+			
+			@include screen-md-up {
+				bottom: 0;
+			}
+			
+			@include screen-sm-down {
+				color: transparent;
+				padding: 0;
+				top: 0;
+				width: 0;
+				
+				&::before {
+					background-color: inherit;
+					border: 1px solid rgba(255, 255, 255, 1);
+					border-radius: 50%;
+					content: "";
+					height: 16px;
+					left: 34px; /* 48px (avatar) - 16px (width) - 2px (border-left + border-right) */
+					position: absolute;
+					width: 16px;
+				}
+			}
+		}
+	}
+	
+	.contentHeaderIcon a {
+		display: block;
+	}
+	
+	.contentDescription {
+		margin-top: 20px;
+	}
+	
+	@include screen-sm-down {
+		display: flex;
+		flex-wrap: wrap;
+		
+		.contentHeaderIcon {
+			display: block;
+			flex: 0 0 48px;
+			margin-right: 10px;
+			
+			img {
+				width: 48px !important;
+				height: 48px !important;
+			}
+		}
+		
+		.contentHeaderTitle {
+			flex: 0 0 calc(100% - 58px);
+			max-width: calc(100% - 58px);
+		}
+	}
+	
+	@include screen-xs {
+		.contentHeaderNavigation {
+			flex: 0 0 100%;
+			
+			.userProfileButtonContainer {
+				display: flex;
+				
+				> li {
+					flex: 1 1 auto;
+					margin-top: 0 !important;
+					
+					&:not(:last-child) {
+						margin-right: 1px;
+					}
+				}
+			}
+		}
+	}
+	
+	@include screen-md-up {
+		.contentHeaderIcon {
+			flex: 0 0 128px;
+			margin-right: 20px;
+		}
+	}
+}
+
+.userTitleBadge {
+	max-width: 154px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.userAvatarImage {
+	background-color: #fff;
+	border-radius: 50%;
+}
+
+.userAvatarList {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: -10px;
+	
+	> li {
+		flex: 0 0 48px;
+		margin-bottom: 10px;
+		text-align: center;
+		
+		&:not(:last-child) {
+			margin-right: -12px;
+		}
+		
+		> a {
+			display: block;
+			
+			> img {
+				border: 2px solid #fff;
+			}
+		}
+	}
+	
+	&.small {
+		> li {
+			flex: 0 0 24px;
+			
+			&:not(:last-child) {
+				margin-right: -6px;
+			}
+			
+			> a {
+				> img {
+					border: 1px solid #fff;
+				}
+			}
+		}
+	}
+}
+
+.userList {
+	.box48 {
+		align-items: center;
+	}
+}
+
+.userProfilePreview {
+	position: relative;
+	
+	.userInformation {
+		padding-bottom: 16px;
+	}
+	
+	.buttonGroupNavigation {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+}
+
+/* using `dl` + `.inlineDataList` to prevent styles applied to the
+   data list provided by the `userInformation` template */
+.userProfilePreview dl.inlineDataList {
+	margin-top: 10px;
+	
+	@include wcfFontSmall;
+}
+
+/* user notifications */
+.userNotificationItemList > .notificationItem {
+	&.notificationUnconfirmed {
+		align-items: center;
+		display: flex;
+		
+		> .box32 {
+			flex: 1 1 auto;
+		}
+		
+		> .notificationItemMarkAsConfirmed {
+			flex: 0 0 auto;
+		}
+	}
+}

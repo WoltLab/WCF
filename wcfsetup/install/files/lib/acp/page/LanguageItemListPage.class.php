@@ -2,7 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\item\LanguageItemList;
-use wcf\page\AbstractPage;
+use wcf\page\SortablePage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -11,34 +11,35 @@ use wcf\util\StringUtil;
  * Shows a list of language items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
  */
-class LanguageItemListPage extends AbstractPage {
+class LanguageItemListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.item.list';
 	
 	/**
-	 * number of matching phrases
-	 * @var	integer
+	 * @inheritDoc
 	 */
-	public $count = 0;
+	public $neededPermissions = ['admin.language.canManageLanguage'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
+	public $itemsPerPage = 100;
 	
 	/**
-	 * language item list
-	 * @var	\wcf\data\language\item\LanguageItemList
+	 * @inheritDoc
 	 */
-	public $languageItemList = null;
+	public $validSortFields = ['languageItem'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultSortField = 'languageItem';
 	
 	/**
 	 * language id
@@ -71,43 +72,54 @@ class LanguageItemListPage extends AbstractPage {
 	public $hasCustomValue = 0;
 	
 	/**
+	 * search for disabled custom values
+	 * @var	boolean
+	 */
+	public $hasDisabledCustomValue = 0;
+	
+	/**
 	 * available languages
 	 * @var	array
 	 */
-	public $availableLanguages = array();
+	public $availableLanguages = [];
 	
 	/**
 	 * available language categories
 	 * @var	array
 	 */
-	public $availableLanguageCategories = array();
+	public $availableLanguageCategories = [];
 	
 	/**
-	 * current page no
-	 * @var	integer
-	 */
-	public $pageNo = 1;
-	
-	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['id'])) $this->languageID = intval($_REQUEST['id']);
+		if (isset($_REQUEST['languageID'])) $this->languageID = intval($_REQUEST['languageID']);
 		if (isset($_REQUEST['languageCategoryID'])) $this->languageCategoryID = intval($_REQUEST['languageCategoryID']);
 		if (isset($_REQUEST['languageItem'])) $this->languageItem = StringUtil::trim($_REQUEST['languageItem']);
 		if (isset($_REQUEST['languageItemValue'])) $this->languageItemValue = $_REQUEST['languageItemValue'];
 		if (!empty($_REQUEST['hasCustomValue'])) $this->hasCustomValue = 1;
-		if (isset($_REQUEST['pageNo'])) $this->pageNo = intval($_REQUEST['pageNo']);
+		if (!empty($_REQUEST['hasDisabledCustomValue'])) $this->hasDisabledCustomValue = 1;
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
+	 */
+	protected function initObjectList() {
+		$this->objectList = new LanguageItemList();
+		$this->objectList->getConditionBuilder()->add('languageID = ?', [$this->languageID]);
+		if ($this->languageCategoryID) $this->objectList->getConditionBuilder()->add('languageCategoryID = ?', [$this->languageCategoryID]);
+		if ($this->languageItem) $this->objectList->getConditionBuilder()->add('languageItem LIKE ?', ['%'.$this->languageItem.'%']);
+		if ($this->languageItemValue) $this->objectList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', ['%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%']);
+		if ($this->hasCustomValue || $this->hasDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
+		if ($this->hasDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageUseCustomValue = ?", [0]);
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function readData() {
-		parent::readData();
-		
 		// get languages
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 		
@@ -124,45 +136,24 @@ class LanguageItemListPage extends AbstractPage {
 			$this->languageCategoryID = 0;
 		}
 		
-		// get items
-		$this->languageItemList = new LanguageItemList();
-		$this->languageItemList->getConditionBuilder()->add('languageID = ?', array($this->languageID));
-		if ($this->languageCategoryID) $this->languageItemList->getConditionBuilder()->add('languageCategoryID = ?', array($this->languageCategoryID));
-		if ($this->languageItem) $this->languageItemList->getConditionBuilder()->add('languageItem LIKE ?', array('%'.$this->languageItem.'%'));
-		if ($this->languageItemValue) $this->languageItemList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', array('%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%'));
-		if ($this->hasCustomValue) $this->languageItemList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
-		$this->languageItemList->sqlLimit = 100;
-		
-		if (!empty($_POST)) {
-			$this->count = $this->languageItemList->countObjects();
-			$maxPages = ceil($this->count / 100);
-			$this->pageNo = max(min($this->pageNo, $maxPages), 1);
-			
-			if ($this->pageNo > 1) {
-				$this->languageItemList->sqlOffset = ($this->pageNo - 1) * 100;
-			}
-		}
-		
-		$this->languageItemList->readObjects();
+		parent::readData();
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
-			'objects' => $this->languageItemList,
-			'count' => $this->count,
-			'pageNo' => $this->pageNo,
+		WCF::getTPL()->assign([
 			'languageID' => $this->languageID,
 			'languageCategoryID' => $this->languageCategoryID,
 			'languageItem' => $this->languageItem,
 			'languageItemValue' => $this->languageItemValue,
 			'hasCustomValue' => $this->hasCustomValue,
+			'hasDisabledCustomValue' => $this->hasDisabledCustomValue,
 			'availableLanguages' => $this->availableLanguages,
 			'availableLanguageCategories' => $this->availableLanguageCategories
-		));
+		]);
 	}
 }

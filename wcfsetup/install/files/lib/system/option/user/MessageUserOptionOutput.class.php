@@ -2,7 +2,7 @@
 namespace wcf\system\option\user;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
-use wcf\system\bbcode\MessageParser;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -10,15 +10,13 @@ use wcf\util\StringUtil;
  * User option output implementation for a formatted textarea value.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option\User
  */
 class MessageUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @inheritDoc
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$value = StringUtil::trim($value);
@@ -26,12 +24,13 @@ class MessageUserOptionOutput implements IUserOptionOutput {
 			return '';
 		}
 		
-		MessageParser::getInstance()->setOutputType('text/html');
+		$htmlOutputProcessor = new HtmlOutputProcessor();
+		$htmlOutputProcessor->process($value, 'com.woltlab.wcf.user.aboutMe', $user->userID);
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'option' => $option,
-			'value' => MessageParser::getInstance()->parse($value),
-		));
+			'value' => $htmlOutputProcessor->getHtml()
+		]);
 		return WCF::getTPL()->fetch('messageUserOptionOutput');
 	}
 }

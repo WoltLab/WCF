@@ -7,22 +7,20 @@ use wcf\util\CLIUtil;
  * Lists available commands.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cli.command
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cli\Command
  */
 class CommandsCLICommand implements ICLICommand {
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * @inheritDoc
 	 */
 	public function execute(array $parameters) {
 		CLIWCF::getReader()->println(CLIUtil::generateList(array_keys(CLICommandHandler::getCommands())));
 	}
 	
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
+	 * @inheritDoc
 	 */
 	public function canAccess() {
 		return true;

@@ -8,11 +8,9 @@ use wcf\util\FileUtil;
  * Extracts files and directories from a tar archive.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.setup
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Setup
  */
 class Installer {
 	/**
@@ -43,10 +41,10 @@ class Installer {
 	/**
 	 * Creates a new Installer object.
 	 * 
-	 * @param	string				$targetDir
-	 * @param	string				$source
-	 * @param	\wcf\system\setup\IFileHandler	$fileHandler
-	 * @param	string				$folder
+	 * @param	string		$targetDir
+	 * @param	string		$source
+	 * @param	IFileHandler	$fileHandler
+	 * @param	string		$folder
 	 */
 	public function __construct($targetDir, $source, $fileHandler = null, $folder = '') {
 		$this->targetDir = FileUtil::addTrailingSlash($targetDir);
@@ -61,11 +59,11 @@ class Installer {
 	 */
 	protected function createTargetDir() {
 		if (!@is_dir($this->targetDir)) {
-			if (!FileUtil::makePath($this->targetDir, (FileUtil::isApacheModule() ? 0777 : 0755))) {
+			if (!FileUtil::makePath($this->targetDir)) {
 				throw new SystemException("Could not create dir '".$this->targetDir."'");
 			}
 		}
-		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir)) {
+		if (FileUtil::isApacheModule() || !is_writable($this->targetDir)) {
 			$this->makeWriteable($this->targetDir);
 		}
 	}
@@ -74,6 +72,7 @@ class Installer {
 	 * Creates a directory in the target directory.
 	 * 
 	 * @param	string		$dir
+	 * @throws	SystemException
 	 */
 	protected function createDir($dir) {
 		if (!@is_dir($this->targetDir.$dir)) {
@@ -83,7 +82,7 @@ class Installer {
 			}
 			umask($oldumask);
 		}
-		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir.$dir)) {
+		if (FileUtil::isApacheModule() || !is_writable($this->targetDir.$dir)) {
 			$this->makeWriteable($this->targetDir.$dir);
 		}
 	}
@@ -107,7 +106,7 @@ class Installer {
 	 */
 	protected function createFile($file, $index, Tar $tar) {
 		$tar->extract($index, $this->targetDir.$file);
-		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir.$file)) {
+		if (FileUtil::isApacheModule() || !is_writable($this->targetDir.$file)) {
 			$this->makeWriteable($this->targetDir.$file);
 		}
 	}
@@ -122,8 +121,8 @@ class Installer {
 		$tar = new Tar($this->source);
 		
 		// distinct directories and files
-		$directories = array();
-		$files = array();
+		$directories = [];
+		$files = [];
 		foreach ($tar->getContentList() as $index => $file) {
 			if (empty($this->folder) || mb_strpos($file['filename'], $this->folder) === 0) {
 				if (!empty($this->folder)) {
@@ -145,7 +144,7 @@ class Installer {
 		$this->checkFiles($files);
 		
 		// now create the directories
-		$errors = array();
+		$errors = [];
 		foreach ($directories as $dir) {
 			try {
 				$this->createDir($dir);
@@ -165,7 +164,7 @@ class Installer {
 			}
 		}
 		if (!empty($errors)) {
-			throw new SystemException('error(s) during the installation of the files.', 0, implode("<br />", $errors));
+			throw new SystemException('error(s) during the installation of the files.', 0, implode("<br>", $errors));
 		}
 		
 		$this->logFiles($files);

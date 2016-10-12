@@ -1,10 +1,11 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\object\type\ObjectType;
 use wcf\page\AbstractPage;
 use wcf\system\category\CategoryHandler;
+use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
@@ -13,11 +14,9 @@ use wcf\system\WCF;
  * type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
  */
 abstract class AbstractCategoryListPage extends AbstractPage {
 	/**
@@ -28,13 +27,13 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	
 	/**
 	 * category node tree
-	 * @var	\wcf\data\category\CategoryNodeTree
+	 * @var	CategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	
 	/**
 	 * ids of collapsed categories
-	 * @var	array<integer>
+	 * @var	integer[]
 	 */
 	public $collapsedCategoryIDs = null;
 	
@@ -54,11 +53,11 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	 * language item with the page title
 	 * @var	string
 	 */
-	public $pageTitle = '';
+	public $pageTitle = 'wcf.category.list';
 	
 	/**
 	 * category object type object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType = null;
 	
@@ -69,12 +68,12 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public $objectTypeName = '';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$templateName
+	 * @inheritDoc
 	 */
 	public $templateName = 'categoryList';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::__run()
+	 * @inheritDoc
 	 */
 	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
@@ -92,19 +91,19 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'addController' => $this->addController,
 			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
 			'collapsedCategoryIDs' => $this->collapsedCategoryIDs,
 			'collapsibleObjectTypeID' => $this->collapsibleObjectTypeID,
 			'editController' => $this->editController,
 			'objectType' => $this->objectType
-		));
+		]);
 		
 		if ($this->pageTitle) {
 			WCF::getTPL()->assign('pageTitle', $this->pageTitle);
@@ -128,12 +127,12 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
 		if ($this->objectType === null) {
-			throw new SystemException("Unknown category object type with name '".$this->objectTypeName."'");
+			throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.category');
 		}
 		
 		// check permissions

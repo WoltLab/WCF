@@ -6,11 +6,9 @@ use wcf\system\exception\SystemException;
  * Represents a callback
  * 
  * @author	Tim Duesterhus
- * @copyright	2011 Tim Duesterhus
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System
  */
 final class Callback {
 	/**
@@ -23,6 +21,7 @@ final class Callback {
 	 * Creates new instance of Callback.
 	 * 
 	 * @param	callback	$callback
+	 * @throws	SystemException
 	 */
 	public function __construct($callback) {
 		if (!is_callable($callback)) {

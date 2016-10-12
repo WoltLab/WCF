@@ -4,7 +4,7 @@
  * Namespace for poll-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Poll = { };
@@ -24,30 +24,31 @@ WCF.Poll.Management = Class.extend({
 	
 	/**
 	 * number of options
-	 * @var	integer
+	 * @var	int
 	 */
 	_count: 0,
 	
 	/**
-	 * width for input-elements
-	 * @var	integer
+	 * editor element id
+	 * @var string
 	 */
-	_inputSize: 0,
+	_editorId: '',
 	
 	/**
 	 * maximum allowed number of options
-	 * @var	integer
+	 * @var	int
 	 */
 	_maxOptions: 0,
 	
 	/**
 	 * Initializes the WCF.Poll.Management class.
 	 * 
-	 * @param	string		containerID
-	 * @param	array<object>	optionList
-	 * @param	integer		maxOptions
+	 * @param       {string}        containerID
+	 * @param       {Object[]}      optionList
+	 * @param       {int}           maxOptions
+	 * @param       {string}        editorId
 	 */
-	init: function(containerID, optionList, maxOptions) {
+	init: function(containerID, optionList, maxOptions, editorId) {
 		this._count = 0;
 		this._maxOptions = maxOptions || -1;
 		this._container = $('#' + containerID).children('ol:eq(0)');
@@ -56,25 +57,29 @@ WCF.Poll.Management = Class.extend({
 			return;
 		}
 		
-		optionList = optionList || [ ];
+		optionList = optionList || [];
 		this._createOptionList(optionList);
 		
 		// bind event listener
-		$(window).resize($.proxy(this._resize, this));
-		this._container.parents('form').submit($.proxy(this._submit, this));
+		if (editorId) {
+			this._editorId = editorId;
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + editorId, this._reset.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + editorId, this._validate.bind(this));
+		}
+		else {
+			this._container.closest('form').submit($.proxy(this._submit, this));
+		}
 		
 		// init sorting
-		new WCF.Sortable.List(containerID, '', undefined, undefined, true);
-		
-		// trigger resize event for field length calculation
-		this._resize();
-		
-		// update size on tab select
-		var self = this;
-		this._container.closest('.messageTabMenu').on('messagetabmenushow', function(event, data) {
-			if (data.activeTab.name == 'poll') {
-				self._resize();
-			}
+		require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+			new UiSortableList({
+				containerId: containerID,
+				options: {
+					toleranceElement: '> div'
+				}
+			});
 		});
 	},
 	
@@ -114,12 +119,13 @@ WCF.Poll.Management = Class.extend({
 		}
 		
 		// insert buttons
-		var $buttonContainer = $('<span class="sortableButtonContainer" />').appendTo($listItem);
-		$('<span class="icon icon16 icon-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($buttonContainer);
-		$('<span class="icon icon16 icon-remove jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($buttonContainer);
+		var $container = $('<div class="pollOptionInput" />').appendTo($listItem);
+		$('<span class="icon icon16 fa-arrows sortableNodeHandle" />').appendTo($container);
+		$('<span class="icon icon16 fa-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($container);
+		$('<span class="icon icon16 fa-times jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($container);
 		
 		// insert input field
-		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
+		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').keydown($.proxy(this._keyDown, this)).appendTo($container);
 		$input.click(function() {
 			// work-around for some weird focus issue on iOS/Android
 			if (document.activeElement !== this) {
@@ -143,19 +149,16 @@ WCF.Poll.Management = Class.extend({
 	 * Handles key down events for option input field.
 	 * 
 	 * @param	object		event
-	 * @return	boolean
 	 */
 	_keyDown: function(event) {
 		// ignore every key except for [Enter]
 		if (event.which !== 13) {
-			return true;
+			return;
 		}
 		
-		$(event.currentTarget).prev('.sortableButtonContainer').children('.jsAddOption').trigger('click');
+		$(event.currentTarget).parent().children('.jsAddOption').trigger('click');
 		
 		event.preventDefault();
-		event.stopPropagation();
-		return false;
 	},
 	
 	/**
@@ -168,7 +171,7 @@ WCF.Poll.Management = Class.extend({
 			return false;
 		}
 		
-		var $listItem = $(event.currentTarget).parents('li');
+		var $listItem = $(event.currentTarget).closest('li', this._container[0]);
 		
 		this._createOption(undefined, undefined, $listItem);
 	},
@@ -179,7 +182,7 @@ WCF.Poll.Management = Class.extend({
 	 * @param	object		event
 	 */
 	_removeOption: function(event) {
-		$(event.currentTarget).parents('li').remove();
+		$(event.currentTarget).closest('li', this._container[0]).remove();
 		
 		this._count--;
 		this._container.find('span.jsAddOption').addClass('pointer').removeClass('disabled');
@@ -190,49 +193,109 @@ WCF.Poll.Management = Class.extend({
 	},
 	
 	/**
-	 * Handles the 'resize'-event to adjust input-width.
+	 * Inserts hidden input elements storing the option values.
+	 * 
+	 * @param       {(Event|Object)}        event
 	 */
-	_resize: function() {
-		var $containerWidth = this._container.innerWidth();
-		
-		// select first option to determine dimensions
-		var $listItem = this._container.children('li:eq(0)');
-		var $buttonWidth = $listItem.children('.sortableButtonContainer').outerWidth();
-		var $inputSize = $containerWidth - $buttonWidth;
-		
-		if ($inputSize != this._inputSize) {
-			this._inputSize = $inputSize;
+	_submit: function(event) {
+		var $options = [];
+		this._container.children('li').each(function (index, listItem) {
+			var $listItem = $(listItem);
+			var $optionValue = $.trim($listItem.find('input').val());
 			
-			// update width of <input /> elements
-			this._container.find('li > input').css({ width: this._inputSize + 'px' });
+			// ignore empty values
+			if ($optionValue != '') {
+				$options.push($listItem.data('optionID') + '_' + $optionValue);
+			}
+		});
+		
+		if (typeof event.originalEvent === 'object' && event.originalEvent instanceof Event) {
+			// create hidden input fields
+			if ($options.length) {
+				var $formSubmit = this._container.parents('form').find('.formSubmit');
+				
+				for (var $i = 0, $length = $options.length; $i < $length; $i++) {
+					$('<input type="hidden" name="pollOptions[' + $i + ']">').val($options[$i]).appendTo($formSubmit);
+				}
+			}
+		}
+		else {
+			event.poll = { pollOptions: $options };
+			
+			// get form input fields
+			var parentContainer = this._container.parents('.messageTabMenuContent:eq(0)');
+			parentContainer.find('input').each(function(index, input) {
+				if (input.name) {
+					if (input.type !== 'checkbox' || input.checked) {
+						event.poll[input.name] = input.value;
+					}
+				}
+			});
 		}
 	},
 	
 	/**
-	 * Inserts hidden input elements storing the option values.
+	 * Resets the poll option form.
+	 * 
+	 * @private
 	 */
-	_submit: function() {
-		var $options = [ ];
-		this._container.children('li').each(function(index, listItem) {
-			var $listItem = $(listItem);
-			var $optionValue = $.trim($listItem.children('input').val());
-			
-			// ignore empty values
-			if ($optionValue != '') {
-				$options.push({
-					optionID: $listItem.data('optionID'),
-					optionValue: $optionValue
-				});
+	_reset: function() {
+		// reset options
+		/** @type Element */
+		var container = this._container[0];
+		while (container.childElementCount > 1) {
+			container.removeChild(container.children[1]);
+		}
+		
+		elBySel('input', container.children[0]).value = '';
+		
+		// reset input fields and checkboxes
+		var parentContainer = this._container.parents('.messageTabMenuContent:eq(0)');
+		parentContainer.find('input').each(function(index, input) {
+			if (input.name) {
+				if (input.type === 'checkbox') {
+					input.checked = false;
+				}
+				else if (input.type === 'text') {
+					input.value = '';
+				}
+				else if (input.type === 'number') {
+					input.value = input.min;
+				}
 			}
 		});
 		
-		// create hidden input fields
-		if ($options.length) {
-			var $formSubmit = this._container.parents('form').find('.formSubmit');
-			
-			for (var $i = 0, $length = $options.length; $i < $length; $i++) {
-				var $option = $options[$i];
-				$('<input type="hidden" name="pollOptions[' + $i + ']" />').val($option.optionID + '_' + $option.optionValue).appendTo($formSubmit);
+		// reset date picker
+		require(['WoltLabSuite/Core/Date/Picker'], (function(UiDatePicker) {
+			UiDatePicker.clear('pollEndTime_' + this._editorId);
+		}).bind(this));
+	},
+	
+	_validate: function(data) {
+		var question = elById('pollQuestion_' + this._editorId);
+		if (question.value.trim() === '') {
+			// no question provided, ignore
+			return;
+		}
+		
+		// get options
+		var count = 0;
+		elBySelAll('li input[type="text"]', this._container[0], function(input) {
+			if (input.value.trim() !== '') {
+				count++;
+			}
+		});
+		
+		if (count === 0) {
+			data.api.throwError(this._container[0], WCF.Language.get('wcf.global.form.error.empty'));
+			data.valid = false;
+		}
+		else {
+			var pollMaxVotes = elById('pollMaxVotes_' + this._editorId);
+			var num = ~~pollMaxVotes.value;
+			if (num && num > count) {
+				data.api.throwError(pollMaxVotes, WCF.Language.get('wcf.poll.maxVotes.error.invalid'));
+				data.valid = false;
 			}
 		}
 	}
@@ -312,7 +375,7 @@ WCF.Poll.Manager = Class.extend({
 		this._polls = { };
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this),
-			url: 'index.php/Poll/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php?poll/&t=' + SECURITY_TOKEN
 		});
 		
 		// init polls

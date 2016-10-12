@@ -3,33 +3,39 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
  * Condition implementation for an integer property of a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.condition
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Condition
  */
-class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IContentCondition, IUserCondition {
+class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
+	 * @inheritDoc
 	 */
-	public function addUserCondition(Condition $condition, UserList $userList) {
-		if ($condition->greaterThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' > ?', array($condition->greaterThan));
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
-		if ($condition->lessThan !== null) {
-			$userList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' < ?', array($condition->lessThan));
+		
+		if (isset($conditionData['greaterThan'])) {
+			/** @noinspection PhpUndefinedFieldInspection */
+			$objectList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' > ?', [$conditionData['greaterThan']]);
+		}
+		if (isset($conditionData['lessThan'])) {
+			$objectList->getConditionBuilder()->add('user_table.'.$this->getDecoratedObject()->propertyname.' < ?', [$conditionData['lessThan']]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IUserCondition::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
 		if ($condition->greaterThan !== null && $user->{$this->getDecoratedObject()->propertyname} <= $condition->greaterThan) {
@@ -43,21 +49,21 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements I
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::getIdentifier()
+	 * @inheritDoc
 	 */
 	protected function getIdentifier() {
 		return 'user_'.$this->getDecoratedObject()->propertyname;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getLabel()
+	 * @inheritDoc
 	 */
 	protected function getLabel() {
 		return WCF::getLanguage()->get('wcf.user.condition.'.$this->getDecoratedObject()->propertyname);
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\IContentCondition::showContent()
+	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;

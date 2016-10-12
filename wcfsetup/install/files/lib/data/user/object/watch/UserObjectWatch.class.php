@@ -7,23 +7,17 @@ use wcf\system\WCF;
  * Represents a watched object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.object.watch
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Object\Watch
+ *
+ * @property-read	integer		$watchID		unique id of the watched object
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.user.objectWatch` object type
+ * @property-read	integer		$objectID		id of the watched object of the specific object type
+ * @property-read	integer		$userID			id of the user watching the object
+ * @property-read	integer		$notification		is `1` if the user wants to receive notifications for the watched object, otherwise `0`
  */
 class UserObjectWatch extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'user_object_watch';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'watchID';
-	
 	/**
 	 * Returns the UserObjectWatch with the given data or null if no such object
 	 * exists.
@@ -31,7 +25,7 @@ class UserObjectWatch extends DatabaseObject {
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$userID
 	 * @param	integer		$objectID
-	 * @return	\wcf\data\user\object\watch\UserObjectWatch
+	 * @return	UserObjectWatch
 	 */
 	public static function getUserObjectWatch($objectTypeID, $userID, $objectID) {
 		$sql = "SELECT	*
@@ -40,7 +34,7 @@ class UserObjectWatch extends DatabaseObject {
 				AND userID = ?
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectTypeID, $userID, $objectID));
+		$statement->execute([$objectTypeID, $userID, $objectID]);
 		$row = $statement->fetch();
 		if (!$row) return null;
 		return new UserObjectWatch(null, $row);

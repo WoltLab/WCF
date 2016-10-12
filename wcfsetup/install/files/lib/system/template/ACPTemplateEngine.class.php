@@ -6,30 +6,24 @@ use wcf\system\application\ApplicationHandler;
  * Loads and displays template in the ACP.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Template
  */
 class ACPTemplateEngine extends TemplateEngine {
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::$environment
+	 * @inheritDoc
 	 */
 	protected $environment = 'admin';
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::__construct()
+	 * @inheritDoc
 	 */
 	protected function init() {
 		parent::init();
 		
-		$this->templatePaths = array('wcf' => WCF_DIR.'acp/templates/');
+		$this->templatePaths = ['wcf' => WCF_DIR.'acp/templates/'];
 		$this->compileDir = WCF_DIR.'acp/templates/compiled/';
-		
-		if (!defined('NO_IMPORTS')) {
-			$this->loadTemplateListeners();
-		}
 	}
 	
 	/**
@@ -44,7 +38,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getCompiledFilename()
+	 * @inheritDoc
 	 */
 	public function getCompiledFilename($templateName, $application) {
 		$abbreviation = 'wcf';
@@ -52,23 +46,25 @@ class ACPTemplateEngine extends TemplateEngine {
 			$abbreviation = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
 		}
 		
-		return $this->compileDir.$this->templateGroupID.'_'.$abbreviation.'_'.$this->languageID.'_'.$templateName.'.php';
+		return $this->compileDir.$this->getTemplateGroupID().'_'.$abbreviation.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::setTemplateGroupID()
+	 * This method always throws, because changing the template group is not supported.
+	 * 
+	 * @param	integer		$templateGroupID
+	 * @throws	\BadMethodCallException
 	 */
-	public final function setTemplateGroupID($templateGroupID) {
-		// template groups are not supported by the acp template engine
-		$this->templateGroupID = 0;
+	public function setTemplateGroupID($templateGroupID) {
+		throw new \BadMethodCallException("You may not change the template group of the acp template engine");
 	}
 	
 	/**
-	 * @see	\wcf\system\template\TemplateEngine::getTemplateListenerCode()
+	 * @inheritDoc
 	 */
 	public function getTemplateListenerCode($templateName, $eventName) {
-		// skip template listeners within WCF ACP
-		if (defined('PACKAGE_ID') && PACKAGE_ID == 1) {
+		// skip template listeners within WCFSetup
+		if (!PACKAGE_ID) {
 			return '';
 		}
 		

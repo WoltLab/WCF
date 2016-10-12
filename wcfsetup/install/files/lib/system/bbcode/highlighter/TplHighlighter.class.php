@@ -6,15 +6,13 @@ use wcf\system\Regex;
  * Highlights syntax of template documents with smarty-syntax.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.bbcode.highlighter
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
 class TplHighlighter extends HtmlHighlighter {
 	/**
-	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightComments()
+	 * @inheritDoc
 	 */
 	protected function highlightComments($string) {
 		$string = parent::highlightComments($string);

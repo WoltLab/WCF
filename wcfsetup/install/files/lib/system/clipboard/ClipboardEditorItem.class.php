@@ -6,18 +6,16 @@ use wcf\system\exception\SystemException;
  * Represents a clipboard item for inline editing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.clipboard
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Clipboard
  */
 final class ClipboardEditorItem {
 	/**
 	 * internal data
 	 * @var	array
 	 */
-	protected $internalData = array();
+	protected $internalData = [];
 	
 	/**
 	 * item name
@@ -29,7 +27,7 @@ final class ClipboardEditorItem {
 	 * list of parameters passed to ClipboardProxyAction
 	 * @var	array
 	 */
-	protected $parameters = array();
+	protected $parameters = [];
 	
 	/**
 	 * redirect url
@@ -78,6 +76,7 @@ final class ClipboardEditorItem {
 	 * 
 	 * @param	string		$name
 	 * @param	mixed		$value
+	 * @throws	SystemException
 	 */
 	public function addInternalData($name, $value) {
 		if (!preg_match('~^[a-zA-Z]+$~', $name)) {
@@ -96,6 +95,7 @@ final class ClipboardEditorItem {
 	 * 
 	 * @param	string		$name
 	 * @param	mixed		$value
+	 * @throws	SystemException
 	 */
 	public function addParameter($name, $value) {
 		if (!preg_match('~^[a-zA-Z]+$~', $name)) {
@@ -113,6 +113,7 @@ final class ClipboardEditorItem {
 	 * Sets item name.
 	 * 
 	 * @param	string		$name
+	 * @throws	SystemException
 	 */
 	public function setName($name) {
 		if (!preg_match('~^[a-zA-Z0-9\.-]+$~', $name)) {

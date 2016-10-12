@@ -5,11 +5,9 @@ namespace wcf\system\cache\source;
  * Any cache sources should implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.cache.source
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Cache\Source
  */
 interface ICacheSource {
 	/**

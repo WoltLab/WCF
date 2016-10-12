@@ -7,23 +7,19 @@ use wcf\system\WCF;
  * Represents a like of an object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.like
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Like
+ *
+ * @property-read	integer		$likeID			unique id of the like
+ * @property-read	integer		$objectID		id of the liked object
+ * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
+ * @property-read	integer|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
+ * @property-read	integer		$userID			id of the user who created the like
+ * @property-read	integer		$time			timestamp at which the like has been created
+ * @property-read	integer		$likeValue		value of the like (`+1` = like, `-1` = dislike, see `Like::LIKE` and `Like::Dislike`)
  */
 class Like extends DatabaseObject {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'like';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
-	 */
-	protected static $databaseTableIndexName = 'likeID';
-	
 	/**
 	 * like value
 	 * @var	integer
@@ -37,7 +33,7 @@ class Like extends DatabaseObject {
 	const DISLIKE = -1;
 	
 	/**
-	 * Gets a like by type, object id and user id.
+	 * Returns the like with given type, object id and user id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID
@@ -51,23 +47,23 @@ class Like extends DatabaseObject {
 				AND objectID = ?
 				AND userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			$objectTypeID,
 			$objectID,
 			$userID
-		));
+		]);
 		
 		$row = $statement->fetchArray();
 		
 		if (!$row) {
-			$row = array();
+			$row = [];
 		}
 		
 		return new Like(null, $row);
 	}
 	
 	/**
-	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @inheritDoc
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'like_table';

@@ -8,45 +8,47 @@ use wcf\system\exception\PermissionDeniedException;
  * Executes user option-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User\Option
+ * 
+ * @method	UserOption		create()
+ * @method	UserOptionEditor[]	getObjects()
+ * @method	UserOptionEditor	getSingleObject()
  */
 class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
+	 * @inheritDoc
 	 */
-	protected $className = 'wcf\data\user\option\UserOptionEditor';
+	protected $className = UserOptionEditor::class;
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @inheritDoc
 	 */
-	protected $permissionsCreate = array('admin.user.canManageUserOption');
+	protected $permissionsCreate = ['admin.user.canManageUserOption'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @inheritDoc
 	 */
-	protected $permissionsDelete = array('admin.user.canManageUserOption');
+	protected $permissionsDelete = ['admin.user.canManageUserOption'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @inheritDoc
 	 */
-	protected $permissionsUpdate = array('admin.user.canManageUserOption');
+	protected $permissionsUpdate = ['admin.user.canManageUserOption'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @inheritDoc
 	 */
-	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 	
 	/**
-	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		parent::validateDelete();
 		
-		foreach ($this->objects as $userOption) {
+		foreach ($this->getObjects() as $userOption) {
 			if (!$userOption->canDelete()) {
 				throw new PermissionDeniedException();
 			}
@@ -54,18 +56,18 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::toggle()
+	 * @inheritDoc
 	 */
 	public function toggle() {
-		foreach ($this->objects as $optionEditor) {
-			$optionEditor->update(array(
+		foreach ($this->getObjects() as $optionEditor) {
+			$optionEditor->update([
 				'isDisabled' => 1 - $optionEditor->isDisabled
-			));
+			]);
 		}
 	}
 	
 	/**
-	 * @see	\wcf\data\IToggleAction::validateToggle()
+	 * @inheritDoc
 	 */
 	public function validateToggle() {
 		$this->validateUpdate();

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\group\UserGroupList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 
@@ -7,37 +8,37 @@ use wcf\system\WCF;
  * Shows a list of all user groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	UserGroupList		$objectList
  */
 class UserGroupListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.user.canEditGroup', 'admin.user.canDeleteGroup');
+	public $neededPermissions = ['admin.user.canEditGroup', 'admin.user.canDeleteGroup'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'groupName';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members', 'priority');
+	public $validSortFields = ['groupID', 'groupName', 'groupType', 'members', 'priority'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
+	public $objectListClassName = UserGroupList::class;
 	
 	/**
 	 * indicates if a group has just been deleted
@@ -46,7 +47,7 @@ class UserGroupListPage extends SortablePage {
 	public $deletedGroups = 0;
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -58,7 +59,7 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
+	 * @inheritDoc
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -67,7 +68,7 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readObjects()
+	 * @inheritDoc
 	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = ($this->sortField != 'members' ? 'user_group.' : '').$this->sortField." ".$this->sortOrder;
@@ -76,13 +77,13 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'deletedGroups' => $this->deletedGroups
-		));
+		]);
 	}
 }

@@ -13,22 +13,20 @@ use wcf\system\WCF;
  * Shows the bbcode edit form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Form
  */
 class BBCodeEditForm extends BBCodeAddForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
+	public $neededPermissions = ['admin.content.bbcode.canManageBBCode'];
 	
 	/**
 	 * bbcode id
@@ -38,18 +36,18 @@ class BBCodeEditForm extends BBCodeAddForm {
 	
 	/**
 	 * bbcode object
-	 * @var	\wcf\data\bbcode\BBCode
+	 * @var	BBCode
 	 */
 	public $bbcode = null;
 	
 	/**
 	 * list of native bbcodes
-	 * @var	array<string>
+	 * @var	string[]
 	 */
-	public static $nativeBBCodes = array('b', 'i', 'u', 's', 'sub', 'sup', 'list', 'align', 'color', 'size', 'font', 'url', 'img', 'email', 'table');
+	public static $nativeBBCodes = ['b', 'i', 'u', 's', 'sub', 'sup', 'list', 'align', 'color', 'size', 'font', 'url', 'img', 'email', 'table'];
 	
 	/**
-	 * @see	\wcf\page\IPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		AbstractForm::readParameters();
@@ -66,7 +64,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\acp\form\BBCodeAddForm::readButtonLabelFormParameter()
+	 * @inheritDoc
 	 */
 	protected function readButtonLabelFormParameter() {
 		if (!in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
@@ -75,77 +73,75 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
 		if ($this->showButton) {
-			$this->buttonLabel = 'wcf.bbcode.buttonLabel'.$this->bbcode->bbcodeID;
+			$this->buttonLabel = 'wcf.editor.button.button'.$this->bbcode->bbcodeID;
 			if (I18nHandler::getInstance()->isPlainValue('buttonLabel')) {
 				I18nHandler::getInstance()->remove($this->buttonLabel);
 				$this->buttonLabel = I18nHandler::getInstance()->getValue('buttonLabel');
 			}
 			else {
-				I18nHandler::getInstance()->save('buttonLabel', $this->buttonLabel, 'wcf.bbcode', 1);
+				I18nHandler::getInstance()->save('buttonLabel', $this->buttonLabel, 'wcf.editor', 1);
 			}
 		}
 		
 		// update bbcode
-		$this->objectAction = new BBCodeAction(array($this->bbcodeID), 'update', array('data' => array_merge($this->additionalFields, array(
-			'allowedChildren' => $this->allowedChildren,
+		$this->objectAction = new BBCodeAction([$this->bbcodeID], 'update', ['data' => array_merge($this->additionalFields, [
 			'bbcodeTag' => $this->bbcodeTag,
 			'buttonLabel' => $this->buttonLabel,
 			'className' => $this->className,
 			'htmlClose' => $this->htmlClose,
 			'htmlOpen' => $this->htmlOpen,
-			'isSourceCode' => ($this->isSourceCode ? 1 : 0),
-			'showButton' => ($this->showButton ? 1 : 0),
+			'isBlockElement' => $this->isBlockElement ? 1 : 0,
+			'isSourceCode' => $this->isSourceCode ? 1 : 0,
+			'showButton' => $this->showButton ? 1 : 0,
 			'wysiwygIcon' => $this->wysiwygIcon
-		))));
+		])]);
 		$this->objectAction->executeAction();
 		
 		// clear existing attributes
 		$sql = "DELETE FROM	wcf".WCF_N."_bbcode_attribute
 			WHERE		bbcodeID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->bbcodeID));
+		$statement->execute([$this->bbcodeID]);
 		
 		foreach ($this->attributes as $attribute) {
-			$attributeAction = new BBCodeAttributeAction(array(), 'create', array('data' => array(
+			$attributeAction = new BBCodeAttributeAction([], 'create', ['data' => [
 				'bbcodeID' => $this->bbcodeID,
 				'attributeNo' => $attribute->attributeNo,
 				'attributeHtml' => $attribute->attributeHtml,
 				'validationPattern' => $attribute->validationPattern,
 				'required' => $attribute->required,
-				'useText' => $attribute->useText,
-			)));
+				'useText' => $attribute->useText
+			]]);
 			$attributeAction->executeAction();
 		}
 		
 		$this->saved();
 		
-		// show success
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel, 'wcf.bbcode.buttonLabel\d+');
+			I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel, 'wcf.editor.button.button\d+');
 			$this->buttonLabel = $this->bbcode->buttonLabel;
 			
 			$this->attributes = BBCodeAttribute::getAttributesByBBCode($this->bbcode);
 			$this->bbcodeTag = $this->bbcode->bbcodeTag;
 			$this->htmlOpen = $this->bbcode->htmlOpen;
 			$this->htmlClose = $this->bbcode->htmlClose;
-			$this->allowedChildren = $this->bbcode->allowedChildren;
+			$this->isBlockElement = $this->bbcode->isBlockElement;
 			$this->isSourceCode = $this->bbcode->isSourceCode;
 			$this->className = $this->bbcode->className;
 			$this->showButton = $this->bbcode->showButton;
@@ -154,17 +150,17 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'bbcode' => $this->bbcode,
 			'action' => 'edit',
-			'nativeBBCode' => (in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes))
-		));
+			'nativeBBCode' => in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)
+		]);
 	}
 }

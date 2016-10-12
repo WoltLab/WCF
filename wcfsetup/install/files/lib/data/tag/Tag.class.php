@@ -9,29 +9,22 @@ use wcf\util\ArrayUtil;
  * Represents a tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.tag
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\Tag
+ * 
+ * @property-read	integer		$tagID		unique id of the tag
+ * @property-read	integer		$languageID	id of the language the tag belongs to
+ * @property-read	string		$name		name/text of the tag
+ * @property-read	integer|null	$synonymFor	id of the tag for which the tag is a synoym or `null` if the tag is no synonym
  */
 class Tag extends DatabaseObject implements IRouteController {
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'tag';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
-	 */
-	protected static $databaseTableIndexName = 'tagID';
-	
 	/**
 	 * Return the tag with the given name or null of no such tag exists.
 	 * 
 	 * @param	string		$name
 	 * @param	integer		$languageID
-	 * @return	mixed
+	 * @return	Tag|null
 	 */
 	public static function getTag($name, $languageID = 0) {
 		$sql = "SELECT	*
@@ -39,11 +32,9 @@ class Tag extends DatabaseObject implements IRouteController {
 			WHERE	languageID = ?
 				AND name = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($languageID, $name));
-		$row = $statement->fetchArray();
-		if ($row !== false) return new Tag(null, $row);
+		$statement->execute([$languageID, $name]);
 		
-		return null;
+		return $statement->fetchObject(self::class);
 	}
 	
 	/**
@@ -51,7 +42,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	 * 
 	 * @param	string		$tags
 	 * @param	string		$separators
-	 * @return	array<string>
+	 * @return	string[]
 	 */
 	public static function splitString($tags, $separators = ',;') {
 		return array_unique(ArrayUtil::trim(preg_split('/['.preg_quote($separators).']/', $tags)));
@@ -60,22 +51,16 @@ class Tag extends DatabaseObject implements IRouteController {
 	/**
 	 * Takes a list of tags and builds a comma separated string from it.
 	 * 
-	 * @param	array<mixed>	$tags
+	 * @param	mixed[]		$tags
 	 * @param	string		$separator
 	 * @return	string
 	 */
 	public static function buildString(array $tags, $separator = ', ') {
-		$string = '';
-		foreach ($tags as $tag) {
-			if (!empty($string)) $string .= $separator;
-			$string .= (is_object($tag) ? $tag->__toString() : $tag);
-		}
-		
-		return $string;
+		return implode($separator, $tags);
 	}
 	
 	/**
-	 * @see	\wcf\data\ITitledObject::getTitle()
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->name;

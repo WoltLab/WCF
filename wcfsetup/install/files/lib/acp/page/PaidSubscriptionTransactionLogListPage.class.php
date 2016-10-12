@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogList;
 use wcf\page\SortablePage;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\WCF;
@@ -9,47 +10,47 @@ use wcf\util\StringUtil;
  * Shows the list of paid subscription transactions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Acp\Page
+ * 
+ * @property	PaidSubscriptionTransactionLogList	$objectList
  */
 class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	/**
-	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.transactionLog.list';
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededModules
+	 * @inheritDoc
 	 */
-	public $neededModules = array('MODULE_PAID_SUBSCRIPTION');
+	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 * @inheritDoc
 	 */
-	public $neededPermissions = array('admin.paidSubscription.canManageSubscription');
+	public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 * @inheritDoc
 	 */
 	public $defaultSortField = 'logTime';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$defaultSortOrder
+	 * @inheritDoc
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @see	\wcf\page\SortablePage::$validSortFields
+	 * @inheritDoc
 	 */
-	public $validSortFields = array('logID', 'subscriptionUserID', 'userID', 'subscriptionID', 'paymentMethodObjectTypeID', 'logTime', 'transactionID', 'logMessage');
+	public $validSortFields = ['logID', 'subscriptionUserID', 'userID', 'subscriptionID', 'paymentMethodObjectTypeID', 'logTime', 'transactionID', 'logMessage'];
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * @inheritDoc
 	 */
-	public $objectListClassName = 'wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogList';
+	public $objectListClassName = PaidSubscriptionTransactionLogList::class;
 	
 	/**
 	 * transaction id
@@ -70,7 +71,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	public $subscriptionID = 0;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readParameters()
+	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -87,13 +88,13 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 		parent::initObjectList();
 		
 		if ($this->transactionID) {
-			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.transactionID LIKE ?', array('%' . $this->transactionID . '%'));
+			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.transactionID LIKE ?', ['%' . $this->transactionID . '%']);
 		}
 		if ($this->username) {
-			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf'.WCF_N.'_user WHERE username LIKE ?)', array('%' . $this->username . '%'));
+			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf'.WCF_N.'_user WHERE username LIKE ?)', ['%' . $this->username . '%']);
 		}
 		if ($this->subscriptionID) {
-			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.subscriptionID = ?', array($this->subscriptionID));
+			$this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.subscriptionID = ?', [$this->subscriptionID]);
 		}
 		
 		$this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';
@@ -102,16 +103,16 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'transactionID' => $this->transactionID,
 			'username' => $this->username,
 			'subscriptionID' => $this->subscriptionID,
 			'availableSubscriptions' => PaidSubscriptionCacheBuilder::getInstance()->getData()
-		));
+		]);
 	}
 }

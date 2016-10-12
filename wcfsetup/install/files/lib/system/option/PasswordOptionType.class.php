@@ -9,41 +9,39 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * Option type implementation for password input fields.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.option
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Option
  */
 class PasswordOptionType extends TextOptionType {
 	/**
-	 * @see	\wcf\system\option\TextOptionType::$inputType
+	 * @inheritDoc
 	 */
 	protected $inputType = 'password';
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
+	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		// does nothing
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 * @inheritDoc
 	 */
 	public function checkUser(User $user, Option $option, $value) {
 		return false;
 	}
 	
 	/**
-	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 * @inheritDoc
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;

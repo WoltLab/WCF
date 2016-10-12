@@ -7,11 +7,9 @@ use wcf\system\WCF;
  * Executes actions on user generated content.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	data.user
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Data\User
  */
 class UserContentAction extends UserAction {
 	/**

@@ -3,7 +3,7 @@
  * This script tries to find the temp folder and unzip all setup files into.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // @codingStandardsIgnoreFile
@@ -19,9 +19,9 @@ set_exception_handler('handleException');
 set_error_handler('handleError', E_ALL);
 
 // define list of needed file
-$neededFilesPattern = array(
+$neededFilesPattern = [
 	'!^setup/.*!',
-	'!^install/files/acp/images/wcfLogo.*!',
+	'!^install/files/acp/images/woltlabSuite.*!',
 	'!^install/files/acp/style/setup/.*!',
 	'!^install/files/lib/data/.*!',
 	'!^install/files/icon/.*!',
@@ -29,9 +29,10 @@ $neededFilesPattern = array(
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
-	'!^install/packages/.*!');
+	'!^install/packages/.*!'];
 	
 // define needed functions and classes
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * WCF::handleException() calls the show method on exceptions that implement this interface.
  *
@@ -45,6 +46,7 @@ interface IPrintableException {
 // define needed classes
 // needed are:
 // SystemException, PrintableException, BasicFileUtil, Tar, File, ZipFile
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * A SystemException is thrown when an unexpected error occurs.
  *
@@ -59,9 +61,9 @@ class SystemException extends \Exception implements IPrintableException {
 	/**
 	 * Creates a new SystemException.
 	 *
-	 * @param	message		string		error message
-	 * @param	code		integer		error code
-	 * @param	description	string		description of the error
+	 * @param	string		$message	error message
+	 * @param	integer		$code		error code
+	 * @param	string		$description	description of the error
 	 */
 	public function __construct($message = '', $code = 0, $description = '') {
 		parent::__construct($message, $code);
@@ -82,71 +84,322 @@ class SystemException extends \Exception implements IPrintableException {
 	 * This method is called by WCF::handleException().
 	 */
 	public function show() {
-		?>
+		/*
+		* A notice on the HTML used below:
+		*
+		* It might appear a bit weird to use <p> all over the place where semantically
+		* other elements would fit in way better. The reason behind this is that we avoid
+		* inheriting unwanted styles (e.g. exception displayed in an overlay) and that
+		* the output needs to be properly readable when copied & pasted somewhere.
+		*
+		* Besides the visual appearance, the output was built to provide a maximum of
+		* compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
+		* without the potential of messing up the formatting and thus harming the readability.
+		*/
+?><!DOCTYPE html>
 <html>
 <head>
-<title>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></title>
-
-<style type="text/css">
-	body {
-		font-family: Verdana, Helvetica, sans-serif;
-		font-size: 0.8em;
-	}
-	div {
-		border: 1px outset lightgrey;
-		padding: 3px;
-		background-color: lightgrey;
-	}
-	
-	div div {
-		border: 1px inset lightgrey;
-		padding: 4px;
-	}
-	
-	h1 {
-		background-color: #154268;
-		padding: 4px;
-		color: #fff;
-		margin: 0 0 3px 0;
-		font-size: 1.15em;
-	}
-	h2 {
-		font-size: 1.1em;
-		margin-bottom: 0;
-	}
-	
-	pre, p {
-		margin: 0;
-	}
-</style>
-</head>
-
-<body>
-	<div>
-		<h1>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></h1>
+	<title>Fatal Error: <?php echo htmlentities($this->getMessage()); ?></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.exceptionBody {
+			margin: 0;
+			padding: 0;
+		}
 		
-		<div>
-			<p><?php echo $this->getDescription(); ?></p>
-			<?php if ($this->getCode()) { ?><p>You get more information about the problem in our knowledge base: <a href="http://www.woltlab.com/help/?code=<?php echo intval($this->getCode()); ?>">http://www.woltlab.com/help/?code=<?php echo intval($this->getCode()); ?></a></p><?php } ?>
+		.exceptionContainer {
+			box-sizing: border-box;
+			font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			font-size: 14px;
+			padding-bottom: 20px;
+		}
+		
+		.exceptionContainer * {
+			box-sizing: inherit;
+			color: #000;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.exceptionHeader {
+			background-color: rgb(58, 109, 156);
+			padding: 30px 0;
+		}
+		
+		.exceptionTitle {
+			color: #fff;
+			font-size: 28px;
+			font-weight: 300;
+		}
+		
+		.exceptionErrorCode {
+			color: #fff;
+			margin-top: .5em;
+		}
+		
+		.exceptionErrorCode .exceptionInlineCode {
+			background-color: rgb(43, 79, 113);
+			border-radius: 3px;
+			color: #fff;
+			font-family: monospace;
+			padding: 3px 10px;
+			white-space: nowrap;
+		}
+		
+		.exceptionSubtitle {
+			border-bottom: 1px solid rgb(238, 238, 238);
+			color: rgb(44, 62, 80);
+			font-size: 24px;
+			font-weight: 300;
+			margin-bottom: 15px;
+			padding-bottom: 10px;
+		}
+		
+		.exceptionContainer > .exceptionBoundary {
+			margin-top: 30px;
+		}
+		
+		.exceptionText .exceptionInlineCodeWrapper {
+			border: 1px solid rgb(169, 169, 169);
+			border-radius: 3px;
+			padding: 2px 5px;
+		}
+		
+		.exceptionText .exceptionInlineCode {
+			font-family: monospace;
+			white-space: nowrap;
+		}
+		
+		.exceptionFieldTitle {
+			color: rgb(59, 109, 169);
+		}
+		
+		.exceptionFieldTitle .exceptionColon {
+			/* hide colon in browser, but will be visible after copy & paste */
+			opacity: 0;
+		}
+		
+		.exceptionFieldValue {
+			font-size: 18px;
+			min-height: 1.5em;
+		}
+		
+		.exceptionSystemInformation,
+		.exceptionErrorDetails,
+		.exceptionStacktrace {
+			list-style-type: none;
+		}
+		
+		.exceptionSystemInformation > li:not(:first-child),
+		.exceptionErrorDetails > li:not(:first-child) {
+			margin-top: 10px;
+		}
+		
+		.exceptionStacktrace {
+			display: block;
+			margin-top: 5px;
+			overflow: auto;
+			padding-bottom: 20px;
+		}
+		
+		.exceptionStacktraceFile,
+		.exceptionStacktraceFile span,
+		.exceptionStacktraceCall,
+		.exceptionStacktraceCall span {
+			font-family: monospace !important;
+			white-space: nowrap !important;
+		}
+		
+		.exceptionStacktraceCall + .exceptionStacktraceFile {
+			margin-top: 5px;
+		}
+		
+		.exceptionStacktraceCall {
+			padding-left: 40px;
+		}
+		
+		.exceptionStacktraceCall,
+		.exceptionStacktraceCall span {
+			color: rgb(102, 102, 102) !important;
+			font-size: 13px !important;
+		}
+		
+		/* mobile */
+		@media (max-width: 767px) {
+			.exceptionBoundary {
+				min-width: 320px;
+				padding: 0 10px;
+			}
 			
-			<h2>Information:</h2>
-			<p>
-				<b>error message:</b> <?php echo htmlspecialchars($this->getMessage()); ?><br />
-				<b>error code:</b> <?php echo intval($this->getCode()); ?><br />
-				<?php echo $this->information; ?>
-				<b>file:</b> <?php echo htmlspecialchars($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
-				<b>php version:</b> <?php echo htmlspecialchars(phpversion()); ?><br />
-				<b>wcf version:</b> <?php if (defined('WCF_VERSION')) echo WCF_VERSION; ?><br />
-				<b>date:</b> <?php echo gmdate('r'); ?><br />
-				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo htmlspecialchars($_SERVER['REQUEST_URI']); ?><br />
-				<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo htmlspecialchars($_SERVER['HTTP_REFERER']); ?><br />
-			</p>
+			.exceptionText .exceptionInlineCodeWrapper {
+				display: inline-block;
+				overflow: auto;
+			}
 			
-			<h2>Stacktrace:</h2>
-			<pre><?php echo htmlspecialchars($this->getTraceAsString()); ?></pre>
+			.exceptionErrorCode .exceptionInlineCode {
+				font-size: 13px;
+				padding: 2px 5px;
+			}
+		}
+		
+		/* desktop */
+		@media (min-width: 768px) {
+			.exceptionBoundary {
+				margin: 0 auto;
+				max-width: 1400px;
+				min-width: 1200px;
+				padding: 0 10px;
+			}
+			
+			.exceptionSystemInformation {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.exceptionSystemInformation1,
+			.exceptionSystemInformation3,
+			.exceptionSystemInformation5 {
+				flex: 0 0 200px;
+				margin: 0 0 10px 0 !important;
+			}
+			
+			.exceptionSystemInformation2,
+			.exceptionSystemInformation4,
+			.exceptionSystemInformation6 {
+				flex: 0 0 calc(100% - 210px);
+				margin: 0 0 10px 10px !important;
+				max-width: calc(100% - 210px);
+			}
+			
+			.exceptionSystemInformation1 { order: 1; }
+			.exceptionSystemInformation2 { order: 2; }
+			.exceptionSystemInformation3 { order: 3; }
+			.exceptionSystemInformation4 { order: 4; }
+			.exceptionSystemInformation5 { order: 5; }
+			.exceptionSystemInformation6 { order: 6; }
+			
+			.exceptionSystemInformation .exceptionFieldValue {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	</style>
+</head>
+<body class="exceptionBody">
+	<div class="exceptionContainer">
+		<div class="exceptionHeader">
+			<div class="exceptionBoundary">
+				<p class="exceptionTitle">An error has occured</p>
+			</div>
 		</div>
 		
-		<?php echo $this->functions; ?>
+		<div class="exceptionBoundary">
+			<p class="exceptionSubtitle">System Information</p>
+			<ul class="exceptionSystemInformation">
+				<li class="exceptionSystemInformation1">
+					<p class="exceptionFieldTitle">PHP Version<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php echo htmlentities(phpversion()); ?></p>
+				</li>
+				<li class="exceptionSystemInformation3">
+					<p class="exceptionFieldTitle">WoltLab Suite Core<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue">3.0</p>
+				</li>
+				<li class="exceptionSystemInformation5">
+					<p class="exceptionFieldTitle">Peak Memory Usage<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php echo round(memory_get_peak_usage() / 1024 / 1024, 3); ?>/<?php echo ini_get('memory_limit'); ?></p>
+				</li>
+				<li class="exceptionSystemInformation2">
+					<p class="exceptionFieldTitle">Request URI<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_URI'])) echo htmlentities($_SERVER['REQUEST_URI']); ?></p>
+				</li>
+				<li class="exceptionSystemInformation4">
+					<p class="exceptionFieldTitle">Referrer<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php if (isset($_SERVER['HTTP_REFERER'])) echo htmlentities($_SERVER['HTTP_REFERER']); ?></p>
+				</li>
+				<li class="exceptionSystemInformation6">
+					<p class="exceptionFieldTitle">User Agent<span class="exceptionColon">:</span></p>
+					<p class="exceptionFieldValue"><?php if (isset($_SERVER['HTTP_USER_AGENT'])) echo htmlentities($_SERVER['HTTP_USER_AGENT']); ?></p>
+				</li>
+			</ul>
+		</div>
+			
+		<?php
+		$first = true;
+		do {
+			?>
+			<div class="exceptionBoundary">
+				<p class="exceptionSubtitle"><?php if (!$this->getPrevious() && !$first) { echo "Original "; } else if ($this->getPrevious() && $first) { echo "Final "; } ?>Error</p>
+				<?php if ($this instanceof SystemException && $this->getDescription()) { ?>
+					<p class="exceptionText"><?php echo $this->getDescription(); ?></p>
+				<?php } ?>
+				<ul class="exceptionErrorDetails">
+					<li>
+						<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
+						<p class="exceptionFieldValue"><?php echo htmlentities(get_class($this)); ?></p>
+					</li>
+					<li>
+						<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
+						<p class="exceptionFieldValue"><?php echo htmlentities($this->getMessage()); ?></p>
+					</li>
+					<?php if ($this->getCode()) { ?>
+						<li>
+							<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
+							<p class="exceptionFieldValue"><?php echo intval($this->getCode()); ?></p>
+						</li>
+					<?php } ?>
+					<li>
+						<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
+						<p class="exceptionFieldValue" style="word-break: break-all"><?php echo htmlentities($this->getFile()); ?> (<?php echo $this->getLine(); ?>)</p>
+					</li>
+					
+					<li>
+						<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span></p>
+						<ul class="exceptionStacktrace">
+							<?php
+							$trace = $this->getTrace();
+							for ($i = 0, $max = count($trace); $i < $max; $i++) {
+							?>
+							<li class="exceptionStacktraceFile"><?php echo '#'.$i.' '.htmlentities($trace[$i]['file']).' ('.$trace[$i]['line'].')'.':'; ?></li>
+							<li class="exceptionStacktraceCall">
+								<?php
+								echo $trace[$i]['class'].$trace[$i]['type'].$trace[$i]['function'].'(';
+								echo implode(', ', array_map(function ($item) {
+									switch (gettype($item)) {
+										case 'integer':
+										case 'double':
+											return $item;
+										case 'NULL':
+											return 'null';
+										case 'string':
+											return "'".addcslashes(htmlentities($item), "\\'")."'";
+										case 'boolean':
+											return $item ? 'true' : 'false';
+										case 'array':
+											$keys = array_keys($item);
+											if (count($keys) > 5) return "[ ".count($keys)." items ]";
+											return '[ '.implode(', ', array_map(function ($item) {
+												return $item.' => ';
+											}, $keys)).']';
+										case 'object':
+											return get_class($item);
+									}
+									
+									throw new \LogicException('Unreachable');
+								}, $trace[$i]['args']));
+								echo ')</li>';
+								}
+								?>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<?php
+			$first = false;
+		} while ($e = $this->getPrevious());
+		?>
 	</div>
 </body>
 </html>
@@ -158,7 +411,7 @@ class SystemException extends \Exception implements IPrintableException {
 /**
  * Loads the required classes automatically.
  */
-function __autoload($className) {
+spl_autoload_register(function($className) {
 	$namespaces = explode('\\', $className);
 	if (count($namespaces) > 1) {
 		// remove 'wcf' component
@@ -170,10 +423,13 @@ function __autoload($className) {
 			require_once($classPath);
 		}
 	}
-}
+});
 
 /**
  * Escapes strings for execution in sql queries.
+ * 
+ * @param	string		$string
+ * @return	string
  */
 function escapeString($string) {
 	return \wcf\system\WCF::getDB()->escapeString($string);
@@ -208,6 +464,7 @@ function handleException($e) {
  * @param	string		$message
  * @param	string		$filename
  * @param	integer		$lineNo
+ * @throws	SystemException
  */
 function handleError($errorNo, $message, $filename, $lineNo) {
 	if (error_reporting() != 0) {
@@ -223,6 +480,7 @@ function handleError($errorNo, $message, $filename, $lineNo) {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * BasicFileUtil contains file-related functions.
  *
@@ -240,6 +498,7 @@ class BasicFileUtil {
 	 * Tries to find the temp folder.
 	 *
 	 * @return	string
+	 * @throws	SystemException
 	 */
 	public static function getTempFolder() {
 		// use tmp folder in document root by default
@@ -307,6 +566,7 @@ class BasicFileUtil {
 	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 *
 	 * @param	string		$filename
+	 * @throws	SystemException
 	 */
 	public static function makeWritable($filename) {
 		if (!file_exists($filename)) {
@@ -346,7 +606,6 @@ class BasicFileUtil {
 			}
 		}
 		
-		$startIndex = 0;
 		if (is_dir($filename)) {
 			if (self::$mode == 0644) {
 				@chmod($filename, 0755);
@@ -365,6 +624,7 @@ class BasicFileUtil {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * Opens tar or tar.gz archives.
  *
@@ -378,7 +638,7 @@ class BasicFileUtil {
  */
 class Tar {
 	protected $archiveName = '';
-	protected $contentList = array();
+	protected $contentList = [];
 	protected $opened = false;
 	protected $read = false;
 	protected $file = null;
@@ -390,6 +650,7 @@ class Tar {
 	 * archiveName must be tarball or gzipped tarball
 	 *
 	 * @param	string		$archiveName
+	 * @throws	SystemException
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -457,8 +718,9 @@ class Tar {
 	 * Returns an associative array with information
 	 * about a specific file in the archive.
 	 *
-	 * @param	mixed	$fileindex	index or name of the requested file
-	 * @return	array	$fileInfo
+	 * @param	mixed	$fileIndex	index or name of the requested file
+	 * @return	array
+	 * @throws	SystemException
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -518,7 +780,7 @@ class Tar {
 		}
 		if(($header['size'] % 512) != 0) {
 			$buffer = $this->file->read(512);
-			$content .= substr($buffer, 0, ($header['size'] % 512));
+			$content .= substr($buffer, 0, $header['size'] % 512);
 		}
 		
 		return $content;
@@ -530,7 +792,8 @@ class Tar {
 	 *
 	 * @param	mixed		$index		index or name of the requested file
 	 * @param	string		$destination
-	 * @return	boolean	$success
+	 * @return	boolean
+	 * @throws	SystemException
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -557,7 +820,7 @@ class Tar {
 		}
 		if (($header['size'] % 512) != 0) {
 			$content = $this->file->read(512);
-			$targetFile->write($content, ($header['size'] % 512));
+			$targetFile->write($content, $header['size'] % 512);
 		}
 		
 		$targetFile->close();
@@ -580,37 +843,55 @@ class Tar {
 	 * This does not get the entire to memory but only parts of it.
 	 */
 	protected function readContent() {
-		$this->contentList = array();
+		$this->contentList = [];
 		$this->read = true;
 		$i = 0;
 		
 		// Read the 512 bytes header
+		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
 				continue;
 			}
-			$this->contentList[$i] = $header;
-			$this->contentList[$i]['index'] = $i;
-			$i++;
 			
-			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
+			// fixes a bug that files with long names aren't correctly
+			// extracted
+			if ($longFilename !== null) {
+				$header['filename'] = $longFilename;
+				$longFilename = null;
+			}
+			if ($header['typeflag'] == 'L') {
+				$format = 'Z'.$header['size'].'filename';
+				
+				$fileData = unpack($format, $this->file->read(512));
+				$longFilename = $fileData['filename'];
+				$header['size'] = 0;
+			}
+			// don't include the @LongLink file in the content list
+			else {
+				$this->contentList[$i] = $header;
+				$this->contentList[$i]['index'] = $i;
+				$i++;
+			}
+			
+			$this->file->seek($this->file->tell() + (512 * ceil($header['size'] / 512)));
 		}
 	}
 	
 	/**
 	 * Unpacks file header for one file entry.
-	 *
+	 * 
 	 * @param	string		$binaryData
-	 * @return	array		$fileheader
+	 * @return	array|boolean
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
 			return false;
 		}
 		
-		$header = array();
+		$header = [];
 		$checksum = 0;
 		// First part of the header
 		for ($i = 0; $i < 148; $i++) {
@@ -626,26 +907,20 @@ class Tar {
 			$checksum += ord(substr($binaryData, $i, 1));
 		}
 		
-		// Extract the values
-		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
-		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
-		}
-		else {
-			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
-		}
+		// extract values
+		$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
 		
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octDec(trim($data['checksum']));
+		$header['checksum'] = octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
-			$header['mode'] = octDec(trim($data['mode']));
-			$header['uid'] = octDec(trim($data['uid']));
-			$header['gid'] = octDec(trim($data['gid']));
-			$header['size'] = octDec(trim($data['size']));
-			$header['mtime'] = octDec(trim($data['mtime']));
+			$header['mode'] = octdec(trim($data['mode']));
+			$header['uid'] = octdec(trim($data['uid']));
+			$header['gid'] = octdec(trim($data['gid']));
+			$header['size'] = octdec(trim($data['size']));
+			$header['mtime'] = octdec(trim($data['mtime']));
 			$header['prefix'] = trim($data['prefix']);
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];
@@ -667,6 +942,7 @@ class Tar {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations.
  *
@@ -692,6 +968,7 @@ class File {
 	 *
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -707,6 +984,8 @@ class File {
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
@@ -723,6 +1002,7 @@ class File {
 	}
 }
 
+/** @noinspection PhpMultipleClassesDeclarationsInOneFile */
 /**
  * The File class handles all file operations on a zipped file.
  *
@@ -736,21 +1016,24 @@ class ZipFile extends File {
 	 */
 	protected static $gzopen64 = null;
 	
+	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * Opens a new zipped file.
 	 *
 	 * @param	string		$filename
 	 * @param	string		$mode
+	 * @throws	SystemException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		if (self::$gzopen64 === null) {
-			self::$gzopen64 = (function_exists('gzopen64'));
+			self::$gzopen64 = function_exists('gzopen64');
 		}
 		
 		$this->filename = $filename;
 		if (!self::$gzopen64 && !function_exists('gzopen')) {
 			throw new SystemException('Can not find functions of the zlib extension');
 		}
+		/** @noinspection PhpUndefinedFunctionInspection */
 		$this->resource = (self::$gzopen64 ? @gzopen64($filename, $mode) : @gzopen($filename, $mode));
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename);
@@ -762,6 +1045,8 @@ class ZipFile extends File {
 	 *
 	 * @param	string		$function
 	 * @param	array		$arguments
+	 * @return	mixed
+	 * @throws	SystemException
 	 */
 	public function __call($function, $arguments) {
 		if (self::$gzopen64 && function_exists('gz' . $function . '64')) {

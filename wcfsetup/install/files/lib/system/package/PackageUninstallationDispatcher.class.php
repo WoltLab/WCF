@@ -8,11 +8,8 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
-use wcf\system\package\plugin\SQLPackageInstallationPlugin;
+use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -22,23 +19,29 @@ use wcf\system\WCF;
  * Handles the whole uninstallation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.package
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\System\Package
  */
 class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
+	 * is true if the package's uninstall script has been executed or if no
+	 * such script exists
+	 * @var	boolean
+	 */
+	protected $didExecuteUninstallScript = false;
+	
+	/** @noinspection PhpMissingParentConstructorInspection */
+	/**
 	 * Creates a new instance of PackageUninstallationDispatcher.
 	 * 
-	 * @param	\wcf\data\package\installation\queue\PackageInstallationQueue	$queue
+	 * @param	PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
 		$this->queue = $queue;
 		$this->nodeBuilder = new PackageUninstallationNodeBuilder($this);
 		
-		$this->action = $this->queue->installationType;
+		$this->action = $this->queue->action;
 	}
 	
 	/**
@@ -60,6 +63,14 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 				break;
 				
 				case 'pip':
+					// the file pip is always executed last, thus, just before it,
+					// execute the uninstall script
+					if ($nodeData['pluginName'] == 'file' && !$this->didExecuteUninstallScript) {
+						$this->executeUninstallScript();
+						
+						$this->didExecuteUninstallScript = true;
+					}
+					
 					$this->executePIP($nodeData);
 				break;
 			}
@@ -93,25 +104,31 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			EventHandler::getInstance()->fireAction($this, 'postUninstall');
 		}
 		
-		if ($this->requireRestructureVersionTables) {
-			$this->restructureVersionTables();
-		}
-		
 		// return next node
 		return $node;
 	}
 	
 	/**
-	 * @see	\wcf\system\package\PackageInstallationDispatcher::executePIP()
+	 * @inheritDoc
 	 */
 	protected function executePIP(array $nodeData) {
+		/** @var IPackageInstallationPlugin $pip */
 		$pip = new $nodeData['className']($this);
 		
-		if ($pip instanceof SQLPackageInstallationPlugin || $pip instanceof ObjectTypePackageInstallationPlugin) {
-			$this->requireRestructureVersionTables = true;
-		}
-		
 		$pip->uninstall();
+	}
+	
+	/**
+	 * Executes the package's uninstall script (if existing).
+	 * 
+	 * @since	3.0
+	 */
+	protected function executeUninstallScript() {
+		// check if uninstall script file for the uninstalled package exists
+		$uninstallScript = WCF_DIR.'acp/uninstall/'.$this->getPackage()->package.'.php';
+		if (file_exists($uninstallScript)) {
+			include($uninstallScript);
+		}
 	}
 	
 	/**
@@ -120,17 +137,16 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * @param	array		$nodeData
 	 */
 	protected function uninstallPackage(array $nodeData) {
-		PackageEditor::deleteAll(array($this->queue->packageID));
+		PackageEditor::deleteAll([$this->queue->packageID]);
 		
-		// remove localized package infos
-		// todo: license/readme
+		// remove localized package info
 		$sql = "DELETE FROM	wcf".WCF_N."_language_item
 			WHERE		languageItem IN (?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
+		$statement->execute([
 			'wcf.acp.package.packageName.package'.$this->queue->packageID,
 			'wcf.acp.package.packageDescription.package'.$this->queue->packageID
-		));
+		]);
 		
 		// reset package cache
 		PackageCacheBuilder::getInstance()->reset();
@@ -142,52 +158,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * @param	string		$targetDir
 	 * @param	string		$files
 	 * @param	boolean		$deleteEmptyDirectories
-	 * @param	booelan		$deleteEmptyTargetDir
+	 * @param	boolean		$deleteEmptyTargetDir
 	 */
 	public function deleteFiles($targetDir, $files, $deleteEmptyTargetDir = false, $deleteEmptyDirectories = true) {
 		new Uninstaller($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories);
-	}
-	
-	/**
-	 * Checks whether this package is required by other packages.
-	 * If so than a template will be displayed to warn the user that
-	 * a further uninstallation will uninstall also the dependent packages
-	 */
-	public static function checkDependencies() {
-		$packageID = 0;
-		if (isset($_REQUEST['packageID'])) {
-			$packageID = intval($_REQUEST['packageID']);
-		}
-		
-		// get packages info
-		try {
-			// create object of uninstalling package
-			$package = new Package($packageID);
-		}
-		catch (SystemException $e) {
-			throw new IllegalLinkException();
-		}
-		
-		// can not uninstall wcf package.
-		if ($package->package == 'com.woltlab.wcf') {
-			throw new IllegalLinkException();
-		}
-		
-		$dependentPackages = array();
-		$uninstallAvailable = true;
-		if ($package->isRequired()) {
-			// get packages that requires this package
-			$dependentPackages = self::getPackageDependencies($package->packageID);
-			foreach ($dependentPackages as $dependentPackage) {
-				if ($dependentPackage['packageID'] == PACKAGE_ID) {
-					$uninstallAvailable = false;
-					break;
-				}
-			}
-		}
-		
-		// add this package to queue
-		self::addQueueEntries($package, $dependentPackages);
 	}
 	
 	/**
@@ -196,24 +170,24 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * @param	Package		$package
 	 * @param	array		$packages
 	 */
-	public static function addQueueEntries(Package $package, $packages = array()) {
+	public static function addQueueEntries(Package $package, $packages = []) {
 		// get new process no
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
 		// add dependent packages to queue
-		$statementParameters = array();
+		$statementParameters = [];
 		foreach ($packages as $dependentPackage) {
-			$statementParameters[] = array(
+			$statementParameters[] = [
 				'packageName' => $dependentPackage['packageName'],
 				'packageID' => $dependentPackage['packageID']
-			);
+			];
 		}
 		
 		// add uninstalling package to queue
-		$statementParameters[] = array(
+		$statementParameters[] = [
 			'packageName' => $package->getName(),
 			'packageID' => $package->packageID
-		);
+		];
 		
 		// insert queue entry (entries)
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_queue
@@ -221,13 +195,13 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			VALUES		(?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($statementParameters as $parameter) {
-			$statement->execute(array(
+			$statement->execute([
 				$processNo,
 				WCF::getUser()->userID,
 				$parameter['packageName'],
 				$parameter['packageID'],
 				'uninstall'
-			));
+			]);
 		}
 		
 		self::openQueue(0, $processNo);

@@ -2,9 +2,12 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\UserMailbox;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
-use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -16,11 +19,9 @@ use wcf\util\UserUtil;
  * Shows the new activation code form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	form
- * @category	Community Framework
+ * @package	WoltLabSuite\Core\Form
  */
 class RegisterNewActivationCodeForm extends AbstractForm {
 	/**
@@ -43,12 +44,12 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	
 	/**
 	 * user object
-	 * @var	\wcf\data\user\User
+	 * @var	User
 	 */
 	public $user = null;
 	
 	/**
-	 * @see	\wcf\form\IForm::readFormParameters()
+	 * @inheritDoc
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -59,7 +60,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::validate()
+	 * @inheritDoc
 	 */
 	public function validate() {
 		parent::validate();
@@ -114,7 +115,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 			// check whether user entered the same email, instead of leaving the input empty
 			if (mb_strtolower($this->email) != mb_strtolower($this->user->email)) {
 				if (!UserRegistrationUtil::isValidEmail($this->email)) {
-					throw new UserInputException('email', 'notValid');
+					throw new UserInputException('email', 'invalid');
 				}
 				
 				// Check if email exists already.
@@ -129,7 +130,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\IForm::save()
+	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
@@ -138,28 +139,34 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		$activationCode = UserRegistrationUtil::getActivationCode();
 		
 		// save user
-		$parameters = array('activationCode' => $activationCode);
+		$parameters = ['activationCode' => $activationCode];
 		if (!empty($this->email)) $parameters['email'] = $this->email;
-		$this->objectAction = new UserAction(array($this->user), 'update', array(
+		$this->objectAction = new UserAction([$this->user], 'update', [
 			'data' => array_merge($this->additionalFields, $parameters)
-		));
+		]);
 		$this->objectAction->executeAction();
 		
 		// reload user to reflect changes
 		$this->user = new User($this->user->userID);
 		
 		// send activation mail
-		$mail = new Mail(array($this->user->username => (!empty($this->email) ? $this->email : $this->user->email)), WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail', array('user' => $this->user)));
-		$mail->send();
+		$email = new Email();
+		$email->addRecipient(new UserMailbox($this->user));
+		$email->setSubject(WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+			new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation')
+		]));
+		$email->send();
 		$this->saved();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.newActivationCode.success', array('email' => (!empty($this->email) ? $this->email : $this->user->email))), 10);
+		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.newActivationCode.success', ['email' => !empty($this->email) ? $this->email : $this->user->email]), 10);
 		exit;
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::readData()
+	 * @inheritDoc
 	 */
 	public function readData() {
 		parent::readData();
@@ -170,20 +177,20 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
+		WCF::getTPL()->assign([
 			'username' => $this->username,
 			'password' => $this->password,
 			'email' => $this->email
-		));
+		]);
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
+	 * @inheritDoc
 	 */
 	public function show() {
 		if (REGISTER_ACTIVATION_METHOD != 1) {
