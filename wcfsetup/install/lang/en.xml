@@ -105,7 +105,7 @@
 		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[The regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Required]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Use content]]></item>
-		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[The content between BBCode tags will be used as attribute value unless it was explicitly specified.]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[The content between BBCode tags would be used as attribute value unless it was explicitly specified.]]></item>
 		<item name="wcf.acp.bbcode.attributes"><![CDATA[Attribute]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[The BBCode already exists.]]></item>
@@ -945,7 +945,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause issues for users with a rotating IP address.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc.) concurrently; all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users Online Timeout]]></item>
