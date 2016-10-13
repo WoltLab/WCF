@@ -21,7 +21,7 @@
 			}
 			
 			body {
-				background-color: #fff;
+				background-color: rgb(250, 250, 250);
 				font-family: "Open Sans", "Segoe UI", "Lucida Grande", "Helvetica", sans-serif;
 				font-size: 14px;
 			}
@@ -51,7 +51,7 @@
 			}
 			
 			.header {
-				background-color: rgb(44, 62, 80);
+				background-color: rgb(58, 109, 156);
 				color: #fff;
 				padding: 20px;
 			}
@@ -61,8 +61,8 @@
 			}
 			
 			.footer {
-				background-color: rgb(52, 73, 94);
-				color: rgb(189, 195, 199);
+				background-color: rgb(50, 92, 132);
+				color: rgb(217, 220, 222);
 				padding: 20px 10px;
 			}
 			
