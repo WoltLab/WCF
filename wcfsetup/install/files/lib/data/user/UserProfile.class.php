@@ -442,19 +442,15 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		switch ($this->$name) {
 			case self::ACCESS_EVERYONE:
 				return true;
-			break;
 			
 			case self::ACCESS_REGISTERED:
 				return (WCF::getUser()->userID ? true : false);
-			break;
 			
 			case self::ACCESS_FOLLOWING:
 				return ($this->isFollowing(WCF::getUser()->userID) ? true : false);
-			break;
 			
 			case self::ACCESS_NOBODY:
 				return false;
-			break;
 		}
 	}
 	
