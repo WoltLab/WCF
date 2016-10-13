@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
-abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableObject {
+abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableCachedObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -113,5 +113,12 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 		WCF::getDB()->commitTransaction();
 		
 		return $affectedCount;
+	}
+	
+	/**
+	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		
 	}
 }
