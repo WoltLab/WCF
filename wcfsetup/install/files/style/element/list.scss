@@ -98,6 +98,14 @@ ol.nativeList {
 /* list of smileys */
 .smileyList {
 	align-items: center;
+	
+	@include screen-lg {
+		margin-bottom: -5px;
+		
+		> li {
+			margin-bottom: 5px;
+		}
+	}
 }
 
 /* legacy styling (deprecated) */
