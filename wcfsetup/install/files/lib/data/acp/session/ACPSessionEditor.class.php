@@ -3,6 +3,7 @@ namespace wcf\data\acp\session;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\system\event\EventHandler;
 
 /**
  * Provides functions to edit ACP sessions.
@@ -60,6 +61,8 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
+		
+		EventHandler::getInstance()->fireAction($this, 'sessionDeleted');
 	}
 	
 	/**
