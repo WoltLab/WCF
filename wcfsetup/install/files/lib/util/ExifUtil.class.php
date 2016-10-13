@@ -214,6 +214,10 @@ final class ExifUtil {
 			// CCD sensitivity equivalent to Ag-Hr film speedrate. (unsigned short)
 			$exifData['ISOSpeedRatings'] = intval($rawExifData['ISOSpeedRatings']);
 		}
+		if (isset($rawExifData['Flash'])) {
+			// Indicates the status of flash when the image was shot. (unsigned short)
+			$exifData['Flash'] = intval($rawExifData['Flash']);
+		}
 		
 		return $exifData;
 	}
