@@ -318,7 +318,7 @@ $.widget('ui.wcfImageViewer', {
 		this.element.click($.proxy(this.open, this));
 
 		window.addEventListener('popstate', (function(event) {
-			if (event.state.name === 'imageViewer') {
+			if (event.state != null && event.state.name === 'imageViewer') {
 				if (event.state.container === this._eventNamespace) {
 					this.open(event);
 					this.showImage(event.state.image);
