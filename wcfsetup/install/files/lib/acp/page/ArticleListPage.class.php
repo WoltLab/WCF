@@ -93,6 +93,12 @@ class ArticleListPage extends SortablePage {
 	public $showArticleAddDialog = 0;
 	
 	/**
+	 * publication status filter
+	 * @var integer
+	 */
+	public $publicationStatus = -1;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -103,6 +109,7 @@ class ArticleListPage extends SortablePage {
 		if (!empty($_REQUEST['title'])) $this->title = StringUtil::trim($_REQUEST['title']);
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);
 		if (!empty($_REQUEST['showArticleAddDialog'])) $this->showArticleAddDialog = 1;
+		if (isset($_REQUEST['publicationStatus'])) $this->publicationStatus = intval($_REQUEST['publicationStatus']);
 	}
 	
 	/**
@@ -132,6 +139,10 @@ class ArticleListPage extends SortablePage {
 		}
 		
 		$this->objectList->sqlSelects = "(SELECT title FROM wcf".WCF_N."_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = ".WCF::getLanguage()->languageID.") LIMIT 1) AS title";
+		
+		if ($this->publicationStatus != -1) {
+			$this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [$this->publicationStatus]);
+		}
 	}
 	
 	/**
@@ -147,7 +158,8 @@ class ArticleListPage extends SortablePage {
 			'content' => $this->content,
 			'showArticleAddDialog' => $this->showArticleAddDialog,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator()
+			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+			'publicationStatus' => $this->publicationStatus
 		]);
 	}
 }

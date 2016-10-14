@@ -70,6 +70,19 @@
 				</dd>
 			</dl>
 			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="publicationStatus" id="publicationStatus">
+						<option value="-1">{lang}wcf.acp.article.publicationStatus{/lang}</option>
+						
+						<option value="0"{if $publicationStatus == 0} selected{/if}>{lang}wcf.acp.article.publicationStatus.unpublished{/lang}</option>
+						<option value="1"{if $publicationStatus == 1} selected{/if}>{lang}wcf.acp.article.publicationStatus.published{/lang}</option>
+						<option value="2"{if $publicationStatus == 2} selected{/if}>{lang}wcf.acp.article.publicationStatus.delayed{/lang}</option>
+					</select>
+				</dd>
+			</dl>
+			
 			{event name='filterFields'}
 		</div>
 		
@@ -88,6 +101,7 @@
 			{if $title}{capture append=linkParameters}&title={@$title|rawurlencode}{/capture}{/if}
 			{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
+			{if $publicationStatus != -1}{capture append=linkParameters}&publicationStatus={@$publicationStatus}{/capture}{/if}
 			
 			{pages print=true assign=pagesLinks controller="ArticleList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
@@ -136,7 +150,11 @@
 								</span>
 								
 								<div class="containerHeadline">
-									<h3><a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.acp.article.edit{/lang}" class="jsTooltip">{$article->title}</a></h3>
+									<h3>
+										{if $article->publicationStatus == 0}<span class="badge">{lang}wcf.acp.article.publicationStatus.unpublished{/lang}</span>{/if}
+										{if $article->publicationStatus == 2}<span class="badge" title="{$article->publicationDate|plainTime}">{lang}wcf.acp.article.publicationStatus.delayed{/lang}</span>{/if}
+										<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.acp.article.edit{/lang}" class="jsTooltip">{$article->title}</a>
+									</h3>
 									<ul class="inlineList dotSeparated">
 										{if $article->categoryID}
 											<li>{$article->getCategory()->getTitle()}</li>
