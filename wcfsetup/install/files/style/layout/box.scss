@@ -363,10 +363,15 @@
 	}
 	
 	.boxTitle {
-		color: $wcfSidebarHeadlineLink;
+		color: $wcfSidebarHeadlineText;
 		
-		&:hover {
-			color: $wcfSidebarHeadlineLinkActive;
+		a {
+			color: $wcfSidebarHeadlineLink;
+			
+			&:hover {
+				color: $wcfSidebarHeadlineLinkActive;
+				
+			}
 		}
 	}
 	

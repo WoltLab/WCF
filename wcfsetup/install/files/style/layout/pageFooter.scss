@@ -16,8 +16,7 @@
 	}
 	
 	a {
-		// use text color instead
-		color: $wcfFooterText;
+		color: $wcfFooterCopyrightLink;
 		
 		&:hover {
 			color: $wcfFooterCopyrightLinkActive;
