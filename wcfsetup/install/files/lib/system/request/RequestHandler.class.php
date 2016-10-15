@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\box\BoxHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
@@ -77,6 +78,7 @@ class RequestHandler extends SingletonFactory {
 					}
 					else {
 						@header('HTTP/1.1 503 Service Unavailable');
+						BoxHandler::getInstance()->disablePageLayout();
 						WCF::getTPL()->assign([
 							'templateName' => 'offline',
 							'templateNameApplication' => 'wcf'
