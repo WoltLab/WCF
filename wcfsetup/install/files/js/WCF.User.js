@@ -1489,6 +1489,7 @@ WCF.User.Registration.LostPassword = Class.extend({
 		else {
 			this._username.disable();
 			this._username.parents('dl:eq(0)').addClass('disabled');
+			this._username.val('');
 		}
 	},
 	
@@ -1503,6 +1504,7 @@ WCF.User.Registration.LostPassword = Class.extend({
 		else {
 			this._email.disable();
 			this._email.parents('dl:eq(0)').addClass('disabled');
+			this._email.val('');
 		}
 	}
 });
