@@ -59,7 +59,7 @@ class AttachmentBBCode extends AbstractBBCode {
 				$thumbnail = (isset($openingTag['attributes'][2]) ? $openingTag['attributes'][2] : false);
 				
 				// backward compatibility, check if width is larger than thumbnail's width to display full version
-				if (is_int($thumbnail)) {
+				if (is_numeric($thumbnail)) {
 					if ($thumbnail == 0) {
 						$thumbnail = true;
 					}
