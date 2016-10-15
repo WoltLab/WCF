@@ -162,7 +162,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 			this.clean.convertTags = (function(html, data) {
 				var div = elCreate('div');
 				div.innerHTML = html;
-				console.debug(html);
+				
 				// reset tag storage
 				storage = [];
 				

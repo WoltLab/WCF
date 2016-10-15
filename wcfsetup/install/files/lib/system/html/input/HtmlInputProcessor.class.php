@@ -197,9 +197,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 						$openParagraph = false;
 					}
 					
-					// ignore two newline because a new paragraph with bbcodes is created
+					// ignore one newline because a new paragraph with bbcodes is created
 					// using two subsequent newlines
-					$newlines -= 1;
+					$newlines--;
 					if ($newlines === 0) {
 						continue;
 					}
