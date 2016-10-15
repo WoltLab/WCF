@@ -2857,6 +2857,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.search.error.tooShort"><![CDATA[Der Suchbegriff ist zu kurz.]]></item>
 		<item name="wcf.page.search.name"><![CDATA[Seitennamen durchsuchen]]></item>
 		<item name="wcf.page.search.results"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.page.comment"><![CDATA[Seiten-Kommentar]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
