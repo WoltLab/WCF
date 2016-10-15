@@ -2,7 +2,7 @@
 namespace wcf\system\html\metacode\converter;
 
 /**
- * Converts color bbcode into `<span style="color: ...">`.
+ * Converts font bbcode into `<span style="font-family: ...">`.
  * 
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -10,13 +10,13 @@ namespace wcf\system\html\metacode\converter;
  * @package     WoltLabSuite\Core\System\Html\Metacode\Converter
  * @since       3.0
  */
-class ColorMetacodeConverter extends AbstractMetacodeConverter {
+class FontMetacodeConverter extends AbstractMetacodeConverter {
 	/**
 	 * @inheritDoc
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
 		$element = $fragment->ownerDocument->createElement('span');
-		$element->setAttribute('style', 'color: ' . $attributes[0]);
+		$element->setAttribute('style', 'font-family: ' . preg_replace('["\']', '', $attributes[0]));
 		$element->appendChild($fragment);
 		
 		return $element;

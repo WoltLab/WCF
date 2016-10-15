@@ -2,7 +2,7 @@
 namespace wcf\system\html\metacode\converter;
 
 /**
- * Converts size bbcode into `<woltlab-size>`.
+ * Converts size bbcode into `<span style="font-size: ...">`.
  * 
  * @author      Alexander Ebert
  * @copyright   2001-2016 WoltLab GmbH
@@ -17,8 +17,8 @@ class SizeMetacodeConverter extends AbstractMetacodeConverter {
 	 * @inheritDoc
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
-		$element = $fragment->ownerDocument->createElement('woltlab-size');
-		$element->setAttribute('class', 'woltlab-size-' . $attributes[0]);
+		$element = $fragment->ownerDocument->createElement('span');
+		$element->setAttribute('style', 'font-size: ' . $attributes[0] . 'pt');
 		$element->appendChild($fragment);
 		
 		return $element;

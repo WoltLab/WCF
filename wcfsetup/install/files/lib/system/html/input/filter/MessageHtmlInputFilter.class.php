@@ -43,8 +43,8 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	protected function getPurifier() {
 		if (self::$purifier === null) {
 			$config = \HTMLPurifier_Config::createDefault();
-			$config->set('HTML.ForbiddenAttributes', ['*@style', '*@lang', '*@xml:lang']);
-			$config->set('HTML.ForbiddenElements', ['span']);
+			$config->set('CSS.AllowedProperties', ['color', 'font-family', 'font-size']);
+			$config->set('HTML.ForbiddenAttributes', ['*@lang', '*@xml:lang']);
 			
 			$this->setAttributeDefinitions($config);
 			self::$purifier = new \HTMLPurifier($config);
@@ -65,15 +65,6 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		$definition->addAttribute('pre', 'data-file', 'Text');
 		$definition->addAttribute('pre', 'data-line', 'Number');
 		$definition->addAttribute('pre', 'data-highlighter', 'Text');
-		
-		// color
-		$definition->addElement('woltlab-color', 'Inline', 'Inline', '', ['class' => 'Text']);
-		
-		// size
-		$definition->addElement('woltlab-size', 'Inline', 'Inline', '', ['class' => 'Text']);
-		
-		// font
-		$definition->addElement('woltlab-font', 'Inline', 'Inline', '', ['class' => 'Text']);
 		
 		// media
 		$definition->addAttribute('img', 'data-media-id', 'Number');

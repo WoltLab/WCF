@@ -19,11 +19,10 @@ define(['Dom/Util'], function(DomUtil) {
 		 * Applies format elements to the selected text.
 		 * 
 		 * @param       {Element}       editorElement   editor element
-		 * @param       {string}        tagName         format tag name
-		 * @param       {string=}       className       optional CSS class for the format tag
-		 * @param       {Object=}       attributes      optional list of attributes for the format tag
+		 * @param       {string}        property        CSS property name
+		 * @param       {string}        value           CSS property value
 		 */
-		format: function(editorElement, tagName, className, attributes) {
+		format: function(editorElement, property, value) {
 			var selection = window.getSelection();
 			if (!selection.rangeCount) {
 				// no active selection
@@ -58,7 +57,7 @@ define(['Dom/Util'], function(DomUtil) {
 				tmpRange.insertNode(markerEnd);
 				
 				// remove existing format before applying new one
-				this.removeFormat(editorElement, tagName);
+				this.removeFormat(editorElement, property);
 				
 				range = document.createRange();
 				range.setStartAfter(markerStart);
@@ -72,19 +71,14 @@ define(['Dom/Util'], function(DomUtil) {
 				document.execCommand('strikethrough');
 			}
 			
-			var elements = elBySelAll('strike', editorElement), formatElement, property, selectElements = [], strike;
+			var elements = elBySelAll('strike', editorElement), formatElement, selectElements = [], strike;
 			for (var i = 0, length = elements.length; i < length; i++) {
 				strike = elements[i];
 				
-				formatElement = elCreate(tagName);
-				if (className) formatElement.className = className;
-				if (typeof attributes === 'object') {
-					for (property in attributes) {
-						if (attributes.hasOwnProperty(property)) {
-							elAttr(formatElement, key, attributes[key]);
-						}
-					}
-				}
+				formatElement = elCreate('span');
+				// we're bypassing `style.setPropertyValue()` on purpose here,
+				// as it prevents browsers from mangling the value
+				elAttr(formatElement, 'style', property + ': ' + value);
 				
 				DomUtil.replaceElement(strike, formatElement);
 				selectElements.push(formatElement);
@@ -95,11 +89,11 @@ define(['Dom/Util'], function(DomUtil) {
 				var firstSelectedElement = selectElements[0];
 				var lastSelectedElement = selectElements[count - 1];
 				
-				// check if parent is of the same format type
+				// check if parent is of the same format
 				// and contains only the selected nodes
 				if (tmpElement === null && (firstSelectedElement.parentNode === lastSelectedElement.parentNode)) {
 					var parent = firstSelectedElement.parentNode;
-					if (parent.nodeName === tagName.toUpperCase()) {
+					if (parent.nodeName === 'SPAN' && parent.style.getPropertyValue(property) !== '') {
 						if (this._isBoundaryElement(firstSelectedElement, parent, 'previous') && this._isBoundaryElement(lastSelectedElement, parent, 'next')) {
 							DomUtil.unwrapChildNodes(parent);
 						}
@@ -183,11 +177,9 @@ define(['Dom/Util'], function(DomUtil) {
 		 * If you fell the need to invoke this method anyway, go ahead. I'm a comment, not a cop.
 		 * 
 		 * @param       {Element}       editorElement   editor element
-		 * @param       {string}        tagName         format tag name that should be removed
+		 * @param       {string}        property        CSS property that should be removed
 		 */
-		removeFormat: function(editorElement, tagName) {
-			tagName = tagName.toUpperCase();
-			
+		removeFormat: function(editorElement, property) {
 			var strikeElements = elByTag('strike', editorElement);
 			
 			// remove any <strike> element first, all though there shouldn't be any at all
@@ -197,28 +189,29 @@ define(['Dom/Util'], function(DomUtil) {
 			
 			document.execCommand('strikethrough');
 			
-			var elements, lastMatchingParent, strikeElement;
+			var lastMatchingParent, strikeElement;
 			while (strikeElements.length) {
 				strikeElement = strikeElements[0];
-				lastMatchingParent = this._getLastMatchingParent(strikeElement, editorElement, tagName);
+				lastMatchingParent = this._getLastMatchingParent(strikeElement, editorElement, property);
 				
 				if (lastMatchingParent !== null) {
-					this._handleParentNodes(strikeElement, lastMatchingParent, tagName);
+					this._handleParentNodes(strikeElement, lastMatchingParent, property);
 				}
 				
 				// remove offending elements from child nodes
-				elements = elByTag(tagName.toLowerCase(), strikeElement);
-				while (elements.length) {
-					DomUtil.unwrapChildNodes(elements[0]);
-				}
+				elBySelAll('span', strikeElement, function (span) {
+					if (span.style.getPropertyValue(property)) {
+						DomUtil.unwrapChildNodes(span);
+					}
+				});
 				
 				// remove strike element itself
 				DomUtil.unwrapChildNodes(strikeElement);
 			}
 			
 			// search for tags that are still floating around, but are completely empty
-			elBySelAll(tagName, editorElement, function (element) {
-				if (element.parentNode && !element.textContent.length) {
+			elBySelAll('span', editorElement, function (element) {
+				if (element.parentNode && !element.textContent.length && element.style.getPropertyValue(property) !== '') {
 					if (element.childElementCount === 1 && element.children[0].nodeName === 'WOLTLAB-TMP-MARKER') {
 						element.parentNode.insertBefore(element.children[0], element);
 					}
@@ -235,10 +228,10 @@ define(['Dom/Util'], function(DomUtil) {
 		 * 
 		 * @param       {Element}       strikeElement           strike element representing the text selection
 		 * @param       {Element}       lastMatchingParent      last matching ancestor element
-		 * @param       {string}        tagName                 format tag name that should be removed
+		 * @param       {string}        property                CSS property that should be removed
 		 * @protected
 		 */
-		_handleParentNodes: function(strikeElement, lastMatchingParent, tagName) {
+		_handleParentNodes: function(strikeElement, lastMatchingParent, property) {
 			var range;
 			
 			// selection does not begin at parent node start, slice all relevant parent
@@ -278,10 +271,11 @@ define(['Dom/Util'], function(DomUtil) {
 			// the strike element is now some kind of isolated, meaning we can now safely
 			// remove all offending parent nodes without influencing formatting of any content
 			// before or after the element
-			var elements = elByTag(tagName, lastMatchingParent);
-			while (elements.length) {
-				DomUtil.unwrapChildNodes(elements[0]);
-			}
+			elBySelAll('span', lastMatchingParent, function (span) {
+				if (span.style.getPropertyValue(property)) {
+					DomUtil.unwrapChildNodes(span);
+				}
+			});
 			
 			// finally remove the parent itself
 			DomUtil.unwrapChildNodes(lastMatchingParent);
@@ -292,14 +286,14 @@ define(['Dom/Util'], function(DomUtil) {
 		 * 
 		 * @param       {Element}               strikeElement   strike element representing the text selection
 		 * @param       {Element}               editorElement   editor element
-		 * @param       {string}                tagName         format tag name that should be removed
+		 * @param       {string}                property        CSS property that should be removed
 		 * @returns     {(Element|null)}        last matching ancestor element or null if there is none
 		 * @protected
 		 */
-		_getLastMatchingParent: function(strikeElement, editorElement, tagName) {
+		_getLastMatchingParent: function(strikeElement, editorElement, property) {
 			var parent = strikeElement.parentNode, match = null;
 			while (parent !== editorElement) {
-				if (parent.nodeName === tagName) {
+				if (parent.nodeName === 'SPAN' && parent.style.getPropertyValue(property) !== '') {
 					match = parent;
 				}
 				

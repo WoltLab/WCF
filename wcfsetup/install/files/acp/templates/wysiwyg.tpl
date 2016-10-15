@@ -99,7 +99,7 @@
 				'wcf.editor.spoiler.title': '{lang __literal=true}wcf.editor.spoiler.title{/lang}'
 			});
 			
-			var buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
+			var allowedInlineStyles = [], buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
 			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
@@ -211,6 +211,7 @@
 				toolbarFixed: false,
 				woltlab: {
 					autosave: autosave,
+					allowedInlineStyles: allowedInlineStyles,
 					buttons: buttonOptions,
 					buttonMobile: buttonMobile,
 					customButtons: customButtons,

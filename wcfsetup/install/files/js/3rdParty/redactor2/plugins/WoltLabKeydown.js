@@ -27,6 +27,22 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
+			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
+				// remove style tag
+				setTimeout($.proxy(function()
+				{
+					this.code.syncFire = false;
+					this.keydown.removeEmptyLists();
+					
+					// WoltLab modification: allow style tag on `<span>`
+					this.core.editor().find('*[style]').not('span, img, #redactor-image-box, #redactor-image-editter').removeAttr('style');
+					
+					this.keydown.formatEmpty(e);
+					this.code.syncFire = true;
+					
+				}, this), 1);
+			}).bind(this);
+			
 			var mpOnEnter = (function(e) {
 				var stop = this.core.callback('enter', e);
 				if (stop === false) {

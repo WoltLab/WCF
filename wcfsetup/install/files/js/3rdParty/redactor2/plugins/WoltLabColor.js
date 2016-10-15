@@ -13,12 +13,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 	return {
 		init: function() {
 			var callback = this.WoltLabColor.setColor.bind(this), color;
-			var dropdown = {
-				'removeColor': {
-					title: this.lang.get('remove-color'),
-					func: this.WoltLabColor.removeColor.bind(this)
-				}
-			};
+			var dropdown = {};
 			for (var i = 0, length = _defaultColors.length; i < length; i++) {
 				color = _defaultColors[i];
 				
@@ -28,26 +23,24 @@ $.Redactor.prototype.WoltLabColor = function() {
 				};
 			}
 			
+			dropdown['removeColor'] = {
+				title: this.lang.get('remove-color'),
+				func: this.WoltLabColor.removeColor.bind(this)
+			};
+			
 			var button = this.button.add('woltlabColor', '');
 			this.button.addDropdown(button, dropdown);
 			
 			// add styling
-			button.data('dropdown').find('a').each(function(index, link) {
+			var dropdownMenu = button.data('dropdown');
+			dropdownMenu.find('a').each(function(index, link) {
 				if (link.className.match(/redactor-dropdown-color_([A-F0-9]{6})/)) {
-					link.parentNode.classList.add('woltlab-color-' + RegExp.$1);
+					link.style.setProperty('color', '#' + RegExp.$1, '');
 					link.parentNode.classList.add('woltlab-color-selection');
 				}
 			});
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'convertTags_' + this.$element[0].id, function (data) {
-				elBySelAll('woltlab-color', data.div, function (element) {
-					data.addToStorage(element, ['class']);
-				});
-			});
-			
-			this.WoltLabColor.registerColors();
-			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'codeStart_' + this.$element[0].id, this.WoltLabColor.registerColors.bind(this));
+			$('<li class="dropdownDivider"></li>').insertBefore(dropdownMenu.children('li').last());
 		},
 		
 		setColor: function(key) {
@@ -58,7 +51,7 @@ $.Redactor.prototype.WoltLabColor = function() {
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
-				UiRedactorFormat.format(this.$editor[0], 'woltlab-color', 'woltlab-color-' + key);
+				UiRedactorFormat.format(this.$editor[0], 'color', '#' + key);
 				
 				this.buffer.set();
 			}).bind(this));
@@ -70,25 +63,9 @@ $.Redactor.prototype.WoltLabColor = function() {
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
-				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-color');
+				UiRedactorFormat.removeFormat(this.$editor[0], 'color');
 				
 				this.buffer.set();
-			}).bind(this));
-		},
-		
-		registerColors: function () {
-			require(['WoltLabSuite/Core/Ui/Redactor/RuntimeStyle'], (function (UiRedactorRuntimeStyle) {
-				elBySelAll('woltlab-color', this.$editor[0], (function (color) {
-					if (color.className.match(/woltlab-color-([a-z0-9]{3}(?:[a-z0-9]{3})?)/i)) {
-						var code = RegExp.$1;
-						if (code.length === 3) code = code.substr(0, 1) + code.substr(0, 1) + code.substr(1, 1) + code.substr(1, 1) + code.substr(2, 1) + code.substr(2, 1);
-						code = code.toUpperCase();
-						
-						if (_defaultColors.indexOf(code) === -1) {
-							UiRedactorRuntimeStyle.add('woltlab-color-' + code, 'color: #' + code + ';');
-						}
-					}
-				}).bind(this));
 			}).bind(this));
 		}
 	};

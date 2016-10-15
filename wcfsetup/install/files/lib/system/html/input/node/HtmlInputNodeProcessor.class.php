@@ -30,13 +30,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia'
 		],
 		'p' => ['text-center', 'text-justify', 'text-right'],
-		'td' => ['text-center', 'text-justify', 'text-right'],
-		'woltlab-color' => '*',
-		'woltlab-font' => [
-			'woltlab-font-arial', 'woltlab-font-comicSansMs', 'woltlab-font-courierNew', 'woltlab-font-georgia', 'woltlab-font-lucidaSansUnicode',
-			'woltlab-font-tahoma', 'woltlab-font-timesNewRoman', 'woltlab-font-trebuchetMs', 'woltlab-font-verdana'
-		],
-		'woltlab-size' => ['woltlab-size-8', 'woltlab-size-10', 'woltlab-size-12', 'woltlab-size-14', 'woltlab-size-18', 'woltlab-size-24', 'woltlab-size-36']
+		'td' => ['text-center', 'text-justify', 'text-right']
 	];
 	
 	/**

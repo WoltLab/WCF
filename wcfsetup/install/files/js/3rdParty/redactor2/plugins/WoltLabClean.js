@@ -3,10 +3,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 	
 	return {
 		init: function () {
-			this.opts.pasteInlineTags = this.opts.pasteInlineTags.filter(function (value) {
-				return (value !== 'span');
-			});
-			
 			var mpOnSet = this.clean.onSet;
 			this.clean.onSet = (function (html) {
 				html = html.replace(/\u200B/g, '');
@@ -73,9 +69,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				div.innerHTML = html;
 				
-				elBySelAll('span', div, function (span) {
-					span.outerHTML = span.innerHTML;
-				});
 				elBySelAll('pre', div, function (pre) {
 					if (replacements.hasOwnProperty(pre.textContent)) {
 						pre.textContent = replacements[pre.textContent];
@@ -102,15 +95,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 				return html;
 			}).bind(this);
 			
-			var mpStripTags = this.clean.stripTags;
-			this.clean.stripTags = (function(input, denied) {
-				if (Array.isArray(denied)) {
-					denied.push('span');
-				}
-				
-				return mpStripTags.call(this, input, denied);
-			}).bind(this);
-			
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
 				if (data.pre) {
@@ -128,7 +112,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 					for (var j = 0, innerLength = element.style.length; j < innerLength; j++) {
 						property = element.style[j];
 						
-						if (this.WoltLabClean._applyInlineStyle(element, property, element.style.getPropertyValue(property))) {
+						//noinspection JSUnresolvedVariable
+						if (this.opts.woltlab.allowedInlineStyles.indexOf(property) === -1) {
 							removeStyles.push(property);
 						}
 					}
@@ -138,14 +123,33 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 				}
 				
+				elBySelAll('span', div, function (span) {
+					if (!span.style.length || !span.hasAttribute('style')) {
+						while (span.childNodes.length) {
+							span.parentNode.insertBefore(span.childNodes[0], span);
+						}
+						
+						elRemove(span);
+					}
+				});
+				
 				return mpOnPaste.call(this, div.innerHTML, data, insert);
 			}).bind(this);
 			
 			var storage = [];
 			var addToStorage = function (element, attributes) {
-				var attrs = {};
+				var attr, attrs = {}, value;
 				for (var i = 0, length = attributes.length; i < length; i++) {
-					attrs[attributes[i]] = elAttr(element, attributes[i]);
+					attr = attributes[i];
+					value = elAttr(element, attr);
+					
+					// Chrome likes to break the font-family tag by encoding quotes
+					// that are then no longer accepted by `style.setPropertyValue()`
+					if (attr === 'style' && element.style.length === 0 && value.indexOf('font-family') === 0) {
+						value = value.replace(/&quot;/g, '');
+					}
+					
+					attrs[attr] = value;
 				}
 				
 				storage.push({
@@ -158,13 +162,17 @@ $.Redactor.prototype.WoltLabClean = function() {
 			this.clean.convertTags = (function(html, data) {
 				var div = elCreate('div');
 				div.innerHTML = html;
-				
+				console.debug(html);
 				// reset tag storage
 				storage = [];
 				
 				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'convertTags_' + this.$element[0].id, {
 					addToStorage: addToStorage,
 					div: div
+				});
+				
+				elBySelAll('span', div, function (span) {
+					addToStorage(span, ['style']);
 				});
 				
 				storage.forEach(function (item, i) {
@@ -208,32 +216,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				return mpReconvertTags.call(this, html, data);
 			}).bind(this);
-		},
-		
-		_applyInlineStyle: function (element, property, value) {
-			var className = '', tagName = '';
 			
-			switch (property) {
-				case 'font-weight':
-					if (value == 600) {
-						if (element.closest('strong') === null) {
-							tagName = 'strong';
-						}
-					}
-					break;
-			}
-			
-			if (tagName) {
-				var newElement = elCreate(tagName);
-				if (className) newElement.className = className;
-				
-				element.parentNode.insertBefore(newElement, element);
-				newElement.appendChild(element);
-				
-				return true;
-			}
-			
-			return false;
+			this.clean.removeSpans = function(html) {
+				return html;
+			};
 		}
 	}
 };

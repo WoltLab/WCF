@@ -25,22 +25,15 @@ $.Redactor.prototype.WoltLabSize = function() {
 			this.button.addDropdown(button, dropdown);
 			
 			// add styling
-			button.data('dropdown').find('a').each(function(index, link) {
+			var dropdownMenu = button.data('dropdown');
+			dropdownMenu.find('a').each(function(index, link) {
 				if (link.className.match(/redactor-dropdown-size_(\d{1,2})/)) {
-					link.parentNode.classList.add('woltlab-size-' + RegExp.$1);
+					link.style.setProperty('font-size', RegExp.$1 + 'pt', '');
 					link.parentNode.classList.add('woltlab-size-selection');
 				}
 			});
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'convertTags_' + this.$element[0].id, function (data) {
-				elBySelAll('woltlab-size', data.div, function (element) {
-					if (element.className.match(/^woltlab-size-(\d{1,2})$/)) {
-						if (sizes.indexOf(~~RegExp.$1) !== -1) {
-							data.addToStorage(element, ['class']);
-						}
-					}
-				});
-			});
+			$('<li class="dropdownDivider"></li>').insertBefore(dropdownMenu.children('li').last());
 		},
 		
 		setSize: function(key) {
@@ -49,7 +42,7 @@ $.Redactor.prototype.WoltLabSize = function() {
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
-				UiRedactorFormat.format(this.$editor[0], 'woltlab-size', 'woltlab-size-' + key.replace(/^size_/, ''));
+				UiRedactorFormat.format(this.$editor[0], 'font-size', key.replace(/^size_/, '') + 'pt');
 				
 				this.buffer.set();
 			}).bind(this));
@@ -61,7 +54,7 @@ $.Redactor.prototype.WoltLabSize = function() {
 			require(['WoltLabSuite/Core/Ui/Redactor/Format'], (function(UiRedactorFormat) {
 				this.buffer.set();
 				
-				UiRedactorFormat.removeFormat(this.$editor[0], 'woltlab-size');
+				UiRedactorFormat.removeFormat(this.$editor[0], 'font-size');
 				
 				this.buffer.set();
 			}).bind(this));

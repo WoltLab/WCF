@@ -44,12 +44,15 @@ buttons.push('subscript');
 buttons.push('superscript');
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
 	buttons.push('woltlabFont');
+	allowedInlineStyles.push('font-family');
 {/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
 	buttons.push('woltlabSize');
+	allowedInlineStyles.push('font-size');
 {/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}
 	buttons.push('woltlabColor');
+	allowedInlineStyles.push('color');
 {/if}
 
 buttons.push('wcfSeparator');
