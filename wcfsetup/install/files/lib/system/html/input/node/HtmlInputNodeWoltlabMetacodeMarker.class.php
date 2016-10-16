@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\input\node;
 use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 
@@ -61,6 +62,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		// group pairs by tag name
 		$groups = $this->groupPairsByName($pairs);
 		
+		$groups = $this->filterGroups($groups, $htmlNodeProcessor);
+		if (empty($groups)) {
+			return;
+		}
+		
 		// convert source bbcode groups first to ensure no bbcodes inside
 		// source blocks will be evaluated
 		$groups = $this->convertSourceGroups($groups);
@@ -69,6 +75,36 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		
 		// convert pairs into HTML or metacode
 		$this->convertGroups($groups);
+	}
+	
+	/**
+	 * Filters groups by reverting metacode markers for invalid bbcodes.
+	 * 
+	 * @param       array                           $groups                 grouped list of bbcode marker pairs
+	 * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+	 * @return      array                           filtered groups
+	 */
+	protected function filterGroups(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
+		/** @noinspection PhpUndefinedMethodInspection */
+		$data = [
+			'context' => $htmlNodeProcessor->getContext(),
+			'bbcodes' => array_keys($groups)
+		];
+		
+		EventHandler::getInstance()->fireAction($this, 'filterGroups', $data);
+		
+		foreach ($groups as $name => $pairs) {
+			if (!in_array($name, $data['bbcodes'])) {
+				foreach ($pairs as $pair) {
+					$pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
+					$this->convertToBBCode($name, $pair);
+				}
+				
+				unset($groups[$name]);
+			}
+		}
+		
+		return $groups;
 	}
 	
 	/**
