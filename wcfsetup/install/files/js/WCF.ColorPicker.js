@@ -143,7 +143,9 @@ WCF.ColorPicker = Class.extend({
 		});
 		
 		// set default focus
-		this._hex.focus();
+		window.setTimeout((function () {
+			this._hex.focus();
+		}).bind(this), 200);
 	},
 	
 	/**
