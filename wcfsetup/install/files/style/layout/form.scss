@@ -136,7 +136,7 @@ select {
 		
 		&:not(.button) {
 			background-color: $wcfButtonBackground;
-			border: 1px solid $wcfButtonBorder;
+			border: 1px solid $wcfInputBorder;
 			color: $wcfButtonText;
 			cursor: default;
 			padding: 3px 5px;
@@ -144,11 +144,11 @@ select {
 	}
 	
 	> .inputPrefix {
-		margin-right: 5px;
+		border-right-width: 0 !important;
 	}
 	
 	> .inputSuffix {
-		margin-left: 5px;
+		border-left-width: 0 !important;
 	}
 	
 	input {

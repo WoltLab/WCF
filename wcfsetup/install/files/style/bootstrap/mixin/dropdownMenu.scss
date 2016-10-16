@@ -17,36 +17,6 @@
 		border-top-right-radius: 0;
 	}
 	
-	&.dropdownArrowRight {
-		&::after {
-			left: auto;
-			right: 9px;
-		}
-		
-		&::before {
-			left: auto;
-			right: 10px;
-		}
-	}
-	
-	&.dropdownArrowBottom {
-		&::after {
-			border: 10px transparent solid;
-			border-top-color: $wcfDropdownBorder;
-			border-bottom-width: 0;
-			bottom: -10px;
-			top: auto;
-		}
-		
-		&::before {
-			border: 9px transparent solid;
-			border-top-color: $wcfDropdownBackground;
-			border-bottom-width: 0;
-			bottom: -9px;
-			top: auto;
-		}
-	}
-	
 	&.dropdownOpen {
 		display: block;
 		visibility: visible;

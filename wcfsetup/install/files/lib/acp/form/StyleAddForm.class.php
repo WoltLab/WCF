@@ -75,6 +75,9 @@ class StyleAddForm extends AbstractForm {
 	 */
 	public $availableUnits = ['px', 'em', '%', 'pt'];
 	
+	/**
+	 * @var array
+	 */
 	public $colorCategories = [];
 	
 	/**
@@ -448,10 +451,10 @@ class StyleAddForm extends AbstractForm {
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
 			'wcfInput' => ['background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfInputDisabled' => ['background', 'border', 'text'],
-			'wcfButton' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
-			'wcfButtonPrimary' => ['background', 'border', 'text', 'backgroundActive', 'borderActive', 'textActive'],
-			'wcfButtonDisabled' => ['background', 'border', 'text'],
-			'wcfDropdown' => ['background', 'border', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
+			'wcfButton' => ['background', 'text', 'backgroundActive', 'textActive'],
+			'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],
+			'wcfButtonDisabled' => ['background', 'text'],
+			'wcfDropdown' => ['background', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
 			'wcfStatusInfo' => ['background', 'border', 'text', 'link', 'linkActive'],
 			'wcfStatusSuccess' => ['background', 'border', 'text', 'link', 'linkActive'],
 			'wcfStatusWarning' => ['background', 'border', 'text', 'link', 'linkActive'],
