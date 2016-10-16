@@ -58,10 +58,10 @@ class RedisCacheSource implements ICacheSource {
 	 */
 	public function flushAll() {
 		// set flush key to current time if it does not exist yet (this prevents falling back to 0 if the key gets deleted)
-		$this->redis->setnx('_flush', TIME_NOW);
+		$this->redis->setnx('cache:_flush', TIME_NOW);
 		
 		// atomic increment of flush count
-		$this->redis->incr('_flush');
+		$this->redis->incr('cache:_flush');
 	}
 	
 	/**
@@ -141,17 +141,17 @@ class RedisCacheSource implements ICacheSource {
 	 * @return	string
 	 */
 	protected function getCacheName($cacheName) {
-		$flush = $this->redis->get('_flush');
+		$flush = $this->redis->get('cache:_flush');
 		
 		// create flush counter if it does not exist
 		if ($flush === false) {
-			$this->redis->setnx('_flush', TIME_NOW);
-			$this->redis->incr('_flush');
+			$this->redis->setnx('cache:_flush', TIME_NOW);
+			$this->redis->incr('cache:_flush');
 			
-			$flush = $this->redis->get('_flush');
+			$flush = $this->redis->get('cache:_flush');
 		}
 		
-		return $flush.':'.$cacheName;
+		return 'cache:'.$flush.':'.$cacheName;
 	}
 	
 	/**
