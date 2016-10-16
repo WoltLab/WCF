@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 
 /**
  * Provides helper methods to work with PHP's DOM implementation.
@@ -96,6 +97,27 @@ final class DOMUtil {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns a non-live collection of elements.
+	 * 
+	 * @param       (\DOMDocument|\DOMElement)      $context        context element
+	 * @param       string                          $tagName        tag name
+	 * @return      \DOMElement[]                   list of elements
+	 * @throws      SystemException
+	 */
+	public static function getElements($context, $tagName) {
+		if (!($context instanceof \DOMDocument) && !($context instanceof \DOMElement)) {
+			throw new SystemException("Expected context to be either of type \\DOMDocument or \\DOMElement.");
+		}
+		
+		$elements = [];
+		foreach ($context->getElementsByTagName($tagName) as $element) {
+			$elements[] = $element;
+		}
+		
+		return $elements;
 	}
 	
 	/**
