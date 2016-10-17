@@ -119,9 +119,11 @@ class BoxEditForm extends BoxAddForm {
 		$this->objectAction->executeAction();
 		
 		// delete old conditions
-		if ($this->box->getController() && $this->box->getController() instanceof IConditionBoxController) {
+		if ($this->box->objectTypeID) {
+			$className = ObjectTypeCache::getInstance()->getObjectType($this->box->objectTypeID)->className;
+			
 			/** @var IConditionBoxController $oldController */
-			$oldController = $this->box->getController();
+			$oldController = new $className;
 			
 			/** @noinspection PhpUndefinedMethodInspection */
 			if ($oldController->getConditionDefinition() && (!$this->boxController || (!($this->boxController->getProcessor() instanceof IConditionBoxController)) || !$this->boxController->getProcessor()->getConditionDefinition())) {
