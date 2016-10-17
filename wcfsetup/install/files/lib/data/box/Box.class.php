@@ -224,9 +224,6 @@ class Box extends DatabaseObject {
 		else if ($this->boxType == 'menu') {
 			return $this->getMenu()->getContent();
 		}
-		else if ($this->boxType == 'tpl') {
-			return WCF::getTPL()->fetch($this->getTplName(WCF::getLanguage()->languageID), 'wcf', [], true);
-		}
 		
 		$this->getBoxContents();
 		$boxContent = null;
