@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.13</version> <!-- codename: maelstrom -->
-		<date>2015-09-02</date>
+		<version>2.0.14</version> <!-- codename: maelstrom -->
+		<date>2016-10-17</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,19 +43,13 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-    <!-- WARNING: Keep both update blocks below in sync! -->
-    <instructions type="update" fromversion="2.0.12">
-        <instruction type="acpTemplate">acptemplates_update.tar</instruction>
-        <instruction type="file">files_update.tar</instruction>
-        <instruction type="template">templates_update.tar</instruction>
-
-        <instruction type="language">language/*.xml</instruction>
-    </instructions>
-    <instructions type="update" fromversion="2.0.12 pl 1">
-        <instruction type="acpTemplate">acptemplates_update.tar</instruction>
-        <instruction type="file">files_update.tar</instruction>
-        <instruction type="template">templates_update.tar</instruction>
-
-        <instruction type="language">language/*.xml</instruction>
-    </instructions>
+	<instructions type="update" fromversion="2.0.13">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language">language/*.xml</instruction>
+		
+		<instruction type="option">option.xml</instruction>
+	</instructions>
 </package>
