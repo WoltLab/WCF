@@ -352,7 +352,7 @@ class RegisterForm extends UserAddForm {
 							list($month, $day, $year) = explode('/', $facebookData['birthday']);
 							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
 						}
-						if (isset($facebookData['bio']) && User::getUserOptionID('bio') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
+						if (isset($facebookData['about']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['about'];
 						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
 						if (isset($facebookData['website']) && User::getUserOptionID('website') !== null) {
 							$urls = preg_split('/[\s,;]/', $facebookData['website'], -1, PREG_SPLIT_NO_EMPTY);
