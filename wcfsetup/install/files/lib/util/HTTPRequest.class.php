@@ -7,6 +7,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\exception\HTTPException;
 
 /**
  * Sends HTTP/1.1 requests.
@@ -284,7 +285,7 @@ final class HTTPRequest {
 				}
 				$this->replyHeaders[] = $line;
 			}
-			if ($this->statusCode != 200) throw new SystemException("Expected 200 Ok as reply to my CONNECT, got '".$this->statusCode."'");
+			if ($this->statusCode != 200) throw new HTTPException($this, "Expected 200 Ok as reply to my CONNECT", $this->statusCode);
 			$remoteFile->setTLS(true);
 		}
 		
@@ -422,7 +423,7 @@ final class HTTPRequest {
 		// get status code
 		$statusLine = reset($this->replyHeaders);
 		$regex = new Regex('^HTTP/1.\d+ +(\d{3})');
-		if (!$regex->match($statusLine[0])) throw new SystemException("Unexpected status '".$statusLine."'");
+		if (!$regex->match($statusLine[0])) throw new HTTPException($this, "Unexpected status '".$statusLine."'");
 		$matches = $regex->getMatches();
 		$this->statusCode = $matches[1];
 	}
@@ -436,7 +437,7 @@ final class HTTPRequest {
 		// identity transfer-coding, the Content-Length MUST be ignored.
 		if (isset($this->replyHeaders['content-length']) && (!isset($this->replyHeaders['transfer-encoding']) || strtolower(end($this->replyHeaders['transfer-encoding'])) !== 'identity') && !isset($this->options['maxLength'])) {
 			if (strlen($this->replyBody) != end($this->replyHeaders['content-length'])) {
-				throw new SystemException('Body length does not match length given in header');
+				throw new HTTPException($this, 'Body length does not match length given in header');
 			}
 		}
 		
@@ -447,7 +448,7 @@ final class HTTPRequest {
 			case '303':
 			case '307':
 				// redirect
-				if ($this->options['maxDepth'] <= 0) throw new SystemException("Received status code '".$this->statusCode."' from server, but recursion level is exhausted");
+				if ($this->options['maxDepth'] <= 0) throw new HTTPException($this, "Received status code '".$this->statusCode."' from server, but recursion level is exhausted", $this->statusCode);
 				
 				$newRequest = clone $this;
 				$newRequest->options['maxDepth']--;
@@ -465,7 +466,7 @@ final class HTTPRequest {
 					$newRequest->setURL(end($this->replyHeaders['location']));
 				}
 				catch (SystemException $e) {
-					throw new SystemException("Received 'Location: ".end($this->replyHeaders['location'])."' from server, which is invalid.", 0, $e);
+					throw new HTTPException($this, "Received 'Location: ".end($this->replyHeaders['location'])."' from server, which is invalid.", 0, $e);
 				}
 				
 				try {
@@ -486,21 +487,21 @@ final class HTTPRequest {
 			case '206':
 				// check, if partial content was expected
 				if (!isset($this->headers['range'])) {
-					throw new HTTPServerErrorException("Received unexpected status code '206' from server");
+					throw new HTTPServerErrorException("Received unexpected status code '206' from server", 0, '', new HTTPException($this, 'Received partial response, without sending a range header', 206));
 				}
 				else if (!isset($this->replyHeaders['content-range'])) {
-					throw new HTTPServerErrorException("Content-Range is missing in reply header");
+					throw new HTTPServerErrorException("Content-Range is missing in reply header", 0, '', new HTTPException($this, 'Server replied with 206 Partial Content, without sending a Content-Range header', 206));
 				}
 			break;
 			
 			case '401':
 			case '402':
 			case '403':
-				throw new HTTPUnauthorizedException("Received status code '".$this->statusCode."' from server");
+				throw new HTTPUnauthorizedException("Received status code '".$this->statusCode."' from server", 0, '', new HTTPException($this, "Received status code '".$this->statusCode."' from server", $this->statusCode));
 			break;
 			
 			case '404':
-				throw new HTTPNotFoundException("Received status code '404' from server");
+				throw new HTTPNotFoundException("Received status code '404' from server", 0, '', new HTTPException($this, "Received status code '".$this->statusCode."' from server", $this->statusCode));
 			break;
 				
 			default:
@@ -515,10 +516,10 @@ final class HTTPRequest {
 						// we are fine
 					break;
 					case '5': // 500 and unknown 5XX
-						throw new HTTPServerErrorException("Received status code '".$this->statusCode."' from server");
+						throw new HTTPServerErrorException("Received status code '".$this->statusCode."' from server", 0, '', new HTTPException($this, "Received status code '".$this->statusCode."' from server", $this->statusCode));
 					break;
 					default:
-						throw new SystemException("Received unhandled status code '".$this->statusCode."' from server");
+						throw new HTTPException($this, "Received unhandled status code '".$this->statusCode."' from server", $this->statusCode);
 					break;
 				}
 			break;
@@ -545,7 +546,7 @@ final class HTTPRequest {
 	 * Sets options and applies default values when an option is omitted.
 	 * 
 	 * @param	array		$options
-	 * @throws	SystemException
+	 * @throws	\InvalidArgumentException
 	 */
 	private function setOptions(array $options) {
 		if (!isset($options['timeout'])) {
@@ -562,10 +563,10 @@ final class HTTPRequest {
 		
 		if (isset($options['auth'])) {
 			if (!isset($options['auth']['username'])) {
-				throw new SystemException('Username is missing in authentification data.');
+				throw new \InvalidArgumentException('Username is missing in authentication data.');
 			}
 			if (!isset($options['auth']['password'])) {
-				throw new SystemException('Password is missing in authentification data.');
+				throw new \InvalidArgumentException('Password is missing in authentication data.');
 			}
 		}
 		
