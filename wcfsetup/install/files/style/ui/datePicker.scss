@@ -67,7 +67,7 @@
 		
 		&.weekdays,
 		&.weekdays + li {
-			border-top-color: $wcfDropdownBorder;
+			border-top-color: $wcfDropdownBorderInner;
 		}
 		
 		> a,
@@ -110,7 +110,7 @@
 	}
 	
 	> footer {
-		border-top: 1px solid $wcfDropdownBorder;
+		border-top: 1px solid $wcfDropdownBorderInner;
 		display: none;
 		padding: 10px;
 		position: relative;
