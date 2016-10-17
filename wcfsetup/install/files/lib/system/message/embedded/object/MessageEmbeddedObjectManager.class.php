@@ -170,14 +170,11 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$statement->execute($conditionBuilder->getParameters());
 		$embeddedObjects = [];
 		while ($row = $statement->fetchArray()) {
-			if (isset($this->embeddedObjects[$row['embeddedObjectTypeID']][$row['embeddedObjectID']])) {
-				// embedded object already loaded
-				continue;
+			if (!isset($this->embeddedObjects[$row['embeddedObjectTypeID']][$row['embeddedObjectID']])) {
+				// group objects by object type
+				if (!isset($embeddedObjects[$row['embeddedObjectTypeID']])) $embeddedObjects[$row['embeddedObjectTypeID']] = [];
+				$embeddedObjects[$row['embeddedObjectTypeID']][] = $row['embeddedObjectID'];
 			}
-			
-			// group objects by object type
-			if (!isset($embeddedObjects[$row['embeddedObjectTypeID']])) $embeddedObjects[$row['embeddedObjectTypeID']] = [];
-			$embeddedObjects[$row['embeddedObjectTypeID']][] = $row['embeddedObjectID'];
 			
 			// store message to embedded object assignment
 			if (!isset($this->messageEmbeddedObjects[$row['messageObjectTypeID']][$row['messageID']][$row['embeddedObjectTypeID']])) {
