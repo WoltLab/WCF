@@ -161,7 +161,7 @@
 				{/if}
 			</h1>
 			
-			<div class="contentDescription">
+			<div class="contentHeaderDescription">
 				<ul class="inlineList commaSeparated">
 					{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
 					{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
