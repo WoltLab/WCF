@@ -126,7 +126,7 @@ class BoxEditForm extends BoxAddForm {
 			$oldController = new $className;
 			
 			/** @noinspection PhpUndefinedMethodInspection */
-			if ($oldController->getConditionDefinition() && (!$this->boxController || (!($this->boxController->getProcessor() instanceof IConditionBoxController)) || !$this->boxController->getProcessor()->getConditionDefinition())) {
+			if ($oldController instanceof IConditionBoxController && $oldController->getConditionDefinition() && (!$this->boxController || (!($this->boxController->getProcessor() instanceof IConditionBoxController)) || !$this->boxController->getProcessor()->getConditionDefinition())) {
 				ConditionHandler::getInstance()->deleteConditions($oldController->getConditionDefinition(), [$this->box->boxID]);
 			}
 		}
