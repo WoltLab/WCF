@@ -312,12 +312,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			this._selectItem(0);
 			
 			if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + window.scrollY) {
-				this._dropdownMenu.classList.add('dropdownArrowBottom');
-				
 				this._dropdownMenu.style.setProperty('top', offset.top - this._dropdownMenu.offsetHeight - 2 * this._lineHeight + 7 + 'px', '');
-			}
-			else {
-				this._dropdownMenu.classList.remove('dropdownArrowBottom');
 			}
 		},
 		

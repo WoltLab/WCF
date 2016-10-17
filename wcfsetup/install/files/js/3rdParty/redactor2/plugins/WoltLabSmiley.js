@@ -27,6 +27,8 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 			// it is clearly present in the DOM. Overwriting the element with itself
 			// is somehow fixing that issue, yay!
 			smiley = elById(id);
+			smiley.removeAttribute('id');
+			
 			//noinspection SillyAssignmentJS
 			smiley.outerHTML = smiley.outerHTML;
 		}

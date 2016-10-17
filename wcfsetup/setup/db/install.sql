@@ -2004,15 +2004,10 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLa
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useGoogleFont', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackground', 'rgba(207, 216, 220, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackgroundActive', 'rgba(120, 144, 156, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorder', 'rgba(127, 140, 141, 1)'); -- no longer in use (ACP style editor needs to be updated first)
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderActive', 'rgba(52, 73, 94, 1)'); -- no longer in use (ACP style editor needs to be updated first)
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonDisabledBackground', 'rgba(223, 223, 223, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonDisabledBorder', 'rgba(173, 176, 179, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonDisabledText', 'rgba(165, 165, 165, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBackground', 'rgba(33, 150, 243, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBackgroundActive', 'rgba(26, 119, 201, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBorder', 'rgba(79, 129, 189, 1)'); -- no longer in use (ACP style editor needs to be updated first)
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBorderActive', 'rgba(79, 129, 189, 1)'); -- no longer in use (ACP style editor needs to be updated first)
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryText', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryTextActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonText', 'rgba(33, 33, 33, 1)');
@@ -2032,7 +2027,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContent
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentText', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBackground', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBackgroundActive', 'rgba(238, 238, 238, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBorder', 'rgba(55, 73, 95, 1)'); -- no longer in use (ACP style editor needs to be updated first)
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBorderInner', 'rgba(238, 238, 238, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownLink', 'rgba(33, 33, 33, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownLinkActive', 'rgba(33, 33, 33, 1)');
