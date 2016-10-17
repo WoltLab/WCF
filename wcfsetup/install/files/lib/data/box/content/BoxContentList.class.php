@@ -2,6 +2,7 @@
 namespace wcf\data\box\content;
 use wcf\data\media\ViewableMediaList;
 use wcf\data\DatabaseObjectList;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Represents a list of box content.
@@ -30,20 +31,29 @@ class BoxContentList extends DatabaseObjectList {
 	protected $imageLoading = false;
 	
 	/**
+	 * enables/disables the loading of embedded objects
+	 * @var	boolean
+	 */
+	protected $embeddedObjectLoading = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readObjects() {
 		parent::readObjects();
 		
-		if ($this->imageLoading) {
-			$imageIDs = [];
-			foreach ($this->getObjects() as $boxContent) {
-				if ($boxContent->imageID) {
-					$imageIDs[] = $boxContent->imageID;
-				}
+		$imageIDs = $embeddedObjectBoxContentIDs = [];
+		foreach ($this->getObjects() as $boxContent) {
+			if ($boxContent->imageID) {
+				$imageIDs[] = $boxContent->imageID;
 			}
 			
-			// cache images
+			if ($boxContent->hasEmbeddedObjects) {
+				$embeddedObjectBoxContentIDs[] = $boxContent->boxContentID;
+			}
+		}
+		
+		if ($this->imageLoading) {
 			if (!empty($imageIDs)) {
 				$mediaList = new ViewableMediaList();
 				$mediaList->setObjectIDs($imageIDs);
@@ -57,8 +67,13 @@ class BoxContentList extends DatabaseObjectList {
 				}
 			}
 		}
+		
+		if ($this->embeddedObjectLoading) {
+			if (!empty($embeddedObjectBoxContentIDs)) {
+				MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content', $embeddedObjectBoxContentIDs);
+			}
+		}
 	}
-	
 	
 	/**
 	 * Enables/disables the loading of box content images.
@@ -67,5 +82,14 @@ class BoxContentList extends DatabaseObjectList {
 	 */
 	public function enableImageLoading($enable = true) {
 		$this->imageLoading = $enable;
+	}
+	
+	/**
+	 * Enables/disables the loading of embedded objects.
+	 *
+	 * @param	boolean		$enable
+	 */
+	public function enableEmbeddedObjectLoading($enable = true) {
+		$this->embeddedObjectLoading = $enable;
 	}
 }

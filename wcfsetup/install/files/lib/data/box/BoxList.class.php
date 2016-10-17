@@ -48,6 +48,7 @@ class BoxList extends DatabaseObjectList {
 			if (!empty($boxIDs)) {
 				$contentList = new BoxContentList();
 				$contentList->enableImageLoading();
+				$contentList->enableEmbeddedObjectLoading();
 				$contentList->getConditionBuilder()->add('box_content.boxID IN (?)', [$this->objectIDs]);
 				$contentList->getConditionBuilder()->add('(box_content.languageID IS NULL OR box_content.languageID = ?)', [WCF::getLanguage()->languageID]);
 				$contentList->readObjects();

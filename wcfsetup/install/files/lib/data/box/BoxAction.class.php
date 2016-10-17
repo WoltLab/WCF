@@ -91,7 +91,9 @@ class BoxAction extends AbstractDatabaseObjectAction {
 					}
 				}
 				else if ($box->boxType == 'html' || $box->boxType == 'tpl') {
-					HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content);
+					if (HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content)) {
+						$boxContentEditor->update(['hasEmbeddedObjects' => 1]);
+					}
 				}
 			}
 		}
@@ -172,7 +174,9 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						}
 					}
 					else if ($box->boxType == 'html' || $box->boxType == 'tpl') {
-						HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content);
+						if ($boxContent->hasEmbeddedObjects != HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content)) {
+							$boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
+						}
 					}
 				}
 				
