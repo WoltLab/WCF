@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.0 Beta 2</version> <!-- codename: vortex -->
-		<date>2016-10-03</date>
+		<version>3.0.0 Beta 3</version> <!-- codename: vortex -->
+		<date>2016-10-17</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -45,17 +45,17 @@
 	
 	<!-- TODO for updates: remember update_com.woltlab.wcf_3.0.0.php -->
 	
-	<instructions type="update" fromversion="3.0.0 Beta 1">
+	<instructions type="update" fromversion="3.0.0 Beta 2">
+		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
-		<instruction type="sql" run="standalone">update_3.0.0_beta_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.0.0_beta_2.sql</instruction>
 		
 		<instruction type="language" />
 		
 		<instruction type="bbcode" />
-		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
 		<instruction type="option" />
 	</instructions>
