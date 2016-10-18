@@ -133,9 +133,15 @@ class MessageParser extends BBCodeParser {
 	 * @return	string
 	 */
 	protected function parseSmilies($text, $enableHtml = false) {
-		foreach ($this->smilies as $code => $html) {
-			//$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
-			$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />|<br>' : '').')~', $html, $text);
+		$codes = array_keys($this->smilies);
+		$pattern = '~(?<=^|\s|<li>)'.str_replace('@', '|', preg_quote((!$enableHtml ? StringUtil::encodeHTML(implode('@', $codes)) : implode('|', $codes)), '~')).'(?=$|\s|</li>'.(!$enableHtml ? '|<br />' : '').')~';
+		$matches = array();
+		preg_match_all($pattern, $text, $matches);
+		if (isset($matches[0])) {
+			foreach ($matches[0] as $key => $value) {
+				$value = StringUtil::decodeHTML($value);
+				$text = preg_replace('~(?<=^|\s|<li>)'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($value) : $value), '~').'(?=$|\s|</li>'.(!$enableHtml ? '|<br />' : '').')~', $this->smilies[$value], $text);
+			}
 		}
 		
 		return $text;
