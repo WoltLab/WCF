@@ -52,4 +52,13 @@
 		
 		<instruction type="option">option.xml</instruction>
 	</instructions>
+	<instructions type="update" fromversion="2.0.13 pl 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language">language/*.xml</instruction>
+		
+		<instruction type="option">option.xml</instruction>
+	</instructions>
 </package>
