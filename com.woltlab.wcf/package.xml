@@ -100,4 +100,15 @@
 		
 		<instruction type="option">option.xml</instruction>
 	</instructions>
+	<instructions type="update" fromversion="2.1.11 pl 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="sql" run="standalone">update_2.1.12.sql</instruction>
+		
+		<instruction type="option">option.xml</instruction>
+	</instructions>
 </package>
