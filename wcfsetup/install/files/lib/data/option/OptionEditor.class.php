@@ -5,6 +5,7 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\io\AtomicWriter;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -94,10 +95,12 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		if ($flushCache) {
 			// flush caches (in case register_shutdown_function gets not properly called)
 			CacheHandler::getInstance()->flushAll();
+			UserStorageHandler::getInstance()->clear();
 			
 			// flush cache before finishing request to flush caches created after this was executed
 			register_shutdown_function(function() {
 				CacheHandler::getInstance()->flushAll();
+				UserStorageHandler::getInstance()->clear();
 			});
 		}
 	}

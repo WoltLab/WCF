@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\user\storage;
+use wcf\system\cache\source\RedisCacheSource;
+use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -32,11 +34,28 @@ class UserStorageHandler extends SingletonFactory {
 	protected $updateFields = [];
 	
 	/**
+	 * redis instance
+	 * @var Redis
+	 */
+	protected $redis = null;
+	
+	/**
+	 * Checks whether Redis is available.
+	 */
+	protected function init() {
+		if (CacheHandler::getInstance()->getCacheSource() instanceof RedisCacheSource) {
+			$this->redis = CacheHandler::getInstance()->getCacheSource()->getRedis();
+		}
+	}
+	
+	/**
 	 * Loads storage for a given set of users.
 	 * 
 	 * @param	integer[]	$userIDs
 	 */
 	public function loadStorage(array $userIDs) {
+		if ($this->redis) return;
+		
 		$tmp = [];
 		foreach ($userIDs as $userID) {
 			if (!isset($this->cache[$userID])) $tmp[] = $userID;
@@ -72,6 +91,15 @@ class UserStorageHandler extends SingletonFactory {
 	public function getStorage(array $userIDs, $field) {
 		$data = [];
 		
+		if ($this->redis) {
+			foreach ($userIDs as $userID) {
+				$data[$userID] = $this->redis->hget($this->getRedisFieldName($field), $userID);
+				if ($data[$userID] === false) $data[$userID] = null;
+			}
+			
+			return $data;
+		}
+		
 		foreach ($userIDs as $userID) {
 			if (isset($this->cache[$userID][$field])) {
 				$data[$userID] = $this->cache[$userID][$field];
@@ -105,6 +133,12 @@ class UserStorageHandler extends SingletonFactory {
 			return null;
 		}
 		
+		if ($this->redis) {
+			$result = $this->redis->hget($this->getRedisFieldName($field), $userID);
+			if ($result === false) return null;
+			return $result;
+		}
+		
 		// make sure stored data is loaded
 		if (!isset($this->cache[$userID])) {
 			$this->loadStorage([$userID]);
@@ -125,8 +159,14 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	string		$fieldValue
 	 */
 	public function update($userID, $field, $fieldValue) {
+		if ($this->redis) {
+			$this->redis->hset($this->getRedisFieldName($field), $userID, $fieldValue);
+			$this->redis->expire($this->getRedisFieldName($field), 86400);
+			return;
+		}
+		
 		$this->updateFields[$userID][$field] = $fieldValue;
-
+		
 		// update data cache for given user
 		if (isset($this->cache[$userID])) {
 			$this->cache[$userID][$field] = $fieldValue;
@@ -140,6 +180,13 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	string		$field
 	 */
 	public function reset(array $userIDs, $field) {
+		if ($this->redis) {
+			foreach ($userIDs as $userID) {
+				$this->redis->hdel($this->getRedisFieldName($field), $userID);
+			}
+			return;
+		}
+		
 		foreach ($userIDs as $userID) {
 			$this->resetFields[$userID][] = $field;
 			
@@ -155,6 +202,11 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	string		$field
 	 */
 	public function resetAll($field) {
+		if ($this->redis) {
+			$this->redis->del($this->getRedisFieldName($field));
+			return;
+		}
+		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 			WHERE		field = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -171,6 +223,8 @@ class UserStorageHandler extends SingletonFactory {
 	 * Removes and inserts data records on shutdown.
 	 */
 	public function shutdown() {
+		if ($this->redis) return;
+		
 		$toReset = [];
 		
 		// remove outdated entries
@@ -215,7 +269,7 @@ class UserStorageHandler extends SingletonFactory {
 					$conditions = new PreparedStatementConditionBuilder();
 					$conditions->add("userID IN (?)", [$userIDs]);
 					$conditions->add("field = ?", [$field]);
-
+					
 					$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 						".$conditions;
 					$statement = WCF::getDB()->prepareStatement($sql);
@@ -264,10 +318,36 @@ class UserStorageHandler extends SingletonFactory {
 	 * Removes the entire user storage data.
 	 */
 	public function clear() {
+		if ($this->redis) {
+			$this->redis->setnx('ush:_flush', TIME_NOW);
+			$this->redis->incr('ush:_flush');
+			return;
+		}
+		
 		$this->resetFields = $this->updateFields = [];
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
+	}
+	
+	/**
+	 * Returns the field name for use in Redis.
+	 * 
+	 * @param	string	$fieldName
+	 * @return	string
+	 */
+	protected function getRedisFieldName($fieldName) {
+		$flush = $this->redis->get('ush:_flush');
+		
+		// create flush counter if it does not exist
+		if ($flush === false) {
+			$this->redis->setnx('ush:_flush', TIME_NOW);
+			$this->redis->incr('ush:_flush');
+			
+			$flush = $this->redis->get('ush:_flush');
+		}
+		
+		return 'ush:'.$flush.':'.$fieldName;
 	}
 }
