@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.11</version> <!-- codename: typhoon -->
-		<date>2016-06-01</date>
+		<version>2.1.12</version> <!-- codename: typhoon -->
+		<date>2016-10-18</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.13">
+	<instructions type="update" fromversion="2.0.14">
 		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
 		<instruction type="file">pre_update_check.tar</instruction>
 		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
@@ -89,15 +89,15 @@
 		<instruction type="script" run="standalone">acp/rebuild_comments_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.1.10">
+	<instructions type="update" fromversion="2.1.11">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
-		<instruction type="sql" run="standalone">update_2.1.11.sql</instruction>
-		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
 		
-		<instruction type="bbcode">bbcode.xml</instruction>
+		<instruction type="sql" run="standalone">update_2.1.12.sql</instruction>
+		
+		<instruction type="option">option.xml</instruction>
 	</instructions>
 </package>
