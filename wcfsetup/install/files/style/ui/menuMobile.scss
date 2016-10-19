@@ -1,6 +1,6 @@
 /* menu container */
 .menuOverlayMobile {
-	background-color: rgb(50, 92, 132);
+	background-color: $wcfHeaderMenuBackground;
 	bottom: 0;
 	display: none;
 	overflow: hidden;
@@ -134,7 +134,7 @@
 }
 
 .menuOverlayItemList {
-	background-color: rgb(50, 92, 132);
+	background-color: $wcfHeaderMenuBackground;
 	height: 100%;
 	list-style-type: none;
 	margin: 0;
@@ -179,7 +179,7 @@
 .menuOverlayItemLink,
 .menuOverlayTitle,
 .menuOverlayBackLink {
-	color: rgb(255, 255, 255);
+	color: $wcfHeaderMenuLink;
 	display: block;
 	font-size: 14px;
 	padding: 10px 30px;
@@ -188,7 +188,7 @@
 
 .menuOverlayItemLink {
 	align-items: center;
-	background-color: rgb(43, 79, 113);
+	background-color: $wcfHeaderMenuLinkBackground;
 	display: flex;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -199,7 +199,7 @@
 	}
 	
 	&:hover {
-		color: rgb(255, 255, 255);
+		color: $wcfHeaderMenuLinkActive;
 	}
 	
 	/* wrapper class for links containing an additional badge */
@@ -252,11 +252,11 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 
 .menuOverlayItemLink.active,
 .menuOverlayItemLinkIcon.active {
-	background-color: rgb(36, 66, 95);
+	background-color: $wcfHeaderMenuLinkBackgroundActive;
 }
 
 .menuOverlayTitle {
-	color: rgba(255, 255, 255, .7);
+	color: rgba($wcfHeaderMenuLink, .7);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -268,7 +268,7 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 
 /* icon link sharing the space with a link or (header only) the logo */
 .menuOverlayItemLinkIcon {
-	background-color: rgb(43, 79, 113);
+	background-color: $wcfHeaderMenuLinkBackground;
 	flex: 0 0 auto;
 	margin-left: 1px;
 	padding: 10px;
@@ -283,7 +283,7 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 }
 
 .menuOverlayBackLink::before {
-	color: rgb(204, 204, 204);
+	color: rgba($wcfHeaderMenuLink, .7);
 	content: $fa-var-angle-left;
 	display: block;
 	font-family: FontAwesome;
