@@ -188,7 +188,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			elData(this._quote, 'author', elById(id + '-author').value);
 			
 			// set url
-			elData(this._quote, 'url', url);
+			elData(this._quote, 'link', url);
 			
 			this._setTitle(this._quote);
 			this._editor.caret.after(this._quote);
@@ -254,7 +254,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					
 					onShow: (function() {
 						elById(idAuthor).value = elData(this._quote, 'author');
-						elById(idUrl).value = elData(this._quote, 'url');
+						elById(idUrl).value = elData(this._quote, 'link');
 					}).bind(this),
 					
 					title: Language.get('wcf.editor.quote.edit')
