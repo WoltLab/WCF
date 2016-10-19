@@ -252,9 +252,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		/** @var Page $page */
 		if (!empty($row)) {
-			// allow only updating of controller, everything else would overwrite user modifications
+			// allow only updating of controller and handler, everything else would overwrite user modifications
 			if (!empty($data['controller'])) {
-				$page = parent::import($row, ['controller' => $data['controller']]);
+				$page = parent::import($row, [
+					'controller' => $data['controller'],
+					'handler' => $data['handler']
+				]);
 			}
 			else {
 				$baseClass = call_user_func([$this->className, 'getBaseClass']);
