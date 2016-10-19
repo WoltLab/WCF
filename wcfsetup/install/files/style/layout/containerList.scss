@@ -212,3 +212,61 @@
 		overflow: hidden;
 	}
 }
+
+.flexibleCategoryList {
+    position: relative;
+    
+    > li {
+        margin-bottom: 14px;
+        
+        > ol {
+            margin-left: 21px;
+        }
+        
+        > ol > li > ol {
+            margin-bottom: 7px;
+            margin-left: 21px;
+            
+            > li {
+                font-size: $wcfFontSizeSmall;
+            }
+        }
+    }
+}
+
+@include screen-md-up {
+    .flexibleCategoryList:not(.flexibleCategoryListDisabled) {
+        /* WebKit */
+        -webkit-column-count: 2;
+        
+        /* Firefox */
+        -moz-column-count: 2;
+        
+        /* CSS 3 / Internet Explorer */
+        column-count: 2;
+        
+        > li {
+            /* WebKit */
+            -webkit-column-break-inside: avoid;
+            
+            /* CSS 3 / Internet Explorer */
+            break-inside: avoid;
+            
+            > ol > li > ol {
+                font-size: 0;
+                
+                > li {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    
+    /* Firefox */
+    @-moz-document url-prefix() {
+        .flexibleCategoryList:not(.flexibleCategoryListDisabled) > li {
+            display: block;
+            overflow: hidden;
+        }
+    }
+}
