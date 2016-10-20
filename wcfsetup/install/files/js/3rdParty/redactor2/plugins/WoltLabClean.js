@@ -248,6 +248,49 @@ $.Redactor.prototype.WoltLabClean = function() {
 					html = div.innerHTML;
 				}
 				
+				// reconvert links as the regex can be overly greedy sometimes
+				if (data.links) {
+					// prevent the original regex from being executed again
+					data.links = false;
+					
+					// We try to avoid the regex to consume too many parts
+					// by having it work from the back to the front. Please
+					// keep in mind that the parts are reversed, so they
+					// actually appear in inverted order
+					var tmp = html.split(/(###\/a###)/gi).reverse();
+					var part, nextPart;
+					for (var i = 1, length = tmp.length; i < length; i++) {
+						if (i + 1 === length) {
+							break;
+						}
+						
+						part = tmp[i];
+						nextPart = tmp[i + 1];
+						
+						// split by '###a' to find all possible start positions
+						var anchors = nextPart.split(/(###a)/gi).reverse();
+						var composite;
+						for (var j = 1, innerLength = anchors.length; j < innerLength; j++) {
+							if (j + 1 === innerLength) {
+								break;
+							}
+							
+							composite = anchors[j] + anchors[j - 1];
+							if (composite.match(/###a(.*?)href="(.*?)"(.*?)###(.*?)/i)) {
+								anchors[j] = '';
+								anchors[j - 1] = composite.replace(/###a(.*?)href="(.*?)"(.*?)###(.*?)/i, '<a$1href="$2"$3>$4');
+								
+								tmp[i] = '</a>';
+								tmp[i + 1] = anchors.reverse().join('');
+								
+								break;
+							}
+						}
+					}
+					
+					html = tmp.reverse().join('');
+				}
+				
 				return mpReconvertTags.call(this, html, data);
 			}).bind(this);
 			
