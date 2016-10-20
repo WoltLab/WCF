@@ -133,7 +133,41 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
-				return mpOnPaste.call(this, div.innerHTML, data, insert);
+				elBySelAll('br', div, function (br) {
+					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br);
+				});
+				
+				html = mpOnPaste.call(this, div.innerHTML, data, insert);
+				
+				html = html.replace(/@@@WOLTLAB-BR-MARKER@@@/g, '<woltlab-br-marker></woltlab-br-marker>');
+				
+				div.innerHTML = html;
+				
+				elBySelAll('woltlab-br-marker', div, function (marker) {
+					var parent = marker.parentNode;
+					
+					if (parent.nodeName === 'P') {
+						var p = elCreate('p');
+						while (marker.nextSibling) {
+							p.appendChild(marker.nextSibling);
+						}
+						p.appendChild(elCreate('br'));
+						
+						parent.parentNode.insertBefore(p, parent.nextSibling);
+						
+						var previous = marker.previousElementSibling;
+						if (previous && previous.nodeName === 'BR') {
+							elRemove(previous);
+						}
+					}
+					else {
+						parent.insertBefore(elCreate('br'), marker);
+					}
+					
+					elRemove(marker);
+				});
+				
+				return div.innerHTML;
 			}).bind(this);
 			
 			var storage = [];
