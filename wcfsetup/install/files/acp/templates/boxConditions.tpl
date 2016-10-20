@@ -5,7 +5,7 @@
 	
 	{if $defaultLimit !== null}
 		<dl{if $errorField === 'limit'} class="formError"{/if}>
-			<dt>{lang}wcf.acp.box.settings.limit{/lang}</dt>
+			<dt><label for="limit">{lang}wcf.acp.box.settings.limit{/lang}</label></dt>
 			<dd>
 				<input type="number" name="limit" id="limit" value="{$limit}" min="{$minimumLimit}"{if $maximumLimit !== null} max="{$maximumLimit}"{/if} class="tiny">
 				{if $errorField === 'limit'}
@@ -23,7 +23,7 @@
 	
 	{if !$validSortFields|empty}
 		<dl{if $errorField === 'sorting'} class="formError"{/if}>
-			<dt>{lang}wcf.global.sorting{/lang}</dt>
+			<dt><label for="sortField">{lang}wcf.global.sorting{/lang}</label></dt>
 			<dd>
 				<select name="sortField" id="sortField">
 					{foreach from=$validSortFields item=validSortField}
