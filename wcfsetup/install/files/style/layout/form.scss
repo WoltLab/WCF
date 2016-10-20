@@ -148,7 +148,13 @@ select {
 	}
 	
 	> .inputSuffix {
-		border-left-width: 0 !important;
+		&.button {
+			margin-left: 5px;
+		}
+		
+		&:not(.button) {
+			border-left-width: 0 !important;
+		}
 	}
 	
 	input {
