@@ -433,6 +433,7 @@
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount.description"><![CDATA[]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Kann Dateianhänge verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -593,7 +594,6 @@
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Label <span class="confirmationObject">{$label}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
-		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein Label hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
@@ -682,7 +682,6 @@
 		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Texte verwalten]]></item>
 		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
-		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[Sprach-Update-Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
@@ -943,6 +942,7 @@
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
+		<item name="wcf.acp.option.session_timeout.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[IP-Adresse der Sitzung überprüfen]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Eine Aktivierung dieser Einstellung kann Benutzer ausschließen, die mit wechselnden IP-Adressen im Internet unterwegs sind.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Browser-Kennung der Sitzung überprüfen]]></item>
@@ -1072,11 +1072,15 @@
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Zeitraum in dem bei Änderungen des Benutzernamens zusätzlich der alte Benutzername im Profil angezeigt wird.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Mitglieder pro Seite]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_order.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.users_online_show_guests"><![CDATA[Unregistrierte Benutzer auflisten]]></item>
 		<item name="wcf.acp.option.users_online_show_robots"><![CDATA[Suchmaschinen-Roboter auflisten]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_field.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_order.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Seite automatisch neu laden]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Zeitraum nachdem die Seite automatisch neu geladen wird. [0, um Neuladen abzuschalten]]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Benachrichtigungen]]></item>
@@ -1104,7 +1108,9 @@
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Suchfunktion]]></item>
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Ergebnisse pro Seite]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Standardsortierung]]></item>
+		<item name="wcf.acp.option.search_default_sort_field.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Standardreihenfolge]]></item>
+		<item name="wcf.acp.option.search_default_sort_order.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
@@ -1888,12 +1894,6 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter <em>System -&gt; O
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} Benutzer</a> {if $usersAwaitingApproval == 1}wartet auf seine{else}warten auf ihre{/if} Aktivierung.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Nicht aktiviert]]></item>
-		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Hallo {@$username},
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort wurde von einem Administrator geändert.
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} neues Kennwort lautet: {$password}
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Klicke hier, um dich mit deinem{else}Klicken Sie hier, um sich mit Ihrem{/if} neuen Kennwort anzumelden: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
