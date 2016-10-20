@@ -87,7 +87,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	protected function filterGroups(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @noinspection PhpUndefinedMethodInspection */
 		$data = [
-			'context' => $htmlNodeProcessor->getContext(),
+			'context' => $htmlNodeProcessor->getHtmlProcessor()->getContext(),
 			'bbcodes' => array_keys($groups)
 		];
 		
