@@ -89,10 +89,8 @@
 		}
 	}
 	
-	// TODO: this is somewhat out of sync
 	table {
 		border-collapse: collapse;
-		//font-size: 14px; TODO
 		line-height: 1.6em;
 		
 		th {
@@ -256,57 +254,6 @@
 	
 	opacity: 1;
 	visibility: visible;
-	
-	&:before {
-		// TODO: border-color: $wcfTooltipBackgroundColor transparent;
-		border-style: solid;
-		border-width: 0 5px 5px;
-		content: "";
-		display: block;
-		left: 50%;
-		position: absolute;
-		top: -5px;
-		transform: translateX(-50%);
-	}
-}
-
-#redactor-image-box {
-	border: 1px dashed rgba(0, 0, 0, .5);
-	display: inline-block;
-	line-height: 0;
-	max-width: 100%;
-	position: relative;
-	
-	> img {
-		border-width: 0;
-		opacity: .5;
-	}
-}
-
-#redactor-image-editter {
-	@extend .balloonTooltip;
-	
-	cursor: pointer;
-	left: 50%;
-	// TODO: line-height: $wcfSmallFontSize;
-	margin-top: -13px;
-	opacity: 1;
-	top: 50%;
-	visibility: visible;
-	z-index: 5;
-}
-
-#redactor-image-resizer {
-	background-color: rgba(0, 0, 0, 1);
-	border: 1px solid rgba(255, 255, 255, 1);
-	bottom: -4px;
-	cursor: nw-resize;
-	height: 8px;
-	line-height: 1;
-	position: absolute;
-	right: -5px;
-	width: 8px;
-	z-index: 10;
 }
 
 .redactorAttachmentContainer {
@@ -330,7 +277,7 @@
 			border: 2px solid rgba(255, 255, 255, 1);
 			border-bottom-width: 0;
 			display: inline-block;
-			font-size: 0; // TODO
+			font-size: 0;
 			height: 20px;
 			padding: 0;
 			margin: 0;
