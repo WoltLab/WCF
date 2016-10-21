@@ -12,9 +12,10 @@
 namespace Leafo\ScssPhp\Formatter;
 
 use Leafo\ScssPhp\Formatter;
+use Leafo\ScssPhp\Formatter\OutputBlock;
 
 /**
- * SCSS crunched formatter
+ * Crunched formatter
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
@@ -32,33 +33,16 @@ class Crunched extends Formatter
         $this->close = '}';
         $this->tagSeparator = ',';
         $this->assignSeparator = ':';
+        $this->keepSemicolons = false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function indentStr($n = 0)
+    public function blockLines(OutputBlock $block)
     {
-        return '';
-    }
+        $inner = $this->indentStr();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function stripSemicolon(&$lines)
-    {
-        if (($count = count($lines))
-            && substr($lines[$count - 1], -1) === ';'
-        ) {
-            $lines[$count - 1] = substr($lines[$count - 1], 0, -1);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function blockLines($inner, $block)
-    {
         $glue = $this->break . $inner;
 
         foreach ($block->lines as $index => $line) {

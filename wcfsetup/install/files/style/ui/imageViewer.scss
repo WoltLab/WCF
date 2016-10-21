@@ -236,7 +236,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 			-ms-user-select: none;*/
 			
 			@extend .icon48;
-			@extend .icon-spinner;
+			@extend .fa-spinner;
 		}
 		
 		> img {
@@ -404,8 +404,8 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 					
 					&.loading{
 						&:before {
-							@extend .icon-48;
-							@extend .icon-spinner;
+							@extend .icon48;
+							@extend .fa-spinner;
 						}
 						
 						> img {

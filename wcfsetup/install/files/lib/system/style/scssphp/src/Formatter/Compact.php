@@ -14,7 +14,7 @@ namespace Leafo\ScssPhp\Formatter;
 use Leafo\ScssPhp\Formatter;
 
 /**
- * SCSS compact formatter
+ * Compact formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
@@ -32,12 +32,13 @@ class Compact extends Formatter
         $this->close = "}\n\n";
         $this->tagSeparator = ',';
         $this->assignSeparator = ':';
+        $this->keepSemicolons = true;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function indentStr($n = 0)
+    public function indentStr()
     {
         return ' ';
     }
