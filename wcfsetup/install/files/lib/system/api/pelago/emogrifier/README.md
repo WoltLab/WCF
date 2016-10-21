@@ -28,13 +28,14 @@ in `<link>` elements. Emogrifier solves this problem by converting CSS styles
 into inline style attributes in your HTML code.
 
 - [How it works](#how-it-works)
+- [Installation](#installation)
 - [Usage](#usage)
+- [Options](#options)
+- [Requirements](#requirements)
 - [Installing with Composer](#installing-with-composer)
-- [Usage](#usage)
 - [Supported CSS selectors](#supported-css-selectors)
 - [Caveats](#caveats)
 - [Maintainer](#maintainer)
-- [Contributing](#contributing)
 
 
 ## How it Works
@@ -42,6 +43,16 @@ into inline style attributes in your HTML code.
 Emogrifier automagically transmogrifies your HTML by parsing your CSS and
 inserting your CSS definitions into tags within your HTML based on your CSS
 selectors.
+
+
+## Installation
+
+For installing emogrifier, either add pelago/emogrifier to your
+project's composer.json, or you can use composer as below:
+
+```
+composer require pelago/emogrifier
+```
 
 
 ## Usage
@@ -102,11 +113,15 @@ calling the `emogrify` method:
   method to remove media types that Emogrifier keeps.
 * `$emogrifier->addExcludedSelector(string $selector)` - Keeps elements from
   being affected by emogrification.
+* `$emogrifier->enableCssToHtmlMapping()` - Some email clients don't support CSS
+  well, even if inline and prefer HTML attributes. This function allows you to
+  put properties such as height, width, background color and font color in your
+  CSS while the transformed content will have all the available HTML tags set.
 
 
 ## Requirements
 
-* PHP from 5.4 to 7.0 (with the mbstring extension)
+* PHP from 5.4 to 7.0
 * or HHVM
 
 
@@ -148,6 +163,11 @@ Emogrifier currently support the following
  * adjacent
  * attribute presence
  * attribute value
+ * attribute value with |
+ * attribute value with ~
+ * attribute value with ^
+ * attribute value with *
+ * attribute value with $
  * attribute only
  * first-child
  * last-child
@@ -155,6 +175,7 @@ Emogrifier currently support the following
 The following selectors are not implemented yet:
 
  * universal
+ * pseudo-elements (will never be supported)
 
 
 ## Caveats

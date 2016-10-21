@@ -3,11 +3,78 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-Emogrifier is in a pre-1.0 state. This means that its APIs and behavior are
-subject to breaking changes without deprecation notices.
+
+## x.y.z (unreleased)
+
+### Added
 
 
-## [1.0.0][] (2015-10-15)
+### Changed
+
+
+### Deprecated
+- Support for PHP 5.5 will be removed in Emogrifier 3.0.
+- Support for PHP 5.4 will be removed in Emogrifier 2.0.
+
+
+### Removed
+
+
+### Fixed
+
+
+### Security
+
+
+
+## 1.1.0 (2016-09-18)
+
+### Added
+- Add support for PHP 7.1
+  ([#342](https://github.com/jjriv/emogrifier/pull/342))
+- Support the attr|=value selector
+  ([#337](https://github.com/jjriv/emogrifier/pull/337))
+- Support the attr*=value selector
+  ([#330](https://github.com/jjriv/emogrifier/pull/330))
+- Support the attr$=value selector
+  ([#329](https://github.com/jjriv/emogrifier/pull/329))
+- Support the attr^=value selector
+  ([#324](https://github.com/jjriv/emogrifier/pull/324))
+- Support the attr~=value selector
+  ([#323](https://github.com/jjriv/emogrifier/pull/323))
+- Add CSS to HTML attribute mapper
+  ([#288](https://github.com/jjriv/emogrifier/pull/288))
+
+
+### Changed
+- Remove composer dependency from PHP mbstring extension
+  (Actual code dependency were removed a lot of time ago)
+  ([#295](https://github.com/jjriv/emogrifier/pull/295))
+
+
+### Deprecated
+- Support for PHP 5.5 will be removed in Emogrifier 3.0.
+- Support for PHP 5.4 will be removed in Emogrifier 2.0.
+
+
+### Fixed
+- Ignore value with words more than one in the attribute selector
+  ([#327](https://github.com/jjriv/emogrifier/pull/327))
+- Ignore spaces around the > in the direct child selector
+  ([#322](https://github.com/jjriv/emogrifier/pull/322))
+- Ignore empty media queries
+  ([#307](https://github.com/jjriv/emogrifier/pull/307))
+  ([#237](https://github.com/jjriv/emogrifier/issues/237))
+- Ignore pseudo-class when combined with pseudo-element
+  ([#308](https://github.com/jjriv/emogrifier/pull/308))
+- First-child and last-child selectors are broken
+  ([#293](https://github.com/jjriv/emogrifier/pull/293))
+- Second !important rule needs to overwrite the first one
+  ([#292](https://github.com/jjriv/emogrifier/pull/292))
+
+
+
+## 1.0.0 (2015-10-15)
 
 ### Added
 - Add branch alias ([#231](https://github.com/jjriv/emogrifier/pull/231))
