@@ -2,8 +2,8 @@
 namespace wcf\system\user\storage;
 use wcf\system\cache\source\RedisCacheSource;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\Redis;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\database\Redis;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
