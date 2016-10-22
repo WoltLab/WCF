@@ -257,11 +257,13 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		I18nHandler::getInstance()->assignVariables();
 		
 		return [
+			'availableLanguageCount' => count(LanguageFactory::getInstance()->getLanguages()),
 			'mediaData' => $this->getI18nMediaData($mediaList)[$this->getSingleObject()->mediaID],
 			'template' => WCF::getTPL()->fetch('mediaEditor', 'wcf', [
 				'__aclSimplePrefix' => 'mediaEditor_' . $media->mediaID . '_',
-				'aclValues' => SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $media->mediaID),
 				'__languageChooserPrefix' => 'mediaEditor_' . $media->mediaID . '_',
+				'aclValues' => SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $media->mediaID),
+				'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 				'languageID' => WCF::getUser()->languageID,
 				'languages' => LanguageFactory::getInstance()->getLanguages(),
 				'media' => $media
@@ -286,11 +288,17 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		$this->readInteger('languageID', true, 'data');
 		$this->readBoolean('isMultilingual', true, 'data');
 		
-		// languageID: convert zero to null
-		if (!$this->parameters['data']['languageID']) $this->parameters['data']['languageID'] = null;
-		
-		// isMultilingual: convert boolean to integer
-		$this->parameters['data']['isMultilingual'] = intval($this->parameters['data']['isMultilingual']);
+		if (count(LanguageFactory::getInstance()->getLanguages()) > 1) {
+			// languageID: convert zero to null
+			if (!$this->parameters['data']['languageID']) $this->parameters['data']['languageID'] = null;
+			
+			// isMultilingual: convert boolean to integer
+			$this->parameters['data']['isMultilingual'] = intval($this->parameters['data']['isMultilingual']);
+		}
+		else {
+			$this->parameters['data']['isMultilingual'] = 0;
+			$this->parameters['data']['languageID'] = WCF::getLanguage()->languageID;
+		}
 		
 		// if data is not multilingual, a language id has to be given
 		if (!$this->parameters['data']['isMultilingual'] && !$this->parameters['data']['languageID']) {

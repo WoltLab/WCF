@@ -31,17 +31,19 @@
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.global.form.data{/lang}</h2>
 	
-	<dl>
-		<dt></dt>
-		<dd>
-			<label>
-				<input type="checkbox" name="isMultilingual" value="1"{if $media->isMultilingual} checked{/if}>
-				<span>{lang}wcf.media.isMultilingual{/lang}</span>
-			</label>
-		</dd>
-	</dl>
-	
-	{include file='languageChooser' label='wcf.media.languageID'}
+	{if $availableLanguages|count > 1}
+		<dl>
+			<dt></dt>
+			<dd>
+				<label>
+					<input type="checkbox" name="isMultilingual" value="1"{if $media->isMultilingual} checked{/if}>
+					<span>{lang}wcf.media.isMultilingual{/lang}</span>
+				</label>
+			</dd>
+		</dl>
+		
+		{include file='languageChooser' label='wcf.media.languageID'}
+	{/if}
 	
 	<dl>
 		<dt><label for="title_{@$media->mediaID}">{lang}wcf.global.title{/lang}</label></dt>
@@ -49,7 +51,9 @@
 			<input type="text" id="title_{@$media->mediaID}" name="title" class="long">
 		</dd>
 	</dl>
-	{include file='multipleLanguageInputJavascript' elementIdentifier='title'|concat:'_':$media->mediaID forceSelection=true}
+	{if $availableLanguages|count > 1}
+		{include file='multipleLanguageInputJavascript' elementIdentifier='title'|concat:'_':$media->mediaID forceSelection=true}
+	{/if}
 	
 	<dl>
 		<dt><label for="caption_{@$media->mediaID}">{lang}wcf.media.caption{/lang}</label></dt>
@@ -57,7 +61,9 @@
 			<textarea id="caption_{@$media->mediaID}" name="caption" cols="40" rows="3"></textarea>
 		</dd>
 	</dl>
-	{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
+	{if $availableLanguages|count > 1}
+		{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
+	{/if}
 	
 	<dl>
 		<dt><label for="altText_{@$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
@@ -65,7 +71,9 @@
 			<input type="text" id="altText_{@$media->mediaID}" name="altText" class="long">
 		</dd>
 	</dl>
-	{include file='multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}
+	{if $availableLanguages|count > 1}
+		{include file='multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}
+	{/if}
 	
 	{event name='dataFields'}
 </section>

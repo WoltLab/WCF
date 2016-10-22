@@ -34,6 +34,7 @@ define(
 		}
 		
 		this._media = null;
+		this._availableLanguageCount = 1;
 		
 		this._dialogs = new Dictionary();
 	}
@@ -109,13 +110,18 @@ define(
 			var captionError = DomTraverse.childByClass(caption.parentNode.parentNode, 'innerError');
 			var titleError = DomTraverse.childByClass(title.parentNode.parentNode, 'innerError');
 			
-			this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
-			this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('languageID');
+			if (this._availableLanguageCount > 1) {
+				this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
+				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('languageID');
+			}
+			else {
+				this._media.languageID = LANGUAGE_ID;
+			}
 			
 			this._media.altText = {};
 			this._media.caption = {};
 			this._media.title = {};
-			if (this._media.isMultilingual) {
+			if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
 				if (!LanguageInput.validate('altText_' + this._media.mediaID, true)) {
 					hasError = true;
 					if (!altTextError) {
@@ -247,6 +253,8 @@ define(
 							},
 							source: {
 								after: (function(content, data) {
+									this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
+									
 									var didLoadMediaData = false;
 									if (data.returnValues.mediaData) {
 										this._media = data.returnValues.mediaData;
@@ -256,12 +264,14 @@ define(
 									
 									// make sure that the language chooser is initialized first
 									setTimeout(function() {
-										LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
+										if (this._availableLanguageCount > 1) {
+											LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
+										}
 										
 										var title = elBySel('input[name=title]', content);
 										var altText = elBySel('input[name=altText]', content);
 										
-										if (this._media.isMultilingual) {
+										if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
 											LanguageInput.setValues('altText_' + this._media.mediaID, Dictionary.fromObject(this._media.altText || { }));
 											LanguageInput.setValues('caption_' + this._media.mediaID, Dictionary.fromObject(this._media.caption || { }));
 											LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || { }));
@@ -272,10 +282,12 @@ define(
 											elBySel('textarea[name=caption]', content).value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
 										}
 										
-										var isMultilingual = elBySel('input[name=isMultilingual]', content);
-										isMultilingual.addEventListener('change', this._updateLanguageFields.bind(this));
-										
-										this._updateLanguageFields(null, isMultilingual);
+										if (this._availableLanguageCount > 1) {
+											var isMultilingual = elBySel('input[name=isMultilingual]', content);
+											isMultilingual.addEventListener('change', this._updateLanguageFields.bind(this));
+											
+											this._updateLanguageFields(null, isMultilingual);
+										}
 										
 										var keyPress = this._keyPress.bind(this);
 										altText.addEventListener('keypress', keyPress);
