@@ -20,7 +20,7 @@ class UserBirthdayCache extends SingletonFactory {
 	
 	/**
 	 * user birthdays
-	 * @var	integer[]
+	 * @var	integer[][]
 	 */
 	protected $birthdays = [];
 	
