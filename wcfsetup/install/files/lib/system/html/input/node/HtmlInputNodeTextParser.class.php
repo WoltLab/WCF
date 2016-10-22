@@ -39,7 +39,7 @@ class HtmlInputNodeTextParser {
 	
 	/**
 	 * list of smilies by smiley code
-	 * @var string[]
+	 * @var Smiley[]
 	 */
 	protected $smilies = [];
 	
@@ -92,7 +92,7 @@ class HtmlInputNodeTextParser {
 				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
 					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = $smiley->getURL();
+						$this->smilies[$smileyCode] = $smiley;
 					}
 				}
 			}
@@ -434,7 +434,7 @@ class HtmlInputNodeTextParser {
 		static $smileyPattern = null;
 		if ($smileyPattern === null) {
 			$difficultCodes = [];
-			foreach ($this->smilies as $smileyCode => $url) {
+			foreach ($this->smilies as $smileyCode => $smiley) {
 				$smileyCode = preg_quote($smileyCode, '~');
 				
 				if (!preg_match('~^\\\:.+\\\:$~', $smileyCode)) {
@@ -457,10 +457,15 @@ class HtmlInputNodeTextParser {
 		return preg_replace_callback($smileyPattern, function($matches) use ($text) {
 			$smileyCode = $matches[0];
 			
+			$smiley = $this->smilies[$smileyCode];
 			$element = $text->ownerDocument->createElement('img');
-			$element->setAttribute('src', $this->smilies[$smileyCode]);
+			$element->setAttribute('src', $smiley->getURL());
 			$element->setAttribute('class', 'smiley');
 			$element->setAttribute('alt', $smileyCode);
+			$element->setAttribute('height', $smiley->getHeight());
+			if ($smiley->getURL2x()) {
+				$element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
+			}
 			
 			return $this->addReplacement($text, $element);
 		}, $value);
