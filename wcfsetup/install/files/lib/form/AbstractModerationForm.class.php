@@ -7,6 +7,7 @@ use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
@@ -73,6 +74,14 @@ abstract class AbstractModerationForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		// if the moderation queue entry has been created after the user visited the
+		// site the last time, they have not been assigned to the queue entry yet,
+		// thus `ViewableModerationQueue::getViewableModerationQueue()` will always
+		// return `null`; `ModerationQueueManager::getOutstandingModerationCount()`
+		// internally refreshes the user assignments if necessary so that the
+		// `ViewableModerationQueue::getViewableModerationQueue()` call will be successful
+		ModerationQueueManager::getInstance()->getOutstandingModerationCount();
 		
 		if (isset($_REQUEST['id'])) $this->queueID = intval($_REQUEST['id']);
 		$this->queue = ViewableModerationQueue::getViewableModerationQueue($this->queueID);
