@@ -100,7 +100,7 @@ class LanguageAddForm extends AbstractForm {
 		
 		// language code
 		$this->validateLanguageCode();
-			
+		
 		// source language id
 		$this->validateSource();
 	}
@@ -124,7 +124,7 @@ class LanguageAddForm extends AbstractForm {
 		if (empty($this->sourceLanguageID)) {
 			throw new UserInputException('sourceLanguageID');
 		}
-			
+		
 		// get language
 		$this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
 		if (!$this->sourceLanguage->languageID) {
@@ -153,6 +153,10 @@ class LanguageAddForm extends AbstractForm {
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
+		
+		// reset values
+		$this->countryCode = $this->languageCode = $this->languageName = '';
+		$this->sourceLanguageID = 0;
 	}
 	
 	/**
