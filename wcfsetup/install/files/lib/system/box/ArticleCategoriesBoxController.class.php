@@ -33,9 +33,11 @@ class ArticleCategoriesBoxController extends AbstractBoxController {
 		if (iterator_count($categoryList)) {
 			// get active category
 			$activeCategory = null;
-			if (RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof CategoryArticleListPage || RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof ArticlePage) {
-				if (RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->category !== null) {
-					$activeCategory = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->category;
+			if (RequestHandler::getInstance()->getActiveRequest() !== null) {
+				if (RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof CategoryArticleListPage || RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof ArticlePage) {
+					if (RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->category !== null) {
+						$activeCategory = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->category;
+					}
 				}
 			}
 			
