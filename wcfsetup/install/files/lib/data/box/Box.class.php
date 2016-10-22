@@ -14,7 +14,6 @@ use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
 use wcf\system\exception\ImplementationException;
-use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
