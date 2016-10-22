@@ -106,8 +106,7 @@ class ApplicationHandler extends SingletonFactory {
 			return new Application(null, [
 				'domainName' => $host,
 				'domainPath' => $path,
-				'cookieDomain' => $host,
-				'cookiePath' => $path
+				'cookieDomain' => $host
 			]);
 		}
 		else if (isset($this->cache['application'][PACKAGE_ID])) {
