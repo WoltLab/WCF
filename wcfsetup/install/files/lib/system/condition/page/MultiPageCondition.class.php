@@ -72,9 +72,12 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
-		$pageID = RequestHandler::getInstance()->getActiveRequest()->getPageID();
-		if ($pageID && $condition->pageIDs && is_array($condition->pageIDs)) {
-			return in_array($pageID, $condition->pageIDs);
+		$activeRequest = RequestHandler::getInstance()->getActiveRequest();
+		if ($activeRequest !== null) {
+			$pageID = $activeRequest->getPageID();
+			if ($pageID && $condition->pageIDs && is_array($condition->pageIDs)) {
+				return in_array($pageID, $condition->pageIDs);
+			}
 		}
 		
 		return false;
