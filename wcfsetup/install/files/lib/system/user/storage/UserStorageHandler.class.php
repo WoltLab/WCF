@@ -2,6 +2,7 @@
 namespace wcf\system\user\storage;
 use wcf\system\cache\source\RedisCacheSource;
 use wcf\system\cache\CacheHandler;
+use wcf\system\database\Redis;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -35,16 +36,17 @@ class UserStorageHandler extends SingletonFactory {
 	
 	/**
 	 * redis instance
-	 * @var Redis
+	 * @var	Redis
 	 */
-	protected $redis = null;
+	protected $redis;
 	
 	/**
 	 * Checks whether Redis is available.
 	 */
 	protected function init() {
-		if (CacheHandler::getInstance()->getCacheSource() instanceof RedisCacheSource) {
-			$this->redis = CacheHandler::getInstance()->getCacheSource()->getRedis();
+		$cacheSource = CacheHandler::getInstance()->getCacheSource();
+		if ($cacheSource instanceof RedisCacheSource) {
+			$this->redis = $cacheSource->getRedis();
 		}
 	}
 	
