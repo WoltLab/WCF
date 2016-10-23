@@ -54,7 +54,7 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spButtonPrimary { margin-top: 10px; }
 
 /* ### dropdown ### */
-#spDropdown { display: inline-block; float: none; position: relative; visibility: visible; }
+#spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }
 
 /* ### footer box ### */
 #spFooterBox > .spBoundary { display: flex; justify-content: space-between; padding: 15px 0; }
