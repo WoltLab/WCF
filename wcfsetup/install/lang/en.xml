@@ -2924,6 +2924,7 @@ Errors are:
 		<item name="wcf.search.type.everywhere"><![CDATA[Everywhere]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
 		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
+		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Article]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 	</category>
 	

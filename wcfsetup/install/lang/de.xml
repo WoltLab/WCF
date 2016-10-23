@@ -2932,6 +2932,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.search.type.everywhere"><![CDATA[Alles]]></item>
 		<item name="wcf.search.error.noMatches"><![CDATA[Es wurde kein{if !$query|empty} mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Suchanfrage „{$query}“ übereinstimmender{/if} Eintrag gefunden.]]></item>
 		<item name="wcf.search.error.user.noMatches"><![CDATA[Es wurde kein Eintrag von diesem Autor gefunden.]]></item>
+		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 	</category>
 	
