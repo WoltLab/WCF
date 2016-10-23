@@ -1,10 +1,22 @@
 {include file='header' pageTitle='wcf.acp.menu.item.list'}
 
 <script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+		new UiSortableList({
+			containerId: 'menuItemList',
+			className: 'wcf\\data\\menu\\item\\MenuItemAction',
+			options: {
+				protectRoot: true
+			},
+			additionalParameters: {
+				menuID: '{@$menuID}'
+			}
+		});
+	});
+	
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
 		new WCF.Action.Toggle('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsToggleButton');
-		new WCF.Sortable.List('menuItemList', 'wcf\\data\\menu\\item\\MenuItemAction', undefined, { protectRoot: true }, false, { menuID: '{@$menuID}' });
 	});
 </script>
 
@@ -33,6 +45,7 @@
 						<span class="sortableNodeLabel">
 							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{lang}{$menuItemNode->title}{/lang}</a>
 							<span class="statusDisplay sortableButtonContainer">
+								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								{if $menuItemNode->canDisable()}
 									<span class="icon icon16 fa-{if !$menuItemNode->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItemNode->itemID}"></span>
 								{else}

@@ -1,10 +1,17 @@
 {include file='header' pageTitle='wcf.acp.notice.list'}
 
 <script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+		new UiSortableList({
+			containerId: 'noticeList',
+			className: 'wcf\\data\\notice\\NoticeAction',
+			offset: {@$startIndex}
+		});
+	});
+	
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\notice\\NoticeAction', '.jsNotice');
 		new WCF.Action.Toggle('wcf\\data\\notice\\NoticeAction', '.jsNotice');
-		new WCF.Sortable.List('noticeList', 'wcf\\data\\notice\\NoticeAction', {@$startIndex});
 	});
 </script>
 
@@ -37,6 +44,7 @@
 						<a href="{link controller='NoticeEdit' object=$notice}{/link}">{$notice->noticeName}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
+							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 							<span class="icon icon16 fa-{if $notice->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $notice->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$notice->noticeID}"></span>
 							<a href="{link controller='NoticeEdit' object=$notice}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$notice->noticeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.notice.delete.confirmMessage{/lang}"></span>

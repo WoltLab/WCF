@@ -1,10 +1,17 @@
 {include file='header' pageTitle='wcf.acp.ad.list'}
 
 <script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+		new UiSortableList({
+			containerId: 'adList',
+			className: 'wcf\\data\\ad\\AdAction',
+			offset: {@$startIndex}
+		});
+	});
+	
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\ad\\AdAction', '.jsAd');
 		new WCF.Action.Toggle('wcf\\data\\ad\\AdAction', '.jsAd');
-		new WCF.Sortable.List('adList', 'wcf\\data\\ad\\AdAction', {@$startIndex});
 	});
 </script>
 
@@ -37,6 +44,7 @@
 						<a href="{link controller='AdEdit' object=$ad}{/link}">{$ad->adName}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
+							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 							<span class="icon icon16 fa-{if !$ad->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
 							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message-html="{lang __encode=true}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
