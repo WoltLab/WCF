@@ -1312,12 +1312,24 @@ WCF.Clipboard = {
 	 * @param	integer		pageObjectID
 	 */
 	init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
-		require(['WoltLabSuite/Core/Controller/Clipboard'], function(ControllerClipboard) {
+		require(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard'], function(EventHandler, ControllerClipboard) {
 			ControllerClipboard.setup({
 				hasMarkedItems: (hasMarkedItems > 0),
 				pageClassName: page,
 				pageObjectId: pageObjectID
 			});
+			
+			for (var type in actionObjects) {
+				if (actionObjects.hasOwnProperty(type)) {
+					(function (type) {
+						EventHandler.add('com.woltlab.wcf.clipboard', type, function (data) {
+							if (actionObjects[type].hasOwnProperty(data.responseData.actionName)) {
+								actionObjects[type][data.responseData.actionName].triggerEffect(data.responseData.objectIDs);
+							}
+						});
+					})(type);
+				}
+			}
 		});
 	},
 	
