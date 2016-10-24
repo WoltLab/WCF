@@ -3838,7 +3838,8 @@ WCF.Table.EmptyTableHandler = Class.extend({
 			emptyMessage: null,
 			messageType: 'info',
 			refreshPage: false,
-			updatePageNumber: false
+			updatePageNumber: false,
+			isTable: (this._tableContainer.find('table').length !== 0)
 		}, options || { });
 		
 		WCF.DOMNodeRemovedHandler.addCallback('WCF.Table.EmptyTableHandler.' + rowClassName, $.proxy(this._remove, this));
@@ -3850,7 +3851,7 @@ WCF.Table.EmptyTableHandler = Class.extend({
 	 * @return	integer
 	 */
 	_getRowCount: function() {
-		return this._tableContainer.find('table tr.' + this._rowClassName).length;
+		return this._tableContainer.find((this._options.isTable ? 'table tr.' : '.tabularList .') + this._rowClassName).length;
 	},
 	
 	/**
@@ -3897,10 +3898,15 @@ WCF.Table.EmptyTableHandler = Class.extend({
 			
 			// check if DOM element is relevant
 			if (element.hasClass(this._rowClassName)) {
-				var tbody = element.parents('tbody:eq(0)');
-				
-				// check if table will be empty if DOM node is removed
-				if (tbody.children('tr').length == 1) {
+				if (this._options.isTable) {
+					var tbody = element.parents('tbody:eq(0)');
+					
+					// check if table will be empty if DOM node is removed
+					if (tbody.children('tr').length == 1) {
+						this._handleEmptyTable();
+					}
+				}
+				else if (this._getRowCount() === 1) {
 					this._handleEmptyTable();
 				}
 			}
