@@ -473,6 +473,12 @@ define(
 				formSubmit.classList.add('dialogFormSubmit');
 				
 				unavailableHeight += DomUtil.outerHeight(formSubmit);
+				
+				// Calculated height can be a fractional value and depending on the
+				// browser the results can vary. By subtracting a single pixel we're
+				// working around fractional values, without visually changing anything.
+				unavailableHeight -= 1;
+				
 				contentContainer.style.setProperty('margin-bottom', unavailableHeight + 'px', '');
 			}
 			else {
