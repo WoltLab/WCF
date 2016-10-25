@@ -121,7 +121,26 @@ define(
 					
 					if (!_knownCheckboxes.has(checkbox)) {
 						elData(checkbox, 'container-id', containerId);
-						checkbox.addEventListener(WCF_CLICK_EVENT, _callbackCheckbox);
+						
+						(function(checkbox) {
+							var link = checkbox.closest('a');
+							if (link === null) {
+								checkbox.addEventListener(WCF_CLICK_EVENT, _callbackCheckbox);
+							}
+							else {
+								// Firefox will always trigger the link if the checkbox is
+								// inside of one. Since 2000. Thanks Firefox. 
+								checkbox.addEventListener(WCF_CLICK_EVENT, function (event) {
+									event.preventDefault();
+									
+									window.setTimeout(function () {
+										checkbox.checked = !checkbox.checked;
+										
+										_callbackCheckbox(null, checkbox);
+									}, 10);
+								});
+							}
+						})(checkbox);
 						
 						_knownCheckboxes.add(checkbox);
 					}
@@ -190,9 +209,10 @@ define(
 		 * Marks or unmarks an individual item.
 		 * 
 		 * @param	{object}	event		event object
+		 * @param       {Element=}      checkbox        checkbox element
 		 */
-		_mark: function(event) {
-			var checkbox = event.currentTarget;
+		_mark: function(event, checkbox) {
+			checkbox = (event instanceof Event) ? event.currentTarget : checkbox;
 			var objectId = ~~elData(checkbox, 'object-id');
 			var isMarked = checkbox.checked;
 			var containerId = elData(checkbox, 'container-id');
