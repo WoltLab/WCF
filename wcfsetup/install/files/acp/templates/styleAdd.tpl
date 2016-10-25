@@ -563,11 +563,11 @@
 									
 									<dl data-region="wcfInput">
 										<dt><label for="spInput">Lorem Ipsum</label></dt>
-										<dd><input type="text" id="spInput" class="long" value="Consetetur sadipscing elitr"></dd>
+										<dd><input type="text" id="spInput" class="long" placeholder="Placeholder" value="Consetetur sadipscing elitr"></dd>
 									</dl>
 									<dl data-region="wcfInputDisabled">
 										<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
-										<dd><input type="text" id="spInputDisabled" class="long" placeholder="Disabled" disabled></dd>
+										<dd><input type="text" id="spInputDisabled" class="long" value="Disabled" disabled></dd>
 									</dl>
 									
 									<div class="spHeadline">Button</div>
