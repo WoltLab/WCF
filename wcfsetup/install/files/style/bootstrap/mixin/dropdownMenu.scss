@@ -124,6 +124,11 @@
 	.scrollableDropdownMenu {
 		max-height: 300px;
 		overflow: auto;
+		
+		&.forceScrollbar {
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
 	}
 	
 	@include screen-xs {

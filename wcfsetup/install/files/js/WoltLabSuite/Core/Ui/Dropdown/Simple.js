@@ -452,6 +452,11 @@ define(
 						}
 					}
 					
+					var itemList = elBySel('.scrollableDropdownMenu', menu);
+					if (itemList !== null) {
+						itemList.classList[(itemList.scrollHeight > itemList.clientHeight ? 'add' : 'remove')]('forceScrollbar');
+					}
+					
 					this._notifyCallbacks(containerId, 'open');
 					
 					this.setAlignment(dropdown, menu, alternateElement);
