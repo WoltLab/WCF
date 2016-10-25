@@ -196,7 +196,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 			this.clean.convertTags = (function(html, data) {
 				var div = elCreate('div');
 				div.innerHTML = html;
-				
+				console.debug(html);
 				// reset tag storage
 				storage = [];
 				
@@ -213,7 +213,45 @@ $.Redactor.prototype.WoltLabClean = function() {
 					item.element.outerHTML = '###custom' + i + '###' + item.element.innerHTML + '###/custom' + i + '###';
 				});
 				
-				return mpConvertTags.call(this, div.innerHTML, data);
+				var hadLinks = false;
+				if (data.links && this.opts.pasteLinks) {
+					elBySelAll('a', div, function(link) {
+						if (link.href) {
+							link.outerHTML = '##%a href="' + link.href + '"%##' + link.innerHTML + '##%/a%##';
+						}
+					});
+					
+					hadLinks = true;
+					data.links = false;
+				}
+				
+				var hadImages = false;
+				if (data.images && this.opts.pasteImages) {
+					elBySelAll('img', div, function(image) {
+						if (image.src) {
+							var tmp = '##%img src="' + image.src + '"';
+							var attr;
+							for (var j = 0, length = image.attributes.length; j < length; j++) {
+								attr = image.attributes.item(j);
+								if (attr.name !== 'src') {
+									tmp += ' ' + attr.name + '="' + attr.value + '"';
+								}
+							}
+							
+							image.outerHTML = tmp + '%##';
+						}
+					});
+					
+					hadImages = true;
+					data.images = false;
+				}
+				
+				html = mpConvertTags.call(this, div.innerHTML, data);
+				
+				if (hadImages) data.images = true;
+				if (hadLinks) data.links = true;
+				
+				return html;
 			}).bind(this);
 			
 			var mpReconvertTags = this.clean.reconvertTags;
@@ -246,49 +284,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 					
 					html = div.innerHTML;
-				}
-				
-				// reconvert links as the regex can be overly greedy sometimes
-				if (data.links) {
-					// prevent the original regex from being executed again
-					data.links = false;
-					
-					// We try to avoid the regex to consume too many parts
-					// by having it work from the back to the front. Please
-					// keep in mind that the parts are reversed, so they
-					// actually appear in inverted order
-					var tmp = html.split(/(###\/a###)/gi).reverse();
-					var part, nextPart;
-					for (var i = 1, length = tmp.length; i < length; i++) {
-						if (i + 1 === length) {
-							break;
-						}
-						
-						part = tmp[i];
-						nextPart = tmp[i + 1];
-						
-						// split by '###a' to find all possible start positions
-						var anchors = nextPart.split(/(###a)/gi).reverse();
-						var composite;
-						for (var j = 1, innerLength = anchors.length; j < innerLength; j++) {
-							if (j + 1 === innerLength) {
-								break;
-							}
-							
-							composite = anchors[j] + anchors[j - 1];
-							if (composite.match(/###a(.*?)href="(.*?)"(.*?)###(.*?)/i)) {
-								anchors[j] = '';
-								anchors[j - 1] = composite.replace(/###a(.*?)href="(.*?)"(.*?)###(.*?)/i, '<a$1href="$2"$3>$4');
-								
-								tmp[i] = '</a>';
-								tmp[i + 1] = anchors.reverse().join('');
-								
-								break;
-							}
-						}
-					}
-					
-					html = tmp.reverse().join('');
 				}
 				
 				return mpReconvertTags.call(this, html, data);
