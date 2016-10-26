@@ -35,6 +35,11 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 		 * @param       {string}        buttonSelector          CSS selector for toggle button
 		 */
 		init: function(eventIdentifier, elementId, buttonSelector) {
+			if (elData(document.body, 'template') === 'packageInstallationSetup') {
+				// work-around for WCFSetup on mobile
+				return;
+			}
+			
 			this._activeList = [];
 			this._depth = 0;
 			this._enabled = true;

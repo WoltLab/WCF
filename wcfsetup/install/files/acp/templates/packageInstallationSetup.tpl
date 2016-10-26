@@ -1,5 +1,11 @@
-{include file='header' templateName='packageInstallationSetup' templateNameApplication='wcf'}
+{include file='header' templateName='packageInstallationSetup' templateNameApplication='wcf' __disableLoginLink=true __disableAds=true}
 
+<style>
+	#pageHeaderPanel,
+	#pageFooter {
+		pointer-events: none !important;
+	}
+</style>
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.add('wcf.acp.package.install.title', '{lang}wcf.acp.package.install.title{/lang}');
