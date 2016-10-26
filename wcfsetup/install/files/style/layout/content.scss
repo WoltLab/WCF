@@ -410,6 +410,10 @@ fieldset {
 				display: block;
 				padding: 7px 10px;
 				text-align: center;
+				
+				> .invisible {
+					display: inline;
+				}
 			}
 		}
 	}
