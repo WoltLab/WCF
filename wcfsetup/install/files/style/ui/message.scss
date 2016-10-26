@@ -35,7 +35,7 @@
 	}
 	
 	> .anchorFixedHeader:target {
-		margin-top: -50px;
+		margin-top: -49px;
 		pointer-events: none;
 		position: relative;
 		z-index: 10;
@@ -48,7 +48,7 @@
 		
 		> .message {
 			pointer-events: all;
-			transform: translateY(50px);
+			transform: translateY(49px);
 		}
 	}
 	
