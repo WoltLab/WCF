@@ -159,6 +159,12 @@ define(
 				if (navigation.classList.contains('jsMobileButtonGroupNavigation')) continue;
 				else navigation.classList.add('jsMobileButtonGroupNavigation');
 				
+				var list = elBySel('.buttonList', navigation);
+				if (list.childElementCount === 0) {
+					// ignore objects without options
+					continue;
+				}
+				
 				navigation.parentNode.classList.add('hasMobileNavigation');
 				
 				var button = elCreate('a');
@@ -168,7 +174,7 @@ define(
 				span.className = 'icon icon24 fa-ellipsis-v';
 				button.appendChild(span);
 				
-				(function(navigation, button) {
+				(function(navigation, button, list) {
 					button.addEventListener(WCF_CLICK_EVENT, function(event) {
 						event.preventDefault();
 						event.stopPropagation();
@@ -176,13 +182,12 @@ define(
 						navigation.classList.toggle('open');
 					});
 					
-					var list = elBySel('.buttonList', navigation);
 					list.addEventListener(WCF_CLICK_EVENT, function(event) {
 						event.stopPropagation();
 						
 						navigation.classList.remove('open');
 					});
-				})(navigation, button);
+				})(navigation, button, list);
 				
 				navigation.insertBefore(button, navigation.firstChild);
 			}
