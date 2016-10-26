@@ -108,7 +108,7 @@ namespace wcf\functions\exception {
 		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
 			'PHP version: '.phpversion()."\n".
-			'WCF version: '.WCF_VERSION."\n".
+			'WoltLab Suite version: '.WCF_VERSION."\n".
 			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? str_replace("\n", ' ', $_SERVER['HTTP_REFERER']) : '')."\n".
 			'User Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? str_replace("\n", ' ', $_SERVER['HTTP_USER_AGENT']) : '')."\n".

@@ -135,7 +135,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*\n".
 "Message: (?P<message>.*?)\s*\n".
 "PHP version: (?P<phpVersion>.*?)\s*\n".
-"WCF version: (?P<wcfVersion>.*?)\s*\n".
+"WoltLab Suite version: (?P<wcfVersion>.*?)\s*\n".
 "Request URI: (?P<requestURI>.*?)\s*\n".
 "Referrer: (?P<referrer>.*?)\s*\n".
 "User Agent: (?P<userAgent>.*?)\s*\n".
