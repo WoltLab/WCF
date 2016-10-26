@@ -234,7 +234,7 @@ define(
 				_pageMenuUser = new UiPageMenuUser();
 			}
 			
-			elBySelAll('.boxMenu', null, function(boxMenu) {
+			elBySelAll('.boxMenu:not(.forceOpen)', null, function(boxMenu) {
 				boxMenu.addEventListener(WCF_CLICK_EVENT, function(event) {
 					event.stopPropagation();
 					

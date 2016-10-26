@@ -453,7 +453,7 @@
 					white-space: nowrap;
 				}
 				
-				&:not(.open) {
+				&:not(.open):not(.forceOpen) {
 					> li:first-child,
 					> li.active:not(:first-child) {
 						pointer-events: none;
