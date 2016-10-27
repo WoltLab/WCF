@@ -87,6 +87,10 @@
 								{@$box->render()}
 							{/foreach}
 							
+							{if !$sidebarLeftBottom|empty}
+								{@$sidebarLeftBottom}
+							{/if}
+							
 							{event name='boxesSidebarLeftBottom'}
 						{/content}
 					</div>
