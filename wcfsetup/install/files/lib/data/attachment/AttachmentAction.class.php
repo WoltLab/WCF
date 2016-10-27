@@ -72,7 +72,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 				}
 			}
 			else if (!$attachment->canDelete()) {
-				throw new PermissionDeniedException();
+				// admin can always delete attachments (unless they are private)
+				if (!WCF::getSession()->getPermission('admin.attachment.canManageAttachment') || ObjectTypeCache::getInstance()->getObjectType($attachment->objectTypeID)->private) {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 	}
