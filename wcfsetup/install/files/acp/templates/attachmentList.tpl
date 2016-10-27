@@ -106,12 +106,12 @@
 						</td>
 						<td class="columnID columnAttachmentID">{@$attachment->attachmentID}</td>
 						<td class="columnTitle columnFilename">
-							<div class="box48">
+							<div class="box64">
 								<a href="{link controller='Attachment' id=$attachment->attachmentID}{/link}"{if $attachment->isImage} class="jsImageViewer" title="{$attachment->filename}"{/if}>
 									{if $attachment->tinyThumbnailType}
 										<img src="{link controller='Attachment' id=$attachment->attachmentID}tiny=1{/link}" class="attachmentTinyThumbnail" alt="">
 									{else}
-										<span class="icon icon48 fa-paperclip"></span>
+										<span class="icon icon64 fa-paperclip"></span>
 									{/if}
 								</a>
 								

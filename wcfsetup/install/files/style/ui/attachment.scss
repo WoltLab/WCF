@@ -127,8 +127,6 @@
 			
 			> .attachmentTinyThumbnail {
 				border-bottom-width: 0;
-				max-height: 64px;
-				max-width: 64px;
 			}
 		}
 	}
@@ -171,8 +169,14 @@
 	}
 }
 
+.attachmentTinyThumbnail {
+	max-height: 64px;
+	max-width: 64px;
+}
+
 /* embedded images */
 .embeddedAttachmentLink img {
 	border: 1px solid $wcfContentBorderInner;
 	padding: 2px;
 }
+
