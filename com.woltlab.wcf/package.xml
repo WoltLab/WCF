@@ -46,10 +46,9 @@
 	<!-- TODO for updates: remember update_com.woltlab.wcf_3.0.0.php -->
 	
 	<instructions type="update" fromversion="3.0.0 Beta 3">
-		<instruction type="acpTemplate" />
-		<instruction type="template" />
-		
-		<instruction type="file" run="standalone" />
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
 	</instructions>
