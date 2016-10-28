@@ -113,13 +113,14 @@ namespace wcf\functions\exception {
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? str_replace("\n", ' ', $_SERVER['HTTP_REFERER']) : '')."\n".
 			'User Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? str_replace("\n", ' ', $_SERVER['HTTP_USER_AGENT']) : '')."\n".
 			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
+		$prev = $e;
 		do {
 			$message .= "======\n".
-			'Error Class: '.get_class($e)."\n".
-			'Error Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
-			'Error Code: '.intval($e->getCode())."\n".
-			'File: '.str_replace("\n", ' ', $e->getFile()).' ('.$e->getLine().')'."\n".
-			'Extra Information: '.($e instanceof IExtraInformationException ? base64_encode(serialize($e->getExtraInformation())) : '-')."\n".
+			'Error Class: '.get_class($prev)."\n".
+			'Error Message: '.str_replace("\n", ' ', $prev->getMessage())."\n".
+			'Error Code: '.intval($prev->getCode())."\n".
+			'File: '.str_replace("\n", ' ', $prev->getFile()).' ('.$prev->getLine().')'."\n".
+			'Extra Information: '.($prev instanceof IExtraInformationException ? base64_encode(serialize($prev->getExtraInformation())) : '-')."\n".
 			'Stack Trace: '.json_encode(array_map(function ($item) {
 				$item['args'] = array_map(function ($item) {
 					switch (gettype($item)) {
@@ -135,15 +136,19 @@ namespace wcf\functions\exception {
 				}, $item['args']);
 				
 				return $item;
-			}, sanitizeStacktrace($e, true)))."\n";
+			}, sanitizeStacktrace($prev, true)))."\n";
 		}
-		while ($e = $e->getPrevious());
+		while ($prev = $prev->getPrevious());
 		
 		// calculate Exception-ID
 		$exceptionID = sha1($message);
 		$entry = "<<<<<<<<".$exceptionID."<<<<\n".$message."<<<<\n\n";
 		
 		file_put_contents($logFile, $entry, FILE_APPEND);
+
+		// let the Exception know it has been logged
+		if (method_exists($e, 'finalizeLog') && is_callable([$e, 'finalizeLog'])) $e->finalizeLog($exceptionID, $logFile);
+
 		return $exceptionID;
 	}
 
