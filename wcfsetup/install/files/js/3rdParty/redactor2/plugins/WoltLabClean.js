@@ -133,6 +133,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
+				// Empty lines in Microsoft Word are represented with <o:p>&nbsp;</o:p>
+				elBySelAll('p.MsoNormal', div, function (p) {
+					if (p.childElementCount === 1 && p.children[0].nodeName === 'O:P' && p.textContent === '\u00A0') {
+						p.innerHTML = '<br>';
+					}
+				});
+				
 				elBySelAll('br', div, function (br) {
 					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br);
 				});
