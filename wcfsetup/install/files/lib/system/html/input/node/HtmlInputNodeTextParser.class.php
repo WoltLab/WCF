@@ -228,7 +228,7 @@ class HtmlInputNodeTextParser {
 	}
 	
 	/**
-	 * Matches the found usernames agains the user table.
+	 * Matches the found usernames against the user table.
 	 * 
 	 * @param       string[]        $usernames      list of found usernames
 	 * @return      string[]        list of valid usernames
@@ -472,7 +472,7 @@ class HtmlInputNodeTextParser {
 	}
 	
 	/**
-	 * Replaces all found occurences of special text with their new value.
+	 * Replaces all found occurrences of special text with their new value.
 	 * 
 	 * @param       \DOMText        $text           text node
 	 * @param       \DOMElement[]   $elements       elements to be inserted
