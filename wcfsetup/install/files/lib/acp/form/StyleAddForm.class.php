@@ -449,7 +449,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfContentDimmed' => ['text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
-			'wcfInput' => ['background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfInput' => ['label', 'background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfInputDisabled' => ['background', 'border', 'text'],
 			'wcfButton' => ['background', 'text', 'backgroundActive', 'textActive'],
 			'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],

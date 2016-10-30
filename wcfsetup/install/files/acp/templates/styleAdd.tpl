@@ -562,11 +562,11 @@
 									<div class="spHeadline">Input</div>
 									
 									<dl data-region="wcfInput">
-										<dt><label for="spInput">Lorem Ipsum</label></dt>
+										<dt><label class="spInputLabel" for="spInput">Lorem Ipsum</label></dt>
 										<dd><input type="text" id="spInput" class="long" placeholder="Placeholder" value="Consetetur sadipscing elitr"></dd>
 									</dl>
 									<dl data-region="wcfInputDisabled">
-										<dt><label for="spInputDisabled">Dolor Sit Amet</label></dt>
+										<dt><label class="spInputLabel" for="spInputDisabled">Dolor Sit Amet</label></dt>
 										<dd><input type="text" id="spInputDisabled" class="long" value="Disabled" disabled></dd>
 									</dl>
 									
@@ -766,6 +766,7 @@
 				'wcfTabularBoxHeadline': '#spTable { border-color: VALUE; } __COMBO_RULE__ #spTable th, #spTable th a { color: VALUE; }',
 				'wcfTabularBoxBackgroundActive': '#spTable tr:hover > td { background-color: VALUE; }',
 				'wcfTabularBoxHeadlineActive': '#spTable th a:hover { color: VALUE; }',
+				'wcfInputLabel': '.spInputLabel { color: VALUE; }',
 				'wcfInputBackground': '#spInput { background-color: VALUE; }',
 				'wcfInputBorder': '#spInput { border-color: VALUE; }',
 				'wcfInputText': '#spInput { color: VALUE; }',
