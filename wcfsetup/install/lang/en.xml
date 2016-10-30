@@ -2968,7 +2968,7 @@ Errors are:
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
 		<item name="wcf.user.language.description"><![CDATA[User interface language]]></item>
 		<item name="wcf.user.logout"><![CDATA[Logout]]></item>
-		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to logout?]]></item>
+		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to log out?]]></item>
 		<item name="wcf.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Multilingualism]]></item>
@@ -3510,8 +3510,8 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Notify me when replies to my comments are liked]]></item>
 		
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify when new comments are written in moderation]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Notify when new replies to comments are written in moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written in moderation]]></item>
 	</category>
 	
 	<category name="wcf.user.profile">
