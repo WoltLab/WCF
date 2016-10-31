@@ -11,10 +11,8 @@
 
 namespace Leafo\ScssPhp;
 
-use Leafo\ScssPhp\Formatter\OutputBlock;
-
 /**
- * Base formatter
+ * SCSS base formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
@@ -55,32 +53,22 @@ abstract class Formatter
      */
     public $assignSeparator;
 
-    /**
-     * @var boolea
-     */
-    public $keepSemicolons;
-
-    /**
-     * Initialize formatter
-     *
-     * @api
-     */
     abstract public function __construct();
 
     /**
      * Return indentation (whitespace)
      *
+     * @param integer $n
+     *
      * @return string
      */
-    protected function indentStr()
+    protected function indentStr($n = 0)
     {
-        return '';
+        return str_repeat($this->indentChar, max($this->indentLevel + $n, 0));
     }
 
     /**
      * Return property assignment
-     *
-     * @api
      *
      * @param string $name
      * @param mixed  $value
@@ -95,34 +83,21 @@ abstract class Formatter
     /**
      * Strip semi-colon appended by property(); it's a separator, not a terminator
      *
-     * @api
-     *
      * @param array $lines
      */
     public function stripSemicolon(&$lines)
     {
-        if ($this->keepSemicolons) {
-            return;
-        }
-
-        if (($count = count($lines))
-            && substr($lines[$count - 1], -1) === ';'
-        ) {
-            $lines[$count - 1] = substr($lines[$count - 1], 0, -1);
-        }
     }
 
     /**
      * Output lines inside a block
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
+     * @param string    $inner
+     * @param \stdClass $block
      */
-    protected function blockLines(OutputBlock $block)
+    protected function blockLines($inner, $block)
     {
-        $inner = $this->indentStr();
-
         $glue = $this->break . $inner;
-
         echo $inner . implode($glue, $block->lines);
 
         if (! empty($block->children)) {
@@ -131,56 +106,34 @@ abstract class Formatter
     }
 
     /**
-     * Output block selectors
-     *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
-     */
-    protected function blockSelectors(OutputBlock $block)
-    {
-        $inner = $this->indentStr();
-
-        echo $inner
-            . implode($this->tagSeparator, $block->selectors)
-            . $this->open . $this->break;
-    }
-
-    /**
-     * Output block children
-     *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
-     */
-    protected function blockChildren(OutputBlock $block)
-    {
-        foreach ($block->children as $child) {
-            $this->block($child);
-        }
-    }
-
-    /**
      * Output non-empty block
      *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
+     * @param \stdClass $block
      */
-    protected function block(OutputBlock $block)
+    protected function block($block)
     {
         if (empty($block->lines) && empty($block->children)) {
             return;
         }
 
-        $pre = $this->indentStr();
+        $inner = $pre = $this->indentStr();
 
         if (! empty($block->selectors)) {
-            $this->blockSelectors($block);
+            echo $pre
+                . implode($this->tagSeparator, $block->selectors)
+                . $this->open . $this->break;
 
             $this->indentLevel++;
+
+            $inner = $this->indentStr();
         }
 
         if (! empty($block->lines)) {
-            $this->blockLines($block);
+            $this->blockLines($inner, $block);
         }
 
-        if (! empty($block->children)) {
-            $this->blockChildren($block);
+        foreach ($block->children as $child) {
+            $this->block($child);
         }
 
         if (! empty($block->selectors)) {
@@ -197,13 +150,11 @@ abstract class Formatter
     /**
      * Entry point to formatting a block
      *
-     * @api
-     *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block An abstract syntax tree
+     * @param \stdClass $block An abstract syntax tree
      *
      * @return string
      */
-    public function format(OutputBlock $block)
+    public function format($block)
     {
         ob_start();
 

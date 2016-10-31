@@ -12,11 +12,10 @@
 namespace Leafo\ScssPhp;
 
 use Leafo\ScssPhp\Compiler;
-use Leafo\ScssPhp\Exception\ServerException;
 use Leafo\ScssPhp\Version;
 
 /**
- * Server
+ * SCSS server
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
@@ -116,12 +115,13 @@ class Server
     /**
      * Determine whether .scss file needs to be re-compiled.
      *
+     * @param string $in   Input path
      * @param string $out  Output path
      * @param string $etag ETag
      *
      * @return boolean True if compile required.
      */
-    protected function needsCompile($out, &$etag)
+    protected function needsCompile($in, $out, &$etag)
     {
         if (! is_file($out)) {
             return true;
@@ -129,23 +129,19 @@ class Server
 
         $mtime = filemtime($out);
 
+        if (filemtime($in) > $mtime) {
+            return true;
+        }
+
         $metadataName = $this->metadataName($out);
 
         if (is_readable($metadataName)) {
             $metadata = unserialize(file_get_contents($metadataName));
 
-            foreach ($metadata['imports'] as $import => $originalMtime) {
-                $currentMtime = filemtime($import);
-
-                if ($currentMtime !== $originalMtime || $currentMtime > $mtime) {
+            foreach ($metadata['imports'] as $import => $importMtime) {
+                if ($importMtime > $mtime) {
                     return true;
                 }
-            }
-
-            $metaVars = crc32(serialize($this->scss->getVariables()));
-
-            if ($metaVars !== $metadata['vars']) {
-                return true;
             }
 
             $etag = $metadata['etag'];
@@ -207,21 +203,20 @@ class Server
         $elapsed = round((microtime(true) - $start), 4);
 
         $v    = Version::VERSION;
-        $t    = date('r');
+        $t    = @date('r');
         $css  = "/* compiled by scssphp $v on $t (${elapsed}s) */\n\n" . $css;
         $etag = md5($css);
 
         file_put_contents($out, $css);
         file_put_contents(
             $this->metadataName($out),
-            serialize([
+            serialize(array(
                 'etag'    => $etag,
                 'imports' => $this->scss->getParsedFiles(),
-                'vars'    => crc32(serialize($this->scss->getVariables())),
-            ])
+            ))
         );
 
-        return [$css, $etag];
+        return array($css, $etag);
     }
 
     /**
@@ -231,11 +226,11 @@ class Server
      *
      * @return string
      */
-    protected function createErrorCSS(\Exception $error)
+    protected function createErrorCSS($error)
     {
         $message = str_replace(
-            ["'", "\n"],
-            ["\\'", "\\A"],
+            array("'", "\n"),
+            array("\\'", "\\A"),
             $error->getfile() . ":\n\n" . $error->getMessage()
         );
 
@@ -269,13 +264,11 @@ class Server
      * @param string $out Output file (.css) optional
      *
      * @return string|bool
-     *
-     * @throws \Leafo\ScssPhp\Exception\ServerException
      */
     public function compileFile($in, $out = null)
     {
         if (! is_readable($in)) {
-            throw new ServerException('load error: failed to find ' . $in);
+            throw new \Exception('load error: failed to find ' . $in);
         }
 
         $pi = pathinfo($in);
@@ -325,7 +318,7 @@ class Server
             $output = $this->cacheName($salt . $input);
             $etag = $noneMatch = trim($this->getIfNoneMatchHeader(), '"');
 
-            if ($this->needsCompile($output, $etag)) {
+            if ($this->needsCompile($input, $output, $etag)) {
                 try {
                     list($css, $etag) = $this->compile($input, $output);
 
@@ -336,6 +329,7 @@ class Server
                     header('ETag: "' . $etag . '"');
 
                     echo $css;
+
                 } catch (\Exception $e) {
                     if ($this->showErrorsAsCSS) {
                         header('Content-type: text/css');
@@ -347,6 +341,7 @@ class Server
 
                         echo 'Parse error: ' . $e->getMessage() . "\n";
                     }
+
                 }
 
                 return;
@@ -365,7 +360,7 @@ class Server
             $modifiedSince = $this->getIfModifiedSinceHeader();
             $mtime = filemtime($output);
 
-            if (strtotime($modifiedSince) === $mtime) {
+            if (@strtotime($modifiedSince) === $mtime) {
                 header($protocol . ' 304 Not Modified');
 
                 return;
@@ -395,19 +390,19 @@ class Server
      *
      * @return string Compiled CSS results
      *
-     * @throws \Leafo\ScssPhp\Exception\ServerException
+     * @throws \Exception
      */
     public function checkedCachedCompile($in, $out, $force = false)
     {
         if (! is_file($in) || ! is_readable($in)) {
-            throw new ServerException('Invalid or unreadable input file specified.');
+            throw new \Exception('Invalid or unreadable input file specified.');
         }
 
         if (is_dir($out) || ! is_writable(file_exists($out) ? $out : dirname($out))) {
-            throw new ServerException('Invalid or unwritable output file specified.');
+            throw new \Exception('Invalid or unwritable output file specified.');
         }
 
-        if ($force || $this->needsCompile($out, $etag)) {
+        if ($force || $this->needsCompile($in, $out, $etag)) {
             list($css, $etag) = $this->compile($in, $out);
         } else {
             $css = file_get_contents($out);
@@ -444,10 +439,6 @@ class Server
 
         $this->scss = $scss;
         $this->showErrorsAsCSS = false;
-
-        if (! ini_get('date.timezone')) {
-            date_default_timezone_set('UTC');
-        }
     }
 
     /**

@@ -12,20 +12,14 @@
 namespace Leafo\ScssPhp\Formatter;
 
 use Leafo\ScssPhp\Formatter;
-use Leafo\ScssPhp\Formatter\OutputBlock;
 
 /**
- * Nested formatter
+ * SCSS nested formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
 class Nested extends Formatter
 {
-    /**
-     * @var integer
-     */
-    private $depth;
-
     /**
      * {@inheritdoc}
      */
@@ -38,26 +32,55 @@ class Nested extends Formatter
         $this->close = ' }';
         $this->tagSeparator = ', ';
         $this->assignSeparator = ': ';
-        $this->keepSemicolons = true;
+    }
+
+    /**
+     * Adjust the depths of all children, depth first
+     *
+     * @param \stdClass $block
+     */
+    public function adjustAllChildren($block)
+    {
+        // flatten empty nested blocks
+        $children = array();
+        foreach ($block->children as $i => $child) {
+            if (empty($child->lines) && empty($child->children)) {
+                if (isset($block->children[$i + 1])) {
+                    $block->children[$i + 1]->depth = $child->depth;
+                }
+                continue;
+            }
+            $children[] = $child;
+        }
+
+        $count = count($children);
+        for ($i = 0; $i < $count; $i++) {
+            $depth = $children[$i]->depth;
+            $j = $i + 1;
+            if (isset($children[$j]) && $depth < $children[$j]->depth) {
+                $childDepth = $children[$j]->depth;
+                for (; $j < $count; $j++) {
+                    if ($depth < $children[$j]->depth && $childDepth >= $children[$j]->depth) {
+                        $children[$j]->depth = $depth + 1;
+                    }
+                }
+            }
+        }
+
+        $block->children = $children;
+
+        // make relative to parent
+        foreach ($block->children as $child) {
+            $this->adjustAllChildren($child);
+            $child->depth = $child->depth - $block->depth;
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function indentStr()
+    protected function blockLines($inner, $block)
     {
-        $n = $this->depth - 1;
-
-        return str_repeat($this->indentChar, max($this->indentLevel + $n, 0));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function blockLines(OutputBlock $block)
-    {
-        $inner = $this->indentStr();
-
         $glue = $this->break . $inner;
 
         foreach ($block->lines as $index => $line) {
@@ -76,20 +99,25 @@ class Nested extends Formatter
     /**
      * {@inheritdoc}
      */
-    protected function blockSelectors(OutputBlock $block)
+    protected function block($block)
     {
-        $inner = $this->indentStr();
+        if ($block->type === 'root') {
+            $this->adjustAllChildren($block);
+        }
 
-        echo $inner
-            . implode($this->tagSeparator, $block->selectors)
-            . $this->open . $this->break;
-    }
+        $inner = $pre = $this->indentStr($block->depth - 1);
+        if (! empty($block->selectors)) {
+            echo $pre .
+                implode($this->tagSeparator, $block->selectors) .
+                $this->open . $this->break;
+            $this->indentLevel++;
+            $inner = $this->indentStr($block->depth - 1);
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function blockChildren(OutputBlock $block)
-    {
+        if (! empty($block->lines)) {
+            $this->blockLines($inner, $block);
+        }
+
         foreach ($block->children as $i => $child) {
             $this->block($child);
 
@@ -98,101 +126,20 @@ class Nested extends Formatter
 
                 if (isset($block->children[$i + 1])) {
                     $next = $block->children[$i + 1];
-
                     if ($next->depth === max($block->depth, 1) && $child->depth >= $next->depth) {
                         echo $this->break;
                     }
                 }
             }
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function block(OutputBlock $block)
-    {
-        if ($block->type === 'root') {
-            $this->adjustAllChildren($block);
-        }
-
-        if (empty($block->lines) && empty($block->children)) {
-            return;
-        }
-
-        $this->depth = $block->depth;
-
-        if (! empty($block->selectors)) {
-            $this->blockSelectors($block);
-
-            $this->indentLevel++;
-        }
-
-        if (! empty($block->lines)) {
-            $this->blockLines($block);
-        }
-
-        if (! empty($block->children)) {
-            $this->blockChildren($block);
-        }
 
         if (! empty($block->selectors)) {
             $this->indentLevel--;
-
             echo $this->close;
         }
 
         if ($block->type === 'root') {
             echo $this->break;
-        }
-    }
-
-    /**
-     * Adjust the depths of all children, depth first
-     *
-     * @param \Leafo\ScssPhp\Formatter\OutputBlock $block
-     */
-    private function adjustAllChildren(OutputBlock $block)
-    {
-        // flatten empty nested blocks
-        $children = [];
-
-        foreach ($block->children as $i => $child) {
-            if (empty($child->lines) && empty($child->children)) {
-                if (isset($block->children[$i + 1])) {
-                    $block->children[$i + 1]->depth = $child->depth;
-                }
-
-                continue;
-            }
-
-            $children[] = $child;
-        }
-
-        $count = count($children);
-
-        for ($i = 0; $i < $count; $i++) {
-            $depth = $children[$i]->depth;
-            $j = $i + 1;
-
-            if (isset($children[$j]) && $depth < $children[$j]->depth) {
-                $childDepth = $children[$j]->depth;
-
-                for (; $j < $count; $j++) {
-                    if ($depth < $children[$j]->depth && $childDepth >= $children[$j]->depth) {
-                        $children[$j]->depth = $depth + 1;
-                    }
-                }
-            }
-        }
-
-        $block->children = $children;
-
-        // make relative to parent
-        foreach ($block->children as $child) {
-            $this->adjustAllChildren($child);
-
-            $child->depth = $child->depth - $block->depth;
         }
     }
 }

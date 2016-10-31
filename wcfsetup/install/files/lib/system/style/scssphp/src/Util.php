@@ -14,7 +14,7 @@ namespace Leafo\ScssPhp;
 use Leafo\ScssPhp\Base\Range;
 
 /**
- * Utilties
+ * SCSS utilties
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */

@@ -12,10 +12,9 @@
 namespace Leafo\ScssPhp\Formatter;
 
 use Leafo\ScssPhp\Formatter;
-use Leafo\ScssPhp\Formatter\OutputBlock;
 
 /**
- * Expanded formatter
+ * SCSS expanded formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
@@ -33,24 +32,13 @@ class Expanded extends Formatter
         $this->close = '}';
         $this->tagSeparator = ', ';
         $this->assignSeparator = ': ';
-        $this->keepSemicolons = true;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function indentStr()
+    protected function blockLines($inner, $block)
     {
-        return str_repeat($this->indentChar, $this->indentLevel);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function blockLines(OutputBlock $block)
-    {
-        $inner = $this->indentStr();
-
         $glue = $this->break . $inner;
 
         foreach ($block->lines as $index => $line) {
