@@ -231,11 +231,11 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns an array containing the quote author, link and text.
 	 * 
 	 * @param	string		$quoteID
-	 * @return	string[]
+	 * @return	string[]|false
 	 */
 	public function getQuoteComponents($quoteID) {
 		if ($this->getQuote($quoteID, false) === null) {
-			return '';
+			return false;
 		}
 		
 		// find the quote and simulate a regular call to render quotes
@@ -257,6 +257,8 @@ class MessageQuoteManager extends SingletonFactory {
 				}
 			}
 		}
+		
+		return false;
 	}
 	
 	/**
