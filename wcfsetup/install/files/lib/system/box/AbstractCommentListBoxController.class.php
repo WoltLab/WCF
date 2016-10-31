@@ -93,6 +93,6 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 		return WCF::getTPL()->fetch('boxSidebarCommentList', 'wcf', [
 			'boxCommentList' => $this->objectList,
 			'boxSortField' => $this->sortField
-		]);
+		], true);
 	}
 }

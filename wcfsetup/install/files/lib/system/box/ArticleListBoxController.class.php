@@ -79,6 +79,6 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController {
 			'boxArticleList' => $this->objectList,
 			'boxSortField' => $this->sortField,
 			'boxPosition' => $this->box->position
-		]);
+		], true);
 	}
 }

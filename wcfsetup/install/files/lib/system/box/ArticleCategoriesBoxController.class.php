@@ -41,7 +41,7 @@ class ArticleCategoriesBoxController extends AbstractBoxController {
 				}
 			}
 			
-			$this->content = WCF::getTPL()->fetch('boxArticleCategories', 'wcf', ['categoryList' => $categoryList, 'activeCategory' => $activeCategory]);
+			$this->content = WCF::getTPL()->fetch('boxArticleCategories', 'wcf', ['categoryList' => $categoryList, 'activeCategory' => $activeCategory], true);
 		}
 	}
 }

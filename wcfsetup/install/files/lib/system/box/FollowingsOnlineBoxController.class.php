@@ -38,7 +38,7 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
 	 * @inheritDoc
 	 */
 	protected function getTemplate() {
-		return WCF::getTPL()->fetch('boxFollowingsOnline', 'wcf', ['usersOnlineList' => $this->objectList]);
+		return WCF::getTPL()->fetch('boxFollowingsOnline', 'wcf', ['usersOnlineList' => $this->objectList], true);
 	}
 	
 	/**

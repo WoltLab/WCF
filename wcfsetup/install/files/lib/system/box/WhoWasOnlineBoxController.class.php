@@ -58,7 +58,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 			'whoWasOnlineList' => $this->users,
 			'boxPosition' => $this->box->position,
 			'whoWasOnlineTimeFormat' => DateUtil::TIME_FORMAT
-		]);
+		], true);
 	}
 	
 	/**

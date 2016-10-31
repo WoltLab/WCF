@@ -22,10 +22,6 @@ class StatisticsBoxController extends AbstractBoxController {
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
-		WCF::getTPL()->assign([
-			'statistics' => UserStatsCacheBuilder::getInstance()->getData()
-		]);
-		
-		$this->content = WCF::getTPL()->fetch('boxStatistics');
+		$this->content = WCF::getTPL()->fetch('boxStatistics', 'wcf', ['statistics' => UserStatsCacheBuilder::getInstance()->getData()], true);
 	}
 }

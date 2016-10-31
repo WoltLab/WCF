@@ -62,10 +62,9 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 				}
 				
 				if (!empty($visibleUserProfiles)) {
-					WCF::getTPL()->assign([
+					$this->content = WCF::getTPL()->fetch($this->templateName, 'wcf', [
 						'birthdayUserProfiles' => $visibleUserProfiles
-					]);
-					$this->content = WCF::getTPL()->fetch($this->templateName);
+					], true);
 				}
 			}
 		}

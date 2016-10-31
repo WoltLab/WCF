@@ -22,7 +22,7 @@ class RegisterButtonBoxController extends AbstractBoxController {
 	 */
 	protected function loadContent() {
 		if (!WCF::getUser()->userID && !REGISTER_DISABLED) {
-			$this->content = WCF::getTPL()->fetch('boxRegisterButton');
+			$this->content = WCF::getTPL()->fetch('boxRegisterButton', 'wcf', [], true);
 		}
 	}
 }

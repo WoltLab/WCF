@@ -97,12 +97,12 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 				'eventList' => $this->objectList,
 				'lastEventTime' => $this->objectList->getLastEventTime(),
 				'filteredByFollowedUsers' => $this->filteredByFollowedUsers
-			]);
+			], true);
 		}
 		else {
 			return WCF::getTPL()->fetch('boxRecentActivitySidebar', 'wcf', [
 				'eventList' => $this->objectList
-			]);
+			], true);
 		}
 	}
 	

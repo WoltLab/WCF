@@ -40,7 +40,7 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
 			'lastCommentTime' => $this->objectList->getMinCommentTime(),
 			'pageID' => RequestHandler::getInstance()->getActiveRequest()->getPageID(),
 			'likeData' => (MODULE_LIKE && $this->objectList) ? $this->objectList->getLikeData() : []
-		]);
+		], true);
 	}
 	
 	/**
