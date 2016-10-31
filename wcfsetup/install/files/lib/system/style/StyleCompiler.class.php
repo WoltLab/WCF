@@ -49,51 +49,19 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	Style	$style
 	 */
 	public function compile(Style $style) {
-		// read stylesheets by dependency order
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.scss']);
+		$files = $this->getCoreFiles();
 		
-		// TESTING ONLY
-		$conditions->add("packageID <> ?", [1]);
-		// TESTING ONLY
-		
+		// read stylesheets in dependency order
 		$sql = "SELECT		filename, application
 			FROM		wcf".WCF_N."_package_installation_file_log
-			".$conditions."
+			WHERE           filename REGEXP ?
+					AND packageID <> ?
 			ORDER BY	packageID";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		
-		$files = [];
-		
-		// TESTING ONLY
-		if ($handle = opendir(WCF_DIR.'style/')) {
-			while (($file = readdir($handle)) !== false) {
-				if ($file === '.' || $file === '..' || $file === 'bootstrap' || is_file(WCF_DIR.'style/'.$file)) {
-					continue;
-				}
-				
-				$file = WCF_DIR."style/{$file}/";
-				if ($innerHandle = opendir($file)) {
-					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z0-9]+\.scss$~', $innerFile)) {
-							continue;
-						}
-						
-						$files[] = $file.$innerFile;
-					}
-					closedir($innerHandle);
-				}
-			}
-			
-			closedir($handle);
-			
-			// directory order is not deterministic in some cases
-			sort($files);
-		}
-		
-		// TESTING ONLY
-		
+		$statement->execute([
+			'style/([a-zA-Z0-9\-\.]+)\.scss',
+			1
+		]);
 		while ($row = $statement->fetchArray()) {
 			$files[] = Application::getDirectory($row['application']).$row['filename'];
 		}
@@ -140,56 +108,10 @@ class StyleCompiler extends SingletonFactory {
 	 * Compiles SCSS stylesheets for ACP usage.
 	 */
 	public function compileACP() {
-		// read stylesheets by dependency order
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("filename REGEXP ?", ['style/([a-zA-Z0-9\_\-\.]+)\.scss']);
+		$files = $this->getCoreFiles();
 		
-		// TESTING ONLY
-		$conditions->add("packageID <> ?", [1]);
-		// TESTING ONLY
-		
-		$sql = "SELECT		filename, application
-			FROM		wcf".WCF_N."_package_installation_file_log
-			".$conditions."
-			ORDER BY	packageID";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		
-		$files = [];
-		
-		// TESTING ONLY
-		if ($handle = opendir(WCF_DIR.'style/')) {
-			while (($file = readdir($handle)) !== false) {
-				if ($file === '.' || $file === '..' || $file === 'bootstrap' || is_file(WCF_DIR.'style/'.$file)) {
-					continue;
-				}
-				
-				$file = WCF_DIR."style/{$file}/";
-				if ($innerHandle = opendir($file)) {
-					while (($innerFile = readdir($innerHandle)) !== false) {
-						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z]+\.scss$~', $innerFile)) {
-							continue;
-						}
-						
-						$files[] = $file.$innerFile;
-					}
-					closedir($innerHandle);
-				}
-			}
-			
-			closedir($handle);
-			
-			// directory order is not deterministic in some cases
-			sort($files);
-		}
-		
-		$additional = ['layout'];
-		for ($i = 0, $length = count($additional); $i < $length; $i++) {
-			$files[] = WCF_DIR . 'acp/style/' . $additional[$i] . '.scss';
-		}
-		// TESTING ONLY
-		
-		//$files = glob(WCF_DIR.'style/*.less');
+		// ACP uses a slightly different layout
+		$files[] = WCF_DIR . 'acp/style/layout.scss';
 		
 		// read default values
 		$sql = "SELECT		variableName, defaultValue
@@ -212,10 +134,7 @@ class StyleCompiler extends SingletonFactory {
 			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
 		}
 		
-		// insert blue temptation files
-		//array_unshift($files, WCF_DIR.'acp/style/blueTemptation/variables.scss', WCF_DIR.'acp/style/blueTemptation/override.scss');
-		
-		$variables['style_image_path'] = "'../images/blueTemptation/'";
+		$variables['style_image_path'] = "'../images/'";
 		
 		$this->compileStylesheet(
 			WCF_DIR.'acp/style/style',
@@ -226,11 +145,46 @@ class StyleCompiler extends SingletonFactory {
 				// fix relative paths
 				$content = str_replace('../font/', '../../font/', $content);
 				$content = str_replace('../icon/', '../../icon/', $content);
-				$content = preg_replace('~\.\./images/(?!blueTemptation)~', '../../images/', $content);
+				$content = preg_replace('~\.\./images/~', '../../images/', $content);
 				
 				return "/* stylesheet for ACP, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 			})
 		);
+	}
+	
+	/**
+	 * Returns a list of common stylesheets provided by the core.
+	 * 
+	 * @return      string[]        list of common stylesheets
+	 */
+	protected function getCoreFiles() {
+		$files = [];
+		if ($handle = opendir(WCF_DIR.'style/')) {
+			while (($file = readdir($handle)) !== false) {
+				if ($file === '.' || $file === '..' || $file === 'bootstrap' || is_file(WCF_DIR.'style/'.$file)) {
+					continue;
+				}
+				
+				$file = WCF_DIR."style/{$file}/";
+				if ($innerHandle = opendir($file)) {
+					while (($innerFile = readdir($innerHandle)) !== false) {
+						if ($innerFile === '.' || $innerFile === '..' || !is_file($file.$innerFile) || !preg_match('~^[a-zA-Z0-9\-\.]+\.scss$~', $innerFile)) {
+							continue;
+						}
+						
+						$files[] = $file.$innerFile;
+					}
+					closedir($innerHandle);
+				}
+			}
+			
+			closedir($handle);
+			
+			// directory order is not deterministic in some cases
+			sort($files);
+		}
+		
+		return $files;
 	}
 	
 	/**
