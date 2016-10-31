@@ -217,24 +217,6 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		z-index: 401;
 		
 		&.loading:before {
-			/*content: $fa-var-spinner;
-			margin: -24px 0 0 -24px;
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			
-			color: #fff;
-			display: inline-block;
-			font-family: FontAwesome;
-			font-weight: normal !important;
-			font-style: normal !important;
-			line-height: 1em;
-			text-align: center;
-			
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;*/
-			
 			@extend .icon48;
 			@extend .fa-spinner;
 		}
