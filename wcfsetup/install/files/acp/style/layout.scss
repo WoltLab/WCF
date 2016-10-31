@@ -141,6 +141,11 @@ $wcfAcpMenuWidth: 150px;
 .acpPageContentContainer {
 	display: flex;
 	flex: 1 0 auto;
+	
+	#content {
+		// required by IE 11 for proper width calculation
+		flex: 1;
+	}
 }
 
 @include screen-lg {
