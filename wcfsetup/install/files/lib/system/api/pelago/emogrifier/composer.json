@@ -25,13 +25,11 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "ext-mbstring": "*"
+        "php": ">=5.4.0,<=7.1.99"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.3.4",
-        "typo3-ci/typo3sniffpool": "2.1.1",
-        "phpunit/phpunit": "4.8.11"
+        "squizlabs/php_codesniffer": "2.6.0",
+        "phpunit/phpunit": "4.8.27"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +38,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "1.2.x-dev"
         }
     }
 }

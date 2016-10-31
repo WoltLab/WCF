@@ -3,8 +3,8 @@
         "vendor-dir": "./"
     },
     "require": {
-        "ezyang/htmlpurifier": "4.7.*",
+        "ezyang/htmlpurifier": "4.8.*",
         "erusev/parsedown": "1.6.*",
-        "pelago/emogrifier": "1.0.*"
+        "pelago/emogrifier": "1.1.*"
     }
 }
