@@ -78,6 +78,10 @@
 					&:not(:last-child) {
 						margin-right: 1px;
 					}
+					
+					.invisible {
+						display: none !important;
+					}
 				}
 			}
 		}
