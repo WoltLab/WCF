@@ -246,32 +246,6 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Parses a temporary message and loads found embedded objects.
-	 * 
-	 * @param	string		$message
-	 */
-	public function parseTemporaryMessage($message) {
-		// remove [code] tags
-		$message = BBCodeParser::getInstance()->removeCodeTags($message);
-		
-		// set active message information
-		$this->activeMessageObjectTypeID = -1;
-		$this->activeMessageID = -1;
-		
-		// get embedded objects
-		foreach ($this->getEmbeddedObjectHandlers() as $handler) {
-			$objectIDs = $handler->parseMessage($message);
-			if (!empty($objectIDs)) {
-				// save assignments
-				$this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$handler->objectTypeID] = $objectIDs;
-				
-				// loads objects
-				$this->embeddedObjects[$handler->objectTypeID] = $handler->loadObjects($objectIDs);
-			}
-		}
-	}
-	
-	/**
 	 * Temporarily registers a message, the parsed data will not be stored.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor
@@ -340,5 +314,12 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$this->getEmbeddedObjectHandlers();
 		
 		return $this->embeddedObjectHandlers[$objectTypeID];
+	}
+	
+	/**
+	 * @deprecated  3.0
+	 */
+	public function parseTemporaryMessage() {
+		throw new \BadMethodCallException("parseTemporaryMessage() has been removed, please use registerTemporaryMessage() instead.");
 	}
 }
