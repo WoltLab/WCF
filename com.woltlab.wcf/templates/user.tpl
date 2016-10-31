@@ -212,7 +212,7 @@
 				
 				{hascontent}
 					<li class="dropdown">
-						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.user{/lang}"><span class="icon icon32 fa-user"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.interaction{/lang}</span></a>
+						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.user{/lang}"><span class="icon icon32 fa-user"></span> <span class="invisible">{lang}wcf.user.profile.user{/lang}</span></a>
 						<ul class="dropdownMenu userProfileButtonMenu" data-menu="interaction">
 							{content}
 								{event name='menuInteraction'}
@@ -244,7 +244,7 @@
 				
 				{hascontent}
 					<li class="dropdown">
-						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.management{/lang}"><span class="icon icon32 fa-cog"></span> <span class="invisible">{lang}wcf.user.profile.dropdown.management{/lang}</span></a>
+						<a class="jsTooltip button dropdownToggle" title="{lang}wcf.user.profile.management{/lang}"><span class="icon icon32 fa-cog"></span> <span class="invisible">{lang}wcf.user.profile.management{/lang}</span></a>
 						<ul class="dropdownMenu userProfileButtonMenu" data-menu="management">
 							{content}
 								{event name='menuManagement'}
