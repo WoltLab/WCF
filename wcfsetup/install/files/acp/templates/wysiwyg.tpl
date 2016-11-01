@@ -1,3 +1,5 @@
+{event name='beforeEditorJavaScript'}
+
 <script data-relocate="true">
 	head.load([
 		{if ENABLE_DEBUG_MODE}
