@@ -97,7 +97,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			}
 			WCF::getDB()->commitTransaction();
 			
-			// update old avatars
+			// update old/imported avatars
 			$avatarList = new UserAvatarList();
 			$avatarList->getConditionBuilder()->add('user_avatar.userID IN (?)', [$userIDs]);
 			$avatarList->getConditionBuilder()->add('(user_avatar.width <> ? OR user_avatar.height <> ?)', [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]);
@@ -106,6 +106,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				$width = $avatar->width;
 				$height = $avatar->height;
 				if ($width != $height) {
+					// make avatar quadratic
 					$width = $height = min($width, $height, UserAvatar::AVATAR_SIZE);
 					$adapter = ImageHandler::getInstance()->getAdapter();
 					$adapter->loadFile($avatar->getLocation());
@@ -113,7 +114,8 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					$adapter->writeImage($thumbnail, $avatar->getLocation());
 				}
 				
-				if ($width < UserAvatar::AVATAR_SIZE || $height < UserAvatar::AVATAR_SIZE) {
+				if ($width != UserAvatar::AVATAR_SIZE || $height != UserAvatar::AVATAR_SIZE) {
+					// resize avatar
 					$adapter = ImageHandler::getInstance()->getAdapter();
 					$adapter->loadFile($avatar->getLocation());
 					$adapter->resize(0, 0, $width, $height, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
