@@ -4,7 +4,6 @@ use Leafo\ScssPhp\Compiler;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\Callback;
 use wcf\system\SingletonFactory;

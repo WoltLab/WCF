@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\bbcode\BBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\html\input\HtmlInputProcessor;
