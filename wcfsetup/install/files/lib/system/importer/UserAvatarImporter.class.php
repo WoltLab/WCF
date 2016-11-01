@@ -3,7 +3,6 @@ namespace wcf\system\importer;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\system\exception\SystemException;
-use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -33,8 +32,6 @@ class UserAvatarImporter extends AbstractImporter {
 		if ($imageData === false) return 0;
 		$data['width'] = $imageData[0];
 		$data['height'] = $imageData[1];
-		// check min size
-		if ($data['width'] < UserAvatar::AVATAR_SIZE || $data['height'] < UserAvatar::AVATAR_SIZE) return 0;
 		
 		// check image type
 		if ($imageData[2] != IMAGETYPE_GIF && $imageData[2] != IMAGETYPE_JPEG && $imageData[2] != IMAGETYPE_PNG) return 0;
@@ -60,14 +57,6 @@ class UserAvatarImporter extends AbstractImporter {
 		try {
 			if (!copy($additionalData['fileLocation'], $avatar->getLocation())) {
 				throw new SystemException();
-			}
-			
-			// enforces dimensions
-			if ($data['width'] > UserAvatar::AVATAR_SIZE || $data['height'] > UserAvatar::AVATAR_SIZE) {
-				$adapter = ImageHandler::getInstance()->getAdapter();
-				$adapter->loadFile($avatar->getLocation());
-				$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
-				$adapter->writeImage($thumbnail, $avatar->getLocation());
 			}
 			
 			// update owner
