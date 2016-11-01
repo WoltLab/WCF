@@ -384,8 +384,18 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					date.setDate(date.getDate() - 1);
 				}
 				
+				// show the last row
+				elShow(_dateCells[35].parentNode);
+				
 				var selectable;
-				for (i = 0; i < 35; i++) {
+				for (i = 0; i < 42; i++) {
+					if (i === 35 && date.getMonth() !== month) {
+						// skip the last row if it only contains the next month
+						elHide(_dateCells[35].parentNode);
+						
+						break;
+					}
+					
 					cell = _dateCells[i];
 					
 					cell.textContent = date.getDate();
@@ -559,7 +569,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			
 			// create date grid
 			var callbackClick = this._click.bind(this), cell, row;
-			for (i = 0; i < 5; i++) {
+			for (i = 0; i < 6; i++) {
 				row = elCreate('li');
 				_dateGrid.appendChild(row);
 				
