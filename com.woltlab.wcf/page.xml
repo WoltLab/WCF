@@ -608,7 +608,11 @@
 				<title>Privacy Policy</title>
 				<content><![CDATA[<p>We, the Operators of this Website, provide it as a public service to our users.</p>
 
+<p><br></p>
+
 <p>Your privacy is important to the us. Our goal is to provide you with a personalized online experience that provides you with the information, resources, and services that are most relevant and helpful to you. This Privacy Policy has been written to describe the conditions under which this web site is being made available to you. The Privacy Policy discusses, among other things, how data obtained during your visit to this web site may be collected and used. We strongly recommend that you read the Privacy Policy carefully. By using this web site, you agree to be bound by the terms of this Privacy Policy. If you do not accept the terms of the Privacy Policy, you are directed to discontinue accessing or otherwise using the web site or any materials obtained from it. If you are dissatisfied with the web site, by all means contact us; otherwise, your only recourse is to disconnect from this site and refrain from visiting the site in the future.</p>
+
+<p><br></p>
 
 <p>The process of maintaining a web site is an evolving one, and the Operators may decide at some point in the future, without advance notice, to modify the terms of this Privacy Policy. Your use of the web site, or materials obtained from the web site, indicates your assent to the Privacy Policy at the time of such use. The effective Privacy Policy will be posted on the web site, and you should check upon every visit for any changes.</p>
 
@@ -656,7 +660,11 @@
 
 <p>The Operators may use non-personal data that is aggregated for reporting about the Operators’s web site usability, performance, and effectiveness. It may be used to improve the experience, usability, and content of the site.</p>
 
+<p><br></p>
+
 <p>The Operators may use personal information to provide services that support the activities of the Operators’s members and their collaboration on the Operators’s standards and projects. When accessing the Operators’s members-only web pages, your personal user information may be tracked by the Operators in order to support collaboration, ensure authorized access, and enable communication between members.</p>
+
+<p><br></p>
 
 <p>Credit card information may be collected to facilitate membership applications; or if you purchase a product or service from our website, such information will not be kept longer than necessary for providing the services requested. Credit card numbers are used only for processing payment and are not used for other purposes. Payment processing services may be provided by a third-party payment service, and a management company external to the Operators may provide support for the financial activities of the Operators. the Operators may share your personal information with its partners to facilitate these transactions.</p>
 
@@ -664,15 +672,27 @@
 
 <p>The Operators does not sell, rent, or lease any individual’s personal information or lists of email addresses to anyone for marketing purposes, and we take commercially reasonable steps to maintain the security of this information. However, the Operators reserve the right to supply any such information to any organization into which the Operators may merge in the future or to which it may make any transfer in order to enable a third party to continue part or all of its mission. We also reserve the right to release personal information to protect our systems or business, when we reasonably believe you to be in violation of our Terms of Use or if we reasonably believe you to have initiated or participated in any illegal activity. In addition, please be aware that in certain circumstances, the Operators may be obligated to release your personal information pursuant to judicial or other government subpoenas, warrants, or other orders.</p>
 
+<p><br></p>
+
 <p>In keeping with our open process, the Operators may maintain publicly accessible archives for the majority of our activities. For example, posting an email to any of the Operators’s-hosted public mail lists or discussion forums, subscribing to one of our newsletters or registering for one of our public meetings may result in your email address becoming part of the publicly accessible archives.</p>
+
+<p><br></p>
 
 <p>On some sites, anonymous users are allowed to post content and/or participate in forum discussions. In such a case, since no user name can be associated with such a user, the IP address number of a user is used as an identifier. When posting content or messages to a Operators site anonymously, your IP address may be revealed to the public.</p>
 
+<p><br></p>
+
 <p>If you are a registered member of an Operators's website or email list, you should be aware that some items of your personal information may be visible to other members and to the public. The Operators’s member databases may retain information about your name, e-mail address, company affiliation (if an organizational member), and such other personal address and identifying data as you choose to supply. That data may be visible to other of the Operators’s members and to the public. Your name, e-mail address, and other information you may supply also may be associated in the Operators’s publicly accessible records with the Operators’s various committees, working groups, and similar activities that you join, in various places, including: (i) the permanently-posted attendance and membership records of those activities; (ii) documents generated by the activity, which may be permanently archived; and, (iii) along with message content, in the permanent archives of the Operators’s e-mail lists, which also may be public.</p>
+
+<p><br></p>
 
 <p>Please remember that any information (including personal information) that you disclose in public areas of our web site, such as forums, message boards, and news groups, becomes public information that others may collect, circulate, and use. Because we cannot and do not control the acts of others, you should exercise caution when deciding to disclose information about yourself or others in public forums such as these.</p>
 
+<p><br></p>
+
 <p>Given the international scope of the Operators websites, personal information may be visible to persons outside your country of residence, including to persons in countries that your own country’s privacy laws and regulations deem deficient in ensuring an adequate level of protection for such information. If you are unsure whether this Privacy Policy is in conflict with applicable local rules, you should not submit your information. If you are located within the European Union, you should note that your information will be transferred to the United States, which is deemed by the European Union to have inadequate data protection. Nevertheless, in accordance with local laws implementing European Union Directive 95/46/EC of 24 October 1995 (“EU Privacy Directive”) on the protection of individuals with regard to the processing of personal data and on the free movement of such data, individuals located in countries outside of the United States of America who submit personal information do thereby consent to the general use of such information as provided in this Privacy Policy and to its transfer to and/or storage in the United States of America.</p>
+
+<p><br></p>
 
 <p>If you do not want your personal information collected and used by the Operators, please do not visit the Operators’s web site or apply for membership of any of the Operators' websites or email lists.</p>
 
@@ -690,6 +710,8 @@
 
 <p>If you have questions regarding this privacy policy, please contact us.</p>
 
+<p><br></p>
+
 <p><small><em>Source: <a rel="nofollow" href="http://forum-template.wikidot.com/legal:privacy-policy" target="_blank">forum-template.wikidot.com</a></em></small></p>]]></content>
 				<customURL>privacy-policy</customURL>
 			</content>
@@ -700,10 +722,12 @@
     <p>Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
       Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.   
     </p>
+    <p><br></p>
     <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. 
       bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. 
       Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht 
       möglich. </p>
+    <p><br></p>
     <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten 
       durch Dritte zur Übersendung von nicht ausdrücklich angeforderter 
       Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. 
@@ -733,6 +757,7 @@
 		 Datenschutzerklärung von facebook unter
 		 <a href="http://de-de.facebook.com/policy.php" target="_blank">
 		 http://de-de.facebook.com/policy.php</a></p>
+     <p><br></p>
      <p>Wenn Sie nicht wünschen, dass Facebook den Besuch unserer Seiten Ihrem 
      Facebook-Nutzerkonto zuordnen kann, loggen Sie sich bitte aus Ihrem
      Facebook-Benutzerkonto aus.</p>
@@ -772,11 +797,13 @@
 		 von Twitter und der Funktion "Re-Tweet" werden die von Ihnen
 		 besuchten Websites mit Ihrem Twitter-Account verknüpft und anderen
 		 Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter übertragen.</p>
+     <p><br></p>
      <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine
      Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch
      Twitter erhalten. Weitere Informationen hierzu finden Sie in der
      Datenschutzerklärung von Twitter unter
      <a href="http://twitter.com/privacy" target="_blank">http://twitter.com/privacy</a>.</p>
+     <p><br></p>
      <p>Ihre Datenschutzeinstellungen bei Twitter können Sie in den
      Konto-Einstellungen unter
      <a href="http://twitter.com/account/settings" target="_blank">http://twitter.com/account/settings</a> ändern.</p>
