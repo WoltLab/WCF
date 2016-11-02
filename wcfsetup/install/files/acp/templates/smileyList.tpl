@@ -75,6 +75,24 @@
 			</section>
 		</div>
 	</div>
+	
+	<footer class="contentFooter">
+		{hascontent}
+			<div class="paginationBottom">
+				{content}{@$pagesLinks}{/content}
+			</div>
+		{/hascontent}
+		
+		{hascontent}
+			<nav class="contentFooterNavigation">
+				<ul>
+					{content}
+						{event name='contentFooterNavigation'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</footer>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
