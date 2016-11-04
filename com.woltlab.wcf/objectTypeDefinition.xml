@@ -222,20 +222,12 @@
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<!-- /box conditions -->
-		
-		<!-- deprecated -->
-		<definition>
-			<name>com.woltlab.wcf.page</name>
-		</definition>
-		
-		<definition>
-			<name>com.woltlab.wcf.user.online.location</name>
-			<interfacename>wcf\system\user\online\location\IUserOnlineLocation</interfacename>
-		</definition>
-		<!-- /deprecated -->
 	</import>
 	
 	<delete>
 		<definition name="com.woltlab.wcf.versionableObject" />
+		<definition name="com.woltlab.wcf.user.dashboardContainer" />
+		<definition name="com.woltlab.wcf.page" />
+		<definition name="com.woltlab.wcf.user.online.location" />
 	</delete>
 </data>

@@ -1992,7 +1992,6 @@ INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMess
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
-
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualScss', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSidebarOrientation', 'left');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideScss', '');

@@ -1142,4 +1142,9 @@
 		</type>
 		<!-- /deprecated -->
 	</import>
+	<delete>
+		<type name="com.woltlab.wcf.collapsibleSidebar">
+			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
+		</type>
+	</delete>
 </data>
