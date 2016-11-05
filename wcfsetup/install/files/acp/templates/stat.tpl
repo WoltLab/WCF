@@ -75,6 +75,6 @@
 	<button class="buttonPrimary" id="statRefreshButton">{lang}wcf.global.button.refresh{/lang}</button>
 </div>
 
-<div id="chartTooltip" class="balloonTooltip" style="display: none"></div>
+<div id="chartTooltip" class="balloonTooltip active" style="display: none"></div>
 
 {include file='footer'}
