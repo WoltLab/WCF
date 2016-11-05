@@ -83,7 +83,7 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 		$data = parent::getData($parameters, $arrayIndex);
 		
 		// work-around for update from 2.1 (changed cache structure :-()
-		if (is_array($data['inheritedActions']['admin']['wcf\page\AbstractPage']['readParameters'][0])) {
+		if (isset($data['inheritedActions']['admin']['wcf\page\AbstractPage']['readParameters'][0]) && is_array($data['inheritedActions']['admin']['wcf\page\AbstractPage']['readParameters'][0])) {
 			$index = CacheHandler::getInstance()->getCacheIndex($parameters);
 			$data = $this->cache[$index] = $this->rebuild($parameters);
 			$this->reset();
