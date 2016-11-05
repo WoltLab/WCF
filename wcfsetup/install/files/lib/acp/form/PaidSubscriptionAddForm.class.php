@@ -25,7 +25,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription';
+	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.add';
 	
 	/**
 	 * @inheritDoc
