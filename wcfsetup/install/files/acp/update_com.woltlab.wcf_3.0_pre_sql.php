@@ -1,5 +1,6 @@
 <?php
 use wcf\system\WCF;
+
 // change encoding of wcf1_acp_session; necessary for foreign key in wcf1_acp_session_virtual
 $sql = "ALTER TABLE wcf".WCF_N."_acp_session CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 $statement = WCF::getDB()->prepareStatement($sql);
