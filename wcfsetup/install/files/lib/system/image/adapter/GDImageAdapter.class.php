@@ -324,6 +324,8 @@ class GDImageAdapter implements IImageAdapter {
 		
 		ob_start();
 		
+		imagealphablending($image, false);
+		imagesavealpha($image, true);
 		if ($this->type == IMAGETYPE_GIF) {
 			imagegif($image);
 		}
