@@ -35,3 +35,5 @@ CREATE TABLE wcf1_page_content (
 	
 	UNIQUE KEY (pageID, languageID)
 );
+
+UPDATE wcf1_user_group_option SET optionName = 'admin.configuration.package.canInstallPackage', categoryName = 'admin.configuration.package' WHERE optionName = 'admin.system.package.canInstallPackage';
