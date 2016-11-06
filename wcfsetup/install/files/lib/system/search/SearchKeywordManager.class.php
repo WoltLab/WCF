@@ -35,7 +35,7 @@ class SearchKeywordManager extends SingletonFactory {
 		}
 		else {
 			$action = new SearchKeywordAction([], 'create', ['data' => [
-				'keyword' => mb_substr($keyword, 0, 255),
+				'keyword' => mb_substr($keyword, 0, 191),
 				'searches' => 1,
 				'lastSearchTime' => TIME_NOW
 			]]);
