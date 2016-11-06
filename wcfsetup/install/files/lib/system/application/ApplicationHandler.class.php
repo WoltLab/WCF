@@ -66,7 +66,8 @@ class ApplicationHandler extends SingletonFactory {
 	 * @since	3.0
 	 */
 	public function getApplicationByID($packageID) {
-		if ($packageID == 1 && !isset($this->cache['application'][1])) {// work-around for update from 2.1 (out-dated cache)
+		// work-around for update from 2.1 (out-dated cache)
+		if ($packageID == 1 && !isset($this->cache['application'][1])) {
 			$this->cache['application'][1] = new Application(1);
 		}
 		if (isset($this->cache['application'][$packageID])) {
