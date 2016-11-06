@@ -1003,7 +1003,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage Time Period]]></item>
 		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Content in the edit history will be removed after the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
-		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/developers'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
 		<item name="wcf.acp.option.twitter_public_key"><![CDATA[Twitter API key]]></item>
 		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[You can obtain both your API key and API secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://dev.twitter.com/apps'|rawurlencode}" class="externalURL">Twitter</a>. The Callback URL is: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
