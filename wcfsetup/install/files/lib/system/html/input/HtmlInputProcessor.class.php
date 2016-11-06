@@ -42,6 +42,8 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 * @param       boolean         $convertFromBBCode      interpret input as bbcode
 	 */
 	public function process($html, $objectType, $objectID = 0, $convertFromBBCode = false) {
+		$this->reset();
+		
 		$this->setContext($objectType, $objectID);
 		
 		// enforce consistent newlines
@@ -159,6 +161,14 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 */
 	public function setObjectID($objectID) {
 		$this->context['objectID'] = $objectID;
+	}
+	
+	/**
+	 * Resets internal states and discards references to objects.
+	 */
+	protected function reset() {
+		$this->embeddedContent = [];
+		$this->htmlInputNodeProcessor = null;
 	}
 	
 	/**
