@@ -9,8 +9,8 @@
 	@include screen-lg {
 		padding: 0 20px;
 		
-		@if $useFluidLayout {
-			//min-width: $wcfLayoutMinWidth;
+		@if $useFluidLayout == 1 {
+			min-width: $wcfLayoutMinWidth;
 			max-width: $wcfLayoutMaxWidth;
 		} @else {
 			width: $wcfLayoutFixedWidth;
