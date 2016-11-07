@@ -1,7 +1,7 @@
 /**
  * Provides helper functions for String handling.
  * 
- * @author	Tim Duesterhus
+ * @author	Tim Duesterhus, Joshua Ruesweg
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/StringUtil
@@ -96,8 +96,45 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		 * @param	{?}		string
 		 * @return	{String}
 		 */
-		unescapeHTML: function (string) {
+		unescapeHTML: function(string) {
 			return String(string).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+		},
+		
+		/**
+		 * Shortens numbers larger than 1000 by using unit prefixes.
+		 *
+		 * @param	{?}		number
+		 * @return	{String}
+		 */
+		shortUnit: function(number) {
+			var unitSuffix = '';
+			
+			if (number >= 1000000) {
+				number /= 1000000;
+				
+				if (number > 10) {
+					number = Math.floor(number);
+				}
+				else {
+					number = NumberUtil.round(number, -1);
+				}
+				
+				unitSuffix = 'M';
+			}
+			else if (number >= 1000) {
+				number /= 1000;
+				
+				if (number > 10) {
+					number = Math.floor(number);
+				}
+				else {
+					number = NumberUtil.round(number, -1);
+				}
+				
+				unitSuffix = 'k';
+			}
+			
+			return this.formatNumeric(number) + unitSuffix;
 		}
 	};
 });
