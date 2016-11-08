@@ -57,12 +57,6 @@
 {event name='sections'}
 
 <footer class="contentFooter">
-	{hascontent}
-		<div class="paginationBottom">
-			{content}{@$pagesLinks}{/content}
-		</div>
-	{/hascontent}
-	
 	<nav class="contentFooterNavigation">
 		<ul>
 			<li><a href="{link controller='PaidSubscriptionTransactionLogList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.paidSubscription.transactionLog.list{/lang}</span></a></li>

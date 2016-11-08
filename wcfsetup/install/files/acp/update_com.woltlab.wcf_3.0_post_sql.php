@@ -1,4 +1,5 @@
 <?php
+use wcf\system\WCF;
 
 // TODO:
 // 1. update label's show order
@@ -10,3 +11,17 @@
 // see: https://github.com/WoltLab/WCF/commit/9fe8b50cc6011628e2ac72d6e80c9561312503f4
 // 5. add application configs
 // if (!file_exists($appConfig)) { Package::writeConfigFile($appPackageID); }
+
+// add vortex update servers if missing
+
+
+
+// set default landing page
+$sql = "UPDATE	wcf".WCF_N."_page
+	SET	isLandingPage = ?
+	WHERE	identifier = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute([
+	1,
+	'com.woltlab.wcf.Dashboard'
+]);

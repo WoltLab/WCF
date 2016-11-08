@@ -3,6 +3,7 @@ namespace wcf\system\exception;
 use wcf\system\box\BoxHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 
 /**
  * A PermissionDeniedException is thrown when a user has no permission to access
@@ -25,7 +26,9 @@ class PermissionDeniedException extends UserException {
 	 * Prints a permission denied exception.
 	 */
 	public function show() {
-		BoxHandler::getInstance()->disablePageLayout();
+		if (!class_exists(WCFACP::class, false)) {
+			BoxHandler::getInstance()->disablePageLayout();
+		}
 		SessionHandler::getInstance()->disableTracking();
 		
 		@header('HTTP/1.0 403 Forbidden');

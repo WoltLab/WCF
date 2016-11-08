@@ -62,7 +62,7 @@ abstract class AbstractSingleFieldCondition extends AbstractCondition {
 	 */
 	protected function getErrorMessageElement() {
 		if ($this->errorMessage) {
-			return '<small class="innerError">'.WCF::getLanguage()->get($this->errorMessage).'</small>';
+			return '<small class="innerError">'.WCF::getLanguage()->getDynamicVariable($this->errorMessage).'</small>';
 		}
 		
 		return '';

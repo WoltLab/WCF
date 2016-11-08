@@ -1992,7 +1992,6 @@ INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMess
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
-
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualScss', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSidebarOrientation', 'left');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideScss', '');
@@ -2091,7 +2090,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputPl
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputPlaceholderActive', 'rgba(204, 204, 204, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFixedWidth', '1200px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMaxWidth', '1400px');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMinWidth', '1240px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMinWidth', '1025px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationBackground', 'rgba(236, 239, 241, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLink', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLinkActive', 'rgba(44, 62, 80, 1)');

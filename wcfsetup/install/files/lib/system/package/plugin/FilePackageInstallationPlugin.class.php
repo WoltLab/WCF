@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\package\FilesFileHandler;
 use wcf\system\package\PackageArchive;
@@ -49,7 +50,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// extract content of files.tar
 		$fileInstaller = $this->installation->extractFiles($packageDir, $sourceFile, $fileHandler);
 		
-		// if this a an application, write config.inc.php for this package
+		// if this is an application, write config.inc.php for this package
 		if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install' && $abbreviation != 'wcf') {
 			// touch file
 			$fileInstaller->touchFile(PackageInstallationDispatcher::CONFIG_FILE);

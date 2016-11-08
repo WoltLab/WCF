@@ -1,6 +1,7 @@
 {
     "config": {
-        "vendor-dir": "./"
+        "vendor-dir": "./",
+        "prepend-autoloader": false
     },
     "require": {
         "ezyang/htmlpurifier": "4.8.*",

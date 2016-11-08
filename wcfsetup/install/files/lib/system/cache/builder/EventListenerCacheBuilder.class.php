@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\event\listener\EventListener;
+use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
@@ -73,5 +74,21 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 			'actions' => $actions,
 			'inheritedActions' => $inheritedActions
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getData(array $parameters = [], $arrayIndex = '') {
+		$data = parent::getData($parameters, $arrayIndex);
+		
+		// work-around for update from 2.1 (changed cache structure :-()
+		if (isset($data['inheritedActions']['admin']['wcf\page\AbstractPage']['readParameters'][0]) && is_array($data['inheritedActions']['admin']['wcf\page\AbstractPage']['readParameters'][0])) {
+			$index = CacheHandler::getInstance()->getCacheIndex($parameters);
+			$data = $this->cache[$index] = $this->rebuild($parameters);
+			$this->reset();
+		}
+		
+		return $data;
 	}
 }

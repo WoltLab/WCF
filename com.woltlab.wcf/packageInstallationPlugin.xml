@@ -31,4 +31,9 @@
 		<pip name="menu">wcf\system\package\plugin\MenuPackageInstallationPlugin</pip>
 		<pip name="menuItem">wcf\system\package\plugin\MenuItemPackageInstallationPlugin</pip>
 	</import>
+	<delete>
+		<pip name="pageMenu" />
+		<pip name="sitemap" />
+		<pip name="dashboardBox" />
+	</delete>
 </data>
