@@ -63,7 +63,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			$this->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH);
 		}
 		
-		$this->invokeHtmlNode(new HtmlInputNodeImg());
+		$imgNodeHandler = new HtmlInputNodeImg();
+		$this->invokeHtmlNode($imgNodeHandler);
+		$smileyCount = $imgNodeHandler->getSmileyCount();
 		
 		// dynamic node handlers
 		$this->invokeNodeHandlers('wcf\system\html\input\node\HtmlInputNode', ['img', 'woltlab-metacode']);
@@ -72,7 +74,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$this->trim();
 		
 		// detect mentions, urls, emails and smileys
-		$textParser = new HtmlInputNodeTextParser($this);
+		$textParser = new HtmlInputNodeTextParser($this, $smileyCount);
 		$textParser->parse();
 		
 		// strip invalid class names

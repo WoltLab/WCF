@@ -18,6 +18,12 @@ use wcf\util\JSON;
  */
 class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	/**
+	 * number of found smilies
+	 * @var integer
+	 */
+	protected $smiliesFound = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $tagName = 'img';
@@ -53,6 +59,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	 * @inheritDoc
 	 */
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
+		$this->smiliesFound = 0;
+		
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$class = $element->getAttribute('class');
@@ -66,6 +74,15 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 				$this->handleSmiley($element);
 			}
 		}
+	}
+	
+	/**
+	 * Returns the number of smilies found within the message.
+	 * 
+	 * @return      integer
+	 */
+	public function getSmileyCount() {
+		return $this->smiliesFound;
 	}
 	
 	/**
@@ -148,7 +165,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		
 		/** @var Smiley $smiley */
 		$smiley = SmileyCache::getInstance()->getSmileyByCode($code);
-		if ($smiley === null) {
+		if ($smiley === null || $this->smiliesFound === 50) {
 			$element->parentNode->insertBefore($element->ownerDocument->createTextNode($code), $element);
 			$element->parentNode->removeChild($element);
 		}
@@ -161,6 +178,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 			
 			if ($smiley->smileyPath2x) $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
 			else $element->removeAttribute('srcset');
+			
+			$this->smiliesFound++;
 		}
 	}
 }

@@ -38,6 +38,12 @@ class HtmlInputNodeTextParser {
 	protected $nodeStack = [];
 	
 	/**
+	 * number of found smilies
+	 * @var integer
+	 */
+	protected $smileyCount = 0;
+	
+	/**
 	 * list of smilies by smiley code
 	 * @var Smiley[]
 	 */
@@ -76,12 +82,15 @@ class HtmlInputNodeTextParser {
 	 * HtmlInputNodeTextParser constructor.
 	 * 
 	 * @param HtmlInputNodeProcessor $htmlInputNodeProcessor
+	 * @param integer $smileyCount
 	 */
-	public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor) {
+	public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor, $smileyCount = 0) {
 		$this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
 		$this->sourceBBCodes = HtmlBBCodeParser::getInstance()->getSourceBBCodes();
 		
 		if (MODULE_SMILEY) {
+			$this->smileyCount = $smileyCount;
+			
 			// get smilies
 			$smilies = SmileyCache::getInstance()->getSmilies();
 			$categories = SmileyCache::getInstance()->getCategories();
@@ -185,7 +194,9 @@ class HtmlInputNodeTextParser {
 				$value = $this->parseEmail($node, $value);
 			}
 			
-			$value = $this->parseSmiley($node, $value);
+			if ($this->smileyCount !== 50) {
+				$value = $this->parseSmiley($node, $value);
+			}
 			
 			if ($value !== $oldValue) {
 				$node->textContent = $value;
@@ -456,7 +467,11 @@ class HtmlInputNodeTextParser {
 		
 		return preg_replace_callback($smileyPattern, function($matches) use ($text) {
 			$smileyCode = $matches[0];
+			if ($this->smileyCount === 50) {
+				return $smileyCode;
+			}
 			
+			$this->smileyCount++;
 			$smiley = $this->smilies[$smileyCode];
 			$element = $text->ownerDocument->createElement('img');
 			$element->setAttribute('src', $smiley->getURL());
