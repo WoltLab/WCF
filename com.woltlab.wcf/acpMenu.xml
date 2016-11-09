@@ -711,5 +711,6 @@
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list" />
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add" />
 		<acpmenuitem name="wcf.acp.menu.link.community" />
+		<acpmenuitem name="wcf.acp.menu.link.cronjob" />
 	</delete>
 </data>
