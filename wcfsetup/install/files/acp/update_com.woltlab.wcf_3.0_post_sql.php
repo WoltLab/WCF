@@ -46,18 +46,15 @@ $sql = "UPDATE	wcf".WCF_N."_option
 	SET	optionValue = ?
 	WHERE	optionName = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute([
-	WCF::getUser()->username,
-	'mail_from_name'
-]);
-$statement->execute([
-	WCF::getUser()->email,
-	'mail_from_address'
-]);
-$statement->execute([
-	WCF::getUser()->email,
-	'mail_admin_address'
-]);
+if (!MAIL_FROM_NAME) {
+	$statement->execute([WCF::getUser()->username, 'mail_from_name']);
+}
+if (!MAIL_FROM_ADDRESS) {
+	$statement->execute([WCF::getUser()->email, 'mail_from_address']);
+}
+if (!MAIL_ADMIN_ADDRESS) {
+	$statement->execute([WCF::getUser()->email, 'mail_admin_address']);
+}
 
 // Generate signature_secret
 try {
