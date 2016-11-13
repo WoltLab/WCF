@@ -7,6 +7,7 @@ use wcf\data\package\Package;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cache\builder\LanguageCacheBuilder;
+use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\util\SQLParser;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\exception\SystemException;
@@ -649,8 +650,16 @@ class WCFSetup extends WCF {
 			try {
 				// check connection data
 				/** @var \wcf\system\database\Database $db */
-				$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
-				$db->connect();
+				try {
+					$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
+				}
+				catch (DatabaseException $e) {
+					if ($e->getPrevious()->getCode() == 1115) { // work-around for older MySQL versions that don't know utf8mb4
+						throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
+					}
+					
+					throw $e;
+				}
 				
 				// check sql version
 				$sqlVersion = $db->getVersion();
