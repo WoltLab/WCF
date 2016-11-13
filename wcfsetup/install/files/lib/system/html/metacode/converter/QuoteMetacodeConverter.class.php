@@ -16,8 +16,8 @@ class QuoteMetacodeConverter extends AbstractMetacodeConverter {
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
 		$element = $fragment->ownerDocument->createElement('woltlab-quote');
-		$element->setAttribute('data-quote-title', isset($attributes[0]) ? $attributes[0] : '');
-		$element->setAttribute('data-quote-url', isset($attributes[1]) ? $attributes[1] : '');
+		$element->setAttribute('data-author', isset($attributes[0]) ? $attributes[0] : '');
+		$element->setAttribute('data-link', isset($attributes[1]) ? $attributes[1] : '');
 		$element->appendChild($fragment);
 		
 		return $element;
