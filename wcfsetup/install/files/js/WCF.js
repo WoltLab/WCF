@@ -1323,6 +1323,11 @@ WCF.Clipboard = {
 				if (actionObjects.hasOwnProperty(type)) {
 					(function (type) {
 						EventHandler.add('com.woltlab.wcf.clipboard', type, function (data) {
+							// only consider events if the action has been executed
+							if (data.responseData === null) {
+								return;
+							}
+							
 							if (actionObjects[type].hasOwnProperty(data.responseData.actionName)) {
 								actionObjects[type][data.responseData.actionName].triggerEffect(data.responseData.objectIDs);
 							}
