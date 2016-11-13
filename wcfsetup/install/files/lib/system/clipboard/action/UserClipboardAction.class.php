@@ -157,7 +157,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 			}
 		}
 		
-		return $userIDs;
+		return array_values($userIDs);
 	}
 	
 	/**
