@@ -236,13 +236,13 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			if (align === 'top') {
 				var bodyHeight = document.body.clientHeight;
 				bottom = (bodyHeight - refOffsets.top) + verticalOffset;
-				if (bodyHeight - (bottom + elDimensions.height) < window.scrollY) {
+				if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset)) {
 					result = false;
 				}
 			}
 			else {
 				top = refOffsets.top + refDimensions.height + verticalOffset;
-				if (top + elDimensions.height - window.scrollY > windowHeight) {
+				if (top + elDimensions.height - (window.scrollY || window.pageYOffset) > windowHeight) {
 					result = false;
 				}
 			}

@@ -134,12 +134,12 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			// get the offsets of the bounding box of current text selection
 			var rect = data.selection.getRangeAt(0).getBoundingClientRect();
 			var offsets = {
-				top: Math.round(rect.bottom) + window.scrollY,
+				top: Math.round(rect.bottom) + (window.scrollY || window.pageYOffset),
 				left: Math.round(rect.left) + document.body.scrollLeft
 			};
 			
 			if (this._lineHeight === null) {
-				this._lineHeight = Math.round(rect.bottom - rect.top - window.scrollY);
+				this._lineHeight = Math.round(rect.bottom - rect.top - (window.scrollY || window.pageYOffset));
 			}
 			
 			// restore caret position
@@ -311,7 +311,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			
 			this._selectItem(0);
 			
-			if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + window.scrollY) {
+			if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + (window.scrollY || window.pageYOffset)) {
 				this._dropdownMenu.style.setProperty('top', offset.top - this._dropdownMenu.offsetHeight - 2 * this._lineHeight + 7 + 'px', '');
 			}
 		},
