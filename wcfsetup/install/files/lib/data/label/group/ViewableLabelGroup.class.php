@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\label\group;
 use wcf\data\label\Label;
+use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITraversableObject;
 use wcf\system\exception\SystemException;
@@ -9,7 +10,7 @@ use wcf\system\WCF;
 /**
  * Represents a viewable label group.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Joshua Ruesweg
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label\Group
@@ -89,25 +90,27 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * Returns true, if current user fulfils option id permissions.
-	 * 
+	 * Returns true, if the given user fulfils option id permissions.
+	 * If the user parameter is null, the method checks the current user.
+	 *
 	 * @param	integer		$optionID
+	 * @param	User		$user
 	 * @return	boolean
 	 */
-	public function getPermission($optionID) {
+	public function getPermission($optionID, User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		
 		// validate by user id
-		$userID = WCF::getUser()->userID;
-		if ($userID) {
-			if (isset($this->permissions['user'][$userID]) && isset($this->permissions['user'][$userID][$optionID])) {
-				if ($this->permissions['user'][$userID][$optionID] == 1) {
+		if ($user->userID) {
+			if (isset($this->permissions['user'][$user->userID]) && isset($this->permissions['user'][$user->userID][$optionID])) {
+				if ($this->permissions['user'][$user->userID][$optionID] == 1) {
 					return true;
 				}
 			}
 		}
 		
 		// validate by group id
-		$groupIDs = WCF::getUser()->getGroupIDs();
-		foreach ($groupIDs as $groupID) {
+		foreach ($user->getGroupIDs() as $groupID) {
 			if (isset($this->permissions['group'][$groupID]) && isset($this->permissions['group'][$groupID][$optionID])) {
 				if ($this->permissions['group'][$groupID][$optionID] == 1) {
 					return true;
