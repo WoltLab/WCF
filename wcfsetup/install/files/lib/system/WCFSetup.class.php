@@ -654,7 +654,8 @@ class WCFSetup extends WCF {
 					$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
 				}
 				catch (DatabaseException $e) {
-					if ($e->getPrevious()->getCode() == 1115) { // work-around for older MySQL versions that don't know utf8mb4
+					// work-around for older MySQL versions that don't know utf8mb4
+					if ($e->getPrevious()->getCode() == 1115) {
 						throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
 					}
 					
