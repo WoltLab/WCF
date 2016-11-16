@@ -31,6 +31,21 @@ $.Redactor.prototype.WoltLabBlock = function() {
 			
 			var mpFormatCollapsed = this.block.formatCollapsed;
 			this.block.formatCollapsed = (function(tag, attr, value, type) {
+				if (this.detect.isFirefox()) {
+					var editor = this.core.editor()[0];
+					if (document.activeElement !== editor) {
+						this.selection.restore();
+						
+						if (document.activeElement !== editor) {
+							editor.focus();
+						}
+					}
+					
+					if (this.selection.block() === false) {
+						this.focus.end();
+					}
+				}
+				
 				var replaced = mpFormatCollapsed.call(this, tag, attr, value, type);
 				
 				for (var i = 0, length = replaced.length; i < length; i++) {
