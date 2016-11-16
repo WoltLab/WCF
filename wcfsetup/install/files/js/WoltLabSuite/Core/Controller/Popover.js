@@ -296,9 +296,11 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			
 			var forceHide = false;
 			if (_popover.classList.contains('active')) {
-				this._hide();
-				
-				forceHide = true;
+				if (_activeId !== _hoverId) {
+					this._hide();
+					
+					forceHide = true;
+				}
 			}
 			else if (_popoverContent.childElementCount) {
 				forceHide = true;
