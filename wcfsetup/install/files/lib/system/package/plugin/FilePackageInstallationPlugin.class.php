@@ -58,7 +58,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			// create file
 			Package::writeConfigFile($this->installation->getPackageID());
 			
-			// log file
+			// log files
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
 						(packageID, filename, application)
 				VALUES		(?, ?, ?)";
@@ -66,6 +66,11 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$statement->execute([
 				$this->installation->getPackageID(),
 				'config.inc.php',
+				Package::getAbbreviation($this->installation->getPackage()->package)
+			]);
+			$statement->execute([
+				$this->installation->getPackageID(),
+				PackageInstallationDispatcher::CONFIG_FILE,
 				Package::getAbbreviation($this->installation->getPackage()->package)
 			]);
 			
