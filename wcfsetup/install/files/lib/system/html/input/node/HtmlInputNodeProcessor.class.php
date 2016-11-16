@@ -239,6 +239,14 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			}
 		}
 		
+		// strip empty <p></p> (zero content, not even whitespaces)
+		$paragraphs = DOMUtil::getElements($this->getDocument(), 'p');
+		foreach ($paragraphs as $paragraph) {
+			if ($paragraph->childNodes->length === 0) {
+				DOMUtil::removeNode($paragraph);
+			}
+		}
+		
 		// trim <p>...</p>
 		/** @var \DOMElement $paragraph */
 		foreach ($this->getDocument()->getElementsByTagName('p') as $paragraph) {
