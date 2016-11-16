@@ -3,6 +3,27 @@ $.Redactor.prototype.WoltLabSource = function() {
 	
 	return {
 		init: function () {
+			var fixQuotes = function(container) {
+				// fix empty quotes suffering from a superfluous <p></p>
+				elBySelAll('woltlab-quote', container, function(quote) {
+					if (quote.childElementCount !== 2 || quote.children[0].nodeName !== 'P' || quote.children[1].nodeName !== 'P') {
+						return;
+					}
+					
+					var first = quote.children[0];
+					if (first.innerHTML.trim() !== '') {
+						return;
+					}
+					
+					var last = quote.children[1];
+					if (last.innerHTML.trim() !== '<br>') {
+						return;
+					}
+					
+					quote.removeChild(first);
+				});
+			};
+			
 			// disable caret position in source mode
 			this.source.setCaretOnShow = function () {};
 			this.source.setCaretOnHide = function (html) { return html; };
@@ -11,7 +32,11 @@ $.Redactor.prototype.WoltLabSource = function() {
 			this.source.hide = (function () {
 				mpHide.call(this);
 				
-				setTimeout(this.focus.end.bind(this), 100);
+				setTimeout((function() {
+					this.focus.end();
+					
+					fixQuotes(this.core.editor()[0]);
+				}).bind(this), 100);
 				
 				this.placeholder.enable();
 			}).bind(this);
@@ -31,7 +56,11 @@ $.Redactor.prototype.WoltLabSource = function() {
 				textarea.style.setProperty('height', Math.ceil(height) + 'px', '');
 				textarea.style.setProperty('display', 'block', '');
 				
-				textarea.value = this.WoltLabSource.format(textarea.value);
+				var div = elCreate('div');
+				div.innerHTML = textarea.value;
+				fixQuotes(div);
+				
+				textarea.value = this.WoltLabSource.format(div.innerHTML);
 				
 				textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
 			}).bind(this);
@@ -65,6 +94,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 			// normalize whitespace before and after block tags
 			html = html.replace(new RegExp('\\s*</(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), '\n</$1$2>');
 			html = html.replace(new RegExp('\\s*<(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), '\n<$1$2>\n');
+			
+			// avoid empty newline at quote start
+			html = html.replace(/<woltlab-quote([^>]*)>\n\t*\n(\t*)<p/, '<woltlab-quote$1>\n$2<p');
 			
 			// lists have additional whitespace inside
 			html = html.replace(new RegExp('<(ol|ul)(' + patternTagAttributes + ')>\\s*', 'g'), '<$1$2>\n');
