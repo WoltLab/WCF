@@ -44,7 +44,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 					var br = p.lastElementChild;
 					if (br && br.nodeName === 'BR') {
 						// check if there is only whitespace afterwards
-						if (br.nextSibling && br.nextSibling.textContent.match(/^[\s\u200B]+$/)) {
+						if (br.nextSibling && br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
 							var newP = elCreate('p');
 							newP.innerHTML = '<br>';
 							p.parentNode.insertBefore(newP, p.nextSibling);
