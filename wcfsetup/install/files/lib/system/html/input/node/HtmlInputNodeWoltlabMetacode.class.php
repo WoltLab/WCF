@@ -108,7 +108,9 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 					
 					if ($attr !== null && $attr->useText && !empty($attributes[0]) && StringUtil::trim($attributes[0]) == StringUtil::trim($element->textContent)) {
 						// discard content as it is already present in the first attribute
-						$element->textContent = '';
+						while ($element->childNodes->length) {
+							$element->removeChild($element->childNodes->item(0));
+						}
 					}
 				}
 				
