@@ -70,16 +70,21 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Swallowes whitespace from beginning and end of the string.
+	 * Removes Unicode whitespace characters from the beginning
+	 * and ending of the given string.
 	 * 
 	 * @param	string		$text
 	 * @return	string
 	 */
 	public static function trim($text) {
-		// Whitespace + (narrow) non breaking spaces.
-		// No one can triforce now.
-		$text = preg_replace('/^(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+/', '', $text);
-		$text = preg_replace('/([^\s'.chr(226).chr(194).']++)(?:\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')++$/', '\\1', $text);
+		// These regular expressions use character properties
+		// to find characters defined as space in the unicode
+		// specification.
+		// Do not merge the expressions, they are seperated for
+		// performance reasons.
+		
+		$text = preg_replace('/^\p{Zs}+/u', '', $text);
+		$text = preg_replace('/\p{Zs}+$/u', '', $text);
 		return $text;
 	}
 	
