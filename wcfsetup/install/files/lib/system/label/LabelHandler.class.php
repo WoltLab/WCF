@@ -3,6 +3,7 @@ namespace wcf\system\label;
 use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\system\cache\builder\LabelCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -12,7 +13,7 @@ use wcf\system\WCF;
 /**
  * Manages labels and label-to-object associations.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Joshua Ruesweg
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Label
@@ -85,22 +86,24 @@ class LabelHandler extends SingletonFactory {
 	 * Returns an array with view permissions for the labels with the given id.
 	 * 
 	 * @param	integer[]		$labelIDs
+	 * @param	User			$user
 	 * @return	array
 	 * @see		\wcf\system\label\LabelHandler::getPermissions()
 	 */
-	public function validateCanView(array $labelIDs) {
-		return $this->getPermissions('canViewLabel', $labelIDs);
+	public function validateCanView(array $labelIDs, User $user = null) {
+		return $this->getPermissions('canViewLabel', $labelIDs, $user);
 	}
 	
 	/**
 	 * Returns an array with use permissions for the labels with the given id.
 	 * 
 	 * @param	integer[]		$labelIDs
+	 * @param	User			$user
 	 * @return	array
 	 * @see		\wcf\system\label\LabelHandler::getPermissions()
 	 */
-	public function validateCanUse(array $labelIDs) {
-		return $this->getPermissions('canUseLabel', $labelIDs);
+	public function validateCanUse(array $labelIDs, User $user = null) {
+		return $this->getPermissions('canUseLabel', $labelIDs, $user);
 	}
 	
 	/**
@@ -108,10 +111,11 @@ class LabelHandler extends SingletonFactory {
 	 * 
 	 * @param	string			$optionName
 	 * @param	integer[]		$labelIDs
+	 * @param	User			$user
 	 * @return	array
 	 * @throws	SystemException
 	 */
-	public function getPermissions($optionName, array $labelIDs) {
+	public function getPermissions($optionName, array $labelIDs, User $user = null) {
 		if (empty($labelIDs)) {
 			// nothing to validate anyway
 			return [];
@@ -140,7 +144,7 @@ class LabelHandler extends SingletonFactory {
 					continue;
 				}
 				
-				if (!$group->hasPermissions() || $group->getPermission($optionID)) {
+				if (!$group->hasPermissions() || $group->getPermission($optionID, $user)) {
 					$isValid = true;
 				}
 			}
@@ -161,7 +165,7 @@ class LabelHandler extends SingletonFactory {
 	 * @param	boolean			$validatePermissions
 	 */
 	public function setLabels(array $labelIDs, $objectTypeID, $objectID, $validatePermissions = true) {
-		// get accessible label ids to prevent unaccessible ones to be removed
+		// get accessible label ids to prevent inaccessible ones to be removed
 		$accessibleLabelIDs = $this->getAccessibleLabelIDs();
 		
 		// delete previous labels
