@@ -2469,8 +2469,11 @@ WCF.User.List = Class.extend({
 		if (this._cache[this._pageNo]) {
 			var $dialogCreated = false;
 			if (this._dialog === null) {
-				this._dialog = $('<div id="userList' + this._className.hashCode() + '" />').hide().appendTo(document.body);
-				$dialogCreated = true;
+				this._dialog = $('#userList' + this._className.hashCode());
+				if (this._dialog.length === 0) {
+					this._dialog = $('<div id="userList' + this._className.hashCode() + '" />').hide().appendTo(document.body);
+					$dialogCreated = true;
+				}
 			}
 			
 			// remove current view
