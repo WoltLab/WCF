@@ -309,9 +309,10 @@ class HtmlInputNodeTextParser {
 		}
 		
 		foreach ($users as $userID => $username) {
+			$offset = 0;
 			do {
 				$needle = '@' . $username;
-				$pos = mb_stripos($value, $needle);
+				$pos = mb_stripos($value, $needle, $offset);
 				
 				// username not found, maybe it is quoted
 				if ($pos === false) {
@@ -331,6 +332,8 @@ class HtmlInputNodeTextParser {
 					// and we need to replace them one by one, also avoiding only replacing
 					// the non-quoted username even though both variants are present
 					$value = preg_replace('~' . preg_quote($needle, '~') . '~i', $marker, $value, 1);
+					
+					$offset = $pos + 1;
 				}
 			}
 			while ($pos);
