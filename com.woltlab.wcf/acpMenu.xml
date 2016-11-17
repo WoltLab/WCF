@@ -51,6 +51,13 @@
 				<parent>wcf.acp.menu.link.package</parent>
 				<permissions>admin.configuration.package.canEditServer</permissions>
 			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.package.server.add">
+				<controller>wcf\acp\form\PackageUpdateServerAddForm</controller>
+				<parent>wcf.acp.menu.link.package.server.list</parent>
+				<permissions>admin.configuration.package.canEditServer</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
 			<!-- /package -->
 		
 			<!-- other -->
@@ -158,6 +165,13 @@
 				<controller>wcf\acp\page\UserGroupAssignmentListPage</controller>
 				<parent>wcf.acp.menu.link.group</parent>
 				<permissions>admin.user.canManageGroupAssignment</permissions>
+			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.group.assignment.add">
+				<controller>wcf\acp\form\UserGroupAssignmentAddForm</controller>
+				<parent>wcf.acp.menu.link.group.assignment</parent>
+				<permissions>admin.user.canManageGroupAssignment</permissions>
+				<icon>fa-plus</icon>
 			</acpmenuitem>
 			<!-- /group -->
 			

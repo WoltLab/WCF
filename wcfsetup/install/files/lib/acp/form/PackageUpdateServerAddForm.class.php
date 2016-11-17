@@ -20,7 +20,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	public $activeMenuItem = 'wcf.acp.menu.link.package.server.add';
 	
 	/**
 	 * @inheritDoc

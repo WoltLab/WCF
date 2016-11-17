@@ -691,6 +691,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Package Servers]]></item>
+		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add Server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Add Style]]></item>
@@ -744,6 +745,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.stat"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.menu.link.stat.list"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatic Assignments]]></item>
+		<item name="wcf.acp.menu.link.group.assignment.add"><![CDATA[Add Automatic Assignment]]></item>
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Notices]]></item>

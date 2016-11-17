@@ -695,6 +695,7 @@
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Paket-Server]]></item>
+		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
@@ -748,6 +749,7 @@
 		<item name="wcf.acp.menu.link.stat"><![CDATA[Statistiken]]></item>
 		<item name="wcf.acp.menu.link.stat.list"><![CDATA[Statistiken]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatische Zuordnungen]]></item>
+		<item name="wcf.acp.menu.link.group.assignment.add"><![CDATA[Automatische Zuordnung hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Hinweise]]></item>

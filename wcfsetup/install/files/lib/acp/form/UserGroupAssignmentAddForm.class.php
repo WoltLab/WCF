@@ -22,7 +22,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.group.assignment';
+	public $activeMenuItem = 'wcf.acp.menu.link.group.assignment.add';
 	
 	/**
 	 * list of grouped user group assignment condition object types
