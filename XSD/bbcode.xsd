@@ -28,7 +28,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	
-	<!-- deleted page menu item element -->
+	<!-- deleted bbcode element -->
 	<xs:complexType name="bbcode_delete">
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
@@ -40,13 +40,12 @@
 				<xs:all>
 					<xs:element name="htmlopen" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="htmlclose" type="woltlab_varchar_nullable" minOccurs="0" />
-					<xs:element name="allowedchildren" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="attributes" type="attributes_element" minOccurs="0" />
 					<xs:element name="sourcecode" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="wysiwygicon" type="woltlab_varchar_nullable" minOccurs="0" />
-					<xs:element name="wysiwyg" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="buttonlabel" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="isBlockElement" type="woltlab_boolean" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>
@@ -65,6 +64,7 @@
 					<xs:element name="required" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="usetext" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="validationpattern" type="xs:string" minOccurs="0" />
+					<xs:element name="html" type="xs:string" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>

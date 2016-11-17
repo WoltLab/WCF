@@ -31,8 +31,8 @@
 	<!-- import element type -->
 	<xs:complexType name="type_import">
 		<xs:all>
-			<xs:element name="name" type="woltlab_varchar_nullable" minOccurs="0" />
-			<xs:element name="definitionname" type="woltlab_varchar_nullable" minOccurs="0" />
+			<xs:element name="name" type="woltlab_varchar_nullable" minOccurs="1" />
+			<xs:element name="definitionname" type="woltlab_varchar_nullable" minOccurs="1" />
 			<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
 			<xs:element name="category" type="woltlab_varchar_nullable" minOccurs="0" />
 			<xs:element name="categoryname" type="woltlab_varchar_nullable" minOccurs="0" />
@@ -48,6 +48,7 @@
 	
 	<!-- delete element type -->
 	<xs:complexType name="type_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 		<xs:all>
 			<xs:element name="name" type="woltlab_varchar_nullable" minOccurs="0" />
 			<xs:element name="definitionname" type="woltlab_varchar_nullable" minOccurs="0" />

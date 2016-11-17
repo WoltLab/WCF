@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/bbcode.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/bbcode.xsd">
 	<import>
 		<bbcode name="b">
 			<htmlopen>b</htmlopen>
@@ -56,7 +56,6 @@
 					<required>1</required>
 				</attribute>
 			</attributes>
-			<wysiwyg>1</wysiwyg>
 		</bbcode>
 		<bbcode name="font">
 			<htmlopen>span</htmlopen>
@@ -83,8 +82,10 @@
 		</bbcode>
 		<bbcode name="quote">
 			<attributes>
-				<attribute name="0"></attribute>
-				<attribute name="1"></attribute>
+				<attribute name="0">
+				</attribute>
+				<attribute name="1">
+				</attribute>
 			</attributes>
 			<wysiwygicon>fa-quote-left</wysiwygicon>
 			<buttonlabel>wcf.editor.button.quote</buttonlabel>
@@ -92,9 +93,12 @@
 		</bbcode>
 		<bbcode name="code">
 			<attributes>
-				<attribute name="0"></attribute>
-				<attribute name="1"></attribute>
-				<attribute name="2"></attribute>
+				<attribute name="0">
+				</attribute>
+				<attribute name="1">
+				</attribute>
+				<attribute name="2">
+				</attribute>
 			</attributes>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-code</wysiwygicon>
@@ -152,7 +156,8 @@
 		</bbcode>
 		<bbcode name="spoiler">
 			<attributes>
-				<attribute name="0"></attribute>
+				<attribute name="0">
+				</attribute>
 			</attributes>
 			<wysiwygicon>fa-eye-slash</wysiwygicon>
 			<buttonlabel>wcf.editor.button.spoiler</buttonlabel>

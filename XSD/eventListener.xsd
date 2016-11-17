@@ -30,6 +30,7 @@
 	
 	<!-- event listener element type -->
 	<xs:complexType name="eventlistener">
+		<xs:attribute name="name" type="woltlab_varchar" use="optional" />
 		<xs:all>
 			<xs:element name="eventclassname" minOccurs="0">
 				<xs:simpleType>

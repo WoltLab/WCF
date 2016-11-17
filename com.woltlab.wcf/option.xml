@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/option.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/option.xsd">
 	<import>
 		<categories>
 			<!-- modules -->
@@ -240,7 +240,8 @@
 				</category>
 			
 			<!-- cms -->
-			<category name="cms"></category>
+			<category name="cms">
+			</category>
 			<category name="cms.media">
 				<parent>cms</parent>
 			</category>
@@ -643,7 +644,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<option name="signature_secret">
 				<categoryname>security.general.secrets</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 				<allowempty>0</allowempty>
 				<validationpattern>^.{15,}$</validationpattern>
 			</option>
@@ -699,14 +699,12 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^[^/]*$</validationpattern>
-				<defaultvalue></defaultvalue>
 				<showorder>1</showorder>
 			</option>
 			<option name="recaptcha_privatekey">
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^[^/]*$</validationpattern>
-				<defaultvalue></defaultvalue>
 				<showorder>2</showorder>
 			</option>
 			<!-- /security.antispam.recaptcha -->
@@ -809,22 +807,18 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 			<option name="mail_from_name">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_from_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_admin_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="mail_signature">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>textareaI18n</optiontype>
-				<defaultvalue></defaultvalue>
 				<supporti18n>1</supporti18n>
 			</option>
 			<!-- /general.mail.general -->
@@ -1130,42 +1124,34 @@ Pinterest</defaultvalue>
 			<option name="github_public_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="github_private_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="twitter_public_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="twitter_private_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="facebook_public_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="facebook_private_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="google_public_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="google_private_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<!-- /user.3rdPartyAuth -->
 			
@@ -1377,7 +1363,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="message_sidebar_user_options">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
-				<defaultvalue></defaultvalue>
 				<issortable>1</issortable>
 			</option>
 			

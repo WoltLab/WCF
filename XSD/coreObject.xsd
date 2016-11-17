@@ -24,8 +24,11 @@
 	<!-- delete element type -->
 	<xs:complexType name="delete">
 		<xs:sequence>
-			<xs:element name="coreobject" type="coreObject" maxOccurs="unbounded" />
+			<xs:element name="coreobject" type="coreObject_delete" maxOccurs="unbounded" />
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="coreObject_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 	
 	<!-- core object element type -->
