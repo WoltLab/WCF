@@ -80,11 +80,11 @@ final class StringUtil {
 		// These regular expressions use character properties
 		// to find characters defined as space in the unicode
 		// specification.
-		// Do not merge the expressions, they are seperated for
+		// Do not merge the expressions, they are separated for
 		// performance reasons.
-		
 		$text = preg_replace('/^\p{Zs}+/u', '', $text);
-		$text = preg_replace('/\p{Zs}+$/u', '', $text);
+		$text = preg_replace('/[\p{Zs}\s]+$/u', '', $text);
+		
 		return $text;
 	}
 	
