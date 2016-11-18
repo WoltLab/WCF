@@ -142,6 +142,9 @@ class QuickReplyManager extends SingletonFactory {
 		unset($parameters['data']['message']);
 		
 		$parameters['htmlInputProcessor']->validate();
+		if ($parameters['htmlInputProcessor']->appearsToBeEmpty()) {
+			throw new UserInputException('message');
+		}
 		
 		// validate message
 		$object->validateMessage($this->container, $parameters['htmlInputProcessor']);

@@ -197,7 +197,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		throwError: function(element, message) {
 			var error = elCreate('small');
 			error.className = 'innerError';
-			error.textContent = message;
+			error.textContent = (message === 'empty' ? Language.get('wcf.global.form.error.empty') : message);
 			
 			DomUtil.insertAfter(error, element);
 		},

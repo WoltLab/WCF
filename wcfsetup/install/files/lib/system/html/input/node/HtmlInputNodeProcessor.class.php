@@ -34,6 +34,29 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	];
 	
 	/**
+	 * list of HTML elements that are treated as empty, that means
+	 * they don't generate any (indirect) output at all
+	 * 
+	 * @var string[]
+	 */
+	public static $emptyTags = [
+		// typical wrappers
+		'div', 'p', 'span',
+		
+		// headlines
+		'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+		
+		// tables
+		'table', 'tbody', 'thead', 'tr', 'th', 'td', 'colgroup', 'col',
+		
+		// lists
+		'ul', 'ol', 'li',
+		
+		// other
+		'a', 'kbd', 'woltlab-quote', 'woltlab-spoiler', 'pre', 'sub', 'sup'
+	];
+	
+	/**
 	 * list of embedded content grouped by type
 	 * @var array
 	 */
@@ -314,6 +337,29 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 */
 	public function getTextContent() {
 		return StringUtil::trim($this->getDocument()->getElementsByTagName('body')->item(0)->textContent);
+	}
+	
+	/**
+	 * Returns true if the message appears to be empty.
+	 *
+	 * @return      boolean         true if message appears to be empty
+	 */
+	public function appearsToBeEmpty() {
+		if ($this->getTextContent() !== '') {
+			return false;
+		}
+		
+		/** @var \DOMElement $body */
+		$body = $this->getDocument()->getElementsByTagName('body')->item(0);
+		
+		/** @var \DOMElement $element */
+		foreach ($body->getElementsByTagName('*') as $element) {
+			if (!in_array($element->nodeName, self::$emptyTags)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	/**

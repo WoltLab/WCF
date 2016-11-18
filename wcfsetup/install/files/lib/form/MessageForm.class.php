@@ -218,6 +218,9 @@ abstract class MessageForm extends AbstractCaptchaForm {
 		$this->htmlInputProcessor->process($this->text, $this->messageObjectType, 0);
 		
 		// check text length
+		if ($this->htmlInputProcessor->appearsToBeEmpty()) {
+			throw new UserInputException('text');
+		}
 		$message = $this->htmlInputProcessor->getTextContent();
 		if ($this->maxTextLength != 0 && mb_strlen($message) > $this->maxTextLength) {
 			throw new UserInputException('text', 'tooLong');

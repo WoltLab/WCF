@@ -135,6 +135,15 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	}
 	
 	/**
+	 * Returns true if the message appears to be empty.
+	 * 
+	 * @return      boolean         true if message appears to be empty
+	 */
+	public function appearsToBeEmpty() {
+		return $this->getHtmlInputNodeProcessor()->appearsToBeEmpty();
+	}
+	
+	/**
 	 * Returns the all embedded content data.
 	 *
 	 * @return array

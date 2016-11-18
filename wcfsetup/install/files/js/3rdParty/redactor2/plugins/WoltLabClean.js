@@ -15,12 +15,21 @@ $.Redactor.prototype.WoltLabClean = function() {
 				// restore ampersands
 				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
 				
+				var div = elCreate('div');
+				div.innerHTML = html;
+				
 				// remove iframes smuggled into the HTML by the user
 				// they're removed on the server anyway, but keeping
 				// them in the wysiwyg may lead to false impressions
-				var div = elCreate('div');
-				div.innerHTML = html;
 				elBySelAll('iframe', div, elRemove);
+				
+				// strip script tags
+				elBySelAll('pre', div, function (pre) {
+					if (pre.classList.contains('redactor-script-tag')) {
+						elRemove(pre);
+					}
+				});
+				
 				html = div.innerHTML;
 				
 				return html;
