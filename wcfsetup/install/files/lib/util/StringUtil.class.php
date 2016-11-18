@@ -82,7 +82,7 @@ final class StringUtil {
 		// specification.
 		// Do not merge the expressions, they are separated for
 		// performance reasons.
-		$text = preg_replace('/^\p{Zs}+/u', '', $text);
+		$text = preg_replace('/^[\p{Zs}\s]+/u', '', $text);
 		$text = preg_replace('/[\p{Zs}\s]+$/u', '', $text);
 		
 		return $text;
