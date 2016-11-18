@@ -445,48 +445,116 @@ class HtmlInputNodeTextParser {
 	 * @return      string          modified node value with replacement placeholders
 	 */
 	protected function parseSmiley(\DOMText $text, $value) {
-		static $smileyPattern = null;
-		if ($smileyPattern === null) {
-			$difficultCodes = [];
+		static $smileyPatterns = null;
+		if ($smileyPatterns === null) {
+			$smileyPatterns = [];
+			$codes = [
+				'simple' => [],
+				'difficult' => []
+			];
+			
 			foreach ($this->smilies as $smileyCode => $smiley) {
 				$smileyCode = preg_quote($smileyCode, '~');
 				
-				if (!preg_match('~^\\\:.+\\\:$~', $smileyCode)) {
-					$difficultCodes[] = $smileyCode;
-					continue;
+				if (preg_match('~^\\\:.+\\\:$~', $smileyCode)) {
+					$codes['simple'][] = $smileyCode;
+				}
+				else {
+					$codes['difficult'][] = $smileyCode;
+				}
+			}
+			
+			$index = 0;
+			$tmp = '';
+			$length = 0;
+			foreach ($codes['simple'] as $code) {
+				if (!empty($tmp)) $tmp .= '|';
+				$tmp .= $code;
+				
+				// add `1` to account for `|` (btw we end up off by 1, but who cares)
+				$length += (mb_strlen($code) + 1);
+				
+				// start a new pattern after 30k characters
+				if ($length > 30000) {
+					$smileyPatterns[$index] = $tmp;
+					
+					$tmp = '';
+					$index++;
+					$length = 0;
+				}
+			}
+			
+			if (!empty($codes['difficult'])) {
+				if (!empty($tmp)) $tmp .= '|';
+				$tmp .= '(?<=\s|^)(?:';
+				$atStart = true;
+				
+				foreach ($codes['difficult'] as $code) {
+					if ($atStart) $atStart = false;
+					else $tmp .= '|';
+					
+					$tmp .= $code;
+					
+					// add `1` to account for `|` (btw we end up off by 1, but who cares)
+					$length += (mb_strlen($code) + 1);
+					
+					// start a new pattern after 30k characters
+					if ($length > 30000) {
+						// close the pattern group
+						$tmp .= ')(?=\s|$)';
+						
+						$smileyPatterns[$index] = $tmp;
+						
+						$atStart = true;
+						$tmp = '(?<=\s|^)(?:';
+						$index++;
+						$length = 0;
+					}
 				}
 				
-				if (!empty($smileyPattern)) $smileyPattern .= '|';
-				$smileyPattern .= $smileyCode;
+				if (!empty($tmp)) {
+					if ($tmp === '(?<=\s|^)(?:') {
+						$tmp = '';
+					}
+					else {
+						// close the pattern group
+						$tmp .= ')(?=\s|$)';
+					}
+				}
 			}
 			
-			if (!empty($difficultCodes)) {
-				if (!empty($smileyPattern)) $smileyPattern .= '|';
-				$smileyPattern .= '(?<=\s|^)(?:' . implode('|', $difficultCodes) . ')(?=\s|$)';
+			if (!empty($tmp)) {
+				$smileyPatterns[$index] = $tmp;
 			}
 			
-			$smileyPattern = '~(' . $smileyPattern . ')~';
+			for ($i = 0, $length = count($smileyPatterns); $i < $length; $i++) {
+				$smileyPatterns[$i] = '~(' . $smileyPatterns[$i] . ')~';
+			}
 		}
 		
-		return preg_replace_callback($smileyPattern, function($matches) use ($text) {
-			$smileyCode = $matches[0];
-			if ($this->smileyCount === 50) {
-				return $smileyCode;
-			}
-			
-			$this->smileyCount++;
-			$smiley = $this->smilies[$smileyCode];
-			$element = $text->ownerDocument->createElement('img');
-			$element->setAttribute('src', $smiley->getURL());
-			$element->setAttribute('class', 'smiley');
-			$element->setAttribute('alt', $smileyCode);
-			$element->setAttribute('height', $smiley->getHeight());
-			if ($smiley->getURL2x()) {
-				$element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
-			}
-			
-			return $this->addReplacement($text, $element);
-		}, $value);
+		foreach ($smileyPatterns as $smileyPattern) {
+			$value = preg_replace_callback($smileyPattern, function ($matches) use ($text) {
+				$smileyCode = $matches[0];
+				if ($this->smileyCount === 50) {
+					return $smileyCode;
+				}
+				
+				$this->smileyCount++;
+				$smiley = $this->smilies[$smileyCode];
+				$element = $text->ownerDocument->createElement('img');
+				$element->setAttribute('src', $smiley->getURL());
+				$element->setAttribute('class', 'smiley');
+				$element->setAttribute('alt', $smileyCode);
+				$element->setAttribute('height', $smiley->getHeight());
+				if ($smiley->getURL2x()) {
+					$element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
+				}
+				
+				return $this->addReplacement($text, $element);
+			}, $value);
+		}
+		
+		return $value;
 	}
 	
 	/**
