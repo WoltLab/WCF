@@ -64,9 +64,10 @@ class SystemException extends \Exception implements IPrintableException {
 	 * @param	string		$message	error message
 	 * @param	integer		$code		error code
 	 * @param	string		$description	description of the error
+	 * @param	\Exception	$previous	repacked Exception
 	 */
-	public function __construct($message = '', $code = 0, $description = '') {
-		parent::__construct($message, $code);
+	public function __construct($message = '', $code = 0, $description = '', \Exception $previous = null) {
+		parent::__construct((string) $message, (int) $code, $previous);
 		$this->description = $description;
 	}
 	
@@ -327,39 +328,46 @@ class SystemException extends \Exception implements IPrintableException {
 		</div>
 			
 		<?php
+		$e = $this;
 		$first = true;
 		do {
+			$trace = $e->getTrace();
+			if (isset($trace[0]['function']) && $trace[0]['function'] === 'handleException') {
+				// ignore repacked exception
+				continue;
+			}
+			
 			?>
 			<div class="exceptionBoundary">
-				<p class="exceptionSubtitle"><?php if (!$this->getPrevious() && !$first) { echo "Original "; } else if ($this->getPrevious() && $first) { echo "Final "; } ?>Error</p>
-				<?php if ($this instanceof SystemException && $this->getDescription()) { ?>
-					<p class="exceptionText"><?php echo $this->getDescription(); ?></p>
+				<p class="exceptionSubtitle"><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error</p>
+				<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
+					<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
 				<?php } ?>
 				<ul class="exceptionErrorDetails">
 					<li>
 						<p class="exceptionFieldTitle">Error Type<span class="exceptionColon">:</span></p>
-						<p class="exceptionFieldValue"><?php echo htmlentities(get_class($this)); ?></p>
+						<p class="exceptionFieldValue"><?php echo htmlentities(get_class($e)); ?></p>
 					</li>
 					<li>
 						<p class="exceptionFieldTitle">Error Message<span class="exceptionColon">:</span></p>
-						<p class="exceptionFieldValue"><?php echo htmlentities($this->getMessage()); ?></p>
+						<p class="exceptionFieldValue"><?php echo htmlentities($e->getMessage()); ?></p>
 					</li>
-					<?php if ($this->getCode()) { ?>
+					<?php if ($e->getCode()) { ?>
 						<li>
 							<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
-							<p class="exceptionFieldValue"><?php echo intval($this->getCode()); ?></p>
+							<p class="exceptionFieldValue"><?php echo intval($e->getCode()); ?></p>
 						</li>
 					<?php } ?>
 					<li>
 						<p class="exceptionFieldTitle">File<span class="exceptionColon">:</span></p>
-						<p class="exceptionFieldValue" style="word-break: break-all"><?php echo htmlentities($this->getFile()); ?> (<?php echo $this->getLine(); ?>)</p>
+						<p class="exceptionFieldValue" style="word-break: break-all"><?php echo htmlentities($e->getFile()); ?> (<?php echo $e->getLine(); ?>)</p>
 					</li>
 					
 					<li>
 						<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span></p>
 						<ul class="exceptionStacktrace">
 							<?php
-							$trace = $this->getTrace();
+							$trace = $e->getTrace();
 							for ($i = 0, $max = count($trace); $i < $max; $i++) {
 							?>
 							<li class="exceptionStacktraceFile"><?php echo '#'.$i.' '.htmlentities($trace[$i]['file']).' ('.$trace[$i]['line'].')'.':'; ?></li>
@@ -398,7 +406,8 @@ class SystemException extends \Exception implements IPrintableException {
 			</div>
 			<?php
 			$first = false;
-		} while ($e = $this->getPrevious());
+		} while ($e = $e->getPrevious());
+		?>
 		?>
 	</div>
 </body>
@@ -448,6 +457,10 @@ function handleException($e) {
 			$e->show();
 			exit;
 		}
+		
+		// repacking
+		(new SystemException($e->getMessage(), $e->getCode(), '', $e))->show();
+		exit;
 	}
 	catch (\Throwable $exception) {
 		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
