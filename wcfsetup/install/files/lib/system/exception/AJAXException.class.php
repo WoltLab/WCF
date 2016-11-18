@@ -56,21 +56,35 @@ class AJAXException extends LoggedException {
 	 * @param	string		$stacktrace
 	 * @param	mixed[]		$returnValues
 	 * @param	string		$exceptionID
+	 * @param       \Exception|\Throwable   $previous
 	 */
-	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = [], $exceptionID = '') {
+	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = [], $exceptionID = '', $previous = null) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
 		$responseData = [
 			'code' => $errorType,
 			'message' => $message,
+			'previous' => [],
 			'returnValues' => $returnValues
 		];
 		
 		// include a stacktrace if:
 		// - debug mode is enabled
 		// - within ACP and a SystemException was thrown
-		if (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR) {
+		$includeStacktrace = (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR);
+		
+		if ($includeStacktrace) {
 			$responseData['stacktrace'] = nl2br($stacktrace, false);
+		}
+		
+		if ($includeStacktrace) {
+			while ($previous) {
+				$data = ['message' => $previous->getMessage()];
+				$data['stacktrace'] = nl2br($previous->getTraceAsString(), false);
+				
+				$responseData['previous'][] = $data;
+				$previous = $previous->getPrevious();
+			}
 		}
 		
 		$statusHeader = '';

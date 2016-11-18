@@ -272,10 +272,15 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				var message = '';
 				
 				if (data !== null) {
-					if (data.stacktrace) details = '<br /><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
-					else if (data.exceptionID) details = '<br /><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+					if (data.stacktrace) details = '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
+					else if (data.exceptionID) details = '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
 					
 					message = data.message;
+					
+					data.previous.forEach(function(previous) {
+						details += '<hr><p>' + previous.message + '</p>';
+						details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+					});
 				}
 				else {
 					message = xhr.responseText;

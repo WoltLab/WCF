@@ -202,7 +202,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), [], \wcf\functions\exception\logThrowable($e));
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), [], \wcf\functions\exception\logThrowable($e), $e->getPrevious());
 		}
 	}
 	
