@@ -534,18 +534,26 @@
 	}
 }
 
-.messageSignature {
-	border-top: 1px solid $wcfContentBorderInner;
-	margin-top: 20px;
-	opacity: .6;
-	padding-top: 10px;
-	transition: opacity .12s linear;
+@include screen-sm-down {
+	.messageSignature {
+		display: none;
+	}
 }
 
-.message:hover .messageSignature {
-	opacity: 1;
+@include screen-md-up {
+	.messageSignature {
+		border-top: 1px solid $wcfContentBorderInner;
+		margin-top: 20px;
+		opacity: .6;
+		padding-top: 10px;
+		transition: opacity .12s linear;
+	}
+	
+	.message:hover .messageSignature {
+		opacity: 1;
+	}
 }
-
+	
 .messageFooterButtons {
 	@extend .buttonGroup;
 	
