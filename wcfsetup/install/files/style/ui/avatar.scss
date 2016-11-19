@@ -16,7 +16,7 @@
 	
 	@include screen-md-up {
 		/* use fixed height to ensure a constant gap between <dl> with and without an image */
-		height: 100px;
+		min-height: 100px;
 		
 		> dt:not(:empty) {
 			margin: 0 0 0 30px;
