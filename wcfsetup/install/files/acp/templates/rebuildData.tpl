@@ -31,18 +31,25 @@
 	</header>
 	
 	{foreach from=$objectTypes item=objectType}
+		{assign var=_allowRebuild value=true}
+		{if !$convertEncoding && $objectType->objectType != 'com.woltlab.wcf.databaseConvertEncoding'}
+			{assign var=_allowRebuild value=false}
+		{/if}
+		
 		<dl class="wide">
 			<dd>
-				<a class="button small" id="rebuildData{@$objectType->objectTypeID}">{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
+				<a class="button small{if !$_allowRebuild} disabled{/if}" id="rebuildData{@$objectType->objectTypeID}">{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
 				<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
 				
-				<script data-relocate="true">
-					$(function() {
-						$('#rebuildData{@$objectType->objectTypeID}').click(function () {
-							new WCF.ACP.Worker('cache', '{@$objectType->className|encodeJS}', '{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}');
+				{if $_allowRebuild}
+					<script data-relocate="true">
+						$(function() {
+							$('#rebuildData{@$objectType->objectTypeID}').click(function () {
+								new WCF.ACP.Worker('cache', '{@$objectType->className|encodeJS}', '{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}');
+							});
 						});
-					});
-				</script>
+					</script>
+				{/if}
 			</dd>
 		</dl>
 	{/foreach}
