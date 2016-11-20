@@ -1,6 +1,3 @@
-ALTER TABLE wcf1_user_avatar DROP COLUMN cropX;
-ALTER TABLE wcf1_user_avatar DROP COLUMN cropY;
-
 ALTER TABLE wcf1_user_notification ADD KEY (confirmTime);
 
 DELETE FROM wcf1_user_profile_visitor WHERE userID IS NULL OR ownerID IS NULL;

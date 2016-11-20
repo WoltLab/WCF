@@ -60,6 +60,7 @@
 		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_columnLength.php</instruction>
 		<instruction type="sql" run="standalone">update_1.sql</instruction>
 		<instruction type="sql" run="standalone">update_2.sql</instruction>
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_dropColumns.php</instruction>
 		<instruction type="sql" run="standalone">update_3.sql</instruction>
 		<instruction type="sql" run="standalone">update_4.sql</instruction>
 		<instruction type="sql" run="standalone">update_5.sql</instruction>

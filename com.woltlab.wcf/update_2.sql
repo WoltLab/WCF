@@ -77,31 +77,3 @@ ALTER TABLE wcf1_modification_log ADD parentObjectID INT(10);
 ALTER TABLE wcf1_package_update_version DROP COLUMN isCritical;
 
 DROP TABLE IF EXISTS wcf1_page_menu_item;
-
-ALTER TABLE wcf1_session DROP COLUMN controller;
-ALTER TABLE wcf1_session DROP COLUMN parentObjectType;
-ALTER TABLE wcf1_session DROP COLUMN parentObjectID;
-ALTER TABLE wcf1_session DROP COLUMN objectType;
-ALTER TABLE wcf1_session DROP COLUMN objectID;
-ALTER TABLE wcf1_session DROP COLUMN sessionVariables;
-
-ALTER TABLE wcf1_session ADD pageID INT(10);
-ALTER TABLE wcf1_session ADD pageObjectID INT(10);
-ALTER TABLE wcf1_session ADD parentPageID INT(10);
-ALTER TABLE wcf1_session ADD parentPageObjectID INT(10);
-ALTER TABLE wcf1_session ADD KEY pageID (pageID, pageObjectID);
-ALTER TABLE wcf1_session ADD KEY parentPageID (parentPageID, parentPageObjectID);
-
-ALTER TABLE wcf1_session_virtual ADD sessionVariables MEDIUMTEXT;
-
-DROP TABLE IF EXISTS wcf1_sitemap;
-
-ALTER TABLE wcf1_smiley ADD smileyPath2x VARCHAR(255) NOT NULL DEFAULT '';
-
-ALTER TABLE wcf1_style ADD packageName VARCHAR(255) NOT NULL DEFAULT '';
-ALTER TABLE wcf1_style ADD isTainted TINYINT(1) NOT NULL DEFAULT 0;
-
-ALTER TABLE wcf1_template_listener ADD permissions TEXT;
-ALTER TABLE wcf1_template_listener ADD options TEXT;
-
-ALTER TABLE wcf1_user CHANGE lostPasswordKey lostPasswordKey CHAR(40) DEFAULT NULL;
