@@ -1,7 +1,6 @@
 <?php
 namespace wcf\util;
 use wcf\system\exception\SystemException;
-use wcf\system\Callback;
 use wcf\system\Regex;
 
 /**
@@ -254,11 +253,11 @@ final class DirectoryUtil {
 	/**
 	 * Executes a callback on each file and returns false if callback is invalid.
 	 * 
-	 * @param	Callback	$callback
+	 * @param	callable	$callback
 	 * @param	Regex		$pattern	callback is only applied to files matching the given pattern
 	 * @return	boolean
 	 */
-	public function executeCallback(Callback $callback, Regex $pattern = null) {
+	public function executeCallback(callable $callback, Regex $pattern = null) {
 		if ($pattern !== null) $files = $this->getFileObjects(self::SORT_NONE, $pattern);
 		else $files = $this->getFileObjects(self::SORT_NONE);
 		

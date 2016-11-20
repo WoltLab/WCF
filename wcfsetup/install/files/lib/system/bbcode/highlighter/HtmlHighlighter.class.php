@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\bbcode\highlighter;
-use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
@@ -33,7 +32,7 @@ class HtmlHighlighter extends XmlHighlighter {
 	protected function cacheScriptsAndStyles($string) {
 		$regex = new Regex('(<(style|script)[^>]*>)(.*?)(</\\2>)', Regex::CASE_INSENSITIVE | Regex::DOT_ALL);
 		
-		return $regex->replace($string, new Callback(function ($matches) {
+		return $regex->replace($string, function ($matches) {
 			$type = ($matches[2] === 'script') ? 'js' : 'css';
 			
 			// strip slashes
@@ -47,7 +46,7 @@ class HtmlHighlighter extends XmlHighlighter {
 			
 			/** @noinspection PhpUndefinedMethodInspection */
 			return $openingTag.StringStack::pushToStringStack('<span class="'.$type.'Highlighter">'.$class::getInstance()->highlight($content).'</span>', 'htmlHighlighter'.ucfirst($type)).$closingTag;
-		}));
+		});
 	}
 	
 	/**

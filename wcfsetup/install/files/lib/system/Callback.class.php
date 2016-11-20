@@ -9,6 +9,7 @@ use wcf\system\exception\SystemException;
  * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
+ * @deprecated	since 3.0, use callables and `callable` type hint directly
  */
 final class Callback {
 	/**

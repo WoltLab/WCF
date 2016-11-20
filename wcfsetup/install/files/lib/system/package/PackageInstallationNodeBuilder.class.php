@@ -4,7 +4,6 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
 use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
-use wcf\system\Callback;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -346,9 +345,9 @@ class PackageInstallationNodeBuilder {
 	 * to insert more than a single node, you should prefer shiftNodes().
 	 * 
 	 * @param	string		$beforeNode
-	 * @param	Callback	$callback
+	 * @param	callable	$callback
 	 */
-	public function insertNode($beforeNode, Callback $callback) {
+	public function insertNode($beforeNode, callable $callback) {
 		$newNode = $this->getToken();
 		
 		// update descendants

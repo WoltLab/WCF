@@ -1,7 +1,6 @@
 <?php
 namespace wcf\util;
 use wcf\system\exception\SystemException;
-use wcf\system\Callback;
 
 /**
  * Contains Array-related functions.
@@ -149,7 +148,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	public static function compare(array $array1, array $array2, Callback $callback = null) {
+	public static function compare(array $array1, array $array2, callable $callback = null) {
 		return static::compareHelper('value', $array1, $array2, $callback);
 	}
 	
@@ -161,7 +160,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	public static function compareKey(array $array1, array $array2, Callback $callback = null) {
+	public static function compareKey(array $array1, array $array2, callable $callback = null) {
 		return static::compareHelper('key', $array1, $array2, $callback);
 	}
 	
@@ -173,7 +172,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	public static function compareAssoc(array $array1, array $array2, Callback $callback = null) {
+	public static function compareAssoc(array $array1, array $array2, callable $callback = null) {
 		return static::compareHelper('assoc', $array1, $array2, $callback);
 	}
 	
@@ -183,11 +182,11 @@ final class ArrayUtil {
 	 * @param	string		$method
 	 * @param	array		$array1
 	 * @param	array		$array2
-	 * @param	Callback	$callback
+	 * @param	callable	$callback
 	 * @return	boolean
 	 * @throws	SystemException
 	 */
-	protected static function compareHelper($method, array $array1, array $array2, Callback $callback = null) {
+	protected static function compareHelper($method, array $array1, array $array2, callable $callback = null) {
 		// get function name
 		$function = null;
 		if ($method === 'value') {

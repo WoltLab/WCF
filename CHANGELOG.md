@@ -2,7 +2,7 @@
 
 ## 3.0 (Vortex)
 
-### 3.0.0 Alpha 1 (XXXX-YY-ZZ)
+### 3.0.0 (XXXX-YY-ZZ)
 
 * Clipboard support for tags in ACP ("delete" and "set as synonyms").
 * `wcf\system\cache\runtime\UserProfileRuntimeCache` for caching user profiles during runtime.
@@ -131,6 +131,7 @@
 
 * Object type definition `com.woltlab.wcf.user.online.location` deprecated.
 * Object type definition `com.woltlab.wcf.page` deprecated.
+* `\wcf\system\Callback` deprecated.
 
 #### Removed Code
 

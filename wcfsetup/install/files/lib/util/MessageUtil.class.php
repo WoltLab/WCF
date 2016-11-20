@@ -1,7 +1,6 @@
 <?php
 namespace wcf\util;
 use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\Callback;
 use wcf\system\Regex;
 
 /**
@@ -24,9 +23,9 @@ class MessageUtil {
 		$text = Regex::compile('(?<=\?|&)([st]=[a-f0-9]{40}|at=\d+-[a-f0-9]{40})')->replace($text, '');
 		
 		// convert html entities (utf-8)
-		$text = Regex::compile('&#(3[2-9]|[4-9][0-9]|\d{3,5});')->replace($text, new Callback(function ($matches) {
+		$text = Regex::compile('&#(3[2-9]|[4-9][0-9]|\d{3,5});')->replace($text, function ($matches) {
 			return StringUtil::getCharacter(intval($matches[1]));
-		}));
+		});
 		
 		// unify new lines
 		$text = StringUtil::unifyNewlines($text);

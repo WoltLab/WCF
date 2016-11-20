@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\bbcode\highlighter;
-use wcf\system\Callback;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
@@ -43,7 +42,7 @@ class SqlHighlighter extends Highlighter {
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
-			$string = $this->cacheCommentsRegEx->replace($string, new Callback(function (array $matches) {
+			$string = $this->cacheCommentsRegEx->replace($string, function (array $matches) {
 				$string = $matches[1];
 				if (isset($matches[2])) $comment = $matches[2];
 				else $comment = '';
@@ -59,7 +58,7 @@ class SqlHighlighter extends Highlighter {
 				}
 				
 				return $string.$hash;
-			}));
+			});
 		}
 		
 		return $string;
@@ -70,9 +69,9 @@ class SqlHighlighter extends Highlighter {
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
-			$string = $this->quotesRegEx->replace($string, new Callback(function (array $matches) {
+			$string = $this->quotesRegEx->replace($string, function (array $matches) {
 				return StringStack::pushToStringStack('<span class="hlQuotes">'.StringUtil::encodeHTML($matches[0]).'</span>', 'highlighterQuotes', "\0\0");
-			}));
+			});
 		}
 		
 		return $string;

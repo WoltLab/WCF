@@ -201,11 +201,11 @@ final class Regex {
 	 * Replaces part of the string with the regex.
 	 * 
 	 * @param	string		$string
-	 * @param	mixed		$replacement	replacement-string or instance of wcf\system\Callback
+	 * @param	mixed		$replacement	replacement-string or callable
 	 * @return	string
 	 */
 	public function replace($string, $replacement) {
-		if ($replacement instanceof Callback) {
+		if ($replacement instanceof Callback || $replacement instanceof \Closure) {
 			return $this->checkResult(preg_replace_callback($this->regex, $replacement, $string), 'replace');
 		}
 		

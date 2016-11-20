@@ -5,7 +5,6 @@ use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
 use wcf\system\exception\SystemException;
-use wcf\system\Callback;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -97,9 +96,9 @@ class StyleCompiler extends SingletonFactory {
 			$files,
 			$variables,
 			$individualScss,
-			new Callback(function($content) use ($style) {
+			function($content) use ($style) {
 				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
-			})
+			}
 		);
 	}
 	
@@ -145,14 +144,14 @@ class StyleCompiler extends SingletonFactory {
 			$files,
 			$variables,
 			'',
-			new Callback(function($content) {
+			function($content) {
 				// fix relative paths
 				$content = str_replace('../font/', '../../font/', $content);
 				$content = str_replace('../icon/', '../../icon/', $content);
 				$content = preg_replace('~\.\./images/~', '../../images/', $content);
 				
 				return "/* stylesheet for ACP, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
-			})
+			}
 		);
 	}
 	
@@ -240,10 +239,10 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	string[]	$files
 	 * @param	string[]	$variables
 	 * @param	string		$individualScss
-	 * @param	Callback	$callback
+	 * @param	callable	$callback
 	 * @throws	SystemException
 	 */
-	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, Callback $callback) {
+	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback) {
 		foreach ($variables as &$value) {
 			if (StringUtil::startsWith($value, '../')) {
 				$value = '~"'.$value.'"';

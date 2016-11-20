@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\bbcode\highlighter;
-use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
@@ -58,13 +57,13 @@ class XmlHighlighter extends Highlighter {
 		$string = parent::highlightKeywords($string);
 		// find tags
 		$regex = new Regex('&lt;(?:/|\!|\?)?[a-z0-9]+(?:\s+'.self::XML_ATTRIBUTE_NAME.'(?:=[^\s/\?&]+)?)*(?:\s+/|\?)?&gt;', Regex::CASE_INSENSITIVE);
-		$string = $regex->replace($string, new Callback(function ($matches) {
+		$string = $regex->replace($string, function ($matches) {
 			// highlight attributes
 			$tag = Regex::compile(XmlHighlighter::XML_ATTRIBUTE_NAME.'(?:=[^\s/\?&]+)?(?=\s|&)', Regex::CASE_INSENSITIVE)->replace($matches[0], '<span class="hlKeywords2">\\0</span>');
 			
 			// highlight tag
 			return '<span class="hlKeywords1">'.$tag.'</span>';
-		}));
+		});
 		
 		return $string;
 	}
@@ -76,9 +75,9 @@ class XmlHighlighter extends Highlighter {
 		$string = parent::cacheQuotes($string);
 		
 		// highlight CDATA-Tags as quotes
-		$string = Regex::compile('<!\[CDATA\[.*?\]\]>', Regex::DOT_ALL)->replace($string, new Callback(function (array $matches) {
+		$string = Regex::compile('<!\[CDATA\[.*?\]\]>', Regex::DOT_ALL)->replace($string, function (array $matches) {
 			return StringStack::pushToStringStack('<span class="hlQuotes">'.StringUtil::encodeHTML($matches[0]).'</span>', 'highlighterQuotes');
-		}));
+		});
 		
 		return $string;
 	}

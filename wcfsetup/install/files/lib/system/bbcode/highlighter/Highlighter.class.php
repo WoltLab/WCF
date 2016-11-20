@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\bbcode\highlighter;
-use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -229,7 +228,7 @@ abstract class Highlighter extends SingletonFactory {
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
-			$string = $this->cacheCommentsRegEx->replace($string, new Callback(function (array $matches) {
+			$string = $this->cacheCommentsRegEx->replace($string, function (array $matches) {
 				$string = $matches[1];
 				if (isset($matches[2])) $comment = $matches[2];
 				else $comment = '';
@@ -241,7 +240,7 @@ abstract class Highlighter extends SingletonFactory {
 				}
 				
 				return $string.$hash;
-			}));
+			});
 		}
 		
 		return $string;
@@ -255,9 +254,9 @@ abstract class Highlighter extends SingletonFactory {
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
-			$string = $this->quotesRegEx->replace($string, new Callback(function (array $matches) {
+			$string = $this->quotesRegEx->replace($string, function (array $matches) {
 				return StringStack::pushToStringStack('<span class="hlQuotes">'.StringUtil::encodeHTML($matches[0]).'</span>', 'highlighterQuotes');
-			}));
+			});
 		}
 		
 		return $string;

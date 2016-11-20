@@ -2,7 +2,6 @@
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
-use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
@@ -98,13 +97,13 @@ class DiskCacheSource implements ICacheSource {
 		$directory = FileUtil::unifyDirSeparator(WCF_DIR.'cache/');
 		$pattern = str_replace('*', '.*', str_replace('.', '\.', $pattern));
 		
-		$this->getDirectoryUtil()->executeCallback(new Callback(function ($filename) {
+		$this->getDirectoryUtil()->executeCallback(function ($filename) {
 			if (!@touch($filename, 1)) {
 				@unlink($filename);
 				
 				WCF::resetZendOpcache($filename);
 			}
-		}), new Regex('^'.$directory.$pattern.'$', Regex::CASE_INSENSITIVE));
+		}, new Regex('^'.$directory.$pattern.'$', Regex::CASE_INSENSITIVE));
 	}
 	
 	/**
