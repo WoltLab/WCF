@@ -201,7 +201,7 @@ final class Regex {
 	 * Replaces part of the string with the regex.
 	 * 
 	 * @param	string		$string
-	 * @param	mixed		$replacement	replacement-string or callable
+	 * @param	mixed		$replacement	replacement-string or closure
 	 * @return	string
 	 */
 	public function replace($string, $replacement) {
