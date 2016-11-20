@@ -21,18 +21,18 @@
 			}
 			
 			body {
-				background-color: rgb(250, 250, 250);
+				background-color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentBackground')};
 				font-family: "Open Sans", "Segoe UI", "Lucida Grande", "Helvetica", sans-serif;
 				font-size: 14px;
 			}
 			
 			a {
-				color: rgb(231, 76, 60);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentLink')};
 				text-decoration: none;
 			}
 			
 			a:hover {
-				color: rgb(192, 57, 43);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentLinkActive')};
 				text-decoration: none;
 			}
 			
@@ -51,8 +51,8 @@
 			}
 			
 			.header {
-				background-color: rgb(58, 109, 156);
-				color: #fff;
+				background-color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground')};
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderText')};
 				padding: 20px;
 			}
 			
@@ -61,17 +61,17 @@
 			}
 			
 			.footer {
-				background-color: rgb(50, 92, 132);
-				color: rgb(217, 220, 222);
+				background-color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFooterCopyrightBackground')};
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFooterCopyrightText')};
 				padding: 20px 10px;
 			}
 			
 			.footer a {
-				color: rgb(189, 195, 199);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFooterCopyrightLink')};
 			}
 			
 			.footer a:hover {
-				color: rgb(255, 255, 255);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFooterCopyrightLinkActive')};
 				text-decoration: none;
 			}
 			
@@ -80,7 +80,7 @@
 			}
 			
 			.main {
-				color: rgb(44, 62, 80);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentText')};
 				padding: 30px 10px;
 			}
 			
@@ -103,7 +103,7 @@
 			}
 			
 			.article .articleAuthor {
-				color: rgb(125, 130, 135);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentDimmedText')};
 				display: inline-block;
 				font-size: 14px;
 				font-weight: 400;
@@ -111,13 +111,13 @@
 			}
 			
 			.article .articleAuthor::after {
-				color: rgb(125, 130, 135);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentDimmedText')};
 				content: "\00b7";
 				margin-left: 6px;
 			}
 			
 			.article .articleDate {
-				color: rgb(125, 130, 135);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentDimmedText')};
 			}
 			
 			.article .articleImage {
@@ -125,7 +125,7 @@
 			}
 			
 			.article .articleImage figcaption {
-				color: rgb(125, 130, 135);
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentDimmedText')};
 				font-size: smaller;
 				margin-top: 5px;
 				text-align: center;
@@ -142,8 +142,8 @@
 			}
 			
 			amp-user-notification {
-				background-color: rgb(217, 237, 247);
-				color: rgb(49, 112, 143);
+				background-color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfStatusInfoBackground')};
+				color: {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfStatusInfoText')};
 				padding: 10px;
 			}
 			
@@ -193,7 +193,7 @@
 			}
 			
 			amp-carousel figcaption {
-				background-color: rgba(0,0,0,.6);
+				background-color: rgba(0, 0, 0, .6);
 				bottom: 0;
 				color: #fff;
 				left: 0;
