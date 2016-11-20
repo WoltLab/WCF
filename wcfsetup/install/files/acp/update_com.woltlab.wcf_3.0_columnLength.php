@@ -14,7 +14,7 @@ $data = <<<DATA
 UPDATE wcf1_acl_option SET optionName = SUBSTRING(optionName, 1, 191);
 ALTER TABLE wcf1_acl_option CHANGE optionName optionName VARCHAR(191) NOT NULL;
 UPDATE wcf1_acl_option SET categoryName = SUBSTRING(categoryName, 1, 191);
-ALTER TABLE wcf1_acl_option CHANGE categoryName	categoryName VARCHAR(191) NOT NULL;
+ALTER TABLE wcf1_acl_option CHANGE categoryName categoryName VARCHAR(191) NOT NULL;
 UPDATE wcf1_acl_option_category SET categoryName = SUBSTRING(categoryName, 1, 191);
 ALTER TABLE wcf1_acl_option_category CHANGE categoryName categoryName VARCHAR(191) NOT NULL;
 UPDATE wcf1_acp_menu_item SET menuItem = SUBSTRING(menuItem, 1, 191);
@@ -108,11 +108,11 @@ ALTER TABLE wcf1_user_option_category CHANGE categoryName categoryName VARCHAR(1
 UPDATE wcf1_user_option_category SET parentCategoryName = SUBSTRING(parentCategoryName, 1, 191);
 ALTER TABLE wcf1_user_option_category CHANGE parentCategoryName parentCategoryName VARCHAR(191) NOT NULL DEFAULT '';
 UPDATE wcf1_user_profile_menu_item SET menuItem = SUBSTRING(menuItem, 1, 191);
-ALTER TABLE wcf1_user_profile_menu_item CHANGE menuItem	menuItem VARCHAR(191) NOT NULL;
+ALTER TABLE wcf1_user_profile_menu_item CHANGE menuItem menuItem VARCHAR(191) NOT NULL;
 DATA;
 
 $lines = explode("\n", StringUtil::trim($data));
-if ($lines % 2 !== 0) {
+if (count($lines) % 2 !== 0) {
 	throw new SystemException("Query data must always come in pairs.");
 }
 
@@ -120,7 +120,7 @@ $rebuildData = WCF::getSession()->getVar('__wcfUpdateRebuildTables');
 if ($rebuildData === null) {
 	$rebuildData = [
 		'i' => 0,
-		'max' => $lines / 2
+		'max' => count($lines) / 2
 	];
 }
 
