@@ -17,6 +17,7 @@ interface IBulkProcessingAction {
 	 * list.
 	 * 
 	 * @param	DatabaseObjectList	$objectList
+	 * @throws	\InvalidArgumentException	if given object list cannot be handled by the action
 	 */
 	public function executeAction(DatabaseObjectList $objectList);
 	

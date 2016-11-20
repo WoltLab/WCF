@@ -37,7 +37,9 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
-		if (!($objectList instanceof UserList)) return;
+		if (!($objectList instanceof UserList)) {
+			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+		}
 		
 		// send content type
 		header('Content-Type: text/'.$this->fileType.'; charset=UTF-8');
