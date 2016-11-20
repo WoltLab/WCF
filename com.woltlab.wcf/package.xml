@@ -57,7 +57,7 @@
 		<instruction type="sql">update_part1.sql</instruction>
 		
 		<instruction type="file" run="standalone">files.tar</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_3.0_columnLength.php</instruction>
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_columnLength.php</instruction>
 		<instruction type="sql" run="standalone">update.sql</instruction>
 		
 		<instruction type="acpTemplate">acptemplates.tar</instruction>

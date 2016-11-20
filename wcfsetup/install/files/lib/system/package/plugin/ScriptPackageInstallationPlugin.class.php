@@ -38,8 +38,13 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 			$path = constant($dirConstant);
 		}
 		
+		$flushCache = true;
+		if (isset($this->instruction['attributes']['flushCache']) && $this->instruction['attributes']['flushCache'] === 'false') {
+			$flushCache = false;
+		}
+		
 		// reset WCF cache
-		CacheHandler::getInstance()->flushAll();
+		if ($flushCache) CacheHandler::getInstance()->flushAll();
 		
 		// run script
 		$this->run($path.$this->instruction['value']);
