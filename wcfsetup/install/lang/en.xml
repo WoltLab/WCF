@@ -1922,7 +1922,7 @@ full extend.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[The server was unable to process your request due to an incomplete request.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You are not authorized to execute this action.]]></item>
-		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session expired, please login again.]]></item>
+		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session has expired, please reload this page.]]></item>
 	</category>
 	
 	<category name="wcf.article">

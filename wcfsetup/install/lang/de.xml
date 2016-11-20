@@ -1963,7 +1963,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[Die Anfrage war unvollständig und konnte nicht verarbeitet werden.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[Es ist ein Fehler bei der Verarbeitung aufgetreten, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche{else}versuchen Sie{/if} es später erneut.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du besitzt{else}Sie besitzen{/if} leider nicht die notwendigen Zugriffsrechte, um diese Aktion auszuführen.]]></item>
-		<item name="wcf.ajax.error.sessionExpired"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Sitzung ist abgelaufen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}melde dich{else}melden Sie sich{/if} erneut an.]]></item>
+		<item name="wcf.ajax.error.sessionExpired"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Sitzung ist abgelaufen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lade{else}laden Sie{/if} die Seite neu.]]></item>
 	</category>
 	
 	<category name="wcf.article">
