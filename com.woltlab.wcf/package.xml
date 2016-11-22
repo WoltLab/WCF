@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.0 Beta 4</version> <!-- codename: vortex -->
-		<date>2016-10-27</date>
+		<version>3.0.0 Beta 5</version> <!-- codename: vortex -->
+		<date>2016-11-23</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -41,14 +41,6 @@
 		<instruction type="menuItem" />
 		<instruction type="box" />
 		<instruction type="script">acp/post_install.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="3.0.0 Beta 3">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
 	</instructions>
 	
 	<instructions type="update" fromversion="2.1.12">
@@ -94,5 +86,25 @@
 		<instruction type="style">defaultStyle.tar</instruction>
 		
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="3.0.0 Beta 4">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file" run="standalone">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="sql">update_3.0.0_beta_5.sql</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="acpMenu" />
+		<instruction type="bbcode" />
+		<instruction type="coreObject" />
+		<instruction type="objectType" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="option" />
+		<instruction type="packageInstallationPlugin" />
+		<instruction type="page" />
+		<instruction type="userGroupOption" />
 	</instructions>
 </package>
