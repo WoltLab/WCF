@@ -1616,6 +1616,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.colors.container"><![CDATA[Container]]></item>
 		<item name="wcf.acp.style.colors.content"><![CDATA[Inhaltsbereich]]></item>
 		<item name="wcf.acp.style.colors.color"><![CDATA[Schriftfarbe]]></item>
+		<item name="wcf.acp.style.colors.description"><![CDATA[Wählen Sie eine Kategorie aus um die Farbpalette zu bearbeiten.]]></item>
 		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Schriftfarbe (abgeschwächt)]]></item>
 		<item name="wcf.acp.style.colors.formInput"><![CDATA[Eingabeelemente in Formularen]]></item>
 		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Hintergrundfarbe (Hover)]]></item>

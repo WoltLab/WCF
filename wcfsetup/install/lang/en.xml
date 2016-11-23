@@ -1580,6 +1580,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.colors.container"><![CDATA[Container]]></item>
 		<item name="wcf.acp.style.colors.content"><![CDATA[Content Area]]></item>
 		<item name="wcf.acp.style.colors.color"><![CDATA[Font Color]]></item>
+		<item name="wcf.acp.style.colors.description"><![CDATA[Select a category to start editing the color palette.]]></item>
 		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Font Color (weakened)]]></item>
 		<item name="wcf.acp.style.colors.formInput"><![CDATA[Input Elements in Forms]]></item>
 		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Background Color (hover)]]></item>

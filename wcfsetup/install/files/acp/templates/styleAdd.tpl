@@ -696,7 +696,7 @@
 							</div>
 							
 							<div class="spSidebarBox" data-category="none">
-								foo
+								{lang}wcf.acp.style.colors.description{/lang}
 							</div>
 							
 							{foreach from=$colors key=spCategory item=spColors}
