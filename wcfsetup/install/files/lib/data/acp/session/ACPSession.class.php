@@ -18,6 +18,7 @@ use wcf\system\WCF;
  * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
  * @property-read	string		$requestURI		uri of the latest request
  * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
+ * @property-read	string		$sessionVariables	serialized array with variables stored on a session-basis
  */
 class ACPSession extends DatabaseObject {
 	/**

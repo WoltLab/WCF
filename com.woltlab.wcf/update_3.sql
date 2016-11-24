@@ -5,8 +5,6 @@ ALTER TABLE wcf1_session ADD parentPageObjectID INT(10);
 ALTER TABLE wcf1_session ADD KEY pageID (pageID, pageObjectID);
 ALTER TABLE wcf1_session ADD KEY parentPageID (parentPageID, parentPageObjectID);
 
-ALTER TABLE wcf1_session_virtual ADD sessionVariables MEDIUMTEXT;
-
 DROP TABLE IF EXISTS wcf1_sitemap;
 
 ALTER TABLE wcf1_smiley ADD smileyPath2x VARCHAR(255) NOT NULL DEFAULT '';

@@ -22,8 +22,7 @@ use wcf\util\UserUtil;
  * @property-read	string		$sessionID		id of the acp session the virtual acp session belongs to
  * @property-read	string		$ipAddress		id of the user whom the virtual acp session belongs to
  * @property-read	string		$userAgent		user agent of the user whom the virtual acp session belongs to
- * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
- * @property-read	string		$sessionVariables	serialized array with variables stored on a session-basis
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occurred
  */
 class ACPSessionVirtual extends DatabaseObject {
 	/**

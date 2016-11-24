@@ -110,6 +110,7 @@ CREATE TABLE wcf1_acp_session_log (
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID)
 );
 
@@ -120,7 +121,6 @@ CREATE TABLE wcf1_acp_session_virtual (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(191) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
@@ -1095,6 +1095,7 @@ CREATE TABLE wcf1_session (
 	parentPageID INT(10),
 	parentPageObjectID INT(10),
 	spiderID INT(10),
+	sessionVariables MEDIUMTEXT,
 	KEY packageID (lastActivityTime, spiderID),
 	KEY pageID (pageID, pageObjectID),
 	KEY parentPageID (parentPageID, parentPageObjectID),
@@ -1108,7 +1109,6 @@ CREATE TABLE wcf1_session_virtual (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(191) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 

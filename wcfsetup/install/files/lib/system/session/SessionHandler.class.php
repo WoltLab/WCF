@@ -399,7 +399,7 @@ class SessionHandler extends SingletonFactory {
 	 * Initializes session variables.
 	 */
 	protected function loadVariables() {
-		@$this->variables = unserialize($this->virtualSession->sessionVariables);
+		@$this->variables = unserialize($this->session->sessionVariables);
 		if (!is_array($this->variables)) {
 			$this->variables = [];
 		}
@@ -848,7 +848,7 @@ class SessionHandler extends SingletonFactory {
 					$this->session = $session;
 					
 					// inherit security token
-					$variables = @unserialize($this->virtualSession->sessionVariables);
+					$variables = @unserialize($this->session->sessionVariables);
 					if (is_array($variables) && !empty($variables['__SECURITY_TOKEN'])) {
 						$this->register('__SECURITY_TOKEN', $variables['__SECURITY_TOKEN']);
 					}
@@ -875,6 +875,9 @@ class SessionHandler extends SingletonFactory {
 			'requestMethod' => $this->requestMethod,
 			'lastActivityTime' => TIME_NOW
 		];
+		if ($this->variablesChanged) {
+			$data['sessionVariables'] = serialize($this->variables);
+		}
 		if (!class_exists('wcf\system\CLIWCF', false) && !$this->isACP && !$this->disableTracking) {
 			$pageLocations = PageLocationManager::getInstance()->getLocations();
 			if (isset($pageLocations[0])) {
@@ -905,13 +908,8 @@ class SessionHandler extends SingletonFactory {
 			else {
 				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
 			}
-			$virtualSessionEditor->updateLastActivityTime();
 			
-			$data = [];
-			if ($this->variablesChanged) {
-				$data['sessionVariables'] = serialize($this->variables);
-			}
-			$virtualSessionEditor->update($data);
+			$virtualSessionEditor->updateLastActivityTime();
 		}
 	}
 	

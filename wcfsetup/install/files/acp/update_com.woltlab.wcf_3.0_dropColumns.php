@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core
  */
 $data = <<<DATA
-ALTER TABLE wcf1_session DROP COLUMN controller, DROP COLUMN parentObjectType, DROP COLUMN parentObjectID, DROP COLUMN objectType, DROP COLUMN objectID, DROP COLUMN sessionVariables;
+ALTER TABLE wcf1_session DROP COLUMN controller, DROP COLUMN parentObjectType, DROP COLUMN parentObjectID, DROP COLUMN objectType, DROP COLUMN objectID;
 ALTER TABLE wcf1_user DROP COLUMN signatureEnableBBCodes, DROP COLUMN signatureEnableSmilies, DROP COLUMN socialNetworkPrivacySettings;
 ALTER TABLE wcf1_user_avatar DROP COLUMN cropX, DROP COLUMN cropY;
 DATA;

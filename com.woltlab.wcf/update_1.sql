@@ -21,7 +21,6 @@ ALTER TABLE wcf1_acp_session DROP COLUMN parentObjectType;
 ALTER TABLE wcf1_acp_session DROP COLUMN parentObjectID;
 ALTER TABLE wcf1_acp_session DROP COLUMN objectType;
 ALTER TABLE wcf1_acp_session DROP COLUMN objectID;
-ALTER TABLE wcf1_acp_session DROP COLUMN sessionVariables;
 
 ALTER TABLE wcf1_application DROP COLUMN cookiePath;
 ALTER TABLE wcf1_application DROP COLUMN isPrimary;

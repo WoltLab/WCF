@@ -15,15 +15,14 @@ $sql = "CREATE TABLE wcf".WCF_N."_acp_session_virtual (
 	sessionID CHAR(40) NOT NULL,
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(191) NOT NULL DEFAULT '',
-	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
+	lastActivityTime INT(10) NOT NULL DEFAULT 0
 	UNIQUE KEY (sessionID, ipAddress, userAgent)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute();
 
 // create virtual session for current user
-$sql = "INSERT INTO wcf".WCF_N."_acp_session_virtual (sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables) SELECT sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables FROM wcf".WCF_N."_acp_session WHERE sessionID = ?";
+$sql = "INSERT INTO wcf".WCF_N."_acp_session_virtual (sessionID, ipAddress, userAgent, lastActivityTime) SELECT sessionID, ipAddress, userAgent, lastActivityTime FROM wcf".WCF_N."_acp_session WHERE sessionID = ?";
 $statement = \wcf\system\WCF::getDB()->prepareStatement($sql);
 $statement->execute([WCF::getSession()->sessionID]);
 
