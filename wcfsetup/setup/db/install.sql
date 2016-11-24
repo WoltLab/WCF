@@ -85,7 +85,8 @@ CREATE TABLE wcf1_acp_session (
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
-	requestMethod VARCHAR(7) NOT NULL DEFAULT ''	
+	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
+	sessionVariables MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -110,7 +111,6 @@ CREATE TABLE wcf1_acp_session_log (
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID)
 );
 
