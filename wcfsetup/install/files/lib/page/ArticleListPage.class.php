@@ -27,7 +27,12 @@ class ArticleListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
-	public $sqlOrderBy = 'article.time DESC';
+	public $sortField = 'time';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $sortOrder = ARTICLE_SORT_ORDER;
 	
 	/**
 	 * @inheritDoc

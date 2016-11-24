@@ -81,16 +81,16 @@ class ArticlePage extends AbstractArticlePage {
 		
 		// get next article
 		$articleList = new CategoryArticleList($this->article->categoryID);
-		$articleList->getConditionBuilder()->add('article.time > ?', [$this->article->time]);
-		$articleList->sqlOrderBy = 'article.time';
+		$articleList->getConditionBuilder()->add('article.time ' . (ARTICLE_SORT_ORDER == 'DESC' ? '>' : '<') . ' ?', [$this->article->time]);
+		$articleList->sqlOrderBy = 'article.time ' . (ARTICLE_SORT_ORDER == 'DESC' ? 'ASC' : 'DESC');
 		$articleList->sqlLimit = 1;
 		$articleList->readObjects();
 		foreach ($articleList as $article) $this->nextArticle = $article;
 		
 		// get previous article
 		$articleList = new CategoryArticleList($this->article->categoryID);
-		$articleList->getConditionBuilder()->add('article.time < ?', [$this->article->time]);
-		$articleList->sqlOrderBy = 'article.time DESC';
+		$articleList->getConditionBuilder()->add('article.time ' . (ARTICLE_SORT_ORDER == 'DESC' ? '<' : '>') . ' ?', [$this->article->time]);
+		$articleList->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
 		$articleList->sqlLimit = 1;
 		$articleList->readObjects();
 		foreach ($articleList as $article) $this->previousArticle = $article;

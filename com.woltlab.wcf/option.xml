@@ -1526,6 +1526,14 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<maxvalue>100</maxvalue>
 				<suffix>percent</suffix>
 			</option>
+			<option name="article_sort_order">
+				<categoryname>cms.article</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions>ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending</selectoptions>
+				<options>module_article</options>
+			</option>
 			<!-- /cms.article -->
 		</options>
 	</import>

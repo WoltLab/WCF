@@ -1232,7 +1232,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_height"><![CDATA[Höhe der kleinen Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von kleinen Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_width"><![CDATA[Breite der kleinen Vorschaugrafiken]]></item>
-	
+		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sortierungsreihenfolge]]></item>
+		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Standard-Reihenfolge für die Liste der Artikel.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
