@@ -9,11 +9,11 @@
 define(
 	[
 	 	'Ajax',                           'WoltLabSuite/Core/Bootstrap',      'WoltLabSuite/Core/Controller/Style/Changer',
-	 	'WoltLabSuite/Core/Controller/Popover', 'WoltLabSuite/Core/Ui/User/Ignore'
+	 	'WoltLabSuite/Core/Controller/Popover', 'WoltLabSuite/Core/Ui/User/Ignore', 'WoltLabSuite/Core/Ui/Page/Header/Menu'
 	],
 	function(
 		Ajax,                              Bootstrap,                    ControllerStyleChanger,
-		ControllerPopover,                 UiUserIgnore
+		ControllerPopover,                 UiUserIgnore, UiPageHeaderMenu
 	)
 {
 	"use strict";
@@ -31,6 +31,8 @@ define(
 		 */
 		setup: function(options) {
 			Bootstrap.setup();
+			
+			UiPageHeaderMenu.init();
 			
 			if (options.styleChanger) {
 				ControllerStyleChanger.setup();
