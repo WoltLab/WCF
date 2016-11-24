@@ -19,4 +19,23 @@ class ArticleCategoryNode extends CategoryNode {
 	 * @inheritDoc
 	 */
 	protected static $baseClass = ArticleCategory::class;
+	
+	/**
+	 * number of articles in the category
+	 * @var	integer
+	 */
+	protected $articles;
+	
+	/**
+	 * Returns number of articles in the category.
+	 *
+	 * @return	integer
+	 */
+	public function getArticles() {
+		if ($this->articles === null) {
+			$this->articles = ArticleCategoryCache::getInstance()->getArticles($this->categoryID);
+		}
+		
+		return $this->articles;
+	}
 }
