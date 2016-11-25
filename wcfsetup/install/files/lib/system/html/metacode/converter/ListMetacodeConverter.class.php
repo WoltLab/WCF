@@ -163,6 +163,11 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 					DOMUtil::removeNode($removeNode);
 				}
 			}
+			
+			// remove the first list item if it is completely empty
+			if ($element->firstChild->childNodes->length === 0 && $element->firstChild !== $element->lastChild) {
+				DOMUtil::removeNode($element->firstChild);
+			}
 		}
 		
 		return $element;
