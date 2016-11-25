@@ -1,5 +1,6 @@
 .flexibleButtonGroup {
 	display: flex;
+	flex-wrap: wrap;
 	
 	> li {
 		display: flex;
