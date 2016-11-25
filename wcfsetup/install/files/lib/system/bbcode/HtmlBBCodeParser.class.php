@@ -125,6 +125,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 					$sibling = $this->tagArray[$j];
 					if ($sibling['name'] === $name) {
 						if (!$sibling['closing']) {
+							if ($name === 'quote') {
+								continue;
+							}
+							
 							// disallow the same tag opened again
 							$badTags[] = $j;
 						}
