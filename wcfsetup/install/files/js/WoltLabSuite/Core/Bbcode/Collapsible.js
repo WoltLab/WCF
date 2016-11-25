@@ -19,40 +19,43 @@ define([], function() {
 			var container, toggleButton;
 			while (_containers.length) {
 				container = _containers[0];
-				container.classList.remove('jsCollapsibleBbcode');
 				
-				toggleButton = elBySel('.toggleButton', container);
-				if (toggleButton === null) {
+				toggleButton = elBySelAll('.toggleButton', container)[0];
+				if (toggleButton === undefined) {
 					continue;
 				}
 				
-				(function(container, toggleButton) {
-					var toggle = function(event) {
-						if (container.classList.toggle('collapsed')) {
-							toggleButton.textContent = elData(toggleButton, 'title-expand');
-							
-							if (event instanceof Event) {
-								// negative top value means the upper boundary is not within the viewport
-								var top = container.getBoundingClientRect().top;
-								if (top < 0) {
-									var y = window.pageYOffset + (top - 100);
-									if (y < 0) y = 0;
-									window.scrollTo(window.pageXOffset, y);
+				if (toggleButton.closest('.jsCollapsibleBbcode') === container) {
+					(function (container, toggleButton) {
+						var toggle = function (event) {
+							if (container.classList.toggle('collapsed')) {
+								toggleButton.textContent = elData(toggleButton, 'title-expand');
+								
+								if (event instanceof Event) {
+									// negative top value means the upper boundary is not within the viewport
+									var top = container.getBoundingClientRect().top;
+									if (top < 0) {
+										var y = window.pageYOffset + (top - 100);
+										if (y < 0) y = 0;
+										window.scrollTo(window.pageXOffset, y);
+									}
 								}
 							}
+							else {
+								toggleButton.textContent = elData(toggleButton, 'title-collapse');
+							}
+						};
+						
+						toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
+						
+						// expand boxes that are initially scrolled
+						if (container.scrollTop !== 0) {
+							toggle();
 						}
-						else {
-							toggleButton.textContent = elData(toggleButton, 'title-collapse');
-						}
-					};
-					
-					toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
-					
-					// expand boxes that are initially scrolled
-					if (container.scrollTop !== 0) {
-						toggle();
-					}
-				})(container, toggleButton);
+					})(container, toggleButton);
+				}
+				
+				container.classList.remove('jsCollapsibleBbcode');
 			}
 		}
 	};
