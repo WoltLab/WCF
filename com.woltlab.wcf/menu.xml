@@ -30,7 +30,7 @@
 			
 			<box>
 				<position>footer</position>
-				<cssClassName>footerLinks</cssClassName>
+				<cssClassName>boxMenuLinkGroup</cssClassName>
 				<showHeader>0</showHeader>
 				<visibleEverywhere>1</visibleEverywhere>
 			</box>

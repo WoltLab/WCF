@@ -753,6 +753,34 @@
 		}
 	}
 	
+	.boxMenuLinkGroup {
+		.boxMenu {
+			> li {
+				> ol {
+					a {
+						// use text color instead
+						color: $wcfFooterText;
+					}
+				}
+			}
+		}
+	}
+	
+	.styleChanger {
+		@include screen-sm-down {
+			display: none;
+		}
+		
+		@include screen-md-up {
+			float: right;
+			padding-left: 20px;
+		}
+	}
+}
+
+.boxesTop,
+.boxesBottom,
+.boxesFooter {
 	.boxMenu {
 		display: inline-flex;
 		margin-left: -10px;
@@ -765,7 +793,7 @@
 		}
 	}
 	
-	.footerLinks {
+	.boxMenuLinkGroup {
 		&:not(:first-child) {
 			margin-top: 40px;
 		}
@@ -788,25 +816,7 @@
 					
 					margin-bottom: 10px;
 				}
-				
-				> ol {
-					a {
-						// use text color instead
-						color: $wcfFooterText;
-					}
-				}
 			}
-		}
-	}
-	
-	.styleChanger {
-		@include screen-sm-down {
-			display: none;
-		}
-		
-		@include screen-md-up {
-			float: right;
-			padding-left: 20px;
 		}
 	}
 }
