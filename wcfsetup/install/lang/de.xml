@@ -2156,8 +2156,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der „weniger als“-Wert darf nicht größer sein als {#$maxValue}.]]></item>
 		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der „weniger als“-Wert darf nicht kleiner sein als {#$minValue}.]]></item>
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
-		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[Das Startdatum ist ungültig.]]></item>
-		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[Das Enddatum ist ungültig.]]></item>
+		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[Das Enddatum ist ungültig.]]></item>
+		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[Das Startdatum ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.date">
