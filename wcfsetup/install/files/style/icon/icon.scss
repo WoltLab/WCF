@@ -138,10 +138,13 @@ a > span.fa:not(.pointer) {
 	border: 2px solid rgb(204, 204, 204);
 	border-top-color: rgb(79, 129, 189);
 	border-radius: 50%;
-	
-	&::before {
-		display: none;
-	}
+	vertical-align: middle;
+}
+
+/* work-around for a bug in the scss compiler that is fixed in a newer version,
+   but that version has a devastating performance compared to the current version */
+.fa-spinner.fa-spinner::before {
+	display: none;
 }
 
 @-webkit-keyframes wcfSpinner {
