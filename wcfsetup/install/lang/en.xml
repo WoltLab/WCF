@@ -1769,7 +1769,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender’s Email]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.<br>
-You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
+You can define the default sender in <em>Configuration -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
