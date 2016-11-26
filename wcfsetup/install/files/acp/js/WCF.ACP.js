@@ -303,6 +303,10 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Prepares installation dialog.
 	 */
 	prepareInstallation: function() {
+		if (document.activeElement) {
+			document.activeElement.blur();
+		}
+		
 		this._proxy.setOption('data', this._getParameters());
 		this._proxy.sendRequest();
 	},
