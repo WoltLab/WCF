@@ -2113,8 +2113,8 @@ Errors are:
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The “less than” value cannot be greater than {#$maxValue}.]]></item>
 		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The “less than” value cannot be less than {#$minValue}.]]></item>
 		<item name="wcf.condition.timestamp.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
-		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The start date is invalid.]]></item>
-		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The end date is invalid.]]></item>
+		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The end date is invalid.]]></item>
+		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
 	
 	<category name="wcf.date">
