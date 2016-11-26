@@ -94,6 +94,16 @@
 				@include inlineList;
 				
 				flex-wrap: nowrap;
+				
+				> li{
+					&:not(:last-child) {
+						margin-right: 0;
+					}
+					
+					&:not(:first-child) {
+						margin-left: 5px;
+					}
+				}
 			}
 		}
 	}
@@ -440,6 +450,32 @@ fieldset {
 		& + nav {
 			// gap between pagination and navigation buttons
 			margin-top: 10px;
+		}
+	}
+}
+
+/* workaround for ancient screen resolutions */
+@media (max-width: 1280px) {
+	.contentHeaderNavigation {
+		flex: 1 1 0%;
+		
+		> ul {
+			flex-wrap: wrap !important;
+			justify-content: flex-end;
+		}
+	}
+}
+
+/* sidebar galore */
+@include screen-lg {
+	.sidebar + .content:not(:last-child) {
+		.contentHeaderNavigation {
+			flex: 1 1 0%;
+			
+			> ul {
+				flex-wrap: wrap !important;
+				justify-content: flex-end;
+			}
 		}
 	}
 }
