@@ -85,7 +85,7 @@ class ImageProxyAction extends AbstractAction {
 					$image = $request->getReply()['body'];
 					
 					// check file type
-					$imageData = getimagesizefromstring($image);
+					$imageData = @getimagesizefromstring($image);
 					if (!$imageData) throw new \DomainException();
 					
 					switch ($imageData[2]) {
