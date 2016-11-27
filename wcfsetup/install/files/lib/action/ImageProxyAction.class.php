@@ -4,6 +4,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
+use wcf\util\exception\HTTPException;
 use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -41,6 +42,8 @@ class ImageProxyAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
+		if (isset($_SERVER['HTTP_VIA']) && strpos($_SERVER['HTTP_VIA'], 'wsc') !== false) throw new IllegalLinkException();
+		
 		try {
 			$url = CryptoUtil::getValueFromSignedString($this->key);
 			if ($url === null) throw new IllegalLinkException();
@@ -64,10 +67,19 @@ class ImageProxyAction extends AbstractAction {
 						$request = new HTTPRequest($url, [
 							'maxLength' => 10 * (1 << 20) // download at most 10 MiB
 						]);
+						$request->addHeader('Via', '1.1 wsc');
 						$request->execute();
 					}
-					catch (SystemException $e) {
-						throw new IllegalLinkException();
+					catch (\Exception $e) {
+						$chain = $e;
+						do {
+							if ($chain instanceof HTTPException) {
+								throw new \DomainException();
+							}
+						}
+						while ($chain = $chain->getPrevious());
+						
+						throw $e;
 					}
 					$image = $request->getReply()['body'];
 					
