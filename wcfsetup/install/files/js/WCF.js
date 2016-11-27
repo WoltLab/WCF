@@ -7282,15 +7282,19 @@ jQuery.fn.extend({
 			case 'getDate':
 				return window.__wcf_bc_datePicker.getDate(element);
 				break;
-				
+			
 			case 'option':
 				if (parameters[0] === 'onClose') {
+					if (parameters.length > 1) {
+						return this.datepicker('setOption', 'onClose', parameters[1]);
+					}
+					
 					return function() {};
 				}
 				
 				console.warn("datepicker('option') supports only 'onClose'.");
 				break;
-				
+			
 			case 'setDate':
 				window.__wcf_bc_datePicker.setDate(element, parameters[0]);
 				break;
