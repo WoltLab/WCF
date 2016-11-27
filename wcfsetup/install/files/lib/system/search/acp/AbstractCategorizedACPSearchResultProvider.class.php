@@ -109,9 +109,16 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 		
 		// create level 2 categories
 		$topCategories = [];
-		foreach ($this->categories as $category) {
-			if ($category->parentCategoryName && in_array($category->parentCategoryName, $this->topCategories)) {
-				$topCategories[] = $category->categoryName;
+		foreach ($this->categories as $key => $category) {
+			if ($category->parentCategoryName) {
+				// check if parent category exists, thus if it is valid; if is does not exist, then all
+				// child categories are also invalid
+				if (!isset($this->categories[$category->parentCategoryName])) {
+					unset($this->categories[$key]);
+				}
+				else if (in_array($category->parentCategoryName, $this->topCategories)) {
+					$topCategories[] = $category->categoryName;
+				}
 			}
 		}
 		
