@@ -187,8 +187,8 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function drawText($text, $x, $y, $font, $size, $opacity = 1.0) {
 		$draw = new \ImagickDraw();
-		$draw->setFillOpacity($opacity);
 		$draw->setFillColor($this->color);
+		$draw->setFillOpacity($opacity);
 		$draw->setTextAntialias(true);
 		$draw->setFont($font);
 		$draw->setFontSize($size);
