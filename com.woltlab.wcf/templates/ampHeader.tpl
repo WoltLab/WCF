@@ -8,7 +8,7 @@
 		{if !$headContent|empty}
 			{@$headContent}
 		{/if}
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600">
 		<style amp-custom>
 			html {
 				box-sizing: border-box;
