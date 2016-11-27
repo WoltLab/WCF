@@ -71,7 +71,7 @@ class FileOptionType extends AbstractOptionType {
 		$fileLocation = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir)).$option->filelocation.'.'.$file->getFileExtension();
 		
 		// save file
-		move_uploaded_file($file->getLocation(), $fileLocation);
+		$file->moveUploadedFile($fileLocation);
 		
 		// return file location as the value to store in the database
 		return $fileLocation;

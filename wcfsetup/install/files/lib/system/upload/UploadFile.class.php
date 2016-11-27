@@ -179,4 +179,17 @@ class UploadFile {
 		
 		return null;
 	}
+	
+	/**
+	 * Moves the uploaded file to the given location and updates the internal location value to the new location
+	 * and the internal filename value to the new filename derived from the given location.
+	 * 
+	 * @param	string		$newLocation	new file location
+	 */
+	public function moveUploadedFile($newLocation) {
+		move_uploaded_file($this->location, $newLocation);
+		
+		$this->location = $newLocation;
+		$this->filename = basename($this->location);
+	}
 }
