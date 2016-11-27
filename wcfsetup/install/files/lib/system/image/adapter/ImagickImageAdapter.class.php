@@ -78,7 +78,7 @@ class ImagickImageAdapter implements IImageAdapter {
 			$this->imagick->readImage($file);
 		}
 		catch (\ImagickException $e) {
-			throw new SystemException("Image '".$file."' is not readable or does not exist.");
+			throw new SystemException("Image '".$file."' is not readable or does not exist.", 0, '', $e);
 		}
 		
 		$this->readImageDimensions();
@@ -377,7 +377,7 @@ class ImagickImageAdapter implements IImageAdapter {
 			$overlayImage = new \Imagick($file);
 		}
 		catch (\ImagickException $e) {
-			throw new SystemException("Image '".$file."' is not readable or does not exist.");
+			throw new SystemException("Image '".$file."' is not readable or does not exist.", 0, '', $e);
 		}
 		
 		$overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
