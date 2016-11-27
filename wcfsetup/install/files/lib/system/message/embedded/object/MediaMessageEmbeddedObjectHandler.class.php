@@ -2,7 +2,7 @@
 namespace wcf\system\message\embedded\object;
 use wcf\data\media\Media;
 use wcf\data\media\MediaList;
-use wcf\system\cache\runtime\MediaRuntimeCache;
+use wcf\system\cache\runtime\ViewableMediaRuntimeCache;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\util\ArrayUtil;
 
@@ -39,7 +39,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
 	 * @inheritDoc
 	 */
 	public function loadObjects(array $objectIDs) {
-		return MediaRuntimeCache::getInstance()->getObjects($objectIDs);
+		return ViewableMediaRuntimeCache::getInstance()->getObjects($objectIDs);
 	}
 	
 	/**

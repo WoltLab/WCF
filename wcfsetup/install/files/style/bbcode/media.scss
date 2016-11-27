@@ -1,0 +1,11 @@
+.mediaBBCode {
+	display: inline-block;
+	
+	figcaption {
+		color: $wcfContentDimmedText;
+		margin-top: 5px;
+		text-align: center;
+		
+		@include wcfFontSmall;
+	}
+}
