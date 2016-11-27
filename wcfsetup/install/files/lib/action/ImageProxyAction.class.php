@@ -68,6 +68,7 @@ class ImageProxyAction extends AbstractAction {
 							'maxLength' => 10 * (1 << 20) // download at most 10 MiB
 						]);
 						$request->addHeader('Via', '1.1 wsc');
+						$request->addHeader('Accept', 'image/*');
 						$request->execute();
 					}
 					catch (\Exception $e) {
