@@ -284,6 +284,10 @@
 			}
 		}
 	}
+	
+	.userPanelAvatar {
+		display: none;
+	}
 }
 
 /* LOGO */
@@ -435,12 +439,13 @@
 	.userPanel {
 		flex: 0 0 auto;
 		
-		&::before {
-			content: $fa-var-user;
-		}
-		
 		> .userPanelItems {
 			display: none;
+		}
+		
+		.userPanelAvatar {
+			display: block;
+			padding: 0 5px;
 		}
 	}
 	
@@ -460,21 +465,6 @@
 	.userPanel {
 		position: relative;
 		
-		&::before {
-			background-color: $wcfHeaderMenuBackground;
-			border-radius: 2px;
-			color: $wcfHeaderMenuLink;
-			font-family: FontAwesome;
-			font-size: 28px;
-			line-height: 32px;
-			padding: 5px 10px;
-		}
-		
-		&:hover::before {
-			background-color: $wcfHeaderMenuLinkBackgroundActive;
-			color: $wcfHeaderMenuLinkActive;
-		}
-		
 		&.pageMenuMobileButtonHasContent::after {
 			background-color: rgb(244, 67, 54);
 			border: 2px solid $wcfHeaderBackground;
@@ -482,9 +472,30 @@
 			content: "";
 			height: 14px;
 			position: absolute;
-			right: -5px;
-			top: -8px;
+			right: -3px;
+			top: -3px;
 			width: 14px;
+		}
+	}
+	
+	.mainMenu,
+	.userPanel:not(.userPanelLoggedIn) {
+		&::before {
+			color: $wcfHeaderMenuLink;
+			font-family: FontAwesome;
+			font-size: 28px;
+			line-height: 32px;
+			padding: 5px 5px;
+		}
+		
+		&:hover::before {
+			color: $wcfHeaderMenuLinkActive;
+		}
+	}
+	
+	.userPanel:not(.userPanelLoggedIn) {
+		&::before {
+			content: $fa-var-user;
 		}
 	}
 	

@@ -1,4 +1,8 @@
-<nav id="topMenu" class="userPanel">
+<nav id="topMenu" class="userPanel{if $__wcf->user->userID} userPanelLoggedIn{/if}">
+	{if $__wcf->user->userID}
+		<span class="userPanelAvatar">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</span>
+	{/if}
+	
 	<ul class="userPanelItems">
 		{if $__wcf->user->userID}
 			<!-- user menu -->
