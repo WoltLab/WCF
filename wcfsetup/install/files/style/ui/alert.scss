@@ -75,7 +75,6 @@
 	left: 0;
 	right: 0;
 	position: fixed;
-	text-align: center;
 	
 	.error,
 	.info,
@@ -85,6 +84,40 @@
 		border-top-width: 1px;
 		border-top-style: solid;
 		margin-top: 0;
+		padding: 10px 0;
+		
+		@include screen-sm-down {
+			@include wcfFontSmall;
+		}
+	}
+	
+	.cookiePolicyNotice {
+		.layoutBoundary {
+			display: flex;
+			align-items: center;
+			
+			@include screen-sm-down {
+				flex-wrap: wrap;
+			}
+		}
+		
+		.cookiePolicyNoticeText {
+			flex: 1 1 auto;
+			
+			@include screen-sm-down {
+				flex-basis: 100%;
+				margin-bottom: 5px;
+			}
+		}
+		
+		.cookiePolicyNoticeMoreInformation,
+		.cookiePolicyNoticeDismiss {
+			flex: 0 0 auto;
+		}
+		
+		.cookiePolicyNoticeDismiss {
+			margin-left: 5px;
+		}
 	}
 }
 

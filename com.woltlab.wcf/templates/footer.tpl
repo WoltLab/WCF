@@ -103,21 +103,26 @@
 
 <div class="pageFooterStickyNotice">
 	{if MODULE_COOKIE_POLICY_PAGE && $__wcf->session->isFirstVisit() && !$__wcf->user->userID}
-		<p class="info cookiePolicyNotice">
-			{lang}wcf.page.cookiePolicy.info{/lang}
-			<span class="icon icon24 fa-times jsTooltip jsOnly pointer cookiePolicyNoticeDismiss" title="{lang}wcf.global.button.close{/lang}"></span>
-			<script data-relocate="true">
-				elBySel('.cookiePolicyNoticeDismiss').addEventListener(WCF_CLICK_EVENT, function() {
-					elRemove(elBySel('.cookiePolicyNotice'));
-				});
-			</script>
-		</p>
+		<div class="info cookiePolicyNotice">
+			<div class="layoutBoundary">
+				<span class="cookiePolicyNoticeText">{lang}wcf.page.cookiePolicy.info{/lang}</span>
+				<a href="{page}com.woltlab.wcf.CookiePolicy{/page}" class="button buttonPrimary small cookiePolicyNoticeMoreInformation">{lang}wcf.page.cookiePolicy.info.moreInformation{/lang}</a>
+				<a href="#" class="button small jsOnly cookiePolicyNoticeDismiss">{lang}wcf.global.button.close{/lang}</a>
+				<script data-relocate="true">
+					elBySel('.cookiePolicyNoticeDismiss').addEventListener(WCF_CLICK_EVENT, function() {
+						elRemove(elBySel('.cookiePolicyNotice'));
+					});
+				</script>
+			</div>
+		</div>
 	{/if}
 	
 	{event name='pageFooterStickyNotice'}
 	
 	<noscript>
-		<p class="error javascriptDisabledWarning">{lang}wcf.page.javascriptDisabled{/lang}</p>
+		<div class="layoutBoundary">
+			<span class="javascriptDisabledWarningText">{lang}wcf.page.javascriptDisabled{/lang}</span>
+		</div>
 	</noscript>
 </div>
 

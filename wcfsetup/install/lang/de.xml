@@ -2832,7 +2832,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[In {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Website nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
-		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} damit einverstanden, dass wir Cookies setzen. <a href="{page}com.woltlab.wcf.CookiePolicy{/page}">Weitere Informationen</a>]]></item>
+		<item name="wcf.page.cookiePolicy.info"><![CDATA[Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} damit einverstanden, dass wir Cookies setzen.]]></item>
+		<item name="wcf.page.cookiePolicy.info.moreInformation"><![CDATA[Weitere Informationen]]></item>
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com/de/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Community-Software: <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategogie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
