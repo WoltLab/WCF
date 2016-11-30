@@ -44,7 +44,7 @@
 @mixin linearGradient($backgroundColor, $gradientColor1, $gradientColor2) {
 	background-image: linear-gradient($gradientColor1, $gradientColor2);
 }
-@mixin linearGradient($backgroundColor, $gradientColor1, $gradientColor2, $gradientColor3) {
+@mixin linearGradient($backgroundColor, $gradientColor1, $gradientColor2, $gradientColor3, $direction: 180deg) {
 	background-image: linear-gradient($direction, $gradientColor1, $gradientColor2, $gradientColor3);
 }
 @mixin linearGradientNative($parameters) {
