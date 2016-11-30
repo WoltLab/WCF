@@ -32,7 +32,7 @@
 		{foreach from=$boxArticleList item=boxArticle}
 			<li>
 				<a href="{$boxArticle->getLink()}">
-					{if $boxArticle->getImage()}
+					{if $boxArticle->getImage() && $boxArticle->getImage()->hasThumbnail('small')}
 						<div class="articleListImage">{@$boxArticle->getImage()->getThumbnailTag('small')}</div>
 					{/if}
 					

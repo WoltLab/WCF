@@ -256,7 +256,7 @@
 							<dt><label for="image">{lang}wcf.acp.box.image{/lang}</label></dt>
 							<dd>
 								<div id="imageDisplay" class="selectedImagePreview">
-									{if $images[0]|isset}
+									{if $images[0]|isset && $images[0]->hasThumbnail('small')}
 										{@$images[0]->getThumbnailTag('small')}
 									{/if}
 								</div>
@@ -267,7 +267,7 @@
 								{/if}
 							</dd>
 						</dl>
-					{elseif $action == 'edit' && $images[0]|isset}
+					{elseif $action == 'edit' && $images[0]|isset && $images[0]->hasThumbnail('small')}
 						<dl>
 							<dt>{lang}wcf.acp.box.image{/lang}</dt>
 							<dd>
@@ -329,7 +329,7 @@
 											<dt><label for="image{@$availableLanguage->languageID}">{lang}wcf.acp.box.image{/lang}</label></dt>
 											<dd>
 												<div id="imageDisplay{@$availableLanguage->languageID}" class="selectedImagePreview">
-													{if $images[$availableLanguage->languageID]|isset}
+													{if $images[$availableLanguage->languageID]|isset && $images[$availableLanguage->languageID]->hasThumbnail('small')}
 														{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}
 													{/if}
 												</div>
@@ -340,7 +340,7 @@
 												{/if}
 											</dd>
 										</dl>
-									{elseif $action == 'edit' && $images[$availableLanguage->languageID]|isset}
+									{elseif $action == 'edit' && $images[$availableLanguage->languageID]|isset && $images[$availableLanguage->languageID]->hasThumbnail('small')}
 										<dl>
 											<dt>{lang}wcf.acp.box.image{/lang}</dt>
 											<dd>

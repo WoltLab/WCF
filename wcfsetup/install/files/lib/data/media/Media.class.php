@@ -208,6 +208,29 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	}
 	
 	/**
+	 * Returns true if a thumbnail version with the given size is available.
+	 *
+	 * @param	string		$size
+	 * @return	boolean
+	 * @throws	\InvalidArgumentException
+	 */
+	public function hasThumbnail($size) {
+		if (!isset(self::$thumbnailSizes[$size])) {
+			throw new \InvalidArgumentException("Unknown thumbnail size '".$size."'");
+		}
+		
+		if ($this->{$size.'ThumbnailType'}) {
+			return true;
+		}
+		
+		if ($this->width <= self::$thumbnailSizes[$size]['width'] && $this->height <= self::$thumbnailSizes[$size]['height']) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Returns the storage path of the media files.
 	 * 
 	 * @return	string

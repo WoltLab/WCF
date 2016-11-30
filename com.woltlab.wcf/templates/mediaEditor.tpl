@@ -1,4 +1,4 @@
-{if $media->isImage}
+{if $media->isImage && $media->hasThumbnail('small')}
 	<div class="mediaThumbnail">
 		{@$media->getThumbnailTag('small')}
 	</div>

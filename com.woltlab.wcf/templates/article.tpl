@@ -98,7 +98,7 @@
 
 {include file='header'}
 
-{if $articleContent->getImage()}
+{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
 	<section class="section">
 		<figure class="articleImage" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
 			<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
@@ -252,7 +252,7 @@
 			{foreach from=$relatedArticles item='relatedArticle'}
 				<li>
 					<a href="{$relatedArticle->getLink()}">
-						{if $relatedArticle->getImage()}
+						{if $relatedArticle->getImage() && $relatedArticle->getImage()->hasThumbnail('tiny')}
 							<div class="box128">
 								<div class="articleListImage">{@$relatedArticle->getImage()->getThumbnailTag('tiny')}</div>
 						{/if}
@@ -285,8 +285,8 @@
 								{@$relatedArticle->getFormattedTeaser()}
 							</div>
 						</div>
-						
-						{if $relatedArticle->getImage()}
+								
+						{if $relatedArticle->getImage() && $relatedArticle->getImage()->hasThumbnail('tiny')}
 							</div>
 						{/if}
 					</a>
