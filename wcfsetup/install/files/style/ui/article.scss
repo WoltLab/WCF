@@ -80,19 +80,26 @@
 	
 	.previousArticleButton,
 	.nextArticleButton {
+		display: flex;
+		
 		@include screen-md-up {
-			width: 50%;
+			flex: 0 0 50%;
 		}
 		
 		> a {
 			color: $wcfContentText;
-			display: block;
+			display: flex;
 			
 			&::before {
+				align-self: center;
+				display: block;
+				flex: 0 0 auto;
 				font-family: FontAwesome;
 				font-size: 36px;
-				display: block;
-				margin-top: 20px;
+			}
+			
+			> div {
+				flex: 1 1 auto;
 			}
 			
 			.articleNavigationEntityName,
@@ -143,17 +150,17 @@
 		
 		> a {
 			&::before {
-				float: left;
 				content: $fa-var-chevron-left;
 			}
 			
 			> div {
-				margin-left: 36px;
+				margin-left: 10px;
 			}
 		}
 	}
 	
 	.nextArticleButton {
+		justify-content: flex-end;
 		text-align: right;
 		
 		@include screen-md-up {
@@ -169,12 +176,12 @@
 		
 		> a {
 			&::before {
-				float: right;
 				content: $fa-var-chevron-right;
+				order: 1;
 			}
 			
 			> div {
-				margin-right: 36px;
+				margin-right: 10px;
 			}
 		}
 	}
