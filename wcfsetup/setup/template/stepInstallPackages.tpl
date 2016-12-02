@@ -1,10 +1,12 @@
 {assign var=lastStep value=true}
 {include file='header'}
 
-<header class="boxHeadline boxSubHeadline">
-	<h2>{lang}wcf.global.next{/lang}</h2>
-	<p>{lang}wcf.global.next.description{/lang}</p>
-</header>
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.global.next{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.global.next.description{/lang}</p>
+	</header>
+</section>
 
 <form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
 	<div class="formSubmit">
