@@ -33,6 +33,17 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	protected static $baseClass = Media::class;
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		if ($this->title){
+			return $this->title;
+		}
+		
+		return $this->getDecoratedObject()->getTitle();
+	}
+	
+	/**
 	 * Returns a textual representation of the media file to be used in templates.
 	 * 
 	 * @return	string
