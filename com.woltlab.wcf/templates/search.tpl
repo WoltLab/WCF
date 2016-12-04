@@ -31,7 +31,7 @@
 		<dl>
 			<dt><label for="searchAuthor">{lang}wcf.search.author{/lang}</label></dt>
 			<dd>
-				<input type="text" id="searchAuthor" name="username" value="{$username}" class="long" maxlength="255" autocomplete="off">
+				<input type="text" id="searchAuthor" name="username" value="{$username}" class="medium" maxlength="255" autocomplete="off">
 				<label><input type="checkbox" name="nameExactly" value="1"{if $nameExactly == 1} checked{/if}> {lang}wcf.search.matchExactly{/lang}</label>
 				{event name='authorOptions'}
 			</dd>
