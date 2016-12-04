@@ -350,7 +350,8 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 							includeUserGroups: false
 						}
 					}
-				}
+				},
+				silent: true
 			};
 		},
 		
