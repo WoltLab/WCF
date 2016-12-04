@@ -78,8 +78,16 @@ $.Redactor.prototype.WoltLabSource = function() {
 		},
 		
 		format: function (html) {
-			var blockTags = this.block.tags.join('|').toLowerCase();
-			blockTags += '|ul|ol|li';
+			var blockTags = ['ul', 'ol', 'li'];
+			this.block.tags.forEach(function(tag) {
+				blockTags.push(tag);
+			});
+			
+			blockTags = blockTags.join('|').toLowerCase();
+			
+			// block tags that are recognized as block tags, but both
+			// newline and indentation matches inline elements
+			var blocksAsInline = ['p', 'li'];
 			
 			var patternTagAttributes = '[^\'">]*(?:(?:"[^"]*"|\'[^\']*\')[^\'">]*)*';
 			
@@ -92,8 +100,12 @@ $.Redactor.prototype.WoltLabSource = function() {
 			});
 			
 			// normalize whitespace before and after block tags
-			html = html.replace(new RegExp('\\s*</(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), '\n</$1$2>');
-			html = html.replace(new RegExp('\\s*<(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), '\n<$1$2>\n');
+			html = html.replace(new RegExp('\\s*</(' + blockTags + ')>\\s*', 'g'), function(match, tag) {
+				return (blocksAsInline.indexOf(tag) === -1 ? '\n' : '') + '</' + tag + '>';
+			});
+			html = html.replace(new RegExp('\\s*<(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), function(match, tag, attributes) {
+				return '\n<' + tag + attributes + '>' + (blocksAsInline.indexOf(tag) === -1 ? '\n' : '');
+			});
 			
 			// avoid empty newline at quote start
 			html = html.replace(/<woltlab-quote([^>]*)>\n\t*\n(\t*)<p/, '<woltlab-quote$1>\n$2<p');
@@ -105,7 +117,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 			var parts = html.split(/\n/);
 			var depth = 0;
 			var i, length, line;
-			var reIsBlockStart = new RegExp('^<(?:' + blockTags + ')');
+			var reIsBlockStart = new RegExp('^<(' + blockTags + ')');
 			var reIsBlockEnd = new RegExp('^</(?:' + blockTags + ')>$');
 			var increaseDepth = false;
 			for (i = 0, length = parts.length; i < length; i++) {
@@ -113,7 +125,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 				increaseDepth = false;
 				
 				if (line.match(reIsBlockStart)) {
-					increaseDepth = true;
+					if (blocksAsInline.indexOf(RegExp.$1) === -1) {
+						increaseDepth = true;
+					}
 				}
 				else if (line.match(reIsBlockEnd)) {
 					depth--;
