@@ -106,8 +106,8 @@ define(
 			var title = elBySel('input[name=title]', content);
 			
 			var hasError = false;
-			var altTextError = DomTraverse.childByClass(altText.parentNode.parentNode, 'innerError');
-			var captionError = DomTraverse.childByClass(caption.parentNode.parentNode, 'innerError');
+			var altTextError = (altText ? DomTraverse.childByClass(altText.parentNode.parentNode, 'innerError') : false);
+			var captionError = (caption ? DomTraverse.childByClass(caption.parentNode.parentNode, 'innerError') : false);
 			var titleError = DomTraverse.childByClass(title.parentNode.parentNode, 'innerError');
 			
 			if (this._availableLanguageCount > 1) {
@@ -122,7 +122,7 @@ define(
 			this._media.caption = {};
 			this._media.title = {};
 			if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
-				if (!LanguageInput.validate('altText_' + this._media.mediaID, true)) {
+				if (elById('altText_' + this._media.mediaID) && !LanguageInput.validate('altText_' + this._media.mediaID, true)) {
 					hasError = true;
 					if (!altTextError) {
 						var error = elCreate('small');
@@ -131,7 +131,7 @@ define(
 						altText.parentNode.parentNode.appendChild(error);
 					}
 				}
-				if (!LanguageInput.validate('caption_' + this._media.mediaID, true)) {
+				if (elById('caption_' + this._media.mediaID) && !LanguageInput.validate('caption_' + this._media.mediaID, true)) {
 					hasError = true;
 					if (!captionError) {
 						var error = elCreate('small');
@@ -150,13 +150,13 @@ define(
 					}
 				}
 				
-				this._media.altText = LanguageInput.getValues('altText_' + this._media.mediaID).toObject();
-				this._media.caption = LanguageInput.getValues('caption_' + this._media.mediaID).toObject();
+				this._media.altText = (elById('altText_' + this._media.mediaID) ? LanguageInput.getValues('altText_' + this._media.mediaID).toObject() : '');
+				this._media.caption = (elById('caption_' + this._media.mediaID) ? LanguageInput.getValues('caption_' + this._media.mediaID).toObject() : '');
 				this._media.title = LanguageInput.getValues('title_' + this._media.mediaID).toObject();
 			}
 			else {
-				this._media.altText[this._media.languageID] = altText.value;
-				this._media.caption[this._media.languageID] = caption.value;
+				this._media.altText[this._media.languageID] = (altText ? altText.value : '');
+				this._media.caption[this._media.languageID] = (caption ? caption.value : '');
 				this._media.title[this._media.languageID] = title.value;
 			}
 			
@@ -209,15 +209,15 @@ define(
 			
 			if (element.checked) {
 				LanguageInput.enable('title_' + this._media.mediaID);
-				LanguageInput.enable('caption_' + this._media.mediaID);
-				LanguageInput.enable('altText_' + this._media.mediaID);
+				if (elById('caption_' + this._media.mediaID)) LanguageInput.enable('caption_' + this._media.mediaID);
+				if (elById('altText_' + this._media.mediaID)) LanguageInput.enable('altText_' + this._media.mediaID);
 				
 				elHide(languageChooserContainer);
 			}
 			else {
 				LanguageInput.disable('title_' + this._media.mediaID);
-				LanguageInput.disable('caption_' + this._media.mediaID);
-				LanguageInput.disable('altText_' + this._media.mediaID);
+				if (elById('caption_' + this._media.mediaID)) LanguageInput.disable('caption_' + this._media.mediaID);
+				if (elById('altText_' + this._media.mediaID)) LanguageInput.disable('altText_' + this._media.mediaID);
 				
 				elShow(languageChooserContainer);
 			}
@@ -270,16 +270,17 @@ define(
 										
 										var title = elBySel('input[name=title]', content);
 										var altText = elBySel('input[name=altText]', content);
+										var caption = elBySel('textarea[name=caption]', content);
 										
 										if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
-											LanguageInput.setValues('altText_' + this._media.mediaID, Dictionary.fromObject(this._media.altText || { }));
-											LanguageInput.setValues('caption_' + this._media.mediaID, Dictionary.fromObject(this._media.caption || { }));
+											if (elById('altText_' + this._media.mediaID)) LanguageInput.setValues('altText_' + this._media.mediaID, Dictionary.fromObject(this._media.altText || { }));
+											if (elById('caption_' + this._media.mediaID)) LanguageInput.setValues('caption_' + this._media.mediaID, Dictionary.fromObject(this._media.caption || { }));
 											LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || { }));
 										}
 										else {
 											title.value = this._media.title ? this._media.title[LANGUAGE_ID] : ''; 
-											altText.value = this._media.altText ? this._media.altText[LANGUAGE_ID] : '';
-											elBySel('textarea[name=caption]', content).value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
+											if (altText) altText.value = this._media.altText ? this._media.altText[LANGUAGE_ID] : '';
+											if (caption) caption.value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
 										}
 										
 										if (this._availableLanguageCount > 1) {
@@ -290,7 +291,7 @@ define(
 										}
 										
 										var keyPress = this._keyPress.bind(this);
-										altText.addEventListener('keypress', keyPress);
+										if (altText) altText.addEventListener('keypress', keyPress);
 										title.addEventListener('keypress', keyPress);
 										
 										elBySel('button[data-type=submit]', content).addEventListener(WCF_CLICK_EVENT, this._saveData.bind(this));

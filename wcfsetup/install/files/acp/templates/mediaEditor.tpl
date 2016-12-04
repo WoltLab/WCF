@@ -55,24 +55,26 @@
 		{include file='multipleLanguageInputJavascript' elementIdentifier='title'|concat:'_':$media->mediaID forceSelection=true}
 	{/if}
 	
-	<dl>
-		<dt><label for="caption_{@$media->mediaID}">{lang}wcf.media.caption{/lang}</label></dt>
-		<dd>
-			<textarea id="caption_{@$media->mediaID}" name="caption" cols="40" rows="3"></textarea>
-		</dd>
-	</dl>
-	{if $availableLanguages|count > 1}
-		{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
-	{/if}
-	
-	<dl>
-		<dt><label for="altText_{@$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
-		<dd>
-			<input type="text" id="altText_{@$media->mediaID}" name="altText" class="long">
-		</dd>
-	</dl>
-	{if $availableLanguages|count > 1}
-		{include file='multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}
+	{if $media->isImage}
+		<dl>
+			<dt><label for="caption_{@$media->mediaID}">{lang}wcf.media.caption{/lang}</label></dt>
+			<dd>
+				<textarea id="caption_{@$media->mediaID}" name="caption" cols="40" rows="3"></textarea>
+			</dd>
+		</dl>
+		{if $availableLanguages|count > 1}
+			{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
+		{/if}
+		
+		<dl>
+			<dt><label for="altText_{@$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
+			<dd>
+				<input type="text" id="altText_{@$media->mediaID}" name="altText" class="long">
+			</dd>
+		</dl>
+		{if $availableLanguages|count > 1}
+			{include file='multipleLanguageInputJavascript' elementIdentifier='altText'|concat:'_':$media->mediaID forceSelection=true}
+		{/if}
 	{/if}
 	
 	{event name='dataFields'}
