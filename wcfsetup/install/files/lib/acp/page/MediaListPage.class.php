@@ -35,10 +35,10 @@ class MediaListPage extends SortablePage {
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * searched media filename
+	 * searched media query
 	 * @var	string
 	 */
-	public $filename = '';
+	public $query = '';
 	
 	/**
 	 * @inheritDoc
@@ -79,7 +79,7 @@ class MediaListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'filename' => $this->filename,
+			'q' => $this->query,
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')),
 			'username' => $this->username
 		]);
@@ -91,8 +91,8 @@ class MediaListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		if ($this->filename) {
-			$this->objectList->addSearchConditions($this->filename);
+		if ($this->query) {
+			$this->objectList->addSearchConditions($this->query);
 		}
 		if ($this->username) {
 			$this->objectList->getConditionBuilder()->add('media.username LIKE ?', ['%'.addcslashes($this->username, '_%').'%']);
@@ -105,13 +105,13 @@ class MediaListPage extends SortablePage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['filename'])) $this->filename = StringUtil::trim($_REQUEST['filename']);
+		if (isset($_REQUEST['q'])) $this->query = StringUtil::trim($_REQUEST['q']);
 		if (isset($_REQUEST['username'])) $this->username = StringUtil::trim($_REQUEST['username']);
 		
 		$parameters = [];
 		if ($this->sortField) $parameters['sortField'] = $this->sortField;
 		if ($this->sortOrder) $parameters['sortOrder'] = $this->sortOrder;
-		if ($this->filename) $parameters['filename'] = $this->filename;
+		if ($this->query) $parameters['q'] = $this->query;
 		if ($this->username) $parameters['username'] = $this->username;
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('MediaList', $parameters);
