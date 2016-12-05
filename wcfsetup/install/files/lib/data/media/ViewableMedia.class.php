@@ -36,7 +36,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * @inheritDoc
 	 */
 	public function getTitle() {
-		if ($this->title){
+		if ($this->title) {
 			return $this->title;
 		}
 		
