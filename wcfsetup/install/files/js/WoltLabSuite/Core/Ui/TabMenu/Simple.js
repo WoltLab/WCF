@@ -168,6 +168,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					var input = elCreate('input');
 					input.type = 'hidden';
 					input.name = store;
+					input.value = elData(this.getActiveTab(), 'name');
 					
 					this._container.appendChild(input);
 					
