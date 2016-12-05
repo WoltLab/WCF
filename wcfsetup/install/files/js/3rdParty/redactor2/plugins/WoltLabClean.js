@@ -150,7 +150,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				});
 				
 				elBySelAll('br', div, function (br) {
-					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br);
+					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br.nextSibling);
 				});
 				
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);
@@ -167,14 +167,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 						while (marker.nextSibling) {
 							p.appendChild(marker.nextSibling);
 						}
-						p.appendChild(elCreate('br'));
 						
-						parent.parentNode.insertBefore(p, parent.nextSibling);
-						
-						var previous = marker.previousElementSibling;
+						var previous = marker.previousSibling;
 						if (previous && previous.nodeName === 'BR') {
 							elRemove(previous);
 						}
+						
+						parent.parentNode.insertBefore(p, parent.nextSibling);
 					}
 					else {
 						parent.insertBefore(elCreate('br'), marker);
