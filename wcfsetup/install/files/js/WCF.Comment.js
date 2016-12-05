@@ -829,8 +829,8 @@ WCF.Comment.Handler = Class.extend({
 	_saveEdit: function(event) {
 		var $input = $(event.currentTarget);
 		if ($input.is('button')) {
-			$input.prev('small.innerError').remove();
-			$input = $input.prev('textarea');
+			$input.parent().children('small.innerError').remove();
+			$input = $input.parent().children('textarea');
 		}
 		var $message = $.trim($input.val());
 		
