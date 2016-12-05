@@ -119,7 +119,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			'outputClass' => $outputClass,
 			'searchable' => $searchable,
 			'showOrder' => $showOrder,
-			'isDisabled' => $isDisabled,
 			'permissions' => $permissions,
 			'options' => $options,
 			'additionalData' => serialize($additionalData),
@@ -136,6 +135,10 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		else {
 			// append option name
 			$data['optionName'] = $optionName;
+			// append disabled state
+			$data['isDisabled'] = $isDisabled;
+			
+			// create option
 			$data['packageID'] = $this->installation->getPackageID();
 			UserOptionEditor::create($data);
 		}
