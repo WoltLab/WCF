@@ -66,20 +66,22 @@
 				{assign var=removeOffset value=0}
 				{assign var=lineNo value=0}
 				<pre id="left" class="monospace" style="overflow: auto; height: 700px;">{*
-					*}<ol class="nativeList">{*
-						*}{foreach from=$diff->getRawDiff() item='line'}{*
-							*}{if $line[0] == ' '}{*
-								*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
-								*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
-							*}{elseif $line[0] == '-'}{*
-								*}{assign var=removeOffset value=$removeOffset + 1}{assign var=lineNo value=$lineNo + 1}{*
-								*}<li value="{@$lineNo}" style="background-color: lightpink;margin: 0">{$line[1]}</li>{*
-							*}{elseif $line[0] == '+'}{*
-								*}{assign var=removeOffset value=$removeOffset - 1}{*
-								*}{if $removeOffset < 0}<li style="list-style-type: none;margin: 0">&nbsp;</li>{/if}{*
-							*}{/if}{*
-						*}{/foreach}{*
-					*}</ol>{*
+					*}<span style="display: inline-block;">{* <-- wrapper span to prevent content from overflowing the <li>
+						*}<ol class="nativeList">{*
+							*}{foreach from=$diff->getRawDiff() item='line'}{*
+								*}{if $line[0] == ' '}{*
+									*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
+									*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
+								*}{elseif $line[0] == '-'}{*
+									*}{assign var=removeOffset value=$removeOffset + 1}{assign var=lineNo value=$lineNo + 1}{*
+									*}<li value="{@$lineNo}" style="background-color: lightpink;margin: 0">{$line[1]}</li>{*
+								*}{elseif $line[0] == '+'}{*
+									*}{assign var=removeOffset value=$removeOffset - 1}{*
+									*}{if $removeOffset < 0}<li style="list-style-type: none;margin: 0">&nbsp;</li>{/if}{*
+								*}{/if}{*
+							*}{/foreach}{*
+						*}</ol>{*
+					*}</span>{*
 				*}</pre>
 			</div>
 			<div class="section">
@@ -92,22 +94,24 @@
 				{assign var=removeOffset value=0}
 				{assign var=lineNo value=0}
 				<pre id="right" class="monospace" style="overflow: auto; height: 700px;">{*
-					*}<ol class="nativeList">{*
-						*}{foreach from=$diff->getRawDiff() item='line'}{*
-							*}{if $line[0] == ' '}{*
-								*}{if $removeOffset > 0}{*
-									*}{@'<li style="list-style-type: none;margin: 0">&nbsp;</li>'|str_repeat:$removeOffset}{*
+					*}<span style="display: inline-block;">{* <-- wrapper span to prevent content from overflowing the <li>
+						*}<ol class="nativeList">{*
+							*}{foreach from=$diff->getRawDiff() item='line'}{*
+								*}{if $line[0] == ' '}{*
+									*}{if $removeOffset > 0}{*
+										*}{@'<li style="list-style-type: none;margin: 0">&nbsp;</li>'|str_repeat:$removeOffset}{*
+									*}{/if}{*
+									*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
+									*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
+								*}{elseif $line[0] == '-'}{*
+									*}{assign var=removeOffset value=$removeOffset + 1}{*
+								*}{elseif $line[0] == '+'}{*
+									*}{assign var=removeOffset value=$removeOffset - 1}{assign var=lineNo value=$lineNo + 1}{*
+									*}<li value="{@$lineNo}" style="background-color: lightgreen; margin: 0">{$line[1]}</li>{*
 								*}{/if}{*
-								*}{assign var=removeOffset value=0}{assign var=lineNo value=$lineNo + 1}{*
-								*}<li value="{@$lineNo}" style="margin: 0">{$line[1]}</li>{*
-							*}{elseif $line[0] == '-'}{*
-								*}{assign var=removeOffset value=$removeOffset + 1}{*
-							*}{elseif $line[0] == '+'}{*
-								*}{assign var=removeOffset value=$removeOffset - 1}{assign var=lineNo value=$lineNo + 1}{*
-								*}<li value="{@$lineNo}" style="background-color: lightgreen; margin: 0">{$line[1]}</li>{*
-							*}{/if}{*
-						*}{/foreach}{*
-					*}</ol>{*
+							*}{/foreach}{*
+						*}</ol>{*
+					*}</span>{*
 				*}</pre>
 				
 				<footer class="contentFooter">
