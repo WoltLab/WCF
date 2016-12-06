@@ -1,11 +1,17 @@
-<section class="section sectionContainerList dashboardBoxRecentActivity" id="dashboardBoxRecentActivity">
+<section class="section sectionContainerList dashboardBoxRecentActivity" id="boxRecentActivity{@$boxID}">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.user.recentActivity{/lang}</h2>
 	</header>
 	
 	{assign var='__events' value=$eventList->getObjects()}
 	{assign var='__lastEvent' value=$__events|end}
-	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}" data-last-event-id="{if $__lastEvent}{@$__lastEvent->eventID}{else}0{/if}">
+	<ul class="containerList recentActivityList"
+	    data-last-event-time="{@$lastEventTime}"
+	    data-last-event-id="{if $__lastEvent}{@$__lastEvent->eventID}{else}0{/if}"
+	    data-filtered-by-followed-users="{if $filteredByFollowedUsers}true{else}false{/if}"
+	    data-user-id="0"
+	    data-box-id="{@$boxID}"
+	>
 		{if $canFilterByFollowedUsers}
 			<li class="containerListButtonGroup jsOnly jsRecentActivitySwitchContext">
 				<ul class="buttonGroup">
@@ -20,12 +26,12 @@
 </section>
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Activity/Recent'], function (Language, UiUserActivityRecent) {
+		Language.addObject({
 			'wcf.user.recentActivity.more': '{lang}wcf.user.recentActivity.more{/lang}',
 			'wcf.user.recentActivity.noMoreEntries': '{lang}wcf.user.recentActivity.noMoreEntries{/lang}'
 		});
 		
-		new WCF.User.RecentActivityLoader(null, {if $filteredByFollowedUsers}true{else}false{/if});
+		new UiUserActivityRecent('boxRecentActivity{@$boxID}');
 	});
 </script>

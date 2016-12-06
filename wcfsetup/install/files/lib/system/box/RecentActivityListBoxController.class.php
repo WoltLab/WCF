@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\box;
+use wcf\data\box\Box;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
+use wcf\system\condition\IObjectListCondition;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
@@ -93,6 +95,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 		if ($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') {
 			/** @noinspection PhpUndefinedMethodInspection */
 			return WCF::getTPL()->fetch('boxRecentActivity', 'wcf', [
+				'boxID' => $this->getBox()->boxID,
 				'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
 				'eventList' => $this->objectList,
 				'lastEventTime' => $this->objectList->getLastEventTime(),
@@ -101,6 +104,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 		}
 		else {
 			return WCF::getTPL()->fetch('boxRecentActivitySidebar', 'wcf', [
+				'boxID' => $this->getBox()->boxID,
 				'eventList' => $this->objectList
 			], true);
 		}
@@ -134,5 +138,34 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 		
 		// remove unused items
 		$this->objectList->truncate($this->box->limit);
+	}
+	
+	public function getFilteredList() {
+		$this->objectList = $this->getObjectList();
+		
+		if ($this->limit) {
+			$this->objectList->sqlLimit = $this->box->limit;
+		}
+		
+		if ($this->sortOrder && $this->sortField) {
+			$alias = $this->objectList->getDatabaseTableAlias();
+			$this->objectList->sqlOrderBy = $this->sortField . ' ' . $this->sortOrder . ", " . ($alias ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
+		}
+		
+		if ($this->conditionDefinition) {
+			foreach ($this->box->getConditions() as $condition) {
+				/** @var IObjectListCondition $processor */
+				$processor = $condition->getObjectType()->getProcessor();
+				$processor->addObjectListCondition($this->objectList, $condition->conditionData);
+			}
+		}
+		
+		// apply filter
+		if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+		}
+		
+		return $this->objectList;
 	}
 }

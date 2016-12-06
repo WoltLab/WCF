@@ -1,8 +1,11 @@
 <?php
 namespace wcf\data\user\activity\event;
+use wcf\data\box\Box;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\box\RecentActivityListBoxController;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
 
@@ -25,13 +28,32 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	public $allowGuestAccess = ['load'];
 	
 	/**
+	 * @var RecentActivityListBoxController
+	 */
+	public $boxController;
+	
+	/**
 	 * Validates parameters to load recent activity entries.
 	 */
 	public function validateLoad() {
+		$this->readInteger('boxID', true);
 		$this->readBoolean('filteredByFollowedUsers', true);
 		$this->readInteger('lastEventTime');
 		$this->readInteger('lastEventID', true);
 		$this->readInteger('userID', true);
+		
+		if ($this->parameters['boxID']) {
+			$box = new Box($this->parameters['boxID']);
+			if ($box->boxID) {
+				$this->boxController = $box->getController();
+				if ($this->boxController instanceof RecentActivityListBoxController) {
+					// all checks passed, end validation; otherwise throw the exception below
+					return;
+				}
+			}
+			
+			throw new UserInputException('boxID');
+		}
 	}
 	
 	/**
@@ -40,25 +62,33 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function load() {
-		$eventList = new ViewableUserActivityEventList();
+		$box = null;
+		if ($this->boxController !== null) {
+			$eventList = $this->boxController->getFilteredList();
+			
+		}
+		else {
+			$eventList = new ViewableUserActivityEventList();
+			
+			// profile view
+			if ($this->parameters['userID']) {
+				$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$this->parameters['userID']]);
+			}
+			else {
+				/** @noinspection PhpUndefinedMethodInspection */
+				if ($this->parameters['filteredByFollowedUsers'] && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
+					/** @noinspection PhpUndefinedMethodInspection */
+					$eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+				}
+			}
+		}
+		
 		if ($this->parameters['lastEventID']) {
 			$eventList->getConditionBuilder()->add("user_activity_event.time <= ?", [$this->parameters['lastEventTime']]);
 			$eventList->getConditionBuilder()->add("user_activity_event.eventID < ?", [$this->parameters['lastEventID']]);
 		}
 		else {
 			$eventList->getConditionBuilder()->add("user_activity_event.time < ?", [$this->parameters['lastEventTime']]);
-		}
-		
-		// profile view
-		if ($this->parameters['userID']) {
-			$eventList->getConditionBuilder()->add("user_activity_event.userID = ?", [$this->parameters['userID']]);
-		}
-		else {
-			/** @noinspection PhpUndefinedMethodInspection */
-			if ($this->parameters['filteredByFollowedUsers'] && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
-				/** @noinspection PhpUndefinedMethodInspection */
-				$eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
-			}
 		}
 		
 		$eventList->readObjects();
@@ -70,6 +100,10 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 		
 		// removes orphaned and non-accessible events
 		UserActivityEventHandler::validateEvents($eventList);
+		
+		if ($this->boxController !== null) {
+			$eventList->truncate($this->boxController->getBox()->limit);
+		}
 		
 		if (!count($eventList)) {
 			return [];
