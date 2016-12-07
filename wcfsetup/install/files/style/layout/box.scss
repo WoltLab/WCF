@@ -424,11 +424,16 @@
 		
 		.boxMenu {
 			.boxMenuLink {
-				display: block;
+				align-items: flex-start;
+				display: flex;
 				padding: 5px 20px;
 				
+				.boxMenuLinkTitle {
+					flex: 1 1 auto;
+				}
+				
 				.badge {
-					float: right;
+					flex: 0 0 auto;
 				}
 			}
 			
