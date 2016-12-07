@@ -89,16 +89,17 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="3.0.0 Beta 5">
+		<instruction type="file" run="standalone">files_update.tar</instruction>
+		
 		<instruction type="sql">update_3.0.0_rc_1.sql</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0.0_rc_1.php</instruction>
 		
 		<!-- !!! whichever instruction comes next: run="standalone" !!! -->
 		
-		<instruction type="file" run="standalone">files_update.tar</instruction>
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
 		
 		<instruction type="menu" />
 		<instruction type="option" />
