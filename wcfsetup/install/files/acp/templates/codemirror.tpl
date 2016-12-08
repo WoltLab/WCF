@@ -43,7 +43,8 @@
 			indentWithTabs: true,
 			lineNumbers: true,
 			indentUnit: 4,
-			readOnly: {if !$editable|isset || $editable}false{else}true{/if}
+			readOnly: {if !$editable|isset || $editable}false{else}true{/if},
+			viewportMargin: Infinity
 		};
 		
 		[].forEach.call(elements, function (element) {
