@@ -21,11 +21,7 @@ define([], function() {
 				container = _containers[0];
 				
 				toggleButton = elBySelAll('.toggleButton', container)[0];
-				if (toggleButton === undefined) {
-					continue;
-				}
-				
-				if (toggleButton.closest('.jsCollapsibleBbcode') === container) {
+				if (toggleButton && toggleButton.closest('.jsCollapsibleBbcode') === container) {
 					(function (container, toggleButton) {
 						var toggle = function (event) {
 							if (container.classList.toggle('collapsed')) {
