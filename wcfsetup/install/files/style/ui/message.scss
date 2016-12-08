@@ -627,9 +627,7 @@
 	}
 }
 
-@include screen-sm-down {
-	/* allow tables to overflow on small screens */
-	.messageTableOverflow {
-		overflow: auto;
-	}
+/* allow tables to overflow on all screens */
+.messageTableOverflow {
+	overflow: auto;
 }
