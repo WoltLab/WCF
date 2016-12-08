@@ -132,7 +132,8 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 					}
 				}
 				
-				if ($isEmpty) {
+				// discard the <li> unless it is the only one
+				if ($isEmpty && $childNode->parentNode->firstChild !== $childNode) {
 					DOMUtil::removeNode($childNode);
 				}
 			}
