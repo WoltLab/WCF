@@ -277,7 +277,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			
 			if ($paragraph->firstChild && $paragraph->firstChild->nodeType === XML_TEXT_NODE) {
 				$oldNode = $paragraph->firstChild;
-				$newNode = $paragraph->ownerDocument->createTextNode(preg_replace('/^(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+/', '', $oldNode->textContent));
+				$newNode = $paragraph->ownerDocument->createTextNode(preg_replace('/^[\p{Zs}\s]+/u', '', $oldNode->textContent));
 				$paragraph->insertBefore($newNode, $oldNode);
 				$paragraph->removeChild($oldNode);
 				
@@ -285,7 +285,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			
 			if ($paragraph->lastChild && $paragraph->lastChild->nodeType === XML_TEXT_NODE) {
 				$oldNode = $paragraph->lastChild;
-				$newNode = $paragraph->ownerDocument->createTextNode(preg_replace('/(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+$/', '', $oldNode->textContent));
+				$newNode = $paragraph->ownerDocument->createTextNode(preg_replace('/[\p{Zs}\s]+$/u', '', $oldNode->textContent));
 				$paragraph->insertBefore($newNode, $oldNode);
 				$paragraph->removeChild($oldNode);
 				
