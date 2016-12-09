@@ -322,14 +322,7 @@ class ControllerMap extends SingletonFactory {
 	protected function getClassData($application, $controller, $isAcpRequest, $pageType) {
 		$className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);
 		if (!class_exists($className)) {
-			if ($application === 'wcf') {
-				return null;
-			}
-			
-			$className = 'wcf\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);
-			if (!class_exists($className)) {
-				return null;
-			}
+			return null;
 		}
 		
 		// check for abstract classes
