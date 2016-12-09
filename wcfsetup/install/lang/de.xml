@@ -2600,7 +2600,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Likes]]></item>
-		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Likes von {$user->username} anzeigen]]></item>
+		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Likes von {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Vergebene Likes]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Erhaltene Dislikes]]></item>
 		<item name="wcf.like.dislikesGiven"><![CDATA[Vergebene Dislikes]]></item>
