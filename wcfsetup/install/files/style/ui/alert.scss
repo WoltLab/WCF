@@ -18,24 +18,56 @@
 	background-color: $wcfStatusErrorBackground;
 	border-color: $wcfStatusErrorBorder;
 	color: $wcfStatusErrorText;
+	
+	a {
+		color: $wcfStatusErrorLink;
+		
+		&:hover {
+			color: $wcfStatusErrorLinkActive;
+		}
+	}
 }
 
 .info {
 	background-color: $wcfStatusInfoBackground;
 	border-color: $wcfStatusInfoBorder;
 	color: $wcfStatusInfoText;
+	
+	a {
+		color: $wcfStatusInfoLink;
+		
+		&:hover {
+			color: $wcfStatusInfoLinkActive;
+		}
+	}
 }
 
 .success {
 	background-color: $wcfStatusSuccessBackground;
 	border-color: $wcfStatusSuccessBorder;
 	color: $wcfStatusSuccessText;
+	
+	a {
+		color: $wcfStatusSuccessLink;
+		
+		&:hover {
+			color: $wcfStatusSuccessLinkActive;
+		}
+	}
 }
 
 .warning {
 	background-color: $wcfStatusWarningBackground;
 	border-color: $wcfStatusWarningBorder;
 	color: $wcfStatusWarningText;
+	
+	a {
+		color: $wcfStatusWarningLink;
+		
+		&:hover {
+			color: $wcfStatusWarningLinkActive;
+		}
+	}
 }
 
 .innerError,
@@ -66,6 +98,14 @@
 
 	&::before {
 		border-bottom-color: rgb(242, 222, 222);
+	}
+	
+	a {
+		color: $wcfStatusErrorLink;
+		
+		&:hover {
+			color: $wcfStatusErrorLinkActive;
+		}
 	}
 }
 
@@ -128,5 +168,13 @@
 
 	&::before {
 		border-bottom-color: $wcfStatusInfoBorder;
+	}
+	
+	a {
+		color: $wcfStatusInfoLink;
+		
+		&:hover {
+			color: $wcfStatusInfoLinkActive;
+		}
 	}
 }
