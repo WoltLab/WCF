@@ -1,4 +1,4 @@
-<div class="messageShareButtons jsOnly">
+<div class="messageShareButtons jsMessageShareButtons jsOnly">
 	{assign var='__share_buttons_providers' value="\n"|explode:SHARE_BUTTONS_PROVIDERS}
 	
 	<ul class="inlineList">
