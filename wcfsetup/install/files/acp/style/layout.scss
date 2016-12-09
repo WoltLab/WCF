@@ -327,6 +327,12 @@ $wcfAcpMenuWidth: 150px;
 
 .CodeMirror {
 	word-wrap: normal;
+	height: auto !important;
+}
+
+.CodeMirror-scroll {
+	min-height: 300px;
+	max-height: 1000px;
 }
 
 #styleLogo,
