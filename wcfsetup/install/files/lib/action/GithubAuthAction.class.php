@@ -152,7 +152,7 @@ class GithubAuthAction extends AbstractAction {
 		}
 		// user declined or any other error that may occur
 		if (isset($_GET['error'])) {
-			throw new NamedUserException(WCF::getLanguage()->get('wcf.user.3rdparty.github.login.error.'.$_GET['error']));
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.github.login.error.'.$_GET['error']));
 		}
 		
 		// start auth by redirecting to github
