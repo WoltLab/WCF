@@ -78,7 +78,10 @@
 				var name = elData(tab, 'name');
 				var tabMenu = DomTraverse.parentByClass(tab, 'tabMenuContainer');
 				
-				EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', function(data) {
+				var uuid = EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', function(data) {
+					if (data.activeName === name || data.previousName === name) {
+						EventHandler.remove('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', uuid);
+					}
 					if (data.activeName === name) {
 						element.codemirror.refresh();
 					}
