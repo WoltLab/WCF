@@ -117,6 +117,11 @@ class StructuredCommentList extends CommentList {
 			
 			foreach ($responseList as $response) {
 				$response = new StructuredCommentResponse($response);
+				
+				if (isset($this->objects[$response->commentID])) {
+					$response->setComment($this->objects[$response->commentID]->getDecoratedObject());
+				}
+				
 				$response->setIsDeletable($this->commentManager->canDeleteResponse($response->getDecoratedObject()));
 				$response->setIsEditable($this->commentManager->canEditResponse($response->getDecoratedObject()));
 				
