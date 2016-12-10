@@ -215,9 +215,17 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 			var oldTab = this.getActiveTab();
 			var oldContent = null;
 			if (oldTab) {
-				if (elData(oldTab, 'name') === name) {
+				var oldTabName = elData(oldTab, 'name');
+				if (oldTabName === name) {
 					// same tab
 					return;
+				}
+				
+				if (!disableEvent) {
+					EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._container.id, 'beforeSelect', {
+						tab: oldTab,
+						tabName: oldTabName
+					});
 				}
 				
 				oldTab.classList.remove('active');
