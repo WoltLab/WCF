@@ -33,7 +33,7 @@
 				<tr>
 					<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a></td>
 					<td class="columnID columnPackageID">{#$application->packageID}</td>
-					<td class="columnText columnPackageName"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a></td>
+					<td class="columnTitle columnPackageName"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a></td>
 					<td class="columnText columnDomainName">{$application->domainName}</td>
 					<td class="columnText columnDomainPath">{$application->domainPath}</td>
 					<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
