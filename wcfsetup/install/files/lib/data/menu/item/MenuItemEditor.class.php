@@ -56,7 +56,7 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				foreach ($title as $languageCode => $value) {
 					$statement->execute([
 						LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageID,
-						'wcf.menu.item.title' . $menuItem->itemID,
+						'wcf.menu.item.' . $menuItem->identifier,
 						$value,
 						1,
 						$languageCategoryID,
@@ -65,7 +65,7 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				}
 				WCF::getDB()->commitTransaction();
 				
-				$title = 'wcf.menu.item.title' . $menuItem->itemID;
+				$title = 'wcf.menu.item.' . $menuItem->identifier;
 			}
 			else {
 				$title = reset($title);

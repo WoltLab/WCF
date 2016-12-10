@@ -70,7 +70,7 @@ class MenuEditForm extends MenuAddForm {
 			$boxName = $values[LanguageFactory::getInstance()->getDefaultLanguageID()];
 		}
 		
-		$this->title = 'wcf.menu.menu'.$this->menu->menuID;
+		$this->title = 'wcf.menu.'.$this->menu->identifier;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
 			I18nHandler::getInstance()->remove($this->title);
 			$this->title = I18nHandler::getInstance()->getValue('title');
@@ -111,7 +111,7 @@ class MenuEditForm extends MenuAddForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			I18nHandler::getInstance()->setOptions('title', 1, $this->menu->title, 'wcf.menu.menu\d+');
+			I18nHandler::getInstance()->setOptions('title', 1, $this->menu->title, 'wcf.menu.'.$this->menu->identifier);
 			
 			$this->title = $this->menu->title;
 			$this->position = $this->menu->getBox()->position;

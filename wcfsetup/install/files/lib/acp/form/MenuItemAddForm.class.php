@@ -253,8 +253,8 @@ class MenuItemAddForm extends AbstractForm {
 			'identifier' => 'com.woltlab.wcf.generic'.$menuItem->itemID
 		];
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->save('title', 'wcf.menu.item.title'.$menuItem->itemID, 'wcf.menu');
-			$data['title'] = 'wcf.menu.item.title'.$menuItem->itemID;
+			I18nHandler::getInstance()->save('title', 'wcf.menu.item.'.$data['identifier'], 'wcf.menu');
+			$data['title'] = 'wcf.menu.item.'.$data['identifier'];
 		}
 		if (!I18nHandler::getInstance()->isPlainValue('externalURL')) {
 			I18nHandler::getInstance()->save('externalURL', 'wcf.menu.item.externalURL'.$menuItem->itemID, 'wcf.menu');

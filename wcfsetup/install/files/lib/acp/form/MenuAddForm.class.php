@@ -181,11 +181,11 @@ class MenuAddForm extends AbstractForm {
 		]);
 		// save i18n
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->save('title', 'wcf.menu.menu'.$menuEditor->menuID, 'wcf.menu', 1);
+			I18nHandler::getInstance()->save('title', 'wcf.menu.com.woltlab.wcf.genericMenu'.$menuEditor->menuID, 'wcf.menu', 1);
 				
 			// update title
 			$menuEditor->update([
-				'title' => 'wcf.menu.menu'.$menuEditor->menuID
+				'title' => 'wcf.menu.com.woltlab.wcf.genericMenu'.$menuEditor->menuID
 			]);
 		}
 		$this->saved();
