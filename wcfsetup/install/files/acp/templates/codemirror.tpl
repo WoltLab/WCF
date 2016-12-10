@@ -77,13 +77,18 @@
 			if (tab !== null) {
 				var name = elData(tab, 'name');
 				var tabMenu = DomTraverse.parentByClass(tab, 'tabMenuContainer');
+				var scrollPosition = null;
 				
-				var uuid = EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', function(data) {
-					if (data.activeName === name || data.previousName === name) {
-						EventHandler.remove('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', uuid);
-					}
+				EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'select', function(data) {
 					if (data.activeName === name) {
 						element.codemirror.refresh();
+						if (scrollPosition !== null) element.codemirror.scrollTo(null, scrollPosition);
+					}
+				});
+				
+				EventHandler.add('com.woltlab.wcf.simpleTabMenu_' + DomUtil.identify(tabMenu), 'beforeSelect', function(data) {
+					if (data.tabName === name) {
+						scrollPosition = element.codemirror.getScrollInfo().top;
 					}
 				});
 			}
