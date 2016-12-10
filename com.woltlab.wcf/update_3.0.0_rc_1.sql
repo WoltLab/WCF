@@ -4,3 +4,6 @@ ALTER TABLE wcf1_acp_session ADD COLUMN sessionVariables MEDIUMTEXT;
 DELETE FROM wcf1_session;
 ALTER TABLE wcf1_session ADD COLUMN sessionVariables MEDIUMTEXT;
 ALTER TABLE wcf1_session_virtual DROP COLUMN sessionVariables;
+
+/* 6123473ddc43b116ed8d6dec42501d8af5fffdfe */
+ALTER TABLE wcf1_moderation_queue ADD KEY objectTypeAndID (objectTypeID, objectID);
