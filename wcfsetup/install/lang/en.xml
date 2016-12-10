@@ -1237,6 +1237,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.media_small_thumbnail_width"><![CDATA[Small Thumbnail Width]]></item>
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Choose default sort order of articles.]]></item>
+		<item name="wcf.acp.option.use_page_title_on_landing_page"><![CDATA[Use page title on landing page]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

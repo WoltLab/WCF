@@ -101,7 +101,7 @@
 						{@$contentHeader}
 					{else}
 						{if $contentTitle|empty}
-							{if $__wcf->isLandingPage()}
+							{if $__wcf->isLandingPage() && USE_PAGE_TITLE_ON_LANDING_PAGE}
 								{capture assign='contentTitle'}{PAGE_TITLE|language}{/capture}
 								{capture assign='contentDescription'}{PAGE_DESCRIPTION|language}{/capture}
 							{elseif $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
