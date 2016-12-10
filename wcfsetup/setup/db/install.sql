@@ -681,7 +681,9 @@ CREATE TABLE wcf1_moderation_queue (
 	lastChangeTime INT(10) NOT NULL DEFAULT 0,
 	
 	-- additional data, e.g. message if reporting content
-	additionalData TEXT
+	additionalData TEXT,
+	
+	KEY objectTypeAndID (objectTypeID, objectID)
 );
 
 DROP TABLE IF EXISTS wcf1_moderation_queue_to_user;
