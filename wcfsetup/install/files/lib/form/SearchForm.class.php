@@ -2,7 +2,6 @@
 namespace wcf\form;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -375,21 +374,8 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		$this->saved();
 		
-		// get application
-		$application = 'wcf';
-		if (count($this->selectedObjectTypes) == 1) {
-			$objectType = SearchEngine::getInstance()->getObjectType(reset($this->selectedObjectTypes));
-			/** @noinspection PhpUndefinedFieldInspection */
-			if ($tmp = ApplicationHandler::getInstance()->getAbbreviation($objectType->packageID)) {
-				$application = $tmp;
-			}
-		}
-		
 		// forward to result page
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', [
-			'id' => $this->searchID,
-			'application' => $application
-		], 'highlight='.urlencode($this->query)));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $this->searchID], 'highlight='.urlencode($this->query)));
 		exit;
 	}
 	

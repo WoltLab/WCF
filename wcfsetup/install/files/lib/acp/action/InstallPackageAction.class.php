@@ -88,38 +88,18 @@ class InstallPackageAction extends AbstractDialogAction {
 				$this->installation->completeSetup();
 				$this->finalize();
 				
-				switch (PACKAGE_ID) {
-					// redirect to application if not already within one
-					case 0: // during WCFSetup
-					case 1:
-						// select first installed application
-						$sql = "SELECT		packageID
-							FROM		wcf".WCF_N."_package
-							WHERE		packageID <> 1
-									AND isApplication = 1
-							ORDER BY	installDate ASC";
-						$statement = WCF::getDB()->prepareStatement($sql, 1);
-						$statement->execute();
-						$row = $statement->fetchArray();
-						$packageID = ($row === false) ? 1 : $row['packageID'];
-					break;
-					
-					default:
-						$packageID = PACKAGE_ID;
-					break;
-				}
-					
 				// get domain path
 				$sql = "SELECT	*
 					FROM	wcf".WCF_N."_application
 					WHERE	packageID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([$packageID]);
+				$statement->execute([1]);
 				
 				/** @var Application $application */
 				$application = $statement->fetchObject(Application::class);
 				
 				// build redirect location
+				// do not use the LinkHandler here as it is sort of unreliable during WCFSetup
 				$location = $application->getPageURL() . 'acp/index.php?package-list/';
 				
 				WCF::resetZendOpcache();
