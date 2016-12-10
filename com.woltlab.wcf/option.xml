@@ -425,11 +425,13 @@
 			</option>
 			<option name="meta_keywords">
 				<categoryname>general.page</categoryname>
-				<optiontype>text</optiontype>
+				<optiontype>textI18n</optiontype>
+				<supporti18n>1</supporti18n>
 			</option>
 			<option name="meta_description">
 				<categoryname>general.page</categoryname>
-				<optiontype>text</optiontype>
+				<optiontype>textI18n</optiontype>
+				<supporti18n>1</supporti18n>
 			</option>
 			<option name="show_version_number">
 				<categoryname>general.page</categoryname>
