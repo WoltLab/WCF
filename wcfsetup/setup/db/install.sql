@@ -706,7 +706,9 @@ CREATE TABLE wcf1_modification_log (
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	action VARCHAR(80) NOT NULL,
-	additionalData MEDIUMTEXT
+	additionalData MEDIUMTEXT,
+	
+	KEY objectTypeAndID (objectTypeID, objectID)
 );
 
 DROP TABLE IF EXISTS wcf1_notice;
