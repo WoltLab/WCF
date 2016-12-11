@@ -7,3 +7,6 @@ ALTER TABLE wcf1_session_virtual DROP COLUMN sessionVariables;
 
 /* 6123473ddc43b116ed8d6dec42501d8af5fffdfe */
 ALTER TABLE wcf1_moderation_queue ADD KEY objectTypeAndID (objectTypeID, objectID);
+
+/* 5935e8588238bef0987e62765bd364f59362d21e */
+ALTER TABLE wcf1_modification_log ADD KEY objectTypeAndID (objectTypeID, objectID);
