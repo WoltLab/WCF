@@ -259,6 +259,20 @@
 					
 					// set value
 					redactor.core.textarea().val(redactor.clean.onSync(redactor.$editor.html()));
+					
+					// work-around for autosave notice being stuck
+					window.setTimeout(function() {
+						var autosaveNotice = elBySel('.redactorAutosaveRestored.active', element.parentNode);
+						if (autosaveNotice) {
+							autosaveNotice.style.setProperty('position', 'static', '');
+							
+							// force layout
+							//noinspection BadExpressionStatementJS
+							autosaveNotice.offsetTop;
+							
+							autosaveNotice.style.removeProperty('position');
+						}
+					}, 10);
 				}, 10);
 			};
 			
