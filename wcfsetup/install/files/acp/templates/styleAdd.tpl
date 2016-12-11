@@ -42,7 +42,7 @@
 		
 		$('.jsUnitSelect').change(function(event) {
 			var $target = $(event.currentTarget);
-			$target.prev().attr('step', ($target.val() == 'em' ? '0.01' : '1'));
+			$target.prev().attr('step', (($target.val() == 'em' || $target.val() == 'rem') ? '0.01' : '1'));
 		}).trigger('change');
 	});
 </script>
@@ -396,7 +396,9 @@
 						<input type="number" id="wcfFontSizeDefault" name="wcfFontSizeDefault" value="{@$variables[wcfFontSizeDefault]}" class="tiny">
 						<select name="wcfFontSizeDefault_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{@$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected{/if}>{@$unit}</option>
+								{if $unit == 'px' || $unit == 'pt'}
+									<option value="{@$unit}"{if $variables[wcfFontSizeDefault_unit] == $unit} selected{/if}>{@$unit}</option>
+								{/if}
 							{/foreach}
 						</select>
 					</dd>

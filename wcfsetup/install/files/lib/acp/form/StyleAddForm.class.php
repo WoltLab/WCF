@@ -73,7 +73,7 @@ class StyleAddForm extends AbstractForm {
 	 * list of available units
 	 * @var	string[]
 	 */
-	public $availableUnits = ['px', 'em', '%', 'pt'];
+	public $availableUnits = ['px', 'pt', 'rem', 'em', '%'];
 	
 	/**
 	 * @var array
@@ -396,18 +396,9 @@ class StyleAddForm extends AbstractForm {
 		
 		// parse global (unit) variables
 		foreach ($this->globals as $variableName) {
-			$unit = '';
-			$value = $this->variables[$variableName];
-			$i = strlen($value) - 1;
-			while ($i >= 0) {
-				$unit = $value[$i] . $unit;
-				if (in_array($unit, $this->availableUnits)) {
-					$this->variables[$variableName] = str_replace($unit, '', $value);
-					$this->variables[$variableName.'_unit'] = $unit;
-					break;
-				}
-				
-				$i--;
+			if (preg_match('/(.*?)(' . implode('|', $this->availableUnits) . ')$/', $this->variables[$variableName], $match)) {
+				$this->variables[$variableName] = $match[1];
+				$this->variables[$variableName.'_unit'] = $match[2];
 			}
 		}
 		
