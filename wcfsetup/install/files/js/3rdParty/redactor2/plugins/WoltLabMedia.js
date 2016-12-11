@@ -25,7 +25,7 @@ $.Redactor.prototype.WoltLabMedia = function() {
 				var image = elCreate('img');
 				image.className = 'woltlabSuiteMedia' + float;
 				//noinspection JSUnresolvedVariable
-				image.src = this.opts.woltlab.mediaUrl.replace('-123456789', data.attributes[0]).replace('thumbnail=void', 'thumbnail=' + data.attributes[1]);
+				image.src = this.opts.woltlab.mediaUrl.replace(/&amp;/, '&').replace('-123456789', data.attributes[0]).replace('thumbnail=void', 'thumbnail=' + data.attributes[1]);
 				elData(image, 'media-id', data.attributes[0]);
 				elData(image, 'media-size', data.attributes[1]);
 				
