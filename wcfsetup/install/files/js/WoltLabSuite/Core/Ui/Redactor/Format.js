@@ -56,12 +56,15 @@ define(['Dom/Util'], function(DomUtil) {
 				tmpRange.collapse(false);
 				tmpRange.insertNode(markerEnd);
 				
-				// remove existing format before applying new one
-				this.removeFormat(editorElement, property);
-				
 				range = document.createRange();
 				range.setStartAfter(markerStart);
 				range.setEndBefore(markerEnd);
+				
+				selection.removeAllRanges();
+				selection.addRange(range);
+				
+				// remove existing format before applying new one
+				this.removeFormat(editorElement, property);
 				
 				selection.removeAllRanges();
 				selection.addRange(range);
