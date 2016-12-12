@@ -388,6 +388,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				elShow(_dateCells[35].parentNode);
 				
 				var selectable;
+				var comparableMinDate = new Date(_minDate.getFullYear(), _minDate.getMonth(), _minDate.getDate());
 				for (i = 0; i < 42; i++) {
 					if (i === 35 && date.getMonth() !== month) {
 						// skip the last row if it only contains the next month
@@ -401,7 +402,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					cell.textContent = date.getDate();
 					selectable = (date.getMonth() === month);
 					if (selectable) {
-						if (date < _minDate) selectable = false;
+						if (date < comparableMinDate) selectable = false;
 						else if (date > _maxDate) selectable = false;
 					}
 					
