@@ -23,3 +23,9 @@
 		color: #900 !important;
 	}
 }
+
+html.touch .wcfLikeButton > .button:not(.active):hover,
+html.touch .wcfDislikeButton > .button:not(.active):hover {
+	background-color: $wcfButtonBackground !important;
+	color: $wcfButtonText !important;
+}
