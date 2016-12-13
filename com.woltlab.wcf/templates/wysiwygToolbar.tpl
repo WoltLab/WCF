@@ -15,6 +15,7 @@ buttonOptions = {
 	undo: { icon: 'fa-undo', title: '{lang}wcf.editor.button.undo{/lang}' },
 	woltlabColor: { icon: 'fa-paint-brush', title: '{lang}wcf.editor.button.color{/lang}' },
 	woltlabFont: { icon: 'fa-font', title: '{lang}wcf.editor.button.font{/lang}' },
+	woltlabFullscreen: { icon: 'fa-expand', title: '{lang}wcf.editor.button.fullscreen{/lang}' },
 	woltlabImage: { icon: 'fa-picture-o', title: '{lang}wcf.editor.button.image{/lang}' },
 	woltlabMedia: { icon: 'fa-file-o', title: '{lang}wcf.editor.button.media{/lang}' },
 	woltlabQuote: { icon: 'fa-comment', title: '{lang}wcf.editor.button.quote{/lang}' },
@@ -26,6 +27,7 @@ buttonMobile = ['format', 'bold', 'italic', 'underline', 'lists', 'link', 'woltl
 buttons.push('html');
 buttons.push('undo');
 buttons.push('redo');
+buttons.push('woltlabFullscreen');
 
 buttons.push('wcfSeparator');
 

@@ -1,4 +1,5 @@
 .redactor-box {
+	background-color: $wcfContentBackground;
 	position: relative;
 	
 	&:not(:first-child) {
@@ -542,5 +543,19 @@
 		> span {
 			text-align: center;
 		}
+	}
+}
+
+.redactorBoxFullscreen {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 310;
+	
+	.redactor-editor {
+		max-height: none !important;
+		min-height: 0 !important;
 	}
 }
