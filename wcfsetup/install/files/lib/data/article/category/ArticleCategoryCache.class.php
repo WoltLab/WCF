@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\article\category;
 use wcf\data\article\Article;
+use wcf\data\category\Category;
+use wcf\system\category\CategoryHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -24,13 +26,46 @@ class ArticleCategoryCache extends SingletonFactory {
 	 * Calculates the number of articles.
 	 */
 	protected function initArticles() {
+		$this->articles = [];
+		
 		$sql = "SELECT		COUNT(*) AS count, categoryID
 			FROM		wcf" . WCF_N . "_article
 			WHERE           publicationStatus = ?
 			GROUP BY	categoryID";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([Article::PUBLISHED]);
-		$this->articles = $statement->fetchMap('categoryID', 'count');
+		$articles = $statement->fetchMap('categoryID', 'count');
+		
+		$categoryToParent = [];
+		/** @var Category $category */
+		foreach (CategoryHandler::getInstance()->getCategories(ArticleCategory::OBJECT_TYPE_NAME) as $category) {
+			if (!isset($categoryToParent[$category->parentCategoryID])) $categoryToParent[$category->parentCategoryID] = [];
+			$categoryToParent[$category->parentCategoryID][] = $category->categoryID;
+		}
+		
+		$this->countArticles($categoryToParent, $articles, 0);
+	}
+	
+	/**
+	 * Counts the articles contained in this category and its children.
+	 *
+	 * @param       integer[]       $categoryToParent
+	 * @param       integer[]       $articles
+	 * @param       integer         $categoryID
+	 * @return      integer
+	 */
+	protected function countArticles(array &$categoryToParent, array &$articles, $categoryID) {
+		$count = (isset($articles[$categoryID])) ? $articles[$categoryID] : 0;
+		if (isset($categoryToParent[$categoryID])) {
+			/** @var Category $category */
+			foreach ($categoryToParent[$categoryID] as $childCategoryID) {
+				$count += $this->countArticles($categoryToParent, $articles, $childCategoryID);
+			}
+		}
+		
+		if ($categoryID) $this->articles[$categoryID] = $count;
+		
+		return $count;
 	}
 	
 	/**
