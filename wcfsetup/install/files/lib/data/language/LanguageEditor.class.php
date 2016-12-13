@@ -168,6 +168,64 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			echo "\t</category>\n";
 		}
 		
+		// add shadow values (pages)
+		$pages = [];
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("page_content.pageID = page.pageID");
+		$conditions->add("page_content.languageID = ?", [$this->languageID]);
+		if (!empty($packageIDArray)) $conditions->add("page.packageID IN (?)", [$packageIDArray]);
+		$conditions->add("page.originIsSystem = ?", [1]);
+		$sql = "SELECT          page.identifier, page_content.title, page_content.content
+			FROM            wcf" . WCF_N . "_page page,
+					wcf" . WCF_N . "_page_content page_content
+			" . $conditions ."
+			ORDER BY        page.identifier";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		while ($row = $statement->fetchArray()) {
+			$pages[] = $row;
+		}
+		
+		if (!empty($pages)) {
+			echo "\t<category name=\"shadow.invalid.page\">\n";
+			
+			foreach ($pages as $page) {
+				if ($page['title']) echo "\t\t<item name=\"shadow.invalid.page.".$page['identifier'].".title\"><![CDATA[".StringUtil::escapeCDATA($page['title'])."]]></item>\n";
+				if ($page['content']) echo "\t\t<item name=\"shadow.invalid.page.".$page['identifier'].".content\"><![CDATA[".StringUtil::escapeCDATA($page['content'])."]]></item>\n";
+			}
+			
+			echo "\t</category>\n";
+		}
+		
+		// add shadow values (boxes)
+		$boxes = [];
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("box_content.boxID = box.boxID");
+		$conditions->add("box_content.languageID = ?", [$this->languageID]);
+		if (!empty($packageIDArray)) $conditions->add("box.packageID IN (?)", [$packageIDArray]);
+		$conditions->add("box.originIsSystem = ?", [1]);
+		$sql = "SELECT          box.identifier, box_content.title, box_content.content
+			FROM            wcf" . WCF_N . "_box box,
+					wcf" . WCF_N . "_box_content box_content
+			" . $conditions ."
+			ORDER BY        box.identifier";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		while ($row = $statement->fetchArray()) {
+			$boxes[] = $row;
+		}
+		
+		if (!empty($pages)) {
+			echo "\t<category name=\"shadow.invalid.box\">\n";
+			
+			foreach ($boxes as $box) {
+				if ($box['title']) echo "\t\t<item name=\"shadow.invalid.box.".$box['identifier'].".title\"><![CDATA[".StringUtil::escapeCDATA($box['title'])."]]></item>\n";
+				if ($box['content']) echo "\t\t<item name=\"shadow.invalid.box.".$box['identifier'].".content\"><![CDATA[".StringUtil::escapeCDATA($box['content'])."]]></item>\n";
+			}
+			
+			echo "\t</category>\n";
+		}
+		
 		// footer
 		echo "</language>";
 	}
@@ -211,6 +269,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		// create new categories
 		foreach ($usedCategories as $categoryName => $categoryID) {
 			if ($categoryID) continue;
+			if (strpos($categoryName, 'shadow.invalid') === 0) continue; // ignore shadow items
 			
 			/** @var LanguageCategory $category */
 			$category = LanguageCategoryEditor::create([
@@ -220,29 +279,49 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		// loop through categories to import items
-		$itemData = [];
+		$itemData = $pageContents = $boxContents = [];
 		
 		/** @var \DOMElement $category */
 		foreach ($categories as $category) {
 			$categoryName = $category->getAttribute('name');
-			$categoryID = $usedCategories[$categoryName];
-			
-			// loop through items
 			$elements = $xpath->query('child::*', $category);
 			
-			/** @var \DOMElement $element */
-			foreach ($elements as $element) {
-				$itemName = $element->getAttribute('name');
-				$itemValue = $element->nodeValue;
+			if ($categoryName == 'shadow.invalid.page') {
+				/** @var \DOMElement $element */
+				foreach ($elements as $element) {
+					if (preg_match('/^shadow\.invalid\.page\.(.*)\.(title|content)/', $element->getAttribute('name'), $match)) {
+						if (!isset($pageContents[$match[1]])) $pageContents[$match[1]] = [];
+						$pageContents[$match[1]][$match[2]] = $element->nodeValue;
+					}
+				}
+			}
+			else if ('shadow.invalid.box') {
+				/** @var \DOMElement $element */
+				foreach ($elements as $element) {
+					if (preg_match('/^shadow\.invalid\.box\.(.*)\.(title|content)/', $element->getAttribute('name'), $match)) {
+						if (!isset($boxContents[$match[1]])) $boxContents[$match[1]] = [];
+						$boxContents[$match[1]][$match[2]] = $element->nodeValue;
+					}
+				}
+			}
+			else {
+				$categoryID = $usedCategories[$categoryName];
 				
-				$itemData[] = $this->languageID;
-				$itemData[] = $itemName;
-				$itemData[] = $itemValue;
-				$itemData[] = $categoryID;
-				if ($packageID) $itemData[] = ($packageID == -1) ? PACKAGE_ID : $packageID;
+				/** @var \DOMElement $element */
+				foreach ($elements as $element) {
+					$itemName = $element->getAttribute('name');
+					$itemValue = $element->nodeValue;
+					
+					$itemData[] = $this->languageID;
+					$itemData[] = $itemName;
+					$itemData[] = $itemValue;
+					$itemData[] = $categoryID;
+					if ($packageID) $itemData[] = ($packageID == -1) ? PACKAGE_ID : $packageID;
+				}
 			}
 		}
 		
+		// save items
 		if (!empty($itemData)) {
 			// insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
 			$step = $packageID ? 5 : 4;
@@ -276,6 +355,92 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$statement->execute($parameters);
 			}
 			WCF::getDB()->commitTransaction();
+		}
+		
+		// save page content
+		if (!empty($pageContents)) {
+			// get page ids
+			$pageIDs = [];
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("identifier IN (?)", [array_keys($pageContents)]);
+			$sql = "SELECT  pageID, identifier
+				FROM    wcf".WCF_N."_page
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			while ($row = $statement->fetchArray()) {
+				$pageIDs[$row['identifier']] = $row['pageID'];
+			}
+			
+			$sql = "INSERT IGNORE INTO      wcf".WCF_N."_page_content
+							(pageID, languageID)
+				VALUES                  (?, ?)";
+			$createLanguageVersionStatement = WCF::getDB()->prepareStatement($sql);
+			$sql = "UPDATE  wcf".WCF_N."_page_content
+				SET     title = ?
+				WHERE   pageID = ?
+					AND languageID = ?";
+			$updateTitleStatement = WCF::getDB()->prepareStatement($sql);
+			$sql = "UPDATE  wcf".WCF_N."_page_content
+				SET     content = ?
+				WHERE   pageID = ?
+					AND languageID = ?";
+			$updateContentStatement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($pageContents as $identifier => $pageContent) {
+				if (!isset($pageIDs[$identifier])) continue; // unknown page
+				
+				$createLanguageVersionStatement->execute([$pageIDs[$identifier], $this->languageID]);
+				if (isset($pageContent['title'])) {
+					$updateTitleStatement->execute([$pageContent['title'], $pageIDs[$identifier], $this->languageID]);
+				}
+				if (isset($pageContent['content'])) {
+					$updateContentStatement->execute([$pageContent['content'], $pageIDs[$identifier], $this->languageID]);
+				}
+			}
+		}
+		
+		// save box content
+		if (!empty($boxContents)) {
+			// get box ids
+			$boxIDs = [];
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("identifier IN (?)", [array_keys($boxContents)]);
+			$sql = "SELECT  boxID, identifier
+				FROM    wcf".WCF_N."_box
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			while ($row = $statement->fetchArray()) {
+				$boxIDs[$row['identifier']] = $row['boxID'];
+			}
+			
+			$sql = "INSERT IGNORE INTO      wcf".WCF_N."_box_content
+							(boxID, languageID)
+				VALUES                  (?, ?)";
+			$createLanguageVersionStatement = WCF::getDB()->prepareStatement($sql);
+			$sql = "UPDATE  wcf".WCF_N."_box_content
+				SET     title = ?
+				WHERE   boxID = ?
+					AND languageID = ?";
+			$updateTitleStatement = WCF::getDB()->prepareStatement($sql);
+			$sql = "UPDATE  wcf".WCF_N."_box_content
+				SET     content = ?
+				WHERE   boxID = ?
+					AND languageID = ?";
+			$updateContentStatement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($boxContents as $identifier => $boxContent) {
+				if (!isset($boxIDs[$identifier])) continue; // unknown box
+				
+				$createLanguageVersionStatement->execute([$boxIDs[$identifier], $this->languageID]);
+				if (isset($boxContent['title'])) {
+					$updateTitleStatement->execute([$boxContent['title'], $boxIDs[$identifier], $this->languageID]);
+				}
+				if (isset($boxContent['content'])) {
+					$updateContentStatement->execute([$boxContent['content'], $boxIDs[$identifier], $this->languageID]);
+				}
+			}
 		}
 		
 		// update the relevant language files
