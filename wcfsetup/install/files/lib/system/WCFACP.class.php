@@ -153,7 +153,7 @@ class WCFACP extends WCF {
 				
 				HeaderUtil::redirect(
 					LinkHandler::getInstance()->getLink('Login', [
-						'url' => rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI)
+						'url' => RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI
 					])
 				);
 				exit;
