@@ -1,25 +1,49 @@
-$.Redactor.prototype.WoltLabCode = function() {
+$.Redactor.prototype.WoltLabFullscreen = function() {
 	"use strict";
 	
+	var _active = false;
 	var _button;
 	
 	return {
 		init: function() {
-			_button = this.button.add('woltlabFullscreen', '');
-			this.button.addCallback(_button, this.WoltLabCode._toggle.bind(this));
+			var button = this.button.add('woltlabFullscreen', '');
+			this.button.addCallback(button, this.WoltLabFullscreen._toggle.bind(this));
+			
+			_button = button[0];
+			elHide(_button.parentNode);
+			
+			require(['Ui/Screen'], (function (UiScreen) {
+				UiScreen.on('screen-sm-up', {
+					match: function () {
+						elShow(_button.parentNode);
+					},
+					unmatch: (function () {
+						elHide(_button.parentNode);
+						
+						if (_active) {
+							this.WoltLabFullscreen._toggle();
+						}
+					}).bind(this),
+					setup: function () {
+						elShow(_button.parentNode);
+					}
+				});
+			}).bind(this));
 		},
 		
 		_toggle: function () {
-			_button[0].children[0].classList.toggle('fa-compress');
-			_button[0].children[0].classList.toggle('fa-expand');
+			_button.children[0].classList.toggle('fa-compress');
+			_button.children[0].classList.toggle('fa-expand');
 			
 			if (this.core.box()[0].classList.toggle('redactorBoxFullscreen')) {
 				WCF.System.DisableScrolling.disable();
 				this.core.editor()[0].style.setProperty('height', 'calc(100% - ' + ~~this.core.toolbar()[0].clientHeight + 'px)', '');
+				_active = true;
 			}
 			else {
 				WCF.System.DisableScrolling.enable();
 				this.core.editor()[0].style.removeProperty('height');
+				_active = false;
 			}
 		}
 	};
