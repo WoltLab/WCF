@@ -295,7 +295,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					}
 				}
 			}
-			else if ('shadow.invalid.box') {
+			else if ($categoryName == 'shadow.invalid.box') {
 				/** @var \DOMElement $element */
 				foreach ($elements as $element) {
 					if (preg_match('/^shadow\.invalid\.box\.(.*)\.(title|content)/', $element->getAttribute('name'), $match)) {
