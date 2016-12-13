@@ -10,6 +10,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -150,12 +151,11 @@ class WCFACP extends WCF {
 					throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
 				}
 				
-				// drop session id
-				$redirectURI = preg_replace('~[&\?]s=[a-f0-9]{40}(&|$)~', '', WCF::getSession()->requestURI);
-				
-				$path = $application->getPageURL() . 'acp/index.php?login/&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
-				
-				HeaderUtil::redirect($path);
+				HeaderUtil::redirect(
+					LinkHandler::getInstance()->getLink('Login', [
+						'url' => rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI)
+					])
+				);
 				exit;
 			}
 			else {
