@@ -62,10 +62,8 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function load() {
-		$box = null;
 		if ($this->boxController !== null) {
 			$eventList = $this->boxController->getFilteredList();
-			
 		}
 		else {
 			$eventList = new ViewableUserActivityEventList();
