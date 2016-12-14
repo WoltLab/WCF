@@ -140,6 +140,11 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 		$this->objectList->truncate($this->box->limit);
 	}
 	
+	/**
+	 * Returns the filtered activity event list based on the settings of the set box.
+	 * 
+	 * @return	ViewableUserActivityEventList
+	 */
 	public function getFilteredList() {
 		$this->objectList = $this->getObjectList();
 		
