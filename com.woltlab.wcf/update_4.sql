@@ -5,3 +5,7 @@ ALTER TABLE wcf1_user_profile_visitor CHANGE ownerID ownerID INT(10) NOT NULL;
 ALTER TABLE wcf1_user_profile_visitor CHANGE userID userID INT(10) NOT NULL;
 
 ALTER TABLE wcf1_user_storage ADD KEY (field);
+
+ALTER TABLE wcf1_moderation_queue ADD KEY objectTypeAndID (objectTypeID, objectID);
+
+ALTER TABLE wcf1_modification_log ADD KEY objectTypeAndID (objectTypeID, objectID);
