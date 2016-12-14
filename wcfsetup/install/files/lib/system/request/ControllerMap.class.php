@@ -66,13 +66,16 @@ class ControllerMap extends SingletonFactory {
 			throw new SystemException("Malformed controller name '" . $controller . "'");
 		}
 		
+		// work-around for package installation during upgrade 2.1 -> 3.0
+		if ($controller === 'InstallPackage') $application = 'wcf';
+		
 		$classData = $this->getLegacyClassData($application, $controller, $isAcpRequest);
 		if ($classData === null) {
 			$parts = explode('-', $controller);
 			$parts = array_map('ucfirst', $parts);
 			$controller = implode('', $parts);
 			
-			// work-around for upgrade path 2.1 -> 2.2
+			// work-around for upgrade path 2.1 -> 3.0
 			if ($controller === 'AjaxProxy') $controller = 'AJAXProxy';
 			
 			$classData = $this->getClassData($application, $controller, $isAcpRequest, 'page');
