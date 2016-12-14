@@ -95,7 +95,7 @@ class UserStorageHandler extends SingletonFactory {
 		
 		if ($this->redis) {
 			foreach ($userIDs as $userID) {
-				$data[$userID] = $this->redis->hget($this->getRedisFieldName($field), $userID);
+				$data[$userID] = $this->redis->hGet($this->getRedisFieldName($field), $userID);
 				if ($data[$userID] === false) $data[$userID] = null;
 			}
 			
@@ -136,7 +136,7 @@ class UserStorageHandler extends SingletonFactory {
 		}
 		
 		if ($this->redis) {
-			$result = $this->redis->hget($this->getRedisFieldName($field), $userID);
+			$result = $this->redis->hGet($this->getRedisFieldName($field), $userID);
 			if ($result === false) return null;
 			return $result;
 		}
@@ -162,7 +162,7 @@ class UserStorageHandler extends SingletonFactory {
 	 */
 	public function update($userID, $field, $fieldValue) {
 		if ($this->redis) {
-			$this->redis->hset($this->getRedisFieldName($field), $userID, $fieldValue);
+			$this->redis->hSet($this->getRedisFieldName($field), $userID, $fieldValue);
 			$this->redis->expire($this->getRedisFieldName($field), 86400);
 			return;
 		}
@@ -184,7 +184,7 @@ class UserStorageHandler extends SingletonFactory {
 	public function reset(array $userIDs, $field) {
 		if ($this->redis) {
 			foreach ($userIDs as $userID) {
-				$this->redis->hdel($this->getRedisFieldName($field), $userID);
+				$this->redis->hDel($this->getRedisFieldName($field), $userID);
 			}
 			return;
 		}
