@@ -1547,6 +1547,7 @@ WCF.Action.Proxy = Class.extend({
 					data: options.data,
 					type: options.type,
 					url: options.url,
+					withCredentials: (options.url === 'index.php?ajax-proxy/&t=' + SECURITY_TOKEN),
 					responseType: (options.dataType === 'json' ? 'application/json' : ''),
 					
 					autoAbort: options.autoAbortPrevious,

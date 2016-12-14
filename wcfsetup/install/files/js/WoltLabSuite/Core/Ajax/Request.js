@@ -39,6 +39,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				responseType: 'application/json',
 				type: 'POST',
 				url: '',
+				withCredentials: false,
 				
 				// behavior
 				autoAbort: false,
@@ -108,6 +109,9 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				this._xhr.setRequestHeader('Content-Type', this._options.contentType);
 			}
 			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			if (this._options.withCredentials) {
+				this._xhr.withCredentials = true;
+			}
 			
 			var self = this;
 			var options = Core.clone(this._options);

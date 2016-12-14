@@ -27,6 +27,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
@@ -152,6 +153,7 @@ class WCF {
 		$this->initCronjobs();
 		$this->initCoreObjects();
 		$this->initApplications();
+		$this->initCors();
 		$this->initBlacklist();
 		
 		EventHandler::getInstance()->fireAction($this, 'initialized');
@@ -440,6 +442,36 @@ class WCF {
 			else {
 				throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
 			}
+		}
+	}
+	
+	/**
+	 * Responds with proper CORS headers.
+	 */
+	protected function initCors() {
+		// Nothing to do here.
+		if (!isset($_SERVER['HTTP_ORIGIN'])) return;
+		
+		$allowed = array_reduce(ApplicationHandler::getInstance()->getApplications(), function ($carry, $item) {
+			if ($_SERVER['HTTP_ORIGIN'] == RouteHandler::getProtocol().$item->domainName) return true;
+			
+			return $carry;
+		}, false);
+		
+		if (!$allowed) return;
+		
+		header('Access-Control-Allow-Origin: '.$_SERVER['HTTP_ORIGIN']);
+		header('Access-Control-Allow-Credentials: true');
+		header('Vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers');
+		
+		if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+			if (!isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) return;
+			if (!isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) return;
+			
+			header('Access-Control-Allow-Methods: GET, HEAD, POST, OPTIONS');
+			header('Access-Control-Allow-Headers: '.$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
+			header('Access-Control-Max-Age: 5');
+			exit;
 		}
 	}
 	
