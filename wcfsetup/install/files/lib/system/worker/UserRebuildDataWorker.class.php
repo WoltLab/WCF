@@ -103,6 +103,13 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			$avatarList->getConditionBuilder()->add('(user_avatar.width <> ? OR user_avatar.height <> ?)', [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]);
 			$avatarList->readObjects();
 			foreach ($avatarList as $avatar) {
+				$editor = new UserAvatarEditor($avatar);
+				if (!file_exists($avatar->getLocation()) || @getimagesize($avatar->getLocation()) === false) {
+					// delete avatars that are missing or broken
+					$editor->delete();
+					continue;
+				}
+				
 				$width = $avatar->width;
 				$height = $avatar->height;
 				if ($width != $height) {
@@ -123,7 +130,6 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					$width = $height = UserAvatar::AVATAR_SIZE;
 				}
 				
-				$editor = new UserAvatarEditor($avatar);
 				$editor->update([
 					'width' => $width,
 					'height' => $height
