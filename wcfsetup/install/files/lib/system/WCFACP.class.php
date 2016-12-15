@@ -53,6 +53,7 @@ class WCFACP extends WCF {
 		// start initialization
 		$this->initDB();
 		$this->loadOptions();
+		$this->initCors();
 		$this->initPackage();
 		$this->initSession();
 		$this->initLanguage();
@@ -65,7 +66,6 @@ class WCFACP extends WCF {
 			$this->initApplications();
 		}
 		
-		$this->initCors();
 		$this->initBlacklist();
 		$this->initAuth();
 		
