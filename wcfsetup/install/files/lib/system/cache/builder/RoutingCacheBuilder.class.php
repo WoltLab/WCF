@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\application\Application;
+use wcf\data\page\Page;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\ControllerMap;
@@ -31,11 +32,14 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	 * @inheritDoc
 	 */
 	protected function rebuild(array $parameters) {
-		return [
+		$data = [
 			'ciControllers' => $this->getCaseInsensitiveControllers(),
-			'customUrls' => $this->getCustomUrls(),
 			'landingPages' => $this->getLandingPages()
 		];
+		
+		$data['customUrls'] = $this->getCustomUrls($data['landingPages']);
+		
+		return $data;
 	}
 	
 	/**
@@ -127,9 +131,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	 * Builds up a lookup and a reverse lookup list per application in order to resolve
 	 * custom page mappings.
 	 * 
+	 * @param       array   $landingPages
 	 * @return	array
 	 */
-	protected function getCustomUrls() {
+	protected function getCustomUrls(array $landingPages) {
 		$data = [
 			'lookup' => [],
 			'reverse' => []
@@ -159,6 +164,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			$rows[] = $row;
 		}
 		
+		$cmsPageID = 0;
+		if (preg_match('~^__WCF_CMS__(\d+)$~', $landingPages['wcf'][0], $matches)) {
+			$cmsPageID = $matches[1];
+		}
+		
 		$abbreviations = [];
 		foreach ($rows as $row) {
 			$customUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($row['controllerCustomURL']));
@@ -178,8 +188,17 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			}
 			else {
 				$cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
-				$data['lookup'][$abbreviations[$packageID]][$customUrl] = $cmsIdentifier;
+				
 				$data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
+				
+				if ($cmsPageID && $abbreviations[$packageID] === 'wcf') {
+					if ($customUrl === '' && $cmsPageID != $row['pageID']) {
+						continue;
+					}
+				}
+				
+				$data['lookup'][$abbreviations[$packageID]][$customUrl] = $cmsIdentifier;
+				
 			}
 		}
 		
