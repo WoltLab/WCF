@@ -147,13 +147,13 @@ class WCF {
 		// start initialization
 		$this->initDB();
 		$this->loadOptions();
+		$this->initCors();
 		$this->initSession();
 		$this->initLanguage();
 		$this->initTPL();
 		$this->initCronjobs();
 		$this->initCoreObjects();
 		$this->initApplications();
-		$this->initCors();
 		$this->initBlacklist();
 		
 		EventHandler::getInstance()->fireAction($this, 'initialized');
