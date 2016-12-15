@@ -331,7 +331,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				silent: true,
 				success: this._success.bind(this, uploadId),
 				uploadProgress: this._progress.bind(this, uploadId),
-				url: this._options.url
+				url: this._options.url,
+				withCredentials: true
 			});
 			request.sendRequest();
 			
