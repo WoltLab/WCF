@@ -76,7 +76,6 @@ class CategoryArticleListPage extends ArticleListPage {
 		foreach ($this->category->getParentCategories() as $parentCategory) {
 			PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $parentCategory->categoryID, $parentCategory);
 		}
-		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ArticleList');
 	}
 	
 	/**

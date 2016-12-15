@@ -511,7 +511,6 @@
 			<name language="en">List of Articles in Certain Category</name>
 			<options>module_article</options>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Article">
