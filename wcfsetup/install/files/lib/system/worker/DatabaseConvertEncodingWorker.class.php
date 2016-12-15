@@ -54,6 +54,10 @@ class DatabaseConvertEncodingWorker extends AbstractWorker {
 			$sql = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
+			
+			$sql = "ALTER TABLE " . $table . " DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
 		}
 		
 		$statement = WCF::getDB()->prepareStatement("SET FOREIGN_KEY_CHECKS=1");
