@@ -66,6 +66,11 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				this._options.url = WSC_API_URL + this._options.url;
 			}
 			
+			if (this._options.url.indexOf(WSC_API_URL) === 0) {
+				// allows allow credentials when querying the very own server
+				this._options.withCredentials = true;
+			}
+			
 			if (this._options.pinData) {
 				this._data = Core.extend({}, this._options.data);
 			}
