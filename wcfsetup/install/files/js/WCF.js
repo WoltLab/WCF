@@ -5910,6 +5910,9 @@ WCF.Upload = Class.extend({
 						}, false);
 					}
 					return $xhr;
+				},
+				xhrFields: {
+					withCredentials: true
 				}
 			});
 		}
