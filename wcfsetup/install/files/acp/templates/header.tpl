@@ -18,7 +18,7 @@
 	<script>
 		var SID_ARG_2ND = '';
 		var WCF_PATH = '{@$__wcf->getPath()}';
-		var WSC_API_URL = '{@$__wcf->getPath()}acp/';
+		var WSC_API_URL = '{@$__wcf->getActivePath()}acp/';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};

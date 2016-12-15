@@ -72,8 +72,10 @@ class ControllerMap extends SingletonFactory {
 			$parts = array_map('ucfirst', $parts);
 			$controller = implode('', $parts);
 			
-			// work-around for upgrade path 2.1 -> 3.0
+			// work-around for legacy action controllers for upgrade and CORS avoidance
 			if ($controller === 'AjaxProxy') $controller = 'AJAXProxy';
+			else if ($controller === 'AjaxUpload') $controller = 'AJAXUpload';
+			else if ($controller === 'AjaxInvoke') $controller = 'AJAXInvoke';
 			
 			// work-around for package installation during upgrade 2.1 -> 3.0
 			if ($isAcpRequest && $controller === 'InstallPackage') $application = 'wcf';
@@ -329,7 +331,16 @@ class ControllerMap extends SingletonFactory {
 	protected function getClassData($application, $controller, $isAcpRequest, $pageType) {
 		$className = $application . '\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);
 		if (!class_exists($className)) {
-			return null;
+			// avoid CORS by allowing action classes invoked form every application domain
+			if ($pageType === 'action' && $application !== 'wcf') {
+				$className = 'wcf\\' . ($isAcpRequest ? 'acp\\' : '') . $pageType . '\\' . $controller . ucfirst($pageType);
+				if (!class_exists($className)) {
+					return null;
+				}
+			}
+			else {
+				return null;
+			}
 		}
 		
 		// check for abstract classes
