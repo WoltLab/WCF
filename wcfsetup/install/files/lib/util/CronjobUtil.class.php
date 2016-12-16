@@ -147,7 +147,7 @@ final class CronjobUtil {
 		self::$result['month'] = $values['month'][$index];
 		
 		// swap to the next year if the next execution month is before the current month
-		if(self::$result['month'] < gmdate('n', self::$timeBase)) {
+		if (self::$result['month'] < gmdate('n', self::$timeBase)) {
 			self::$result['year']++;
 		}
 	}
