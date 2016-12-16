@@ -112,7 +112,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 			case 200:
 				if (empty($response['products'])) {
 					return [
-						'noResults' => WCF::getLanguage()->get('wcf.acp.pluginStore.purchasedItems.noResults')
+						'noResults' => WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.purchasedItems.noResults')
 					];
 				}
 				else {
