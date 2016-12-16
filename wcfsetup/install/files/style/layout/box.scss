@@ -149,40 +149,48 @@
 		
 		@include screen-sm-md {
 			flex: 0 0 50%;
+			max-width: 50%;
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
+				max-width: none;
 			}
 			
 			/* one item */
 			&:first-child:nth-last-child(1) {
 				flex-basis: 100%;
+				max-width: none;
 			}
 		}
 		
 		@include screen-lg {
 			flex: 0 0 25%;
 			margin-bottom: 60px;
+			max-width: 25%;
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
+				max-width: none;
 			}
 			
 			/* one item */
 			&:first-child:nth-last-child(1) {
 				flex-basis: 100%;
+				max-width: none;
 			}
 			
 			/* two items */
 			&:first-child:nth-last-child(2),
 			&:first-child:nth-last-child(2) ~ .box {
 				flex-basis: 50%;
+				max-width: 50%;
 			}
 			
 			/* three items */
 			&:first-child:nth-last-child(3),
 			&:first-child:nth-last-child(3) ~ .box {
 				flex-basis: 33.3333%;
+				max-width: 33.3333%;
 			}
 		}
 	}
@@ -671,9 +679,11 @@
 		@include screen-md-up {
 			flex: 0 0 50%;
 			margin-bottom: 60px;
+			max-width: 50%;
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
+				max-width: none;
 			}
 		}
 	}
@@ -816,6 +826,7 @@
 			> li {
 				flex: 0 0 25%;
 				margin-bottom: 20px;
+				max-width: 25%;
 				
 				> .boxMenuLink {
 					@include wcfFontHeadline;
