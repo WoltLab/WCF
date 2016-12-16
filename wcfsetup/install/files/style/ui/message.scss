@@ -267,7 +267,8 @@
 /* content */
 .messageContent {
 	display: flex;
-	flex: 1 1 0%;
+	/* do not use `flex: 1 1 0%` as it causes Mobile Safari to fail */
+	flex: 1;
 	flex-direction: column;
 	
 	@include screen-sm-down {
