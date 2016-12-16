@@ -179,11 +179,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					throw new SystemException("Missing required 'content' element(s) for box '{$identifier}'");
 				}
 				
-				if (count($data['elements']['content']) === 1) {
+				if (count($data['elements']['content']) === 1 && $boxType != 'system') {
 					if (!isset($data['elements']['content'][''])) {
 						throw new SystemException("Expected one 'content' element without a 'language' attribute for box '{$identifier}'");
 					}
-				}
+				} else if (isset($data['elements']['content'][''] && $boxType == 'system') {
+					throw new SystemException("Expected one 'content' element with a 'language' attribute for box '{$identifier}'");	
 				else {
 					$isMultilingual = true;
 					
