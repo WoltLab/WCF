@@ -183,9 +183,11 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					if (!isset($data['elements']['content'][''])) {
 						throw new SystemException("Expected one 'content' element without a 'language' attribute for box '{$identifier}'");
 					}
-				} else if (isset($data['elements']['content']['']) && $boxType == 'system') {
+				}
+				else if (isset($data['elements']['content']['']) && $boxType == 'system') {
 					throw new SystemException("Expected one 'content' element with a 'language' attribute for box '{$identifier}'");
-				} else {
+				}
+				else {
 					$isMultilingual = true;
 					
 					if (isset($data['elements']['content'][''])) {
