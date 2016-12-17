@@ -143,7 +143,6 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$name = $data['elements']['name'][''];
 		}
 		
-		$ignoreMissingContent = false;
 		switch ($boxType) {
 			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'system':
@@ -164,7 +163,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					throw new SystemException("Unknown object type '{$data['elements']['objectType']}' for 'system'-type box '{$identifier}'");
 				}
 				
-				$ignoreMissingContent = true;
+				$isMultilingual = true;
 				
 				// fallthrough
 			
@@ -172,7 +171,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			case 'text':
 			case 'tpl':
 				if (empty($data['elements']['content'])) {
-					if ($ignoreMissingContent) {
+					if ($boxType === 'system') {
 						break;
 					}
 					
