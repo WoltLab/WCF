@@ -19,6 +19,7 @@ use wcf\system\package\PackageArchive;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
+use wcf\system\setup\SetupFileHandler;
 use wcf\system\template\SetupTemplateEngine;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
@@ -843,13 +844,13 @@ class WCFSetup extends WCF {
 		$acpTemplateInserts = $fileInserts = [];
 		foreach (self::$installedFiles as $file) {
 			$match = [];
-			if (preg_match('!/acp/templates/([^/]+)\.tpl$!', $file, $match)) {
+			if (preg_match('~^acp/templates/([^/]+)\.tpl$~', $file, $match)) {
 				// acp template
 				$acpTemplateInserts[] = $match[1];
 			}
 			else {
 				// regular file
-				$fileInserts[] = preg_replace('/^'.preg_quote(WCF_DIR, '/').'/', '', $file);
+				$fileInserts[] = $file;
 			}
 		}
 		
@@ -888,18 +889,17 @@ class WCFSetup extends WCF {
 	 * Scans the given dir for installed files.
 	 * 
 	 * @param	string		$dir
+	 * @throws      SystemException
 	 */
 	protected function getInstalledFiles($dir) {
-		if ($files = glob($dir.'*')) {
-			foreach ($files as $file) {
-				if (is_dir($file)) {
-					$this->getInstalledFiles(FileUtil::addTrailingSlash($file));
-				}
-				else {
-					self::$installedFiles[] = FileUtil::unifyDirSeparator($file);
-				}
-			}
+		$logFile = $dir . 'files.log';
+		if (!file_exists($logFile)) {
+			throw new SystemException("Expected a valid file log at '".$logFile."'.");
 		}
+		
+		self::$installedFiles = explode("\n", file_get_contents($logFile));
+		
+		@unlink($logFile);
 	}
 	
 	/**
@@ -1234,7 +1234,9 @@ class WCFSetup extends WCF {
 	 * Installs the files of the tar archive.
 	 */
 	protected static function installFiles() {
-		new Installer(self::$directories['wcf'], SETUP_FILE, null, 'install/files/');
+		$fileHandler = new SetupFileHandler();
+		new Installer(self::$directories['wcf'], SETUP_FILE, $fileHandler, 'install/files/');
+		$fileHandler->dumpToFile(self::$directories['wcf'] . 'files.log');
 	}
 	
 	/**
