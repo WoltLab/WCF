@@ -85,6 +85,7 @@
 	.boxMenu {
 		display: flex;
 		overflow: hidden;
+		transform: translateZ(0);
 		
 		> li {
 			flex: 0 0 auto;
