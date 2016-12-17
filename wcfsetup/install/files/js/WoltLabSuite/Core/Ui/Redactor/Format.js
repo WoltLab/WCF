@@ -66,6 +66,10 @@ define(['Dom/Util'], function(DomUtil) {
 				// remove existing format before applying new one
 				this.removeFormat(editorElement, property);
 				
+				range = document.createRange();
+				range.setStartAfter(markerStart);
+				range.setEndBefore(markerEnd);
+				
 				selection.removeAllRanges();
 				selection.addRange(range);
 			}
