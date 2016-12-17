@@ -48,6 +48,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// merge values
+		$neverValues = [];
 		foreach ($data as $optionName => $option) {
 			if (count($option['values']) == 1) {
 				$result = $option['values'][0];
@@ -65,6 +66,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 			
 			// handle special value 'Never' for boolean options
 			if ($option['type'] === 'boolean' && $result == -1) {
+				$neverValues[$optionName] = $optionName;
 				$result = 0;
 			}
 			
@@ -77,6 +79,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 			}
 		}
 		
+		$data['__never'] = $neverValues;
 		$data['groupIDs'] = $parameters;
 		return $data;
 	}

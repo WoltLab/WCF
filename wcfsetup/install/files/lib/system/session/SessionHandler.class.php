@@ -624,6 +624,19 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if a permission was set to 'Never'. This is required to preserve
+	 * compatibility, while preventing ACLs from overruling a 'Never' setting.
+	 * 
+	 * @param       string          $permission
+	 * @return      boolean
+	 */
+	public function getNeverPermission($permission) {
+		$this->loadGroupData();
+		
+		return (isset($this->groupData['__never'][$permission]));
+	}
+	
+	/**
 	 * Checks if the active user has the given permissions and throws a
 	 * PermissionDeniedException if that isn't the case.
 	 * 
