@@ -12,6 +12,14 @@
 	@include screen-sm-down {
 		padding: 10px;
 	}
+	
+	a {
+		@include wcfFontBold;
+		
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .error {
