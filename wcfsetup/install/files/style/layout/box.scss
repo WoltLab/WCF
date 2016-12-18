@@ -745,6 +745,18 @@
 		}
 	}
 	
+	.boxTitle {
+		color: $wcfFooterHeadlineText;
+		
+		a {
+			color: $wcfFooterHeadlineLink;
+			
+			&:hover {
+				color: $wcfFooterHeadlineLinkActive;
+			}
+		}
+	}
+	
 	@include screen-xs {
 		.boxImage {
 			align-items: center;
