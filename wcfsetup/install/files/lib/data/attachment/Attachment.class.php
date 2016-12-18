@@ -170,8 +170,6 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	
 	/**
 	 * Marks this attachment as embedded.
-	 * 
-	 * @return	boolean
 	 */
 	public function markAsEmbedded() {
 		$this->embedded = true;
