@@ -27,6 +27,10 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 		'screen-lg': '(min-width: 1025px)'                              /* desktop */
 	});
 	
+	// Microsoft Edge rewrites the media queries to whatever it
+	// pleases, causing the input and output query to mismatch
+	var _mqMapEdge = new Dictionary();
+	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Screen
 	 */
@@ -179,6 +183,10 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 				throw new TypeError("Expected a non-empty string for parameter 'query'.");
 			}
 			
+			// Microsoft Edge rewrites the media queries to whatever it
+			// pleases, causing the input and output query to mismatch
+			if (_mqMapEdge.has(query)) query = _mqMapEdge.get(query);
+			
 			if (_mqMap.has(query)) query = _mqMap.get(query);
 			
 			var queryObject = _mql.get(query);
@@ -192,6 +200,10 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 				queryObject.mql.addListener(this._mqlChange.bind(this));
 				
 				_mql.set(query, queryObject);
+				
+				if (query !== queryObject.mql.media) {
+					_mqMapEdge.set(queryObject.mql.media, query);
+				}
 			}
 			
 			return queryObject;
