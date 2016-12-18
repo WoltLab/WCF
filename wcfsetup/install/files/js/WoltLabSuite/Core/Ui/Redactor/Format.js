@@ -45,8 +45,8 @@ define(['Dom/Util'], function(DomUtil) {
 			else {
 				// removing existing format causes the selection to vanish,
 				// these markers are used to restore it afterwards
-				markerStart = elCreate('woltlab-tmp-marker');
-				markerEnd = elCreate('woltlab-tmp-marker');
+				markerStart = elCreate('mark');
+				markerEnd = elCreate('mark');
 				
 				var tmpRange = range.cloneRange();
 				tmpRange.collapse(true);
@@ -219,7 +219,7 @@ define(['Dom/Util'], function(DomUtil) {
 			// search for tags that are still floating around, but are completely empty
 			elBySelAll('span', editorElement, function (element) {
 				if (element.parentNode && !element.textContent.length && element.style.getPropertyValue(property) !== '') {
-					if (element.childElementCount === 1 && element.children[0].nodeName === 'WOLTLAB-TMP-MARKER') {
+					if (element.childElementCount === 1 && element.children[0].nodeName === 'MARK') {
 						element.parentNode.insertBefore(element.children[0], element);
 					}
 					
