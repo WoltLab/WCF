@@ -223,6 +223,7 @@ class RequestHandler extends SingletonFactory {
 		else if (!empty($data['redirect'])) {
 			// force a redirect
 			HeaderUtil::redirect($data['redirect'], true, false);
+			exit;
 		}
 		else if (!empty($data['application']) && $data['application'] !== $application) {
 			HeaderUtil::redirect(

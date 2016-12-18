@@ -22,7 +22,7 @@
 				<th class="columnText columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
 				<th class="columnText columnDomainName">{lang}wcf.acp.application.domainName{/lang}</th>
 				<th class="columnText columnDomainPath">{lang}wcf.acp.application.domainPath{/lang}</th>
-				<th class="columnText columnCookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</th>
+				<th class="columnText columnLandingPageID">{lang}wcf.acp.application.landingPage{/lang}</th>
 				
 				{event name='columnHeads'}
 			</tr>
@@ -36,7 +36,13 @@
 					<td class="columnTitle columnPackageName"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a></td>
 					<td class="columnText columnDomainName">{$application->domainName}</td>
 					<td class="columnText columnDomainPath">{$application->domainPath}</td>
-					<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
+					<td class="columnText columnLandingPageID">
+						{if $application->landingPageID && $pageList[$application->landingPageID]|isset}
+							{$pageList[$application->landingPageID]}
+						{else}
+							{lang}wcf.global.noSelection{/lang}
+						{/if}
+					</td>
 					
 					{event name='columns'}
 				</tr>

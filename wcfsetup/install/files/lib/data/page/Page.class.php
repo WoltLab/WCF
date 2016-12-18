@@ -8,6 +8,8 @@ use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
@@ -250,6 +252,20 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 			$this->pageID
 		]);
 		WCF::getDB()->commitTransaction();
+		
+		$sql = "UPDATE	wcf".WCF_N."_application
+			SET	landingPageID = ?
+			WHERE	packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->pageID,
+			1
+		]);
+		WCF::getDB()->commitTransaction();
+		
+		// reset caches to reflect new landing page
+		ApplicationCacheBuilder::getInstance()->reset();
+		RoutingCacheBuilder::getInstance()->reset();
 	}
 	
 	/**

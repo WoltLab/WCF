@@ -22,6 +22,7 @@ use wcf\util\FileUtil;
  * @property-read	string		$domainPath	path used to access the application
  * @property-read	string		$cookieDomain	domain used to set cookies (corresponds to `domain` cookie property; may not contain path components)
  * @property-read	integer		$isTainted	is `1` if the application is being uninstalled and thus should not be loaded during uninstallation, otherwise `0`
+ * @property-read       integer         $landingPageID  id of the page that is used as initial page when app is accessed without a controller name
  */
 class Application extends DatabaseObject {
 	/**

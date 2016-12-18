@@ -2,6 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\data\application\Application;
 use wcf\data\page\Page;
+use wcf\data\page\PageCache;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\ControllerMap;
@@ -254,7 +255,22 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				}
 			}
 			else {
-				$controller = WCF::getApplicationObject($application)->getPrimaryController();
+				if ($application->landingPageID) {
+					$page = PageCache::getInstance()->getPage($application->landingPageID);
+					if ($page !== null) {
+						if ($page->controller) {
+							$controller = $page->controller;
+						}
+						else {
+							$controller = '__WCF_CMS__' . $page->pageID;
+							$controller = [$controller, $controller, CmsPage::class];
+						}
+					}
+				}
+				
+				if ($controller === null) {
+					$controller = WCF::getApplicationObject($application)->getPrimaryController();
+				}
 			}
 			
 			if (is_string($controller)) {

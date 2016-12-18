@@ -63,6 +63,8 @@
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Pfad an, über den diese App erreichbar ist. Wenn die App zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „/community/forum/“ lauten.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[App bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[App bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
+		<item name="wcf.acp.application.landingPage"><![CDATA[Einstiegsseite]]></item>
+		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Seite an, die angezeigt wird, wenn diese App direkt aufgerufen wird.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Apps]]></item>
 	</category>
 	

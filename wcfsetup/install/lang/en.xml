@@ -63,6 +63,8 @@
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you are accessing this application through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
+		<item name="wcf.acp.application.landingPage"><![CDATA[Entry Page]]></item>
+		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: This page will be shown when a user is navigating to this app.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
 	</category>
 	

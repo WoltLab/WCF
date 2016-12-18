@@ -4,8 +4,12 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ViewableApplication;
 use wcf\data\package\PackageCache;
+use wcf\data\page\Page;
+use wcf\data\page\PageNodeTree;
 use wcf\system\application\ApplicationHandler;
 use wcf\form\AbstractForm;
+use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
@@ -31,7 +35,7 @@ class ApplicationEditForm extends AbstractForm {
 	 * viewable application object
 	 * @var	ViewableApplication
 	 */
-	public $application = null;
+	public $application;
 	
 	/**
 	 * cookie domain
@@ -52,6 +56,12 @@ class ApplicationEditForm extends AbstractForm {
 	public $domainPath = '';
 	
 	/**
+	 * landing page id
+	 * @var integer
+	 */
+	public $landingPageID = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.configuration.canManageApplication'];
@@ -68,6 +78,12 @@ class ApplicationEditForm extends AbstractForm {
 	public $templateName = 'applicationEdit';
 	
 	/**
+	 * nested list of page nodes
+	 * @var	\RecursiveIteratorIterator
+	 */
+	public $pageNodeList;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -78,6 +94,8 @@ class ApplicationEditForm extends AbstractForm {
 		if (!$this->application->packageID) {
 			throw new IllegalLinkException();
 		}
+		
+		$this->pageNodeList = (new PageNodeTree())->getNodeList();
 	}
 	
 	/**
@@ -89,6 +107,7 @@ class ApplicationEditForm extends AbstractForm {
 		if (isset($_POST['cookieDomain'])) $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
 		if (isset($_POST['domainName'])) $this->domainName = StringUtil::trim($_POST['domainName']);
 		if (isset($_POST['domainPath'])) $this->domainPath = StringUtil::trim($_POST['domainPath']);
+		if (isset($_POST['landingPageID'])) $this->landingPageID = intval($_POST['landingPageID']);
 	}
 	
 	/**
@@ -101,6 +120,7 @@ class ApplicationEditForm extends AbstractForm {
 			$this->cookieDomain = $this->application->cookieDomain;
 			$this->domainName = $this->application->domainName;
 			$this->domainPath = $this->application->domainPath;
+			$this->landingPageID = $this->application->landingPageID;
 		}
 	}
 	
@@ -157,6 +177,16 @@ class ApplicationEditForm extends AbstractForm {
 			WCF::getTPL()->assign('conflictApplication', PackageCache::getInstance()->getPackage($row['packageID']));
 			throw new UserInputException('domainPath', 'conflict');
 		}
+		
+		if ($this->landingPageID) {
+			$page = new Page($this->landingPageID);
+			if (!$page->pageID) {
+				throw new UserInputException('landingPageID');
+			}
+			else if ($page->requireObjectID) {
+				throw new UserInputException('landingPageID', 'invalid');
+			}
+		}
 	}
 	
 	/**
@@ -169,14 +199,35 @@ class ApplicationEditForm extends AbstractForm {
 		$this->objectAction = new ApplicationAction([$this->application->getDecoratedObject()], 'update', ['data' => array_merge($this->additionalFields, [
 			'cookieDomain' => mb_strtolower($this->cookieDomain),
 			'domainName' => mb_strtolower($this->domainName),
-			'domainPath' => $this->domainPath
+			'domainPath' => $this->domainPath,
+			'landingPageID' => ($this->landingPageID ?: null)
 		])]);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
+		if ($this->application->packageID === 1) {
+			if ($this->landingPageID) {
+				(new Page($this->landingPageID))->setAsLandingPage();
+			}
+			else {
+				$sql = "UPDATE  wcf".WCF_N."_page
+					SET     isLandingPage = ?
+					WHERE   isLandingPage = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					0,
+					1
+				]);
+			}
+		}
+		
 		// re-calculate cookie settings
 		ApplicationHandler::rebuild();
+		
+		// reset caches to reflect new landing page
+		ApplicationCacheBuilder::getInstance()->reset();
+		RoutingCacheBuilder::getInstance()->reset();
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
@@ -193,7 +244,9 @@ class ApplicationEditForm extends AbstractForm {
 			'cookieDomain' => $this->cookieDomain,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath,
-			'packageID' => $this->packageID
+			'packageID' => $this->packageID,
+			'pageNodeList' => $this->pageNodeList,
+			'landingPageID' => $this->landingPageID
 		]);
 	}
 }

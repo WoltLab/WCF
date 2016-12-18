@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\application\ViewableApplicationList;
+use wcf\data\page\PageList;
 use wcf\page\AbstractPage;
 use wcf\system\WCF;
 
@@ -45,8 +46,12 @@ class ApplicationManagementPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$pageList = new PageList();
+		$pageList->readObjects();
+		
 		WCF::getTPL()->assign([
-			'applicationList' => $this->applicationList
+			'applicationList' => $this->applicationList,
+			'pageList' => $pageList->getObjects()
 		]);
 	}
 }

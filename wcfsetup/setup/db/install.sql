@@ -149,7 +149,8 @@ CREATE TABLE wcf1_application (
 	domainName VARCHAR(255) NOT NULL,
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
-	isTainted TINYINT(1) NOT NULL DEFAULT 0
+	isTainted TINYINT(1) NOT NULL DEFAULT 0,
+	landingPageID INT(10) NULL
 );
 
 DROP TABLE IF EXISTS wcf1_article;
@@ -1679,6 +1680,7 @@ ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_packag
 ALTER TABLE wcf1_ad ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_application ADD FOREIGN KEY (landingPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_article ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
