@@ -5,6 +5,7 @@ use wcf\data\ITitledLinkObject;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles page locations for use with menu active markings.
@@ -98,6 +99,10 @@ class PageLocationManager extends SingletonFactory {
 			$title = $page->getTitle();
 		}
 		
+		if ($page->isLandingPage) {
+			$title = WCF::getLanguage()->get(PAGE_TITLE);
+		}
+		
 		$this->stack[] = [
 			'identifier' => $identifier,
 			'link' => $link,
@@ -134,13 +139,19 @@ class PageLocationManager extends SingletonFactory {
 				$page = PageCache::getInstance()->getPage($location['pageID']);
 				while ($page !== null && $page->parentPageID) {
 					$page = PageCache::getInstance()->getPage($page->parentPageID);
+					if ($page->isLandingPage) {
+						$title = WCF::getLanguage()->get(PAGE_TITLE);
+					}
+					else {
+						$title = $page->getTitle();
+					}
 					
 					$this->stack[] = [
 						'identifier' => $page->identifier,
 						'link' => $page->getLink(),
 						'pageID' => $page->pageID,
 						'pageObjectID' => 0,
-						'title' => $page->getTitle(),
+						'title' => $title,
 						'useAsParentLocation' => false
 					];
 				}
