@@ -54,6 +54,7 @@ class ArticleFeedPage extends AbstractFeedPage {
 		
 		// read the articles
 		$this->items = new FeedArticleList($this->categoryID);
+		$this->items->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
 		$this->items->sqlLimit = 20;
 		$this->items->readObjects();
 		
