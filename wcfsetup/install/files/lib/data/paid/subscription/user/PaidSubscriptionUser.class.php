@@ -21,6 +21,11 @@ use wcf\system\WCF;
  */
 class PaidSubscriptionUser extends DatabaseObject {
 	/**
+	 * @inheritDoc
+	 */
+	protected static $databaseTableIndexName = 'subscriptionUserID';
+	
+	/**
 	 * paid subscription object
 	 * @var	PaidSubscription
 	 */
