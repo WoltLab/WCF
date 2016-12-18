@@ -96,6 +96,12 @@ ol.nativeList {
 
 /* simulate native HTML styles for certain elements */
 .htmlContent {
+	@include clearfix;
+		
+	img {
+		max-width: 100%;
+	}
+	
 	> :first-child {
 		margin-top: 0 !important;
 	}

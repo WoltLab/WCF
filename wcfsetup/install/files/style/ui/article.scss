@@ -43,14 +43,6 @@
 			display: inline;
 		}
 	}
-	
-	.htmlContent {
-		@include clearfix;
-		
-		img {
-			max-width: 100%;
-		}
-	}
 }
 
 .articleAboutAuthor {
