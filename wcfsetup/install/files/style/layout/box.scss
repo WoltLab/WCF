@@ -560,6 +560,16 @@
 	}
 }
 
+.boxesSidebarLeft .box .boxMenu li.active > .boxMenuLink {
+	margin-left: 10px;
+	padding-left: 10px;
+}
+
+.boxesSidebarRight .box .boxMenu li.active > .boxMenuLink {
+	margin-right: 10px;
+	padding-right: 10px;
+}
+
 /* styling for boxes in <contentTop>/<contentBottom> position */
 .boxesContentTop,
 .boxesContentBottom {
