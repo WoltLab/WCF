@@ -165,9 +165,22 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * @inheritDoc
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight) {
-		$this->clip($originX, $originY, $originWidth, $originHeight);
-		
-		$this->imagick->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_POINT, 0);
+		if ($this->imagick->getImageFormat() == 'GIF') {
+			$image = $this->imagick->coalesceImages();
+			
+			foreach ($image as $frame) {
+				$frame->cropImage($originWidth, $originHeight, $originX, $originY);
+				$frame->thumbnailImage($targetWidth, $targetHeight);
+				$frame->setImagePage($targetWidth, $targetHeight, 0, 0);
+			}
+			
+			$this->imagick = $image->deconstructImages();
+		}
+		else {
+			$this->clip($originX, $originY, $originWidth, $originHeight);
+			
+			$this->imagick->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_POINT, 0);
+		}
 	}
 	
 	/**
