@@ -111,7 +111,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				}
 				
 				var div = elCreate('div');
-				div.innerHTML = html;
+				div.innerHTML = html.replace(/@@@WOLTLAB-P-ALIGN-(?:left|right|center|justify)@@@/g, '');
 				
 				var element, elements = elBySelAll('[style]', div), property, removeStyles;
 				for (var i = 0, length = elements.length; i < length; i++) {
@@ -142,10 +142,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
-				// Empty lines in Microsoft Word are represented with <o:p>&nbsp;</o:p>
-				elBySelAll('p.MsoNormal', div, function (p) {
-					if (p.childElementCount === 1 && p.children[0].nodeName === 'O:P' && p.textContent === '\u00A0') {
-						p.innerHTML = '<br>';
+				elBySelAll('p', div, function (p) {
+					if (p.classList.contains('MsoNormal')) {
+						// Empty lines in Microsoft Word are represented with <o:p>&nbsp;</o:p>
+						if (p.childElementCount === 1 && p.children[0].nodeName === 'O:P' && p.textContent === '\u00A0') {
+							p.innerHTML = '<br>';
+						}
+					}
+					else if (p.className.match(/\btext-(left|right|center|justify)\b/)) {
+						p.insertBefore(document.createTextNode('@@@WOLTLAB-P-ALIGN-' + RegExp.$1 + '@@@'), p.firstChild);
 					}
 				});
 				
@@ -156,6 +161,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);
 				
 				html = html.replace(/@@@WOLTLAB-BR-MARKER@@@/g, '<woltlab-br-marker></woltlab-br-marker>');
+				html = html.replace(/(<p>)?\s*@@@WOLTLAB-P-ALIGN-(left|right|center|justify)@@@/g, function (match, p, alignment) {
+					if (p) {
+						return '<p class="text-' + alignment + '">';
+					}
+					
+					return '';
+				});
 				
 				div.innerHTML = html;
 				
