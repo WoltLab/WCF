@@ -133,7 +133,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				}
 				
 				elBySelAll('span', div, function (span) {
-					if (!span.style.length || !span.hasAttribute('style')) {
+					if (!span.hasAttribute('style') || !span.style.length) {
 						while (span.childNodes.length) {
 							span.parentNode.insertBefore(span.childNodes[0], span);
 						}
@@ -154,8 +154,12 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 					
 					// discard classes and styles, they're stripped later on anyway
-					p.className = '';
+					p.removeAttribute('class');
 					p.removeAttribute('style');
+				});
+				
+				elBySelAll('img', div, function (img) {
+					img.removeAttribute('style');
 				});
 				
 				elBySelAll('br', div, function (br) {
@@ -173,7 +177,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 					return '';
 				});
 				
-				div.innerHTML = html;
+				div.innerHTML = html.replace(/&amp;quot;/g, '&quot;');
 				
 				elBySelAll('woltlab-br-marker', div, function (marker) {
 					var parent = marker.parentNode;
