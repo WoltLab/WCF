@@ -152,6 +152,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 					else if (p.className.match(/\btext-(left|right|center|justify)\b/)) {
 						p.insertBefore(document.createTextNode('@@@WOLTLAB-P-ALIGN-' + RegExp.$1 + '@@@'), p.firstChild);
 					}
+					
+					// discard classes and styles, they're stripped later on anyway
+					p.className = '';
+					p.removeAttribute('style');
 				});
 				
 				elBySelAll('br', div, function (br) {
@@ -237,7 +241,17 @@ $.Redactor.prototype.WoltLabClean = function() {
 				});
 				
 				storage.forEach(function (item, i) {
-					item.element.outerHTML = '###custom' + i + '###' + item.element.innerHTML + '###/custom' + i + '###';
+					var element = item.element;
+					var parent = element.parentNode;
+					
+					parent.insertBefore(document.createTextNode('###custom' + i + '###'), element);
+					parent.insertBefore(document.createTextNode('###/custom' + i + '###'), element.nextSibling);
+					
+					while (element.childNodes.length) {
+						parent.insertBefore(element.childNodes[0], element);
+					}
+					
+					parent.removeChild(element);
 				});
 				
 				var hadLinks = false;
