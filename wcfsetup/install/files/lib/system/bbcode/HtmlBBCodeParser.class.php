@@ -21,6 +21,12 @@ use wcf\util\StringUtil;
  */
 class HtmlBBCodeParser extends BBCodeParser {
 	/**
+	 * list of bbcodes that cannot be nested
+	 * @var string[]
+	 */
+	public static $disallowNesting = ['attach', 'b', 'code', 'email', 'i', 'img', 'media', 's', 'tt', 'u', 'url', 'user', 'wsm', 'wsp'];
+	
+	/**
 	 * list of open tags with name and uuid
 	 * @var array
 	 */
@@ -125,7 +131,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 					$sibling = $this->tagArray[$j];
 					if ($sibling['name'] === $name) {
 						if (!$sibling['closing']) {
-							if ($name === 'quote') {
+							if (!in_array($name, self::$disallowNesting)) {
 								continue;
 							}
 							
