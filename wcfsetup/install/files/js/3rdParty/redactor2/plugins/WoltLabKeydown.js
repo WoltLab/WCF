@@ -109,6 +109,9 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 				
 				// remove inline tags in new-empty paragraph
+				/*
+					WoltLab modification: preserve inline tags
+				
 				setTimeout($.proxy(function () {
 					var inline = this.selection.inline();
 					if (inline && this.utils.isEmpty(inline.innerHTML)) {
@@ -131,6 +134,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					}
 					
 				}, this), 1);
+				*/
 			}).bind(this);
 			
 			this.keydown.onEnter = (function(e) {
