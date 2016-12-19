@@ -142,6 +142,11 @@ ol.nativeList {
 	ol {
 		list-style-type: decimal;
 	}
+	
+	em {
+		/* slight margin to prevent visual merge with adjacent words */
+		margin-right: 2px;
+	}
 }
 
 .separatorLeft::before {
