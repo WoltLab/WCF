@@ -160,6 +160,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				elBySelAll('img', div, function (img) {
 					img.removeAttribute('style');
+					
+					if (img.hasAttribute('alt')) {
+						// The editor trips over `<`, causing the DOM to be seriously
+						// messed up. Until this is resolved, we're simply dropping it,
+						// at least for smilies it is later restored.
+						img.setAttribute('alt', img.getAttribute('alt').replace(/</g, ''));
+					}
 				});
 				
 				elBySelAll('br', div, function (br) {
@@ -200,6 +207,28 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 					
 					elRemove(marker);
+				});
+				
+				elBySelAll('p', div, function (p) {
+					// remove garbage paragraphs that contain absolutely nothing
+					var remove = false;
+					if (p.childNodes.length === 0) {
+						remove = true;
+					}
+					else if (p.textContent === '') {
+						remove = true;
+						
+						// check if there are only <span> elements
+						elBySelAll('*', p, function (element) {
+							if (element.nodeName !== 'SPAN') {
+								remove = false;
+							}
+						});
+					}
+					
+					if (remove) {
+						elRemove(p);
+					}
 				});
 				
 				return div.innerHTML;
