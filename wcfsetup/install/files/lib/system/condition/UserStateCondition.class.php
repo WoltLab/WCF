@@ -59,7 +59,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 			$objectList->getConditionBuilder()->add('user_table.banned = ?', [$conditionData['userIsBanned']]);
 		}
 		
-		if ($conditionData['userIsEnabled']) {
+		if (isset($conditionData['userIsEnabled'])) {
 			if ($conditionData['userIsEnabled']) {
 				$objectList->getConditionBuilder()->add('user_table.activationCode = ?', [0]);
 			}
