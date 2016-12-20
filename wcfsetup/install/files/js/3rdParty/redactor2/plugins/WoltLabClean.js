@@ -191,6 +191,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 					
 					if (parent.nodeName === 'P') {
 						var p = elCreate('p');
+						p.innerHTML = '<br>';
+						
 						while (marker.nextSibling) {
 							p.appendChild(marker.nextSibling);
 						}
