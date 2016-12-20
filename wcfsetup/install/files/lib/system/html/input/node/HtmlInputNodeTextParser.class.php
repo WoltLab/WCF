@@ -162,7 +162,7 @@ class HtmlInputNodeTextParser {
 			$value = preg_replace('~\x{200B}~u', '', $value);
 			
 			if ($value !== $oldValue) {
-				$node->textContent = $value;
+				$node->nodeValue = $value;
 			}
 			
 			$this->detectMention($node, $value, $usernames);
@@ -199,7 +199,7 @@ class HtmlInputNodeTextParser {
 			}
 			
 			if ($value !== $oldValue) {
-				$node->textContent = $value;
+				$node->nodeValue = $value;
 			}
 		}
 		
@@ -393,7 +393,7 @@ class HtmlInputNodeTextParser {
 					
 					$element = $text->ownerDocument->createElement('a');
 					$element->setAttribute('href', $link);
-					$element->textContent = $link;
+					$element->nodeValue = $link;
 				}
 				else {
 					return $matches[0];
@@ -587,7 +587,7 @@ class HtmlInputNodeTextParser {
 					$node->parentNode->insertBefore($element, $node);
 					
 					// modify text content of existing text node
-					$node->textContent = mb_substr($value, $pos + strlen($marker));
+					$node->nodeValue = mb_substr($value, $pos + strlen($marker));
 				}
 			}
 		}

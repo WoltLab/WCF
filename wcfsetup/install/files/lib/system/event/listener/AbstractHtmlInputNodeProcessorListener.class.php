@@ -100,7 +100,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 							throw new ImplementationException(get_class($object), ITitledObject::class);
 						}
 						
-						$element->textContent = $object->getTitle();
+						$element->nodeValue = $object->getTitle();
 					}
 				}
 			}
