@@ -105,6 +105,45 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				// firefox enter into inline element
 				if (this.detect.isFirefox() && this.utils.isInline(this.keydown.parent)) {
 					this.keydown.insertBreakLine(e);
+					
+					// WoltLab modification: strip links on return
+					setTimeout((function () {
+						var block = this.selection.block();
+						var current = this.selection.inline();
+						
+						while (current && current !== block) {
+							if (current.nodeName === 'A') {
+								// check if this is an empty link
+								var remove = false;
+								if (current.childNodes.length === 0) {
+									remove = true;
+								}
+								else if (current.textContent.replace(/\u200B/g, '') === '') {
+									remove = true;
+									
+									// check if there are only <span> elements
+									elBySelAll('*', current, function (element) {
+										if (element.nodeName !== 'SPAN') {
+											remove = false;
+										}
+									});
+								}
+								
+								if (remove) {
+									while (current.childNodes.length) {
+										current.parentNode.insertBefore(current.childNodes[0], current);
+									}
+									
+									elRemove(current);
+									
+									break;
+								}
+							}
+							
+							current = current.parentNode;
+						}
+					}).bind(this), 1);
+					
 					return;
 				}
 				
