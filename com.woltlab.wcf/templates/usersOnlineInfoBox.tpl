@@ -34,4 +34,5 @@
 			</div>
 		{/if}
 	</section>
+	{event name='afterBoxes'}
 {/if}
