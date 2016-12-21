@@ -139,7 +139,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 			};
 			
 			if (this._lineHeight === null) {
-				this._lineHeight = Math.round(rect.bottom - rect.top - (window.scrollY || window.pageYOffset));
+				this._lineHeight = Math.round(rect.bottom - rect.top);
 			}
 			
 			// restore caret position
