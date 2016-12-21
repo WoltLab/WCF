@@ -100,7 +100,9 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter {
 		}
 		
 		// trim code block
-		$element->nodeValue = StringUtil::trim($element->textContent);
+		$content = StringUtil::trim($element->textContent);
+		$element->nodeValue = '';
+		$element->appendChild($element->ownerDocument->createTextNode($content));
 		
 		return $element;
 	}

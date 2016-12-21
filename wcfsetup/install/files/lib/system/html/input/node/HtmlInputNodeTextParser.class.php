@@ -393,7 +393,7 @@ class HtmlInputNodeTextParser {
 					
 					$element = $text->ownerDocument->createElement('a');
 					$element->setAttribute('href', $link);
-					$element->nodeValue = $link;
+					$element->appendChild($element->ownerDocument->createTextNode($link));
 				}
 				else {
 					return $matches[0];
