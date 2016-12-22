@@ -88,6 +88,8 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
 	</instructions>
 	
+	<!-- Update RC 2 -> RC 3: deploy *all* acptemplates to account for missing update at Beta 5 -> RC 1 -->
+	
 	<instructions type="update" fromversion="3.0.0 RC 1">
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="sql">update_3.0.0_rc_2.sql</instruction>
