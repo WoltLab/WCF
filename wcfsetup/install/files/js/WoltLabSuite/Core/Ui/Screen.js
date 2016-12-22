@@ -117,12 +117,7 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					pageContainer.style.setProperty('top', '-' + _scrollTop + 'px', '');
 				}
 				else {
-					pageContainer.style.setProperty('transform', 'translateY(-' + _scrollTop + 'px)', '');
-					
-					if (_dialogContainer !== null) {
-						// the same value for `pageContainer` but in reverse
-						_dialogContainer.style.setProperty('transform', 'translateY(' + _scrollTop + 'px)', '');
-					}
+					pageContainer.style.setProperty('margin-top', '-' + _scrollTop + 'px', '');
 				}
 				
 				document.documentElement.classList.add('disableScrolling');
@@ -147,11 +142,7 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 						pageContainer.style.removeProperty('top');
 					}
 					else {
-						pageContainer.style.removeProperty('transform');
-						
-						if (_dialogContainer !== null) {
-							_dialogContainer.style.removeProperty('transform');
-						}
+						pageContainer.style.removeProperty('margin-top');
 					}
 					
 					if (_scrollTop) {
