@@ -21,10 +21,15 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 			this._list.appendChild(showMoreItem);
 			this._showMoreItem = showMoreItem;
 			
-			var button = elBySel('.jsRecentActivitySwitchContext button:not(.active)', container);
-			if (button !== null) {
-				button.addEventListener(WCF_CLICK_EVENT, this._switchContext.bind(this));
-			}
+			elBySelAll('.jsRecentActivitySwitchContext .button', container, (function (button) {
+				button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+					event.preventDefault();
+					
+					if (!button.classList.contains('active')) {
+						this._switchContext();
+					}
+				}).bind(this));
+			}).bind(this));
 		},
 		
 		_showMore: function (event) {
@@ -44,9 +49,7 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 			});
 		},
 		
-		_switchContext: function(event) {
-			event.preventDefault();
-			
+		_switchContext: function() {
 			Ajax.api(
 				this,
 				{
