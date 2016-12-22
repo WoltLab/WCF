@@ -548,6 +548,7 @@
 		opacity: .6;
 		padding-top: 10px;
 		transition: opacity .12s linear;
+		transform: translateZ(0);
 	}
 	
 	.message:hover .messageSignature {
