@@ -19,7 +19,7 @@ class NamedUserException extends UserException {
 	 */
 	public function show() {
 		if (!class_exists(WCFACP::class, false)) {
-			BoxHandler::getInstance()->disablePageLayout();
+			BoxHandler::disablePageLayout();
 		}
 		SessionHandler::getInstance()->disableTracking();
 		

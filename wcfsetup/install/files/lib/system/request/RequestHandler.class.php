@@ -78,7 +78,7 @@ class RequestHandler extends SingletonFactory {
 					}
 					else {
 						@header('HTTP/1.1 503 Service Unavailable');
-						BoxHandler::getInstance()->disablePageLayout();
+						BoxHandler::disablePageLayout();
 						WCF::getTPL()->assign([
 							'templateName' => 'offline',
 							'templateNameApplication' => 'wcf'
