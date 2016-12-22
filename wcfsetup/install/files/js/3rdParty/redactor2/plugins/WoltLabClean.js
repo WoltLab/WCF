@@ -107,7 +107,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
 				if (data.pre) {
-					return mpOnPaste.call(this, html, data, insert);
+					// prevent method call when data.pre is true
+					var mpRemoveEmptyInlineTags = this.clean.removeEmptyInlineTags;
+					this.clean.removeEmptyInlineTags = function(html) { return html; };
+					
+					html = mpOnPaste.call(this, html, data, insert);
+					
+					this.clean.removeEmptyInlineTags = mpRemoveEmptyInlineTags;
+					
+					return html;
 				}
 				
 				var div = elCreate('div');
