@@ -363,7 +363,29 @@ class ControllerMap extends SingletonFactory {
 	 * @return	string		url representation, e.g. 'board-list'
 	 */
 	public static function transformController($controller) {
-		$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		// work-around for broken controllers that violate the strict naming rules
+		if (preg_match('~[A-Z]{2,}~', $controller)) {
+			$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+			
+			// fix for invalid pages that would cause single character fragments
+			$sanitizedParts = [];
+			$tmp = '';
+			foreach ($parts as $part) {
+				if (strlen($part) === 1) {
+					$tmp .= $part;
+					continue;
+				}
+				
+				$sanitizedParts[] = $tmp . $part;
+				$tmp = '';
+			}
+			if ($tmp) $sanitizedParts[] = $tmp;
+			$parts = $sanitizedParts;
+		}
+		else {
+			$parts = preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		}
+		
 		$parts = array_map('strtolower', $parts);
 		
 		return implode('-', $parts);
