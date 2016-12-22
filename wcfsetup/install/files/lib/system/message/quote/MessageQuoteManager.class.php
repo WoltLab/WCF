@@ -423,15 +423,14 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @return	string
 	 */
 	public function renderQuote(IMessage $message, $text, $renderAsString = true) {
-		$escapedUsername = str_replace(["\\", "'"], ["\\\\", "\'"], $message->getUsername());
 		$escapedLink = str_replace(["\\", "'"], ["\\\\", "\'"], $message->getLink());
 		
 		if ($renderAsString) {
-			return "[quote='".$escapedUsername."','".$escapedLink."']".$text."[/quote]";
+			return "[quote='".$message->getUsername()."','".$escapedLink."']".$text."[/quote]";
 		}
 		else {
 			return [
-				'username' => $escapedUsername,
+				'username' => $message->getUsername(),
 				'link' => $escapedLink,
 				'text' => $text
 			];
