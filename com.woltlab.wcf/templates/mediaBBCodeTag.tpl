@@ -1,4 +1,4 @@
-<figure class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}">
+<span class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}">
 	{if $thumbnailSize != 'original'}
 		<a href="{$media->getLink()}" class="embeddedAttachmentLink jsImageViewer"><img src="{$media->getThumbnailLink($thumbnailSize)}" alt="{$media->altText}" title="{$media->title}"></a>
 	{else}
@@ -6,6 +6,6 @@
 	{/if}
 		
 	{if $media->caption}
-		<figcaption>{$media->caption}</figcaption>
+		<span class="mediaBBCodeCaption">{$media->caption}</span>
 	{/if}
-</figure>
+</span>

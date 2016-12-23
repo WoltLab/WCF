@@ -1,8 +1,9 @@
 .mediaBBCode {
 	display: inline-block;
 	
-	figcaption {
+	.mediaBBCodeCaption {
 		color: $wcfContentDimmedText;
+		display: block;
 		margin-top: 5px;
 		text-align: center;
 		
