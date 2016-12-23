@@ -5,6 +5,62 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 	
 	return {
 		init: function () {
+			var mpInit = this.keydown.init;
+			this.keydown.init = (function (e) {
+				var returnValue = mpInit.call(this, e);
+				
+				if (returnValue !== false && !e.originalEvent.defaultPrevented) {
+					e = e.originalEvent;
+					
+					// 39 == right
+					if (e.which === 39 && !e.ctrlKey && !e.shiftKey && !e.metaKey && !e.altKey) {
+						var selection = window.getSelection();
+						if (!selection.isCollapsed) {
+							return;
+						}
+						
+						var current = selection.anchorNode;
+						if (current.nodeType !== Node.TEXT_NODE || selection.getRangeAt(0).startOffset !== current.textContent.length) {
+							return;
+						}
+						
+						var parent = current.parentNode;
+						if (parent.nodeName !== 'KBD') {
+							return;
+						}
+						
+						// check if caret is at the very end
+						
+						// check if there is absolutely nothing afterwards
+						var isAtTheVeryEnd = true;
+						var node = parent;
+						while (node && node !== this.core.editor()[0]) {
+							if (node.nextSibling !== null) {
+								// strip empty text nodes
+								while (node.nextSibling && node.nextSibling.nodeType === Node.TEXT_NODE && node.nextSibling.textContent.length === 0) {
+									node.parentNode.removeChild(node.nextSibling);
+								}
+								
+								if (node.nextSibling && node.nextSibling.nodeName !== 'BR' || node.nextSibling.nextSibling !== null) {
+									isAtTheVeryEnd = false;
+									break;
+								}
+							}
+							
+							node = node.parentNode;
+						}
+						
+						if (isAtTheVeryEnd) {
+							parent.parentNode.insertBefore(document.createTextNode('\u200B'), parent.nextSibling);
+						}
+					}
+				}
+			}).bind(this);
+			
+			// rebind keydown event
+			this.core.editor().off('keydown.redactor');
+			this.core.editor().on('keydown.redactor', this.keydown.init.bind(this));
+			
 			this.keydown.onArrowDown = (function() {
 				var tags = this.WoltLabKeydown._getBlocks();
 				
