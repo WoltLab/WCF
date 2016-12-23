@@ -13,7 +13,7 @@ $.Redactor.prototype.WoltLabMedia = function() {
 				}
 				
 				var float = '';
-				if (data.attributes === 3) {
+				if (data.attributes.length === 3) {
 					if (data.attributes[2] === 'left') {
 						float = ' messageFloatObjectLeft';
 					}
