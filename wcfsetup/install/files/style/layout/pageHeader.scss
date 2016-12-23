@@ -245,6 +245,9 @@
 				padding: 0 15px;
 				position: relative;
 				
+				/* fix flicker in Safari on dropdown menu hover */
+				transform: translateZ(0);
+				
 				/* hide icon label */
 				> span:not(.icon):not(.badge) {
 					display: none;
