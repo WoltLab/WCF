@@ -439,7 +439,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 */
 	public function isAccessible($name) {
 		/** @noinspection PhpVariableVariableInspection */
-		$data = ['result' => true, 'args' => [$name]];
+		$data = ['result' => true, 'name' => $name];
 		
 		switch ($this->$name) {
 			case self::ACCESS_EVERYONE:
@@ -469,7 +469,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function isProtected() {
-		$data = ['result' => (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID)];
+		$data = [
+            'result' => (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID)
+        ];
 		EventHandler::getInstance()->fireAction($this, 'isProtected', $data);
 		return $data['result'];
 	}
@@ -818,4 +820,3 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		return new UserProfile(new User(null, ['username' => $username]));
 	}
 }
-
