@@ -101,6 +101,9 @@
 				height: 50px;
 				padding: 0 15px;
 				
+				/* fix flicker in Safari on dropdown menu hover */
+				transform: translateZ(0);
+				
 				> span {
 					flex: 0 0 auto;
 				}

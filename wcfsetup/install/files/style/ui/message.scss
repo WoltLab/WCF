@@ -548,6 +548,9 @@
 		opacity: .6;
 		padding-top: 10px;
 		transition: opacity .12s linear;
+		
+		/* fix flicker in Safari on message hover */
+		transform: translateZ(0);
 	}
 	
 	.message:hover .messageSignature {
