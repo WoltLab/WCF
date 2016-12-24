@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
 
 /**
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2016 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -127,11 +127,11 @@ if ($rebuildData === null) {
 $i = $rebuildData['i'];
 
 // truncate values
-$statement = WCF::getDB()->prepareStatement($lines[$i * 2]);
+$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $lines[$i * 2]));
 $statement->execute();
 
 // decrease column width
-$statement = WCF::getDB()->prepareStatement($lines[$i * 2 + 1]);
+$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $lines[$i * 2 + 1]));
 $statement->execute();
 
 $rebuildData['i']++;
