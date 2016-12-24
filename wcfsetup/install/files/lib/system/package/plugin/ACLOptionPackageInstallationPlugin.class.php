@@ -37,13 +37,89 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	/**
 	 * @inheritDoc
 	 */
+	protected function deleteItems(\DOMXPath $xpath) {
+		// delete options
+		$elements = $xpath->query('/ns:data/ns:delete/ns:option');
+		$options = [];
+		
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			$options[] = [
+				'name' => $element->getAttribute('name'),
+				'objectType' => $element->getElementsByTagName('objecttype')->item(0)->nodeValue
+			];
+		}
+		
+		if (!empty($options)) {
+			$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName. "
+				WHERE		optionName = ?
+						AND objectTypeID = ?
+						AND packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($options as $option) {
+				$statement->execute([
+					$option['name'],
+					$this->getObjectTypeID($option['objectType']),
+					$this->installation->getPackageID()
+				]);
+			}
+		}
+		
+		// delete categories
+		$elements = $xpath->query('/ns:data/ns:delete/ns:optioncategory');
+		$categories = [];
+		
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			$categories[] = [
+				'name' => $element->getAttribute('name'),
+				'objectType' => $element->getElementsByTagName('objecttype')->item(0)->nodeValue
+			];
+		}
+		
+		if (!empty($categories)) {
+			// delete options for given categories
+			$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName. "
+				WHERE		categoryName = ?
+						AND objectTypeID = ?
+						AND packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($categories as $category) {
+				$statement->execute([
+					$category['name'],
+					$this->getObjectTypeID($category['objectType']),
+					$this->installation->getPackageID()
+				]);
+			}
+			
+			// delete categories
+			$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName. "_category
+				WHERE		categoryName = ?
+						AND objectTypeID = ?
+						AND packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($categories as $category) {
+				$statement->execute([
+					$category['name'],
+					$this->getObjectTypeID($category['objectType']),
+					$this->installation->getPackageID()
+				]);
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
 		
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$data = ['categoryName' => $element->getAttribute('name')];
-				
+			
 			// get child elements
 			$children = $xpath->query('child::*', $element);
 			foreach ($children as $child) {
@@ -171,7 +247,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
-		/* Does nothing */
+		// does nothing
 	}
 	
 	/**
@@ -194,19 +270,19 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 					)";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$optionType]);
-			$row = $statement->fetchArray();
-			if (!$row) {
+			$objectTypeID = $statement->fetchColumn();
+			if ($objectTypeID === false) {
 				throw new SystemException("unknown object type '".$optionType."' given");
 			}
 			
-			$this->optionTypeIDs[$optionType] = $row['objectTypeID'];
+			$this->optionTypeIDs[$optionType] = $objectTypeID;
 		}
 		
 		return $this->optionTypeIDs[$optionType];
 	}
 	
 	/**
-	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
+	 * @inheritDoc
 	 * @since	3.0
 	 */
 	public static function getDefaultFilename() {
