@@ -25,7 +25,7 @@
 	<!-- delete element type -->
 	<xs:complexType name="delete">
 		<xs:choice maxOccurs="unbounded">
-			<xs:element name="category" type="category_delete" minOccurs="0" />
+			<xs:element name="optioncategory" type="category" minOccurs="0" />
 			<xs:element name="option" type="option_delete" minOccurs="0" />
 		</xs:choice>
 	</xs:complexType>
@@ -33,19 +33,8 @@
 	<!-- categories import element type -->
 	<xs:complexType name="categories_import">
 		<xs:sequence>
-			<xs:element name="category" type="category_import" maxOccurs="unbounded" />
+			<xs:element name="category" type="category" maxOccurs="unbounded" />
 		</xs:sequence>
-	</xs:complexType>
-	
-	<!-- imported/updated category element type -->
-	<xs:complexType name="category_import">
-		<xs:complexContent>
-			<xs:extension base="category_delete">
-				<xs:all>
-					<xs:element name="objecttype" type="woltlab_varchar_nullable" minOccurs="0" />
-				</xs:all>
-			</xs:extension>
-		</xs:complexContent>
 	</xs:complexType>
 	
 	<!-- option import element type -->
@@ -57,23 +46,26 @@
 	
 	<!-- imported/updated option element type -->
 	<xs:complexType name="option_import">
-		<xs:complexContent>
-			<xs:extension base="option_delete">
-				<xs:all>
-					<xs:element name="objecttype" type="woltlab_varchar_nullable" minOccurs="1" />
-					<xs:element name="categoryname" type="woltlab_varchar_nullable" minOccurs="0" />
-				</xs:all>
-			</xs:extension>
-		</xs:complexContent>
+		<xs:all>
+			<xs:element name="objecttype" type="woltlab_varchar_nullable" />
+			<xs:element name="categoryname" type="woltlab_varchar_nullable" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 	
-	<!-- deleted category element type -->
-	<xs:complexType name="category_delete">
+	<!-- category element-->
+	<xs:complexType name="category">
+		<xs:all>
+			<xs:element name="objecttype" type="woltlab_varchar_nullable" />
+		</xs:all>
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 	
 	<!-- deleted option element type -->
 	<xs:complexType name="option_delete">
+		<xs:all>
+			<xs:element name="objecttype" type="woltlab_varchar_nullable" />
+		</xs:all>
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>
 </xs:schema>
