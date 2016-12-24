@@ -27,7 +27,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
-use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
@@ -47,7 +46,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.0.0 RC 2');
+define('WCF_VERSION', '3.0.0 RC 3');
 
 // define current unix timestamp
 define('TIME_NOW', time());

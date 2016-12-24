@@ -7,6 +7,8 @@ ALTER TABLE wcf1_acl_simple_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_u
 
 ALTER TABLE wcf1_acp_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_acp_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 
+ALTER TABLE wcf1_application ADD FOREIGN KEY (landingPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
+
 ALTER TABLE wcf1_article ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
 
@@ -207,3 +209,6 @@ INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templ
 INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube Playlist', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/)playlist\\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>');
 UPDATE wcf1_bbcode_media_provider SET regex = 'https?://vimeo\\.com/(?:channels/[^/]+/)?(?P<ID>\\d+)' WHERE title = 'Vimeo';
 UPDATE wcf1_bbcode_media_provider SET regex = 'https?://(?:www\\.)?dailymotion\\.com/video/(?P<ID>[a-zA-Z0-9_-]+)', html = '<iframe width="480" height="270" src="//www.dailymotion.com/embed/video/{$ID}"></iframe>' WHERE title = 'DailyMotion';
+
+-- application landing page
+UPDATE wcf1_application SET landingPageID = (SELECT pageID FROM wcf1_page WHERE isLandingPage = 1 LIMIT 1) WHERE packageID = 1;

@@ -25,6 +25,7 @@ ALTER TABLE wcf1_acp_session DROP COLUMN objectID;
 ALTER TABLE wcf1_application DROP COLUMN cookiePath;
 ALTER TABLE wcf1_application DROP COLUMN isPrimary;
 ALTER TABLE wcf1_application ADD isTainted TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_application ADD landingPageID INT(10) NULL;
 
 DROP TABLE IF EXISTS wcf1_article;
 CREATE TABLE wcf1_article (
