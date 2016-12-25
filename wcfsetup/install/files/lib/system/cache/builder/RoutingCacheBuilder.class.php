@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\application\Application;
-use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
@@ -239,19 +238,12 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			if ($application->packageID == 1) {
 				// handle WCF
 				$page = PageCacheBuilder::getInstance()->getData([], 'landingPage');
-				if ($page === null) {
-					// no landing page defined
-					$controller = ['', '', ''];
+				if ($page->controller) {
+					$controller = $page->controller;
 				}
 				else {
-					if ($page->controller) {
-						$controller = $page->controller;
-					}
-					else {
-						$controller = '__WCF_CMS__' . $page->pageID;
-						$controller = [$controller, $controller, CmsPage::class];
-					}
-					
+					$controller = '__WCF_CMS__' . $page->pageID;
+					$controller = [$controller, $controller, CmsPage::class];
 				}
 			}
 			else {
