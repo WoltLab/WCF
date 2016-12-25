@@ -19,6 +19,10 @@ $.Redactor.prototype.WoltLabLink = function() {
 				e.preventDefault();
 			}
 			
+			// used to determine if selection needs to be restored later as
+			// Safari sometimes discards the selection when setting markers
+			var hasSelectedText = this.selection.is();
+			
 			this.selection.save();
 			
 			// close tooltip
@@ -49,7 +53,11 @@ $.Redactor.prototype.WoltLabLink = function() {
 			// WoltLab END
 			
 			// build link
+			if (hasSelectedText) this.selection.restore();
+			
 			var link = this.link.buildLinkFromElement($el);
+			
+			if (hasSelectedText) this.selection.save();
 			
 			// if link cut & paste inside editor browser added self host to a link
 			link.url = this.link.removeSelfHostFromUrl(link.url);
