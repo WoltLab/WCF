@@ -251,6 +251,7 @@ class UserSearchForm extends UserOptionListForm {
 	 */
 	protected function search() {
 		$this->userList = new UserList();
+		$this->userList->sqlLimit = $this->maxResults;
 		
 		EventHandler::getInstance()->fireAction($this, 'search');
 		
