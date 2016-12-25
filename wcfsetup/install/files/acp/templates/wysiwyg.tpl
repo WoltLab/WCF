@@ -212,6 +212,7 @@
 				],
 				toolbarFixed: false,
 				woltlab: {
+					attachments: (elDataBool(element, 'disable-attachments') === false),
 					autosave: autosave,
 					allowedInlineStyles: allowedInlineStyles,
 					buttons: buttonOptions,

@@ -30,7 +30,7 @@
 {if $pageType == 'text'}
 	<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
 		{if $pageType == 'text'}
-			class="wysiwygTextarea" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
+			class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
 		{/if}
 	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	
@@ -47,8 +47,8 @@
 {else}
 	<div dir="ltr">
 		<textarea name="content[{@$languageID}]" id="{@$__pageContentID}"
-			{if $pageType == 'text'}
-				class="wysiwygTextarea" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
+		        {if $pageType == 'text'}
+				class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.page{$action|ucfirst}-{if $action == 'edit'}{@$pageID}{else}0{/if}-{@$languageID}"
 			{/if}
 		>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	</div>

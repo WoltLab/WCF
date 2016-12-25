@@ -284,7 +284,7 @@
 					<dl>
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
-							<textarea name="signature" id="signature" cols="40" rows="10">{$signature}</textarea>
+							<textarea name="signature" id="signature" cols="40" rows="10" class="wysiwygTextarea" data-disable-attachments="true">{$signature}</textarea>
 							{include file='wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>

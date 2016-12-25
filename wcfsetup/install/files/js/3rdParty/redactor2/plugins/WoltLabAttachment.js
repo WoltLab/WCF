@@ -3,6 +3,10 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 	
 	return {
 		init: function() {
+			if (!this.opts.woltlab.attachments) {
+				return;
+			}
+			
 			require(['EventHandler'], (function(EventHandler) {
 				EventHandler.add('com.woltlab.wcf.redactor2', 'insertAttachment_' + this.$element[0].id, this.WoltLabAttachment._insert.bind(this));
 				EventHandler.add('com.woltlab.wcf.redactor2', 'deleteAttachment_' + this.$element[0].id, this.WoltLabAttachment._delete.bind(this));
