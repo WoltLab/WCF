@@ -580,7 +580,12 @@ WCF.User.QuickLogin = {
 	 */
 	init: function() {
 		require(['EventHandler', 'Ui/Dialog'], function(EventHandler, UiDialog) {
-			var loginForm = document.getElementById('loginForm');
+			var loginForm = elById('loginForm');
+			var loginSection = elBySel('.loginFormLogin', loginForm);
+			if (loginSection && !loginSection.nextElementSibling) {
+				loginForm.classList.add('loginFormLoginOnly');
+			}
+			
 			var callbackOpen = function(event) {
 				if (event instanceof Event) {
 					event.preventDefault();

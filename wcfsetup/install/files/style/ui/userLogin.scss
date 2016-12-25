@@ -59,8 +59,10 @@
 			}
 		}
 	}
-	
-	@include screen-md-up {
+}
+
+@include screen-md-up {
+	.loginForm:not(.loginFormLoginOnly) > form {
 		-webkit-column-count: 2;
 		-moz-column-count: 2;
 		column-count: 2;
@@ -106,7 +108,7 @@
 	}
 	
 	/* force columns to be 300px wide in login overlay */
-	.dialogContent .loginForm .section {
+	.dialogContent .loginForm:not(.loginFormLoginOnly) .section {
 		width: 300px;
 	}
 }
