@@ -192,6 +192,7 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 			
 			window.addEventListener('dragover', this._dragOver.bind(this));
 			window.addEventListener('dragleave', this._dragLeave.bind(this));
+			window.addEventListener('drop', this._dragLeave.bind(this));
 			
 			_didInit = true;
 		}
