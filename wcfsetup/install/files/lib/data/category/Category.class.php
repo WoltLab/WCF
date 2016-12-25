@@ -31,10 +31,16 @@ use wcf\system\WCF;
  */
 class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController {
 	/**
-	 * list of all child categories of this category
+	 * list of child categories of this category
 	 * @var	Category[]
 	 */
 	protected $childCategories = null;
+	
+	/**
+	 * list of all child categories of this category
+	 * @var	Category[]
+	 */
+	protected $allChildCategories = null;
 	
 	/**
 	 * list of all parent category generations of this category
@@ -115,7 +121,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * Returns the child categories of this category.
+	 * Returns the direct child categories of this category.
 	 * 
 	 * @return	Category[]
 	 */
@@ -125,6 +131,25 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 		}
 		
 		return $this->childCategories;
+	}
+	
+	/**
+	 * Returns the child categories of this category recursively.
+	 *
+	 * @return	Category[]
+	 */
+	public function getAllChildCategories() {
+		if ($this->allChildCategories === null) {
+			$directChildCategories = CategoryHandler::getInstance()->getChildCategories($this->categoryID);
+			$childCategories = [];
+			foreach ($directChildCategories as $childCategory) {
+				$childCategories = array_replace($childCategories, $childCategory->getAllChildCategories());
+			}
+			
+			$this->allChildCategories = array_replace($directChildCategories, $childCategories);
+		}
+		
+		return $this->allChildCategories;
 	}
 	
 	/**

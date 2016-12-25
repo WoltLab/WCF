@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Smiley\Category
  * 
  * @method		SmileyCategory[]	getChildCategories()
+ * @method		SmileyCategory[]	getAllChildCategories()
  * @method		SmileyCategory		getParentCategory()
  * @method		SmileyCategory[]	getParentCategories()
  * @method static	SmileyCategory|null	getCategory($categoryID)

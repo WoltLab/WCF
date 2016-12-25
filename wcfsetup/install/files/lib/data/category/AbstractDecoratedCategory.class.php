@@ -17,10 +17,16 @@ use wcf\system\exception\PermissionDeniedException;
  */
 abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	/**
-	 * list of all child categories of this category
+	 * list of child categories of this category
 	 * @var	Category[]
 	 */
 	protected $childCategories = null;
+	
+	/**
+	 * list of all child categories of this category
+	 * @var	Category[]
+	 */
+	protected $allChildCategories = null;
 	
 	/**
 	 * list of all parent category generations of this category
@@ -62,6 +68,20 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 		}
 		
 		return $this->childCategories;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getAllChildCategories() {
+		if ($this->allChildCategories === null) {
+			$this->allChildCategories = [];
+			foreach ($this->getDecoratedObject()->getAllChildCategories() as $category) {
+				$this->allChildCategories[$category->categoryID] = new static($category);
+			}
+		}
+		
+		return $this->allChildCategories;
 	}
 	
 	/**

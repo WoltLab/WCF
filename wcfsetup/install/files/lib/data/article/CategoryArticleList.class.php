@@ -29,7 +29,7 @@ class CategoryArticleList extends AccessibleArticleList {
 			if ($category === null) {
 				throw new \InvalidArgumentException("invalid category id '".$categoryID."' given");
 			}
-			foreach ($category->getChildCategories() as $category) {
+			foreach ($category->getAllChildCategories() as $category) {
 				if ($category->isAccessible()) {
 					$categoryIDs[] = $category->categoryID;
 				}
