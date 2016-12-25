@@ -198,7 +198,9 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 				this._container.classList.remove('active');
 				
 				window.setTimeout((function () {
-					elRemove(this._container);
+					if (this._container !== null) {
+						elRemove(this._container);
+					}
 					
 					this._container = null;
 					this._originalMessage = '';
