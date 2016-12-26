@@ -17,7 +17,7 @@
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.signature.current{/lang}</h2>
 			
-			{@$signatureCache}
+			<div class="htmlContent">{@$signatureCache}</div>
 		</section>
 	{/if}
 	
