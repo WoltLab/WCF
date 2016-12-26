@@ -535,6 +535,16 @@
 	}
 }
 
+.messageSignature {
+	> div {
+		@extend .htmlContent;
+	}
+	
+	img {
+		max-height: #{$wcf_option_signature_max_image_height}px;
+	}
+}
+
 @include screen-sm-down {
 	.messageSignature {
 		display: none;
