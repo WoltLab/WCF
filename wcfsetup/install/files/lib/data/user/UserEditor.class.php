@@ -40,7 +40,12 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	public static function create(array $parameters = []) {
 		// create salt and password hash
 		if ($parameters['password'] !== '') {
-			$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
+			if ($parameters['password'] !== null) {
+				$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
+			}
+			else {
+				$parameters['password'] = 'invalid:';
+			}
 		}
 		
 		// create accessToken for AbstractAuthedPage
