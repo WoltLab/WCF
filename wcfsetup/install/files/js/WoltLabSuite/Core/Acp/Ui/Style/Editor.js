@@ -12,10 +12,13 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 	var _stylePreviewRegions = new Dictionary();
 	var _stylePreviewRegionMarker = null;
 	
+	var _isVisible = true;
+	var _updateRegionMarker = null;
+	
 	/**
 	 * @module	WoltLabSuite/Core/Acp/Ui/Style/Editor
 	 */
-	var AcpUiStyleEditor = {
+	return {
 		/**
 		 * Sets up dynamic style options.
 		 */
@@ -33,6 +36,16 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				match: this.hideVisualEditor.bind(this),
 				unmatch: this.showVisualEditor.bind(this),
 				setup: this.hideVisualEditor.bind(this)
+			});
+			
+			var callbackRegionMarker = function () {
+				if (_isVisible) _updateRegionMarker();
+			};
+			window.addEventListener('resize', callbackRegionMarker);
+			EventHandler.add('com.woltlab.wcf.AcpMenu', 'resize', callbackRegionMarker);
+			EventHandler.add('com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer', 'select', function (data) {
+				_isVisible = (data.activeName == 'colors');
+				callbackRegionMarker();
 			});
 		},
 		
@@ -125,7 +138,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			var select = elById('spCategories');
 			var lastValue = select.value;
 			
-			function updateRegionMarker() {
+			_updateRegionMarker = function() {
 				if (lastValue === 'none') {
 					elHide(_stylePreviewRegionMarker);
 					updateWrapperPosition(null);
@@ -149,7 +162,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				
 				updateWrapperPosition(region);
 				scrollToRegion(top);
-			}
+			};
 			
 			var variablesWrapper = elById('spVariablesWrapper');
 			function updateWrapperPosition(region) {
@@ -205,7 +218,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				elShow(element);
 				
 				// set region marker
-				updateRegionMarker();
+				_updateRegionMarker();
 				
 				selectContainer.classList[(lastValue === 'none' ? 'remove' : 'add')]('pointer');
 			});
@@ -284,6 +297,4 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			}, 100);
 		}
 	};
-	
-	return AcpUiStyleEditor;
 });

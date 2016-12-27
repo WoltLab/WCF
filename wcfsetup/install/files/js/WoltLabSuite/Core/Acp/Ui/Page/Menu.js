@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Page/Menu
  */
-define(['Dictionary'], function(Dictionary) {
+define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
 	"use strict";
 	
 	var _activeMenuItem = '';
@@ -66,6 +66,8 @@ define(['Dictionary'], function(Dictionary) {
 				
 				_activeMenuItem = menuItem;
 			}
+			
+			EventHandler.fire('com.woltlab.wcf.AcpMenu', 'resize');
 		}
 	};
 });
