@@ -85,9 +85,9 @@
 			break-inside: avoid; /* IE 10+ */
 			
 			&.loginFormLogin {
-				-webkit-column-break-after: always;
 				page-break-after: always;
 				break-after: always;
+				-webkit-column-break-after: always;
 			}
 			
 			&.loginFormRegister {
