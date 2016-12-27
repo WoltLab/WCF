@@ -106,9 +106,10 @@ class MultiSelectOptionType extends SelectOptionType {
 	public function checkUser(User $user, Option $option, $value) {
 		if (!is_array($value) || empty($value)) return false;
 		
-		$optionValues = explode('\n', $user->getUserOption($option->optionName));
+		$optionValues = explode("\n", $user->getUserOption($option->optionName));
 		
-		return count(array_diff($optionValues, $value)) > 0;
+		// check if the user has selected all options in $value array
+		return count(array_intersect($value, $optionValues)) === count($value);
 	}
 	
 	/**
