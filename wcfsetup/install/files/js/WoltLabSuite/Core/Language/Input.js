@@ -225,8 +225,10 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				data.languageId = languageId;
 			}
 			
-			data.element.blur();
-			data.element.focus();
+			if (!isInit) {
+				data.element.blur();
+				data.element.focus();
+			}
 		},
 		
 		/**
