@@ -743,7 +743,6 @@
 				'wcfHeaderMenuLink': '#spHeaderPanel ol.inlineList > li > a { color: VALUE; }',
 				'wcfHeaderMenuLinkActive': '#spHeaderPanel ol.inlineList > li.active > a, #spHeaderPanel ol.inlineList > li > a:hover { color: VALUE; }',
 				'wcfHeaderMenuDropdownBackground': '#spSubMenu { background-color: VALUE; }',
-				'wcfHeaderMenuDropdownBorder': '#spSubMenu { border-color: VALUE; }',
 				'wcfHeaderMenuDropdownLink': '#spSubMenu li > a { color: VALUE; }',
 				'wcfHeaderMenuDropdownBackgroundActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { background-color: VALUE; }',
 				'wcfHeaderMenuDropdownLinkActive': '#spSubMenu li.active > a, #spSubMenu li > a:hover { color: VALUE; }',

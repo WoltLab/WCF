@@ -24,7 +24,7 @@ html[dir="rtl"] #spHeaderPanel ol.inlineList > li { margin-left: 0; }
 html[dir="ltr"] #spHeaderPanel ol.inlineList > li.active > a::after { margin-left: 5px; }
 html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after { margin-right: 5px; }
 #spHeaderPanel ol.inlineList > li.active { position: relative; }
-#spSubMenu { border-bottom: 1px solid #fff; box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2); padding: 3px 0; position: absolute; }
+#spSubMenu { box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2); padding: 3px 0; position: absolute; }
 #spSubMenu > li > a { display: block; padding: 5px 20px; white-space: nowrap; width: 120px; }
 
 /* ### navigation ### */
