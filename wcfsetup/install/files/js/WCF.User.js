@@ -586,6 +586,8 @@ WCF.User.QuickLogin = {
 				loginForm.classList.add('loginFormLoginOnly');
 			}
 			
+			var registrationBlock = elBySel('.loginFormRegister', loginForm);
+			
 			var callbackOpen = function(event) {
 				if (event instanceof Event) {
 					event.preventDefault();
@@ -597,6 +599,20 @@ WCF.User.QuickLogin = {
 				UiDialog.openStatic('loginForm', null, {
 					title: WCF.Language.get('wcf.user.login')
 				});
+				
+				// The registration part should always be on the right
+				// but some browser (Firefox and IE) have a really bad
+				// support for forcing column breaks, requiring us to
+				// work around it by force pushing it to the right.
+				if (loginSection !== null && registrationBlock !== null) {
+					var loginOffset = loginSection.offsetTop;
+					var margin = 0;
+					while (loginOffset < (registrationBlock.offsetTop - 50)) {
+						// push the registration down by 100 pixel each time
+						margin += 100;
+						loginSection.style.setProperty('margin-bottom', margin + 'px', '');
+					}
+				}
 			};
 			
 			var links = document.getElementsByClassName('loginLink');
