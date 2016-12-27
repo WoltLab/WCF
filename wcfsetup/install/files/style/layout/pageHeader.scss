@@ -222,6 +222,18 @@
 	}
 }
 
+/* Firefox suffers from subpixel rendering issues */
+@-moz-document url-prefix() {
+	.mainMenu .boxMenu > li:not(:last-child) {
+		box-shadow: 0 0 0 1px $wcfHeaderMenuLinkBackground;
+		
+		&.active,
+		&:hover {
+			box-shadow: 0 0 0 1px $wcfHeaderMenuLinkBackgroundActive;
+		}
+	}
+}
+
 /* user panel */
 .userPanel {
 	flex: 0 0 auto;
