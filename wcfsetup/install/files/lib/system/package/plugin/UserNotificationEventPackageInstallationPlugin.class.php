@@ -41,11 +41,13 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE		packageID = ?
+					AND objectTypeID = ?
 					AND eventName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
 			$statement->execute([
 				$this->installation->getPackageID(),
+				$this->getObjectTypeID($item['elements']['objecttype']),
 				$item['elements']['name']
 			]);
 		}
@@ -55,21 +57,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 */
 	protected function prepareImport(array $data) {
-		// get object type id
-		$sql = "SELECT	object_type.objectTypeID
-			FROM	wcf".WCF_N."_object_type object_type
-			WHERE	object_type.objectType = ?
-				AND object_type.definitionID IN (
-					SELECT	definitionID
-					FROM	wcf".WCF_N."_object_type_definition
-					WHERE	definitionName = 'com.woltlab.wcf.notification.objectType'
-				)";
-		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute([$data['elements']['objecttype']]);
-		$row = $statement->fetchArray();
-		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$data['elements']['objecttype']."' given");
-		$objectTypeID = $row['objectTypeID'];
-		
 		$presetMailNotificationType = 'none';
 		if (isset($data['elements']['presetmailnotificationtype']) && ($data['elements']['presetmailnotificationtype'] == 'instant' || $data['elements']['presetmailnotificationtype'] == 'daily')) {
 			$presetMailNotificationType = $data['elements']['presetmailnotificationtype'];
@@ -78,7 +65,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		return [
 			'eventName' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
-			'objectTypeID' => $objectTypeID,
+			'objectTypeID' => $this->getObjectTypeID($data['elements']['objecttype']),
 			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
 			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
 			'preset' => !empty($data['elements']['preset']) ? 1 : 0,
@@ -135,5 +122,28 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			'sql' => $sql,
 			'parameters' => $parameters
 		];
+	}
+	
+	/**
+	 * Gets the id of given object type id.
+	 *
+	 * @param       string          $objectType
+	 * @return      integer
+	 */
+	protected function getObjectTypeID($objectType) {
+		// get object type id
+		$sql = "SELECT	object_type.objectTypeID
+			FROM	wcf".WCF_N."_object_type object_type
+			WHERE	object_type.objectType = ?
+				AND object_type.definitionID IN (
+					SELECT	definitionID
+					FROM	wcf".WCF_N."_object_type_definition
+					WHERE	definitionName = 'com.woltlab.wcf.notification.objectType'
+				)";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute([$objectType]);
+		$row = $statement->fetchArray();
+		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$objectType."' given");
+		return $row['objectTypeID'];
 	}
 }
