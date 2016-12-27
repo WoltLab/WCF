@@ -229,7 +229,7 @@ class StyleAddForm extends AbstractForm {
 		foreach ($this->globals as $variableName) {
 			if (isset($_POST[$variableName]) && is_numeric($_POST[$variableName])) {
 				if (isset($_POST[$variableName.'_unit']) && in_array($_POST[$variableName.'_unit'], $this->availableUnits)) {
-					$this->variables[$variableName] = $_POST[$variableName].$_POST[$variableName.'_unit'];
+					$this->variables[$variableName] = abs($_POST[$variableName]).$_POST[$variableName.'_unit'];
 				}
 			}
 			else {
@@ -239,8 +239,11 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		// read specialized variables
+		$integerValues = ['pageLogoHeight', 'pageLogoWidth'];
 		foreach ($this->specialVariables as $variableName) {
-			if (isset($_POST[$variableName])) $this->variables[$variableName] = StringUtil::trim($_POST[$variableName]);
+			if (isset($_POST[$variableName])) {
+				$this->variables[$variableName] = (in_array($variableName, $integerValues)) ? abs(intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
+			}
 		}
 		$this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
 		$this->variables['useGoogleFont'] = isset($_POST['useGoogleFont']) ? 1 : 0;
