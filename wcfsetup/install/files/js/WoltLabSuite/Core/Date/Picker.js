@@ -50,6 +50,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				var isDateTime = (elAttr(element, 'type') === 'datetime');
 				var isTimeOnly = (isDateTime && elDataBool(element, 'time-only'));
 				var disableClear = elDataBool(element, 'disable-clear');
+				var ignoreTimezone = isDateTime && elDataBool(element, 'ignore-timezone');
 				
 				elData(element, 'is-date-time', isDateTime);
 				elData(element, 'is-time-only', isTimeOnly);
@@ -63,6 +64,19 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 						date.setHours(tmp[0], tmp[1]);
 					}
 					else {
+						if (ignoreTimezone) {
+							var timezoneOffset = new Date(value).getTimezoneOffset();
+							var timezone = (timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
+							timezoneOffset = Math.abs(timezoneOffset);
+							var hours = (Math.floor(timezoneOffset / 60)).toString();
+							var minutes = (timezoneOffset % 60).toString();
+							timezone += (hours.length == 2) ? hours : '0' + hours;
+							timezone += ':';
+							timezone += (minutes.length == 2) ? minutes : '0' + minutes;
+							
+							value = value.replace(/[+-][0-9]{2}:[0-9]{2}$/, timezone);
+						}
+						
 						date = new Date(value);
 					}
 					
@@ -110,6 +124,9 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				if (date !== null) {
 					if (isTimeOnly) {
 						shadowElement.value = DateUtil.format(date, 'H:i');
+					}
+					else if (ignoreTimezone) {
+						shadowElement.value = DateUtil.format(date, 'Y-m-dTH:i:s');
 					}
 					else {
 						shadowElement.value = DateUtil.format(date, (isDateTime) ? 'c' : 'Y-m-d');
@@ -170,6 +187,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					isDateTime: isDateTime,
 					isEmpty: isEmpty,
 					isTimeOnly: isTimeOnly,
+					ignoreTimezone: ignoreTimezone,
 					
 					onClose: null
 				});
@@ -483,6 +501,10 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 					value = DateUtil.formatTime(date);
 					shadowValue = DateUtil.format(date, 'H:i');
 				}
+				else if (data.ignoreTimezone) {
+					value = DateUtil.formatDateTime(date);
+					shadowValue = DateUtil.format(date, 'Y-m-dTH:i:s');
+				}
 				else {
 					value = DateUtil.formatDateTime(date);
 					shadowValue = DateUtil.format(date, 'c');
@@ -712,7 +734,18 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			elData(element, 'value', date.getTime());
 			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
 			
-			data.shadow.value = DateUtil.format(date, (data.isDateTime ? 'c' : 'Y-m-d'));
+			var format = '';
+			if (data.ignoreTimezone) {
+				format = 'Y-m-dTH:i:s';
+			}
+			else if (data.isDateTime) {
+				format = 'c';
+			}
+			else {
+				format = 'Y-m-d';
+			}
+			
+			data.shadow.value = DateUtil.format(date, format);
 		},
 		
 		/**
