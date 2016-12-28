@@ -170,10 +170,9 @@ $.Redactor.prototype.WoltLabClean = function() {
 					img.removeAttribute('style');
 					
 					if (img.hasAttribute('alt')) {
-						// The editor trips over `<`, causing the DOM to be seriously
-						// messed up. Until this is resolved, we're simply dropping it,
-						// at least for smilies it is later restored.
-						img.setAttribute('alt', img.getAttribute('alt').replace(/</g, ''));
+						// Any smiley with an code that has `<` followed by
+						// a letter will cause the editor to fail.
+						img.setAttribute('alt', img.getAttribute('alt').replace(/</g, '&lt;'));
 					}
 				});
 				
