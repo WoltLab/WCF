@@ -155,7 +155,7 @@ class RequestHandler extends SingletonFactory {
 			}
 			
 			// handle CMS page meta data
-			$metaData = [];
+			$metaData = ['isDefaultController' => (!empty($routeData['isDefaultController']))];
 			if (isset($routeData['cmsPageID'])) {
 				$metaData['cms'] = [
 					'pageID' => $routeData['cmsPageID'],
@@ -243,6 +243,8 @@ class RequestHandler extends SingletonFactory {
 		foreach ($data as $key => $value) {
 			$routeData[$key] = $value;
 		}
+		
+		$routeData['isDefaultController'] = true;
 	}
 	
 	/**

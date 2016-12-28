@@ -48,6 +48,12 @@ abstract class AbstractPage implements IPage {
 	public $forceCanonicalURL = false;
 	
 	/**
+	 * is true if the redirect should use a 307 instead of the default 301, not recommended in general
+	 * @var boolean
+	 */
+	public $softRedirectCanonicalURL = false;
+	
+	/**
 	 * indicates if you need to be logged in to access this page
 	 * @var	boolean
 	 */
@@ -250,7 +256,7 @@ abstract class AbstractPage implements IPage {
 				
 				// force a permanent redirect as recommended by Google
 				// https://support.google.com/webmasters/answer/6033086?hl=en#a_note_about_redirects
-				HeaderUtil::redirect($redirectURL, true, false);
+				HeaderUtil::redirect($redirectURL, true, $this->softRedirectCanonicalURL);
 				exit;
 			}
 		}

@@ -75,6 +75,11 @@ class CmsPage extends AbstractPage {
 		}
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
+		if ($this->page->isMultilingual && RequestHandler::getInstance()->getActiveRequest()->getMetaData()['isDefaultController']) {
+			if ($this->languageID != LanguageFactory::getInstance()->getDefaultLanguageID()) {
+				$this->softRedirectCanonicalURL = true;
+			}
+		}
 		
 		// update interface language
 		if (!WCF::getUser()->userID && $this->page->isMultilingual && $this->languageID != WCF::getLanguage()->languageID) {
