@@ -63,6 +63,16 @@ define([], function() {
 		},
 		
 		/**
+		 * Returns true if pressed key equals 'Comma'.
+		 * 
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		Comma: function(event) {
+			return _isKey(event, ',', 44);
+		},
+		
+		/**
 		 * Returns true if pressed key equals 'Enter'.
 		 * 
 		 * @param       {Event}         event           event object

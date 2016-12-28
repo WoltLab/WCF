@@ -10,12 +10,12 @@ define(
 	[
 		'Ajax',                         'Core',                       'Dictionary',          'Dom/ChangeListener',
 		'Dom/Traverse',                 'Language',                   'Ui/Dialog',           'Ui/Notification',
-		'WoltLabSuite/Core/Language/Chooser', 'WoltLabSuite/Core/Language/Input'
+		'WoltLabSuite/Core/Language/Chooser', 'WoltLabSuite/Core/Language/Input', 'EventKey'
 	],
 	function(
 		Ajax,                            Core,                         Dictionary,            DomChangeListener,
 		DomTraverse,                     Language,                     UiDialog,              UiNotification,
-		LanguageChooser,                 LanguageInput
+		LanguageChooser,                 LanguageInput,                EventKey
 	)
 {
 	"use strict";
@@ -87,8 +87,7 @@ define(
 		 * @param	{object}	event		event object
 		 */
 		_keyPress: function(event) {
-			// 13 = [ENTER]
-			if (event.charCode === 13) {
+			if (EventKey.Enter(event)) {
 				event.preventDefault();
 				
 				this._saveData();

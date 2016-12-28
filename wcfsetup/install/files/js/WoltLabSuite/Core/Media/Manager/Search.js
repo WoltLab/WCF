@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Search
  */
-define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, DomTraverse, DomUtil, Language, UiSimpleDropdown) {
+define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, DomTraverse, DomUtil, EventKey, Language, UiSimpleDropdown) {
 	"use strict";
 	
 	/**
@@ -65,8 +65,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/SimpleDropdo
 		 * @param	{Event}		event		event object
 		 */
 		_keyPress: function(event) {
-			// 13 = [ENTER]
-			if (event.charCode === 13) {
+			if (EventKey.Enter(event)) {
 				event.preventDefault();
 				
 				var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');

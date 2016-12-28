@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList
  */
-define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLabSuite/Core/Ui/Suggestion'], function(Core, Dictionary, Language, DomTraverse, UiSuggestion) {
+define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSuite/Core/Ui/Suggestion'], function(Core, Dictionary, Language, DomTraverse, EventKey, UiSuggestion) {
 	"use strict";
 	
 	var _activeId = '';
@@ -329,8 +329,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'WoltLabSuite/Core/Ui/
 		 * @param	{object}	event		event object
 		 */
 		_keyPress: function(event) {
-			// 13 = [ENTER], 44 = [,]
-			if (event.charCode == 13 || event.charCode == 44) {
+			if (EventKey.Enter(event) || EventKey.Comma(event)) {
 				event.preventDefault();
 				
 				if (_data.get(event.currentTarget.id).options.restricted) {
