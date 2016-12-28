@@ -294,10 +294,16 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 */
 	protected function postImport() {
 		if (!empty($this->content)) {
+			$sql = "SELECT  COUNT(*) AS count
+				FROM    wcf".WCF_N."_box_content
+				WHERE   boxID = ?
+					AND languageID IS NULL";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_box_content
 							(boxID, languageID, title, content)
 				VALUES			(?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($this->content as $boxID => $contentData) {
@@ -310,7 +316,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 						$languageID = $language->languageID;
 					}
 					
-					$statement->execute([
+					if ($languageID === null) {
+						$statement->execute([$boxID]);
+						if ($statement->fetchColumn()) continue;
+					}
+					
+					$insertStatement->execute([
 						$boxID,
 						$languageID,
 						$content['title'],

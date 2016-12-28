@@ -280,10 +280,16 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 */
 	protected function postImport() {
 		if (!empty($this->content)) {
+			$sql = "SELECT  COUNT(*) AS count
+				FROM    wcf".WCF_N."_page_content
+				WHERE   pageID = ?
+					AND languageID IS NULL";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_page_content
 							(pageID, languageID, title, content, metaDescription, metaKeywords, customURL)
 				VALUES			(?, ?, ?, ?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($this->content as $pageID => $contentData) {
@@ -296,7 +302,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 						$languageID = $language->languageID;
 					}
 					
-					$statement->execute([
+					if ($languageID === null) {
+						$statement->execute([$pageID]);
+						if ($statement->fetchColumn()) continue;
+					}
+					
+					$insertStatement->execute([
 						$pageID,
 						$languageID,
 						$content['title'],
