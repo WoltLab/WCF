@@ -172,7 +172,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 				'sortFieldLanguageItemPrefix' => $this->sortFieldLanguageItemPrefix,
 				'sortOrder' => $this->sortOrder,
 				'validSortFields' => $this->validSortFields
-			]);
+			], true);
 		}
 		
 		return '';
