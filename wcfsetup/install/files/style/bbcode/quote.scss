@@ -30,6 +30,7 @@ woltlab-quote,
 
 .quoteBox {
 	clear: both;
+	overflow: hidden;
 	
 	@include screen-md-up {
 		min-height: 104px;
