@@ -173,7 +173,7 @@ define(
 				this._mediaManager.resetMedia();
 			}
 			
-			return MediaUpload._super.prototype._getParameters.call(this, files, blob);
+			return MediaUpload._super.prototype._uploadFiles.call(this, files, blob);
 		}
 	});
 	
