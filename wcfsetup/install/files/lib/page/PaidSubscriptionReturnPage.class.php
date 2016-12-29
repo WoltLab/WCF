@@ -24,7 +24,7 @@ class PaidSubscriptionReturnPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'message' => WCF::getLanguage()->get('wcf.paidSubscription.returnMessage'),
+			'message' => WCF::getLanguage()->getDynamicVariable('wcf.paidSubscription.returnMessage'),
 			'wait' => 60,
 			'url' => LinkHandler::getInstance()->getLink()
 		]);
