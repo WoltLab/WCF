@@ -126,7 +126,6 @@ define(
 					
 					if (this._mediaManager) {
 						this._mediaManager.setupMediaElement(media, file);
-						this._mediaManager.resetMedia();
 						this._mediaManager.addMedia(media, file);
 					}
 				}
@@ -163,6 +162,18 @@ define(
 				media: data.returnValues.media,
 				upload: this
 			});
+		},
+		
+		/**
+		 * @see	WoltLabSuite/Core/Upload#_uploadFiles
+		 */
+		_uploadFiles: function(files, blob) {
+			// reset media (search) before uploading
+			if (this._mediaManager) {
+				this._mediaManager.resetMedia();
+			}
+			
+			return MediaUpload._super.prototype._getParameters.call(this, files, blob);
 		}
 	});
 	
