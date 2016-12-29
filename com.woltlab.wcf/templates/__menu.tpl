@@ -2,7 +2,7 @@
 	<ol class="boxMenu">
 		{foreach from=$menuItemNodeList item=menuItemNode}
 			<li class="{if $menuItemNode->isActiveNode()}active{/if}{if $menuItemNode->hasChildren()} boxMenuHasChildren{/if}">
-				<a href="{$menuItemNode->getURL()}" class="boxMenuLink">
+				<a href="{$menuItemNode->getURL()}" class="boxMenuLink"{if $menuItemNode->isExternalLink()}{if EXTERNAL_LINK_REL_NOFOLLOW} rel="nofollow"{/if}{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}{/if}>
 					<span class="boxMenuLinkTitle">{lang}{$menuItemNode->title}{/lang}</span>
 					{if $menuItemNode->getOutstandingItems() > 0}
 						<span class="boxMenuLinkOutstandingItems badge badgeUpdate">{#$menuItemNode->getOutstandingItems()}</span>

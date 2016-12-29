@@ -3,6 +3,7 @@ namespace wcf\data\menu\item;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
@@ -134,6 +135,15 @@ class MenuItem extends DatabaseObject {
 		}
 		
 		return 0;
+	}
+	
+	/**
+	 * Returns true if this item is an external link.
+	 * 
+	 * @return boolean
+	 */
+	public function isExternalLink() {
+		return ($this->externalURL ? !ApplicationHandler::getInstance()->isInternalURL($this->externalURL) : false);
 	}
 	
 	/**
