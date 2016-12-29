@@ -6,7 +6,7 @@
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
 		<version>3.0.0 RC 3</version> <!-- codename: vortex -->
-		<date>2016-12-21</date> <!-- TODO: update version -->
+		<date>2016-12-29</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -92,11 +92,12 @@
 		<!-- do not move this down, it is required to deploy the update script below -->
 		<instruction type="file">files_update.tar</instruction>
 		
-		<!-- force deploy of all acp templates -->
-		<instruction type="acpTemplate" />
 		<!-- fix missing SQL update when upgrading WCF 2.1 -> WSC 3.0 RC 2 -->
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0.0_rc_3.php</instruction>
 		
-		<!-- TODO: all the other fancy stuff -->
+		<!-- force deploy of all acp templates -->
+		<instruction type="acpTemplate" />
+		
+		<instruction type="template">templates_update.tar</instruction>
 	</instructions>
 </package>
