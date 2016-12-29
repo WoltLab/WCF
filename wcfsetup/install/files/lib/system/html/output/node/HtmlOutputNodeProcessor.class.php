@@ -2,6 +2,7 @@
 namespace wcf\system\html\output\node;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\bbcode\KeywordHighlighter;
+use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\IHtmlNode;
 use wcf\util\DOMUtil;
@@ -59,6 +60,9 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @inheritDoc
 	 */
 	public function process() {
+		// fire event action
+		EventHandler::getInstance()->fireAction($this, 'beforeProcess');
+		
 		// highlight keywords
 		$this->highlightKeywords();
 		
