@@ -311,7 +311,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			// open the insert dialog if all media files are images
 			var imagesOnly = true, media;
 			for (var i = 0, length = mediaIds.length; i < length; i++) {
-				media = this._mediaData.get(mediaIds[i]);
+				media = this._media.get(mediaIds[i]);
 				this._mediaToInsert.set(media.mediaID, media);
 				
 				if (!media.isImage) {

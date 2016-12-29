@@ -78,7 +78,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 				throw new Error("Media cannot be chosen if no button is active.");
 			}
 			
-			var media = this._mediaData.get(~~elData(event.currentTarget, 'object-id'));
+			var media = this._media.get(~~elData(event.currentTarget, 'object-id'));
 			
 			// save selected media in store element
 			elById(elData(this._activeButton, 'store')).value = media.mediaID;

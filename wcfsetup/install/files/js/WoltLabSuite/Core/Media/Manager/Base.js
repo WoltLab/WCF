@@ -32,8 +32,8 @@ define(
 			minSearchLength: 3
 		}, options);
 		
+		this._listItems = new Dictionary();
 		this._media = new Dictionary();
-		this._mediaData = new Dictionary();
 		this._mediaCache = null;
 		this._mediaManagerMediaList = null;
 		this._search = null;
@@ -115,7 +115,7 @@ define(
 			var media = data.returnValues.media || { };
 			for (var mediaId in media) {
 				if (objOwns(media, mediaId)) {
-					this._mediaData.set(~~mediaId, media[mediaId]);
+					this._media.set(~~mediaId, media[mediaId]);
 				}
 			}
 			
@@ -126,7 +126,7 @@ define(
 			for (var i = 0, length = listItems.length; i < length; i++) {
 				var listItem = listItems[i];
 				
-				this._media.set(~~elData(listItem, 'object-id'), listItem);
+				this._listItems.set(~~elData(listItem, 'object-id'), listItem);
 			}
 			
 			if (Permission.get('admin.content.cms.canManageMedia')) {
@@ -212,7 +212,7 @@ define(
 			
 			UiDialog.close('mediaManager');
 			
-			this._mediaEditor.edit(this._mediaData.get(~~elData(event.currentTarget, 'object-id')));
+			this._mediaEditor.edit(this._media.get(~~elData(event.currentTarget, 'object-id')));
 		},
 		
 		/**
@@ -231,9 +231,9 @@ define(
 		_editorSuccess: function(media) {
 			UiDialog.open(this);
 			
-			this._mediaData.set(~~media.mediaID, media);
+			this._media.set(~~media.mediaID, media);
 			
-			var listItem = this._media.get(~~media.mediaID);
+			var listItem = this._listItems.get(~~media.mediaID);
 			var p = elByClass('mediaTitle', listItem)[0];
 			if (media.isMultilingual) {
 				p.textContent = media.title[LANGUAGE_ID] || media.filename;
@@ -315,10 +315,10 @@ define(
 		addMedia: function(media, listItem) {
 			if (!media.languageID) media.isMultilingual = 1;
 			
-			this._mediaData.set(~~media.mediaID, media);
-			this._media.set(~~media.mediaID, listItem);
+			this._media.set(~~media.mediaID, media);
+			this._listItems.set(~~media.mediaID, listItem);
 			
-			if (this._media.size === 1) {
+			if (this._listItems.size === 1) {
 				this._search.showSearch();
 			}
 		},
@@ -353,17 +353,17 @@ define(
 		 * @param	{boolean|undefined}	checkCache	media file will also be removed from the local cache if true
 	 	 */
 		removeMedia: function(mediaId, checkCache) {
-			if (this._media.has(mediaId)) {
+			if (this._listItems.has(mediaId)) {
 				// remove list item
 				try {
-					elRemove(this._media.get(mediaId));
+					elRemove(this._listItems.get(mediaId));
 				}
 				catch (e) {
 					// ignore errors if item has already been removed like by WCF.Action.Delete
 				}
 				
+				this._listItems.delete(mediaId);
 				this._media.delete(mediaId);
-				this._mediaData.delete(mediaId);
 			}
 			
 			if (checkCache && this._mediaCache && this._mediaCache.has(mediaId)) {
@@ -410,8 +410,8 @@ define(
 				var listItems = DomTraverse.childrenByTag(ul, 'LI');
 				for (var i = 0, length = listItems.length; i < length; i++) {
 					var listItem = listItems[i];
-					if (!this._mediaData.has(~~elData(listItem, 'object-id'))) {
-						this._mediaData.set(elData(listItem, 'object-id'), listItem);
+					if (!this._listItems.has(~~elData(listItem, 'object-id'))) {
+						this._listItems.set(elData(listItem, 'object-id'), listItem);
 						
 						this._mediaManagerMediaList.appendChild(listItem);
 					}
