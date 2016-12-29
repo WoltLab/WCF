@@ -57,6 +57,15 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	}
 	
 	/**
+	 * Returns the current output type.
+	 * 
+	 * @return 	string
+	 */
+	public function getOutputType() {
+		return $this->outputType;
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function process() {
