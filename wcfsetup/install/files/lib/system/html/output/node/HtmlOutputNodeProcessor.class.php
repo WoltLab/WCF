@@ -61,7 +61,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 */
 	public function process() {
 		// fire event action
-		EventHandler::getInstance()->fireAction($this, 'preProcess');
+		EventHandler::getInstance()->fireAction($this, 'beforeProcess');
 		
 		// highlight keywords
 		$this->highlightKeywords();
