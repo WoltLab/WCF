@@ -40,7 +40,7 @@ $sql = "SELECT          COUNT(*) AS count, pageID
 	FROM            wcf".WCF_N."_page_content
 	WHERE           languageID IS NULL
 	GROUP BY        pageID
-	HAVING          count > 1";
+	HAVING          COUNT(*) > 1";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute();
 while ($row = $statement->fetchArray()) {
@@ -59,7 +59,7 @@ $sql = "SELECT          COUNT(*) AS count, boxID
 	FROM            wcf".WCF_N."_box_content
 	WHERE           languageID IS NULL
 	GROUP BY        boxID
-	HAVING          count > 1";
+	HAVING          COUNT(*) > 1";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute();
 while ($row = $statement->fetchArray()) {
