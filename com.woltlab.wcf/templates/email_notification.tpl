@@ -18,6 +18,13 @@
 		{@$notificationContent}
 	{/if}
 
+	{capture assign=button}
+	<a href="{link controller='NotificationConfirm' isEmail=true id=$event->getNotification()->notificationID}{/link}">
+		{lang}wcf.user.notification.markAsConfirmed{/lang}
+	</a>
+	{/capture}
+	{include file='email_paddingHelper' class='button' outerClass='paragraphMargin' content=$button sandbox=true}
+
 	{lang}wcf.user.notification.mail.html.outro{/lang}
 	{/capture}
 	{include file='email_html'}

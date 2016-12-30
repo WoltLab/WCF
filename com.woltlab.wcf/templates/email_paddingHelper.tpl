@@ -1,5 +1,5 @@
 {* This construct is needed for Microsoft Outlook: https://litmus.com/help/email-clients/outlookcom-margins/ *}
-<table cellpadding="0" cellspacing="0" border="0" class="paddingHelper{if $block|isset && $block} block{/if}">
+<table cellpadding="0" cellspacing="0" border="0" class="paddingHelper{if $block|isset && $block} block{/if}{if $outerClass|isset && $outerClass} {$outerClass}{/if}">
 	<tr>
 		<td class="{$class}">
 			{@$content}

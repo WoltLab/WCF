@@ -20,6 +20,11 @@
 			text-decoration: none;
 		}
 		
+		p, .paragraphMargin {
+			margin-top: 1em;
+			margin-bottom: 1em;
+		}
+		
 		td {
 			vertical-align: top;
 		}
