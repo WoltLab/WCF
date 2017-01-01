@@ -46,7 +46,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.0.0 RC 3');
+define('WCF_VERSION', '3.0.0 RC 4');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -62,7 +62,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
