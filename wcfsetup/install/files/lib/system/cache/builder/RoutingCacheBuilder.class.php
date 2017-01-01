@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\acp\page\ArticleListPage;
 use wcf\data\application\Application;
 use wcf\data\page\PageCache;
 use wcf\page\CmsPage;
@@ -238,7 +239,11 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			if ($application->packageID == 1) {
 				// handle WCF
 				$page = PageCacheBuilder::getInstance()->getData([], 'landingPage');
-				if ($page->controller) {
+				if ($page === null) {
+					// invalid cache data, e.g. during upgrade 2.1 -> 3.0
+					$controller = ArticleListPage::class;
+				}
+				else if ($page->controller) {
 					$controller = $page->controller;
 				}
 				else {
