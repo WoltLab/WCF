@@ -76,6 +76,10 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	 * @inheritDoc
 	 */
 	public function getHTML() {
+		if (!count($_POST)) {
+			$this->from = MAIL_FROM_ADDRESS;
+		}
+		
 		return WCF::getTPL()->fetch('sendMailUserBulkProcessing', 'wcf', [
 			'enableHTML' => $this->enableHTML,
 			'from' => $this->from,
