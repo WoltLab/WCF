@@ -1,4 +1,7 @@
 .articleImage {
+	/* work-around for IE 11 to properly align the image if overflowing */
+	display: flex;
+	
 	.articleImageWrapper {
 		align-items: center;
 		display: flex;
