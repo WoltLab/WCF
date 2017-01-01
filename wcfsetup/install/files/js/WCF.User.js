@@ -607,10 +607,12 @@ WCF.User.QuickLogin = {
 				if (loginSection !== null && registrationBlock !== null) {
 					var loginOffset = loginSection.offsetTop;
 					var margin = 0;
-					while (loginOffset < (registrationBlock.offsetTop - 50)) {
-						// push the registration down by 100 pixel each time
-						margin += 100;
-						loginSection.style.setProperty('margin-bottom', margin + 'px', '');
+					if (loginForm.clientWidth > loginSection.clientWidth * 2) {
+						while (loginOffset < (registrationBlock.offsetTop - 50)) {
+							// push the registration down by 100 pixel each time
+							margin += 100;
+							loginSection.style.setProperty('margin-bottom', margin + 'px', '');
+						}
 					}
 				}
 			};
