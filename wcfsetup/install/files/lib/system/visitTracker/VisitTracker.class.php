@@ -174,7 +174,7 @@ class VisitTracker extends SingletonFactory {
 	
 	/**
 	 * Tracks an object visit.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
 	 * @param	integer		$time
@@ -195,7 +195,7 @@ class VisitTracker extends SingletonFactory {
 	
 	/**
 	 * Tracks an object type visit.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$time
 	 */
