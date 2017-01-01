@@ -308,6 +308,10 @@ class Email {
 				throw new \DomainException("The given type '".$type."' is invalid. Must be one of 'to', 'cc', 'bcc'.");
 		}
 		
+		if (isset($this->recipients[$recipient->getAddress()])) {
+			throw new \UnexpectedValueException("There already is a recipient with the email address '".$recipient->getAddress()."'. If you want to change the \$type use removeRecipient() first.");
+		}
+		
 		$this->recipients[$recipient->getAddress()] = [
 			'type' => $type,
 			'mailbox' => $recipient
