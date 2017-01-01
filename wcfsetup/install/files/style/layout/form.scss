@@ -57,6 +57,7 @@ input[type="text"] {
 	-webkit-appearance: none;
 }
 
+/* prevent iOS from zooming when focusing inputs */
 .iOS {
 	input[type="date"],
 	input[type="datetime"],
@@ -66,6 +67,7 @@ input[type="text"] {
 	input[type="search"],
 	input[type="text"],
 	input[type="url"],
+	select,
 	textarea {
 		font-size: 16px;
 	}
