@@ -539,7 +539,7 @@ $.widget('ui.wcfImageViewer', {
 			
 			// jump to image page or full version
 			case $.ui.keyCode.ENTER:
-				var $link = this._ui.header.find('> div > h1 > a');
+				var $link = this._ui.header.find('h1 > a');
 				if ($link.length == 1) {
 					// forward to image page
 					window.location = $link.prop('href');
@@ -718,15 +718,15 @@ $.widget('ui.wcfImageViewer', {
 		// meta data
 		var $title = WCF.String.escapeHTML($image.image.title);
 		if ($image.image.link) $title = '<a href="' + $image.image.link + '">' + $title + '</a>';
-		this._ui.header.find('> div > h1').html($title);
+		this._ui.header.find('h1').html($title);
 		
 		if (!this.options.staticViewer) {
 			var $seriesTitle = ($image.series && $image.series.title ? WCF.String.escapeHTML($image.series.title) : '');
 			if ($image.series.link) $seriesTitle = '<a href="' + $image.series.link + '">' + $seriesTitle + '</a>';
-			this._ui.header.find('> div > h2').html($seriesTitle);
+			this._ui.header.find('h2').html($seriesTitle);
 		}
 		
-		this._ui.header.find('> div > h3').text(WCF.Language.get('wcf.imageViewer.seriesIndex').replace(/{x}/, $image.listItem.data('index') + 1).replace(/{y}/, this._items));
+		this._ui.header.find('h3').text(WCF.Language.get('wcf.imageViewer.seriesIndex').replace(/{x}/, $image.listItem.data('index') + 1).replace(/{y}/, this._items));
 		
 		this._ui.slideshow.full.data('link', ($image.image.fullURL ? $image.image.fullURL : $image.image.url));
 		
@@ -866,7 +866,7 @@ $.widget('ui.wcfImageViewer', {
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
 			buttonPrevious: $imageList.children('span.wcfImageViewerButtonPrevious'),
-			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="jsTooltip"><img /></a>' ) + '<h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
+			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="jsTooltip"><img /></a>' ) + '<div><h1 /><h2 /><h3 /></div></div></header>').appendTo(this._container),
 			imageContainer: $imageContainer,
 			images: [
 				$imageContainer.children('img:eq(0)').on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() { $(this).removeClass('animateTransformation'); }),

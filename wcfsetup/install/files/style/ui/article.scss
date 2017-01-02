@@ -1,6 +1,7 @@
 .articleImage {
 	/* work-around for IE 11 to properly align the image if overflowing */
 	display: flex;
+	flex-wrap: wrap;
 	
 	.articleImageWrapper {
 		align-items: center;
@@ -16,6 +17,7 @@
 	
 	figcaption {
 		color: $wcfContentDimmedText;
+		flex: 1;
 		margin-top: 5px;
 		text-align: center;
 		

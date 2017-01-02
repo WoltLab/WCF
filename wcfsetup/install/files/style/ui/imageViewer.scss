@@ -38,14 +38,6 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		}
 	}
 	
-	&.wcfImageViewerStatic > header > div {
-		> h1,
-		> h2,
-		> h3 {
-			margin-left: 0 !important;
-		}
-	}
-	
 	&.wcfImageViewerMobile {
 		> header,
 		> footer {
@@ -167,35 +159,34 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		top: 0;
 		
 		> div {
-			> h1,
-			> h2,
-			> h3 {
-				color: $wcfImageViewerFontColor;
-				margin-left: 80px !important;
-				
-				> a {
-					color: $wcfImageViewerFontColor;
-				}
-			}
-			
-			> h1 {
-				font-size: 1.75rem;
-			}
-			
-			> h2 {
-				font-size: 1.25rem;
-			}
-			
-			> h3 {
-				color: $wcfImageViewerFontColor;
-				font-size: .85rem;
-				margin-top: .25rem;
-			}
-			
 			> a > img {
 				height: 64px;
 				width: 64px;
 			}
+		}
+		
+		h1,
+		h2,
+		h3 {
+			color: $wcfImageViewerFontColor;
+			
+			> a {
+				color: $wcfImageViewerFontColor;
+			}
+		}
+		
+		h1 {
+			font-size: 1.75rem;
+		}
+		
+		h2 {
+			font-size: 1.25rem;
+		}
+		
+		h3 {
+			color: $wcfImageViewerFontColor;
+			font-size: .85rem;
+			margin-top: .25rem;
 		}
 		
 		> .wcfImageViewerButtonClose {
