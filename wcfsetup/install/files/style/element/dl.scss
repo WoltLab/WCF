@@ -53,6 +53,14 @@ dl {
 					&:last-child {
 						margin-right: 0;
 					}
+					
+					+ small:not(.innerError) {
+						margin-left: 0;
+					}
+				}
+				
+				small {
+					flex: 1 1 100%;
 				}
 			}
 		}
