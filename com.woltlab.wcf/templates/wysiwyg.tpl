@@ -279,7 +279,9 @@
 				}, 10);
 			};
 			
-			$(element).redactor(config);
+			$(function () {
+				$(element).redactor(config);
+			});
 		});
 	});
 </script>
