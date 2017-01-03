@@ -164,6 +164,7 @@ class UsersOnlineList extends SessionList {
 		switch ($canViewOnlineStatus) {
 			case 0: // everyone
 				$data['result'] = true;
+				break;
 			case 1: // registered
 				if (WCF::getUser()->userID) $data['result'] = true;
 				break;
