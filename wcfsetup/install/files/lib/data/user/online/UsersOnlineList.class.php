@@ -157,9 +157,9 @@ class UsersOnlineList extends SessionList {
 	 * @return	boolean
 	 */
 	public static function isVisible($userID, $canViewOnlineStatus) {
+		if (WCF::getSession()->getPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) return true;
+
 		$data = ['result' => false, 'userID' => $userID, 'canViewOnlineStatus' => $canViewOnlineStatus];
-		
-		if (WCF::getSession()->getPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) $data['result'] = true;
 		
 		switch ($canViewOnlineStatus) {
 			case 0: // everyone
@@ -174,6 +174,7 @@ class UsersOnlineList extends SessionList {
 		}
 		
 		EventHandler::getInstance()->fireAction(get_called_class(), 'isVisible', $data);
+		
 		return $data['result'];
 	}
 }

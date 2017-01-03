@@ -460,6 +460,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'isAccessible', $data);
+		
 		return $data['result'];
 	}
 	
@@ -469,11 +470,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function isProtected() {
-		$data = [
-			'result' => (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID)
-		];
-		EventHandler::getInstance()->fireAction($this, 'isProtected', $data);
-		return $data['result'];
+		return (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID);
 	}
 	
 	/**
