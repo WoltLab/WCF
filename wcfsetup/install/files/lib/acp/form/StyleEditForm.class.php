@@ -49,6 +49,17 @@ class StyleEditForm extends StyleAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	public function validate() {
+		parent::validate();
+		
+		if (!$this->style->isTainted) {
+			$this->parseOverrides('overrideScssCustom');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
 		
