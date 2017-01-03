@@ -128,13 +128,20 @@ $wcfAcpMenuWidth: 150px;
 }
 
 .acpSearchDropdown {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 	border-width: 0;
+	position: fixed;
 	top: 50px !important;
 	width: 300px;
 	
 	&::before,
 	&::after {
 		display: none;
+	}
+	
+	> .dropdownText {
+		color: $wcfContentDimmedText;
 	}
 }
 
