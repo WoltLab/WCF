@@ -131,7 +131,7 @@ class AttachmentBBCode extends AbstractBBCode {
 				// file
 				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
 					'object' => $attachment
-				]), ((!empty($content) && $content != $attachmentID) ? $content : $attachment->filename));
+				]), $attachment->filename);
 			}
 		}
 		
