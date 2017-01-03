@@ -149,6 +149,30 @@ class VisitTracker extends SingletonFactory {
 	}
 	
 	/**
+	 * Tracks an object visit for the users with the given ids.
+	 *
+	 * @param   string      $objectType
+	 * @param   integer     $objectID
+	 * @param   integer[]   $userIDs
+	 * @param   int         $time
+	 */
+	public function trackObjectVisitByUserIDs($objectType, $objectID, array $userIDs, $time = TIME_NOW) {
+		// save visit
+		$sql = "REPLACE INTO wcf".WCF_N."_tracked_visit
+					(objectTypeID, objectID, userID, visitTime)
+			VALUES		(?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		WCF::getDB()->beginTransaction();
+		
+		foreach ($userIDs as $userID) {
+			$statement->execute([$objectTypeID, $objectID, $userID, $time]);
+		}
+		
+		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
 	 * Tracks an object visit.
 	 * 
 	 * @param	string		$objectType
