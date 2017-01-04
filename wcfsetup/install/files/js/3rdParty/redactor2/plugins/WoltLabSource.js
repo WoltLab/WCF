@@ -24,12 +24,41 @@ $.Redactor.prototype.WoltLabSource = function() {
 				});
 			};
 			
+			function stripIcons(div) {
+				elBySelAll('.icon, .fa', div, function (element) {
+					var classNames = element.className.split(' ');
+					classNames = classNames.filter(function (value) {
+						if (value === 'fa' || value === 'icon') {
+							return false;
+						}
+						else if (value.match(/^icon\d{2}$/)) {
+							return false;
+						}
+						else if (value.match(/^fa-[a-z\-]+$/)) {
+							return false;
+						}
+						
+						return true;
+					});
+					
+					element.className = classNames.join(' ');
+					if (element.className.trim() === '' && element.innerHTML === '') {
+						elRemove(element);
+					}
+				});
+			}
+			
 			// disable caret position in source mode
 			this.source.setCaretOnShow = function () {};
 			this.source.setCaretOnHide = function (html) { return html; };
 			
 			var mpHide = this.source.hide;
 			this.source.hide = (function () {
+				// use jQuery to parse, its parser is much more graceful
+				var div = $('<div />').html(this.source.$textarea.val());
+				stripIcons(div[0]);
+				this.source.$textarea.val(div[0].innerHTML);
+				
 				mpHide.call(this);
 				
 				setTimeout((function() {
