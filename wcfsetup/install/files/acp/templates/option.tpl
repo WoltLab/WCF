@@ -7,13 +7,16 @@
 		new WCF.Option.Handler();
 		
 		{if $optionName}
-			var $option = $('#' + $.wcfEscapeID('{$optionName}'));
-			new WCF.PeriodicalExecuter(function(pe) {
-				pe.stop();
+			setTimeout(function() {
+				var option = elById('{$optionName}');
+				var div = elCreate('div');
+				div.id = 'wcfOptionAnchor';
+				div.style.setProperty('position', 'absolute', '');
+				div.style.setProperty('top', (option.closest('dl').offsetTop - 60) + 'px', '');
+				document.body.appendChild(div);
+				div.scrollIntoView({ behavior: 'smooth' });
 				
-				var $scrollHandler = new WCF.Effect.Scroll();
-				$scrollHandler.scrollTo($option, true);
-				$option.focus();
+				option.focus();
 			}, 200);
 		{/if}
 	});
