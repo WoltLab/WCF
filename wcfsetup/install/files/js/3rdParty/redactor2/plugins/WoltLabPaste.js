@@ -4,14 +4,16 @@ $.Redactor.prototype.WoltLabPaste = function() {
 	return {
 		init: function () {
 			var clipboardData = null;
+			var isKbd = false;
 			
 			// IE 11
 			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
 			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
-				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre')) ? true : false;
-				if (isCode) {
+				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
+				isKbd = (!isCode && this.utils.isCurrentOrParent('kbd'));
+				if (isCode || isKbd) {
 					if (isIe) {
 						clipboardData = window.clipboardData.getData('Text');
 					}
@@ -34,6 +36,10 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
 				var returnValue = mpGetPasteBoxCode.call(this, pre);
+				
+				if (isKbd) {
+					return clipboardData;
+				}
 				
 				// use clipboard data if paste box is flawed or when
 				// pasting in IE 11 where clipboard data is more reliable
@@ -115,6 +121,37 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			this.paste.insert = (function(html, data) {
 				if (data.pre) {
 					return mpInsert.call(this, html, data);
+				}
+				else if (this.utils.isCurrentOrParent('kbd')) {
+					mpInsert.call(this, html, data);
+					
+					var current = this.selection.current();
+					if (current.nodeType === Node.TEXT_NODE) current = current.parentNode;
+					var kbd = current.closest('kbd');
+					var paragraphs = elByTag('p', kbd);
+					while (paragraphs.length) {
+						paragraphs[0].outerHTML = paragraphs[0].innerHTML;
+					}
+					
+					var parts = kbd.innerHTML.split(/<br\s*\/?>/);
+					if (parts.length > 1) {
+						var lastParent = this.selection.block();
+						
+						for (var i = 1, length = parts.length; i < length; i++) {
+							var newParent = elCreate(lastParent.nodeName);
+							newParent.innerHTML = '<kbd>' + parts[i] + (i === length - 1 ? this.marker.html() : '') + '</kbd>';
+							lastParent.parentNode.insertBefore(newParent, lastParent.nextSibling);
+							
+							lastParent = newParent;
+						}
+						
+						kbd.innerHTML = parts[0];
+						
+						this.selection.restore();
+						
+					}
+					
+					return;
 				}
 				
 				var div = elCreate('div');

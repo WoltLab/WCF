@@ -106,7 +106,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 			
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
-				if (data.pre) {
+				if (data.pre || this.utils.isCurrentOrParent('kbd')) {
 					// prevent method call when data.pre is true
 					var mpRemoveEmptyInlineTags = this.clean.removeEmptyInlineTags;
 					this.clean.removeEmptyInlineTags = function(html) { return html; };
