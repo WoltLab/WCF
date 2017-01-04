@@ -63,11 +63,10 @@ define(
 				return true;
 			}).bind(this);
 			
-			enquire.register('(max-width: 767px)', {
+			UiScreen.on('screen-xs', {
 				match: function() { _dialogFullHeight = true; },
 				unmatch: function() { _dialogFullHeight = false; },
-				setup: function() { _dialogFullHeight = true; },
-				deferSetup: true
+				setup: function() { _dialogFullHeight = true; }
 			});
 			
 			this._initStaticDialogs();

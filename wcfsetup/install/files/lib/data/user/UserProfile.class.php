@@ -12,6 +12,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledLinkObject;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\EventHandler;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -438,23 +439,29 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 */
 	public function isAccessible($name) {
 		/** @noinspection PhpVariableVariableInspection */
+		$data = ['result' => true, 'name' => $name];
+		
 		switch ($this->$name) {
 			case self::ACCESS_EVERYONE:
-				return true;
+				$data['result'] = true;
 			break;
 			
 			case self::ACCESS_REGISTERED:
-				return (WCF::getUser()->userID ? true : false);
+				$data['result'] = (WCF::getUser()->userID ? true : false);
 			break;
 			
 			case self::ACCESS_FOLLOWING:
-				return ($this->isFollowing(WCF::getUser()->userID) ? true : false);
+				$data['result'] = ($this->isFollowing(WCF::getUser()->userID) ? true : false);
 			break;
 			
 			case self::ACCESS_NOBODY:
-				return false;
+				$data['result'] = false;
 			break;
 		}
+		
+		EventHandler::getInstance()->fireAction($this, 'isAccessible', $data);
+		
+		return $data['result'];
 	}
 	
 	/**

@@ -4,6 +4,7 @@ use wcf\data\option\OptionAction;
 use wcf\data\session\SessionList;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
+use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -157,19 +158,24 @@ class UsersOnlineList extends SessionList {
 	 */
 	public static function isVisible($userID, $canViewOnlineStatus) {
 		if (WCF::getSession()->getPermission('admin.user.canViewInvisible') || $userID == WCF::getUser()->userID) return true;
+
+		$data = ['result' => false, 'userID' => $userID, 'canViewOnlineStatus' => $canViewOnlineStatus];
 		
 		switch ($canViewOnlineStatus) {
 			case 0: // everyone
-				return true;
+				$data['result'] = true;
+				break;
 			case 1: // registered
-				if (WCF::getUser()->userID) return true;
+				if (WCF::getUser()->userID) $data['result'] = true;
 				break;
 			case 2: // following
 				/** @noinspection PhpUndefinedMethodInspection */
-				if (WCF::getUserProfileHandler()->isFollower($userID)) return true;
+				if (WCF::getUserProfileHandler()->isFollower($userID)) $data['result'] = true;
 				break;
 		}
 		
-		return false;
+		EventHandler::getInstance()->fireAction(get_called_class(), 'isVisible', $data);
+		
+		return $data['result'];
 	}
 }

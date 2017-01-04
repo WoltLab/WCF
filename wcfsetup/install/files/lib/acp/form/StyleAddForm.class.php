@@ -334,8 +334,21 @@ class StyleAddForm extends AbstractForm {
 	 * 
 	 * If an override is invalid, unknown or matches a variable covered by
 	 * the style editor itself, it will be silently discarded.
+	 * 
+	 * @param       string          $variableName
+	 * @throws      UserInputException
 	 */
-	protected function parseOverrides() {
+	protected function parseOverrides($variableName = 'overrideScss') {
+		static $colorNames = null;
+		if ($colorNames === null) {
+			$colorNames = [];
+			foreach ($this->colors as $colorPrefix => $colors) {
+				foreach ($colors as $color) {
+					$colorNames[] = $colorPrefix . ucfirst($color);
+				}
+			}
+		}
+		
 		// get available variables
 		$sql = "SELECT	variableName
 			FROM	wcf".WCF_N."_style_variable";
@@ -343,8 +356,8 @@ class StyleAddForm extends AbstractForm {
 		$statement->execute();
 		$variables = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
-		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideScss']));
-		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');
+		$lines = explode("\n", StringUtil::unifyNewlines($this->variables[$variableName]));
+		$regEx = new Regex('^\$([a-zA-Z]+):\s*([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');
 		$errors = [];
 		foreach ($lines as $index => &$line) {
 			$line = StringUtil::trim($line);
@@ -359,7 +372,7 @@ class StyleAddForm extends AbstractForm {
 				$matches = $regEx->getMatches();
 				
 				// cannot override variables covered by style editor
-				if (in_array($matches[1], $this->colors) || in_array($matches[1], $this->globals) || in_array($matches[1], $this->specialVariables)) {
+				if (in_array($matches[1], $colorNames) || in_array($matches[1], $this->globals) || in_array($matches[1], $this->specialVariables)) {
 					$errors[] = [
 						'error' => 'predefined',
 						'text' => $matches[1]
@@ -385,10 +398,10 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		
-		$this->variables['overrideScss'] = implode("\n", $lines);
+		$this->variables[$variableName] = implode("\n", $lines);
 		
 		if (!empty($errors)) {
-			throw new UserInputException('overrideScss', $errors);
+			throw new UserInputException($variableName, $errors);
 		}
 	}
 	

@@ -122,7 +122,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		$this->fieldValue = $condition->conditionData[$this->fieldName];
+		$this->fieldValue = (isset($condition->conditionData[$this->fieldName]) ? $condition->conditionData[$this->fieldName] : self::NO_SELECTION_VALUE);
 	}
 	
 	/**

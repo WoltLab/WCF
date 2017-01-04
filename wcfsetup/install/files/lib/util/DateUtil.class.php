@@ -518,6 +518,7 @@ final class DateUtil {
 			$dtoNoTime = clone $dateTimeObject;
 			$dtoNoTime->setTime(0, 0, 0);
 			$currentDateTimeObject = self::getDateTimeByTimestamp(TIME_NOW);
+			$currentDateTimeObject->setTimezone(WCF::getUser()->getTimeZone());
 			$currentDateTimeObject->setTime(0, 0, 0);
 			
 			$days = $dtoNoTime->diff($currentDateTimeObject)->days;
