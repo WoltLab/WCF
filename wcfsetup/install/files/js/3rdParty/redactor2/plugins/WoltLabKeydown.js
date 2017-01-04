@@ -94,6 +94,13 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					this.core.editor().find('*[style]').not('span, img, #redactor-image-box, #redactor-image-editter').removeAttr('style');
 					
 					this.keydown.formatEmpty(e);
+					
+					// strip empty <kbd>
+					var current = this.selection.current();
+					if (current.nodeName === 'KBD' && current.innerHTML.length === 0) {
+						elRemove(current);
+					}
+					
 					this.code.syncFire = true;
 					
 				}, this), 1);
