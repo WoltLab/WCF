@@ -63,7 +63,15 @@
 					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}'
 				});
 				
-				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
+				var userProfileEditor = new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
+				var editLink = elBySel('.interactiveDropdownItemsUserMenu .jsUserPanelEditProfile');
+				if (editLink) {
+					editLink.addEventListener(WCF_CLICK_EVENT, function (event) {
+						userProfileEditor._beginEdit(event);
+						
+						WCF.CloseOverlayHandler.forceExecution();
+					});
+				}
 			{/if}
 			
 			{if $followingCount > 7}
