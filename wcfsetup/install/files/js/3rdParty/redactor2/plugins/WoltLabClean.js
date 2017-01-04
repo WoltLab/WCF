@@ -168,12 +168,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				elBySelAll('img', div, function (img) {
 					img.removeAttribute('style');
-					
-					if (img.hasAttribute('alt')) {
-						// Any smiley with an code that has `<` followed by
-						// a letter will cause the editor to fail.
-						img.setAttribute('alt', img.getAttribute('alt').replace(/</g, '&lt;'));
-					}
 				});
 				
 				elBySelAll('br', div, function (br) {
