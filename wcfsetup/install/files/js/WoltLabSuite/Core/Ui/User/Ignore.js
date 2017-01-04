@@ -60,6 +60,9 @@ define(['List', 'Dom/ChangeListener'], function(List, DomChangeListener) {
 			message.classList.remove('ignoredUserMessage');
 			message.removeEventListener(WCF_CLICK_EVENT, _callback);
 			_knownMessages.delete(message);
+			
+			// Firefox selects the entire message on click for no reason
+			window.getSelection().removeAllRanges();
 		}
 	};
 });
