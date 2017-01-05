@@ -24,7 +24,20 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 			this.buffer.set();
 			
 			if (data.url) {
-				this.insert.html('<img src="' + data.url + '" class="woltlabAttachment" data-attachment-id="' + attachmentId + '">');
+				var id = 'wcfImgAttachment' + this.uuid;
+				var img = elById(id);
+				if (img) img.removeAttribute('id');
+				
+				this.insert.html('<img src="' + data.url + '" class="woltlabAttachment" data-attachment-id="' + attachmentId + '" id="' + id + '">');
+				
+				window.setTimeout((function () {
+					// Safari does not properly update the caret position on insert
+					var img = elById(id);
+					if (img) {
+						img.removeAttribute('id');
+						this.caret.after(img);
+					}
+				}).bind(this), 10);
 			}
 			else {
 				// non-image attachment

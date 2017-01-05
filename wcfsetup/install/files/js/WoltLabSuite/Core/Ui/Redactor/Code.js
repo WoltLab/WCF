@@ -61,6 +61,9 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 				this._setTitle(pre);
 				
 				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				
+				// work-around for Safari
+				this._editor.caret.end(pre);
 			}
 		},
 		

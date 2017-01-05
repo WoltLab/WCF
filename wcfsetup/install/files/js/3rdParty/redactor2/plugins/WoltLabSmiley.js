@@ -29,6 +29,9 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 			smiley = elById(id);
 			smiley.removeAttribute('id');
 			
+			// Safari does not properly update the caret position on insert
+			this.caret.after(smiley);
+			
 			//noinspection SillyAssignmentJS
 			smiley.outerHTML = smiley.outerHTML;
 		}
