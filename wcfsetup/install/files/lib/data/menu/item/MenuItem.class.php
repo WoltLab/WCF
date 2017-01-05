@@ -86,7 +86,7 @@ class MenuItem extends DatabaseObject {
 			return $this->getPage()->getLink();
 		}
 		else {
-			return $this->externalURL;
+			return WCF::getLanguage()->get($this->externalURL);
 		}
 	}
 	
