@@ -32,8 +32,8 @@ $.Redactor.prototype.WoltLabBlock = function() {
 			var mpFormatCollapsed = this.block.formatCollapsed;
 			this.block.formatCollapsed = (function(tag, attr, value, type) {
 				var block = this.selection.block();
-				if (block && block.nodeName === 'LI') {
-					// lists cannot contain other block elements
+				if (block && (block.nodeName === 'LI' || block.nodeName === 'TD')) {
+					// tables/lists cannot contain other block elements
 					return;
 				}
 				

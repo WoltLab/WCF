@@ -40,6 +40,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSource.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSpoiler.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabTable.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabUtils.js?v={@LAST_UPDATE_TIME}'
 		{else}
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.min.js?v={@LAST_UPDATE_TIME}',
@@ -208,6 +209,7 @@
 					'WoltLabSmiley',
 					'WoltLabSource',
 					'WoltLabSpoiler',
+					'WoltLabTable',
 					'WoltLabUtils'
 				],
 				toolbarFixed: false,
