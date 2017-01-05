@@ -83,19 +83,24 @@
 		}
 		
 		.contentHeaderTitle {
-			flex: 1 1 0%;
+			flex: 1 1 0;
 		}
 		
 		.contentHeaderNavigation {
 			flex: 0 0 auto;
 			margin-left: 15px;
+			max-width: 50%;
 			
 			> ul {
 				@include inlineList;
 				
-				flex-wrap: nowrap;
+				flex-wrap: wrap;
+				justify-content: flex-end;
+				margin-top: -5px;
 				
-				> li{
+				> li {
+					margin-top: 5px;
+					
 					&:not(:last-child) {
 						margin-right: 0;
 					}
