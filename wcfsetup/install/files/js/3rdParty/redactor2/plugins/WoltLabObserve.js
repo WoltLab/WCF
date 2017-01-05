@@ -64,6 +64,17 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					this.button.enable('horizontalrule');
 				}
 				
+				if (this.utils.isCurrentOrParent(['table', 'li'])) {
+					this.button.disable('code');
+					this.button.disable('spoiler');
+					this.button.disable('woltlabQuote');
+				}
+				else {
+					this.button.enable('code');
+					this.button.enable('spoiler');
+					this.button.enable('woltlabQuote');
+				}
+				
 				// WoltLab modification: we know that there will be quite a few
 				// active button states, so we'll simply check all ancestors one
 				// by one instead of searching the DOM over and over again
