@@ -2469,7 +2469,7 @@ WCF.ACP.Stat.Chart = Class.extend({
 				tickFormatter: function(val) {
 					return WCF.String.addThousandsSeparator(val);
 				}
-			},
+			}
 		};
 		
 		var $data = [ ];
@@ -2484,13 +2484,24 @@ WCF.ACP.Stat.Chart = Class.extend({
 		
 		$.plot("#chart", $data, options);
 		
-		$("#chart").on("plothover", function(event, pos, item) {
-			if (item) {
-				$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).css({top: item.pageY + 5, left: item.pageX + 5}).wcfFadeIn();
-			}
-			else {
-				$("#chartTooltip").hide();
-			}
+		require(['Ui/Alignment'], function (UiAlignment) {
+			var span = elCreate('span');
+			span.style.setProperty('position', 'absolute', '');
+			document.body.appendChild(span);
+			$("#chart").on("plothover", function(event, pos, item) {
+				if (item) {
+					span.style.setProperty('top', item.pageY + 'px', '');
+					span.style.setProperty('left', item.pageX + 'px', '');
+					$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).show();
+					UiAlignment.set($("#chartTooltip")[0], span, {
+						verticalOffset: 5,
+						horizontal: 'center'
+					});
+				}
+				else {
+					$("#chartTooltip").hide();
+				}
+			});
 		});
 		
 		if (!$data.length) {
