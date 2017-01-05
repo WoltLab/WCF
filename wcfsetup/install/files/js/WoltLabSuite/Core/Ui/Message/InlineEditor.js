@@ -527,8 +527,10 @@ define(
 				//noinspection JSUnresolvedVariable
 				DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 				
+				var node;
 				while (element.childNodes.length) {
-					elementData.messageFooter.appendChild(element.childNodes[0]);
+					node = element.childNodes[element.childNodes.length - 1];
+					elementData.messageFooter.insertBefore(node, elementData.messageFooter.firstChild);
 				}
 			}
 			
