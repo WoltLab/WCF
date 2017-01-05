@@ -59,6 +59,25 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					continue;
 				}
 				
+				$urlComponents = parse_url($src);
+				if ($urlComponents === false) {
+					// not a valid URL, discard it
+					DOMUtil::removeNode($element);
+					continue;
+				}
+				
+				if (empty($urlComponents['host'])) {
+					// relative URL, ignore it
+					continue;
+				}
+				
+				$element->setAttribute('data-valid', 'true');
+				
+				if (!empty($urlComponents['path']) && preg_match('~\.svg~', basename($urlComponents['path']))) {
+					// we can't proxy SVG, ignore it
+					continue;
+				}
+				
 				$element->setAttribute('src', $this->getProxyLink($src));
 				
 				$srcset = $element->getAttribute('srcset');
