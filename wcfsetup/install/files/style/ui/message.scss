@@ -85,10 +85,8 @@
 }
 
 .message {
-	display: flex;
-	
-	@include screen-sm-down {
-		flex-direction: column;
+	@include screen-md-up {
+		display: flex;
 	}
 	
 	.messageClipboardCheckbox {
@@ -133,7 +131,6 @@
 	}
 	
 	@include screen-sm-down {
-		flex: 0 0 auto;
 		margin: 0 -10px;
 		padding: 10px;
 		
@@ -266,13 +263,15 @@
 
 /* content */
 .messageContent {
-	display: flex;
-	/* do not use `flex: 1 1 0%` as it causes Mobile Safari to fail */
-	flex: 1;
-	flex-direction: column;
-	
 	@include screen-sm-down {
 		position: relative;
+	}
+	
+	@include screen-md-up {
+		display: flex;
+		/* do not use `flex: 1 1 0%` as it causes Mobile Safari to fail */
+		flex: 1;
+		flex-direction: column;
 	}
 	
 	&.loading {
@@ -299,8 +298,11 @@
 /* content - header */
 .messageHeader {
 	display: flex;
-	flex: 0 0 auto;
 	justify-content: flex-end;
+	
+	@include screen-md-up {
+		flex: 0 0 auto;
+	}
 		
 	+ .messageBody {
 		margin-top: 20px;
@@ -414,7 +416,9 @@
 
 /* content - body */
 .messageBody {
-	flex: 1 1 auto;
+	@include screen-md-up {
+		flex: 1 1 auto;
+	}
 	
 	&.editor {
 		align-items: center;
@@ -446,7 +450,9 @@
 
 /* content - footer */
 .messageFooter {
-	flex: 0 0 auto;
+	@include screen-md-up {
+		flex: 0 0 auto;
+	}
 	
 	.formSubmit {
 		margin-top: 20px;
