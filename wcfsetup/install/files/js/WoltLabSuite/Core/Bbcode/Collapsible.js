@@ -20,8 +20,16 @@ define([], function() {
 			while (_containers.length) {
 				container = _containers[0];
 				
-				toggleButton = elBySelAll('.toggleButton', container)[0];
-				if (toggleButton && toggleButton.closest('.jsCollapsibleBbcode') === container) {
+				// find the matching toggle button
+				toggleButton = null;
+				elBySelAll('.toggleButton:not(.jsToggleButtonEnabled)', container, function (button) {
+					//noinspection JSReferencingMutableVariableFromClosure
+					if (button.closest('.jsCollapsibleBbcode') === container) {
+						toggleButton = button;
+					}
+				});
+				
+				if (toggleButton) {
 					(function (container, toggleButton) {
 						var toggle = function (event) {
 							if (container.classList.toggle('collapsed')) {
@@ -42,6 +50,7 @@ define([], function() {
 							}
 						};
 						
+						toggleButton.classList.add('jsToggleButtonEnabled');
 						toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
 						
 						// expand boxes that are initially scrolled
