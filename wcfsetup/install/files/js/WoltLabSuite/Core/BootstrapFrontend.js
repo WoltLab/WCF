@@ -30,6 +30,9 @@ define(
 		 * @param	{object<string, *>}	options		bootstrap options
 		 */
 		setup: function(options) {
+			// fix the background queue URL to always run against the current domain (avoiding CORS)
+			options.backgroundQueue.url = WSC_API_URL + options.backgroundQueue.url.substr(WCF_PATH.length);
+			
 			Bootstrap.setup();
 			
 			UiPageHeaderMenu.init();
