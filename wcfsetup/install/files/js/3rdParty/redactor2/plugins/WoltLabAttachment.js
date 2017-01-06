@@ -35,7 +35,21 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 					var img = elById(id);
 					if (img) {
 						img.removeAttribute('id');
-						this.caret.after(img);
+						
+						// manually set the caret after the img by using a simple text-node containing just `\u200B`
+						var text = img.nextSibling;
+						if (!text || text.nodeType !== Node.TEXT_NODE || text.textContent !== '\u200B') {
+							text = document.createTextNode('\u200B');
+							img.parentNode.insertBefore(text, img.nextSibling);
+						}
+						
+						var range = document.createRange();
+						range.selectNode(text);
+						range.collapse(false);
+						
+						var selection = window.getSelection();
+						selection.removeAllRanges();
+						selection.addRange(range);
 					}
 				}).bind(this), 10);
 			}
