@@ -187,3 +187,15 @@
 		}
 	}
 }
+
+/* dismiss icon */
+.noticeDismissible > .jsDismissNoticeButton {
+	float: right;
+	
+	@include screen-md-down {
+		font-size: 18px;
+		height: 24px;
+		line-height: 24px;
+		width: 24px;
+	}
+}
