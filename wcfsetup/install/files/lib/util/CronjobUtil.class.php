@@ -138,12 +138,28 @@ final class CronjobUtil {
 	 * @param	array		$values
 	 */
 	protected static function calculateTime(array &$values) {
-		// calculation starts with month, thus start with
-		// month of $time (if within values)
-		$currentMonth = gmdate('n', self::$timeBase);
-		self::findKey($currentMonth, $values['month']);
-		
 		self::calculateDay($values);
+	}
+	
+	/**
+	 * Calculates the next month and year to match given criteria.
+	 * 
+	 * @param	integer		$month
+	 * @param	integer		$year
+	 * @param	array		$values
+	 */
+	protected static function calculateMonth($month, $year, array &$values) {
+		$index = self::findKey($month, $values['month']);
+		
+		// swap to the next year if the next execution month is before the current month
+		if ($values['month'][$index] < $month) {
+			$year++;
+		}
+		
+		return [
+			'month' => $values['month'][$index],
+			'year' => $year
+		];
 	}
 	
 	/**
@@ -168,6 +184,21 @@ final class CronjobUtil {
 		$day = gmdate('j', $timeBase);
 		$month = gmdate('n', $timeBase);
 		$year = gmdate('Y', $timeBase);
+		
+		// calculate month of next execution and if its not the current one reset previous calculations
+		$dateMonth = self::calculateMonth($month, $year, $values);
+		if ($month != $dateMonth['month'] || $year != $dateMonth['year']) {
+			$day = 1;
+			$month = $dateMonth['month'];
+			$year = $dateMonth['year'];
+			
+			$timeBase = gmmktime(0, 0, 1, $month, $day, $year);
+			
+			if (!$addAnDay) {
+				self::calculateHour($values, $timeBase);
+				$addAnDay = true;
+			}
+		}
 		
 		// calculate date of next execution based upon day of week
 		$dateDow = self::calculateDow($month, $year, $values, $day);
@@ -245,7 +276,8 @@ final class CronjobUtil {
 		}
 		
 		// try next month
-		return self::calculateDow(++$month, $year, $values);
+		$nextMonth = self::calculateMonth(++$month, $year, $values);
+		return self::calculateDow($nextMonth['month'], $nextMonth['year'], $values);
 	}
 	
 	/**
@@ -271,7 +303,8 @@ final class CronjobUtil {
 		}
 		
 		// try next month
-		return self::calculateDom(++$month, $year, $values);
+		$nextMonth = self::calculateMonth(++$month, $year, $values);
+		return self::calculateDom($nextMonth['month'], $nextMonth['year'], $values);
 	}
 	
 	/**
