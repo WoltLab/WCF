@@ -121,6 +121,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			}
 			
 			$element->removeAttribute('class');
+			
+			if ($nodeName === 'span' && $element->attributes->length === 0) {
+				DOMUtil::removeNode($element, true);
+			}
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'beforeEmbeddedProcess');

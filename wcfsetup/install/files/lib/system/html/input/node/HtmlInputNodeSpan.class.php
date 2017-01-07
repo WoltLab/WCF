@@ -30,6 +30,10 @@ class HtmlInputNodeSpan extends AbstractHtmlInputNode {
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
+			if (!$element->hasAttribute('style')) {
+				continue;
+			}
+			
 			$style = explode(';', $element->getAttribute('style'));
 			for ($i = 0, $length = count($style); $i < $length; $i++) {
 				if (preg_match('~^\s*font-size\s*:(.+)$~', $style[$i], $matches)) {
