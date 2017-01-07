@@ -518,7 +518,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
-		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy the user group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy the user group <span class="confirmationObject">{$group->groupName|language|encodeJS}</span>?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Copy Object Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[The permissions set for certain objects like label groups will also be set for the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Copy Members]]></item>

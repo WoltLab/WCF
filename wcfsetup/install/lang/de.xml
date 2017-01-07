@@ -522,7 +522,7 @@
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Kann Captcha-Fragen verwalten]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Benutzergruppe kopieren]]></item>
-		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich kopieren?]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->groupName|language|encodeJS}</span> wirklich kopieren?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Objekt-Berechtigungen kopieren]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Berechtigungen, die für bestimmte Objekte wie Labelgruppen gesetzt wurden, werden auch für die neue Benutzergruppe übernommen.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Mitglieder kopieren]]></item>
