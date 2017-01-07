@@ -135,9 +135,10 @@
 		cursor: default;
 		opacity: .6;
 		
-		&:hover {
-			background-color: transparent !important;
+		> a:hover {
+			background-color: $wcfDropdownBackground !important;
 			color: $wcfDropdownText !important;
+			cursor: default !important;
 		}
 	}
 }

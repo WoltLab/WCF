@@ -2440,6 +2440,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
 		
+		<item name="wcf.editor.list.indent"><![CDATA[Einrücken]]></item>
+		<item name="wcf.editor.list.outdent"><![CDATA[Ausrücken]]></item>
+		
 		<item name="wcf.editor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {$author}{else}Zitat{/if}]]></item>

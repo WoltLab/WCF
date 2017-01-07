@@ -2396,6 +2396,9 @@ Errors are:
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
 		
+		<item name="wcf.editor.list.indent"><![CDATA[Indent]]></item>
+		<item name="wcf.editor.list.outdent"><![CDATA[Outdent]]></item>
+		
 		<item name="wcf.editor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Edit Quote]]></item>
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>

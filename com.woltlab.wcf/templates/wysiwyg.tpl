@@ -87,6 +87,9 @@
 				'wcf.editor.link.url': '{lang}wcf.editor.link.url{/lang}',
 				'wcf.editor.link.text': '{lang}wcf.editor.link.text{/lang}',
 				
+				'wcf.editor.list.indent': '{lang}wcf.editor.list.indent{/lang}',
+				'wcf.editor.list.outdent': '{lang}wcf.editor.list.outdent{/lang}',
+				
 				'wcf.editor.quote.author': '{lang}wcf.editor.quote.author{/lang}',
 				'wcf.editor.quote.edit': '{lang}wcf.editor.quote.edit{/lang}',
 				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',

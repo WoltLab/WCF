@@ -63,10 +63,18 @@ $.Redactor.prototype.WoltLabButton = function() {
 				if (!button[0]) {
 					throw new Error("Missing button element for '" + buttonName + "'.");
 				}
+				
 				// set title
 				//noinspection JSUnresolvedVariable
 				elAttr(button[0], 'title', buttonData.title);
 				button[0].classList.add('jsTooltip');
+				
+				// update dropdown label for list
+				if (buttonName == 'lists') {
+					var dropdown = button.data('dropdown');
+					elBySel('.redactor-dropdown-outdent span', dropdown[0]).textContent = WCF.Language.get('wcf.editor.list.outdent');
+					elBySel('.redactor-dropdown-indent span', dropdown[0]).textContent = WCF.Language.get('wcf.editor.list.indent');
+				}
 			}
 			
 			// enforce button order as provided with `opts.buttons`
