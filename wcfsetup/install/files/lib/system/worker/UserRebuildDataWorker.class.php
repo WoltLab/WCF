@@ -4,6 +4,7 @@ use wcf\data\like\Like;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
+use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
@@ -40,6 +41,8 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
+		$this->objectList->sqlSelects = 'user_option_value.userOption' . User::getUserOptionID('aboutMe') . ' AS aboutMe';
+		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)";
 		$this->objectList->sqlOrderBy = 'user_table.userID';
 	}
 	
@@ -81,7 +84,12 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				$statement->execute($conditionBuilder->getParameters());
 			}
 			
-			// update signatures
+			// update signatures and about me
+			$sql = "UPDATE  wcf".WCF_N."_user_option_value
+				SET     userOption" . User::getUserOptionID('aboutMe') . " = ?
+				WHERE   userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
 			$htmlInputProcessor = new HtmlInputProcessor();
 			WCF::getDB()->beginTransaction();
 			/** @var UserEditor $user */
@@ -93,6 +101,14 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 						'signature' => $htmlInputProcessor->getHtml(),
 						'signatureEnableHtml' => 1
 					]);
+					
+					if ($user->aboutMe) {
+						$htmlInputProcessor->process($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID, true);
+						$statement->execute([
+							$htmlInputProcessor->getHtml(),
+							$user->userID
+						]);
+					}
 				}
 			}
 			WCF::getDB()->commitTransaction();
