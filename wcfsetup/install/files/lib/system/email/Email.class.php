@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
@@ -92,13 +93,7 @@ class Email {
 	 */
 	public static function getHost() {
 		if (self::$host === null) {
-			self::$host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-			if (empty(self::$host)) {
-				self::$host = gethostname();
-				if (self::$host === false) {
-					self::$host = 'localhost';
-				}
-			}
+			self::$host = ApplicationHandler::getInstance()->getApplication('wcf')->domainName;
 		}
 		
 		return self::$host;
