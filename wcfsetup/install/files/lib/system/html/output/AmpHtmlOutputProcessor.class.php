@@ -89,6 +89,19 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 				DOMUtil::removeNode($element);
 			}
 		}
+		
+		// strip invalid attribute 'style'
+		/** @var \DOMElement $element */
+		foreach ($this->getHtmlOutputNodeProcessor()->getXPath()->query('//*[@style]') as $element) {
+			$element->removeAttribute('style');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtml() {
+		return str_ireplace('<img', '<amp-img layout="flex-item"', $this->getHtmlOutputNodeProcessor()->getHtml());
 	}
 	
 	/**
