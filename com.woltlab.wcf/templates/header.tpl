@@ -3,7 +3,7 @@
 <head>
 	{if !$pageTitle|isset}
 		{assign var='pageTitle' value=''}
-		{if !$__wcf->isLandingPage() && $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
+		{if (!$__wcf->isLandingPage() || !USE_PAGE_TITLE_ON_LANDING_PAGE) && $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
 			{capture assign='pageTitle'}{$__wcf->getActivePage()->getTitle()}{/capture}
 		{/if}
 	{/if}
