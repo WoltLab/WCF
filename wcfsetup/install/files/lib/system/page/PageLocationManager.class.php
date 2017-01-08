@@ -139,6 +139,8 @@ class PageLocationManager extends SingletonFactory {
 				$page = PageCache::getInstance()->getPage($location['pageID']);
 				while ($page !== null && $page->parentPageID) {
 					$page = PageCache::getInstance()->getPage($page->parentPageID);
+					if (!$page->isVisible()) continue;
+					
 					if ($page->isLandingPage) {
 						$title = WCF::getLanguage()->get(PAGE_TITLE);
 					}
