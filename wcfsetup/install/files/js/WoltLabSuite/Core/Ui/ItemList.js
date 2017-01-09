@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList
  */
-define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSuite/Core/Ui/Suggestion'], function(Core, Dictionary, Language, DomTraverse, EventKey, UiSuggestion) {
+define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSuite/Core/Ui/Suggestion', 'Ui/SimpleDropdown'], function(Core, Dictionary, Language, DomTraverse, EventKey, UiSuggestion, UiSimpleDropdown) {
 	"use strict";
 	
 	var _activeId = '';
@@ -36,6 +36,23 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			var element = elById(elementId);
 			if (element === null) {
 				throw new Error("Expected a valid element id, '" + elementId + "' is invalid.");
+			}
+			
+			// remove data from previous instance
+			if (_data.has(elementId)) {
+				var tmp = _data.get(elementId);
+				
+				for (var key in tmp) {
+					if (tmp.hasOwnProperty(key)) {
+						var el = tmp[key];
+						if (el instanceof Element && el.parentNode) {
+							elRemove(el);
+						}
+					}
+				}
+				
+				UiSimpleDropdown.destroy(elementId);
+				_data.delete(elementId);
 			}
 			
 			options = Core.extend({
