@@ -295,6 +295,60 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 				
 			}
 		}
+		
+		// trim quotes
+		/** @var \DOMElement $quote */
+		foreach ($this->getDocument()->getElementsByTagName('woltlab-quote') as $quote) {
+			$removeElements = [];
+			for ($i = 0, $length = $quote->childNodes->length; $i < $length; $i++) {
+				$node = $quote->childNodes->item($i);
+				if ($node->nodeType === XML_TEXT_NODE) {
+					continue;
+				}
+				
+				if ($node->nodeName === 'p' && $node->childNodes->length === 1) {
+					$child = $node->childNodes->item(0);
+					if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'br') {
+						$removeElements[] = $node;
+					}
+					else {
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			
+			foreach ($removeElements as $removeElement) {
+				$quote->removeChild($removeElement);
+			}
+			
+			$removeElements = [];
+			for ($i = $quote->childNodes->length - 1; $i >= 0; $i--) {
+				$node = $quote->childNodes->item($i);
+				if ($node->nodeType === XML_TEXT_NODE) {
+					continue;
+				}
+				
+				if ($node->nodeName === 'p' && $node->childNodes->length === 1) {
+					$child = $node->childNodes->item(0);
+					if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'br') {
+						$removeElements[] = $node;
+					}
+					else {
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			
+			foreach ($removeElements as $removeElement) {
+				$quote->removeChild($removeElement);
+			}
+		}
 	}
 	
 	/**
