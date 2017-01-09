@@ -194,21 +194,21 @@
 					'WoltLabCaret',
 					'WoltLabClean',
 					'WoltLabCode',
-					'WoltLabColor',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}'WoltLabColor',{/if}
 					'WoltLabDragAndDrop',
 					'WoltLabDropdown',
-					'WoltLabFont',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
-					'WoltLabImage',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}'WoltLabImage',{/if}
 					'WoltLabInlineCode',
 					'WoltLabInsert',
-					'WoltLabLink',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}'WoltLabLink',{/if}
 					'WoltLabModal',
 					'WoltLabObserve',
 					'WoltLabPaste',
 					'WoltLabQuote',
 					'WoltLabReply',
-					'WoltLabSize',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}'WoltLabSize',{/if}
 					'WoltLabSmiley',
 					'WoltLabSource',
 					'WoltLabSpoiler',
