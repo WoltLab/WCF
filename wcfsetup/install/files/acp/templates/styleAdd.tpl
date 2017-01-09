@@ -772,6 +772,7 @@
 				'wcfInputBorder': '#spInput { border-color: VALUE; }',
 				'wcfInputText': '#spInput { color: VALUE; }',
 				'wcfInputPlaceholder': '#spInput::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInput::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spInput:-ms-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled:-ms-input-placeholder { color: VALUE; }',
+				'wcfInputPlaceholderActive': '#spInput:focus::-webkit-input-placeholder, #spInput:hover::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInput:focus::-moz-placeholder, #spInput:hover::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spInput:focus:-ms-input-placeholder, #spInput:hover:-ms-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled:focus::-webkit-input-placeholder, #spInputDisabled:hover::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled:focus::-moz-placeholder, #spInputDisabled:hover::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spInputDisabled:focus:-ms-input-placeholder, #spInputDisabled:hover:-ms-input-placeholder { color: VALUE; }',
 				'wcfInputBackgroundActive': '#spInput:focus, #spInput:hover { background-color: VALUE; }',
 				'wcfInputBorderActive': '#spInput:focus, #spInput:hover { border-color: VALUE; }',
 				'wcfInputTextActive': '#spInput:focus, #spInput:hover { color: VALUE; }',
