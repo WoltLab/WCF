@@ -28,6 +28,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLine.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLink.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
@@ -202,6 +203,7 @@
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}'WoltLabImage',{/if}
 					'WoltLabInlineCode',
 					'WoltLabInsert',
+					'WoltLabLine',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}'WoltLabLink',{/if}
 					'WoltLabModal',
 					'WoltLabObserve',
