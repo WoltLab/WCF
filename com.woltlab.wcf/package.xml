@@ -48,7 +48,11 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_pre_sql.php</instruction>
 		<instruction type="sql">update_part1.sql</instruction>
 		
-		<instruction type="file" run="standalone">files.tar</instruction>
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_noop.php</instruction>
+		
+		<instruction type="file">files.tar</instruction>
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_3.0_appConfig.php</instruction>
+		
 		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_columnLength.php</instruction>
 		<instruction type="sql" run="standalone">update_1.sql</instruction>
 		<instruction type="sql" run="standalone">update_2.sql</instruction>
