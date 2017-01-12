@@ -14,11 +14,13 @@ use wcf\util\XML;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
-class RefreshSearchRobotsCronjob implements ICronjob {
+class RefreshSearchRobotsCronjob extends AbstractCronjob {
 	/**
 	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
+		
 		$filename = FileUtil::downloadFileFromHttp('http://assets.woltlab.com/spiderlist/typhoon/list.xml', 'spiders');
 		$xml = new XML();
 		$xml->load($filename);

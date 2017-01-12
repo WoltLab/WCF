@@ -11,11 +11,13 @@ use wcf\system\package\PackageUpdateDispatcher;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
-class GetUpdateInfoCronjob implements ICronjob {
+class GetUpdateInfoCronjob extends AbstractCronjob {
 	/**
 	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
+		
 		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 	}
 }
