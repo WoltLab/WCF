@@ -2,7 +2,7 @@
 	{if OFFLINE && $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
 		<div class="warning">
 			<p><strong>{lang}wcf.page.offline{/lang}</strong></p>
-			<p>{if OFFLINE_MESSAGE_ALLOW_HTML}{@OFFLINE_MESSAGE|language}{else}{@OFFLINE_MESSAGE|language|newlineToBreak}{/if}</p>
+			<div>{if OFFLINE_MESSAGE_ALLOW_HTML}{@OFFLINE_MESSAGE|language}{else}{@OFFLINE_MESSAGE|language|newlineToBreak}{/if}</div>
 		</div>
 	{/if}
 	
@@ -17,13 +17,13 @@
 	{hascontent}
 		{content}
 			{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
-				<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}">
+				<div class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible active{/if}">
 					{if $notice->isDismissible}
 						<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
 					{/if}
 					
 					{@$notice}
-				</p>
+				</div>
 			{/foreach}
 		{/content}
 		
