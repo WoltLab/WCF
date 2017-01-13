@@ -43,6 +43,16 @@
 		margin-top: 20px;
 	}
 	
+	@include screen-sm-md {
+		.contentHeaderNavigation {
+			.button {
+				.invisible {
+					display: inline;
+				}
+			}
+		}
+	}
+	
 	@include screen-sm-down {
 		display: flex;
 		flex-wrap: wrap;
@@ -62,12 +72,14 @@
 			flex: 0 0 calc(100% - 58px);
 			max-width: calc(100% - 58px);
 		}
+		
+		.contentHeaderNavigation {
+			flex: 0 0 100%;
+		}
 	}
 	
 	@include screen-xs {
 		.contentHeaderNavigation {
-			flex: 0 0 100%;
-			
 			.userProfileButtonContainer {
 				display: flex;
 				

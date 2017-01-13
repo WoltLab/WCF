@@ -67,7 +67,6 @@
 		.contentHeaderNavigation > ul {
 			@include inlineList;
 			
-			flex-wrap: nowrap;
 			justify-content: flex-end;
 			margin-top: 20px;
 		}
@@ -455,18 +454,6 @@ fieldset {
 		& + nav {
 			// gap between pagination and navigation buttons
 			margin-top: 10px;
-		}
-	}
-}
-
-/* workaround for ancient screen resolutions */
-@media (max-width: 1280px) {
-	.contentHeaderNavigation {
-		flex: 1 1 0%;
-		
-		> ul {
-			flex-wrap: wrap !important;
-			justify-content: flex-end;
 		}
 	}
 }
