@@ -213,7 +213,7 @@ class PackageInstallationScheduler {
 	 */
 	protected function downloadPackage($package, $packageUpdateVersions, $validateInstallInstructions = false) {
 		// get download from cache
-		if ($filename = $this->getCachedDownload($package, $packageUpdateVersions[0]['package'])) {
+		if ($filename = $this->getCachedDownload($package, $packageUpdateVersions[0]['packageVersion'])) {
 			return $filename;
 		}
 		

@@ -141,7 +141,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 					WHERE	definitionName = 'com.woltlab.wcf.notification.objectType'
 				)";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute([$objectType]);
+		$statement->execute(array($objectType));
 		$row = $statement->fetchArray();
 		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$objectType."' given");
 		return $row['objectTypeID'];
