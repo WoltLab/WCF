@@ -180,7 +180,8 @@
 }
 
 /* embedded images */
-.embeddedAttachmentLink {
+.embeddedAttachmentLink,
+.embeddedImageLink {
 	border: 1px solid $wcfContentBorderInner;
 	display: inline-block;
 	max-width: 100%;
