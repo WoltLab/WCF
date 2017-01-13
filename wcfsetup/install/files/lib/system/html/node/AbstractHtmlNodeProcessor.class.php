@@ -53,8 +53,15 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$this->document = new \DOMDocument('1.0', 'UTF-8');
 		$this->xpath = null;
 		
+		$html = preg_replace_callback('~(<pre[^>]*>)(.*?)(</pre>)~s', function($matches) {
+			return $matches[1] . preg_replace('~\r?\n~', '@@@WCF_PRE_LINEBREAK@@@', $matches[2]) . $matches[3];
+		}, $html);
+		
 		// strip UTF-8 zero-width whitespace
 		$html = preg_replace('~\x{200B}~u', '', $html);
+		
+		// discard any non-breaking spaces
+		$html = str_replace('&nbsp;', ' ', $html);
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped 
@@ -100,6 +107,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 			}, $html);
 			
 		}
+		
+		// restore line breaks inside code
+		$html = str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $html);
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped
