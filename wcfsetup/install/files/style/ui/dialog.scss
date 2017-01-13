@@ -108,7 +108,8 @@
 	> .dialogContent {
 		background-color: $wcfContentBackground;
 		overflow: auto;
-		-webkit-overflow-scrolling: touch;
+		
+		// do not use `-webkit-overflow-scrolling` as it will cut off content in iOS Safari
 		
 		&:not(.dialogContentNoPadding) {
 			@include screen-sm-down {
