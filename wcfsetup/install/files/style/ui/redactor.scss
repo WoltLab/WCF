@@ -183,6 +183,11 @@
 			.icon {
 				color: inherit;
 				cursor: inherit !important;
+				
+				&.redactorButtonImage {
+					background: no-repeat center center;
+					background-size: contain;
+				}
 			}
 			
 			@include screen-lg {

@@ -17,7 +17,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 			}
 			
 			// set button icons and labels
-			var buttonData;
+			var buttonData, icon, iconIsImage;
 			for (i = 0, length = this.opts.buttons.length; i < length; i++) {
 				buttonName = this.opts.buttons[i];
 				
@@ -58,8 +58,15 @@ $.Redactor.prototype.WoltLabButton = function() {
 						break;
 				}
 				
+				icon = buttonData.icon;
+				iconIsImage = false;
+				if (!icon.match(/^fa-/) && icon.match(/\.(gif|jpe?g|png|svg)$/)) {
+					iconIsImage = true;
+				}
+				
 				// set icon
-				this.button.setIcon(button, '<span class="icon icon16 ' + buttonData.icon + '"></span>');
+				//noinspection CssUnknownTarget
+				this.button.setIcon(button, '<span class="icon icon16 ' + (iconIsImage ? 'redactorButtonImage' : icon) + '"' + (iconIsImage ? ' style="background-image: url(\'' + WCF_PATH + 'icon/' + icon + '\')"' : '') + '></span>');
 				if (!button[0]) {
 					throw new Error("Missing button element for '" + buttonName + "'.");
 				}
