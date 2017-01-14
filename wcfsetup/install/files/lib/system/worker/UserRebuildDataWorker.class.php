@@ -104,8 +104,17 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					
 					if ($user->aboutMe) {
 						$htmlInputProcessor->process($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID, true);
+						$html = $htmlInputProcessor->getHtml();
+						// MySQL's TEXT type allows for 65,535 bytes, hence we need to count
+						// the bytes rather than the actual amount of characters
+						if (strlen($html) > 65535) {
+							// content does not fit the available space, and any
+							// attempts to truncate it will yield awkward results
+							$html = '';
+						}
+						
 						$statement->execute([
-							$htmlInputProcessor->getHtml(),
+							$html,
 							$user->userID
 						]);
 					}
