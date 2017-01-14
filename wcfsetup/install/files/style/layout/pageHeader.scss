@@ -364,7 +364,7 @@
 			max-width: 200px;
 			min-width: 140px;
 			overflow: hidden;
-			padding: 4px 24px 4px 8px;
+			padding: 4px 8px;
 			position: relative;
 			text-align: left;
 			text-overflow: ellipsis;
@@ -374,9 +374,10 @@
 			&::after {
 				color: inherit;
 				content: $fa-var-caret-down;
+				flex: 1;
 				font-family: FontAwesome;
-				position: absolute;
-				right: 8px;
+				margin-left: 10px;
+				text-align: right;
 			}
 		}
 		
