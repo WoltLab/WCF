@@ -30,6 +30,14 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
+				// each `<td>` must at least contain \u200B, otherwise
+				// Firefox will be unable to place the caret inside
+				elBySelAll('td', div, function (td) {
+					if (td.childNodes.length === 0) {
+						td.innerHTML = '\u200B';
+					}
+				});
+				
 				html = div.innerHTML;
 				
 				return html;

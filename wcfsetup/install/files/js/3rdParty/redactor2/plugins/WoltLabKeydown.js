@@ -369,7 +369,24 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			var firefoxHandleBackspace = (function(e) {
 				var parent;
 				var block = this.selection.block();
-				if (block.nodeName.indexOf('-') !== -1 && isEmpty(block)) {
+				if (!block) {
+					return;
+				}
+				
+				if (block.nodeName === 'TD') {
+					var html = block.innerHTML;
+					if (html === '\u200B') {
+						// backspacing the `\u200B` will break Firefox
+						e.preventDefault();
+					}
+					else if (html === '') {
+						// Firefox already broke itself, try to recover
+						e.preventDefault();
+						
+						block.innerHTML = '\u200B';
+					}
+				}
+				else if (block.nodeName.indexOf('-') !== -1 && isEmpty(block)) {
 					// backspacing an entire block
 					parent = block.parentNode;
 					parent.insertBefore(this.marker.get(), block.nextSibling);
