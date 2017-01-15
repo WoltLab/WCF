@@ -12,7 +12,6 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 	var _activeList = null;
 	var _enableTabScroll = false;
 	var _tabMenus = new Dictionary();
-	var _scrollListenerUuid = null;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/TabMenu
@@ -52,6 +51,35 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 					});
 				}
 			});
+			
+			if (window.location.hash.match(/^#(.*)$/)) {
+				var hash = RegExp.$1;
+				window.setTimeout(function () {
+					// check if page was initially scrolled using a tab id
+					var tabMenuContent = elById(hash);
+					if (tabMenuContent && tabMenuContent.classList.contains('tabMenuContent')) {
+						var scrollY = (window.scrollY || window.pageYOffset);
+						if (scrollY > 0) {
+							var parent = tabMenuContent.parentNode;
+							var offsetTop = parent.offsetTop - 50;
+							if (offsetTop < 0) offsetTop = 0;
+							
+							if (scrollY > offsetTop) {
+								var y = DomUtil.offset(parent).top;
+								
+								if (y <= 50) {
+									y = 0;
+								}
+								else {
+									y -= 50;
+								}
+								
+								window.scrollTo(0, y);
+							}
+						}
+					}
+				}, 100);
+			}
 		},
 		
 		/**
