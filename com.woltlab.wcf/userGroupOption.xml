@@ -875,9 +875,11 @@ png</defaultvalue>
 		<option name="admin.system.package.canEditServer" />
 		<option name="admin.content.dashboard.canEditDashboard" />
 		<option name="admin.display.canManagePageMenu" />
+		<option name="user.message.allowedBBCodes" />
 		<option name="user.message.canUseSmilies" />
 		<option name="user.message.canUseHtml" />
 		<option name="user.message.canUseBBCodes" />
+		<option name="user.signature.allowedBBCodes" />
 		<option name="user.signature.canUseSmilies" />
 		<option name="user.signature.canUseHtml" />
 		<option name="user.signature.canUseBBCodes" />
