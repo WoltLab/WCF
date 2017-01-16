@@ -141,7 +141,7 @@ define(
 			});
 			
 			_main.addEventListener(WCF_CLICK_EVENT, function() {
-				_searchBar.classList.remove('open');
+				if (_searchBar) _searchBar.classList.remove('open');
 				
 				if (Environment.platform() === 'ios' && scrollTop !== null) {
 					UiScreen.scrollEnable();
