@@ -101,9 +101,6 @@
 				height: 50px;
 				padding: 0 15px;
 				
-				/* fix flicker in Safari on dropdown menu hover */
-				transform: translateZ(0);
-				
 				> span {
 					flex: 0 0 auto;
 				}
@@ -234,6 +231,9 @@
 	}
 }
 
+/* Hack for a font rendering issue in Safari on menu hover */
+@include only_safari_no_ios('.pageHeaderPanel > .layoutBoundary', (transform: translateZ(0)));
+
 /* user panel */
 .userPanel {
 	flex: 0 0 auto;
@@ -256,9 +256,6 @@
 				height: 50px;
 				padding: 0 15px;
 				position: relative;
-				
-				/* fix flicker in Safari on dropdown menu hover */
-				transform: translateZ(0);
 				
 				/* hide icon label */
 				> span:not(.icon):not(.badge) {

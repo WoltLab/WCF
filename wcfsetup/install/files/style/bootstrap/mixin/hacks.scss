@@ -1,0 +1,9 @@
+/* See https://github.com/saadeghi/browser-hack-sass-mixins */
+/*--- Only Safari ≥ 9 (Non iOS) ---*/
+@mixin only_safari_no_ios($selector, $map){
+	_:-webkit-full-screen:not(:root:root),#{$selector} {
+		@each $property, $value in ($map) {
+			#{$property}: $value;
+		}
+	}
+}
