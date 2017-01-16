@@ -219,18 +219,6 @@
 	}
 }
 
-/* Firefox suffers from subpixel rendering issues */
-@-moz-document url-prefix() {
-	.mainMenu .boxMenu > li:not(:last-child) {
-		box-shadow: 0 0 0 1px $wcfHeaderMenuLinkBackground;
-		
-		&.active,
-		&:hover {
-			box-shadow: 0 0 0 1px $wcfHeaderMenuLinkBackgroundActive;
-		}
-	}
-}
-
 /* Hack for a font rendering issue in Safari on menu hover */
 @include only_safari_no_ios('.pageHeaderPanel > .layoutBoundary', (transform: translateZ(0)));
 
