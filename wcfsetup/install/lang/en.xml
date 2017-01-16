@@ -1633,7 +1633,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
 		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, the uploaded file is not a valid style.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
-		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
+		<item name="wcf.acp.style.list"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
 		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For example if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[The package identifier is invalid.]]></item>
