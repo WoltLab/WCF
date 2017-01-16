@@ -735,6 +735,7 @@
 				'wcfHeaderSearchBoxBackground': '#spSearchBox { background-color: VALUE; }',
 				'wcfHeaderSearchBoxText': '#spSearchBox { color: VALUE; }',
 				'wcfHeaderSearchBoxPlaceholder': '#spSearchBox::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:-ms-input-placeholder { color: VALUE; }',
+				'wcfHeaderSearchBoxPlaceholderActive': '#spSearchBox:focus::-webkit-input-placeholder, #spSearchBox:hover::-webkit-input-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:focus::-moz-placeholder, #spSearchBox:hover::-moz-placeholder { color: VALUE; } __COMBO_RULE__ #spSearchBox:focus:-ms-input-placeholder, #spSearchBox:hover:-ms-input-placeholder { color: VALUE; }',
 				'wcfHeaderSearchBoxBackgroundActive': '#spSearchBox:focus, #spSearchBox:hover { background-color: VALUE; }',
 				'wcfHeaderSearchBoxTextActive': '#spSearchBox:focus, #spSearchBox:hover { color: VALUE; }',
 				'wcfHeaderMenuBackground': '#spHeaderPanel { background-color: VALUE; }',
