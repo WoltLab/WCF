@@ -89,6 +89,9 @@ class BackgroundQueueHandler extends SingletonFactory {
 		
 		try {
 			SessionHandler::getInstance()->changeUser(new User(null), true);
+			if (!WCF::debugModeIsEnabled()) {
+				ob_start();
+			}
 			$job->perform();
 		}
 		catch (\Throwable $e) {
@@ -124,6 +127,9 @@ class BackgroundQueueHandler extends SingletonFactory {
 			}
 		}
 		finally {
+			if (!WCF::debugModeIsEnabled()) {
+				ob_end_clean();
+			}
 			SessionHandler::getInstance()->changeUser($user, true);
 		}
 	}
