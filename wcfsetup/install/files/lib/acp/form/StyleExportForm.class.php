@@ -118,7 +118,7 @@ class StyleExportForm extends AbstractForm {
 		
 		// export style
 		$styleEditor = new StyleEditor($this->style);
-		$styleEditor->export($this->exportTemplates, $this->exportImages, $this->style->packageName);
+		$styleEditor->export($this->exportTemplates, $this->exportImages, ($this->exportAsPackage ? $this->style->packageName : ''));
 		
 		// call saved event
 		$this->saved();

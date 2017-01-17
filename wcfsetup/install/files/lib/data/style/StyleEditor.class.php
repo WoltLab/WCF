@@ -19,6 +19,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\style\StyleCompiler;
 use wcf\system\Regex;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
@@ -144,7 +145,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = [
 			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => ''
+			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => ''
 		];
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -199,6 +200,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							
 							case 'stylename':
 								$data['name'] = $element->nodeValue;
+							break;
+							
+							case 'packageName':
+								$data['packageName'] = $element->nodeValue;
 							break;
 							
 							case 'version':
@@ -313,8 +318,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'copyright' => $data['copyright'],
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
-			'authorURL' => $data['authorURL']
+			'authorURL' => $data['authorURL'],
+			'packageName' => $data['packageName']
 		];
+		
+		// check if there is an untainted style with the same package name
+		if ($style === null && !empty($styleData['packageName'])) {
+			$style = StyleHandler::getInstance()->getStyleByName($styleData['packageName'], true);
+		}
 		
 		// import images
 		if (!empty($data['images']) && $data['imagesPath'] != 'images/') {
@@ -519,6 +530,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			unset($styleData['styleName']);
 			
 			$variables = $style->getVariables();
+			if (!isset($styleData['variables']['individualScss'])) $styleData['variables']['individualScss'] = '';
+			if (!isset($styleData['variables']['overrideScss'])) $styleData['variables']['overrideScss'] = '';
 			
 			$individualScss = Style::splitLessVariables($variables['individualScss']);
 			$variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
@@ -606,6 +619,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$index = ($index === null ? 2 : ($index + 1));
 		}
 		while (true);
+		
+		// this should never happen
+		throw new \LogicException();
 	}
 	
 	/**
@@ -642,6 +658,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// general block
 		$xml->startElement('general');
 		$xml->writeElement('stylename', $this->styleName);
+		$xml->writeElement('packageName', $this->packageName);
 		
 		// style description
 		foreach ($styleDescriptions as $languageCode => $value) {
