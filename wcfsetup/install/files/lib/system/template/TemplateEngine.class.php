@@ -541,10 +541,14 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		// get output
-		ob_start();
-		$this->display($templateName, $application, false);
-		$output = ob_get_contents();
-		ob_end_clean();
+		try {
+			ob_start();
+			$this->display($templateName, $application, false);
+			$output = ob_get_contents();
+		}
+		finally {
+			ob_end_clean();
+		}
 		
 		// disable sandbox
 		if ($sandbox) {
