@@ -31,7 +31,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 					element.removeAttribute('data-title');
 				});
 				
-				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'source_' + stripIntermediateCode + '_' + id, { div: div });
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'source_stripIntermediateCode_' + id, { div: div });
 			};
 			
 			function stripIcons(div) {
