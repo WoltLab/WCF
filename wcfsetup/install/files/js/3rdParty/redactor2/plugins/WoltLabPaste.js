@@ -87,6 +87,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						if (this.detect.isWebkit() && clipboard.items.length > 1) {
 							file = clipboard.items[1].getAsFile();
 							cancelPaste = true;
+							e.preventDefault();
 						}
 						
 						if (file === null) {
