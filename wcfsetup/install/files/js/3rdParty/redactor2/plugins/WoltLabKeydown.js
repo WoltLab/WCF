@@ -57,6 +57,16 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.indexOf('linux') !== -1 && ua.indexOf('android') !== -1 && ua.indexOf('chrome') !== -1) {
+				// prevent the word duplication issue on Chrome for Android,
+				// caused by the call to buffer.set() during backspace
+				this.keydown.checkEvents = (function() {
+					// also discard the previous existing click event
+					this.core.addEvent(false);
+				}).bind(this);
+			}
+			
 			// rebind keydown event
 			this.core.editor().off('keydown.redactor');
 			this.core.editor().on('keydown.redactor', this.keydown.init.bind(this));
