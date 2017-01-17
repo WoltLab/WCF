@@ -97,7 +97,9 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 				WhoWasOnlineCacheBuilder::getInstance()->reset();
 			}
 			
-			$this->users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
+			$this->users = array_filter(UserProfileRuntimeCache::getInstance()->getObjects($userIDs), function($user) {
+				return $user !== null;
+			});
 			foreach ($this->users as $key => $user) {
 				// remove invisible users
 				if (!UsersOnlineList::isVisible($user->userID, $user->canViewOnlineStatus)) {
