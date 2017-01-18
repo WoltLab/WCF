@@ -18,12 +18,13 @@
 					{/if}
 				{/foreach}
 			</ol>
-			<ol>
-				{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
-					<li><a href="{$menuItemNode->getURL()}">{lang}{$menuItemNode->title}{/lang}</a></li>
-				{/foreach}
-			</ol>
-			
+			{if $__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')}
+				<ol>
+					{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
+						<li><a href="{$menuItemNode->getURL()}">{lang}{$menuItemNode->title}{/lang}</a></li>
+					{/foreach}
+				</ol>
+			{/if}
 			<h3>{lang}wcf.menu.page.location{/lang}</h3>
 			<ol class="breadcrumbs">
 				{assign var=__breadcrumbsDepth value=0}
