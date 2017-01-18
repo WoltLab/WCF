@@ -355,8 +355,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// fire notification event
-		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification')) {
-			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.response.notification');
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
 			$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
 			
 			$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
