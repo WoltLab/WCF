@@ -377,6 +377,23 @@ $.Redactor.prototype.WoltLabClean = function() {
 			this.clean.removeSpans = function(html) {
 				return html;
 			};
+			
+			var mpGetCurrentType = this.clean.getCurrentType;
+			this.clean.getCurrentType = (function(html, insert) {
+				var data = mpGetCurrentType.call(this, html, insert);
+				
+				if (this.utils.isCurrentOrParent(['kbd'])) {
+					data.inline = false;
+					data.block = false;
+					data.encode = true;
+					data.pre = true;
+					data.paragraphize = false;
+					data.images = false;
+					data.links = false;
+				}
+				
+				return data;
+			}).bind(this);
 		}
 	}
 };

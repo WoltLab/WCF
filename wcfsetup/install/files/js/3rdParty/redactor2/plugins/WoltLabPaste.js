@@ -87,7 +87,10 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						if (this.detect.isWebkit() && clipboard.items.length > 1) {
 							file = clipboard.items[1].getAsFile();
 							cancelPaste = true;
-							e.preventDefault();
+							
+							if (file !== null) {
+								e.preventDefault();
+							}
 						}
 						
 						if (file === null) {
@@ -120,6 +123,8 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 			var mpInsert = this.paste.insert;
 			this.paste.insert = (function(html, data) {
+				if (isKbd) data.pre = true;
+				
 				if (data.pre) {
 					return mpInsert.call(this, html, data);
 				}
