@@ -44,3 +44,12 @@ requirejs.config({
 		}
 	}
 });
+
+/* Define jQuery shim. We cannot use the shim object in the configuration above,
+   because it tries to load the file, even if the exported global already exists.
+   This shim is needed for jQuery plugins supporting an AMD loaded jQuery, because
+   we break the AMD support of jQuery for BC reasons.
+*/
+define('jquery', function() {
+	return window.jQuery;
+});
