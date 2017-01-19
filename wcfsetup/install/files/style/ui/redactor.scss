@@ -172,6 +172,7 @@
 				background-color: transparent !important;
 				color: $wcfButtonDisabledText !important;
 				cursor: default;
+				pointer-events: none;
 			}
 			
 			&.redactor-act,
