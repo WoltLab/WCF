@@ -29,6 +29,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			// built-in
 			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia'
 		],
+		'li' => ['text-center', 'text-justify', 'text-right'],
 		'p' => ['text-center', 'text-justify', 'text-right'],
 		'td' => ['text-center', 'text-justify', 'text-right']
 	];
