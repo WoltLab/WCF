@@ -76,6 +76,19 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// would conflict with already existing entities when reverting them.
 		@$this->document->loadHTML('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>');
 		
+		// fix the `<pre>` linebreaks again
+		$pres = $this->document->getElementsByTagName('pre');
+		for ($i = 0, $length = $pres->length; $i < $length; $i++) {
+			/** @var \DOMElement $pre */
+			$pre = $pres[$i];
+			/** @var \DOMNode $node */
+			foreach ($pre->childNodes as $node) {
+				if ($node->nodeType === XML_TEXT_NODE && mb_strpos($node->textContent, '@@@WCF_PRE_LINEBREAK@@@') !== false) {
+					$node->nodeValue = str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $node->textContent);
+				}
+			}
+		}
+		
 		$this->nodeData = [];
 	}
 	
@@ -107,9 +120,6 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 			}, $html);
 			
 		}
-		
-		// restore line breaks inside code
-		$html = str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $html);
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped
