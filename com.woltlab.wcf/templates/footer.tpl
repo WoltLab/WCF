@@ -45,6 +45,10 @@
 							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
 								{@$box->render()}
 							{/foreach}
+							
+							{if !$sidebarRightBottom|empty}
+								{@$sidebarRightBottom}
+							{/if}
 						
 							{event name='boxesSidebarRightBottom'}
 						
