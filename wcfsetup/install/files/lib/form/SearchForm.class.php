@@ -409,7 +409,7 @@ class SearchForm extends AbstractCaptchaForm {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		if (empty($_POST) && $this->submit) {
+		if (count($_POST) == 1 && $this->submit) {
 			if ($this->userID) $this->useCaptcha = false;
 			$this->submit();
 		}
