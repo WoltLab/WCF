@@ -125,10 +125,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			this.paste.insert = (function(html, data) {
 				if (isKbd) data.pre = true;
 				
-				if (data.pre) {
-					return mpInsert.call(this, html, data);
-				}
-				else if (this.utils.isCurrentOrParent('kbd')) {
+				if (this.utils.isCurrentOrParent('kbd')) {
 					mpInsert.call(this, html, data);
 					
 					var current = this.selection.current();
@@ -158,6 +155,9 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}
 					
 					return;
+				}
+				else if (data.pre) {
+					return mpInsert.call(this, html, data);
 				}
 				
 				var div = elCreate('div');
