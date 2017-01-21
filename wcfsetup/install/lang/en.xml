@@ -547,12 +547,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.mod.page.canEditComment"><![CDATA[Can edit comments]]></item>
 		<item name="wcf.acp.group.option.mod.page.canModerateComment"><![CDATA[Can moderate comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canAddComment"><![CDATA[Can create comments]]></item>
-		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Can delete their own comments]]></item>
-		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Can edit their own comments]]></item>
+		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Can delete their comments]]></item>
+		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Can read articles]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Can create comments]]></item>
-		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their own comments]]></item>
-		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their own comments]]></item>
+		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their comments]]></item>
+		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
