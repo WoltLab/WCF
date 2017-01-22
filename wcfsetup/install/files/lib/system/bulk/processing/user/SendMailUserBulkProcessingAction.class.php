@@ -58,7 +58,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 			// save config in session
 			$userMailData = WCF::getSession()->getVar('userMailData');
 			if ($userMailData === null) $userMailData = [];
-			$this->mailID = count($userMailData);
+			$this->mailID = count($userMailData) + 1;
 			$userMailData[$this->mailID] = [
 				'action' => '',
 				'enableHTML' => $this->enableHTML,
