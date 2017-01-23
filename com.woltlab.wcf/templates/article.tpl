@@ -99,20 +99,20 @@
 {include file='header'}
 
 {if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
-	<section class="section">
-		<figure class="articleImage" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+	<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+		<figure class="articleImage">
 			<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
 			{if $articleContent->getImage()->caption}
 				<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
 			{/if}
-			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
-			<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
-			<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
 		</figure>
-	</section>
+		<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
+		<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
+		<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
+	</div>
 {/if}
 
-<section class="section articleContent"
+<div class="section articleContent"
          data-object-id="{@$article->articleID}"
          data-object-type="com.woltlab.wcf.likeableArticle"
          data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
@@ -145,7 +145,7 @@
 			<ul class="articleLikeButtons buttonGroup"></ul>
 		</div>
 	</div>
-</section>
+</div>
 
 {if ENABLE_SHARE_BUTTONS}
 	<section class="section jsOnly">
