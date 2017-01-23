@@ -360,6 +360,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$templateGroupFolderName = '';
 			if ($style !== null && $style->templateGroupID) {
 				$templateGroupFolderName = (new TemplateGroup($style->templateGroupID))->templateGroupFolderName;
+				$styleData['templateGroupID'] = $style->templateGroupID;
 			}
 			
 			if (empty($templateGroupFolderName)) {
