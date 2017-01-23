@@ -35,6 +35,10 @@
 	> .elementPointer {
 		display: none;
 	}
+	
+	@include screen-sm-down {
+		display: none;
+	}
 }
 
 /* actual popover content */
