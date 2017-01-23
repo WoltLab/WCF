@@ -129,7 +129,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				var div = elCreate('div');
 				div.innerHTML = html.replace(/@@@WOLTLAB-P-ALIGN-(?:left|right|center|justify)@@@/g, '');
 				
-				var element, elements = elBySelAll('[style]', div), property, removeStyles;
+				var element, elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
 					
@@ -139,6 +139,21 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						//noinspection JSUnresolvedVariable
 						if (this.opts.woltlab.allowedInlineStyles.indexOf(property) === -1) {
+							if (property === 'font-weight') {
+								styleValue = element.style.getPropertyValue(property);
+								if (styleValue === 'bold' || styleValue === 'bolder') {
+									styleValue = 600;
+								}
+								
+								styleValue = ~~styleValue;
+								if (styleValue > 500) {
+									// treat anything above 500 as bold
+									strong = elCreate('strong');
+									element.parentNode.insertBefore(strong, element);
+									strong.appendChild(element);
+								}
+							}
+							
 							removeStyles.push(property);
 						}
 					}
