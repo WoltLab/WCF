@@ -80,7 +80,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$pres = $this->document->getElementsByTagName('pre');
 		for ($i = 0, $length = $pres->length; $i < $length; $i++) {
 			/** @var \DOMElement $pre */
-			$pre = $pres[$i];
+			$pre = $pres->item($i);
 			/** @var \DOMNode $node */
 			foreach ($pre->childNodes as $node) {
 				if ($node->nodeType === XML_TEXT_NODE && mb_strpos($node->textContent, '@@@WCF_PRE_LINEBREAK@@@') !== false) {
