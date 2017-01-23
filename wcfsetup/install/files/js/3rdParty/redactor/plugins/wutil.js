@@ -815,6 +815,11 @@ RedactorPlugins.wutil = function() {
 				return false;
 			}
 			
+			// check if caret is there are child nodes beyond the current end offset
+			if ($range.endContainer.childNodes.length > $range.endOffset) {
+				return false;
+			}
+			
 			if ($range.endContainer.nodeType === Element.TEXT_NODE) {
 				// caret is not at the end
 				if ($range.endOffset < $range.endContainer.length) {
