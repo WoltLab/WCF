@@ -1831,6 +1831,17 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	},
 	
 	/**
+	 * @see	WCF.Search.Base._openDropdown()
+	 */
+	_openDropdown: function() {
+		this._list.find('small').each(function(index, element) {
+			while (element.scrollWidth > element.clientWidth) {
+				element.innerText = '\u2026 ' + element.innerText.substr(3);
+			}
+		});
+	},
+	
+	/**
 	 * @see	WCF.Search.Base._handleEmptyResult()
 	 */
 	_handleEmptyResult: function() {
