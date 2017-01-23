@@ -60,6 +60,15 @@ class StyleEditForm extends StyleAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function enforcePackageNameRestriction() {
+		if ($this->style->isTainted) {
+			parent::enforcePackageNameRestriction();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
 		

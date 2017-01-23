@@ -303,10 +303,7 @@ class StyleAddForm extends AbstractForm {
 				throw new UserInputException('packageName', 'invalid');
 			}
 			
-			// 3rd party styles may never have com.woltlab.* as name
-			if (strpos($this->packageName, 'com.woltlab.') === 0) {
-				throw new UserInputException('packageName', 'reserved');
-			}
+			$this->enforcePackageNameRestriction();
 		}
 		
 		// validate template group id
@@ -326,6 +323,18 @@ class StyleAddForm extends AbstractForm {
 		
 		if (!empty($this->variables['overrideScss'])) {
 			$this->parseOverrides();
+		}
+	}
+	
+	/**
+	 * Disallow the use of `com.woltlab.*` for package names to avoid accidential collisions.
+	 * 
+	 * @throws      UserInputException
+	 */
+	protected function enforcePackageNameRestriction() {
+		// 3rd party styles may never have com.woltlab.* as name
+		if (strpos($this->packageName, 'com.woltlab.') !== false) {
+			throw new UserInputException('packageName', 'reserved');
 		}
 	}
 	
