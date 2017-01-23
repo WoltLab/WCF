@@ -4,7 +4,7 @@
  * Message related classes for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Message = { };
@@ -2351,6 +2351,13 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @param	object		event
 	 */
 	_saveFullQuote: function(event) {
+		event.preventDefault();
+		var selection = window.getSelection();
+		if (!selection.isCollapsed && this._copyQuote) {
+			selection.removeAllRanges();
+			this._copyQuote.hide();
+		}
+		
 		var $listItem = $(event.currentTarget);
 		
 		this._proxy.setOption('data', {
