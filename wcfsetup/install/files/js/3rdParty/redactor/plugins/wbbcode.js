@@ -2485,8 +2485,10 @@ RedactorPlugins.wbbcode = function() {
 					
 					$codeBoxContent = $codeBoxContent.split('\n');
 					var $codeContent = '';
+					var $line;
 					for (var $i = 0; $i < $codeBoxContent.length; $i++) {
-						$codeContent += '<li>' + WCF.String.escapeHTML($codeBoxContent[$i]) + '</li>';
+						$line = $codeBoxContent[$i];
+						$codeContent += '<li>' + ($line.length ? WCF.String.escapeHTML($line) : this.opts.invisibleSpace) + '</li>';
 					}
 					$list.append($($codeContent));
 					
