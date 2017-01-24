@@ -796,12 +796,13 @@ RedactorPlugins.wmonkeypatch = function() {
 					}
 				}
 				else {
-					if (document.activeElement !== this.$editor[0]) {
+					var $selection = window.getSelection();
+					if (document.activeElement !== this.$editor[0] || $selection.rangeCount === 0) {
 						this.wutil.restoreSelection();
 					}
 					
-					if (html.match(/^<(blockquote|div|p)/i) && getSelection().getRangeAt(0).collapsed) {
-						var $startContainer = getSelection().getRangeAt(0).startContainer;
+					if (html.match(/^<(blockquote|div|p)/i) && $selection.getRangeAt(0).collapsed) {
+						var $startContainer = $selection.getRangeAt(0).startContainer;
 						if ($startContainer.nodeType === Node.TEXT_NODE && $startContainer.textContent === '\u200b') {
 							// Safari breaks if inserting block-level elements into a <p /> w/ only a zero-width space
 							this.caret.setEnd($($startContainer.parentElement).html('<br />'));
