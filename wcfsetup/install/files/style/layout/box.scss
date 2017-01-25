@@ -846,9 +846,16 @@
 			}
 			
 			> li {
-				flex: 0 0 25%;
+				@include screen-md-up {
+					flex: 0 0 25%;
+					max-width: 25%;
+				}
+				
+				@include screen-sm-down {
+					flex: 1 1 100%;
+				}
+				
 				margin-bottom: 20px;
-				max-width: 25%;
 				
 				> .boxMenuLink {
 					@include wcfFontHeadline;
