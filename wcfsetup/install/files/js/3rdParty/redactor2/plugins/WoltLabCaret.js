@@ -141,7 +141,14 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var mpSet = this.buffer.set;
 			this.buffer.set = (function (type) {
 				if (document.activeElement !== editor) {
-					restoreRange();
+					// check if caret is still inside the editor
+					var selection = window.getSelection();
+					if (selection.rangeCount && this.utils.isRedactorParent(selection.anchorNode) !== false) {
+						editor.focus();
+					}
+					else {
+						restoreRange();
+					}
 				}
 				
 				mpSet.call(this, type);
