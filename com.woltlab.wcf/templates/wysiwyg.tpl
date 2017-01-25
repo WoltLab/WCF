@@ -121,6 +121,8 @@
 				element.value = autosave.getInitialValue();
 			}
 			
+			var disableMedia = elDataBool(element, 'disable-media');
+			
 			var config = {
 				buttons: buttons,
 				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
@@ -237,7 +239,15 @@
 			
 			// media
 			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
-				config.plugins.push('WoltLabMedia');
+				if (disableMedia) {
+					var index = config.buttons.indexOf('woltlabMedia');
+					if (index !== -1) {
+						config.buttons.splice(index, 1);
+					}
+				}
+				else {
+					config.plugins.push('WoltLabMedia');
+				}
 			{/if}
 			
 			{if $__redactorConfig|isset}{@$__redactorConfig}{/if}
