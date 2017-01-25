@@ -48,6 +48,9 @@
 			background-color: {$style->getVariable('wcfFooterBackground', true)};
 			color: {$style->getVariable('wcfFooterText', true)};
 		}
+		.footer a {
+			color: {$style->getVariable('wcfFooterText', true)};
+		}
 		h1 {
 			font-weight: 300;
 			line-height: 1.05;
