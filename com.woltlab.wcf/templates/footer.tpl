@@ -16,49 +16,51 @@
 					{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
 				{/if}
 			</div>
-			
-			{hascontent}
+				
+			{capture assign='__sidebarRightContent'}
+				{event name='boxesSidebarRightTop'}
+				
+				{* WCF2.1 Fallback *}
+				{if !$sidebar|empty}
+					{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
+						{@$sidebar}
+					{/if}
+				{/if}
+				
+				{if !$sidebarRight|empty}
+					{@$sidebarRight}
+				{/if}
+				
+				{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
+					{@$box->render()}
+				{/foreach}
+				
+				{event name='boxesSidebarRightBottom'}
+			{/capture}
+				
+			{if $__sidebarRightContent|trim}
 				<aside class="sidebar boxesSidebarRight">
 					<div class="boxContainer">
-						{content}
-							{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
-								<div class="box boxBorderless">
-									<div class="boxContent">
-										{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
-									</div>
+						{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
+							<div class="box boxBorderless">
+								<div class="boxContent">
+									{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
 								</div>
-							{/if}
+							</div>
+						{/if}
 							
-							{event name='boxesSidebarRightTop'}
-													
-							{* WCF2.1 Fallback *}
-							{if !$sidebar|empty}
-								{if !$sidebarOrientation|isset || $sidebarOrientation == 'right'}
-									{@$sidebar}
-								{/if}
-							{/if}
-							
-							{if !$sidebarRight|empty}
-								{@$sidebarRight}
-							{/if}
-							
-							{foreach from=$__wcf->getBoxHandler()->getBoxes('sidebarRight') item=box}
-								{@$box->render()}
-							{/foreach}
+						{@$__sidebarRightContent}	
 						
-							{event name='boxesSidebarRightBottom'}
-						
-							{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
-								<div class="box boxBorderless">
-									<div class="boxContent">
-										{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
-									</div>
+						{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
+							<div class="box boxBorderless">
+								<div class="boxContent">
+									{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.bottom')}
 								</div>
-							{/if}	
-						{/content}
+							</div>
+						{/if}
 					</div>
 				</aside>
-			{/hascontent}
+			{/if}
 		</div>
 	</section>
 	
