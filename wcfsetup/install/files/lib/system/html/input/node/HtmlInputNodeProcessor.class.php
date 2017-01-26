@@ -22,6 +22,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @var array<array>
 	 */
 	public static $allowedClassNames = [
+		'h2' => ['text-center', 'text-justify', 'text-right'],
+		'h3' => ['text-center', 'text-justify', 'text-right'],
+		'h4' => ['text-center', 'text-justify', 'text-right'],
 		'img' => [
 			// float left/right
 			'messageFloatObjectLeft', 'messageFloatObjectRight',
