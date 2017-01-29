@@ -47,7 +47,7 @@ class Notice extends DatabaseObject implements IRouteController {
 		]);
 		
 		if (!$this->noticeUseHtml) {
-			$text = nl2br(htmlspecialchars($text), false);
+			$text = nl2br(StringUtil::encodeHTML($text), false);
 		}
 		
 		return $text;
