@@ -3,7 +3,7 @@
 		<div class="mediaThumbnail">
 			{@$media->getElementTag(144)}
 		</div>
-
+		
 		{assign var='__mediaTitle' value=$media->filename}
 		{if $media->title}
 			{assign var='__mediaTitle' value=$media->title}
@@ -11,7 +11,7 @@
 		<div class="mediaInformation">
 			<p class="mediaTitle">{$__mediaTitle}</p>
 		</div>
-
+		
 		<nav class="jsMobileNavigation buttonGroupNavigation">
 			<ul class="buttonList iconList">
 				<li class="mediaCheckbox">

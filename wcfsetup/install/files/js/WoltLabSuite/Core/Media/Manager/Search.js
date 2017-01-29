@@ -16,10 +16,11 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		this._mediaManager = mediaManager;
 		this._searchMode = false;
 		
-		this._input = elById('mediaManagerSearchField');
+		this._searchContainer = elByClass('mediaManagerSearch', mediaManager.getDialog())[0];
+		this._input = elByClass('mediaManagerSearchField', mediaManager.getDialog())[0];
 		this._input.addEventListener('keypress', this._keyPress.bind(this));
 		
-		this._cancelButton = elById('mediaManagerSearchCancelButton');
+		this._cancelButton = elByClass('mediaManagerSearchCancelButton', mediaManager.getDialog())[0];
 		this._cancelButton.addEventListener(WCF_CLICK_EVENT, this._cancelSearch.bind(this));
 	}
 	MediaManagerSearch.prototype = {
@@ -111,7 +112,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		 * Hides the media search.
 		 */
 		hideSearch: function() {
-			elHide(elById('mediaManagerSearch'));
+			elHide(this._searchContainer);
 		},
 		
 		/**
@@ -125,7 +126,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		 * Shows the media search.
 		 */
 		showSearch: function() {
-			elShow(elById('mediaManagerSearch'));
+			elShow(this._searchContainer);
 		}
 	};
 	

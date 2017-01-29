@@ -106,7 +106,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 			// show remove button
 			elShow(this._activeButton.nextElementSibling);
 			
-			UiDialog.close('mediaManager');
+			UiDialog.close(this);
 		},
 		
 		/**

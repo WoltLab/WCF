@@ -604,10 +604,17 @@ define(
 		/**
 		 * Returns the dialog data for given element id.
 		 * 
-		 * @param	{string}	id	element id
+		 * @param	{(string|object)}	id	element id or callback object
 		 * @return	{(object|undefined)}	dialog data or undefined if element id is unknown
 		 */
 		getDialog: function(id) {
+			if (typeof id === 'object') {
+				var dialogData = _dialogObjects.get(id);
+				if (dialogData !== undefined) {
+					id = dialogData.id;
+				}
+			}
+			
 			return _dialogs.get(id);
 		},
 		
