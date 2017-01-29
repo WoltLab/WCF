@@ -86,6 +86,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * @param	HtmlInputNodeProcessor		$processor
 	 * @param	Regex				$regex
 	 * @param	ITitledObject[]			$objects
+	 * @throws	ImplementationException
 	 */
 	protected function setObjectTitles(HtmlInputNodeProcessor $processor, Regex $regex, array $objects) {
 		foreach ($processor->getDocument()->getElementsByTagName('a') as $element) {
