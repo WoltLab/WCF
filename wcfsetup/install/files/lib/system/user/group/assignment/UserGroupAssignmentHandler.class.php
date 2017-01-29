@@ -86,7 +86,7 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the users who fullfil all conditions of the given user group
+	 * Returns the users who fulfill all conditions of the given user group
 	 * assignment.
 	 * 
 	 * @param	UserGroupAssignment	$assignment
