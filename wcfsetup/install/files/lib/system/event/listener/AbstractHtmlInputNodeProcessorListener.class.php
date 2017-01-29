@@ -61,6 +61,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * @param	string				$bbcodeName
 	 */
 	protected function replaceLinksWithBBCode(HtmlInputNodeProcessor $processor, Regex $regex, array $objects, $bbcodeName) {
+		$elements = [];
 		foreach ($processor->getDocument()->getElementsByTagName('a') as $element) {
 			/** @var \DOMElement $element */
 			if ($element->getAttribute('href') === $element->textContent) {
@@ -68,14 +69,21 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 					$objectID = $regex->getMatches()[2][0];
 					
 					if (isset($objects[$objectID])) {
-						$metacodeElement = $processor->getDocument()->createElement('woltlab-metacode');
-						$metacodeElement->setAttribute('data-name', $bbcodeName);
-						$metacodeElement->setAttribute('data-attributes', base64_encode(JSON::encode([$objectID])));
-						
-						DOMUtil::replaceElement($element, $metacodeElement, false);
+						$elements[] = [
+							'element' => $element,
+							'objectID' => $objectID
+						];
 					}
 				}
 			}
+		}
+		
+		foreach ($elements as $elementData) {
+			$metacodeElement = $processor->getDocument()->createElement('woltlab-metacode');
+			$metacodeElement->setAttribute('data-name', $bbcodeName);
+			$metacodeElement->setAttribute('data-attributes', base64_encode(JSON::encode([$elementData['objectID']])));
+			
+			DOMUtil::replaceElement($elementData['element'], $metacodeElement, false);
 		}
 	}
 	
