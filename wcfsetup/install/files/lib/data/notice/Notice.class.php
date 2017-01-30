@@ -6,6 +6,7 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a notice.
@@ -41,12 +42,12 @@ class Notice extends DatabaseObject implements IRouteController {
 		// replace `{$username}` with the active user's name and `{$email}`
 		// with the active user's email address
 		$text = strtr(WCF::getLanguage()->get($this->notice), [
-			'{$username}' => WCF::getUser()->username,
-			'{$email}' => WCF::getUser()->email
+			'{$username}' => $this->noticeUseHtml ? StringUtil::encodeHTML(WCF::getUser()->username) : WCF::getUser()->username,
+			'{$email}' => $this->noticeUseHtml ? StringUtil::encodeHTML(WCF::getUser()->email) : WCF::getUser()->email
 		]);
 		
 		if (!$this->noticeUseHtml) {
-			$text = nl2br(htmlspecialchars($text), false);
+			$text = nl2br(StringUtil::encodeHTML($text), false);
 		}
 		
 		return $text;
