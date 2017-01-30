@@ -120,7 +120,7 @@ class ArticleEditForm extends ArticleAddForm {
 	public function readData() {
 		if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			foreach ($this->article->getArticleContents() as $languageID => $content) {
-				$this->imageID[$languageID] = $content['imageID'];
+				$this->imageID[$languageID] = $content->imageID;
 			}
 			
 			$this->readImages();
