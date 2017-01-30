@@ -111,7 +111,9 @@
 				<a href="{page}com.woltlab.wcf.CookiePolicy{/page}" class="button buttonPrimary small cookiePolicyNoticeMoreInformation">{lang}wcf.page.cookiePolicy.info.moreInformation{/lang}</a>
 				<a href="#" class="button small jsOnly cookiePolicyNoticeDismiss">{lang}wcf.global.button.close{/lang}</a>
 				<script data-relocate="true">
-					elBySel('.cookiePolicyNoticeDismiss').addEventListener(WCF_CLICK_EVENT, function() {
+					elBySel('.cookiePolicyNoticeDismiss').addEventListener(WCF_CLICK_EVENT, function(event) {
+						event.preventDefault();
+
 						elRemove(elBySel('.cookiePolicyNotice'));
 					});
 				</script>
