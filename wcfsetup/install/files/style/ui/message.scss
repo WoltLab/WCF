@@ -141,14 +141,9 @@
 			.userAvatar {
 				display: block;
 				margin: 0;
-				position: static;
-				
-				> a {
-					left: 0;
-					position: absolute;
-					top: 50%;
-					transform: translateY(-50%);
-				}
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
 				
 				.userAvatarImage {
 					max-height: 48px;
@@ -157,7 +152,8 @@
 			}
 			
 			.messageAuthorContainer,
-			.userTitle {
+			.userTitle,
+			.userRank {
 				margin-left: 58px;
 			}
 		}
@@ -211,6 +207,7 @@
 		@include screen-sm-down {
 			color: transparent;
 			padding: 0;
+			top: 0;
 			width: 0;
 			
 			&::before {
@@ -224,6 +221,10 @@
 				width: 16px;
 			}
 		}
+	}
+	
+	.userTitle + .userRank {
+		margin-top: 3px;
 	}
 }
 
