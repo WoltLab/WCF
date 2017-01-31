@@ -64,6 +64,7 @@
 		
 		@include screen-md-down {
 			height: 50px;
+			-webkit-justify-content: center;
 			justify-content: center;
 			left: 60px;
 			padding: 9px 0;
@@ -439,6 +440,7 @@
 @include screen-md-down {
 	.pageHeaderPanel > .layoutBoundary {
 		/* pushes buttons to the left / right corner */
+		-webkit-justify-content: space-between;
 		justify-content: space-between;
 	}
 	
