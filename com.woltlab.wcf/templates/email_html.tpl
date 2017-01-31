@@ -13,6 +13,7 @@
 		
 		body {
 			background-color: {$style->getVariable('wcfContentBackground', true)};
+			color: {$style->getVariable('wcfContentText', true)};
 		}
 		
 		a {
@@ -49,7 +50,7 @@
 			color: {$style->getVariable('wcfFooterText', true)};
 		}
 		.footer a {
-			color: {$style->getVariable('wcfFooterText', true)};
+			color: {$style->getVariable('wcfFooterLink', true)};
 		}
 		h1 {
 			font-weight: 300;
