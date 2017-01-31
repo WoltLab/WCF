@@ -1224,6 +1224,9 @@ if (isset($_GET['showFont'])) {
 
 // check whether setup files are already unzipped
 if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
+	// extract the tar-ball at the end of install.php
+	file_put_contents(SETUP_FILE, file_get_contents(__FILE__, false, null, __COMPILER_HALT_OFFSET__));
+	
 	// try to unzip all setup files into temp folder
 	$tar = new Tar(SETUP_FILE);
 	$contentList = $tar->getContentList();
@@ -1261,3 +1264,4 @@ if (!class_exists('wcf\system\WCFSetup')) {
 
 // start setup
 new \wcf\system\WCFSetup();
+__halt_compiler();
