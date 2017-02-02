@@ -153,13 +153,13 @@
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 			
 			/* one item */
 			&:first-child:nth-last-child(1) {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 		}
 		
@@ -170,13 +170,13 @@
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 			
 			/* one item */
 			&:first-child:nth-last-child(1) {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 			
 			/* two items */
@@ -460,7 +460,8 @@
 			@include screen-md-down {
 				position: relative;
 				
-				.boxMenuLink {
+				.boxMenuLink,
+				.boxMenuLinkTitle {
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
@@ -693,7 +694,7 @@
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 		}
 	}
