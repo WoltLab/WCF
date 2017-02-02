@@ -47,6 +47,9 @@ define(['Ui/Screen'], function(UiScreen) {
 			_enabled = true;
 			
 			this._rebuildVisibility();
+			
+			// IE11 sometimes suffers from a timing issue
+			window.setTimeout(this._rebuildVisibility.bind(this), 1000);
 		},
 		
 		/**
