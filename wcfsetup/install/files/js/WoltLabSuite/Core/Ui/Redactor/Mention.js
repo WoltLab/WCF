@@ -1,4 +1,4 @@
-define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, UiCloseOverlay) {
+define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, Environment, StringUtil, UiCloseOverlay) {
 	"use strict";
 	
 	var _dropdownContainer = null;
@@ -385,7 +385,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				link = elCreate('a');
 				link.addEventListener('mousedown', callbackClick);
 				link.className = 'box16';
-				link.innerHTML = '<span>' + user.icon + '</span> <span>' + user.label + '</span>';
+				link.innerHTML = '<span>' + user.icon + '</span> <span>' + StringUtil.escapeHTML(user.label) + '</span>';
 				elData(link, 'user-id', user.objectID);
 				elData(link, 'username', user.label);
 				
