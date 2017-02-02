@@ -6,12 +6,6 @@ $wcfAcpMenuWidth: 150px;
 	min-width: 0;
 }
 
-@include screen-lg {
-	.tabularBox {
-		overflow: auto;
-	}
-}
-
 /* page header */
 .pageHeaderContainer {
 	@include screen-lg {
