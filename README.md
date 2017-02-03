@@ -8,11 +8,11 @@ _Formerly known as [WoltLab Community Framework](https://community.woltlab.com/t
 Version notes
 -------------
 
-This is the **EXPERIMENTAL/crash-for-sure** tree of WoltLab Suite Core, it contains work in progress subject to change. At no point it is guaranteed to yield a successful build.
+This is the **stable** tree of WoltLab Suite Core, changes will be rejected unless they fix an existing issue without changing the API.
 
 Other versions:
-- **stable** branch: [WCF 2.1.x](https://github.com/WoltLab/WCF/tree/master)
-- **oldstable** branch: [WCF 2.0.x](https://github.com/WoltLab/WCF/tree/2.0)
+- **oldstable** branch: [WCF 2.1.x](https://github.com/WoltLab/WCF/tree/2.1)
+- **oldoldstable** branch: [WCF 2.0.x](https://github.com/WoltLab/WCF/tree/2.0)
 
 About Redactor II
 -----------------
@@ -26,7 +26,7 @@ Redactor II is **NOT** free software!
 Contribution
 ------------
 
-For information on contributing to WoltLab Suite Core refer to CONTRIBUTING.md in this folder.
+For information on contributing to WoltLab Suite Core refer to [CONTRIBUTING.md](CONTRIBUTING.md) in this folder.
 
 License
 -------
