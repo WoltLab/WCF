@@ -831,7 +831,7 @@ class WCF {
 			return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
 		}
 		
-		return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());
+		return self::getActiveRequest()->getPageID() ?: null;
 	}
 	
 	/**
