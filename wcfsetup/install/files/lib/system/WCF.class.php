@@ -826,12 +826,8 @@ class WCF {
 			return null;
 		}
 		
-		if (self::getActiveRequest()->getClassName() === CmsPage::class) {
-			$metaData = self::getActiveRequest()->getMetaData();
-			return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
-		}
-		
-		return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());
+		$pageID = self::getActiveRequest()->getPageID();
+		return $pageID ? PageCache::getInstance()->getPage($pageID) : null;
 	}
 	
 	/**
