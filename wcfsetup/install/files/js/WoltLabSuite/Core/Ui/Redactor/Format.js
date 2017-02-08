@@ -74,11 +74,14 @@ define(['Dom/Util'], function(DomUtil) {
 				selection.addRange(range);
 			}
 			
+			var selectionMarker = ['strike', 'strikethrough'];
 			if (tmpElement === null) {
-				document.execCommand('strikethrough');
+				selectionMarker = this._getSelectionMarker(editorElement, selection);
+				
+				document.execCommand(selectionMarker[1]);
 			}
-			
-			var elements = elBySelAll('strike', editorElement), formatElement, selectElements = [], strike;
+			console.debug(selectionMarker);
+			var elements = elBySelAll(selectionMarker[0], editorElement), formatElement, selectElements = [], strike;
 			for (var i = 0, length = elements.length; i < length; i++) {
 				strike = elements[i];
 				
@@ -194,7 +197,12 @@ define(['Dom/Util'], function(DomUtil) {
 				DomUtil.unwrapChildNodes(strikeElements[0]);
 			}
 			
-			document.execCommand('strikethrough');
+			var selectionMarker = this._getSelectionMarker(editorElement, window.getSelection());
+			
+			document.execCommand(selectionMarker[1]);
+			if (selectionMarker[0] !== 'strike') {
+				strikeElements = elByTag(selectionMarker[0], editorElement);
+			}
 			
 			var lastMatchingParent, strikeElement;
 			while (strikeElements.length) {
@@ -330,6 +338,47 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			return true;
+		},
+		
+		/**
+		 * Returns a custom selection marker element, can be either `strike`, `sub` or `sup`. Using other kind
+		 * of formattings is not possible due to the inconsistent behavior across browsers.
+		 * 
+		 * @param       {Element}       editorElement   editor element
+		 * @param       {Selection}     selection       selection object
+		 * @return      {string[]}      tag name and command name
+		 * @protected
+		 */
+		_getSelectionMarker: function (editorElement, selection) {
+			var node = selection.anchorNode;
+			
+			var tag, tags = ['DEL', 'SUB', 'SUP'];
+			for (var i = 0, length = tags.length; i < length; i++) {
+				tag = tags[i];
+				
+				var hasNode = false;
+				while (node && node !== editorElement) {
+					if (node.nodeName === tag) {
+						hasNode = true;
+						break;
+					}
+					
+					node = node.parentNode;
+				}
+				
+				if (hasNode) {
+					tag = undefined;
+				}
+				else {
+					break;
+				}
+			}
+			
+			if (tag === 'DEL' || tag === undefined) {
+				return ['strike', 'strikethrough'];
+			}
+			
+			return [tag.toLowerCase(), tag.toLowerCase() + 'script'];
 		}
 	};
 });
