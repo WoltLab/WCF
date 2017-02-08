@@ -649,7 +649,7 @@ define(
 		
 		_ajaxFailure: function(data) {
 			var elementData = this._elements.get(this._activeElement);
-			var editor = elBySel('.redactor-editor', elementData.messageBodyEditor);
+			var editor = elBySel('.redactor-layer', elementData.messageBodyEditor);
 			
 			// handle errors occurring on editor load
 			if (editor === null) {

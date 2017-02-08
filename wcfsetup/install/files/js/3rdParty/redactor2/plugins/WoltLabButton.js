@@ -5,6 +5,9 @@ $.Redactor.prototype.WoltLabButton = function() {
 	
 	return {
 		init: function() {
+			// tooltips are handled on our own
+			this.button.buildButtonTooltip = function () {};
+			
 			// add custom buttons
 			var button, buttonName, i, length;
 			//noinspection JSUnresolvedVariable

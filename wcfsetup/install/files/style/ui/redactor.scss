@@ -23,7 +23,7 @@
 	}
 }
 
-.redactor-editor {
+.redactor-layer {
 	border: 1px solid $wcfContentBorderInner;
 	border-top-width: 0;
 	max-height: 500px;
@@ -145,7 +145,7 @@
 
 /* disable auto zoom in mobile safari */
 @include screen-md-down {
-	.redactor-editor {
+	.redactor-layer {
 		font-size: 16px;
 		max-height: 500px;
 	}
@@ -561,7 +561,7 @@
 	top: 0;
 	z-index: 310;
 	
-	.redactor-editor {
+	.redactor-layer {
 		max-height: none !important;
 		min-height: 0 !important;
 	}
