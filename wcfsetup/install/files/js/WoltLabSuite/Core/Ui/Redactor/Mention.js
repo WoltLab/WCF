@@ -190,13 +190,19 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, 
 				return null;
 			}
 			
+			var container = selection.anchorNode;
+			if (container.nodeType === Node.TEXT_NODE) {
+				// work-around for Firefox after suggestions have been presented
+				container = container.parentNode;
+			}
+			
 			// check if there is an '@' within the current range
-			if (selection.anchorNode.textContent.indexOf('@') === -1) {
+			if (container.textContent.indexOf('@') === -1) {
 				return null;
 			}
 			
 			// check if we're inside code or quote blocks
-			var container = selection.anchorNode, editor = this._redactor.core.editor()[0];
+			var editor = this._redactor.core.editor()[0];
 			while (container && container !== editor) {
 				if (['PRE', 'WOLTLAB-QUOTE'].indexOf(container.nodeName) !== -1) {
 					return null;
