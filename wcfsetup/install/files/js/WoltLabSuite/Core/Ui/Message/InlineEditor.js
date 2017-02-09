@@ -696,7 +696,8 @@ define(
 				data: {
 					className: this._options.className,
 					interfaceName: 'wcf\\data\\IMessageInlineEditorAction'
-				}
+				},
+				silent: true
 			};
 		},
 		

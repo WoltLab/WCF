@@ -376,12 +376,12 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		
 		_ajaxSetup: function() {
 			return {
-				silent: true,
 				data: {
 					actionName: 'quickReply',
 					className: this._options.ajax.className,
 					interfaceName: 'wcf\\data\\IMessageQuickReplyAction'
-				}
+				},
+				silent: true
 			};
 		}
 	};
