@@ -80,7 +80,7 @@ define(['Dom/Util'], function(DomUtil) {
 				
 				document.execCommand(selectionMarker[1]);
 			}
-			console.debug(selectionMarker);
+			
 			var elements = elBySelAll(selectionMarker[0], editorElement), formatElement, selectElements = [], strike;
 			for (var i = 0, length = elements.length; i < length; i++) {
 				strike = elements[i];
