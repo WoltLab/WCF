@@ -7,7 +7,6 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
-use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
 use wcf\system\box\BoxHandler;
@@ -826,12 +825,8 @@ class WCF {
 			return null;
 		}
 		
-		if (self::getActiveRequest()->getClassName() === CmsPage::class) {
-			$metaData = self::getActiveRequest()->getMetaData();
-			return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
-		}
-		
-		return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());
+		$pageID = self::getActiveRequest()->getPageID();
+		return $pageID ? PageCache::getInstance()->getPage($pageID) : null;
 	}
 	
 	/**
