@@ -35,6 +35,32 @@ $.Redactor.prototype.WoltLabEvent = function() {
 					}, 100);
 				});
 			}
+			
+			this.events.iterateObserver = (function(mutation) {
+				var stop = false;
+				
+				// target
+				// WoltLab modification: do not suppress event if nodes have been added
+				if (((this.opts.type === 'textarea' || this.opts.type === 'div')
+					&& (!this.detect.isFirefox() && mutation.target === this.core.editor()[0]) && (mutation.type === 'childList' && !mutation.addedNodes.length))
+					|| (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0])
+				)
+				{
+					console.log(mutation, mutation.addedNodes.length);
+					stop = true;
+				}
+				
+				if (!stop)
+				{
+					this.observe.load();
+					this.events.changeHandler();
+				}
+			}).bind(this);
+			
+			// re-attach the observer
+			this.events.observer.disconnect();
+			this.events.createObserver();
+			this.events.setupObserver();
 		},
 		
 		_setEvents: function(EventHandler) {
