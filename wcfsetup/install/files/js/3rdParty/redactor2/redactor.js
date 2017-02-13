@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.0
-	Updated: February 5, 2017
+	Version 2.1
+	Updated: February 13, 2017
 
 	http://imperavi.com/redactor/
 
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.0';
+	$.Redactor.VERSION = '2.1';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -506,11 +506,12 @@
 
 			this.opts = $.extend(
 				{},
-				$.extend(true, {}, $.Redactor.opts),
-				$.extend(true, {}, settings),
+				$.Redactor.opts,
 				this.$element.data(),
 				options
 			);
+
+			this.opts = $.extend(true, this.opts, settings);
 
 		},
 		getModuleMethods: function(object)
@@ -613,9 +614,9 @@
 				},
 				show: function (e)
 				{
-					this.marker.remove();
-					this.selection.save();
-					this.selection.restore(false);
+					//this.marker.remove();
+					this.selection.saveInstant();
+					//this.selection.restore(false);
 
 					$('.redactor-air').hide();
 
@@ -661,19 +662,19 @@
 						if (key === this.keyCode.ESC)
 						{
 							this.selection.get().collapseToStart();
-							this.marker.remove();
+							//this.marker.remove();
 						}
 						else if (key === this.keyCode.BACKSPACE || key === this.keyCode.DELETE)
 						{
 							var sel = this.selection.get();
 							var range = this.selection.range(sel);
 							range.deleteContents();
-							this.marker.remove();
+							//this.marker.remove();
 						}
 						else if (key === this.keyCode.ENTER)
 						{
 							this.selection.get().collapseToEnd();
-							this.marker.remove();
+							//this.marker.remove();
 						}
 
 						if (this.air.enabled)
@@ -683,7 +684,7 @@
 						else
 						{
 							this.selection.get().collapseToStart();
-							this.marker.remove();
+							//this.marker.remove();
 						}
 
 
@@ -783,7 +784,7 @@
 					var json;
 					try
 					{
-						json = $.parseJSON(data);
+						json = JSON.parse(data);
 					}
 					catch(e)
 					{
@@ -1114,26 +1115,28 @@
 				},
 				setUndo: function()
 				{
-					var saved = this.selection.saveInstant();
+                    var saved = this.selection.saveInstant();
 
 					var last = this.opts.buffer[this.opts.buffer.length-1];
 					var current = this.core.editor().html();
-					if (last !== current)
-					{
+
+					var save = (typeof last !== 'undefined' && (last[0] === current)) ? false : true;
+    				if (save)
+    				{
 						this.opts.buffer.push([current, saved]);
 					}
 
-					this.selection.restoreInstant();
+					//this.selection.restoreInstant();
 				},
 				setRedo: function()
 				{
 					var saved = this.selection.saveInstant();
 					this.opts.rebuffer.push([this.core.editor().html(), saved]);
-					this.selection.restoreInstant();
+					//this.selection.restoreInstant();
 				},
 				add: function()
 				{
-					this.opts.buffer.push(this.core.editor().html());
+					this.opts.buffer.push([this.core.editor().html(), 0]);
 				},
 				undo: function()
 				{
@@ -2216,7 +2219,6 @@
 				},
 				start: function(node)
 				{
-
 					var sel, range;
 					node = this.caret.prepare(node);
 
@@ -2230,45 +2232,56 @@
 						return this.caret.before(node);
 					}
 
+					var $first = $(node).children().first();
+
 					// empty or inline tag
 					var inline = this.utils.isInlineTag(node.tagName);
 					if (node.innerHTML === '' || inline)
 					{
-                        sel = window.getSelection();
-					    range = document.createRange();
-						var textNode = document.createTextNode('\u200B');
-
-						range.setStart(node, 0);
-						range.insertNode(textNode);
-						range.setStartAfter(textNode);
-						range.collapse(true);
-
-						sel.removeAllRanges();
-						sel.addRange(range);
-
-						// remove invisible text node
-						if (!inline)
-						{
-							this.core.editor().on('keydown.redactor-remove-textnode', function()
-							{
-								$(textNode).remove();
-								$(this).off('keydown.redactor-remove-textnode');
-							});
-						}
+                        this.caret.setStartEmptyOrInline(node, inline);
 					}
-					// block tag
+					// empty inline inside
+                    else if ($first && $first.length !== 0 && this.utils.isInlineTag($first[0].tagName) && $first.text() === '')
+                    {
+                       this.caret.setStartEmptyOrInline($first[0], true);
+                    }
+                    // block tag
 					else
 					{
-						sel = window.getSelection();
-						sel.removeAllRanges();
+                        sel = window.getSelection();
+                        sel.removeAllRanges();
 
-						range = document.createRange();
-						range.selectNodeContents(node);
-						range.collapse(true);
-						sel.addRange(range);
+                        range = document.createRange();
+                        range.selectNodeContents(node);
+                        range.collapse(true);
+                        sel.addRange(range);
 					}
 
 
+				},
+				setStartEmptyOrInline: function(node, inline)
+				{
+                    var sel = window.getSelection();
+				    var range = document.createRange();
+					var textNode = document.createTextNode('\u200B');
+
+					range.setStart(node, 0);
+					range.insertNode(textNode);
+					range.setStartAfter(textNode);
+					range.collapse(true);
+
+					sel.removeAllRanges();
+					sel.addRange(range);
+
+					// remove invisible text node
+					if (!inline)
+					{
+						this.core.editor().on('keydown.redactor-remove-textnode', function()
+						{
+							$(textNode).remove();
+							$(this).off('keydown.redactor-remove-textnode');
+						});
+					}
 				},
 				end: function(node)
 				{
@@ -2573,7 +2586,7 @@
 					$div.find('*[rel=""]').removeAttr('rel');
 
 					// remove markers
-					$div.find('.redactor-invisible-space').each(function()
+					$div.find('.redactor-invisible-space, .redactor-unlink').each(function()
 					{
 						$(this).contents().unwrap();
 					});
@@ -2967,7 +2980,7 @@
     					$links.attr('target', this.opts.pasteLinkTarget);
 					}
 
-                    // links & images
+                    // links
                     if (data.links && this.opts.pasteLinks)
                     {
                     	$div.find('a').each(function(i, link)
@@ -2992,6 +3005,7 @@
 
                     html = $div.html();
 
+                    // images
 					if (data.images && this.opts.pasteImages)
 					{
 						html = html.replace(/<img(.*?)src="(.*?)"(.*?[^>])>/gi, '##%img$1src="$2"$3%##');
@@ -5011,14 +5025,23 @@
 					var $figure = $image.closest(this.opts.imageTag, this.core.editor()[0]);
 					var $parent = $image.parent();
 
+					// callback
+                    var imageDeleteStop = this.core.callback('imageDelete', e, $image[0]);
+					if (imageDeleteStop === false)
+					{
+						e.preventDefault();
+						return false;
+					}
+
 					if ($('#redactor-image-box').length !== 0)
 					{
 						$parent = $('#redactor-image-box').parent();
 					}
 
-					var $next;
+					var $next, $prev;
 					if ($figure.length !== 0)
 					{
+						$prev = $figure.prev();
 						$next = $figure.next();
 						$figure.remove();
 					}
@@ -5036,19 +5059,18 @@
 
 					if (e !== false)
 					{
-						if ($figure.length !== 0 && $next.length !== 0)
+						if ($next && $next.length !== 0)
 						{
 							this.caret.start($next);
 						}
-						else if ($parent.length !== 0)
+						else if ($prev && $prev.length !== 0)
 						{
-							this.caret.start($parent);
+                            this.caret.end($prev);
 						}
 					}
 
 					if (typeof e !== 'boolean')
 					{
-
 						this.modal.close();
 					}
 
@@ -5436,7 +5458,7 @@
         				{
             				for (var key in attr)
                             {
-            				    self.inline.setAttr($inside, key, attr[key], 'remove');
+            				    self.inline.removeSpecificAttr($inside, key, attr[key]);
             				}
         				}
 
@@ -5446,7 +5468,7 @@
                         {
                             for (var key in attr)
                             {
-            				    self.inline.setAttr($parent, key, attr[key], 'remove');
+            				    self.inline.removeSpecificAttr($parent, key, attr[key]);
             				}
                         }
     				});
@@ -5638,6 +5660,20 @@
 				addAttr: function(attr, value, inline)
 				{
 					return $(this.inline.getInlines(inline)).attr(attr, value)[0];
+				},
+				removeSpecificAttr: function(inline, key, value)
+				{
+    				if (key === 'style')
+    				{
+        				var arr = value.split(':');
+        				var name = arr[0].trim();
+                        $(inline).css(name, '');
+                        this.utils.removeEmptyAttr(inline, 'style');
+    				}
+    				else
+    				{
+        				$(inline).removeAttr(key)[0];
+    				}
 				},
 				removeAttr: function(attr, inline)
 				{
@@ -6318,7 +6354,6 @@
 					// backspace
 					if (key === this.keyCode.BACKSPACE)
 					{
-
 						if (this.detect.isFirefox())
 						{
 							this.line.removeOnBackspace(e);
@@ -6459,6 +6494,7 @@
                         return;
                     }
 
+
 					// remove inline tags in new-empty paragraph
 					setTimeout($.proxy(function()
 					{
@@ -6483,8 +6519,8 @@
             				sel.addRange(range);
 						}
 
-					}, this), 1);
 
+					}, this), 1);
 				},
 				checkEvents: function(arrow, key)
 				{
@@ -9423,7 +9459,6 @@
 						return node.nextSibling;
 					}
 				},
-				saved: {},
 				save: function()
 				{
  					this.marker.insert();
@@ -9477,11 +9512,13 @@
 
                     var start = selectionRange.toString().length;
 
-                    return this.saved = {
+                    this.saved = {
                         start: start,
                         end: start + range.toString().length,
                         node: range.startContainer
                     };
+
+                    return this.saved;
                 },
                 restoreInstant: function(saved)
                 {
@@ -9507,7 +9544,6 @@
 
                         return;
                     }
-
 
                     var el = this.core.editor()[0];
                     var doc = el.ownerDocument, win = doc.defaultView;
@@ -10181,7 +10217,7 @@
 							var json;
 							try
 							{
-								json = (typeof data === 'string' ? $.parseJSON(data) : data);
+								json = (typeof data === 'string' ? JSON.parse(data) : data);
 							}
 							catch(err)
 							{
@@ -10822,14 +10858,12 @@
 				},
 				rgb2hex: function(rgb)
 				{
-                    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
 
-                    function hex(x)
-                    {
-                        return ("0" + parseInt(x).toString(16)).slice(-2);
-                    }
-
-                    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+                    return (rgb && rgb.length === 4) ? "#" +
+                    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+                    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+                    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
                 },
 
 				// #backward
