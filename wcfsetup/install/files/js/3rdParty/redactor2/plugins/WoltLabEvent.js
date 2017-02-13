@@ -46,7 +46,6 @@ $.Redactor.prototype.WoltLabEvent = function() {
 					|| (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0])
 				)
 				{
-					console.log(mutation, mutation.addedNodes.length);
 					stop = true;
 				}
 				
