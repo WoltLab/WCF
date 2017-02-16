@@ -719,38 +719,38 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 */
 	public static function copyLanguageContent($sourceLanguageID, $destinationLanguageID) {
 		// article content
-		$sql = "INSERT INTO     wcf".WCF_N."_article_content
-					(articleID, languageID, title, teaser, content, imageID, hasEmbeddedObjects)
-			SELECT          articleID, ?, title, teaser, content, imageID, hasEmbeddedObjects
-			FROM            wcf".WCF_N."_article_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_article_content
+						(articleID, languageID, title, teaser, content, imageID, hasEmbeddedObjects)
+			SELECT                  articleID, ?, title, teaser, content, imageID, hasEmbeddedObjects
+			FROM                    wcf".WCF_N."_article_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
 		// box content
-		$sql = "INSERT INTO     wcf".WCF_N."_box_content
-					(boxID, languageID, title, content, imageID, hasEmbeddedObjects)
-			SELECT          boxID, ?, title, content, imageID, hasEmbeddedObjects
-			FROM            wcf".WCF_N."_box_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_box_content
+						(boxID, languageID, title, content, imageID, hasEmbeddedObjects)
+			SELECT                  boxID, ?, title, content, imageID, hasEmbeddedObjects
+			FROM                    wcf".WCF_N."_box_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
 		// media content
-		$sql = "INSERT INTO     wcf".WCF_N."_media_content
-					(mediaID, languageID, title, caption, altText)
-			SELECT          mediaID, ?, title, caption, altText
-			FROM            wcf".WCF_N."_media_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_media_content
+						(mediaID, languageID, title, caption, altText)
+			SELECT                  mediaID, ?, title, caption, altText
+			FROM                    wcf".WCF_N."_media_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
 		// page content
-		$sql = "INSERT INTO     wcf".WCF_N."_page_content
-					(pageID, languageID, title, content, metaDescription, metaKeywords, customURL, hasEmbeddedObjects)
-			SELECT          pageID, ?, title, content, metaDescription, metaKeywords, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
-			FROM            wcf".WCF_N."_page_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_page_content
+						(pageID, languageID, title, content, metaDescription, metaKeywords, customURL, hasEmbeddedObjects)
+			SELECT                  pageID, ?, title, content, metaDescription, metaKeywords, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
+			FROM                    wcf".WCF_N."_page_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $destinationLanguageID, $sourceLanguageID]);
 		
