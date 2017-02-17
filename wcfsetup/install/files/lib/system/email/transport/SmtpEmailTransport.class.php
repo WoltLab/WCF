@@ -358,7 +358,7 @@ class SmtpEmailTransport implements IEmailTransport {
 			if (StringUtil::startsWith($item, '.')) return '.'.$item;
 			
 			return $item;
-		}, explode("\r\n", $email->getEmail()))));
+		}, explode("\r\n", $email->getEmail())))."\r\n");
 		$this->write(".");
 		$this->read([250]);
 	}
