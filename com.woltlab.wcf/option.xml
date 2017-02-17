@@ -818,10 +818,12 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 			<option name="mail_from_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
+				<validationpattern><![CDATA[^.+@.+\..+$]]></validationpattern>
 			</option>
 			<option name="mail_admin_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
+				<validationpattern><![CDATA[^.+@.+\..+$]]></validationpattern>
 			</option>
 			<option name="mail_signature">
 				<categoryname>general.mail.general</categoryname>
