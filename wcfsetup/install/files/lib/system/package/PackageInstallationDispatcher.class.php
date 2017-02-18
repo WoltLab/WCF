@@ -368,6 +368,7 @@ class PackageInstallationDispatcher {
 		// update package
 		if ($this->queue->packageID) {
 			$packageEditor = new PackageEditor(new Package($this->queue->packageID));
+			unset($nodeData['installDate']);
 			$packageEditor->update($nodeData);
 			
 			// delete old excluded packages
