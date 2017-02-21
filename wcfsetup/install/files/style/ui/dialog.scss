@@ -83,7 +83,14 @@
 		background-color: $wcfHeaderBackground;
 		color: $wcfHeaderText;
 		display: flex;
-		padding: 10px 20px;
+		
+		@include screen-sm-down {
+			padding: 10px;
+		}
+		
+		@include screen-md-up {
+			padding: 10px 20px;
+		}
 		
 		> span {
 			flex: 1 auto;
