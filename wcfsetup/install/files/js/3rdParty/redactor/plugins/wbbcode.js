@@ -1612,7 +1612,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<\/h[1-6]>/g, '[/size]');
 			
 			// some fixes for paste from Microsoft Word / OpenOffice / LibreOffice
-			if (/<p class="MsoNormal/.test(html) || /margin-bottom: 0cm/.test(html)) {
+			if (/<p class="Mso(?:Normal|NoSpacing)/.test(html) || /margin-bottom: 0cm/.test(html)) {
 				// fix weird newlines
 				html = html.replace(/([^>\s])\n([^<\s])/g, '$1 $2');
 				
