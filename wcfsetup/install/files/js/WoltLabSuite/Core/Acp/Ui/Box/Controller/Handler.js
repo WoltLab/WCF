@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
  */
-define(['Ajax', 'Dictionary'], function(Ajax, Dictionary) {
+define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 	"use strict";
 	
 	var _boxControllerContainer = elById('boxControllerContainer');
@@ -52,7 +52,7 @@ define(['Ajax', 'Dictionary'], function(Ajax, Dictionary) {
 		_ajaxSuccess: function(data) {
 			_templates.set(~~data.returnValues.objectTypeID, data.returnValues.template);
 			
-			_boxConditions.innerHTML = data.returnValues.template;
+			DomUtil.setInnerHtml(_boxConditions, data.returnValues.template);
 		},
 		
 		/**
