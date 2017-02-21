@@ -410,24 +410,69 @@
 			margin-top: 30px;
 		}
 		
+		&.boxError,
+		&.boxInfo,
+		&.boxSuccess,
+		&.boxWarning {
+			a:not(.button) {
+				@include wcfFontBold;
+				
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+		
 		&.boxError {
 			background-color: $wcfStatusErrorBackground;
 			color: $wcfStatusErrorText;
+			
+			a:not(.button) {
+				color: $wcfStatusErrorLink;
+				
+				&:hover {
+					color: $wcfStatusErrorLinkActive;
+				}
+			}
 		}
 		
 		&.boxInfo {
 			background-color: $wcfStatusInfoBackground;
 			color: $wcfStatusInfoText;
+			
+			a:not(.button) {
+				color: $wcfStatusInfoLink;
+				
+				&:hover {
+					color: $wcfStatusInfoLinkActive;
+				}
+			}
 		}
 		
 		&.boxSuccess {
 			background-color: $wcfStatusSuccessBackground;
 			color: $wcfStatusSuccessText;
+			
+			a:not(.button) {
+				color: $wcfStatusSuccessLink;
+				
+				&:hover {
+					color: $wcfStatusSuccessLinkActive;
+				}
+			}
 		}
 		
 		&.boxWarning {
 			background-color: $wcfStatusWarningBackground;
 			color: $wcfStatusWarningText;
+			
+			a:not(.button) {
+				color: $wcfStatusWarningLink;
+				
+				&:hover {
+					color: $wcfStatusWarningLinkActive;
+				}
+			}
 		}
 		
 		.boxMenu {
