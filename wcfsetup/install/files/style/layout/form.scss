@@ -89,6 +89,12 @@ textarea {
 	}
 }
 
+input[disabled],
+textarea[disabled] {
+	-webkit-text-fill-color: $wcfInputDisabledText; /* override safari font color change */
+	-webkit-opacity: 1; /* override mobile safari opacity change affecting text color */
+}
+
 select {
 	// The width is determined by the browser based upon the longest <option> contained,
 	// but this can cause the <select> to overflow the parent container. This is acceptable
