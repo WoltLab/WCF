@@ -55,6 +55,8 @@ $.Redactor.prototype.WoltLabColor = function() {
 				
 				this.buffer.set();
 			}).bind(this));
+			
+			this.selection.restore();
 		},
 		
 		removeColor: function() {
@@ -67,6 +69,8 @@ $.Redactor.prototype.WoltLabColor = function() {
 				
 				this.buffer.set();
 			}).bind(this));
+			
+			this.selection.restore();
 		}
 	};
 };
