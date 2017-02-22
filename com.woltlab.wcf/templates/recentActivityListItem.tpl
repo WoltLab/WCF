@@ -13,7 +13,7 @@
 					<small class="containerContentType">{lang}wcf.user.recentActivity.{@$event->getObjectTypeName()}{/lang}</small>
 				</div>
 				
-				<div class="containerContent">{@$event->getDescription()}</div>
+				<div class="containerContent htmlContent">{@$event->getDescription()}</div>
 			</div>
 		</div>
 	</li>
