@@ -89,6 +89,7 @@ dl {
 		
 		> dd {
 			float: right;
+			min-height: 20px;
 			text-align: right;
 			
 			&:not(:last-child) {
