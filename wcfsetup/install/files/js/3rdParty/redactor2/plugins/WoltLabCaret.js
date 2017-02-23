@@ -14,11 +14,27 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				mpAfter.call(this, node);
 			}).bind(this);
 			
+			var iOS = false;
+			require(['Environment'], function (Environment) {
+				iOS = (Environment.platform() === 'ios');
+			});
+			
 			var mpEnd = this.caret.end;
 			this.caret.end = (function (node) {
 				node = this.caret.prepare(node);
 				
+				var useCustomRange = false;
 				if (node.nodeType === Node.ELEMENT_NODE && node.lastChild && node.lastChild.nodeName === 'P') {
+					useCustomRange = true;
+				}
+				else if (iOS) {
+					var editor = this.core.editor()[0];
+					if (node.parentNode === editor && editor.innerHTML === '<p><br></p>') {
+						useCustomRange = true;
+					}
+				}
+				
+				if (useCustomRange) {
 					var selection = window.getSelection();
 					var range = document.createRange();
 					range.selectNodeContents(node.lastChild);
