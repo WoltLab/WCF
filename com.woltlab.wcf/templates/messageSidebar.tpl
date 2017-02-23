@@ -1,3 +1,6 @@
+{if !$isReply|isset}
+	{assign var=isReply value=false} 
+{/if}
 {if !$enableMicrodata|isset}
 	{assign var=enableMicrodata value=false}
 {/if}
@@ -5,7 +8,7 @@
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 
-<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
+<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
 	<div class="messageAuthor">
 		{event name='messageAuthor'}
 		
@@ -16,7 +19,7 @@
 				<div class="userAvatar">
 					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}">{@$userProfile->getAvatar()->getImageTag(128)}</a>
 					
-					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
+					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
 				</div>
 			{/if}
 			
@@ -24,12 +27,14 @@
 				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
 					<span{if $enableMicrodata} itemprop="name"{/if}>{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
 				</a>
-				{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
-				
-				{event name='messageAuthorContainer'}
+				{if !$isReply}
+					{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
+					
+					{event name='messageAuthorContainer'}
+				{/if}
 			</div>
 			
-			{if MODULE_USER_RANK}
+			{if MODULE_USER_RANK && !$isReply}
 				{if $userProfile->getUserTitle()}
 					<div class="userTitle">
 						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
@@ -52,42 +57,44 @@
 		{/if}
 	</div>
 	
-	{event name='beforeCredits'}
-	
-	{if $userProfile->userID}
-		{hascontent}
-			<div class="userCredits">
-				<dl class="plain dataList">
-					{content}
-						{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
-							<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
-							<dd>{#$userProfile->likesReceived}</dd>
-						{/if}
-						
-						{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
-							<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
-							<dd>{#$userProfile->activityPoints}</dd>
-						{/if}
-						
-						{event name='userCredits'}
-						
-						{if MESSAGE_SIDEBAR_USER_OPTIONS && $userProfile->isAccessible('canViewProfile')}
-							{assign var='__sidebarUserOptions' value=','|explode:MESSAGE_SIDEBAR_USER_OPTIONS}
-							{foreach from=$__sidebarUserOptions item='__sidebarUserOption'}
-								{if $userProfile->getUserOption($__sidebarUserOption)}
-									{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
-									{if $__formattedUserOption}
-										<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
-										<dd>{@$__formattedUserOption}</dd>
+	{if !$isReply}
+		{event name='beforeCredits'}
+		
+		{if $userProfile->userID}
+			{hascontent}
+				<div class="userCredits">
+					<dl class="plain dataList">
+						{content}
+							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
+								<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
+								<dd>{#$userProfile->likesReceived}</dd>
+							{/if}
+							
+							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
+								<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
+								<dd>{#$userProfile->activityPoints}</dd>
+							{/if}
+							
+							{event name='userCredits'}
+							
+							{if MESSAGE_SIDEBAR_USER_OPTIONS && $userProfile->isAccessible('canViewProfile')}
+								{assign var='__sidebarUserOptions' value=','|explode:MESSAGE_SIDEBAR_USER_OPTIONS}
+								{foreach from=$__sidebarUserOptions item='__sidebarUserOption'}
+									{if $userProfile->getUserOption($__sidebarUserOption)}
+										{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
+										{if $__formattedUserOption}
+											<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
+											<dd>{@$__formattedUserOption}</dd>
+										{/if}
 									{/if}
-								{/if}
-							{/foreach}
-						{/if}
-					{/content}
-				</dl>
-			</div>
-		{/hascontent}
+								{/foreach}
+							{/if}
+						{/content}
+					</dl>
+				</div>
+			{/hascontent}
+		{/if}
+		
+		{event name='afterCredits'}
 	{/if}
-	
-	{event name='afterCredits'}
 </aside>
