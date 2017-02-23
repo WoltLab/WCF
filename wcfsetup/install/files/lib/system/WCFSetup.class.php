@@ -475,7 +475,7 @@ class WCFSetup extends WCF {
 			// by glob() above
 			foreach ($showOrder as $application) {
 				$path = FileUtil::getRealPath($documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application])));
-				if (strpos($path, $documentRoot) !== 0) {
+				if (!empty($documentRoot) && strpos($path, $documentRoot) !== 0) {
 					// verify that given path is still within the current document root
 					$errors[$application] = 'outsideDocumentRoot';
 				}
