@@ -38,7 +38,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.1.12 (Typhoon)');
+define('WCF_VERSION', '2.1.13 (Typhoon)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -759,7 +759,7 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
-		return self::getRequestURI() . '#' . $fragment;
+		return StringUtil::encodeHTML(self::getRequestURI() . '#' . $fragment);
 	}
 	
 	/**
