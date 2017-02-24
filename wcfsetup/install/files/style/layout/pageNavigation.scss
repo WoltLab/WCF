@@ -1,4 +1,4 @@
-@include screen-lg {
+@include screen-md-up {
 	.pageNavigation {
 		background-color: $wcfNavigationBackground;
 		color: $wcfNavigationText;
@@ -28,7 +28,9 @@
 	.boxesHeaderBoxes + .pageNavigation {
 		margin-top: 1px;
 	}
-	
+}
+
+@include screen-lg {
 	.pageNavigationIcons {
 		display: flex;
 		flex: 0 0 auto;
@@ -45,8 +47,14 @@
 	}
 }
 
-@include screen-md-down {
+@include screen-sm-down {
 	.pageNavigation {
+		display: none;
+	}
+}
+
+@include screen-md-down {
+	.pageNavigationIcons {
 		display: none;
 	}
 }
