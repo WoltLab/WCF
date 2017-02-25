@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.2 pl 1</version> <!-- codename: vortex -->
-		<date>2017-02-16</date>
+		<version>3.0.3</version> <!-- codename: vortex -->
+		<date>2017-02-25</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.1.12">
+	<instructions type="update" fromversion="2.1.13">
 		<instruction type="file">files_pre_update.tar</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_pre_sql.php</instruction>
 		<instruction type="sql">update_part1.sql</instruction>
@@ -92,7 +92,28 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
 	</instructions>
 	
+	<!-- WARNING: Keep both update blocks below in sync! -->
 	<instructions type="update" fromversion="3.0.2">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="sql">update_3.0.3.sql</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="option" />
+	</instructions>
+	
+	<instructions type="update" fromversion="3.0.2 pl 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="sql">update_3.0.3.sql</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="option" />
 	</instructions>
 </package>
