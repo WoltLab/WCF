@@ -266,10 +266,12 @@
 										{@$relatedArticle->time|time}
 									</li>
 									
-									<li>
-										<span class="icon icon16 fa-comments"></span>
-										{lang article=$relatedArticle}wcf.article.articleComments{/lang}
-									</li>
+									{if $relatedArticle->enableComments}
+										<li>
+											<span class="icon icon16 fa-comments"></span>
+											{lang article=$relatedArticle}wcf.article.articleComments{/lang}
+										</li>
+									{/if}
 									
 									{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
 										<li class="wcfLikeCounter{if $relatedArticle->cumulativeLikes > 0} likeCounterLiked{elseif $relatedArticle->cumulativeLikes < 0}likeCounterDisliked{/if}">
