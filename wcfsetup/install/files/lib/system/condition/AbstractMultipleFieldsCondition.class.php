@@ -65,7 +65,7 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition {
 	 */
 	protected function getErrorMessageElement($identifier) {
 		if (isset($this->errorMessages[$identifier])) {
-			return '<small class="innerError">'.WCF::getLanguage()->get($this->errorMessages[$identifier]).'</small>';
+			return '<small class="innerError">'.WCF::getLanguage()->getDynamicVariable($this->errorMessages[$identifier]).'</small>';
 		}
 		
 		return '';
