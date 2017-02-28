@@ -433,6 +433,10 @@
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
 			</option>
+			<option name="og_image">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
 			<option name="show_version_number">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>

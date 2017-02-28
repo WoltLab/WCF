@@ -43,6 +43,9 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
 			$this->addTag('og:site_name', 'og:site_name', $value, true);
 		}
+		if (OG_IMAGE) {
+			$this->addTag('og:image', 'og:image', (preg_match('~^https?://~', OG_IMAGE) ? OG_IMAGE : WCF::getPath() . OG_IMAGE), true);
+		}
 	}
 	
 	/**

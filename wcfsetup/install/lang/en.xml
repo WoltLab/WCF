@@ -937,6 +937,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[The “-f” parameter sets the proper sender of the email if the PHP send method is used. This parameter may not be supported by every server. Try disabling it, if you have trouble sending emails.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
+		<item name="wcf.acp.option.og_image"><![CDATA[Open Graph Image]]></item>
+		<item name="wcf.acp.option.og_image.description"><![CDATA[Path to the default image that will be displayed when sharing your site on Facebook, Twitter and other social media sites.]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
 		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Enables an additional password to protect both critical actions and sensitive data.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
