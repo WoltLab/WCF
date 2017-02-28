@@ -171,7 +171,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				UserActivityEventHandler::getInstance()->fireEvent($this->objectType->objectType.'.recentActivityEvent', $this->parameters['data']['objectID'], $this->likeableObject->getLanguageID());
 			}
 			else {
-				UserActivityEventHandler::getInstance()->removeEvents($this->objectType->objectType.'.recentActivityEvent', [$this->parameters['data']['objectID']]);
+				UserActivityEventHandler::getInstance()->removeEvent($this->objectType->objectType.'.recentActivityEvent', $this->parameters['data']['objectID']);
 			}
 		}
 		
