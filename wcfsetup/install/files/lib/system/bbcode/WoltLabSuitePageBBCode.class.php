@@ -23,10 +23,12 @@ class WoltLabSuitePageBBCode extends AbstractBBCode {
 			return '';
 		}
 		
+		$title = (!empty($openingTag['attributes'][1])) ? StringUtil::trim($openingTag['attributes'][1]) : '';
+		
 		/** @var Page $page */
 		$page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $pageID);
 		if ($page !== null) {
-			return StringUtil::getAnchorTag($page->getLink(), $page->getTitle());
+			return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
 		}
 		
 		return '';
