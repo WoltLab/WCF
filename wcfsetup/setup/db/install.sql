@@ -263,7 +263,8 @@ CREATE TABLE wcf1_bbcode_media_provider (
 	providerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(255) NOT NULL,
 	regex TEXT NOT NULL,
-	html TEXT NOT NULL
+	html TEXT NOT NULL,
+	className varchar(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_box;
@@ -2145,11 +2146,11 @@ INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templ
 -- media providers
 -- Videos
 	-- Youtube
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/(?:#/)?watch\\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)(?:(?:\\?|&)t=(?P<start>\\d+)$)?', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/{$ID}?wmode=transparent&amp;start={$start}" allowfullscreen></iframe></div>');
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html, className) VALUES ('YouTube', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/(?:#/)?watch\\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)(?:(?:\\?|&)t=(?P<start>[0-9hms]+)$)?', '', 'wcf\\system\\bbcode\\media\\provider\\YouTubeBBCodeMediaProvider');
 	-- Youtube playlist
 	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube Playlist', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/)playlist\\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>');
 	-- Vimeo
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Vimeo', 'https?://vimeo\\.com/(?:channels/[^/]+/)?(?P<ID>\\d+)', '<iframe src="https://player.vimeo.com/video/{$ID}" width="400" height="225" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Vimeo', 'https?://vimeo\\.com/(?:channels/[^/]+/)?(?P<ID>\\d+)\nhttps?://vimeo\\.com/groups/[^/]+/videos/(?P<ID>\\d+)', '<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>');
 	-- Clipfish
 	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Clipfish', 'http://(?:www\\.)?clipfish\\.de/(?:.*?/)?video/(?P<ID>\\d+)/', '<div style="width:464px; height:404px;"><div style="width:464px; height:384px;"><iframe src="http://www.clipfish.de/embed_video/?vid={$ID}&amp;as=0&amp;col=990000" name="Clipfish Embedded Video" width="464" height="384" align="left" marginheight="0" marginwidth="0" scrolling="no"></iframe></div></div>');
 	-- Veoh

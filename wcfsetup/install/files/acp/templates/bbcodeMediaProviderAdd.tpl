@@ -41,7 +41,7 @@
 		<dl{if $errorField == 'regex'} class="formError"{/if}>
 			<dt><label for="regex">{lang}wcf.acp.bbcode.mediaProvider.regex{/lang}</label></dt>
 			<dd>
-				<textarea id="regex" name="regex" cols="40" rows="10" required>{$regex}</textarea>
+				<textarea id="regex" name="regex" cols="40" rows="5" required>{$regex}</textarea>
 				{if $errorField == 'regex'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -58,7 +58,7 @@
 		<dl{if $errorField == 'html'} class="formError"{/if}>
 			<dt><label for="html">{lang}wcf.acp.bbcode.mediaProvider.html{/lang}</label></dt>
 			<dd>
-				<textarea id="html" name="html" cols="40" rows="10" required>{$html}</textarea>
+				<textarea id="html" name="html" cols="40" rows="10">{$html}</textarea>
 				{if $errorField == 'html'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
@@ -69,6 +69,22 @@
 					</small>
 				{/if}
 				<small>{lang}wcf.acp.bbcode.mediaProvider.html.description{/lang}</small>
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'className'} class="formError"{/if}>
+			<dt><label for="className">{lang}wcf.acp.bbcode.mediaProvider.className{/lang}</label></dt>
+			<dd>
+				<input type="text" id="className" name="className" value="{$className}" pattern="^\\?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\\)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$" class="long">
+				{if $errorField == 'className'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.bbcode.mediaProvider.className.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
 			</dd>
 		</dl>
 		

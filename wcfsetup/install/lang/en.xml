@@ -127,6 +127,8 @@
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.className"><![CDATA[PHP Class Name]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider <span class="confirmationObject">{$mediaProvider->title}</span>?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Edit Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML Code]]></item>

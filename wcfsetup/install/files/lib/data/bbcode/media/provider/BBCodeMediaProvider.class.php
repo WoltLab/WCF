@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\bbcode\media\provider;
 use wcf\data\DatabaseObject;
+use wcf\system\bbcode\media\provider\IBBCodeMediaProvider;
 use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
 use wcf\system\request\IRouteController;
 use wcf\system\Regex;
@@ -18,6 +19,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$title		title of the bbcode media provider (shown in acp)
  * @property-read	string		$regex		regular expression to recognize media elements/element urls
  * @property-read	string		$html		html code used to render media elements
+ * @property-read	string		$className	callback class name                            
  */
 class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	/**
@@ -30,6 +32,12 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	 * @var	BBCodeMediaProvider[]
 	 */
 	protected static $cache = null;
+	
+	/**
+	 * media provider callback instance
+	 * @var IBBCodeMediaProvider
+	 */
+	protected $callback;
 	
 	/**
 	 * Loads the provider cache.
@@ -89,11 +97,16 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 			$regex = new Regex($line);
 			if (!$regex->match($url)) continue;
 			
-			$output = $this->html;
-			foreach ($regex->getMatches() as $name => $value) {
-				$output = str_replace('{$'.$name.'}', $value, $output);
+			if ($this->getCallback() !== null) {
+				return $this->getCallback()->parse($url, $regex->getMatches());
 			}
-			return $output;
+			else {
+				$output = $this->html;
+				foreach ($regex->getMatches() as $name => $value) {
+					$output = str_replace('{$' . $name . '}', $value, $output);
+				}
+				return $output;
+			}
 		}
 		
 		return '';
@@ -104,5 +117,20 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+	
+	/**
+	 * Returns media provider callback instance.
+	 * 
+	 * @return      IBBCodeMediaProvider
+	 */
+	public function getCallback() {
+		if (!$this->className) return null;
+		
+		if ($this->callback === null) {
+			$this->callback = new $this->className;
+		}
+		
+		return $this->callback;
 	}
 }

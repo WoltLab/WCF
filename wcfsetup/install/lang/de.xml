@@ -127,6 +127,8 @@
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.className"><![CDATA[Klassen-Name]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Medienanbieter <span class="confirmationObject">{$mediaProvider->title}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Medienanbieter bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML-Code]]></item>
