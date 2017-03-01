@@ -332,13 +332,8 @@ WCF.Comment.Handler = Class.extend({
 	 * Initializes the UI components to add a comment.
 	 */
 	_initAddComment: function() {
-		// create UI
-		this._commentAdd = $('<li class="box48 jsCommentAdd">' + this._userAvatar + '<div /></li>').prependTo(this._container);
-		var $inputContainer = this._commentAdd.children('div');
-		var $input = $('<textarea placeholder="' + WCF.Language.get('wcf.comment.add') + '" maxlength="65535" class="long" />').appendTo($inputContainer).flexible();
-		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._save, this)).appendTo($inputContainer);
-		
-		$input.keyup($.proxy(this._keyUp, this));
+		var button = elBySel('.jsCommentAdd .formSubmit button[data-type="save"]', this._commentAdd[0]);
+		if (button) button.addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 	},
 	
 	/**

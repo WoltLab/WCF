@@ -24,6 +24,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$message		comment message
  * @property-read	integer		$responses		number of responses on the comment
  * @property-read	string		$responseIDs		serialized array with the ids of the five latest comment responses
+ * @property-read       integer         $enableHtml             is 1 if HTML will rendered in the comment, otherwise 0
  */
 class Comment extends DatabaseObject implements IMessage {
 	use TUserContent;
