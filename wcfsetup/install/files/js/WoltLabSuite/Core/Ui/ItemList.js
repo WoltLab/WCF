@@ -17,6 +17,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 	var _callbackKeyPress = null;
 	var _callbackKeyUp = null;
 	var _callbackRemoveItem = null;
+	var _callbackBlur = null;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/ItemList
@@ -211,6 +212,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			_callbackKeyPress = this._keyPress.bind(this);
 			_callbackKeyUp = this._keyUp.bind(this);
 			_callbackRemoveItem = this._removeItem.bind(this);
+			_callbackBlur = this._blur.bind(this);
 		},
 		
 		/**
@@ -238,6 +240,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			element.addEventListener('keydown', _callbackKeyDown);
 			element.addEventListener('keypress', _callbackKeyPress);
 			element.addEventListener('keyup', _callbackKeyUp);
+			element.addEventListener('blur', _callbackBlur);
 			
 			element.parentNode.insertBefore(list, element);
 			listItem.appendChild(element);
@@ -457,6 +460,23 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			data.shadow.value = value;
 			
 			return values;
+		},
+		
+		/**
+		 * Handles the blur event.
+		 *
+		 * @param	{object}	event		event object
+		 */
+		_blur: function(event) {
+			if (_data.get(event.currentTarget.id).options.restricted) {
+				// restricted item lists only allow results from the dropdown to be picked
+				return;
+			}
+			
+			var value = event.currentTarget.value.trim();
+			if (value.length) {
+				this._addItem(event.currentTarget.id, { objectId: 0, value: value });
+			}
 		}
 	};
 });

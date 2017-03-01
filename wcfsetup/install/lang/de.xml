@@ -961,7 +961,7 @@
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Zeit in Sekunden, in der der Benutzer trotz Inaktivität als online markiert werden soll.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Wartungsmodus aktivieren]]></item>
 		<item name="wcf.acp.option.offline.description"><![CDATA[Deaktiviert alle installierten Apps (z.B. für Wartungsarbeiten).]]></item>
-		<item name="wcf.acp.option.offline_message"><![CDATA[Deaktivierungshinweis]]></item>
+		<item name="wcf.acp.option.offline_message"><![CDATA[Wartungshinweis]]></item>
 		<item name="wcf.acp.option.offline_message.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier eine Meldung ein, die angezeigt wird, solange sich die Seite im Wartungsmodus befindet.]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[HTML-Code im Hinweistext verwenden]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Aktiviere{else}Aktivieren Sie{/if} diese Option, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} HTML-Code im Hinweistext verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>

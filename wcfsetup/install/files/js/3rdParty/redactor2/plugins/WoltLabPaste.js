@@ -209,10 +209,16 @@ $.Redactor.prototype.WoltLabPaste = function() {
 							img = elBySel('img[data-uuid="' + imgData.uuid + '"]', this.$editor[0]);
 							
 							if (img) {
-								WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
-									blob: this.utils.dataURItoBlob(imgData.src),
-									replace: img
-								});
+								if (isIe) {
+									// Internet Explorer 11 triggers both the event *and* insert the image
+									img.parentNode.removeChild(img);
+								}
+								else {
+									WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+										blob: this.utils.dataURItoBlob(imgData.src),
+										replace: img
+									});
+								}
 							}
 						}
 					}).bind(this), 50);

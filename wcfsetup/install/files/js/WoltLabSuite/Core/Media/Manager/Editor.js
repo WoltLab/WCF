@@ -22,7 +22,8 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		
 		this._forceClipboard = true;
 		this._activeButton = null;
-		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton', this._options.editor.core.toolbar()[0]);
+		var context = (this._options.editor) ? this._options.editor.core.toolbar()[0] : undefined;
+		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton', context);
 		for (var i = 0, length = this._buttons.length; i < length; i++) {
 			this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 		}

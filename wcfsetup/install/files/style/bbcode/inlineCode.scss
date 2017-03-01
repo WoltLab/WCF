@@ -4,7 +4,8 @@ kbd {
 	border: 1px solid rgba(196, 196, 196, 1) !important;
 	border-radius: 2px;
 	color: rgba(68, 68, 68, 1) !important;
-	display: inline-block;
+	/* do not use inline-block, it breaks arrow key navigation in Firefox and Internet Explorer 11 */
+	display: inline;
 	font-family: Consolas, 'Courier New', monospace;
 	font-style: normal;
 	font-weight: normal;

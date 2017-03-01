@@ -100,7 +100,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 				break;
 				
 				default:
-					$errorMessage = WCF::getLanguage()->get($this->errorMessage);
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage);
 				break;
 			}
 			

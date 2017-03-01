@@ -121,7 +121,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 			$followEditor->delete();
 			
 			// remove activity event
-			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', [$this->parameters['data']['userID']]);
+			UserActivityEventHandler::getInstance()->removeEvent('com.woltlab.wcf.user.recentActivityEvent.follow', $this->parameters['data']['userID']);
 		}
 		
 		// reset storage

@@ -813,7 +813,7 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
-		return self::getRequestURI() . '#' . $fragment;
+		return StringUtil::encodeHTML(self::getRequestURI() . '#' . $fragment);
 	}
 	
 	/**

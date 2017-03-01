@@ -79,6 +79,10 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
+		if (!WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
+		
 		// if the moderation queue entry has been created after the user visited the
 		// site the last time, they have not been assigned to the queue entry yet,
 		// thus `ViewableModerationQueue::getViewableModerationQueue()` will always

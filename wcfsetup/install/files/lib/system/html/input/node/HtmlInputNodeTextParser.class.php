@@ -229,9 +229,12 @@ class HtmlInputNodeTextParser {
 						continue;
 					}
 					
-					$username = $this->getUsername($matches[$i][$j]);
-					if (!isset($usernames[$username])) {
-						$usernames[$username] = $username;
+					$match = $matches[$i][$j];
+					$variants = $this->getUsernameVariants($match);
+					foreach ($variants as $username) {
+						if (!isset($usernames[$username])) {
+							$usernames[$username] = $username;
+						}
 					}
 				}
 			}
@@ -676,10 +679,11 @@ class HtmlInputNodeTextParser {
 	 * of any quotes outside the username and certain special characters, such as
 	 * colons, that have been incorrectly matched.
 	 * 
-	 * @param	string		$match          matched username
+	 * @param	string		$match                                  matched username
+	 * @param       boolean         $trimTrailingSpecialCharacters          true to strip special characters found at the end of the match
 	 * @return	string          sanitized username
 	 */
-	public function getUsername($match) {
+	public function getUsername($match, $trimTrailingSpecialCharacters = true) {
 		// remove escaped single quotation mark
 		$match = str_replace("''", "'", $match);
 		
@@ -687,13 +691,37 @@ class HtmlInputNodeTextParser {
 		if ($match{0} == "'") {
 			$match = mb_substr($match, 1, -1);
 		}
-		else {
+		else if ($trimTrailingSpecialCharacters) {
 			// remove characters that might be at the end of our match
 			// but are not part of the username itself such as a colon
 			// rtrim() is not binary safe
-			$match = preg_replace('~[:;,.)]$~', '', $match);
+			$match = preg_replace('~[:;,.?!)]+$~', '', $match);
 		}
 		
 		return mb_strtolower($match);
+	}
+	
+	/**
+	 * Returns an array containing the sanitized username and the variant with a
+	 * trailing special character.
+	 * 
+	 * @param       string          $match          matched username
+	 * @return      string[]        [sanitizedUsername, usernameWithTrailingSpecialChar]
+	 */
+	public function getUsernameVariants($match) {
+		$username = $this->getUsername($match);
+		$usernameTSC = $this->getUsername($match, false);
+		
+		if ($username === $usernameTSC) {
+			return [$username, $usernameTSC];
+		}
+		
+		$usernames = [$username];
+		preg_match('~([:;,.?!)]+)$~', $match, $matches);
+		for ($i = 0, $length = mb_strlen($matches[1]); $i < $length; $i++) {
+			$usernames[] = $username . mb_substr($matches[1], 0, $i + 1); 
+		}
+		
+		return $usernames;
 	}
 }

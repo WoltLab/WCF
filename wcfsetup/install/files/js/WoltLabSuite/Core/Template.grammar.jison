@@ -125,9 +125,9 @@ COMMAND:
 		+ "return (looped ? result : " + ($5 || "''") + "); })()"
 	}
 |	'{lang}' CHUNK_STAR '{/lang}' -> "Language.get(" + $2 + ")"
-|	'{' VARIABLE '}'  -> "StringUtil.escapeHTML(" + $2 + ")"
-|	'{#' VARIABLE '}' -> "StringUtil.formatNumeric(" + $2 + ")"
-|	'{@' VARIABLE '}' -> $2
+|	'{' FUNCTION_CALL '}'  -> "StringUtil.escapeHTML(" + $2 + ")"
+|	'{#' FUNCTION_CALL '}' -> "StringUtil.formatNumeric(" + $2 + ")"
+|	'{@' FUNCTION_CALL '}' -> $2
 |	'{ldelim}' -> "'{'"
 |	'{rdelim}' -> "'}'"
 ;
@@ -145,10 +145,19 @@ FOREACH_ELSE: '{foreachelse}' CHUNK_STAR -> $2
 VARIABLE: T_VARIABLE T_VARIABLE_NAME VARIABLE_SUFFIX* -> "v['" + $2 + "']" + $3.join('');
 ;
 
+// FUNCTION_CALL parses a valid function call
+FUNCTION_CALL: T_VARIABLE T_VARIABLE_NAME FUNCTION_CALL_SUFFIX* -> "v['" + $2 + "']" + $3.join('');
+;
+
 VARIABLE_SUFFIX:
 	'[' COMMAND_PARAMETERS ']' -> $1 + $2 + $3
 |	'.' T_VARIABLE_NAME -> "['" + $2 + "']"
-|	'(' COMMAND_PARAMETERS? ')' -> $1 + ($2 || '') + $3
+;
+
+FUNCTION_CALL_SUFFIX:
+	VARIABLE_SUFFIX
+|	'(' ')' -> $1 + $2
+|	'(' COMMAND_PARAMETERS ')' -> $1 + ($2 || '') + $3
 ;
 
 COMMAND_PARAMETER_LIST:
@@ -161,4 +170,6 @@ COMMAND_PARAMETER_VALUE: T_QUOTED_STRING | VARIABLE;
 // COMMAND_PARAMETERS parses anything that is valid between a command name and the closing brace
 COMMAND_PARAMETERS: COMMAND_PARAMETER+ -> $1.join('')
 ;
-COMMAND_PARAMETER: T_ANY | T_WS | '=' | T_QUOTED_STRING | VARIABLE | T_VARIABLE_NAME;
+COMMAND_PARAMETER: T_ANY | T_WS | '=' | T_QUOTED_STRING | VARIABLE | T_VARIABLE_NAME
+|	'(' COMMAND_PARAMETERS ')' -> $1 + ($2 || '') + $3
+;

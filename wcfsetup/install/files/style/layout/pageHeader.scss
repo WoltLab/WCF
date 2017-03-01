@@ -485,7 +485,7 @@
 	.mainMenu,
 	.userPanel:not(.userPanelLoggedIn) {
 		&::before {
-			color: $wcfHeaderMenuLink;
+			color: $wcfHeaderLink;
 			font-family: FontAwesome;
 			font-size: 28px;
 			line-height: 32px;
@@ -493,7 +493,7 @@
 		}
 		
 		&:hover::before {
-			color: $wcfHeaderMenuLinkActive;
+			color: $wcfHeaderLinkActive;
 		}
 	}
 	
