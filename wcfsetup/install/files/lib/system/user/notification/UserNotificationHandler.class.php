@@ -189,6 +189,34 @@ class UserNotificationHandler extends SingletonFactory {
 			return;
 		}
 		
+		// remove recipients that are blocking the current user
+		if ($userProfile->getUserID()) {
+			// we use a live query here to avoid offloading this to the UserProfile
+			// class, as we're potentially dealing with a lot of users and loading
+			// their user storage data can get really expensive
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("userID IN (?)", [$recipientIDs]);
+			$conditions->add("ignoreUserID = ?", [$userProfile->getUserID()]);
+			
+			$sql = "SELECT  userID
+				FROM    wcf" . WCF_N . "_user_ignore
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$userIDs = [];
+			while ($userID = $statement->fetchColumn()) {
+				$userIDs[] = $userID;
+			}
+			
+			if (!empty($userIDs)) {
+				$recipientIDs = array_diff($recipientIDs, $userIDs);
+			}
+			
+			if (empty($recipientIDs)) {
+				return;
+			}
+		}
+		
 		// get recipients
 		$recipientList = new UserNotificationEventRecipientList();
 		$recipientList->getConditionBuilder()->add('event_to_user.eventID = ?', [$event->eventID]);
