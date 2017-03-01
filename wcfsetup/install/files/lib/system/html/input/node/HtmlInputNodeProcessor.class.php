@@ -398,7 +398,14 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @return      string          raw text content
 	 */
 	public function getTextContent() {
-		return StringUtil::trim($this->getDocument()->getElementsByTagName('body')->item(0)->textContent);
+		// cloning the body allows custom event handlers to alter the contents
+		// without making permanent changes to the document, avoids side-effects
+		$body = $this->getDocument()->getElementsByTagName('body')->item(0)->cloneNode(true);
+		
+		$parameters = ['body' => $body];
+		EventHandler::getInstance()->fireAction($this, 'getTextContent', $parameters);
+		
+		return StringUtil::trim($parameters['body']->textContent);
 	}
 	
 	/**
