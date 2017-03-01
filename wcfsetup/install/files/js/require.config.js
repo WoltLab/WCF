@@ -1,3 +1,4 @@
+//noinspection JSUnresolvedVariable
 requirejs.config({
 	paths: {
 		enquire: '3rdParty/enquire',
@@ -42,7 +43,9 @@ requirejs.config({
 			'Upload': 'WoltLabSuite/Core/Upload',
 			'User': 'WoltLabSuite/Core/User'
 		}
-	}
+	},
+	urlArgs: 't=' + window.LAST_UPDATE_TIME,
+	waitSeconds: 0
 });
 
 /* Define jQuery shim. We cannot use the shim object in the configuration above,

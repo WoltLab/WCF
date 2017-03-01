@@ -10,6 +10,7 @@
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
 	var TIME_NOW = {@TIME_NOW};
+	var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 	var URL_LEGACY_MODE = false;
 </script>
 
