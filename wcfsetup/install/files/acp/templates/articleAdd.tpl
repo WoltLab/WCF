@@ -19,7 +19,15 @@
 {/if}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/User/Search/Input'], function(UiUserSearchInput) {
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input'], function(Language, UiUserSearchInput) {
+		Language.addObject({
+			'wcf.page.search': '{lang}wcf.page.search{/lang}',
+			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
+			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
+			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
+			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}'
+		});
+		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
 	});
 </script>
@@ -240,7 +248,18 @@
 				<dt><label for="content0">{lang}wcf.acp.article.content{/lang}</label></dt>
 				<dd>
 					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+					
+					{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
+					{capture append='__redactorConfig'}
+						buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
+						
+						buttons.push('woltlabPage');
+						
+						config.plugins.push('WoltLabPage');
+					{/capture}
+					
 					{include file='wysiwyg' wysiwygSelector='content0'}
+					
 					{if $errorField == 'content'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -354,7 +373,18 @@
 							<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.article.content{/lang}</label></dt>
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
+								
+								{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
+								{capture append='__redactorConfig'}
+									buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
+									
+									buttons.push('woltlabPage');
+									
+									config.plugins.push('WoltLabPage');
+								{/capture}
+								
 								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
