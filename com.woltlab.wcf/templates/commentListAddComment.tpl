@@ -5,7 +5,6 @@
 			<textarea id="{$wysiwygSelector}" name="text" class="wysiwygTextarea"
 			          data-disable-attachments="true"
 			          data-disable-media="true"
-			          data-support-mention="true"
 			></textarea>
 			{include file='wysiwyg'}
 			
