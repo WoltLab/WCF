@@ -57,11 +57,20 @@ define(['Dom/Util'], function(DomUtil) {
 				y -= 50;
 			}
 			
+			var offset = window.pageYOffset;
+			
 			window.scrollTo({
 				left: 0,
 				top: y,
 				behavior: 'smooth'
 			});
+			
+			window.setTimeout((function () {
+				// no scrolling took place
+				if (offset === window.pageYOffset) {
+					this._onScroll();
+				}
+			}).bind(this), 100);
 		},
 		
 		/**
