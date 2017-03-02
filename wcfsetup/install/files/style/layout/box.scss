@@ -606,9 +606,19 @@
 	}
 }
 
-.boxesSidebarLeft .box .boxMenu li.active > .boxMenuLink {
-	margin-left: 10px;
-	padding-left: 10px;
+.boxesSidebarLeft .box .boxMenu {
+	li.active > .boxMenuLink {
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+	
+	.boxMenuDepth1 li.active > .boxMenuLink {
+		padding-left: 30px;
+	}
+	
+	.boxMenuDepth2 li.active > .boxMenuLink {
+		padding-left: 50px;
+	}
 }
 
 .boxesSidebarRight .box .boxMenu li.active > .boxMenuLink {
