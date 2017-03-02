@@ -306,7 +306,7 @@ class SystemException extends \Exception implements IPrintableException {
 				</li>
 				<li class="exceptionSystemInformation3">
 					<p class="exceptionFieldTitle">WoltLab Suite Core<span class="exceptionColon">:</span></p>
-					<p class="exceptionFieldValue">3.0</p>
+					<p class="exceptionFieldValue">3.1</p>
 				</li>
 				<li class="exceptionSystemInformation5">
 					<p class="exceptionFieldTitle">Peak Memory Usage<span class="exceptionColon">:</span></p>
