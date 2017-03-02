@@ -2,17 +2,17 @@
 	{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}
 	<div class="commentListAddComment collapsed" data-placeholder="{lang}wcf.comment.add{/lang}">
 		<div class="commentListAddCommentEditorContainer">
-			<textarea id="text" name="text" class="wysiwygTextarea"
+			<textarea id="{$wysiwygSelector}" name="text" class="wysiwygTextarea"
 			          data-disable-attachments="true"
 			          data-disable-media="true"
 			          data-support-mention="true"
 			></textarea>
-			{include file='wysiwyg' userProfileCommentList=$commentListContainerID}
+			{include file='wysiwyg'}
 			
 			<div class="formSubmit">
 				<button class="buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
 				
-				{include file='messageFormPreviewButton' previewMessageObjectType='com.woltlab.wcf.comment' previewMessageObjectID=0}
+				{include file='messageFormPreviewButton' previewMessageFieldID=$wysiwygSelector previewButtonID=$wysiwygSelector|concat:'_PreviewButton' previewMessageObjectType='com.woltlab.wcf.comment' previewMessageObjectID=0}
 			</div>
 		</div>
 	</div>

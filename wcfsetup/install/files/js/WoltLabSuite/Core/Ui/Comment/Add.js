@@ -13,22 +13,14 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 	/**
 	 * @constructor
 	 */
-	function UiCommentAdd(container, options) { this.init(container, options); }
+	function UiCommentAdd(container) { this.init(container); }
 	UiCommentAdd.prototype = {
 		/**
 		 * Initializes a new quick reply field.
 		 * 
 		 * @param       {Element}       container       container element
-		 * @param       {Object}        options         configuration options
 		 */
-		init: function(container, options) {
-			this._options = Core.extend({
-				ajax: {
-					className: ''
-				},
-				successMessage: 'wcf.global.success.add'
-			}, options);
-			
+		init: function(container) {
 			this._container = container;
 			this._content = elBySel('.commentListAddComment', this._container);
 			this._textarea = elBySel('.wysiwygTextarea', this._container);
@@ -265,7 +257,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			//noinspection JSCheckFunctionSignatures
 			DomUtil.insertHtml(data.returnValues.template, this._container, 'after');
 					
-			UiNotification.show(Language.get(this._options.successMessage));
+			UiNotification.show(Language.get('wcf.global.success.add'));
 			
 			DomChangeListener.trigger();
 		},

@@ -113,3 +113,23 @@
 		}
 	}
 }
+
+.commentEditorContainer {
+	> .icon {
+		left: calc(50% - 24px);
+		position: relative;
+	}
+	
+	~ .commentContent,
+	~ .commentOptionContainer {
+		display: none;
+	}
+}
+
+.commentListAddComment,
+.commentEditorContainer {
+	.formSubmit {
+		/* reduced margin, now in sync with the container padding */
+		margin-top: 20px;
+	}
+}

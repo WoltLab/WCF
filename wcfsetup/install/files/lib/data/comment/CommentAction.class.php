@@ -251,7 +251,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
 			'message' => $htmlInputProcessor->getHtml(),
 			'responses' => 0,
-			'responseIDs' => serialize([])
+			'responseIDs' => serialize([]),
+			'enableHtml' => 1
 		]);
 		
 		// update counter
@@ -480,17 +481,12 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to edit a comment or a response.
 	 */
 	public function validatePrepareEdit() {
-		// validate comment id or response id
+		// validate response id
 		try {
-			$this->validateCommentID();
+			$this->validateResponseID();
 		}
 		catch (UserInputException $e) {
-			try {
-				$this->validateResponseID();
-			}
-			catch (UserInputException $e) {
-				throw new UserInputException('objectIDs');
-			}
+			throw new UserInputException('objectIDs');
 		}
 		
 		// validate object type id
@@ -498,15 +494,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// validate object id and permissions
 		$this->commentProcessor = $objectType->getProcessor();
-		if ($this->comment !== null) {
-			if (!$this->commentProcessor->canEditComment($this->comment)) {
-				throw new PermissionDeniedException();
-			}
-		}
-		else {
-			if (!$this->commentProcessor->canEditResponse($this->response)) {
-				throw new PermissionDeniedException();
-			}
+		if (!$this->commentProcessor->canEditResponse($this->response)) {
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -516,25 +505,11 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function prepareEdit() {
-		if ($this->comment !== null) {
-			$message = $this->comment->message;
-		}
-		else {
-			$message = $this->response->message;
-		}
-		
-		$returnValues = [
+		return [
 			'action' => 'prepare',
-			'message' => $message
+			'message' => $this->response->message,
+			'responseID' => $this->response->responseID
 		];
-		if ($this->comment !== null) {
-			$returnValues['commentID'] = $this->comment->commentID;
-		}
-		else {
-			$returnValues['responseID'] = $this->response->responseID;
-		}
-		
-		return $returnValues;
 	}
 	
 	/**
@@ -552,28 +527,65 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function edit() {
-		$returnValues = ['action' => 'saved'];
+		$editor = new CommentResponseEditor($this->response);
+		$editor->update([
+			'message' => $this->parameters['data']['message']
+		]);
+		$response = new CommentResponse($this->response->responseID);
 		
-		if ($this->response === null) {
-			$editor = new CommentEditor($this->comment);
-			$editor->update([
-				'message' => $this->parameters['data']['message']
-			]);
-			$comment = new Comment($this->comment->commentID);
-			$returnValues['commentID'] = $this->comment->commentID;
-			$returnValues['message'] = $comment->getFormattedMessage();
-		}
-		else {
-			$editor = new CommentResponseEditor($this->response);
-			$editor->update([
-				'message' => $this->parameters['data']['message']
-			]);
-			$response = new CommentResponse($this->response->responseID);
-			$returnValues['responseID'] = $this->response->responseID;
-			$returnValues['message'] = $response->getFormattedMessage();
-		}
+		return [
+			'action' => 'saved',
+			'message' => $response->getFormattedMessage(),
+			'responseID' => $this->response->responseID
+		];
+	}
+	
+	public function validateBeginEdit() {
+		$this->comment = $this->getSingleObject();
 		
-		return $returnValues;
+		// validate object type id
+		$objectType = $this->validateObjectType();
+		
+		// validate object id and permissions
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canEditComment($this->comment->getDecoratedObject())) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	public function beginEdit() {
+		WCF::getTPL()->assign([
+			'comment' => $this->comment,
+			'wysiwygSelector' => 'commentEditor'.$this->comment->commentID
+		]);
+		
+		return [
+			'actionName' => 'beginEdit',
+			'template' => WCF::getTPL()->fetch('commentEditor', 'wcf')
+		];
+	}
+	
+	public function validateSave() {
+		$this->validateBeginEdit();
+		
+		$this->validateMessage(true);
+	}
+	
+	public function save() {
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
+		$action = new CommentAction([$this->comment], 'update', [
+			'data' => [
+				'message' => $htmlInputProcessor->getHtml()
+			]
+		]);
+		$action->executeAction();
+		
+		return [
+			'actionName' => 'save',
+			'message' => (new Comment($this->comment->commentID))->getFormattedMessage()
+		];
 	}
 	
 	/**
@@ -726,6 +738,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates message parameter.
+	 * 
+	 * @param       bool  $isComment
+	 * @throws      UserInputException
 	 */
 	protected function validateMessage($isComment = false) {
 		$this->readString('message', false, 'data');

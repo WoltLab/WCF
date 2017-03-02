@@ -10,7 +10,7 @@
 				{@$comment->getUserProfile()->getAvatar()->getImageTag(48)}
 			{/if}
 			
-			<div itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<div class="commentContentContainer" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="commentContent">
 					<meta itemprop="dateCreated" content="{@$comment->time|date:'c'}">
 					

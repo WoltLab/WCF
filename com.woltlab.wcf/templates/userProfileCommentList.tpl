@@ -2,7 +2,7 @@
 
 {if $commentCanAdd}
 	<ul id="userProfileCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$userID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{@$commentList->countObjects()}" data-last-comment-time="{@$lastCommentTime}">
-		{include file='commentListAddComment' commentListContainerID='userProfileCommentList'}
+		{include file='commentListAddComment' wysiwygSelector='userProfileCommentListAddComment'}
 		{include file='commentList'}
 	</ul>
 {else}

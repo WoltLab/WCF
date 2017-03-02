@@ -14,12 +14,6 @@ WCF.Comment = { };
  */
 WCF.Comment.Handler = Class.extend({
 	/**
-	 * input element to add a comment
-	 * @var	jQuery
-	 */
-	_commentAdd: null,
-	
-	/**
 	 * list of comment buttons per comment
 	 * @var	object
 	 */
@@ -105,7 +99,6 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	string		userAvatarSmall
 	 */
 	init: function(containerID, userAvatar, userAvatarSmall) {
-		this._commentAdd = null;
 		this._commentButtonList = { };
 		this._comments = { };
 		this._containerID = containerID;
@@ -135,13 +128,15 @@ WCF.Comment.Handler = Class.extend({
 				console.debug("Missing WYSIWYG implementation, adding comments is not available.");
 			}
 			else {
-				require(['WoltLabSuite/Core/Ui/Comment/Add'], (function (UICommentAdd) {
-					new UICommentAdd(elBySel('.jsCommentAdd',  this._container[0]), {
-						
-					});
+				require(['WoltLabSuite/Core/Ui/Comment/Add'], (function (UiCommentAdd) {
+					new UiCommentAdd(elBySel('.jsCommentAdd',  this._container[0]));
 				}).bind(this));
 			}
 		}
+		
+		require(['WoltLabSuite/Core/Ui/Comment/Edit'], (function (UiCommentEdit) {
+			new UiCommentEdit(this._container[0]);
+		}).bind(this));
 		
 		WCF.DOMNodeInsertedHandler.execute();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Comment.Handler', $.proxy(this._domNodeInserted, this));
@@ -291,8 +286,8 @@ WCF.Comment.Handler = Class.extend({
 		}
 		
 		if (comment.data('canEdit')) {
-			var $editButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 fa-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
-			$editButton.data('commentID', commentID).appendTo(comment.find('ul.buttonList:eq(0)')).click($.proxy(this._prepareEdit, this));
+			var $editButton = $('<li><a href="#" class="jsCommentEditButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.edit') + '"><span class="icon icon16 fa-pencil" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.edit') + '</span></a></li>');
+			$editButton.appendTo(comment.find('ul.buttonList:eq(0)'));
 		}
 		
 		if (comment.data('canDelete')) {
@@ -366,19 +361,17 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	boolean		isResponse
 	 */
 	_prepareEdit: function(event, isResponse) {
+		if (!isResponse) {
+			throw new Error("Editing comments is no longer supported through this method.");
+		}
+		
 		event.preventDefault();
 		var $button = $(event.currentTarget);
 		var $data = {
 			objectID: this._container.data('objectID'),
-			objectTypeID: this._container.data('objectTypeID')
+			objectTypeID: this._container.data('objectTypeID'),
+			responseID: $button.data('responseID')
 		};
-		
-		if (isResponse === true) {
-			$data.responseID = $button.data('responseID');
-		}
-		else {
-			$data.commentID = $button.data('commentID');
-		}
 		
 		this._proxy.setOption('data', {
 			actionName: 'prepareEdit',

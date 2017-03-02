@@ -9,6 +9,7 @@
 			'wcf.comment.more': '{lang}wcf.comment.more{/lang}',
 			'wcf.comment.response.add': '{lang}wcf.comment.response.add{/lang}',
 			'wcf.comment.response.more': '{lang}wcf.comment.response.more{/lang}',
+			'wcf.message.error.editorAlreadyInUse': '{lang}wcf.message.error.editorAlreadyInUse{/lang}',
 			'wcf.moderation.report.reportContent': '{lang}wcf.moderation.report.reportContent{/lang}',
 			'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
 		});
