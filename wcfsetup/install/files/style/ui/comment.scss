@@ -7,6 +7,10 @@
 				opacity: 0;
 			}
 		}
+		
+		&.jsCommentAdd {
+			padding-right: 0;
+		}
 	}
 	
 	.commentContent {
@@ -52,5 +56,60 @@
 	
 	textarea + button {
 		margin-top: 2px;
+	}
+}
+
+.commentListAddComment {
+	&.collapsed {
+		background-color: $wcfSidebarBackground;
+		cursor: pointer;
+		overflow: hidden;
+		padding: 10px 20px;
+		position: relative;
+		
+		&::before {
+			color: $wcfSidebarText;
+			content: $fa-var-reply;
+			font-family: FontAwesome;
+			font-size: 28px;
+			height: 32px;
+			line-height: 32px;
+			margin-right: 10px;
+			width: 32px;
+			vertical-align: -5px;
+		}
+		
+		&::after {
+			color: $wcfSidebarText;
+			content: attr(data-placeholder);
+			position: relative;
+			top: 2px;
+			
+			@include screen-sm-up {
+				@include wcfFontSection;
+			}
+		}
+		
+		> .commentListAddCommentEditorContainer {
+			left: 200%;
+			position: absolute;
+			top: -100%;
+		}
+	}
+	
+	&.loading {
+		height: 150px;
+		position: relative;
+		
+		> .commentListAddCommentEditorContainer {
+			display: none;
+		}
+		
+		> .commentLoadingOverlay {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		}
 	}
 }

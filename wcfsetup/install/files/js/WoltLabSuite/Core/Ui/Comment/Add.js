@@ -35,6 +35,18 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._editor = null;
 			this._loadingOverlay = null;
 			
+			this._content.addEventListener(WCF_CLICK_EVENT, (function (event) {
+				if (this._content.classList.contains('collapsed')) {
+					event.preventDefault();
+					
+					this._content.classList.remove('collapsed');
+					
+					UiScroll.element(this._container, (function() {
+						window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
+					}).bind(this));
+				}	
+			}).bind(this));
+			
 			// handle submit button
 			var submitButton = elBySel('button[data-type="save"]', this._container);
 			submitButton.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
@@ -287,6 +299,10 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				this._reset();
 				
 				this._hideLoadingOverlay();
+				
+				window.setTimeout((function () {
+					UiScroll.element(this._container.nextElementSibling);
+				}).bind(this), 100);
 			}
 		},
 		
