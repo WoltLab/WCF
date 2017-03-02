@@ -5,10 +5,10 @@ use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\comment\response\CommentResponseEditor;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
-use wcf\data\IMessageInlineEditorAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IMessageInlineEditorAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\manager\ICommentManager;
@@ -905,6 +905,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
 	}
 	
+	/**
+	 * Returns the current html input processor or a new one if `$message` is not null.
+	 * 
+	 * @param       string|null     $message        source message
+	 * @param       integer         $objectID       object id
+	 * @return      HtmlInputProcessor
+	 */
 	public function getHtmlInputProcessor($message = null, $objectID = 0) {
 		if ($message === null) {
 			return $this->htmlInputProcessor;
