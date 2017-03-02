@@ -131,7 +131,16 @@ WCF.Comment.Handler = Class.extend({
 		
 		// add new comment
 		if (this._container.data('canAdd')) {
-			this._initAddComment();
+			if (elBySel('.commentListAddComment .wysiwygTextarea', this._container[0]) === null) {
+				console.debug("Missing WYSIWYG implementation, adding comments is not available.");
+			}
+			else {
+				require(['WoltLabSuite/Core/Ui/Comment/Add'], (function (UICommentAdd) {
+					new UICommentAdd(elBySel('.jsCommentAdd',  this._container[0]), {
+						
+					});
+				}).bind(this));
+			}
 		}
 		
 		WCF.DOMNodeInsertedHandler.execute();
@@ -329,14 +338,6 @@ WCF.Comment.Handler = Class.extend({
 	},
 	
 	/**
-	 * Initializes the UI components to add a comment.
-	 */
-	_initAddComment: function() {
-		var button = elBySel('.jsCommentAdd .formSubmit button[data-type="save"]', this._commentAdd[0]);
-		if (button) button.addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
-	},
-	
-	/**
 	 * Initializes the UI elements to add a response.
 	 * 
 	 * @param	integer		commentID
@@ -438,6 +439,10 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	jQuery		input
 	 */
 	_save: function(event, isResponse, input) {
+		if (!isResponse) {
+			throw new Error("Adding comments through `_save()` is no longer supported.");
+		}
+		
 		var $input = (event === null) ? input : $(event.currentTarget).parent().children('textarea');
 		$input.next('small.innerError').remove();
 		var $value = $.trim($input.val());
@@ -447,16 +452,12 @@ WCF.Comment.Handler = Class.extend({
 			return;
 		}
 		
-		var $actionName = 'addComment';
 		var $data = {
+			commentID: $input.data('commentID'),
 			message: $value,
 			objectID: this._container.data('objectID'),
 			objectTypeID: this._container.data('objectTypeID')
 		};
-		if (isResponse === true) {
-			$actionName = 'addResponse';
-			$data.commentID = $input.data('commentID');
-		}
 		
 		if (!WCF.User.userID) {
 			this._commentData = $data;
@@ -479,7 +480,7 @@ WCF.Comment.Handler = Class.extend({
 			new WCF.Action.Proxy({
 				autoSend: true,
 				data: {
-					actionName: $actionName,
+					actionName: 'addResponse',
 					className: 'wcf\\data\\comment\\CommentAction',
 					parameters: {
 						data: $data
@@ -561,20 +562,6 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		switch (data.actionName) {
-			case 'addComment':
-				if (data.returnValues.guestDialog) {
-					this._createGuestDialog(data.returnValues.guestDialog, data.returnValues.useCaptcha);
-				}
-				else {
-					this._commentAdd.find('textarea').val('').blur().trigger('updateHeight');
-					$(data.returnValues.template).insertAfter(this._commentAdd).wcfFadeIn();
-					
-					if (!WCF.User.userID) {
-						this._guestDialog.wcfDialog('close');
-					}
-				}
-			break;
-			
 			case 'addResponse':
 				if (data.returnValues.guestDialog) {
 					this._createGuestDialog(data.returnValues.guestDialog, data.returnValues.useCaptcha);
@@ -782,7 +769,7 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_submit: function(event) {
 		var $requestData = {
-			actionName: this._commentData.commentID ? 'addResponse' : 'addComment',
+			actionName: 'addResponse',
 			className: 'wcf\\data\\comment\\CommentAction'
 		};
 		

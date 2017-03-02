@@ -8,12 +8,14 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
@@ -65,6 +67,11 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @var	ICommentManager
 	 */
 	protected $commentProcessor = null;
+	
+	/**
+	 * @var HtmlInputProcessor
+	 */
+	protected $htmlInputProcessor;
 	
 	/**
 	 * response object
@@ -203,7 +210,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$this->validateUsername();
 		$this->validateCaptcha();
 		
-		$this->validateMessage();
+		$this->validateMessage(true);
 		$objectType = $this->validateObjectType();
 		
 		// validate object id and permissions
@@ -232,6 +239,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			];
 		}
 		
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
 		// create comment
 		$this->createdComment = CommentEditor::create([
 			'objectTypeID' => $this->parameters['data']['objectTypeID'],
@@ -239,7 +249,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
-			'message' => $this->parameters['data']['message'],
+			'message' => $htmlInputProcessor->getHtml(),
 			'responses' => 0,
 			'responseIDs' => serialize([])
 		]);
@@ -533,7 +543,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	public function validateEdit() {
 		$this->validatePrepareEdit();
 		
-		$this->validateMessage();
+		$this->validateMessage($this->comment !== null);
 	}
 	
 	/**
@@ -717,7 +727,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates message parameter.
 	 */
-	protected function validateMessage() {
+	protected function validateMessage($isComment = false) {
 		$this->readString('message', false, 'data');
 		$this->parameters['data']['message'] = MessageUtil::stripCrap($this->parameters['data']['message']);
 		
@@ -726,6 +736,26 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		CommentHandler::enforceCensorship($this->parameters['data']['message']);
+		
+		if ($isComment) {
+			$this->setDisallowedBBCodes();
+			$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message']);
+			
+			// search for disallowed bbcodes
+			$disallowedBBCodes = $htmlInputProcessor->validate();
+			if (!empty($disallowedBBCodes)) {
+				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
+			}
+			
+			if ($htmlInputProcessor->appearsToBeEmpty()) {
+				throw new UserInputException('message');
+			}
+			
+			$this->parameters['htmlInputProcessor'] = $htmlInputProcessor;
+		}
+		else {
+			unset($this->parameters['htmlInputProcessor']);
+		}
 	}
 	
 	/**
@@ -816,6 +846,24 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		catch (UserInputException $e) {
 			$this->validationErrors = array_merge($this->validationErrors, [$e->getField() => $e->getType()]);
 		}
+	}
+	
+	/**
+	 * Sets the list of disallowed bbcodes for comments.
+	 */
+	protected function setDisallowedBBCodes() {
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
+	}
+	
+	public function getHtmlInputProcessor($message = null, $objectID = 0) {
+		if ($message === null) {
+			return $this->htmlInputProcessor;
+		}
+		
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment', $objectID);
+		
+		return $this->htmlInputProcessor;
 	}
 	
 	/**

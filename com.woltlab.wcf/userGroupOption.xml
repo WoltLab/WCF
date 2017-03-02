@@ -568,6 +568,10 @@ pdf</defaultvalue>
 				<admindefaultvalue>0</admindefaultvalue>
 				<minvalue>0</minvalue>
 			</option>
+			<option name="user.comment.disallowedBBCodes">
+				<categoryname>user.message.comment</categoryname>
+				<optiontype>BBCodeSelect</optiontype>
+			</option>
 			<!-- /user.message.comment -->
 			
 			<!-- user.signature -->

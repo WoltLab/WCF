@@ -5,6 +5,7 @@ use wcf\data\IMessage;
 use wcf\data\TUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\comment\CommentHandler;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\util\StringUtil;
 
 /**
@@ -51,14 +52,30 @@ class Comment extends DatabaseObject implements IMessage {
 	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		return SimpleMessageParser::getInstance()->parse($this->message);
+		$processor = new HtmlOutputProcessor();
+		$processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+		
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * Returns a simplified version of the formatted message.
+	 * 
+	 * @return	string
+	 */
+	public function getSimplifiedFormattedMessage() {
+		$processor = new HtmlOutputProcessor();
+		$processor->setOutputType('text/simplified-html');
+		$processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+		
+		return $processor->getHtml();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
-		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
+		return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
 	}
 	
 	/**
