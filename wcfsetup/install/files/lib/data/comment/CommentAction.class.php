@@ -5,6 +5,7 @@ use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\comment\response\CommentResponseEditor;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
+use wcf\data\IMessageInlineEditorAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -17,6 +18,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
@@ -39,7 +41,7 @@ use wcf\util\UserUtil;
  * @method	CommentEditor[]		getObjects()
  * @method	CommentEditor		getSingleObject()
  */
-class CommentAction extends AbstractDatabaseObjectAction {
+class CommentAction extends AbstractDatabaseObjectAction implements IMessageInlineEditorAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -254,6 +256,13 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'responseIDs' => serialize([]),
 			'enableHtml' => 1
 		]);
+		
+		// save embedded objects
+		$htmlInputProcessor->setObjectID($this->createdComment->commentID);
+		if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
+			(new CommentEditor($this->createdComment))->update(['hasEmbeddedObjects' => 1]);
+			$this->createdComment = new Comment($this->createdComment->commentID);
+		}
 		
 		// update counter
 		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
@@ -540,6 +549,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		];
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function validateBeginEdit() {
 		$this->comment = $this->getSingleObject();
 		
@@ -553,6 +565,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function beginEdit() {
 		WCF::getTPL()->assign([
 			'comment' => $this->comment,
@@ -565,12 +580,18 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		];
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function validateSave() {
 		$this->validateBeginEdit();
 		
 		$this->validateMessage(true);
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		/** @var HtmlInputProcessor $htmlInputProcessor */
 		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
@@ -581,6 +602,16 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			]
 		]);
 		$action->executeAction();
+		
+		if ($this->comment->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			$this->comment->update([
+				'hasEmbeddedObjects' => $this->comment->hasEmbeddedObjects ? 0 : 1
+			]);
+		}
+		
+		// load embedded objects
+		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.comment', [$this->comment->commentID]);
 		
 		return [
 			'actionName' => 'save',
@@ -706,6 +737,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	string
 	 */
 	protected function renderComment(Comment $comment) {
+		if ($comment->hasEmbeddedObjects) {
+			MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.comment', [$comment->commentID]);
+		}
+		
 		$comment = new StructuredComment($comment);
 		$comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
@@ -754,7 +789,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		if ($isComment) {
 			$this->setDisallowedBBCodes();
-			$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message']);
+			$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
 			
 			// search for disallowed bbcodes
 			$disallowedBBCodes = $htmlInputProcessor->validate();
