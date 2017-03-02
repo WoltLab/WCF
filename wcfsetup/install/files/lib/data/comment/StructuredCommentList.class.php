@@ -6,7 +6,6 @@ use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Provides a structured comment list fetching last responses for every comment.
@@ -74,18 +73,6 @@ class StructuredCommentList extends CommentList {
 	public $responseLoading = true;
 	
 	/**
-	 * enables/disables the loading of embedded objects
-	 * @var	boolean
-	 */
-	protected $embeddedObjectLoading = true;
-	
-	/**
-	 * ids of the comments with embedded objects
-	 * @var	integer[]
-	 */
-	protected $embeddedObjectCommentIDs = [];
-	
-	/**
 	 * Creates a new structured comment list.
 	 * 
 	 * @param	ICommentManager		$commentManager
@@ -124,10 +111,6 @@ class StructuredCommentList extends CommentList {
 				}
 			}
 			
-			if ($this->embeddedObjectLoading && $comment->hasEmbeddedObjects) {
-				$this->embeddedObjectCommentIDs[] = $comment->commentID;
-			}
-			
 			if ($comment->userID) {
 				$userIDs[] = $comment->userID;
 			}
@@ -164,10 +147,6 @@ class StructuredCommentList extends CommentList {
 		// cache user ids
 		if (!empty($userIDs)) {
 			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
-		}
-		
-		if ($this->embeddedObjectLoading) {
-			$this->readEmbeddedObjects();
 		}
 	}
 	
@@ -209,15 +188,5 @@ class StructuredCommentList extends CommentList {
 	 */
 	public function getCommentManager() {
 		return $this->commentManager;
-	}
-	
-	/**
-	 * Reads the embedded objects of the posts in the list.
-	 */
-	public function readEmbeddedObjects() {
-		if (!empty($this->embeddedObjectCommentIDs)) {
-			// load embedded objects
-			MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.comment', $this->embeddedObjectCommentIDs);
-		}
 	}
 }

@@ -379,7 +379,6 @@ CREATE TABLE wcf1_comment (
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
 	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
-	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	
 	KEY (objectTypeID, objectID, time),
 	KEY lastCommentTime (userID, time)

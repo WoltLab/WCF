@@ -18,7 +18,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
@@ -256,13 +255,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'responseIDs' => serialize([]),
 			'enableHtml' => 1
 		]);
-		
-		// save embedded objects
-		$htmlInputProcessor->setObjectID($this->createdComment->commentID);
-		if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
-			(new CommentEditor($this->createdComment))->update(['hasEmbeddedObjects' => 1]);
-			$this->createdComment = new Comment($this->createdComment->commentID);
-		}
 		
 		// update counter
 		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
@@ -603,16 +595,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		]);
 		$action->executeAction();
 		
-		if ($this->comment->hasEmbeddedObjects != MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
-			/** @noinspection PhpUndefinedMethodInspection */
-			$this->comment->update([
-				'hasEmbeddedObjects' => $this->comment->hasEmbeddedObjects ? 0 : 1
-			]);
-		}
-		
-		// load embedded objects
-		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.comment', [$this->comment->commentID]);
-		
 		return [
 			'actionName' => 'save',
 			'message' => (new Comment($this->comment->commentID))->getFormattedMessage()
@@ -737,10 +719,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * @return	string
 	 */
 	protected function renderComment(Comment $comment) {
-		if ($comment->hasEmbeddedObjects) {
-			MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.comment', [$comment->commentID]);
-		}
-		
 		$comment = new StructuredComment($comment);
 		$comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
