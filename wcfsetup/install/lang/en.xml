@@ -1454,6 +1454,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article.description"><![CDATA[Rebuilds the article search index.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding"><![CDATA[Convert Database Encoding]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warning: This action may take a while to complete on large databases.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Rebuild Comments]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Rebuilds the comments.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">

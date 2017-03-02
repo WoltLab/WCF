@@ -384,6 +384,12 @@
 			<classname>wcf\system\worker\StatDailyRebuildDataWorker</classname>
 			<nicevalue>110</nicevalue>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.comment</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\CommentRebuildDataWorker</classname>
+			<nicevalue>120</nicevalue>
+		</type>
 		<!-- /rebuild data workers -->
 		
 		<!-- stat handlers -->
