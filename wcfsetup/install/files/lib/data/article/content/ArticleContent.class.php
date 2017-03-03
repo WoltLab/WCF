@@ -76,12 +76,12 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getFormattedTeaser() {
 		if ($this->teaser) {
-			return StringUtil::encodeHTML($this->teaser);
+			return nl2br(StringUtil::encodeHTML($this->teaser), false);
 		}
 		else {
 			$htmlInputProcessor = new HtmlInputProcessor();
 			$htmlInputProcessor->processIntermediate($this->content);
-			return StringUtil::encodeHTML(StringUtil::truncate($htmlInputProcessor->getTextContent(), 500));
+			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlInputProcessor->getTextContent(), 500)), false);
 		}
 	}
 	
