@@ -87,6 +87,6 @@ class Smiley extends DatabaseObject {
 		$srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
 		$height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
 		
-		return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" class="smiley"' . $srcset . $height . '>';
+		return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley"' . $srcset . $height . '>';
 	}
 }

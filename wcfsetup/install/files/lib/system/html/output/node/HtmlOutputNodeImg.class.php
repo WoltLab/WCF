@@ -4,6 +4,7 @@ use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
 use wcf\util\DOMUtil;
@@ -50,6 +51,8 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					
 					if ($smiley->smileyPath2x) $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
 					else $element->removeAttribute('srcset');
+					
+					$element->setAttribute('title', WCF::getLanguage()->get($smiley->smileyTitle));
 				}
 			}
 			else {
