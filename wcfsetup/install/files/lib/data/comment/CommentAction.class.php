@@ -44,7 +44,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComments', 'getGuestDialog'];
+	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComment', 'loadComments', 'getGuestDialog'];
 	
 	/**
 	 * captcha object type used for comments
