@@ -131,6 +131,10 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 			if (!oldTabs) {
 				var hash = window.location.hash.replace(/^#/, ''), selectTab = null;
 				if (hash !== '') {
+					if (hash.match(/^(.+)\/.*$/)) {
+						hash = RegExp.$1;
+					}
+					
 					selectTab = this._tabs.get(hash);
 					
 					// check for parent tab menu

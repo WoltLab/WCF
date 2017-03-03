@@ -142,6 +142,19 @@ WCF.Comment.Handler = Class.extend({
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Comment.Handler', $.proxy(this._domNodeInserted, this));
 		
 		WCF.System.ObjectStore.add('WCF.Comment.Handler', this);
+		
+		window.addEventListener('hashchange', function () {
+			var hash = window.location.hash;
+			if (hash && hash.match(/.+\/(comment\d+)/)) {
+				var commentId = RegExp.$1;
+				
+				// delay scrolling in case a tab menu change was requested
+				window.setTimeout(function () {
+					var comment = elById(commentId);
+					if (comment) comment.scrollIntoView({ behavior: 'smooth' });
+				}, 100);
+			}
+		});
 	},
 	
 	/**
@@ -249,12 +262,29 @@ WCF.Comment.Handler = Class.extend({
 	 * Initializes available comments.
 	 */
 	_initComments: function() {
+		var link = elBySel('link[rel="canonical"]');
+		if (link) {
+			link = link.href;
+		}
+		else {
+			link = window.location.toString().replace(/#.+$/, '');
+		}
+		
+		// check if comments are within a tab menu
+		var tab = this._container[0].closest('.tabMenuContent');
+		if (tab) {
+			link += '#' + elData(tab, 'name');
+		}
+		
 		var self = this;
 		var $loadedComments = false;
 		this._container.find('.jsComment').each(function(index, comment) {
 			var $comment = $(comment).removeClass('jsComment');
 			var $commentID = $comment.data('commentID');
 			self._comments[$commentID] = $comment;
+			
+			// permalink anchor
+			$comment[0].id = 'comment' + $commentID;
 			
 			var $insertAfter = $comment.find('ul.commentResponseList');
 			if (!$insertAfter.length) $insertAfter = $comment.find('.commentContent');
@@ -264,6 +294,7 @@ WCF.Comment.Handler = Class.extend({
 			
 			self._handleLoadNextResponses($commentID);
 			self._initComment($commentID, $comment);
+			self._initPermalink($comment[0], link);
 			self._displayedComments++;
 			
 			$loadedComments = true;
@@ -294,6 +325,15 @@ WCF.Comment.Handler = Class.extend({
 			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 fa-times" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
 			$deleteButton.data('commentID', commentID).appendTo(comment.find('ul.buttonList:eq(0)')).click($.proxy(this._delete, this));
 		}
+	},
+	
+	_initPermalink: function(comment, link) {
+		var anchor = elCreate('a');
+		anchor.href = link + (link.indexOf('#') === -1 ? '#' : '/') + 'comment' + elData(comment, 'object-id');
+		
+		var time = elBySel('.commentContent .containerHeadline time', comment);
+		time.parentNode.insertBefore(anchor, time);
+		anchor.appendChild(time);
 	},
 	
 	/**
