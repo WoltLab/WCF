@@ -77,7 +77,8 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message', [
 			'author' => $this->author,
-			'commentAuthor' => $commentAuthor
+			'commentAuthor' => $commentAuthor,
+			'commentID' => $this->getUserNotificationObject()->commentID
 		]);
 	}
 	
@@ -103,6 +104,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 			'references' => [$messageID],
 			'variables' => [
 				'commentAuthor' => $commentAuthor,
+				'commentID' => $this->getUserNotificationObject()->commentID,
 				'owner' => $owner
 			]
 		];
@@ -112,7 +114,11 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', ['object' => WCF::getUser()], '#wall');
+		return LinkHandler::getInstance()->getLink(
+			'User',
+			['object' => WCF::getUser()],
+			'#wall/comment' . $this->getUserNotificationObject()->commentID
+		);
 	}
 	
 	/**

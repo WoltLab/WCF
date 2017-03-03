@@ -68,6 +68,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 						// title
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileCommentResponse', [
 							'commentAuthor' => $users[$comment->userID],
+							'commentID' => $comment->commentID,
 							'user' => $users[$comment->objectID]
 						]);
 						$event->setTitle($text);

@@ -68,6 +68,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message', [
 			'author' => $this->author,
+			'commentID' => $this->additionalData['commentID'],
 			'owner' => $owner
 		]);
 	}
@@ -88,7 +89,11 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 			$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		}
 		
-		return LinkHandler::getInstance()->getLink('User', ['object' => $owner], '#wall');
+		return LinkHandler::getInstance()->getLink(
+			'User',
+			['object' => $owner],
+			'#wall/comment' . $this->additionalData['commentID']
+		);
 	}
 	
 	/**
