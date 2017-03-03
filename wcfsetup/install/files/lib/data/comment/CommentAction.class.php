@@ -200,6 +200,36 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		];
 	}
 	
+	public function validateLoadComment() {
+		$this->readInteger('objectID', false, 'data');
+		
+		try {
+			$this->comment = $this->getSingleObject()->getDecoratedObject();
+		}
+		catch (UserInputException $e) {
+			/* unknown comment id, error handling takes place in `loadComment()` */
+		}
+		
+		$objectType = $this->validateObjectType();
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->isAccessible($this->parameters['data']['objectID'])) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	public function loadComment() {
+		if ($this->comment === null) {
+			return ['template' => ''];
+		}
+		else if ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
+			return ['template' => ''];
+		}
+		
+		return [
+			'template' => $this->renderComment($this->comment)
+		];
+	}
+	
 	/**
 	 * Validates parameters to add a comment.
 	 */

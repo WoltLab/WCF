@@ -133,3 +133,21 @@
 		margin-top: 20px;
 	}
 }
+
+.commentPermalinkContainer {
+	border-bottom-color: $wcfContentBorder !important;
+	
+	&.loading > .icon {
+		left: calc(50% - 24px);
+		position: relative;
+	}
+	
+	&:not(.loading) {
+		opacity: 0;
+	}
+	
+	&.fadeIn {
+		opacity: 1;
+		transition: opacity .24s linear;
+	}
+}

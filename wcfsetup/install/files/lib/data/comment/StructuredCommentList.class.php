@@ -89,6 +89,9 @@ class StructuredCommentList extends CommentList {
 		$this->getConditionBuilder()->add("comment.objectTypeID = ?", [$objectTypeID]);
 		$this->getConditionBuilder()->add("comment.objectID = ?", [$objectID]);
 		$this->sqlLimit = $this->commentManager->getCommentsPerPage();
+		
+		// TODO: DEBUG ONLY
+		$this->sqlLimit = 5;
 	}
 	
 	/**

@@ -91,6 +91,8 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_guestDialog: null,
 	
+	_permalinkComment: null,
+	
 	/**
 	 * Initializes the WCF.Comment.Handler class.
 	 * 
@@ -105,6 +107,7 @@ WCF.Comment.Handler = Class.extend({
 		this._displayedComments = 0;
 		this._loadNextComments = null;
 		this._loadNextResponses = { };
+		this._permalinkComment = null;
 		this._responses = { };
 		this._userAvatar = userAvatar;
 		this._userAvatarSmall = userAvatarSmall;
@@ -155,6 +158,38 @@ WCF.Comment.Handler = Class.extend({
 				}, 100);
 			}
 		});
+		
+		var hash = window.location.hash;
+		if (hash.match(/^(?:[^\/]+\/)?comment(\d+)/)) {
+			var comment = elById('comment' + RegExp.$1);
+			if (comment) {
+				comment.scrollIntoView({ behavior: 'smooth' });
+			}
+			else {
+				// load comment on-the-fly
+				this._loadCommentSegment(RegExp.$1);
+			}
+		}
+	},
+	
+	_loadCommentSegment: function (commentId) {
+		this._permalinkComment = elCreate('li');
+		this._permalinkComment.className = 'commentPermalinkContainer loading';
+		this._permalinkComment.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
+		this._container[0].insertBefore(this._permalinkComment, this._container[0].firstChild);
+		
+		this._proxy.setOption('data', {
+			actionName: 'loadComment',
+			className: 'wcf\\data\\comment\\CommentAction',
+			objectIDs: [commentId],
+			parameters: {
+				data: {
+					objectID: this._container.data('objectID'),
+					objectTypeID: this._container.data('objectTypeID')
+				}
+			}
+		});
+		this._proxy.sendRequest();
 	},
 	
 	/**
@@ -617,6 +652,10 @@ WCF.Comment.Handler = Class.extend({
 				this._update(data);
 			break;
 			
+			case 'loadComment':
+				this._insertComment(data);
+				break;
+			
 			case 'loadComments':
 				this._insertComments(data);
 			break;
@@ -641,6 +680,25 @@ WCF.Comment.Handler = Class.extend({
 		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
+	_insertComment: function (data) {
+		if (data.returnValues.template === '') {
+			// comment id is invalid or there is a mismatch, silently ignore it
+			return;
+		}	
+		
+		$(data.returnValues.template).insertBefore(this._permalinkComment);
+		var comment = this._permalinkComment.previousElementSibling;
+		comment.classList.add('commentPermalinkContainer');
+		
+		elRemove(this._permalinkComment);
+		this._permalinkComment = comment;
+		
+		//noinspection BadExpressionStatementJS
+		comment.offsetTop;
+		
+		comment.classList.add('fadeIn');
+	},
+	
 	/**
 	 * Inserts previously loaded comments.
 	 * 
@@ -652,6 +710,16 @@ WCF.Comment.Handler = Class.extend({
 		
 		// update time of last comment
 		this._container.data('lastCommentTime', data.returnValues.lastCommentTime);
+		
+		// check if permalink comment has been loaded and remove it from view
+		if (this._permalinkComment) {
+			var commentId = elData(this._permalinkComment, 'object-id');
+			
+			if (elBySel('.comment[data-object-id="' + commentId + '"]:not(.commentPermalinkContainer)', this._container[0]) !== null) {
+				elRemove(this._permalinkComment);
+				this._permalinkComment = null;
+			}
+		}
 	},
 	
 	/**
