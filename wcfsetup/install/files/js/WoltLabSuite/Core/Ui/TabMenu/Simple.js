@@ -129,12 +129,9 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 			
 			var returnValue = null;
 			if (!oldTabs) {
-				var hash = window.location.hash.replace(/^#/, ''), selectTab = null;
+				var hash = TabMenuSimple.getIdentifierFromHash();
+				var selectTab = null;
 				if (hash !== '') {
-					if (hash.match(/^(.+)\/.*$/)) {
-						hash = RegExp.$1;
-					}
-					
 					selectTab = this._tabs.get(hash);
 					
 					// check for parent tab menu
@@ -276,11 +273,20 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					});
 				}
 				
+				var location = window.location.href.replace(/#[^#]+$/, '');
+				if (TabMenuSimple.getIdentifierFromHash() === name) {
+					location += window.location.hash;
+				}
+				else {
+					location += '#' + name;
+				}
+				
 				// update history
+				//noinspection JSCheckFunctionSignatures
 				window.history.replaceState(
 					undefined,
 					undefined,
-					window.location.href.replace(/#[^#]+$/, '') + '#' + name
+					location
 				);
 			}
 			
@@ -380,6 +386,14 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 		getTabs: function() {
 			return this._tabs;
 		}
+	};
+	
+	TabMenuSimple.getIdentifierFromHash = function () {
+		if (window.location.hash.match(/^#([^\/]+)+(?:\/.+)?/)) {
+			return RegExp.$1;
+		}
+		
+		return '';
 	};
 	
 	return TabMenuSimple;

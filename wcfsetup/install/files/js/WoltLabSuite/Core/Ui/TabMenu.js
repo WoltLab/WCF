@@ -41,7 +41,7 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 			});
 			
 			window.addEventListener('hashchange', function () {
-				var hash = window.location.hash.replace(/^#/, '');
+				var hash = SimpleTabMenu.getIdentifierFromHash();
 				var element = (hash) ? elById(hash) : null;
 				if (element !== null && element.classList.contains('tabMenuContent')) {
 					_tabMenus.forEach(function (tabMenu) {
@@ -52,8 +52,8 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 				}
 			});
 			
-			if (window.location.hash.match(/^#(.*)$/)) {
-				var hash = RegExp.$1;
+			var hash = SimpleTabMenu.getIdentifierFromHash();
+			if (hash) {
 				window.setTimeout(function () {
 					// check if page was initially scrolled using a tab id
 					var tabMenuContent = elById(hash);
