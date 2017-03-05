@@ -366,7 +366,7 @@ WCF.Comment.Handler = Class.extend({
 		var anchor = elCreate('a');
 		anchor.href = link + (link.indexOf('#') === -1 ? '#' : '/') + 'comment' + elData(comment, 'object-id');
 		
-		var time = elBySel('.commentContent .containerHeadline time', comment);
+		var time = elBySel('.commentContent:not(.commentResponseContent) .containerHeadline time', comment);
 		time.parentNode.insertBefore(anchor, time);
 		anchor.appendChild(time);
 	},
@@ -375,14 +375,43 @@ WCF.Comment.Handler = Class.extend({
 	 * Initializes available responses.
 	 */
 	_initResponses: function() {
-		var self = this;
-		this._container.find('.jsCommentResponse').each(function(index, response) {
-			var $response = $(response).removeClass('jsCommentResponse');
-			var $responseID = $response.data('responseID');
-			self._responses[$responseID] = $response;
-			
-			self._initResponse($responseID, $response);
-		});
+		var link = elBySel('link[rel="canonical"]');
+		if (link) {
+			link = link.href;
+		}
+		else {
+			link = window.location.toString().replace(/#.+$/, '');
+		}
+		
+		// check if comments are within a tab menu
+		var tab = this._container[0].closest('.tabMenuContent');
+		if (tab) {
+			link += '#' + elData(tab, 'name');
+		}
+		
+		for (var commentId in this._comments) {
+			if (this._comments.hasOwnProperty(commentId)) {
+				elBySelAll('.jsCommentResponse', this._comments[commentId][0], (function(response) {
+					var $response = $(response).removeClass('jsCommentResponse');
+					var $responseID = $response.data('responseID');
+					this._responses[$responseID] = $response;
+					
+					this._initResponse($responseID, $response);
+					
+					//noinspection JSReferencingMutableVariableFromClosure
+					this._initPermalinkResponse(commentId, response, $responseID, link);
+				}).bind(this));
+			}
+		}
+	},
+	
+	_initPermalinkResponse: function (commentId, response, responseId, link) {
+		var anchor = elCreate('a');
+		anchor.href = link + (link.indexOf('#') === -1 ? '#' : '/') + 'comment' + commentId + '/response' + responseId;
+		
+		var time = elBySel('.commentResponseContent .containerHeadline time', response);
+		time.parentNode.insertBefore(anchor, time);
+		anchor.appendChild(time);
 	},
 	
 	/**
