@@ -92,6 +92,8 @@ WCF.Comment.Handler = Class.extend({
 	_guestDialog: null,
 	
 	_permalinkComment: null,
+	_permalinkResponse: null,
+	_scrollTarget: null,
 	
 	/**
 	 * Initializes the WCF.Comment.Handler class.
@@ -108,7 +110,9 @@ WCF.Comment.Handler = Class.extend({
 		this._loadNextComments = null;
 		this._loadNextResponses = { };
 		this._permalinkComment = null;
+		this._permalinkResponse = null;
 		this._responses = { };
+		this._scrollTarget = null;
 		this._userAvatar = userAvatar;
 		this._userAvatarSmall = userAvatarSmall;
 		
@@ -160,19 +164,57 @@ WCF.Comment.Handler = Class.extend({
 		});
 		
 		var hash = window.location.hash;
-		if (hash.match(/^(?:[^\/]+\/)?comment(\d+)/)) {
+		if (hash.match(/^(?:[^\/]+\/)?comment(\d+)(?:\/response(\d+))?/)) {
 			var comment = elById('comment' + RegExp.$1);
 			if (comment) {
-				comment.scrollIntoView({ behavior: 'smooth' });
+				var response;
+				if (RegExp.$2) {
+					response = elById('comment' + RegExp.$1 + 'response' + RegExp.$2);
+					if (response) {
+						this._scrollTo(response, true);
+					}
+					else {
+						// load response on-the-fly
+						this._loadResponseSegment(comment, RegExp.$1, RegExp.$2);
+					}
+				}
+				else {
+					this._scrollTo(comment, true);
+				}
 			}
 			else {
 				// load comment on-the-fly
-				this._loadCommentSegment(RegExp.$1);
+				this._loadCommentSegment(RegExp.$1, RegExp.$2);
 			}
 		}
 	},
 	
-	_loadCommentSegment: function (commentId) {
+	_scrollTo: function (element, highlight) {
+		if (this._scrollTarget === null) {
+			this._scrollTarget = elCreate('span');
+			this._scrollTarget.className = 'commentScrollTarget';
+			
+			document.body.appendChild(this._scrollTarget);
+		}
+		
+		this._scrollTarget.style.setProperty('top', (element.getBoundingClientRect().top + window.pageYOffset - 49) + 'px', '');
+		
+		require(['Ui/Scroll'], (function (UiScroll) {
+			UiScroll.element(this._scrollTarget, function () {
+				if (highlight) {
+					if (element.classList.contains('commentHighlightTarget')) {
+						element.classList.remove('commentHighlightTarget');
+						//noinspection BadExpressionStatementJS
+						element.offsetTop;
+					}
+					
+					element.classList.add('commentHighlightTarget');
+				}
+			})
+		}).bind(this));
+	},
+	
+	_loadCommentSegment: function (commentId, responseID) {
 		this._permalinkComment = elCreate('li');
 		this._permalinkComment.className = 'commentPermalinkContainer loading';
 		this._permalinkComment.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
@@ -185,7 +227,30 @@ WCF.Comment.Handler = Class.extend({
 			parameters: {
 				data: {
 					objectID: this._container.data('objectID'),
-					objectTypeID: this._container.data('objectTypeID')
+					objectTypeID: this._container.data('objectTypeID'),
+					responseID: ~~responseID
+				}
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	_loadResponseSegment: function (comment, commentId, responseID) {
+		this._permalinkResponse = elCreate('li');
+		this._permalinkResponse.className = 'commentResponsePermalinkContainer loading';
+		this._permalinkResponse.innerHTML = '<span class="icon icon32 fa-spinner"></span>';
+		var responseList = elBySel('.commentResponseList', comment);
+		responseList.insertBefore(this._permalinkResponse, responseList.firstChild);
+		
+		this._proxy.setOption('data', {
+			actionName: 'loadResponse',
+			className: 'wcf\\data\\comment\\CommentAction',
+			objectIDs: [commentId],
+			parameters: {
+				data: {
+					objectID: this._container.data('objectID'),
+					objectTypeID: this._container.data('objectTypeID'),
+					responseID: ~~responseID
 				}
 			}
 		});
@@ -396,6 +461,9 @@ WCF.Comment.Handler = Class.extend({
 					var $responseID = $response.data('responseID');
 					this._responses[$responseID] = $response;
 					
+					//noinspection JSReferencingMutableVariableFromClosure
+					response.id = 'comment' + commentId + 'response' + $responseID;
+						
 					this._initResponse($responseID, $response);
 					
 					//noinspection JSReferencingMutableVariableFromClosure

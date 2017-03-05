@@ -134,7 +134,14 @@
 	}
 }
 
-.commentPermalinkContainer {
+@keyframes wcfCommentHighlight {
+	0%   { opacity: 1;  }
+	50%  { opacity: .3; }
+	100% { opacity: 1;  }
+}
+
+.commentPermalinkContainer,
+.commentResponsePermalinkContainer{
 	border-bottom-color: $wcfContentBorder !important;
 	
 	&.loading > .icon {
@@ -143,11 +150,22 @@
 	}
 	
 	&:not(.loading) {
-		opacity: 0;
+		//opacity: 0;
 	}
 	
 	&.fadeIn {
-		opacity: 1;
-		transition: opacity .24s linear;
+		
+		/*opacity: 1;
+		transition: opacity .24s linear;*/
 	}
+}
+
+.comment.commentHighlightTarget .commentContent:not(.commentResponseContent) {
+	animation: wcfCommentHighlight .96s linear;
+}
+
+.commentScrollTarget {
+	display: block;
+	height: 0;
+	position: absolute;
 }
