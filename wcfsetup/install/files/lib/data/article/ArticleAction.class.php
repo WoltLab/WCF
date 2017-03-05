@@ -71,7 +71,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					'title' => $content['title'],
 					'teaser' => $content['teaser'],
 					'content' => $content['content'],
-					'imageID' => $content['imageID']
+					'imageID' => $content['imageID'],
+					'teaserImageID' => $content['teaserImageID']
 				]);
 				$articleContentEditor = new ArticleContentEditor($articleContent);
 				
@@ -131,8 +132,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'title' => $content['title'],
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
-							'imageID' => $content['imageID']
-						
+							'imageID' => $content['imageID'],
+							'teaserImageID' => $content['teaserImageID']
 						]);
 						
 						// delete tags
@@ -148,7 +149,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'title' => $content['title'],
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
-							'imageID' => $content['imageID']
+							'imageID' => $content['imageID'],
+							'teaserImageID' => $content['teaserImageID']
 						]);
 						$articleContentEditor = new ArticleContentEditor($articleContent);
 					}

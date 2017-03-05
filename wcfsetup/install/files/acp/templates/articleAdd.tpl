@@ -186,6 +186,31 @@
 				</dl>
 			{/if}
 			
+			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+				<dl{if $errorField == 'teaserImage'} class="formError"{/if}>
+					<dt><label for="teaserImage">{lang}wcf.acp.article.teaserImage{/lang}</label></dt>
+					<dd>
+						<div id="teaserImageDisplay" class="selectedImagePreview">
+							{if $teaserImages[0]|isset && $teaserImages[0]->hasThumbnail('small')}
+								{@$teaserImages[0]->getThumbnailTag('small')}
+							{/if}
+						</div>
+						<p class="button jsMediaSelectButton" data-store="teaserImageID0" data-display="teaserImageDisplay">{lang}wcf.media.chooseImage{/lang}</p>
+						<input type="hidden" name="teaserImageID[0]" id="teaserImageID0"{if $teaserImageID[0]|isset} value="{@$teaserImageID[0]}"{/if}>
+						{if $errorField == 'teaserImage'}
+							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+						{/if}
+					</dd>
+				</dl>
+			{elseif $action == 'edit' && $teaserImages[0]|isset && $teaserImages[0]->hasThumbnail('small')}
+				<dl>
+					<dt>{lang}wcf.acp.article.teaserImage{/lang}</dt>
+					<dd>
+						<div id="teaserImageDisplay">{@$teaserImages[0]->getThumbnailTag('small')}</div>
+					</dd>
+				</dl>
+			{/if}
+			
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title0">{lang}wcf.global.title{/lang}</label></dt>
 				<dd>
@@ -307,6 +332,31 @@
 								<dt>{lang}wcf.acp.article.image{/lang}</dt>
 								<dd>
 									<div id="imageDisplay">{@$images[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
+								</dd>
+							</dl>
+						{/if}
+						
+						{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
+								<dt><label for="teaserImage{@$availableLanguage->languageID}">{lang}wcf.acp.article.teaserImage{/lang}</label></dt>
+								<dd>
+									<div id="teaserImageDisplay{@$availableLanguage->languageID}">
+										{if $teaserImages[$availableLanguage->languageID]|isset && $teaserImages[$availableLanguage->languageID]->hasThumbnail('small')}
+											{@$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}
+										{/if}
+									</div>
+									<p class="button jsMediaSelectButton" data-store="teaserImageID{@$availableLanguage->languageID}" data-display="teaserImageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</p>
+									<input type="hidden" name="teaserImageID[{@$availableLanguage->languageID}]" id="teaserImageID{@$availableLanguage->languageID}"{if $teaserImageID[$availableLanguage->languageID]|isset} value="{@$teaserImageID[$availableLanguage->languageID]}"{/if}>
+									{if $errorField == 'teaserImage'|concat:$availableLanguage->languageID}
+										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+									{/if}
+								</dd>
+							</dl>
+						{elseif $action == 'edit' && $teaserImages[$availableLanguage->languageID]|isset && $teaserImages[$availableLanguage->languageID]->hasThumbnail('small')}
+							<dl>
+								<dt>{lang}wcf.acp.article.teaserImage{/lang}</dt>
+								<dd>
+									<div id="imageDisplay">{@$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
 								</dd>
 							</dl>
 						{/if}

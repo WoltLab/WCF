@@ -142,8 +142,8 @@
 						<td class="columnText columnArticleTitle">
 							<div class="box48">
 								<span>
-									{if $article->getImage()}
-										{@$article->getImage()->getElementTag(48)}
+									{if $article->getTeaserImage()}
+										{@$article->getTeaserImage()->getElementTag(48)}
 									{else}
 										<img src="{@$__wcf->getPath()}images/placeholderTiny.png" style="width: 48px; height: 48px" alt="">
 									{/if}

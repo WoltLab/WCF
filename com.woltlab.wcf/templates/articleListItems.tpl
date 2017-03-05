@@ -2,9 +2,9 @@
 	{foreach from=$objects item='article'}
 		<li>
 			<a href="{$article->getLink()}">
-				{if $article->getImage() && $article->getImage()->hasThumbnail('tiny')}
+				{if $article->getTeaserImage() && $article->getTeaserImage()->hasThumbnail('tiny')}
 					<div class="box128">
-						<div class="articleListImage">{@$article->getImage()->getThumbnailTag('tiny')}</div>
+						<div class="articleListImage">{@$article->getTeaserImage()->getThumbnailTag('tiny')}</div>
 				{/if}
 					
 					<div>
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 						
-				{if $article->getImage() && $article->getImage()->hasThumbnail('tiny')}
+				{if $article->getTeaserImage() && $article->getTeaserImage()->hasThumbnail('tiny')}
 					</div>
 				{/if}
 			</a>

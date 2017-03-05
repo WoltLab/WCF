@@ -109,8 +109,8 @@ class ArticlePage extends AbstractArticlePage {
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))), true);
 		
-		if ($this->articleContent->getImage()) {
-			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getImage()->getLink(), true);
+		if ($this->articleContent->getTeaserImage()) {
+			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getTeaserImage()->getLink(), true);
 			MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getImage()->width, true);
 			MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getImage()->height, true);
 		}

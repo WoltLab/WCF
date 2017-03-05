@@ -95,4 +95,17 @@ class ViewableArticle extends DatabaseObjectDecorator {
 		
 		return null;
 	}
+	
+	/**
+	 * Returns the article's teaser image.
+	 *
+	 * @return	ViewableMedia|null
+	 */
+	public function getTeaserImage() {
+		if ($this->getArticleContent() !== null) {
+			return $this->getArticleContent()->getTeaserImage();
+		}
+		
+		return null;
+	}
 }

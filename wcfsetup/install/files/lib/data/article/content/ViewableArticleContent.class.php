@@ -29,6 +29,12 @@ class ViewableArticleContent extends DatabaseObjectDecorator {
 	protected $image;
 	
 	/**
+	 * article thumbnail image
+	 * @var ViewableMedia
+	 */
+	protected $teaserImage;
+	
+	/**
 	 * article object
 	 * @var ViewableArticle
 	 */
@@ -82,6 +88,36 @@ class ViewableArticleContent extends DatabaseObjectDecorator {
 	 */
 	public function setImage(ViewableMedia $image) {
 		$this->image = $image;
+	}
+	
+	/**
+	 * Returns the article's teaser image if the active user can access it or `null`.
+	 *
+	 * @return	ViewableMedia|null
+	 */
+	public function getTeaserImage() {
+		if (!$this->teaserImageID) {
+			return $this->getImage();
+		}
+		
+		if ($this->teaserImage === null) {
+			$this->teaserImage = ViewableMedia::getMedia($this->teaserImageID);
+		}
+		
+		if ($this->teaserImage === null || !$this->teaserImage->isAccessible()) {
+			return null;
+		}
+		
+		return $this->teaserImage;
+	}
+	
+	/**
+	 * Sets the article's teaser image.
+	 *
+	 * @param	ViewableMedia	$image
+	 */
+	public function setTeaserImage(ViewableMedia $image) {
+		$this->teaserImage = $image;
 	}
 	
 	/**

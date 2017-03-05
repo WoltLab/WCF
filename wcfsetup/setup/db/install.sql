@@ -180,6 +180,7 @@ CREATE TABLE wcf1_article_content (
 	teaser TEXT,
 	content MEDIUMTEXT,
 	imageID INT(10),
+	teaserImageID INT(10),
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	
 	UNIQUE KEY (articleID, languageID)
@@ -1690,6 +1691,7 @@ ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (articleID) REFERENCES wcf1_article (articleID) ON DELETE CASCADE;
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (imageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
+ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;

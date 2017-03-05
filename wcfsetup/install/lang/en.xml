@@ -84,6 +84,7 @@
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Multilingual article]]></item>
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[The content will be provided for each language separately.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
+		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser Image]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>
 		<item name="wcf.acp.article.publicationDate.error.invalid"><![CDATA[The publication date is invalid.]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>

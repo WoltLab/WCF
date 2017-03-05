@@ -140,10 +140,22 @@ class ArticleAddForm extends AbstractForm {
 	public $imageID = [];
 	
 	/**
+	 * thumbnail image ids
+	 * @var	integer[]
+	 */
+	public $teaserImageID = [];
+	
+	/**
 	 * images
 	 * @var	Media[]
 	 */
 	public $images = [];
+	
+	/**
+	 * thumbnail images
+	 * @var	Media[]
+	 */
+	public $teaserImages = [];
 	
 	/**
 	 * list of available languages
@@ -212,6 +224,7 @@ class ArticleAddForm extends AbstractForm {
 		
 		if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			if (isset($_POST['imageID']) && is_array($_POST['imageID'])) $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
+			if (isset($_POST['teaserImageID']) && is_array($_POST['teaserImageID'])) $this->teaserImageID = ArrayUtil::toIntegerArray($_POST['teaserImageID']);
 			
 			$this->readImages();
 		}
@@ -221,15 +234,21 @@ class ArticleAddForm extends AbstractForm {
 	 * Reads the box images.
 	 */
 	protected function readImages() {
-		if (!empty($this->imageID)) {
+		if (!empty($this->imageID) || !empty($this->teaserImageID)) {
 			$mediaList = new ViewableMediaList();
-			$mediaList->setObjectIDs($this->imageID);
+			$mediaList->setObjectIDs(array_merge($this->imageID, $this->teaserImageID));
 			$mediaList->readObjects();
 			
 			foreach ($this->imageID as $languageID => $imageID) {
 				$image = $mediaList->search($imageID);
 				if ($image !== null && $image->isImage) {
 					$this->images[$languageID] = $image;
+				}
+			}
+			foreach ($this->teaserImageID as $languageID => $imageID) {
+				$image = $mediaList->search($imageID);
+				if ($image !== null && $image->isImage) {
+					$this->teaserImages[$languageID] = $image;
 				}
 			}
 		}
@@ -326,7 +345,8 @@ class ArticleAddForm extends AbstractForm {
 					'teaser' => !empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : '',
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
-					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null
+					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
 				];
 			}
 		}
@@ -337,7 +357,8 @@ class ArticleAddForm extends AbstractForm {
 				'teaser' => !empty($this->teaser[0]) ? $this->teaser[0] : '',
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
-				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null
+				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
 			];
 		}
 		
@@ -366,7 +387,7 @@ class ArticleAddForm extends AbstractForm {
 		$this->categoryID = 0;
 		$this->publicationStatus = Article::PUBLISHED;
 		$this->enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
-		$this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->tags = [];
+		$this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->teaserImages = $this->teaserImageID == $this->tags = [];
 		
 		$this->setDefaultValues();
 	}
@@ -413,6 +434,8 @@ class ArticleAddForm extends AbstractForm {
 			'publicationDate' => $this->publicationDate,
 			'imageID' => $this->imageID,
 			'images' => $this->images,
+			'teaserImageID' => $this->teaserImageID,
+			'teaserImages' => $this->teaserImages,
 			'tags' => $this->tags,
 			'title' => $this->title,
 			'teaser' => $this->teaser,

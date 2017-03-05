@@ -29,6 +29,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$content		actual content of the article in the associated language
  * @property-read	string		$teaser			teaser of the article in the associated language or empty if no teaser exists
  * @property-read	integer|null	$imageID		id of the (image) media object used as article image for the associated language or `null` if no image is used
+ * @property-read	integer|null	$teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used                                      
  * @property-read	integer		$hasEmbeddedObjects	is `1` if there are embedded objects in the article content, otherwise `0`
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController {

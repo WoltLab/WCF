@@ -79,7 +79,8 @@ class ArticleEditForm extends ArticleAddForm {
 					'teaser' => !empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : '',
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
-					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null
+					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
 				];
 			}
 		}
@@ -90,7 +91,8 @@ class ArticleEditForm extends ArticleAddForm {
 				'teaser' => !empty($this->teaser[0]) ? $this->teaser[0] : '',
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
-				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null
+				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
 			];
 		}
 		
@@ -121,6 +123,7 @@ class ArticleEditForm extends ArticleAddForm {
 		if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			foreach ($this->article->getArticleContents() as $languageID => $content) {
 				$this->imageID[$languageID] = $content->imageID;
+				$this->teaserImageID[$languageID] = $content->teaserImageID;
 			}
 			
 			$this->readImages();
@@ -147,6 +150,7 @@ class ArticleEditForm extends ArticleAddForm {
 				$this->teaser[$languageID] = $content->teaser;
 				$this->content[$languageID] = $content->content;
 				$this->imageID[$languageID] = $content->imageID;
+				$this->teaserImageID[$languageID] = $content->teaserImageID;
 				
 				// get tags
 				if (MODULE_TAGGING) {

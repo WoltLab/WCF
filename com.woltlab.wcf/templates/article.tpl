@@ -199,9 +199,9 @@
 				{if $previousArticle}
 					<li class="previousArticleButton">
 						<a href="{$previousArticle->getLink()}" rel="prev">
-							{if $previousArticle->getImage()}
+							{if $previousArticle->getTeaserImage()}
 								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$previousArticle->getImage()->getElementTag(96)}</span>
+									<span class="articleNavigationArticleImage">{@$previousArticle->getTeaserImage()->getElementTag(96)}</span>
 									
 									<div>
 										<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
@@ -221,9 +221,9 @@
 				{if $nextArticle}
 					<li class="nextArticleButton">
 						<a href="{$nextArticle->getLink()}" rel="next">
-							{if $nextArticle->getImage()}
+							{if $nextArticle->getTeaserImage()}
 								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$nextArticle->getImage()->getElementTag(96)}</span>
+									<span class="articleNavigationArticleImage">{@$nextArticle->getTeaserImage()->getElementTag(96)}</span>
 									
 									<div>
 										<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
@@ -252,9 +252,9 @@
 			{foreach from=$relatedArticles item='relatedArticle'}
 				<li>
 					<a href="{$relatedArticle->getLink()}">
-						{if $relatedArticle->getImage() && $relatedArticle->getImage()->hasThumbnail('tiny')}
+						{if $relatedArticle->getTeaserImage() && $relatedArticle->getTeaserImage()->hasThumbnail('tiny')}
 							<div class="box128">
-								<div class="articleListImage">{@$relatedArticle->getImage()->getThumbnailTag('tiny')}</div>
+								<div class="articleListImage">{@$relatedArticle->getTeaserImage()->getThumbnailTag('tiny')}</div>
 						{/if}
 						
 						<div>
@@ -288,7 +288,7 @@
 							</div>
 						</div>
 								
-						{if $relatedArticle->getImage() && $relatedArticle->getImage()->hasThumbnail('tiny')}
+						{if $relatedArticle->getTeaserImage() && $relatedArticle->getTeaserImage()->hasThumbnail('tiny')}
 							</div>
 						{/if}
 					</a>

@@ -64,8 +64,8 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
 	public function getFormattedMessage() {
 		$message = SearchResultTextParser::getInstance()->parse($this->getDecoratedObject()->getFormattedContent());
 		
-		if ($this->getImage()) {
-			return '<div class="box96">'.$this->getImage()->getElementTag(96).'<div>'.$message.'</div></div>';
+		if ($this->getTeaserImage()) {
+			return '<div class="box96">'.$this->getTeaserImage()->getElementTag(96).'<div>'.$message.'</div></div>';
 		}
 		
 		return $message;
