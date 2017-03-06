@@ -704,6 +704,11 @@ png</defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="user.page.canAddCommentWithoutModeration">
+				<categoryname>user.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="user.page.canEditComment">
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -724,6 +729,11 @@ png</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="user.article.canAddComment">
+				<categoryname>user.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.page.canAddCommentWithoutModeration">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -834,6 +844,11 @@ png</defaultvalue>
 			
 			<!-- user.profileComment -->
 			<option name="user.profileComment.canAddComment">
+				<categoryname>user.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.page.canAddCommentWithoutModeration">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>

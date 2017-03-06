@@ -484,6 +484,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteCommentInOwnProfile"><![CDATA[Can delete users’ comments on their wall]]></item>
@@ -551,10 +552,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.mod.page.canEditComment"><![CDATA[Can edit comments]]></item>
 		<item name="wcf.acp.group.option.mod.page.canModerateComment"><![CDATA[Can moderate comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canAddComment"><![CDATA[Can create comments]]></item>
+		<item name="wcf.acp.group.option.user.article.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>
 		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Can read articles]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Can create comments]]></item>
+		<item name="wcf.acp.group.option.user.page.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 	</category>

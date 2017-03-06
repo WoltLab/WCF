@@ -380,8 +380,9 @@ CREATE TABLE wcf1_comment (
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
 	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	
-	KEY (objectTypeID, objectID, time),
+	KEY (objectTypeID, objectID, isDisabled, time),
 	KEY lastCommentTime (userID, time)
 );
 
@@ -393,8 +394,9 @@ CREATE TABLE wcf1_comment_response (
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
 	message TEXT NOT NULL,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	
-	KEY (commentID, time),
+	KEY (commentID, isDisabled, time),
 	KEY lastResponseTime (userID, time)
 );
 

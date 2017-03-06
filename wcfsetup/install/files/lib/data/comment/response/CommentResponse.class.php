@@ -22,6 +22,7 @@ use wcf\util\StringUtil;
  * @property-read	integer|null	$userID		id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
  * @property-read	string		$username	name of the user or guest who wrote the comment response
  * @property-read	string		$message	comment response message
+ * @property-read	integer		$isDisabled	is 1 if the comment response is disabled, otherwise 0
  */
 class CommentResponse extends DatabaseObject implements IMessage {
 	use TUserContent;

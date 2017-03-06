@@ -488,6 +488,7 @@
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Kann Inhalte liken]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canAddCommentWithoutModeration"><![CDATA[Kann Kommentare ohne Moderation erstellen]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteCommentInOwnProfile"><![CDATA[Kann Kommentare an der eigenen Pinnwand löschen]]></item>
@@ -555,10 +556,12 @@
 		<item name="wcf.acp.group.option.mod.page.canEditComment"><![CDATA[Kann Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.option.mod.page.canModerateComment"><![CDATA[Kann Kommentare moderieren]]></item>
 		<item name="wcf.acp.group.option.user.article.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.article.canAddCommentWithoutModeration"><![CDATA[Kann Kommentare ohne Moderation erstellen]]></item>
 		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Kann Artikel lesen]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.page.canAddCommentWithoutModeration"><![CDATA[Kann Kommentare ohne Moderation erstellen]]></item>
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 	</category>
