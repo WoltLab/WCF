@@ -860,6 +860,16 @@ WCF.Comment.Handler = Class.extend({
 		
 		// update button state to load next responses
 		this._handleLoadNextResponses(data.returnValues.commentID);
+		
+		// check if permalink response has been loaded and remove it from view
+		if (this._permalinkResponse) {
+			var responseId = elData(this._permalinkResponse, 'object-id');
+			
+			if (elBySel('.commentResponse[data-object-id="' + responseId + '"]:not(.commentPermalinkContainer)', this._container[0]) !== null) {
+				elRemove(this._permalinkResponse);
+				this._permalinkResponse = null;
+			}
+		}
 	},
 	
 	/**
