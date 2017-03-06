@@ -757,6 +757,10 @@ WCF.Comment.Handler = Class.extend({
 				this._insertComments(data);
 			break;
 			
+			case 'loadResponse':
+				this._insertResponse(data);
+				break;
+			
 			case 'loadResponses':
 				this._insertResponses(data);
 			break;
@@ -781,7 +785,9 @@ WCF.Comment.Handler = Class.extend({
 		if (data.returnValues.template === '') {
 			// comment id is invalid or there is a mismatch, silently ignore it
 			return;
-		}	
+		}
+		
+		// TODO: handle 'response' value
 		
 		$(data.returnValues.template).insertBefore(this._permalinkComment);
 		var comment = this._permalinkComment.previousElementSibling;
@@ -793,7 +799,26 @@ WCF.Comment.Handler = Class.extend({
 		//noinspection BadExpressionStatementJS
 		comment.offsetTop;
 		
-		comment.classList.add('fadeIn');
+		comment.classList.add('commentHighlightTarget');
+	},
+	
+	_insertResponse: function(data) {
+		if (data.returnValues.template === '') {
+			// comment id is invalid or there is a mismatch, silently ignore it
+			return;
+		}
+		
+		$(data.returnValues.template).insertBefore(this._permalinkResponse);
+		var response = this._permalinkResponse.previousElementSibling;
+		response.classList.add('commentResponsePermalinkContainer');
+		
+		elRemove(this._permalinkResponse);
+		this._permalinkResponse = response;
+		
+		//noinspection BadExpressionStatementJS
+		response.offsetTop;
+		
+		response.classList.add('commentHighlightTarget');
 	},
 	
 	/**

@@ -160,7 +160,8 @@
 	}
 }
 
-.comment.commentHighlightTarget .commentContent:not(.commentResponseContent) {
+.comment.commentHighlightTarget .commentContent:not(.commentResponseContent),
+.commentResponse.commentHighlightTarget .commentResponseContent {
 	animation: wcfCommentHighlight .96s linear;
 }
 

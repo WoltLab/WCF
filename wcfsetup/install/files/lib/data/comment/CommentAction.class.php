@@ -44,7 +44,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComment', 'loadComments', 'getGuestDialog'];
+	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComment', 'loadComments', 'loadResponse', 'getGuestDialog'];
 	
 	/**
 	 * captcha object type used for comments
@@ -202,6 +202,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	public function validateLoadComment() {
 		$this->readInteger('objectID', false, 'data');
+		$this->readInteger('responseID', true, 'data');
 		
 		try {
 			$this->comment = $this->getSingleObject()->getDecoratedObject();
@@ -215,6 +216,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		if (!$this->commentProcessor->isAccessible($this->parameters['data']['objectID'])) {
 			throw new PermissionDeniedException();
 		}
+		
+		if (!empty($this->parameters['data']['responseID'])) {
+			$this->response = new CommentResponse($this->parameters['data']['responseID']);
+			if (!$this->response->responseID) {
+				$this->response = null;
+			}
+		}
 	}
 	
 	public function loadComment() {
@@ -225,8 +233,24 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			return ['template' => ''];
 		}
 		
+		$returnValues = $this->renderComment($this->comment, $this->response);
+		return (is_array($returnValues)) ? $returnValues : ['template' => $returnValues];
+	}
+	
+	public function validateLoadResponse() {
+		$this->validateLoadComment();
+	}
+	
+	public function loadResponse() {
+		if ($this->comment === null || $this->response === null) {
+			return ['template' => ''];
+		}
+		else if ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
+			return ['template' => ''];
+		}
+		
 		return [
-			'template' => $this->renderComment($this->comment)
+			'template' => $this->renderResponse($this->response)
 		];
 	}
 	
@@ -746,18 +770,39 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * Renders a comment.
 	 * 
 	 * @param	Comment		$comment
-	 * @return	string
+	 * @param       CommentResponse $response
+	 * @return	string|string[]
 	 */
-	protected function renderComment(Comment $comment) {
+	protected function renderComment(Comment $comment, CommentResponse $response = null) {
 		$comment = new StructuredComment($comment);
 		$comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
+		
+		if ($response !== null) {
+			// check if response is not visible
+			/** @var CommentResponse $visibleResponse */
+			foreach ($comment as $visibleResponse) {
+				if ($visibleResponse->responseID == $response->responseID) {
+					$response = null;
+					break;
+				}
+			}
+		}
 		
 		WCF::getTPL()->assign([
 			'commentList' => [$comment],
 			'commentManager' => $this->commentProcessor
 		]);
-		return WCF::getTPL()->fetch('commentList');
+		
+		$template = WCF::getTPL()->fetch('commentList');
+		if ($response === null) {
+			return $template;
+		}
+		
+		return [
+			'template' => $template,
+			'response' => $this->renderResponse($response)
+		];
 	}
 	
 	/**
