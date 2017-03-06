@@ -216,7 +216,8 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'commentID' => $comment->commentID,
 							'user' => $users[$comment->objectID],
-							'like' => $like
+							'like' => $like,
+							'responseID' => $response->responseID
 						]);
 						$like->setTitle($text);
 						

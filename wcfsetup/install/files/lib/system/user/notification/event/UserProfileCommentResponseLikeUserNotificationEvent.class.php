@@ -69,7 +69,8 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message', [
 			'author' => $this->author,
 			'commentID' => $this->additionalData['commentID'],
-			'owner' => $owner
+			'owner' => $owner,
+			'responseID' => $this->getResponseID()
 		]);
 	}
 	
@@ -92,7 +93,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 		return LinkHandler::getInstance()->getLink(
 			'User',
 			['object' => $owner],
-			'#wall/comment' . $this->additionalData['commentID']
+			'#wall/comment' . $this->additionalData['commentID'] . '/response' . $this->getResponseID()
 		);
 	}
 	
@@ -108,5 +109,15 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 	 */
 	public function supportsEmailNotification() {
 		return false;
+	}
+	
+	/**
+	 * Returns the liked response's id.
+	 *
+	 * @return      integer
+	 */
+	protected function getResponseID() {
+		// this is the `wcfN_like.objectID` value
+		return $this->getUserNotificationObject()->objectID;
 	}
 }

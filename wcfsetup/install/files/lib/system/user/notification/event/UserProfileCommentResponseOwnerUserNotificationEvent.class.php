@@ -78,7 +78,8 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message', [
 			'author' => $this->author,
 			'commentAuthor' => $commentAuthor,
-			'commentID' => $this->getUserNotificationObject()->commentID
+			'commentID' => $this->getUserNotificationObject()->commentID,
+			'responseID' => $this->getUserNotificationObject()->responseID
 		]);
 	}
 	
@@ -105,7 +106,8 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 			'variables' => [
 				'commentAuthor' => $commentAuthor,
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'owner' => $owner
+				'owner' => $owner,
+				'responseID' => $this->getUserNotificationObject()->responseID
 			]
 		];
 	}
@@ -117,7 +119,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		return LinkHandler::getInstance()->getLink(
 			'User',
 			['object' => WCF::getUser()],
-			'#wall/comment' . $this->getUserNotificationObject()->commentID
+			'#wall/comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID
 		);
 	}
 	

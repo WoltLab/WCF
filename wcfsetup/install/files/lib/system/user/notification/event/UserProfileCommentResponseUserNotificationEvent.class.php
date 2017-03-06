@@ -69,7 +69,8 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message', [
 			'author' => $this->author,
 			'commentID' => $this->getUserNotificationObject()->commentID,
-			'owner' => $owner
+			'owner' => $owner,
+			'responseID' => $this->getUserNotificationObject()->responseID
 		]);
 	}
 	
@@ -89,7 +90,8 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 			'references' => [$messageID],
 			'variables' => [
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'owner' => $owner
+				'owner' => $owner,
+				'responseID' => $this->getUserNotificationObject()->responseID
 			]
 		];
 	}
@@ -98,7 +100,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall/comment' . $this->getUserNotificationObject()->commentID;
+		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall/comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID;
 	}
 	
 	/**
