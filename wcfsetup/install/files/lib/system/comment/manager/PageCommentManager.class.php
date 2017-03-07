@@ -27,6 +27,11 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 	/**
 	 * @inheritDoc
 	 */
+	protected $permissionAddWithoutModeration = 'user.page.canAddCommentWithoutModeration';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $permissionDelete = 'user.page.canDeleteComment';
 	
 	/**

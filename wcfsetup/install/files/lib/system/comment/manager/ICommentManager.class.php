@@ -21,6 +21,14 @@ interface ICommentManager {
 	public function canAdd($objectID);
 	
 	/**
+	 * Returns true if a comment requires approval.
+	 * 
+	 * @param       integer         $objectID
+	 * @return      boolean
+	 */
+	public function canAddWithoutApproval($objectID);
+	
+	/**
 	 * Returns true if the current user may edit given comment.
 	 * 
 	 * @param	Comment		$comment

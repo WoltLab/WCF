@@ -27,6 +27,11 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	/**
 	 * @inheritDoc
 	 */
+	protected $permissionAddWithoutModeration = 'user.profileComment.canAddCommentWithoutModeration';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $permissionCanModerate = 'mod.profileComment.canModerateComment';
 	
 	/**

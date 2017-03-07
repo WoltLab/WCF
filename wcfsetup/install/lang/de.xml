@@ -2155,6 +2155,7 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
+		<item name="wcf.comment.approve"><![CDATA[Freischalten]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Kommentar wirklich löschen?]]></item>
 		<item name="wcf.comment.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Drücke{else}Drücken Sie{/if} die Eingabetaste, um abzusenden oder Escape, um abzubrechen.]]></item>
 		<item name="wcf.comment.error.floodControl"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} bereits einen Kommentar innerhalb der letzten {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} Sekunden{else}Sekunde{/if} geschrieben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} erst in {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} Sekunde{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}n{/if} einen neuen Kommentar erstellen.]]></item>

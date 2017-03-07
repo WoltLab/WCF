@@ -57,6 +57,10 @@
 	textarea + button {
 		margin-top: 2px;
 	}
+	
+	.comment[data-is-disabled="1"] .jsCommentShowAddResponse {
+		display: none;
+	}
 }
 
 .commentListAddComment {
@@ -169,4 +173,8 @@
 	display: block;
 	height: 0;
 	position: absolute;
+}
+
+.jsEnableComment > .invisible {
+	display: inline;
 }

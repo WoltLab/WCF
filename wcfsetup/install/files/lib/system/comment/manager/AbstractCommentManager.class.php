@@ -27,6 +27,12 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	protected $permissionAdd = '';
 	
 	/**
+	 * permission name for comment/response creation without approval
+	 * @var string
+	 */
+	protected $permissionAddWithoutModeration = '';
+	
+	/**
 	 * permission name for comment/response moderation
 	 * @var	string
 	 */
@@ -65,6 +71,17 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 		}
 		
 		return (WCF::getSession()->getPermission($this->permissionAdd) ? true : false);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function canAddWithoutApproval($objectID) {
+		if (empty($this->permissionAddWithoutModeration)) {
+			return false;
+		}
+		
+		return (WCF::getSession()->getPermission($this->permissionAddWithoutModeration) ? true : false);
 	}
 	
 	/**

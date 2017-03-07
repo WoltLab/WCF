@@ -27,6 +27,11 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 	/**
 	 * @inheritDoc
 	 */
+	protected $permissionAddWithoutModeration = 'user.article.canAddCommentWithoutModeration';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $permissionDelete = 'user.article.canDeleteComment';
 	
 	/**
