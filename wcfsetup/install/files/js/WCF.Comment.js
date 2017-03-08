@@ -425,6 +425,30 @@ WCF.Comment.Handler = Class.extend({
 			var $deleteButton = $('<li><a href="#" class="jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '"><span class="icon icon16 fa-times" /> <span class="invisible">' + WCF.Language.get('wcf.global.button.delete') + '</span></a></li>');
 			$deleteButton.data('commentID', commentID).appendTo(comment.find('ul.buttonList:eq(0)')).click($.proxy(this._delete, this));
 		}
+		
+		var enableComment = elBySel('.jsEnableComment', comment[0]);
+		if (enableComment) {
+			enableComment.addEventListener(WCF_CLICK_EVENT, this._enableComment.bind(this));
+		}
+	},
+	
+	_enableComment: function (event) {
+		event.preventDefault();
+		
+		var comment = event.currentTarget.closest('.comment');
+		
+		this._proxy.setOption('data', {
+			actionName: 'enable',
+			className: 'wcf\\data\\comment\\CommentAction',
+			objectIDs: [elData(comment, 'object-id')],
+			parameters: {
+				data: {
+					objectID: elData(this._container[0], 'object-id'),
+					objectTypeID: elData(this._container[0], 'object-type-id')
+				}
+			}
+		});
+		this._proxy.sendRequest();
 	},
 	
 	_initPermalink: function(comment, link) {
@@ -755,6 +779,10 @@ WCF.Comment.Handler = Class.extend({
 				this._update(data);
 			break;
 			
+			case 'enable':
+				this._enable(data);
+				break;
+			
 			case 'loadComment':
 				this._insertComment(data);
 				break;
@@ -785,6 +813,20 @@ WCF.Comment.Handler = Class.extend({
 		}
 		
 		WCF.DOMNodeInsertedHandler.execute();
+	},
+	
+	_enable: function(data) {
+		if (data.returnValues.commentID) {
+			var comment = elBySel('.comment[data-object-id="' + data.returnValues.commentID + '"]', this._container[0]);
+			if (comment) {
+				elData(comment, 'is-disabled', 0);
+				var badge = elBySel('.jsIconDisabled', comment);
+				if (badge) elRemove(badge);
+				
+				var enableLink = elBySel('.jsEnableComment', comment);
+				if (enableLink) elRemove(enableLink.parentNode);
+			}
+		}
 	},
 	
 	_insertComment: function (data) {

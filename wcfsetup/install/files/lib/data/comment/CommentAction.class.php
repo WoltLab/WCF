@@ -355,6 +355,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		/** @var CommentEditor $comment */
 		foreach ($this->objects as $comment) {
 			// update counter
+			$comment->update(['isDisabled' => 0]);
 			$this->commentProcessor->updateCounter($comment->objectID, 1);
 			
 			// fire activity event
@@ -594,6 +595,28 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 				}
 			}
 		}
+	}
+	
+	public function validateEnable() {
+		$this->readInteger('objectID', false, 'data');
+		$this->comment = $this->getSingleObject()->getDecoratedObject();
+		
+		$objectType = $this->validateObjectType($this->comment->objectTypeID);
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	public function enable() {
+		if ($this->comment->isDisabled) {
+			$action = new CommentAction([$this->comment], 'triggerPublication', [
+				'commentProcessor' => $this->commentProcessor
+			]);
+			$action->executeAction();
+		}
+		
+		return ['commentID' => $this->comment->commentID];
 	}
 	
 	/**
