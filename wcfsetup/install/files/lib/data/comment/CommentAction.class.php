@@ -360,7 +360,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			
 			// fire activity event
 			if ($comment->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent')) {
-				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.recentActivityEvent', $comment->commentID);
+				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.recentActivityEvent', $comment->commentID, null, null, $comment->time);
 			}
 			
 			// fire notification event
@@ -528,7 +528,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			
 			// fire activity event
 			if ($this->createdResponse->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
-				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $this->createdResponse->responseID);
+				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $response->responseID, null, null, $response->time);
 			}
 			
 			// fire notification event
