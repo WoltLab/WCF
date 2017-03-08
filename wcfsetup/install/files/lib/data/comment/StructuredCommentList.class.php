@@ -6,6 +6,7 @@ use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
+use wcf\system\WCF;
 
 /**
  * Provides a structured comment list fetching last responses for every comment.
@@ -89,6 +90,11 @@ class StructuredCommentList extends CommentList {
 		$this->getConditionBuilder()->add("comment.objectTypeID = ?", [$objectTypeID]);
 		$this->getConditionBuilder()->add("comment.objectID = ?", [$objectID]);
 		$this->sqlLimit = $this->commentManager->getCommentsPerPage();
+		
+		if (!$this->commentManager->canModerate($objectTypeID, $objectID)) {
+			if (WCF::getUser()->userID) $this->getConditionBuilder()->add('(comment.isDisabled = 0 OR comment.userID = ?)', [WCF::getUser()->userID]);
+			else $this->getConditionBuilder()->add('comment.isDisabled = 0');
+		}
 	}
 	
 	/**

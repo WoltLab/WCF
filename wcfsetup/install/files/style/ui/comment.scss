@@ -118,8 +118,16 @@
 	}
 }
 
-.commentListAddCommentEditorContainer > .info:first-child {
+.commentListAddCommentEditorContainer > .jsCommentAddRequiresApproval {
 	margin-top: 0;
+}
+
+.commentResponseAdd > div > .jsCommentAddRequiresApproval {
+	margin-top: 0;
+	
+	& + textarea {
+		margin-top: 20px;
+	}
 }
 
 .commentEditorContainer {

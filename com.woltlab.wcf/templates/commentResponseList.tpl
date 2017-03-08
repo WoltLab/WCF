@@ -23,6 +23,10 @@
 						{/if}
 						
 						<small class="separatorLeft">{@$response->time|time}</small>
+						
+						{if $response->isDisabled}
+							<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
+						{/if}
 					</h3>
 				</div>
 				

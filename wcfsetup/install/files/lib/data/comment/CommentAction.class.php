@@ -404,6 +404,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		// validate comment id
 		$this->validateCommentID();
 		
+		// disallow responses on disabled comments
+		if ($this->comment->isDisabled) {
+			throw new PermissionDeniedException();
+		}
+		
 		$objectType = $this->validateObjectType();
 		
 		// validate object id and permissions
@@ -438,8 +443,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
-			'message' => $this->parameters['data']['message']
+			'message' => $this->parameters['data']['message'],
+			'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1
 		]);
+		$this->createdResponse->setComment($this->comment);
 		
 		// update response data
 		$responseIDs = $this->comment->getResponseIDs();
@@ -455,77 +462,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'responses' => $responses
 		]);
 		
-		// update counter
-		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
-		
-		// fire activity event
-		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
-		if ($this->createdResponse->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
-			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $this->createdResponse->responseID);
-		}
-		
-		// fire notification event
-		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-			$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
-			
-			if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
-				$recipientIDs = $notificationObjectType->getRecipientIDs($this->comment);
-				
-				// make sure that the active user gets no notification
-				$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
-				
-				if (!empty($recipientIDs)) {
-					UserNotificationHandler::getInstance()->fireEvent(
-						'commentResponse',
-						$objectType->objectType . '.response.notification',
-						$notificationObject,
-						$recipientIDs,
-						[
-							'commentID' => $this->comment->commentID,
-							'objectID' => $this->comment->objectID,
-							'userID' => $this->comment->userID
-						]
-					);
-				}
-			}
-			else {
-				/** @var ICommentUserNotificationObjectType $notificationObjectType */
-				
-				$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
-				
-				if ($this->comment->userID != WCF::getUser()->userID) {
-					UserNotificationHandler::getInstance()->fireEvent(
-						'commentResponse',
-						$objectType->objectType . '.response.notification',
-						$notificationObject,
-						[$this->comment->userID],
-						[
-							'commentID' => $this->comment->commentID,
-							'objectID' => $this->comment->objectID,
-							'objectUserID' => $userID,
-							'userID' => $this->comment->userID
-						]
-					);
-				}
-				
-				// notify the container owner
-				if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-					if ($userID != $this->comment->userID && $userID != WCF::getUser()->userID) {
-						UserNotificationHandler::getInstance()->fireEvent(
-							'commentResponseOwner',
-							$objectType->objectType . '.response.notification',
-							$notificationObject,
-							[$userID], [
-								'commentID' => $this->comment->commentID,
-								'objectID' => $this->comment->objectID,
-								'objectUserID' => $userID,
-								'userID' => $this->comment->userID
-							]
-						);
-					}
-				}
-			}
+		if (!$this->createdResponse->isDisabled) {
+			$action = new CommentAction([], 'triggerPublicationResponse', [
+				'commentProcessor' => $this->commentProcessor,
+				'responses' => [$this->createdResponse]
+			]);
+			$action->executeAction();
 		}
 		
 		if (!$this->createdResponse->userID) {
@@ -546,6 +488,100 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'template' => $this->renderResponse($this->createdResponse),
 			'responses' => $responses
 		];
+	}
+	
+	public function triggerPublicationResponse() {
+		if (!empty($this->parameters['commentProcessor'])) {
+			$objectType = null;
+			if (!empty($this->parameters['responses'])) {
+				/** @var CommentResponse $response */
+				$response = reset($this->parameters['responses']);
+				$objectType = $this->validateObjectType($response->getComment()->objectTypeID);
+			}
+			
+			$this->commentProcessor = $this->parameters['commentProcessor'];
+		}
+		else {
+			$objectType = $this->validateObjectType($this->parameters['objectTypeID']);
+			$this->commentProcessor = $objectType->getProcessor();
+		}
+		
+		/** @var CommentResponseEditor $response */
+		foreach ($this->parameters['responses'] as $response) {
+			$comment = $response->getComment();
+			
+			// update counter
+			$this->commentProcessor->updateCounter($comment->objectID, 1);
+			
+			// fire activity event
+			if ($this->createdResponse->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
+				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $this->createdResponse->responseID);
+			}
+			
+			// fire notification event
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
+				$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
+				
+				if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
+					$recipientIDs = $notificationObjectType->getRecipientIDs($comment);
+					
+					// make sure that the active user gets no notification
+					$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
+					
+					if (!empty($recipientIDs)) {
+						UserNotificationHandler::getInstance()->fireEvent(
+							'commentResponse',
+							$objectType->objectType . '.response.notification',
+							$notificationObject,
+							$recipientIDs,
+							[
+								'commentID' => $comment->commentID,
+								'objectID' => $comment->objectID,
+								'userID' => $comment->userID
+							]
+						);
+					}
+				}
+				else {
+					/** @var ICommentUserNotificationObjectType $notificationObjectType */
+					
+					$userID = $notificationObjectType->getOwnerID($comment->commentID);
+					
+					if ($comment->userID != WCF::getUser()->userID) {
+						UserNotificationHandler::getInstance()->fireEvent(
+							'commentResponse',
+							$objectType->objectType . '.response.notification',
+							$notificationObject,
+							[$this->comment->userID],
+							[
+								'commentID' => $comment->commentID,
+								'objectID' => $comment->objectID,
+								'objectUserID' => $userID,
+								'userID' => $comment->userID
+							]
+						);
+					}
+					
+					// notify the container owner
+					if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+						if ($userID != $comment->userID && $userID != WCF::getUser()->userID) {
+							UserNotificationHandler::getInstance()->fireEvent(
+								'commentResponseOwner',
+								$objectType->objectType . '.response.notification',
+								$notificationObject,
+								[$userID], [
+									'commentID' => $comment->commentID,
+									'objectID' => $comment->objectID,
+									'objectUserID' => $userID,
+									'userID' => $comment->userID
+								]
+							);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**

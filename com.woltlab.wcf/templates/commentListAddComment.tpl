@@ -3,7 +3,7 @@
 	<div class="commentListAddComment collapsed" data-placeholder="{lang}wcf.comment.add{/lang}">
 		<div class="commentListAddCommentEditorContainer">
 			{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
-				<p class="info">{lang}wcf.comment.add.moderation.info{/lang}</p>
+				<p class="info jsCommentAddRequiresApproval">{lang}wcf.comment.add.moderation.info{/lang}</p>
 			{/if}
 			
 			<textarea id="{$wysiwygSelector}" name="text" class="wysiwygTextarea"

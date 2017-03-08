@@ -524,6 +524,12 @@ WCF.Comment.Handler = Class.extend({
 		$input.keyup(function(event) { self._keyUp(event, true); });
 		
 		comment.data('responsePlaceholder', $placeholder).data('responseInput', $listItem);
+		
+		// mirror the moderation notice
+		var commentRequireApproval = elBySel('.commentListAddCommentEditorContainer .jsCommentAddRequiresApproval', this._container[0]);
+		if (commentRequireApproval) {
+			$inputContainer[0].insertBefore(commentRequireApproval.cloneNode(true), $inputContainer[0].firstChild);
+		}
 	},
 	
 	/**
