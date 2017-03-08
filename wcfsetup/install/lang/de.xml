@@ -2155,6 +2155,7 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
+		<item name="wcf.comment.add.moderation.info"><![CDATA[Neu erstellte Kommentare unterliegen der Moderation und werden erst sichtbar, wenn sie durch einen Moderator geprüft und freigeschaltet wurden.]]></item>
 		<item name="wcf.comment.approve"><![CDATA[Freischalten]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Kommentar wirklich löschen?]]></item>
 		<item name="wcf.comment.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Drücke{else}Drücken Sie{/if} die Eingabetaste, um abzusenden oder Escape, um abzubrechen.]]></item>

@@ -118,6 +118,10 @@
 	}
 }
 
+.commentListAddCommentEditorContainer > .info:first-child {
+	margin-top: 0;
+}
+
 .commentEditorContainer {
 	> .icon {
 		left: calc(50% - 24px);

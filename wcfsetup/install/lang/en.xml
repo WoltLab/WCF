@@ -2113,6 +2113,7 @@ Errors are:
 	
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
+		<item name="wcf.comment.add.moderation.info"><![CDATA[Newly created comments need to be manually approved before publication, other users cannot see this comment until it has been approved.]]></item>
 		<item name="wcf.comment.approve"><![CDATA[Approve]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Do you really want to delete this comment?]]></item>
 		<item name="wcf.comment.description"><![CDATA[Press Enter to send or Escape to cancel.]]></item>

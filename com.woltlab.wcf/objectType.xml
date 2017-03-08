@@ -231,10 +231,20 @@
 		<!-- moderation -->
 		<type>
 			<name>com.woltlab.wcf.comment.comment</name>
+			<definitionname>com.woltlab.wcf.moderation.activation</definitionname>
+			<classname>wcf\system\moderation\queue\activation\CommentCommentModerationQueueActivationHandler</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.comment.comment</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\CommentCommentModerationQueueReportHandler</classname>
 		</type>
 		
+		<type>
+			<name>com.woltlab.wcf.comment.response</name>
+			<definitionname>com.woltlab.wcf.moderation.activation</definitionname>
+			<classname>wcf\system\moderation\queue\activation\CommentResponseModerationQueueActivationHandler</classname>
+		</type>
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>

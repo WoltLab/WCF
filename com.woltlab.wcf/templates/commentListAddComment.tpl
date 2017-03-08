@@ -2,6 +2,10 @@
 	{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}
 	<div class="commentListAddComment collapsed" data-placeholder="{lang}wcf.comment.add{/lang}">
 		<div class="commentListAddCommentEditorContainer">
+			{if !$commentList->getCommentManager()->canAddWithoutApproval($commentList->objectID)}
+				<p class="info">{lang}wcf.comment.add.moderation.info{/lang}</p>
+			{/if}
+			
 			<textarea id="{$wysiwygSelector}" name="text" class="wysiwygTextarea"
 			          data-disable-attachments="true"
 			          data-disable-media="true"

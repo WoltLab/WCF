@@ -806,6 +806,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 		
 		WCF::getTPL()->assign([
+			'commentCanModerate' => $this->commentProcessor->canModerate($comment->getDecoratedObject()->objectTypeID, $comment->getDecoratedObject()->objectID),
 			'commentList' => [$comment],
 			'commentManager' => $this->commentProcessor
 		]);

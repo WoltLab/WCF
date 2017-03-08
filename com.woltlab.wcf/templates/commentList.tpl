@@ -1,5 +1,5 @@
 {if !$commentManager|isset}{assign var='commentManager' value=$commentList->getCommentManager()}{/if}
-{assign var=__comentCanModerate value=$commentManager->canModerate($commentList->objectTypeID, $commentList->objectID)}
+{if !$commentCanModerate|isset}{assign var=commentCanModerate value=$commentManager->canModerate($commentList->objectTypeID, $commentList->objectID)}{/if}
 {foreach from=$commentList item=comment}
 	<li class="comment jsComment"
 	    data-object-id="{@$comment->commentID}" data-comment-id="{@$comment->commentID}" data-object-type="com.woltlab.wcf.comment"
@@ -41,7 +41,7 @@
 					
 					<nav class="jsMobileNavigation buttonGroupNavigation">
 						<ul class="buttonList iconList">
-							{if $comment->isDisabled && $__comentCanModerate}
+							{if $comment->isDisabled && $commentCanModerate}
 								<li class="jsOnly"><a href="#" class="jsEnableComment"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.comment.approve{/lang}</span></a></li>
 							{/if}
 							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
