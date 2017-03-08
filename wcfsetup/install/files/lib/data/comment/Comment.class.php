@@ -24,6 +24,8 @@ use wcf\util\StringUtil;
  * @property-read	string		$message		comment message
  * @property-read	integer		$responses		number of responses on the comment
  * @property-read	string		$responseIDs		serialized array with the ids of the five latest comment responses
+ * @property-read	integer		$unfilteredResponses	number of all responses on the comment, including disabled ones
+ * @property-read	string		$unfilteredResponseIDs	serialized array with the ids of the five latest comment responses, including disabled ones
  * @property-read       integer         $enableHtml             is 1 if HTML will rendered in the comment, otherwise 0
  * @property-read	integer		$isDisabled		is 1 if the comment is disabled, otherwise 0
  */
@@ -47,6 +49,24 @@ class Comment extends DatabaseObject implements IMessage {
 		
 		return $responseIDs;
 	}
+	
+	/**
+	 * Returns a list of unfiltered response ids, including those that are still disabled.
+	 *
+	 * @return	integer[]
+	 */
+	public function getUnfilteredResponseIDs() {
+		if ($this->unfilteredResponseIDs === null || $this->unfilteredResponseIDs == '') {
+			return [];
+		}
+		
+		$responseIDs = @unserialize($this->unfilteredResponseIDs);
+		if ($responseIDs === false) {
+			return [];
+		}
+		
+		return $responseIDs;
+	} 
 	
 	/**
 	 * @inheritDoc

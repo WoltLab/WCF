@@ -379,6 +379,8 @@ CREATE TABLE wcf1_comment (
 	message TEXT NOT NULL,
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
 	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
+	unfilteredResponses MEDIUMINT(7) NOT NULL DEFAULT '0',
+	unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	

@@ -54,7 +54,7 @@
 				</div>
 				
 				{if $comment|count}
-					<ul data-responses="{@$comment->responses}" class="containerList commentResponseList">
+					<ul data-responses="{if $commentCanModerate}{@$comment->unfilteredResponses}{else}{@$comment->responses}{/if}" class="containerList commentResponseList">
 						{include file='commentResponseList' responseList=$comment}
 					</ul>
 				{/if}

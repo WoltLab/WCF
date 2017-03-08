@@ -449,17 +449,17 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		$this->createdResponse->setComment($this->comment);
 		
 		// update response data
-		$responseIDs = $this->comment->getResponseIDs();
-		if (count($responseIDs) < 5) {
-			$responseIDs[] = $this->createdResponse->responseID;
+		$unfilteredResponseIDs = $this->comment->getUnfilteredResponseIDs();
+		if (count($unfilteredResponseIDs) < 5) {
+			$unfilteredResponseIDs[] = $this->createdResponse->responseID;
 		}
-		$responses = $this->comment->responses + 1;
+		$unfilteredResponses = $this->comment->unfilteredResponses + 1;
 		
 		// update comment
 		$commentEditor = new CommentEditor($this->comment);
 		$commentEditor->update([
-			'responseIDs' => serialize($responseIDs),
-			'responses' => $responses
+			'unfilteredResponseIDs' => serialize($unfilteredResponseIDs),
+			'unfilteredResponses' => $unfilteredResponses
 		]);
 		
 		if (!$this->createdResponse->isDisabled) {
@@ -483,10 +483,15 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 		}
 		
+		$responses = $this->comment->responses;
+		if ($this->commentProcessor->canModerate($this->parameters['data']['objectTypeID'], $this->parameters['data']['objectID'])) {
+			$responses = $this->comment->unfilteredResponses;
+		}
+		
 		return [
 			'commentID' => $this->comment->commentID,
 			'template' => $this->renderResponse($this->createdResponse),
-			'responses' => $responses
+			'responses' => $responses + 1
 		];
 	}
 	
@@ -509,6 +514,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		/** @var CommentResponseEditor $response */
 		foreach ($this->parameters['responses'] as $response) {
 			$comment = $response->getComment();
+			
+			// update response count
+			$commentEditor = new CommentEditor($comment);
+			$commentEditor->updateCounters(['responses' => 1]);
+			
+			// do not prepend the response id as the approved response can appear anywhere
+			$commentEditor->updateResponseIDs();
 			
 			// update counter
 			$this->commentProcessor->updateCounter($comment->objectID, 1);

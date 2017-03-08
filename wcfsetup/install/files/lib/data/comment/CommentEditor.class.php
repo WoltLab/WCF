@@ -28,11 +28,27 @@ class CommentEditor extends DatabaseObjectEditor {
 		$sql = "SELECT		responseID
 			FROM		wcf".WCF_N."_comment_response
 			WHERE		commentID = ?
+					AND isDisabled = ?
+			ORDER BY	time ASC, responseID ASC";
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
+		$statement->execute([$this->commentID, 0]);
+		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+		
+		$this->update(['responseIDs' => serialize($responseIDs)]);
+	}
+	
+	/**
+	 * Updates response ids, including disabled ones.
+	 */
+	public function updateUnfilteredResponseIDs() {
+		$sql = "SELECT		responseID
+			FROM		wcf".WCF_N."_comment_response
+			WHERE		commentID = ?
 			ORDER BY	time ASC, responseID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 5);
 		$statement->execute([$this->commentID]);
 		$responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
-		$this->update(['responseIDs' => serialize($responseIDs)]);
+		$this->update(['unfilteredResponseIDs' => serialize($responseIDs)]);
 	}
 }

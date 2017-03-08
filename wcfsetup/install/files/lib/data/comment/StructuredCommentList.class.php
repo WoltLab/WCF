@@ -126,9 +126,19 @@ class StructuredCommentList extends CommentList {
 		}
 		
 		// fetch last responses
-		if ( !empty($responseIDs)) {
+		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
-			$responseList->setObjectIDs(array_keys($responseIDs));
+			
+			if ($this->commentManager->canModerate($this->objectTypeID, $this->objectID)) {
+				$responseList->setObjectIDs(array_keys($responseIDs));
+			}
+			else {
+				$responseList->getConditionBuilder()->add('comment_response.responseID IN (?)', [array_keys($responseIDs)]);
+				
+				if (WCF::getUser()->userID) $responseList->getConditionBuilder()->add('(comment_response.isDisabled = 0 OR comment_response.userID = ?)', [WCF::getUser()->userID]);
+				else $responseList->getConditionBuilder()->add('comment_response.isDisabled = 0');
+			}
+			
 			$responseList->readObjects();
 			
 			foreach ($responseList as $response) {
