@@ -598,7 +598,7 @@ WCF.Comment.Handler = Class.extend({
 			$placeholder.parent().children('.button').disable();
 		}
 		
-		$placeholder.remove();
+		$placeholder.hide();
 		
 		var $responseInput = this._comments[$commentID].data('responseInput').show();
 		$responseInput.find('textarea').focus();
@@ -764,6 +764,11 @@ WCF.Comment.Handler = Class.extend({
 				else {
 					var $comment = this._comments[data.returnValues.commentID];
 					$comment.find('.jsCommentResponseAdd textarea').val('').blur().trigger('updateHeight');
+					
+					// revert response field
+					elBySel('.commentOptionContainer', $comment[0]).classList.remove('jsAddResponseActive');
+					elHide(elBySel('.jsCommentResponseAdd', $comment[0]));
+					elShow(elBySel('.jsCommentShowAddResponse', $comment[0]));
 					
 					var $responseList = $comment.find('ul.commentResponseList');
 					if (!$responseList.length) $responseList = $('<ul class="containerList commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
