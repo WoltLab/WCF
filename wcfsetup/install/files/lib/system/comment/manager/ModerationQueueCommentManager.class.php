@@ -24,6 +24,13 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	/**
 	 * @inheritDoc
 	 */
+	public function canAddWithoutApproval($objectID) {
+		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getLink($objectTypeID, $objectID) {
 		$entry = new ViewableModerationQueue(new ModerationQueue($objectID));
 		return $entry->getLink();

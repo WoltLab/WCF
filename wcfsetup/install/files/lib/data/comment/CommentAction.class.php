@@ -374,7 +374,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
 				
 				if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
-					$recipientIDs = $notificationObjectType->getRecipientIDs($comment);
+					$recipientIDs = $notificationObjectType->getRecipientIDs($comment->getDecoratedObject());
 					
 					// make sure that the active user gets no notification
 					$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
