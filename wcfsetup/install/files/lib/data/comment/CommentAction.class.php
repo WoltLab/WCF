@@ -18,6 +18,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
@@ -317,6 +318,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			]);
 			$action->executeAction();
 		}
+		else {
+			// mark comment for moderated content
+			ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.comment', $this->createdComment->commentID);
+		}
 		
 		if (!$this->createdComment->userID) {
 			// save user name is session
@@ -470,6 +475,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			]);
 			$action->executeAction();
 		}
+		else {
+			// mark response for moderated content
+			ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.response', $this->createdResponse->responseID);
+		}
 		
 		if (!$this->createdResponse->userID) {
 			// save user name is session
@@ -609,9 +618,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	}
 	
 	public function enable() {
+		if ($this->comment === null) $this->comment = reset($this->objects);
+		
 		if ($this->comment->isDisabled) {
 			$action = new CommentAction([$this->comment], 'triggerPublication', [
-				'commentProcessor' => $this->commentProcessor
+				'commentProcessor' => $this->commentProcessor,
+				'objectTypeID' => $this->comment->objectTypeID
 			]);
 			$action->executeAction();
 		}
@@ -636,6 +648,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	}
 	
 	public function enableResponse() {
+		if ($this->comment === null) $this->comment = reset($this->objects);
+		if ($this->response === null) $this->response = reset($this->parameters['responses']);
+		
 		if ($this->response->isDisabled) {
 			$action = new CommentAction([], 'triggerPublicationResponse', [
 				'commentProcessor' => $this->commentProcessor,
