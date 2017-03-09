@@ -1,5 +1,5 @@
 {foreach from=$responseList item=response}
-	{if $response->isDisabled && $commentCanModerate|isset && !$commentCanModerate}
+	{if $response->isDisabled && !$commentCanModerate}
 		<li>
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
 		</li>
@@ -39,6 +39,9 @@
 					
 					<nav class="jsMobileNavigation buttonGroupNavigation">
 						<ul class="buttonList iconList">
+							{if $response->isDisabled && $commentCanModerate}
+								<li class="jsOnly"><a href="#" class="jsEnableResponse"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.comment.approve{/lang}</span></a></li>
+							{/if}
 							{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
 								<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 							{/if}

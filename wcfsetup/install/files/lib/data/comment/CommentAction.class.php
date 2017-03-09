@@ -512,8 +512,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			$this->commentProcessor = $objectType->getProcessor();
 		}
 		
-		/** @var CommentResponseEditor $response */
+		/** @var CommentResponse $response */
 		foreach ($this->parameters['responses'] as $response) {
+			(new CommentResponseEditor($response))->update(['isDisabled' => 0]);
+			
 			$comment = $response->getComment();
 			
 			// update response count
@@ -527,14 +529,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			$this->commentProcessor->updateCounter($comment->objectID, 1);
 			
 			// fire activity event
-			if ($this->createdResponse->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
+			if ($response->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
 				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $response->responseID, null, null, $response->time);
 			}
 			
 			// fire notification event
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
 				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-				$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
+				$notificationObject = new CommentResponseUserNotificationObject($response);
 				
 				if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
 					$recipientIDs = $notificationObjectType->getRecipientIDs($comment);
@@ -565,7 +567,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 							'commentResponse',
 							$objectType->objectType . '.response.notification',
 							$notificationObject,
-							[$this->comment->userID],
+							[$comment->userID],
 							[
 								'commentID' => $comment->commentID,
 								'objectID' => $comment->objectID,
@@ -597,7 +599,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	}
 	
 	public function validateEnable() {
-		$this->readInteger('objectID', false, 'data');
 		$this->comment = $this->getSingleObject()->getDecoratedObject();
 		
 		$objectType = $this->validateObjectType($this->comment->objectTypeID);
@@ -616,6 +617,35 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 		
 		return ['commentID' => $this->comment->commentID];
+	}
+	
+	public function validateEnableResponse() {
+		$this->readInteger('responseID', false, 'data');
+		$this->response = new CommentResponse($this->parameters['data']['responseID']);
+		if (!$this->response->responseID) {
+			throw new UserInputException('responseID');
+		}
+		
+		$this->comment = $this->response->getComment();
+		
+		$objectType = $this->validateObjectType($this->comment->objectTypeID);
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	public function enableResponse() {
+		if ($this->response->isDisabled) {
+			$action = new CommentAction([], 'triggerPublicationResponse', [
+				'commentProcessor' => $this->commentProcessor,
+				'objectTypeID' => $this->comment->objectTypeID,
+				'responses' => [$this->response]
+			]);
+			$action->executeAction();
+		}
+		
+		return ['responseID' => $this->response->responseID];
 	}
 	
 	/**

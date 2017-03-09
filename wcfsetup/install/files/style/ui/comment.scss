@@ -187,7 +187,8 @@
 	position: absolute;
 }
 
-.jsEnableComment > .invisible {
+.jsEnableComment > .invisible,
+.jsEnableResponse > .invisible {
 	display: inline;
 }
 

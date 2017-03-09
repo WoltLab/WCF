@@ -440,13 +440,7 @@ WCF.Comment.Handler = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'enable',
 			className: 'wcf\\data\\comment\\CommentAction',
-			objectIDs: [elData(comment, 'object-id')],
-			parameters: {
-				data: {
-					objectID: elData(this._container[0], 'object-id'),
-					objectTypeID: elData(this._container[0], 'object-type-id')
-				}
-			}
+			objectIDs: [elData(comment, 'object-id')]
 		});
 		this._proxy.sendRequest();
 	},
@@ -492,9 +486,31 @@ WCF.Comment.Handler = Class.extend({
 					
 					//noinspection JSReferencingMutableVariableFromClosure
 					this._initPermalinkResponse(commentId, response, $responseID, link);
+					
+					var enableResponse = elBySel('.jsEnableResponse', response);
+					if (enableResponse) {
+						enableResponse.addEventListener(WCF_CLICK_EVENT, this._enableCommentResponse.bind(this));
+					}
 				}).bind(this));
 			}
 		}
+	},
+	
+	_enableCommentResponse: function (event) {
+		event.preventDefault();
+		
+		var response = event.currentTarget.closest('.commentResponse');
+		
+		this._proxy.setOption('data', {
+			actionName: 'enableResponse',
+			className: 'wcf\\data\\comment\\CommentAction',
+			parameters: {
+				data: {
+					responseID: elData(response, 'object-id')
+				}
+			}
+		});
+		this._proxy.sendRequest();
 	},
 	
 	_initPermalinkResponse: function (commentId, response, responseId, link) {
@@ -787,6 +803,10 @@ WCF.Comment.Handler = Class.extend({
 			case 'enable':
 				this._enable(data);
 				break;
+				
+			case 'enableResponse':
+				this._enableResponse(data);
+				break;
 			
 			case 'loadComment':
 				this._insertComment(data);
@@ -829,6 +849,20 @@ WCF.Comment.Handler = Class.extend({
 				if (badge) elRemove(badge);
 				
 				var enableLink = elBySel('.jsEnableComment', comment);
+				if (enableLink) elRemove(enableLink.parentNode);
+			}
+		}
+	},
+	
+	_enableResponse: function(data) {
+		if (data.returnValues.responseID) {
+			var response = elBySel('.commentResponse[data-object-id="' + data.returnValues.responseID + '"]', this._container[0]);
+			if (response) {
+				elData(response, 'is-disabled', 0);
+				var badge = elBySel('.jsIconDisabled', response);
+				if (badge) elRemove(badge);
+				
+				var enableLink = elBySel('.jsEnableResponse', response);
 				if (enableLink) elRemove(enableLink.parentNode);
 			}
 		}

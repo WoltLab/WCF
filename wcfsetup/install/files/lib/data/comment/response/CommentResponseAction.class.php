@@ -163,9 +163,12 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function loadResponses() {
+		$commentCanModerate = $this->commentManager->canModerate($this->comment->objectTypeID, $this->comment->objectID);
+		
 		// get response list
 		$responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
 		$responseList->getConditionBuilder()->add("comment_response.time > ?", [$this->parameters['data']['lastResponseTime']]);
+		if (!$commentCanModerate) $responseList->getConditionBuilder()->add("comment_response.isDisabled = ?", [0]);
 		if (!$this->parameters['data']['loadAllResponses']) $responseList->sqlLimit = 50;
 		$responseList->readObjects();
 		
@@ -179,6 +182,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		}
 		
 		WCF::getTPL()->assign([
+			'commentCanModerate' => $commentCanModerate,
 			'likeData' => MODULE_LIKE ? $responseList->getLikeData() : [],
 			'responseList' => $responseList,
 			'commentManager' => $this->commentManager
