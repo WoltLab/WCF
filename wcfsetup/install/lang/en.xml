@@ -1882,7 +1882,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-an administrator resetted your password. You are now required to set a new password to be able to use your
+An administrator resetted your password. You are now required to set a new password to be able to use your
 user account {@$mailbox->getUser()->username} on the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] again:
 
     {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
@@ -1891,7 +1891,7 @@ If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime
 the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}] for security reasons.]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
-<p>an administrator resetted your password. You are now required to set a new password to be able to use your
+<p>An administrator resetted your password. You are now required to set a new password to be able to use your
 user account {@$mailbox->getUser()->username} on the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a> again:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Choose new password]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
@@ -1906,11 +1906,11 @@ the lost password form <a href="{link controller='LostPassword' isEmail=true}{/l
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
-<p>your account on the website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> has been approved
+<p>Your account on the website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> has been approved
 by an administrator. You are now able to use your user account to it’s full extend.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved
+Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved
 by an administrator. You are now able to use your user account to it’s
 full extend.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
@@ -3064,7 +3064,7 @@ Errors are:
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+You (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
 the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. You can change your password after clicking
 the following link:
 
@@ -3073,7 +3073,7 @@ the following link:
 If you don’t want to change your password you can simply wait. The request will expire at {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.]]></item>
 		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
-<p>you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+<p>You (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
 the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Change Password]]></item>
 		<item name="wcf.user.lostPassword.mail.html.outro"><![CDATA[
@@ -3114,7 +3114,7 @@ the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>
 		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.intro"><![CDATA[
-<p>you’ve changed your email address on: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. To complete
+<p>You have changed your email address on: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. To complete
 this change it is required to confirm your new email address once:</p>]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.outro"><![CDATA[
@@ -3124,14 +3124,14 @@ this change it is required to confirm your new email address once:</p>]]></item>
 you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
 
-you’ve changed your email address on: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. To complete
+You have changed your email address on: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. To complete
 this change it is required to confirm your new email address once:
 
     {link controller='EmailActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->reactivationCode}{/link} {* this line ends with a space *}
 
 Your activation code is: {@$mailbox->getUser()->reactivationCode} {* this line ends with a space *}
 
-If you have troubles confirming your email address, please contect the
+If you have troubles confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[The password has been changed.]]></item>
@@ -3240,25 +3240,25 @@ not register with us.]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>thank you for registering at: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
+<p>Thank you for registering at: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
 <p>Your activation code is: <code>{$mailbox->getUser()->activationCode}</code>.</p>
-<p>If you have troubles confirming your email address, please contact the administrator at:
+<p>If you have trouble confirming your email address, please contact the administrator at:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
 you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
 
-thank your for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. Before you are
-able to user your user account to it's full extent it is required that you
+Thank you for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. Before you are
+able to use your user account to it's full extent it is required that you
 confirm the validity of your email address once:
 
     {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
 
 Your activation code is: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
 
-If you have troubles confirming your email address, please contect the
+If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		
@@ -3478,7 +3478,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-you currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
+You currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
@@ -3490,7 +3490,7 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {@$mailbox->getUser()->username},</h2>
 
-<p>you currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
+<p>You currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>

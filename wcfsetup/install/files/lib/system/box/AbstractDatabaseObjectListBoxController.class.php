@@ -196,6 +196,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * @inheritDoc
 	 */
 	public function hasContent() {
+		EventHandler::getInstance()->fireAction($this, 'hasContent');
+
 		if ($this->objectList === null) {
 			$this->loadContent();
 		}

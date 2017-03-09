@@ -35,3 +35,17 @@
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
+
+<script data-relocate="true">
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
+			'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
+			'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
+			'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+		});
+		
+		new WCF.User.Action.Follow($('.jsGroupedUserList > li'));
+		new WCF.User.Action.Ignore($('.jsGroupedUserList > li'));
+	});
+</script>
