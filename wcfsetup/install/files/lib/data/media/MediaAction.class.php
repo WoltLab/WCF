@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\media;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\IUploadAction;
 use wcf\system\acl\simple\SimpleAclHandler;
