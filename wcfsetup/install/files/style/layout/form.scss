@@ -102,6 +102,10 @@ select {
 	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
 	// boundaries and nicely wrap the displayed value instead.
 	max-width: 100%;
+	
+	&.fullWidth {
+		width: 100%;
+	}
 }
 
 .formSubmit {

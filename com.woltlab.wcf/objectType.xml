@@ -1131,10 +1131,6 @@
 			<name>com.woltlab.wcf.box</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
-		<type>
-			<name>com.woltlab.wcf.media</name>
-			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
-		</type>
 		<!-- /simple acl -->
 		
 		<!-- article list box condition -->
@@ -1152,6 +1148,18 @@
 			<classname>wcf\system\condition\user\activity\event\UserActivityEventExcludedObjectTypeCondition</classname>
 		</type>
 		<!-- /recent activity box condition -->
+		
+		<!-- media -->
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.media.category</name>
+			<definitionname>com.woltlab.wcf.category</definitionname>
+			<classname>wcf\system\category\MediaCategoryType</classname>
+		</type>
+		<!-- /media -->
 		
 		<!-- deprecated -->
 		<type>

@@ -592,6 +592,7 @@ CREATE TABLE wcf1_like_object (
 DROP TABLE IF EXISTS wcf1_media;
 CREATE TABLE wcf1_media (
 	mediaID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	categoryID INT(10),
 	
 	filename VARCHAR(255) NOT NULL DEFAULT '',
 	filesize INT(10) NOT NULL DEFAULT 0,
@@ -1745,6 +1746,7 @@ ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_lang
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_media ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
 ALTER TABLE wcf1_media ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_media ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
 

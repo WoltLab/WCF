@@ -1,9 +1,11 @@
 <?php
 namespace wcf\data\media;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\category\CategoryNodeTree;
 use wcf\data\ISearchAction;
 use wcf\data\IUploadAction;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\category\CategoryHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -109,6 +111,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		return [
 			'altText' => $media instanceof ViewableMedia ? $media->altText : [],
 			'caption' => $media instanceof ViewableMedia ? $media->caption : [],
+			'categoryID' => $media->categoryID,
 			'fileHash' => $media->fileHash,
 			'filename' => $media->filename,
 			'filesize' => $media->filesize,
@@ -178,10 +181,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		$mediaList->sqlLimit = 50;
 		$mediaList->readObjects();
 		
+		$categoryList = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+		$categoryList->setMaxDepth(0);
+		
 		return [
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')),
 			'media' => $this->getI18nMediaData($mediaList),
 			'template' => WCF::getTPL()->fetch('mediaManager', 'wcf', [
+				'categoryList' => $categoryList,
 				'mediaList' => $mediaList,
 				'mode' => $this->parameters['mode']
 			])
@@ -256,14 +263,19 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		I18nHandler::getInstance()->register('altText_' . $media->mediaID);
 		I18nHandler::getInstance()->assignVariables();
 		
+		$categoryList = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+		$categoryList->setMaxDepth(0);
+		
 		return [
 			'availableLanguageCount' => count(LanguageFactory::getInstance()->getLanguages()),
+			'categoryIDs' => array_keys(CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category')),
 			'mediaData' => $this->getI18nMediaData($mediaList)[$this->getSingleObject()->mediaID],
 			'template' => WCF::getTPL()->fetch('mediaEditor', 'wcf', [
 				'__aclSimplePrefix' => 'mediaEditor_' . $media->mediaID . '_',
 				'__languageChooserPrefix' => 'mediaEditor_' . $media->mediaID . '_',
 				'aclValues' => SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $media->mediaID),
 				'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
+				'categoryList' => $categoryList,
 				'languageID' => WCF::getUser()->languageID,
 				'languages' => LanguageFactory::getInstance()->getLanguages(),
 				'media' => $media
@@ -285,6 +297,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			}
 		}
 		
+		$this->readInteger('categoryID', true, 'data');
 		$this->readInteger('languageID', true, 'data');
 		$this->readBoolean('isMultilingual', true, 'data');
 		
@@ -309,12 +322,24 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if ($this->parameters['data']['languageID'] && !LanguageFactory::getInstance()->getLanguage($this->parameters['data']['languageID'])) {
 			throw new UserInputException('languageID');
 		}
+		
+		// check category id
+		if ($this->parameters['data']['categoryID']) {
+			$category = CategoryHandler::getInstance()->getCategory($this->parameters['data']['categoryID']);
+			if ($category === null || $category->getObjectType()->objectType !== 'com.woltlab.wcf.media.category') {
+				throw new UserInputException('categoryID');
+			}
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function update() {
+		if (isset($this->parameters['data']['categoryID']) && $this->parameters['data']['categoryID'] === 0) {
+			$this->parameters['data']['categoryID'] = null;
+		}
+		
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
@@ -396,11 +421,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		}
 		
 		$this->readString('searchString', true);
-		$this->readString('fileType', true);
-		
-		if (!$this->parameters['searchString'] && !$this->parameters['fileType']) {
-			throw new UserInputException('searchString');
-		}
+		$this->readInteger('categoryID', true);
 		
 		$this->readBoolean('imagesOnly', true);
 		
@@ -418,6 +439,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		$mediaList->addSearchConditions($this->parameters['searchString']);
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
+		}
+		if ($this->parameters['categoryID']) {
+			$mediaList->getConditionBuilder()->add('media.categoryID = ?', [$this->parameters['categoryID']]);
 		}
 		$mediaList->sqlOrderBy = 'media.uploadTime DESC';
 		$mediaList->sqlLimit = 50;

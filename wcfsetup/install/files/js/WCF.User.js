@@ -623,7 +623,7 @@ WCF.User.QuickLogin = {
 			}
 			
 			var input = loginForm.querySelector('#loginForm input[name=url]');
-			if (input !== null) {
+			if (input !== null && !input.value.match(/^https?:\/\//)) {
 				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
 			}
 			

@@ -71,6 +71,13 @@ define(
 		},
 		
 		/**
+		 * Is called when a new category is selected.
+		 */
+		_categoryChange: function() {
+			this._search.search();
+		},
+		
+		/**
 		 * Handles clicks on the media manager button.
 		 * 
 		 * @param	{object}	event	event object
@@ -158,7 +165,14 @@ define(
 		 */
 		_dialogShow: function() {
 			if (!this._mediaManagerMediaList) {
-				this._mediaManagerMediaList = elByClass('mediaManagerMediaList', UiDialog.getDialog(this).dialog)[0];
+				var dialog = this.getDialog();
+				
+				this._mediaManagerMediaList = elByClass('mediaManagerMediaList', dialog)[0];
+				
+				this._mediaCategorySelect = elBySel('.mediaManagerCategoryList > select', dialog);
+				if (this._mediaCategorySelect) {
+					this._mediaCategorySelect.addEventListener('change', this._categoryChange.bind(this));
+				}
 				
 				// store list items locally
 				var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI');
@@ -232,8 +246,23 @@ define(
 		 * successfully editing a media file.
 		 * 
 		 * @param	{object}	media		updated media file data
+		 * @param	{integer}	oldCategoryId	old category id
 		 */
-		_editorSuccess: function(media) {
+		_editorSuccess: function(media, oldCategoryId) {
+			// if the category changed of media changed and category
+			// is selected, check if media list needs to be refreshed
+			if (this._mediaCategorySelect) {
+				var selectedCategoryId = ~~this._mediaCategorySelect.value;
+				
+				if (selectedCategoryId) {
+					var newCategoryId = ~~media.categoryID;
+					
+					if (oldCategoryId != newCategoryId && (oldCategoryId == selectedCategoryId || newCategoryId == selectedCategoryId)) {
+						this._search.search();
+					}
+				}
+			}
+			
 			UiDialog.open(this);
 			
 			this._media.set(~~media.mediaID, media);
@@ -326,6 +355,19 @@ define(
 			if (this._listItems.size === 1) {
 				this._search.showSearch();
 			}
+		},
+		
+		/**
+		 * Returns the id of the currently selected category or `0` if no category is selected.
+		 * 
+		 * @return	{integer}
+		 */
+		getCategoryId: function() {
+			if (this._mediaCategorySelect) {
+				return this._mediaCategorySelect.value;
+			}
+			
+			return 0;
 		},
 		
 		/**
