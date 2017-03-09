@@ -2113,11 +2113,12 @@ Errors are:
 	
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
-		<item name="wcf.comment.add.moderation.info"><![CDATA[Newly created comments need to be manually approved before publication, other users cannot see this comment until it has been approved.]]></item>
 		<item name="wcf.comment.approve"><![CDATA[Approve]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Do you really want to delete this comment?]]></item>
 		<item name="wcf.comment.description"><![CDATA[Press Enter to send or Escape to cancel.]]></item>
 		<item name="wcf.comment.error.floodControl"><![CDATA[You have already written a comment within the last {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} seconds{else}second{/if}. You must wait at least {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} second{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}s{/if} before attempting to write a new comment.]]></item>
+		<item name="wcf.comment.moderation.info"><![CDATA[Newly created comments need to be manually approved before publication, other users cannot see this comment until it has been approved.]]></item>
+		<item name="wcf.comment.moderation.disabledComment"><![CDATA[Your comment requires approval by a moderator, until then it will remain invisible for others.]]></item>
 		<item name="wcf.comment.more"><![CDATA[More Comments]]></item>
 		<item name="wcf.comment.response.add"><![CDATA[Reply …]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}One more reply{else}{#$count} more replies{/if}{/literal}]]></item>

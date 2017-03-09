@@ -92,8 +92,7 @@ class StructuredCommentList extends CommentList {
 		$this->sqlLimit = $this->commentManager->getCommentsPerPage();
 		
 		if (!$this->commentManager->canModerate($objectTypeID, $objectID)) {
-			if (WCF::getUser()->userID) $this->getConditionBuilder()->add('(comment.isDisabled = 0 OR comment.userID = ?)', [WCF::getUser()->userID]);
-			else $this->getConditionBuilder()->add('comment.isDisabled = 0');
+			$this->getConditionBuilder()->add('comment.isDisabled = 0');
 		}
 	}
 	
@@ -103,6 +102,8 @@ class StructuredCommentList extends CommentList {
 	public function readObjects() {
 		parent::readObjects();
 		
+		$canModerate = $this->commentManager->canModerate($this->objectTypeID, $this->objectID);
+		
 		// fetch response ids
 		$responseIDs = $userIDs = [];
 		/** @var Comment $comment */
@@ -110,7 +111,7 @@ class StructuredCommentList extends CommentList {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
 			
 			if ($this->responseLoading) {
-				$commentResponseIDs = $comment->getResponseIDs();
+				$commentResponseIDs = ($canModerate) ? $comment->getUnfilteredResponseIDs() : $comment->getResponseIDs();
 				foreach ($commentResponseIDs as $responseID) {
 					$this->responseIDs[] = $responseID;
 					$responseIDs[$responseID] = $comment->commentID;
@@ -128,15 +129,14 @@ class StructuredCommentList extends CommentList {
 		// fetch last responses
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
+			$responseList->setObjectIDs(array_keys($responseIDs));
 			
 			if ($this->commentManager->canModerate($this->objectTypeID, $this->objectID)) {
-				$responseList->setObjectIDs(array_keys($responseIDs));
+				
 			}
 			else {
 				$responseList->getConditionBuilder()->add('comment_response.responseID IN (?)', [array_keys($responseIDs)]);
-				
-				if (WCF::getUser()->userID) $responseList->getConditionBuilder()->add('(comment_response.isDisabled = 0 OR comment_response.userID = ?)', [WCF::getUser()->userID]);
-				else $responseList->getConditionBuilder()->add('comment_response.isDisabled = 0');
+				$responseList->getConditionBuilder()->add('comment_response.isDisabled = 0');
 			}
 			
 			$responseList->readObjects();

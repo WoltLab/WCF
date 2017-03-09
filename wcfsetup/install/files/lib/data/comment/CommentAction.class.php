@@ -558,7 +558,6 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 				}
 				else {
 					/** @var ICommentUserNotificationObjectType $notificationObjectType */
-					
 					$userID = $notificationObjectType->getOwnerID($comment->commentID);
 					
 					if ($comment->userID != WCF::getUser()->userID) {
@@ -907,6 +906,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		// render response
 		WCF::getTPL()->assign([
 			'responseList' => [$response],
+			'commentCanModerate' => $this->commentProcessor->canModerate($response->getComment()->objectTypeID, $response->getComment()->objectID),
 			'commentManager' => $this->commentProcessor
 		]);
 		return WCF::getTPL()->fetch('commentResponseList');
