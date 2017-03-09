@@ -778,7 +778,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.cms.menu.add"><![CDATA[Add Menu]]></item>
 		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxes]]></item>
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Add Box]]></item>
-		<item name="wcf.acp.menu.link.cms.media.list"><![CDATA[Media]]></item>
+		<item name="wcf.acp.menu.link.media"><![CDATA[Media]]></item>
+		<item name="wcf.acp.menu.link.media.list"><![CDATA[Media]]></item>
+		<item name="wcf.acp.menu.link.media.category.list"><![CDATA[Categories]]></item>
+		<item name="wcf.acp.menu.link.media.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Add Article]]></item>
@@ -2611,6 +2614,8 @@ Errors are:
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
+		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete the media file <span class="confirmationObject">{$title}</span>?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Edit Media File]]></item>

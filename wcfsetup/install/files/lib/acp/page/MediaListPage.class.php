@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\category\CategoryNodeTree;
 use wcf\data\media\ViewableMediaList;
 use wcf\page\SortablePage;
 use wcf\system\clipboard\ClipboardHandler;
@@ -22,7 +23,19 @@ class MediaListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.cms.media.list';
+	public $activeMenuItem = 'wcf.acp.menu.link.media.list';
+	
+	/**
+	 * id of the selected media category
+	 * @var	integer
+	 */
+	public $categoryID = 0;
+	
+	/**
+	 * node tree with all available media categories
+	 * @var	\RecursiveIteratorIterator
+	 */
+	public $categoryList;
 	
 	/**
 	 * @inheritDoc
@@ -79,6 +92,8 @@ class MediaListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'categoryID' => $this->categoryID,
+			'categoryList' => $this->categoryList,
 			'q' => $this->query,
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')),
 			'username' => $this->username
@@ -91,6 +106,9 @@ class MediaListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
+		if ($this->categoryID) {
+			$this->objectList->getConditionBuilder()->add('media.categoryID = ?', [$this->categoryID]);
+		}
 		if ($this->query) {
 			$this->objectList->addSearchConditions($this->query);
 		}
@@ -102,9 +120,20 @@ class MediaListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
+	public function readData() {
+		parent::readData();
+		
+		$this->categoryList = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+		$this->categoryList->setMaxDepth(0);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		
+		if (isset($_REQUEST['categoryID'])) $this->categoryID = intval($_REQUEST['categoryID']);
 		if (isset($_REQUEST['q'])) $this->query = StringUtil::trim($_REQUEST['q']);
 		if (isset($_REQUEST['username'])) $this->username = StringUtil::trim($_REQUEST['username']);
 		

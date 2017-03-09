@@ -29,6 +29,8 @@ class MediaList extends DatabaseObjectList {
 	 * @param	string		$searchString
 	 */
 	public function addSearchConditions($searchString) {
+		if ($searchString === '') return;
+		
 		$searchString = '%'.addcslashes($searchString, '_%').'%';
 		
 		$this->sqlConditionJoins .= ' LEFT JOIN wcf'.WCF_N.'_media_content media_content ON (media_content.mediaID = media.mediaID)';

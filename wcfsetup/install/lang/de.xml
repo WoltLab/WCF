@@ -782,7 +782,10 @@
 		<item name="wcf.acp.menu.link.cms.menu.add"><![CDATA[Menü hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cms.box.list"><![CDATA[Boxen]]></item>
 		<item name="wcf.acp.menu.link.cms.box.add"><![CDATA[Box hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.cms.media.list"><![CDATA[Medien]]></item>
+		<item name="wcf.acp.menu.link.media"><![CDATA[Medien]]></item>
+		<item name="wcf.acp.menu.link.media.list"><![CDATA[Medien]]></item>
+		<item name="wcf.acp.menu.link.media.category.list"><![CDATA[Kategorien]]></item>
+		<item name="wcf.acp.menu.link.media.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.menu.link.article.list"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Artikel hinzufügen]]></item>
@@ -2656,6 +2659,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
+		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
+		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>

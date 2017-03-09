@@ -18,6 +18,7 @@ use wcf\system\WCF;
  * @since	3.0
  * 
  * @property-read	integer		$mediaID		unique id of the media file
+ * @property-read	integer		$categoryID		id of the category the media file belongs to or `null` if it belongs to no category
  * @property-read	string		$filename		name of the physical media file
  * @property-read	integer		$filesize		size of the physical media file
  * @property-read	string		$fileType		type of the physical media file
