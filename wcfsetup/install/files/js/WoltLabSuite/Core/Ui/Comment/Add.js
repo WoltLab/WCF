@@ -213,6 +213,12 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._getEditor().code.set('<p>\u200b</p>');
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'reset_text');
+			
+			if (document.activeElement) {
+				document.activeElement.blur();
+			}
+			
+			this._content.classList.add('collapsed');
 		},
 		
 		/**
