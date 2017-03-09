@@ -130,15 +130,6 @@ class StructuredCommentList extends CommentList {
 		if (!empty($responseIDs)) {
 			$responseList = new CommentResponseList();
 			$responseList->setObjectIDs(array_keys($responseIDs));
-			
-			if ($this->commentManager->canModerate($this->objectTypeID, $this->objectID)) {
-				
-			}
-			else {
-				$responseList->getConditionBuilder()->add('comment_response.responseID IN (?)', [array_keys($responseIDs)]);
-				$responseList->getConditionBuilder()->add('comment_response.isDisabled = 0');
-			}
-			
 			$responseList->readObjects();
 			
 			foreach ($responseList as $response) {
