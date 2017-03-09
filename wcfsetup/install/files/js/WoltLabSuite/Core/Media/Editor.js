@@ -35,8 +35,6 @@ define(
 		
 		this._media = null;
 		this._availableLanguageCount = 1;
-		this._categoryIds = [];
-		this._oldCategoryId = 0;
 		
 		this._dialogs = new Dictionary();
 	}
@@ -64,8 +62,7 @@ define(
 			UiNotification.show();
 			
 			if (this._callbackObject._editorSuccess) {
-				this._callbackObject._editorSuccess(this._media, this._oldCategoryId);
-				this._oldCategoryId = 0;
+				this._callbackObject._editorSuccess(this._media);
 			}
 			
 			UiDialog.close('mediaEditor_' + this._media.mediaID);
@@ -103,7 +100,6 @@ define(
 		_saveData: function() {
 			var content = UiDialog.getDialog('mediaEditor_' + this._media.mediaID).content;
 			
-			var categoryId = elBySel('select[name=categoryID]', content);
 			var altText = elBySel('input[name=altText]', content);
 			var caption = elBySel('textarea[name=caption]', content);
 			var title = elBySel('input[name=title]', content);
@@ -113,18 +109,6 @@ define(
 			var captionError = (caption ? DomTraverse.childByClass(caption.parentNode.parentNode, 'innerError') : false);
 			var titleError = DomTraverse.childByClass(title.parentNode.parentNode, 'innerError');
 			
-			// category
-			this._oldCategoryId = this._media.categoryID;
-			if (this._categoryIds.length) {
-				this._media.categoryID = ~~categoryId.value;
-				
-				// if the selected category id not valid (manipulated DOM), ignore
-				if (this._categoryIds.indexOf(this._media.categoryID) === -1) {
-					this._media.categoryID = 0;
-				}
-			}
-			
-			// language and multilingualism
 			if (this._availableLanguageCount > 1) {
 				this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
 				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('languageID');
@@ -133,7 +117,6 @@ define(
 				this._media.languageID = LANGUAGE_ID;
 			}
 			
-			// altText, caption and title
 			this._media.altText = {};
 			this._media.caption = {};
 			this._media.title = {};
@@ -205,7 +188,6 @@ define(
 						altText: this._media.altText,
 						caption: this._media.caption,
 						data: {
-							categoryID: this._media.categoryID,
 							isMultilingual: this._media.isMultilingual,
 							languageID: this._media.languageID
 						},
@@ -271,9 +253,6 @@ define(
 							source: {
 								after: (function(content, data) {
 									this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
-									this._categoryIds = data.returnValues.categoryIDs.map(function(number) {
-										return ~~number;
-									});
 									
 									var didLoadMediaData = false;
 									if (data.returnValues.mediaData) {
@@ -286,10 +265,6 @@ define(
 									setTimeout(function() {
 										if (this._availableLanguageCount > 1) {
 											LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
-										}
-										
-										if (this._categoryIds.length) {
-											elBySel('select[name=categoryID]', content).value = ~~this._media.categoryID;
 										}
 										
 										var title = elBySel('input[name=title]', content);

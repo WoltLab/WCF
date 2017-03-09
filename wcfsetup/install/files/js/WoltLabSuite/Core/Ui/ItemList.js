@@ -473,13 +473,10 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 				return;
 			}
 			
-			var currentTarget = event.currentTarget;
-			window.setTimeout(function() {
-				var value = currentTarget.value.trim();
-				if (value.length) {
-					this._addItem(currentTarget.id, { objectId: 0, value: value });
-				}
-			}.bind(this), 100);
+			var value = event.currentTarget.value.trim();
+			if (value.length) {
+				this._addItem(event.currentTarget.id, { objectId: 0, value: value });
+			}
 		}
 	};
 });

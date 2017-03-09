@@ -29,15 +29,7 @@ define(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/
 			var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
 			deleteAction.setCallback(Clipboard.reload.bind(Clipboard));
 			
-			_mediaEditor = new MediaEditor({
-				_editorSuccess: function(media, oldCategoryId) {
-					if (media.categoryID != oldCategoryId) {
-						window.setTimeout(function() {
-							window.location.reload();
-						}, 500);
-					}
-				}
-			});
+			_mediaEditor = new MediaEditor();
 			
 			var editButtons = elByClass('jsMediaEditButton');
 			for (var i = 0, length = editButtons.length; i < length; i++) {

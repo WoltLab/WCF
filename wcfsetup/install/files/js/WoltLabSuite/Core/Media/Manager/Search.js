@@ -61,16 +61,6 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		},
 		
 		/**
-		 * Hides the search string treshold error.
-		 */
-		_hideStringThresholdError: function() {
-			var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
-			if (innerInfo) {
-				elHide(innerInfo);
-			}
-		},
-		
-		/**
 		 * Handles the `[ENTER]` key to submit the form.
 		 *
 		 * @param	{Event}		event		event object
@@ -79,32 +69,43 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 			if (EventKey.Enter(event)) {
 				event.preventDefault();
 				
+				var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
+				
 				if (this._input.value.length >= this._mediaManager.getOption('minSearchLength')) {
-					this._hideStringThresholdError();
+					if (innerInfo) {
+						elHide(innerInfo);
+					}
 					
-					this.search();
+					this._search();
 				}
 				else {
-					this._showStringThresholdError();
+					if (innerInfo) {
+						elShow(innerInfo);
+					}
+					else {
+						innerInfo = elCreate('p');
+						innerInfo.className = 'innerInfo';
+						innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold');
+						
+						DomUtil.insertAfter(innerInfo, this._input.parentNode);
+					}
 				}
 			}
 		},
 		
 		/**
-		 * Shows the search string treshold error.
+		 * Sends an AJAX request to fetch search results.
 		 */
-		_showStringThresholdError: function() {
-			var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
-			if (innerInfo) {
-				elShow(innerInfo);
-			}
-			else {
-				innerInfo = elCreate('p');
-				innerInfo.className = 'innerInfo';
-				innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold');
-				
-				DomUtil.insertAfter(innerInfo, this._input.parentNode);
-			}
+		_search: function() {
+			this._searchMode = true;
+			
+			Ajax.api(this, {
+				parameters: {
+					imagesOnly: this._mediaManager.getOption('imagesOnly'),
+					mode: this._mediaManager.getMode(),
+					searchString: this._input.value
+				}
+			});
 		},
 		
 		/**
@@ -126,33 +127,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		 */
 		showSearch: function() {
 			elShow(this._searchContainer);
-		},
-		
-		/**
-		 * Sends an AJAX request to fetch search results.
-		 */
-		search: function() {
-			var searchString = this._input.value;
-			if (searchString && this._input.value.length < this._mediaManager.getOption('minSearchLength')) {
-				this._showStringThresholdError();
-				
-				searchString = '';
-			}
-			else {
-				this._hideStringThresholdError();
-			}
-			
-			this._searchMode = true;
-			
-			Ajax.api(this, {
-				parameters: {
-					categoryID: this._mediaManager.getCategoryId(),
-					imagesOnly: this._mediaManager.getOption('imagesOnly'),
-					mode: this._mediaManager.getMode(),
-					searchString: searchString
-				}
-			});
-		},
+		}
 	};
 	
 	return MediaManagerSearch;

@@ -34,35 +34,6 @@
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
 		
 		<div class="row rowColGap formGrid">
-			{hascontent}
-				<dl class="col-xs-12 col-md-4">
-					<dt></dt>
-					<dd>
-						<select id="categoryID" name="categoryID">
-							<option value="0">{lang}wcf.media.category.choose{/lang}</option>
-							
-							{content}
-								{foreach from=$categoryList item=categoryItem}
-									<option value="{$categoryItem->categoryID}"{if $categoryItem->categoryID == $categoryID} selected="selected"{/if}>{$categoryItem->getTitle()}</option>
-									
-									{if $categoryItem->hasChildren()}
-										{foreach from=$categoryItem item=subCategoryItem}
-											<option value="{$subCategoryItem->categoryID}"{if $subCategoryItem->categoryID == $categoryID} selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$subCategoryItem->getTitle()}</option>
-											
-											{if $subCategoryItem->hasChildren()}
-												{foreach from=$subCategoryItem item=subSubCategoryItem}
-													<option value="{$subSubCategoryItem->categoryID}"{if $subSubCategoryItem->categoryID == $categoryID} selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$subSubCategoryItem->getTitle()}</option>
-												{/foreach}
-											{/if}
-										{/foreach}
-									{/if}
-								{/foreach}
-							{/content}
-						</select>
-					</dd>
-				</dl>
-			{/hascontent}
-			
 			<dl class="col-xs-12 col-md-4">
 				<dt></dt>
 				<dd>
