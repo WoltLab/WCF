@@ -55,6 +55,21 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		},
 		
 		/**
+		 * Registers a callback for an element.
+		 * 
+		 * @param       {string}        elementId
+		 * @param       {string}        eventName
+		 * @param       {function}      callback
+		 */
+		registerCallback: function (elementId, eventName, callback) {
+			if (!_values.has(elementId)) {
+				throw new Error("Unknown element id '" + elementId + "'.");
+			}
+			
+			_elements.get(elementId).callbacks.set(eventName, callback);
+		},
+		
+		/**
 		 * Caches common event listener callbacks.
 		 */
 		_setup: function() {
@@ -157,6 +172,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			
 			_elements.set(elementId, {
 				buttonLabel: button.children[0],
+				callbacks: new Dictionary(),
 				element: element,
 				languageId: 0,
 				isEnabled: true,
@@ -192,7 +208,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		_select: function(elementId, languageId, isInit) {
 			var data = _elements.get(elementId);
 			
-			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(data.element.parentNode.id);
+			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(data.element.closest('.inputAddon').id);
 			var item, label = '';
 			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
 				item = dropdownMenu.children[i];
@@ -228,6 +244,10 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			if (!isInit) {
 				data.element.blur();
 				data.element.focus();
+			}
+			
+			if (data.callbacks.has('select')) {
+				data.callbacks.get('select')(data.element);
 			}
 		},
 		
@@ -282,6 +302,10 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				data = _elements.get(elementId);
 				if (data.isEnabled) {
 					values = _values.get(elementId);
+					
+					if (data.callbacks.has('submit')) {
+						data.callbacks.get('submit')(data.element);
+					}
 					
 					// update with current value
 					if (data.languageId) {

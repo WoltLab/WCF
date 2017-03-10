@@ -196,6 +196,11 @@ select {
 	> textarea {
 		flex: 0 0 100%;
 	}
+	
+	> .redactor-box {
+		flex: 0 0 100%;
+		margin-top: 0 !important;
+	}
 }
 
 .inputAddon input,
