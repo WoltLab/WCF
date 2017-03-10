@@ -455,6 +455,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="timeNowReference" value="{@TIME_NOW}" class="medium">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
