@@ -2,6 +2,7 @@
 namespace wcf\data\paid\subscription;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -56,5 +57,35 @@ class PaidSubscription extends DatabaseObject {
 	 */
 	public function getDateInterval() {
 		return new \DateInterval('P' . $this->subscriptionLength . $this->subscriptionLengthUnit);
+	}
+	
+	/**
+	 * Returns the formatted description, with support for legacy descriptions without HTML.
+	 * 
+	 * @return      string
+	 */
+	public function getFormattedDescription() {
+		$description = $this->getDescription();
+		if (preg_match('~^<[a-z]+~', $description)) {
+			$processor = new HtmlOutputProcessor();
+			$processor->process($description, 'com.woltlab.wcf.paidSubscription', $this->subscriptionID);
+			
+			return $processor->getHtml();
+		}
+		
+		return nl2br($description, false);
+	}
+	
+	/**
+	 * Returns the description with transparent handling of phrases.
+	 * 
+	 * @return      string
+	 */
+	protected function getDescription() {
+		if (preg_match('~^wcf.paidSubscription.subscription\d+.description$~', $this->description)) {
+			return WCF::getLanguage()->get($this->description);
+		}
+		
+		return $this->description;
 	}
 }

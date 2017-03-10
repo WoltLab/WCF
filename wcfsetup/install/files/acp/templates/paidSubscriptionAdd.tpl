@@ -60,7 +60,11 @@
 		<dl{if $errorField == 'description'} class="formError"{/if}>
 			<dt><label for="description">{lang}wcf.global.description{/lang}</label></dt>
 			<dd>
-				<textarea id="description" name="description" cols="40" rows="10">{$i18nPlainValues[description]}</textarea>
+				<textarea id="description" name="description" class="wysiwygTextarea"
+				          data-disable-attachments="true"
+				          data-disable-media="true"
+				>{$i18nPlainValues[description]}</textarea>
+				{include file='wysiwyg' wysiwygSelector='description'}
 				{if $errorField == 'description'}
 					<small class="innerError">
 						{if $errorType == 'empty'}

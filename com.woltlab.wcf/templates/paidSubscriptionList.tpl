@@ -42,7 +42,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$subscription->title|language} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
-						<p>{@$subscription->description|language|newlineToBreak}</p>
+						<p>{@$subscription->getFormattedDescription()}</p>
 					</div>
 					
 					<div class="containerContent">
