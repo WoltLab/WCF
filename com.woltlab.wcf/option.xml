@@ -1185,6 +1185,7 @@ retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<defaultvalue>150</defaultvalue>
 				<minvalue>0</minvalue>
 				<suffix>pixel</suffix>
+				<options>module_user_signature</options>
 			</option>
 			<!-- /user.signature -->
 			
