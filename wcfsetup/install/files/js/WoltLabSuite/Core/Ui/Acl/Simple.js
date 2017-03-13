@@ -1,4 +1,4 @@
-define(['Language', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Input'], function(Language, DomChangeListener, UiUserSearchInput) {
+define(['Language', 'StringUtil', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Input'], function(Language, StringUtil, DomChangeListener, UiUserSearchInput) {
 	"use strict";
 	
 	function UiAclSimple(prefix) { this.init(prefix); }
@@ -19,25 +19,32 @@ define(['Language', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Inpu
 				elShow(container);
 			}));
 			
-			new UiUserSearchInput(elById(this._prefix + 'aclSearchInput'), {
-				callbackSelect: this._select.bind(this),
-				includeUserGroups: true,
-				preventSubmit: true
-			});
-			
-			this._aclListContainer = elById(this._prefix + 'aclListContainer');
-			
 			this._list = elById(this._prefix + 'aclAccessList');
 			this._list.addEventListener(WCF_CLICK_EVENT, this._removeItem.bind(this));
 			
+			var excludedSearchValues = [];
+			elBySelAll('.aclLabel', this._list, function(label) {
+				excludedSearchValues.push(label.textContent);
+			});
+			
+			this._searchInput = new UiUserSearchInput(elById(this._prefix + 'aclSearchInput'), {
+				callbackSelect: this._select.bind(this),
+				includeUserGroups: true,
+				excludedSearchValues: excludedSearchValues,
+				preventSubmit: true,
+			});
+			
+			this._aclListContainer = elById(this._prefix + 'aclListContainer');
+						
 			DomChangeListener.trigger();
 		},
 		
 		_select: function(listItem) {
 			var type = elData(listItem, 'type');
+			var label = elData(listItem, 'label');
 			
 			var html = '<span class="icon icon16 fa-' + (type === 'group' ? 'users' : 'user') + '"></span>';
-			html += '<span class="aclLabel">' + elData(listItem, 'label') + '</span>';
+			html += '<span class="aclLabel">' + StringUtil.escapeHTML(label) + '</span>';
 			html += '<span class="icon icon16 fa-times pointer jsTooltip" title="' + Language.get('wcf.global.button.delete') + '"></span>';
 			html += '<input type="hidden" name="aclValues[' + type + '][]" value="' + elData(listItem, 'object-id') + '">';
 			
@@ -54,6 +61,8 @@ define(['Language', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Inpu
 			
 			elShow(this._aclListContainer);
 			
+			this._searchInput.addExcludedSearchValues(label);
+			
 			DomChangeListener.trigger();
 			
 			return false;
@@ -61,6 +70,9 @@ define(['Language', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Inpu
 		
 		_removeItem: function (event) {
 			if (event.target.classList.contains('fa-times')) {
+				var label = elBySel('.aclLabel', event.target.parentNode);
+				this._searchInput.removeExcludedSearchValues(label.textContent);
+				
 				elRemove(event.target.parentNode);
 				
 				if (this._list.childElementCount === 0) {
