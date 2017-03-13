@@ -108,7 +108,7 @@ WCF.Moderation.Management = Class.extend({
 			$innerTemplate = this._confirmationTemplate[$actionName];
 		}
 		
-		WCF.System.Confirmation.show(WCF.Language.get(this._languageItem.replace(/{actionName}/, $actionName)), $.proxy(function(action) {
+		WCF.System.Confirmation.show(WCF.Language.get(this._languageItem.replace(/{actionName}/, $actionName)), $.proxy(function(action, parameters, content) {
 			if (action === 'confirm') {
 				var $parameters = {
 					actionName: $actionName,
@@ -117,7 +117,7 @@ WCF.Moderation.Management = Class.extend({
 				};
 				if (this._confirmationTemplate[$actionName]) {
 					$parameters.parameters = { };
-					$innerTemplate.find('input, textarea').each(function(index, element) {
+					$(content).find('input, textarea').each(function(index, element) {
 						var $element = $(element);
 						var $value = $element.val();
 						if ($element.getTagName() === 'input' && $element.attr('type') === 'checkbox') {
