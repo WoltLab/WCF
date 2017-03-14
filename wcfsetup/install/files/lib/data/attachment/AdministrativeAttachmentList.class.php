@@ -64,7 +64,9 @@ class AdministrativeAttachmentList extends AttachmentList {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$fileTypes[$row['fileType']] = $row['fileType'];
+			if ($row['fileType']) {
+				$fileTypes[$row['fileType']] = $row['fileType'];
+			}
 		}
 		
 		ksort($fileTypes);
