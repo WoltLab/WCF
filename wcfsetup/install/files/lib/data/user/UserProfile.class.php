@@ -711,6 +711,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	public function showSignature() {
 		if (!$this->signature) return false;
 		if ($this->disableSignature) return false;
+		if ($this->banned) return false;
 		if (WCF::getUser()->userID && !WCF::getUser()->showSignature) return false;
 		
 		return true;
