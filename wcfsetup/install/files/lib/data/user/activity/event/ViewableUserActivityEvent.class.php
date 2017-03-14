@@ -53,6 +53,12 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	protected $userProfile = null;
 	
 	/**
+	 * true if event description contains raw html
+	 * @var boolean
+	 */
+	protected $isRawHtml = false;
+	
+	/**
 	 * Marks this event as accessible for current user.
 	 */
 	public function setIsAccessible() {
@@ -111,9 +117,11 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 * Sets event text.
 	 * 
 	 * @param	string		$description
+	 * @param       boolean         $isRawHtml
 	 */
-	public function setDescription($description) {
+	public function setDescription($description, $isRawHtml = false) {
 		$this->description = $description;
+		$this->isRawHtml = $isRawHtml;
 	}
 	
 	/**
@@ -150,5 +158,15 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 */
 	public function getObjectTypeName() {
 		return UserActivityEventHandler::getInstance()->getObjectType($this->objectTypeID)->objectType;
+	}
+	
+	/**
+	 * Returns true if event description contains raw html.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function isRawHtml() {
+		return $this->isRawHtml;
 	}
 }
