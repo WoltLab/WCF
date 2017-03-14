@@ -1252,6 +1252,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Choose default sort order of articles.]]></item>
 		<item name="wcf.acp.option.use_page_title_on_landing_page"><![CDATA[Use page title on landing page]]></item>
+		<item name="wcf.acp.option.head_code"><![CDATA[Head Code]]></item>
+		<item name="wcf.acp.option.head_code.description"><![CDATA[The entered code will be appended to the head tag of your site. You can use it to add additional meta tags.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

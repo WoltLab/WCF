@@ -217,3 +217,4 @@ define('SHOW_STYLE_CHANGER', 0);
 define('ARTICLE_SORT_ORDER', 'DESC');
 define('USE_PAGE_TITLE_ON_LANDING_PAGE', 1);
 define('OG_IMAGE', '');
+define('HEAD_CODE', '');

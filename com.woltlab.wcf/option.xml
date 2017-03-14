@@ -467,6 +467,10 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
+			<option name="head_code">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
 			<option name="footer_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>

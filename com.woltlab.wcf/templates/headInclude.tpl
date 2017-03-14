@@ -40,3 +40,5 @@
 		{event name='javascriptInit'}
 	});
 </script>
+
+{@HEAD_CODE}
