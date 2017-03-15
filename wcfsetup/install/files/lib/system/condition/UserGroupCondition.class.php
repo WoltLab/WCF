@@ -111,7 +111,8 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	 * @inheritDoc
 	 */
 	public function getHTML() {
-		return <<<HTML
+		if (!empty($this->getUserGroups())) {
+			return <<<HTML
 <dl{$this->getErrorClass('groupIDs')}>
 	<dt>{$this->getLabel('groupIDs')}</dt>
 	<dd>
@@ -129,6 +130,9 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	</dd>
 </dl>
 HTML;
+		} 
+		
+		return '';
 	}
 	
 	/**
