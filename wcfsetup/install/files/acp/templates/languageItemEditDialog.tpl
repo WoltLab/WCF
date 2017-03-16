@@ -10,6 +10,22 @@
 </section>
 
 {if $item->languageItemOriginIsSystem}
+	{if $item->languageItemOldValue}
+		<section class="section">
+			<header class="sectionHeader">
+				<h2 class="sectionTitle">{lang}wcf.acp.language.item.oldValue{/lang}</h2>
+				<p class="sectionDescription">{lang}wcf.acp.language.item.oldValue.description{/lang}</p>
+			</header>
+			
+			<dl class="wide">
+				<dt></dt>
+				<dd>
+					<textarea rows="5" cols="60" readonly>{$item->languageItemOldValue}</textarea>
+				</dd>
+			</dl>
+		</section>
+	{/if}
+	
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.acp.language.item.customValue{/lang}</h2>
 		

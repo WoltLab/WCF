@@ -560,6 +560,8 @@ CREATE TABLE wcf1_language_item (
 	languageItemOriginIsSystem TINYINT(1) NOT NULL DEFAULT 1,
 	languageCategoryID INT(10) NOT NULL,
 	packageID INT(10),
+	languageItemOldValue MEDIUMTEXT,
+	languageCustomItemDisableTime INT(10),
 	UNIQUE KEY languageItem (languageItem, languageID),
 	KEY languageItemOriginIsSystem (languageItemOriginIsSystem)
 );
