@@ -55,6 +55,8 @@
 					<xs:element name="parent" type="woltlab_varchar" minOccurs="0" />
 					<xs:element name="hasFixedParent" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="requireObjectID" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="availableDuringOfflineMode" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="cssClassName" type="woltlab_varchar" minOccurs="0" />
 				</xs:choice>
 			</xs:extension>
 		</xs:complexContent>
