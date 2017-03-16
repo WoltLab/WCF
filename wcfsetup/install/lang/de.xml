@@ -662,6 +662,8 @@
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Ursprünglicher Inhalt]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand vom {$item->languageCustomItemDisableTime|date}.]]></item>
+		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Kürzlich deaktivierte Inhalte finden (Letzten 7 Tagen)]]></item>
+		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}Eine{else}{#$recentlyDisabledCustomValues}{/if} individuell angepasste {if $recentlyDisabledCustomValues == 1}Sprachvariable wurde{else}Sprachvariablen wurden{/if} vor Kurzem <a href="{link controller='LanguageItemList' hasRecentlyDisabledCustomValue=1}{/link}">automatisch deaktiviert</a>.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">

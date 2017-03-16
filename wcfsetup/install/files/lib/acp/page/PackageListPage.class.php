@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\package\PackageList;
 use wcf\page\SortablePage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -72,6 +73,7 @@ class PackageListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
 			'packageID' => $this->packageID
 		]);
 	}

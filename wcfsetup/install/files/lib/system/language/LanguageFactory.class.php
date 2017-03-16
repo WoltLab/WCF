@@ -324,4 +324,19 @@ class LanguageFactory extends SingletonFactory {
 	public function multilingualismEnabled() {
 		return $this->cache['multilingualismEnabled'];
 	}
+	
+	/**
+	 * Returns the number of phrases that have been automatically disabled in the past 7 days.
+	 * 
+	 * @return      integer
+	 */
+	public function countRecentlyDisabledCustomValues() {
+		$sql = "SELECT  COUNT(*) AS count
+			FROM    wcf".WCF_N."_language_item
+			WHERE   languageCustomItemDisableTime >= ?";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute([TIME_NOW - 86400 * 7]);
+		
+		return $statement->fetchColumn();
+	}
 }

@@ -54,6 +54,10 @@
 	{/hascontent}
 </header>
 
+{if $recentlyDisabledCustomValues > 0}
+	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
+{/if}
+
 {hascontent}
 	<div class="paginationTop">
 		{content}{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
