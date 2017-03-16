@@ -434,11 +434,13 @@ fieldset {
 }
 
 @include screen-sm-down {
-	.paginationTop {
-		display: none;
-		
-		& + .section {
-			margin-top: 30px;
+	body:not(.mobileShowPaginationTop) {
+		.paginationTop {
+			display: none;
+			
+			& + .section {
+				margin-top: 30px;
+			}
 		}
 	}
 	
