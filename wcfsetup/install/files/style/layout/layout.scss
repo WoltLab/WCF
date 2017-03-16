@@ -58,7 +58,12 @@ a {
 .main {
 	flex: 1 0 auto;
 	
-	@include screen-md-down {
+	@include screen-xs {
+		padding: 30px 0;
+		width: 100%;
+	}
+	
+	@include screen-sm-md {
 		padding: 40px 0;
 		width: 100%;
 	}
