@@ -150,6 +150,12 @@ class PageAddForm extends AbstractForm {
 	public $htmlInputProcessors = [];
 	
 	/**
+	 * css class name of created page
+	 * @var	string
+	 */
+	public $cssClassName = '';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -203,6 +209,7 @@ class PageAddForm extends AbstractForm {
 		
 		if (isset($_POST['parentPageID'])) $this->parentPageID = intval($_POST['parentPageID']);
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
+		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
@@ -436,6 +443,7 @@ class PageAddForm extends AbstractForm {
 			'parentPageID' => $this->parentPageID ?: null,
 			'pageType' => $this->pageType,
 			'name' => $this->name,
+			'cssClassName' => $this->cssClassName,
 			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'isLandingPage' => 0,
 			'applicationPackageID' => $this->applicationPackageID,
@@ -470,7 +478,7 @@ class PageAddForm extends AbstractForm {
 		// reset variables
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
 		$this->applicationPackageID = 1;
-		$this->name = '';
+		$this->cssClassName = $this->name = '';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->boxIDs = $this->aclValues = [];
 	}
 	
@@ -499,6 +507,7 @@ class PageAddForm extends AbstractForm {
 			'parentPageID' => $this->parentPageID,
 			'pageType' => $this->pageType,
 			'name' => $this->name,
+			'cssClassName' => $this->cssClassName,
 			'isDisabled' => $this->isDisabled,
 			'isLandingPage' => $this->isLandingPage,
 			'isMultilingual' => $this->isMultilingual,

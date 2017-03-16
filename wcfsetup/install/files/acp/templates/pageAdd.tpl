@@ -188,6 +188,22 @@
 					{/foreach}
 				{/if}
 				
+				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
+					<dt><label for="cssClassName">{lang}wcf.acp.page.cssClassName{/lang}</label></dt>
+					<dd>
+						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" maxlength="255">
+						{if $errorField == 'cssClassName'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.page.cssClassName.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+				
 				{if $action != 'edit' || !$page->requireObjectID}
 					<dl>
 						<dt></dt>

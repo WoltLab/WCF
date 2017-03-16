@@ -979,6 +979,7 @@ CREATE TABLE wcf1_page (
 	requireObjectID TINYINT(1) NOT NULL DEFAULT 0,
 	hasFixedParent TINYINT(1) NOT NULL DEFAULT 0,
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
+	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
 	permissions TEXT NULL,
 	options TEXT NULL
 );

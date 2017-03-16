@@ -134,6 +134,7 @@ class PageEditForm extends PageAddForm {
 		
 		$data = [
 			'name' => $this->name,
+			'cssClassName' => $this->cssClassName,
 			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => $this->parentPageID ?: null,
@@ -220,6 +221,7 @@ class PageEditForm extends PageAddForm {
 			$this->parentPageID = $this->page->parentPageID;
 			$this->pageType = $this->page->pageType;
 			$this->applicationPackageID = $this->page->applicationPackageID;
+			$this->cssClassName = $this->page->cssClassName;
 			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
 			if ($this->page->isDisabled) $this->isDisabled = 1;
