@@ -280,6 +280,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// loop through categories to import items
 		$itemData = $pageContents = $boxContents = [];
+		$languageItemValues = [];
 		
 		/** @var \DOMElement $category */
 		foreach ($categories as $category) {
@@ -317,12 +318,56 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					$itemData[] = $itemValue;
 					$itemData[] = $categoryID;
 					if ($packageID) $itemData[] = ($packageID == -1) ? PACKAGE_ID : $packageID;
+					
+					if ($updateExistingItems) {
+						$languageItemValues[$itemName] = $itemValue;
+					}
 				}
 			}
 		}
 		
 		// save items
 		if (!empty($itemData)) {
+			// select phrases that have custom versions that might get disabled during the update
+			if ($updateExistingItems) {
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("languageItem IN (?)", [array_keys($languageItemValues)]);
+				if ($packageID > 0) $conditions->add("packageID = ?", [$packageID]);
+				$conditions->add("languageUseCustomValue = ?", [1]);
+				$conditions->add("languageItemOriginIsSystem = ?", [1]);
+				
+				$sql = "SELECT  languageItemID, languageItem, languageItemValue
+					FROM    wcf".WCF_N."_language_item
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				$updateValues = [];
+				while ($row = $statement->fetchArray()) {
+					if ($row['languageItemValue'] != $languageItemValues[$row['languageItem']]) {
+						$updateValues[] = $row['languageItemID'];
+					}
+				}
+				
+				if (!empty($updateValues)) {
+					$sql = "UPDATE  wcf".WCF_N."_language_item
+						SET     languageItemOldValue = languageItemValue,
+							languageCustomItemDisableTime = ?,
+							languageUseCustomValue = ?
+						WHERE   languageItemID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					
+					WCF::getDB()->beginTransaction();
+					foreach ($updateValues as $languageItemID) {
+						$statement->execute([
+							TIME_NOW,
+							0,
+							$languageItemID
+						]);
+					}
+					WCF::getDB()->commitTransaction();
+				}
+			}
+			
 			// insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
 			$step = $packageID ? 5 : 4;
 			WCF::getDB()->beginTransaction();
@@ -338,15 +383,13 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					if ($packageID > 0) {
 						// do not update anything if language item is owned by a different package
 						$sql .= "	ON DUPLICATE KEY
-								UPDATE			languageUseCustomValue = IF(packageID = ".$packageID.", IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0), languageUseCustomValue),
-											languageItemValue = IF(packageID = ".$packageID.", IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)), languageItemValue),
+								UPDATE			languageItemValue = IF(packageID = ".$packageID.", IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)), languageItemValue),
 											languageCategoryID = IF(packageID = ".$packageID.", VALUES(languageCategoryID), languageCategoryID)";
 					}
 					else {
 						// skip package id check during WCFSetup (packageID = 0) or if using the ACP form (packageID = -1)
 						$sql .= "	ON DUPLICATE KEY
-								UPDATE			languageUseCustomValue = IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0),
-											languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
+								UPDATE			languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
 											languageCategoryID = VALUES(languageCategoryID)";
 					}
 				}

@@ -660,6 +660,8 @@
 		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Deaktivierte veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.item.oldValue"><![CDATA[Ursprünglicher Inhalt]]></item>
+		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand vom {$item->languageCustomItemDisableTime|date}.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
