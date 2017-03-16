@@ -24,26 +24,27 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
  * 
- * @property-read	integer		$pageID			unique id of the page
- * @property-read	integer|null	$parentPageID		id of the page's parent page or `null` if it has no parent page
- * @property-read	string		$identifier		unique textual identifier of the page
- * @property-read	string		$name			monolingual name of the page shown in the ACP
- * @property-read	string		$pageType		type of the page, default types: `text`, `html`, `tpl` `system`
- * @property-read	integer		$isDisabled		is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
- * @property-read	integer		$isLandingPage		is `1` if the page is the landing page, otherwise `0`
- * @property-read	integer		$isMultilingual		is `1` if the page is available in different languages, otherwise `0`
- * @property-read	integer		$originIsSystem		is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
- * @property-read	integer		$packageID		id of the package the which delivers the page or `1` if it has been created in the ACP
- * @property-read	integer		$applicationPackageID	id of the package of the application the pages belongs to
- * @property-read	string		$controller		name of the page controller class
- * @property-read	string		$handler		name of the page handler class for `system` pages or empty 
- * @property-read	string		$controllerCustomURL	custom url of the page
- * @property-read	integer		$requireObjectID	is `1` if the page requires an object id parameter, otherwise `0`
- * @property-read	integer		$hasFixedParent		is `1` if the page's parent page cannot be changed, otherwise `0`
- * @property-read	integer		$lastUpdateTime		timestamp at which the page has been updated the last time
- * @property-read	string		$cssClassName		css class name(s) of the page
- * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to access the page
- * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the page to be accessible
+ * @property-read	integer		$pageID			        unique id of the page
+ * @property-read	integer|null	$parentPageID		        id of the page's parent page or `null` if it has no parent page
+ * @property-read	string		$identifier		        unique textual identifier of the page
+ * @property-read	string		$name			        monolingual name of the page shown in the ACP
+ * @property-read	string		$pageType		        type of the page, default types: `text`, `html`, `tpl` `system`
+ * @property-read	integer		$isDisabled		        is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
+ * @property-read	integer		$isLandingPage		        is `1` if the page is the landing page, otherwise `0`
+ * @property-read	integer		$isMultilingual		        is `1` if the page is available in different languages, otherwise `0`
+ * @property-read	integer		$originIsSystem		        is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
+ * @property-read	integer		$packageID		        id of the package the which delivers the page or `1` if it has been created in the ACP
+ * @property-read	integer		$applicationPackageID	        id of the package of the application the pages belongs to
+ * @property-read	string		$controller		        name of the page controller class
+ * @property-read	string		$handler		        name of the page handler class for `system` pages or empty 
+ * @property-read	string		$controllerCustomURL	        custom url of the page
+ * @property-read	integer		$requireObjectID	        is `1` if the page requires an object id parameter, otherwise `0`
+ * @property-read	integer		$hasFixedParent		        is `1` if the page's parent page cannot be changed, otherwise `0`
+ * @property-read	integer		$lastUpdateTime		        timestamp at which the page has been updated the last time
+ * @property-read	string		$cssClassName		        css class name(s) of the page
+ * @property-read	string		$availableDuringOfflineMode     is `1` if the page is available during offline mode, otherwise `0`
+ * @property-read	string		$permissions		        comma separated list of user group permissions of which the active user needs to have at least one to access the page
+ * @property-read	string		$options		        comma separated list of options of which at least one needs to be enabled for the page to be accessible
  */
 class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	use TDatabaseObjectOptions;

@@ -531,6 +531,7 @@
 			<pageType>text</pageType>
 			<name language="de">Dashboard</name>
 			<name language="en">Dashboard</name>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
 			
 			<content>
 				<title>Dashboard</title>
@@ -543,6 +544,7 @@
 			<pageType>text</pageType>
 			<name language="en">Cookie Policy</name>
 			<name language="de">Cookie-Richtlinie</name>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
 			
 			<content language="en">
 				<title>Cookie Policy</title>

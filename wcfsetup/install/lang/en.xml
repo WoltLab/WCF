@@ -2893,6 +2893,7 @@ Errors are:
 		<item name="wcf.acp.page.type.tpl.description"><![CDATA[Similar to the type “HTML”, but offers additional support for template scripting.]]></item>
 		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 		<item name="wcf.acp.page.cssClassName"><![CDATA[CSS Class Name]]></item>
+		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Page is available during maintenance mode]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

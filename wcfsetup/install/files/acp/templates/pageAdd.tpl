@@ -222,6 +222,13 @@
 					</dl>
 				{/if}
 				
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="availableDuringOfflineMode" name="availableDuringOfflineMode" value="1"{if $availableDuringOfflineMode} checked{/if}> {lang}wcf.acp.page.availableDuringOfflineMode{/lang}</label>
+					</dd>
+				</dl>
+				
 				{event name='dataFields'}
 			</div>
 		</div>

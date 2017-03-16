@@ -158,6 +158,10 @@ class Request {
 			return true;
 		}
 		
+		if ($this->getPageID() && ($page = PageCache::getInstance()->getPage($this->getPageID()))) {
+			if ($page->availableDuringOfflineMode) return true;
+		}
+		
 		return false;
 	}
 	

@@ -138,7 +138,8 @@ class PageEditForm extends PageAddForm {
 			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => $this->parentPageID ?: null,
-			'applicationPackageID' => $this->applicationPackageID
+			'applicationPackageID' => $this->applicationPackageID,
+			'availableDuringOfflineMode' => $this->availableDuringOfflineMode
 		];
 		
 		if ($this->pageType == 'system') {
@@ -225,6 +226,7 @@ class PageEditForm extends PageAddForm {
 			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
 			if ($this->page->isDisabled) $this->isDisabled = 1;
+			if ($this->page->availableDuringOfflineMode) $this->availableDuringOfflineMode = 1;
 			
 			foreach ($this->page->getPageContents() as $languageID => $content) {
 				$this->title[$languageID] = $content->title;

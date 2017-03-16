@@ -1422,6 +1422,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.type.tpl.description"><![CDATA[Eingabemöglichkeit entspricht dem Typ „HTML“, zusätzlich wird Template-Scripting unterstützt.]]></item>
 		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 		<item name="wcf.acp.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
+		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Seite ist im Wartungsmodus aufrufbar]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">

@@ -156,6 +156,12 @@ class PageAddForm extends AbstractForm {
 	public $cssClassName = '';
 	
 	/**
+	 * true if the page is available during offline mode
+	 * @var boolean
+	 */
+	public $availableDuringOfflineMode = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -212,6 +218,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
+		if (isset($_POST['availableDuringOfflineMode'])) $this->availableDuringOfflineMode = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = array_map('mb_strtolower', ArrayUtil::trim($_POST['customURL']));
@@ -446,6 +453,7 @@ class PageAddForm extends AbstractForm {
 			'cssClassName' => $this->cssClassName,
 			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'isLandingPage' => 0,
+			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
 			'applicationPackageID' => $this->applicationPackageID,
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
@@ -476,7 +484,7 @@ class PageAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
+		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = 0;
 		$this->applicationPackageID = 1;
 		$this->cssClassName = $this->name = '';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->boxIDs = $this->aclValues = [];
@@ -510,6 +518,7 @@ class PageAddForm extends AbstractForm {
 			'cssClassName' => $this->cssClassName,
 			'isDisabled' => $this->isDisabled,
 			'isLandingPage' => $this->isLandingPage,
+			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
 			'isMultilingual' => $this->isMultilingual,
 			'applicationPackageID' => $this->applicationPackageID,
 			'customURL' => $this->customURL,

@@ -220,7 +220,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
 			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
 			'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0,
-			'cssClassName' => isset($data['elements']['cssClassName']) ? $data['elements']['cssClassName'] : ''
+			'cssClassName' => isset($data['elements']['cssClassName']) ? $data['elements']['cssClassName'] : '',
+			'availableDuringOfflineMode' => (!empty($data['elements']['availableDuringOfflineMode'])) ? 1 : 0
 		];
 	}
 	
