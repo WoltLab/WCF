@@ -1173,6 +1173,13 @@ Pinterest</defaultvalue>
 			<!-- /user.3rdPartyAuth -->
 			
 			<!-- user.avatar -->
+			<option name="avatar_default_type">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>initials</defaultvalue>
+				<selectoptions>initials:wcf.acp.option.avatar_default_type.initials
+silhouette:wcf.acp.option.avatar_default_type.silhouette</selectoptions>
+			</option>
 			<option name="gravatar_default_type">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>select</optiontype>
