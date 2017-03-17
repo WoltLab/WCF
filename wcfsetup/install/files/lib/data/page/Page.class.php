@@ -43,6 +43,7 @@ use wcf\system\WCF;
  * @property-read	integer		$lastUpdateTime		        timestamp at which the page has been updated the last time
  * @property-read	string		$cssClassName		        css class name(s) of the page
  * @property-read	string		$availableDuringOfflineMode     is `1` if the page is available during offline mode, otherwise `0`
+ * @property-read	string		$allowSpidersToIndex            is `1` if the page is accessible for search spiders, otherwise `0`
  * @property-read	string		$permissions		        comma separated list of user group permissions of which the active user needs to have at least one to access the page
  * @property-read	string		$options		        comma separated list of options of which at least one needs to be enabled for the page to be accessible
  */

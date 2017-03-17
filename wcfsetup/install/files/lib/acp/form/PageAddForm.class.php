@@ -162,6 +162,12 @@ class PageAddForm extends AbstractForm {
 	public $availableDuringOfflineMode = 0;
 	
 	/**
+	 * true if the page is accessible for search spiders
+	 * @var boolean
+	 */
+	public $allowSpidersToIndex = 1;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -213,12 +219,14 @@ class PageAddForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
+		$this->allowSpidersToIndex = 0;
 		if (isset($_POST['parentPageID'])) $this->parentPageID = intval($_POST['parentPageID']);
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['availableDuringOfflineMode'])) $this->availableDuringOfflineMode = 1;
+		if (isset($_POST['allowSpidersToIndex'])) $this->allowSpidersToIndex = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = array_map('mb_strtolower', ArrayUtil::trim($_POST['customURL']));
@@ -454,6 +462,7 @@ class PageAddForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'isLandingPage' => 0,
 			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
+			'allowSpidersToIndex' => $this->allowSpidersToIndex,
 			'applicationPackageID' => $this->applicationPackageID,
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
@@ -519,6 +528,7 @@ class PageAddForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled,
 			'isLandingPage' => $this->isLandingPage,
 			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
+			'allowSpidersToIndex' => $this->allowSpidersToIndex,
 			'isMultilingual' => $this->isMultilingual,
 			'applicationPackageID' => $this->applicationPackageID,
 			'customURL' => $this->customURL,

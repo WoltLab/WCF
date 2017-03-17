@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">
-{if $allowSpidersToIndexThisPage|empty}<meta name="robots" content="noindex,nofollow">{/if}
+{if $allowSpidersToIndexThisPage|empty && ($__wcf->getActivePage() == null || !$__wcf->getActivePage()->allowSpidersToIndex)}<meta name="robots" content="noindex,nofollow">{/if}
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 

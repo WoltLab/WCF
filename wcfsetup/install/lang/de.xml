@@ -1423,6 +1423,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.url"><![CDATA[URL]]></item>
 		<item name="wcf.acp.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Seite ist im Wartungsmodus aufrufbar]]></item>
+		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Seite darf von Suchmaschinen-Robotern indiziert werden]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">

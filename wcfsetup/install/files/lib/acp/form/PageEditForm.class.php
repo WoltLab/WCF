@@ -139,7 +139,8 @@ class PageEditForm extends PageAddForm {
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => $this->parentPageID ?: null,
 			'applicationPackageID' => $this->applicationPackageID,
-			'availableDuringOfflineMode' => $this->availableDuringOfflineMode
+			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
+			'allowSpidersToIndex' => $this->allowSpidersToIndex
 		];
 		
 		if ($this->pageType == 'system') {
@@ -227,6 +228,7 @@ class PageEditForm extends PageAddForm {
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
 			if ($this->page->isDisabled) $this->isDisabled = 1;
 			if ($this->page->availableDuringOfflineMode) $this->availableDuringOfflineMode = 1;
+			if ($this->page->allowSpidersToIndex) $this->allowSpidersToIndex = 1;
 			
 			foreach ($this->page->getPageContents() as $languageID => $content) {
 				$this->title[$languageID] = $content->title;

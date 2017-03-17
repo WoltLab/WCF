@@ -161,7 +161,6 @@ class UserPage extends AbstractPage {
 			'followingCount' => $this->followingList->countObjects(),
 			'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
 			'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
-			'allowSpidersToIndexThisPage' => true,
 			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs())
 		]);
 	}

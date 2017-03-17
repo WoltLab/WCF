@@ -122,17 +122,6 @@ class UsersOnlineListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'allowSpidersToIndexThisPage' => true
-		]);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected function readObjects() {
 		if ($this->sqlOrderBy) $this->sqlOrderBy = ($this->sortField == 'lastActivityTime' ? 'session.' : '').$this->sqlOrderBy;
 		parent::readObjects();

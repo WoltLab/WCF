@@ -221,7 +221,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
 			'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0,
 			'cssClassName' => isset($data['elements']['cssClassName']) ? $data['elements']['cssClassName'] : '',
-			'availableDuringOfflineMode' => (!empty($data['elements']['availableDuringOfflineMode'])) ? 1 : 0
+			'availableDuringOfflineMode' => (!empty($data['elements']['availableDuringOfflineMode'])) ? 1 : 0,
+			'allowSpidersToIndex' => (!empty($data['elements']['allowSpidersToIndex'])) ? 1 : 0
 		];
 	}
 	

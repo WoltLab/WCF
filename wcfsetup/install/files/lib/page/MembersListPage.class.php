@@ -154,8 +154,7 @@ class MembersListPage extends SortablePage {
 		WCF::getTPL()->assign([
 			'letters' => str_split(self::$availableLetters),
 			'letter' => $this->letter,
-			'searchID' => $this->searchID,
-			'allowSpidersToIndexThisPage' => true
+			'searchID' => $this->searchID
 		]);
 		
 		if (count($this->objectList) === 0) {

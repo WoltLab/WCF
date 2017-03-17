@@ -61,8 +61,7 @@ class RecentActivityListPage extends AbstractPage {
 		
 		WCF::getTPL()->assign([
 			'eventList' => $this->eventList,
-			'lastEventTime' => $this->eventList->getLastEventTime(),
-			'allowSpidersToIndexThisPage' => true
+			'lastEventTime' => $this->eventList->getLastEventTime()
 		]);
 	}
 }

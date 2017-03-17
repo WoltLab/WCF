@@ -2,7 +2,6 @@
 namespace wcf\page;
 use wcf\data\article\AccessibleArticleList;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 /**
  * Shows a list of cms articles.
@@ -46,16 +45,5 @@ class ArticleListPage extends MultipleLinkPage {
 		parent::readParameters();
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleList', [], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'allowSpidersToIndexThisPage' => true
-		]);
 	}
 }

@@ -86,8 +86,7 @@ class CategoryArticleListPage extends ArticleListPage {
 		
 		WCF::getTPL()->assign([
 			'categoryID' => $this->categoryID,
-			'category' => $this->category,
-			'allowSpidersToIndexThisPage' => true
+			'category' => $this->category
 		]);
 	}
 }

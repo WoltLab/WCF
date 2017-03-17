@@ -229,6 +229,13 @@
 					</dd>
 				</dl>
 				
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="allowSpidersToIndex" name="allowSpidersToIndex" value="1"{if $allowSpidersToIndex} checked{/if}> {lang}wcf.acp.page.allowSpidersToIndex{/lang}</label>
+					</dd>
+				</dl>
+				
 				{event name='dataFields'}
 			</div>
 		</div>

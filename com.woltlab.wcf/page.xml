@@ -9,6 +9,7 @@
 			<name language="en">Members</name>
 			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Members</title>
@@ -23,6 +24,7 @@
 			<name language="de">Letzte Aktivitäten</name>
 			<name language="en">Recent Activities</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Recent Activities</title>
@@ -39,6 +41,7 @@
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<permissions>user.profile.canViewUsersOnlineList</permissions>
 			<options>module_users_online</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Users Online</title>
@@ -55,6 +58,7 @@
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_team_page</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Team</title>
@@ -489,6 +493,7 @@
 			<name language="en">User Profile</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<requireObjectID>1</requireObjectID>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 		</page>
 		<page identifier="com.woltlab.wcf.ArticleList">
 			<pageType>system</pageType>
@@ -496,6 +501,7 @@
 			<name language="de">Artikel-Liste</name>
 			<name language="en">Article List</name>
 			<options>module_article</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Articles</title>
@@ -513,6 +519,7 @@
 			<options>module_article</options>
 			<parent>com.woltlab.wcf.ArticleList</parent>
 			<requireObjectID>1</requireObjectID>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 		</page>
 		<page identifier="com.woltlab.wcf.Article">
 			<pageType>system</pageType>
@@ -524,6 +531,7 @@
 			<parent>com.woltlab.wcf.CategoryArticleList</parent>
 			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 		</page>
 		
 		<!-- static -->

@@ -981,6 +981,7 @@ CREATE TABLE wcf1_page (
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
 	availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0,
+	allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
 	options TEXT NULL
 );

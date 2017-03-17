@@ -64,15 +64,4 @@ class TeamPage extends MultipleLinkPage {
 		// add breadcrumbs
 		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
 	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'allowSpidersToIndexThisPage' => true
-		]);
-	}
 }
