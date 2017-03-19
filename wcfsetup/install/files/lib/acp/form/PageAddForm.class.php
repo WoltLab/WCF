@@ -5,6 +5,11 @@ use wcf\data\application\ApplicationList;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\data\language\Language;
+use wcf\data\menu\item\MenuItem;
+use wcf\data\menu\item\MenuItemAction;
+use wcf\data\menu\item\MenuItemEditor;
+use wcf\data\menu\item\MenuItemNodeTree;
+use wcf\data\menu\MenuCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
@@ -14,6 +19,7 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
@@ -168,6 +174,24 @@ class PageAddForm extends AbstractForm {
 	public $allowSpidersToIndex = 1;
 	
 	/**
+	 * true if page should be added to the main menu
+	 * @var boolean
+	 */
+	public $addPageToMainMenu = 0;
+	
+	/**
+	 * parent menu item id
+	 * @var integer
+	 */
+	public $parentMenuItemID = null;
+	
+	/**
+	 * menu item node tree
+	 * @var	MenuItemNodeTree
+	 */
+	public $menuItems = null;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -227,7 +251,9 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = 1;
 		if (isset($_POST['availableDuringOfflineMode'])) $this->availableDuringOfflineMode = 1;
 		if (isset($_POST['allowSpidersToIndex'])) $this->allowSpidersToIndex = 1;
+		if (isset($_POST['addPageToMainMenu'])) $this->addPageToMainMenu = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
+		if (!empty($_POST['parentMenuItemID'])) $this->parentMenuItemID = intval($_POST['parentMenuItemID']);
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = array_map('mb_strtolower', ArrayUtil::trim($_POST['customURL']));
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
@@ -255,7 +281,11 @@ class PageAddForm extends AbstractForm {
 		
 		$this->validateApplicationPackageID();
 		
+		$this->validateParentMenuItemID();
+		
 		$this->validateCustomUrls();
+		
+		$this->validateTitle();
 		
 		$this->validateBoxIDs();
 		
@@ -382,6 +412,42 @@ class PageAddForm extends AbstractForm {
 	}
 	
 	/**
+	 * Validates page title.
+	 * 
+	 * @throws UserInputException
+	 */
+	protected function validateTitle() {
+		if ($this->addPageToMainMenu) {
+			if ($this->isMultilingual) {
+				foreach ($this->availableLanguages as $language) {
+					if (empty($this->title[$language->languageID])) {
+						throw new UserInputException('title_' . $language->languageID);
+					}
+				}
+			}
+			else {
+				if (empty($this->title[0])) {
+					throw new UserInputException('title');
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Validates parent menu item id.
+	 *
+	 * @throws	UserInputException
+	 */
+	protected function validateParentMenuItemID() {
+		if ($this->addPageToMainMenu && $this->parentMenuItemID) {
+			$parentMenuItem = new MenuItem($this->parentMenuItemID);
+			if (!$parentMenuItem->itemID || $parentMenuItem->menuID != MenuCache::getInstance()->getMainMenuID()) {
+				throw new UserInputException('parentMenuItemID', 'invalid');
+			}
+		}
+	}
+	
+	/**
 	 * Validates box ids.
 	 * 
 	 * @throws	UserInputException
@@ -486,6 +552,33 @@ class PageAddForm extends AbstractForm {
 		// save acl
 		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.page', $page->pageID, $this->aclValues);
 		
+		// add page to main menu
+		if ($this->addPageToMainMenu) {
+			$menuItemAction = new MenuItemAction([], 'create', ['data' => [
+				'isDisabled' => $this->isDisabled ? 1 : 0,
+				'title' => (!$this->isMultilingual ? $this->title[0] : ''),
+				'pageID' => $page->pageID,
+				'menuID' => MenuCache::getInstance()->getMainMenuID(),
+				'parentItemID' => $this->parentMenuItemID,
+				'identifier' => StringUtil::getRandomID(),
+				'packageID' => 1
+			]]);
+			$menuItemAction->executeAction();
+			
+			if ($this->isMultilingual) {
+				$returnValues = $menuItemAction->getReturnValues();
+				$menuItem = $returnValues['returnValues'];
+				
+				$data = ['identifier' => 'com.woltlab.wcf.generic' . $menuItem->itemID];
+				$data['title'] = 'wcf.menu.item.' . $data['identifier'];
+				I18nHandler::getInstance()->setValues('title', $this->title);
+				I18nHandler::getInstance()->save('title', $data['title'], 'wcf.menu');
+				
+				$menuItemEditor = new MenuItemEditor($menuItem);
+				$menuItemEditor->update($data);
+			}
+		}
+		
 		// call saved event
 		$this->saved();
 		
@@ -511,6 +604,8 @@ class PageAddForm extends AbstractForm {
 				if ($box->visibleEverywhere) $this->boxIDs[] = $box->boxID;
 			}
 		}
+		
+		$this->menuItems = new MenuItemNodeTree(MenuCache::getInstance()->getMainMenuID(), null, false);
 	}
 	
 	/**
@@ -541,7 +636,10 @@ class PageAddForm extends AbstractForm {
 			'availableLanguages' => $this->availableLanguages,
 			'availableBoxes' => $this->availableBoxes,
 			'pageNodeList' => (new PageNodeTree())->getNodeList(),
-			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues)
+			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
+			'addPageToMainMenu' => $this->addPageToMainMenu,
+			'parentMenuItemID' => $this->parentMenuItemID,
+			'menuItemNodeList' => $this->menuItems->getNodeList()
 		]);
 	}
 }

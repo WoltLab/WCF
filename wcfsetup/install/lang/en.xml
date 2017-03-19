@@ -2898,6 +2898,7 @@ Errors are:
 		<item name="wcf.acp.page.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Page is available during maintenance mode]]></item>
 		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Allow search spiders to index this page]]></item>
+		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Add page to main menu]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
