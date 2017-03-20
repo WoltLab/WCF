@@ -167,6 +167,7 @@ CREATE TABLE wcf1_article (
 	comments SMALLINT(5) NOT NULL DEFAULT 0,
 	views MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
 	
 	KEY (time)
 );

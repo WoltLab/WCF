@@ -27,6 +27,7 @@ use wcf\system\WCF;
  * @property-read	integer		$comments		number of comments on the article
  * @property-read	integer		$views			number of times the article has been viewed
  * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
+ * @property-read	integer		$isDeleted		is 1 if the article is in trash bin, otherwise 0
  */
 class Article extends DatabaseObject implements ILinkableObject {
 	/**

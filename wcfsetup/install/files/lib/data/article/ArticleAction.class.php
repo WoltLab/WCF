@@ -4,11 +4,13 @@ use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\comment\CommentHandler;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\like\LikeHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
+use wcf\system\WCF;
 
 /**
  * Executes article related actions.
@@ -23,6 +25,12 @@ use wcf\system\tagging\TagEngine;
  * @method	ArticleEditor	getSingleObject()
  */
 class ArticleAction extends AbstractDatabaseObjectAction {
+	/**
+	 * article editor instance
+	 * @var ArticleEditor
+	 */
+	public $articleEditor;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -46,7 +54,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'update'];
+	protected $requireACP = ['create', 'delete', 'restore', 'trash', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -211,5 +219,47 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			// delete entry from search index
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
 		}
+	}
+	
+	/**
+	 * Validates parameters to move an article to the trash bin.
+	 * 
+	 * @throws UserInputException
+	 */
+	public function validateTrash() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		$this->articleEditor = $this->getSingleObject();
+		if ($this->articleEditor->isDeleted) {
+			throw new UserInputException('objectIDs');
+		}
+	}
+	
+	/**
+	 * Moves an article to the trash bin.
+	 */
+	public function trash() {
+		$this->articleEditor->update(['isDeleted' => 1]);
+	}
+	
+	/**
+	 * Validates parameters o restore an article.
+	 * 
+	 * @throws UserInputException
+	 */
+	public function validateRestore() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		$this->articleEditor = $this->getSingleObject();
+		if (!$this->articleEditor->isDeleted) {
+			throw new UserInputException('objectIDs');
+		}
+	}
+	
+	/**
+	 * Restores an article.
+	 */
+	public function restore() {
+		$this->articleEditor->update(['isDeleted' => 0]);
 	}
 }

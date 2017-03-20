@@ -1,15 +1,13 @@
 {include file='header' pageTitle='wcf.acp.article.list'}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/User/Search/Input'], function(UiUserSearchInput) {
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
+		Language.addObject({
+			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}'
+		});
+		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
-	});
-</script>
-
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\article\\ArticleAction', '.jsArticleRow');
-		new WCF.Action.Toggle('wcf\\data\\article\\ArticleAction', '.jsArticleRow');
+		new AcpUiArticleInlineEditor();
 	});
 </script>
 
@@ -125,11 +123,13 @@
 			
 			<tbody>
 				{foreach from=$objects item=article}
-					<tr class="jsArticleRow">
+					<tr class="jsArticleRow" data-object-id="{@$article->articleID}">
 						<td class="columnIcon">
 							<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
 							{if $article->canDelete()}
-								<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$article->articleID}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"></span>
+								<a href="#" class="jsButtonRestore jsTooltip" title="{lang}wcf.global.button.restore{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon24 fa-refresh"></span></a>
+								<a href="#" class="jsButtonDelete jsTooltip" title="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon24 fa-times"></span></a>
+								<a href="#" class="jsButtonTrash jsTooltip" title="{lang}wcf.global.button.trash{/lang}" data-confirm-message-html="{lang __encode=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon24 fa-times"></span></a>
 							{else}
 								<span class="icon icon24 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
@@ -151,6 +151,7 @@
 								
 								<div class="containerHeadline">
 									<h3>
+										{if $article->isDeleted}<span class="badge label red jsIconDeleted">{lang}wcf.message.status.deleted{/lang}</span>{/if}
 										{if $article->publicationStatus == 0}<span class="badge">{lang}wcf.acp.article.publicationStatus.unpublished{/lang}</span>{/if}
 										{if $article->publicationStatus == 2}<span class="badge" title="{$article->publicationDate|plainTime}">{lang}wcf.acp.article.publicationStatus.delayed{/lang}</span>{/if}
 										<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.acp.article.edit{/lang}" class="jsTooltip">{$article->title}</a>
