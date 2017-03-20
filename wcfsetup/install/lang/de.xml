@@ -1427,7 +1427,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Seite ist im Wartungsmodus aufrufbar]]></item>
 		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Seite darf von Suchmaschinen-Robotern indiziert werden]]></item>
-		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Seiten automatisch in das Hauptmenü aufnehmen]]></item>
+		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Seite automatisch in das Hauptmenü aufnehmen]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
