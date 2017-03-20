@@ -82,6 +82,10 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 * @return	boolean
 	 */
 	public function canRead() {
+		if ($this->isDeleted && !WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			return false;
+		}
+		
 		if ($this->publicationStatus != self::PUBLISHED) {
 			if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle') && (!WCF::getSession()->getPermission('admin.content.article.canContributeArticle') || $this->userID != WCF::getUser()->userID)) {
 				return false;
