@@ -6,6 +6,7 @@ use wcf\data\page\PageEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RouteHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -25,9 +26,16 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	public $className = PageEditor::class;
 	
 	/**
-	 * @inheritDoc
+	 * page content
+	 * @var mixed[]
 	 */
 	protected $content = [];
+	
+	/**
+	 * pages objects
+	 * @var Page[]
+	 */
+	protected $pages = [];
 	
 	/**
 	 * @inheritDoc
@@ -273,6 +281,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		// store content for later import
+		$this->pages[$page->pageID] = $page;
 		$this->content[$page->pageID] = $content;
 		
 		return $page;
@@ -322,6 +331,27 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				}
 			}
 			WCF::getDB()->commitTransaction();
+			
+			// create search index tables
+			SearchIndexManager::getInstance()->createSearchIndices();
+			
+			// update search index
+			foreach ($this->pages as $pageID => $page) {
+				if ($page->pageType == 'text' || $page->pageType == 'html') {
+					foreach ($page->getPageContents() as $languageID => $pageContent) {
+						SearchIndexManager::getInstance()->set(
+							'com.woltlab.wcf.page',
+							$pageContent->pageContentID,
+							$pageContent->content,
+							$pageContent->title,
+							0,
+							null,
+							'',
+							$languageID ?: null
+						);
+					}
+				}
+			}
 		}
 	}
 }

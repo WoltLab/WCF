@@ -1514,6 +1514,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warnung: Die Ausführung dieser Aktion kann bei umfangreichen Datenbanken sehr lange dauern.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Kommentare aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Aktualisiert die Kommentare]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page"><![CDATA[Seiten aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Aktualisiert den Suchindex für CMS-Seiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">
@@ -2987,6 +2989,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.search.error.user.noMatches"><![CDATA[Es wurde kein Eintrag von diesem Autor gefunden.]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Seite]]></item>
+		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
 	</category>
 	
 	<category name="wcf.style">

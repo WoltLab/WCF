@@ -1475,6 +1475,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warning: This action may take a while to complete on large databases.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Rebuild Comments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Rebuilds the comments.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page"><![CDATA[Rebuild Pages]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Rebuilds the page search index.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">
@@ -2980,6 +2982,8 @@ Errors are:
 		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.article"><![CDATA[Article]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Page]]></item>
+		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
 	</category>
 	
 	<category name="wcf.style">

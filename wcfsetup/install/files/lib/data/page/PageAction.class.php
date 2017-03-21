@@ -10,6 +10,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 
 /**
@@ -82,6 +83,20 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 					'customURL' => $content['customURL']
 				]);
 				$pageContentEditor = new PageContentEditor($pageContent);
+				
+				// update search index
+				if ($page->pageType == 'text' || $page->pageType == 'html') {
+					SearchIndexManager::getInstance()->set(
+						'com.woltlab.wcf.page',
+						$pageContent->pageContentID,
+						$pageContent->content,
+						$pageContent->title,
+						0,
+						null,
+						'',
+						$languageID ?: null
+					);
+				}
 				
 				// save embedded objects
 				if (!empty($content['htmlInputProcessor'])) {
@@ -166,6 +181,20 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'customURL' => $content['customURL']
 						]);
 						$pageContentEditor = new PageContentEditor($pageContent);
+					}
+					
+					// update search index
+					if ($page->pageType == 'text' || $page->pageType == 'html') {
+						SearchIndexManager::getInstance()->set(
+							'com.woltlab.wcf.page',
+							$pageContent->pageContentID,
+							$pageContent->content,
+							$pageContent->title,
+							0,
+							null,
+							'',
+							$languageID ?: null
+						);
 					}
 					
 					// save embedded objects
@@ -313,6 +342,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 * @inheritDoc
 	 */
 	public function delete() {
+		$pageContentIDs = [];
 		foreach ($this->getObjects() as $page) {
 			if ($page->pageType == 'tpl') {
 				foreach ($page->getPageContents() as $languageID => $content) {
@@ -322,8 +352,17 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 					}
 				}
 			}
+			
+			foreach ($page->getPageContents() as $pageContent) {
+				$pageContentIDs[] = $pageContent->pageContentID;
+			}
 		}
 		
 		parent::delete();
+		
+		if (!empty($pageContentIDs)) {
+			// delete entry from search index
+			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.page', $pageContentIDs);
+		}
 	}
 }
