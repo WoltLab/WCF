@@ -8,6 +8,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\like\LikeHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
@@ -219,6 +220,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			// delete entry from search index
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
 		}
+		
+		return [
+			'redirectURL' => LinkHandler::getInstance()->getLink('ArticleList', ['isACP' => true])
+		];
 	}
 	
 	/**

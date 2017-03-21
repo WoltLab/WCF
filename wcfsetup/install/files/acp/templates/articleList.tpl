@@ -7,7 +7,7 @@
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
-		new AcpUiArticleInlineEditor();
+		new AcpUiArticleInlineEditor(0);
 	});
 </script>
 

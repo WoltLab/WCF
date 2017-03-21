@@ -76,7 +76,7 @@
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
-		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete the article <span class="confirmationObject">{$article->getTitle()}</span>?]]></item>
+		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if}?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Monolingual article]]></item>
@@ -91,9 +91,10 @@
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Delayed publishing]]></item>
-		<item name="wcf.acp.article.restore.confirmMessage"><![CDATA[Do you really want to restore the article <span class="confirmationObject">{$article->getTitle()}</span>?]]></item>
+		<item name="wcf.acp.article.restore.confirmMessage"><![CDATA[Do you really want to restore {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if}?]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Teaser]]></item>
-		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[Do you really want to move the article <span class="confirmationObject">{$article->getTitle()}</span> to the trash bin?]]></item>
+		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[Do you really want to move {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if} to the trash bin?]]></item>
+		<item name="wcf.acp.article.trash.notice"><![CDATA[This article has been moved to the trash bin and is currently hidden from view.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
 	</category>
 	

@@ -11,26 +11,41 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 	
 	var _articles = new Dictionary();
 	
-	/**     
+	/**
 	 * @constructor
 	 */
-	function AcpUiArticleInlineEditor() { this.init(); }
+	function AcpUiArticleInlineEditor(objectId) { this.init(objectId); }
 	AcpUiArticleInlineEditor.prototype = {
 		/**
 		 * Initializes the ACP inline editor for articles.
+		 * 
+		 * @param       {int}   objectId        article id, equals 0 on the article list, but is non-zero when editing a single article
 		 */
-		init: function () {
-			elBySelAll('.jsArticleRow', undefined, this._initArticle.bind(this));
+		init: function (objectId) {
+			if (objectId) {
+				this._initArticle(null, objectId);
+			}
+			else {
+				elBySelAll('.jsArticleRow', undefined, this._initArticle.bind(this));
+			}
 		},
 		
 		/**
 		 * Initializes an article row element.
 		 * 
 		 * @param       {Element}       article         article row element
+		 * @param       {int}           objectId        optional article id
 		 * @protected
 		 */
-		_initArticle: function (article) {
-			var objectId = ~~elData(article, 'object-id');
+		_initArticle: function (article, objectId) {
+			var isArticleEdit = false;
+			if (~~objectId > 0) {
+				isArticleEdit = true;
+				article = undefined;
+			}
+			else {
+				objectId = ~~elData(article, 'object-id');
+			}
 			
 			var buttonDelete = elBySel('.jsButtonDelete', article);
 			buttonDelete.addEventListener(WCF_CLICK_EVENT, this._prompt.bind(this, objectId, 'delete'));
@@ -47,7 +62,8 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 					restore: buttonRestore,
 					trash: buttonTrash
 				},
-				element: article
+				element: article,
+				isArticleEdit: isArticleEdit
 			});
 		},
 		
@@ -89,11 +105,17 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 			var article = _articles.get(data.objectIDs[0]);
 			switch (data.actionName) {
 				case 'delete':
-					var tbody = article.element.parentNode;
-					elRemove(article.element);
-					
-					if (elBySel('tr', tbody) === null) {
-						window.location.reload();
+					if (article.isArticleEdit) {
+						//noinspection JSUnresolvedVariable
+						window.location = data.returnValues.redirectURL;
+					}
+					else {
+						var tbody = article.element.parentNode;
+						elRemove(article.element);
+						
+						if (elBySel('tr', tbody) === null) {
+							window.location.reload();
+						}
 					}
 					break;
 					
@@ -102,7 +124,12 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 					elHide(article.buttons.restore);
 					elShow(article.buttons.trash);
 					
-					elRemove(elBySel('.jsIconDeleted', article.element));
+					if (article.isArticleEdit) {
+						elHide(elBySel('.jsArticleNoticeTrash'));
+					}
+					else {
+						elRemove(elBySel('.jsIconDeleted', article.element));
+					}
 					break;
 					
 				case 'trash':
@@ -110,12 +137,17 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 					elShow(article.buttons.restore);
 					elHide(article.buttons.trash);
 					
-					var badge = elCreate('span');
-					badge.className = 'badge label red jsIconDeleted';
-					badge.textContent = Language.get('wcf.message.status.deleted');
-					
-					var h3 = elBySel('.containerHeadline > h3', article.element);
-					h3.insertBefore(badge, h3.firstChild);
+					if (article.isArticleEdit) {
+						elShow(elBySel('.jsArticleNoticeTrash'));
+					}
+					else {
+						var badge = elCreate('span');
+						badge.className = 'badge label red jsIconDeleted';
+						badge.textContent = Language.get('wcf.message.status.deleted');
+						
+						var h3 = elBySel('.containerHeadline > h3', article.element);
+						h3.insertBefore(badge, h3.firstChild);
+					}
 					
 					break;
 			}

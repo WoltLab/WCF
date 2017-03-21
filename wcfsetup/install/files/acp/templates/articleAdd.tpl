@@ -19,8 +19,9 @@
 {/if}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input'], function(Language, UiUserSearchInput) {
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
 		Language.addObject({
+			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}',
 			'wcf.page.search': '{lang}wcf.page.search{/lang}',
 			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
 			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
@@ -29,6 +30,7 @@
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
+		{if $action == 'edit'}new AcpUiArticleInlineEditor({@$article->articleID});{/if}
 	});
 </script>
 
@@ -53,6 +55,11 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
+				{if $article->canDelete()}
+					<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
+					<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
+					<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+				{/if}
 				<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
@@ -67,6 +74,8 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
+
+{if $action == 'edit'}<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>{/if}
 
 <form method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
 	<div class="section">
