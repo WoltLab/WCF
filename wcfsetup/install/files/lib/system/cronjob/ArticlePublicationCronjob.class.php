@@ -26,6 +26,7 @@ class ArticlePublicationCronjob extends AbstractCronjob {
 		$articleList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::DELAYED_PUBLICATION]);
 		$articleList->getConditionBuilder()->add('article.publicationDate > ?', [0]);
 		$articleList->getConditionBuilder()->add('article.publicationDate <= ?', [TIME_NOW]);
+		$articleList->getConditionBuilder()->add('article.isDeleted = ?', [0]);
 		$articleList->decoratorClassName = ArticleEditor::class;
 		$articleList->readObjects();
 		
