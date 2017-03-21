@@ -220,6 +220,19 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
+	 * Returns icon name for this attachment.
+	 * 
+	 * @return      string
+	 */
+	public function getIconName() {
+		if ($iconName = FileUtil::getIconNameByFilename($this->filename)) {
+			return 'file-' . $iconName . '-o';
+		}
+		
+		return 'paperclip';
+	}
+	
+	/**
 	 * Returns the storage path.
 	 * 
 	 * @return	string

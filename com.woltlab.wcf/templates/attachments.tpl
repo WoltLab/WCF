@@ -61,7 +61,7 @@
 					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
 						{if $attachment->showAsFile() && !$attachment->isEmbedded()}
 							<li class="box32" data-attachment-id="{@$attachment->attachmentID}">
-								<a href="{link controller='Attachment' object=$attachment}{/link}"><span class="icon icon32 fa-paperclip"></span></a>
+								<a href="{link controller='Attachment' object=$attachment}{/link}"><span class="icon icon32 fa-{@$attachment->getIconName()}"></span></a>
 								
 								<div>
 									<p><a href="{link controller='Attachment' object=$attachment}{/link}">{$attachment->filename}</a></p>

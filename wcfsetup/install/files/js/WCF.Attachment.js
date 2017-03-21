@@ -350,7 +350,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 				// show file icon
 				else {
-					$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-paperclip');
+					$li.children('.fa-spinner').removeClass('fa-spinner').addClass('fa-' + attachmentData.iconName);
 				}
 				
 				// update attachment link

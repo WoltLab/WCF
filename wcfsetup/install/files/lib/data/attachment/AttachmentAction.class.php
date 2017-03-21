@@ -176,7 +176,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 					'thumbnailURL' => $attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'thumbnail=1') : '',
 					'url' => LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]),
 					'height' => $attachment->height,
-					'width' => $attachment->width
+					'width' => $attachment->width,
+					'iconName' => $attachment->getIconName()
 				];
 			}
 		}

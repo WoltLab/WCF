@@ -639,6 +639,47 @@ final class FileUtil {
 	}
 	
 	/**
+	 * Returns icon name for given filename.
+	 * 
+	 * @param       string          $filename
+	 * @return      string
+	 */
+	public static function getIconNameByFilename($filename) {
+		static $mapping = [
+			// archive
+			'zip' => 'archive', 'rar' => 'archive', 'tar' => 'archive', 'gz' => 'archive',
+			// audio
+			'mp3' => 'audio', 'ogg' => 'audio', 'wav' => 'audio',
+			// code
+			'php' => 'code', 'html' => 'code', 'htm' => 'code', 'tpl' => 'code', 'js' => 'code',
+			// excel
+			'xls' => 'excel', 'ods' => 'excel', 'xlsx' => 'excel',
+			// image
+			'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image', 'bmp' => 'image',
+			// video
+			'avi' => 'video', 'wmv' => 'video', 'mov' => 'video', 'mp4' => 'video', 'mpg' => 'video', 'mpeg' => 'video', 'flv' => 'video',
+			// pdf
+			'pdf' => 'pdf',
+			// powerpoint
+			'ppt' => 'powerpoint', 'pptx' => 'powerpoint',
+			// text
+			'txt' => 'text',
+			// word
+			'doc' => 'word', 'docx' => 'word', 'odt' => 'word'
+		];
+		
+		$lastDotPosition = strrpos($filename, '.');
+		if ($lastDotPosition !== false) {
+			$extension = substr($filename, $lastDotPosition + 1);
+			if (isset($mapping[$extension])) {
+				return $mapping[$extension];
+			}
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * Forbid creation of FileUtil objects.
 	 */
 	private function __construct() {
