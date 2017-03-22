@@ -16,6 +16,7 @@ requirejs.config({
 			'AjaxJsonp': 'WoltLabSuite/Core/Ajax/Jsonp',
 			'AjaxRequest': 'WoltLabSuite/Core/Ajax/Request',
 			'CallbackList': 'WoltLabSuite/Core/CallbackList',
+			'ColorUtil': 'WoltLabSuite/Core/ColorUtil',
 			'Core': 'WoltLabSuite/Core/Core',
 			'DateUtil': 'WoltLabSuite/Core/Date/Util',
 			'Dictionary': 'WoltLabSuite/Core/Dictionary',

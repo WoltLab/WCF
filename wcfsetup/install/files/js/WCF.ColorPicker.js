@@ -520,68 +520,7 @@ WCF.ColorPicker = Class.extend({
 	 * @return	object
 	 */
 	hsvToRgb: function(h, s, v) {
-		var $rgb = { r: 0, g: 0, b: 0 };
-		var $h, $f, $p, $q, $t;
-		
-		$h = Math.floor(h / 60);
-		$f = h / 60 - $h;
-		
-		s /= 100;
-		v /= 100;
-		
-		$p = v * (1 - s);
-		$q = v * (1 - s * $f);
-		$t = v * (1 - s * (1 - $f));
-		
-		if (s == 0) {
-			$rgb.r = $rgb.g = $rgb.b = v;
-		}
-		else {
-			switch ($h) {
-				case 1:
-					$rgb.r = $q;
-					$rgb.g = v;
-					$rgb.b = $p;
-				break;
-				
-				case 2:
-					$rgb.r = $p;
-					$rgb.g = v;
-					$rgb.b = $t;
-				break;
-				
-				case 3:
-					$rgb.r = $p;
-					$rgb.g = $q;
-					$rgb.b = v;
-				break;
-				
-				case 4:
-					$rgb.r = $t;
-					$rgb.g = $p;
-					$rgb.b = v;
-				break;
-				
-				case 5:
-					$rgb.r = v;
-					$rgb.g = $p;
-					$rgb.b = $q;
-				break;
-				
-				case 0:
-				case 6:
-					$rgb.r = v;
-					$rgb.g = $t;
-					$rgb.b = $p;
-				break;
-			}
-		}
-		
-		return {
-			r: Math.round($rgb.r * 255),
-			g: Math.round($rgb.g * 255),
-			b: Math.round($rgb.b * 255)
-		};
+		return window.__wcf_bc_colorUtil.hsvToRgb(h, s, v);
 	},
 	
 	/**
@@ -595,52 +534,7 @@ WCF.ColorPicker = Class.extend({
 	 * @return	object
 	 */
 	rgbToHsv: function(r, g, b) {
-		var $h, $s, $v;
-		var $max, $min, $diff;
-		
-		r /= 255;
-		g /= 255;
-		b /= 255;
-		
-		$max = Math.max(Math.max(r, g), b);
-		$min = Math.min(Math.min(r, g), b);
-		$diff = $max - $min;
-		
-		$h = 0;
-		if ($max !== $min) {
-			switch ($max) {
-				case r:
-					$h = 60 * (0 + (g - b) / $diff);
-				break;
-				
-				case g:
-					$h = 60 * (2 + (b - r) / $diff);
-				break;
-				
-				case b:
-					$h = 60 * (4 + (r - g) / $diff);
-				break;
-			}
-			
-			if ($h < 0) {
-				$h += 360;
-			}
-		}
-		
-		if ($max === 0) {
-			$s = 0;
-		}
-		else {
-			$s = $diff / $max;
-		}
-		
-		$v = $max;
-		
-		return {
-			h: Math.round($h),
-			s: Math.round($s * 100),
-			v: Math.round($v * 100)
-		};
+		return window.__wcf_bc_colorUtil.rgbToHsv(r, g, b);
 	},
 	
 	/**
@@ -650,33 +544,7 @@ WCF.ColorPicker = Class.extend({
 	 * @return	object
 	 */
 	hexToRgb: function(hex) {
-		if (/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) {
-			// only convert #abc and #abcdef
-			hex = hex.split('');
-			
-			// drop the hashtag
-			if (hex[0] === '#') {
-				hex.shift();
-			}
-			
-			// parse shorthand #xyz
-			if (hex.length === 3) {
-				return {
-					r: parseInt(hex[0] + '' + hex[0], 16),
-					g: parseInt(hex[1] + '' + hex[1], 16),
-					b: parseInt(hex[2] + '' + hex[2], 16)
-				};
-			}
-			else {
-				return {
-					r: parseInt(hex[0] + '' + hex[1], 16),
-					g: parseInt(hex[2] + '' + hex[3], 16),
-					b: parseInt(hex[4] + '' + hex[5], 16)
-				};
-			}
-		}
-		
-		return Number.NaN;
+		return window.__wcf_bc_colorUtil.hexToRgb(hex);
 	},
 	
 	/**
@@ -690,6 +558,6 @@ WCF.ColorPicker = Class.extend({
 	 * @return	string
 	 */
 	rgbToHex: function(r, g, b) {
-		return ("0123456789ABCDEF".charAt((r - r % 16) / 16) + '' + "0123456789ABCDEF".charAt(r % 16)) + '' + ("0123456789ABCDEF".charAt((g - g % 16) / 16) + '' + "0123456789ABCDEF".charAt(g % 16)) + '' + ("0123456789ABCDEF".charAt((b - b % 16) / 16) + '' + "0123456789ABCDEF".charAt(b % 16));
+		return window.__wcf_bc_colorUtil.rgbToHex(r, g, b);
 	}
 });
