@@ -1,6 +1,17 @@
+/**
+ * Helper functions to convert between different color formats.
+ *
+ * @author      Alexander Ebert
+ * @copyright   2001-2017 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/ColorUtil
+ */
 define([], function () {
 	"use strict";
 	
+	/**
+	 * @exports     WoltLabSuite/Core/ColorUtil
+	 */
 	var ColorUtil = {
 		/**
 		 * Converts a HSV color into RGB.

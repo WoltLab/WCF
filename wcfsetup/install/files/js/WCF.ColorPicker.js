@@ -27,6 +27,12 @@ WCF.ColorPicker = Class.extend({
 	_barSelector: null,
 	
 	/**
+	 * optional submit callback
+	 * @var Function
+	 */
+	_callbackSubmit: null,
+	
+	/**
 	 * dialog overlay
 	 * @var	jQuery
 	 */
@@ -104,6 +110,7 @@ WCF.ColorPicker = Class.extend({
 	 * @param	string		selector
 	 */
 	init: function(selector) {
+		this._callbackSubmit = null;
 		this._elementID = '';
 		this._hsv = { h: 0, s: 100, v: 100 };
 		this._position = { };
@@ -115,6 +122,15 @@ WCF.ColorPicker = Class.extend({
 		}
 		
 		$elements.click($.proxy(this._open, this));
+	},
+	
+	/**
+	 * Sets an optional submit callback.
+	 * 
+	 * @param	{Function}	callback
+	 */
+	setCallbackSubmit: function(callback) {
+		this._callbackSubmit = callback;
 	},
 	
 	/**
@@ -328,6 +344,15 @@ WCF.ColorPicker = Class.extend({
 		$('#' + $element.data('store')).val('rgba(' + this._rgba.r.val() + ', ' + this._rgba.g.val() + ', ' + this._rgba.b.val() + ', ' + (this._rgba.a.val() / 100) + ')').trigger('change');
 		
 		this._dialog.wcfDialog('close');
+		
+		if (typeof this._callbackSubmit === 'function') {
+			this._callbackSubmit({
+				r: this._rgba.r.val(),
+				g: this._rgba.g.val(),
+				b: this._rgba.b.val(),
+				a: (this._rgba.a.val() / 100)
+			});
+		}
 	},
 	
 	/**
@@ -561,3 +586,9 @@ WCF.ColorPicker = Class.extend({
 		return window.__wcf_bc_colorUtil.rgbToHex(r, g, b);
 	}
 });
+
+(function() {
+	if (typeof window.__wcf_bc_colorPickerInit === 'function') {
+		window.__wcf_bc_colorPickerInit();
+	}
+})();
