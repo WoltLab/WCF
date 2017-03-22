@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\page\content;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\search\ISearchResultObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchResultTextParser;
 
