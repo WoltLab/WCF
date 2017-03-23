@@ -2,6 +2,7 @@
 namespace wcf\system\email\transport;
 use wcf\system\email\transport\exception\TransientFailure;
 use wcf\system\email\Email;
+use wcf\system\email\EmailGrammar;
 use wcf\system\email\Mailbox;
 use wcf\util\StringUtil;
 
@@ -41,11 +42,13 @@ class PhpEmailTransport implements IEmailTransport {
 			return implode(': ', $item);
 		}, $headers));
 		
+		$encodedSubject = EmailGrammar::encodeQuotedPrintableHeader($email->getSubject());
+		
 		if (MAIL_USE_F_PARAM) {
-			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$envelopeFrom->getAddress());
+			$return = mail($envelopeTo->getAddress(), $encodedSubject, StringUtil::unifyNewlines($email->getBodyString()), $headers, '-f'.$envelopeFrom->getAddress());
 		}
 		else {
-			$return = mail($envelopeTo->getAddress(), $email->getSubject(), StringUtil::unifyNewlines($email->getBodyString()), $headers);
+			$return = mail($envelopeTo->getAddress(), $encodedSubject, StringUtil::unifyNewlines($email->getBodyString()), $headers);
 		}
 		
 		if (!$return) {
