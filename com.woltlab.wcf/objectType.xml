@@ -64,6 +64,14 @@
 			<name>com.woltlab.wcf.article.content</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.versionTracker.objectType</definitionname>
+			<classname>wcf\data\article\ArticleVersionTrackerProvider</classname>
+			<tableName>wcf1_article</tableName>
+			<tablePrimaryKey>articleID</tablePrimaryKey>
+		</type>
 		<!-- /articles -->
 		
 		<type>

@@ -90,6 +90,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.versionTracker.objectType</name>
+			<interfacename>wcf\system\version\IVersionTrackerObjectTypeProvider</interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.comment.commentableContent</name>
 			<interfacename>wcf\system\comment\manager\ICommentManager</interfacename>
 		</definition>

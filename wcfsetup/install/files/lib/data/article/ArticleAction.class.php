@@ -11,6 +11,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -126,6 +127,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// update article content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->getObjects() as $article) {
+				$versionData = [];
+				$hasChanges = false;
+				
 				foreach ($this->parameters['content'] as $languageID => $content) {
 					if (!empty($content['htmlInputProcessor'])) {
 						/** @noinspection PhpUndefinedMethodInspection */
@@ -145,6 +149,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'teaserImageID' => $content['teaserImageID']
 						]);
 						
+						$versionData[] = $articleContent;
+						if ($articleContent->content != $content['content'] || $articleContent->teaser != $content['teaser'] || $articleContent->title != $content['title']) {
+							$hasChanges = true;
+						}
+						
 						// delete tags
 						if (empty($content['tags'])) {
 							TagEngine::getInstance()->deleteObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, ($languageID ?: null));
@@ -162,6 +171,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'teaserImageID' => $content['teaserImageID']
 						]);
 						$articleContentEditor = new ArticleContentEditor($articleContent);
+						
+						$versionData[] = $articleContent;
+						$hasChanges = true;
 					}
 					
 					// save tags
@@ -190,6 +202,12 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							$articleContentEditor->update(['hasEmbeddedObjects' => $articleContent->hasEmbeddedObjects ? 0 : 1]);
 						}
 					}
+				}
+				
+				if ($hasChanges) {
+					$articleObj = new ArticleVersionTracker($article->getDecoratedObject());
+					$articleObj->setContent($versionData);
+					VersionTracker::getInstance()->add('com.woltlab.wcf.article', $articleObj);
 				}
 			}
 		}
