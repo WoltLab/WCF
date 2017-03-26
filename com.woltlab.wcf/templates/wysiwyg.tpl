@@ -228,6 +228,7 @@
 					buttonMobile: buttonMobile,
 					customButtons: customButtons,
 					highlighters: highlighters,
+					media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 					mediaUrl: '{link controller='Media' id=-123456789 thumbnail='void' forceFrontend=true}{/link}'
 				}
 			};

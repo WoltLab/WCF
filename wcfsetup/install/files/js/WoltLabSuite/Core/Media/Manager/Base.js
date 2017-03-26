@@ -40,6 +40,7 @@ define(
 		this._mediaCache = null;
 		this._mediaManagerMediaList = null;
 		this._search = null;
+		this._upload = null;
 		this._forceClipboard = false;
 		this._hadInitiallyMarkedItems = false;
 		
@@ -184,7 +185,7 @@ define(
 				
 				if (Permission.get('admin.content.cms.canManageMedia')) {
 					var uploadButton = elByClass('mediaManagerMediaUploadButton', UiDialog.getDialog(this).dialog)[0];
-					new MediaUpload(DomUtil.identify(uploadButton), DomUtil.identify(this._mediaManagerMediaList), {
+					this._upload = new MediaUpload(DomUtil.identify(uploadButton), DomUtil.identify(this._mediaManagerMediaList), {
 						mediaManager: this
 					});
 					

@@ -337,6 +337,26 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			request.sendRequest();
 			
 			return uploadId;
+		},
+		
+		/**
+		 * Uploads the given file blob.
+		 * 
+		 * @param	{Blob}		blob		file blob
+		 * @return	{int}		identifier for the uploaded file
+		 */
+		uploadBlob: function(blob) {
+			return this._upload(null, null, blob);
+		},
+		
+		/**
+		 * Uploads the given file.
+		 *
+		 * @param	{File}		file		uploaded file
+		 * @return	{int}		identifier(s) for the uploaded file
+		 */
+		uploadFile: function(file) {
+			return this._upload(null, file);
 		}
 	};
 	

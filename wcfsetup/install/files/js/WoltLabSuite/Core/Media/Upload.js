@@ -160,7 +160,8 @@ define(
 			EventHandler.fire('com.woltlab.wcf.media.upload', 'success', {
 				files: files,
 				media: data.returnValues.media,
-				upload: this
+				upload: this,
+				uploadId: uploadId
 			});
 		},
 		
