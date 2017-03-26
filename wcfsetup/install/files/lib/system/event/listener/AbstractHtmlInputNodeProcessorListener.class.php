@@ -13,7 +13,7 @@ use wcf\util\JSON;
  * with links with the name of the linked object or with bbcodes.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Event\Listener
  * @since	3.0
@@ -61,6 +61,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * @param	string				$bbcodeName
 	 */
 	protected function replaceLinksWithBBCode(HtmlInputNodeProcessor $processor, Regex $regex, array $objects, $bbcodeName) {
+		$elements = [];
 		foreach ($processor->getDocument()->getElementsByTagName('a') as $element) {
 			/** @var \DOMElement $element */
 			if ($element->getAttribute('href') === $element->textContent) {
@@ -68,14 +69,21 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 					$objectID = $regex->getMatches()[2][0];
 					
 					if (isset($objects[$objectID])) {
-						$metacodeElement = $processor->getDocument()->createElement('woltlab-metacode');
-						$metacodeElement->setAttribute('data-name', $bbcodeName);
-						$metacodeElement->setAttribute('data-attributes', base64_encode(JSON::encode([$objectID])));
-						
-						DOMUtil::replaceElement($element, $metacodeElement, false);
+						$elements[] = [
+							'element' => $element,
+							'objectID' => $objectID
+						];
 					}
 				}
 			}
+		}
+		
+		foreach ($elements as $elementData) {
+			$metacodeElement = $processor->getDocument()->createElement('woltlab-metacode');
+			$metacodeElement->setAttribute('data-name', $bbcodeName);
+			$metacodeElement->setAttribute('data-attributes', base64_encode(JSON::encode([$elementData['objectID']])));
+			
+			DOMUtil::replaceElement($elementData['element'], $metacodeElement, false);
 		}
 	}
 	
@@ -86,6 +94,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * @param	HtmlInputNodeProcessor		$processor
 	 * @param	Regex				$regex
 	 * @param	ITitledObject[]			$objects
+	 * @throws	ImplementationException
 	 */
 	protected function setObjectTitles(HtmlInputNodeProcessor $processor, Regex $regex, array $objects) {
 		foreach ($processor->getDocument()->getElementsByTagName('a') as $element) {

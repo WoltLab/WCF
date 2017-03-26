@@ -4,7 +4,7 @@
  * User-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -623,7 +623,7 @@ WCF.User.QuickLogin = {
 			}
 			
 			var input = loginForm.querySelector('#loginForm input[name=url]');
-			if (input !== null) {
+			if (input !== null && !input.value.match(/^https?:\/\//)) {
 				input.setAttribute('value', window.location.protocol + '//' + window.location.host + input.getAttribute('value'));
 			}
 			
@@ -897,6 +897,8 @@ WCF.User.Profile.Editor = Class.extend({
 	 */
 	_actionName: '',
 	
+	_active: false,
+	
 	/**
 	 * list of interface buttons
 	 * @var	object
@@ -935,6 +937,7 @@ WCF.User.Profile.Editor = Class.extend({
 	 */
 	init: function(userID, editOnInit) {
 		this._actionName = '';
+		this._active = false;
 		this._cachedTemplate = '';
 		this._tab = $('#about');
 		this._userID = userID;
@@ -967,6 +970,9 @@ WCF.User.Profile.Editor = Class.extend({
 	 */
 	_beginEdit: function(event) {
 		if (event) event.preventDefault();
+		
+		if (this._active) return;
+		this._active = true;
 		
 		this._actionName = 'beginEdit';
 		this._buttons.beginEdit.parent().addClass('active');
@@ -1045,6 +1051,7 @@ WCF.User.Profile.Editor = Class.extend({
 	 */
 	_restore: function() {
 		this._actionName = 'restore';
+		this._active = false;
 		this._buttons.beginEdit.parent().removeClass('active');
 		
 		this._destroyEditor();
@@ -1536,7 +1543,7 @@ WCF.User.Registration.LostPassword = Class.extend({
  * Notification system for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Notification = { };

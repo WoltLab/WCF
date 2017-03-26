@@ -46,6 +46,8 @@ $.Redactor.prototype.WoltLabSize = function() {
 				
 				this.buffer.set();
 			}).bind(this));
+			
+			this.selection.restore();
 		},
 		
 		removeSize: function() {
@@ -58,6 +60,8 @@ $.Redactor.prototype.WoltLabSize = function() {
 				
 				this.buffer.set();
 			}).bind(this));
+			
+			this.selection.restore();
 		}
 	};
 };

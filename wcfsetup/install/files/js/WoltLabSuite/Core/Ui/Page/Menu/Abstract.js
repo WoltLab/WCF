@@ -2,7 +2,7 @@
  * Provides a touch-friendly fullscreen menu.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/Abstract
  */
@@ -57,6 +57,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 			
 			EventHandler.add(this._eventIdentifier, 'open', callbackOpen);
 			EventHandler.add(this._eventIdentifier, 'close', this.close.bind(this));
+			EventHandler.add(this._eventIdentifier, 'updateButtonState', this._updateButtonState.bind(this));
 			
 			var itemList, itemLists = elByClass('menuOverlayItemList', this._menu);
 			this._menu.addEventListener('animationend', (function() {

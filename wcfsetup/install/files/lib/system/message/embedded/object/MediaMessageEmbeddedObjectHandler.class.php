@@ -10,7 +10,7 @@ use wcf\util\ArrayUtil;
  * IMessageEmbeddedObjectHandler implementation for shared media.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  */

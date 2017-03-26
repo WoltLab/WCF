@@ -767,6 +767,7 @@ png</defaultvalue>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_profile_wall</options>
 			</option>
 			<option name="mod.profileComment.canDeleteComment">
 				<categoryname>mod.profileComment</categoryname>
@@ -774,6 +775,7 @@ png</defaultvalue>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_profile_wall</options>
 			</option>
 			<option name="mod.profileComment.canModerateComment">
 				<categoryname>mod.profileComment</categoryname>
@@ -781,6 +783,7 @@ png</defaultvalue>
 				<defaultvalue>0</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_profile_wall</options>
 			</option>
 			<!-- /mod.general -->
 			
@@ -833,12 +836,14 @@ png</defaultvalue>
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<options>module_user_profile_wall</options>
 			</option>
 			<option name="user.profileComment.canEditComment">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_profile_wall</options>
 			</option>
 			<option name="user.profileComment.canDeleteComment">
 				<categoryname>user.profileComment</categoryname>
@@ -846,12 +851,14 @@ png</defaultvalue>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_profile_wall</options>
 			</option>
 			<option name="user.profileComment.canDeleteCommentInOwnProfile">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_profile_wall</options>
 			</option>
 			<!-- /user.profileComment -->
 			
@@ -875,9 +882,11 @@ png</defaultvalue>
 		<option name="admin.system.package.canEditServer" />
 		<option name="admin.content.dashboard.canEditDashboard" />
 		<option name="admin.display.canManagePageMenu" />
+		<option name="user.message.allowedBBCodes" />
 		<option name="user.message.canUseSmilies" />
 		<option name="user.message.canUseHtml" />
 		<option name="user.message.canUseBBCodes" />
+		<option name="user.signature.allowedBBCodes" />
 		<option name="user.signature.canUseSmilies" />
 		<option name="user.signature.canUseHtml" />
 		<option name="user.signature.canUseBBCodes" />

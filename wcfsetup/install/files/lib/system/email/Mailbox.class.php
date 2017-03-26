@@ -7,7 +7,7 @@ use wcf\system\language\LanguageFactory;
  * Represents a RFC 5322 mailbox.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email
  * @since	3.0

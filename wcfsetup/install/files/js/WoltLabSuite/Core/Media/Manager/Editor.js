@@ -2,7 +2,7 @@
  * Provides the media manager dialog for selecting media for Redactor editors.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Editor
  */
@@ -22,7 +22,8 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		
 		this._forceClipboard = true;
 		this._activeButton = null;
-		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton');
+		var context = (this._options.editor) ? this._options.editor.core.toolbar()[0] : undefined;
+		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton', context);
 		for (var i = 0, length = this._buttons.length; i < length; i++) {
 			this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 		}

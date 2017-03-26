@@ -83,7 +83,14 @@
 		background-color: $wcfHeaderBackground;
 		color: $wcfHeaderText;
 		display: flex;
-		padding: 10px 20px;
+		
+		@include screen-sm-down {
+			padding: 10px;
+		}
+		
+		@include screen-md-up {
+			padding: 10px 20px;
+		}
 		
 		> span {
 			flex: 1 auto;
@@ -108,6 +115,8 @@
 	> .dialogContent {
 		background-color: $wcfContentBackground;
 		overflow: auto;
+		
+		// do not use `-webkit-overflow-scrolling` as it will cut off content in iOS Safari
 		
 		&:not(.dialogContentNoPadding) {
 			@include screen-sm-down {

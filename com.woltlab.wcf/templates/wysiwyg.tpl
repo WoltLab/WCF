@@ -28,6 +28,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLine.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabLink.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMedia.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabMention.js?v={@LAST_UPDATE_TIME}',
@@ -40,6 +41,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSmiley.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSource.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabSpoiler.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabTable.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabUtils.js?v={@LAST_UPDATE_TIME}'
 		{else}
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.min.js?v={@LAST_UPDATE_TIME}',
@@ -86,6 +88,9 @@
 				'wcf.editor.link.url': '{lang}wcf.editor.link.url{/lang}',
 				'wcf.editor.link.text': '{lang}wcf.editor.link.text{/lang}',
 				
+				'wcf.editor.list.indent': '{lang}wcf.editor.list.indent{/lang}',
+				'wcf.editor.list.outdent': '{lang}wcf.editor.list.outdent{/lang}',
+				
 				'wcf.editor.quote.author': '{lang}wcf.editor.quote.author{/lang}',
 				'wcf.editor.quote.edit': '{lang}wcf.editor.quote.edit{/lang}',
 				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',
@@ -115,6 +120,8 @@
 				autosave = new UiRedactorAutosave(element);
 				element.value = autosave.getInitialValue();
 			}
+			
+			var disableMedia = elDataBool(element, 'disable-media');
 			
 			var config = {
 				buttons: buttons,
@@ -190,24 +197,26 @@
 					'WoltLabCaret',
 					'WoltLabClean',
 					'WoltLabCode',
-					'WoltLabColor',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}'WoltLabColor',{/if}
 					'WoltLabDragAndDrop',
 					'WoltLabDropdown',
-					'WoltLabFont',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
-					'WoltLabImage',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}'WoltLabImage',{/if}
 					'WoltLabInlineCode',
 					'WoltLabInsert',
-					'WoltLabLink',
+					'WoltLabLine',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}'WoltLabLink',{/if}
 					'WoltLabModal',
 					'WoltLabObserve',
 					'WoltLabPaste',
 					'WoltLabQuote',
 					'WoltLabReply',
-					'WoltLabSize',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}'WoltLabSize',{/if}
 					'WoltLabSmiley',
 					'WoltLabSource',
 					'WoltLabSpoiler',
+					'WoltLabTable',
 					'WoltLabUtils'
 				],
 				toolbarFixed: false,
@@ -230,7 +239,15 @@
 			
 			// media
 			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
-				config.plugins.push('WoltLabMedia');
+				if (disableMedia) {
+					var index = config.buttons.indexOf('woltlabMedia');
+					if (index !== -1) {
+						config.buttons.splice(index, 1);
+					}
+				}
+				else {
+					config.plugins.push('WoltLabMedia');
+				}
 			{/if}
 			
 			{if $__redactorConfig|isset}{@$__redactorConfig}{/if}

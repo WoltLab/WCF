@@ -52,7 +52,7 @@
 			</dd>
 		</dl>
 		
-		<dl class="formError">
+		<dl>
 			<dt></dt>
 			<dd>
 				<label><input type="checkbox" id="isDisabled" name="isDisabled"{if $isDisabled} checked{/if}> {lang}wcf.acp.group.assignment.isDisabled{/lang}</label>

@@ -3,10 +3,11 @@
 	
 	> ol {
 		display: flex;
+		flex-wrap: wrap;
 		
 		> li {
 			flex: 0 0 auto;
-			white-space: nowrap;
+			max-width: 100%;
 			
 			@include wcfFontSmall;
 			

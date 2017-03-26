@@ -2,7 +2,7 @@
  * Provides suggestions using an input field, designed to work with `wcf\data\ISearchAction`.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Search/Input
  */
@@ -47,6 +47,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 				callbackDropdownInit: null,
 				callbackSelect: null,
 				delay: 500,
+				excludedSearchValues: [],
 				minLength: 3,
 				noResultPlaceholder: '',
 				preventSubmit: false
@@ -57,6 +58,29 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 			
 			this._element.addEventListener('keydown', this._keydown.bind(this));
 			this._element.addEventListener('keyup', this._keyup.bind(this));
+		},
+		
+		/**
+		 * Adds an excluded search value.
+		 * 
+		 * @param       {string}        value   excluded value
+		 */
+		addExcludedSearchValues: function (value) {
+			if (this._options.excludedSearchValues.indexOf(value) === -1) {
+				this._options.excludedSearchValues.push(value);
+			}
+		},
+		
+		/**
+		 * Removes a value from the excluded search values.
+		 * 
+		 * @param       {string}        value   excluded value
+		 */
+		removeExcludedSearchValues: function (value) {
+			var index = this._options.excludedSearchValues.indexOf(value);
+			if (index !== -1) {
+				this._options.excludedSearchValues.splice(index, 1);
+			}
 		},
 		
 		/**
@@ -172,6 +196,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 			return {
 				parameters: {
 					data: {
+						excludedSearchValues: this._options.excludedSearchValues,
 						searchString: value
 					}
 				}

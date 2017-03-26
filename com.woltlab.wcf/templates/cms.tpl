@@ -42,9 +42,9 @@
 
 {if $content->content}
 	{if $page->pageType == 'text'}
-		<section class="section cmsContent htmlContent">
+		<div class="section cmsContent htmlContent">
 			{@$content->getFormattedContent()}
-		</section>
+		</div>
 	{elseif $page->pageType == 'html'}
 		{@$content->getParsedContent()}
 	{elseif $page->pageType == 'tpl'}

@@ -56,6 +56,8 @@ $.Redactor.prototype.WoltLabFont = function() {
 				
 				this.buffer.set();
 			}).bind(this));
+			
+			this.selection.restore();
 		},
 		
 		removeFont: function() {
@@ -68,6 +70,8 @@ $.Redactor.prototype.WoltLabFont = function() {
 				
 				this.buffer.set();
 			}).bind(this));
+			
+			this.selection.restore();
 		}
 	};
 };

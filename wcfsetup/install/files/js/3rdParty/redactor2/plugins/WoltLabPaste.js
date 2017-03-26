@@ -4,14 +4,16 @@ $.Redactor.prototype.WoltLabPaste = function() {
 	return {
 		init: function () {
 			var clipboardData = null;
+			var isKbd = false;
 			
 			// IE 11
 			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
 			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
-				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre')) ? true : false;
-				if (isCode) {
+				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
+				isKbd = (!isCode && this.utils.isCurrentOrParent('kbd'));
+				if (isCode || isKbd) {
 					if (isIe) {
 						clipboardData = window.clipboardData.getData('Text');
 					}
@@ -34,6 +36,10 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
 				var returnValue = mpGetPasteBoxCode.call(this, pre);
+				
+				if (isKbd) {
+					return clipboardData;
+				}
 				
 				// use clipboard data if paste box is flawed or when
 				// pasting in IE 11 where clipboard data is more reliable
@@ -81,6 +87,10 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						if (this.detect.isWebkit() && clipboard.items.length > 1) {
 							file = clipboard.items[1].getAsFile();
 							cancelPaste = true;
+							
+							if (file !== null) {
+								e.preventDefault();
+							}
 						}
 						
 						if (file === null) {
@@ -113,7 +123,40 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 			var mpInsert = this.paste.insert;
 			this.paste.insert = (function(html, data) {
-				if (data.pre) {
+				if (isKbd) data.pre = true;
+				
+				if (this.utils.isCurrentOrParent('kbd')) {
+					mpInsert.call(this, html, data);
+					
+					var current = this.selection.current();
+					if (current.nodeType === Node.TEXT_NODE) current = current.parentNode;
+					var kbd = current.closest('kbd');
+					var paragraphs = elByTag('p', kbd);
+					while (paragraphs.length) {
+						paragraphs[0].outerHTML = paragraphs[0].innerHTML;
+					}
+					
+					var parts = kbd.innerHTML.split(/<br\s*\/?>/);
+					if (parts.length > 1) {
+						var lastParent = this.selection.block();
+						
+						for (var i = 1, length = parts.length; i < length; i++) {
+							var newParent = elCreate(lastParent.nodeName);
+							newParent.innerHTML = '<kbd>' + parts[i] + (i === length - 1 ? this.marker.html() : '') + '</kbd>';
+							lastParent.parentNode.insertBefore(newParent, lastParent.nextSibling);
+							
+							lastParent = newParent;
+						}
+						
+						kbd.innerHTML = parts[0];
+						
+						this.selection.restore();
+						
+					}
+					
+					return;
+				}
+				else if (data.pre) {
 					return mpInsert.call(this, html, data);
 				}
 				
@@ -166,10 +209,16 @@ $.Redactor.prototype.WoltLabPaste = function() {
 							img = elBySel('img[data-uuid="' + imgData.uuid + '"]', this.$editor[0]);
 							
 							if (img) {
-								WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
-									blob: this.utils.dataURItoBlob(imgData.src),
-									replace: img
-								});
+								if (isIe) {
+									// Internet Explorer 11 triggers both the event *and* insert the image
+									img.parentNode.removeChild(img);
+								}
+								else {
+									WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this.$element[0].id, {
+										blob: this.utils.dataURItoBlob(imgData.src),
+										replace: img
+									});
+								}
 							}
 						}
 					}).bind(this), 50);

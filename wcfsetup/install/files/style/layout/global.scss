@@ -147,6 +147,12 @@ ol.nativeList {
 		/* slight margin to prevent visual merge with adjacent words */
 		margin-right: 2px;
 	}
+	
+	hr {
+		border: 0;
+		border-top: 1px solid $wcfContentBorderInner;
+		height: 0;
+	}
 }
 
 .separatorLeft::before {

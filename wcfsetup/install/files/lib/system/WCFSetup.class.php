@@ -42,7 +42,7 @@ define('ENABLE_BENCHMARK', 0);
  * Executes the installation of the basic WCF systems.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -475,7 +475,7 @@ class WCFSetup extends WCF {
 			// by glob() above
 			foreach ($showOrder as $application) {
 				$path = FileUtil::getRealPath($documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application])));
-				if (strpos($path, $documentRoot) !== 0) {
+				if (!empty($documentRoot) && strpos($path, $documentRoot) !== 0) {
 					// verify that given path is still within the current document root
 					$errors[$application] = 'outsideDocumentRoot';
 				}

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * Executes follower-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Follow
  * 
@@ -121,7 +121,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 			$followEditor->delete();
 			
 			// remove activity event
-			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow', [$this->parameters['data']['userID']]);
+			UserActivityEventHandler::getInstance()->removeEvent('com.woltlab.wcf.user.recentActivityEvent.follow', $this->parameters['data']['userID']);
 		}
 		
 		// reset storage

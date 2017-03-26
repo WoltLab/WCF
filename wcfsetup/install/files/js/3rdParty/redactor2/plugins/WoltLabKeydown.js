@@ -57,6 +57,16 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.indexOf('linux') !== -1 && ua.indexOf('android') !== -1 && ua.indexOf('chrome') !== -1) {
+				// prevent the word duplication issue on Chrome for Android,
+				// caused by the call to buffer.set() during backspace
+				this.keydown.checkEvents = (function() {
+					// also discard the previous existing click event
+					this.core.addEvent(false);
+				}).bind(this);
+			}
+			
 			// rebind keydown event
 			this.core.editor().off('keydown.redactor');
 			this.core.editor().on('keydown.redactor', this.keydown.init.bind(this));
@@ -81,22 +91,6 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						return false;
 					}
 				}
-			}).bind(this);
-			
-			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
-				// remove style tag
-				setTimeout($.proxy(function()
-				{
-					this.code.syncFire = false;
-					this.keydown.removeEmptyLists();
-					
-					// WoltLab modification: allow style tag on `<span>`
-					this.core.editor().find('*[style]').not('span, img, #redactor-image-box, #redactor-image-editter').removeAttr('style');
-					
-					this.keydown.formatEmpty(e);
-					this.code.syncFire = true;
-					
-				}, this), 1);
 			}).bind(this);
 			
 			var mpOnEnter = (function(e) {
@@ -358,6 +352,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this));
 			
+			this.WoltLabKeydown._handleBackspaceAndDelete();
 		},
 		
 		register: function (tag) {
@@ -374,6 +369,265 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			}
 			
 			return tags;
+		},
+		
+		_handleBackspaceAndDelete: function () {
+			var isEmpty = function(element) {
+				return (elBySel('img', element) === null && element.textContent.replace(/\u200B/g, '').trim() === '');
+			};
+			
+			var firefoxHandleBackspace = (function(e) {
+				var parent;
+				var block = this.selection.block();
+				if (!block) {
+					return;
+				}
+				
+				if (block.nodeName === 'TD') {
+					var html = block.innerHTML;
+					if (html === '\u200B') {
+						// backspacing the `\u200B` will break Firefox
+						e.preventDefault();
+					}
+					else if (html === '') {
+						// Firefox already broke itself, try to recover
+						e.preventDefault();
+						
+						block.innerHTML = '\u200B';
+					}
+				}
+				else if (block.nodeName.indexOf('-') !== -1 && isEmpty(block)) {
+					// backspacing an entire block
+					parent = block.parentNode;
+					parent.insertBefore(this.marker.get(), block.nextSibling);
+					
+					elRemove(block);
+					
+					this.selection.restore();
+				}
+				else {
+					parent = (block && block.nodeName === 'P') ? block.parentNode : null;
+					if (parent && parent.nodeName.indexOf('-') !== -1) {
+						var orgRange = window.getSelection().getRangeAt(0);
+						
+						// check if there is anything in front of the caret
+						var range = document.createRange();
+						range.setStartBefore(block);
+						range.setEnd(orgRange.startContainer, orgRange.startOffset);
+						
+						var fragment = range.cloneContents();
+						var div = elCreate('div');
+						div.appendChild(fragment);
+						
+						// caret is at start
+						if (isEmpty(div)) {
+							// prevent Firefox from giving the DOM a good beating 
+							e.preventDefault();
+							
+							var sibling = block.previousElementSibling;
+							// can be `true` to remove, `false` to merge and `null` to do nothing
+							var removeSibling = null;
+							if (sibling) {
+								removeSibling = (isEmpty(sibling));
+							}
+							else {
+								parent = block;
+								while (parent = parent.parentNode) {
+									if (parent === this.$editor[0]) {
+										break;
+									}
+									
+									sibling = parent.previousElementSibling;
+									if (sibling) {
+										// setting to false triggers the merge
+										removeSibling = false;
+										break;
+									}
+								}
+							}
+							
+							if (removeSibling) {
+								elRemove(sibling);
+							}
+							else if (removeSibling !== null) {
+								var oldParent = block.parentNode;
+								
+								// merge blocks
+								if (sibling.nodeName === 'P') {
+									sibling.appendChild(this.marker.get());
+									
+									while (block.childNodes.length) {
+										sibling.appendChild(block.childNodes[0]);
+									}
+									
+									elRemove(block);
+									this.selection.restore();
+								}
+								else {
+									sibling.appendChild(block);
+									
+									block.insertBefore(this.marker.get(), block.firstChild);
+									this.selection.restore();
+								}
+								
+								// check if `parent` is now completely empty
+								if (isEmpty(oldParent)) {
+									elRemove(oldParent);
+								}
+							}
+							else if (removeSibling === null) {
+								// check if the parent is empty and the user wants to remove the parent
+								parent = block.parentNode;
+								if (isEmpty(parent)) {
+									elRemove(parent);
+								}
+							}
+						}
+					}
+				}
+			}).bind(this);
+			
+			var firefoxHandleDelete = (function(e) {
+				var parent;
+				var block = this.selection.block();
+				if (block.nodeName.indexOf('-') !== -1 && isEmpty(block)) {
+					// deleting an entire block
+					parent = block.parentNode;
+					parent.insertBefore(this.marker.get(), block.nextSibling);
+					
+					elRemove(block);
+					
+					this.selection.restore();
+				}
+				else {
+					parent = (block && block.nodeName === 'P') ? block.parentNode : null;
+					if (parent && parent.nodeName.indexOf('-') !== -1) {
+						var orgRange = window.getSelection().getRangeAt(0);
+						
+						// check if there is anything after the caret
+						var range = document.createRange();
+						range.setStart(orgRange.startContainer, orgRange.startOffset);
+						range.setEndAfter(block);
+						
+						var fragment = range.cloneContents();
+						var div = elCreate('div');
+						div.appendChild(fragment);
+						
+						// caret is at end
+						if (isEmpty(div)) {
+							// prevent Firefox from giving the DOM a good beating 
+							e.preventDefault();
+							
+							var sibling = block.nextElementSibling;
+							// can be `true` to remove, `false` to merge and `null` to do nothing
+							var removeSibling = null;
+							if (sibling) {
+								removeSibling = (isEmpty(sibling));
+							}
+							else {
+								parent = block;
+								while (parent = parent.parentNode) {
+									if (parent === this.$editor[0]) {
+										break;
+									}
+									
+									sibling = parent.nextElementSibling;
+									if (sibling) {
+										// setting to false triggers the merge
+										removeSibling = false;
+										break;
+									}
+								}
+							}
+							
+							if (removeSibling) {
+								elRemove(sibling);
+							}
+							else if (removeSibling !== null) {
+								var oldParent = sibling.parentNode;
+								
+								// merge blocks
+								if (sibling.nodeName === 'P') {
+									while (sibling.childNodes.length) {
+										block.appendChild(sibling.childNodes[0]);
+									}
+									
+									elRemove(sibling);
+								}
+								else {
+									block.appendChild(this.marker.get());
+									
+									parent = block.parentNode;
+									if (sibling.nodeName.indexOf('-') !== -1) {
+										var content = sibling.firstElementChild;
+										if (content && content.nodeName === 'P') {
+											while (content.childNodes.length) {
+												block.appendChild(content.childNodes[0]);
+											}
+											
+											sibling.removeChild(content);
+											
+											if (isEmpty(sibling)) {
+												elRemove(sibling);
+											}
+										}
+									}
+									else {
+										parent.insertBefore(sibling, block.nextSibling);
+									}
+									
+									this.selection.restore();
+								}
+								
+								// check if `parent` is now completely empty
+								if (isEmpty(oldParent)) {
+									elRemove(oldParent);
+								}
+							}
+							else if (removeSibling === null) {
+								// check if the parent is empty and the user wants to remove the parent
+								parent = block.parentNode;
+								if (isEmpty(parent)) {
+									elRemove(parent);
+								}
+							}
+						}
+					}
+				}
+			}).bind(this);
+			
+			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
+				//noinspection JSValidateTypes
+				if (this.detect.isFirefox() && this.selection.isCollapsed()) {
+					if (e.which === this.keyCode.BACKSPACE) {
+						firefoxHandleBackspace(e);
+					}
+					else if (e.which === this.keyCode.DELETE) {
+						firefoxHandleDelete(e);
+					}
+				}
+				
+				// remove style tag
+				setTimeout($.proxy(function()
+				{
+					this.code.syncFire = false;
+					this.keydown.removeEmptyLists();
+					
+					// WoltLab modification: allow style tag on `<span>`
+					this.core.editor().find('*[style]').not('span, img, #redactor-image-box, #redactor-image-editter').removeAttr('style');
+					
+					this.keydown.formatEmpty(e);
+					
+					// strip empty <kbd>
+					var current = this.selection.current();
+					if (current.nodeName === 'KBD' && current.innerHTML.length === 0) {
+						elRemove(current);
+					}
+					
+					this.code.syncFire = true;
+					
+				}, this), 1);
+			}).bind(this);
 		}
 	}
 };

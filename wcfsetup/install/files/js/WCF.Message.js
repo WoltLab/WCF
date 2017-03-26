@@ -4,7 +4,7 @@
  * Message related classes for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Message = { };
@@ -1604,7 +1604,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	 */
 	_click: function() {
 		var editor = document.activeElement;
-		if (editor.classList.contains('redactor-editor')) {
+		if (editor.classList.contains('redactor-layer')) {
 			$('#' + elData(editor, 'element-id')).redactor('selection.save');
 		}
 		

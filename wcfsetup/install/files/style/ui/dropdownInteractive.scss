@@ -254,6 +254,10 @@
 		-webkit-overflow-scrolling: touch;
 		
 		/* increase the clickable area of the mark as read icon */
+		.interactiveDropdownItemOutstanding {
+			padding-right: 41px;
+		}
+		
 		.interactiveDropdownItemMarkAsRead {
 			bottom: 0;
 			position: absolute;

@@ -18,6 +18,7 @@ use wcf\system\io\TarWriter;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\style\StyleCompiler;
+use wcf\system\style\StyleHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -30,7 +31,7 @@ use wcf\util\XMLWriter;
  * Provides functions to edit, import, export and delete a style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  * 
@@ -144,7 +145,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = [
 			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => ''
+			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => ''
 		];
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -199,6 +200,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							
 							case 'stylename':
 								$data['name'] = $element->nodeValue;
+							break;
+							
+							case 'packageName':
+								$data['packageName'] = $element->nodeValue;
 							break;
 							
 							case 'version':
@@ -313,8 +318,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'copyright' => $data['copyright'],
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
-			'authorURL' => $data['authorURL']
+			'authorURL' => $data['authorURL'],
+			'packageName' => $data['packageName']
 		];
+		
+		// check if there is an untainted style with the same package name
+		if ($style === null && !empty($styleData['packageName'])) {
+			$style = StyleHandler::getInstance()->getStyleByName($styleData['packageName'], true);
+		}
 		
 		// import images
 		if (!empty($data['images']) && $data['imagesPath'] != 'images/') {
@@ -349,6 +360,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$templateGroupFolderName = '';
 			if ($style !== null && $style->templateGroupID) {
 				$templateGroupFolderName = (new TemplateGroup($style->templateGroupID))->templateGroupFolderName;
+				$styleData['templateGroupID'] = $style->templateGroupID;
 			}
 			
 			if (empty($templateGroupFolderName)) {
@@ -519,6 +531,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			unset($styleData['styleName']);
 			
 			$variables = $style->getVariables();
+			if (!isset($styleData['variables']['individualScss'])) $styleData['variables']['individualScss'] = '';
+			if (!isset($styleData['variables']['overrideScss'])) $styleData['variables']['overrideScss'] = '';
 			
 			$individualScss = Style::splitLessVariables($variables['individualScss']);
 			$variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
@@ -606,6 +620,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$index = ($index === null ? 2 : ($index + 1));
 		}
 		while (true);
+		
+		// this should never happen
+		throw new \LogicException();
 	}
 	
 	/**
@@ -637,11 +654,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// create style info file
 		$xml = new XMLWriter();
-		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/style.xsd');
+		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/style.xsd');
 		
 		// general block
 		$xml->startElement('general');
 		$xml->writeElement('stylename', $this->styleName);
+		$xml->writeElement('packageName', $this->packageName);
 		
 		// style description
 		foreach ($styleDescriptions as $languageCode => $value) {
@@ -673,7 +691,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		unset($string);
 		
 		// create variable list
-		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/styleVariables.xsd');
+		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/styleVariables.xsd');
 		
 		// get variables
 		$sql = "SELECT		variable.variableName, value.variableValue
@@ -776,7 +794,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml
-			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/package.xsd', ['name' => $packageName]);
+			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/package.xsd', ['name' => $packageName]);
 			
 			$xml->startElement('packageinformation');
 			$xml->writeElement('packagename', $this->styleName);

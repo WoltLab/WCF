@@ -85,6 +85,7 @@
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[The content will be provided for each language separately.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>
+		<item name="wcf.acp.article.publicationDate.error.invalid"><![CDATA[The publication date is invalid.]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
@@ -518,7 +519,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
-		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy the user group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy the user group <span class="confirmationObject">{$group->groupName|language|encodeJS}</span>?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Copy Object Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[The permissions set for certain objects like label groups will also be set for the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Copy Members]]></item>
@@ -547,12 +548,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.mod.page.canEditComment"><![CDATA[Can edit comments]]></item>
 		<item name="wcf.acp.group.option.mod.page.canModerateComment"><![CDATA[Can moderate comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canAddComment"><![CDATA[Can create comments]]></item>
-		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Can delete their own comments]]></item>
-		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Can edit their own comments]]></item>
+		<item name="wcf.acp.group.option.user.article.canDeleteComment"><![CDATA[Can delete their comments]]></item>
+		<item name="wcf.acp.group.option.user.article.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.option.user.article.canReadArticle"><![CDATA[Can read articles]]></item>
 		<item name="wcf.acp.group.option.user.page.canAddComment"><![CDATA[Can create comments]]></item>
-		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their own comments]]></item>
-		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their own comments]]></item>
+		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their comments]]></item>
+		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1152,7 +1153,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Attention! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you! Please read the following article for instructions: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fblog.woltlab.com%2Fentry%2F67-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a>. Enabling this option will rewrite URLs into a better readable representation. Examples: 
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Attention! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you! Please read the following article for instructions: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a>. Enabling this option will rewrite URLs into a better readable representation. Examples: 
 <ul class="nativeList">
 <li>the link “http://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “http://example.com/thread/1-hello-i-am-john-doe/”</li>
 <li>the link “http://example.com/index.php?members-list/” will turn into “http://example.com/members-list/”</li>
@@ -1633,7 +1634,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
 		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, the uploaded file is not a valid style.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
-		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
+		<item name="wcf.acp.style.list"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
 		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For example if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[The package identifier is invalid.]]></item>
@@ -1871,7 +1872,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-an administrator resetted your password. You are now required to set a new password to be able to use your
+An administrator resetted your password. You are now required to set a new password to be able to use your
 user account {@$mailbox->getUser()->username} on the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] again:
 
     {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
@@ -1880,7 +1881,7 @@ If you read this message after {$mailbox->getUser()->lastLostPasswordRequestTime
 the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}] for security reasons.]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
-<p>an administrator resetted your password. You are now required to set a new password to be able to use your
+<p>An administrator resetted your password. You are now required to set a new password to be able to use your
 user account {@$mailbox->getUser()->username} on the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a> again:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Choose new password]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
@@ -1895,11 +1896,11 @@ the lost password form <a href="{link controller='LostPassword' isEmail=true}{/l
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
-<p>your account on the website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> has been approved
+<p>Your account on the website: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> has been approved
 by an administrator. You are now able to use your user account to it’s full extend.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved
+Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved
 by an administrator. You are now able to use your user account to it’s
 full extend.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
@@ -2008,7 +2009,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Author]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Source]]></item>
 		<item name="wcf.bbcode.quote.insert"><![CDATA[Insert Quote]]></item>
-		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} wrote:]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[{$quoteAuthor} wrote:]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Click to set source)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} wrote:{/literal}]]></item>
 		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Quote{if $cite} from {$cite}{/if})]]></item>
@@ -2395,6 +2396,9 @@ Errors are:
 		<item name="wcf.editor.link.unlink"><![CDATA[Unlink]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
+		
+		<item name="wcf.editor.list.indent"><![CDATA[Indent]]></item>
+		<item name="wcf.editor.list.outdent"><![CDATA[Outdent]]></item>
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Edit Quote]]></item>
@@ -3047,7 +3051,7 @@ Errors are:
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+You (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
 the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. You can change your password after clicking
 the following link:
 
@@ -3056,7 +3060,7 @@ the following link:
 If you don’t want to change your password you can simply wait. The request will expire at {$mailbox->getUser()->lastLostPasswordRequestTime+86400|plainTime}.]]></item>
 		<item name="wcf.user.lostPassword.mail.html.headline"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.lostPassword.mail.html.intro"><![CDATA[
-<p>you (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
+<p>You (or someone else) claimed to have lost the password for the user account {@$mailbox->getUser()->username} on
 the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>]]></item>
 		<item name="wcf.user.lostPassword.mail.html.reset"><![CDATA[Change Password]]></item>
 		<item name="wcf.user.lostPassword.mail.html.outro"><![CDATA[
@@ -3097,7 +3101,7 @@ the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>
 		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.intro"><![CDATA[
-<p>you’ve changed your email address on: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. To complete
+<p>You have changed your email address on: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. To complete
 this change it is required to confirm your new email address once:</p>]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.outro"><![CDATA[
@@ -3107,14 +3111,14 @@ this change it is required to confirm your new email address once:</p>]]></item>
 you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
 
-you’ve changed your email address on: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. To complete
+You have changed your email address on: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. To complete
 this change it is required to confirm your new email address once:
 
     {link controller='EmailActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->reactivationCode}{/link} {* this line ends with a space *}
 
 Your activation code is: {@$mailbox->getUser()->reactivationCode} {* this line ends with a space *}
 
-If you have troubles confirming your email address, please contect the
+If you have troubles confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[The password has been changed.]]></item>
@@ -3223,25 +3227,25 @@ not register with us.]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.intro"><![CDATA[
-<p>thank you for registering at: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
+<p>Thank you for registering at: <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>. Before you are able to use your
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
 <p>Your activation code is: <code>{$mailbox->getUser()->activationCode}</code>.</p>
-<p>If you have troubles confirming your email address, please contact the administrator at:
+<p>If you have trouble confirming your email address, please contact the administrator at:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
 you did not register an account with us.</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.plaintext"><![CDATA[Dear {$mailbox->getUser()->username},
 
-thank your for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. Before you are
-able to user your user account to it's full extent it is required that you
+Thank you for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]. Before you are
+able to use your user account to it's full extent it is required that you
 confirm the validity of your email address once:
 
     {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
 
 Your activation code is: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
 
-If you have troubles confirming your email address, please contect the
+If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		
@@ -3461,7 +3465,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-you currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
+You currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
@@ -3473,7 +3477,7 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {@$mailbox->getUser()->username},</h2>
 
-<p>you currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
+<p>You currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>

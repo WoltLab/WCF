@@ -2,7 +2,7 @@
  * Manages code blocks.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
  */
@@ -61,6 +61,9 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 				this._setTitle(pre);
 				
 				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				
+				// work-around for Safari
+				this._editor.caret.end(pre);
 			}
 		},
 		

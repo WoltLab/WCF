@@ -54,14 +54,27 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					return;
 				}
 				
+				var isSource = this.WoltLabSource.isActive();
+				
 				// disable line
 				if (this.utils.isCurrentOrParentHeader() || this.utils.isCurrentOrParent(['table', 'pre', 'blockquote', 'li']))
 				{
 					this.button.disable('horizontalrule');
 				}
-				else
+				else if (!isSource)
 				{
 					this.button.enable('horizontalrule');
+				}
+				
+				if (this.utils.isCurrentOrParent(['table', 'li'])) {
+					this.button.disable('code');
+					this.button.disable('spoiler');
+					this.button.disable('woltlabQuote');
+				}
+				else if (!isSource) {
+					this.button.enable('code');
+					this.button.enable('spoiler');
+					this.button.enable('woltlabQuote');
 				}
 				
 				// WoltLab modification: we know that there will be quite a few

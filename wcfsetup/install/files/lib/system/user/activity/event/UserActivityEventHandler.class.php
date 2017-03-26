@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * User activity event handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
@@ -97,6 +97,34 @@ class UserActivityEventHandler extends SingletonFactory {
 		$returnValues = $eventAction->executeAction();
 		
 		return $returnValues['returnValues'];
+	}
+	
+	/**
+	 * Removes an activity event.
+	 * 
+	 * @param	integer		$objectType
+	 * @param	integer		$objectID
+	 * @param	integer		$userID
+	 * @throws	SystemException
+	 */
+	public function removeEvent($objectType, $objectID, $userID = null) {
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown recent activity event '".$objectType."'");
+		}
+		
+		if ($userID === null) $userID = WCF::getUser()->userID;
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_user_activity_event
+			WHERE		objectTypeID = ?
+					AND objectID = ?
+					AND userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$objectTypeID,
+			$objectID,
+			$userID
+		]);
 	}
 	
 	/**

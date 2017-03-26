@@ -12,7 +12,7 @@ use wcf\system\WCFACP;
  * Resolves incoming requests and performs lookups for controller to url mappings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -210,9 +210,21 @@ class ControllerMap extends SingletonFactory {
 		else if (preg_match('~^__WCF_CMS__(?P<pageID>\d+)$~', $controller, $matches)) {
 			$cmsPageData = $this->lookupCmsPage($matches['pageID'], 0);
 			if ($cmsPageData === null) {
-				// page is multilingual, use current language id to resolve request
-				$cmsPageData = $this->lookupCmsPage($matches['pageID'], WCF::getLanguage()->languageID);
+				// page is multilingual, use the language id that matches the URL
+				// do *not* use the client language id, Google's bot is stubborn
 				
+				$languageID = null;
+				// use a reverse search to find the page
+				if (isset($this->customUrls['lookup']['wcf']) && isset($this->customUrls['lookup']['wcf']['']) && preg_match('~^__WCF_CMS__\d+\-(?P<languageID>\d+)$~', $this->customUrls['lookup']['wcf'][''], $match)) {
+					$languageID = $match['languageID'];
+				}
+				
+				if ($languageID === null) {
+					// something went wrong, use the current language id
+					$languageID = WCF::getLanguage()->languageID;
+				}
+				
+				$cmsPageData = $this->lookupCmsPage($matches['pageID'], $languageID);
 				if ($cmsPageData === null) {
 					throw new SystemException("Unable to resolve CMS page");
 				}

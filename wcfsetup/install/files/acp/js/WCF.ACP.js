@@ -2,7 +2,7 @@
  * Class and function collection for WCF ACP
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -1831,6 +1831,17 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	},
 	
 	/**
+	 * @see	WCF.Search.Base._openDropdown()
+	 */
+	_openDropdown: function() {
+		this._list.find('small').each(function(index, element) {
+			while (element.scrollWidth > element.clientWidth) {
+				element.innerText = '\u2026 ' + element.innerText.substr(3);
+			}
+		});
+	},
+	
+	/**
 	 * @see	WCF.Search.Base._handleEmptyResult()
 	 */
 	_handleEmptyResult: function() {
@@ -2469,7 +2480,7 @@ WCF.ACP.Stat.Chart = Class.extend({
 				tickFormatter: function(val) {
 					return WCF.String.addThousandsSeparator(val);
 				}
-			},
+			}
 		};
 		
 		var $data = [ ];
@@ -2484,18 +2495,31 @@ WCF.ACP.Stat.Chart = Class.extend({
 		
 		$.plot("#chart", $data, options);
 		
-		$("#chart").on("plothover", function(event, pos, item) {
-			if (item) {
-				$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).css({top: item.pageY + 5, left: item.pageX + 5}).wcfFadeIn();
-			}
-			else {
-				$("#chartTooltip").hide();
-			}
+		require(['Ui/Alignment'], function (UiAlignment) {
+			var span = elCreate('span');
+			span.style.setProperty('position', 'absolute', '');
+			document.body.appendChild(span);
+			$("#chart").on("plothover", function(event, pos, item) {
+				if (item) {
+					span.style.setProperty('top', item.pageY + 'px', '');
+					span.style.setProperty('left', item.pageX + 'px', '');
+					$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).show();
+					UiAlignment.set($("#chartTooltip")[0], span, {
+						verticalOffset: 5,
+						horizontal: 'center'
+					});
+				}
+				else {
+					$("#chartTooltip").hide();
+				}
+			});
 		});
 		
 		if (!$data.length) {
 			$('#chart').append('<p style="position: absolute; font-size: 1.2rem; text-align: center; top: 50%; margin-top: -20px; width: 100%">' + WCF.Language.get('wcf.acp.stat.noData') + '</p>');
 		}
+		
+		elBySel('.contentHeader > .contentTitle').scrollIntoView({ behavior: 'smooth' });
 	}
 });
 

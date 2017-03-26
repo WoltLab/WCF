@@ -5,6 +5,31 @@ $.Redactor.prototype.WoltLabLink = function() {
 	
 	return {
 		init: function() {
+			this.link.isUrl = (function(url) {
+				//var pattern = '((xn--)?[\\W\\w\\D\\d]+(-[\\W\\w\\D\\d]+)*\\.)+[\\W\\w]{2,}';
+				// WoltLab modification: prevent catastrophic backtracing
+				var pattern = '((xn--)?[\\W\\w\\D\\d]+(-(?!-[\\W\\w\\D\\d])+)*\\.)+[\\W\\w]{2,}';
+				
+				var re1 = new RegExp('^(http|ftp|https)://' + pattern, 'i');
+				var re2 = new RegExp('^' + pattern, 'i');
+				var re3 = new RegExp('\.(html|php)$', 'i');
+				var re4 = new RegExp('^/', 'i');
+				var re5 = new RegExp('^tel:(.*?)', 'i');
+				
+				// add protocol
+				if (url.search(re1) === -1 && url.search(re2) !== -1 && url.search(re3) === -1 && url.substring(0, 1) !== '/')
+				{
+					url = 'http://' + url;
+				}
+				
+				if (url.search(re1) !== -1 || url.search(re3) !== -1 || url.search(re4) !== -1 || url.search(re5) !== -1)
+				{
+					return url;
+				}
+				
+				return false;
+			}).bind(this);
+			
 			this.link.show = this.WoltLabLink.show.bind(this);
 			
 			require(['WoltLabSuite/Core/Ui/Redactor/Link'], function(UiRedactorLink) {

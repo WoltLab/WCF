@@ -6,7 +6,7 @@
  * after making changes to the grammar.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Template.grammar
  */
@@ -161,4 +161,6 @@ COMMAND_PARAMETER_VALUE: T_QUOTED_STRING | VARIABLE;
 // COMMAND_PARAMETERS parses anything that is valid between a command name and the closing brace
 COMMAND_PARAMETERS: COMMAND_PARAMETER+ -> $1.join('')
 ;
-COMMAND_PARAMETER: T_ANY | T_WS | '=' | T_QUOTED_STRING | VARIABLE | T_VARIABLE_NAME;
+COMMAND_PARAMETER: T_ANY | T_WS | '=' | T_QUOTED_STRING | VARIABLE | T_VARIABLE_NAME
+|	'(' COMMAND_PARAMETERS ')' -> $1 + ($2 || '') + $3
+;

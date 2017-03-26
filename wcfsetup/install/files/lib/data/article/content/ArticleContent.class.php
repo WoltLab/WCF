@@ -4,6 +4,7 @@ use wcf\data\article\Article;
 use wcf\data\language\Language;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;
@@ -16,7 +17,7 @@ use wcf\util\StringUtil;
  * Represents an article content.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
@@ -78,7 +79,9 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 			return StringUtil::encodeHTML($this->teaser);
 		}
 		else {
-			return StringUtil::truncateHTML(StringUtil::stripHTML($this->getFormattedContent()));
+			$htmlInputProcessor = new HtmlInputProcessor();
+			$htmlInputProcessor->processIntermediate($this->content);
+			return StringUtil::encodeHTML(StringUtil::truncate($htmlInputProcessor->getTextContent(), 500));
 		}
 	}
 	

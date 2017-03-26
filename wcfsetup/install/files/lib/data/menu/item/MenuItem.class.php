@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Represents a menu item.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Menu\Item
  * @since	3.0
@@ -86,7 +86,7 @@ class MenuItem extends DatabaseObject {
 			return $this->getPage()->getLink();
 		}
 		else {
-			return $this->externalURL;
+			return WCF::getLanguage()->get($this->externalURL);
 		}
 	}
 	

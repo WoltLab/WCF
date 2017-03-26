@@ -4,6 +4,7 @@ use wcf\data\like\Like;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
+use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
@@ -17,7 +18,7 @@ use wcf\system\WCF;
  * Worker implementation for updating users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  * 
@@ -40,6 +41,8 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
+		$this->objectList->sqlSelects = 'user_option_value.userOption' . User::getUserOptionID('aboutMe') . ' AS aboutMe';
+		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)";
 		$this->objectList->sqlOrderBy = 'user_table.userID';
 	}
 	
@@ -81,7 +84,12 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				$statement->execute($conditionBuilder->getParameters());
 			}
 			
-			// update signatures
+			// update signatures and about me
+			$sql = "UPDATE  wcf".WCF_N."_user_option_value
+				SET     userOption" . User::getUserOptionID('aboutMe') . " = ?
+				WHERE   userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
 			$htmlInputProcessor = new HtmlInputProcessor();
 			WCF::getDB()->beginTransaction();
 			/** @var UserEditor $user */
@@ -93,6 +101,23 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 						'signature' => $htmlInputProcessor->getHtml(),
 						'signatureEnableHtml' => 1
 					]);
+					
+					if ($user->aboutMe) {
+						$htmlInputProcessor->process($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID, true);
+						$html = $htmlInputProcessor->getHtml();
+						// MySQL's TEXT type allows for 65,535 bytes, hence we need to count
+						// the bytes rather than the actual amount of characters
+						if (strlen($html) > 65535) {
+							// content does not fit the available space, and any
+							// attempts to truncate it will yield awkward results
+							$html = '';
+						}
+						
+						$statement->execute([
+							$html,
+							$user->userID
+						]);
+					}
 				}
 			}
 			WCF::getDB()->commitTransaction();

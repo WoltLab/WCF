@@ -1,4 +1,4 @@
-define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, UiCloseOverlay) {
+define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, Environment, StringUtil, UiCloseOverlay) {
 	"use strict";
 	
 	var _dropdownContainer = null;
@@ -190,13 +190,19 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				return null;
 			}
 			
+			var container = selection.anchorNode;
+			if (container.nodeType === Node.TEXT_NODE) {
+				// work-around for Firefox after suggestions have been presented
+				container = container.parentNode;
+			}
+			
 			// check if there is an '@' within the current range
-			if (selection.anchorNode.textContent.indexOf('@') === -1) {
+			if (container.textContent.indexOf('@') === -1) {
 				return null;
 			}
 			
 			// check if we're inside code or quote blocks
-			var container = selection.anchorNode, editor = this._redactor.core.editor()[0];
+			var editor = this._redactor.core.editor()[0];
 			while (container && container !== editor) {
 				if (['PRE', 'WOLTLAB-QUOTE'].indexOf(container.nodeName) !== -1) {
 					return null;
@@ -385,7 +391,7 @@ define(['Ajax', 'Environment', 'Ui/CloseOverlay'], function(Ajax, Environment, U
 				link = elCreate('a');
 				link.addEventListener('mousedown', callbackClick);
 				link.className = 'box16';
-				link.innerHTML = '<span>' + user.icon + '</span> <span>' + user.label + '</span>';
+				link.innerHTML = '<span>' + user.icon + '</span> <span>' + StringUtil.escapeHTML(user.label) + '</span>';
 				elData(link, 'user-id', user.objectID);
 				elData(link, 'username', user.label);
 				

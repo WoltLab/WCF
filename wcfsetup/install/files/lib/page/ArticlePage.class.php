@@ -10,12 +10,13 @@ use wcf\system\like\LikeHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows a cms article.
  *
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -106,7 +107,7 @@ class ArticlePage extends AbstractArticlePage {
 		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->articleContent->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
 		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('Article', ['object' => $this->articleContent]), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
-		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->articleContent->teaser, true);
+		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))), true);
 		
 		if ($this->articleContent->getImage()) {
 			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getImage()->getLink(), true);

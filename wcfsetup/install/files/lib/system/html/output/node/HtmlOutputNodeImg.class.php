@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Processes images.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -52,32 +52,58 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					else $element->removeAttribute('srcset');
 				}
 			}
-			else if (MODULE_IMAGE_PROXY) {
+			else {
 				$src = $element->getAttribute('src');
 				if (!$src) {
 					DOMUtil::removeNode($element);
 					continue;
 				}
 				
-				$element->setAttribute('src', $this->getProxyLink($src));
+				$class = $element->getAttribute('class');
+				if ($class) $class .= ' ';
+				$class .= 'jsResizeImage';
+				$element->setAttribute('class', $class);
 				
-				$srcset = $element->getAttribute('srcset');
-				if ($srcset) {
-					// simplified regex to check if it appears to be a valid list of sources
-					if (!preg_match('~^[^\s]+\s+[0-9\.]+[wx](,\s*[^\s]+\s+[0-9\.]+[wx])*~', $srcset)) {
-						$element->removeAttribute('srcset');
+				if (MODULE_IMAGE_PROXY) {
+					$urlComponents = parse_url($src);
+					if ($urlComponents === false) {
+						// not a valid URL, discard it
+						DOMUtil::removeNode($element);
 						continue;
 					}
 					
-					$sources = explode(',', $srcset);
-					$srcset = '';
-					foreach ($sources as $source) {
-						$tmp = preg_split('~\s+~', StringUtil::trim($source));
-						if (!empty($srcset)) $srcset .= ', ';
-						$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+					if (empty($urlComponents['host'])) {
+						// relative URL, ignore it
+						continue;
 					}
 					
-					$element->setAttribute('srcset', $srcset);
+					$element->setAttribute('data-valid', 'true');
+					
+					if (!empty($urlComponents['path']) && preg_match('~\.svg~', basename($urlComponents['path']))) {
+						// we can't proxy SVG, ignore it
+						continue;
+					}
+					
+					$element->setAttribute('src', $this->getProxyLink($src));
+					
+					$srcset = $element->getAttribute('srcset');
+					if ($srcset) {
+						// simplified regex to check if it appears to be a valid list of sources
+						if (!preg_match('~^[^\s]+\s+[0-9\.]+[wx](,\s*[^\s]+\s+[0-9\.]+[wx])*~', $srcset)) {
+							$element->removeAttribute('srcset');
+							continue;
+						}
+						
+						$sources = explode(',', $srcset);
+						$srcset = '';
+						foreach ($sources as $source) {
+							$tmp = preg_split('~\s+~', StringUtil::trim($source));
+							if (!empty($srcset)) $srcset .= ', ';
+							$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+						}
+						
+						$element->setAttribute('srcset', $srcset);
+					}
 				}
 			}
 		}

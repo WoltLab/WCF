@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -36,10 +36,10 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
 		
-		if ($conditionData['greaterThan'] !== null) {
+		if (isset($conditionData['greaterThan'])) {
 			$objectList->getConditionBuilder()->add('user_table.registrationDate < ?', [TIME_NOW - $conditionData['greaterThan'] * 86400]);
 		}
-		if ($conditionData['lessThan'] !== null) {
+		if (isset($conditionData['lessThan'])) {
 			$objectList->getConditionBuilder()->add('user_table.registrationDate > ?', [TIME_NOW - $conditionData['lessThan'] * 86400]);
 		}
 	}

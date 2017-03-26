@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Shows the style export form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -118,7 +118,7 @@ class StyleExportForm extends AbstractForm {
 		
 		// export style
 		$styleEditor = new StyleEditor($this->style);
-		$styleEditor->export($this->exportTemplates, $this->exportImages, $this->style->packageName);
+		$styleEditor->export($this->exportTemplates, $this->exportImages, ($this->exportAsPackage ? $this->style->packageName : ''));
 		
 		// call saved event
 		$this->saved();

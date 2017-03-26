@@ -8,7 +8,7 @@ use wcf\util\JSON;
  * Default implementation for html node processors.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Node
  * @since       3.0
@@ -53,8 +53,15 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$this->document = new \DOMDocument('1.0', 'UTF-8');
 		$this->xpath = null;
 		
+		$html = preg_replace_callback('~(<pre[^>]*>)(.*?)(</pre>)~s', function($matches) {
+			return $matches[1] . preg_replace('~\r?\n~', '@@@WCF_PRE_LINEBREAK@@@', $matches[2]) . $matches[3];
+		}, $html);
+		
 		// strip UTF-8 zero-width whitespace
 		$html = preg_replace('~\x{200B}~u', '', $html);
+		
+		// discard any non-breaking spaces
+		$html = str_replace('&nbsp;', ' ', $html);
 		
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped 
@@ -68,6 +75,19 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// to handle UTF-8 properly. This avoids encoding non-ASCII characters as it
 		// would conflict with already existing entities when reverting them.
 		@$this->document->loadHTML('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>');
+		
+		// fix the `<pre>` linebreaks again
+		$pres = $this->document->getElementsByTagName('pre');
+		for ($i = 0, $length = $pres->length; $i < $length; $i++) {
+			/** @var \DOMElement $pre */
+			$pre = $pres->item($i);
+			/** @var \DOMNode $node */
+			foreach ($pre->childNodes as $node) {
+				if ($node->nodeType === XML_TEXT_NODE && mb_strpos($node->textContent, '@@@WCF_PRE_LINEBREAK@@@') !== false) {
+					$node->nodeValue = str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $node->textContent);
+				}
+			}
+		}
 		
 		$this->nodeData = [];
 	}

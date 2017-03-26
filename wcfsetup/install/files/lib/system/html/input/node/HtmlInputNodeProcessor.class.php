@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Processes HTML nodes and handles bbcodes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
@@ -22,6 +22,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @var array<array>
 	 */
 	public static $allowedClassNames = [
+		'h2' => ['text-center', 'text-justify', 'text-right'],
+		'h3' => ['text-center', 'text-justify', 'text-right'],
+		'h4' => ['text-center', 'text-justify', 'text-right'],
 		'img' => [
 			// float left/right
 			'messageFloatObjectLeft', 'messageFloatObjectRight',
@@ -29,6 +32,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			// built-in
 			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia'
 		],
+		'li' => ['text-center', 'text-justify', 'text-right'],
 		'p' => ['text-center', 'text-justify', 'text-right'],
 		'td' => ['text-center', 'text-justify', 'text-right']
 	];
@@ -121,6 +125,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			}
 			
 			$element->removeAttribute('class');
+			
+			if ($nodeName === 'span' && $element->attributes->length === 0) {
+				DOMUtil::removeNode($element, true);
+			}
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'beforeEmbeddedProcess');
@@ -289,6 +297,60 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 				$paragraph->insertBefore($newNode, $oldNode);
 				$paragraph->removeChild($oldNode);
 				
+			}
+		}
+		
+		// trim quotes
+		/** @var \DOMElement $quote */
+		foreach ($this->getDocument()->getElementsByTagName('woltlab-quote') as $quote) {
+			$removeElements = [];
+			for ($i = 0, $length = $quote->childNodes->length; $i < $length; $i++) {
+				$node = $quote->childNodes->item($i);
+				if ($node->nodeType === XML_TEXT_NODE) {
+					continue;
+				}
+				
+				if ($node->nodeName === 'p' && $node->childNodes->length === 1) {
+					$child = $node->childNodes->item(0);
+					if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'br') {
+						$removeElements[] = $node;
+					}
+					else {
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			
+			foreach ($removeElements as $removeElement) {
+				$quote->removeChild($removeElement);
+			}
+			
+			$removeElements = [];
+			for ($i = $quote->childNodes->length - 1; $i >= 0; $i--) {
+				$node = $quote->childNodes->item($i);
+				if ($node->nodeType === XML_TEXT_NODE) {
+					continue;
+				}
+				
+				if ($node->nodeName === 'p' && $node->childNodes->length === 1) {
+					$child = $node->childNodes->item(0);
+					if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'br') {
+						$removeElements[] = $node;
+					}
+					else {
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			
+			foreach ($removeElements as $removeElement) {
+				$quote->removeChild($removeElement);
 			}
 		}
 	}

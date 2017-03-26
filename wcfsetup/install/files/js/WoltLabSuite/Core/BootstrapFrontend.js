@@ -2,7 +2,7 @@
  * Bootstraps WCF's JavaScript with additions for the frontend usage.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/BootstrapFrontend
  */
@@ -30,6 +30,9 @@ define(
 		 * @param	{object<string, *>}	options		bootstrap options
 		 */
 		setup: function(options) {
+			// fix the background queue URL to always run against the current domain (avoiding CORS)
+			options.backgroundQueue.url = WSC_API_URL + options.backgroundQueue.url.substr(WCF_PATH.length);
+			
 			Bootstrap.setup();
 			
 			UiPageHeaderMenu.init();

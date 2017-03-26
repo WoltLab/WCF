@@ -2,7 +2,7 @@
  * Simple dropdown implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dropdown/Simple
  */
@@ -284,15 +284,14 @@ define(
 			try {
 				this.close(containerId);
 				
-				var menu = _menus.get(containerId);
-				_menus.parentNode.removeChild(menu);
+				elRemove(_menus.get(containerId));
 			}
 			catch (e) {
-				// the elements might not exist anymore thus ignore all errors cleaning up
+				// the elements might not exist anymore thus ignore all errors while cleaning up
 			}
 			
-			_menus['delete'](containerId);
-			_dropdowns['delete'](containerId);
+			_menus.delete(containerId);
+			_dropdowns.delete(containerId);
 			
 			return true;
 		},

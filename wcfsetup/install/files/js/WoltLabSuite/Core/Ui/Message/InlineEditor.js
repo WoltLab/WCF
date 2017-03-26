@@ -2,7 +2,7 @@
  * Flexible message inline editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/InlineEditor
  */
@@ -527,8 +527,10 @@ define(
 				//noinspection JSUnresolvedVariable
 				DomUtil.setInnerHtml(element, data.returnValues.attachmentList);
 				
+				var node;
 				while (element.childNodes.length) {
-					elementData.messageFooter.appendChild(element.childNodes[0]);
+					node = element.childNodes[element.childNodes.length - 1];
+					elementData.messageFooter.insertBefore(node, elementData.messageFooter.firstChild);
 				}
 			}
 			
@@ -647,7 +649,7 @@ define(
 		
 		_ajaxFailure: function(data) {
 			var elementData = this._elements.get(this._activeElement);
-			var editor = elBySel('.redactor-editor', elementData.messageBodyEditor);
+			var editor = elBySel('.redactor-layer', elementData.messageBodyEditor);
 			
 			// handle errors occurring on editor load
 			if (editor === null) {
@@ -694,7 +696,8 @@ define(
 				data: {
 					className: this._options.className,
 					interfaceName: 'wcf\\data\\IMessageInlineEditorAction'
-				}
+				},
+				silent: true
 			};
 		},
 		

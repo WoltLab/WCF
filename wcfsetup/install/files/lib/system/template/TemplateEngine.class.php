@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Loads and displays template.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template
  */
@@ -541,10 +541,14 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		// get output
-		ob_start();
-		$this->display($templateName, $application, false);
-		$output = ob_get_contents();
-		ob_end_clean();
+		try {
+			ob_start();
+			$this->display($templateName, $application, false);
+			$output = ob_get_contents();
+		}
+		finally {
+			ob_end_clean();
+		}
 		
 		// disable sandbox
 		if ($sandbox) {

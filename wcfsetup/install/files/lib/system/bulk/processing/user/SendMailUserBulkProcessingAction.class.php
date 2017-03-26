@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Bulk processing action implementation for sending mails to users.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bulk\Processing\User
  * @since	3.0
@@ -58,7 +58,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 			// save config in session
 			$userMailData = WCF::getSession()->getVar('userMailData');
 			if ($userMailData === null) $userMailData = [];
-			$this->mailID = count($userMailData);
+			$this->mailID = count($userMailData) + 1;
 			$userMailData[$this->mailID] = [
 				'action' => '',
 				'enableHTML' => $this->enableHTML,

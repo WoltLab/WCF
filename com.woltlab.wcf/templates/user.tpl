@@ -9,7 +9,7 @@
 					'wcf.acp.user.disable': '{lang}wcf.acp.user.disable{/lang}',
 					'wcf.acp.user.enable': '{lang}wcf.acp.user.enable{/lang}',
 					'wcf.user.ban': '{lang}wcf.user.ban{/lang}',
-					'wcf.user.banned': '{lang}wcf.user.banned{/lang}',
+					'wcf.user.banned': '{"wcf.user.banned"|language|encodeJS}',
 					'wcf.user.ban.confirmMessage': '{lang}wcf.user.ban.confirmMessage{/lang}',
 					'wcf.user.ban.expires': '{lang}wcf.user.ban.expires{/lang}',
 					'wcf.user.ban.expires.description': '{lang}wcf.user.ban.expires.description{/lang}',
@@ -63,7 +63,15 @@
 					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}'
 				});
 				
-				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
+				var userProfileEditor = new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
+				var editLink = elBySel('.interactiveDropdownItemsUserMenu .jsUserPanelEditProfile');
+				if (editLink) {
+					editLink.addEventListener(WCF_CLICK_EVENT, function (event) {
+						userProfileEditor._beginEdit(event);
+						
+						WCF.CloseOverlayHandler.forceExecution();
+					});
+				}
 			{/if}
 			
 			{if $followingCount > 7}
@@ -163,9 +171,11 @@
 			
 			<div class="contentHeaderDescription">
 				<ul class="inlineList commaSeparated">
-					{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
-					{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
-					{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
+					{if !$user->isProtected()}
+						{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
+						{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
+						{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
+					{/if}
 					{if $user->getOldUsername()}<li>{lang}wcf.user.profile.oldUsername{/lang}</li>{/if}
 					<li>{lang}wcf.user.membersList.registrationDate{/lang}</li>
 					{event name='userDataRow1'}

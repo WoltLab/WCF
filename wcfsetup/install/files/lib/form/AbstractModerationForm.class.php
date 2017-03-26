@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * Provides an abstract form for moderation queue processing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -78,6 +78,10 @@ abstract class AbstractModerationForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (!WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
 		
 		// if the moderation queue entry has been created after the user visited the
 		// site the last time, they have not been assigned to the queue entry yet,

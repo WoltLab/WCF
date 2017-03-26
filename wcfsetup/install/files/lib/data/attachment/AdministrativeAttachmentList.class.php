@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Represents a list of attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Attachment
  *
@@ -64,7 +64,9 @@ class AdministrativeAttachmentList extends AttachmentList {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$fileTypes[$row['fileType']] = $row['fileType'];
+			if ($row['fileType']) {
+				$fileTypes[$row['fileType']] = $row['fileType'];
+			}
 		}
 		
 		ksort($fileTypes);

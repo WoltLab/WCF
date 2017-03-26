@@ -2,7 +2,7 @@
  * Modal dialog handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dialog
  */
@@ -73,6 +73,18 @@ define(
 			DomChangeListener.add('Ui/Dialog', this._initStaticDialogs.bind(this));
 			
 			UiScreen.setDialogContainer(_container);
+			
+			// mobile safari dynamically shows/hides the bottom browser bar
+			// causing the window height to differ significantly
+			if (Environment.platform() === 'ios') {
+				window.addEventListener('resize', (function () {
+					_dialogs.forEach((function (dialog) {
+						if (!elAttrBool(dialog.dialog, 'aria-hidden')) {
+							this.rebuild(elData(dialog.dialog, 'id'));
+						}
+					}).bind(this));
+				}).bind(this));
+			}
 		},
 		
 		_initStaticDialogs: function() {
@@ -592,10 +604,17 @@ define(
 		/**
 		 * Returns the dialog data for given element id.
 		 * 
-		 * @param	{string}	id	element id
+		 * @param	{(string|object)}	id	element id or callback object
 		 * @return	{(object|undefined)}	dialog data or undefined if element id is unknown
 		 */
 		getDialog: function(id) {
+			if (typeof id === 'object') {
+				var dialogData = _dialogObjects.get(id);
+				if (dialogData !== undefined) {
+					id = dialogData.id;
+				}
+			}
+			
 			return _dialogs.get(id);
 		},
 		

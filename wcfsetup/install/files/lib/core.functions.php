@@ -1,7 +1,7 @@
 <?php
 /**
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -82,6 +82,11 @@ namespace {
 				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
 			}
 		}
+	}
+	
+	// setting global gzip compression breaks output buffering
+	if (@ini_get('zlib.output_compression')) {
+		@ini_set('zlib.output_compression', 0);
 	}
 }
 

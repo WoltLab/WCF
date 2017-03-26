@@ -3,6 +3,8 @@ $.Redactor.prototype.WoltLabSource = function() {
 	
 	return {
 		init: function () {
+			var id = this.$element[0].id;
+			
 			var fixQuotes = function(container) {
 				// fix empty quotes suffering from a superfluous <p></p>
 				elBySelAll('woltlab-quote', container, function(quote) {
@@ -22,6 +24,14 @@ $.Redactor.prototype.WoltLabSource = function() {
 					
 					quote.removeChild(first);
 				});
+			};
+			
+			var stripIntermediateCode = function(div) {
+				elBySelAll('pre, woltlab-quote, woltlab-spoiler', div, function (element) {
+					element.removeAttribute('data-title');
+				});
+				
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'source_stripIntermediateCode_' + id, { div: div });
 			};
 			
 			function stripIcons(div) {
@@ -88,13 +98,14 @@ $.Redactor.prototype.WoltLabSource = function() {
 				var div = elCreate('div');
 				div.innerHTML = textarea.value;
 				fixQuotes(div);
+				stripIntermediateCode(div);
 				
 				textarea.value = this.WoltLabSource.format(div.innerHTML);
 				
 				textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
 			}).bind(this);
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + this.$element[0].id, (function (data) {
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + id, (function (data) {
 				if (textarea.clientHeight) {
 					data.api.throwError(this.$element[0], WCF.Language.get('wcf.editor.source.error.active'));
 					data.valid = false;

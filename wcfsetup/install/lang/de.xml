@@ -85,6 +85,7 @@
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Artikel-Bild]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
+		<item name="wcf.acp.article.publicationDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Veröffentlichungsdatum angegeben.]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unveröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
@@ -483,13 +484,13 @@
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Kann vergebene Likes sehen]]></item>
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Kann Inhalte liken]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Kann Pinnwand-Kommentare erstellen]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Kann eigene Pinnwand-Kommentare bearbeiten]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Kann eigene Pinnwand-Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Kann Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteCommentInOwnProfile"><![CDATA[Kann Kommentare an der eigenen Pinnwand löschen]]></item>
-		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Kann Pinnwand-Kommentare bearbeiten]]></item>
-		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Kann Pinnwand-Kommentare löschen]]></item>
-		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Kann Pinnwand-Kommentare moderieren]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Kann Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Kann Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Kann Kommentare moderieren]]></item>
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 		<item name="wcf.acp.group.option.admin.content.label.canManageLabel"><![CDATA[Kann Labels verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
@@ -522,7 +523,7 @@
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Kann Captcha-Fragen verwalten]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Benutzergruppe kopieren]]></item>
-		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich kopieren?]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->groupName|language|encodeJS}</span> wirklich kopieren?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Objekt-Berechtigungen kopieren]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Berechtigungen, die für bestimmte Objekte wie Labelgruppen gesetzt wurden, werden auch für die neue Benutzergruppe übernommen.]]></item>
 		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Mitglieder kopieren]]></item>
@@ -958,7 +959,7 @@
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Zeit in Sekunden, in der der Benutzer trotz Inaktivität als online markiert werden soll.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Wartungsmodus aktivieren]]></item>
 		<item name="wcf.acp.option.offline.description"><![CDATA[Deaktiviert alle installierten Apps (z.B. für Wartungsarbeiten).]]></item>
-		<item name="wcf.acp.option.offline_message"><![CDATA[Deaktivierungshinweis]]></item>
+		<item name="wcf.acp.option.offline_message"><![CDATA[Wartungshinweis]]></item>
 		<item name="wcf.acp.option.offline_message.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier eine Meldung ein, die angezeigt wird, solange sich die Seite im Wartungsmodus befindet.]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[HTML-Code im Hinweistext verwenden]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Aktiviere{else}Aktivieren Sie{/if} diese Option, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} HTML-Code im Hinweistext verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
@@ -1153,7 +1154,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Link-Umschreibungen aktivieren]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „http://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fblog.woltlab.com%2Fentry%2F68-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „http://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
@@ -1668,7 +1669,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Stil-Datei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
 		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
-		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
+		<item name="wcf.acp.style.list"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
 		<item name="wcf.acp.style.packageName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier optional den Paketbezeichner in der Form „tld.domain.paketName“ an. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} beispielsweise die Domain „example.com“ gehört und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Stil „Blue Sunrise“ heißt, so wäre „com.example.style.blueSunrise“ ein passender und gültiger Paketbezeichner.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
@@ -2048,7 +2049,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Autor]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Quelle]]></item>
 		<item name="wcf.bbcode.quote.insert"><![CDATA[Zitat einfügen]]></item>
-		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} schrieb:]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[{$quoteAuthor} schrieb:]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Klicken um eine Quelle anzugeben)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} schrieb:{/literal}]]></item>
 		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Zitat{if $cite} von {$cite}{/if})]]></item>
@@ -2439,6 +2440,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.link.unlink"><![CDATA[Link entfernen]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
+		
+		<item name="wcf.editor.list.indent"><![CDATA[Einrücken]]></item>
+		<item name="wcf.editor.list.outdent"><![CDATA[Ausrücken]]></item>
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
@@ -2842,7 +2846,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.cookiePolicy.info.moreInformation"><![CDATA[Weitere Informationen]]></item>
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com/de/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Community-Software: <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategogie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategorie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[Es sind <a href="{link controller='PackageUpdate' isACP=true}{/link}">Aktualisierungen für installierte Pakete</a> verfügbar.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} leider verwehrt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du besitzt{else}Sie besitzen{/if} nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>

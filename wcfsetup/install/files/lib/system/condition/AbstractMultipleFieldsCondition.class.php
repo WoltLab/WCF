@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Abstract implementation of a condition for multiple fields.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -65,7 +65,7 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition {
 	 */
 	protected function getErrorMessageElement($identifier) {
 		if (isset($this->errorMessages[$identifier])) {
-			return '<small class="innerError">'.WCF::getLanguage()->get($this->errorMessages[$identifier]).'</small>';
+			return '<small class="innerError">'.WCF::getLanguage()->getDynamicVariable($this->errorMessages[$identifier]).'</small>';
 		}
 		
 		return '';

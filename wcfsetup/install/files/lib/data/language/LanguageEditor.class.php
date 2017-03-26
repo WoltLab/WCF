@@ -23,7 +23,7 @@ use wcf\util\XML;
  * Provides functions to edit languages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
  * 
@@ -130,7 +130,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		echo "\xEF\xBB\xBF";
 		
 		// header
-		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
+		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
 		
 		// get items
 		$items = [];
@@ -719,38 +719,38 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 */
 	public static function copyLanguageContent($sourceLanguageID, $destinationLanguageID) {
 		// article content
-		$sql = "INSERT INTO     wcf".WCF_N."_article_content
-					(articleID, languageID, title, teaser, content, imageID, hasEmbeddedObjects)
-			SELECT          articleID, ?, title, teaser, content, imageID, hasEmbeddedObjects
-			FROM            wcf".WCF_N."_article_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_article_content
+						(articleID, languageID, title, teaser, content, imageID, hasEmbeddedObjects)
+			SELECT                  articleID, ?, title, teaser, content, imageID, hasEmbeddedObjects
+			FROM                    wcf".WCF_N."_article_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
 		// box content
-		$sql = "INSERT INTO     wcf".WCF_N."_box_content
-					(boxID, languageID, title, content, imageID, hasEmbeddedObjects)
-			SELECT          boxID, ?, title, content, imageID, hasEmbeddedObjects
-			FROM            wcf".WCF_N."_box_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_box_content
+						(boxID, languageID, title, content, imageID, hasEmbeddedObjects)
+			SELECT                  boxID, ?, title, content, imageID, hasEmbeddedObjects
+			FROM                    wcf".WCF_N."_box_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
 		// media content
-		$sql = "INSERT INTO     wcf".WCF_N."_media_content
-					(mediaID, languageID, title, caption, altText)
-			SELECT          mediaID, ?, title, caption, altText
-			FROM            wcf".WCF_N."_media_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_media_content
+						(mediaID, languageID, title, caption, altText)
+			SELECT                  mediaID, ?, title, caption, altText
+			FROM                    wcf".WCF_N."_media_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
 		// page content
-		$sql = "INSERT INTO     wcf".WCF_N."_page_content
-					(pageID, languageID, title, content, metaDescription, metaKeywords, customURL, hasEmbeddedObjects)
-			SELECT          pageID, ?, title, content, metaDescription, metaKeywords, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
-			FROM            wcf".WCF_N."_page_content
-			WHERE           languageID = ?";
+		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_page_content
+						(pageID, languageID, title, content, metaDescription, metaKeywords, customURL, hasEmbeddedObjects)
+			SELECT                  pageID, ?, title, content, metaDescription, metaKeywords, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
+			FROM                    wcf".WCF_N."_page_content
+			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $destinationLanguageID, $sourceLanguageID]);
 		

@@ -81,9 +81,7 @@
 }
 
 .tabularBox {
-	@include screen-sm-down {
-		overflow: auto;
-	}
+	overflow: auto;
 }
 
 .tabularBoxTitle {

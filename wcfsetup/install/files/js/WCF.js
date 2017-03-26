@@ -6,7 +6,7 @@
  * Major Contributors: Markus Bartz, Tim Duesterhus, Matthias Schmidt and Marcel Werk
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -4338,6 +4338,8 @@ WCF.Search.Base = Class.extend({
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
 			WCF.Dropdown.toggleDropdown($containerID);
+			
+			this._openDropdown();
 		}
 		
 		// pre-select first item
@@ -4345,6 +4347,13 @@ WCF.Search.Base = Class.extend({
 		if (!WCF.Dropdown.getDropdown($containerID).data('disableAutoFocus')) {
 			this._selectNextItem();
 		}
+	},
+	
+	/**
+	 * Is called after the dropdown has been opened.
+	 */
+	_openDropdown: function() {
+		// does nothing
 	},
 	
 	/**

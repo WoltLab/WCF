@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Generic controller to display cms content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -76,9 +76,7 @@ class CmsPage extends AbstractPage {
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
 		if ($this->page->isMultilingual && RequestHandler::getInstance()->getActiveRequest()->getMetaData()['isDefaultController']) {
-			if ($this->languageID != LanguageFactory::getInstance()->getDefaultLanguageID()) {
-				$this->softRedirectCanonicalURL = true;
-			}
+			$this->softRedirectCanonicalURL = true;
 		}
 		
 		// update interface language

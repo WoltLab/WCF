@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
@@ -13,7 +14,7 @@ use wcf\util\StringUtil;
  * Represents a RFC 5322 message using the Mime format as defined in RFC 2045.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email
  * @since	3.0
@@ -92,13 +93,7 @@ class Email {
 	 */
 	public static function getHost() {
 		if (self::$host === null) {
-			self::$host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-			if (empty(self::$host)) {
-				self::$host = gethostname();
-				if (self::$host === false) {
-					self::$host = 'localhost';
-				}
-			}
+			self::$host = ApplicationHandler::getInstance()->getApplication('wcf')->domainName;
 		}
 		
 		return self::$host;

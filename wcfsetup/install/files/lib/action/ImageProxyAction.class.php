@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Proxies requests for embedded images.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  * @since	3.0
@@ -57,10 +57,15 @@ class ImageProxyAction extends AbstractAction {
 			}
 			
 			// check whether we already downloaded the image
-			$files = glob($dir.'/'.$fileName.'.{png,gif,jpg}', GLOB_BRACE | GLOB_NOSORT);
-			if ($files === false) throw new IllegalLinkException();
+			$fileLocation = null;
+			foreach (['png','jpg','gif'] as $extension) {
+				if (is_file($dir.'/'.$fileName.'.'.$extension)) {
+					$fileLocation = $dir.'/'.$fileName.'.'.$extension;
+					break;
+				}
+			}
 			
-			if (empty($files)) {
+			if ($fileLocation === null) {
 				try {
 					// download image
 					try {
@@ -116,10 +121,7 @@ class ImageProxyAction extends AbstractAction {
 				// update mtime for correct expiration calculation
 				@touch($fileLocation);
 			}
-			else {
-				$fileLocation = $files[0];
-			}
-			
+
 			$path = FileUtil::getRelativePath(WCF_DIR, dirname($fileLocation)).basename($fileLocation);
 			
 			$this->executed();

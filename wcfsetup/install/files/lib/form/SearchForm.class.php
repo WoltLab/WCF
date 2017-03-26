@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * Shows the search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -406,7 +406,7 @@ class SearchForm extends AbstractCaptchaForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (empty($_POST) && $this->submit) {
+		if (count($_POST) == 1 && $this->submit) {
 			if ($this->userID) $this->useCaptcha = false;
 			$this->submit();
 		}

@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Condition implementation for the avatar of a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -92,12 +92,16 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	 * @inheritDoc
 	 */
 	protected function getOptions() {
-		return [
+		$options = [
 			self::NO_SELECTION_VALUE => 'wcf.global.noSelection',
 			self::NO_AVATAR => 'wcf.user.condition.avatar.noAvatar',
-			self::AVATAR => 'wcf.user.condition.avatar.avatar',
-			self::GRAVATAR => 'wcf.user.condition.avatar.gravatar'
+			self::AVATAR => 'wcf.user.condition.avatar.avatar'
 		];
+		if (MODULE_GRAVATAR) {
+			$options[self::GRAVATAR] = 'wcf.user.condition.avatar.gravatar';
+		}
+		
+		return $options;
 	}
 	
 	/**

@@ -2,7 +2,7 @@
  * Provides the media manager dialog.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Base
  */
@@ -22,6 +22,8 @@ define(
 {
 	"use strict";
 	
+	var _mediaManagerCounter = 0;
+	
 	/**
 	 * @constructor
 	 */
@@ -32,12 +34,14 @@ define(
 			minSearchLength: 3
 		}, options);
 		
+		this._id = 'mediaManager' + _mediaManagerCounter++;
 		this._listItems = new Dictionary();
 		this._media = new Dictionary();
 		this._mediaCache = null;
 		this._mediaManagerMediaList = null;
 		this._search = null;
 		this._forceClipboard = false;
+		this._hadInitiallyMarkedItems = false;
 		
 		if (Permission.get('admin.content.cms.canManageMedia')) {
 			this._mediaEditor = new MediaEditor(this);
@@ -119,46 +123,7 @@ define(
 				}
 			}
 			
-			this._mediaManagerMediaList = elById('mediaManagerMediaList');
-			
-			// store list items locally
-			var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI');
-			for (var i = 0, length = listItems.length; i < length; i++) {
-				var listItem = listItems[i];
-				
-				this._listItems.set(~~elData(listItem, 'object-id'), listItem);
-			}
-			
-			if (Permission.get('admin.content.cms.canManageMedia')) {
-				new MediaUpload('mediaManagerMediaUploadButton', 'mediaManagerMediaList', {
-					mediaManager: this
-				});
-				
-				var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.mediaFile');
-				deleteAction._didTriggerEffect = function(element) {
-					this.removeMedia(elData(element[0], 'object-id'), true);
-				}.bind(this);
-			}
-			
-			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
-				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
-				
-				Clipboard.setup({
-					hasMarkedItems: data.returnValues.hasMarkedItems ? true : false,
-					pageClassName: 'menuManagerDialog-' + this.getMode()
-				});
-			}
-			else {
-				this._removeClipboardCheckboxes();
-			}
-			
-			this._search = new MediaManagerSearch(this);
-			
-			if (!listItems.length) {
-				this._search.hideSearch();
-			}
-			
-			this._dialogShow();
+			this._hadInitiallyMarkedItems = data.returnValues.hasMarkedItems;
 		},
 		
 		/**
@@ -168,7 +133,7 @@ define(
 		 */
 		_dialogSetup: function() {
 			return {
-				id: 'mediaManager',
+				id: this._id,
 				options: {
 					onClose: this._dialogClose.bind(this),
 					onShow: this._dialogShow.bind(this),
@@ -192,7 +157,47 @@ define(
 		 * Is called if the media manager dialog is shown.
 		 */
 		_dialogShow: function() {
-			if (!this._mediaManagerMediaList) return;
+			if (!this._mediaManagerMediaList) {
+				this._mediaManagerMediaList = elByClass('mediaManagerMediaList', UiDialog.getDialog(this).dialog)[0];
+				
+				// store list items locally
+				var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI');
+				for (var i = 0, length = listItems.length; i < length; i++) {
+					var listItem = listItems[i];
+					
+					this._listItems.set(~~elData(listItem, 'object-id'), listItem);
+				}
+				
+				if (Permission.get('admin.content.cms.canManageMedia')) {
+					var uploadButton = elByClass('mediaManagerMediaUploadButton', UiDialog.getDialog(this).dialog)[0];
+					new MediaUpload(DomUtil.identify(uploadButton), DomUtil.identify(this._mediaManagerMediaList), {
+						mediaManager: this
+					});
+					
+					var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.mediaFile');
+					deleteAction._didTriggerEffect = function(element) {
+						this.removeMedia(elData(element[0], 'object-id'), true);
+					}.bind(this);
+				}
+				
+				if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
+					EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
+					
+					Clipboard.setup({
+						hasMarkedItems: this._hadInitiallyMarkedItems ? true : false,
+						pageClassName: 'menuManagerDialog-' + this.getMode()
+					});
+				}
+				else {
+					this._removeClipboardCheckboxes();
+				}
+				
+				this._search = new MediaManagerSearch(this);
+				
+				if (!listItems.length) {
+					this._search.hideSearch();
+				}
+			}
 			
 			// only show media clipboard if editor is open
 			if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
@@ -210,7 +215,7 @@ define(
 				throw new Error("You are not allowed to edit media files.");
 			}
 			
-			UiDialog.close('mediaManager');
+			UiDialog.close(this);
 			
 			this._mediaEditor.edit(this._media.get(~~elData(event.currentTarget, 'object-id')));
 		},
@@ -321,6 +326,15 @@ define(
 			if (this._listItems.size === 1) {
 				this._search.showSearch();
 			}
+		},
+		
+		/**
+		 * Returns the media manager dialog element.
+		 * 
+		 * @return	{Element}	media manager dialog
+		 */
+		getDialog: function() {
+			return UiDialog.getDialog(this).dialog;
 		},
 		
 		/**

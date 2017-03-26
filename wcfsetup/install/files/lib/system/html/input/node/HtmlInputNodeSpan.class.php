@@ -6,7 +6,7 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
  * Processes `<span>` and sanitizes font sizes.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
@@ -30,6 +30,10 @@ class HtmlInputNodeSpan extends AbstractHtmlInputNode {
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
+			if (!$element->hasAttribute('style')) {
+				continue;
+			}
+			
 			$style = explode(';', $element->getAttribute('style'));
 			for ($i = 0, $length = count($style); $i < $length; $i++) {
 				if (preg_match('~^\s*font-size\s*:(.+)$~', $style[$i], $matches)) {

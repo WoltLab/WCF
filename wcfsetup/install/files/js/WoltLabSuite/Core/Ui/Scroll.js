@@ -2,7 +2,7 @@
  * Smoothly scrolls to an element while accounting for potential sticky headers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Scroll
  */
@@ -57,11 +57,20 @@ define(['Dom/Util'], function(DomUtil) {
 				y -= 50;
 			}
 			
+			var offset = window.pageYOffset;
+			
 			window.scrollTo({
 				left: 0,
 				top: y,
 				behavior: 'smooth'
 			});
+			
+			window.setTimeout((function () {
+				// no scrolling took place
+				if (offset === window.pageYOffset) {
+					this._onScroll();
+				}
+			}).bind(this), 100);
 		},
 		
 		/**

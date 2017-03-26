@@ -30,6 +30,14 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
+				// each `<td>` must at least contain \u200B, otherwise
+				// Firefox will be unable to place the caret inside
+				elBySelAll('td', div, function (td) {
+					if (td.childNodes.length === 0) {
+						td.innerHTML = '\u200B';
+					}
+				});
+				
 				html = div.innerHTML;
 				
 				return html;
@@ -106,7 +114,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 			
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
-				if (data.pre) {
+				if (data.pre || this.utils.isCurrentOrParent('kbd')) {
 					// prevent method call when data.pre is true
 					var mpRemoveEmptyInlineTags = this.clean.removeEmptyInlineTags;
 					this.clean.removeEmptyInlineTags = function(html) { return html; };
@@ -121,7 +129,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				var div = elCreate('div');
 				div.innerHTML = html.replace(/@@@WOLTLAB-P-ALIGN-(?:left|right|center|justify)@@@/g, '');
 				
-				var element, elements = elBySelAll('[style]', div), property, removeStyles;
+				var element, elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
 					
@@ -131,6 +139,21 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						//noinspection JSUnresolvedVariable
 						if (this.opts.woltlab.allowedInlineStyles.indexOf(property) === -1) {
+							if (property === 'font-weight') {
+								styleValue = element.style.getPropertyValue(property);
+								if (styleValue === 'bold' || styleValue === 'bolder') {
+									styleValue = 600;
+								}
+								
+								styleValue = ~~styleValue;
+								if (styleValue > 500) {
+									// treat anything above 500 as bold
+									strong = elCreate('strong');
+									element.parentNode.insertBefore(strong, element);
+									strong.appendChild(element);
+								}
+							}
+							
 							removeStyles.push(property);
 						}
 					}
@@ -168,12 +191,6 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				elBySelAll('img', div, function (img) {
 					img.removeAttribute('style');
-					
-					if (img.hasAttribute('alt')) {
-						// Any smiley with an code that has `<` followed by
-						// a letter will cause the editor to fail.
-						img.setAttribute('alt', img.getAttribute('alt').replace(/</g, '&lt;'));
-					}
 				});
 				
 				elBySelAll('br', div, function (br) {
@@ -375,6 +392,23 @@ $.Redactor.prototype.WoltLabClean = function() {
 			this.clean.removeSpans = function(html) {
 				return html;
 			};
+			
+			var mpGetCurrentType = this.clean.getCurrentType;
+			this.clean.getCurrentType = (function(html, insert) {
+				var data = mpGetCurrentType.call(this, html, insert);
+				
+				if (this.utils.isCurrentOrParent(['kbd'])) {
+					data.inline = false;
+					data.block = false;
+					data.encode = true;
+					data.pre = true;
+					data.paragraphize = false;
+					data.images = false;
+					data.links = false;
+				}
+				
+				return data;
+			}).bind(this);
 		}
 	}
 };

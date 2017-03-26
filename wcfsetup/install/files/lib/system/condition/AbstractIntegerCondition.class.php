@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Abstract implementation of a condition for an integer value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -100,7 +100,7 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 				break;
 				
 				default:
-					$errorMessage = WCF::getLanguage()->get($this->errorMessage);
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage);
 				break;
 			}
 			

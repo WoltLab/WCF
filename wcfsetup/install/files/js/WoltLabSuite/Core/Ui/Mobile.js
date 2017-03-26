@@ -2,7 +2,7 @@
  * Modifies the interface to provide a better usability for mobile devices.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Mobile
  */
@@ -141,7 +141,7 @@ define(
 			});
 			
 			_main.addEventListener(WCF_CLICK_EVENT, function() {
-				_searchBar.classList.remove('open');
+				if (_searchBar) _searchBar.classList.remove('open');
 				
 				if (Environment.platform() === 'ios' && scrollTop !== null) {
 					UiScreen.scrollEnable();
@@ -214,7 +214,7 @@ define(
 					if (quickOptions && navigation.childElementCount) {
 						quickOptions.classList.add('active');
 						quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
-							if (_enabled) {
+							if (_enabled && event.target.nodeName !== 'LABEL') {
 								event.preventDefault();
 								event.stopPropagation();
 								

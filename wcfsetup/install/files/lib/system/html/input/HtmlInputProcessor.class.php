@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Reads a HTML string, applies filters and parses all nodes including bbcodes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input
  * @since       3.0
@@ -199,6 +199,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 */
 	protected function convertToHtml($html) {
 		$html = StringUtil::encodeHTML($html);
+		$html = preg_replace('/\[attach=(\d+)\]/', "[attach=\\1,'none','2']", $html);
 		$parts = preg_split('~(\n+)~', $html, null, PREG_SPLIT_DELIM_CAPTURE);
 		
 		$openParagraph = false;

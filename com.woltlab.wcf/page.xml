@@ -169,6 +169,7 @@
 		<page identifier="com.woltlab.wcf.Mail">
 			<pageType>system</pageType>
 			<controller>wcf\form\MailForm</controller>
+			<requireObjectID>1</requireObjectID>
 			<name language="de">E-Mail-Formular</name>
 			<name language="en">Mail Form</name>
 			

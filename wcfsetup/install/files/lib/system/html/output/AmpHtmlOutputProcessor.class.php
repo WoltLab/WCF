@@ -9,7 +9,7 @@ use wcf\util\DOMUtil;
  * See https://github.com/ampproject/amphtml/blob/master/spec/amp-html-format.md#html-tags
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2016 WoltLab GmbH
+ * @copyright   2001-2017 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output
  * @since       3.0
@@ -89,6 +89,19 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 				DOMUtil::removeNode($element);
 			}
 		}
+		
+		// strip invalid attribute 'style'
+		/** @var \DOMElement $element */
+		foreach ($this->getHtmlOutputNodeProcessor()->getXPath()->query('//*[@style]') as $element) {
+			$element->removeAttribute('style');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtml() {
+		return str_ireplace('<img', '<amp-img layout="flex-item"', $this->getHtmlOutputNodeProcessor()->getHtml());
 	}
 	
 	/**

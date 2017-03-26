@@ -13,7 +13,7 @@ use wcf\util\DateUtil;
  * Box controller for a list of registered users that visited the website in last 24 hours.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -97,7 +97,9 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 				WhoWasOnlineCacheBuilder::getInstance()->reset();
 			}
 			
-			$this->users = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
+			$this->users = array_filter(UserProfileRuntimeCache::getInstance()->getObjects($userIDs), function($user) {
+				return $user !== null;
+			});
 			foreach ($this->users as $key => $user) {
 				// remove invisible users
 				if (!UsersOnlineList::isVisible($user->userID, $user->canViewOnlineStatus)) {

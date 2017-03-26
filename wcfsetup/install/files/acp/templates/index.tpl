@@ -165,7 +165,7 @@
 			
 			<dl>
 				<dt></dt>
-				<dd>Copyright &copy; 2001-2016 WoltLab&reg; GmbH. All rights reserved.</dd>
+				<dd>Copyright &copy; 2001-2017 WoltLab&reg; GmbH. All rights reserved.</dd>
 			</dl>
 			
 			<dl>

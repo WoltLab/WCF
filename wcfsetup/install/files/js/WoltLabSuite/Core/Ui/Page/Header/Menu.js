@@ -2,7 +2,7 @@
  * Handles main menu overflow.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Menu
  */
@@ -47,6 +47,9 @@ define(['Ui/Screen'], function(UiScreen) {
 			_enabled = true;
 			
 			this._rebuildVisibility();
+			
+			// IE11 sometimes suffers from a timing issue
+			window.setTimeout(this._rebuildVisibility.bind(this), 1000);
 		},
 		
 		/**

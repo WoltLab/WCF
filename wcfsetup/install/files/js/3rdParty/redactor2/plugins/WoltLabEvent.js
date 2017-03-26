@@ -17,21 +17,49 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				}).bind(this))
 			}).bind(this));
 			
-			this.$editor[0].addEventListener('focus', function () {
-				_activeInstances++;
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.indexOf('windows phone') === -1 && ua.indexOf('edge/') === -1) {
+				this.$editor[0].addEventListener('focus', function () {
+					_activeInstances++;
+					
+					document.documentElement.classList.add('redactorActive');
+				});
+				this.$editor[0].addEventListener('blur', function () {
+					_activeInstances--;
+					
+					// short delay to prevent flickering when switching focus between editors
+					window.setTimeout(function () {
+						if (_activeInstances === 0) {
+							document.documentElement.classList.remove('redactorActive');
+						}
+					}, 100);
+				});
+			}
+			
+			this.events.iterateObserver = (function(mutation) {
+				var stop = false;
 				
-				document.documentElement.classList.add('redactorActive');
-			});
-			this.$editor[0].addEventListener('blur', function () {
-				_activeInstances--;
+				// target
+				// WoltLab modification: do not suppress event if nodes have been added
+				if (((this.opts.type === 'textarea' || this.opts.type === 'div')
+					&& (!this.detect.isFirefox() && mutation.target === this.core.editor()[0]) && (mutation.type === 'childList' && !mutation.addedNodes.length))
+					|| (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0])
+				)
+				{
+					stop = true;
+				}
 				
-				// short delay to prevent flickering when switching focus between editors
-				window.setTimeout(function () {
-					if (_activeInstances === 0) {
-						document.documentElement.classList.remove('redactorActive');
-					}
-				}, 100);
-			})
+				if (!stop)
+				{
+					this.observe.load();
+					this.events.changeHandler();
+				}
+			}).bind(this);
+			
+			// re-attach the observer
+			this.events.observer.disconnect();
+			this.events.createObserver();
+			this.events.setupObserver();
 		},
 		
 		_setEvents: function(EventHandler) {

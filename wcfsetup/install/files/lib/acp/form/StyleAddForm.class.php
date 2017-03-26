@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * Shows the style add form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -303,10 +303,7 @@ class StyleAddForm extends AbstractForm {
 				throw new UserInputException('packageName', 'invalid');
 			}
 			
-			// 3rd party styles may never have com.woltlab.* as name
-			if (strpos($this->packageName, 'com.woltlab.') === 0) {
-				throw new UserInputException('packageName', 'reserved');
-			}
+			$this->enforcePackageNameRestriction();
 		}
 		
 		// validate template group id
@@ -326,6 +323,18 @@ class StyleAddForm extends AbstractForm {
 		
 		if (!empty($this->variables['overrideScss'])) {
 			$this->parseOverrides();
+		}
+	}
+	
+	/**
+	 * Disallow the use of `com.woltlab.*` for package names to avoid accidential collisions.
+	 * 
+	 * @throws      UserInputException
+	 */
+	protected function enforcePackageNameRestriction() {
+		// 3rd party styles may never have com.woltlab.* as name
+		if (strpos($this->packageName, 'com.woltlab.') !== false) {
+			throw new UserInputException('packageName', 'reserved');
 		}
 	}
 	
@@ -446,7 +455,7 @@ class StyleAddForm extends AbstractForm {
 		
 		$this->colors = [
 			'wcfHeader' => ['background', 'text', 'link', 'linkActive'],
-			'wcfHeaderSearchBox' => ['background', 'text', 'placeholder', 'backgroundActive', 'textActive'],
+			'wcfHeaderSearchBox' => ['background', 'text', 'placeholder', 'placeholderActive', 'backgroundActive', 'textActive'],
 			'wcfHeaderMenu' => ['background', 'linkBackground', 'linkBackgroundActive', 'link', 'linkActive'],
 			'wcfHeaderMenuDropdown' => ['background', 'link', 'backgroundActive', 'linkActive'],
 			'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
@@ -457,7 +466,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfContentDimmed' => ['text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
-			'wcfInput' => ['label', 'background', 'border', 'text', 'placeholder', 'backgroundActive', 'borderActive', 'textActive'],
+			'wcfInput' => ['label', 'background', 'border', 'text', 'placeholder', 'placeholderActive', 'backgroundActive', 'borderActive', 'textActive'],
 			'wcfInputDisabled' => ['background', 'border', 'text'],
 			'wcfButton' => ['background', 'text', 'backgroundActive', 'textActive'],
 			'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],

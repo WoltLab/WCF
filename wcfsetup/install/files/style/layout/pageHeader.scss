@@ -64,6 +64,7 @@
 		
 		@include screen-md-down {
 			height: 50px;
+			-webkit-justify-content: center;
 			justify-content: center;
 			left: 60px;
 			padding: 9px 0;
@@ -78,7 +79,7 @@
 
 /* MAIN MENU */
 .mainMenu {
-	flex: 1 1 auto;
+	flex: 1;
 	margin-right: 20px;
 	position: relative;
 	
@@ -100,9 +101,6 @@
 				display: flex;
 				height: 50px;
 				padding: 0 15px;
-				
-				/* fix flicker in Safari on dropdown menu hover */
-				transform: translateZ(0);
 				
 				> span {
 					flex: 0 0 auto;
@@ -222,17 +220,8 @@
 	}
 }
 
-/* Firefox suffers from subpixel rendering issues */
-@-moz-document url-prefix() {
-	.mainMenu .boxMenu > li:not(:last-child) {
-		box-shadow: 0 0 0 1px $wcfHeaderMenuLinkBackground;
-		
-		&.active,
-		&:hover {
-			box-shadow: 0 0 0 1px $wcfHeaderMenuLinkBackgroundActive;
-		}
-	}
-}
+/* Hack for a font rendering issue in Safari on menu hover */
+@include only_safari_no_ios('.pageHeaderPanel > .layoutBoundary', (transform: translateZ(0)));
 
 /* user panel */
 .userPanel {
@@ -256,9 +245,6 @@
 				height: 50px;
 				padding: 0 15px;
 				position: relative;
-				
-				/* fix flicker in Safari on dropdown menu hover */
-				transform: translateZ(0);
 				
 				/* hide icon label */
 				> span:not(.icon):not(.badge) {
@@ -364,7 +350,7 @@
 			max-width: 200px;
 			min-width: 140px;
 			overflow: hidden;
-			padding: 4px 24px 4px 8px;
+			padding: 4px 8px;
 			position: relative;
 			text-align: left;
 			text-overflow: ellipsis;
@@ -374,9 +360,10 @@
 			&::after {
 				color: inherit;
 				content: $fa-var-caret-down;
+				flex: 1;
 				font-family: FontAwesome;
-				position: absolute;
-				right: 8px;
+				margin-left: 10px;
+				text-align: right;
 			}
 		}
 		
@@ -449,6 +436,7 @@
 @include screen-md-down {
 	.pageHeaderPanel > .layoutBoundary {
 		/* pushes buttons to the left / right corner */
+		-webkit-justify-content: space-between;
 		justify-content: space-between;
 	}
 	
@@ -497,7 +485,7 @@
 	.mainMenu,
 	.userPanel:not(.userPanelLoggedIn) {
 		&::before {
-			color: $wcfHeaderMenuLink;
+			color: $wcfHeaderLink;
 			font-family: FontAwesome;
 			font-size: 28px;
 			line-height: 32px;
@@ -505,7 +493,7 @@
 		}
 		
 		&:hover::before {
-			color: $wcfHeaderMenuLinkActive;
+			color: $wcfHeaderLinkActive;
 		}
 	}
 	

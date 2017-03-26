@@ -12,8 +12,8 @@
 
 .row {
 	display: flex;
-	margin-right: -.9375rem;
-	margin-left: -.9375rem;
+	margin-right: -10px;
+	margin-left: -10px;
 	
 	flex-wrap: wrap;
 }
@@ -22,8 +22,8 @@
 .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
 	position: relative;
 	min-height: 1px;
-	padding-right: .9375rem;
-	padding-left: .9375rem;
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .col-xs-1 {
@@ -363,11 +363,11 @@
 
 /* vertical gap between wrapped columns */
 .rowColGap {
-	margin-bottom: -1.875rem;
+	margin-bottom: -20px;
 	
 	> .col-xs-1, > .col-xs-2, > .col-xs-3, > .col-xs-4, > .col-xs-5, > .col-xs-6, > .col-xs-7, > .col-xs-8, > .col-xs-9, > .col-xs-10, > .col-xs-11, > .col-xs-12,
 	> .col-md-1, > .col-md-2, > .col-md-3, > .col-md-4, > .col-md-5, > .col-md-6, > .col-md-7, > .col-md-8, > .col-md-9, > .col-md-10, > .col-md-11, > .col-md-12 {
-		margin-bottom: 1.875rem !important;
+		margin-bottom: 20px !important;
 	}
 	
 	&:not(:first-child) {

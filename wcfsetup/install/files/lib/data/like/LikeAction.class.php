@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * Executes like-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  * 
@@ -171,7 +171,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 				UserActivityEventHandler::getInstance()->fireEvent($this->objectType->objectType.'.recentActivityEvent', $this->parameters['data']['objectID'], $this->likeableObject->getLanguageID());
 			}
 			else {
-				UserActivityEventHandler::getInstance()->removeEvents($this->objectType->objectType.'.recentActivityEvent', [$this->parameters['data']['objectID']]);
+				UserActivityEventHandler::getInstance()->removeEvent($this->objectType->objectType.'.recentActivityEvent', $this->parameters['data']['objectID']);
 			}
 		}
 		

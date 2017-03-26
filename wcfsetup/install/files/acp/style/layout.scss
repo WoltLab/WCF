@@ -6,12 +6,6 @@ $wcfAcpMenuWidth: 150px;
 	min-width: 0;
 }
 
-@include screen-lg {
-	.tabularBox {
-		overflow: auto;
-	}
-}
-
 /* page header */
 .pageHeaderContainer {
 	@include screen-lg {
@@ -78,11 +72,7 @@ $wcfAcpMenuWidth: 150px;
 				border-radius: 0;
 				display: flex;
 				height: 50px;
-				padding: 6px 28px 6px 10px;
-				
-				&::after {
-					right: 10px;
-				}
+				padding: 6px 10px;
 				
 				&:hover {
 					background-color: rgba(0, 0, 0, .4);

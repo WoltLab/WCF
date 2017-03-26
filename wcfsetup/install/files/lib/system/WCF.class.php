@@ -46,7 +46,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.0.0 RC 4');
+define('WCF_VERSION', '3.0.3');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -657,7 +657,9 @@ class WCF {
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
-		if (!$languageID) $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+		if (!$languageID || LanguageFactory::getInstance()->getLanguage($languageID) === null) {
+			$languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+		}
 		
 		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
@@ -811,13 +813,13 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
-		return self::getRequestURI() . '#' . $fragment;
+		return StringUtil::encodeHTML(self::getRequestURI() . '#' . $fragment);
 	}
 	
 	/**
 	 * Returns the currently active page or null if unknown.
 	 * 
-	 * @return Page|null
+	 * @return	Page|null
 	 */
 	public static function getActivePage() {
 		if (self::getActiveRequest() === null) {
@@ -826,7 +828,11 @@ class WCF {
 		
 		if (self::getActiveRequest()->getClassName() === CmsPage::class) {
 			$metaData = self::getActiveRequest()->getMetaData();
-			return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
+			if (isset($metaData['cms'])) {
+				return PageCache::getInstance()->getPage($metaData['cms']['pageID']);
+			}
+			
+			return null;
 		}
 		
 		return PageCache::getInstance()->getPageByController(self::getActiveRequest()->getClassName());

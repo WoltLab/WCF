@@ -153,13 +153,13 @@
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 			
 			/* one item */
 			&:first-child:nth-last-child(1) {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 		}
 		
@@ -170,13 +170,13 @@
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 			
 			/* one item */
 			&:first-child:nth-last-child(1) {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 			
 			/* two items */
@@ -410,24 +410,69 @@
 			margin-top: 30px;
 		}
 		
+		&.boxError,
+		&.boxInfo,
+		&.boxSuccess,
+		&.boxWarning {
+			a:not(.button) {
+				@include wcfFontBold;
+				
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+		
 		&.boxError {
 			background-color: $wcfStatusErrorBackground;
 			color: $wcfStatusErrorText;
+			
+			a:not(.button) {
+				color: $wcfStatusErrorLink;
+				
+				&:hover {
+					color: $wcfStatusErrorLinkActive;
+				}
+			}
 		}
 		
 		&.boxInfo {
 			background-color: $wcfStatusInfoBackground;
 			color: $wcfStatusInfoText;
+			
+			a:not(.button) {
+				color: $wcfStatusInfoLink;
+				
+				&:hover {
+					color: $wcfStatusInfoLinkActive;
+				}
+			}
 		}
 		
 		&.boxSuccess {
 			background-color: $wcfStatusSuccessBackground;
 			color: $wcfStatusSuccessText;
+			
+			a:not(.button) {
+				color: $wcfStatusSuccessLink;
+				
+				&:hover {
+					color: $wcfStatusSuccessLinkActive;
+				}
+			}
 		}
 		
 		&.boxWarning {
 			background-color: $wcfStatusWarningBackground;
 			color: $wcfStatusWarningText;
+			
+			a:not(.button) {
+				color: $wcfStatusWarningLink;
+				
+				&:hover {
+					color: $wcfStatusWarningLinkActive;
+				}
+			}
 		}
 		
 		.boxMenu {
@@ -460,7 +505,8 @@
 			@include screen-md-down {
 				position: relative;
 				
-				.boxMenuLink {
+				.boxMenuLink,
+				.boxMenuLinkTitle {
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
@@ -560,9 +606,19 @@
 	}
 }
 
-.boxesSidebarLeft .box .boxMenu li.active > .boxMenuLink {
-	margin-left: 10px;
-	padding-left: 10px;
+.boxesSidebarLeft .box .boxMenu {
+	li.active > .boxMenuLink {
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+	
+	.boxMenuDepth1 li.active > .boxMenuLink {
+		padding-left: 30px;
+	}
+	
+	.boxMenuDepth2 li.active > .boxMenuLink {
+		padding-left: 50px;
+	}
 }
 
 .boxesSidebarRight .box .boxMenu li.active > .boxMenuLink {
@@ -693,7 +749,7 @@
 			
 			&.boxFullWidth {
 				flex-basis: 100%;
-				max-width: none;
+				max-width: 100%;
 			}
 		}
 	}
@@ -846,9 +902,16 @@
 			}
 			
 			> li {
-				flex: 0 0 25%;
+				@include screen-md-up {
+					flex: 0 0 25%;
+					max-width: 25%;
+				}
+				
+				@include screen-sm-down {
+					flex: 1 1 100%;
+				}
+				
 				margin-bottom: 20px;
-				max-width: 25%;
 				
 				> .boxMenuLink {
 					@include wcfFontHeadline;

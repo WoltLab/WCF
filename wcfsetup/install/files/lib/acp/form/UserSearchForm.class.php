@@ -19,7 +19,7 @@ use wcf\util\HeaderUtil;
  * Shows the user search form.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -251,6 +251,7 @@ class UserSearchForm extends UserOptionListForm {
 	 */
 	protected function search() {
 		$this->userList = new UserList();
+		$this->userList->sqlConditionJoins .= " LEFT JOIN wcf".WCF_N."_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)";
 		$this->userList->sqlLimit = $this->maxResults;
 		
 		EventHandler::getInstance()->fireAction($this, 'search');

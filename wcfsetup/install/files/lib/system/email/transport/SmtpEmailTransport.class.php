@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * SmtpEmailTransport is an implementation of an email transport which sends emails via SMTP (RFC 5321, 3207 and 4954).
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email\Transport
  * @since	3.0
@@ -358,7 +358,7 @@ class SmtpEmailTransport implements IEmailTransport {
 			if (StringUtil::startsWith($item, '.')) return '.'.$item;
 			
 			return $item;
-		}, explode("\r\n", $email->getEmail()))));
+		}, explode("\r\n", $email->getEmail())))."\r\n");
 		$this->write(".");
 		$this->read([250]);
 	}

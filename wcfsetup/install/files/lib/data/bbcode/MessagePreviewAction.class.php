@@ -12,7 +12,7 @@ use wcf\util\ArrayUtil;
  * Provides a default message preview action.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Message
  */
@@ -38,13 +38,17 @@ class MessagePreviewAction extends BBCodeAction {
 	 * @throws	UserInputException
 	 */
 	public function getMessagePreview() {
+		// set disallowed bbcodes first to ensure proper parsing
+		$disallowedBBCodesPermission = isset($this->parameters['disallowedBBCodesPermission']) ? $this->parameters['disallowedBBCodesPermission'] : 'user.message.disallowedBBCodes';
+		if ($disallowedBBCodesPermission) {
+			BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($disallowedBBCodesPermission))));
+		}
+		
 		$htmlInputProcessor = new HtmlInputProcessor();
 		$htmlInputProcessor->process($this->parameters['data']['message'], $this->parameters['messageObjectType'], $this->parameters['messageObjectID']);
 		
 		// check if disallowed bbcode are used
-		$disallowedBBCodesPermission = isset($this->parameters['disallowedBBCodesPermission']) ? $this->parameters['disallowedBBCodesPermission'] : 'user.message.disallowedBBCodes';
 		if ($disallowedBBCodesPermission) {
-			BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($disallowedBBCodesPermission))));
 			$disallowedBBCodes = $htmlInputProcessor->validate();
 			if (!empty($disallowedBBCodes)) {
 				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [

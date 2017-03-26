@@ -14,11 +14,27 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				mpAfter.call(this, node);
 			}).bind(this);
 			
+			var iOS = false;
+			require(['Environment'], function (Environment) {
+				iOS = (Environment.platform() === 'ios');
+			});
+			
 			var mpEnd = this.caret.end;
 			this.caret.end = (function (node) {
 				node = this.caret.prepare(node);
 				
+				var useCustomRange = false;
 				if (node.nodeType === Node.ELEMENT_NODE && node.lastChild && node.lastChild.nodeName === 'P') {
+					useCustomRange = true;
+				}
+				else if (iOS) {
+					var editor = this.core.editor()[0];
+					if (node.parentNode === editor && editor.innerHTML === '<p><br></p>') {
+						useCustomRange = true;
+					}
+				}
+				
+				if (useCustomRange) {
 					var selection = window.getSelection();
 					var range = document.createRange();
 					range.selectNodeContents(node.lastChild);
@@ -36,17 +52,6 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			this.$editor[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabCaret._handleEditorClick.bind(this));
 			
 			this.WoltLabCaret._initInternalRange();
-			
-			require(['Environment'], (function (Environment) {
-				if (Environment.browser() === 'chrome' && Environment.platform() === 'android') {
-					// Chrome for Android exposes falsified keyboard event data, causing
-					// quite a few issues with keystrokes such as backspace. Turning off
-					// auto-complete works around the issue for now.
-					// 
-					// https://bugs.chromium.org/p/chromium/issues/detail?id=118639
-					elAttr(this.$editor[0], 'autocomplete', 'off');
-				}
-			}).bind(this));
 		},
 		
 		paragraphAfterBlock: function (block) {
@@ -152,7 +157,14 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var mpSet = this.buffer.set;
 			this.buffer.set = (function (type) {
 				if (document.activeElement !== editor) {
-					restoreRange();
+					// check if caret is still inside the editor
+					var selection = window.getSelection();
+					if (selection.rangeCount && this.utils.isRedactorParent(selection.anchorNode) !== false) {
+						editor.focus();
+					}
+					else {
+						restoreRange();
+					}
 				}
 				
 				mpSet.call(this, type);

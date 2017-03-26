@@ -2,7 +2,7 @@
  * Provides the media manager dialog for selecting media for input elements.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Select
  */
@@ -106,7 +106,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 			// show remove button
 			elShow(this._activeButton.nextElementSibling);
 			
-			UiDialog.close('mediaManager');
+			UiDialog.close(this);
 		},
 		
 		/**

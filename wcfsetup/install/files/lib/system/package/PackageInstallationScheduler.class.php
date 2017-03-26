@@ -16,7 +16,7 @@ use wcf\util\HTTPRequest;
  * Contains business logic related to preparation of package installations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -213,7 +213,7 @@ class PackageInstallationScheduler {
 	 */
 	protected function downloadPackage($package, $packageUpdateVersions, $validateInstallInstructions = false) {
 		// get download from cache
-		if ($filename = $this->getCachedDownload($package, $packageUpdateVersions[0]['package'])) {
+		if ($filename = $this->getCachedDownload($package, $packageUpdateVersions[0]['packageVersion'])) {
 			return $filename;
 		}
 		

@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Manages the background queue.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Background\Job
  * @since	3.0
@@ -89,6 +89,9 @@ class BackgroundQueueHandler extends SingletonFactory {
 		
 		try {
 			SessionHandler::getInstance()->changeUser(new User(null), true);
+			if (!WCF::debugModeIsEnabled()) {
+				ob_start();
+			}
 			$job->perform();
 		}
 		catch (\Throwable $e) {
@@ -124,6 +127,9 @@ class BackgroundQueueHandler extends SingletonFactory {
 			}
 		}
 		finally {
+			if (!WCF::debugModeIsEnabled()) {
+				ob_end_clean();
+			}
 			SessionHandler::getInstance()->changeUser($user, true);
 		}
 	}

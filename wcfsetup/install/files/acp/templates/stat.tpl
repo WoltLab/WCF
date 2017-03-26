@@ -31,9 +31,9 @@
 	<dl>
 		<dt><label for="startDate">{lang}wcf.acp.stat.period{/lang}</label></dt>
 		<dd>
-			<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}">
+			<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}" data-disable-clear="true">
 			&ndash;
-			<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}">
+			<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}" data-disable-clear="true">
 		</dd>
 	</dl>
 	

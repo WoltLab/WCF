@@ -10,15 +10,17 @@ use wcf\util\XML;
  * Refreshes list of search robots.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2016 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
-class RefreshSearchRobotsCronjob implements ICronjob {
+class RefreshSearchRobotsCronjob extends AbstractCronjob {
 	/**
 	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
+		
 		$filename = FileUtil::downloadFileFromHttp('http://assets.woltlab.com/spiderlist/typhoon/list.xml', 'spiders');
 		$xml = new XML();
 		$xml->load($filename);
