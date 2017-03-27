@@ -61,4 +61,39 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
 	public function getContent() {
 		return $this->content;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		return $this->getDecoratedObject()->getLink();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getUsername() {
+		return $this->getDecoratedObject()->username;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getUserID() {
+		return $this->getDecoratedObject()->userID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTime() {
+		return $this->getDecoratedObject()->time;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return $this->getDecoratedObject()->getTitle();
+	}
 }

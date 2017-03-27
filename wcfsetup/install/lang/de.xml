@@ -96,6 +96,7 @@
 		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich in den Papierkorb verschieben?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
+		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID}{/link}">vorherige Versionen</a> dieses Artikels, die <a href="{link controller='VersionTrackerCompare' id=$lastVersion->versionID objectType='com.woltlab.wcf.article'}{/link}">letzte Änderung</a> erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -2400,8 +2401,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von {$edit->username} vom {$edit->time|plainTime}]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Vergleichen]]></item>
 		<item name="wcf.edit.button.goToContent"><![CDATA[Zum Inhalt gehen]]></item>
+		<item name="wcf.edit.headline.comparison"><![CDATA[Vergleich]]></item>
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
+		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Aktuelle Version{else}Version vom {@$new->time|plainTime}{/if} ({$new->username})]]></item>
 	</category>
 	
 	<category name="wcf.editor">

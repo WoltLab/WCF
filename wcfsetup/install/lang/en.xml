@@ -2352,8 +2352,10 @@ Errors are:
 		<item name="wcf.edit.reverted"><![CDATA[Reverted to the version at {$edit->time|plainTime}, created by {$edit->username}]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Compare]]></item>
 		<item name="wcf.edit.button.goToContent"><![CDATA[Go to Related Content]]></item>
+		<item name="wcf.edit.headline.comparison"><![CDATA[Comparison]]></item>
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Current version{else}Version{/if} as of {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Current version{else}Version{/if} as of {@$new->time|plainTime} ({$new->username})]]></item>
+		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Current version{else}Version as of {@$new->time|plainTime}{/if} ({$new->username})]]></item>
 	</category>
 	
 	<category name="wcf.editor">

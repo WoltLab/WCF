@@ -75,7 +75,11 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-{if $action == 'edit'}<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>{/if}
+{if $action == 'edit'}
+	<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>
+	
+	{if $lastVersion}<p class="info">{lang}wcf.acp.article.lastVersion{/lang}</p>{/if}
+{/if}
 
 <form method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
 	<div class="section">

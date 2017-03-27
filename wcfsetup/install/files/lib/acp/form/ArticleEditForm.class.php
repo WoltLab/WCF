@@ -7,6 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
@@ -175,7 +176,8 @@ class ArticleEditForm extends ArticleAddForm {
 		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'articleID' => $this->articleID,
-			'article' => $this->article
+			'article' => $this->article,
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID)
 		]);
 	}
 }

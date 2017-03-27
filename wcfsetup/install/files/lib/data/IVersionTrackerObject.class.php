@@ -9,7 +9,7 @@ namespace wcf\data;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
-interface IVersionTrackerObject {
+interface IVersionTrackerObject extends IUserContent {
 	/**
 	 * Returns the object's unique id.
 	 * 

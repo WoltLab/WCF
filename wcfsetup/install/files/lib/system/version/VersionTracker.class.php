@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\version;
+use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeList;
@@ -36,7 +37,7 @@ class VersionTracker extends SingletonFactory {
 	/**
 	 * Adds a new entry to the version history.
 	 * 
-	 * @param       string                  $objectTypeName         object typename
+	 * @param       string                  $objectTypeName         object type name
 	 * @param       IVersionTrackerObject   $object                 target object
 	 */
 	public function add($objectTypeName, IVersionTrackerObject $object) {
@@ -47,13 +48,98 @@ class VersionTracker extends SingletonFactory {
 		$data = $processor->getTrackedData($object);
 		
 		$sql = "INSERT INTO     ".$this->getTableName($objectType)."_version
-					(objectID, data)
-			VALUES          (?, ?)";
+					(objectID, userID, username, time, data)
+			VALUES          (?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$object->getObjectID(),
+			WCF::getUser()->userID,
+			WCF::getUser()->username,
+			TIME_NOW,
 			serialize($data)
 		]);
+	}
+	
+	/**
+	 * Returns the number of stored versions for provided object type and object id.
+	 * 
+	 * @param       string          $objectTypeName         object type name
+	 * @param       integer         $objectID               target object id
+	 * @return      integer         number of stored versions
+	 */
+	public function countVersions($objectTypeName, $objectID) {
+		$objectType = $this->getObjectType($objectTypeName);
+		
+		$sql = "SELECT  COUNT(*) as count
+			FROM    ".$this->getTableName($objectType)."_version
+			WHERE   objectID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$objectID]);
+		
+		return $statement->fetchColumn();
+	}
+	
+	/**
+	 * Returns the last stored version.
+	 * 
+	 * @param       string          $objectTypeName         object type name
+	 * @param       integer         $objectID               target object id
+	 * @return      VersionTrackerEntry|null|DatabaseObject
+	 */
+	public function getLastVersion($objectTypeName, $objectID) {
+		$objectType = $this->getObjectType($objectTypeName);
+		
+		$sql = "SELECT          *, '' as data
+			FROM            ".$this->getTableName($objectType)."_version
+			WHERE           objectID = ?
+			ORDER BY        versionID DESC";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute([$objectID]);
+		
+		return $statement->fetchObject(VersionTrackerEntry::class);
+	}
+	
+	/**
+	 * Returns the list of stored versions.
+	 * 
+	 * @param       string          $objectTypeName         object type name
+	 * @param       integer         $objectID               target object id
+	 * @return      VersionTrackerEntry[]
+	 */
+	public function getVersions($objectTypeName, $objectID) {
+		$objectType = $this->getObjectType($objectTypeName);
+		
+		$sql = "SELECT          *, '' as data
+			FROM            ".$this->getTableName($objectType)."_version
+			WHERE           objectID = ?
+			ORDER BY        versionID DESC";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$objectID]);
+		$versions = [];
+		while ($version = $statement->fetchObject(VersionTrackerEntry::class)) {
+			$versions[] = $version;
+		}
+		
+		return $versions;
+	}
+	
+	/**
+	 * Returns a version including the contents of the data column.
+	 * 
+	 * @param       string          $objectTypeName         object type name
+	 * @param       integer         $versionID              version id
+	 * @return      VersionTrackerEntry|null|DatabaseObject
+	 */
+	public function getVersion($objectTypeName, $versionID) {
+		$objectType = $this->getObjectType($objectTypeName);
+		
+		$sql = "SELECT          *
+			FROM            ".$this->getTableName($objectType)."_version
+			WHERE           versionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute([$versionID]);
+		
+		return $statement->fetchObject(VersionTrackerEntry::class);
 	}
 	
 	/**
@@ -75,6 +161,23 @@ class VersionTracker extends SingletonFactory {
 		foreach ($objectTypeList as $objectType) {
 			$this->createStorageTable($objectType);
 		}
+	}
+	
+	/**
+	 * Retrieves the object type object by its name.
+	 *
+	 * @param       string          $name   object type name
+	 * @return      ObjectType      target object
+	 * @throws      SystemException
+	 */
+	public function getObjectType($name) {
+		foreach ($this->availableObjectTypes as $objectType) {
+			if ($objectType->objectType === $name) {
+				return $objectType;
+			}
+		}
+		
+		throw new \InvalidArgumentException("Unknown object type '".$name."' for definition 'com.woltlab.wcf.versionTracker.objectType'.");
 	}
 	
 	/**
@@ -100,7 +203,11 @@ class VersionTracker extends SingletonFactory {
 		}
 		
 		$columns = [
+			['name' => 'versionID', 'data' => ['length' => 10, 'notNull' => true, 'type' => 'int', 'key' => 'PRIMARY', 'autoIncrement' => true]],
 			['name' => 'objectID', 'data' => ['length' => 10, 'notNull' => true, 'type' => 'int']],
+			['name' => 'userID', 'data' => ['length' => 10, 'type' => 'int']],
+			['name' => 'username', 'data' => ['length' => 100, 'notNull' => true, 'type' => 'varchar']],
+			['name' => 'time', 'data' => ['length' => 10, 'notNull' => true, 'type' => 'int']],
 			['name' => 'data', 'data' => ['type' => 'longblob']]
 		];
 		
@@ -113,6 +220,16 @@ class VersionTracker extends SingletonFactory {
 				'referencedTable' => $baseTableName,
 				'referencedColumns' => $objectType->tablePrimaryKey,
 				'ON DELETE' => 'CASCADE'
+			]
+		);
+		WCF::getDB()->getEditor()->addForeignKey(
+			$tableName,
+			md5($tableName . '_userID') . '_fk',
+			[
+				'columns' => 'userID',
+				'referencedTable' => 'wcf'.WCF_N.'_user',
+				'referencedColumns' => 'userID',
+				'ON DELETE' => 'SET NULL'
 			]
 		);
 		
@@ -161,22 +278,5 @@ class VersionTracker extends SingletonFactory {
 		}
 		
 		return $tableName;
-	}
-	
-	/**
-	 * Retrieves the object type object by its name.
-	 * 
-	 * @param       string          $name   object type name
-	 * @return      ObjectType      target object
-	 * @throws      SystemException
-	 */
-	protected function getObjectType($name) {
-		foreach ($this->availableObjectTypes as $objectType) {
-			if ($objectType->objectType === $name) {
-				return $objectType;
-			}
-		}
-		
-		throw new SystemException("Unknown object type '".$name."' for definition 'com.woltlab.wcf.versionTracker.objectType'.");
 	}
 }

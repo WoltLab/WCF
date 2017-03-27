@@ -17,7 +17,17 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider {
 	/**
 	 * @inheritDoc
 	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.article.list';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $className = Article::class;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $decoratorClassName = ArticleVersionTracker::class;
 	
 	/**
 	 * @inheritDoc
@@ -27,7 +37,49 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider {
 	/**
 	 * @inheritDoc
 	 */
-	public static $trackedProperties = ['content', 'teaser', 'title'];
+	public $permissionCanAccess = 'admin.content.article.canManageArticle';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static $defaultProperty = 'content';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static $propertyLabels = [
+		'content' => 'wcf.acp.article.content',
+		'teaser' => 'wcf.acp.article.teaser',
+		'title' => 'wcf.global.title'
+	];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static $trackedProperties = ['title', 'teaser', 'content'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCurrentVersion(IVersionTrackerObject $object) {
+		$properties = $this->getTrackedProperties();
+		
+		/** @var Article $object */
+		$payload = [];
+		foreach ($object->getArticleContents() as $languageID => $articleContent) {
+			$payload[$languageID] = [];
+			foreach ($properties as $property) {
+				$payload[$languageID][$property] = $articleContent->{$property};
+			}
+		}
+		
+		return new VersionTrackerEntry(null, [
+			'versionID' => 'current',
+			'userID' => $object->userID,
+			'username' => $object->username,
+			'data' => $payload
+		]);
+	}
 	
 	/**
 	 * @inheritDoc
@@ -46,5 +98,13 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider {
 		}
 		
 		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isI18n(IVersionTrackerObject $object) {
+		/** @var Article $object */
+		return $object->isMultilingual == 1;
 	}
 }
