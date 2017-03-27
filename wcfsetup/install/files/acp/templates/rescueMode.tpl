@@ -83,7 +83,7 @@
 		</dl>
 	</section>
 	
-	{include file='captcha'}
+	{include file='captcha' supportsAsyncCaptcha=true}
 	
 	<section class="section">
 		<header class="sectionHeader">

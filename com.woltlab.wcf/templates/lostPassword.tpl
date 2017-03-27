@@ -42,7 +42,7 @@
 	
 	{event name='sections'}
 	
-	{include file='captcha'}
+	{include file='captcha' supportsAsyncCaptcha=true}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
