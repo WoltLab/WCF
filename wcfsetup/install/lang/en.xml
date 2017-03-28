@@ -2064,6 +2064,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Please confirm that you are not a robot.]]></item>
 	</category>
 	
+	<category name="wcf.captcha.recaptchaInvisible">
+		<item name="wcf.captcha.recaptchaInvisible.error.recaptchaString.false"><![CDATA[The check failed, please re-submit the form.]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.category.button.list"><![CDATA[List Categories]]></item>

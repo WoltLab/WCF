@@ -97,10 +97,21 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			//noinspection JSCheckFunctionSignatures
 			var captchaId = elData(event.currentTarget, 'captcha-id');
 			if (ControllerCaptcha.has(captchaId)) {
-				parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
+				var data = ControllerCaptcha.getData(captchaId);
+				if (data instanceof Promise) {
+					data.then((function (data) {
+						parameters = Core.extend(parameters, data);
+						this._submit(undefined, parameters);
+					}).bind(this));
+				}
+				else {
+					parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
+					this._submit(undefined, parameters);
+				}
 			}
-			
-			this._submit(undefined, parameters);
+			else {
+				this._submit(undefined, parameters);
+			}
 		},
 		
 		/**
