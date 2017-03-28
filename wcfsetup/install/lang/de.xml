@@ -1262,6 +1262,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Standard Avatar-Typ]]></item>
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initialen]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
+		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Gelesen-Markierung für Artikel aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2023,6 +2024,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
+		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
 	</category>
 	
 	<category name="wcf.attachment">

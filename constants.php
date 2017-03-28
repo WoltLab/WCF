@@ -219,3 +219,4 @@ define('USE_PAGE_TITLE_ON_LANDING_PAGE', 1);
 define('OG_IMAGE', '');
 define('HEAD_CODE', '');
 define('AVATAR_DEFAULT_TYPE', 'initials');
+define('ARTICLE_ENABLE_VISIT_TRACKING', 1);

@@ -1527,6 +1527,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>1</defaultvalue>
 				<options>module_article</options>
 			</option>
+			<option name="article_enable_visit_tracking">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
 			<option name="articles_per_page">
 				<categoryname>cms.article</categoryname>
 				<optiontype>integer</optiontype>

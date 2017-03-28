@@ -11,7 +11,9 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -57,6 +59,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'restore', 'trash', 'update'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $allowGuestAccess = ['markAllAsRead'];
 	
 	/**
 	 * @inheritDoc
@@ -113,6 +120,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					}
 				}
 			}
+		}
+		
+		// reset storage
+		if (ARTICLE_ENABLE_VISIT_TRACKING) {
+			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 		}
 		
 		return $article;
@@ -213,6 +225,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				}
 			}
 		}
+		
+		// reset storage
+		if (ARTICLE_ENABLE_VISIT_TRACKING) {
+			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+		}
 	}
 	
 	/**
@@ -286,5 +303,48 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 */
 	public function restore() {
 		$this->articleEditor->update(['isDeleted' => 0]);
+	}
+	
+	/**
+	 * Marks articles as read.
+	 */
+	public function markAsRead() {
+		if (empty($this->parameters['visitTime'])) {
+			$this->parameters['visitTime'] = TIME_NOW;
+		}
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$articleIDs = [];
+		foreach ($this->getObjects() as $article) {
+			$articleIDs[] = $article->articleID;
+			VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.article', $article->articleID, $this->parameters['visitTime']);
+		}
+		
+		// reset storage
+		if (WCF::getUser()->userID) {
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
+		}
+	}
+	
+	/**
+	 * Marks all articles as read.
+	 */
+	public function markAllAsRead() {
+		VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.article');
+		
+		// reset storage
+		if (WCF::getUser()->userID) {
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
+		}
+	}
+	
+	/**
+	 * Validates the mark all as read action.
+	 */
+	public function validateMarkAllAsRead() {
+		// does nothing
 	}
 }

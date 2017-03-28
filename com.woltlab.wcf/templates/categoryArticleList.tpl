@@ -19,6 +19,9 @@
 
 {capture assign='headerNavigation'}
 	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed' id=$categoryID}{/link}{/if}" title="{lang}wcf.global.button.rss{/lang}" class="jsTooltip"><span class="icon icon16 fa-rss"></span> <span class="invisible">{lang}wcf.global.button.rss{/lang}</span></a></li>
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
+	{/if}
 {/capture}
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
@@ -60,5 +63,13 @@
 		</nav>
 	{/hascontent}
 </footer>
+
+{if ARTICLE_ENABLE_VISIT_TRACKING}
+	<script data-relocate="true">
+		require(['WoltLabSuite/Core/Ui/Article/MarkAllAsRead'], function(UiArticleMarkAllAsRead) {
+			UiArticleMarkAllAsRead.init();
+		});
+	</script>
+{/if}
 
 {include file='footer'}

@@ -498,6 +498,7 @@
 		<page identifier="com.woltlab.wcf.ArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\ArticleListPage</controller>
+			<handler>wcf\system\page\handler\ArticleListPageHandler</handler>
 			<name language="de">Artikel-Liste</name>
 			<name language="en">Article List</name>
 			<options>module_article</options>

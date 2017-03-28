@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\article\ArticleAction;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\AccessibleArticleList;
@@ -107,6 +108,14 @@ abstract class AbstractArticlePage extends AbstractPage {
 		$articleEditor->updateCounters([
 			'views' => 1
 		]);
+		
+		// update article visit
+		if (ARTICLE_ENABLE_VISIT_TRACKING && $this->article->isNew()) {
+			$articleAction = new ArticleAction([$this->article->getDecoratedObject()], 'markAsRead', [
+				'viewableArticle' => $this->article
+			]);
+			$articleAction->executeAction();
+		}
 		
 		// get tags
 		if (MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag')) {

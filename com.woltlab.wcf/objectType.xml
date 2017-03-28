@@ -149,6 +149,10 @@
 			<name>com.woltlab.wcf.moderation.queue</name>
 			<definitionname>com.woltlab.wcf.visitTracker.objectType</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.visitTracker.objectType</definitionname>
+		</type>
 		<!-- /Visit Tracker -->
 		
 		<!-- activity points -->

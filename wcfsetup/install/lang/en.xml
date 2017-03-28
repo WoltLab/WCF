@@ -1264,6 +1264,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Default Avatar Type]]></item>
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initials]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
+		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Enable “mark as read” for articles]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1978,6 +1979,7 @@ full extend.]]></item>
 		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
+		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
