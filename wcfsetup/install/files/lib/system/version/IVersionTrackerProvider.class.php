@@ -73,4 +73,12 @@ interface IVersionTrackerProvider extends IObjectTypeProvider {
 	 * @return      boolean
 	 */
 	public function isI18n(IVersionTrackerObject $object);
+	
+	/**
+	 * Reverts an object to a previous version.
+	 * 
+	 * @param       IVersionTrackerObject   $object         target object
+	 * @param       VersionTrackerEntry     $entry          previous version
+	 */
+	public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry);
 }

@@ -11,6 +11,13 @@ namespace wcf\data;
  */
 interface IVersionTrackerObject extends IUserContent {
 	/**
+	 * Returns the link to the object's edit page.
+	 * 
+	 * @return      string
+	 */
+	public function getEditLink();
+	
+	/**
 	 * Returns the object's unique id.
 	 * 
 	 * @return      integer

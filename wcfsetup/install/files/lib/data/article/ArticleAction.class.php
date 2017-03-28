@@ -124,6 +124,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	public function update() {
 		parent::update();
 		
+		$isRevert = (!empty($this->parameters['isRevert']));
+		
 		// update article content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->getObjects() as $article) {
@@ -145,8 +147,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'title' => $content['title'],
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
-							'imageID' => $content['imageID'],
-							'teaserImageID' => $content['teaserImageID']
+							'imageID' => ($isRevert) ? $articleContent->imageID : $content['imageID'],
+							'teaserImageID' => ($isRevert) ? $articleContent->teaserImageID : $content['teaserImageID']
 						]);
 						
 						$versionData[] = $articleContent;
@@ -155,7 +157,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 						}
 						
 						// delete tags
-						if (empty($content['tags'])) {
+						if (!$isRevert && empty($content['tags'])) {
 							TagEngine::getInstance()->deleteObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, ($languageID ?: null));
 						}
 					}
@@ -167,8 +169,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'title' => $content['title'],
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
-							'imageID' => $content['imageID'],
-							'teaserImageID' => $content['teaserImageID']
+							'imageID' => ($isRevert) ? null : $content['imageID'],
+							'teaserImageID' => ($isRevert) ? null : $content['teaserImageID']
 						]);
 						$articleContentEditor = new ArticleContentEditor($articleContent);
 						
@@ -177,7 +179,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					}
 					
 					// save tags
-					if (!empty($content['tags'])) {
+					if (!$isRevert && !empty($content['tags'])) {
 						TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, $content['tags'], ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
 					}
 					

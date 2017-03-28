@@ -121,12 +121,19 @@ WCF.Message.EditHistory = Class.extend({
 	 * @param	object	newIDInputs
 	 * @param	string	containerSelector
 	 * @param	string	buttonSelector
+	 * @param       {Object}        options
 	 */
-	init: function(oldIDInputs, newIDInputs, containerSelector, buttonSelector) {
+	init: function(oldIDInputs, newIDInputs, containerSelector, buttonSelector, options) {
 		this._oldIDInputs = oldIDInputs;
 		this._newIDInputs = newIDInputs;
 		this._containerSelector = containerSelector;
 		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsRevertButton';
+		this._options = $.extend({
+			isVersionTracker: false,
+			versionTrackerObjectType: '',
+			versionTrackerObjectId: 0,
+			redirectUrl: ''
+		}, options);
 		
 		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -221,11 +228,26 @@ WCF.Message.EditHistory = Class.extend({
 	 * @param	jQuery	object
 	 */
 	_sendRequest: function(object) {
-		this.proxy.setOption('data', {
-			actionName: 'revert',
-			className: 'wcf\\data\\edit\\history\\entry\\EditHistoryEntryAction',
-			objectIDs: [ $(object).data('objectID') ]
-		});
+		if (this._options.isVersionTracker) {
+			//noinspection JSUnresolvedVariable
+			this.proxy.setOption('url', window.WSC_API_URL + 'index.php?ajax-invoke/&t=' + window.SECURITY_TOKEN);
+			this.proxy.setOption('data', {
+				actionName: 'revert',
+				className: 'wcf\\system\\version\\VersionTracker',
+				parameters: {
+					objectType: this._options.versionTrackerObjectType,
+					objectID: this._options.versionTrackerObjectId,
+					versionID: $(object).data('objectID')
+				}
+			});
+		}
+		else {
+			this.proxy.setOption('data', {
+				actionName: 'revert',
+				className: 'wcf\\data\\edit\\history\\entry\\EditHistoryEntryAction',
+				objectIDs: [$(object).data('objectID')]
+			});
+		}
 		
 		this.proxy.sendRequest();
 	},
@@ -238,7 +260,14 @@ WCF.Message.EditHistory = Class.extend({
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		window.location.reload(true);
+		if (this._options.redirectUrl) {
+			new WCF.System.Notification().show((function () {
+				window.location = this._options.redirectUrl;
+			}).bind(this));
+		}
+		else {
+			window.location.reload(true);
+		}
 	}
 });
 

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\version;
 use wcf\data\article\Article;
+use wcf\data\article\ArticleAction;
 use wcf\data\article\ArticleList;
 use wcf\data\article\ArticleVersionTracker;
 use wcf\data\IVersionTrackerObject;
@@ -106,5 +107,22 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider {
 	public function isI18n(IVersionTrackerObject $object) {
 		/** @var Article $object */
 		return $object->isMultilingual == 1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry) {
+		/** @var ArticleVersionTracker $object */
+		
+		// build the content data
+		$properties = $this->getTrackedProperties();
+		$content = [];
+		foreach ($object->getArticleContents() as $articleContent) {
+			$content[$articleContent->languageID ?: 0] = $entry->getPayloadForProperties($properties, $articleContent->languageID ?: 0);
+		}
+		
+		$action = new ArticleAction([$object->getDecoratedObject()], 'update', ['content' => $content, 'isRevert' => true]);
+		$action->executeAction();
 	}
 }

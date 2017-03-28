@@ -3,6 +3,7 @@ namespace wcf\data\article;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IVersionTrackerObject;
+use wcf\system\request\LinkHandler;
 
 /**
  * Represents an article with version tracking.
@@ -95,5 +96,12 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
 	 */
 	public function getTitle() {
 		return $this->getDecoratedObject()->getTitle();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getEditLink() {
+		return LinkHandler::getInstance()->getLink('ArticleEdit', ['isACP' => true, 'id' => $this->getDecoratedObject()->articleID]);
 	}
 }

@@ -94,6 +94,27 @@ class VersionTrackerEntry {
 	}
 	
 	/**
+	 * Returns the stored values for all given properties. Unknown or missing
+	 * properties will be set to an empty string.
+	 * 
+	 * @param       string[]        $properties     list of property names
+	 * @param       integer         $languageID     language id
+	 * @return      string[]
+	 */
+	public function getPayloadForProperties(array $properties, $languageID) {
+		$payload = [];
+		foreach ($properties as $property) {
+			$payload[$property] = '';
+			
+			if (isset($this->payload[$languageID]) && isset($this->payload[$languageID][$property])) {
+				$payload[$property] = $this->payload[$languageID][$property];
+			}
+		}
+		
+		return $payload;
+	}
+	
+	/**
 	 * Returns the list of language ids.
 	 * 
 	 * @return      integer[]
