@@ -14,6 +14,7 @@
 	var URL_LEGACY_MODE = false;
 </script>
 
+{js application='wcf' lib='polyfill' file='promise' core='true'}
 {js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
 {js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
 {js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
