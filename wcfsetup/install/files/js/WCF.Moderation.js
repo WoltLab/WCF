@@ -304,7 +304,7 @@ WCF.Moderation.Queue.MarkAsRead = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'markAsRead',
 			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
-			objectIDs: [ $(event.currentTarget).parents('tr:eq(0)').data('queueID') ]
+			objectIDs: [ $(event.currentTarget).parents('.moderationQueueEntry:eq(0)').data('queueID') ]
 		});
 		this._proxy.sendRequest();
 	},
