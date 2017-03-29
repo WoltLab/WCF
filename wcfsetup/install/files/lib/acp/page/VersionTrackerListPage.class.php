@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\IVersionTrackerObject;
 use wcf\data\language\Language;
+use wcf\data\IVersionTrackerObject;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;

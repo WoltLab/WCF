@@ -1,17 +1,17 @@
 <?php
 namespace wcf\system\version;
-use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
+use wcf\data\DatabaseObject;
 use wcf\data\IVersionTrackerObject;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\IAJAXInvokeAction;
 use wcf\system\request\RequestHandler;
+use wcf\system\IAJAXInvokeAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;

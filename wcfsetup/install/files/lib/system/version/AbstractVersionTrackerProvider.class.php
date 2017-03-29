@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\version;
-use wcf\data\IVersionTrackerObject;
 use wcf\data\object\type\AbstractObjectTypeProvider;
+use wcf\data\IVersionTrackerObject;
 use wcf\system\WCF;
 
 /**
