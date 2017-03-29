@@ -7,6 +7,7 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -265,7 +266,8 @@ class PageEditForm extends PageAddForm {
 		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'pageID' => $this->pageID,
-			'page' => $this->page
+			'page' => $this->page,
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->pageID)
 		]);
 	}
 }

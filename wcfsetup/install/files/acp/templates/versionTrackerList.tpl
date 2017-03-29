@@ -109,8 +109,8 @@
 						{event name='rowButtons'}
 					</td>
 					<td class="columnID"><strong>{lang}wcf.edit.currentVersion{/lang}</strong></td>
-					<td class="columnText columnUser"><a href="{link controller='UserEdit' id=$object->getUserID()}{/link}">{$object->getUsername()}</a></td>
-					<td class="columnDate columnTime">{@$object->getTime()|time}</td>
+					<td class="columnText columnUser">{if $object->getUserID()}<a href="{link controller='UserEdit' id=$object->getUserID()}{/link}">{$object->getUsername()}{else}---{/if}</a></td>
+					<td class="columnDate columnTime">{if $object->getTime()}{@$object->getTime()|time}{else}---{/if}</td>
 					
 					{event name='columns'}
 				</tr>

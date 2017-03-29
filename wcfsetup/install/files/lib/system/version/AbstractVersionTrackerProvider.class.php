@@ -20,7 +20,8 @@ abstract class AbstractVersionTrackerProvider extends AbstractObjectTypeProvider
 	public static $defaultProperty = '';
 	
 	/**
-	 * list of property names to their phrase
+	 * list of property names to their phrase, the order in which properties
+	 * appear is significant and is used as display orders when comparing changes
 	 * @var string[]
 	 */
 	public static $propertyLabels = [];

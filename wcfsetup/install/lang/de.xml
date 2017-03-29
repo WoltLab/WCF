@@ -96,7 +96,7 @@
 		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich in den Papierkorb verschieben?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
-		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID}{/link}">vorherige Versionen</a> dieses Artikels, die <a href="{link controller='VersionTrackerCompare' id=$lastVersion->versionID objectType='com.woltlab.wcf.article'}{/link}">letzte Änderung</a> erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID}{/link}">vorherige Versionen</a> dieses Artikels, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -222,6 +222,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Benutzer online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Wer war online]]></item>
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
+		<item name="wcf.acp.box.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">vorherige Versionen</a> dieser Box, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -1433,6 +1434,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Seite ist im Wartungsmodus aufrufbar]]></item>
 		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Seite darf von Suchmaschinen-Robotern indiziert werden]]></item>
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Seite automatisch in das Hauptmenü aufnehmen]]></item>
+		<item name="wcf.acp.page.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">vorherige Versionen</a> dieser Seite, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
@@ -2410,7 +2412,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.edit.headline.comparison"><![CDATA[Vergleich]]></item>
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
-		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Aktuelle Version{else}Version vom {@$new->time|plainTime}{/if} ({$new->username})]]></item>
+		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Aktuelle Version{else}Version vom {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
 	</category>
 	
 	<category name="wcf.editor">

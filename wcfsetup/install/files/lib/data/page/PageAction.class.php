@@ -11,6 +11,7 @@ use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\search\SearchIndexManager;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -145,10 +146,13 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 */
 	public function update() {
 		parent::update();
-	
+		
 		// update page content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->getObjects() as $page) {
+				$versionData = [];
+				$hasChanges = false;
+				
 				foreach ($this->parameters['content'] as $languageID => $content) {
 					if (!empty($content['htmlInputProcessor'])) {
 						/** @noinspection PhpUndefinedMethodInspection */
@@ -167,6 +171,15 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'metaKeywords' => $content['metaKeywords'],
 							'customURL' => $content['customURL']
 						]);
+						
+						$versionData[] = $pageContent;
+						foreach (['title', 'content', 'metaDescription', 'metaKeywords', 'customURL'] as $property) {
+							if ($pageContent->{$property} != $content[$property]) {
+								$hasChanges = true;
+								break;
+							}
+						}
+						
 						$pageContent = PageContent::getPageContent($page->pageID, ($languageID ?: null));
 					}
 					else {
@@ -181,6 +194,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'customURL' => $content['customURL']
 						]);
 						$pageContentEditor = new PageContentEditor($pageContent);
+						
+						$versionData[] = $pageContent;
+						$hasChanges = true;
 					}
 					
 					// update search index
@@ -215,6 +231,12 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 					foreach ($this->parameters['content'] as $languageID => $content) {
 						file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
 					}
+				}
+				
+				if ($hasChanges) {
+					$pageObj = new PageVersionTracker($page->getDecoratedObject());
+					$pageObj->setContent($versionData);
+					VersionTracker::getInstance()->add('com.woltlab.wcf.page', $pageObj);
 				}
 			}
 		}

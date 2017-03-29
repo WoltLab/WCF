@@ -64,14 +64,6 @@
 			<name>com.woltlab.wcf.article.content</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
-		
-		<type>
-			<name>com.woltlab.wcf.article</name>
-			<definitionname>com.woltlab.wcf.versionTracker.objectType</definitionname>
-			<classname>wcf\data\article\ArticleVersionTrackerProvider</classname>
-			<tableName>wcf1_article</tableName>
-			<tablePrimaryKey>articleID</tablePrimaryKey>
-		</type>
 		<!-- /articles -->
 		
 		<type>
@@ -143,6 +135,30 @@
 			<classname>wcf\system\moderation\queue\ModerationQueueReportManager</classname>
 		</type>
 		<!-- /moderation type -->
+		
+		<!-- version tracker -->
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.versionTracker.objectType</definitionname>
+			<classname>wcf\system\version\ArticleVersionTrackerProvider</classname>
+			<tableName>wcf1_article</tableName>
+			<tablePrimaryKey>articleID</tablePrimaryKey>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.box</name>
+			<definitionname>com.woltlab.wcf.versionTracker.objectType</definitionname>
+			<classname>wcf\system\version\BoxVersionTrackerProvider</classname>
+			<tableName>wcf1_box</tableName>
+			<tablePrimaryKey>boxID</tablePrimaryKey>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.versionTracker.objectType</definitionname>
+			<classname>wcf\system\version\PageVersionTrackerProvider</classname>
+			<tableName>wcf1_page</tableName>
+			<tablePrimaryKey>pageID</tablePrimaryKey>
+		</type>
+		<!-- /version tracker -->
 		
 		<!-- Visit Tracker -->
 		<type>

@@ -91,7 +91,7 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.versionTracker.objectType</name>
-			<interfacename>wcf\system\version\IVersionTrackerObjectTypeProvider</interfacename>
+			<interfacename>wcf\system\version\IVersionTrackerProvider</interfacename>
 		</definition>
 		
 		<definition>

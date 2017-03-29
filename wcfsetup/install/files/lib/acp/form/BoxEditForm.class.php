@@ -9,6 +9,7 @@ use wcf\system\box\IConditionBoxController;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -213,7 +214,8 @@ class BoxEditForm extends BoxAddForm {
 		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'boxID' => $this->boxID,
-			'box' => $this->box
+			'box' => $this->box,
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.box', $this->boxID)
 		]);
 	}
 }

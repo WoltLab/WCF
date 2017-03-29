@@ -96,6 +96,7 @@
 		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[Do you really want to move {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if} to the trash bin?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[This article has been moved to the trash bin and is currently hidden from view.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
+		<item name="wcf.acp.article.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID}{/link}">previous versions</a> of this article, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.acp.attachment">
@@ -218,6 +219,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Users Online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Who Was Online]]></item>
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
+		<item name="wcf.acp.box.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">previous versions</a> of this box, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -2361,7 +2363,7 @@ Errors are:
 		<item name="wcf.edit.headline.comparison"><![CDATA[Comparison]]></item>
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Current version{else}Version{/if} as of {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Current version{else}Version{/if} as of {@$new->time|plainTime} ({$new->username})]]></item>
-		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Current version{else}Version as of {@$new->time|plainTime}{/if} ({$new->username})]]></item>
+		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Current version{else}Version as of {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
 	</category>
 	
 	<category name="wcf.editor">
@@ -2914,6 +2916,7 @@ Errors are:
 		<item name="wcf.acp.page.availableDuringOfflineMode"><![CDATA[Page is available during maintenance mode]]></item>
 		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Allow search spiders to index this page]]></item>
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Add page to main menu]]></item>
+		<item name="wcf.acp.page.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">previous versions</a> of this page, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
