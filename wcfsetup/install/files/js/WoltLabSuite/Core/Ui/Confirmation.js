@@ -131,7 +131,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 		 */
 		_confirm: function() {
 			if (typeof _options.legacyCallback === 'function') {
-				_options.legacyCallback('confirm', _options.parameters);
+				_options.legacyCallback('confirm', _options.parameters, _content);
 			}
 			else {
 				_options.confirm(_options.parameters);
@@ -150,7 +150,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 				_active = false;
 				
 				if (typeof _options.legacyCallback === 'function') {
-					_options.legacyCallback('cancel', _options.parameters);
+					_options.legacyCallback('cancel', _options.parameters, _content);
 				}
 				else if (typeof _options.cancel === 'function') {
 					_options.cancel(_options.parameters);

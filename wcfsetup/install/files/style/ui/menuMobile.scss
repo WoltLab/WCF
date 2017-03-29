@@ -219,8 +219,6 @@
 		
 		> .menuOverlayItemTitle {
 			flex: 1 1 auto;
-			overflow: hidden;
-			text-overflow: ellipsis;
 		}
 		
 		> .badge {
@@ -238,6 +236,11 @@
 		right: 18px;
 		top: 50%;
 		transform: translateY(-50%);
+	}
+	
+	.menuOverlayItemTitle {
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 }
 

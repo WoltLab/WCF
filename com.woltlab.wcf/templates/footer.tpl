@@ -124,9 +124,11 @@
 	{event name='pageFooterStickyNotice'}
 	
 	<noscript>
-		<div class="layoutBoundary">
-			<span class="javascriptDisabledWarningText">{lang}wcf.page.javascriptDisabled{/lang}</span>
-		</div>
+		<div class="info">
+			<div class="layoutBoundary">
+				<span class="javascriptDisabledWarningText">{lang}wcf.page.javascriptDisabled{/lang}</span>
+			</div>
+		</div>	
 	</noscript>
 </div>
 

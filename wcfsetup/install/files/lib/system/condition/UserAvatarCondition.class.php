@@ -92,12 +92,16 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	 * @inheritDoc
 	 */
 	protected function getOptions() {
-		return [
+		$options = [
 			self::NO_SELECTION_VALUE => 'wcf.global.noSelection',
 			self::NO_AVATAR => 'wcf.user.condition.avatar.noAvatar',
-			self::AVATAR => 'wcf.user.condition.avatar.avatar',
-			self::GRAVATAR => 'wcf.user.condition.avatar.gravatar'
+			self::AVATAR => 'wcf.user.condition.avatar.avatar'
 		];
+		if (MODULE_GRAVATAR) {
+			$options[self::GRAVATAR] = 'wcf.user.condition.avatar.gravatar';
+		}
+		
+		return $options;
 	}
 	
 	/**

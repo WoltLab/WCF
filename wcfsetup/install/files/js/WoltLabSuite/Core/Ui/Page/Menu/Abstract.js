@@ -57,6 +57,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 			
 			EventHandler.add(this._eventIdentifier, 'open', callbackOpen);
 			EventHandler.add(this._eventIdentifier, 'close', this.close.bind(this));
+			EventHandler.add(this._eventIdentifier, 'updateButtonState', this._updateButtonState.bind(this));
 			
 			var itemList, itemLists = elByClass('menuOverlayItemList', this._menu);
 			this._menu.addEventListener('animationend', (function() {

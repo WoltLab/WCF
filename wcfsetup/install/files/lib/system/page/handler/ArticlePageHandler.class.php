@@ -37,7 +37,9 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 	 * @inheritDoc
 	 */
 	public function isVisible($objectID = null) {
-		return ViewableArticleRuntimeCache::getInstance()->getObject($objectID)->canRead();
+		$article = ViewableArticleRuntimeCache::getInstance()->getObject($objectID);
+		
+		return ($article !== null && $article->canRead());
 	}
 	
 	/**

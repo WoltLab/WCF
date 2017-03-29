@@ -21,6 +21,7 @@ class TaggedArticleList extends AccessibleArticleList {
 	public function __construct(Tag $tag) {
 		parent::__construct();
 		
+		$this->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
 		$this->getConditionBuilder()->add("article.articleID IN (SELECT articleID FROM wcf".WCF_N."_article_content WHERE articleContentID IN (SELECT objectID FROM wcf".WCF_N."_tag_to_object WHERE objectTypeID = ? AND languageID = ? AND tagID = ?))", [TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article'), $tag->languageID, $tag->tagID]);
 	}
 }
