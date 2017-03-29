@@ -19,18 +19,18 @@
 \{literal\}[\s\S]*?\{\/literal\} { yytext = yytext.substring(9, yytext.length - 10); return 'T_LITERAL'; }
 <command>\"([^"]|\\\.)*\" return 'T_QUOTED_STRING';
 <command>\'([^']|\\\.)*\' return 'T_QUOTED_STRING';
-\$ return 'T_VARIABLE';
-[_a-zA-Z][_a-zA-Z0-9]* { return 'T_VARIABLE_NAME'; }
-"."	 return '.';
-"["	 return '[';
-"]"	 return ']';
-"("	 return '(';
-")"	 return ')';
-"="	 return '=';
+<command>\$ return 'T_VARIABLE';
+<command>[_a-zA-Z][_a-zA-Z0-9]* { return 'T_VARIABLE_NAME'; }
+<command>"."	 return '.';
+<command>"["	 return '[';
+<command>"]"	 return ']';
+<command>"("	 return '(';
+<command>")"	 return ')';
+<command>"="	 return '=';
 "{ldelim}"  return '{ldelim}';
 "{rdelim}"  return '{rdelim}';
-"{#"	return '{#';
-"{@"	return '{@';
+"{#"	{ this.begin('command'); return '{#'; }
+"{@"	{ this.begin('command'); return '{@'; }
 "{if "	{ this.begin('command'); return '{if'; }
 "{else if " { this.begin('command'); return '{elseif'; }
 "{elseif "  { this.begin('command'); return '{elseif'; }
@@ -44,9 +44,8 @@
 "{foreach "  { this.begin('command'); return '{foreach'; }
 "{foreachelse}"  return '{foreachelse}';
 "{/foreach}"  return '{/foreach}';
-"{"	 return '{';
+\{(?!\s)	 { this.begin('command'); return '{'; }
 <command>"}" { this.popState(); return '}';}
-"}"	 return '}';
 \s+	 return 'T_WS';
 <<EOF>>	    return 'EOF';
 [^{]	return 'T_ANY';
@@ -82,8 +81,7 @@ CHUNK:
 |	COMMAND -> { encode: false, value: $1 }
 ;
 
-PLAIN_ANY: T_ANY | '}' | '{' T_WS -> $1 + $2
-| ']' | '[' | ')' | '(' | '.' | '=' | T_VARIABLE | T_VARIABLE_NAME | T_QUOTED_STRING | T_WS;
+PLAIN_ANY: T_ANY | T_WS;
 
 COMMAND:
 	'{if' COMMAND_PARAMETERS '}' CHUNK_STAR (ELSE_IF)* ELSE? '{/if}' {
