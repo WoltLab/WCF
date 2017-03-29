@@ -272,8 +272,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			catch (e) {}
 			
 			var showError = true;
-			if (data !== null && typeof options.failure === 'function') {
-				showError = options.failure(data, xhr.responseText, xhr, options.data);
+			if (typeof options.failure === 'function') {
+				showError = options.failure((data || {}), (xhr.responseText || ''), xhr, options.data);
 			}
 			
 			if (options.ignoreError !== true && showError !== false) {
