@@ -63,7 +63,14 @@ class FacebookAuthAction extends AbstractAction {
 			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__facebookInit')) throw new IllegalLinkException();
 			WCF::getSession()->unregister('__facebookInit');
 			
-			parse_str($content, $data);
+			try {
+				$data = JSON::decode($content);
+			}
+			catch (SystemException $e) {
+				parse_str($content, $data);
+			}
+			
+			if (!isset($data['access_token'])) throw new IllegalLinkException();
 			
 			try {
 				// fetch userdata
