@@ -159,8 +159,8 @@ class EditHistoryPage extends AbstractPage {
 		
 		// valid IDs were given, calculate diff
 		if ($this->old && $this->new) {
-			$a = explode("\n", StringUtil::unifyNewlines($this->old->getMessage()));
-			$b = explode("\n", StringUtil::unifyNewlines($this->new->getMessage()));
+			$a = explode("\n", StringUtil::unifyNewlines(StringUtil::trim($this->old->getMessage())));
+			$b = explode("\n", StringUtil::unifyNewlines(StringUtil::trim($this->new->getMessage())));
 			$diff = new Diff($a, $b);
 			$this->diff = $diff->getRawDiff();
 			
