@@ -30,54 +30,59 @@
 {/if}
 {foreach from=$diffs key=languageID item=properties}
 {if $languageID}<div class="tabMenuContent" data-name="language{@$languageID}">{/if}
+<div class="section editHistoryDiff">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{lang}wcf.edit.headline.old{/lang}</th>
+				<th>{lang}wcf.edit.headline.newOrCurrent{/lang}</th>
+			</tr>
+		</thead>
+		
+		<tbody>
 {foreach from=$properties key=property item=diff}
-<section class="section editHistoryDiff">
-	<h2 class="sectionTitle">{lang}wcf.edit.headline.comparison{/lang}: {$objectTypeProcessor->getPropertyLabel($property)}</h2>
+			<tr>
+				<td class="diffSection" colspan="2">{lang}wcf.edit.headline.comparison{/lang}: {$objectTypeProcessor->getPropertyLabel($property)}</td>
+			</tr>
 	
-	<div class="sideBySide">
-		<div class="containerHeadline">
-			<h3>{lang}wcf.edit.headline.old{/lang}</h3>
-		</div>
-		<div class="containerHeadline">
-			<h3>{lang}wcf.edit.headline.newOrCurrent{/lang}</h3>
-		</div>
-	</div>
-
-<div><div>
-{assign var='prevType' value=''}
-{foreach from=$diff item='line'}
-{if $line[0] !== $prevType}
-	</div>
+			<tr><td>{*
+*}{assign var='prevType' value=''}{*
+*}{assign var='colspan' value=false}{*
+*}{foreach from=$diff item='line'}{*
+*}{if $line[0] !== $prevType}{*
+	*}</td>
 	
 	{* unmodified, after deletion needs a "fake" insertion *}
-	{if $line[0] === ' ' && $prevType === '-'}<div></div>{/if}
+	{if $line[0] === ' ' && $prevType === '-'}<td></td>{/if}
 	
 	{* unmodified and deleted start a new container *}
-	{if $line[0] === ' ' || $line[0] === '-'}</div>{/if}
+	{if $line[0] === ' ' || $line[0] === '-'}</tr>{/if}
 	
 	{* adding, without deleting needs a "fake" deletion *}
 	{if $line[0] === '+' && $prevType !== '-'}
-		</div>
-		<div class="sideBySide">
-			<div></div>
+		</tr>
+		<tr>
+			{assign var='colspan' value=true}
 	{/if}
 	
 	{if $line[0] === ' '}
-		<div>
+		<tr>
+		{assign var='colspan' value=true}
 	{/if}
 	{if $line[0] === '-'}
-		<div class="sideBySide">
+		<tr>
 	{/if}
-	<div{if $line[0] === '+'} style="color: green;"{elseif $line[0] === '-'} style="color: red;"{/if}>
+	<td{if $line[0] === '+'} class="diffAdded"{elseif $line[0] === '-'} class="diffRemoved"{/if}{if $colspan} colspan="2"{assign var='colspan' value=false}{/if}>
 {/if}
 {if $line[0] === ' '}{@$line[1]}<br>{/if}
 {if $line[0] === '-'}{@$line[1]}<br>{/if}
 {if $line[0] === '+'}{@$line[1]}<br>{/if}
 {assign var='prevType' value=$line[0]}
 {/foreach}
-</div></div>
-</section>
 {/foreach}
+</td></tr></tbody></table>
+
+</div>
 {if $languageID}</div>{/if}
 {/foreach}
 {if !$diffs[0]|isset}</div>{/if}

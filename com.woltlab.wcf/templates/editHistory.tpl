@@ -8,49 +8,50 @@
 
 {if $diff}
 <div class="section editHistoryDiff">
-	<div class="sideBySide">
-		<div class="containerHeadline">
-			<h3>{lang}wcf.edit.headline.old{/lang}</h3>
-		</div>
-		<div class="containerHeadline">
-			<h3>{lang}wcf.edit.headline.new{/lang}</h3>
-		</div>
-	</div>
-
-<div><div>
-{assign var='prevType' value=''}
-{foreach from=$diff item='line'}
-{if $line[0] !== $prevType}
-	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{lang}wcf.edit.headline.old{/lang}</th>
+				<th>{lang}wcf.edit.headline.new{/lang}</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr><td>{*
+*}{assign var='prevType' value=''}{*
+*}{assign var='colspan' value=false}{*
+*}{foreach from=$diff item='line'}{*
+*}{if $line[0] !== $prevType}{*
+	*}</td>
 	
 	{* unmodified, after deletion needs a "fake" insertion *}
-	{if $line[0] === ' ' && $prevType === '-'}<div></div>{/if}
+	{if $line[0] === ' ' && $prevType === '-'}<td></td>{/if}
 	
 	{* unmodified and deleted start a new container *}
-	{if $line[0] === ' ' || $line[0] === '-'}</div>{/if}
+	{if $line[0] === ' ' || $line[0] === '-'}</tr>{/if}
 	
 	{* adding, without deleting needs a "fake" deletion *}
 	{if $line[0] === '+' && $prevType !== '-'}
-		</div>
-		<div class="sideBySide">
-			<div></div>
+		</tr>
+		<tr>
+			{assign var='colspan' value=true}
 	{/if}
 	
 	{if $line[0] === ' '}
-		<div>
+		<tr>
+		{assign var='colspan' value=true}
 	{/if}
 	{if $line[0] === '-'}
-		<div class="sideBySide">
+		<tr>
 	{/if}
-	<div{if $line[0] === '+'} style="color: green;"{elseif $line[0] === '-'} style="color: red;"{/if}>
+	<td{if $line[0] === '+'} class="diffAdded"{elseif $line[0] === '-'} class="diffRemoved"{/if}{if $colspan} colspan="2"{assign var='colspan' value=false}{/if}>
 {/if}
 {if $line[0] === ' '}{@$line[1]}<br>{/if}
 {if $line[0] === '-'}{@$line[1]}<br>{/if}
 {if $line[0] === '+'}{@$line[1]}<br>{/if}
 {assign var='prevType' value=$line[0]}
 {/foreach}
-</div></div>
-</div>
+</td></tr></table>
 {/if}
 
 <form action="{link controller='EditHistory'}{/link}" method="post">
