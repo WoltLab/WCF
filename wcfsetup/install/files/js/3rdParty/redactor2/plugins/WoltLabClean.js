@@ -129,8 +129,45 @@ $.Redactor.prototype.WoltLabClean = function() {
 				var div = elCreate('div');
 				div.innerHTML = html.replace(/@@@WOLTLAB-P-ALIGN-(?:left|right|center|justify)@@@/g, '');
 				
-				var element, elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
-				for (var i = 0, length = elements.length; i < length; i++) {
+				// handle text that appears to be pasted from a text-only editor or <textarea>
+				var element, i, length;
+				var isRawText = true;
+				for (i = 0, length = div.childElementCount; i < length; i++) {
+					element = div.children[i];
+					
+					if (element.nodeName !== 'DIV' || element.childNodes.length === 0) {
+						isRawText = false;
+						break;
+					}
+					
+					if (element.childNodes.length === 1 && element.childElementCount === 1) {
+						var child = element.children[0];
+						if (child.childNodes.length === 0 && child.nodeName !== 'BR') {
+							isRawText = false;
+							break;
+						}
+					}
+				}
+				
+				if (isRawText) {
+					var divs = [];
+					for (i = 0, length = div.childElementCount; i < length; i++) {
+						divs.push(div.children[i]);
+					}
+					
+					divs.forEach(function (element) {
+						var p = elCreate('p');
+						div.insertBefore(p, element);
+						while (element.childNodes.length > 0) {
+							p.appendChild(element.childNodes[0]);
+						}
+						
+						div.removeChild(element);
+					});
+				}
+				
+				var elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
+				for (i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
 					
 					removeStyles = [];
