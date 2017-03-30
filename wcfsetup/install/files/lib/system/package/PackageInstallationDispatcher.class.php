@@ -116,9 +116,16 @@ class PackageInstallationDispatcher {
 	 * 
 	 * @param	string		$node
 	 * @return	PackageInstallationStep
+	 * @throws      SystemException
 	 */
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
+		if (empty($nodes)) {
+			// guard against possible issues with empty instruction blocks, including
+			// these blocks that contain no valid instructions at all (e.g. typo from
+			// copy & paste)
+			throw new SystemException("Failed to retrieve nodes for identifier '".$node."', the query returned no results.");
+		}
 		
 		// invoke node-specific actions
 		$step = null;
