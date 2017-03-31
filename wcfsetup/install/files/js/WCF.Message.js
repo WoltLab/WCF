@@ -2099,7 +2099,7 @@ $.widget('wcf.messageTabMenu', {
 			});
 			this._tabsByName[$name] = $i;
 			
-			var $anchor = $tab.children('a').data('index', $i).click($.proxy(this._showTab, this));
+			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
 			if ($preselect == $name) {
 				$anchor.trigger('click');
 			}
