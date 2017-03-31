@@ -56,11 +56,9 @@ $.Redactor.prototype.WoltLabInlineCode = function() {
 				
 				if (nextSibling) {
 					nextSibling.textContent = '\u200B';
-					console.log("this");
 				}
 				else {
 					node.parentNode.appendChild(document.createTextNode('\u200B'));
-					console.log("this");
 				}
 			}
 		}
