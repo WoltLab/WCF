@@ -4,6 +4,10 @@
 					<div class="boxesContentBottom">
 						<div class="boxContainer">
 							{content}
+								{if !$boxesContentBottom|empty}
+									{@$boxesContentBottom}
+								{/if}
+								
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentBottom') item=box}
 									{@$box->render()}
 								{/foreach}
@@ -85,7 +89,9 @@
 			<div class="layoutBoundary">
 				<div class="boxContainer">
 					{content}
-						{if !$footerBoxes|empty}{@$footerBoxes}{/if}
+						{if !$footerBoxes|empty}
+							{@$footerBoxes}
+						{/if}
 					
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('footerBoxes') item=box}
 							{@$box->render()}

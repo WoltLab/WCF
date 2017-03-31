@@ -40,6 +40,10 @@
 			<div class="layoutBoundary">
 				<div class="boxContainer">
 					{content}
+						{if !$headerBoxes|empty}
+							{@$headerBoxes}
+						{/if}
+						
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('headerBoxes') item=box}
 							{@$box->render()}
 						{/foreach}
@@ -141,6 +145,10 @@
 					<div class="boxesContentTop">
 						<div class="boxContainer">
 							{content}
+								{if !$boxesContentTop|empty}
+									{@$boxesContentTop}
+								{/if}
+								
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentTop') item=box}
 									{@$box->render()}
 								{/foreach}
