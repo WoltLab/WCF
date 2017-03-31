@@ -438,6 +438,9 @@ define(
 				this._mediaCache = null;
 				
 				this._search.resetSearch();
+				if (this._mediaCategorySelect) {
+					this._mediaCategorySelect.value = 0;
+				}
 			}
 		},
 		
