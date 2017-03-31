@@ -8,6 +8,17 @@ $.Redactor.prototype.WoltLabButton = function() {
 			// tooltips are handled on our own
 			this.button.buildButtonTooltip = function () {};
 			
+			var mpClickCallback = this.button.clickCallback;
+			this.button.clickCallback = (function(e, callback, btnName, args) {
+				// prevent the browser from breaking the editor focus
+				if (typeof e.preventDefault === 'function') {
+					e.preventDefault();
+				}
+				
+				//noinspection JSUnresolvedFunction
+				mpClickCallback.call(this, e, callback, btnName, args);
+			}).bind(this);
+			
 			// add custom buttons
 			var button, buttonName, i, length;
 			//noinspection JSUnresolvedVariable
@@ -80,7 +91,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 				button[0].classList.add('jsTooltip');
 				
 				// update dropdown label for list
-				if (buttonName == 'lists') {
+				if (buttonName === 'lists') {
 					var dropdown = button.data('dropdown');
 					elBySel('.redactor-dropdown-outdent span', dropdown[0]).textContent = WCF.Language.get('wcf.editor.list.outdent');
 					elBySel('.redactor-dropdown-indent span', dropdown[0]).textContent = WCF.Language.get('wcf.editor.list.indent');
