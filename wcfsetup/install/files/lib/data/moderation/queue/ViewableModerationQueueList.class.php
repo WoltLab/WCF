@@ -23,12 +23,6 @@ use wcf\system\WCF;
  */
 class ViewableModerationQueueList extends ModerationQueueList {
 	/**
-	 * true, if objects should be populated with associated user profiles
-	 * @var	boolean
-	 */
-	public $loadUserProfiles = false;
-	
-	/**
 	 * @inheritDoc
 	 */
 	public $decoratorClassName = ViewableModerationQueue::class;
@@ -90,14 +84,13 @@ class ViewableModerationQueueList extends ModerationQueueList {
 				ModerationQueueManager::getInstance()->removeOrphans($queueIDs);
 			}
 			
-			if ($this->loadUserProfiles) {
-				$userIDs = [];
-				foreach ($this->objects as $object) {
-					$userIDs[] = $object->getAffectedObject()->getUserID();
-				}
-				
-				UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
+			$userIDs = [];
+			foreach ($this->objects as $object) {
+				$userIDs[] = $object->getAffectedObject()->getUserID();
+				if ($object->assignedUserID) $userIDs[] = $object->assignedUserID;
 			}
+				
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 	}
 	

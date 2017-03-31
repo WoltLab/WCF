@@ -111,6 +111,19 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	}
 	
 	/**
+	 * Returns assigned user profile object.
+	 *
+	 * @return	UserProfile|null
+	 */
+	public function getAssignedUserProfile() {
+		if ($this->assignedUserID) {
+			return UserProfileRuntimeCache::getInstance()->getObject($this->assignedUserID);
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns true if associated object was removed.
 	 * 
 	 * @return	boolean

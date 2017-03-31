@@ -79,10 +79,8 @@
 							<div>
 								<p{if $entry->isNew()} title="{lang}wcf.moderation.markAsRead.doubleClick{/lang}"{/if}>{@$entry->getUserProfile()->getAvatar()->getImageTag(48)}</p>
 								
-								{if $entry->assignedUserID == $__wcf->user->userID}
-									{if $__wcf->getUserProfileHandler()->getAvatar()}
-										<small class="myAvatar jsTooltip" title="{lang}wcf.moderation.assignedUser{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}</small>
-									{/if}
+								{if $entry->assignedUserID}
+									<small class="myAvatar jsTooltip" title="{lang}wcf.moderation.assignedUser{/lang}">{@$entry->getAssignedUserProfile()->getAvatar()->getImageTag(24)}</small>
 								{/if}
 							</div>
 						</li>
