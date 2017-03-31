@@ -34,6 +34,11 @@ use wcf\util\FileUtil;
  */
 class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction, IUploadAction {
 	/**
+	 * number of media files per media manager dialog page
+	 */
+	const ITEMS_PER_MANAGER_DIALOG_PAGE = 50;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function validateUpload() {
@@ -188,8 +193,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
-		$mediaList->sqlOrderBy = 'media.uploadTime DESC';
-		$mediaList->sqlLimit = 50;
+		$mediaList->sqlOrderBy = 'media.uploadTime DESC, media.mediaID DESC';
+		$mediaList->sqlLimit = static::ITEMS_PER_MANAGER_DIALOG_PAGE;
 		$mediaList->readObjects();
 		
 		$categoryList = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
@@ -198,6 +203,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		return [
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media')),
 			'media' => $this->getI18nMediaData($mediaList),
+			'pageCount' => ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE),
 			'template' => WCF::getTPL()->fetch('mediaManager', 'wcf', [
 				'categoryList' => $categoryList,
 				'mediaList' => $mediaList,
@@ -440,6 +446,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if ($this->parameters['mode'] != 'editor' && $this->parameters['mode'] != 'select') {
 			throw new UserInputException('mode');
 		}
+		
+		$this->readInteger('pageNo', true);
+		if (!$this->parameters['pageNo']) $this->parameters['pageNo'] = 1;
 	}
 	
 	/**
@@ -454,11 +463,22 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if ($this->parameters['categoryID']) {
 			$mediaList->getConditionBuilder()->add('media.categoryID = ?', [$this->parameters['categoryID']]);
 		}
-		$mediaList->sqlOrderBy = 'media.uploadTime DESC';
-		$mediaList->sqlLimit = 50;
+		$mediaList->sqlOrderBy = 'media.uploadTime DESC, media.mediaID DESC';
+		$mediaList->sqlLimit = static::ITEMS_PER_MANAGER_DIALOG_PAGE;
+		$mediaList->sqlOffset = ($this->parameters['pageNo'] - 1) * static::ITEMS_PER_MANAGER_DIALOG_PAGE;
 		$mediaList->readObjectIDs();
 		
 		if (empty($mediaList->getObjectIDs())) {
+			// check if page is requested that might have existed but does not exist anymore due to deleted
+			// media files
+			if ($this->parameters['pageNo'] > 1 && $this->parameters['searchString'] === '' && !$this->parameters['categoryID']) {
+				// request media dialog page with highest page number 
+				$parameters = $this->parameters;
+				$parameters['pageNo'] = ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE);
+				
+				return (new MediaAction($this->objects, 'getSearchResultList', $parameters))->executeAction()['returnValues'];
+			}
+			
 			return [
 				'template' => WCF::getLanguage()->getDynamicVariable('wcf.media.search.noResults')
 			];
@@ -470,6 +490,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		
 		return [
 			'media' => $this->getI18nMediaData($viewableMediaList),
+			'pageCount' => ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE),
+			'pageNo' => $this->parameters['pageNo'],
 			'template' => WCF::getTPL()->fetch('mediaListItems', 'wcf', [
 				'mediaList' => $viewableMediaList,
 				'mode' => $this->parameters['mode']

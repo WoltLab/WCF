@@ -204,6 +204,33 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		},
 		
 		/**
+		 * Returns the active page.
+		 *
+		 * @return	{integer}
+		 */
+		getActivePage: function() {
+			return this._options.activePage;
+		},
+		
+		/**
+		 * Returns the pagination Ui element.
+		 * 
+		 * @return	{HTMLElement}
+		 */
+		getElement: function() {
+			return this._element;
+		},
+		
+		/**
+		 * Returns the maximum page.
+		 * 
+		 * @return	{integer}
+		 */
+		getMaxPage: function() {
+			return this._options.maxPage;
+		},
+		
+		/**
 		 * Switches to given page number.
 		 * 
 		 * @param	{int}		pageNo		page number

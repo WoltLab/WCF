@@ -87,10 +87,9 @@ define(
 					imagesOnly: this._mediaManager.getOption('imagesOnly')
 				};
 				
-				if (this._categoryId) {
-					parameters.categoryID = this._categoryId;
-					
-					this._categoryId = null;
+				var categoryId = this._mediaManager.getCategoryId();
+				if (categoryId) {
+					parameters.categoryID = categoryId;
 				}
 				
 				return Core.extend(MediaUpload._super.prototype._getParameters.call(this), parameters);
@@ -178,12 +177,6 @@ define(
 		 * @see	WoltLabSuite/Core/Upload#_uploadFiles
 		 */
 		_uploadFiles: function(files, blob) {
-			// reset media (search) before uploading
-			if (this._mediaManager) {
-				this._categoryId = this._mediaManager.getCategoryId();
-				this._mediaManager.resetMedia();
-			}
-			
 			return MediaUpload._super.prototype._uploadFiles.call(this, files, blob);
 		}
 	});

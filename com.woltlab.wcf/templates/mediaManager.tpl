@@ -41,3 +41,5 @@
 		{include file='mediaListItems'}
 	</ul>
 </div>
+
+<div class="paginationBottom jsPagination"></div>

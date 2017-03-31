@@ -45,7 +45,12 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			this._mediaManager.setMedia(data.returnValues.media || { }, data.returnValues.template || '');
+			this._mediaManager.setMedia(data.returnValues.media || { }, data.returnValues.template || '', {
+				pageCount: data.returnValues.pageCount || 0,
+				pageNo: data.returnValues.pageNo || 0
+			});
+			
+			elByClass('dialogContent', this._mediaManager.getDialog())[0].scrollTop = 0;
 		},
 		
 		/**
@@ -55,8 +60,8 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 			if (this._searchMode) {
 				this._searchMode = false;
 				
-				this._mediaManager.resetMedia();
 				this.resetSearch();
+				this._mediaManager.resetMedia();
 			}
 		},
 		
@@ -130,8 +135,14 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		
 		/**
 		 * Sends an AJAX request to fetch search results.
+		 * 
+		 * @param	{integer}	pageNo
 		 */
-		search: function() {
+		search: function(pageNo) {
+			if (typeof pageNo !== "number") {
+				pageNo = 1;
+			}
+			
 			var searchString = this._input.value;
 			if (searchString && this._input.value.length < this._mediaManager.getOption('minSearchLength')) {
 				this._showStringThresholdError();
@@ -149,6 +160,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 					categoryID: this._mediaManager.getCategoryId(),
 					imagesOnly: this._mediaManager.getOption('imagesOnly'),
 					mode: this._mediaManager.getMode(),
+					pageNo: pageNo,
 					searchString: searchString
 				}
 			});
