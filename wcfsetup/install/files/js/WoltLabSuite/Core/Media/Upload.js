@@ -29,6 +29,7 @@ define(
 			this._mediaManager = options.mediaManager;
 			delete options.mediaManager;
 		}
+		this._categoryId = null;
 		
 		Upload.call(this, buttonContainerId, targetId, Core.extend({
 			className: 'wcf\\data\\media\\MediaAction',
@@ -82,9 +83,17 @@ define(
 		 */
 		_getParameters: function() {
 			if (this._mediaManager) {
-				return Core.extend(MediaUpload._super.prototype._getParameters.call(this), {
+				var parameters = {
 					imagesOnly: this._mediaManager.getOption('imagesOnly')
-				});
+				};
+				
+				if (this._categoryId) {
+					parameters.categoryID = this._categoryId;
+					
+					this._categoryId = null;
+				}
+				
+				return Core.extend(MediaUpload._super.prototype._getParameters.call(this), parameters);
 			}
 			
 			return MediaUpload._super.prototype._getParameters.call(this);
@@ -171,6 +180,7 @@ define(
 		_uploadFiles: function(files, blob) {
 			// reset media (search) before uploading
 			if (this._mediaManager) {
+				this._categoryId = this._mediaManager.getCategoryId();
 				this._mediaManager.resetMedia();
 			}
 			

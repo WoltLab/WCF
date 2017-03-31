@@ -40,22 +40,33 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 		
 		$this->readBoolean('imagesOnly', true);
+		$this->readInteger('categoryID', true);
 		
 		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->validateFiles(new MediaUploadFileValidationStrategy($this->parameters['imagesOnly']));
+		
+		if ($this->parameters['categoryID']) {
+			$category = CategoryHandler::getInstance()->getCategory($this->parameters['categoryID']);
+			if ($category === null || $category->getObjectType()->objectType !== 'com.woltlab.wcf.media.category') {
+				throw new UserInputException('categoryID');
+			}
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function upload() {
+		$additionalData = ['username' => WCF::getUser()->username];
+		if ($this->parameters['categoryID']) {
+			$additionalData['categoryID'] = $this->parameters['categoryID'];
+		}
+		
 		// save files
 		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
 			'generateThumbnails' => true,
 			'rotateImages' => true
-		], [
-			'username' => WCF::getUser()->username
-		]);
+		], $additionalData);
 		
 		/** @noinspection PhpUndefinedMethodInspection */
 		$this->parameters['__files']->saveFiles($saveStrategy);
