@@ -71,6 +71,13 @@
 				</dd>
 			</dl>
 			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="originIsNotSystem" value="1"{if $originIsNotSystem} checked{/if}> {lang}wcf.acp.box.originIsNotSystem{/lang}</label>
+				</dd>
+			</dl>
+			
 			{event name='filterFields'}
 		</div>
 		
@@ -90,6 +97,7 @@
 		{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
 		{if $position}{capture append=linkParameters}&position={@$position}{/capture}{/if}
 		{if $boxType}{capture append=linkParameters}&boxType={@$boxType|rawurlencode}{/capture}{/if}
+		{if $originIsNotSystem}{capture append=linkParameters}&originIsNotSystem=1{/capture}{/if}
 		
 		{pages print=true assign=pagesLinks controller="BoxList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}

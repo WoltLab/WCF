@@ -220,6 +220,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Who Was Online]]></item>
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">previous versions</a> of this box, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Custom boxes only]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -2917,6 +2918,7 @@ Errors are:
 		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Allow search spiders to index this page]]></item>
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Add page to main menu]]></item>
 		<item name="wcf.acp.page.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">previous versions</a> of this page, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Custom pages only]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

@@ -223,6 +223,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Wer war online]]></item>
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">vorherige Versionen</a> dieser Box, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Eigene Boxen]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -1435,6 +1436,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.allowSpidersToIndex"><![CDATA[Seite darf von Suchmaschinen-Robotern indiziert werden]]></item>
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Seite automatisch in das Hauptmenü aufnehmen]]></item>
 		<item name="wcf.acp.page.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">vorherige Versionen</a> dieser Seite, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Eigene Seiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">

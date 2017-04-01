@@ -86,6 +86,12 @@ class BoxListPage extends SortablePage {
 	public $showBoxAddDialog = 0;
 	
 	/**
+	 * filters the list of boxes showing only custom boxes
+	 * @var boolean
+	 */
+	public $originIsNotSystem = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -97,6 +103,7 @@ class BoxListPage extends SortablePage {
 		if (!empty($_REQUEST['boxType'])) $this->boxType = $_REQUEST['boxType'];
 		if (!empty($_REQUEST['position'])) $this->position = $_REQUEST['position'];
 		if (!empty($_REQUEST['showBoxAddDialog'])) $this->showBoxAddDialog = 1;
+		if (!empty($_REQUEST['originIsNotSystem'])) $this->originIsNotSystem = 1;
 	}
 	
 	/**
@@ -123,6 +130,9 @@ class BoxListPage extends SortablePage {
 		if (!empty($this->boxType)) {
 			$this->objectList->getConditionBuilder()->add('box.boxType = ?', [$this->boxType]);
 		}
+		if ($this->originIsNotSystem) {
+			$this->objectList->getConditionBuilder()->add('box.originIsSystem = ?', [0]);
+		}
 	}
 	
 	/**
@@ -139,7 +149,8 @@ class BoxListPage extends SortablePage {
 			'position' => $this->position,
 			'availablePositions' => Box::$availablePositions,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-			'showBoxAddDialog' => $this->showBoxAddDialog
+			'showBoxAddDialog' => $this->showBoxAddDialog,
+			'originIsNotSystem' => $this->originIsNotSystem
 		]);
 	}
 }

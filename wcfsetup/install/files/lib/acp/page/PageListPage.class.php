@@ -88,9 +88,15 @@ class PageListPage extends SortablePage {
 	
 	/**
 	 * display 'Add Page' dialog on load
-	 * @var integer
+	 * @var boolean
 	 */
 	public $showPageAddDialog = 0;
+	
+	/**
+	 * filters the list of pages showing only custom pages
+	 * @var boolean
+	 */
+	public $originIsNotSystem = 0;
 	
 	/**
 	 * @inheritDoc
@@ -104,6 +110,7 @@ class PageListPage extends SortablePage {
 		if (isset($_REQUEST['applicationPackageID'])) $this->applicationPackageID = intval($_REQUEST['applicationPackageID']);
 		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
 		if (!empty($_REQUEST['showPageAddDialog'])) $this->showPageAddDialog = 1;
+		if (!empty($_REQUEST['originIsNotSystem'])) $this->originIsNotSystem = 1;
 		
 		// get available applications
 		$applicationList = new ApplicationList();
@@ -132,6 +139,9 @@ class PageListPage extends SortablePage {
 		if (!empty($this->pageType)) {
 			$this->objectList->getConditionBuilder()->add('page.pageType = (?)', [$this->pageType]);
 		}
+		if ($this->originIsNotSystem) {
+			$this->objectList->getConditionBuilder()->add('page.originIsSystem = ?', [0]);
+		}
 	}
 	
 	/**
@@ -148,7 +158,8 @@ class PageListPage extends SortablePage {
 			'pageType' => $this->pageType,
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-			'showPageAddDialog' => $this->showPageAddDialog
+			'showPageAddDialog' => $this->showPageAddDialog,
+			'originIsNotSystem' => $this->originIsNotSystem
 		]);
 	}
 }
