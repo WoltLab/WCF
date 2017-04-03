@@ -326,12 +326,21 @@ class RegisterForm extends UserAddForm {
 					// Twitter
 					if (WCF::getSession()->getVar('__twitterData')) {
 						$twitterData = WCF::getSession()->getVar('__twitterData');
-						$this->additionalFields['authData'] = 'twitter:'.$twitterData['user_id'];
+						$this->additionalFields['authData'] = 'twitter:'.(isset($twitterData['id']) ? $twitterData['id'] : $twitterData['user_id']);
 						
 						WCF::getSession()->unregister('__twitterData');
 						
+						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+							$registerVia3rdParty = true;
+						}
+						
 						if (isset($twitterData['description']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
 						if (isset($twitterData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
+						
+						// avatar
+						if (isset($twitterData['profile_image_url'])) {
+							$avatarURL = $twitterData['profile_image_url'];
+						}
 					}
 				break;
 				case 'facebook':

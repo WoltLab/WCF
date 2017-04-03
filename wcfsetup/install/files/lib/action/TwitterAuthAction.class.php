@@ -112,7 +112,23 @@ class TwitterAuthAction extends AbstractAction {
 					// fetch user data
 					$twitterData = null;
 					try {
-						$request = new HTTPRequest('https://api.twitter.com/1.1/users/show.json?screen_name=' . $data['screen_name']);
+						$oauthHeader = [
+							'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
+							'oauth_nonce' => StringUtil::getRandomID(),
+							'oauth_signature_method' => 'HMAC-SHA1',
+							'oauth_timestamp' => TIME_NOW,
+							'oauth_version' => '1.0',
+							'oauth_token' => $data['oauth_token']
+						];
+						$getData = [
+							'include_email' => 'true',
+							'skip_status' => 'true'
+						];
+						$signature = $this->createSignature('https://api.twitter.com/1.1/account/verify_credentials.json', array_merge($oauthHeader, $getData), $data['oauth_token_secret'], 'GET');
+						$oauthHeader['oauth_signature'] = $signature;
+						
+						$request = new HTTPRequest('https://api.twitter.com/1.1/account/verify_credentials.json?skip_status=true&include_email=true');
+						$request->addHeader('Authorization', 'OAuth '.$this->buildOAuthHeader($oauthHeader));
 						$request->execute();
 						$reply = $request->getReply();
 						$twitterData = json_decode($reply['body'], true);
@@ -120,6 +136,7 @@ class TwitterAuthAction extends AbstractAction {
 					catch (SystemException $e) { /* ignore errors */ }
 					
 					WCF::getSession()->register('__username', $data['screen_name']);
+					if (isset($twitterData['email'])) WCF::getSession()->register('__email', $twitterData['email']);
 					
 					if ($twitterData !== null) $data = $twitterData;
 					WCF::getSession()->register('__twitterData', $data);
@@ -206,7 +223,7 @@ class TwitterAuthAction extends AbstractAction {
 	 * @param	string $tokenSecret
 	 * @return	string
 	 */
-	public function createSignature($url, array $parameters, $tokenSecret = '') {
+	public function createSignature($url, array $parameters, $tokenSecret = '', $method = 'POST') {
 		$tmp = [];
 		foreach ($parameters as $key => $val) {
 			$tmp[rawurlencode($key)] = rawurlencode($val);
@@ -220,7 +237,7 @@ class TwitterAuthAction extends AbstractAction {
 			$parameterString .= $key.'='.$val;
 		}
 		
-		$base = "POST&".rawurlencode($url)."&".rawurlencode($parameterString);
+		$base = $method."&".rawurlencode($url)."&".rawurlencode($parameterString);
 		$key = rawurlencode(StringUtil::trim(TWITTER_PRIVATE_KEY)).'&'.rawurlencode($tokenSecret);
 		
 		return base64_encode(hash_hmac('sha1', $base, $key, true));
