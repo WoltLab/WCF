@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\system\exception\SystemException;
+use wcf\util\DOMUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -287,7 +288,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 			}
 			
 			$openingTag = ['attributes' => $attributes, 'name' => $name];
-			$closingTag = ['name' => $name];
+			$closingTag = ['name' => $name, '__parents' => DOMUtil::getReadonlyParentTree($element)];
 			
 			if ($bbcode->getProcessor()) {
 				/** @var IBBCode $processor */

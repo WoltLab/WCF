@@ -38,6 +38,17 @@ class AttachmentBBCode extends AbstractBBCode {
 			$attachmentID = $openingTag['attributes'][0];
 		}
 		
+		$hasParentLink = false;
+		if (!empty($closingTag['__parents'])) {
+			/** @var \DOMElement $parent */
+			foreach ($closingTag['__parents'] as $parent) {
+				if ($parent->nodeName === 'a') {
+					$hasParentLink = true;
+					break;
+				}
+			}
+		}
+		
 		// get embedded object
 		$attachment = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.attachment', $attachmentID);
 		if ($attachment === null) {
@@ -92,7 +103,7 @@ class AttachmentBBCode extends AbstractBBCode {
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
 					$result = '<img src="' . $source . '" alt="">';
-					if ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT) {
+					if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
 						$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">' . $result . '</a>';
 					}
 					else {
@@ -120,7 +131,7 @@ class AttachmentBBCode extends AbstractBBCode {
 					}
 					
 					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="">';
-					if ($attachment->hasThumbnail() && $attachment->canDownload()) {
+					if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
 						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
 					}
 				}
