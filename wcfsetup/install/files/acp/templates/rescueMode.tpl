@@ -14,14 +14,12 @@
 
 <div id="pageContainer" class="pageContainer">
 	<div class="pageHeaderContainer">
-		<header id="pageHeader" class="pageHeader">
-			<div>
-				<div class="layoutBoundary">
-					<div id="logo" class="logo">
-						<a href="{$pageURL}">
-							<img src="{$pageURL}&amp;proxy=logo" alt="" class="large">
-						</a>
-					</div>
+		<header id="pageHeaderFacade" class="pageHeaderFacade">
+			<div class="layoutBoundary">
+				<div id="pageHeaderLogo" class="pageHeaderLogo">
+					<a href="{$pageURL}">
+						<img src="{$pageURL}&amp;proxy=logo" alt="" class="pageHeaderLogoLarge" style="width: 281px;height: 40px;display: inline !important;">
+					</a>
 				</div>
 			</div>
 		</header>
