@@ -1661,7 +1661,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default user profile settings will be applied to existing users. This will override any settings changed by the users themselves.]]></item>
 		<item name="wcf.acp.user.option.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
-		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
+		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[You can provide a regular expression to validate the user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.user.option.visible"><![CDATA[Visible for]]></item>
 		<item name="wcf.acp.user.option.visible.0"><![CDATA[Nobody]]></item>
