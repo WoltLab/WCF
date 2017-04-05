@@ -147,6 +147,7 @@ final class CronjobUtil {
 	 * @param	integer		$month
 	 * @param	integer		$year
 	 * @param	array		$values
+	 * @return      array
 	 */
 	protected static function calculateMonth($month, $year, array &$values) {
 		$index = self::findKey($month, $values['month']);
@@ -166,7 +167,7 @@ final class CronjobUtil {
 	 * Calculates the day while adjusting month and year to match given criteria.
 	 * 
 	 * Note: The day of a command's execution can be specified by two fields - day
-	 * of month, and day of week. If both fields are restricted (ie, aren't *), the
+	 * of month, and day of week. If both fields are restricted , that is not '*', the
 	 * command will be run when either field matches the current time. -- crontab(5)
 	 * 
 	 * @param	array		$values
@@ -196,7 +197,6 @@ final class CronjobUtil {
 			
 			if (!$addAnDay) {
 				self::calculateHour($values, $timeBase);
-				$addAnDay = true;
 			}
 		}
 		
@@ -419,7 +419,7 @@ final class CronjobUtil {
 	protected static function calculateValue($fieldName, $fieldValue) {
 		$values = [];
 		
-		// examinate first char
+		// examine first char
 		$char = mb_substr($fieldValue, 0, 1);
 		
 		// could be a single value, range or list
