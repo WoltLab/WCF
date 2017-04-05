@@ -29,6 +29,10 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				return (this.utils.isCollapsed()) ? this.block.formatCollapsed(tag, attr, value, type) : this.block.formatUncollapsed(tag, attr, value, type);
 			}).bind(this);
 			
+			var isCaretInsideRedactor = (function (editor, block) {
+				return !(document.activeElement !== editor || block === false || !this.utils.isRedactorParent(block));
+			}).bind(this);
+			
 			var mpFormatCollapsed = this.block.formatCollapsed;
 			this.block.formatCollapsed = (function(tag, attr, value, type) {
 				var block = this.selection.block();
@@ -37,19 +41,18 @@ $.Redactor.prototype.WoltLabBlock = function() {
 					return;
 				}
 				
-				if (this.detect.isFirefox()) {
-					var editor = this.core.editor()[0];
-					if (document.activeElement !== editor) {
-						this.selection.restore();
-						
-						if (document.activeElement !== editor) {
-							editor.focus();
-						}
-					}
+				var editor = this.core.editor()[0];
+				if (!isCaretInsideRedactor(editor, block)) {
+					this.selection.restore();
 					
-					if (this.selection.block() === false) {
-						this.focus.end();
+					if (document.activeElement !== editor) {
+						editor.focus();
 					}
+				}
+				
+				if (!isCaretInsideRedactor(editor, block)) {
+					this.focus.end();
+					this.selection.save();
 				}
 				
 				var replaced = mpFormatCollapsed.call(this, tag, attr, value, type);

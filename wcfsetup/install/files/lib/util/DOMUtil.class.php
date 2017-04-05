@@ -172,6 +172,27 @@ final class DOMUtil {
 	}
 	
 	/**
+	 * Returns a cloned parent tree that is virtually readonly. In fact it can be
+	 * modified, but all changes are non permanent and do not affect the source
+	 * document at all.
+	 * 
+	 * @param       \DOMNode        $node           node
+	 * @return      \DOMElement[]   list of parent elements
+	 */
+	public static function getReadonlyParentTree(\DOMNode $node) {
+		$tree = [];
+		/** @var \DOMElement $parent */
+		foreach (self::getParents($node) as $parent) {
+			// do not include <body>, <html> and the document itself
+			if ($parent->nodeName === 'body') break;
+			
+			$tree[] = $parent->cloneNode(false);
+		}
+		
+		return $tree;
+	}
+	
+	/**
 	 * Determines the relative position of two nodes to each other.
 	 * 
 	 * @param	\DOMNode	$node1		first node

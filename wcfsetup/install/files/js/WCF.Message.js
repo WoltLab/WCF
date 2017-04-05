@@ -59,8 +59,8 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 				$content += "\n";
 			}
 			
-			// do *not* use $.trim here, as we want to preserve whitespaces
-			$content += $(listItem).text().replace(/\n+$/, '');
+			// do *not* use $.trim here, as we want to preserve whitespaces, \xa0 = &nbsp;
+			$content += $(listItem).text().replace(/\n+$/, '').replace(/\u200B/g, '').replace(/\xa0/, ' ');
 		});
 		
 		if (this._dialog === null) {
@@ -2128,7 +2128,7 @@ $.widget('wcf.messageTabMenu', {
 			});
 			this._tabsByName[$name] = $i;
 			
-			var $anchor = $tab.children('a').data('index', $i).click($.proxy(this._showTab, this));
+			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
 			if ($preselect == $name) {
 				$anchor.trigger('click');
 			}

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\system\exception\SystemException;
+use wcf\util\DOMUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
@@ -27,6 +28,12 @@ class HtmlBBCodeParser extends BBCodeParser {
 	public static $disallowNesting = ['attach', 'b', 'code', 'email', 'i', 'img', 'media', 's', 'tt', 'u', 'url', 'user', 'wsm', 'wsp'];
 	
 	/**
+	 * tag names used to isolate bbcodes contained in source code elements
+	 * @var string[]
+	 */
+	public static $codeTagNames = ['kbd', 'pre'];
+	
+	/**
 	 * list of open tags with name and uuid
 	 * @var array
 	 */
@@ -42,6 +49,16 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * @inheritDoc
 	 */
 	public function parse($text) {
+		$codeBlocks = [];
+		foreach (self::$codeTagNames as $tagName) {
+			$text = preg_replace_callback('~(<' . $tagName . '[^>]+>)([\s\S]+?)(<\/' . $tagName . ')~', function ($matches) use (&$codeBlocks) {
+				$uuid = StringUtil::getUUID();
+				$codeBlocks[$uuid] = $matches[2];
+				
+				return $matches[1] . '###' . $uuid . '###' . $matches[3];
+			}, $text);
+		}
+		
 		$this->setText($text);
 		
 		// difference to the original implementation: sourcecode bbcodes are handled too
@@ -52,6 +69,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 		$this->buildXMLStructure();
 		
 		$this->buildParsedString();
+		
+		foreach ($codeBlocks as $uuid => $content) {
+			$this->parsedText = str_replace('###' . $uuid . '###', $content, $this->parsedText);
+		}
 		
 		return $this->parsedText;
 	}
@@ -287,7 +308,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 			}
 			
 			$openingTag = ['attributes' => $attributes, 'name' => $name];
-			$closingTag = ['name' => $name];
+			$closingTag = ['name' => $name, '__parents' => DOMUtil::getReadonlyParentTree($element)];
 			
 			if ($bbcode->getProcessor()) {
 				/** @var IBBCode $processor */

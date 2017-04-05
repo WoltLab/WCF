@@ -82,6 +82,11 @@ class ImageProxyAction extends AbstractAction {
 							if ($chain instanceof HTTPException) {
 								throw new \DomainException();
 							}
+							// TODO: This is the Exception thrown by RemoteFile.
+							//       Update if RemoteFile switches to a proper subclass in the future.
+							if (strpos($chain->getMessage(), 'Can not connect to') === 0) {
+								throw new \DomainException();
+							}
 						}
 						while ($chain = $chain->getPrevious());
 						
