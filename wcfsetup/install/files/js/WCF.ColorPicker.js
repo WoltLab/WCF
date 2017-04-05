@@ -588,6 +588,12 @@ WCF.ColorPicker = Class.extend({
 });
 
 (function() {
+	if (window.__wcf_bc_colorUtil === undefined) {
+		require(['ColorUtil'], function (ColorUtil) {
+			// void call to force module evaluation
+		});
+	}
+	
 	if (typeof window.__wcf_bc_colorPickerInit === 'function') {
 		window.__wcf_bc_colorPickerInit();
 	}
