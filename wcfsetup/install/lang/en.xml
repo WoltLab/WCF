@@ -103,8 +103,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Variables are recognized as {$variable} and will be replaced with the regular expression’s matching named group. Enter the media’s HTML code here. Example: <code>{$ID}</code> will be replaced with the medium ID as shown above.{/literal}]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regular Expression]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Provide the link format as a <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRegular_expression">regular expression</a>. Enter one expression per line.
-Examples for medium ID detection:
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Provide the link format as a <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRegular_expression">regular expression</a>. Enter one expression per line. Examples for medium ID detection:
 <ul class="nativeList">
 	<li><code>(?&lt;ID&gt;[0-9]+)</code> detects a numeric ID.</li>
 	<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> detects an alphanumeric ID.</li>
@@ -707,7 +706,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
-		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally, you can provide a Proxy-Server for outgoing connections.]]></item>
 		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[​Changing the backend requires a rebuild of the search indices available on the rebuild data page.​​​]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
@@ -1642,7 +1641,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
-		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[The value will be used as preset on first time editing.]]></item>
+		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
 		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
@@ -1656,7 +1655,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.required"><![CDATA[Owner must provide a valid value]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Field values are searchable in the member search]]></item>
 		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Select Options]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Enter one select option per line, e.g. for use with a select-box. Note: The left hand side of a colon is used as an internal identifier. It allows you to change the text of the option without invalidating former selections.]]></item>
+		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Enter one select option per line, e.g. for use with a select-box. Note: The left-hand side of a colon is used as an internal identifier. It allows you to change the text of the option without invalidating former selections.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default user profile settings will be applied to existing users. This will override any settings changed by the users themselves.]]></item>
