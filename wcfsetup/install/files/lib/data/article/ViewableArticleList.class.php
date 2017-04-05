@@ -2,6 +2,7 @@
 namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContentList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\like\LikeHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -57,10 +58,13 @@ class ViewableArticleList extends ArticleList {
 	public function readObjects() {
 		parent::readObjects();
 		
-		$userIDs = [];
+		$userIDs = $articleIDs = [];
 		foreach ($this->getObjects() as $article) {
 			if ($article->userID) {
 				$userIDs[] = $article->userID;
+			}
+			if ($article->hasLabels) {
+				$articleIDs[] = $article->articleID;
 			}
 		}
 		
@@ -77,6 +81,16 @@ class ViewableArticleList extends ArticleList {
 			$contentList->readObjects();
 			foreach ($contentList as $articleContent) {
 				$this->objects[$articleContent->articleID]->setArticleContent($articleContent);
+			}
+		}
+		
+		// get labels
+		if (!empty($articleIDs)) {
+			$assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels($articleIDs);
+			foreach ($assignedLabels as $articleID => $labels) {
+				foreach ($labels as $label) {
+					$this->objects[$articleID]->addLabel($label);
+				}
 			}
 		}
 	}

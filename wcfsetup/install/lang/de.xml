@@ -626,6 +626,7 @@
 		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Feld leer {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, wird das Label an letzter Position einsortiert.]]></item>
 		<item name="wcf.acp.label.sortAfterGroupFiltering"><![CDATA[Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Label-Liste nur nach einer bestimmten Labelgruppe {if LANGUAGE_USE_INFORMAL_VARIANT}filterst{else}filtern{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Labels innerhalb dieser Gruppe durch Ziehen und Loslassen sortieren.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Artikel]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">

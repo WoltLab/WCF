@@ -7,6 +7,17 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle" itemprop="name headline">{$articleContent->title}</h1>
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
+				{if $article->hasLabels()}
+					<li>
+						<span class="icon icon16 fa-tags"></span>
+						<ul class="labelList">
+							{foreach from=$article->getLabels() item=label}
+								<li><span class="label badge{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+							{/foreach}
+						</ul>
+					</li>
+				{/if}
+				
 				<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<span class="icon icon16 fa-user"></span>
 					{if $article->userID}

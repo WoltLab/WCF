@@ -3,6 +3,7 @@ namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ViewableArticleContent;
+use wcf\data\label\Label;
 use wcf\data\media\ViewableMedia;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
@@ -50,6 +51,12 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * @var	integer
 	 */
 	protected static $unreadArticles;
+	
+	/**
+	 * list of assigned labels
+	 * @var	Label[]
+	 */
+	protected $labels = [];
 	
 	/**
 	 * Returns a specific article decorated as viewable article or `null` if it does not exist.
@@ -155,6 +162,33 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 */
 	public function isNew() {
 		return $this->time > $this->getVisitTime();
+	}
+	
+	/**
+	 * Adds a label.
+	 *
+	 * @param	Label	$label
+	 */
+	public function addLabel(Label $label) {
+		$this->labels[$label->labelID] = $label;
+	}
+	
+	/**
+	 * Returns a list of labels.
+	 *
+	 * @return	Label[]
+	 */
+	public function getLabels() {
+		return $this->labels;
+	}
+	
+	/**
+	 * Returns true if one or more labels are assigned to this article.
+	 *
+	 * @return	boolean
+	 */
+	public function hasLabels() {
+		return !empty($this->labels);
 	}
 	
 	/**

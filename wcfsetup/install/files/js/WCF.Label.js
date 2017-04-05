@@ -279,3 +279,65 @@ WCF.Label.Chooser = Class.extend({
 		}
 	}
 });
+
+/**
+ * Handles displaying label groups based on the selected categories.
+ */
+WCF.Label.ArticleLabelChooser = WCF.Label.Chooser.extend({
+	/**
+	 * maps the available label group ids to the categories
+	 * @var	object
+	 */
+	_labelGroupsToCategories: null,
+	
+	/**
+	 * Initializes a new WCF.Label.ArticleLabelChooser object.
+	 *
+	 * @param	object		labelGroupsToCategories
+	 * @param	object		selectedLabelIDs
+	 * @param	string		containerSelector
+	 * @param	string		submitButtonSelector
+	 * @param	boolean		showWithoutSelection
+	 */
+	init: function(labelGroupsToCategories, selectedLabelIDs, containerSelector, submitButtonSelector, showWithoutSelection) {
+		this._super(selectedLabelIDs, containerSelector, submitButtonSelector, showWithoutSelection);
+		this._labelGroupsToCategories = labelGroupsToCategories;
+		
+		this._updateLabelGroups();
+		
+		$('#categoryID').change($.proxy(this._updateLabelGroups, this));
+	},
+	
+	/**
+	 * Updates the visible label groups based on the selected categories.
+	 */
+	_updateLabelGroups: function() {
+		// hide all label choosers first
+		$('.labelChooser').each(function(index, element) {
+			$(element).parents('dl:eq(0)').hide();
+		})
+		
+		var visibleGroupIDs = [];
+		var categoryID = parseInt($('#categoryID').val());
+		
+		if (this._labelGroupsToCategories[categoryID]) {
+			for (var i = 0, length = this._labelGroupsToCategories[categoryID].length; i < length; i++) {
+				$('#labelGroup' + this._labelGroupsToCategories[categoryID][i]).parents('dl:eq(0)').show();
+			}
+		}
+	},
+	
+	/**
+	 * @see	WCF.Label.Chooser._submit()
+	 */
+	_submit: function() {
+		// delete non-selected groups to avoid sumitting these labels
+		for (var groupID in this._groups) {
+			if (!this._groups[groupID].is(':visible')) {
+				delete this._groups[groupID];
+			}
+		}
+		
+		this._super();
+	}
+});

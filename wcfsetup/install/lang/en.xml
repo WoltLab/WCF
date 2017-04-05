@@ -622,6 +622,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.showOrder.description"><![CDATA[Display order of the label in its label group. If you leave this field empty, the label will be placed at the last position.]]></item>
 		<item name="wcf.acp.label.sortAfterGroupFiltering"><![CDATA[If you only filter the label list by a certain label group, you can sort the labels in this group using drag and drop.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Articles]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">

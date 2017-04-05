@@ -81,7 +81,7 @@
 	{if $lastVersion}<p class="info">{lang}wcf.acp.article.lastVersion{/lang}</p>{/if}
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
+<form class="articleAddForm" method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
 	<div class="section">
 		<dl{if $errorField == 'categoryID'} class="formError"{/if}>
 			<dt><label for="categoryID">{lang}wcf.acp.article.category{/lang}</label></dt>
@@ -104,6 +104,46 @@
 				{/if}
 			</dd>
 		</dl>
+		
+		{if $labelGroups|count}
+			{foreach from=$labelGroups item=labelGroup}
+				{if $labelGroup|count}
+					<dl{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset} class="formError"{/if}>
+						<dt><label>{$labelGroup->getTitle()}</label></dt>
+						<dd>
+							<ul class="labelList jsOnly" data-object-id="{@$labelGroup->groupID}">
+								<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}" data-force-selection="{if $labelGroup->forceSelection}true{else}false{/if}">
+									<div class="dropdownToggle" data-toggle="labelGroup{@$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
+									<div class="dropdownMenu">
+										<ul class="scrollableDropdownMenu">
+											{foreach from=$labelGroup item=label}
+												<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></span></li>
+											{/foreach}
+										</ul>
+									</div>
+								</li>
+							</ul>
+							<noscript>
+								<select name="labelIDs[{@$labelGroup->groupID}]">
+									{foreach from=$labelGroup item=label}
+										<option value="{@$label->labelID}">{lang}{$label->label}{/lang}</option>
+									{/foreach}
+								</select>
+							</noscript>
+							{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset}
+								<small class="innerError">
+									{if $errorType[$labelGroup->groupID] == 'missing'}
+										{lang}wcf.label.error.missing{/lang}
+									{else}
+										{lang}wcf.label.error.invalid{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+				{/if}
+			{/foreach}
+		{/if}
 		
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.acp.article.author{/lang}</label></dt>
@@ -472,5 +512,18 @@
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
+
+{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
+<script data-relocate="true">
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.label.none': '{lang}wcf.label.none{/lang}',
+		});
+		
+		{if !$labelGroups|empty}
+			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
+		{/if}
+	});
+</script>
 
 {include file='footer'}

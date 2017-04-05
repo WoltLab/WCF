@@ -5,6 +5,7 @@ use wcf\data\article\ArticleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
 use wcf\system\version\VersionTracker;
@@ -71,6 +72,10 @@ class ArticleEditForm extends ArticleAddForm {
 	public function save() {
 		AbstractForm::save();
 		
+		// save labels
+		ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->article->articleID);
+		$labelIDs = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID], false);
+				
 		$content = [];
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -104,7 +109,8 @@ class ArticleEditForm extends ArticleAddForm {
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
-			'time' => $this->timeObj->getTimestamp()
+			'time' => $this->timeObj->getTimestamp(),
+			'hasLabels' => (isset($labelIDs[$this->article->articleID]) && !empty($labelIDs[$this->article->articleID])) ? 1 : 0
 		];
 		
 		$this->objectAction = new ArticleAction([$this->article], 'update', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
@@ -164,6 +170,14 @@ class ArticleEditForm extends ArticleAddForm {
 			}
 			
 			$this->readImages();
+			
+			// labels
+			$assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID], true);
+			if (isset($assignedLabels[$this->article->articleID])) {
+				foreach ($assignedLabels[$this->article->articleID] as $label) {
+					$this->labelIDs[$label->groupID] = $label->labelID;
+				}
+			}
 		}
 	}
 	

@@ -168,6 +168,7 @@ CREATE TABLE wcf1_article (
 	views MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
+	hasLabels TINYINT(1) NOT NULL DEFAULT 0,
 	
 	KEY (time)
 );

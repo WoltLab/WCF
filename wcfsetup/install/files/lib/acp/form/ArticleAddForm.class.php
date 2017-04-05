@@ -4,13 +4,16 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\language\Language;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
+use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -164,6 +167,24 @@ class ArticleAddForm extends AbstractForm {
 	public $availableLanguages = [];
 	
 	/**
+	 * label group list
+	 * @var	ViewableLabelGroup[]
+	 */
+	public $labelGroups;
+	
+	/**
+	 * list of label ids
+	 * @var	integer[]
+	 */
+	public $labelIDs = [];
+	
+	/**
+	 * maps the label group ids to the article category ids
+	 * @var	array
+	 */
+	public $labelGroupsToCategories = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -175,6 +196,9 @@ class ArticleAddForm extends AbstractForm {
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 		
 		$this->readMultilingualSetting();
+		
+		// labels
+		ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
 	}
 	
 	/**
@@ -199,6 +223,7 @@ class ArticleAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		$this->enableComments = 0;
+		if (isset($_POST['labelIDs']) && is_array($_POST['labelIDs'])) $this->labelIDs = $_POST['labelIDs'];
 		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['time'])) {
 			$this->time = $_POST['time'];
@@ -336,6 +361,29 @@ class ArticleAddForm extends AbstractForm {
 			$this->htmlInputProcessors[0] = new HtmlInputProcessor();
 			$this->htmlInputProcessors[0]->process($this->content[0], 'com.woltlab.wcf.article.content', 0);
 		}
+		
+		$this->validateLabelIDs();
+	}
+	
+	/**
+	 * Validates the selected labels.
+	 */
+	protected function validateLabelIDs() {
+		// set category ids to selected category ids for validation
+		ArticleLabelObjectHandler::getInstance()->setCategoryIDs([$this->categoryID]);
+		
+		$validationResult = ArticleLabelObjectHandler::getInstance()->validateLabelIDs($this->labelIDs, 'canSetLabel', false);
+		
+		// reset category ids to accessible category ids
+		ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
+		
+		if (!empty($validationResult[0])) {
+			throw new UserInputException('labelIDs');
+		}
+		
+		if (!empty($validationResult)) {
+			throw new UserInputException('label', $validationResult);
+		}
 	}
 	
 	/**
@@ -378,11 +426,16 @@ class ArticleAddForm extends AbstractForm {
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
-			'isMultilingual' => $this->isMultilingual
+			'isMultilingual' => $this->isMultilingual,
+			'hasLabels' => empty($this->labelIDs) ? 0 : 1
 		];
 		
 		$this->objectAction = new ArticleAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
-		$this->objectAction->executeAction();
+		$article = $this->objectAction->executeAction()['returnValues'];
+		// save labels
+		if (!empty($this->labelIDs)) {
+			ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $article->articleID);
+		}
 		
 		// call saved event
 		$this->saved();
@@ -406,6 +459,9 @@ class ArticleAddForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
+		$this->labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
+		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
+				
 		if (empty($_POST)) {
 			$this->setDefaultValues();
 		}
@@ -449,7 +505,10 @@ class ArticleAddForm extends AbstractForm {
 			'teaser' => $this->teaser,
 			'content' => $this->content,
 			'availableLanguages' => $this->availableLanguages,
-			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator()
+			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+			'labelIDs' => $this->labelIDs,
+			'labelGroups' => $this->labelGroups,
+			'labelGroupsToCategories' => $this->labelGroupsToCategories
 		]);
 	}
 }

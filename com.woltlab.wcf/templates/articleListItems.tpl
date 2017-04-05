@@ -11,6 +11,17 @@
 						<div class="containerHeadline">
 							<h3 class="articleListTitle">{$article->getTitle()}</h3>
 							<ul class="inlineList articleListMetaData">
+								{if $article->hasLabels()}
+									<li>
+										<span class="icon icon16 fa-tags"></span>
+										<ul class="labelList">
+											{foreach from=$article->getLabels() item=label}
+												<li><span class="label badge{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+											{/foreach}
+										</ul>
+									</li>
+								{/if}
+								
 								<li>
 									<span class="icon icon16 fa-clock-o"></span>
 									{@$article->time|time}

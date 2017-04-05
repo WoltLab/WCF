@@ -150,6 +150,14 @@
 								</span>
 								
 								<div class="containerHeadline">
+									{if $article->hasLabels()}
+										<ul class="labelList" style="float: right; padding-left: 7px;">
+											{foreach from=$article->getLabels() item=label}
+												<li><span class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+											{/foreach}
+										</ul>
+									{/if}
+									
 									<h3>
 										{if $article->isDeleted}<span class="badge label red jsIconDeleted">{lang}wcf.message.status.deleted{/lang}</span>{/if}
 										{if $article->publicationStatus == 0}<span class="badge">{lang}wcf.acp.article.publicationStatus.unpublished{/lang}</span>{/if}
