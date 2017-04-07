@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\paid\subscription\user;
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\DatabaseObject;
 use wcf\data\user\User;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
