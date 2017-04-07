@@ -2,6 +2,7 @@
 namespace wcf\data\paid\subscription\user;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\DatabaseObject;
+use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
@@ -32,6 +33,12 @@ class PaidSubscriptionUser extends DatabaseObject {
 	protected $subscription = null;
 	
 	/**
+	 * user object 
+	 * @var User
+	 */
+	protected $user = null;
+	
+	/**
 	 * Returns the paid subscription object.
 	 * 
 	 * @return	PaidSubscription
@@ -51,6 +58,19 @@ class PaidSubscriptionUser extends DatabaseObject {
 	 */
 	public function setSubscription(PaidSubscription $subscription) {
 		$this->subscription = $subscription;
+	}
+	
+	/**
+	 * Returns the user object.
+	 * 
+	 * @return      User
+	 */
+	public function getUser() {
+		if ($this->user === null) {
+			$this->user = new User($this->userID);
+		}
+		
+		return $this->user;
 	}
 	
 	/**
