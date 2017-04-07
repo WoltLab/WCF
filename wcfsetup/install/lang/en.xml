@@ -73,6 +73,7 @@
 		<item name="wcf.acp.article.edit"><![CDATA[Edit Article]]></item>
 		<item name="wcf.acp.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
+		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
@@ -83,6 +84,9 @@
 		<item name="wcf.acp.article.i18n.none.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Multilingual article]]></item>
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[The content will be provided for each language separately.]]></item>
+		<item name="wcf.acp.article.i18n.source"><![CDATA[Use values]]></item>
+		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[Do you really want to enable internationalization for this article? This will cause the current values to be copied over to all other languages, and causes the edit history of this article to be discarded.<br><br>Please submit any unsaved changes before executing this action.]]></item>
+		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[Do you really want to disable internationalization for this article? All values except the ones of the selected language will be discarded, this will also delete the edit history of this article.<br><br>Please submit any unsaved changes before executing this action.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser Image]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>

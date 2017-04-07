@@ -254,6 +254,21 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction {
 	}
 	
 	/**
+	 * Resets the entire history for provided object id.
+	 * 
+	 * @param       string          $objectTypeName         object type name
+	 * @param       integer         $objectID               object id
+	 */
+	public function reset($objectTypeName, $objectID) {
+		$objectType = $this->getObjectType($objectTypeName);
+		
+		$sql = "DELETE FROM     ".$this->getTableName($objectType)."_version
+			WHERE           objectID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$objectID]);
+	}
+	
+	/**
 	 * Creates a database table for an object type unless it exists already.
 	 * 
 	 * @param       ObjectType      $objectType     target object type

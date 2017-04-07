@@ -1,8 +1,10 @@
 <?php
 namespace wcf\data\article;
 use wcf\data\article\content\ArticleContent;
+use wcf\data\article\content\ArticleContentAction;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\language\Language;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -36,6 +38,12 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	public $articleEditor;
 	
 	/**
+	 * language object
+	 * @var Language
+	 */
+	public $language;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $className = ArticleEditor::class;
@@ -58,7 +66,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'restore', 'trash', 'update'];
+	protected $requireACP = ['create', 'delete', 'restore', 'toggleI18n', 'trash', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -303,6 +311,82 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 */
 	public function restore() {
 		$this->articleEditor->update(['isDeleted' => 0]);
+	}
+	
+	/**
+	 * Validates parameters to toggle between i18n and monolingual mode.
+	 * 
+	 * @throws      UserInputException
+	 */
+	public function validateToggleI18n() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		$this->articleEditor = $this->getSingleObject();
+		if ($this->articleEditor->getDecoratedObject()->isMultilingual) {
+			$this->readInteger('languageID');
+			$this->language = LanguageFactory::getInstance()->getLanguage($this->parameters['languageID']);
+			if ($this->language === null) {
+				throw new UserInputException('languageID');
+			}
+			
+			$contents = $this->articleEditor->getArticleContents();
+			if (!isset($contents[$this->language->languageID])) {
+				// there is no content
+				throw new UserInputException('languageID');
+			}
+		}
+	}
+	
+	/**
+	 * Toggles between i18n and monolingual mode.
+	 */
+	public function toggleI18n() {
+		$removeContent = [];
+		
+		// i18n -> monolingual
+		if ($this->articleEditor->getDecoratedObject()->isMultilingual) {
+			foreach ($this->articleEditor->getArticleContents() as $articleContent) {
+				if ($articleContent->languageID == $this->language->languageID) {
+					$articleContentEditor = new ArticleContentEditor($articleContent);
+					$articleContentEditor->update(['languageID' => null]);
+				}
+				else {
+					$removeContent[] = $articleContent;
+				}
+			}
+		}
+		else {
+			// monolingual -> i18n
+			$articleContent = $this->articleEditor->getArticleContent();
+			$data = [];
+			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+				$data[$language->languageID] = [
+					'title' => $articleContent->title,
+					'teaser' => $articleContent->teaser,
+					'content' => $articleContent->content,
+					'imageID' => $articleContent->imageID ?: null,
+					'teaserImageID' => $articleContent->teaserImageID ?: null
+				];
+			}
+			
+			$action = new ArticleAction([$this->articleEditor], 'update', ['content' => $data]);
+			$action->executeAction();
+			
+			$removeContent[] = $articleContent;
+		}
+		
+		if (!empty($removeContent)) {
+			$action = new ArticleContentAction($removeContent, 'delete');
+			$action->executeAction();
+		}
+		
+		// flush edit history
+		VersionTracker::getInstance()->reset('com.woltlab.wcf.article', $this->articleEditor->getDecoratedObject()->articleID);
+		
+		// update article's i18n state
+		$this->articleEditor->update([
+			'isMultilingual' => ($this->articleEditor->getDecoratedObject()->isMultilingual) ? 0 : 1
+		]);
 	}
 	
 	/**

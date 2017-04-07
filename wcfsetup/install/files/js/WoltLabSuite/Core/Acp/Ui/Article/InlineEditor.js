@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
-define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Dictionary, Language, UiConfirmation, UiNotification) {
+define(['Ajax', 'Core', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Core, Dictionary, Language, UiConfirmation, UiNotification) {
 	"use strict";
 	
 	var _articles = new Dictionary();
@@ -14,14 +14,23 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 	/**
 	 * @constructor
 	 */
-	function AcpUiArticleInlineEditor(objectId) { this.init(objectId); }
+	function AcpUiArticleInlineEditor(objectId, options) { this.init(objectId, options); }
 	AcpUiArticleInlineEditor.prototype = {
 		/**
 		 * Initializes the ACP inline editor for articles.
 		 * 
-		 * @param       {int}   objectId        article id, equals 0 on the article list, but is non-zero when editing a single article
+		 * @param       {int}           objectId        article id, equals 0 on the article list, but is non-zero when editing a single article
+		 * @param       {Object}        options         list of configuration options
 		 */
-		init: function (objectId) {
+		init: function (objectId, options) {
+			this._options = Core.extend({
+				i18n: {
+					defaultLanguageId: 0,
+					isI18n: false,
+					languages: {}
+				}
+			}, options);
+			
 			if (objectId) {
 				this._initArticle(null, objectId);
 			}
@@ -56,6 +65,11 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 			var buttonTrash = elBySel('.jsButtonTrash', article);
 			buttonTrash.addEventListener(WCF_CLICK_EVENT, this._prompt.bind(this, objectId, 'trash'));
 			
+			if (isArticleEdit) {
+				var buttonToggleI18n = elBySel('.jsButtonToggleI18n', article);
+				if (buttonToggleI18n !== null) buttonToggleI18n.addEventListener(WCF_CLICK_EVENT, this._toggleI18n.bind(this, objectId));
+			}
+			
 			_articles.set(objectId, {
 				buttons: {
 					delete: buttonDelete,
@@ -83,6 +97,49 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 			UiConfirmation.show({
 				confirm: (function () { this._invoke(objectId, actionName) }).bind(this),
 				message: elData(article.buttons[actionName], 'confirm-message-html'),
+				messageIsHtml: true
+			});
+		},
+		
+		/**
+		 * Toggles an article between i18n and monolingual.
+		 * 
+		 * @param       {int}           objectId        article id
+		 * @param       {Event}         event           event object
+		 * @protected
+		 */
+		_toggleI18n: function (objectId, event) {
+			event.preventDefault();
+			
+			var html = '<p>' + Language.get('wcf.acp.article.i18n.' + (this._options.i18n.isI18n ? 'fromI18n' : 'toI18n') + '.confirmMessage') + '</p>';
+			
+			// build language selection
+			if (this._options.i18n.isI18n) {
+				html += '<dl><dt>' + Language.get('wcf.acp.article.i18n.source') + '</dt><dd>';
+				for (var languageId in this._options.i18n.languages) {
+					if (this._options.i18n.languages.hasOwnProperty(languageId)) {
+						html += '<label><input type="radio" name="i18nLanguage" value="' + languageId + '"' + (~~this._options.i18n.defaultLanguageId === ~~languageId ? ' checked' : '') + '> ' + this._options.i18n.languages[languageId] + '</label>';
+					}
+				}
+				html += '</dd></dl>';
+			}
+			
+			UiConfirmation.show({
+				confirm: (function (parameters, content) {
+					var languageId = 0;
+					if (this._options.i18n.isI18n) {
+						languageId = elBySel("input[name='i18nLanguage']:checked", content.parentNode).value;
+					}
+					
+					Ajax.api(this, {
+						actionName: 'toggleI18n',
+						objectIDs: [objectId],
+						parameters: {
+							languageID: languageId
+						}
+					});
+				}).bind(this),
+				message: html,
 				messageIsHtml: true
 			});
 		},
@@ -130,6 +187,10 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'],
 					else {
 						elRemove(elBySel('.jsIconDeleted', article.element));
 					}
+					break;
+					
+				case 'toggleI18n':
+					UiNotification.show(undefined, function () { window.location.reload(); });
 					break;
 					
 				case 'trash':

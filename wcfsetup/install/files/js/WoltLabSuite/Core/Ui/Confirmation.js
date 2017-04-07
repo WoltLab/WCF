@@ -134,7 +134,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 				_options.legacyCallback('confirm', _options.parameters, _content);
 			}
 			else {
-				_options.confirm(_options.parameters);
+				_options.confirm(_options.parameters, _content);
 			}
 			
 			_active = false;

@@ -21,6 +21,9 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
 		Language.addObject({
+			'wcf.acp.article.i18n.source': '{lang}wcf.acp.article.i18n.source{/lang}',
+			'wcf.acp.article.i18n.toI18n.confirmMessage': '{lang}wcf.acp.article.i18n.toI18n.confirmMessage{/lang}',
+			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{lang}wcf.acp.article.i18n.fromI18n.confirmMessage{/lang}',
 			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}',
 			'wcf.page.search': '{lang}wcf.page.search{/lang}',
 			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
@@ -30,7 +33,15 @@
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
-		{if $action == 'edit'}new AcpUiArticleInlineEditor({@$article->articleID});{/if}
+		{if $action == 'edit'}
+			new AcpUiArticleInlineEditor({@$article->articleID}, {
+				i18n: {
+					defaultLanguageId: {@$defaultLanguageID},
+					isI18n: {if $article->isMultilingual}true{else}false{/if},
+					languages: { {implode from=$languages item=language glue=', '}{@$language->languageID}: '{$language|encodeJS}'{/implode} }
+				}
+			});
+		{/if}
 	});
 </script>
 
@@ -59,6 +70,9 @@
 					<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
 					<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
 					<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+				{/if}
+				{if $languages|count > 1 || $article->isMultilingual}
+					<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
 				{/if}
 				<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
 			{/if}
