@@ -43,7 +43,8 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				// WoltLab modification: do not suppress event if nodes have been added
 				if (((this.opts.type === 'textarea' || this.opts.type === 'div')
 					&& (!this.detect.isFirefox() && mutation.target === this.core.editor()[0]) && (mutation.type === 'childList' && !mutation.addedNodes.length))
-					|| (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0])
+					|| (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0]
+					|| (mutation.attributeName === 'data-vivaldi-spatnav-clickable'))
 				)
 				{
 					stop = true;
