@@ -1,13 +1,21 @@
 {include file='header' pageTitle='wcf.acp.article.list'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
+	require(['Language', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'],
+		function(Language, ControllerClipboard, UiUserSearchInput, AcpUiArticleInlineEditor) {
 		Language.addObject({
+			'wcf.acp.article.publicationStatus.unpublished': '{lang}wcf.acp.article.publicationStatus.unpublished{/lang}',
+			'wcf.acp.article.setCategory': '{lang}wcf.acp.article.setCategory{/lang}',
 			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}'
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
 		new AcpUiArticleInlineEditor(0);
+		
+		ControllerClipboard.setup({
+			hasMarkedItems: {if $hasMarkedItems}true{else}false{/if},
+			pageClassName: 'wcf\\acp\\page\\ArticleListPage'
+		});
 	});
 </script>
 
@@ -108,9 +116,10 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table data-type="com.woltlab.wcf.article" class="table jsClipboardContainer">
 			<thead>
 				<tr>
+					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
 					<th class="columnID columnArticleID{if $sortField == 'articleID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=articleID&sortOrder={if $sortField == 'articleID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnText columnArticleTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.title{/lang}</a></th>
 					<th class="columnDigits columnComments{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.comments{/lang}</a></th>
@@ -123,7 +132,8 @@
 			
 			<tbody>
 				{foreach from=$objects item=article}
-					<tr class="jsArticleRow" data-object-id="{@$article->articleID}">
+					<tr class="jsArticleRow jsClipboardObject" data-object-id="{@$article->articleID}">
+						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$article->articleID}"></td>
 						<td class="columnIcon">
 							<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
 							{if $article->canDelete()}
@@ -160,13 +170,13 @@
 									
 									<h3>
 										{if $article->isDeleted}<span class="badge label red jsIconDeleted">{lang}wcf.message.status.deleted{/lang}</span>{/if}
-										{if $article->publicationStatus == 0}<span class="badge">{lang}wcf.acp.article.publicationStatus.unpublished{/lang}</span>{/if}
+										{if $article->publicationStatus == 0}<span class="badge jsUnpublishedArticle">{lang}wcf.acp.article.publicationStatus.unpublished{/lang}</span>{/if}
 										{if $article->publicationStatus == 2}<span class="badge" title="{$article->publicationDate|plainTime}">{lang}wcf.acp.article.publicationStatus.delayed{/lang}</span>{/if}
 										<a href="{link controller='ArticleEdit' id=$article->articleID}{/link}" title="{lang}wcf.acp.article.edit{/lang}" class="jsTooltip">{$article->title}</a>
 									</h3>
 									<ul class="inlineList dotSeparated">
 										{if $article->categoryID}
-											<li>{$article->getCategory()->getTitle()}</li>
+											<li class="jsArticleCategory">{$article->getCategory()->getTitle()}</li>
 										{/if}
 										
 										{if $article->username}

@@ -106,5 +106,50 @@
 			</pages>
 		</action>
 		<!-- /com.woltlab.wcf.media -->
+		
+		<!-- com.woltlab.wcf.article -->
+		<action name="trash">
+			<actionclassname>wcf\system\clipboard\action\ArticleClipboardAction</actionclassname>
+			<showorder>1</showorder>
+			<pages>
+				<page>wcf\acp\page\ArticleListPage</page>
+			</pages>
+		</action>
+		<action name="delete">
+			<actionclassname>wcf\system\clipboard\action\ArticleClipboardAction</actionclassname>
+			<showorder>2</showorder>
+			<pages>
+				<page>wcf\acp\page\ArticleListPage</page>
+			</pages>
+		</action>
+		<action name="restore">
+			<actionclassname>wcf\system\clipboard\action\ArticleClipboardAction</actionclassname>
+			<showorder>3</showorder>
+			<pages>
+				<page>wcf\acp\page\ArticleListPage</page>
+			</pages>
+		</action>
+		<action name="unpublish">
+			<actionclassname>wcf\system\clipboard\action\ArticleClipboardAction</actionclassname>
+			<showorder>4</showorder>
+			<pages>
+				<page>wcf\acp\page\ArticleListPage</page>
+			</pages>
+		</action>
+		<action name="publish">
+			<actionclassname>wcf\system\clipboard\action\ArticleClipboardAction</actionclassname>
+			<showorder>5</showorder>
+			<pages>
+				<page>wcf\acp\page\ArticleListPage</page>
+			</pages>
+		</action>
+		<action name="setCategory">
+			<actionclassname>wcf\system\clipboard\action\ArticleClipboardAction</actionclassname>
+			<showorder>6</showorder>
+			<pages>
+				<page>wcf\acp\page\ArticleListPage</page>
+			</pages>
+		</action>
+		<!-- /com.woltlab.wcf.article -->
 	</import>
 </data>

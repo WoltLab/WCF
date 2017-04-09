@@ -96,6 +96,7 @@
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.delayed"><![CDATA[Zeitgesteuerte Veröffentlichung]]></item>
 		<item name="wcf.acp.article.restore.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich wiederherstellen?]]></item>
+		<item name="wcf.acp.article.setCategory"><![CDATA[Kategorie ändern]]></item>
 		<item name="wcf.acp.article.teaser"><![CDATA[Einleitungstext]]></item>
 		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich in den Papierkorb verschieben?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
@@ -2166,6 +2167,15 @@ Fehler sind beispielsweise:
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
 		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[{if $count == 1}Eine{else}{#$count}{/if} Artikel löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.publish"><![CDATA[Veröffentlichen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.restore"><![CDATA[Wiederherstellen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.setCategory"><![CDATA[Kategorie ändern ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.trash"><![CDATA[Löschen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $count == 1}einen{else}{#$count}{/if} Artikel wirklich in den Papierkorb verschieben?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.unpublish"><![CDATA[Veröffentlichung zurückziehen ({#$count})]]></item>
+		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
@@ -2186,6 +2196,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem Benutzer{else}{#$count} Benutzern{/if} ein neues Kennwort zusenden?]]></item>
 		
+		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Artikel]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer]]></item>

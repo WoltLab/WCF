@@ -1,10 +1,12 @@
 <?php
 namespace wcf\data\article;
+use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentAction;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\language\Language;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -241,6 +243,29 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
+	 * Validates parameters to delete articles.
+	 *
+	 * @throws	UserInputException
+	 */
+	public function validateDelete() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		foreach ($this->getObjects() as $article) {
+			if (!$article->isDeleted) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function delete() {
@@ -266,51 +291,70 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
 		}
 		
+		$this->unmarkItems();
+		
 		return [
+			'objectIDs' => $this->objectIDs,
 			'redirectURL' => LinkHandler::getInstance()->getLink('ArticleList', ['isACP' => true])
 		];
 	}
 	
 	/**
-	 * Validates parameters to move an article to the trash bin.
+	 * Validates parameters to move articles to the trash bin.
 	 * 
-	 * @throws UserInputException
+	 * @throws	UserInputException
 	 */
 	public function validateTrash() {
 		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
 		
-		$this->articleEditor = $this->getSingleObject();
-		if ($this->articleEditor->isDeleted) {
-			throw new UserInputException('objectIDs');
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		foreach ($this->getObjects() as $article) {
+			if ($article->isDeleted) {
+				throw new UserInputException('objectIDs');
+			}
 		}
 	}
 	
 	/**
-	 * Moves an article to the trash bin.
+	 * Moves articles to the trash bin.
 	 */
 	public function trash() {
-		$this->articleEditor->update(['isDeleted' => 1]);
+		foreach ($this->getObjects() as $articleEditor) {
+			$articleEditor->update(['isDeleted' => 1]);
+		}
+		
+		$this->unmarkItems();
+		
+		return ['objectIDs' => $this->objectIDs];
 	}
 	
 	/**
-	 * Validates parameters o restore an article.
+	 * Validates parameters to restore articles.
 	 * 
-	 * @throws UserInputException
+	 * @throws	UserInputException
 	 */
 	public function validateRestore() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
-		$this->articleEditor = $this->getSingleObject();
-		if (!$this->articleEditor->isDeleted) {
-			throw new UserInputException('objectIDs');
-		}
+		$this->validateDelete();
 	}
 	
 	/**
-	 * Restores an article.
+	 * Restores articles.
 	 */
 	public function restore() {
-		$this->articleEditor->update(['isDeleted' => 0]);
+		foreach ($this->getObjects() as $articleEditor) {
+			$articleEditor->update(['isDeleted' => 0]);
+		}
+		
+		$this->unmarkItems();
+		
+		return ['objectIDs' => $this->objectIDs];
 	}
 	
 	/**
@@ -430,5 +474,134 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateMarkAllAsRead() {
 		// does nothing
+	}
+	
+	/**
+	 * Validates the `setCategory` action.
+	 * 
+	 * @throws	UserInputException
+	 */
+	public function validateSetCategory() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		$this->readBoolean('useMarkedArticles', true);
+		
+		// if no object ids are given, use clipboard handler
+		if (empty($this->objectIDs) && $this->parameters['useMarkedArticles']) {
+			$this->objectIDs = array_keys(ClipboardHandler::getInstance()->getMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')));
+		}
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		$this->readInteger('categoryID');
+		if (ArticleCategory::getCategory($this->parameters['categoryID']) === null) {
+			throw new UserInputException('categoryID');
+		}
+	}
+	
+	/**
+	 * Sets the category of articles.
+	 */
+	public function setCategory() {
+		foreach ($this->getObjects() as $articleEditor) {
+			$articleEditor->update(['categoryID' => $this->parameters['categoryID']]);
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
+	 * Validates the `publish` action.
+	 * 
+	 * @throws	UserInputException
+	 */
+	public function validatePublish() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		foreach ($this->getObjects() as $article) {
+			if ($article->publicationStatus == Article::PUBLISHED) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Publishes articles.
+	 */
+	public function publish() {
+		foreach ($this->getObjects() as $articleEditor) {
+			$articleEditor->update([
+				'time' => TIME_NOW,
+				'publicationStatus' => Article::PUBLISHED,
+				'publicationDate' => 0
+			]);
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
+	 * Validates the `unpublish` action.
+	 *
+	 * @throws	UserInputException
+	 */
+	public function validateUnpublish() {
+		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		foreach ($this->getObjects() as $article) {
+			if ($article->publicationStatus != Article::PUBLISHED) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Unpublishes articles.
+	 */
+	public function unpublish() {
+		foreach ($this->getObjects() as $articleEditor) {
+			$articleEditor->update(['publicationStatus' => Article::UNPUBLISHED]);
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
+	 * Unmarks articles.
+	 * 
+	 * @param	integer[]	$articleIDs
+	 */
+	protected function unmarkItems(array $articleIDs = []) {
+		if (empty($articleIDs)) {
+			foreach ($this->getObjects() as $article) {
+				$articleIDs[] = $article->articleID;
+			}
+		}
+		
+		if (!empty($articleIDs)) {
+			ClipboardHandler::getInstance()->unmark($articleIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article'));
+		}
 	}
 }

@@ -6,7 +6,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
-define(['Ajax', 'Core', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Core, Dictionary, Language, UiConfirmation, UiNotification) {
+define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Dialog', 'Ui/Notification', 'WoltLabSuite/Core/Controller/Clipboard'],
+	function (Ajax, Core, Dictionary, DomUtil, EventHandler, Language, UiConfirmation, UiDialog, UiNotification, ControllerClipboard) {
 	"use strict";
 	
 	var _articles = new Dictionary();
@@ -36,6 +37,97 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notific
 			}
 			else {
 				elBySelAll('.jsArticleRow', undefined, this._initArticle.bind(this));
+				
+				EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.article', this._clipboardAction.bind(this));
+			}
+		},
+		
+		/**
+		 * Reacts to executed clipboard actions.
+		 *
+		 * @param	{object<string, *>}	actionData	data of the executed clipboard action
+		 */
+		_clipboardAction: function(actionData) {
+			// only consider events if the action has been executed
+			if (actionData.responseData !== null) {
+				var triggerFunction;
+				switch (actionData.data.actionName) {
+					case 'com.woltlab.wcf.article.delete':
+						triggerFunction = this._triggerDelete;
+						break;
+					
+					case 'com.woltlab.wcf.article.publish':
+						triggerFunction = this._triggerPublish;
+						break;
+					
+					case 'com.woltlab.wcf.article.restore':
+						triggerFunction = this._triggerRestore;
+						break;
+					
+					case 'com.woltlab.wcf.article.trash':
+						triggerFunction = this._triggerTrash;
+						break;
+					
+					case 'com.woltlab.wcf.article.unpublish':
+						triggerFunction = this._triggerUnpublish;
+						break;
+				}
+				
+				if (triggerFunction) {
+					for (var i = 0, length = actionData.responseData.objectIDs.length; i < length; i++) {
+						triggerFunction(actionData.responseData.objectIDs[i]);
+					}
+					
+					UiNotification.show();
+				}
+			}
+			else if (actionData.data.actionName === 'com.woltlab.wcf.article.setCategory') {
+				try {
+					dialog = UiDialog.getDialog('articleCategoryDialog');
+					UiDialog.openStatic('articleCategoryDialog');
+				}
+				catch (e) {
+					UiDialog.openStatic('articleCategoryDialog', actionData.data.internalData.template, {
+						title: Language.get('wcf.acp.article.setCategory')
+					});
+					
+					elBySel('[data-type=submit]', UiDialog.getDialog('articleCategoryDialog').content).addEventListener('click', this._submitSetCategory.bind(this));
+				}
+			}
+		},
+		
+		/**
+		 * Is called, if the set category dialog form is submitted.
+		 * 
+		 * @param	{Event}		event		form submit button click event
+		 */
+		_submitSetCategory: function(event) {
+			var dialog = UiDialog.getDialog('articleCategoryDialog').content;
+			var innerErrors = elByClass('innerError', dialog);
+			var select = elBySel('select[name=categoryID]', dialog);
+			
+			var categoryId = ~~elBySel('select[name=categoryID]', event.currentTarget.parentNode.parentNode).value;
+			if (categoryId) {
+				Ajax.api(this, {
+					actionName: 'setCategory',
+					parameters: {
+						categoryID: categoryId,
+						useMarkedArticles: true
+					}
+				});
+				
+				if (innerErrors.length === 1) {
+					elRemove(innerErrors.item(0));
+				}
+				
+				UiDialog.close('articleCategoryDialog');
+			}
+			else if (innerErrors.length === 0) {
+				var innerError = elCreate('small');
+				innerError.className = 'innerError';
+				innerError.innerText = Language.get('wcf.global.form.error.empty');
+				
+				DomUtil.insertAfter(innerError, select);
 			}
 		},
 		
@@ -48,7 +140,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notific
 		 */
 		_initArticle: function (article, objectId) {
 			var isArticleEdit = false;
-			if (~~objectId > 0) {
+			if (!article && ~~objectId > 0) {
 				isArticleEdit = true;
 				article = undefined;
 			}
@@ -158,35 +250,127 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notific
 			});
 		},
 		
+		/**
+		 * Handles an article being deleted.
+		 * 
+		 * @param	{int}		articleId	id of the deleted article
+		 */
+		_triggerDelete: function(articleId) {
+			var article = _articles.get(articleId);
+			
+			if (article.isArticleEdit) {
+				//noinspection JSUnresolvedVariable
+				window.location = data.returnValues.redirectURL;
+			}
+			else {
+				var tbody = article.element.parentNode;
+				elRemove(article.element);
+				
+				if (elBySel('tr', tbody) === null) {
+					window.location.reload();
+				}
+			}
+		},
+		
+		/**
+		 * Handles publishing an article via clipboard.
+		 *
+		 * @param	{int}		articleId	id of the published article
+		 */
+		_triggerPublish: function(articleId) {
+			var article = _articles.get(articleId);
+			
+			if (article.isArticleEdit) {
+				// unsupported
+			}
+			else {
+				elRemove(elBySel('.jsUnpublishedArticle', article.element));
+			}
+		},
+		
+		/**
+		 * Handles an article being restored.
+		 *
+		 * @param	{int}		articleId	id of the deleted article
+		 */
+		_triggerRestore: function(articleId) {
+			var article = _articles.get(articleId);
+			
+			elHide(article.buttons.delete);
+			elHide(article.buttons.restore);
+			elShow(article.buttons.trash);
+			
+			if (article.isArticleEdit) {
+				elHide(elBySel('.jsArticleNoticeTrash'));
+			}
+			else {
+				elRemove(elBySel('.jsIconDeleted', article.element));
+			}
+		},
+		
+		/**
+		 * Handles an article being trashed.
+		 *
+		 * @param	{int}		articleId	id of the deleted article
+		 */
+		_triggerTrash: function(articleId) {
+			var article = _articles.get(articleId);
+			
+			elShow(article.buttons.delete);
+			elShow(article.buttons.restore);
+			elHide(article.buttons.trash);
+			
+			if (article.isArticleEdit) {
+				elShow(elBySel('.jsArticleNoticeTrash'));
+			}
+			else {
+				var badge = elCreate('span');
+				badge.className = 'badge label red jsIconDeleted';
+				badge.textContent = Language.get('wcf.message.status.deleted');
+				
+				var h3 = elBySel('.containerHeadline > h3', article.element);
+				h3.insertBefore(badge, h3.firstChild);
+			}
+		},
+		
+		/**
+		 * Handles unpublishing an article via clipboard.
+		 *
+		 * @param	{int}		articleId	id of the unpublished article
+		 */
+		_triggerUnpublish: function(articleId) {
+			var article = _articles.get(articleId);
+			
+			if (article.isArticleEdit) {
+				// unsupported
+			}
+			else {
+				var badge = elCreate('span');
+				badge.className = 'badge jsUnpublishedArticle';
+				badge.textContent = Language.get('wcf.acp.article.publicationStatus.unpublished');
+				
+				var h3 = elBySel('.containerHeadline > h3', article.element);
+				var a = elBySel('a', h3);
+				
+				h3.insertBefore(badge, a);
+				h3.insertBefore(document.createTextNode(" "), a);
+			}
+		},
+		
 		_ajaxSuccess: function (data) {
-			var article = _articles.get(data.objectIDs[0]);
+			var notificationCallback;
+			
 			switch (data.actionName) {
 				case 'delete':
-					if (article.isArticleEdit) {
-						//noinspection JSUnresolvedVariable
-						window.location = data.returnValues.redirectURL;
-					}
-					else {
-						var tbody = article.element.parentNode;
-						elRemove(article.element);
-						
-						if (elBySel('tr', tbody) === null) {
-							window.location.reload();
-						}
-					}
+					this._triggerDelete(data.objectIDs[0]);
 					break;
 					
 				case 'restore':
-					elHide(article.buttons.delete);
-					elHide(article.buttons.restore);
-					elShow(article.buttons.trash);
+					this._triggerRestore(data.objectIDs[0]);
+					break;
 					
-					if (article.isArticleEdit) {
-						elHide(elBySel('.jsArticleNoticeTrash'));
-					}
-					else {
-						elRemove(elBySel('.jsIconDeleted', article.element));
-					}
+				case 'setCategory':
+					notificationCallback = window.location.reload.bind(window.location);
 					break;
 					
 				case 'toggleI18n':
@@ -194,26 +378,12 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Ui/Confirmation', 'Ui/Notific
 					break;
 					
 				case 'trash':
-					elShow(article.buttons.delete);
-					elShow(article.buttons.restore);
-					elHide(article.buttons.trash);
-					
-					if (article.isArticleEdit) {
-						elShow(elBySel('.jsArticleNoticeTrash'));
-					}
-					else {
-						var badge = elCreate('span');
-						badge.className = 'badge label red jsIconDeleted';
-						badge.textContent = Language.get('wcf.message.status.deleted');
-						
-						var h3 = elBySel('.containerHeadline > h3', article.element);
-						h3.insertBefore(badge, h3.firstChild);
-					}
-					
+					this._triggerTrash(data.objectIDs[0]);
 					break;
 			}
 			
-			UiNotification.show();
+			UiNotification.show(undefined, notificationCallback);
+			ControllerClipboard.reload();
 		},
 		
 		_ajaxSetup: function () {
