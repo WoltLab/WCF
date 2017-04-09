@@ -2168,7 +2168,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
 		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[{if $count == 1}Eine{else}{#$count}{/if} Artikel löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Artikel löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.publish"><![CDATA[Veröffentlichen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.restore"><![CDATA[Wiederherstellen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.setCategory"><![CDATA[Kategorie ändern ({#$count})]]></item>
