@@ -490,6 +490,10 @@
 		<name>Googlebot-Mobile</name>
 		<url>http://www.google.com/bot.html</url>
 	</spider>
+	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
+		<name>Google Stackdriver Monitoring</name>
+		<url>https://cloud.google.com/monitoring/alerts/uptime-checks</url>
+	</spider>
 	<spider ident="Gpostbot">
 		<name>Gpostbot</name>
 		<url>http://www.gpost.info/help.php?c=bot</url>
