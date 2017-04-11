@@ -1791,6 +1791,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Destination]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[The selected users will be merged into this user account.]]></item>
 		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Merge the following users]]></item>
+		<item name="wcf.acp.user.merge.warning"><![CDATA[The process to merge users does not update all counters and references due to technical limitations. You’re required to manually run the rebuild data tasks in the maintenance section afterwards in order to solve any conflicts or inconsistencies.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Time Period]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in the previous days will be reverted to the newest version, that is either older than the given number of days or made by an unrelated user.]]></item>
