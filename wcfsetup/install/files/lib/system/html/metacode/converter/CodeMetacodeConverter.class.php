@@ -72,7 +72,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter {
 		/** @var \DOMElement $node */
 		foreach ($childNodes as $node) {
 			if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName === 'p') {
-				DOMUtil::insertAfter($node->ownerDocument->createTextNode("\n\n"), $node);
+				DOMUtil::insertAfter($node->ownerDocument->createTextNode("\n"), $node);
 				
 				$brs = $node->getElementsByTagName('br');
 				while ($brs->length) {
