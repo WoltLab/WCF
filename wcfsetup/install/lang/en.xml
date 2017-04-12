@@ -210,6 +210,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCategories"><![CDATA[Article Categories]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCommentList"><![CDATA[Article Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleList"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleTagCloud"><![CDATA[Article Tags]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Users Online Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Page Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Paid Subscriptions]]></item>

@@ -1180,6 +1180,11 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\WhoWasOnlineBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.articleTagCloud</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\ArticleTagCloudBoxController</classname>
+		</type>
 		<!-- /box controllers -->
 		
 		<!-- simple acl -->

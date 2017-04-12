@@ -213,6 +213,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCategories"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleCommentList"><![CDATA[Artikel-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleList"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.articleTagCloud"><![CDATA[Artikel-Tags]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Benutzer online, denen der aktive Nutzer folgt]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Seiten-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Bezahlte Mitgliedschaften]]></item>
