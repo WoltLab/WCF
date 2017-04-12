@@ -215,6 +215,14 @@ class BoxAddForm extends AbstractForm {
 		}
 		
 		$this->availableBoxControllers = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController');
+		
+		uasort($this->availableBoxControllers, function(ObjectType $a, ObjectType $b) {
+			return strcmp(
+				WCF::getLanguage()->get('wcf.acp.box.boxController.' . $a->objectType),
+				WCF::getLanguage()->get('wcf.acp.box.boxController.' . $b->objectType)
+			);
+		});
+		
 		$this->readBoxPositions();
 	}
 	
