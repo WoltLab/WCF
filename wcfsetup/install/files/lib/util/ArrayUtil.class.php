@@ -51,6 +51,24 @@ final class ArrayUtil {
 	}
 	
 	/**
+	 * Applies StringUtil::toLowerCase() to all elements of the given array.
+	 * 
+	 * @param	array		$array
+	 * @return	array
+	 */
+	public static function toLowerCase($array) {
+		if (!is_array($array)) {
+			return StringUtil::toLowerCase($array);
+		}
+		else {
+			foreach ($array as $key => $val) {
+				$array[$key] = StringUtil::toLowerCase($val);
+			}
+			return $array;
+		}
+	}
+	
+	/**
 	 * Converts html special characters in the given array.
 	 * 
 	 * @param	array		$array
