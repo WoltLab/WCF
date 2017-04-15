@@ -120,7 +120,10 @@ final class HeaderUtil {
 		}, self::$output);
 		
 		self::$output = str_replace('<!-- JAVASCRIPT_RELOCATE_POSITION -->', implode("\n", $javascript), self::$output);
-		
+
+		// remove blank line
+		self::$output = preg_replace('/^\n+|^[\t\s\r]*\n+/m', '', self::$output);
+
 		// 3rd party plugins may differ the actual output before it is sent to the browser
 		// please be aware, that $eventObj is not available here due to this being a static
 		// class. Use HeaderUtil::$output to modify it.
