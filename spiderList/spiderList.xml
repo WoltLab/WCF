@@ -632,6 +632,9 @@
 	<spider ident="JavaBee">
 		<name>JavaBee</name>
 	</spider>
+	<spider ident="java/">
+		<name>Java</name>
+	</spider>
 	<spider ident="JBot">
 		<name>JBot</name>
 	</spider>
