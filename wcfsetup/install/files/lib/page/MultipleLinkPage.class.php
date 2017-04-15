@@ -151,7 +151,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	protected function readObjects() {
 		$this->objectList->sqlLimit = $this->sqlLimit;
 		$this->objectList->sqlOffset = $this->sqlOffset;
-		if ($this->sqlOrderBy) $this->objectList->sqlOrderBy = $this->sqlOrderBy;
+		if ($this->sqlOrderBy) $this->objectList->sqlOrderBy = $this->objectList->getDatabaseTableAlias().".".$this->sqlOrderBy;
 		
 		EventHandler::getInstance()->fireAction($this, 'beforeReadObjects');
 		
