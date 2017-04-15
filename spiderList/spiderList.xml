@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/spiderList.xsd">
+	<spider ident="360Spider">
+		<name>360Spider</name>
+		<url>http://www.so.com/help/help_3_2.html</url>
+	</spider>
 	<spider ident="ABCdatos">
 		<name>ABCdatos BotLink</name>
 		<url>http://www.robotstxt.org/wc/active/html/abcdatos.html</url>
@@ -350,6 +354,9 @@
 	<spider ident="ExaLead">
 		<name>ExaLead</name>
 		<url>http://www.exalead.com/search</url>
+	</spider>
+	<spider ident="Ezooms">
+		<name>Ezooms</name>
 	</spider>
 	<spider ident="facebookexternalhit">
 		<name>Facebook</name>
@@ -707,6 +714,10 @@
 	</spider>
 	<spider ident="Magpie">
 		<name>Magpie</name>
+	</spider>
+	<spider ident="Mail.RU">
+		<name>Mail.Ru</name>
+		<url>http://go.mail.ru/help/robots</url>
 	</spider>
 	<spider ident="MJ12bot">
 		<name>Majestics MJ12bot</name>
@@ -1131,10 +1142,6 @@
 	<spider ident="T-H-U-N-D-E-R-S-T-O-N-E">
 		<name>T-H-U-N-D-E-R-S-T-O-N-E</name>
 	</spider>
-	<spider ident="TinEye Crawler">
-		<name>TinEye</name>
-		<url>http://tineye.com/crawler.html</url>
-	</spider>
 	<spider ident="Black Widow">
 		<name>TACH Black Widow</name>
 	</spider>
@@ -1182,6 +1189,14 @@
 	</spider>
 	<spider ident="thumbshots-de-Bot">
 		<name>thumbshots-de-Bot</name>
+	</spider>
+	<spider ident="TinEye Crawler">
+		<name>TinEye</name>
+		<url>http://tineye.com/crawler.html</url>
+	</spider>
+	<spider ident="http://tt-rss.org/">
+		<name>Tiny Tiny RSS</name>
+		<url>http://tt-rss.org/</url>
 	</spider>
 	<spider ident="TITAN">
 		<name>TITAN</name>
