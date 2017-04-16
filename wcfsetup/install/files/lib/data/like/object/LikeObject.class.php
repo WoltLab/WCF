@@ -3,6 +3,7 @@ namespace wcf\data\like\object;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -75,7 +76,14 @@ class LikeObject extends DatabaseObject {
 	 */
 	public function getLikedObject() {
 		if ($this->likedObject === null) {
-			$this->likedObject = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getObjectByID($this->objectID);
+			$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID); 
+			
+			if ($objectType === null) {
+				// if the objectTypeID is e.g. null, because the object is invalid
+				throw new SystemException('Can not fetch likedObject, because objectType is invalid.');
+			}
+			
+			$this->likedObject = $objectType->getProcessor()->getObjectByID($this->objectID);
 		}
 		
 		return $this->likedObject;
