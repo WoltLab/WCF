@@ -1854,17 +1854,16 @@ WCF.User.LikeLoader = Class.extend({
 	_userID: 0,
 	
 	/**
-	 * Initializes a new RecentActivityLoader object.
+	 * Initializes a new LikeLoader object.
 	 * 
 	 * @param	integer		userID
-	 * @param	boolean		filteredByFollowedUsers
 	 */
 	init: function(userID) {
 		this._container = $('#likeList');
 		this._userID = userID;
 		
 		if (!this._userID) {
-			console.debug("[WCF.User.RecentActivityLoader] Invalid parameter 'userID' given.");
+			console.debug("[WCF.User.LikeLoader] Invalid parameter 'userID' given.");
 			return;
 		}
 		
