@@ -13,7 +13,7 @@ use wcf\util\UserUtil;
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.user.online
+ * @subpackage	data.user.onlineapa
  * @category	Community Framework
  */
 class UserOnline extends UserProfile {
@@ -197,6 +197,11 @@ class UserOnline extends UserProfile {
 		// midori
 		if (preg_match('~midori/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Midori '.$match[1];
+		}
+		
+		// android
+		if (preg_match('~Mozilla/5.0 \(Linux; (?:(?:N|U|I); )?Android ([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Android '.$match[1];
 		}
 		
 		// chrome mobile
