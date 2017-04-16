@@ -10,7 +10,7 @@ use wcf\system\exception\SystemException;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
-abstract class DatabaseObjectDecorator extends DatabaseObject {
+abstract class DatabaseObjectDecorator {
 	/**
 	 * name of the base class
 	 * @var	string
