@@ -4,7 +4,7 @@ use wcf\system\version\VersionHandler;
 
 /**
  * Abstract class for all versionable data actions.
- * 
+ *
  * @author	Jeffrey Reichardt
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -19,7 +19,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	public function validateRestoreRevision() {
 		parent::validateUpdate();
 	}
-	
+
 	/**
 	 * @see	\wcf\data\IDeleteAction::delete()
 	 */
@@ -27,17 +27,17 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-		
+
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
 			$objectIDs[] = $object->getObjectID();
 		}
-		
+
 		// execute action
 		return call_user_func(array($this->className, 'deleteAll'), $objectIDs);
 	}
-	
+
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
@@ -45,28 +45,28 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-		
+
 		if (isset($this->parameters['data'])) {
 			foreach ($this->objects as $object) {
 				$object->update($this->parameters['data']);
 			}
-			
+
 			// create revision retroactively
 			$this->createRevision();
 		}
 	}
-	
+
 	/**
 	 * Creates a new revision.
 	 */
 	protected function createRevision() {
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		
+
 		foreach ($this->objects as $object) {
 			call_user_func(array($this->className, 'createRevision'), array_merge($object->getDecoratedObject()->getData(), array($indexName => $object->getObjectID())));
 		}
 	}
-	
+
 	/**
 	 * Deletes a revision.
 	 */
@@ -74,17 +74,17 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-		
+
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
 			$objectIDs[] = $object->getObjectID();
 		}
-		
+
 		// execute action
 		return call_user_func(array($this->className, 'deleteRevision'), $objectIDs);
 	}
-	
+
 	/**
 	 * Restores a revision.
 	 */
@@ -92,15 +92,17 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-		
+
 		// currently we only support restoring one version
 		foreach ($this->objects as $object) {
-			$objectType = VersionHandler::getInstance()->getObjectTypeByName($object->versionableObjectTypeName);
-			$restoreObject = VersionHandler::getInstance()->getVersionByID($objectType->objectTypeID, $this->parameters['restoreObjectID']);
-			
+			$objectType = VersionHandler::getInstance()->getObjectTypeByName($object->getDecoratedObject()->versionableObjectTypeName);
+			$indexName = $object->getDatabaseTableIndexName();
+			$restoreObject = VersionHandler::getInstance()->getVersionByID($objectType->objectTypeID, $object->$indexName, $this->parameters['restoreObjectID']);
+
 			$this->parameters['data'] = $restoreObject->getData();
+			unset($this->parameters['data']['versionID']);
 		}
-		
+
 		$this->update();
 	}
 }
