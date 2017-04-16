@@ -76,6 +76,18 @@ class RegisterForm extends UserAddForm {
 	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	
 	/**
+	 * 3rd party registration
+	 * @var	boolean
+	 */
+	public $registerVia3rdParty = false;
+	
+	/**
+	 * avatar url
+	 * @var	string
+	 */
+	public $avatarURL = '';
+	
+	/**
 	 * field names
 	 * @var	array
 	 */
@@ -290,9 +302,7 @@ class RegisterForm extends UserAddForm {
 		
 		// get options
 		$saveOptions = $this->optionHandler->save();
-		$registerVia3rdParty = false;
 		
-		$avatarURL = '';
 		if ($this->isExternalAuthentication) {
 			switch (WCF::getSession()->getVar('__3rdPartyProvider')) {
 				case 'github':
@@ -306,7 +316,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__githubToken');
 						
 						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($githubData['bio']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
@@ -334,7 +344,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__facebookData');
 						
 						if (isset($facebookData['email']) && $facebookData['email'] == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($facebookData['gender']) && User::getUserOptionID('gender') !== null) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
@@ -358,7 +368,7 @@ class RegisterForm extends UserAddForm {
 						
 						// avatar
 						if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {
-							$avatarURL = $facebookData['picture']['data']['url'];
+							$this->avatarURL = $facebookData['picture']['data']['url'];
 						}
 					}
 				break;
@@ -371,7 +381,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__googleData');
 						
 						if (isset($googleData['emails'][0]['value']) && $googleData['emails'][0]['value'] == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($googleData['gender']) && User::getUserOptionID('gender') !== null) {
@@ -395,7 +405,7 @@ class RegisterForm extends UserAddForm {
 						
 						// avatar
 						if (isset($googleData['image']['url'])) {
-							$avatarURL = $googleData['image']['url'];
+							$this->avatarURL = $googleData['image']['url'];
 						}
 					}
 				break;
@@ -410,7 +420,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if ((REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if ((REGISTER_ACTIVATION_METHOD == 1 && !$this->registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
@@ -440,9 +450,9 @@ class RegisterForm extends UserAddForm {
 		$userEditor = new UserEditor($user);
 		
 		// set avatar if provided
-		if (!empty($avatarURL)) {
+		if (!empty($this->avatarURL)) {
 			$userAvatarAction = new UserAvatarAction(array(), 'fetchRemoteAvatar', array(
-				'url' => $avatarURL,
+				'url' => $this->avatarURL,
 				'userEditor' => $userEditor
 			));
 			$userAvatarAction->executeAction();
@@ -457,7 +467,7 @@ class RegisterForm extends UserAddForm {
 		}
 		else if (REGISTER_ACTIVATION_METHOD == 1) {
 			// registering via 3rdParty leads to instant activation
-			if ($registerVia3rdParty) {
+			if ($this->registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
 			}
 			else {
