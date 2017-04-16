@@ -62,7 +62,7 @@ final class PasswordUtil {
 	 * blowfish encryption type
 	 * @var	string
 	 */
-	const BCRYPT_TYPE = '2a';
+	const BCRYPT_TYPE = '2y';
 	
 	/**
 	 * Returns true if given encryption type is supported.
@@ -93,7 +93,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns true if given bcrypt hash uses a different cost factor and should be re-computed.
+	 * Returns true if given bcrypt hash uses a different cost factor or encryption type and should be re-computed.
 	 * 
 	 * @param	string		$hash
 	 * @return	boolean
@@ -102,7 +102,10 @@ final class PasswordUtil {
 		$currentCost = intval(self::BCRYPT_COST);
 		$hashCost = intval(substr($hash, 4, 2));
 		
-		if ($currentCost != $hashCost) {
+		$currentType = self::BCRYPT_TYPE;
+		$hashType = substr($hash, 1, 2);
+		
+		if ($currentCost != $hashCost || $currentType != $hashType) {
 			return true;
 		}
 		
