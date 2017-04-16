@@ -118,7 +118,7 @@ window.shuffle = function(array) {
 		array[randomIndex] = temporaryValue;
 	}
 	
-	return this;
+	return array;
 };
 
 /**
