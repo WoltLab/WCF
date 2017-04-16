@@ -56,7 +56,7 @@ final class PasswordUtil {
 	 * blowfish cost factor
 	 * @var	string
 	 */
-	const BCRYPT_COST = '08';
+	const BCRYPT_COST = '14';
 	
 	/**
 	 * blowfish encryption type
