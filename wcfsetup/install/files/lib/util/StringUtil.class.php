@@ -518,7 +518,7 @@ final class StringUtil {
 		$word = mb_strtolower($word);
 		
 		if ($filter != '') {
-			$forbiddenNames = explode("\n", mb_strtolower(self::unifyNewlines($filter)));
+			$forbiddenNames = ArrayUtil::trim(explode("\n", mb_strtolower(self::unifyNewlines($filter))));
 			foreach ($forbiddenNames as $forbiddenName) {
 				if (mb_strpos($forbiddenName, '*') !== false) {
 					$forbiddenName = str_replace('\*', '.*', preg_quote($forbiddenName, '/'));
