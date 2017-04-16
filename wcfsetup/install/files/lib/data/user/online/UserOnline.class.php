@@ -284,6 +284,11 @@ class UserOnline extends UserProfile {
 			return 'Safari '.$match[1];
 		}
 		
+		// tapatalk 4
+		if (preg_match('~tapatalk/([\d\.]+)?~i', $this->userAgent, $match)) {
+			return 'Tapatalk '.(isset($match[1]) ? $match[1] : 4);
+		}
+		
 		return $this->userAgent;
 	}
 	
