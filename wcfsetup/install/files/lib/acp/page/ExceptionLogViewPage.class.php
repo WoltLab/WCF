@@ -4,6 +4,7 @@ use wcf\page\AbstractPage;
 use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
@@ -115,6 +116,8 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		// split contents
 		$split = new Regex('(?:^|\n<<<<\n\n)(?:<<<<<<<<([a-f0-9]{40})<<<<\n|$)');
 		$contents = $split->split($contents, Regex::SPLIT_NON_EMPTY_ONLY | Regex::CAPTURE_SPLIT_DELIMITER);
+		
+		if (empty($contents)) throw new NamedUserException(WCF::getLanguage()->get('wcf.acp.exceptionLog.logEmpty', array('logFile' => $this->logFile)));
 		
 		// even items become keys, odd items become values
 		$this->exceptions = call_user_func_array('array_merge', array_map(
