@@ -22,6 +22,8 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * This means that the AJAX request to BackgroundQueuePerformAction is triggered.
 	 */
 	public function forceCheck() {
+		WCF::getSession()->register('forceBackgroundQueuePerform', true);
+		
 		WCF::getTPL()->assign([
 			'forceBackgroundQueuePerform' => true
 		]);

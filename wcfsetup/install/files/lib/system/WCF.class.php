@@ -620,6 +620,19 @@ class WCF {
 			'__wcf' => $this,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
 		]);
+		
+		$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+		// Execute background queue in this request, if it was requested and AJAX isn't used.
+		if (!$isAjax) {
+			if (self::getSession()->getVar('forceBackgroundQueuePerform')) {
+				self::getTPL()->assign([
+					'forceBackgroundQueuePerform' => true
+				]);
+				
+				self::getSession()->unregister('forceBackgroundQueuePerform');
+			}
+		}
+		
 		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
 		EmailTemplateEngine::getInstance()->assign([
 			'__wcf' => $this
