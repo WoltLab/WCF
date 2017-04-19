@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
+use wcf\data\page\PageCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
@@ -107,6 +108,20 @@ class PageEditForm extends PageAddForm {
 		}
 		else {
 			parent::validateParentPageID();
+			
+			if ($this->parentPageID) {
+				if ($this->parentPageID == $this->pageID) {
+					throw new UserInputException('parentPageID', 'invalid');
+				}
+				
+				$page = PageCache::getInstance()->getPage($this->parentPageID);
+				while ($page->parentPageID !== null) {
+					$page = PageCache::getInstance()->getPage($page->parentPageID);
+					if ($page->pageID == $this->pageID) {
+						throw new UserInputException('parentPageID', 'invalid');
+					}
+				}
+			}
 		}
 	}
 	
