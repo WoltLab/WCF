@@ -2900,6 +2900,13 @@ Errors are:
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
 		<item name="wcf.acp.page.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.page.boxes"><![CDATA[Display the Selected Boxes on This Page]]></item>
+		<item name="wcf.acp.page.boxOrder"><![CDATA[Sort Boxes]]></item>
+		<item name="wcf.acp.page.boxOrder.discard"><![CDATA[Discard Sorting]]></item>
+		<item name="wcf.acp.page.boxOrder.discard.confirmMessage"><![CDATA[Do you really want to discard the invidiual box sorting for this page?]]></item>
+		<item name="wcf.acp.page.boxOrder.pageAdd"><![CDATA[You can set an individual sort order for boxes after saving.]]></item>
+		<item name="wcf.acp.page.boxOrder.pageEdit"><![CDATA[You can set an individual <a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}">sort order for boxes</a>, please save your changes before continuing.]]></item>
+		<item name="wcf.acp.page.boxOrder.position.content"><![CDATA[(Content)]]></item>
+		<item name="wcf.acp.page.button.boxOrder"><![CDATA[Sort Boxes]]></item>
 		<item name="wcf.acp.page.button.viewPage"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Contents]]></item>

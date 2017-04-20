@@ -1,10 +1,13 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\box\Box;
+use wcf\data\ISortableAction;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\IToggleAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\simple\HtmlSimpleParser;
@@ -26,7 +29,7 @@ use wcf\system\WCF;
  * @method	PageEditor[]	getObjects()
  * @method	PageEditor	getSingleObject()
  */
-class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, IToggleAction {
+class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, ISortableAction, IToggleAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -55,7 +58,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'search', 'toggle', 'update'];
+	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'resetPosition', 'search', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @inheritDoc
@@ -386,5 +389,103 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 			// delete entry from search index
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.page', $pageContentIDs);
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateUpdatePosition() {
+		WCF::getSession()->checkPermissions(['admin.content.cms.canManagePage']);
+		
+		$this->pageEditor = $this->getSingleObject();
+		
+		if (empty($this->parameters['position']) || !is_array($this->parameters['position'])) {
+			throw new UserInputException('position');
+		}
+		
+		$seenBoxIDs = [];
+		foreach ($this->parameters['position'] as $position => $boxIDs) {
+			// validate each position for both existence and the supplied box ids
+			if (!in_array($position, Box::$availablePositions) || !is_array($boxIDs)) {
+				throw new UserInputException('position');
+			}
+			
+			foreach ($boxIDs as $boxID) {
+				// check for duplicate box ids
+				if (in_array($boxID, $seenBoxIDs)) {
+					throw new UserInputException('position');
+				}
+				
+				$seenBoxIDs[] = $boxID;
+			}
+		}
+		
+		// validates box ids
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("boxID IN (?)", [$seenBoxIDs]);
+		
+		$sql = "SELECT  boxID
+			FROM    wcf".WCF_N."_box
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$validBoxIDs = [];
+		while ($boxID = $statement->fetchColumn()) {
+			$validBoxIDs[] = $boxID;
+		}
+		
+		foreach ($seenBoxIDs as $boxID) {
+			if (!in_array($boxID, $validBoxIDs)) {
+				throw new UserInputException('position');
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatePosition() {
+		$pageID = $this->pageEditor->getDecoratedObject()->pageID;
+		
+		$sql = "DELETE FROM     wcf".WCF_N."_page_box_order
+			WHERE           pageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$pageID]);
+		
+		$sql = "INSERT INTO     wcf".WCF_N."_page_box_order
+					(pageID, boxID, showOrder)
+			VALUES          (?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($this->parameters['position'] as $boxIDs) {
+			for ($i = 0, $length = count($boxIDs); $i < $length; $i++) {
+				$statement->execute([
+					$pageID,
+					$boxIDs[$i],
+					$i
+				]);
+			}
+		}
+		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
+	 * Validates parameters to reset the custom box positions for provided page.
+	 */
+	public function validateResetPosition() {
+		WCF::getSession()->checkPermissions(['admin.content.cms.canManagePage']);
+		
+		$this->pageEditor = $this->getSingleObject();
+	}
+	
+	/**
+	 * Resets the custom box positions for provided page.
+	 */
+	public function resetPosition() {
+		$sql = "DELETE FROM     wcf".WCF_N."_page_box_order
+			WHERE           pageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->pageEditor->getDecoratedObject()->pageID]);
 	}
 }

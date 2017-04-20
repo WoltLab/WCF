@@ -110,6 +110,12 @@ class Box extends DatabaseObject {
 	protected $linkPage;
 	
 	/**
+	 * virtual show order of this box
+	 * @var integer
+	 */
+	public $virtualShowOrder = -1;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __get($name) {
@@ -486,6 +492,15 @@ class Box extends DatabaseObject {
 	 */
 	public function isAccessible() {
 		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.box', $this->boxID);
+	}
+	
+	/**
+	 * Sets the virtual show order of this box.
+	 * 
+	 * @param       integer         $virtualShowOrder
+	 */
+	public function setVirtualShowOrder($virtualShowOrder) {
+		$this->virtualShowOrder = $virtualShowOrder;
 	}
 	
 	/**

@@ -59,8 +59,12 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $action == 'edit' && !$page->requireObjectID}
-				<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+			{if $action == 'edit'}
+				{if !$page->requireObjectID}
+					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+				{/if}
+				
+				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='PageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
 			
@@ -447,6 +451,8 @@
 		
 		<div id="boxes" class="tabMenuContent">
 			<div class="section">
+				<p class="info">{lang}wcf.acp.page.boxOrder.page{@$action|ucfirst}{/lang}</p>
+				
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
 					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
 					<dd>

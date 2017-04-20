@@ -988,6 +988,14 @@ CREATE TABLE wcf1_page (
 	options TEXT NULL
 );
 
+DROP TABLE IF EXISTS wcf1_page_box_order;
+CREATE TABLE wcf1_page_box_order (
+	pageID INT(10) NOT NULL,
+	boxID INT(10) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY pageToBox (pageID, boxID)
+);
+
 DROP TABLE IF EXISTS wcf1_page_content;
 CREATE TABLE wcf1_page_content (
 	pageContentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1822,6 +1830,9 @@ ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMetho
 ALTER TABLE wcf1_page ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (applicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
