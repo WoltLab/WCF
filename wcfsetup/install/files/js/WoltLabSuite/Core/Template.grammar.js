@@ -84,7 +84,7 @@ case 11:
 	
 break;
 case 12:
-this.$ = "Language.get(" + $$[$0-1] + ")";
+this.$ = "Language.get(" + $$[$0-1] + ", v)";
 break;
 case 13:
 this.$ = "StringUtil.escapeHTML(" + $$[$0-1] + ")";
