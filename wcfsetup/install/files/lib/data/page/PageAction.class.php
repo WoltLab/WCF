@@ -1,11 +1,11 @@
 <?php
 namespace wcf\data\page;
 use wcf\data\box\Box;
-use wcf\data\ISortableAction;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
+use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;

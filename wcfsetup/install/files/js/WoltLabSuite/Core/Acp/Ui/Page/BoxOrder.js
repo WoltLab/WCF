@@ -1,10 +1,27 @@
+/**
+ * Provides helper functions to sort boxes per page.
+ *
+ * @author      Alexander Ebert
+ * @copyright   2001-2017 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/Acp/Ui/Page/BoxOrder
+ */
 define(['Ajax', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Language, UiConfirmation, UiNotification) {
 	"use strict";
 	
 	var _pageId = 0;
 	var _pbo = elById('pbo');
 	
+	/**
+	 * @exports     WoltLabSuite/Core/Acp/Ui/Page/BoxOrder
+	 */
 	return {
+		/**
+		 * Initializes the sorting capabilities.
+		 * 
+		 * @param       {int}           pageId          page id
+		 * @param       {Dictionary}    boxes           list of boxes per position
+		 */
 		init: function (pageId, boxes) {
 			_pageId = pageId;
 			
@@ -34,6 +51,12 @@ define(['Ajax', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Aja
 			if (buttonDiscard) buttonDiscard.addEventListener(WCF_CLICK_EVENT, this._discard.bind(this));
 		},
 		
+		/**
+		 * Saves the order of all boxes per position.
+		 * 
+		 * @param       {Event}         event           event object
+		 * @protected
+		 */
 		_save: function (event) {
 			event.preventDefault();
 			
@@ -57,6 +80,12 @@ define(['Ajax', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Aja
 			});
 		},
 		
+		/**
+		 * Shows an dialog to discard the individual box show order for this page.
+		 * 
+		 * @param       {Event}         event           event object
+		 * @protected
+		 */
 		_discard: function (event) {
 			event.preventDefault();
 			
