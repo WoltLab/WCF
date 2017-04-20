@@ -1408,7 +1408,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.page.boxes"><![CDATA[Ausgewählte Boxen auf dieser Seite anzeigen]]></item>
 		<item name="wcf.acp.page.boxOrder"><![CDATA[Boxen sortieren]]></item>
 		<item name="wcf.acp.page.boxOrder.discard"><![CDATA[Sortierung verwerfen]]></item>
-		<item name="wcf.acp.page.boxOrder.discard.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} individuelle Sortierung der Boxen für diese Seite wirklich löschen?]]></item>
+		<item name="wcf.acp.page.boxOrder.discard.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die individuelle Sortierung der Boxen für diese Seite wirklich löschen?]]></item>
 		<item name="wcf.acp.page.boxOrder.pageAdd"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die individuelle Sortierung der Boxen für diese Seite nach dem Speichern festlegen.]]></item>
 		<item name="wcf.acp.page.boxOrder.pageEdit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Sortierung der angezeigten Boxen <a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}">individuell festlegen</a>, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} zuvor {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Änderungen.]]></item>
 		<item name="wcf.acp.page.boxOrder.position.content"><![CDATA[(Inhalt)]]></item>
