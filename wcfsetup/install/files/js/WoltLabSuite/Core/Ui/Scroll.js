@@ -82,7 +82,7 @@ define(['Dom/Util'], function(DomUtil) {
 			if (_timeoutScroll !== null) window.clearTimeout(_timeoutScroll);
 			
 			_timeoutScroll = window.setTimeout(function() {
-				_callback();
+				if (_callback !== null) _callback();
 				
 				window.removeEventListener('scroll', _callbackScroll);
 				_callback = null;
