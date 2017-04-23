@@ -41,7 +41,9 @@
 			{/if}
 		{else}
 			<div class="messageAuthorContainer">
-				<span class="username"{if $enableMicrodata} itemprop="name"{/if}>{$userProfile->username}</span>
+				{if $userProfile->username}
+					<span class="username"{if $enableMicrodata} itemprop="name"{/if}>{$userProfile->username}</span>
+				{/if}
 				
 				{event name='messageAuthorContainer'}
 			</div>
