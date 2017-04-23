@@ -129,11 +129,11 @@ requirejs.config({
 </script>
 
 {if JQUERY_SOURCE == 'google'}
-<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'microsoft'}
-<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'cloudflare'}
-<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {else}
 {js application='wcf' lib='jquery'}
 {/if}
