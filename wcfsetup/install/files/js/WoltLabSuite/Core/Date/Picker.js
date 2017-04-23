@@ -51,6 +51,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				var isTimeOnly = (isDateTime && elDataBool(element, 'time-only'));
 				var disableClear = elDataBool(element, 'disable-clear');
 				var ignoreTimezone = isDateTime && elDataBool(element, 'ignore-timezone');
+				var isBirthday = element.classList.contains('birthday');
 				
 				elData(element, 'is-date-time', isDateTime);
 				elData(element, 'is-time-only', isTimeOnly);
@@ -64,17 +65,22 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 						date.setHours(tmp[0], tmp[1]);
 					}
 					else {
-						if (ignoreTimezone) {
+						if (ignoreTimezone || isBirthday) {
 							var timezoneOffset = new Date(value).getTimezoneOffset();
 							var timezone = (timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
 							timezoneOffset = Math.abs(timezoneOffset);
 							var hours = (Math.floor(timezoneOffset / 60)).toString();
 							var minutes = (timezoneOffset % 60).toString();
-							timezone += (hours.length == 2) ? hours : '0' + hours;
+							timezone += (hours.length === 2) ? hours : '0' + hours;
 							timezone += ':';
-							timezone += (minutes.length == 2) ? minutes : '0' + minutes;
+							timezone += (minutes.length === 2) ? minutes : '0' + minutes;
 							
-							value = value.replace(/[+-][0-9]{2}:[0-9]{2}$/, timezone);
+							if (isBirthday) {
+								value += 'T00:00:00' + timezone;
+							}
+							else {
+								value = value.replace(/[+-][0-9]{2}:[0-9]{2}$/, timezone);
+							}
 						}
 						
 						date = new Date(value);
@@ -88,7 +94,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				var isEmpty = (value.length === 0);
 				
 				// handle birthday input
-				if (element.classList.contains('birthday')) {
+				if (isBirthday) {
 					elData(element, 'min-date', '120');
 					
 					// do not use 'now' here, all though it makes sense, it causes bad UX 
