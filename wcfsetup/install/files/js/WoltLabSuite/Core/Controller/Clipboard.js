@@ -304,7 +304,7 @@ define(
 										
 										switch (item.nodeName) {
 											case 'INPUT':
-												if (item.checked) {
+												if ((item.type !== "checkbox" && item.type !== "radio") || item.checked) {
 													formData[name] = elAttr(item, 'value');
 												}
 												break;
