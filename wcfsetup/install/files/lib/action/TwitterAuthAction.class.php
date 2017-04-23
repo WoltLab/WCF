@@ -78,7 +78,7 @@ class TwitterAuthAction extends AbstractAction {
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
 				if (WCF::getUser()->userID) {
-					throw new NamedUserException(WCF::getLanguage()->get('wcf.user.3rdparty.twitter.connect.error.inuse'));
+					throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.twitter.connect.error.inuse'));
 				}
 				// perform login
 				else {

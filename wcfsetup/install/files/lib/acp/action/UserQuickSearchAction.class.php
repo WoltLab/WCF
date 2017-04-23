@@ -20,7 +20,7 @@ class UserQuickSearchAction extends AbstractAction {
 	/**
 	 * @inheritDoc
 	 */
-	public $neededPermissions = ['admin.user.canEditUser'];
+	public $neededPermissions = ['admin.user.canSearchUser'];
 	
 	/**
 	 * search mode

@@ -122,7 +122,7 @@ COMMAND:
 		+ "}"
 		+ "return (looped ? result : " + ($5 || "''") + "); })()"
 	}
-|	'{lang}' CHUNK_STAR '{/lang}' -> "Language.get(" + $2 + ")"
+|	'{lang}' CHUNK_STAR '{/lang}' -> "Language.get(" + $2 + ", v)"
 |	'{' VARIABLE '}'  -> "StringUtil.escapeHTML(" + $2 + ")"
 |	'{#' VARIABLE '}' -> "StringUtil.formatNumeric(" + $2 + ")"
 |	'{@' VARIABLE '}' -> $2

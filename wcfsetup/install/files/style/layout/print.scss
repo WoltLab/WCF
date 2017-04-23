@@ -107,4 +107,9 @@
 		margin: 0 !important;
 		padding: 0 !important;
 	}
+	
+	/* see https://bugzilla.mozilla.org/show_bug.cgi?id=939897 */
+	.pageContainer {
+		display: block;
+	}
 }

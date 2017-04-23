@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user;
 use wcf\system\cache\builder\UserBirthdayCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -33,6 +34,13 @@ class UserBirthdayCache extends SingletonFactory {
 		if (!isset($this->monthsLoaded[$month])) {
 			$this->birthdays = array_merge($this->birthdays, UserBirthdayCacheBuilder::getInstance()->getData(['month' => $month]));
 			$this->monthsLoaded[$month] = true;
+			
+			$data = [
+				'birthdays' => $this->birthdays,
+				'month' => $month
+			];
+			EventHandler::getInstance()->fireAction($this, 'loadMonth', $data);
+			$this->birthdays = $data['birthdays'];
 		}
 	}
 	

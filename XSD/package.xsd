@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
-	
+
 	<!-- data element -->
 	<xs:element name="package">
 		<xs:complexType>
@@ -17,7 +17,7 @@
 			<xs:attribute name="name" type="woltlab_varchar" use="required" />
 		</xs:complexType>
 	</xs:element>
-	
+
 	<!-- simple package element -->
 	<xs:complexType name="simplePackage">
 		<xs:simpleContent>
@@ -27,7 +27,7 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	
+
 	<!-- optional package element -->
 	<xs:complexType name="optionalPackage">
 		<xs:simpleContent>
@@ -37,7 +37,7 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	
+
 	<!-- excluded package element -->
 	<xs:complexType name="excludedPackage">
 		<xs:simpleContent>
@@ -46,24 +46,26 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	
+
 	<!-- instructions elements -->
 	<xs:complexType name="instructions">
 		<xs:sequence>
-			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip" />
+			<xs:sequence>
+				<xs:element name="instruction" maxOccurs="unbounded" type="instructionType"/>
+			</xs:sequence>
 		</xs:sequence>
-		<xs:attribute name="type" type="instructionType" use="required" />
+		<xs:attribute name="type" type="instructionTypes" use="required" />
 		<xs:attribute name="fromversion" type="woltlab_varchar" />
 	</xs:complexType>
-	
+
 	<!-- instruction type attribute -->
-	<xs:simpleType name="instructionType">
+	<xs:simpleType name="instructionTypes">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="install" />
 			<xs:enumeration value="update" />
 		</xs:restriction>
 	</xs:simpleType>
-	
+
 	<!-- package information element -->
 	<xs:complexType name="packageInformation">
 		<xs:choice maxOccurs="unbounded">
@@ -85,13 +87,14 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="applicationdirectory" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="packageurl" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
 			<xs:element name="isapplication" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="version" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
 			<xs:element name="date" type="xs:date" minOccurs="1" maxOccurs="1" />
 		</xs:choice>
 	</xs:complexType>
-	
+
 	<!-- author information element -->
 	<xs:complexType name="authorInformation">
 		<xs:all>
@@ -99,25 +102,36 @@
 			<xs:element name="authorurl" type="xs:anyURI" minOccurs="0" />
 		</xs:all>
 	</xs:complexType>
-	
+
 	<!-- required packages element -->
 	<xs:complexType name="requiredPackages">
 		<xs:sequence>
 			<xs:element name="requiredpackage" type="simplePackage" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<!-- optional packages element -->
 	<xs:complexType name="optionalPackages">
 		<xs:sequence>
 			<xs:element name="optionalpackage" type="optionalPackage" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<!-- excluded packages element -->
 	<xs:complexType name="excludedPackages">
 		<xs:sequence>
 			<xs:element name="excludedpackage" type="excludedPackage" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="instructionType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" use="required" type="woltlab_varchar"/>
+				<xs:attribute name="application" type="woltlab_varchar"/>
+				<xs:attribute name="run" type="woltlab_varchar"/>
+				<xs:attribute name="flushCache" type="xs:boolean"/>
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 </xs:schema>

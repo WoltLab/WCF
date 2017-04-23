@@ -104,20 +104,25 @@ class FileReader {
 		$this->endByte = $this->options['filesize'] - 1;
 		if ($this->options['enableRangeSupport']) {
 			if (!empty($_SERVER['HTTP_RANGE'])) {
-				$regex = new Regex('^bytes=(-?\d+)(?:-(\d+))?$');
+				$regex = new Regex('^bytes=(?:(\d+)-(\d+)?|-(\d+))$');
 				if ($regex->match($_SERVER['HTTP_RANGE'])) {
 					$matches = $regex->getMatches();
-					$first = intval($matches[1]);
-					$last = (isset($matches[2]) ? intval($matches[2]) : 0);
+					$start = (isset($matches[1]) && $matches[1] !== '' ? intval($matches[1]) : null);
+					$end = (isset($matches[2]) && $matches[2] !== '' ? intval($matches[2]) : null);
+					$last = (isset($matches[3]) && $matches[3] !== '' ? intval($matches[3]) : null);
 					
-					if ($first < 0) {
-						// negative value; subtract from filesize
-						$this->startByte = $this->options['filesize'] + $first;
+					if ($start !== null) {
+						$this->startByte = $start;
 					}
-					else {
-						$this->startByte = $first;
-						if ($last > 0) {
-							$this->endByte = $last;
+					if ($end !== null) {
+						if ($end <= ($this->options['filesize'] - 1)) {
+							$this->endByte = $end;
+						}
+					}
+					if ($start === null && $end === null && $last !== null) {
+						if ($last <= $this->options['filesize']) {
+							// negative value; subtract from filesize
+							$this->startByte = $this->options['filesize'] - $last;
 						}
 					}
 				}
@@ -129,7 +134,7 @@ class FileReader {
 	 * Handles the given header items.
 	 */
 	protected function handleHeaders() {
-		if ($this->startByte < 0 || $this->startByte >= $this->options['filesize'] || $this->endByte >= $this->options['filesize']) {
+		if ($this->startByte < 0 || $this->startByte >= $this->options['filesize'] || $this->endByte < $this->startByte) {
 			// invalid range given
 			$this->addHeader('', 'HTTP/1.1 416 Requested Range Not Satisfiable');
 			$this->addHeader('Accept-Ranges', 'bytes');

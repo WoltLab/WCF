@@ -2082,7 +2082,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add Category]]></item>
-		<item name="wcf.category.button.list"><![CDATA[List Categories]]></item>
+		<item name="wcf.category.button.list"><![CDATA[Categories]]></item>
 		<item name="wcf.category.delete.sure"><![CDATA[Do you really want to delete this category?]]></item>
 		<item name="wcf.category.edit"><![CDATA[Edit Category]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[Disable Category]]></item>

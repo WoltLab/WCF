@@ -3,6 +3,7 @@ namespace wcf\system\message\quote;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\IMessage;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\SingletonFactory;
@@ -135,6 +136,9 @@ class MessageQuoteManager extends SingletonFactory {
 				if (MESSAGE_MAX_QUOTE_DEPTH) {
 					$htmlInputProcessor->enforceQuoteDepth(MESSAGE_MAX_QUOTE_DEPTH - 1);
 				}
+				
+				$parameters = ['htmlInputProcessor' => $htmlInputProcessor];
+				EventHandler::getInstance()->fireAction($this, 'addFullQuote', $parameters);
 				
 				$this->quotes[$objectType][$objectID][$quoteID] = 1;
 				$this->quoteData[$quoteID.'_fq'] = $htmlInputProcessor->getHtml();
@@ -423,6 +427,13 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @return	string
 	 */
 	public function renderQuote(IMessage $message, $text, $renderAsString = true) {
+		$parameters = [
+			'message' => $message,
+			'text' => $text
+		];
+		EventHandler::getInstance()->fireAction($this, 'beforeRenderQuote', $parameters);
+		$text = $parameters['text'];
+		
 		$escapedLink = str_replace(["\\", "'"], ["\\\\", "\'"], $message->getLink());
 		
 		if ($renderAsString) {

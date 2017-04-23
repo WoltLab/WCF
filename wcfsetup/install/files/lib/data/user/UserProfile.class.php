@@ -709,6 +709,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function showSignature() {
+		if (!MODULE_USER_SIGNATURE) return false;
 		if (!$this->signature) return false;
 		if ($this->disableSignature) return false;
 		if ($this->banned) return false;

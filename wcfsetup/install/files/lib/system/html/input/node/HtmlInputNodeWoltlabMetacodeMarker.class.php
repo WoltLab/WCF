@@ -340,7 +340,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		while ($parent->nodeName === 'p' || !$this->isBlockElement($parent));
 		
 		$element = DOMUtil::splitParentsUntil($start, $parent);
-		DOMUtil::insertBefore($start, $element);
+		if ($start !== $element) DOMUtil::insertBefore($start, $element);
 		
 		$commonAncestor = DOMUtil::getCommonAncestor($start, $end);
 		$lastElement = DOMUtil::splitParentsUntil($end, $commonAncestor, false);
