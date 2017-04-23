@@ -30,6 +30,8 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	 */
 	public function render(array $data, $supportPaste = false) {
 		$messages = $this->getMessages($data);
+		$this->overrideIsFullQuote($messages);
+		
 		$userIDs = $userProfiles = [];
 		foreach ($messages as $message) {
 			$userID = $message->getUserID();
@@ -44,7 +46,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 		}
 		
 		WCF::getTPL()->assign([
-			'messages' => $this->getMessages($data),
+			'messages' => $messages,
 			'supportPaste' => $supportPaste,
 			'userProfiles' => $userProfiles
 		]);
@@ -57,6 +59,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	 */
 	public function renderQuotes(array $data, $render = true, $renderAsString = true) {
 		$messages = $this->getMessages($data);
+		$this->overrideIsFullQuote($messages);
 		
 		$renderedQuotes = [];
 		foreach ($messages as $message) {
@@ -72,6 +75,20 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 		}
 		
 		return $renderedQuotes;
+	}
+	
+	/**
+	 * Overrides the full quote flag for given message.
+	 * 
+	 * @param       QuotedMessage[]         $messages
+	 */
+	protected function overrideIsFullQuote(array $messages) {
+		foreach ($messages as $message) {
+			$quoteIDs = $message->getQuoteIDs();
+			foreach ($quoteIDs as $quoteID) {
+				$message->setOverrideIsFullQuote($quoteID, MessageQuoteManager::getInstance()->isFullQuote($quoteID));
+			}
+		}
 	}
 	
 	/**

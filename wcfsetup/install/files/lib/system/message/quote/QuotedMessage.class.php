@@ -35,6 +35,12 @@ class QuotedMessage implements \Countable, \Iterator {
 	public $object = null;
 	
 	/**
+	 * overrides full quote flag
+	 * @var boolean[]
+	 */
+	public $overrideIsFullQuote = [];
+	
+	/**
 	 * list of quotes (shortened)
 	 * @var	string[]
 	 */
@@ -93,6 +99,25 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
+	 * Overrides the full quote flag.
+	 * 
+	 * @param       string          $quoteID
+	 * @param       boolean         $overrideIsFullQuote
+	 */
+	public function setOverrideIsFullQuote($quoteID, $overrideIsFullQuote) {
+		$this->overrideIsFullQuote[$quoteID] = $overrideIsFullQuote;
+	}
+	
+	/**
+	 * Returns the list of quote ids for this message.
+	 * 
+	 * @return      string[]
+	 */
+	public function getQuoteIDs() {
+		return array_keys($this->quotes);
+	}
+	
+	/**
 	 * Returns the full quote by quote id.
 	 * 
 	 * @param	string		$quoteID
@@ -113,6 +138,10 @@ class QuotedMessage implements \Countable, \Iterator {
 	 * @return	boolean
 	 */
 	public function isFullQuote($quoteID) {
+		if (isset($this->overrideIsFullQuote[$quoteID])) {
+			return $this->overrideIsFullQuote[$quoteID];
+		}
+		
 		if (isset($this->fullQuotes[$quoteID]) && $this->quotes[$quoteID] != $this->fullQuotes[$quoteID]) {
 			// full quotes are parsed and differ from their original
 			return true;
