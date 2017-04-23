@@ -41,34 +41,47 @@ define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], func
 		},
 		
 		/**
-		 * Checks if any of the relevant pages is selected. If that is the case, the dependent
+		 * Checks if only relevant pages are selected. If that is the case, the dependent
 		 * element is shown, otherwise it is hidden.
 		 * 
 		 * @private
 		 */
 		_checkVisibility: function() {
-			var dependentElement, page, pageIds;
+			var dependentElement, page, pageIds, checkedPageIds, irrelevantPageIds;
 			
 			depenentElementLoop: for (var i = 0, length = _dependentElements.length; i < length; i++) {
 				dependentElement = _dependentElements[i];
 				pageIds = _pageIds.get(dependentElement);
 				
+				checkedPageIds = [];
 				for (var j = 0, length2 = _pages.length; j < length2; j++) {
 					page = _pages[j];
 					
-					if (page.checked && pageIds.indexOf(~~page.value) !== -1) {
-						this._showDependentElement(dependentElement);
-						
-						continue depenentElementLoop;
+					if (page.checked) {
+						checkedPageIds.push(~~page.value);
 					}
 				}
 				
-				this._hideDependentElement(dependentElement);
+				irrelevantPageIds = checkedPageIds.filter(function(pageId) {
+					return pageIds.indexOf(pageId) === -1;
+				});
+				
+				if (!checkedPageIds.length || irrelevantPageIds.length) {
+					this._hideDependentElement(dependentElement);
+				}
+				else {
+					this._showDependentElement(dependentElement);
+				}
 			}
 			
 			EventHandler.fire('com.woltlab.wcf.pageConditionDependence', 'checkVisivility');
 		},
 		
+		/**
+		 * Hides all elements that depend on the given element.
+		 * 
+		 * @param	{HTMLElement}	dependentElement
+		 */
 		_hideDependentElement: function(dependentElement) {
 			elHide(dependentElement);
 			
@@ -80,6 +93,11 @@ define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], func
 			_hiddenElements.set(dependentElement, []);
 		},
 		
+		/**
+		 * Shows all elements that depend on the given element.
+		 * 
+		 * @param	{HTMLElement}	dependentElement
+		 */
 		_showDependentElement: function(dependentElement) {
 			elShow(dependentElement);
 			
