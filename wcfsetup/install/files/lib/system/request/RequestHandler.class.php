@@ -148,6 +148,15 @@ class RequestHandler extends SingletonFactory {
 				unset($routeData['pageType']);
 			}
 			else {
+				if ($this->isACPRequest() && ($controller === 'login' || $controller === 'index') && $application !== 'wcf') {
+					HeaderUtil::redirect(
+						LinkHandler::getInstance()->getLink(ucfirst($controller)),
+						true,
+						false
+					);
+					exit;
+				}
+				
 				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest());
 				if (is_string($classData)) {
 					$this->redirect($routeData, $application, $classData);
