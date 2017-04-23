@@ -23,6 +23,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
+use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -778,7 +779,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		try {
 			$this->readString('username', false, 'data');
 			
-			if (!UserUtil::isValidUsername($this->parameters['data']['username'])) {
+			if (!UserRegistrationUtil::isValidUsername($this->parameters['data']['username'])) {
 				throw new UserInputException('username', 'invalid');
 			}
 			if (!UserUtil::isAvailableUsername($this->parameters['data']['username'])) {

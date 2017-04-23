@@ -5,6 +5,7 @@ use wcf\system\captcha\CaptchaHandler;
 use wcf\system\captcha\ICaptchaHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -106,7 +107,7 @@ trait TMessageQuickReplyGuestDialogAction {
 		try {
 			$this->readString('username', false, 'data');
 			
-			if (!UserUtil::isValidUsername($this->parameters['data']['username'])) {
+			if (!UserRegistrationUtil::isValidUsername($this->parameters['data']['username'])) {
 				throw new UserInputException('username', 'invalid');
 			}
 			if (!UserUtil::isAvailableUsername($this->parameters['data']['username'])) {
