@@ -14,6 +14,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
+use wcf\util\ImageUtil;
 
 /**
  * Executes avatar-related actions.
@@ -189,8 +190,21 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		}
 		$tmp = pathinfo($tmp['path']);
 		if (!isset($tmp['basename']) || !isset($tmp['extension'])) {
-			@unlink($filename);
-			return;
+			if (!isset($tmp['basename'])) {
+				$tmp['basename'] = basename($filename);
+			}
+			
+			if (!isset($tmp['extension'])) {
+				$imageData = @getimagesize($filename);
+				if ($imageData !== false) {
+					$tmp['extension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
+				}
+			}
+			
+			if (empty($tmp['extension'])) {
+				@unlink($filename);
+				return;
+			}
 		}
 		
 		$data = [
