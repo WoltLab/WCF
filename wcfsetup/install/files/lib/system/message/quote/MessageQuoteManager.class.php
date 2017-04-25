@@ -609,6 +609,16 @@ class MessageQuoteManager extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if a quote id represents a full quote.
+	 * 
+	 * @param       string          $quoteID
+	 * @return      boolean
+	 */
+	public function isFullQuote($quoteID) {
+		return isset($this->quoteData[$quoteID . '_fq']);
+	}
+	
+	/**
 	 * Updates data stored in session,
 	 */
 	protected function updateSession() {

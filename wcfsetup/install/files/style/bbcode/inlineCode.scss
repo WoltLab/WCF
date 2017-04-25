@@ -5,7 +5,9 @@ kbd {
 	border-radius: 2px;
 	color: rgba(68, 68, 68, 1) !important;
 	/* do not use inline-block, it breaks arrow key navigation in Firefox and Internet Explorer 11 */
-	display: inline;
+	/* update: `inline` styling breaks even more things, in particular the caret position is way off */
+	/* this reverts 8d381dc61e8183adcb770457f9fba25c29c00bd2 */
+	display: inline-block;
 	font-family: Consolas, 'Courier New', monospace;
 	font-style: normal;
 	font-weight: normal;

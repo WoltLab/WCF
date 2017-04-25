@@ -282,6 +282,10 @@ class UserOptionAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$additionalData = array();
+		if ($this->optionType == 'select') $additionalData['allowEmptyValue'] = true;
+		if ($this->optionType == 'message') $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
+		
 		$this->objectAction = new UserOptionAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'optionName' => StringUtil::getRandomID(),
 			'categoryName' => $this->categoryName,
@@ -297,7 +301,7 @@ class UserOptionAddForm extends AbstractForm {
 			'editable' => $this->editable,
 			'visible' => $this->visible,
 			'packageID' => 1,
-			'additionalData' => $this->optionType == 'select' ? serialize(['allowEmptyValue' => true]) : ''
+			'additionalData' => !empty($additionalData) ? serialize($additionalData) : ''
 		])]);
 		$this->objectAction->executeAction();
 		

@@ -2130,7 +2130,7 @@ $.widget('wcf.messageTabMenu', {
 			
 			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
 			if ($preselect == $name) {
-				$anchor.trigger('click');
+				$anchor.trigger('mousedown');
 			}
 		}
 		

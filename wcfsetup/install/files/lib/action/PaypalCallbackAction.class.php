@@ -98,6 +98,7 @@ class PaypalCallbackAction extends AbstractAction {
 		catch (SystemException $e) {
 			@header('HTTP/1.1 500 Internal Server Error');
 			echo $e->getMessage();
+			$e->getExceptionID(); // log error
 			exit;
 		}
 	}

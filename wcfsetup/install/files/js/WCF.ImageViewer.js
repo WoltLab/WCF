@@ -800,8 +800,8 @@ $.widget('ui.wcfImageViewer', {
 				var $img = new Image();
 				$img.src = imageData.image.url;
 				
-				imageData.image.height = $img.height;
-				imageData.image.width = $img.width;
+				imageData.image.height = $img.height || $image[0].naturalHeight;
+				imageData.image.width = $img.width || $image[0].naturalWidth;
 			}
 			else {
 				$image.css({

@@ -20,7 +20,7 @@
 	{/if}
 {/capture}
 
-{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
+{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 	{capture assign='contentHeaderNavigation'}
 		<li><a href="{link controller='ArticleAdd' isACP=true}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 	{/capture}

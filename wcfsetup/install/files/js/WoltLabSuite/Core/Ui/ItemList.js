@@ -468,7 +468,8 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		 * @param	{object}	event		event object
 		 */
 		_blur: function(event) {
-			if (_data.get(event.currentTarget.id).options.restricted) {
+			var data = _data.get(event.currentTarget.id);
+			if (data.options.restricted) {
 				// restricted item lists only allow results from the dropdown to be picked
 				return;
 			}
@@ -477,7 +478,9 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			window.setTimeout(function() {
 				var value = currentTarget.value.trim();
 				if (value.length) {
-					this._addItem(currentTarget.id, { objectId: 0, value: value });
+					if (!data.suggestion || !data.suggestion.isActive()) {
+						this._addItem(currentTarget.id, { objectId: 0, value: value });
+					}
 				}
 			}.bind(this), 100);
 		}

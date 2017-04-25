@@ -49,6 +49,9 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spTable th, #spTable td { padding: 10px; }
 #spTable tr:not(:last-child) > td { border-bottom: 1px solid #000; }
 
+/* ### input ### */
+#spInputDisabled { -webkit-text-fill-color: unset; }
+
 /* ### button ### */
 #spButton .button.disabled, #spButtonPrimary .button.disabled { cursor: default; }
 #spButtonPrimary { margin-top: 10px; }
