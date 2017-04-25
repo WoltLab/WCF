@@ -179,6 +179,14 @@ define(['Language'], function(Language) {
 					case 'U':
 						char = Math.round(date.getTime() / 1000);
 						break;
+						
+					// escape sequence
+					case '\\':
+						char = '';
+						if (i + 1 < length) {
+							char = format[++i];
+						}
+						break;
 					
 					default:
 						char = format[i];
