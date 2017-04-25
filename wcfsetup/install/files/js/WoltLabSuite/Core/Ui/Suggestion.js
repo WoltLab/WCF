@@ -82,12 +82,20 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 		},
 		
 		/**
+		 * Returns true if the suggestions are active.
+		 * @return      {boolean}
+		 */
+		isActive: function() {
+			return (this._dropdownMenu !== null && UiSimpleDropdown.isOpen(this._element.id));
+		},
+		
+		/**
 		 * Handles the keyboard navigation for interaction with the suggestion list.
 		 * 
 		 * @param	{object}	event		event object
 		 */
 		_keyDown: function(event) {
-			if (this._dropdownMenu === null || !UiSimpleDropdown.isOpen(this._element.id)) {
+			if (!this.isActive()) {
 				return true;
 			}
 			
