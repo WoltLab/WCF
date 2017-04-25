@@ -952,7 +952,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	
 	/**
 	 * object id
-	 * @var	integer
+	 * @var	{int}
 	 */
 	_objectID: 0,
 	
@@ -987,13 +987,13 @@ WCF.Message.Quote.Handler = Class.extend({
 	 */
 	init: function(quoteManager, className, objectType, containerSelector, messageBodySelector, messageContentSelector, supportDirectInsert) {
 		this._className = className;
-		if (this._className == '') {
+		if (this._className === '') {
 			console.debug("[WCF.Message.QuoteManager] Empty class name given, aborting.");
 			return;
 		}
 		
 		this._objectType = objectType;
-		if (this._objectType == '') {
+		if (this._objectType === '') {
 			console.debug("[WCF.Message.QuoteManager] Empty object type name given, aborting.");
 			return;
 		}
@@ -1001,7 +1001,6 @@ WCF.Message.Quote.Handler = Class.extend({
 		this._containerSelector = containerSelector;
 		this._message = '';
 		this._messageBodySelector = messageBodySelector;
-		this._messageContentSelector = messageContentSelector;
 		this._objectID = 0;
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -1009,7 +1008,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		
 		this._initContainers();
 		
-		supportDirectInsert = (supportDirectInsert && quoteManager.supportPaste()) ? true : false;
+		supportDirectInsert = (supportDirectInsert && quoteManager.supportPaste());
 		this._initCopyQuote(supportDirectInsert);
 		
 		$(document).mouseup($.proxy(this._mouseUp, this));
@@ -1091,12 +1090,28 @@ WCF.Message.Quote.Handler = Class.extend({
 			true
 		);
 		
-		var $text = '';
+		var $text = '', ignoreLinks = [], value;
 		while ($walker.nextNode()) {
 			var $node = $walker.currentNode;
 			
 			if ($node.nodeType === Node.ELEMENT_NODE) {
 				switch ($node.tagName) {
+					case 'A':
+						// \u2026 === &hellip;
+						value = $node.textContent;
+						if (value.indexOf('\u2026') > 0) {
+							var tmp = value.split(/\u2026/);
+							if (tmp.length === 2) {
+								var href = $node.href;
+								if (href.indexOf(tmp[0]) === 0 && href.substr(tmp[1].length * -1) === tmp[1]) {
+									// truncated url, use original href to preserve link
+									$text += href;
+									ignoreLinks.push($node);
+								}
+							}
+						}
+						break;
+						
 					case 'BR':
 					case 'LI':
 					case 'UL':
@@ -1115,6 +1130,11 @@ WCF.Message.Quote.Handler = Class.extend({
 				}
 			}
 			else {
+				if ($node.parentNode.nodeName === 'A' && ignoreLinks.indexOf($node.parentNode) !== -1) {
+					// ignore text content of links that have already been captured
+					continue;
+				}
+				
 				$text += $node.nodeValue.replace(/\n/g, '');
 			}
 			
