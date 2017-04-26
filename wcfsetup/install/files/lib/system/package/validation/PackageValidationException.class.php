@@ -88,6 +88,12 @@ class PackageValidationException extends SystemException {
 	const MISSING_INSTRUCTION_FILE = 11;
 	
 	/**
+	 * the uploaded version is already installed, expects the details 'packageName' and 'packageVersion'
+	 * @var integer
+	 */
+	const ALREADY_INSTALLED = 12;
+	
+	/**
 	 * Creates a new PackageArchiveValidationException.
 	 * 
 	 * @param	integer		$code
