@@ -45,7 +45,6 @@ requirejs.config({
 			'User': 'WoltLabSuite/Core/User'
 		}
 	},
-	urlArgs: 't=' + window.LAST_UPDATE_TIME,
 	waitSeconds: 0
 });
 

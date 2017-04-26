@@ -22,7 +22,8 @@
 {js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true'}
 <script>
 requirejs.config({
-	baseUrl: '{@$__wcf->getPath()}js'
+	baseUrl: '{@$__wcf->getPath()}js', 
+	urlArgs: 't=' + window.LAST_UPDATE_TIME
 	{hascontent}
 	, paths: {
 		{content}{event name='requirePaths'}{/content}
