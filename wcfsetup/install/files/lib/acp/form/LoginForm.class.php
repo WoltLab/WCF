@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
@@ -190,6 +191,13 @@ class LoginForm extends AbstractCaptchaForm {
 		}
 		
 		$this->validateUser();
+		
+		if (RequestHandler::getInstance()->isACPRequest() && $this->user !== null) {
+			$userProfile = new UserProfile($this->user);
+			if (!$userProfile->getPermission('admin.general.canUseAcp')) {
+				throw new UserInputException('username', 'acpNotAuthorized');
+			}
+		}
 	}
 	
 	/**

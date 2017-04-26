@@ -3075,6 +3075,7 @@ Errors are:
 		<item name="wcf.user.userID"><![CDATA[User ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Enter a username]]></item>
+		<item name="wcf.user.username.error.acpNotAuthorized"><![CDATA[This user is not authorized to log into the administration control panel.]]></item>
 		<item name="wcf.user.username.error.notFound"><![CDATA[The username {$username} does not exist.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[The username is already in use.]]></item>
 		<item name="wcf.user.username.error.invalid"><![CDATA[The username is invalid.]]></item>
