@@ -66,9 +66,6 @@
 					<category name="general.system.date">
 						<parent>general.system</parent>
 					</category>
-					<category name="general.system.jquery">
-						<parent>general.system</parent>
-					</category>
 					<category name="general.system.googleMaps">
 						<parent>general.system</parent>
 					</category>
@@ -731,18 +728,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>Europe/London</defaultvalue>
 			</option>
 			<!-- /general.system.date -->
-			
-			<!-- general.system.jquery -->
-			<option name="jquery_source">
-				<categoryname>general.system.jquery</categoryname>
-				<optiontype>radioButton</optiontype>
-				<defaultvalue>google</defaultvalue>
-				<selectoptions>local:wcf.acp.option.jquery_source.local
-google:wcf.acp.option.jquery_source.google
-microsoft:wcf.acp.option.jquery_source.microsoft
-cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
-			</option>
-			<!-- /general.system.jquery -->
 			
 			<!-- general.system.googleMaps -->
 			<option name="google_maps_api_key">
@@ -1593,9 +1578,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="message_sidebar_enable_rank" /> 
 		<option name="message_sidebar_enable_avatar" />
 		<option name="message_sidebar_enable_message_group_starter_icon" />
+		<option name="jquery_source" />
 		
 		<optioncategory name="dashboard.content.recentActivities" />
 		<optioncategory name="dashboard.sidebar.recentActivities" />
 		<optioncategory name="module.display" />
+		<optioncategory name="general.system.jquery" />
 	</delete>
 </data>

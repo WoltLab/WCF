@@ -910,7 +910,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
-		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		<item name="wcf.acp.option.exception_privacy"><![CDATA[Privacy]]></item>
 		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Specifies how detailed the error messages are. Private completely hides the error message, reduced tries to hide sensitive information and public (only supported in debug mode) shows everything.]]></item>
 		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Public]]></item>
@@ -994,11 +993,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
-		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery Source]]></item>
-		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Use Local Version]]></item>
-		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Use Google Hosted Libraries CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Use Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Use CloudFlare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in production environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>

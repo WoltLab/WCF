@@ -47,10 +47,10 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		if (empty($tagArgs['application'])) throw new SystemException("missing 'application' argument in js tag");
 		if (empty($tagArgs['file']) && empty($tagArgs['lib'])) throw new SystemException("missing 'file' or 'lib' argument in js tag");
 		
-		$isJqueryUi = false;
-		if (isset($tagArgs['lib']) && $tagArgs['lib'] === 'jquery-ui' && empty($tagArgs['file'])) {
+		$isJquery = false;
+		if (isset($tagArgs['lib']) && ($tagArgs['lib'] === 'jquery' || $tagArgs['lib'] === 'jquery-ui') && empty($tagArgs['file'])) {
 			$tagArgs['bundle'] = '';
-			$isJqueryUi = true;
+			$isJquery = true;
 		}
 		
 		$src = WCF::getPath($tagArgs['application']) . (isset($tagArgs['acp']) && $tagArgs['acp'] === 'true' ? 'acp/' : '') . 'js/';
@@ -58,7 +58,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$src .= $tagArgs['bundle'];
 		}
 		else if (!empty($tagArgs['lib'])) {
-			if ($isJqueryUi) {
+			if ($isJquery) {
 				$src .= ENABLE_DEBUG_MODE ? '3rdParty/' . $tagArgs['lib'] : 'WCF.Combined';
 			}
 			else {

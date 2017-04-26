@@ -914,7 +914,6 @@
 		<item name="wcf.acp.option.category.user.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
-		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		<item name="wcf.acp.option.exception_privacy"><![CDATA[Privatsphäre]]></item>
 		<item name="wcf.acp.option.exception_privacy.description"><![CDATA[Gibt an, wie detailliert die Fehlermeldungen sind. „Privat“ versteckt Fehler vollständig, „Gekürzt“ versucht private Informationen zu verstecken und „Öffentlich“ (nur bei aktivem Debug-Modus) zeigt alle Informationen an.]]></item>
 		<item name="wcf.acp.option.exception_privacy.public"><![CDATA[Öffentlich]]></item>
@@ -998,11 +997,6 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
-		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery-Quelle]]></item>
-		<item name="wcf.acp.option.jquery_source.local"><![CDATA[lokale Version]]></item>
-		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[CloudFlare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
