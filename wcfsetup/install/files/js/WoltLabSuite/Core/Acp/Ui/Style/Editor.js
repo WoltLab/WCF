@@ -14,6 +14,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 	var _stylePreviewWindow = elById('spWindow');
 	
 	var _isVisible = true;
+	var _isSmartphone = false;
 	var _updateRegionMarker = null;
 	
 	/**
@@ -139,6 +140,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			var lastValue = select.value;
 			
 			_updateRegionMarker = function() {
+				if (_isSmartphone) {
+					return;
+				}
+				
 				if (lastValue === 'none') {
 					elHide(_stylePreviewRegionMarker);
 					updateWrapperPosition(null);
@@ -285,6 +290,8 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			elHide(_stylePreviewWindow);
 			elById('spVariablesWrapper').style.removeProperty('transform');
 			elHide(elById('stylePreviewRegionMarker'));
+			
+			_isSmartphone = true;
 		},
 		
 		showVisualEditor: function() {
@@ -293,6 +300,8 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			window.setTimeout(function() {
 				Core.triggerEvent(elById('spCategories'), 'change');
 			}, 100);
+			
+			_isSmartphone = false;
 		}
 	};
 });
