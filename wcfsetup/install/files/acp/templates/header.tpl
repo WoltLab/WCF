@@ -35,7 +35,7 @@
 	<script>
 		requirejs.config({
 			baseUrl: '{@$__wcf->getPath()}js',
-			urlArgs: 't=' + window.LAST_UPDATE_TIME
+			urlArgs: 't={@LAST_UPDATE_TIME}'
 			{hascontent}
 			, paths: {
 				{content}{event name='requirePaths'}{/content}
