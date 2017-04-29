@@ -3423,6 +3423,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzeren, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}. Es werden alle Aktivitäten angezeigt.]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">

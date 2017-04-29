@@ -39,6 +39,12 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	public $filteredByFollowedUsers = false;
 	
 	/**
+	 * is true if filtering by followed users yielded no results
+	 * @var boolean
+	 */
+	public $filteredByFollowedUsersOverride = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $defaultLimit = 10;
@@ -99,7 +105,8 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 				'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
 				'eventList' => $this->objectList,
 				'lastEventTime' => $this->objectList->getLastEventTime(),
-				'filteredByFollowedUsers' => $this->filteredByFollowedUsers
+				'filteredByFollowedUsers' => $this->filteredByFollowedUsers,
+				'filteredByFollowedUsersOverride' => $this->filteredByFollowedUsersOverride
 			], true);
 		}
 		else {
@@ -120,11 +127,32 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	/**
 	 * @inheritDoc
 	 */
+	public function hasContent() {
+		$hasContent = parent::hasContent();
+		
+		if (!$hasContent) {
+			if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+				$this->filteredByFollowedUsersOverride = true;
+				
+				$this->loadContent();
+				
+				return count($this->objectList) > 0;
+			}
+		}
+		
+		return $hasContent;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function readObjects() {
 		// apply filter
 		if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
-			/** @noinspection PhpUndefinedMethodInspection */
-			$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+			if (!$this->filteredByFollowedUsersOverride) {
+				/** @noinspection PhpUndefinedMethodInspection */
+				$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+			}
 		}
 		
 		// load more items than necessary to avoid empty list if some items are invisible for current user

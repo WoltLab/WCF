@@ -63,6 +63,10 @@
 				margin-left: 5px;
 			}
 		}
+		
+		> .recentActivityFollowedNoResults {
+			text-align: left;
+		}
 	}
 	
 	@include screen-md-down {

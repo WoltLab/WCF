@@ -3410,6 +3410,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Excluded Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[There are no recent activities by followed users. Displaying activity for all users.]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">
