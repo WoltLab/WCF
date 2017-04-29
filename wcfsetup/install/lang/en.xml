@@ -737,6 +737,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Field Categories]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
 		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[User Field Settings]]></item>
+		<item name="wcf.acp.menu.link.user.profileMenu"><![CDATA[User Profile Menu]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Add Template]]></item>
@@ -1952,6 +1953,7 @@ full extend.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[The selection action has been executed and affected {#$affectedObjectCount} user{if $affectedObjectCount != 1}s{/if}.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the selected conditions without any further confirmation prompt!]]></item>
+		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[User Profile Menu Show Order]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

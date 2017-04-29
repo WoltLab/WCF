@@ -8,6 +8,7 @@ use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Represents an user profile menu item.
@@ -73,5 +74,12 @@ class UserProfileMenuItem extends DatabaseObject {
 		}
 		
 		return $this->contentManager;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function __toString() {
+		return WCF::getLanguage()->get('wcf.user.profile.menu.' . $this->menuItem);
 	}
 }

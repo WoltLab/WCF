@@ -134,6 +134,12 @@
 				<parent>wcf.acp.menu.link.user.management</parent>
 				<permissions>admin.user.canMailUser</permissions>
 			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.profileMenu">
+				<controller>wcf\acp\page\UserProfileMenuPage</controller>
+				<parent>wcf.acp.menu.link.user.management</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
+			</acpmenuitem>
 			<!-- /management -->
 			
 			<!-- group -->

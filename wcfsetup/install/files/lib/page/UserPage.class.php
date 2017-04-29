@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
@@ -35,7 +36,7 @@ class UserPage extends AbstractPage {
 	
 	/**
 	 * overview editable content object type
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType;
 	

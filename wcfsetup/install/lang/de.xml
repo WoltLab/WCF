@@ -741,6 +741,7 @@
 		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Profilfeld-Kategorien]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Profilfeld-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.userOptionDefaults"><![CDATA[Benutzerprofil-Einstellungen]]></item>
+		<item name="wcf.acp.menu.link.user.profileMenu"><![CDATA[Benutzerprofil-Menü]]></item>
 		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Template hinzufügen]]></item>
@@ -2005,6 +2006,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde auf {#$affectedObjectCount} Benutzer ausgeführt.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
+		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[Benutzerprofil-Menü Sortierung]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
