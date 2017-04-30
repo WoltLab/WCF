@@ -1268,7 +1268,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
 		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Gelesen-Markierung für Artikel aktivieren]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Werbung abwechselnd anzeigen]]></item>
-		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sobald einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
+		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sollte einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
