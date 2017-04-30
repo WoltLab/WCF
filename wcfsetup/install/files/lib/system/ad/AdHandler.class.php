@@ -55,11 +55,6 @@ class AdHandler extends SingletonFactory {
 			$ads = [
 				$ads[mt_rand(0, count($ads) - 1)]
 			];
-			
-			$a = [0, 0];
-			for ($i = 0; $i < 10000; $i++) {
-				$a[mt_rand(0, 1)]++;
-			}
 		}
 		
 		$output = '';
