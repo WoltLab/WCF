@@ -220,3 +220,4 @@ define('OG_IMAGE', '');
 define('HEAD_CODE', '');
 define('AVATAR_DEFAULT_TYPE', 'initials');
 define('ARTICLE_ENABLE_VISIT_TRACKING', 1);
+define('ENABLE_AD_ROTATION', 1);

@@ -45,8 +45,25 @@ class AdHandler extends SingletonFactory {
 			return '';
 		}
 		
-		$output = '';
+		/** @var Ad[] $ads */
+		$ads = [];
 		foreach ($this->ads[$this->objectTypes[$adLocation]->objectTypeID] as $ad) {
+			$ads[] = $ad;
+		}
+		
+		if (ENABLE_AD_ROTATION && count($ads) > 1) {
+			$ads = [
+				$ads[mt_rand(0, count($ads) - 1)]
+			];
+			
+			$a = [0, 0];
+			for ($i = 0; $i < 10000; $i++) {
+				$a[mt_rand(0, 1)]++;
+			}
+		}
+		
+		$output = '';
+		foreach ($ads as $ad) {
 			$conditions = $ad->getConditions();
 			foreach ($conditions as $condition) {
 				if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {

@@ -1270,6 +1270,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initials]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
 		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Enable “mark as read” for articles]]></item>
+		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Enable ad rotation]]></item>
+		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[If there is more than one ad per placeholder, a random ad will be displayed every time. Disabling this option will display all ads simultaneously.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
