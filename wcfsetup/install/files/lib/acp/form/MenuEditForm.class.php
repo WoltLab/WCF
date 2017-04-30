@@ -4,6 +4,7 @@ use wcf\data\box\BoxAction;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuAction;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
@@ -98,6 +99,8 @@ class MenuEditForm extends MenuAddForm {
 			$boxAction->executeAction();
 		}
 		
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID, $this->aclValues);
+		
 		$this->saved();
 		
 		// show success message
@@ -120,6 +123,8 @@ class MenuEditForm extends MenuAddForm {
 			$this->visibleEverywhere = $this->menu->getBox()->visibleEverywhere;
 			$this->pageIDs = $this->menu->getBox()->getPageIDs();
 			$this->showHeader = $this->menu->getBox()->showHeader;
+			
+			$this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID);
 		}
 	}
 	
