@@ -41,7 +41,10 @@ define(
 				ControllerStyleChanger.setup();
 			}
 			
-			this._initUserPopover();
+			if (options.enableUserPopover) {
+				this._initUserPopover();
+			}
+			
 			this._invokeBackgroundQueue(options.backgroundQueue.url, options.backgroundQueue.force);
 			
 			UiUserIgnore.init();

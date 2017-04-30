@@ -77,6 +77,8 @@ class UserProfileAction extends UserAction {
 	 * Validates user profile preview.
 	 */
 	public function validateGetUserProfile() {
+		WCF::getSession()->checkPermissions(['user.profile.canViewUserProfile']);
+		
 		if (count($this->objectIDs) != 1) {
 			throw new UserInputException('objectIDs');
 		}

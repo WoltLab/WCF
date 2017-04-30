@@ -118,6 +118,7 @@ requirejs.config({
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
+			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
