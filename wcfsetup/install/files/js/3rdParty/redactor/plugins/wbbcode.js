@@ -2204,7 +2204,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			var $quote = null;
 			if (this.wutil.inWysiwygMode()) {
-				var $id = WCF.getUUID();
+				var $id = 'quote' + WCF.getUUID();
 				var $html = '';
 				if (plainText) {
 					$html = this.wbbcode.convertToHtml($openTag + plainText + $closingTag);
@@ -2246,25 +2246,49 @@ RedactorPlugins.wbbcode = function() {
 					
 					$current = $parent;
 				}
-				
-				if ($current && $current.parentNode === this.$editor[0]) {
-					if ($current.innerHTML.length) {
-						if ($current.innerHTML === '\u200b') {
-							this.caret.setEnd($current);
-						}
-						else {
-							this.wutil.setCaretAfter($current);
+				var childNodeIndex = -1, editor = this.$editor[0];
+				if ($current && $current.parentNode === editor && $current.innerHTML.length > 0) {
+					for (var i = 0; i < editor.childNodes.length; i++) {
+						if (editor.childNodes[i] === $current) {
+							childNodeIndex = i + 1;
+							
+							break;
 						}
 					}
 				}
 				
-				this.insert.html($html, false);
+				if (childNodeIndex === -1) {
+					childNodeIndex = editor.childNodes.length;
+				}
+				
+				var range = document.createRange();
+				range.setStart(editor, childNodeIndex);
+				range.setEnd(editor, childNodeIndex);
+				
+				var selection = window.getSelection();
+				selection.removeAllRanges();
+				selection.addRange(range);
+				
+				var markerElement = document.createElement('span');
+				range.insertNode(markerElement);
+				
+				// jQuery handles malformed HTML gracefully, yielding perfectly valid HTML in the end
+				// which can then be injected using outerHTML
+				$html = $('<div />').html($html)[0].innerHTML;
+				
+				// remove previous element if it was an empty paragraph
+				var previousElement = markerElement.previousElementSibling;
+				if (previousElement && previousElement.nodeName === 'P' && previousElement.innerHTML === '\u200B') {
+					editor.removeChild(previousElement);
+				}
+				
+				markerElement.outerHTML = $html;
 				
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
 					// quote may be empty if $innerHTML was empty, fix it
 					var $inner = $quote.find('> div');
-					if ($inner.length == 1) {
+					if ($inner.length === 1) {
 						if ($inner[0].innerHTML === '') {
 							$inner[0].innerHTML = this.opts.invisibleSpace;
 						}
