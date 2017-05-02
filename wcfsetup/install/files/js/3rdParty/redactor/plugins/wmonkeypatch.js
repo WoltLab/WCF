@@ -1350,6 +1350,31 @@ RedactorPlugins.wmonkeypatch = function() {
 				$(document).find('span.redactor-nodes-marker').each($removeEmptyTextNodes);
 				this.$editor.find('span.redactor-nodes-marker').each($removeEmptyTextNodes);
 			}).bind(this);
+			
+			this.selection.createMarkers = (function() {
+				this.selection.get();
+				
+				var node1 = this.selection.getMarker(1);
+				
+				this.selection.setMarker(this.range, node1, true);
+				if (this.range.collapsed === false)
+				{
+					var node2 = this.selection.getMarker(2);
+					this.selection.setMarker(this.range, node2, false);
+					
+					// Chrome 58 fails if the selection contains the first marker
+					var range = document.createRange();
+					range.setStartAfter(node1);
+					range.setEndBefore(node2);
+					
+					var selection = window.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+					
+				}
+				
+				this.savedSel = this.$editor.html();
+			}).bind(this);
 		},
 		
 		/**
