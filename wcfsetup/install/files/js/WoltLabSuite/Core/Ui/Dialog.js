@@ -421,12 +421,7 @@ define(
 			}
 			
 			if (typeof html === 'string') {
-				data.content.innerHTML = '';
-				
-				var content = elCreate('div');
-				DomUtil.setInnerHtml(content, html);
-				
-				data.content.appendChild(content);
+				DomUtil.setInnerHtml(data.content, html);
 			}
 			
 			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
