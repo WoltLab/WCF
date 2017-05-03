@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\database\exception;
 use wcf\system\exception\IExtraInformationException;
+use wcf\util\StringUtil;
 
 /**
  * Denotes an error that is related to a specific database query.
@@ -41,8 +42,21 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	 * @inheritDoc
 	 */
 	public function getExtraInformation() {
-		return array_map(function ($val) {
-			static $i = 0;
+		$i = 0;
+		
+		return array_map(function ($val) use (&$i) {
+			switch (gettype($val)) {
+				case 'NULL':
+					$val = 'null';
+				break;
+				case 'string':
+					$val = "'".addcslashes(StringUtil::encodeHTML($val), "\\'")."'";
+				break;
+				case 'boolean':
+					$val = $val ? 'true' : 'false';
+				break;
+			}
+			
 			return ['Query Parameter '.(++$i), $val];
 		}, $this->getParameters());
 	}
