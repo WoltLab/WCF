@@ -11,8 +11,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 	
 	var _stylePreviewRegions = new Dictionary();
 	var _stylePreviewRegionMarker = null;
+	var _stylePreviewWindow = elById('spWindow');
 	
 	var _isVisible = true;
+	var _isSmartphone = false;
 	var _updateRegionMarker = null;
 	
 	/**
@@ -123,10 +125,9 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 		},
 		
 		_initVisualEditor: function(styleRuleMap) {
-			var regions = elBySelAll('#spWindow [data-region]');
-			for (var i = 0, length = regions.length; i < length; i++) {
-				_stylePreviewRegions.set(elData(regions[i], 'region'), regions[i]);
-			}
+			elBySelAll('[data-region]', _stylePreviewWindow, function(region) {
+				_stylePreviewRegions.set(elData(region, 'region'), region);
+			});
 			
 			_stylePreviewRegionMarker = elCreate('div');
 			_stylePreviewRegionMarker.id = 'stylePreviewRegionMarker';
@@ -139,6 +140,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			var lastValue = select.value;
 			
 			_updateRegionMarker = function() {
+				if (_isSmartphone) {
+					return;
+				}
+				
 				if (lastValue === 'none') {
 					elHide(_stylePreviewRegionMarker);
 					updateWrapperPosition(null);
@@ -187,7 +192,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 						fromTop = maxHeight - wrapperHeight;
 					}
 					
-					variablesWrapper.style.setProperty('transform', 'translateY(' + fromTop + 'px)');
+					variablesWrapper.style.setProperty('transform', 'translateY(' + fromTop + 'px)', '');
 				}
 			}
 			
@@ -230,15 +235,13 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			elData(style, 'created-by', 'WoltLab/Acp/Ui/Style/Editor');
 			document.head.appendChild(style);
 			
-			function updateCSSRule(identifier, value, isInit) {
+			function updateCSSRule(identifier, value) {
 				if (styleRuleMap[identifier] === undefined) {
-					console.debug("Unknown style identifier: " + identifier);
 					return;
 				}
 				
 				var rule = styleRuleMap[identifier].replace(/VALUE/g, value + ' !important');
 				if (!rule) {
-					console.debug("Invalid style rule for " + identifier);
 					return;
 				}
 				
@@ -284,17 +287,21 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 		},
 		
 		hideVisualEditor: function() {
-			elHide(elById('spWindow'));
+			elHide(_stylePreviewWindow);
 			elById('spVariablesWrapper').style.removeProperty('transform');
 			elHide(elById('stylePreviewRegionMarker'));
+			
+			_isSmartphone = true;
 		},
 		
 		showVisualEditor: function() {
-			elShow(elById('spWindow'));
+			elShow(_stylePreviewWindow);
 			
 			window.setTimeout(function() {
 				Core.triggerEvent(elById('spCategories'), 'change');
 			}, 100);
+			
+			_isSmartphone = false;
 		}
 	};
 });

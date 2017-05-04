@@ -96,7 +96,7 @@ class HtmlInputNodeTextParser {
 			$categories = SmileyCache::getInstance()->getCategories();
 			
 			foreach ($smilies as $categoryID => $categorySmilies) {
-				if ($categories[$categoryID ?: null]->isDisabled) continue;
+				if (!array_key_exists($categoryID ?: null, $categories) || $categories[$categoryID ?: null]->isDisabled) continue;
 				
 				/** @var Smiley $smiley */
 				foreach ($categorySmilies as $smiley) {
