@@ -330,10 +330,10 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, 
 			}
 			
 			this._itemIndex += step;
-			if (this._itemIndex === -1) {
+			if (this._itemIndex < 0) {
 				this._itemIndex = this._dropdownMenu.childElementCount - 1;
 			}
-			else if (this._itemIndex === this._dropdownMenu.childElementCount) {
+			else if (this._itemIndex >= this._dropdownMenu.childElementCount) {
 				this._itemIndex = 0;
 			}
 			
@@ -343,6 +343,7 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, 
 		_hideDropdown: function() {
 			if (this._dropdownMenu !== null) this._dropdownMenu.classList.remove('dropdownOpen');
 			this._dropdownActive = false;
+			this._itemIndex = 0;
 		},
 		
 		_ajaxSetup: function() {
