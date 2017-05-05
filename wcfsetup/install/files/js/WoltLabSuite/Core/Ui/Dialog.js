@@ -341,11 +341,34 @@ define(
 			dialog.appendChild(contentContainer);
 			
 			contentContainer.addEventListener('wheel', function (event) {
-				// positive value: scrolling up
-				if (event.wheelDelta > 0 && contentContainer.scrollTop === 0) {
-					event.preventDefault();
+				var allowScroll = false;
+				var element = event.target, clientHeight, scrollHeight, scrollTop;
+				while (true) {
+					clientHeight = element.clientHeight;
+					scrollHeight = element.scrollHeight;
+					
+					if (clientHeight < scrollHeight) {
+						scrollTop = element.scrollTop;
+						
+						// positive value: scrolling up
+						if (event.wheelDelta > 0 && scrollTop > 0) {
+							allowScroll = true;
+							break;
+						}
+						else if (event.wheelDelta < 0 && (scrollTop + clientHeight < scrollHeight)) {
+							allowScroll = true;
+							break;
+						}
+					}
+					
+					if (!element || element === contentContainer) {
+						break;
+					}
+					
+					element = element.parentNode;
 				}
-				else if (event.wheelDelta < 0 && (contentContainer.scrollTop + contentContainer.clientHeight === contentContainer.scrollHeight)) {
+				
+				if (allowScroll === false) {
 					event.preventDefault();
 				}
 			});
