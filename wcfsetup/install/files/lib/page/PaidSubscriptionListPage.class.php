@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 
@@ -37,6 +38,17 @@ class PaidSubscriptionListPage extends AbstractPage {
 	 * @var	\wcf\data\paid\subscription\user\PaidSubscriptionUserList
 	 */
 	public $userSubscriptionList = array();
+	
+	/**
+	 * @see	\wcf\page\AbstractPage::checkPermissions()
+	 */
+	public function checkPermissions() {
+		parent::checkPermissions();
+		
+		if (WCF::getUser()->activationCode != 0) {
+			throw new PermissionDeniedException();
+		}
+	}
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::readData()
