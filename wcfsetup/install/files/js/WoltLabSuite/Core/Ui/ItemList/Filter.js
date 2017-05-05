@@ -6,30 +6,36 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Permission
  */
-define(['EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], function (EventKey, Language, List, StringUtil, DomUtil) {
+define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], function (Core, EventKey, Language, List, StringUtil, DomUtil) {
 	"use strict";
 	
 	/**
 	 * Creates a new filter input.
 	 * 
 	 * @param       {string}        elementId       list element id
+	 * @param       {Object=}       options         options
 	 * @constructor
 	 */
-	function UiItemListFilter(elementId) { this.init(elementId); }
+	function UiItemListFilter(elementId, options) { this.init(elementId, options); }
 	UiItemListFilter.prototype = {
 		/**
 		 * Creates a new filter input.
 		 * 
 		 * @param       {string}        elementId       list element id
+		 * @param       {Object=}       options         options
 		 */
-		init: function(elementId) {
+		init: function(elementId, options) {
 			this._value = '';
+			
+			this._options = Core.extend({
+				callbackPrepareItem: undefined
+			}, options);
 			
 			var element = elById(elementId);
 			if (element === null) {
 				throw new Error("Expected a valid element id, '" + elementId + "' does not match anything.");
 			}
-			else if (!element.classList.contains('scrollableCheckboxList')) {
+			else if (!element.classList.contains('scrollableCheckboxList') && typeof this._options.callbackPrepareItem !== 'function') {
 				throw new Error("Filter only works with elements with the CSS class 'scrollableCheckboxList'.");
 			}
 			
@@ -85,30 +91,39 @@ define(['EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], function (Eve
 		_buildItems: function() {
 			this._items = new List();
 			
-			var item;
+			var callback = (typeof this._options.callbackPrepareItem === 'function') ? this._options.callbackPrepareItem : this._prepareItem.bind(this);
 			for (var i = 0, length = this._element.childElementCount; i < length; i++) {
-				item = this._element.children[i];
-				
-				var label = item.children[0];
-				var text = label.textContent.trim();
-				
-				var checkbox = label.children[0];
-				while (checkbox.nextSibling) {
-					label.removeChild(checkbox.nextSibling);
-				}
-				
-				label.appendChild(document.createTextNode(' '));
-				
-				var span = elCreate('span');
-				span.textContent = text;
-				label.appendChild(span);
-				
-				this._items.add({
-					item: item,
-					span: span,
-					text: text
-				});
+				this._items.add(callback(this._element.children[i]));
 			}
+		},
+		
+		/**
+		 * Processes an item and returns the meta data.
+		 * 
+		 * @param       {Element}       item    current item
+		 * @return      {{item: *, span: Element, text: string}}
+		 * @protected
+		 */
+		_prepareItem: function(item) {
+			var label = item.children[0];
+			var text = label.textContent.trim();
+			
+			var checkbox = label.children[0];
+			while (checkbox.nextSibling) {
+				label.removeChild(checkbox.nextSibling);
+			}
+			
+			label.appendChild(document.createTextNode(' '));
+			
+			var span = elCreate('span');
+			span.textContent = text;
+			label.appendChild(span);
+			
+			return {
+				item: item,
+				span: span,
+				text: text
+			};
 		},
 		
 		/**

@@ -4,6 +4,7 @@ use Leafo\ScssPhp\Compiler;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -91,11 +92,14 @@ class StyleCompiler extends SingletonFactory {
 			unset($variables['overrideScss']);
 		}
 		
+		$parameters = ['scss' => ''];
+		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
+		
 		$this->compileStylesheet(
 			WCF_DIR.'style/style-'.$style->styleID,
 			$files,
 			$variables,
-			$individualScss,
+			$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 			function($content) use ($style) {
 				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 			}

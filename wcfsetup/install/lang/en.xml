@@ -2576,6 +2576,7 @@ Errors are:
 		<item name="wcf.global.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.select"><![CDATA[Select]]></item>
 		<item name="wcf.global.sorting"><![CDATA[Sorting]]></item>
+		<item name="wcf.global.fontAwesome.selectIcon"><![CDATA[Select Icon]]></item>
 	</category>
 	
 	<category name="wcf.global.form">

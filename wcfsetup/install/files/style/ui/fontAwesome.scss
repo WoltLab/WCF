@@ -1,0 +1,31 @@
+.fontAwesomeIcons {
+	border: 1px solid $wcfContentBorderInner;
+	max-height: 540px;
+	overflow: auto;
+	
+	> li {
+		display: inline-flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 10px 0;
+		width: 150px;
+		
+		&:hover {
+			background-color: $wcfButtonBackgroundActive;
+			color: $wcfButtonTextActive;
+			cursor: pointer;
+			
+			> .icon,
+			> small {
+				color: inherit;
+				cursor: pointer;
+			}
+		}
+		
+		> small {
+			color: $wcfContentDimmedText;
+			flex: 0 0 100%;
+			text-align: center;
+		}
+	}
+}

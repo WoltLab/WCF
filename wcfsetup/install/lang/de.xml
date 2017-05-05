@@ -2633,6 +2633,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.global.sorting"><![CDATA[Sortierung]]></item>
+		<item name="wcf.global.fontAwesome.selectIcon"><![CDATA[Icon auswählen]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
