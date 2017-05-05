@@ -2196,7 +2196,7 @@ Errors are:
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
-		<item name="wcf.global.success"><![CDATA[The action has been completed successfully.]]></item>
+		<item name="wcf.global.success"><![CDATA[The operation completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
@@ -3123,11 +3123,11 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since Registration]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
-		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You cannot simultaneously select “Banned” and “Not banned”.]]></item>
-		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting approval]]></item>
+		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You cannot simultaneously select “Banned” and “Not Banned”.]]></item>
+		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
-		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting approval”.]]></item>
-		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not banned]]></item>
+		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting Approval”.]]></item>
+		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">
