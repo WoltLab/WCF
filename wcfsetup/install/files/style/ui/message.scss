@@ -132,6 +132,12 @@
 			margin-left: 30px;
 			max-width: calc(100% - 270px);
 		}
+		
+		.username {
+			/* required to fix wrapping behavior in combination with
+			   `overflow-wrap` / `word-wrap` */
+			display: block;
+		}
 	}
 	
 	@include screen-sm-down {

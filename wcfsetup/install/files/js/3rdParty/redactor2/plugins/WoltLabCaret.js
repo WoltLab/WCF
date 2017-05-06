@@ -49,6 +49,19 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				return mpEnd.call(this, node);
 			}).bind(this);
 			
+			var mpSelectionNodes = this.selection.nodes;
+			this.selection.nodes = (function (tag) {
+				var returnValues = mpSelectionNodes.call(this, tag);
+				if (returnValues.length === 1 && returnValues[0] === this.$editor[0]) {
+					var range = this.selection.range(this.selection.get());
+					if (range.startContainer === range.endContainer) {
+						return [range.startContainer];
+					}
+				}
+				
+				return returnValues;
+			}).bind(this);
+			
 			this.$editor[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabCaret._handleEditorClick.bind(this));
 			
 			this.WoltLabCaret._initInternalRange();
