@@ -1,4 +1,9 @@
 <?php
+namespace WCF\Sniffs\Classes;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+
 /**
  * This sniff is based on Squiz_Sniffs_Classes_ClassFileNameSniff. Originally written
  * by Greg Sherwood <gsherwood@squiz.net> and Marc McIntyre <mmcintyre@squiz.net>
@@ -10,7 +15,7 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-class WCF_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff {
+class ClassFileNameSniff implements Sniff {
 	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *
@@ -32,7 +37,7 @@ class WCF_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff {
 	 *
 	 * @return void
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens   = $phpcsFile->getTokens();
 		$decName  = $phpcsFile->findNext(T_STRING, $stackPtr);
 		$fullPath = basename($phpcsFile->getFilename());
