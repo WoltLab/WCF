@@ -140,7 +140,7 @@
 		<item name="wcf.acp.captcha.question.add"><![CDATA[Add Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
-		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[The regular expression “{$invalidRegex}” is not valid.]]></item>
+		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[The regular expression “{$invalidRegex}” is invalid.]]></item>
 		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question “{$question->question|language}”?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
@@ -829,7 +829,7 @@
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s start page.]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
@@ -1074,7 +1074,7 @@
 		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[Use MySQL FULLTEXT (default)]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Display recommended products]]></item>
-		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Displays recommended products from the WoltLab® Plugin-Store on the Administration Control Panel’s start page.]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Displays recommended products from the WoltLab® Plugin-Store on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
@@ -1201,7 +1201,7 @@
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[No packages matched your criteria.]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
-		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Uploading of specified file has failed.]]></item>
+		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.acp.package.updates"><![CDATA[Updates]]></item>
 		<item name="wcf.acp.package.error.downloadFailed"><![CDATA[Downloading package{if $__downloadPackage|isset} “{$__downloadPackage}”{/if} has failed.]]></item>
 		<item name="wcf.acp.package.newVersion"><![CDATA[New Version]]></item>
@@ -1417,9 +1417,9 @@
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley File]]></item>
 		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Upload Smiley]]></item>
-		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Upload the image file of the smiley.]]></item>
-		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is not an image file.]]></item>
-		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[An unknown error occurred during upload.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Upload the image of the smiley.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is not an image.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">
@@ -1764,7 +1764,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.attachment.attachments"><![CDATA[Attachments]]></item>
 		<item name="wcf.attachment.delete.sure"><![CDATA[Do you really want to delete this attachment?]]></item>
 		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too large.]]></item>
+		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too big.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments allowed.]]></item>
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many attachments, remaining: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
@@ -3088,12 +3088,12 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
-		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[The uploaded avatar is invalid.]]></item>
-		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[The avatar does not match the allowed file extensions.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[The avatar exceeds the allowed maximum file size.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[The avatar dimensions are under the allowed minimum dimensions.]]></item>
-		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred.]]></item>
-		<item name="wcf.user.avatar.upload.success"><![CDATA[The avatar has been saved.]]></item>
+		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
+		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[Your avatar is too big.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Your avatar is too small.]]></item>
+		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+		<item name="wcf.user.avatar.upload.success"><![CDATA[Your avatar has been saved.]]></item>
 	</category>
 	
 	<category name="wcf.user.condition">
@@ -3118,8 +3118,8 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user group(s) in “User in User Group(s)” and “User Not in User Group(s)” are conflicting.]]></item>
 		<item name="wcf.user.condition.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[The end date is before the start date.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[The start date is not valid.]]></item>
-		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[The end date is not valid.]]></item>
+		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[The start date is invalid.]]></item>
+		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[The end date is invalid.]]></item>
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since Registration]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
