@@ -1,4 +1,9 @@
 <?php
+namespace WCF\Sniffs\Namespaces;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+
 /**
  * This sniff is based on Squiz_Sniffs_Classes_ClassFileNameSniff. Originally written
  * by Greg Sherwood <gsherwood@squiz.net> and released under the terms of the BSD Licence.
@@ -9,7 +14,7 @@
  * @package com.woltlab.wcf
  * @category    Community Framework
  */
-class WCF_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
+class UseDeclarationSniff implements Sniff
 {
 
 
@@ -34,7 +39,7 @@ class WCF_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->_shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
             return;
@@ -149,7 +154,7 @@ class WCF_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function _shouldIgnoreUse(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
