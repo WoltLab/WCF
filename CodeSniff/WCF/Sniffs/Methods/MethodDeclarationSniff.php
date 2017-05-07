@@ -1,11 +1,4 @@
 <?php
-namespace WCF\Sniffs\Methods;
-
-use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Tokens;
-
-
 /**
  * This sniff is based on PSR2_Sniffs_Methods_MethodDeclarationSniff. Originally written
  * by Greg Sherwood <gsherwood@squiz.net> and released under the terms of the BSD Licence.
@@ -16,7 +9,7 @@ use PHP_CodeSniffer\Util\Tokens;
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-class MethodDeclarationSniff extends AbstractScopeSniff {
+class WCF_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
 	/**
 	 * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
 	 */
@@ -33,7 +26,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 	 *
 	 * @return void
 	 */
-	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {
+	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();
 		
 		$methodName = $phpcsFile->getDeclarationName($stackPtr);
@@ -47,12 +40,12 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 		$abstract = 0;
 		$final = 0;
 		
-		$find = Tokens::$methodPrefixes;
+		$find = PHP_CodeSniffer_Tokens::$methodPrefixes;
 		$find[] = T_WHITESPACE;
 		$prev = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 		
 		$prefix = $stackPtr;
-		while (($prefix = $phpcsFile->findPrevious(Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
+		while (($prefix = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
 			switch ($tokens[$prefix]['code']) {
 				case T_STATIC:
 					$static = $prefix;
@@ -83,9 +76,5 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 			$error = 'The final declaration must come after the visibility declaration and after the static declaration';
 			$phpcsFile->addError($error, $final, 'FinalBeforeVisibilityOrBeforeStatic');
 		}
-	}
-	
-	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
-	{
 	}
 }

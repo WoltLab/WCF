@@ -1,9 +1,4 @@
 <?php
-namespace WCF\Sniffs\WhiteSpace;
-
-use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Files\File;
-
 /**
  * This sniff is based on Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff. Originally written
  * by Greg Sherwood <gsherwood@squiz.net> and Marc McIntyre <mmcintyre@squiz.net>
@@ -15,7 +10,7 @@ use PHP_CodeSniffer\Files\File;
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-class SuperfluousWhitespaceSniff implements Sniff {
+class WCF_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * A list of tokenizers this sniff supports.
 	 *
@@ -57,7 +52,7 @@ class SuperfluousWhitespaceSniff implements Sniff {
 	 * @param int                  $stackPtr  The position of the current token in the
 	 *                                        stack passed in $tokens.
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		
 		if ($tokens[$stackPtr]['code'] === T_OPEN_TAG) {
