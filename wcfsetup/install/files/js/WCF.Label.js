@@ -5,99 +5,114 @@
  */
 WCF.Label = {};
 
-/**
- * Provides enhancements for ACP label management.
- */
-WCF.Label.ACPList = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * input element
-	 * @var	jQuery
+	 * Provides enhancements for ACP label management.
 	 */
-	_labelInput: null,
-	
-	/**
-	 * list of pre-defined label items
-	 * @var	array<jQuery>
-	 */
-	_labelList: [ ],
-	
-	/**
-	 * Initializes the ACP label list.
-	 */
-	init: function() {
-		this._labelInput = $('#label').keydown($.proxy(this._keyPressed, this)).keyup($.proxy(this._keyPressed, this)).blur($.proxy(this._keyPressed, this));
+	WCF.Label.ACPList = Class.extend({
+		/**
+		 * input element
+		 * @var        jQuery
+		 */
+		_labelInput: null,
 		
-		if ($.browser.mozilla && $.browser.touch) {
-			this._labelInput.on('input', $.proxy(this._keyPressed, this));
-		}
+		/**
+		 * list of pre-defined label items
+		 * @var        array<jQuery>
+		 */
+		_labelList: [],
 		
-		$('#labelList').find('input[type="radio"]').each($.proxy(function(index, input) {
-			var $input = $(input);
+		/**
+		 * Initializes the ACP label list.
+		 */
+		init: function () {
+			this._labelInput = $('#label').keydown($.proxy(this._keyPressed, this)).keyup($.proxy(this._keyPressed, this)).blur($.proxy(this._keyPressed, this));
 			
-			// ignore custom values
-			if ($input.prop('value') !== 'custom') {
-				this._labelList.push($($input.next('span')));
+			if ($.browser.mozilla && $.browser.touch) {
+				this._labelInput.on('input', $.proxy(this._keyPressed, this));
 			}
-		}, this));
-	},
-	
-	/**
-	 * Renders label name as label or falls back to a default value if label is empty.
-	 */
-	_keyPressed: function() {
-		var $text = this._labelInput.prop('value');
-		if ($text === '') $text = WCF.Language.get('wcf.acp.label.defaultValue');
-		
-		for (var $i = 0, $length = this._labelList.length; $i < $length; $i++) {
-			this._labelList[$i].text($text);
-		}
-	}
-});
-
-/**
- * Provides simple logic to inherit associations within structured lists.
- */
-WCF.Label.ACPList.Connect = Class.extend({
-	/**
-	 * Initializes inheritation for structured lists.
-	 */
-	init: function() {
-		var $listItems = $('#connect .structuredList li');
-		if (!$listItems.length) return;
-		
-		$listItems.each($.proxy(function(index, item) {
-			$(item).find('input[type="checkbox"]').click($.proxy(this._click, this));
-		}, this));
-	},
-	
-	/**
-	 * Marks items as checked if they're logically below current item.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $listItem = $(event.currentTarget);
-		if ($listItem.is(':checked')) {
-			$listItem = $listItem.parents('li');
-			var $depth = $listItem.data('depth');
 			
-			while (true) {
-				$listItem = $listItem.next();
-				if (!$listItem.length) {
-					// no more siblings
-					return true;
-				}
+			$('#labelList').find('input[type="radio"]').each($.proxy(function (index, input) {
+				var $input = $(input);
 				
-				// element is on the same or higher level (= lower depth)
-				if ($listItem.data('depth') <= $depth) {
-					return true;
+				// ignore custom values
+				if ($input.prop('value') !== 'custom') {
+					this._labelList.push($($input.next('span')));
 				}
-				
-				$listItem.find('input[type="checkbox"]').prop('checked', 'checked');
+			}, this));
+		},
+		
+		/**
+		 * Renders label name as label or falls back to a default value if label is empty.
+		 */
+		_keyPressed: function () {
+			var $text = this._labelInput.prop('value');
+			if ($text === '') $text = WCF.Language.get('wcf.acp.label.defaultValue');
+			
+			for (var $i = 0, $length = this._labelList.length; $i < $length; $i++) {
+				this._labelList[$i].text($text);
 			}
 		}
-	}
-});
+	});
+	
+	/**
+	 * Provides simple logic to inherit associations within structured lists.
+	 */
+	WCF.Label.ACPList.Connect = Class.extend({
+		/**
+		 * Initializes inheritation for structured lists.
+		 */
+		init: function () {
+			var $listItems = $('#connect .structuredList li');
+			if (!$listItems.length) return;
+			
+			$listItems.each($.proxy(function (index, item) {
+				$(item).find('input[type="checkbox"]').click($.proxy(this._click, this));
+			}, this));
+		},
+		
+		/**
+		 * Marks items as checked if they're logically below current item.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			var $listItem = $(event.currentTarget);
+			if ($listItem.is(':checked')) {
+				$listItem = $listItem.parents('li');
+				var $depth = $listItem.data('depth');
+				
+				while (true) {
+					$listItem = $listItem.next();
+					if (!$listItem.length) {
+						// no more siblings
+						return true;
+					}
+					
+					// element is on the same or higher level (= lower depth)
+					if ($listItem.data('depth') <= $depth) {
+						return true;
+					}
+					
+					$listItem.find('input[type="checkbox"]').prop('checked', 'checked');
+				}
+			}
+		}
+	});
+}
+else {
+	WCF.Label.ACPList = Class.extend({
+		_labelInput: {},
+		_labelList: {},
+		init: function() {},
+		_keyPressed: function() {}
+	});
+	
+	WCF.Label.ACPList.Connect = Class.extend({
+		init: function() {},
+		_click: function() {}
+	});
+}
 
 /**
  * Provides a flexible label chooser.
@@ -280,64 +295,74 @@ WCF.Label.Chooser = Class.extend({
 	}
 });
 
-/**
- * Handles displaying label groups based on the selected categories.
- */
-WCF.Label.ArticleLabelChooser = WCF.Label.Chooser.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * maps the available label group ids to the categories
-	 * @var	object
+	 * Handles displaying label groups based on the selected categories.
 	 */
-	_labelGroupsToCategories: null,
-	
-	/**
-	 * Initializes a new WCF.Label.ArticleLabelChooser object.
-	 *
-	 * @param	object		labelGroupsToCategories
-	 * @param	object		selectedLabelIDs
-	 * @param	string		containerSelector
-	 * @param	string		submitButtonSelector
-	 * @param	boolean		showWithoutSelection
-	 */
-	init: function(labelGroupsToCategories, selectedLabelIDs, containerSelector, submitButtonSelector, showWithoutSelection) {
-		this._super(selectedLabelIDs, containerSelector, submitButtonSelector, showWithoutSelection);
-		this._labelGroupsToCategories = labelGroupsToCategories;
+	WCF.Label.ArticleLabelChooser = WCF.Label.Chooser.extend({
+		/**
+		 * maps the available label group ids to the categories
+		 * @var        object
+		 */
+		_labelGroupsToCategories: null,
 		
-		this._updateLabelGroups();
+		/**
+		 * Initializes a new WCF.Label.ArticleLabelChooser object.
+		 *
+		 * @param        object                labelGroupsToCategories
+		 * @param        object                selectedLabelIDs
+		 * @param        string                containerSelector
+		 * @param        string                submitButtonSelector
+		 * @param        boolean                showWithoutSelection
+		 */
+		init: function (labelGroupsToCategories, selectedLabelIDs, containerSelector, submitButtonSelector, showWithoutSelection) {
+			this._super(selectedLabelIDs, containerSelector, submitButtonSelector, showWithoutSelection);
+			this._labelGroupsToCategories = labelGroupsToCategories;
+			
+			this._updateLabelGroups();
+			
+			$('#categoryID').change($.proxy(this._updateLabelGroups, this));
+		},
 		
-		$('#categoryID').change($.proxy(this._updateLabelGroups, this));
-	},
-	
-	/**
-	 * Updates the visible label groups based on the selected categories.
-	 */
-	_updateLabelGroups: function() {
-		// hide all label choosers first
-		$('.labelChooser').each(function(index, element) {
-			$(element).parents('dl:eq(0)').hide();
-		})
-		
-		var visibleGroupIDs = [];
-		var categoryID = parseInt($('#categoryID').val());
-		
-		if (this._labelGroupsToCategories[categoryID]) {
-			for (var i = 0, length = this._labelGroupsToCategories[categoryID].length; i < length; i++) {
-				$('#labelGroup' + this._labelGroupsToCategories[categoryID][i]).parents('dl:eq(0)').show();
+		/**
+		 * Updates the visible label groups based on the selected categories.
+		 */
+		_updateLabelGroups: function () {
+			// hide all label choosers first
+			$('.labelChooser').each(function (index, element) {
+				$(element).parents('dl:eq(0)').hide();
+			})
+			
+			var visibleGroupIDs = [];
+			var categoryID = parseInt($('#categoryID').val());
+			
+			if (this._labelGroupsToCategories[categoryID]) {
+				for (var i = 0, length = this._labelGroupsToCategories[categoryID].length; i < length; i++) {
+					$('#labelGroup' + this._labelGroupsToCategories[categoryID][i]).parents('dl:eq(0)').show();
+				}
 			}
-		}
-	},
-	
-	/**
-	 * @see	WCF.Label.Chooser._submit()
-	 */
-	_submit: function() {
-		// delete non-selected groups to avoid sumitting these labels
-		for (var groupID in this._groups) {
-			if (!this._groups[groupID].is(':visible')) {
-				delete this._groups[groupID];
-			}
-		}
+		},
 		
-		this._super();
-	}
-});
+		/**
+		 * @see        WCF.Label.Chooser._submit()
+		 */
+		_submit: function () {
+			// delete non-selected groups to avoid sumitting these labels
+			for (var groupID in this._groups) {
+				if (!this._groups[groupID].is(':visible')) {
+					delete this._groups[groupID];
+				}
+			}
+			
+			this._super();
+		}
+	});
+}
+else {
+	WCF.Label.ArticleLabelChooser = WCF.Label.Chooser.extend({
+		_labelGroupsToCategories: {},
+		init: function() {},
+		_updateLabelGroups: function () {},
+		_submit: function() {}
+	});
+}

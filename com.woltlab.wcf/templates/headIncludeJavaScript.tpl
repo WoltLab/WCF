@@ -12,6 +12,11 @@
 	var TIME_NOW = {@TIME_NOW};
 	var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 	var URL_LEGACY_MODE = false;
+	
+	{if ENABLE_DEBUG_MODE}
+		{* This constant is a compiler option, it does not exist in production. *}
+		var COMPILER_TARGET_DEFAULT = {if $__wcf->user->userID}true{else}false{/if};
+	{/if}
 </script>
 
 {js application='wcf' lib='polyfill' file='promise' core='true'}

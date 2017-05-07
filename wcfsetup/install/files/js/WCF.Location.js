@@ -737,21 +737,17 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 			case $.ui.keyCode.LEFT:
 			case $.ui.keyCode.RIGHT:
 				return;
-			break;
 			
 			case $.ui.keyCode.UP:
 				this._selectPreviousItem();
 				return;
-			break;
 			
 			case $.ui.keyCode.DOWN:
 				this._selectNextItem();
 				return;
-			break;
 			
 			case $.ui.keyCode.ENTER:
 				return this._selectElement(event);
-			break;
 		}
 		
 		var $content = this._getSearchString(event);
