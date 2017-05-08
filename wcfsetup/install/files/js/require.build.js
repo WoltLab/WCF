@@ -7,7 +7,26 @@
 		useStrict: true,
 		preserveLicenseComments: false,
 		optimize: 'uglify2',
-		uglify2: {},
+		uglify2: {
+			compress: {
+				sequences: true,
+				properties: true,
+				dead_code: true,
+				conditionals: true,
+				comparisons: true,
+				booleans: true,
+				loops: true,
+				hoist_funs: true,
+				hoist_vars: true,
+				if_return: true,
+				join_vars: true,
+				cascade: true,
+				/* this is basically the `--define` argument */
+				global_defs: {
+					COMPILER_TARGET_DEFAULT: false
+				}
+			}
+		},
 		paths: {
 			"requireLib": "require",
 			
@@ -44,7 +63,7 @@
 					while (folder = queue.shift()) {
 						var files = fs.readdirSync(folder);
 						for (var i = 0; i < files.length; i++) {
-							var filename = path.join(folder, files[i]);
+							var filename = path.join(folder, files[i]).replace(/\\/g, '/');
 							if (filename === 'WoltLabSuite/Core/Acp') continue;
 							
 							if (path.extname(filename) == '.js') {
@@ -68,7 +87,8 @@
 	require._isSupportedBuildUrl = function (url) {
 		var result = _isSupportedBuildUrl(url);
 		if (!result) return result;
-		if (Object.keys(config.rawText).map(function (item) { return process.cwd() + '/' + item + '.js'; }).indexOf(url) !== -1) return result;
+		
+		if (Object.keys(config.rawText).map(function (item) { return (process.cwd() + '/' + item + '.js').replace(/\\/g, '/'); }).indexOf(url.replace(/\\/g, '/')) !== -1) return result;
 
 		var fs = module.require('fs');
 		try {
