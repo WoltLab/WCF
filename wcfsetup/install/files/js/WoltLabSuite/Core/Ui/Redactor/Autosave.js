@@ -10,6 +10,22 @@
 define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			getInitialValue: function() {},
+			watch: function() {},
+			destroy: function() {},
+			clear: function() {},
+			createOverlay: function() {},
+			hideOverlay: function() {},
+			_saveToStorage: function() {},
+			_cleanup: function() {}
+		};
+		return Fake;
+	}
+	
 	// time between save requests in seconds
 	var _frequency = 15;
 	

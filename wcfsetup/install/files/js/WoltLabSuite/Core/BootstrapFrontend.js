@@ -47,7 +47,9 @@ define(
 			
 			this._invokeBackgroundQueue(options.backgroundQueue.url, options.backgroundQueue.force);
 			
-			UiUserIgnore.init();
+			if (COMPILER_TARGET_DEFAULT) {
+				UiUserIgnore.init();
+			}
 		},
 		
 		/**

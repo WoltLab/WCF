@@ -9,6 +9,19 @@
 define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notification'], function(Ajax, Language, StringUtil, DomUtil, UiDialog, UiNotification) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_click: function() {},
+			_submit: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _actionName = '';
 	var _userHeader = null;
 	

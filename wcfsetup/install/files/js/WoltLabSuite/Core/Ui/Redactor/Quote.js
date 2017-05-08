@@ -9,6 +9,22 @@
 define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Metacode', './PseudoHeader'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorMetacode, UiRedactorPseudoHeader) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_insertQuote: function() {},
+			_click: function() {},
+			_observeLoad: function() {},
+			_edit: function() {},
+			_save: function() {},
+			_setTitle: function() {},
+			_delete: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _headerHeight = 0;
 	
 	/**

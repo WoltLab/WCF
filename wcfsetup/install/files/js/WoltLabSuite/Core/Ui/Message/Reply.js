@@ -10,6 +10,27 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 	function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_submitGuestDialog: function() {},
+			_submit: function() {},
+			_validate: function() {},
+			throwError: function() {},
+			_showLoadingOverlay: function() {},
+			_hideLoadingOverlay: function() {},
+			_reset: function() {},
+			_handleError: function() {},
+			_getEditor: function() {},
+			_insertMessage: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxFailure: function() {},
+			_ajaxSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

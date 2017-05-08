@@ -9,6 +9,16 @@
 define(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/List/Upload'], function(EventHandler, Clipboard, MediaEditor, MediaListUpload) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_clipboardAction: function() {},
+			_edit: function() {}
+		};
+		return Fake;
+	}
+	
 	var _mediaEditor;
 	
 	/**

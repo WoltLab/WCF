@@ -4,10 +4,21 @@
  * @author	Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Permission
+ * @module	WoltLabSuite/Core/Ui/ItemList/Filter
  */
 define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], function (Core, EventKey, Language, List, StringUtil, DomUtil) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_buildItems: function() {},
+			_prepareItem: function() {},
+			_keyup: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * Creates a new filter input.

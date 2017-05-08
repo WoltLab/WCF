@@ -16,6 +16,24 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_createButton: function() {},
+			_success: function() {},
+			_upload: function() {},
+			_createFileElement: function() {},
+			_getParameters: function() {},
+			_uploadFiles: function() {},
+			_createFileElements: function() {},
+			_failure: function() {},
+			_insertButton: function() {},
+			_progress: function() {},
+			_removeButton: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

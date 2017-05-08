@@ -9,6 +9,21 @@
 define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_bbcodeSpoiler: function() {},
+			_observeLoad: function() {},
+			_edit: function() {},
+			_save: function() {},
+			_setTitle: function() {},
+			_delete: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _headerHeight = 0;
 	
 	/**

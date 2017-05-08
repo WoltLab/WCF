@@ -24,6 +24,33 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_addButtonEventListeners: function() {},
+			_click: function() {},
+			_clipboardAction: function() {},
+			_dialogClose: function() {},
+			_dialogInit: function() {},
+			_dialogSetup: function() {},
+			_dialogShow: function() {},
+			_editMedia: function() {},
+			_editorClose: function() {},
+			_editorSuccess: function() {},
+			_removeClipboardCheckboxes: function() {},
+			_setMedia: function() {},
+			addMedia: function() {},
+			getDialog: function() {},
+			getMode: function() {},
+			getOption: function() {},
+			removeMedia: function() {},
+			resetMedia: function() {},
+			setMedia: function() {},
+			setupMediaElement: function() {}
+		};
+		return Fake;
+	}
+	
 	var _mediaManagerCounter = 0;
 	
 	/**

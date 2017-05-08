@@ -20,6 +20,41 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			rebuild: function() {},
+			_click: function() {},
+			_clickDropdown: function() {},
+			_dropdownBuild: function() {},
+			_dropdownToggle: function() {},
+			_dropdownGetItems: function() {},
+			_dropdownOpen: function() {},
+			_dropdownSelect: function() {},
+			_clickDropdownItem: function() {},
+			_prepare: function() {},
+			_showEditor: function() {},
+			_restoreMessage: function() {},
+			_save: function() {},
+			_validate: function() {},
+			throwError: function() {},
+			_showMessage: function() {},
+			_hideEditor: function() {},
+			_restoreEditor: function() {},
+			_destroyEditor: function() {},
+			_getHash: function() {},
+			_updateHistory: function() {},
+			_getEditorId: function() {},
+			_getObjectId: function() {},
+			_ajaxFailure: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {},
+			legacyEdit: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

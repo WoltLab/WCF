@@ -1,6 +1,16 @@
 define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			showDialog: function() {},
+			_submit: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _boundListener = false;
 	var _callback = null;
 	

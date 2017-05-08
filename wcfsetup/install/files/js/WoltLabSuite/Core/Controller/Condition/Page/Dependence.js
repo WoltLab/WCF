@@ -9,6 +9,17 @@
 define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], function(DomChangeListener, DomTraverse, EventHandler, ObjectMap) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			register: function() {},
+			_checkVisibility: function() {},
+			_hideDependentElement: function() {},
+			_showDependentElement: function() {}
+		};
+		return Fake;
+	}
+	
 	var _pages = elBySelAll('input[name="pageIDs[]"]');
 	var _dependentElements = [];
 	var _pageIds = new ObjectMap();

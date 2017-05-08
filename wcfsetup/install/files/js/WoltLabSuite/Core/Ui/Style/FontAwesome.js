@@ -9,6 +9,17 @@
 define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function (Language, UiDialog, UiItemListFilter) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			setup: function() {},
+			open: function() {},
+			_click: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _callback, _iconList;
 	var _icons = [];
 	

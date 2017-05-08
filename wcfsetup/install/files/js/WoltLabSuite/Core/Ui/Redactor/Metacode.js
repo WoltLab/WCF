@@ -9,6 +9,20 @@
 define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			convert: function() {},
+			convertFromHtml: function() {},
+			_getOpeningTag: function() {},
+			_getClosingTag: function() {},
+			_getFirstParagraph: function() {},
+			_getLastParagraph: function() {},
+			_parseAttributes: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Redactor/Metacode
 	 */

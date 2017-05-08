@@ -1,6 +1,25 @@
 define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, Environment, StringUtil, UiCloseOverlay) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_keyDown: function() {},
+			_keyUp: function() {},
+			_getTextLineInFrontOfCaret: function() {},
+			_getDropdownMenuPosition: function() {},
+			_setUsername: function() {},
+			_selectMention: function() {},
+			_updateDropdownPosition: function() {},
+			_selectItem: function() {},
+			_hideDropdown: function() {},
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {}
+		};
+		return Fake;
+	}
+	
 	var _dropdownContainer = null;
 	
 	function UiRedactorMention(redactor) { this.init(redactor); }

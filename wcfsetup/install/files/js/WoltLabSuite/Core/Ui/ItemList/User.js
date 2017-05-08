@@ -9,10 +9,19 @@
 define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			getValues: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/ItemList/User
 	 */
-	var UiItemListUser = {
+	return {
 		/**
 		 * Initializes user suggestion support for an element.
 		 * 
@@ -44,6 +53,4 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 			return UiItemList.getValues(elementId);
 		}
 	};
-	
-	return UiItemListUser;
 });

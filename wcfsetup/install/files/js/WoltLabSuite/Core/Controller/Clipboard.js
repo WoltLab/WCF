@@ -22,6 +22,29 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			setup: function() {},
+			reload: function() {},
+			_initContainers: function() {},
+			_loadMarkedItems: function() {},
+			_markAll: function() {},
+			_mark: function() {},
+			_saveState: function() {},
+			_executeAction: function() {},
+			_executeProxyAction: function() {},
+			_unmarkAll: function() {},
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {},
+			_rebuildMarkings: function() {},
+			hideEditor: function() {},
+			showEditor: function() {},
+			unmark: function() {}
+		};
+		return Fake;
+	}
+	
 	var _containers = new Dictionary();
 	var _editors = new Dictionary();
 	var _editorDropdowns = new Dictionary();

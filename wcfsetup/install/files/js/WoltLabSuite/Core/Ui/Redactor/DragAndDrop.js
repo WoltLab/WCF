@@ -9,6 +9,18 @@
 define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHandler, Language) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_dragOver: function() {},
+			_drop: function() {},
+			_dragLeave: function() {},
+			_setup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _didInit = false;
 	var _dragArea = new Dictionary();
 	var _isDragging = false;

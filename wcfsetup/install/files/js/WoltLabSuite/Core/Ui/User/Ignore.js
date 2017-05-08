@@ -9,6 +9,16 @@
 define(['List', 'Dom/ChangeListener'], function(List, DomChangeListener) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_rebuild: function() {},
+			_removeClass: function() {}
+		};
+		return Fake;
+	}
+	
 	var _availableMessages = elByClass('ignoredUserMessage');
 	var _callback = null;
 	var _knownMessages = new List();

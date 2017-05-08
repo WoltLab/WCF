@@ -9,6 +9,16 @@
 define(['Core', 'Ui/Screen'], function (Core, UiScreen) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_enable: function() {},
+			_disable: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

@@ -20,6 +20,31 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			rebuild: function() {},
+			_click: function() {},
+			_prepare: function() {},
+			_showEditor: function() {},
+			_restoreMessage: function() {},
+			_save: function() {},
+			_validate: function() {},
+			throwError: function() {},
+			_showMessage: function() {},
+			_hideEditor: function() {},
+			_restoreEditor: function() {},
+			_destroyEditor: function() {},
+			_getEditorId: function() {},
+			_getObjectId: function() {},
+			_ajaxFailure: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

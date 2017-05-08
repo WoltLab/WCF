@@ -20,6 +20,20 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {},
+			_close: function() {},
+			_keyPress: function() {},
+			_saveData: function() {},
+			_updateLanguageFields: function() {},
+			edit: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

@@ -9,6 +9,41 @@
 define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permission', 'Ui/Dialog', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Manager/Base'],
 	function(Core, Dictionary, DomTraverse, EventHandler, Language, Permission, UiDialog, ControllerClipboard, MediaManagerBase) {
 	"use strict";
+		
+		if (!COMPILER_TARGET_DEFAULT) {
+			var Fake = function() {};
+			Fake.prototype = {
+				_addButtonEventListeners: function() {},
+				_buildInsertDialog: function() {},
+				_click: function() {},
+				_clipboardAction: function() {},
+				_getInsertDialogId: function() {},
+				_getThumbnailSizes: function() {},
+				_insertMedia: function() {},
+				_insertMediaGallery: function() {},
+				_insertMediaItem: function() {},
+				_openInsertDialog: function() {},
+				insertMedia: function() {},
+				getMode: function() {},
+				setupMediaElement: function() {},
+				_dialogClose: function() {},
+				_dialogInit: function() {},
+				_dialogSetup: function() {},
+				_dialogShow: function() {},
+				_editMedia: function() {},
+				_editorClose: function() {},
+				_editorSuccess: function() {},
+				_removeClipboardCheckboxes: function() {},
+				_setMedia: function() {},
+				addMedia: function() {},
+				getDialog: function() {},
+				getOption: function() {},
+				removeMedia: function() {},
+				resetMedia: function() {},
+				setMedia: function() {}
+			};
+			return Fake;
+		}
 	
 	/**
 	 * @constructor

@@ -10,6 +10,14 @@
 define([], function() {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			getHeight: function() {}
+		};
+		return Fake;
+	}
+	
 	return {
 		/**
 		 * Returns the height within a click should be treated as a click

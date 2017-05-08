@@ -10,6 +10,35 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 	function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, MediaManagerBase) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_addButtonEventListeners: function() {},
+			_chooseMedia: function() {},
+			_click: function() {},
+			getMode: function() {},
+			setupMediaElement: function() {},
+			_removeMedia: function() {},
+			_clipboardAction: function() {},
+			_dialogClose: function() {},
+			_dialogInit: function() {},
+			_dialogSetup: function() {},
+			_dialogShow: function() {},
+			_editMedia: function() {},
+			_editorClose: function() {},
+			_editorSuccess: function() {},
+			_removeClipboardCheckboxes: function() {},
+			_setMedia: function() {},
+			addMedia: function() {},
+			getDialog: function() {},
+			getOption: function() {},
+			removeMedia: function() {},
+			resetMedia: function() {},
+			setMedia: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

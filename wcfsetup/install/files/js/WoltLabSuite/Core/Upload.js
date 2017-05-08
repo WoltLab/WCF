@@ -9,6 +9,24 @@
 define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_createButton: function() {},
+			_createFileElement: function() {},
+			_createFileElements: function() {},
+			_failure: function() {},
+			_getParameters: function() {},
+			_insertButton: function() {},
+			_progress: function() {},
+			_removeButton: function() {},
+			_success: function() {},
+			_upload: function() {},
+			_uploadFiles: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

@@ -1,6 +1,19 @@
 define(['Ajax', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function(Ajax, EventKey, Language, StringUtil, DomUtil, UiDialog) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			open: function() {},
+			_search: function() {},
+			_click: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _callbackSelect, _resultContainer, _resultList, _searchInput = null;
 	
 	return {

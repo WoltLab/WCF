@@ -9,6 +9,21 @@
 define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, DomTraverse, DomUtil, EventKey, Language, UiSimpleDropdown) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {},
+			_cancelSearch: function() {},
+			_keyPress: function() {},
+			_search: function() {},
+			hideSearch: function() {},
+			resetSearch: function() {},
+			showSearch: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */

@@ -11,6 +11,19 @@
 define(['Dom/Util'], function(DomUtil) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			format: function() {},
+			removeFormat: function() {},
+			_handleParentNodes: function() {},
+			_getLastMatchingParent: function() {},
+			_isBoundaryElement: function() {},
+			_getSelectionMarker: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Redactor/Format
 	 */

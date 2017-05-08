@@ -9,6 +9,27 @@
 define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Util'], function(Ajax, Core, Dictionary, Language, DomChangeListener, DomUtil) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			rebuild: function() {},
+			getPermission: function() {},
+			getPropertyValue: function() {},
+			update: function() {},
+			updateItems: function() {},
+			updateAllItems: function() {},
+			setNote: function() {},
+			_update: function() {},
+			_updateState: function() {},
+			_toggleMessageStatus: function() {},
+			_getAttributeName: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @param       {Object}        options         initilization options
 	 * @constructor
