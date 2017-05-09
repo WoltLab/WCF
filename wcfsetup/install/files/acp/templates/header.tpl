@@ -125,13 +125,13 @@
 			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 		});
 	</script>
-	{js application='wcf' lib='jquery'}
 	
 	<script>
 		// prevent jQuery and other libraries from utilizing define()
 		__require_define_amd = define.amd;
 		define.amd = undefined;
 	</script>
+	{js application='wcf' lib='jquery'}
 	{js application='wcf' lib='jquery-ui'}
 	{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
 	{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}

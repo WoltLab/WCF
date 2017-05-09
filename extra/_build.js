@@ -27,7 +27,7 @@ function compile(destination, files) {
 
     files.forEach(filename => {
         minifiedData.push({
-            filename: `${filename}.js`,
+            filename: filename,
             content: uglify.minify(filename, uglifyJsConfig)
         });
     });

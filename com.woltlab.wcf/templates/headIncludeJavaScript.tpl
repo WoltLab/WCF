@@ -20,11 +20,11 @@
 </script>
 
 {js application='wcf' lib='polyfill' file='promise' core='true'}
-{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 <script>
 requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js', 
@@ -135,12 +135,12 @@ requirejs.config({
 	define.amd = undefined;
 </script>
 
-{js application='wcf' lib='jquery'}
-{js application='wcf' lib='jquery-ui'}
-{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
-{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Assets' bundle='WCF.Combined'}
-{js application='wcf' file='WCF' bundle='WCF.Combined'}
+{js application='wcf' lib='jquery' hasTiny=true}
+{js application='wcf' lib='jquery-ui' hasTiny=true}
+{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Assets' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF' bundle='WCF.Combined' hasTiny=true}
 
 <script data-relocate="true">
 	define.amd = __require_define_amd;
@@ -149,19 +149,19 @@ requirejs.config({
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 </script>
 
-{js application='wcf' file='WCF.Like' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.ACL' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Comment' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Location' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Search.Message' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.User' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Moderation' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Like' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.ACL' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Comment' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Label' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Location' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Message' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Poll' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Search.Message' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.User' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Moderation' bundle='WCF.Combined' hasTiny=true}
 
 {event name='javascriptInclude'}
 

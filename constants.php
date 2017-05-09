@@ -29,6 +29,7 @@ define('LAST_UPDATE_TIME', 0);
 define('WCF_UUID', 'bd096261-15f4-5dc1-9767-01ce08d7c80b');
 define('WOLTLAB_BRANDING', 1);
 define('MODULE_MASTER_PASSWORD', 0);
+define('VISITOR_USE_TINY_BUILD', 0);
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
 define('LOG_IP_ADDRESS', 1);
