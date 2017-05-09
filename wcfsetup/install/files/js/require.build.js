@@ -23,7 +23,7 @@
 				cascade: true,
 				/* this is basically the `--define` argument */
 				global_defs: {
-					COMPILER_TARGET_DEFAULT: false
+					COMPILER_TARGET_DEFAULT: true
 				}
 			}
 		},
