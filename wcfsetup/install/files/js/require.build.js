@@ -1,6 +1,5 @@
 (function () {
-	var config;
-	config = {
+	var config = {
 		mainConfigFile: 'require.config.js',
 		name: "WoltLabSuite/_Meta",
 		out: "WoltLabSuite.Core.min.js",
@@ -53,7 +52,7 @@
 			}
 			
 			if (moduleName === 'WoltLabSuite/_Meta') {
-				if (global.allModules == undefined) {
+				if (global.allModules === undefined) {
 					var fs   = module.require('fs'),
 					    path = module.require('path');
 					global.allModules = [];
@@ -66,7 +65,7 @@
 							var filename = path.join(folder, files[i]).replace(/\\/g, '/');
 							if (filename === 'WoltLabSuite/Core/Acp') continue;
 							
-							if (path.extname(filename) == '.js') {
+							if (path.extname(filename) === '.js') {
 								global.allModules.push(filename);
 							}
 							else if (fs.statSync(filename).isDirectory()) {
@@ -101,6 +100,8 @@
 		}
 		return true;
 	};
+	
+	if (module) module.exports = config;
 
 	return config;
 })();
