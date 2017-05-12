@@ -1560,7 +1560,7 @@
 	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
-		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to user group]]></item>
+		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to User Group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Adding the following users to the user groups selected below]]></item>
 		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[The user{if $users|count > 1}s have{else} has{/if} successfully been added to the selected user group{if $groupIDs|count > 1}s{/if}.]]></item>
 		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
@@ -1576,7 +1576,7 @@
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Warning! You are editing your user account, any changes could result in yourself being locked out of the Administration Control Panel.]]></item>
-		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export email addresses]]></item>
+		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export Email Addresses]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Export Format]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
@@ -1614,15 +1614,15 @@
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[No users matched your criteria.]]></item>
 		<item name="wcf.acp.user.search.matches"><![CDATA[{#$items} result{if $items != 1}s{/if}]]></item>
-		<item name="wcf.acp.user.sendMail"><![CDATA[Send email to users]]></item>
-		<item name="wcf.acp.user.sendMail.all"><![CDATA[Send email to all users]]></item>
+		<item name="wcf.acp.user.sendMail"><![CDATA[Send Email to Users]]></item>
+		<item name="wcf.acp.user.sendMail.all"><![CDATA[Email All Users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML.description"><![CDATA[]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender’s Email]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}<br />
 {if MAIL_USE_FORMATTED_ADDRESS}<em>Sender Name &lt;email@example.com&gt;</em><br />{/if}
 You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
-		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
+		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email User Group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
@@ -1678,10 +1678,10 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
-		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
+		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not Banned]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
-		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
+		<item name="wcf.acp.user.delete"><![CDATA[Delete User(s)]]></item>
 		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
@@ -1718,7 +1718,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
-		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
+		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Dear {@$username},
 
 Your password has been changed by an administrator.
@@ -3004,7 +3004,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.usersOnline.location.UserPage"><![CDATA[Viewing profile <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
 		<item name="wcf.user.usersOnline.location.UsersOnlineListPage"><![CDATA[Viewing users online]]></item>
 		<item name="wcf.user.usersOnline.location.MembersListPage"><![CDATA[Viewing members list]]></item>
-		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Viewing staff members list]]></item>
+		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Viewing list of staff members]]></item>
 		<item name="wcf.user.usersOnline.location.DashboardPage"><![CDATA[Viewing dashboard]]></item>
 		<item name="wcf.user.usersOnline.location.RegisterForm"><![CDATA[Registering]]></item>
 		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Requesting password]]></item>
