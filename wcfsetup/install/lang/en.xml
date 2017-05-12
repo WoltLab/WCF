@@ -1678,7 +1678,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
-		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
+		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not Banned]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
@@ -1718,7 +1718,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
-		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
+		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Dear {@$username},
 
 Your password has been changed by an administrator.
