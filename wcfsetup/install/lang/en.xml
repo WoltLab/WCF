@@ -2129,7 +2129,7 @@ Errors are:
 	
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
-		<item name="wcf.date.timeFormat">g:i&#xa0;a</item>
+		<item name="wcf.date.timeFormat"><![CDATA[g:i&#xa0;a]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
 		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
 		
