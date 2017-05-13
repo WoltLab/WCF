@@ -94,6 +94,14 @@ final class HeaderUtil {
 	}
 	
 	/**
+	 * Disables gzip compression on runtime in case of an exception. You should not call
+	 * this method at all, it exists for exception handling only.
+	 */
+	public static function exceptionDisableGzip() {
+		self::$enableGzipCompression = false;
+	}
+	
+	/**
 	 * Parses the rendered output.
 	 * 
 	 * @param	string		$output
