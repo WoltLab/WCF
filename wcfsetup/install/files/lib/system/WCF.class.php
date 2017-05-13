@@ -245,7 +245,12 @@ class WCF {
 		if (ob_get_level()) {
 			// discard any output generated before the exception occured, prevents exception
 			// being hidden inside HTML elements and therefore not visible in browser output
-			ob_clean();
+			ob_end_clean();
+			
+			// `identity` is the default "encoding" and basically means that the client
+			// must treat the content as if the header did not appear in first place, this
+			// also overrules the gzip header if present
+			@header('Content-Encoding: identity');
 		}
 		
 		// backwards compatibility
