@@ -47,8 +47,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		if (targetId === null) {
 			throw new Error("Element id '" + targetId + "' is unknown.");
 		}
-		if (options.multiple && this._target.nodeName !== 'UL' && this._target.nodeName !== 'OL') {
-			throw new Error("Target element has to be list when allowing upload of multiple files.");
+		if (options.multiple && this._target.nodeName !== 'UL' && this._target.nodeName !== 'OL' && this._target.nodeName !== 'TBODY') {
+			throw new Error("Target element has to be list or table body if uploading multiple files is supported.");
 		}
 		
 		this._fileElements = [];
@@ -87,6 +87,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 * Creates the document element for an uploaded file.
 		 * 
 		 * @param	{File}		file		uploaded file
+		 * @return	{HTMLElement}
 		 */
 		_createFileElement: function(file) {
 			var progress = elCreate('progress');
@@ -100,6 +101,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				this._target.appendChild(li);
 				
 				return li;
+			}
+			else if (this._target.nodeName === 'TBODY') {
+				return this._createFileTableRow(file);
 			}
 			else {
 				var p = elCreate('p');
@@ -138,6 +142,10 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			}
 			
 			return null;
+		},
+		
+		_createFileTableRow: function(file) {
+			throw new Error("Has to be implemented in subclass.");
 		},
 		
 		/**

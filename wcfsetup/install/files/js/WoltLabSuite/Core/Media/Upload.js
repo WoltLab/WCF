@@ -8,12 +8,30 @@
  */
 define(
 	[
-		'Core',                'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util',
-		'EventHandler',        'Language',           'Permission',   'Upload'
+		'Core',
+		'DateUtil',
+		'Dom/ChangeListener',
+		'Dom/Traverse',
+		'Dom/Util',
+		'EventHandler',
+		'Language',
+		'Permission',
+		'Upload',
+		'User',
+		'WoltLabSuite/Core/FileUtil'
 	],
 	function(
-		Core,                   DomChangeListener,    DomTraverse,    DomUtil,
-		EventHandler,           Language,             Permission,     Upload
+		Core,
+		DateUtil,
+		DomChangeListener,
+		DomTraverse,
+		DomUtil,
+		EventHandler,
+		Language,
+		Permission,
+		Upload,
+		User,
+		FileUtil
 	)
 {
 	"use strict";
@@ -46,6 +64,82 @@ define(
 			if (this._target.nodeName === 'OL' || this._target.nodeName === 'UL') {
 				fileElement = elCreate('li');
 			}
+			else if (this._target.nodeName === 'TBODY') {
+				var firstTr = elByTag('TR', this._target)[0];
+				var tableContainer = this._target.parentNode.parentNode;
+				if (tableContainer.style.getPropertyValue('display') === 'none') {
+					fileElement = firstTr;
+					
+					tableContainer.style.removeProperty('display');
+					
+					elRemove(elById(elData(this._target, 'no-items-info')));
+				}
+				else {
+					fileElement = firstTr.cloneNode(true);
+					
+					// regenerate id of table row
+					fileElement.removeAttribute('id');
+					DomUtil.identify(fileElement);
+				}
+					
+					var cells = elByTag('TD', fileElement), cell;
+					for (var i = 0, length = cells.length; i < length; i++) {
+						cell = cells[i];
+						
+						if (cell.classList.contains('columnMark')) {
+							elBySelAll('[data-object-id]', cell, elHide);
+						}
+						else if (cell.classList.contains('columnIcon')) { 
+							elBySelAll('[data-object-id]', cell, elHide);
+							
+							elByClass('mediaEditButton', cell)[0].classList.add('jsMediaEditButton');
+							elData(elByClass('jsDeleteButton', cell)[0], 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage', {
+								title: file.name
+							}));
+						}
+						else if (cell.classList.contains('columnFilename')) {
+							// replace copied image with spinner
+							var image = elByTag('IMG', cell);
+							
+							if (!image.length) {
+								image = elByClass('icon48', cell);
+							}
+							
+							var spinner = elCreate('span');
+							spinner.classList = 'icon icon48 fa-spinner mediaThumbnail';
+							
+							DomUtil.replaceElement(image[0], spinner);
+							
+							// replace title and uploading user
+							var ps = elBySelAll('.box48 > div > p', cell);
+							ps[0].textContent = file.name;
+							
+							var userLink = elByTag('A', ps[1])[0];
+							if (!userLink) {
+								userLink = elCreate('a');
+								elByTag('SMALL', ps[1])[0].appendChild(userLink);
+							}
+							
+							userLink.setAttribute('href', User.getLink());
+							userLink.textContent = User.username;
+						}
+						else if (cell.classList.contains('columnUploadTime')) {
+							cell.innerHTML = '';
+							cell.append(DateUtil.getTimeElement(new Date(), new Date()));
+						}
+						else if (cell.classList.contains('columnDigits')) {
+							cell.textContent = FileUtil.formatFilesize(file.size);
+						}
+						else {
+							// empty the other cells
+							cell.innerHTML = '';
+						}
+					}
+				
+				DomUtil.prepend(fileElement, this._target);
+				
+				return fileElement;
+			}
 			else {
 				fileElement = elCreate('p');
 			}
@@ -74,8 +168,6 @@ define(
 			DomUtil.prepend(fileElement, this._target);
 			
 			DomChangeListener.trigger();
-			
-			return fileElement;
 		},
 		
 		/**
@@ -99,6 +191,29 @@ define(
 		},
 		
 		/**
+		 * Replaces the default or copied file icon with the actual file icon.
+		 * 
+		 * @param	{HTMLElement}	fileIcon	file icon element
+		 * @param	{object}	media		media data
+		 * @param	{integer}	size		size of the file icon in pixels
+		 */
+		_replaceFileIcon: function(fileIcon, media, size) {
+			if (media.tinyThumbnailType) {
+				var img = elCreate('img');
+				elAttr(img, 'src', media.tinyThumbnailLink);
+				elAttr(img, 'alt', '');
+				img.style.setProperty('width', size + 'px');
+				img.style.setProperty('height', size + 'px');
+				
+				DomUtil.replaceElement(fileIcon, img);
+			}
+			else {
+				fileIcon.classList.remove('fa-spinner');
+				fileIcon.classList.add('fa-file-o');
+			}
+		},
+		
+		/**
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */
 		_success: function(uploadId, data) {
@@ -109,57 +224,93 @@ define(
 				var internalFileId = elData(file, 'internal-file-id');
 				var media = data.returnValues.media[internalFileId];
 				
-				elRemove(DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaInformation'), 'PROGRESS'));
-				
-				if (media) {
-					var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
-					if (media.tinyThumbnailType) {
-						var parentNode = fileIcon.parentNode;
-						elRemove(fileIcon);
+				if (file.tagName === 'TR') {
+					if (media) {
+						// update object id
+						var objectIdElements = elBySelAll('[data-object-id]', file);
+						for (var i = 0, length = objectIdElements.length; i < length; i++) {
+							elData(objectIdElements[i], 'object-id', ~~media.mediaID);
+							elShow(objectIdElements[i]);
+						}
 						
-						var img = elCreate('img');
-						elAttr(img, 'src', media.tinyThumbnailLink);
-						elAttr(img, 'alt', '');
-						img.style.setProperty('width', '144px');
-						img.style.setProperty('height', '144px');
-						parentNode.appendChild(img);
+						elByClass('columnMediaID', file)[0].textContent = media.mediaID;
+						
+						// update icon
+						var fileIcon = elByClass('fa-spinner', file)[0];
+						this._replaceFileIcon(fileIcon, media, 48);
 					}
 					else {
+						var error = data.returnValues.errors[internalFileId];
+						if (!error) {
+							error = {
+								errorType: 'uploadFailed',
+								filename: elData(file, 'filename')
+							};
+						}
+						
+						var fileIcon = elByClass('fa-spinner', file)[0];
 						fileIcon.classList.remove('fa-spinner');
-						fileIcon.classList.add('fa-file-o');
-					}
-					
-					file.className = 'jsClipboardObject mediaFile';
-					elData(file, 'object-id', media.mediaID);
-					
-					if (this._mediaManager) {
-						this._mediaManager.setupMediaElement(media, file);
-						this._mediaManager.addMedia(media, file);
+						fileIcon.classList.add('fa-remove');
+						fileIcon.classList.add('pointer');
+						fileIcon.classList.add('jsTooltip');
+						elAttr(fileIcon, 'title', Language.get('wcf.global.button.delete'));
+						fileIcon.addEventListener(WCF_CLICK_EVENT, function (event) {
+							elRemove(event.currentTarget.parentNode.parentNode.parentNode);
+						});
+						
+						file.classList.add('uploadFailed');
+						
+						var small = elCreate('small');
+						small.classList.add('innerError');
+						small.textContent = Language.get('wcf.media.upload.error.' + error.errorType, {
+							filename: error.filename
+						});
+						
+						var p = elBySelAll('.columnFilename .box48 > div > p', file)[1];
+						
+						DomUtil.insertAfter(small, p);
+						elRemove(p);
 					}
 				}
 				else {
-					var error = data.returnValues.errors[internalFileId];
-					if (!error) {
-						error = {
-							errorType: 'uploadFailed',
-							filename: elData(file, 'filename')
-						};
+					elRemove(DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaInformation'), 'PROGRESS'));
+					
+					if (media) {
+						var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
+						this._replaceFileIcon(fileIcon, media, 144)
+						
+						file.className = 'jsClipboardObject mediaFile';
+						elData(file, 'object-id', media.mediaID);
+						
+						if (this._mediaManager) {
+							this._mediaManager.setupMediaElement(media, file);
+							this._mediaManager.addMedia(media, file);
+						}
 					}
-					
-					var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
-					fileIcon.classList.remove('fa-spinner');
-					fileIcon.classList.add('fa-remove');
-					fileIcon.classList.add('pointer');
-					
-					file.classList.add('uploadFailed');
-					file.addEventListener(WCF_CLICK_EVENT, function() {
-						elRemove(this);
-					});
-					
-					var title = DomTraverse.childByClass(DomTraverse.childByClass(file, 'mediaInformation'), 'mediaTitle');
-					title.innerText = Language.get('wcf.media.upload.error.' + error.errorType, {
-						filename: error.filename
-					});
+					else {
+						var error = data.returnValues.errors[internalFileId];
+						if (!error) {
+							error = {
+								errorType: 'uploadFailed',
+								filename: elData(file, 'filename')
+							};
+						}
+						
+						var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
+						fileIcon.classList.remove('fa-spinner');
+						fileIcon.classList.add('fa-remove');
+						fileIcon.classList.add('pointer');
+						
+						file.classList.add('uploadFailed');
+						file.addEventListener(WCF_CLICK_EVENT, function () {
+							elRemove(this);
+						});
+						
+						var title = DomTraverse.childByClass(DomTraverse.childByClass(file, 'mediaInformation'), 'mediaTitle');
+						title.innerText = Language.get('wcf.media.upload.error.' + error.errorType, {
+							filename: error.filename
+						});
+					}
 				}
 				
 				DomChangeListener.trigger();
