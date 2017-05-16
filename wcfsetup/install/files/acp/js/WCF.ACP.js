@@ -334,7 +334,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._shouldRender = false;
 		
 		if (this._dialog === null) {
-			this._dialog = $('<div id="packageInstallationDialog" />').hide().appendTo(document.body);
+			this._dialog = $('<div id="package' + (this._actionName === 'UninstallPackage' ? 'Uni' : 'I') + 'nstallationDialog" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
 				closable: false,
 				title: WCF.Language.get(this._dialogTitle)
