@@ -1,4 +1,9 @@
 <?php
+namespace WCF\Sniffs\Namespaces;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+
 /**
  * This sniff is based on Squiz_Sniffs_Classes_ClassFileNameSniff. Originally written
  * by Greg Sherwood <gsherwood@squiz.net> and released under the terms of the BSD Licence.
@@ -8,7 +13,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
-class WCF_Sniffs_Namespaces_SortedUseDeclarationSniff implements PHP_CodeSniffer_Sniff {
+class SortedUseDeclarationSniff implements Sniff {
 	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *
@@ -27,7 +32,7 @@ class WCF_Sniffs_Namespaces_SortedUseDeclarationSniff implements PHP_CodeSniffer
 	 *
 	 * @return void
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		
 		$classes = array();

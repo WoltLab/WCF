@@ -34,6 +34,7 @@ use wcf\system\template\EmailTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
@@ -245,7 +246,13 @@ class WCF {
 		if (ob_get_level()) {
 			// discard any output generated before the exception occured, prevents exception
 			// being hidden inside HTML elements and therefore not visible in browser output
-			ob_clean();
+			ob_end_clean();
+			
+			// `identity` is the default "encoding" and basically means that the client
+			// must treat the content as if the header did not appear in first place, this
+			// also overrules the gzip header if present
+			@header('Content-Encoding: identity');
+			HeaderUtil::exceptionDisableGzip();
 		}
 		
 		// backwards compatibility

@@ -23,6 +23,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	public $className = BoxEditor::class;
 	
 	/**
+	 * list of created or updated boxes by id
+	 * @var Box[]
+	 */
+	protected $boxes = [];
+	
+	/**
 	 * box contents
 	 * @var	array
 	 */
@@ -285,6 +291,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		// store content for later import
 		$this->content[$box->boxID] = $content;
+		$this->boxes[$box->boxID] = $box;
 		
 		return $box;
 	}
@@ -307,6 +314,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($this->content as $boxID => $contentData) {
+				$boxEditor = new BoxEditor($this->boxes[$boxID]);
+				
 				foreach ($contentData as $languageCode => $content) {
 					$languageID = null;
 					if ($languageCode != '') {
@@ -321,12 +330,17 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 						if ($statement->fetchColumn()) continue;
 					}
 					
+					$boxContent = isset($content['content']) ? $content['content'] : '';
 					$insertStatement->execute([
 						$boxID,
 						$languageID,
 						$content['title'],
-						isset($content['content']) ? $content['content'] : ''
+						$boxContent
 					]);
+					
+					if ($boxEditor->getDecoratedObject()->boxType === 'tpl') {
+						$boxEditor->writeTemplate($languageID, $boxContent);
+					}
 				}
 			}
 			WCF::getDB()->commitTransaction();

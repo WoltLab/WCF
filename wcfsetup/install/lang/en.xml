@@ -118,7 +118,7 @@
 		<item name="wcf.acp.bbcode.attribute.validationPattern.error.invalid"><![CDATA[The regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Required]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Use content]]></item>
-		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[The content between BBCode tags would be used as attribute value unless it was explicitly specified.]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[The content between BBCode tags would be used as attribute value unless it was clearly specified.]]></item>
 		<item name="wcf.acp.bbcode.attributes"><![CDATA[Attribute]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[The BBCode already exists.]]></item>
@@ -145,8 +145,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Variables are recognized as {$variable} and will be replaced with the regular expression’s matching named group. Enter the media’s HTML code here. Example: <code>{$ID}</code> will be replaced with the medium ID as shown above.{/literal}]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regular Expression]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Provide the link format as a <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRegular_expression">regular expression</a>. Enter one expression per line.
-Examples for medium ID detection:
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Provide the link format as a <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRegular_expression">regular expression</a>. Enter one expression per line. Examples for medium ID detection:
 <ul class="nativeList">
 	<li><code>(?&lt;ID&gt;[0-9]+)</code> detects a numeric ID.</li>
 	<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> detects an alphanumeric ID.</li>
@@ -255,7 +254,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.captcha.question.add"><![CDATA[Add Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
-		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is not valid.]]></item>
+		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is invalid.]]></item>
 		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question “{$question->question|language}”?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
@@ -386,7 +385,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.list"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Members]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManageMenu"><![CDATA[Can manage page menu]]></item>
-		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
+		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can access Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this user group can access the Administration Control Panel based upon their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Can manage languages]]></item>
@@ -401,8 +400,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible User Groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Users of this user group have access to these user groups. Furthermore, you need to specify if these users are allowed to edit these user groups.]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add user groups]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Can add users]]></item>
+		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can create user groups]]></item>
+		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Can create users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteGroup"><![CDATA[Can delete user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteUser"><![CDATA[Can delete users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditGroup"><![CDATA[Can edit user groups]]></item>
@@ -860,7 +859,7 @@ Examples for medium ID detection:
 	<category name="wcf.acp.option">
 		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Block by Hostname]]></item>
 		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[You can specify which hostnames will be blacklisted. Enter one hostname per line.]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP address]]></item>
+		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP Address]]></item>
 		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[You can specify which IP addresses will be blacklisted. Enter one IP address per line.]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[You can specify which user-agents will be blacklisted. Enter one user-agent per line.]]></item>
@@ -880,14 +879,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Memcached on <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Redis on <a href="http://redis.io/" class="externalURL">redis.io</a>.]]></item>
-		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date &amp; Time]]></item>
+		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date and Time]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.option.category.general.system.error"><![CDATA[Error messages]]></item>
 		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
-		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally, you can provide a Proxy-Server for outgoing connections.]]></item>
 		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[​Changing the backend requires a rebuild of the search indices available on the rebuild data page.​​​]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
@@ -1002,13 +1001,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s start page.]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
+		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for attachment images]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
@@ -1215,7 +1214,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[Use MySQL FULLTEXT (default)]]></item>
 		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Display recommended products]]></item>
-		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Displays recommended products from the WoltLab® Plugin-Store on the Administration Control Panel’s start page.]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Displays recommended products from the WoltLab® Plugin-Store on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
@@ -1387,7 +1386,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[No packages matched your criteria.]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
-		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Uploading of specified file has failed.]]></item>
+		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.acp.package.updates"><![CDATA[Updates]]></item>
 		<item name="wcf.acp.package.error.downloadFailed"><![CDATA[Downloading package{if $__downloadPackage|isset} “{$__downloadPackage}”{/if} has failed.]]></item>
 		<item name="wcf.acp.package.newVersion"><![CDATA[New Version]]></item>
@@ -1597,9 +1596,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.smiley.smileyFile2x"><![CDATA[Smiley File (HD)]]></item>
 		<item name="wcf.acp.smiley.smileyFile2x.description"><![CDATA[Optional image used for display on high resolution displays such as Apple Retina or 4K/UHD-displays. Image must be double times the dimensions of the normal image to work.]]></item>
 		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Upload Smiley]]></item>
-		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Upload the image file of the smiley.]]></item>
-		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is not an image file.]]></item>
-		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[An unknown error occurred during upload.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Upload the image of the smiley.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is not an image.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">
@@ -1761,7 +1760,7 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
-		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to user group]]></item>
+		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to User Group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Adding the following users to the user groups selected below]]></item>
 		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[The user{if $users|count > 1}s have{else} has{/if} successfully been added to the selected user group{if $groupIDs|count > 1}s{/if}.]]></item>
 		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
@@ -1777,7 +1776,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user <span class="confirmationObject">{$user->username}</span>?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Warning! You are editing your user account, any changes could result in yourself being locked out of the Administration Control Panel.]]></item>
-		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export email addresses]]></item>
+		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export Email Addresses]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Export Format]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
@@ -1810,13 +1809,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[No users matched your criteria.]]></item>
 		<item name="wcf.acp.user.search.matches"><![CDATA[{#$items} result{if $items != 1}s{/if}]]></item>
-		<item name="wcf.acp.user.sendMail"><![CDATA[Send email to users]]></item>
-		<item name="wcf.acp.user.sendMail.all"><![CDATA[Send email to all users]]></item>
+		<item name="wcf.acp.user.sendMail"><![CDATA[Send Email to Users]]></item>
+		<item name="wcf.acp.user.sendMail.all"><![CDATA[Email All Users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender’s Email]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.<br>
 You can define the default sender in “Configuration » Options » General » Emails“. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
-		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
+		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email User Group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
@@ -1834,7 +1833,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
-		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[The value will be used as preset on first time editing.]]></item>
+		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
 		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field <span class="confirmationObject">{lang}wcf.user.option.{$option->optionName}{/lang}</span>?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
@@ -1849,12 +1848,12 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.option.required"><![CDATA[Owner must provide a valid value]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Field values are searchable in the member search]]></item>
 		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Select Options]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Enter one select option per line, e.g. for use with a select-box. Note: The left hand side of a colon is used as an internal identifier. It allows you to change the text of the option without invalidating former selections.]]></item>
+		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Enter one select option per line, e.g. for use with a select-box. Note: The left-hand side of a colon is used as an internal identifier. It allows you to change the text of the option without invalidating former selections.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users also]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default user profile settings will be applied to existing users. This will override any settings changed by the users themselves.]]></item>
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
-		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
+		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[You can provide a regular expression to validate the user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.user.option.visible"><![CDATA[Visible for]]></item>
 		<item name="wcf.acp.user.option.visible.0"><![CDATA[Nobody]]></item>
@@ -1871,10 +1870,10 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
-		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
+		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not Banned]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
-		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
+		<item name="wcf.acp.user.delete"><![CDATA[Delete User(s)]]></item>
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
@@ -1910,7 +1909,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
-		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
+		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
@@ -2005,7 +2004,7 @@ full extend.]]></item>
 		<item name="wcf.attachment.attachments"><![CDATA[Attachments]]></item>
 		<item name="wcf.attachment.delete.sure"><![CDATA[Do you really want to delete this attachment?]]></item>
 		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too large.]]></item>
+		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too big.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments allowed.]]></item>
 		
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many attachments, remaining: #remaining#.]]></item>
@@ -2539,7 +2538,7 @@ Errors are:
 		<item name="wcf.global.filter.button.clear"><![CDATA[Clear Filter]]></item>
 		<item name="wcf.global.filter.error.noMatches"><![CDATA[Filter does not match anything.]]></item>
 		<item name="wcf.global.filter.placeholder"><![CDATA[Filter by name]]></item>
-		<item name="wcf.global.success"><![CDATA[The action has been completed successfully.]]></item>
+		<item name="wcf.global.success"><![CDATA[The action completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
@@ -2557,7 +2556,7 @@ Errors are:
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[Ascending]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[Descending]]></item>
 		<item name="wcf.global.state.closed"><![CDATA[Closed]]></item>
-		<item name="wcf.global.state.trashed"><![CDATA[In Trash]]></item>
+		<item name="wcf.global.state.trashed"><![CDATA[Deleted]]></item>
 		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.title"><![CDATA[Title]]></item>
@@ -3079,7 +3078,7 @@ Errors are:
 		<item name="wcf.user.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Enter a username]]></item>
 		<item name="wcf.user.username.error.acpNotAuthorized"><![CDATA[This user is not authorized to log into the administration control panel.]]></item>
-		<item name="wcf.user.username.error.notFound"><![CDATA[The username {$username} does not exist.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[The username “{$username}” does not exist.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[The username is already in use.]]></item>
 		<item name="wcf.user.username.error.invalid"><![CDATA[The username is invalid.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
@@ -3091,7 +3090,7 @@ Errors are:
 		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[The text contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banExpires != 0} until {@$__wcf->user->banExpires|plainTime}{/if}{if $__wcf->user->banReason}: {@$__wcf->user->banReason|newlineToBreak}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
-		<item name="wcf.user.access.following"><![CDATA[Users I am following]]></item>
+		<item name="wcf.user.access.following"><![CDATA[Followed Users]]></item>
 		<item name="wcf.user.access.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.user.access.registered"><![CDATA[Registered Users]]></item>
 		<item name="wcf.user.button.login"><![CDATA[Login]]></item>
@@ -3272,8 +3271,8 @@ not register with us.]]></item>
 		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
-		<item name="wcf.user.login.blocked"><![CDATA[There have been too many failed login attempts originating from your ip address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
-		<item name="wcf.user.banned"><![CDATA[The user {$user->username} has been banned{if $user->banExpires != 0} until {@$user->banExpires|date}{/if}.]]></item>
+		<item name="wcf.user.login.blocked"><![CDATA[There have been too many failed login attempts originating from your IP address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
+		<item name="wcf.user.banned"><![CDATA[The user “{$user->username}” has been banned{if $user->banExpires != 0} until {@$user->banExpires|date}{/if}.]]></item>
 		<item name="wcf.user.panel.markAllAsRead"><![CDATA[Mark All as Read]]></item>
 		<item name="wcf.user.panel.markAsRead"><![CDATA[Mark as Read]]></item>
 		<item name="wcf.user.panel.settings"><![CDATA[Settings]]></item>
@@ -3471,12 +3470,12 @@ Open the link below to access the user profile:
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
-		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[The uploaded avatar is invalid.]]></item>
-		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[The avatar does not match the allowed file extensions.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[The avatar exceeds the allowed maximum file size.]]></item>
-		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[The avatar dimensions are under the allowed minimum dimensions.]]></item>
-		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred.]]></item>
-		<item name="wcf.user.avatar.upload.success"><![CDATA[The avatar has been saved.]]></item>
+		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
+		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[Your avatar is too big.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Your avatar is too small.]]></item>
+		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+		<item name="wcf.user.avatar.upload.success"><![CDATA[Your avatar has been saved.]]></item>
 	</category>
 	
 	<category name="wcf.user.condition">
@@ -3504,11 +3503,11 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since Registration]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
-		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You cannot simultaneously select “Banned” and “Not banned”.]]></item>
-		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting approval]]></item>
+		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You cannot simultaneously select “Banned” and “Not Banned”.]]></item>
+		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
-		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting approval”.]]></item>
-		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not banned]]></item>
+		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting Approval”.]]></item>
+		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">
@@ -3624,7 +3623,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are not any details visible to you.{/if}]]></item>
 		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are not any recent activities at the moment.]]></item>
-		<item name="wcf.user.profile.followers"><![CDATA[{$user->username}’s Follower]]></item>
+		<item name="wcf.user.profile.followers"><![CDATA[{$user->username}’s Followers]]></item>
 		<item name="wcf.user.profile.following"><![CDATA[{$user->username} Follows]]></item>
 		<item name="wcf.user.profile.menu.about"><![CDATA[About Me]]></item>
 		<item name="wcf.user.profile.menu.recentActivity"><![CDATA[Recent Activity]]></item>
@@ -3667,7 +3666,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.category.profile.personal"><![CDATA[Personal Details]]></item>
 		<item name="wcf.user.option.category.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.user.option.category.settings.general"><![CDATA[General]]></item>
-		<item name="wcf.user.option.category.settings.general.date"><![CDATA[Date &amp; Time]]></item>
+		<item name="wcf.user.option.category.settings.general.date"><![CDATA[Date and Time]]></item>
 		<item name="wcf.user.option.category.settings.general.appearance"><![CDATA[Appearance]]></item>
 		<item name="wcf.user.option.category.settings.general.interface"><![CDATA[Interface]]></item>
 		<item name="wcf.user.option.category.settings.privacy"><![CDATA[Privacy]]></item>

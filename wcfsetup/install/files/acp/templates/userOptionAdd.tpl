@@ -46,9 +46,10 @@
 				<dd>
 					{* dirty work-around for non-i18n environments *}
 					{capture assign=__optionDescription}{lang __optional=true}{$i18nPlainValues['optionDescription']}{/lang}{/capture}
-					{if !$__optionDescription && !"~^[a-zA-Z0-9\-\_\.]+$~"|preg_match:$i18nPlainValues['optionDescription']}{assign var=__optionDescription value=$i18nPlainValues['optionDescription']}{/if}
+					{if !$__optionDescription && !"~^[a-zA-Z0-9\-\_\.]+$~"|preg_match:$i18nPlainValues['optionDescription']}{capture assign=__optionDescription}{$i18nPlainValues['optionDescription']}{/capture}{/if}
 					
-					<textarea name="optionDescription" id="optionDescription" cols="40" rows="10">{$__optionDescription}</textarea>
+					{* value is already encoded inside the capture calls above *}
+					<textarea name="optionDescription" id="optionDescription" cols="40" rows="10">{@$__optionDescription}</textarea>
 					{if $errorField == 'optionDescription'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

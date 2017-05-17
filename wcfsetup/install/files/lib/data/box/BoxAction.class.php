@@ -198,7 +198,7 @@ class BoxAction extends AbstractDatabaseObjectAction {
 				// save template
 				if ($box->boxType == 'tpl') {
 					foreach ($this->parameters['content'] as $languageID => $content) {
-						file_put_contents(WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+						$box->writeTemplate($languageID, $content['content']);
 					}
 				}
 				

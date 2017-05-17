@@ -321,6 +321,11 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			_activeId = _hoverId;
 			
 			var elementData = _elements.get(_activeId);
+			// check if source element is already gone
+			if (elementData === undefined) {
+				return;
+			}
+			
 			var data = _cache.get(elData(elementData.element, 'cache-id'));
 			
 			if (data.state === STATE_READY) {
