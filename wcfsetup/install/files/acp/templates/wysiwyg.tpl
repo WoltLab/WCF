@@ -44,8 +44,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabTable.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabUtils.js?v={@LAST_UPDATE_TIME}'
 		{else}
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.min.js?v={@LAST_UPDATE_TIME}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/combined.min.js?v={@LAST_UPDATE_TIME}'
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/redactor.combined.min.js?v={@LAST_UPDATE_TIME}'
 		{/if}
 		
 		{if $__redactorJavaScript|isset}{@$__redactorJavaScript}{/if}
