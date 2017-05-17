@@ -42,6 +42,8 @@ class DefaultAvatar implements IUserAvatar {
 				$text = mb_strtoupper(mb_substr($username, 0, 2));
 			}
 			
+			$text = htmlspecialchars($text, ENT_XML1, 'UTF-8');
+			
 			$backgroundColor = substr(sha1($username), 0, 6);
 			
 			$perceptiveLuminance = $this->getPerceptiveLuminance(

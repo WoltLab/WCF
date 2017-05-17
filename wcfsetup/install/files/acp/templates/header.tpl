@@ -122,7 +122,7 @@
 				}
 			});
 			
-			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
+			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 		});
 	</script>
 	

@@ -413,7 +413,7 @@ class RegisterForm extends UserAddForm {
 						
 						// avatar
 						if (isset($googleData['image']['url'])) {
-							$avatarURL = $googleData['image']['url'];
+							$avatarURL = preg_replace('/\?sz=\d+/', '?sz=128', $googleData['image']['url']);
 						}
 					}
 				break;

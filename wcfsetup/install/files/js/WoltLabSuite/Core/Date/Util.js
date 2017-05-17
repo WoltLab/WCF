@@ -221,6 +221,34 @@ define(['Language'], function(Language) {
 		},
 		
 		/**
+		 * Returns a `time` element based on the given date just like a `time`
+		 * element created by `wcf\system\template\plugin\TimeModifierTemplatePlugin`.
+		 * 
+		 * Note: The actual content of the element is empty and is expected
+		 * to be automatically updated by `WoltLabSuite/Core/Date/Time/Relative`
+		 * after the DOM change listener has been triggered.
+		 * 
+		 * @param	{Date}		date	displayed date
+		 * @return	{HTMLElement}	`time` element
+		 */
+		getTimeElement: function(date) {
+			var time = elCreate('time');
+			time.classList = 'datetime';
+			
+			elAttr(time, 'datetime', this.format(date, 'c'));
+			elData(time, 'timestamp', (date.getTime() - date.getMilliseconds()) / 1000);
+			elData(time, 'date', this.formatDate(date));
+			elData(time, 'time', this.formatTime(date));
+			elData(time, 'offset', date.getTimezoneOffset() * 60); // PHP returns minutes, JavaScript returns seconds
+			
+			if (date.getTime() > new Date().getTime()) {
+				elData(time, 'is-future-date', 'true');
+			}
+			
+			return time;
+		},
+		
+		/**
 		 * Returns a Date object with precise offset (including timezone and local timezone).
 		 * 
 		 * @param	{int}		timestamp	timestamp in milliseconds
