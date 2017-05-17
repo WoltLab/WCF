@@ -38,7 +38,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 * user group editor object
 	 * @var	UserGroupEditor
 	 */
-	public $group = null;
+	public $group;
 	
 	/**
 	 * @inheritDoc
@@ -101,7 +101,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
 			'action' => 'edit',
-			'availableUserGroups' => UserGroup::getAccessibleGroups()
+			'availableUserGroups' => UserGroup::getAccessibleGroups(),
+			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS
 		]);
 		
 		// add warning when the initiator is in the group

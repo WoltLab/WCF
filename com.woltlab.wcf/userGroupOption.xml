@@ -703,11 +703,13 @@ png</defaultvalue>
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.page.canAddCommentWithoutModeration">
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.page.canEditComment">
 				<categoryname>user.page</categoryname>
@@ -732,11 +734,13 @@ png</defaultvalue>
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.article.canAddCommentWithoutModeration">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.article.canEditComment">
 				<categoryname>user.article</categoryname>
@@ -851,11 +855,13 @@ png</defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<options>module_user_profile_wall</options>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.profileComment.canAddCommentWithoutModeration">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.profileComment.canEditComment">
 				<categoryname>user.profileComment</categoryname>

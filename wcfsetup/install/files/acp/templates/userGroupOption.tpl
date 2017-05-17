@@ -61,6 +61,10 @@
 
 {include file='formError'}
 
+{if VISITOR_USE_TINY_BUILD && $guestGroupID}
+	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
+{/if}
+
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
@@ -74,7 +78,7 @@
 		
 		{foreach from=$groups item=group}
 			<dl>
-				<dt><label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
+				<dt>{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}<label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
 				<dd>
 					{@$formElements[$group->groupID]}
 					

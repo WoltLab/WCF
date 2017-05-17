@@ -66,7 +66,7 @@ rjsPaths.forEach(path => {
     let outFilename = require(process.cwd() + `/${buildConfig}`).out;
 
     [true, false].forEach(COMPILER_TARGET_DEFAULT => {
-        let overrides = "uglify2.global_defs.COMPILER_TARGET_DEFAULT=" + (COMPILER_TARGET_DEFAULT ? "true" : "false");
+        let overrides = "uglify2.compress.global_defs.COMPILER_TARGET_DEFAULT=" + (COMPILER_TARGET_DEFAULT ? "true" : "false");
         if (!COMPILER_TARGET_DEFAULT) {
             outFilename = outFilename.replace(/\.min\.js$/, '.tiny.min.js');
             overrides += " out=" + outFilename;

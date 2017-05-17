@@ -12,6 +12,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
 
 /**
@@ -47,9 +48,9 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * user group option type object
-	 * @var	\wcf\system\option\user\group\IUserGroupOptionType
+	 * @var	IUserGroupOptionType
 	 */
-	public $optionType = null;
+	public $optionType;
 	
 	/**
 	 * list of parent categories
@@ -67,7 +68,7 @@ class UserGroupOptionForm extends AbstractForm {
 	 * user group option object
 	 * @var	UserGroupOption
 	 */
-	public $userGroupOption = null;
+	public $userGroupOption;
 	
 	/**
 	 * user group option id
@@ -245,12 +246,21 @@ class UserGroupOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$guestGroupID = 0;
+		foreach ($this->groups as $group) {
+			if ($group->groupType == UserGroup::GUESTS) {
+				$guestGroupID = $group->groupID;
+				break;
+			}
+		}
+		
 		WCF::getTPL()->assign([
 			'formElements' => $this->formElements,
 			'groups' => $this->groups,
 			'parentCategories' => $this->parentCategories,
 			'userGroupOption' => $this->userGroupOption,
-			'values' => $this->values
+			'values' => $this->values,
+			'guestGroupID' => $guestGroupID
 		]);
 	}
 	

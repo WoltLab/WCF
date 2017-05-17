@@ -576,6 +576,8 @@
 		<item name="wcf.acp.group.option.user.page.canAddCommentWithoutModeration"><![CDATA[Kann Kommentare ohne Moderation erstellen]]></item>
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Seitenbeschleunigung für Gäste ist aktiv]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol (<span class="icon icon16 fa-bolt red"></span>) markiert.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1269,6 +1271,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.article_enable_visit_tracking"><![CDATA[Gelesen-Markierung für Artikel aktivieren]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Werbung abwechselnd anzeigen]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sollte einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
+		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Seitenbeschleunigung für Gäste aktivieren (Experimentell)]]></item>
+		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Aktiviert einen besonderen Modus in dem Gästen und Suchmaschinen stark reduzierte JavaScript-Dateien ausgeliefert werden, um das Laden als auch den Seitenaufbau zu beschleunigen.<br><strong>Warnung:</strong> Dieser Modus arbeitet sehr restriktiv und untersagt unter anderem jeglichen Schreibzugriff, bitte überprüfen Sie, ob alle installierten Plugins mit diesem Modus kompatibel sind.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

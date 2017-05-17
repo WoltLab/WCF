@@ -119,6 +119,7 @@ WCF.Comment.Handler = Class.extend({
 		this._container = $('#' + $.wcfEscapeID(this._containerID));
 		if (!this._container.length) {
 			console.debug("[WCF.Comment.Handler] Unable to find container identified by '" + this._containerID + "'");
+			return;
 		}
 		
 		this._proxy = new WCF.Action.Proxy({
