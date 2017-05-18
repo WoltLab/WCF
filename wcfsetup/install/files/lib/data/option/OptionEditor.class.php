@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\option;
+use wcf\data\user\group\UserGroupEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\data\user\group\UserGroupEditor;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\io\AtomicWriter;

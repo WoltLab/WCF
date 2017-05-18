@@ -216,7 +216,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Returns true if this is a secure connection.
 	 * 
-	 * @return	true
+	 * @return	boolean
 	 */
 	public static function secureConnection() {
 		if (self::$secure === null) {
