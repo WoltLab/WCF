@@ -36,6 +36,7 @@ use wcf\system\WCF;
  * @property-read	integer		$showOrder		position of the box in relation to its siblings
  * @property-read	integer		$visibleEverywhere	is `1` if the box is visible on every page, otherwise `0`
  * @property-read	integer		$isMultilingual		is `1` if the box content is available in multiple languages, otherwise `0`
+ * @property-read	integer		$lastUpdateTime		timestamp at which the box has been updated the last time
  * @property-read	string		$cssClassName		css class name(s) of the box
  * @property-read	integer		$showHeader		is `1` if the box header will be shown, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
