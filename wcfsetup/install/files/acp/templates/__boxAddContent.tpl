@@ -27,6 +27,7 @@
 	<textarea name="content[{@$languageID}]" id="content{@$languageID}"
 		{if $boxType == 'text'}
 			class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{@$boxID}{else}0{/if}-{@$languageID}"
+			{if $action === 'edit'}data-autosave-last-edit-time="{@$box->lastUpdateTime}"{/if}
 		{/if}
 	>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	
@@ -45,6 +46,7 @@
 		<textarea name="content[{@$languageID}]" id="content{@$languageID}"
 			{if $boxType == 'text'}
 				class="wysiwygTextarea" data-disable-attachments="true" data-autosave="com.woltlab.wcf.box{$action|ucfirst}-{if $action == 'edit'}{@$boxID}{else}0{/if}-{@$languageID}"
+				{if $action === 'edit'}data-autosave-last-edit-time="{@$box->lastUpdateTime}"{/if}
 			{/if}
 		>{if !$content[$languageID]|empty}{$content[$languageID]}{/if}</textarea>
 	</div>
