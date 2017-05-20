@@ -64,14 +64,16 @@
 				});
 				
 				var userProfileEditor = new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
-				var editLink = elBySel('.interactiveDropdownItemsUserMenu .jsUserPanelEditProfile');
-				if (editLink) {
-					editLink.addEventListener(WCF_CLICK_EVENT, function (event) {
-						userProfileEditor._beginEdit(event);
-						
-						WCF.CloseOverlayHandler.forceExecution();
-					});
-				}
+				{if $__wcf->getUser()->userID == $user->userID}
+					var editLink = elBySel('.interactiveDropdownItemsUserMenu .jsUserPanelEditProfile');
+					if (editLink) {
+						editLink.addEventListener(WCF_CLICK_EVENT, function (event) {
+							userProfileEditor._beginEdit(event);
+							
+							WCF.CloseOverlayHandler.forceExecution();
+						});
+					}
+				{/if}
 			{/if}
 			
 			{if $followingCount > 7}

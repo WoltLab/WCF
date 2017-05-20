@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
+define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(EventHandler, Language, DomTraverse, UiRedactorMetacode) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -63,6 +63,9 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 			if (form !== null) {
 				form.addEventListener('submit', this.destroy.bind(this));
 			}
+			
+			// clear editor content on reset
+			EventHandler.add('com.woltlab.wcf.redactor2', 'reset_' + this._element.id, this.hideOverlay.bind(this));
 		},
 		
 		/**
@@ -185,7 +188,8 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 				this.clear();
 				
 				// set code
-				this._editor.code.start(this._originalMessage);
+				var content = UiRedactorMetacode.convertFromHtml(this._editor.core.element()[0].id, this._originalMessage);
+				this._editor.code.start(content);
 				
 				// set value
 				this._editor.core.textarea().val(this._editor.clean.onSync(this._editor.$editor.html()));

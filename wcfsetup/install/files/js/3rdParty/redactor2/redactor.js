@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.5
-	Updated: May 1, 2017
+	Version 2.6
+	Updated: May 17, 2017
 
 	http://imperavi.com/redactor/
 
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.5';
+	$.Redactor.VERSION = '2.6';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -202,7 +202,7 @@
 		formatting: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 		formattingAdd: false,
 
-		buttons: ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link'], // + 'horizontalrule', 'underline', 'ol', 'ul', 'indent', 'outdent'
+		buttons: ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'], // + 'horizontalrule', 'underline', 'ol', 'ul', 'indent', 'outdent'
         buttonsTextLabeled: false,
 		buttonsHide: [],
 		buttonsHideOnMobile: [],
@@ -215,6 +215,8 @@
 			'i': 'em',
 			'strike': 'del'
 		},
+
+        keepStyleAttr: [], // tag name array
 
 		// shortcuts
 		shortcuts: {
@@ -1709,7 +1711,7 @@
 									observe: {
 										element: 'a',
 										'in': {
-											title: this.lang.get('link-edit'),
+											title: this.lang.get('link-edit')
 										},
 										out: {
 											title: this.lang.get('link-insert')
@@ -2353,10 +2355,13 @@
 					sel = window.getSelection();
 					sel.removeAllRanges();
 
-					range = document.createRange();
-					range.selectNodeContents(node);
-					range.collapse(false);
-					sel.addRange(range);
+                    try {
+			    		range = document.createRange();
+		    			range.selectNodeContents(node);
+	    				range.collapse(false);
+    					sel.addRange(range);
+					}
+					catch(e) {}
 				},
 				after: function(node)
 				{
@@ -2717,6 +2722,10 @@
                         html = html.replace(/<span[^>]*font-weight: bold[^>]*>([\w\W]*?)<\/span>/gi, '<b>$1</b>');
                         html = html.replace(/<span[^>]*font-weight: 700[^>]*>([\w\W]*?)<\/span>/gi, '<b>$1</b>');
 
+                        // op tag
+                        html = html.replace(/<o:p[^>]*>/gi, '');
+                        html = html.replace(/<\/o:p>/gi, '');
+
 						var msword = this.clean.isHtmlMsWord(html);
 						if (msword)
 						{
@@ -2735,6 +2744,7 @@
 					}
 					else
 					{
+
 						html = this.clean.replaceBrToNl(html);
 						html = this.clean.removeTagsInsidePre(html);
 					}
@@ -2772,8 +2782,14 @@
 
 					if (data.paragraphize)
 					{
+    					// ff bugfix
+                        html = html.replace(/ \n/g, ' ');
+                        html = html.replace(/\n /g, ' ');
 
 						html = this.paragraphize.load(html);
+
+						// remove empty p
+						html = html.replace(/<p><\/p>/g, '');
 					}
 
 					return html;
@@ -3188,7 +3204,9 @@
 				{
 					html = html.replace(/<!--[\s\S]*?-->/gi, '');
 					html = html.replace(/<style[\s\S]*?style>/gi, '');
-					html = html.replace(/<\/p>|<\/div>|<\/li>|<\/td>/gi, '\n');
+                    html = html.replace(/<p><\/p>/g, '');
+					html = html.replace(/<\/div>|<\/li>|<\/td>/gi, '\n');
+					html = html.replace(/<\/p>/gi, '\n\n');
 					html = html.replace(/<\/H[1-6]>/gi, '\n\n');
 
 					var tmp = document.createElement('div');
@@ -4830,6 +4848,11 @@
 				},
 				loadEditableControls: function($image)
 				{
+    				if ($('#redactor-image-box').length !== 0)
+    				{
+        				return;
+    				}
+
 					var imageBox = $('<span id="redactor-image-box" data-redactor="verified">');
 					imageBox.css('float', $image.css('float')).attr('contenteditable', false);
 
@@ -5376,7 +5399,8 @@
 						}
 						else
 						{
-    						this.caret.start(inline);
+    						var $first = this.inline.insertBreakpoint($parent[0], currentTag);
+                            this.caret.after($first);
 						}
     				}
     				else
@@ -5846,6 +5870,10 @@
     				{
         				var $el = $(el);
                         $el.removeAttr('style').css(params);
+
+                        var style = $el.attr('style');
+                        if (style) $el.attr('style', style.replace(/"/g, '\''));
+
                         $el = self.inline.addParentStyle($el);
 
                         return $el;
@@ -5865,8 +5893,8 @@
                             var newVal = params[key];
                             var oldVal = $el.css(key);
 
-                            oldVal = (self.utils.isRgb(oldVal)) ? self.utils.rgb2hex(oldVal) : oldVal;
-                            newVal = (self.utils.isRgb(newVal)) ? self.utils.rgb2hex(newVal) : newVal;
+                            oldVal = (self.utils.isRgb(oldVal)) ? self.utils.rgb2hex(oldVal) : oldVal.replace(/"/g, '');
+                            newVal = (self.utils.isRgb(newVal)) ? self.utils.rgb2hex(newVal) : newVal.replace(/"/g, '');
 
                             if (oldVal === newVal)
                             {
@@ -5878,6 +5906,9 @@
                             }
                         }
 
+                        var style = $el.attr('style');
+                        if (style) $el.attr('style', style.replace(/"/g, '\''));
+
                         if (!self.utils.removeEmptyAttr(el, 'style'))
                         {
                             $el = self.inline.addParentStyle($el);
@@ -5886,6 +5917,7 @@
                         {
                             $el.removeAttr('data-redactor-style-cache');
                         }
+
 
                         return $el;
     				});
@@ -5900,6 +5932,10 @@
                         var $el = $(el);
 
                         $el.css(params);
+
+                        var style = $el.attr('style');
+                        if (style) $el.attr('style', style.replace(/"/g, '\''));
+
                         $el = self.inline.addParentStyle($el);
 
                         return $el;
@@ -6051,6 +6087,9 @@
 
 					html = $.parseHTML(html);
 
+                    // end node
+                    var endNode = $(html).last();
+
 					// delete selected content
 					var sel = this.selection.get();
 					var range = this.selection.range(sel);
@@ -6137,15 +6176,13 @@
 						}
 					}
 
-
 					this.utils.disableSelectAll();
 					this.linkify.format();
 
-					if (data.pre)
-					{
-						this.clean.cleanPre();
-					}
+					if (data.pre) this.clean.cleanPre();
 
+                    // end focus
+                    this.caret.end(endNode);
 				},
 				text: function(text)
 				{
@@ -6701,7 +6738,14 @@
 						this.code.syncFire = false;
 						this.keydown.removeEmptyLists();
 
-						this.core.editor().find('*[style]').not('img, figure, iframe, #redactor-image-box, #redactor-image-editter, [data-redactor-style-cache], [data-redactor-span]').removeAttr('style');
+                        var filter = '';
+                        if (this.opts.keepStyleAttr.length !== 0)
+                        {
+                            filter = ',' + this.opts.keepStyleAttr.join(',');
+                        }
+
+						var $styleTags = this.core.editor().find('*[style]');
+						$styleTags.not('img, figure, iframe, #redactor-image-box, #redactor-image-editter, [data-redactor-style-cache], [data-redactor-span]' + filter).removeAttr('style');
 
 						this.keydown.formatEmpty(e);
 						this.code.syncFire = true;
@@ -8604,13 +8648,10 @@
 					}
 
 					// disable line
-					if (this.utils.isCurrentOrParentHeader() || this.utils.isCurrentOrParent(['table', 'pre', 'blockquote', 'li']))
+					if (this.core.editor().css('display') !== 'none')
 					{
-						this.button.disable('horizontalrule');
-					}
-					else
-					{
-						this.button.enable('horizontalrule');
+	    				if (this.utils.isCurrentOrParentHeader() || this.utils.isCurrentOrParent(['table', 'pre', 'blockquote', 'li'])) this.button.disable('horizontalrule');
+    					else this.button.enable('horizontalrule');
 					}
 
 					$.each(this.opts.activeButtonsStates, $.proxy(function(key, value)
@@ -9068,6 +9109,7 @@
 					// clipboard event
 					if (this.detect.isDesktop())
 					{
+
     					if (!this.paste.pre && this.opts.clipboardImageUpload && this.opts.imageUpload && this.paste.detectClipboardUpload(e))
     					{
     						if (this.detect.isIe())
@@ -9163,13 +9205,7 @@
 					e = e.originalEvent || e;
 
 					var clipboard = e.clipboardData;
-
-					if (this.detect.isIe())
-					{
-						return true;
-					}
-
-					if (this.detect.isFirefox())
+					if (this.detect.isIe() || this.detect.isFirefox())
 					{
 						return false;
 					}
@@ -9181,7 +9217,6 @@
 						e.preventDefault();
 						return false;
 					}
-
 
 					if (!clipboard.items || !clipboard.items.length)
 					{
@@ -10384,7 +10419,7 @@
 					this.upload.$droparea = $('<div id="redactor-droparea" />');
 
 					this.upload.$placeholdler = $('<div id="redactor-droparea-placeholder" />').text(this.lang.get('upload-label'));
-					this.upload.$input = $('<input type="file" name="file" />');
+					this.upload.$input = $('<input type="file" name="file" multiple />');
 
 					this.upload.$placeholdler.append(this.upload.$input);
 					this.upload.$droparea.append(this.upload.$placeholdler);
@@ -10399,8 +10434,13 @@
 					// change
 					this.upload.$input.on('change.redactor.upload', $.proxy(function(e)
 					{
-						e = e.originalEvent || e;
-						this.upload.traverseFile(this.upload.$input[0].files[0], e);
+                        e = e.originalEvent || e;
+                        var len = this.upload.$input[0].files.length;
+
+                        for (var i = 0; i < len; i++)
+                        {
+                            this.upload.traverseFile(this.upload.$input[0].files[i], e);
+                        }
 					}, this));
 
 					// drop
