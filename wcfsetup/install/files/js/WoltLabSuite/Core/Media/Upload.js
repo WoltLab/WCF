@@ -227,7 +227,12 @@ define(
 			}
 			else {
 				fileIcon.classList.remove('fa-spinner');
-				fileIcon.classList.add('fa-file-o');
+				
+				var fileIconName = FileUtil.getIconNameByFilename(media.filename);
+				if (fileIconName) {
+					fileIconName = '-' + fileIconName;
+				}
+				fileIcon.classList.add('fa-file' + fileIconName + '-o');
 			}
 		},
 		

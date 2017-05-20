@@ -6,8 +6,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Select
  */
-define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLabSuite/Core/Media/Manager/Base'],
-	function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, MediaManagerBase) {
+define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog', 'WoltLabSuite/Core/FileUtil', 'WoltLabSuite/Core/Media/Manager/Base'],
+	function(Core, DomTraverse, DomUtil, Language, ObjectMap, UiDialog, FileUtil, MediaManagerBase) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -121,8 +121,13 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 						displayElement.innerHTML = '<img src="' + (media.smallThumbnailLink ? media.smallThumbnailLink : media.link) + '" alt="' + (media.altText && media.altText[LANGUAGE_ID] ? media.altText[LANGUAGE_ID] : '') + '" />';
 					}
 					else {
+						var fileIcon = FileUtil.getIconNameByFilename(media.filename);
+						if (fileIcon) {
+							fileIcon = '-' + fileIcon;
+						}
+						
 						displayElement.innerHTML = '<div class="box48" style="margin-bottom: 10px;">'
-							+ '<span class="icon icon48 fa-file-o"></span>'
+							+ '<span class="icon icon48 fa-file' + fileIcon + '-o"></span>'
 							+ '<div class="containerHeadline">'
 								+ '<h3>' + media.filename + '</h3>'
 								+ '<p>' + media.formattedFilesize + '</p>'
