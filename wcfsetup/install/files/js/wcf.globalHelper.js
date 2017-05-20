@@ -217,6 +217,9 @@
 	   user might have to press the forward button several times.
 	   Note: A 'skip' state cannot be hit in the 'popstate' event when navigation backwards,
 	         because the history already is left of all the 'skip' states for the current page.
+	   Note 2: Setting the URL component of `history.replaceState()` to an empty string will
+	           cause the Internet Explorer to discard the path and query string from the
+	           address bar.
 	 */
 	(function() {
 		var stateDepth = 0;
@@ -225,14 +228,14 @@
 				window.history.replaceState({
 					name: 'skip',
 					depth: ++stateDepth
-				}, '', '');
+				}, '');
 				window.history.back();
 				
 				// window.history does not update in this iteration of the event loop
 				setTimeout(check, 1);
 			}
 			else {
-				window.history.replaceState({name: 'initial'}, '', '');
+				window.history.replaceState({name: 'initial'}, '');
 			}
 		}
 		check();
