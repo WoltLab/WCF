@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
+define(['Language', 'Dom/Traverse', './Metacode'], function(Language, DomTraverse, UiRedactorMetacode) {
 	"use strict";
 	
 	// time between save requests in seconds
@@ -169,7 +169,8 @@ define(['Language', 'Dom/Traverse'], function(Language, DomTraverse) {
 				this.clear();
 				
 				// set code
-				this._editor.code.start(this._originalMessage);
+				var content = UiRedactorMetacode.convertFromHtml(this._editor.core.element()[0].id, this._originalMessage);
+				this._editor.code.start(content);
 				
 				// set value
 				this._editor.core.textarea().val(this._editor.clean.onSync(this._editor.$editor.html()));
