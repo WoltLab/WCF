@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['Language', 'Dom/Traverse', './Metacode'], function(Language, DomTraverse, UiRedactorMetacode) {
+define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(EventHandler, Language, DomTraverse, UiRedactorMetacode) {
 	"use strict";
 	
 	// time between save requests in seconds
@@ -47,6 +47,9 @@ define(['Language', 'Dom/Traverse', './Metacode'], function(Language, DomTravers
 			if (form !== null) {
 				form.addEventListener('submit', this.destroy.bind(this));
 			}
+			
+			// clear editor content on reset
+			EventHandler.add('com.woltlab.wcf.redactor2', 'reset_' + this._element.id, this.hideOverlay.bind(this));
 		},
 		
 		/**
