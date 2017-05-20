@@ -23,6 +23,15 @@ $.Redactor.prototype.WoltLabCode = function() {
 					this.observe.toolbar();
 				}
 			}).bind(this);
+			
+			var mpGet = this.code.get;
+			this.code.get = (function () {
+				// force sync
+				this.code.html = false;
+				this.code.startSync(this.core.editor().html());
+				
+				return mpGet.call(this);
+			}).bind(this);
 		}
 	};
 };
