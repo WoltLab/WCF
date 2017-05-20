@@ -165,10 +165,12 @@
 	<a id="top"></a>
 	
 	{assign var=_acpPageSubMenuActive value=false}
-	{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}
-	{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
-		{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems}{assign var=_acpPageSubMenuActive value=true}{/if}
-	{/foreach}
+	{if PACKAGE_ID}
+		{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}
+		{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
+			{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems}{assign var=_acpPageSubMenuActive value=true}{/if}
+		{/foreach}
+	{/if}
 	<div id="pageContainer" class="pageContainer{if !PACKAGE_ID || !$__wcf->user->userID} acpPageHiddenMenu{elseif $_acpPageSubMenuActive} acpPageSubMenuActive{/if}">
 		{event name='beforePageHeader'}
 		
