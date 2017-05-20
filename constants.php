@@ -94,7 +94,6 @@ define('SEARCH_USE_CAPTCHA', 1);
 define('RECAPTCHA_PUBLICKEY', '');
 define('RECAPTCHA_PRIVATEKEY', '');
 define('TIMEZONE', 'Europe/London');
-define('JQUERY_SOURCE', 'google');
 define('GOOGLE_MAPS_ZOOM', '13');
 define('GOOGLE_MAPS_TYPE', 'hybrid');
 define('GOOGLE_MAPS_ENABLE_SCALE_CONTROL', 0);
