@@ -1362,6 +1362,7 @@
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}License and serial number{else}Username and password{/if} have been accepted by the server, but they do not grant you the permission to download this commercial product.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[You are not allowed to access this package.]]></item>
+		<item name="wcf.acp.package.update.authInsufficient"><![CDATA[The credentials are valid, but do not allow the download of this package.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[License Number]]></item>
 		<item name="wcf.acp.package.update.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.package.update.saveCredentials"><![CDATA[Save Credentials]]></item>

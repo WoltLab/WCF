@@ -51,10 +51,15 @@ class PackageUpdateUnauthorizedException extends UserException {
 	 * @return	string
 	 */
 	public function getRenderedTemplate() {
+		$serverReply = $this->request->getReply();
+		
 		WCF::getTPL()->assign([
+			'authInsufficient' => (isset($serverReply['httpHeaders']['wcf-update-server-auth'][0]) && $serverReply['httpHeaders']['wcf-update-server-auth'][0] === 'unauthorized'),
 			'packageUpdateVersion' => $this->packageUpdateVersion,
 			'request' => $this->request,
-			'updateServer' => $this->updateServer
+			'updateServer' => $this->updateServer,
+			'serverAuthData' => $this->updateServer->getAuthData(),
+			'serverReply' => $serverReply
 		]);
 		
 		return WCF::getTPL()->fetch('packageUpdateUnauthorized');
