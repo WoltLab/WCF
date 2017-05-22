@@ -130,6 +130,19 @@ select {
 	}
 	
 	@include screen-sm-up {
+		/* the `margin-bottom` styles are required to deal with buttons wrapping
+		   into the next row, also requires some changes to `.dialogFormSubmit`! */
+		margin-bottom: -10px;
+		
+		> button,
+		> input[type="button"],
+		> input[type="reset"],
+		> input[type="submit"],
+		> .button,
+		> a.button {
+			margin-bottom: 10px;
+		}
+		
 		> :not(:first-child) {
 			margin-left: 10px;
 		}
