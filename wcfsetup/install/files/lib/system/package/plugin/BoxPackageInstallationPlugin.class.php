@@ -24,7 +24,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * list of created or updated boxes by id
-	 * @var Box[]
+	 * @var BoxEditor[]
 	 */
 	protected $boxes = [];
 	
@@ -283,7 +283,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		// updating boxes is only supported for 'system' type boxes, all other
 		// types would potentially overwrite changes made by the user if updated
 		if (!empty($row) && $row['boxType'] !== 'system') {
-			$box = new Box(null, $row);
+			$box = new BoxEditor(new Box(null, $row));
 		}
 		else {
 			$box = parent::import($row, $data);
@@ -314,7 +314,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($this->content as $boxID => $contentData) {
-				$boxEditor = new BoxEditor($this->boxes[$boxID]);
+				$boxEditor = $this->boxes[$boxID];
 				
 				foreach ($contentData as $languageCode => $content) {
 					$languageID = null;
