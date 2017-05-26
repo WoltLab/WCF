@@ -67,7 +67,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$userSubscription->getSubscription()->title|language}</h3>
-						<p>{@$userSubscription->getSubscription()->description|language|newlineToBreak}</p>
+						<p>{@$userSubscription->getSubscription()->getFormattedDescription()}</p>
 					</div>
 					
 					{if $userSubscription->endDate}
