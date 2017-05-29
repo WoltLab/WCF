@@ -1,3 +1,12 @@
+/**
+ * Provides desktop notifications via periodic polling with an
+ * increasing request delay on inactivity.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2017 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/Notification/Handler
+ */
 define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 	"use strict";
 	
@@ -11,11 +20,20 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 	var _allowNotification = false;
 	var _icon = '';
 	var _inactiveSince = 0;
+	//noinspection JSUnresolvedVariable
 	var _lastRequestTimestamp = window.TIME_NOW;
 	var _requestTimer = null;
 	var _sessionKeepAlive = 0;
 	
+	/**
+	 * @exports     WoltLabSuite/Core/Notification/Handler
+	 */
 	return {
+		/**
+		 * Initializes the desktop notification system.
+		 * 
+		 * @param       {Object}        options         initialization options
+		 */
 		setup: function (options) {
 			options = Core.extend({
 				icon: '',
@@ -25,49 +43,88 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			_icon = options.icon;
 			_sessionKeepAlive = options.sessionKeepAlive * 60;
 			
-			console.log("DEBUG ONLY");
-			var x = this._dispatchRequest.bind(this);
-			//this._prepareNextRequest();
+			this._prepareNextRequest();
 			
 			document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
 			window.addEventListener('storage', this._onStorage.bind(this));
 			
 			this._onVisibilityChange();
 			
-			Notification.requestPermission().then(function (result) {
+			window.Notification.requestPermission().then(function (result) {
 				if (result === 'granted') {
 					_allowNotification = true;
-					console.log("DEBUG ONLY");
-					x();
 				}
 			});
 		},
 		
+		/**
+		 * Detects when this window is hidden or restored.
+		 * 
+		 * @protected
+		 */
 		_onVisibilityChange: function() {
 			_inactiveSince = (document.hidden) ? Date.now() : 0;
+			
+			// document was hidden before
+			if (!document.hidden) {
+				var difference = (Date.now() - _inactiveSince) / 60000;
+				if (difference > 4) {
+					this._resetTimer();
+					this._dispatchRequest();
+				}
+			}
 		},
 		
+		/**
+		 * Returns the delay in minutes before the next request should be dispatched.
+		 * 
+		 * @return      {int}
+		 * @protected
+		 */
 		_getNextDelay: function() {
 			if (_inactiveSince === 0) return 5;
 			
 			// milliseconds -> minutes
-			var inactiveMins = ~~((Date.now() - _inactiveSince) / 60000);
-			if (inactiveMins < 15) {
+			var inactiveMinutes = ~~((Date.now() - _inactiveSince) / 60000);
+			if (inactiveMinutes < 15) {
 				return 5;
 			}
-			else if (inactiveMins < 30) {
+			else if (inactiveMinutes < 30) {
 				return 10;
 			}
 			
 			return 15;
 		},
 		
+		/**
+		 * Resets the request delay timer.
+		 * 
+		 * @protected
+		 */
+		_resetTimer: function() {
+			if (_requestTimer !== null) {
+				window.clearTimeout(_requestTimer);
+				_requestTimer = null;
+			}
+		},
+		
+		/**
+		 * Schedules the next request using a calculated delay.
+		 * 
+		 * @protected
+		 */
 		_prepareNextRequest: function() {
-			var delay = Math.min(this._getNextDelay(), _sessionKeepAlive);
+			this._resetTimer();
 			
+			var delay = Math.min(this._getNextDelay(), _sessionKeepAlive);
 			_requestTimer = window.setTimeout(this._dispatchRequest.bind(this), delay * 60000);
 		},
 		
+		/**
+		 * Requests new data from the server.
+		 * 
+		 * @protected
+		 */
 		_dispatchRequest: function() {
 			var parameters = {};
 			EventHandler.fire('com.woltlab.wcf.notification', 'beforePoll', parameters);
@@ -82,23 +139,47 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			});
 		},
 		
+		/**
+		 * Notifies subscribers for updated data received by another tab.
+		 * 
+		 * @protected
+		 */
 		_onStorage: function() {
-			window.clearTimeout(_requestTimer);
+			// abort and re-schedule periodic request
 			this._prepareNextRequest();
 			
-			// TODO: update counters and stuff, this is not the requesting tab!
+			var pollData, keepAliveData, abort = false;
+			try {
+				pollData = window.localStorage.getItem(Core.getStoragePrefix() + 'notification');
+				keepAliveData = window.localStorage.getItem(Core.getStoragePrefix() + 'keepAliveData');
+				
+				pollData = JSON.parse(pollData);
+				keepAliveData = JSON.parse(keepAliveData);
+			}
+			catch (e) {
+				abort = true;
+			}
+			
+			if (!abort) {
+				EventHandler.fire('com.woltlab.wcf.notification', 'onStorage', {
+					pollData: pollData,
+					keepAliveData: keepAliveData
+				});
+			}
 		},
 		
 		_ajaxSuccess: function(data) {
-			// forward keep alive data
-			window.WCF.System.PushNotification.executeCallbacks(data.returnValues.keepAliveData);
-			
 			var abort = false;
+			var keepAliveData = data.returnValues.keepAliveData;
 			var pollData = data.returnValues.pollData;
 			
-			// store response data in session storage
+			// forward keep alive data
+			window.WCF.System.PushNotification.executeCallbacks(keepAliveData);
+			
+			// store response data in local storage
 			try {
 				window.localStorage.setItem(Core.getStoragePrefix() + 'notification', JSON.stringify(pollData));
+				window.localStorage.setItem(Core.getStoragePrefix() + 'keepAliveData', JSON.stringify(keepAliveData));
 			}
 			catch (e) {
 				// storage is unavailable, e.g. in private mode, log error and disable polling
@@ -118,13 +199,21 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			this._showNotification(pollData);
 		},
 		
+		/**
+		 * Displays a desktop notification.
+		 * 
+		 * @param       {Object}        pollData
+		 * @protected
+		 */
 		_showNotification: function(pollData) {
 			if (!_allowNotification) {
 				return;
 			}
 			
+			//noinspection JSUnresolvedVariable
 			if (typeof pollData.notification === 'object' && typeof pollData.notification.message ===  'string') {
-				new Notification(pollData.notification.title, {
+				//noinspection JSUnresolvedVariable
+				new window.Notification(pollData.notification.title, {
 					body: pollData.notification.message,
 					icon: _icon
 				})
@@ -132,6 +221,7 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 		},
 		
 		_ajaxSetup: function() {
+			//noinspection JSUnresolvedVariable
 			return {
 				data: {
 					actionName: 'poll',

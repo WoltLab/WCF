@@ -202,12 +202,14 @@ requirejs.config({
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 			
-			require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
-				NotificationHandler.setup({
-					icon: '{@$__wcf->getPath()}images/apple-touch-icon.png',
-					sessionKeepAlive: {@$__sessionKeepAlive}
+			{if $__wcf->user->userID}
+				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
+					NotificationHandler.setup({
+						icon: '{@$__wcf->getPath()}images/apple-touch-icon.png',
+						sessionKeepAlive: {@$__sessionKeepAlive}
+					});
 				});
-			});
+			{/if}
 		{/if}
 	});
 </script>
