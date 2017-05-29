@@ -476,6 +476,17 @@
 				<defaultvalue>1</defaultvalue>
 				<options>module_wcf_ad</options>
 			</option>
+			<option name="enable_polling">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>enable_desktop_notifications</enableoptions>
+			</option>
+			<option name="enable_desktop_notifications">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="head_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>

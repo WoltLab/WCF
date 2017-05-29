@@ -202,9 +202,10 @@ requirejs.config({
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 			
-			{if $__wcf->user->userID}
+			{if ENABLE_POLLING && $__wcf->user->userID}
 				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
 					NotificationHandler.setup({
+						enableNotifications: {if ENABLE_DESKTOP_NOTIFICATIONS}true{else}false{/if},
 						icon: '{@$__wcf->getPath()}images/apple-touch-icon.png',
 						sessionKeepAlive: {@$__sessionKeepAlive}
 					});

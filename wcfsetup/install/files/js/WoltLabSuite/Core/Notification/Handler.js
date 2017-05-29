@@ -36,6 +36,7 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 		 */
 		setup: function (options) {
 			options = Core.extend({
+				enableNotifications: false,
 				icon: '',
 				sessionKeepAlive: 0
 			}, options);
@@ -50,11 +51,13 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			
 			this._onVisibilityChange();
 			
-			window.Notification.requestPermission().then(function (result) {
-				if (result === 'granted') {
-					_allowNotification = true;
-				}
-			});
+			if (options.enableNotifications) {
+				window.Notification.requestPermission().then(function (result) {
+					if (result === 'granted') {
+						_allowNotification = true;
+					}
+				});
+			}
 		},
 		
 		/**
