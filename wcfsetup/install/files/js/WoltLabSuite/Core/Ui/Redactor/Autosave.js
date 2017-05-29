@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(EventHandler, Language, DomTraverse, UiRedactorMetacode) {
+define(['Core', 'EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Core, EventHandler, Language, DomTraverse, UiRedactorMetacode) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -29,9 +29,6 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 	// time between save requests in seconds
 	var _frequency = 15;
 	
-	//noinspection JSUnresolvedVariable
-	var _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
-	
 	/**
 	 * @param       {Element}       element         textarea element
 	 * @constructor
@@ -47,7 +44,7 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 			this._container = null;
 			this._editor = null;
 			this._element = element;
-			this._key = _prefix + elData(this._element, 'autosave');
+			this._key = Core.getStoragePrefix() + elData(this._element, 'autosave');
 			this._lastMessage = '';
 			this._originalMessage = '';
 			this._overlay = null;
@@ -273,7 +270,7 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 				key = window.localStorage.key(i);
 				
 				// check if key matches our prefix
-				if (key.indexOf(_prefix) !== 0) {
+				if (key.indexOf(Core.getStoragePrefix()) !== 0) {
 					continue;
 				}
 				

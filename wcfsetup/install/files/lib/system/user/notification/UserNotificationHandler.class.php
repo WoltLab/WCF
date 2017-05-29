@@ -899,4 +899,31 @@ class UserNotificationHandler extends SingletonFactory {
 		if ($row === false) return false;
 		return $row['mailNotificationType'];
 	}
+	
+	/**
+	 * Returns the title and text-only message body for the latest notification,
+	 * that is both unread and newer than `$lastRequestTimestamp`. May return an
+	 * empty array if there is no new notification.
+	 * 
+	 * @param       integer         $lastRequestTimestamp
+	 * @return      string[]
+	 */
+	public function getLatestNotification($lastRequestTimestamp) {
+		$notifications = $this->fetchNotifications(1, 0, 0);
+		if (!empty($notifications) && reset($notifications)->time > $lastRequestTimestamp) {
+			$notifications = $this->processNotifications($notifications);
+			
+			if (isset($notifications['notifications'][0])) {
+				/** @var IUserNotificationEvent $event */
+				$event = $notifications['notifications'][0]['event'];
+				
+				return [
+					'title' => strip_tags($event->getTitle()),
+					'message' => strip_tags($event->getMessage())
+				];
+			}
+		}
+		
+		return [];
+	}
 }

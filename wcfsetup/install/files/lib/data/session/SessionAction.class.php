@@ -4,6 +4,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\event\EventHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -51,7 +52,8 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	public function keepAlive() {
 		// ignore sessions created by this request
 		if (WCF::getSession()->lastActivityTime == TIME_NOW) {
-			return [];
+			// TODO: DEBUG ONLY
+			//return [];
 		}
 		
 		// update last activity time
@@ -66,5 +68,53 @@ class SessionAction extends AbstractDatabaseObjectAction {
 		EventHandler::getInstance()->fireAction($this, 'keepAlive');
 		
 		return $this->keepAliveData;
+	}
+	
+	/**
+	 * Validates parameters to poll notification data.
+	 */
+	public function validatePoll() {
+		$this->readInteger('lastRequestTimestamp');
+	}
+	
+	/**
+	 * Polls notification data, including values provided by `keepAlive()`.
+	 * 
+	 * @return      array[]
+	 */
+	public function poll() {
+		$pollData = [];
+		
+		// trigger session keep alive
+		$keepAliveData = (new SessionAction([], 'keepAlive'))->executeAction()['returnValues'];
+		
+		// get notifications
+		if (!empty($keepAliveData['userNotificationCount'])) {
+			// We can synchronize notification polling between tabs of the same domain, but
+			// this doesn't work for different origins, that is different sub-domains that
+			// belong to the same instance. 
+			// 
+			// Storing the time of the last request on the server has the benefit of avoiding
+			// the same notification being presented to the client by different tabs.
+			$lastRequestTime = UserStorageHandler::getInstance()->getField('__notification_lastRequestTime');
+			if ($lastRequestTime === null || $lastRequestTime < $this->parameters['lastRequestTimestamp']) {
+				$lastRequestTime = $this->parameters['lastRequestTimestamp'];
+			}
+			
+			$pollData['notification'] = UserNotificationHandler::getInstance()->getLatestNotification($lastRequestTime);
+			
+			if (!empty($pollData['notification'])) {
+				UserStorageHandler::getInstance()->update(WCF::getUser()->userID, '__notification_lastRequestTime', TIME_NOW);
+			}
+		}
+		
+		// notify 3rd party components
+		EventHandler::getInstance()->fireAction($this, 'poll', $pollData);
+		
+		return [
+			'keepAliveData' => $keepAliveData,
+			'lastRequestTimestamp' => TIME_NOW,
+			'pollData' => $pollData
+		];
 	}
 }
