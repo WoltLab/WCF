@@ -440,6 +440,11 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>text</optiontype>
 			</option>
+			<option name="fb_share_app_id">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
 			<option name="show_version_number">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>

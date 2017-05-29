@@ -46,6 +46,9 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		if (OG_IMAGE) {
 			$this->addTag('og:image', 'og:image', (preg_match('~^https?://~', OG_IMAGE) ? OG_IMAGE : WCF::getPath() . OG_IMAGE), true);
 		}
+		if (FB_SHARE_APP_ID) {
+			$this->addTag('fb:app_id', 'fb:app_id', FB_SHARE_APP_ID, true);
+		}
 	}
 	
 	/**
