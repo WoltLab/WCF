@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\paid\subscription;
+use wcf\data\ITitledObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\html\output\HtmlOutputProcessor;
@@ -28,7 +29,7 @@ use wcf\system\WCF;
  * @property-read	string		$groupIDs			comma-separated list with the ids of the user groups for which the subscription pays membership
  * @property-read	string		$excludedSubscriptionIDs	comma-separated list with the ids of paid subscriptions which prohibit purchase of this paid subscription
  */
-class PaidSubscription extends DatabaseObject {
+class PaidSubscription extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns list of purchase buttons.
 	 * 
@@ -87,5 +88,13 @@ class PaidSubscription extends DatabaseObject {
 		}
 		
 		return $this->description;
+	}
+	
+	/**
+	 * @see		ITitledObject::getTitle()
+	 * @since	3.1
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->title);
 	}
 }

@@ -898,11 +898,19 @@
 			<classname>wcf\system\payment\method\PaypalPaymentMethod</classname>
 		</type>
 		
+		<!-- paid subscriptions -->
 		<type>
 			<name>com.woltlab.wcf.payment.type.paidSubscription</name>
 			<definitionname>com.woltlab.wcf.payment.type</definitionname>
 			<classname>wcf\system\payment\type\PaidSubscriptionPaymentType</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.paidSubscription.user</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\PaidSubscriptionUserUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.user</category>
+		</type>
+		<!-- /paid subscriptions -->
 		
 		<!-- bulk processable objects -->
 		<type>

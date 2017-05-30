@@ -104,7 +104,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			
 			$subscriptionUser->update([
 				'endDate' => $endDate,
-				'isActive' => 1
+				'isActive' => 1,
+				'sentExpirationNotification' => 0
 			]);
 			
 			if (!$subscriptionUser->isActive) {

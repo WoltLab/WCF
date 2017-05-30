@@ -1036,6 +1036,7 @@ CREATE TABLE wcf1_paid_subscription_user (
 	startDate INT(10) NOT NULL DEFAULT 0,
 	endDate INT(10) NOT NULL DEFAULT 0,
 	isActive TINYINT(1) NOT NULL DEFAULT 1,
+	sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0,
 	
 	UNIQUE KEY (subscriptionID, userID),
 	KEY (isActive)

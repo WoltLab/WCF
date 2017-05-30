@@ -9,8 +9,9 @@ use wcf\util\DateUtil;
  * indicates if the full difference is returned or just a rounded difference.
  * 
  * Usage:
- *	{$timestamp|dateDiff}
- *	{"123456789"|dateDiff:$timestamp:$fullInverval}
+ *	{$endTimestamp|dateDiff}
+ *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval}
+ *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval:$inSentence}
  * 
  * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2017 WoltLab GmbH
@@ -31,9 +32,14 @@ class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 			$fullInterval = $tagArgs[2];
 		}
 		
+		$inSentence = false;
+		if (isset($tagArgs[3])) {
+			$inSentence = $tagArgs[3];
+		}
+		
 		$startTime = DateUtil::getDateTimeByTimestamp($tagArgs[1]);
 		$endTime = DateUtil::getDateTimeByTimestamp($tagArgs[0]);
 		
-		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval);
+		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval, $inSentence);
 	}
 }

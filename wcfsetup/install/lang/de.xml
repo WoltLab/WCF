@@ -2990,6 +2990,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.paidSubscription.returnMessage"><![CDATA[Danke für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zahlung. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Transaktion wurde abgeschlossen. Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zahlung von uns verarbeitet wurde, wird die erworbene Mitgliedschaft aktiviert.]]></item>
 		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[Hiermit bestätige ich mein Einverständnis mit den <a href="{PAID_SUBSCRIPTION_TOS_URL}">Nutzungsbedingungen</a>]]></item>
 		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[Mehr Informationen]]></item>
+		<item name="wcf.paidSubscription.notification.title"><![CDATA[Ablaufende Mitgliedschaft]]></item>
+		<item name="wcf.paidSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$userNotificationObject->getTitle()}“ läuft {$userNotificationObject->endDate|dateDiff:$notification->time:false:true} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
 	</category>
 	
 	<category name="wcf.payment">
@@ -3650,6 +3652,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem gefällt {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem gefällt {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaft läuft bald ab]]></item>
 		
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>

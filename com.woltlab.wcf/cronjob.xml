@@ -202,6 +202,19 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.expiringPaidSubscriptionUser">
+			<classname>wcf\system\cronjob\ExpiringPaidSubscriptionUserCronjob</classname>
+			<description>Sends notifications about expiring paid subscriptions</description>
+			<description language="de">Sendet Benachrichtigungen über ablaufende bezahlte Mitgliedschaften</description>
+			<startminute>0</startminute>
+			<starthour>2</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 	
 	<delete>
