@@ -52,7 +52,7 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			this._onVisibilityChange();
 			
 			if (options.enableNotifications) {
-				window.Notification.requestPermission().then(function (result) {
+				window.Notification.requestPermission(function (result) {
 					if (result === 'granted') {
 						_allowNotification = true;
 					}
