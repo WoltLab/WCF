@@ -177,14 +177,14 @@ final class DateUtil {
 	}
 	
 	/**
-	 * Returns a formatted date interval. If $fullInterval is set true, the
-	 * complete interval is returned, otherwise a rounded interval is used.
+	 * Returns a formatted date interval.
 	 * 
-	 * @param	\DateInterval	$interval
-	 * @param	boolean		$fullInterval
+	 * @param	\DateInterval	$interval	interval to be formatted
+	 * @param	boolean		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
+	 * @param	boolean		$inSentence	if `true`, the returned phrase is considered to be used in a sentence, otherwise as a standalone phrase
 	 * @return	string
 	 */
-	public static function formatInterval(\DateInterval $interval, $fullInterval = false) {
+	public static function formatInterval(\DateInterval $interval, $fullInterval = false, $inSentence = false) {
 		$years = $interval->format('%y');
 		$months = $interval->format('%m');
 		$days = $interval->format('%d');
@@ -202,8 +202,13 @@ final class DateUtil {
 			break;
 		}
 		
+		$languageItemSuffix = $direction;
+		if ($inSentence) {
+			$languageItemSuffix .= '.inSentence';
+		}
+		
 		if ($fullInterval) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.' . $languageItemSuffix, [
 				'days' => $days - 7 * $weeks,
 				'firstElement' => $years ? 'years' : ($months ? 'months' : ($weeks ? 'weeks' : ($days ? 'days' : ($hours ? 'hours' : 'minutes')))),
 				'hours' => $hours,
@@ -216,36 +221,36 @@ final class DateUtil {
 		}
 		
 		if ($years) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.' . $languageItemSuffix, [
 				'years' => $years
 			]);
 		}
 		
 		if ($months) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.' . $languageItemSuffix, [
 				'months' => $months
 			]);
 		}
 		
 		if ($weeks) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.' . $languageItemSuffix, [
 				'weeks' => $weeks
 			]);
 		}
 		
 		if ($days) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.' . $languageItemSuffix, [
 				'days' => $days
 			]);
 		}
 		
 		if ($hours) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.' . $languageItemSuffix, [
 				'hours' => $hours
 			]);
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.'.$direction, [
+		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.' . $languageItemSuffix, [
 			'minutes' => $minutes
 		]);
 	}
