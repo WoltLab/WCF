@@ -4,7 +4,8 @@ php:
   - 7.0
   - 5.5
 before_install:
-  - pear install pear/PHP_CodeSniffer
+  - export PATH="$PATH:$(composer global config bin-dir --absolute)"
+  - composer global require "squizlabs/php_codesniffer=3.*"
   - phpenv rehash
 script:
   - find . -type f -name '*.php' -not -path './wcfsetup/install/files/lib/system/api/composer/autoload_static.php' -print0 |xargs -0 -I file -P 4 php -l file > /dev/null
