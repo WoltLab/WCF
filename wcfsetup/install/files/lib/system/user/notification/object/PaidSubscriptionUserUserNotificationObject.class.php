@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\user\notification\object;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\request\LinkHandler;
 
 /**
