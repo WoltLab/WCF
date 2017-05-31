@@ -674,6 +674,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
 			
 			this._confirmationTemplate.removeContent = $('<div class="section"><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></div>');
+			this._confirmationTemplate.removeReport = $('<div class="section"><dl><dt></dt><dd><label><input type="checkbox" name="markAsJustified" id="markAsJustified" value="1"> ' + WCF.Language.get('wcf.moderation.report.removeReport.markAsJustified') + '</label></dd></dl></div>');
 		}
 	});
 	

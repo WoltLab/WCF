@@ -115,6 +115,7 @@
 			'wcf.moderation.report.removeContent.confirmMessage': '{lang}wcf.moderation.report.removeContent.confirmMessage{/lang}',
 			'wcf.moderation.report.removeContent.reason': '{lang}wcf.moderation.report.removeContent.reason{/lang}',
 			'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}',
+			'wcf.moderation.report.removeReport.markAsJustified': '{lang}wcf.moderation.report.removeReport.markAsJustified{/lang}',
 			'wcf.moderation.status.outstanding': '{lang}wcf.moderation.status.outstanding{/lang}',
 			'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}',
 			'wcf.user.username.error.notFound': '{lang __literal=true}wcf.user.username.error.notFound{/lang}'

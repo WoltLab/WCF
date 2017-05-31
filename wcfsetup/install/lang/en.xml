@@ -2808,6 +2808,7 @@ Errors are:
 		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.report"><![CDATA[Report was justified, content has been deleted]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Approval was denied]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.report"><![CDATA[Report was unjustified]]></item>
+		<item name="wcf.moderation.status.rejectedButJustified.com.woltlab.wcf.moderation.report"><![CDATA[Report was justified]]></item>
 		<item name="wcf.moderation.time"><![CDATA[Time]]></item>
 		<item name="wcf.moderation.title"><![CDATA[Title]]></item>
 		<item name="wcf.moderation.type"><![CDATA[Type]]></item>
@@ -2872,6 +2873,7 @@ Errors are:
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>
 		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to delete this report?]]></item>
+		<item name="wcf.moderation.report.removeReport.markAsJustified"><![CDATA[Also mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>

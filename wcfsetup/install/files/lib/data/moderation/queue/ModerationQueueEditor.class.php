@@ -46,9 +46,20 @@ class ModerationQueueEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * Marks this entry as rejected, e.g. report was unjustified or content approval was denied.
+	 * 
+	 * @param       boolean         $markAsJustified
 	 */
-	public function markAsRejected() {
-		$this->update(['status' => ModerationQueue::STATUS_REJECTED]);
+	public function markAsRejected($markAsJustified = false) {
+		$data = ['status' => ModerationQueue::STATUS_REJECTED];
+		if ($markAsJustified) {
+			$additionalData = $this->getDecoratedObject()->additionalData;
+			if (!is_array($additionalData)) $additionalData = [];
+			$additionalData['markAsJustified'] = true;
+			
+			$data['additionalData'] = serialize($additionalData);
+		}
+		
+		$this->update($data);
 		
 		// reset moderation count
 		ModerationQueueManager::getInstance()->resetModerationCount();

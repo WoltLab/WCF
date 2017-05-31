@@ -2866,6 +2866,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.report"><![CDATA[Meldung berechtigt, Inhalt wurde gelöscht]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung wurde abgelehnt]]></item>
 		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.report"><![CDATA[Meldung unberechtigt]]></item>
+		<item name="wcf.moderation.status.rejectedButJustified.com.woltlab.wcf.moderation.report"><![CDATA[Meldung berechtigt]]></item>
 		<item name="wcf.moderation.time"><![CDATA[Datum]]></item>
 		<item name="wcf.moderation.title"><![CDATA[Titel]]></item>
 		<item name="wcf.moderation.type"><![CDATA[Typ]]></item>
@@ -2930,6 +2931,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung löschen]]></item>
 		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diese Meldung wirklich löschen?]]></item>
+		<item name="wcf.moderation.report.removeReport.markAsJustified"><![CDATA[Meldung zusätzlich als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
