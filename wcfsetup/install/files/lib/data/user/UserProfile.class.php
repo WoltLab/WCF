@@ -37,12 +37,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	protected static $baseClass = User::class;
 	
 	/**
-	 * cached list of user profiles
-	 * @var	UserProfile[]
-	 */
-	protected static $userProfiles = [];
-	
-	/**
 	 * list of ignored user ids
 	 * @var	integer[]
 	 */
@@ -410,7 +404,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			
 			foreach ($userList as $user) {
 				$users[mb_strtolower($user->username)] = $user;
-				self::$userProfiles[$user->userID] = $user;
+				UserProfileRuntimeCache::getInstance()->addUserProfile($user);
 			}
 			
 			foreach ($usernames as $username) {

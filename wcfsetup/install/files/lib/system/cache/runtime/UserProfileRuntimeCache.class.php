@@ -6,7 +6,7 @@ use wcf\data\user\UserProfileList;
 /**
  * Runtime cache implementation for user profiles.
  *
- * @author	Matthias Schmidt
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Runtime
@@ -21,4 +21,20 @@ class UserProfileRuntimeCache extends AbstractRuntimeCache {
 	 * @inheritDoc
 	 */
 	protected $listClassName = UserProfileList::class;
+	
+	/**
+	 * Adds a user profile to the cache. This is an internal method that should
+	 * not be used on a regular basis.
+	 * 
+	 * @param       UserProfile     $profile
+	 * @since       3.1
+	 */
+	public function addUserProfile(UserProfile $profile) {
+		$objectID = $profile->getObjectID();
+		
+		if (!isset($this->objects[$objectID])) {
+			$this->objectIDs[] = $objectID;
+			$this->objects[$objectID] = $profile;
+		}
+	}
 }
