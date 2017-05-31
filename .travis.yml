@@ -8,4 +8,4 @@ before_install:
   - phpenv rehash
 script:
   - find . -type f -name '*.php' -print0 |xargs -0 -I file -P 4 php -l file > /dev/null
-  - phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .
+  - $COMPOSER_BIN_DIR/phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .
