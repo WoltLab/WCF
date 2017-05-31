@@ -62,7 +62,7 @@
 		<event>
 			<name>expiring</name>
 			<objecttype>com.woltlab.wcf.paidSubscription.user</objecttype>
-			<classname>wcf\system\user\notification\event\PaidSubscriptionUserUserNotificationEvent</classname>
+			<classname>wcf\system\user\notification\event\ExpiringPaidSubscriptionUserUserNotificationEvent</classname>
 			<options>module_paid_subscription</options>
 		</event>
 	</import>
