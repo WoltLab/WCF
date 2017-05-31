@@ -4,7 +4,7 @@ php:
   - 5.6
   - 5.3
 before_install:
-  - pyrus install pear/PHP_CodeSniffer-2.9.0
+  - composer global require "squizlabs/php_codesniffer=2.*"
   - phpenv rehash
 script:
   - find . -type f -name '*.php' -print0 |xargs -0 -I file -P 4 php -l file > /dev/null
