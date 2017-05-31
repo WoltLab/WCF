@@ -33,7 +33,6 @@ class UserProfileRuntimeCache extends AbstractRuntimeCache {
 		$objectID = $profile->getObjectID();
 		
 		if (!isset($this->objects[$objectID])) {
-			$this->objectIDs[] = $objectID;
 			$this->objects[$objectID] = $profile;
 		}
 	}
