@@ -2985,8 +2985,8 @@ Errors are:
 		<item name="wcf.paidSubscription.returnMessage"><![CDATA[Thank you for your payment, the transaction has been completed. Your subscription will be active once your payment has been processed by us.]]></item>
 		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[I agree to the <a href="{PAID_SUBSCRIPTION_TOS_URL}">Terms of Service</a>]]></item>
 		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[More Details]]></item>
-		<item name="wcf.paidSubscription.notification.title"><![CDATA[Expiring Subscription]]></item>
-		<item name="wcf.paidSubscription.notification.message"><![CDATA[Your subscription “{$userNotificationObject->getTitle()}” will expire {$userNotificationObject->endDate|dateDiff:$notification->time:false:true} (on {$userNotificationObject->endDate|date:'F jS'}).]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.title"><![CDATA[Expiring Subscription]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[Your subscription “{$userNotificationObject->getTitle()}” will expire {$userNotificationObject->endDate|dateDiff:$notification->time:false:true} (on {$userNotificationObject->endDate|date:'F jS'}).]]></item>
 	</category>
 	
 	<category name="wcf.payment">

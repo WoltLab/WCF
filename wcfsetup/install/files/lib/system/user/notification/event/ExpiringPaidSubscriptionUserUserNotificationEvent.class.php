@@ -6,7 +6,7 @@ use wcf\system\user\notification\object\PaidSubscriptionUserUserNotificationObje
 use wcf\system\WCF;
 
 /**
- * Notification event for followers.
+ * Notification event for expiring paid subscriptions.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH
@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * 
  * @method	PaidSubscriptionUserUserNotificationObject	getUserNotificationObject()
  */
-class PaidSubscriptionUserUserNotificationEvent extends AbstractUserNotificationEvent {
+class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
@@ -28,7 +28,7 @@ class PaidSubscriptionUserUserNotificationEvent extends AbstractUserNotification
 	 * @inheritDoc
 	 */
 	public function getMessage() {
-		return $this->getLanguage()->getDynamicVariable('wcf.paidSubscription.notification.message', [
+		return $this->getLanguage()->getDynamicVariable('wcf.paidSubscription.expiringSubscription.notification.message', [
 			'author' => $this->author,
 			'notification' => $this->notification, 
 			'userNotificationObject' => $this->getUserNotificationObject()
@@ -39,7 +39,7 @@ class PaidSubscriptionUserUserNotificationEvent extends AbstractUserNotification
 	 * @inheritDoc
 	 */
 	public function getTitle() {
-		return $this->getLanguage()->get('wcf.paidSubscription.notification.title');
+		return $this->getLanguage()->get('wcf.paidSubscription.expiringSubscription.notification.title');
 	}
 	
 	/**

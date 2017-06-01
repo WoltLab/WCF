@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\paid\subscription;
-use wcf\data\ITitledObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;

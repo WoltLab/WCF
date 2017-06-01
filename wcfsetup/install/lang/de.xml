@@ -2992,8 +2992,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.paidSubscription.returnMessage"><![CDATA[Danke für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zahlung. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Transaktion wurde abgeschlossen. Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zahlung von uns verarbeitet wurde, wird die erworbene Mitgliedschaft aktiviert.]]></item>
 		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[Hiermit bestätige ich mein Einverständnis mit den <a href="{PAID_SUBSCRIPTION_TOS_URL}">Nutzungsbedingungen</a>]]></item>
 		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[Mehr Informationen]]></item>
-		<item name="wcf.paidSubscription.notification.title"><![CDATA[Ablaufende Mitgliedschaft]]></item>
-		<item name="wcf.paidSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$userNotificationObject->getTitle()}“ läuft {$userNotificationObject->endDate|dateDiff:$notification->time:false:true} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.title"><![CDATA[Ablaufende Mitgliedschaft]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$userNotificationObject->getTitle()}“ läuft {$userNotificationObject->endDate|dateDiff:$notification->time:false:true} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
 	</category>
 	
 	<category name="wcf.payment">
