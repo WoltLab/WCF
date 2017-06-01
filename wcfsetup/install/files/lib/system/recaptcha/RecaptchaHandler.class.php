@@ -56,6 +56,7 @@ class RecaptchaHandler extends SingletonFactory {
 	const ERROR_INCORRECT_PARAMS = 'verify-params-incorrect';
 	const ERROR_INVALID_REFFERER = 'invalid-referrer';
 	const ERROR_NOT_REACHABLE = 'recaptcha-not-reachable';
+	const ERROR_TIMEOUT_OR_DUPLICATE = 'timeout-or-duplicate';
 	
 	/**
 	 * @inheritDoc
@@ -108,6 +109,11 @@ class RecaptchaHandler extends SingletonFactory {
 				throw new UserInputException('recaptchaString', 'false');
 				break;
 			
+			case self::ERROR_TIMEOUT_OR_DUPLICATE:
+				// User was to slow to fill the captcha.
+				throw new UserInputException('recaptchaString', 'false');
+				break;
+				
 			default:
 				throw new SystemException('reCAPTCHA returned the following error: '.$response);
 		}
