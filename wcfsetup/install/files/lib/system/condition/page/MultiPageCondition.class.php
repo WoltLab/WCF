@@ -9,6 +9,7 @@ use wcf\system\condition\AbstractSingleFieldCondition;
 use wcf\system\condition\IContentCondition;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
+use wcf\system\WCF;
 
 /**
  * Condition implementation for selecting multiple pages.
@@ -34,24 +35,12 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
-		$pageNodes = (new PageNodeTree())->getNodeList();
-		
-		$fieldElement = '<ul class="scrollableCheckboxList">';
-		/** @var PageNode $pageNode */
-		foreach ($pageNodes as $pageNode) {
-			$fieldElement .= '<li';
-			if ($pageNode->getDepth() > 1) {
-				$fieldElement .= ' style="padding-left: '.($pageNode->getDepth()*20-20).'px"';
-			}
-			$fieldElement .= '><label><input type="checkbox" name="'.$this->fieldName.'[]" value="'.$pageNode->pageID.'" data-identifier="'.$pageNode->identifier.'"';
-			if (in_array($pageNode->pageID, $this->fieldValue)) {
-				$fieldElement .= ' checked';
-			}
-			$fieldElement .= '> '.$pageNode->name.'</label></li>';
-		}
-		$fieldElement .= "</ul>";
-		
-		return $fieldElement;
+		return WCF::getTPL()->fetch('scrollablePageCheckboxList', 'wcf', [
+			'pageCheckboxID' => $this->fieldName,
+			'pageCheckboxListContainerID' => $this->fieldName . 'Container',
+			'pageIDs' => $this->fieldValue,
+			'pageNodeList' => (new PageNodeTree())->getNodeList()
+		]);
 	}
 	
 	/**

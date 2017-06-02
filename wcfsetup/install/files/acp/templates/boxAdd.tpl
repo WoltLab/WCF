@@ -402,15 +402,7 @@
 					<dd>
 						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 						<script data-relocate="true">
-							require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
-								Language.addObject({
-									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
-									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',
-									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}'
-								});
-								
-								new UiItemListFilter('boxVisibilitySettings');
-								
+							require([], function() {
 								// visibility toggle
 								var visibilityExceptionHidden = elById('visibilityExceptionHidden');
 								var visibilityExceptionVisible = elById('visibilityExceptionVisible');
@@ -430,13 +422,7 @@
 						<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
 					</dt>
 					<dd>
-						<ul class="scrollableCheckboxList" id="boxVisibilitySettings">
-							{foreach from=$pageNodeList item=pageNode}
-								<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-									<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
-								</li>
-							{/foreach}
-						</ul>
+						{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
 					</dd>
 				</dl>
 			</div>
