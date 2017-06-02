@@ -260,7 +260,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		$this->objectAction = new PaidSubscriptionAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'title' => $this->title,
 			'description' => $this->description,
-			'isDisabled' => $this->isDisabled,	
+			'isDisabled' => $this->isDisabled,
 			'showOrder' => $this->showOrder,
 			'cost' => $this->cost,
 			'currency' => $this->currency,
@@ -278,7 +278,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset values
-		$this->title = $this->description = '';
+		$this->title = $this->description = $this->subscriptionLengthUnit = '';
 		$this->isDisabled = $this->showOrder = $this->cost = $this->subscriptionLength = $this->isRecurring = 0;
 		$this->currency = 'EUR';
 		$this->groupIDs = array();
