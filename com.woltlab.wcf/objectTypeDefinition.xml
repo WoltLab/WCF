@@ -227,6 +227,11 @@
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<!-- /box conditions -->
+		
+		<definition>
+			<name>com.woltlab.wcf.sitemap.object</name>
+			<interfacename><![CDATA[wcf\system\sitemap\object\ISitemapObjectObjectType]]></interfacename>
+		</definition>
 	</import>
 	
 	<delete>
