@@ -34,6 +34,9 @@
 					<category name="general.page.seo">
 						<parent>general.page</parent>
 					</category>
+					<category name="general.page.sitemap">
+						<parent>general.page</parent>
+					</category>
 				<category name="general.offline">
 					<parent>general</parent>
 					<showorder>2</showorder>
@@ -517,6 +520,14 @@
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>textarea</optiontype>
+			</option>
+			
+			<option name="sitemap_index_time_frame">
+				<categoryname>general.page.sitemap</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>365</defaultvalue>
+				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /general.page -->
 			

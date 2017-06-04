@@ -900,6 +900,7 @@
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Versand]]></item>
 		<item name="wcf.acp.option.category.general.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.option.category.general.page.seo"><![CDATA[Suchmaschinenoptimierung (SEO)]]></item>
+		<item name="wcf.acp.option.category.general.page.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.acp.option.category.message"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.option.category.message.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
@@ -1096,6 +1097,8 @@
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Benutzer aktiviert sich durch E-Mail-Bestätigung]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[Keine Aktivierung notwendig]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximale Höhe von Signatur-Bildern]]></item>
+		<item name="wcf.acp.option.sitemap_index_time_frame"><![CDATA[Zeitfenster der Indexierung]]></item>
+		<item name="wcf.acp.option.sitemap_index_time_frame.description"><![CDATA[Maximales Alter der Objekte um in die Sitemap aufgenommen zu werden [0 um das Zeitfenster zu deaktivieren].]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximale Länge des Benutzertitels]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reservierte Benutzertitel]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[Benutzertitel, die nicht verwendet werden dürfen. Ein Titel pro Zeile]]></item>
