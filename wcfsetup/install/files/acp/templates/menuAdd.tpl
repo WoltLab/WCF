@@ -129,8 +129,6 @@
 				</div>
 			</div>
 			
-			
-			
 			<div id="pages" class="tabMenuContent">
 				<div class="section">
 					<dl>
@@ -158,13 +156,7 @@
 							<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
 						</dt>
 						<dd>
-							<ul class="scrollableCheckboxList">
-								{foreach from=$pageNodeList item=pageNode}
-									<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-										<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
-									</li>
-								{/foreach}
-							</ul>
+							{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='menuVisibilitySettings' pageCheckboxID='pageIDs'}
 						</dd>
 					</dl>
 					
