@@ -140,13 +140,16 @@ final class CronjobUtil {
 	 * @param	array		$values
 	 */
 	protected static function calculateTime(array &$values) {
-		// calculation starts with month, thus start with
-		// month of $time (if within values)
-		$currentMonth = gmdate('n', self::$timeBase);
-		$currentYear = gmdate('Y', self::$timeBase);
-		$index = self::findKey($currentMonth, $values['month']);
-		
 		self::calculateDay($values);
+		
+		// calculate month based on the past calculations
+		$index = self::findKey(self::$result['month'], $values['month']);
+		self::$result['month'] = $values['month'][$index];
+		
+		// swap to the next year if the next execution month is before the current month
+		if (self::$result['month'] < gmdate('n', self::$timeBase)) {
+			self::$result['year']++;
+		}
 	}
 	
 	/**
