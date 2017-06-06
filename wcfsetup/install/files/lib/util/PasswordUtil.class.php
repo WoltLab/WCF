@@ -7,7 +7,7 @@ use wcf\system\Regex;
  * Provides functions to compute password hashes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2015 WoltLab GmbH
+ * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -19,7 +19,7 @@ final class PasswordUtil {
 	 * @var	string
 	 */
 	const PASSWORD_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
+	
 	/**
 	 * concated list of valid blowfish salt characters
 	 * @var	string
@@ -51,7 +51,8 @@ final class PasswordUtil {
 		'joomla3',	// Joomla 3.x
 		'phpfox3',	// phpFox 3.x
 		'cryptMD5',
-		'invalid',	// Never going to match anything
+		'viecode',	// VieCode Customer Area 5.1.x
+		'invalid'	// Never going to match anything
 	);
 	
 	/**
@@ -219,11 +220,11 @@ final class PasswordUtil {
 	public static function getRandomPassword($length = 12) {
 		$charset = self::PASSWORD_CHARSET;
 		$password = '';
-
+		
 		for ($i = 0, $maxIndex = (strlen($charset) - 1); $i < $length; $i++) {
 			$password .= $charset[self::secureRandomNumber(0, $maxIndex)];
 		}
-
+		
 		return $password;
 	}
 	
@@ -715,6 +716,23 @@ final class PasswordUtil {
 	 */
 	protected static function cryptMD5($username, $password, $salt, $dbHash) {
 		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Validates the password hash for VieCode Customer Area 5.1.x
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function viecode($username, $password, $salt, $dbHash) {
+		if (self::secureCompare($dbHash, sha1(md5($password).$salt))) {
 			return true;
 		}
 		
