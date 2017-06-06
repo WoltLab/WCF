@@ -165,6 +165,8 @@ class WCF {
 	 * when gzip is enabled.
 	 */
 	public static function destruct() {
+		EventHandler::getInstance()->fireAction(WCF::class, 'destruct');
+		
 		try {
 			// database has to be initialized
 			if (!is_object(self::$dbObj)) return;
