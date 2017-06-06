@@ -1205,6 +1205,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 		
 		this._triggerElement.addClass('open');
 		this._container.addClass('open');
+		this._triggerElement.addClass('openDropdown');
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.Search', 'close');
 		
@@ -1217,6 +1218,7 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 	close: function() {
 		this._triggerElement.removeClass('open');
 		this._container.removeClass('open');
+		this._triggerElement.removeClass('openDropdown');
 	},
 	
 	/**
