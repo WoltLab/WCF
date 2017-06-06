@@ -563,11 +563,11 @@ define(
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
+			elAttr(data.dialog, 'aria-hidden', 'true');
+			
 			if (typeof data.onClose === 'function') {
 				data.onClose(id);
 			}
-			
-			elAttr(data.dialog, 'aria-hidden', 'true');
 			
 			// get next active dialog
 			_activeDialog = null;
@@ -603,14 +603,50 @@ define(
 		 * @return	{(object|undefined)}	dialog data or undefined if element id is unknown
 		 */
 		getDialog: function(id) {
+			return _dialogs.get(this._getDialogId(id));
+		},
+		
+		/**
+		 * Returns true for open dialogs.
+		 * 
+		 * @param	{(string|object)}	id	element id or callback object
+		 * @return      {boolean}
+		 */
+		isOpen: function(id) {
+			var data = this.getDialog(id);
+			return (data !== undefined && elAttr(data.dialog, 'aria-hidden') === 'false');
+		},
+		
+		/**
+		 * Destroys a dialog instance.
+		 * 
+		 * @param	{(string|object)}	id	element id or callback object
+		 */
+		destroy: function(id) {
+			id = this._getDialogId(id);
+			if (this.isOpen(id)) {
+				this.close(id);
+			}
+			
+			_dialogs.delete(id);
+		},
+		
+		/**
+		 * Returns a dialog's id.
+		 * 
+		 * @param	{(string|object)}	id	element id or callback object
+		 * @return      {string}
+		 * @protected
+		 */
+		_getDialogId: function(id) {
 			if (typeof id === 'object') {
 				var dialogData = _dialogObjects.get(id);
 				if (dialogData !== undefined) {
-					id = dialogData.id;
+					return dialogData.id;
 				}
 			}
 			
-			return _dialogs.get(id);
+			return id.toString();
 		},
 		
 		_ajaxSetup: function() {
