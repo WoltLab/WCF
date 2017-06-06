@@ -3506,7 +3506,7 @@ WCF.Date.Picker = {
 					}
 				},
 				showOtherMonths: true,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2037')
 			};
 			
 			if ($hasTime) {
@@ -3551,7 +3551,7 @@ WCF.Date.Picker = {
 					showTime: false,
 					timeFormat: this._timeFormat,
 					timeOnly: $input.data('timeOnly') ? true : false,
-					yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+					yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2037')
 				});
 			}
 			
