@@ -546,6 +546,11 @@ WCF.Poll.Manager = Class.extend({
 				// display results
 				this._canViewResult[$pollID] = true;
 				this._canVote[$pollID] = (data.canVote) ? true : false;
+				
+				if (this._polls[$pollID].data('isPublic')) {
+					this._canViewParticipants[$pollID] = true;
+				}
+				
 				this._showResult(null, $pollID);
 			break;
 		}
