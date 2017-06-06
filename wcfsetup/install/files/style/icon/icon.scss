@@ -204,5 +204,10 @@ a > span.fa:not(.pointer) {
 	20%, 100% { transform:rotate(0deg) }
 }
 
+/* EmojiOne's Emoji Keyboard (2016) for Chrome uses an excessively high `z-index` value */
+.emojione-emoji {
+	z-index: auto !important;
+}
+
 @import "variables";
 @import "icons";
