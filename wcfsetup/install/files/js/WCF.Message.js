@@ -3648,6 +3648,13 @@ WCF.Message.UserMention = Class.extend({
 			$startOffset = $startContainer.textContent.length - 1;
 		}
 		
+		// check if `$startContainer` is an element, as it causes `$startOffset` to be
+		// relative to the child nodes instead of the actual text length
+		if ($startContainer.nodeType === Node.ELEMENT_NODE && $startOffset > 0) {
+			$startContainer = $startContainer.childNodes[$startOffset - 1];
+			$startOffset = $startContainer.textContent.length;
+		}
+		
 		$startOffset -= (this._mentionStart.length + 1);
 		
 		// navigating with the keyboard before hitting enter will cause the text node to be split
