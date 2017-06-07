@@ -63,6 +63,10 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 	 */
 	public function setAsDefault() {
 		$this->languageEditor->setAsDefault();
+		
+		if ($this->languageEditor->getDecoratedObject()->isDisabled) {
+			$this->languageEditor->update(['isDisabled' => 0]);
+		}
 	}
 	
 	/**
