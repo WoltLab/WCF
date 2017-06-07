@@ -408,16 +408,6 @@ class WCF {
 				throw new PermissionDeniedException();
 			}
 		}
-		
-		// handle banned users
-		if (self::getUser()->userID && self::getUser()->banned) {
-			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-				throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
-			}
-			else {
-				throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
-			}
-		}
 	}
 	
 	/**

@@ -4,6 +4,7 @@ use wcf\system\application\AbstractApplication;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
@@ -85,6 +86,16 @@ class RequestHandler extends SingletonFactory {
 		
 		// build request
 		$this->buildRequest($application);
+		
+		// handle banned users
+		if (WCF::getUser()->userID && WCF::getUser()->banned && $this->activeRequest->getClassName() != 'wcf\action\LogoutAction') {
+			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+				throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			}
+			else {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
+			}
+		}
 		
 		// handle offline mode
 		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
