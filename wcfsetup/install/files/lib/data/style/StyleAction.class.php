@@ -543,6 +543,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 		if (preg_match('~^wcf.style.styleDescription\d+$~', $newStyle->styleDescription)) {
 			$styleDescription = 'wcf.style.styleDescription'.$newStyle->styleID;
 			
+			// delete any phrases that were the result of an import
+			$sql = "DELETE FROM     wcf".WCF_N."_language_item
+				WHERE           languageItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$styleDescription]);
+			
 			// copy language items
 			$sql = "INSERT INTO	wcf".WCF_N."_language_item
 						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)

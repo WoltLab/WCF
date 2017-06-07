@@ -2371,6 +2371,14 @@ $.widget('wcf.messageTabMenu', {
 					$current.container.addClass('active');
 					$target = $current;
 					
+					// if the tab contains a tab menu itself, open the first tab too,
+					// unless there is already at least one open tab
+					var container = $current.container[0];
+					if (elBySel('.messageTabMenuContent.active', container) === null && elBySel('.messageTabMenuContent', container) !== null) {
+						var link = elBySel('nav > ul > li[data-name] > a', container);
+						if (link !== null) $(link).trigger('mousedown');
+					}
+					
 					continue;
 				}
 				else if (forceOpen === true) {

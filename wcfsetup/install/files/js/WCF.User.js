@@ -2703,6 +2703,7 @@ WCF.User.List = Class.extend({
 				});
 			}
 			else {
+				this._dialog.wcfDialog('option', 'title', this._dialogTitle);
 				this._dialog.wcfDialog('open').wcfDialog('render');
 			}
 			

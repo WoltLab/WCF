@@ -7,7 +7,7 @@
 	</script>
 {/if}
 
-<div class="pollContainer" data-poll-id="{@$poll->pollID}" data-can-vote="{if $poll->canVote()}1{else}0{/if}" data-can-view-result="{if $poll->canSeeResult()}1{else}0{/if}" data-can-view-participants="{if $poll->canViewParticipants()}true{else}false{/if}" data-in-vote="{if $poll->canVote() && !$poll->isParticipant()}1{else}0{/if}" data-question="{$poll->question}" data-max-votes="{@$poll->maxVotes}">
+<div class="pollContainer" data-poll-id="{@$poll->pollID}" data-can-vote="{if $poll->canVote()}1{else}0{/if}" data-can-view-result="{if $poll->canSeeResult()}1{else}0{/if}" data-can-view-participants="{if $poll->canViewParticipants()}true{else}false{/if}" data-in-vote="{if $poll->canVote() && !$poll->isParticipant()}1{else}0{/if}" data-question="{$poll->question}" data-max-votes="{@$poll->maxVotes}" data-is-public="{if $poll->isPublic}true{else}false{/if}">
 	<section>
 		<h2>{$poll->question} <span class="badge jsTooltip" title="{lang}wcf.poll.totalVotes{/lang}">{#$poll->votes}</span></h2>
 		
@@ -42,7 +42,7 @@
 					<button class="small jsButtonPollShowVote"{if !$poll->canVote() || $__pollView === 'vote'} style="display: none;"{/if}>{lang}wcf.poll.button.showVote{/lang}</button>
 					<button class="small jsButtonPollShowResult"{if $__pollView === 'result'} style="display: none;"{/if}>{lang}wcf.poll.button.showResult{/lang}</button>
 				{/if}
-				{if $poll->canViewParticipants()}
+				{if $poll->canViewParticipants() || ($poll->canVote() && $poll->isPublic)}
 					<button class="small jsButtonPollShowParticipants"{if $__pollView === 'vote' || !$poll->canSeeResult()} style="display: none"{/if}>{lang}wcf.poll.button.showParticipants{/lang}</button>
 				{/if}
 				

@@ -24,6 +24,19 @@ define(['Dom/Util'], function(DomUtil) {
 		return Fake;
 	}
 	
+	var _isValidSelection = function(editorElement) {
+		var element = window.getSelection().anchorNode;
+		while (element) {
+			if (element === editorElement) {
+				return true;
+			}
+			
+			element = element.parentNode;
+		}
+		
+		return false;
+	};
+	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Redactor/Format
 	 */
@@ -39,6 +52,11 @@ define(['Dom/Util'], function(DomUtil) {
 			var selection = window.getSelection();
 			if (!selection.rangeCount) {
 				// no active selection
+				return;
+			}
+			
+			if (!_isValidSelection(editorElement)) {
+				console.error("Invalid selection, range exists outside of the editor:", selection.anchorNode);
 				return;
 			}
 			
@@ -203,6 +221,15 @@ define(['Dom/Util'], function(DomUtil) {
 		 * @param       {string}        property        CSS property that should be removed
 		 */
 		removeFormat: function(editorElement, property) {
+			var selection = window.getSelection();
+			if (!selection.rangeCount) {
+				return;
+			}
+			else if (!_isValidSelection(editorElement)) {
+				console.error("Invalid selection, range exists outside of the editor:", selection.anchorNode);
+				return;
+			}
+			
 			var strikeElements = elByTag('strike', editorElement);
 			
 			// remove any <strike> element first, all though there shouldn't be any at all

@@ -203,8 +203,10 @@ abstract class AbstractPage implements IPage {
 				return '%' . strtoupper($matches['encoded']);
 			}, $requestURI);
 			
-			$requestURL = parse_url($requestURI);
+			// reduce successive forwarded slashes into a single one
+			$requestURI = preg_replace('~/{2,}~', '/', $requestURI);
 			
+			$requestURL = parse_url($requestURI);
 			$redirect = false;
 			if ($canonicalURL['path'] != $requestURL['path']) {
 				$redirect = true;
