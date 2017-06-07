@@ -84,7 +84,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 */
 	protected function prepareImport(array $data) {
 		$data = array(
-			'bbcodeTag' => $data['attributes']['name'],
+			'bbcodeTag' =>  mb_strtolower(StringUtil::trim($data['attributes']['name'])),
 			'htmlOpen' => (!empty($data['elements']['htmlopen']) ? $data['elements']['htmlopen'] : ''),
 			'htmlClose' => (!empty($data['elements']['htmlclose']) ? $data['elements']['htmlclose'] : ''),
 			'allowedChildren' => (!empty($data['elements']['allowedchildren']) ? $data['elements']['allowedchildren'] : 'all'),
