@@ -76,6 +76,12 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		}
 		
 		var textarea = this._dialog.children('textarea')[0];
+		// force LTR for RTL languages
+		if (document.documentElement.dir === 'rtl') {
+			textarea.dir = 'ltr';
+			textarea.style.setProperty('text-align', 'left', '');
+		}
+		
 		var selectAll = function () {
 			textarea.selectionStart = 0;
 			textarea.selectionEnd = textarea.value.length;
