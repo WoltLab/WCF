@@ -6,7 +6,6 @@ use wcf\data\article\ArticleEditor;
 use wcf\data\article\ArticleList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\event\EventHandler;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
@@ -135,12 +134,6 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker {
 			// update data
 			$editor->update($data);
 		}
-		
-		$parameters = [
-			'articleContentList' => $articleContentList,
-			'objectList' => $this->objectList
-		];
-		EventHandler::getInstance()->fireAction($this, 'afterExecute', $parameters);
 	}
 	
 	/**
