@@ -64,7 +64,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		});
 		
 		if (this._dialog === null) {
-			this._dialog = $('<div><textarea cols="60" rows="12" readonly></textarea></div>').hide().appendTo(document.body);
+			this._dialog = $('<div><textarea class="wcfMessageBBCodeCodeViewerContent" cols="60" rows="12" readonly></textarea></div>').hide().appendTo(document.body);
 			this._dialog.children('textarea').val($content);
 			this._dialog.wcfDialog({
 				title: WCF.Language.get('wcf.message.bbcode.code.copy')
