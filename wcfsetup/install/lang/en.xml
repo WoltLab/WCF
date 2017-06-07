@@ -1501,6 +1501,8 @@
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Rebuilds the comments.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page"><![CDATA[Rebuild Pages]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Rebuilds the page search index.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Rebuild Sitemap]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap.description"><![CDATA[Rebuilds the sitemap.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">

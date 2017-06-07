@@ -1550,6 +1550,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Aktualisiert die Kommentare]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page"><![CDATA[Seiten aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Aktualisiert den Suchindex für CMS-Seiten]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Sitemap aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap.description"><![CDATA[Erstellt die Sitemap neu.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rescueMode">

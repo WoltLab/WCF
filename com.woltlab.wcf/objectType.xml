@@ -464,6 +464,12 @@
 			<classname>wcf\system\worker\CommentRebuildDataWorker</classname>
 			<nicevalue>120</nicevalue>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.sitemap</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\SitemapRebuildWorker</classname>
+			<nicevalue>130</nicevalue>
+		</type>
 		<!-- /rebuild data workers -->
 		
 		<!-- stat handlers -->
