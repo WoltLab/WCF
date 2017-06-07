@@ -79,6 +79,7 @@
 							{if $files.0.perm|isset}
 								<th class="columnDigits">{lang}wcf.acp.cache.list.perm{/lang}</th>
 							{/if}
+							{event name='columnHeads'}
 						</tr>
 					</thead>
 					
@@ -91,6 +92,7 @@
 								{if $file.perm|isset}
 									<td class="columnDigits"><span{if !$file.writable} class="hot"{/if}>{@$file.perm}</span></td>
 								{/if}
+								{event name='columns'}
 							</tr>
 						{/foreach}
 					</tbody>
