@@ -230,7 +230,7 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.sitemap.object</name>
-			<interfacename><![CDATA[wcf\system\sitemap\object\ISitemapObjectObjectType]]></interfacename>
+			<interfacename>wcf\system\sitemap\object\ISitemapObjectObjectType</interfacename>
 		</definition>
 	</import>
 	

@@ -16,7 +16,6 @@ use wcf\data\DatabaseObject;
 abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectType {
 	/**
 	 * A guest user profile.
-	 *
 	 * @var UserProfile
 	 */
 	protected static $userProfile = null;
@@ -40,7 +39,7 @@ abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectTy
 	 * @inheritDoc
 	 */
 	public function getLastModifiedColumn() {
-		return false;
+		return null;
 	}
 	
 	/**

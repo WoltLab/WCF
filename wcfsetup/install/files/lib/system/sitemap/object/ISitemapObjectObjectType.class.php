@@ -35,7 +35,7 @@ interface ISitemapObjectObjectType {
 
 	/**
 	 * Returns the database column, which represents the last modified date.
-	 * If there isn't any column, this method should return false.
+	 * If there isn't any column, this method should return `null`.
 	 *
 	 * @return 	string|null
 	 */

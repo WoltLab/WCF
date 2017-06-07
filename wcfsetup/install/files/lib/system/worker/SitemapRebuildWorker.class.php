@@ -5,8 +5,8 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\io\File;
-use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
