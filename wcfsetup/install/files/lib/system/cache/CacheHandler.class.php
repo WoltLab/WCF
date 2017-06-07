@@ -37,6 +37,8 @@ class CacheHandler extends SingletonFactory {
 			}
 		}
 		catch (SystemException $e) {
+			// force logging
+			$e->getExceptionID();
 			if (CACHE_SOURCE_TYPE != 'disk') {
 				// fallback to disk cache
 				$this->cacheSource = new DiskCacheSource();
