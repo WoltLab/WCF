@@ -147,6 +147,8 @@ final class UserUtil {
 	public static function getIpAddress() {
 		$REMOTE_ADDR = '';
 		if (isset($_SERVER['REMOTE_ADDR'])) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+		if (isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP'])) $REMOTE_ADDR = $_SERVER['HTTP_CLIENT_IP'];
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_CLIENT_IP'])) $REMOTE_ADDR = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		
 		// darwin fix
 		if ($REMOTE_ADDR == '::1' || $REMOTE_ADDR == 'fe80::1') {
