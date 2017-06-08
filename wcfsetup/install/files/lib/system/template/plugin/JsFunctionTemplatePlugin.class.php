@@ -77,7 +77,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 		
 		$this->includedFiles[$src] = true;
-		$src .= (!ENABLE_DEBUG_MODE ? '.min' : '') . '.js?v=' . LAST_UPDATE_TIME;
+		$src .= (!ENABLE_DEBUG_MODE && !(isset($tagArgs['acp']) && $tagArgs['acp'] === 'true') ? '.min' : '') . '.js?v=' . LAST_UPDATE_TIME;
 		
 		$relocate = !RequestHandler::getInstance()->isACPRequest() && (!isset($tagArgs['core']) || $tagArgs['core'] !== 'true');
 		$html = '<script' . ($relocate ? ' data-relocate="true"' : '') . ' src="' . $src . '"></script>'."\n";
