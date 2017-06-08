@@ -40,6 +40,11 @@ define(['Dictionary', 'EventHandler', 'perfect-scrollbar', 'Ui/Screen'], functio
 				_menuItemContainers.set(elData(container, 'menu-item'), container);
 			});
 			
+			// menu is missing on the login page or during WCFSetup
+			if (_acpPageMenu === null) {
+				return;
+			}
+			
 			var enablePerfectScrollbar = function () {
 				var options = {
 					wheelPropagation: false,
