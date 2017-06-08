@@ -59,7 +59,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			// read sitemaps
 			$sitemapObjects = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
 			foreach ($sitemapObjects as $sitemapObject) {
-				if ($sitemapObject->enabled === null || $sitemapObject->enabled) {
+				if ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled) {
 					$this->sitemapObjects[] = $sitemapObject;
 					
 					$processor = $sitemapObject->getProcessor();

@@ -812,6 +812,7 @@
 		<item name="wcf.acp.menu.link.article.add"><![CDATA[Artikel hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.article.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Menü hinzufügen]]></item>
 		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Menü <span class="confirmationObject">{lang}{$menu->title}{/lang}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Menü bearbeiten]]></item>
@@ -1575,6 +1576,26 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.box"><![CDATA[Boxen]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
+	</category>
+	
+	<category name="wcf.acp.sitemap">
+		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
+		<item name="wcf.acp.sitemap.priority"><![CDATA[Priorität]]></item>
+		<item name="wcf.acp.sitemap.priority.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Priorität der Einträge in dieser Sitemap an. Gültige Werte liegen zwischen 0,0 und 1,0.]]></item>
+		<item name="wcf.acp.sitemap.priority.error.invalid"><![CDATA[Der Wert muss zwischen 0,0 und 1,0 liegen.]]></item>
+		<item name="wcf.acp.sitemap.changeFreq"><![CDATA[Änderungsfrequenz]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.always"><![CDATA[Immer]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.hourly"><![CDATA[Stündlich]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.daily"><![CDATA[Täglich]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.weekly"><![CDATA[Wöchentlich]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.monthly"><![CDATA[Monatlich]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Jährlich]]></item>
+		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Nie]]></item>
+		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Erneuerungszeit]]></item>
+		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Die Zeit nachdem die Sitemap erneuert werden soll.]]></item>
+		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktiviert]]></item>
+		<item name="wcf.acp.sitemap.enabled"><![CDATA[Sitemap aktiviert]]></item>
+		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.stat">

@@ -685,6 +685,12 @@
 				<parent>wcf.acp.menu.link.maintenance</parent>
 				<permissions>admin.management.canImportData</permissions>
 			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.maintenance.sitemap">
+				<controller>wcf\acp\page\SitemapListPage</controller>
+				<parent>wcf.acp.menu.link.maintenance</parent>
+				<permissions>admin.management.canRebuildData</permissions>
+			</acpmenuitem>
 			<!-- /maintenance -->
 		
 			<!-- stat -->
