@@ -26,7 +26,6 @@
 				elBySelAll('.sortableList[data-object-id="' + objectId + '"] > li', item, function(childItem) {
 					item.parentNode.insertBefore(childItem, item);
 				});
-				console.log("item", item);
 			});
 			
 			mpTriggerEffect.call(deleteAction, objectIDs);
