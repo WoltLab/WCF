@@ -123,12 +123,14 @@
 		{else}
 			{* guest *}
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
-			<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
-				<a href="#" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-sign-in"></span>
-					<span class="menuOverlayItemTitle">{lang}wcf.user.login{/lang}</span>
-				</a>
-			</li>
+			{if !$__disableLoginLink|isset}
+				<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
+					<a href="#" class="menuOverlayItemLink box24">
+						<span class="icon icon24 fa-sign-in"></span>
+						<span class="menuOverlayItemTitle">{lang}wcf.user.login{/lang}</span>
+					</a>
+				</li>
+			{/if}
 			{if !REGISTER_DISABLED}
 				<li class="menuOverlayItem">
 					<a href="{link controller='Register'}{/link}" class="menuOverlayItemLink box24">
