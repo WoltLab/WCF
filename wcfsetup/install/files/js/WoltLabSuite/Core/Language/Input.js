@@ -387,7 +387,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		disable: function(elementId) {
 			var element = _elements.get(elementId);
 			if (element === undefined) {
-				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+				throw new Error("Expected a valid element, '" + elementId + "' is not an i18n input field.");
 			}
 			
 			if (!element.isEnabled) return;
