@@ -283,7 +283,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		// updating boxes is only supported for 'system' type boxes, all other
 		// types would potentially overwrite changes made by the user if updated
 		if (!empty($row) && $row['boxType'] !== 'system') {
-			$box = new Box(null, $row);
+			$box = new BoxEditor(new Box(null, $row));
 		}
 		else {
 			$box = parent::import($row, $data);
