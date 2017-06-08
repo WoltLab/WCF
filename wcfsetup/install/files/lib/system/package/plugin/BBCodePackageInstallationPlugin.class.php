@@ -143,6 +143,13 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$attributes = $data['attributes'];
 		unset($data['attributes']);
 		
+		if (!empty($row)) {
+			// allow updating of all values except for those controlling the editor button
+			unset($data['wysiwygIcon']);
+			unset($data['buttonLabel']);
+			unset($data['showButton']);
+		}
+		
 		/** @var BBCode $bbcode */
 		$bbcode = parent::import($row, $data);
 		
