@@ -503,6 +503,10 @@
 		}
 	}
 	
+	.userPanel.hideUserPanel::before {
+		visibility: hidden !important;
+	}
+	
 	.pageHeaderSearch {
 		left: 0 !important;
 		right: 0 !important;

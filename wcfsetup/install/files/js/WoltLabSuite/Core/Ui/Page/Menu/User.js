@@ -18,6 +18,13 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 		 * Initializes the touch-friendly fullscreen user menu.
 		 */
 		init: function() {
+			// check if user menu is actually empty
+			var menu = elBySel('#pageUserMenuMobile > .menuOverlayItemList');
+			if (menu.childElementCount === 1 && menu.children[0].classList.contains('menuOverlayTitle')) {
+				elBySel('#pageHeader .userPanel').classList.add('hideUserPanel');
+				return;
+			}
+			
 			UiPageMenuUser._super.prototype.init.call(
 				this,
 				'com.woltlab.wcf.UserMenuMobile',
