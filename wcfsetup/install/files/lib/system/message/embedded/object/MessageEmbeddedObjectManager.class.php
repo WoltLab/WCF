@@ -41,10 +41,22 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	protected $activeMessageID;
 	
 	/**
+	 * language id of the active message
+	 * @var integer
+	 */
+	protected $activeMessageLanguageID;
+	
+	/**
 	 * list of embedded object handlers
 	 * @var	array
 	 */
 	protected $embeddedObjectHandlers;
+	
+	/**
+	 * content language id
+	 * @var integer
+	 */
+	protected $contentLanguageID;
 	
 	/**
 	 * Registers the embedded objects found in given message.
@@ -149,9 +161,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * 
 	 * @param	string		$messageObjectType
 	 * @param	integer[]	$messageIDs
+	 * @param       integer         $contentLanguageID
 	 * @throws	InvalidObjectTypeException
 	 */
-	public function loadObjects($messageObjectType, array $messageIDs) {
+	public function loadObjects($messageObjectType, array $messageIDs, $contentLanguageID = null) {
 		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		if ($messageObjectTypeID === null) {
 			throw new InvalidObjectTypeException($messageObjectType, 'com.woltlab.wcf.message');
@@ -182,6 +195,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 			$this->messageEmbeddedObjects[$row['messageObjectTypeID']][$row['messageID']][$row['embeddedObjectTypeID']][] = $row['embeddedObjectID'];
 		}
 		
+		$this->contentLanguageID = $contentLanguageID;
+		
 		// load objects
 		foreach ($embeddedObjects as $embeddedObjectTypeID => $objectIDs) {
 			if (!isset($this->embeddedObjects[$embeddedObjectTypeID])) $this->embeddedObjects[$embeddedObjectTypeID] = [];
@@ -189,6 +204,17 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 				$this->embeddedObjects[$embeddedObjectTypeID][$objectID] = $object;
 			}
 		}
+		
+		$this->contentLanguageID = null;
+	}
+	
+	/**
+	 * Returns the content language id or null.
+	 * 
+	 * @return      integer
+	 */
+	public function getContentLanguageID() {
+		return $this->contentLanguageID;
 	}
 	
 	/**
@@ -197,9 +223,19 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * @param	string		$messageObjectType
 	 * @param	integer		$messageID
 	 */
-	public function setActiveMessage($messageObjectType, $messageID) {
+	public function setActiveMessage($messageObjectType, $messageID, $languageID = null) {
 		$this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		$this->activeMessageID = $messageID;
+		$this->activeMessageLanguageID = $languageID;
+	}
+	
+	/**
+	 * Returns the language id of the active message.
+	 * 
+	 * @return      integer
+	 */
+	public function getActiveMessageLanguageID() {
+		return $this->activeMessageLanguageID;
 	}
 	
 	/**

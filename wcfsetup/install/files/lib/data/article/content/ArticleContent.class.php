@@ -4,6 +4,7 @@ use wcf\data\article\Article;
 use wcf\data\language\Language;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
@@ -93,7 +94,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getFormattedContent() {
 		$processor = new HtmlOutputProcessor();
-		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
+		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
 		
 		return $processor->getHtml();
 	}

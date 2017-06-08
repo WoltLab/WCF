@@ -3,7 +3,9 @@ namespace wcf\system\message\embedded\object;
 use wcf\data\media\Media;
 use wcf\data\media\MediaList;
 use wcf\system\cache\runtime\ViewableMediaRuntimeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**
@@ -39,7 +41,33 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
 	 * @inheritDoc
 	 */
 	public function loadObjects(array $objectIDs) {
-		return ViewableMediaRuntimeCache::getInstance()->getObjects($objectIDs);
+		$viewableMedia = ViewableMediaRuntimeCache::getInstance()->getObjects($objectIDs);
+		$contentLanguageID = MessageEmbeddedObjectManager::getInstance()->getContentLanguageID();
+		if ($contentLanguageID !== null) {
+			$mediaIDs = [];
+			foreach ($viewableMedia as $media) {
+				if ($media->localizedLanguageID != $contentLanguageID) {
+					$mediaIDs[] = $media->getDecoratedObject()->mediaID;
+				}
+			}
+			
+			if (!empty($mediaIDs)) {
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("mediaID IN (?)", [$mediaIDs]);
+				$conditions->add("languageID = ?", [$contentLanguageID]);
+				
+				$sql = "SELECT  *
+					FROM    wcf".WCF_N."_media_content
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				while ($row = $statement->fetchArray()) {
+					$viewableMedia[$row['mediaID']]->setLocalizedContent($row['languageID'], $row);
+				}
+			}
+		}
+		
+		return $viewableMedia;
 	}
 	
 	/**

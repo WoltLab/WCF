@@ -23,6 +23,18 @@ use wcf\util\StringUtil;
  */
 class ViewableMedia extends DatabaseObjectDecorator {
 	/**
+	 * force localized content by language id
+	 * @var integer
+	 */
+	protected $forceLanguageID;
+	
+	/**
+	 * localized content per language id
+	 * @var string[][]
+	 */
+	protected $localizedContent = [];
+	
+	/**
 	 * user profile of the user who uploaded the media file
 	 * @var	UserProfile
 	 */
@@ -32,6 +44,53 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * @inheritDoc
 	 */
 	protected static $baseClass = Media::class;
+	
+	/**
+	 * Registers localized content by language id.
+	 * 
+	 * @param       integer         $languageID
+	 * @param       string[]        $content
+	 */
+	public function setLocalizedContent($languageID, array $content) {
+		$this->localizedContent[$languageID] = $content;
+	}
+	
+	/**
+	 * Returns an instance of this class with localized versions.
+	 * 
+	 * @param       integer         $languageID
+	 * @return      ViewableMedia
+	 */
+	public function getLocalizedVersion($languageID) {
+		if (isset($this->localizedContent[$languageID])) {
+			$localized = clone $this;
+			$localized->forceLanguageID($languageID);
+			
+			return $localized;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Forces the localized values by language id.
+	 * 
+	 * @param       integer         $languageID
+	 */
+	protected function forceLanguageID($languageID) {
+		$this->forceLanguageID = $languageID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __get($name) {
+		if ($this->forceLanguageID !== null && isset($this->localizedContent[$this->forceLanguageID][$name])) {
+			return $this->localizedContent[$this->forceLanguageID][$name];
+		}
+		
+		return $this->object->__get($name);
+	}
 	
 	/**
 	 * @inheritDoc
