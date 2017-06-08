@@ -20,6 +20,12 @@ class NoticeHandler extends SingletonFactory {
 	protected $notices = [];
 	
 	/**
+	 * suppresses display of notices
+	 * @var boolean
+	 */
+	protected static $disableNotices = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
@@ -32,6 +38,10 @@ class NoticeHandler extends SingletonFactory {
 	 * @return	Notice[]
 	 */
 	public function getVisibleNotices() {
+		if (self::$disableNotices) {
+			return [];
+		}
+		
 		$notices = [];
 		foreach ($this->notices as $notice) {
 			if ($notice->isDismissed()) continue;
@@ -47,5 +57,12 @@ class NoticeHandler extends SingletonFactory {
 		}
 		
 		return $notices;
+	}
+	
+	/**
+	 * Disables the display of notices for the active page.
+	 */
+	public static function disableNotices() {
+		self::$disableNotices = true;
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\box\BoxHandler;
+use wcf\system\notice\NoticeHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -28,6 +29,7 @@ class PermissionDeniedException extends UserException {
 	public function show() {
 		if (!class_exists(WCFACP::class, false)) {
 			BoxHandler::disablePageLayout();
+			NoticeHandler::disableNotices();
 		}
 		SessionHandler::getInstance()->disableTracking();
 		
