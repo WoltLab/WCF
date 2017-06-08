@@ -92,6 +92,9 @@ class UsersOnlineListPage extends SortablePage {
 				$this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
 			}
 		}
+		
+		$this->objectList->sqlSelects .= ", CASE WHEN session.userID IS NULL THEN 1 ELSE 0 END AS userIsGuest";
+		$this->objectList->sqlSelects .= ", CASE WHEN session.spiderID IS NOT NULL THEN 1 ELSE 0 END AS userIsRobot";
 	}
 	
 	/**
@@ -124,6 +127,14 @@ class UsersOnlineListPage extends SortablePage {
 	 */
 	protected function readObjects() {
 		if ($this->sqlOrderBy) $this->sqlOrderBy = ($this->sortField == 'lastActivityTime' ? 'session.' : '').$this->sqlOrderBy;
+		
+		$originalSqlOrderBy = $this->sqlOrderBy;
+		// sort in this order: users -> guests -> robots
+		$this->sqlOrderBy = "userIsGuest ASC, userIsRobot DESC, " . $this->sqlOrderBy;
+		
 		parent::readObjects();
+		
+		// restore original order
+		$this->sqlOrderBy = $originalSqlOrderBy;
 	}
 }
