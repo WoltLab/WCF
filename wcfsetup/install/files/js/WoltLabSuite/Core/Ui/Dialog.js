@@ -529,6 +529,16 @@ define(
 					data.content.style.removeProperty('margin-right');
 				}
 			}
+			
+			// Chrome and Safari use heavy anti-aliasing when the dialog's width
+			// cannot be evenly divided, causing the whole text to become blurry
+			if (Environment.browser() === 'chrome' || Environment.browser() === 'safari') {
+				// `clientWidth` will report an integer value that isn't rounded properly (e.g. 0.59 -> 0)
+				var floatWidth = parseFloat(window.getComputedStyle(data.content).width);
+				var needsFix = (Math.round(floatWidth) % 2) !== 0;
+				
+				data.content.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+			}
 		},
 		
 		/**
