@@ -380,6 +380,10 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			DOMUtil::removeNode($start);
 			
 			$element = DOMUtil::getParentBefore($element, $commonAncestor);
+			if ($element === null) {
+				return;
+			}
+			
 			while ($element = $element->nextSibling) {
 				if ($element->nodeType === XML_TEXT_NODE) {
 					// ignore text nodes between tags
