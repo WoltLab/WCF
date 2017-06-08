@@ -27,6 +27,24 @@ final class DateUtil {
 	const TIME_FORMAT = 'wcf.date.timeFormat';
 	
 	/**
+	 * format the interval to be used as a standalone phrase
+	 * @var	integer
+	 */
+	const FORMAT_DEFAULT = 1;
+	
+	/**
+	 * format the interval to be used as a phrase in a sentence
+	 * @var	integer
+	 */
+	const FORMAT_SENTENCE = 2;
+	
+	/**
+	 * format the interval without direction
+	 * @var	integer
+	 */
+	const FORMAT_PLAIN = 3; 
+	
+	/**
 	 * list of available time zones
 	 * @var	string[]
 	 */
@@ -181,10 +199,10 @@ final class DateUtil {
 	 * 
 	 * @param	\DateInterval	$interval	interval to be formatted
 	 * @param	boolean		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
-	 * @param	boolean		$inSentence	if `true`, the returned phrase is considered to be used in a sentence, otherwise as a standalone phrase
+	 * @param	integer		$formatType	format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
 	 * @return	string
 	 */
-	public static function formatInterval(\DateInterval $interval, $fullInterval = false, $inSentence = false) {
+	public static function formatInterval(\DateInterval $interval, $fullInterval = false, $formatType = self::FORMAT_DEFAULT) {
 		$years = $interval->format('%y');
 		$months = $interval->format('%m');
 		$days = $interval->format('%d');
@@ -202,9 +220,21 @@ final class DateUtil {
 			break;
 		}
 		
-		$languageItemSuffix = $direction;
-		if ($inSentence) {
-			$languageItemSuffix .= '.inSentence';
+		switch ($formatType) {
+			case self::FORMAT_DEFAULT:
+				$languageItemSuffix = $direction;
+			break; 
+			
+			case self::FORMAT_SENTENCE:
+				$languageItemSuffix = $direction . '.inSentence';
+			break;
+				
+			case self::FORMAT_PLAIN:
+				$languageItemSuffix = 'plain';
+			break; 
+			
+			default: 
+				throw new \InvalidArgumentException('Invalid $formatType value');
 		}
 		
 		if ($fullInterval) {

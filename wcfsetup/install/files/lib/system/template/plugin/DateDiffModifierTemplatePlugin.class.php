@@ -11,7 +11,7 @@ use wcf\util\DateUtil;
  * Usage:
  *	{$endTimestamp|dateDiff}
  *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval}
- *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval:$inSentence}
+ *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval:$formatType}
  * 
  * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2017 WoltLab GmbH
@@ -32,14 +32,18 @@ class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 			$fullInterval = $tagArgs[2];
 		}
 		
-		$inSentence = false;
+		$formatType = DateUtil::FORMAT_DEFAULT;
 		if (isset($tagArgs[3])) {
-			$inSentence = $tagArgs[3];
+			if (!defined(DateUtil::class .'::'. strtoupper($tagArgs[3]))) {
+				throw new \InvalidArgumentException('Invalid $formatType value');
+			}
+			
+			$formatType = constant(DateUtil::class .'::'. strtoupper($tagArgs[3]));
 		}
 		
 		$startTime = DateUtil::getDateTimeByTimestamp($tagArgs[1]);
 		$endTime = DateUtil::getDateTimeByTimestamp($tagArgs[0]);
 		
-		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval, $inSentence);
+		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval, $formatType);
 	}
 }

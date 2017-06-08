@@ -2295,6 +2295,14 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.interval.weeks.future.inSentence"><![CDATA[in {if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}]]></item>
 		<item name="wcf.date.interval.years.future.inSentence"><![CDATA[in {if $years > 1}{#$years} Jahren{else}einem Jahr{/if}]]></item>
 		
+		<item name="wcf.date.interval.days.plain"><![CDATA[{if $days > 1}{#$days} Tage{else}ein Tag{/if}]]></item>
+		<item name="wcf.date.interval.full.plain"><![CDATA[{if $years}{if $years > 1}{#$years} Jahre{else}ein Jahr{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} und {else}, {/if}{/if}{if $months > 1}{#$months} Monate{else}ein Monat{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} und {else}, {/if}{/if}{if $weeks > 1}{#$weeks} Wochen{else}eine Woche{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} und {else}, {/if}{/if}{if $days > 1}{#$days} Tage{else}ein Tag{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} und {else}, {/if}{/if}{if $hours > 1}{#$hours} Stunden{else}eine Stunde{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} und {/if}{if $minutes > 1}{#$minutes} Minuten{else}eine Minute{/if}{/if}]]></item>
+		<item name="wcf.date.interval.hours.plain"><![CDATA[{if $hours > 1}{#$hours} Stunden{else}eine Stunde{/if}]]></item>
+		<item name="wcf.date.interval.minutes.plain"><![CDATA[{if $minutes > 1}{#$minutes} Minuten{else}eine Minute{/if}]]></item>
+		<item name="wcf.date.interval.months.plain"><![CDATA[{if $months > 1}{#$months} Monate{else}ein Monat{/if}]]></item>
+		<item name="wcf.date.interval.weeks.plain"><![CDATA[{if $weeks > 1}{#$weeks} Wochen{else}eine Woche{/if}]]></item>
+		<item name="wcf.date.interval.years.plain"><![CDATA[{if $years > 1}{#$years} Jahre{else}ein Jahr{/if}]]></item>
+		
 		<!-- variables for time periods -->
 		<item name="wcf.date.period.older"><![CDATA[Älter]]></item>
 		<item name="wcf.date.period.today"><![CDATA[Heute]]></item>
@@ -2998,7 +3006,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[Hiermit bestätige ich mein Einverständnis mit den <a href="{PAID_SUBSCRIPTION_TOS_URL}">Nutzungsbedingungen</a>]]></item>
 		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[Mehr Informationen]]></item>
 		<item name="wcf.paidSubscription.expiringSubscription.notification.title"><![CDATA[Ablaufende Mitgliedschaft]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$userNotificationObject->getTitle()}“ läuft {$userNotificationObject->endDate|dateDiff:$notification->time:false:true} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$userNotificationObject->getTitle()}“ läuft {$userNotificationObject->endDate|dateDiff:$notification->time:false:"format_sentence"} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
 	</category>
 	
 	<category name="wcf.payment">
