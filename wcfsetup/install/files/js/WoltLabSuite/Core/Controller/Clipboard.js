@@ -23,8 +23,7 @@ define(
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
-		var Fake = function() {};
-		Fake.prototype = {
+		return {
 			setup: function() {},
 			reload: function() {},
 			_initContainers: function() {},
@@ -42,7 +41,6 @@ define(
 			showEditor: function() {},
 			unmark: function() {}
 		};
-		return Fake;
 	}
 	
 	var _containers = new Dictionary();
