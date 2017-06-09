@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
+use wcf\system\exception\ParentClassException;
 use wcf\system\io\File;
 use wcf\system\request\LinkHandler;
 use wcf\system\Regex;
@@ -67,7 +68,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 					$list = $processor->getObjectList();
 					
 					if (!($list instanceof DatabaseObjectList)) {
-						throw new \InvalidArgumentException("Class '" . get_class($list) . "' is not an instance of " . DatabaseObjectList::class);
+						throw new ParentClassException(get_class($list), DatabaseObjectList::class);
 					}
 					
 					if (SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
