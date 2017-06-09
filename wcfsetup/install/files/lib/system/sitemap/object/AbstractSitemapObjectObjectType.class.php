@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\sitemap\object;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
 
@@ -56,8 +55,7 @@ abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectTy
 	 */
 	public static function getGuestUserProfile() {
 		if (self::$userProfile === null) {
-			$user = new User(null, []);
-			self::$userProfile = new UserProfile($user);
+			self::$userProfile = UserProfile::getGuestUserProfile('');
 		}
 
 		return self::$userProfile;
