@@ -189,7 +189,7 @@ class WCF {
 			if (is_object(self::getSession())) {
 				if (self::$forceLogout) {
 					// do logout
-					WCF::getSession()->delete();
+					self::getSession()->delete();
 				}
 				else {
 					self::getSession()->update();
