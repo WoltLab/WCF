@@ -1551,6 +1551,7 @@
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Article categories]]></item>
+		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Article]]></item>
 	</category>
 	
 	<category name="wcf.acp.stat">

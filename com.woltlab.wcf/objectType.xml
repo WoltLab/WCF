@@ -1267,6 +1267,14 @@
 			<changeFreq>weekly</changeFreq>
 			<rebuildTime>2592000</rebuildTime>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.sitemap.object.article</name>
+			<definitionname>com.woltlab.wcf.sitemap.object</definitionname>
+			<classname>wcf\system\sitemap\object\ArticleSitemapObject</classname>
+			<priority>0.5</priority>
+			<changeFreq>monthly</changeFreq>
+			<rebuildTime>259200</rebuildTime>
+		</type>
 		<!-- /sitemap -->
 		
 		<!-- deprecated -->
