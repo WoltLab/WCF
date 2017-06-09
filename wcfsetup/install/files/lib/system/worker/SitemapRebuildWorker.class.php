@@ -191,7 +191,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			if (!isset($this->sitemapObjects[$this->workerData['sitemap']])) {
 				$this->writeIndexFile();
 				
-				// if we musn't refresh any data, we set loopCount to one
+				// if we don't have to refresh any data, we set loopCount to one
 				// so that we no init a new $workerData session
 				if ($this->loopCount == 0) {
 					$this->loopCount = 1;
