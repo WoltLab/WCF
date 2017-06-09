@@ -118,6 +118,23 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	}
 	
 	/**
+	 * Generates thumbnails.
+	 */
+	public function generateThumbnails() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class);
+		
+		foreach ($this->getObjects() as $mediaEditor) {
+			if ($mediaEditor->getDecoratedObject()->isImage) {
+				$saveStrategy->generateThumbnails($mediaEditor->getDecoratedObject());
+			}
+		}
+	}
+	
+	/**
 	 * Returns the data of the media file to be returned by AJAX requests.
 	 * 
 	 * @param	Media|ViewableMedia	$media		media files whose data will be returned

@@ -453,6 +453,12 @@
 			<nicevalue>100</nicevalue>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\MediaRebuildDataWorker</classname>
+			<nicevalue>105</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.statDaily</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\StatDailyRebuildDataWorker</classname>
