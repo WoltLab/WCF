@@ -10,6 +10,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\MessageUtil;
 
 /**
  * Worker implementation for rebuilding all sitemaps.
@@ -132,7 +133,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			if ($sitemapObject->canView($object)) {
 				$this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [
 					// strip session links
-					'link' => Regex::compile('(?<=\?|&)([st]=[a-f0-9]{40}|at=\d+-[a-f0-9]{40})')->replace($link, ''),
+					'link' => MessageUtil::stripCrap($link),
 					'lastModifiedTime' => $lastModifiedTime,
 					'priority' => $this->sitemapObjects[$this->workerData['sitemap']]->priority,
 					'changeFreq' => $this->sitemapObjects[$this->workerData['sitemap']]->changeFreq
