@@ -29,7 +29,7 @@ class PaidSubscriptionsSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
 		
-		if (WCF::getUser()->userID && MODULE_PAID_SUBSCRIPTION) {
+		if (WCF::getUser()->userID && WCF::getUser()->activationCode == 0 && MODULE_PAID_SUBSCRIPTION) {
 			// get available subscriptions
 			$this->subscriptions = PaidSubscriptionCacheBuilder::getInstance()->getData();
 			
