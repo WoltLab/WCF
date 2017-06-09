@@ -209,7 +209,12 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		$this->objectTypeProvider = $this->objectType->getProcessor();
 		$this->likeableObject = $this->objectTypeProvider->getObjectByID($this->parameters['data']['objectID']);
 		$this->likeableObject->setObjectType($this->objectType);
-		if (!$this->objectTypeProvider->checkPermissions($this->likeableObject)) {
+		if ($this->objectTypeProvider instanceof IRestrictedLikeObjectTypeProvider) {
+			if (!$this->objectTypeProvider->canViewLikes($this->likeableObject)) {
+				throw new PermissionDeniedException();
+			}
+		}
+		else if (!$this->objectTypeProvider->checkPermissions($this->likeableObject)) {
 			throw new PermissionDeniedException();
 		}
 	}
