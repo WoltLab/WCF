@@ -38,7 +38,7 @@ class PaidSubscriptionsBoxController extends AbstractBoxController {
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
-		if (WCF::getUser()->userID && MODULE_PAID_SUBSCRIPTION) {
+		if (WCF::getUser()->userID && WCF::getUser()->activationCode == 0 && MODULE_PAID_SUBSCRIPTION) {
 			// get available subscriptions
 			$subscriptions = PaidSubscriptionCacheBuilder::getInstance()->getData();
 			
