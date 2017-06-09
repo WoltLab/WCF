@@ -135,6 +135,12 @@ class WCF {
 	protected static $zendOpcacheEnabled = null;
 	
 	/**
+	 * force logout during destructor call
+	 * @var boolean
+	 */
+	protected static $forceLogout = false;
+	
+	/**
 	 * Calls all init functions of the WCF class.
 	 */
 	public function __construct() {
@@ -181,7 +187,13 @@ class WCF {
 			
 			// update session
 			if (is_object(self::getSession())) {
-				self::getSession()->update();
+				if (self::$forceLogout) {
+					// do logout
+					WCF::getSession()->delete();
+				}
+				else {
+					self::getSession()->update();
+				}
 			}
 			
 			// execute shutdown actions of user storage handler
@@ -445,6 +457,16 @@ class WCF {
 				throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
 			}
 			else {
+				self::$forceLogout = true;
+				
+				// remove cookies
+				if (isset($_COOKIE[COOKIE_PREFIX.'userID'])) {
+					HeaderUtil::setCookie('userID', 0);
+				}
+				if (isset($_COOKIE[COOKIE_PREFIX.'password'])) {
+					HeaderUtil::setCookie('password', '');
+				}
+				
 				throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
 			}
 		}
