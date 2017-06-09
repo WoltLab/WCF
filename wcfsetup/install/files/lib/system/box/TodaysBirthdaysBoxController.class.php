@@ -51,6 +51,10 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 				
 				$i = 0;
 				foreach ($userProfiles as $userProfile) {
+					// ignore deleted users
+					if ($userProfile === null) continue;
+					
+					// show a maximum of 10 users
 					if ($i == 10) break;
 					
 					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
