@@ -35,7 +35,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * action object
 	 * @var	SingletonFactory
 	 */
-	public $actionObject = null;
+	public $actionObject;
 	
 	/**
 	 * class name
@@ -53,7 +53,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * results of the executed action
 	 * @var	mixed
 	 */
-	protected $response = null;
+	protected $response;
 	
 	/**
 	 * @inheritDoc
@@ -189,13 +189,15 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $exception->getMessage(),
 				'errorType' => $e->getType(),
-				'fieldName' => $exception->getFieldName()
+				'fieldName' => $exception->getFieldName(),
+				'realErrorMessage' => $exception->getErrorMessage()
 			]);
 		}
 		else if ($e instanceof ValidateActionException) {
 			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $e->getMessage(),
-				'fieldName' => $e->getFieldName()
+				'fieldName' => $e->getFieldName(),
+				'realErrorMessage' => $e->getErrorMessage()
 			]);
 		}
 		else if ($e instanceof NamedUserException) {
