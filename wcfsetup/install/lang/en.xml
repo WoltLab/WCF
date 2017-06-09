@@ -1547,6 +1547,7 @@
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.enabled"><![CDATA[Sitemap enabled]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
+		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[User]]></item>
 	</category>
 	
 	<category name="wcf.acp.stat">

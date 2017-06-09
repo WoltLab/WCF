@@ -1244,6 +1244,17 @@
 		</type>
 		<!-- /media -->
 		
+		<!-- sitemap -->
+		<type>
+			<name>com.woltlab.wcf.sitemap.object.user</name>
+			<definitionname>com.woltlab.wcf.sitemap.object</definitionname>
+			<classname>wcf\system\sitemap\object\UserSitemapObject</classname>
+			<priority>0.5</priority>
+			<changeFreq>monthly</changeFreq>
+			<rebuildTime>259200</rebuildTime>
+		</type>
+		<!-- /sitemap -->
+		
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
