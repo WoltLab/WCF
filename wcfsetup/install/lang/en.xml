@@ -1545,7 +1545,7 @@
 		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Yearly]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Never]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Rebuild Time]]></item>
-		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[The time after the sitemap have to be rebuilded.]]></item>
+		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[The time after the sitemap have to be rebuilt.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.enabled"><![CDATA[Sitemap enabled]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>

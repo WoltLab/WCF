@@ -175,7 +175,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * Checks if the sitemap have to be rebuilded. If not, this method marks the sitemap as builded.
+	 * Checks if the sitemap has to be rebuilt. If not, this method marks the sitemap as built.
 	 */
 	protected function checkCache() {
 		$object = (isset($this->sitemapObjects[$this->workerData['sitemap']])) ? $this->sitemapObjects[$this->workerData['sitemap']] : false;
@@ -276,7 +276,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 		// try to unlink the tmp file 
 		@unlink($this->workerData['tmpFile']);
 		
-		// add sitemap to the successfully builded sitemaps
+		// add sitemap to the successfully built sitemaps
 		$this->workerData['sitemaps'][] = self::getSitemapURL() . $filename;
 	}
 	
