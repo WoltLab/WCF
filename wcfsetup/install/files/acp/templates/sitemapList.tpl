@@ -38,8 +38,8 @@
 						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
 						<td class="columnInteger columnPriority">{$object->priority}</td>
 						<td class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq.{$object->changeFreq}{/lang}</td>
-						<td class="columnInteger columnRebuildTime">{@TIME_NOW + $object->rebuildTime|dateDiff:TIME_NOW:true:"format_plain"}</td>
-	
+						<td class="columnInteger columnRebuildTime">{dateInterval end=TIME_NOW+$object->rebuildTime full=true format='plain'}</td>
+						
 						{event name='columns'}
 					</tr>
 				{/foreach}

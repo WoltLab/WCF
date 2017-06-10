@@ -11,12 +11,12 @@ use wcf\util\DateUtil;
  * Usage:
  *	{$endTimestamp|dateDiff}
  *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval}
- *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval:$formatType}
  * 
  * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
+ * @deprecated	since 3.1, use `DateIntervalFunctionTemplatePlugin`
  */
 class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
@@ -32,18 +32,9 @@ class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 			$fullInterval = $tagArgs[2];
 		}
 		
-		$formatType = DateUtil::FORMAT_DEFAULT;
-		if (isset($tagArgs[3])) {
-			if (!defined(DateUtil::class .'::'. strtoupper($tagArgs[3]))) {
-				throw new \InvalidArgumentException('Invalid $formatType value');
-			}
-			
-			$formatType = constant(DateUtil::class .'::'. strtoupper($tagArgs[3]));
-		}
-		
 		$startTime = DateUtil::getDateTimeByTimestamp($tagArgs[1]);
 		$endTime = DateUtil::getDateTimeByTimestamp($tagArgs[0]);
 		
-		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval, $formatType);
+		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval);
 	}
 }

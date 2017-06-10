@@ -228,7 +228,7 @@ final class DateUtil {
 			case self::FORMAT_SENTENCE:
 				$languageItemSuffix = $direction . '.inSentence';
 			break;
-				
+			
 			case self::FORMAT_PLAIN:
 				$languageItemSuffix = 'plain';
 			break; 
