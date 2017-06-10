@@ -103,7 +103,7 @@ class PageNodeTree {
 	}
 	
 	/**
-	 * Returns the iteratable node list.
+	 * Returns the iterable node list.
 	 *
 	 * @return	\RecursiveIteratorIterator
 	 */

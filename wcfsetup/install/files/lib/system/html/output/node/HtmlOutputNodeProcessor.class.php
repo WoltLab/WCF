@@ -232,7 +232,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	}
 	
 	/**
-	 * Returns true if text node is inside a code element, suppresing any
+	 * Returns true if text node is inside a code element, suppressing any
 	 * auto-detection of content.
 	 *
 	 * @param       \DOMText        $text           text node

@@ -19,7 +19,7 @@ if (strpos($testURL, 'script:') !== false || !preg_match('~^https?://~', $testUR
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
-	<title>Dereferer</title>
+	<title>Dereferrer</title>
 	<meta http-equiv="refresh" content="0;URL=<?php echo $url; ?>">
 </head>
 <body>

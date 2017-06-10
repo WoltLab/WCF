@@ -45,7 +45,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $permissionPrefix = '';
 	
 	/**
-	 * maximum category nesting lebel
+	 * maximum category nesting label
 	 * @var	integer
 	 */
 	protected $maximumNestingLevel = -1;

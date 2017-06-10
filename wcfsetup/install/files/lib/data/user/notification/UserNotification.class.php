@@ -20,9 +20,9 @@ use wcf\system\WCF;
  * @property-read	integer|null	$authorID		id of the user that triggered the user notification or null if there is no such user or the user was a guest
  * @property-read	integer		$timesTriggered		number of times a stacked notification has been triggered by registered users
  * @property-read	integer		$guestTimesTriggered	number of times a stacked notification has been triggered by guests
- * @property-read	integer		$userID			id of the user who recieves the user notification
+ * @property-read	integer		$userID			id of the user who receives the user notification
  * @property-read	integer		$time			timestamp at which the user notification has been created
- * @property-read	integer		$mailNotified		is 0 has not be notified by mail about the user notifiction, otherwise 1
+ * @property-read	integer		$mailNotified		is 0 has not be notified by mail about the user notification, otherwise 1
  * @property-read	integer		$confirmTime		timestamp at which the user notification has been marked as confirmed/read
  * @property-read	array		$additionalData		array with additional data of the user notification event
  */

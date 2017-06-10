@@ -623,7 +623,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Builds nodes for optional packages, whereas each package exists within
-	 * one node with the same parent node, seperated by sequence no (which does
+	 * one node with the same parent node, separated by sequence no (which does
 	 * not really matter at this point).
 	 */
 	protected function buildOptionalNodes() {

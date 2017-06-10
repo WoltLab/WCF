@@ -251,7 +251,7 @@ class Mail {
 	}
 	
 	/**
-	 * Sets the recpients of this mail.
+	 * Sets the recipients of this mail.
 	 * 
 	 * @param	mixed		$to
 	 */

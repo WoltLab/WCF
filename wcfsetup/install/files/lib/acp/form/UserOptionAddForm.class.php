@@ -282,7 +282,7 @@ class UserOptionAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$additionalData = array();
+		$additionalData = [];
 		if ($this->optionType == 'select') $additionalData['allowEmptyValue'] = true;
 		if ($this->optionType == 'message') $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
 		

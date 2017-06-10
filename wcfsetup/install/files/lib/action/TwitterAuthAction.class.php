@@ -202,7 +202,7 @@ class TwitterAuthAction extends AbstractAction {
 	/**
 	 * Builds the OAuth authorization header.
 	 * 
-	 * @param	array $parameters
+	 * @param	array 		$parameters
 	 * @return	string
 	 */
 	public function buildOAuthHeader(array $parameters) {
@@ -218,9 +218,10 @@ class TwitterAuthAction extends AbstractAction {
 	/**
 	 * Creates an OAuth 1 signature.
 	 * 
-	 * @param	string $url
-	 * @param	array $parameters
-	 * @param	string $tokenSecret
+	 * @param	string 		$url
+	 * @param	array 		$parameters
+	 * @param	string 		$tokenSecret
+	 * @param	string		$method
 	 * @return	string
 	 */
 	public function createSignature($url, array $parameters, $tokenSecret = '', $method = 'POST') {

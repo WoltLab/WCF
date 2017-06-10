@@ -125,7 +125,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 		},
 		
 		/**
-		 * Handles clicks on the item unless the click occured directly on a link.
+		 * Handles clicks on the item unless the click occurred directly on a link.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @protected

@@ -52,7 +52,7 @@ class TagCloud {
 	protected $languageIDs = [];
 	
 	/**
-	 * Contructs a new TagCloud object.
+	 * Constructs a new TagCloud object.
 	 * 
 	 * @param	integer[]	$languageIDs
 	 */

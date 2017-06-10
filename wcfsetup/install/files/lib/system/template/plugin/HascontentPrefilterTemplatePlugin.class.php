@@ -4,7 +4,7 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * Template prefiler plugin which allows inserting code dynamically upon the contents
+ * Template prefilter plugin which allows inserting code dynamically upon the contents
  * of 'content'.
  * 
  * Usage:

@@ -207,7 +207,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		},
 		
 		/**
-		 * Handles errorneus AJAX requests.
+		 * Handles erroneous AJAX requests.
 		 *
 		 * @param        object                data
 		 * @param        jQuery                jqXHR

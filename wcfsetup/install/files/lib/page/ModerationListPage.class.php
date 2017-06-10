@@ -40,7 +40,7 @@ class ModerationListPage extends SortablePage {
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * definiton id for filtering
+	 * definition id for filtering
 	 * @var	integer
 	 */
 	public $definitionID = 0;

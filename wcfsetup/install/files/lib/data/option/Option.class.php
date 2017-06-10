@@ -28,7 +28,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to set the option value
  * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the option to be editable
  * @property-read	integer		$supportI18n		is `1` if the option supports different values for all available languages, otherwise `0`
- * @property-read	integer		$requireI18n		is `1` if `$supportI18n = 1` and the option's value has to explicily set for all values so that the `monolingual` option is not available, otherwise `0`
+ * @property-read	integer		$requireI18n		is `1` if `$supportI18n = 1` and the option's value has to explicitly set for all values so that the `monolingual` option is not available, otherwise `0`
  * @property-read	array		$additionalData		array with additional data of the option
  */
 class Option extends DatabaseObject {

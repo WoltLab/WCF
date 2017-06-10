@@ -38,7 +38,7 @@ use wcf\util\UserUtil;
  * @property-read	integer|null	$userID			id of the user the session belongs to or `null` if the acp session belongs to a guest
  * @property-read	string		$ipAddress		id of the user whom the session belongs to
  * @property-read	string		$userAgent		user agent of the user whom the session belongs to
- * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occurred
  * @property-read	string		$requestURI		uri of the latest request
  * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
  * @property-read	integer|null	$pageID			id of the latest page visited

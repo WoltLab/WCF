@@ -300,7 +300,7 @@ define(
 					
 					if (media) {
 						var fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, 'mediaThumbnail'), 'SPAN');
-						this._replaceFileIcon(fileIcon, media, 144)
+						this._replaceFileIcon(fileIcon, media, 144);
 						
 						file.className = 'jsClipboardObject mediaFile';
 						elData(file, 'object-id', media.mediaID);

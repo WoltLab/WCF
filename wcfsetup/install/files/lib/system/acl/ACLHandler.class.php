@@ -42,7 +42,7 @@ class ACLHandler extends SingletonFactory {
 	protected $categories = [];
 	
 	/**
-	 * Assignes the acl values to the template.
+	 * Assigns the acl values to the template.
 	 * 
 	 * @param	integer		$objectTypeID
 	 */

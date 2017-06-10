@@ -27,7 +27,7 @@ interface IOptionHandler {
 	public function readUserInput(array &$source);
 	
 	/**
-	 * Validates user input, returns an array with all occured errors.
+	 * Validates user input, returns an array with all occurred errors.
 	 * 
 	 * @return	array
 	 */

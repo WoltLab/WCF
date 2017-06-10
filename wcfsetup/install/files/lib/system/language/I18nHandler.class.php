@@ -142,7 +142,7 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the values for the given element. If the element is multilingual,
-	 * the multilingual values are returned, otherweise the plain value is
+	 * the multilingual values are returned, otherwise the plain value is
 	 * returned for each language id.
 	 * 
 	 * @param	string		$elementID

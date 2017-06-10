@@ -164,7 +164,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates the 'getOustandingNotifications' action.
+	 * Validates the 'getOutstandingNotifications' action.
 	 */
 	public function validateGetOutstandingNotifications() {
 		// does nothing

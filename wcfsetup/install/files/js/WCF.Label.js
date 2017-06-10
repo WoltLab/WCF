@@ -331,7 +331,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			// hide all label choosers first
 			$('.labelChooser').each(function (index, element) {
 				$(element).parents('dl:eq(0)').hide();
-			})
+			});
 			
 			var visibleGroupIDs = [];
 			var categoryID = parseInt($('#categoryID').val());
@@ -347,7 +347,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @see        WCF.Label.Chooser._submit()
 		 */
 		_submit: function () {
-			// delete non-selected groups to avoid sumitting these labels
+			// delete non-selected groups to avoid submitting these labels
 			for (var groupID in this._groups) {
 				if (!this._groups[groupID].is(':visible')) {
 					delete this._groups[groupID];

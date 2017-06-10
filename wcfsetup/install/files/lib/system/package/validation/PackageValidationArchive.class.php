@@ -40,7 +40,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	protected $depth = 0;
 	
 	/**
-	 * exception occured during validation
+	 * exception occurred during validation
 	 * @var	\Exception
 	 */
 	protected $exception = null;
@@ -342,7 +342,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	}
 	
 	/**
-	 * Returns the occured exception.
+	 * Returns the occurred exception.
 	 * 
 	 * @return	\Exception
 	 */

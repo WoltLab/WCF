@@ -54,7 +54,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	 * @param	integer		$count
 	 */
 	public function reduceResults($count) {
-		// more results than available should be whiped, just set it to 0
+		// more results than available should be wiped, just set it to 0
 		if ($count >= count($this->results)) {
 			$this->results = [];
 		}

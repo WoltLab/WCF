@@ -52,7 +52,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 			
 			$logMessage = '';
 			if ($status == 'completed') {
-				// validate payment amout
+				// validate payment amount
 				if ($amount != $subscription->cost || $currency != $subscription->currency) {
 					throw new SystemException('invalid payment amount');
 				}

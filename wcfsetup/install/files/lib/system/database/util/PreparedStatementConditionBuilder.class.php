@@ -43,7 +43,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 			$condition = preg_replace_callback('/\?/', $callback, $condition);
 		}
 		
-		// add condtion
+		// add condition
 		if (!empty($this->conditions)) $this->conditions .= $this->concat;
 		$this->conditions .= $condition;
 		

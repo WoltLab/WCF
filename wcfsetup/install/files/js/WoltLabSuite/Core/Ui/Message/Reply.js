@@ -276,7 +276,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		},
 		
 		/**
-		 * Handles errors occured during server processing.
+		 * Handles errors occurred during server processing.
 		 * 
 		 * @param       {Object}        data    response data
 		 * @protected

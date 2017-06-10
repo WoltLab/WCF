@@ -19,7 +19,7 @@ class TypedTagCloud extends TagCloud {
 	protected $objectTypeIDs = [];
 	
 	/**
-	 * Contructs a new TypedTagCloud object.
+	 * Constructs a new TypedTagCloud object.
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer[]	$languageIDs

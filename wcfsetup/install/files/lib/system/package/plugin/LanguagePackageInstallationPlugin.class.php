@@ -192,7 +192,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * Deletes categories which where changed by an update or deinstallation
+	 * Deletes categories which where changed by an update or uninstallation
 	 * in case they are now empty.
 	 * 
 	 * @param	array		$categoryIDs

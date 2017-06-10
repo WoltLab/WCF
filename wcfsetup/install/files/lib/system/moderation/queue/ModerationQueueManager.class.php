@@ -162,7 +162,7 @@ class ModerationQueueManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of object type ids for given definiton ids.
+	 * Returns a list of object type ids for given definition ids.
 	 * 
 	 * @param	integer[]		$definitionIDs
 	 * @return	integer[]

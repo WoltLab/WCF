@@ -67,7 +67,7 @@ class PackageInstallationScheduler {
 	}
 	
 	/**
-	 * Trys to install a new package. Checks the virtual package version list.
+	 * Tries to install a new package. Checks the virtual package version list.
 	 * 
 	 * @param	string		$package		package identifier
 	 * @param	string		$minversion		preferred package version
@@ -142,7 +142,7 @@ class PackageInstallationScheduler {
 	}
 	
 	/**
-	 * Resolves the package requirements of an package uppdate.
+	 * Resolves the package requirements of an package update.
 	 * Starts the installation or update to higher version of required packages.
 	 * 
 	 * @param	integer		$packageUpdateVersionID

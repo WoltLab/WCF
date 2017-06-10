@@ -61,7 +61,7 @@ interface IFormElementContainer {
 	public function appendChild(IFormElement $element);
 	
 	/**
-	 * Preprens a new child to stack.
+	 * Prepends a new child to stack.
 	 * 
 	 * @param	IFormElement	$element
 	 */

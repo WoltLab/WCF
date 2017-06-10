@@ -112,7 +112,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		},
 		
 		/**
-		 * Removes all listeners registered for an identifer and ending with a special suffix.
+		 * Removes all listeners registered for an identifier and ending with a special suffix.
 		 * This is commonly used to unbound event handlers for the editor.
 		 * 
 		 * @param       {string}        identifier      event identifier

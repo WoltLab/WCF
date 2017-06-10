@@ -6,7 +6,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Handels form documents associated with a queue.
+ * Handles form documents associated with a queue.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH

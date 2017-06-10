@@ -22,7 +22,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		/**
 		 * Initializes a language chooser.
 		 * 
-		 * @param       {string}                                containerId             input element conainer id
+		 * @param       {string}                                containerId             input element container id
 		 * @param       {string}                                chooserId               input element id
 		 * @param       {int}                                   languageId              selected language id
 		 * @param       {object<int, object<string, string>>}   languages               data of available languages

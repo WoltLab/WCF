@@ -4,7 +4,7 @@ use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * Template prefiler plugin that replaces simple embedded object placeholders. Not to be meant for
+ * Template prefilter plugin that replaces simple embedded object placeholders. Not to be meant for
  * regular use, is currently only utilized in `wcf\data\page\content\PageContent::getParsedTemplate()`.
  * 
  * @author	Alexander Ebert
