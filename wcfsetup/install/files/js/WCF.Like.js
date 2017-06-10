@@ -161,7 +161,7 @@ WCF.Like = Class.extend({
 	_getWidgetContainer: function(containerID) { },
 	
 	/**
-	 * Returns object id for targer object container.
+	 * Returns object id for target object container.
 	 * 
 	 * @param	string		containerID
 	 * @return	integer

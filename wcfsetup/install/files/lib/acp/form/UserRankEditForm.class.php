@@ -74,7 +74,7 @@ class UserRankEditForm extends UserRankAddForm {
 		$this->objectAction->executeAction();
 		$this->saved();
 		
-		// reset values if non-custom value was choosen
+		// reset values if non-custom value was chosen
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
 		// show success message

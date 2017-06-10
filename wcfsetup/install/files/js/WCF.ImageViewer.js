@@ -842,7 +842,7 @@ $.widget('ui.wcfImageViewer', {
 	},
 	
 	/**
-	 * Initialites the user interface.
+	 * Initializes the user interface.
 	 * 
 	 * @return	boolean
 	 */

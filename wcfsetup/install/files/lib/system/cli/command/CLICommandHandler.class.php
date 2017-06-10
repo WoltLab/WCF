@@ -82,7 +82,7 @@ class CLICommandHandler {
 	}
 	
 	/**
-	 * Returns the parameterlist of the given line.
+	 * Returns the parameter list of the given line.
 	 * 
 	 * @param	string		$line
 	 * @return	string[]

@@ -68,7 +68,7 @@ interface IFormElement {
 	public function setError($error);
 	
 	/**
-	 * Returns localized error message, empty if no error occured.
+	 * Returns localized error message, empty if no error occurred.
 	 * 
 	 * @return	string
 	 */

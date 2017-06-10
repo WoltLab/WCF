@@ -31,7 +31,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 	}
 	
 	/**
-	 * @param       {Object}        options         initilization options
+	 * @param       {Object}        options         initialization options
 	 * @constructor
 	 */
 	function UiMessageManager(options) { this.init(options); }
@@ -39,7 +39,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 		/**
 		 * Initializes a new manager instance.
 		 * 
-		 * @param       {Object}        options         initilization options
+		 * @param       {Object}        options         initialization options
 		 */
 		init: function(options) {
 			this._elements = null;

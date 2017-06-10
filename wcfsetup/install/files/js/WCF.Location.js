@@ -108,7 +108,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 	_markers: [ ],
 	
 	/**
-	 * Initalizes a new WCF.Location.Map object.
+	 * Initializes a new WCF.Location.Map object.
 	 * 
 	 * @param	string		mapContainerID
 	 * @param	object		mapOptions
@@ -782,7 +782,7 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 	},
 	
 	/**
-	 * Handles a successfull geocoder request.
+	 * Handles a successful geocoder request.
 	 * 
 	 * @param	array		results
 	 * @param	integer		status

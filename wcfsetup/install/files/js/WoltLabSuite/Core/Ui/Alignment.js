@@ -218,7 +218,7 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 		},
 		
 		/**
-		 * Calculates top/bottom position and verifys if the element would be still within the page's boundaries.
+		 * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
 		 * 
 		 * @param	{string}		align		align to this side of the reference element
 		 * @param	{Object<string, int>}	elDimensions	element dimensions

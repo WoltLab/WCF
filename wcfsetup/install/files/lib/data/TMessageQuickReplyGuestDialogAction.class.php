@@ -9,7 +9,7 @@ use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
 
 /**
- * Provdes methods related to the guest dialog of message quick reply.
+ * Provides methods related to the guest dialog of message quick reply.
  * 
  * @author	Matthias Schmudt
  * @copyright	2001-2017 WoltLab GmbH
@@ -95,7 +95,7 @@ trait TMessageQuickReplyGuestDialogAction {
 	/**
 	 * Validates the entered username in the guest dialog.
 	 * 
-	 * @return	string		type of the validation error or empty if no error occured
+	 * @return	string		type of the validation error or empty if no error occurred
 	 * @throws	\BadMethodCallException
 	 */
 	protected function validateGuestDialogUsername() {

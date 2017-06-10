@@ -431,7 +431,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			throw new UserInputException('packages');
 		}
 		
-		// validate packages for their existance
+		// validate packages for their existence
 		$availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 		foreach ($this->parameters['packages'] as $packageName => $versionNumber) {
 			$isValid = false;

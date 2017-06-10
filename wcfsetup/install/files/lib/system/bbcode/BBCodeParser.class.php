@@ -279,13 +279,13 @@ class BBCodeParser extends SingletonFactory {
 		$attributesString = '';
 		foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
 			if (isset($tag['attributes'][$attribute->attributeNo])) {
-				$atrributeString = '';
+				$attributeString = '';
 				if (!empty($attribute->attributeHtml)) {
-					$atrributeString = ' '.$attribute->attributeHtml;
+					$attributeString = ' '.$attribute->attributeHtml;
 				}
 				
-				if (!empty($atrributeString)) {
-					$attributesString .= sprintf($atrributeString, $tag['attributes'][$attribute->attributeNo]);
+				if (!empty($attributeString)) {
+					$attributesString .= sprintf($attributeString, $tag['attributes'][$attribute->attributeNo]);
 				}
 			}
 		}
@@ -428,12 +428,12 @@ class BBCodeParser extends SingletonFactory {
 	/**
 	 * Builds the tag array from the given text.
 	 * 
-	 * @param	boolean		$ignoreSoureCodes
+	 * @param	boolean		$ignoreSourceCodes
 	 */
-	public function buildTagArray($ignoreSoureCodes = true) {
+	public function buildTagArray($ignoreSourceCodes = true) {
 		// build tag pattern
 		$validTags = '';
-		if (!$ignoreSoureCodes) {
+		if (!$ignoreSourceCodes) {
 			$validTags = implode('|', array_keys($this->bbcodes));
 		}
 		else {

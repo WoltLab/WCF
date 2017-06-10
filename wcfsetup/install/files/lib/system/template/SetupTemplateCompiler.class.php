@@ -35,7 +35,7 @@ class SetupTemplateCompiler extends TemplateCompiler {
 			$parsedTag = 'wcf\util\StringUtil::encodeHTML('.$parsedTag.')';
 		}
 		// the # operator at the beginning of an output instructs
-		// the complier to call the StringUtil::formatNumeric() method
+		// the compiler to call the StringUtil::formatNumeric() method
 		else if ($formatNumeric) {
 			$parsedTag = 'wcf\util\StringUtil::formatNumeric('.$parsedTag.')';
 		}

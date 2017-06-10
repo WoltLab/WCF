@@ -95,7 +95,7 @@ class LabelEditForm extends LabelAddForm {
 		
 		$this->saved();
 		
-		// reset values if non-custom value was choosen
+		// reset values if non-custom value was chosen
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
 		$this->groupID = $this->labelObj->groupID;

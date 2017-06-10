@@ -48,7 +48,7 @@ class PhpHighlighter extends Highlighter {
 		// remove added php tags
 		if ($phpTagsAdded) {
 			// the opening and closing PHP tags were added previously, hence we actually do
-			// know that the first (last for the closing tag) occurence is the one inserted
+			// know that the first (last for the closing tag) occurrence is the one inserted
 			// by us. The previously used regex was bad because it was significantly slower
 			// and could easily hit the backtrace limit for larger inputs
 			$openingTag = mb_strpos($highlightedCode, '&lt;?php&nbsp;');

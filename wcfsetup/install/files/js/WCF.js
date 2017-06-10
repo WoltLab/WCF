@@ -2096,7 +2096,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		},
 		
 		/**
-		 * Tiggers the toggle effect on a button
+		 * Triggers the toggle effect on a button
 		 *
 		 * @param        jQuery        $container
 		 * @param        jQuery        $toggleButton
@@ -2174,7 +2174,7 @@ else {
 }
 
 /**
- * Executes provided callback if scroll threshold is reached. Usuable to determine
+ * Executes provided callback if scroll threshold is reached. Usable to determine
  * if user reached the bottom of an element to load new elements on the fly.
  * 
  * If you do not provide a value for 'reference' and 'target' it will assume you're
@@ -2312,7 +2312,7 @@ WCF.Date.Util = {
 	
 	/**
 	 * Returns a Date object with precise offset (including timezone and local timezone).
-	 * Parameters timestamp and offset must be in miliseconds!
+	 * Parameters timestamp and offset must be in milliseconds!
 	 * 
 	 * @param	integer		timestamp
 	 * @param	integer		offset
@@ -3246,7 +3246,7 @@ WCF.Collapsible.Remote = Class.extend({
 	},
 	
 	/**
-	 * Sets content upon successfull AJAX request.
+	 * Sets content upon successful AJAX request.
 	 * 
 	 * @param	object		data
 	 * @param	string		textStatus
@@ -3939,7 +3939,7 @@ WCF.Table.EmptyTableHandler = Class.extend({
 	_rowClassName: '',
 	
 	/**
-	 * Initalizes a new WCF.Table.EmptyTableHandler object.
+	 * Initializes a new WCF.Table.EmptyTableHandler object.
 	 * 
 	 * @param	jQuery		tableContainer
 	 * @param	string		rowClassName
@@ -4062,19 +4062,19 @@ WCF.Search.Base = Class.extend({
 	_className: '',
 	
 	/**
-	 * comma seperated list
+	 * comma separated list
 	 * @var	boolean
 	 */
 	_commaSeperated: false,
 	
 	/**
-	 * delay in miliseconds before a request is send to the server
+	 * delay in milliseconds before a request is send to the server
 	 * @var	integer
 	 */
 	_delay: 0,
 	
 	/**
-	 * list with values that are excluded from seaching
+	 * list with values that are excluded from searching
 	 * @var	array
 	 */
 	_excludedSearchValues: [],
@@ -5209,7 +5209,7 @@ WCF.System.KeepAlive = Class.extend({
  */
 WCF.System.PushNotification = {
 	/**
-	 * list of callbacks groupped by type
+	 * list of callbacks grouped by type
 	 * @var	object<array>
 	 */
 	_callbacks: { },
@@ -7062,7 +7062,7 @@ WCF.Language.Chooser = Class.extend({
 	/**
 	 * Initializes the language chooser.
 	 *
-	 * @param       {string}                                containerId             input element conainer id
+	 * @param       {string}                                containerId             input element container id
 	 * @param       {string}                                chooserId               input element id
 	 * @param       {int}                                   languageId              selected language id
 	 * @param       {object<int, object<string, string>>}   languages               data of available languages
@@ -7120,7 +7120,7 @@ WCF.UserPanel = Class.extend({
 	_revertOnEmpty: true,
 	
 	/**
-	 * Initialites the WCF.UserPanel class.
+	 * Initializes the WCF.UserPanel class.
 	 * 
 	 * @param	string		containerID
 	 */
@@ -7130,7 +7130,7 @@ WCF.UserPanel = Class.extend({
 		this._revertOnEmpty = true;
 		
 		if (this._container.length != 1) {
-			console.debug("[WCF.UserPanel] Unable to find container identfied by '" + containerID + "', aborting.");
+			console.debug("[WCF.UserPanel] Unable to find container identified by '" + containerID + "', aborting.");
 			return;
 		}
 		

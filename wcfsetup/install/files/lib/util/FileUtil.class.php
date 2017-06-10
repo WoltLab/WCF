@@ -383,7 +383,7 @@ final class FileUtil {
 	/**
 	 * Formats a filesize with binary prefix.
 	 * 
-	 * For more informations: <http://en.wikipedia.org/wiki/Binary_prefix>
+	 * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
 	 * 
 	 * @param	integer		$byte
 	 * @param	integer		$precision

@@ -24,7 +24,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		 * Initializes the pagination.
 		 * 
 		 * @param	{Element}	element		container element
-		 * @param	{object}	options		list of initilization options
+		 * @param	{object}	options		list of initialization options
 		 */
 		init: function(element, options) {
 			this._element = element;

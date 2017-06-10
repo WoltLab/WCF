@@ -17,7 +17,7 @@ use wcf\system\request\IRouteController;
  * @property-read	integer		$assignmentID		unique id of the automatic user group assignment
  * @property-read	integer		$groupID		id of the user group to which users are automatically assigned
  * @property-read	string		$title			title of the automatic user group assignment
- * @property-read	integer		$isDisabled		is `1` if the user group assigment is disabled and thus not checked for automatic assigments, otherwise `0`
+ * @property-read	integer		$isDisabled		is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	/**

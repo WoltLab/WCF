@@ -256,7 +256,7 @@ class WCF {
 	 */
 	public static final function handleException($e) {
 		if (ob_get_level()) {
-			// discard any output generated before the exception occured, prevents exception
+			// discard any output generated before the exception occurred, prevents exception
 			// being hidden inside HTML elements and therefore not visible in browser output
 			ob_end_clean();
 			

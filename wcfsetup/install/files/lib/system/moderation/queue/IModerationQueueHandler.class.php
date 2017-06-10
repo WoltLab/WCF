@@ -86,7 +86,7 @@ interface IModerationQueueHandler {
 	
 	/**
 	 * Returns the prefix of language items for notifications for comments
-	 * and comment reponses on moderation queues of this type. 
+	 * and comment responses on moderation queues of this type.
 	 * 
 	 * @return	string
 	 * @since	3.0

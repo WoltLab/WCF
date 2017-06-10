@@ -120,9 +120,9 @@ class Uninstaller {
 				}
 			}
 			
-			// delete direcotries
+			// delete directories
 			if ($this->deleteEmptyDirectories) {
-				// the deepest diretories first
+				// the deepest directories first
 				krsort($directories, SORT_NUMERIC);
 				foreach ($directories as $depth) {
 					foreach ($depth as $dir) {

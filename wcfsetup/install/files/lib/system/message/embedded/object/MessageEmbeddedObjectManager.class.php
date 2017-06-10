@@ -222,6 +222,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * 
 	 * @param	string		$messageObjectType
 	 * @param	integer		$messageID
+	 * @param	integer		$languageID
 	 */
 	public function setActiveMessage($messageObjectType, $messageID, $languageID = null) {
 		$this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);

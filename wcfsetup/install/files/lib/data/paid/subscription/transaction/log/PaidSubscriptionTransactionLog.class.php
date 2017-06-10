@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @property-read	integer		$paymentMethodObjectTypeID	id of the `com.woltlab.wcf.payment.method` object type
  * @property-read	integer		$logTime			timestamp at which the log has been created
  * @property-read	string		$transactionID			identifier of the paid subscription transaction
- * @property-read	string		$transactionDetails		serialized defailts of the paid subscription transaction
+ * @property-read	string		$transactionDetails		serialized details of the paid subscription transaction
  * @property-read	string		$logMessage			log message describing the status of the paid subscription transaction
  */
 class PaidSubscriptionTransactionLog extends DatabaseObject {

@@ -61,7 +61,7 @@ class XML {
 		// load xml document
 		$this->document->load($path);
 		
-		// check for errors occured in libxml
+		// check for errors occurred in libxml
 		$errors = $this->pollErrors();
 		if (!empty($errors)) {
 			$this->throwException("XML document '".$this->path."' is not valid XML.", $errors);
@@ -69,7 +69,7 @@ class XML {
 	}
 	
 	/**
-	 * Loads a xml string, specifying $path is mandatory to provide detailied error handling.
+	 * Loads a xml string, specifying $path is mandatory to provide detailed error handling.
 	 * 
 	 * @param	string		$path
 	 * @param	string		$xml
@@ -80,7 +80,7 @@ class XML {
 		// load xml document
 		$this->document->loadXML($xml);
 		
-		// check for errors occured in libxml
+		// check for errors occurred in libxml
 		$errors = $this->pollErrors();
 		if (!empty($errors)) {
 			$this->throwException("XML document '".$this->path."' is not valid XML.", $errors);
@@ -97,7 +97,7 @@ class XML {
 		// validate document against schema
 		$this->document->schemaValidate($this->schema);
 		
-		// check for errors occured in libxml
+		// check for errors occurred in libxml
 		$errors = $this->pollErrors();
 		if (!empty($errors)) {
 			$this->throwException("XML document '".$this->path."' violates XML schema definition.", $errors);

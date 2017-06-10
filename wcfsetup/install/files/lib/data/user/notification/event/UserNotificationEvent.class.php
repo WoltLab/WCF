@@ -21,7 +21,7 @@ use wcf\system\user\notification\event\IUserNotificationEvent;
  * @property-read	string		$permissions			comma separated list of user group permissions of which the active user needs to have at least one to see the user notification event setting
  * @property-read	string		$options			comma separated list of options of which at least one needs to be enabled for the user notification event setting to be shown
  * @property-read	integer		$preset				is `1` if the user notification event is enabled by default otherwise `0`
- * @property-read	string		$presetMailNotificationType	default mail notification type if the user notification event is enabled by defauled, otherwise empty
+ * @property-read	string		$presetMailNotificationType	default mail notification type if the user notification event is enabled by default, otherwise empty
  */
 class UserNotificationEvent extends ProcessibleDatabaseObject {
 	use TDatabaseObjectOptions;

@@ -62,7 +62,7 @@ class PackageValidationManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Validates given archive for existance and ability to be installed/updated. If you set the
+	 * Validates given archive for existence and ability to be installed/updated. If you set the
 	 * second parameter $deepInspection to "false", the system will only check if the archive
 	 * looks fine, this is useful for a rough check during upload when a more detailed check will
 	 * be performed afterwards.
@@ -130,7 +130,7 @@ class PackageValidationManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the iteratable package archive list.
+	 * Returns the iterable package archive list.
 	 * 
 	 * @return	\RecursiveIteratorIterator
 	 */

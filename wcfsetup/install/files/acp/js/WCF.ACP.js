@@ -754,7 +754,7 @@ WCF.ACP.Package.Search = Class.extend({
 	_selectedPackageVersion: '',
 	
 	/**
-	 * Initializes the WCF.ACP.Package.Seach class.
+	 * Initializes the WCF.ACP.Package.Search class.
 	 */
 	init: function() {
 		this._button = null;

@@ -2175,7 +2175,7 @@ WCF.User.ProfilePreview = WCF.Popover.extend({
 });
 
 /**
- * Initalizes WCF.User.Action namespace.
+ * Initializes WCF.User.Action namespace.
  */
 WCF.User.Action = {};
 
@@ -2443,7 +2443,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		_userID: 0,
 		
 		/**
-		 * Initalizes a new WCF.User.Avatar.Upload object.
+		 * Initializes a new WCF.User.Avatar.Upload object.
 		 *
 		 * @param        integer                        userID
 		 */

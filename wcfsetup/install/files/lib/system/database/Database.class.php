@@ -90,7 +90,7 @@ abstract class Database {
 	protected $activeTransactions = 0;
 	
 	/**
-	 * Creates a Dabatase Object.
+	 * Creates a Database Object.
 	 * 
 	 * @param	string		$host			SQL database server host address
 	 * @param	string		$user			SQL database server username

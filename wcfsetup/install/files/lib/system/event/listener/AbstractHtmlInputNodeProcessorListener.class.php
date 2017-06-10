@@ -20,7 +20,7 @@ use wcf\util\JSON;
  */
 abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedEventListener {
 	/**
-	 * Returns the ids of the objects linked in the text proccessed by the given
+	 * Returns the ids of the objects linked in the text processed by the given
 	 * processor matching the given regular expression.
 	 * 
 	 * @param	HtmlInputNodeProcessor		$processor

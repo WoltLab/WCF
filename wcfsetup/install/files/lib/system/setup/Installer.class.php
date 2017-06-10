@@ -174,7 +174,7 @@ class Installer {
 	}
 	
 	/**
-	 * Checkes whether the given files overwriting locked existing files.
+	 * Checks whether the given files overwriting locked existing files.
 	 * 
 	 * @param	array		$files
 	 */

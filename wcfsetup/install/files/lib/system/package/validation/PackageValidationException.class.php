@@ -5,7 +5,7 @@ use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 
 /**
- * Represents exceptions occured during validation of a package archive. This exception
+ * Represents exceptions occurred during validation of a package archive. This exception
  * does not cause the details to be logged.
  * 
  * @author	Alexander Ebert

@@ -3,7 +3,7 @@ namespace wcf\system\cache\runtime;
 use wcf\data\DatabaseObject;
 
 /**
- * Handles runtime caches to centrally store objects fetched during tuntime for reuse.
+ * Handles runtime caches to centrally store objects fetched during runtime for reuse.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH

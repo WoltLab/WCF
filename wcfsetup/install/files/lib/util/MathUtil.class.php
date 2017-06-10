@@ -23,7 +23,7 @@ final class MathUtil {
 	}
 	
 	/**
-	 * Transforms the given latitude and longitude into cartesion coordinates
+	 * Transforms the given latitude and longitude into cartesian coordinates
 	 * (x, y, z).
 	 * 
 	 * @param	float		$latitude

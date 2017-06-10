@@ -29,7 +29,7 @@ class CategoryHandler extends SingletonFactory {
 	protected $objectTypeCategoryIDs = [];
 	
 	/**
-	 * mapes the names of the category object types to the object type ids
+	 * maps the names of the category object types to the object type ids
 	 * @var	integer[]
 	 */
 	protected $objectTypeIDs = [];
@@ -64,7 +64,7 @@ class CategoryHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the category with the given id or `null` if no such category ecists.
+	 * Returns the category with the given id or `null` if no such category exists.
 	 * 
 	 * @param	integer		$categoryID
 	 * @return	Category|null

@@ -205,7 +205,7 @@ define(
 		},
 		
 		/**
-		 * Calculats and sets the alignment of the dropdown identified by given id.
+		 * Calculates and sets the alignment of the dropdown identified by given id.
 		 * 
 		 * @param	{string}	containerId	dropdown wrapper id
 		 */

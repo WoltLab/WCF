@@ -141,7 +141,7 @@ final class ExifUtil {
 	}
 	
 	/**
-	 * Returns the longutide of the place the image with the given exif data
+	 * Returns the longitude of the place the image with the given exif data
 	 * was taken.
 	 * 
 	 * @param	array		$exifData

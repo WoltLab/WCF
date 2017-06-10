@@ -94,7 +94,7 @@ abstract class AbstractFormElement implements IFormElement {
 	}
 	
 	/**
-	 * Returns class attribute if an error occured.
+	 * Returns class attribute if an error occurred.
 	 * 
 	 * @return	string
 	 */
@@ -103,7 +103,7 @@ abstract class AbstractFormElement implements IFormElement {
 	}
 	
 	/**
-	 * Returns an error message if occured.
+	 * Returns an error message if occurred.
 	 * 
 	 * @return	string
 	 */

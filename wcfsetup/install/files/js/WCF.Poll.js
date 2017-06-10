@@ -375,7 +375,7 @@ WCF.Poll.Manager = Class.extend({
 	_proxy: null,
 	
 	/**
-	 * Intiailizes the poll manager.
+	 * Initializes the poll manager.
 	 * 
 	 * @param	string		containerSelector
 	 */

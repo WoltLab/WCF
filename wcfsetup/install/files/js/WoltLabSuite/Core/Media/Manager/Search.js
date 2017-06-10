@@ -81,7 +81,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		},
 		
 		/**
-		 * Hides the search string treshold error.
+		 * Hides the search string threshold error.
 		 */
 		_hideStringThresholdError: function() {
 			var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
@@ -111,7 +111,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		},
 		
 		/**
-		 * Shows the search string treshold error.
+		 * Shows the search string threshold error.
 		 */
 		_showStringThresholdError: function() {
 			var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');

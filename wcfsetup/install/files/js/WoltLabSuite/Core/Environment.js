@@ -15,7 +15,7 @@ define([], function() {
 	var _touch = false;
 	
 	/**
-	 * @exports	WoltLabSuite/Core/Enviroment
+	 * @exports	WoltLabSuite/Core/Environment
 	 */
 	return {
 		/**
