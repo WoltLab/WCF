@@ -27,11 +27,12 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function getObjectList() {
-		/** @var $classList PageList */
-		$classList = parent::getObjectList();
-		$classList->getConditionBuilder()->add('isMultilingual = ?', [0]);
+		/** @var $pageList PageList */
+		$pageList = parent::getObjectList();
+		$pageList->getConditionBuilder()->add('isMultilingual = ?', [0]);
+		$pageList->getConditionBuilder()->add('page.allowSpidersToIndex = ?', [1]);
 		
-		return $classList;
+		return $pageList;
 	}
 	
 	/**
