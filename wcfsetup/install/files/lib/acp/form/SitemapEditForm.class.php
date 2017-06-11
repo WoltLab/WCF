@@ -118,7 +118,7 @@ class SitemapEditForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['priority'])) $this->priority = floatval($_POST['priority']);
+		if (isset($_POST['priority'])) $this->priority = round(floatval($_POST['priority']), 1);
 		if (isset($_POST['changeFreq'])) $this->changeFreq = $_POST['changeFreq'];
 		if (isset($_POST['rebuildTime'])) $this->rebuildTime = intval($_POST['rebuildTime']);
 		$this->isDisabled = (isset($_POST['isDisabled'])) ? 1 : 0;
