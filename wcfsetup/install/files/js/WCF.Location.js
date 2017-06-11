@@ -443,9 +443,23 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 	_previousSouthWest: null,
 	
 	/**
+	 * if `true`, the `exludedObjectIds` array will be sent as a JSON string,
+	 * otherwise as an array (default)
+	 * note: be prepared that in the future, only JSON strings might be supported
+	 * @var	boolean
+	 */
+	_stringifyExcludedObjectIds: false,
+	
+	/**
 	 * @see	WCF.Location.GoogleMaps.Map.init()
 	 */
 	init: function(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector, additionalParameters) {
+		this._stringifyExcludedObjectIds = false;
+		if (mapOptions && mapOptions.stringifyExcludedObjectIds) {
+			this._stringifyExcludedObjectIds = mapOptions.stringifyExcludedObjectIds;
+			delete mapOptions.stringifyExcludedObjectIds;
+		}
+		
 		this._super(mapContainerID, mapOptions);
 		
 		this._actionClassName = actionClassName;
@@ -526,7 +540,7 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 			actionName: 'getMapMarkers',
 			className: this._actionClassName,
 			parameters: $.extend(this._additionalParameters, {
-				excludedObjectIDs: this._objectIDs,
+				excludedObjectIDs: this._stringifyExcludedObjectIds ? JSON.stringify(this._objectIDs) : this._objectIDs,
 				eastLongitude: $northEast.lng(),
 				northLatitude: $northEast.lat(),
 				southLatitude: $southWest.lat(),
