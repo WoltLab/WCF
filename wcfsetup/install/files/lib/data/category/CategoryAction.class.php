@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\category;
+use wcf\data\language\item\LanguageItemAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\data\IToggleContainerAction;
-use wcf\data\language\item\LanguageItemAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
