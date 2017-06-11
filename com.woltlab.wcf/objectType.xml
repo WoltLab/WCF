@@ -1283,6 +1283,14 @@
 			<changeFreq>monthly</changeFreq>
 			<rebuildTime>604800</rebuildTime>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.sitemap.object.multilingualPage</name>
+			<definitionname>com.woltlab.wcf.sitemap.object</definitionname>
+			<classname>wcf\system\sitemap\object\MultilingualPageSitemapObject</classname>
+			<priority>0.5</priority>
+			<changeFreq>monthly</changeFreq>
+			<rebuildTime>604800</rebuildTime>
+		</type>
 		<!-- /sitemap -->
 		
 		<!-- deprecated -->

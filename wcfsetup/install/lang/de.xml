@@ -1602,6 +1602,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.simplePage"><![CDATA[Einfache Seiten]]></item>
+		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.multilingualPage"><![CDATA[Mehrsprachige Seiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.stat">
