@@ -1,7 +1,10 @@
 <?php
 namespace wcf\data\label\group;
+use wcf\data\language\item\LanguageItemAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\WCF;
 
 /**
  * Executes label group-related actions.
@@ -46,6 +49,32 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 	 */
 	public function delete() {
 		$count = parent::delete();
+		
+		if (!empty($this->objects)) {
+			// identify i18n labels
+			$languageVariables = [];
+			foreach ($this->objects as $labelGroup) {
+				if ($labelGroup->groupName === 'wcf.acp.label.group' . $labelGroup->groupID) {
+					$languageVariables[] = $labelGroup->groupName;
+				}
+			}
+			
+			// remove language variables
+			if (!empty($languageVariables)) {
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add('languageItem IN (?)', [$languageVariables]);
+				
+				$sql = "SELECT	languageItemID
+					FROM	wcf".WCF_N."_language_item
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				$languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+				
+				$objectAction = new LanguageItemAction($languageItemIDs, 'delete');
+				$objectAction->executeAction();
+			}
+		}
 		
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType') as $objectType) {
 			$objectType->getProcessor()->save();
