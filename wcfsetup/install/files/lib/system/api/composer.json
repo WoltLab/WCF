@@ -6,6 +6,7 @@
     "require": {
         "ezyang/htmlpurifier": "4.9.*",
         "erusev/parsedown": "1.6.*",
-        "pelago/emogrifier": "1.1.*"
+        "pelago/emogrifier": "1.1.*",
+        "chrisjean/php-ico": "1.0.*"
     }
 }

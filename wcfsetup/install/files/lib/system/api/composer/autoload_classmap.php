@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'PHP_ICO' => $vendorDir . '/chrisjean/php-ico/class-php-ico.php',
 );

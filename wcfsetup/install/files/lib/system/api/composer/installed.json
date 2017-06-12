@@ -153,5 +153,50 @@
             "markdown",
             "parser"
         ]
+    },
+    {
+        "name": "chrisjean/php-ico",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/chrisbliss18/php-ico.git",
+            "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/chrisbliss18/php-ico/zipball/ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
+            "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
+            "shasum": ""
+        },
+        "require": {
+            "ext-gd": "*",
+            "php": ">=5.2.4"
+        },
+        "time": "2016-09-27T22:00:56+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "class-php-ico.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Chris Jean",
+                "homepage": "https://chrisjean.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "An easy-to-use library to generate valid ICO files.",
+        "homepage": "https://github.com/chrisbliss18/php-ico",
+        "keywords": [
+            "favicon",
+            "ico"
+        ]
     }
 ]
