@@ -298,6 +298,10 @@ class StyleCompiler extends SingletonFactory {
 		// convert stylesheet to RTL
 		$content = StyleUtil::convertCSSToRTL($content);
 		
+		// force code boxes to be always LTR
+		$content .= "\n/* RTL fix for code boxes */\n";
+		$content .= '.codeBox > div > ol > li > span:last-child, .redactor-layer pre { direction: ltr; text-align: left; } .codeBox > div > ol > li > span:last-child { display: block; }';
+		
 		// write stylesheet for RTL
 		file_put_contents($filename.'-rtl.css', $content);
 		FileUtil::makeWritable($filename.'-rtl.css');

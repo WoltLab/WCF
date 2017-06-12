@@ -76,6 +76,12 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		}
 		
 		var textarea = this._dialog.children('textarea')[0];
+		// force LTR for RTL languages
+		if (document.documentElement.dir === 'rtl') {
+			textarea.dir = 'ltr';
+			textarea.style.setProperty('text-align', 'left', '');
+		}
+		
 		var selectAll = function () {
 			textarea.selectionStart = 0;
 			textarea.selectionEnd = textarea.value.length;
@@ -2155,6 +2161,14 @@ $.widget('wcf.messageTabMenu', {
 					$current.tab.addClass('active');
 					$current.container.addClass('active');
 					$target = $current;
+					
+					// if the tab contains a tab menu itself, open the first tab too,
+					// unless there is already at least one open tab
+					var container = $current.container[0];
+					if (elBySel('.messageTabMenuContent.active', container) === null && elBySel('.messageTabMenuContent', container) !== null) {
+						var link = elBySel('nav > ul > li[data-name] > a', container);
+						if (link !== null) $(link).trigger('mousedown');
+					}
 					
 					continue;
 				}

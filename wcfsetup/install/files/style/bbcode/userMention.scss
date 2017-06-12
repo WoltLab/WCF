@@ -5,5 +5,8 @@
 	
 	&::before {
 		content: '@';
+		/* avoids breaks between the '@' and the username, but still allows
+		   wrapping inside the username itself */
+		display: inline-block;
 	}
 }

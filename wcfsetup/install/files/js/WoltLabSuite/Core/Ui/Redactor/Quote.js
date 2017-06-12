@@ -248,6 +248,8 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 				options: {
 					onClose: (function () {
 						this._editor.selection.restore();
+						
+						UiDialog.destroy(this);
 					}).bind(this),
 					
 					onSetup: (function() {

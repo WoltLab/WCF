@@ -24,7 +24,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * list of created or updated boxes by id
-	 * @var Box[]
+	 * @var BoxEditor[]
 	 */
 	protected $boxes = [];
 	
@@ -291,7 +291,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		// store content for later import
 		$this->content[$box->boxID] = $content;
-		$this->boxes[$box->boxID] = $box;
+		$this->boxes[$box->boxID] = ($box instanceof Box) ? new BoxEditor($box) : $box;
 		
 		return $box;
 	}
@@ -314,7 +314,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			
 			WCF::getDB()->beginTransaction();
 			foreach ($this->content as $boxID => $contentData) {
-				$boxEditor = new BoxEditor($this->boxes[$boxID]);
+				$boxEditor = $this->boxes[$boxID];
 				
 				foreach ($contentData as $languageCode => $content) {
 					$languageID = null;
