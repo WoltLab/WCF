@@ -40,6 +40,9 @@ class Style extends DatabaseObject {
 	const PREVIEW_IMAGE_MAX_HEIGHT = 64;
 	const PREVIEW_IMAGE_MAX_WIDTH = 102;
 	
+	const FAVICON_IMAGE_HEIGHT = 256;
+	const FAVICON_IMAGE_WIDTH = 256;
+	
 	/**
 	 * Returns the name of this style.
 	 * 
@@ -121,6 +124,31 @@ class Style extends DatabaseObject {
 		}
 		
 		return WCF::getPath().'images/stylePreview.png';
+	}
+	
+	public function getFaviconAppleTouchIcon() {
+		return $this->getFaviconPath('apple-touch-icon.png');
+	}
+	
+	public function getFaviconManifest() {
+		return $this->getFaviconPath('manifest.json');
+	}
+	
+	public function getFaviconBrowserconfig() {
+		return $this->getFaviconPath('browserconfig.xml');
+	}
+	
+	public function getRelativeFavicon() {
+		return $this->getFaviconPath('favicon.ico', false);
+	}
+	
+	protected function getFaviconPath($filename, $absolutePath = true) {
+		$path = 'images/favicon/'. ($this->hasFavicon ? $this->styleID : 'default') . ".{$filename}";
+		if ($absolutePath) {
+			return WCF::getPath() . $path;
+		}
+		
+		return $path;
 	}
 	
 	/**

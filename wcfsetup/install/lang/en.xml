@@ -1695,6 +1695,7 @@
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Options]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
+		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Width]]></item>
@@ -1749,6 +1750,10 @@
 		<item name="wcf.acp.style.globals.useGoogleFont"><![CDATA[Use Google font face]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Font Face]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
+		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256px × 256px image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256px × 256px large.]]></item>
+		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">

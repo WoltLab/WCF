@@ -32,7 +32,7 @@
 <link rel="manifest" href="{@$__wcf->getStyleHandler()->getStyle()->getFaviconManifest()}">
 <link rel="shortcut icon" href="{@$__wcf->getFavicon()}">
 <meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getStyle()->getFaviconBrowserconfig()}">
-<meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground')}">
+<meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground', true)}">
 
 <script data-relocate="true">
 	$(function() {

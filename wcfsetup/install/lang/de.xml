@@ -1798,6 +1798,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.globals.useGoogleFont"><![CDATA[Google-Schriftart aktivieren]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Schriftart]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
+		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
+		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256px × 256px großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256px × 256px groß sein.]]></item>
+		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">

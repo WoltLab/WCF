@@ -98,6 +98,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			// handle style preview image
 			$this->updateStylePreviewImage($style->getDecoratedObject());
 			
+			// create favicon data
+			$this->updateFavicons($style->getDecoratedObject());
+			
 			// reset stylesheet
 			StyleHandler::getInstance()->resetStylesheet($style->getDecoratedObject());
 		}
@@ -243,6 +246,88 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 					@unlink($oldFilename);
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Updates style favicon files.
+	 * 
+	 * @param       Style           $style
+	 */
+	protected function updateFavicons(Style $style) {
+		$styleID = $style->styleID;
+		$fileExtension = WCF::getSession()->getVar('styleFavicon-template-'.$styleID);
+		$hasFavicon = (bool)$style->hasFavicon;
+		if ($fileExtension) {
+			$template = WCF_DIR . "images/favicon/{$styleID}.favicon-template.{$fileExtension}";
+			$images = [
+				'android-chrome-192x192.png' => 192,
+				'android-chrome-256x256.png' => 256,
+				'apple-touch-icon.png' => 180,
+				'mstile-150x150.png' => 150
+			];
+			
+			$adapter = ImageHandler::getInstance()->getAdapter();
+			$adapter->loadFile($template);
+			foreach ($images as $filename => $length) {
+				$thumbnail = $adapter->createThumbnail($length, $length);
+				$adapter->writeImage($thumbnail, WCF_DIR."images/favicon/{$styleID}.{$filename}");
+			}
+			
+			// create ico
+			require(WCF_DIR . 'lib/system/api/chrisjean/php-ico/class-php-ico.php');
+			$phpIco = new \PHP_ICO($template, [
+				[16, 16],
+				[32, 32]
+			]);
+			$phpIco->save_ico(WCF_DIR . "images/favicon/{$styleID}.favicon.ico");
+			
+			$hasFavicon = true;
+			
+			(new StyleEditor($style))->update(['hasFavicon' => 1]);
+			WCF::getSession()->unregister('styleFavicon-template-'.$style->styleID);
+		}
+		
+		if ($hasFavicon) {
+			// update manifest.json
+			$manifest = <<<MANIFEST
+{
+    "name": "",
+    "icons": [
+        {
+            "src": "{$styleID}.android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "{$styleID}.android-chrome-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
+MANIFEST;
+			file_put_contents(WCF_DIR . "images/favicon/{$styleID}.manifest.json", $manifest);
+			
+			$style->loadVariables();
+			$tileColor = $style->getVariable('wcfHeaderBackground', true);
+			
+			// update browserconfig.xml
+			$browserconfig = <<<BROWSERCONFIG
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square150x150logo src="{$styleID}.mstile-150x150.png"/>
+            <TileColor>{$tileColor}</TileColor>
+        </tile>
+    </msapplication>
+</browserconfig>
+BROWSERCONFIG;
+			file_put_contents(WCF_DIR . "images/favicon/{$styleID}.browserconfig.xml", $browserconfig);
 		}
 	}
 	
@@ -441,6 +526,78 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 				}
 				else {
 					throw new UserInputException('image', 'uploadFailed');
+				}
+			}
+		}
+		catch (UserInputException $e) {
+			$file->setValidationErrorType($e->getType());
+		}
+		
+		return ['errorType' => $file->getValidationErrorType()];
+	}
+	
+	/**
+	 * Validates parameters to upload a favicon.
+	 */
+	public function validateUploadFavicon() {
+		// ignore tmp hash, uploading is supported for existing styles only
+		// and files will be finally processed on form submit
+		$this->parameters['tmpHash'] = '@@@WCF_INVALID_TMP_HASH@@@';
+		
+		$this->validateUpload();
+	}
+	
+	/**
+	 * Handles favicon upload.
+	 *
+	 * @return	string[]
+	 */
+	public function uploadFavicon() {
+		// save files
+		/** @noinspection PhpUndefinedMethodInspection */
+		/** @var UploadFile[] $files */
+		$files = $this->parameters['__files']->getFiles();
+		$file = $files[0];
+		
+		try {
+			if (!$file->getValidationErrorType()) {
+				$fileLocation = $file->getLocation();
+				try {
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new UserInputException('favicon');
+					}
+					switch ($imageData[2]) {
+						case IMAGETYPE_PNG:
+						case IMAGETYPE_JPEG:
+						case IMAGETYPE_GIF:
+							// fine
+							break;
+						default:
+							throw new UserInputException('favicon');
+					}
+					
+					if ($imageData[0] != Style::FAVICON_IMAGE_WIDTH || $imageData[1] != Style::FAVICON_IMAGE_HEIGHT) {
+						throw new UserInputException('favicon', 'dimensions');
+					}
+				}
+				catch (SystemException $e) {
+					throw new UserInputException('favicon');
+				}
+				
+				// move uploaded file
+				if (@copy($fileLocation, WCF_DIR.'images/favicon/'.$this->style->styleID.'.favicon-template.'.$file->getFileExtension())) {
+					@unlink($fileLocation);
+					
+					// store extension within session variables
+					WCF::getSession()->register('styleFavicon-template-'.$this->style->styleID, $file->getFileExtension());
+					
+					// return result
+					return [
+						'url' => WCF::getPath().'images/favicon/'.$this->style->styleID.'.favicon-template.'.$file->getFileExtension()
+					];
+				}
+				else {
+					throw new UserInputException('favicon', 'uploadFailed');
 				}
 			}
 		}

@@ -365,7 +365,8 @@ $wcfAcpSubMenuWidth: 300px;
 	min-width: 20px;
 }
 
-.selectedImagePreview {
+.selectedImagePreview,
+.selectedFaviconPreview {
 	img {
 		margin-bottom: 5px;
 	}
