@@ -206,7 +206,7 @@ requirejs.config({
 				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
 					NotificationHandler.setup({
 						enableNotifications: {if ENABLE_DESKTOP_NOTIFICATIONS}true{else}false{/if},
-						icon: '{@$__wcf->getPath()}images/apple-touch-icon.png',
+						icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
 						sessionKeepAlive: {@$__sessionKeepAlive}
 					});
 				});
