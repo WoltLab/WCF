@@ -969,16 +969,17 @@ class WCF {
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
 		$wcf = ApplicationHandler::getInstance()->getWCF();
+		$favicon = StyleHandler::getInstance()->getStyle()->getRelativeFavicon();
 		
 		if ($activeApplication->domainName !== $wcf->domainName) {
-			if (file_exists(WCF_DIR.'images/favicon.ico')) {
-				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
+			if (file_exists(WCF_DIR.$favicon)) {
+				$favicon = file_get_contents(WCF_DIR.$favicon);
 				
 				return 'data:image/x-icon;base64,' . base64_encode($favicon);
 			}
 		}
 		
-		return self::getPath() . 'images/favicon.ico';
+		return self::getPath() . $favicon;
 	}
 	
 	/**

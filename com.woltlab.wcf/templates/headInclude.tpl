@@ -28,10 +28,10 @@
 {event name='javascriptInclude'}
 
 <!-- Icons -->
-<link rel="icon" href="{@$__wcf->getFavicon()}" type="image/x-icon">
-<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
-
-<!-- theme color (mobile Chrome) -->
+<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}">
+<link rel="manifest" href="{@$__wcf->getStyleHandler()->getStyle()->getFaviconManifest()}">
+<link rel="shortcut icon" href="{@$__wcf->getFavicon()}">
+<meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getStyle()->getFaviconBrowserconfig()}">
 <meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground')}">
 
 <script data-relocate="true">

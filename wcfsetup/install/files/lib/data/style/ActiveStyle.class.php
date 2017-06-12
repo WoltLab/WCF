@@ -69,4 +69,29 @@ class ActiveStyle extends DatabaseObjectDecorator {
 		
 		return WCF::getPath() . 'images/default-logo-small.png';
 	}
+	
+	public function getFaviconAppleTouchIcon() {
+		return $this->getFaviconPath('apple-touch-icon.png');
+	}
+	
+	public function getFaviconManifest() {
+		return $this->getFaviconPath('manifest.json');
+	}
+	
+	public function getFaviconBrowserconfig() {
+		return $this->getFaviconPath('browserconfig.xml');
+	}
+	
+	public function getRelativeFavicon() {
+		return $this->getFaviconPath('favicon.ico', false);
+	}
+	
+	protected function getFaviconPath($filename, $absolutePath = true) {
+		$path = 'images/favicon/'. ($this->getDecoratedObject()->hasFavicon ? $this->getDecoratedObject()->styleID : 'default') . ".{$filename}";
+		if ($absolutePath) {
+			return WCF::getPath() . $path;
+		}
+		
+		return $path;
+	}
 }
