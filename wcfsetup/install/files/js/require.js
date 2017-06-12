@@ -1,6 +1,6 @@
 /**
- * @license alameda 1.1.2 Copyright jQuery Foundation and other contributors.
- * Released under MIT license, http://github.com/requirejs/alameda/LICENSE
+ * @license alameda 1.2.0 Copyright jQuery Foundation and other contributors.
+ * Released under MIT license, https://github.com/requirejs/alameda/blob/master/LICENSE
  */
 // Going sloppy because loader plugin execs may depend on non-strict execution.
 /*jslint sloppy: true, nomen: true, regexp: true */
@@ -28,6 +28,8 @@ var requirejs, require, define;
     return;
   }
 
+  var asap = Promise.resolve(undefined);
+
   // Could match something like ')//comment', do not lose the prefix to comment.
   function commentReplace(match, singlePrefix) {
     return singlePrefix || '';
@@ -39,6 +41,10 @@ var requirejs, require, define;
 
   function getOwn(obj, prop) {
     return obj && hasProp(obj, prop) && obj[prop];
+  }
+
+  function obj() {
+    return Object.create(null);
   }
 
   /**
@@ -97,8 +103,8 @@ var requirejs, require, define;
 
   function newContext(contextName) {
     var req, main, makeMap, callDep, handlers, checkingLater, load, context,
-      defined = {},
-      waiting = {},
+      defined = obj(),
+      waiting = obj(),
       config = {
         // Defaults. Do not set a default for map
         // config to speed up normalize(), which
@@ -111,17 +117,17 @@ var requirejs, require, define;
         shim: {},
         config: {}
       },
-      mapCache = {},
+      mapCache = obj(),
       requireDeferreds = [],
-      deferreds = {},
-      calledDefine = {},
-      calledPlugin = {},
+      deferreds = obj(),
+      calledDefine = obj(),
+      calledPlugin = obj(),
       loadCount = 0,
       startTime = (new Date()).getTime(),
       errCount = 0,
-      trackedErrors = {},
-      urlFetched = {},
-      bundlesMap = {},
+      trackedErrors = obj(),
+      urlFetched = obj(),
+      bundlesMap = obj(),
       asyncResolve = Promise.resolve();
 
     /**
@@ -285,8 +291,8 @@ var requirejs, require, define;
         id = args[0];
         i -= 1;
 
-        if (!hasProp(defined, id) && !hasProp(waiting, id)) {
-          if (hasProp(deferreds, id)) {
+        if (!(id in defined) && !(id in waiting)) {
+          if (id in deferreds) {
             main.apply(undef, args);
           } else {
             waiting[id] = args;
@@ -319,7 +325,7 @@ var requirejs, require, define;
           // is just the relName.
           // Normalize module name, if it contains . or ..
           name = makeMap(deps, relName, true).id;
-          if (!hasProp(defined, name)) {
+          if (!(name in defined)) {
             throw new Error('Not loaded: ' + name);
           }
           return defined[name];
@@ -443,12 +449,12 @@ var requirejs, require, define;
       };
 
       req.defined = function (id) {
-        return hasProp(defined, makeMap(id, relName, true).id);
+        return makeMap(id, relName, true).id in defined;
       };
 
       req.specified = function (id) {
         id = makeMap(id, relName, true).id;
-        return hasProp(defined, id) || hasProp(deferreds, id);
+        return id in defined || id in deferreds;
       };
 
       return req;
@@ -484,9 +490,9 @@ var requirejs, require, define;
         name = d.map.id;
 
       try {
-         ret = d.factory.apply(defined[name], d.values);
+        ret = context.execCb(name, d.factory, d.values, defined[name]);
       } catch(err) {
-         return reject(d, err);
+        return reject(d, err);
       }
 
       if (name) {
@@ -551,7 +557,7 @@ var requirejs, require, define;
     function getDefer(name, calculatedMap) {
       var d;
       if (name) {
-        d = hasProp(deferreds, name) && deferreds[name];
+        d = (name in deferreds) && deferreds[name];
         if (!d) {
           d = deferreds[name] = makeDefer(name, calculatedMap);
         }
@@ -683,15 +689,18 @@ var requirejs, require, define;
           script.addEventListener('error', function () {
             loadCount -= 1;
             var err,
-              pathConfig = getOwn(config.paths, id),
-              d = getOwn(deferreds, id);
+              pathConfig = getOwn(config.paths, id);
             if (pathConfig && Array.isArray(pathConfig) &&
                 pathConfig.length > 1) {
               script.parentNode.removeChild(script);
               // Pop off the first array value, since it failed, and
               // retry
               pathConfig.shift();
+              var d = getDefer(id);
               d.map = makeMap(id);
+              // mapCache will have returned previous map value, update the
+              // url, which will also update mapCache value.
+              d.map.url = req.nameToUrl(id);
               load(d.map);
             } else {
               err = new Error('Load failed: ' + id + ': ' + script.src);
@@ -702,7 +711,16 @@ var requirejs, require, define;
 
           script.src = url;
 
-          document.head.appendChild(script);
+          // If the script is cached, IE10 executes the script body and the
+          // onload handler synchronously here.  That's a spec violation,
+          // so be sure to do this asynchronously.
+          if (document.documentMode === 10) {
+            asap.then(function() {
+              document.head.appendChild(script);
+            });
+          } else {
+            document.head.appendChild(script);
+          }
         };
 
     function callPlugin(plugin, map, relName) {
@@ -714,11 +732,11 @@ var requirejs, require, define;
         name = map.id,
         shim = config.shim[name];
 
-      if (hasProp(waiting, name)) {
+      if (name in waiting) {
         args = waiting[name];
         delete waiting[name];
         main.apply(undef, args);
-      } else if (!hasProp(deferreds, name)) {
+      } else if (!(name in deferreds)) {
         if (map.pr) {
           // If a bundles config, then just load that file instead to
           // resolve the plugin, as it is built into that bundle.
@@ -734,7 +752,7 @@ var requirejs, require, define;
 
               // Make sure to only call load once per resource. Many
               // calls could have been queued waiting for plugin to load.
-              if (!hasProp(calledPlugin, newId)) {
+              if (!(newId in calledPlugin)) {
                 calledPlugin[newId] = true;
                 if (shim && shim.deps) {
                   req(shim.deps, function () {
@@ -789,13 +807,13 @@ var requirejs, require, define;
       prefix = parts[0];
       name = parts[1];
 
-      if (!prefix && hasProp(mapCache, cacheKey)) {
+      if (!prefix && (cacheKey in mapCache)) {
         return mapCache[cacheKey];
       }
 
       if (prefix) {
         prefix = normalize(prefix, relName, applyMap);
-        plugin = hasProp(defined, prefix) && defined[prefix];
+        plugin = (prefix in defined) && defined[prefix];
       }
 
       // Normalize according
@@ -894,7 +912,7 @@ var requirejs, require, define;
     }
 
     function check(d) {
-      var err,
+      var err, mid, dfd,
         notFinished = [],
         waitInterval = config.waitSeconds * 1000,
         // It is possible to disable the wait interval by using waitSeconds 0.
@@ -922,11 +940,12 @@ var requirejs, require, define;
       // scripts, then just try back later.
       if (expired) {
         // If wait time expired, throw error of unloaded modules.
-        eachProp(deferreds, function (d) {
-          if (!d.finished) {
-            notFinished.push(d.map.id);
+        for (mid in deferreds) {
+          dfd = deferreds[mid];
+          if (!dfd.finished) {
+            notFinished.push(dfd.map.id);
           }
-        });
+        }
         err = new Error('Timeout for modules: ' + notFinished);
         err.requireModules = notFinished;
         req.onError(err);
@@ -960,11 +979,13 @@ var requirejs, require, define;
     }
 
     main = function (name, deps, factory, errback, relName) {
-      // Only allow main calling once per module.
-      if (name && hasProp(calledDefine, name)) {
-        return;
+      if (name) {
+        // Only allow main calling once per module.
+        if (name in calledDefine) {
+          return;
+        }
+        calledDefine[name] = true;
       }
-      calledDefine[name] = true;
 
       var d = getDefer(name);
 
@@ -976,6 +997,9 @@ var requirejs, require, define;
         factory = deps;
         deps = [];
       }
+
+      // Create fresh array instead of modifying passed in value.
+      deps = deps ? slice.call(deps, 0) : null;
 
       if (!errback) {
         if (hasProp(config, 'defaultErrback')) {
@@ -1083,7 +1107,7 @@ var requirejs, require, define;
       }
 
       // Since config changed, mapCache may not be valid any more.
-      mapCache = {};
+      mapCache = obj();
 
       // Make sure the baseUrl ends in a slash.
       if (cfg.baseUrl) {
@@ -1193,7 +1217,10 @@ var requirejs, require, define;
       waiting: waiting,
       config: config,
       deferreds: deferreds,
-      req: req
+      req: req,
+      execCb: function execCb(name, callback, args, exports) {
+        return callback.apply(exports, args);
+      }
     };
 
     contexts[contextName] = context;
