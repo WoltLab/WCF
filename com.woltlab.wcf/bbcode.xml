@@ -230,7 +230,6 @@
 		</bbcode>
 		
 		<bbcode name="html">
-			<classname>wcf\system\bbcode\HtmlBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-html5</wysiwygicon>
