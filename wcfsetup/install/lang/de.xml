@@ -2535,7 +2535,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.font.removeFont"><![CDATA[Schriftart entfernen]]></item>
 		<item name="wcf.editor.button.format"><![CDATA[Überschrift]]></item>
 		<item name="wcf.editor.button.fullscreen"><![CDATA[Vollbild]]></item>
-		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
+		<item name="wcf.editor.button.html"><![CDATA[Quellcode]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Bild]]></item>
 		<item name="wcf.editor.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.editor.button.italic"><![CDATA[Kursiv]]></item>

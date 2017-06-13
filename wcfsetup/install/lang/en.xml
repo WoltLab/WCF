@@ -2478,7 +2478,7 @@ Errors are:
 		<item name="wcf.editor.button.font.removeFont"><![CDATA[Remove Font Family]]></item>
 		<item name="wcf.editor.button.format"><![CDATA[Headline]]></item>
 		<item name="wcf.editor.button.fullscreen"><![CDATA[Fullscreen]]></item>
-		<item name="wcf.editor.button.html"><![CDATA[HTML]]></item>
+		<item name="wcf.editor.button.html"><![CDATA[Source Code]]></item>
 		<item name="wcf.editor.button.image"><![CDATA[Image]]></item>
 		<item name="wcf.editor.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.editor.button.italic"><![CDATA[Italic]]></item>
