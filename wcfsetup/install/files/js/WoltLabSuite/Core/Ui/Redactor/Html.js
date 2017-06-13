@@ -46,7 +46,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			EventHandler.add('com.woltlab.wcf.redactor2', 'observe_load_' + this._elementId, this._observeLoad.bind(this));
 			
 			// support for active button marking
-			this._editor.opts.activeButtonsStates['pre-html'] = 'code';
+			this._editor.opts.activeButtonsStates['woltlab-html'] = 'woltlabHtml';
 			
 			// static bind to ensure that removing works
 			this._callbackEdit = this._edit.bind(this);

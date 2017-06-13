@@ -69,11 +69,13 @@ $.Redactor.prototype.WoltLabObserve = function() {
 				if (this.utils.isCurrentOrParent(['table', 'li'])) {
 					this.button.disable('code');
 					this.button.disable('spoiler');
+					this.button.disable('woltlabHtml');
 					this.button.disable('woltlabQuote');
 				}
 				else if (!isSource) {
 					this.button.enable('code');
 					this.button.enable('spoiler');
+					this.button.enable('woltlabHtml');
 					this.button.enable('woltlabQuote');
 				}
 				
@@ -83,16 +85,21 @@ $.Redactor.prototype.WoltLabObserve = function() {
 				var editor = this.$editor[0];
 				if (current.nodeType !== Node.ELEMENT_NODE) current = current.parentNode;
 				
-				var tagName, tags = [];
+				var key, tagName, tags = [];
 				while (current !== editor) {
 					tagName = current.nodeName.toLowerCase();
 					if (tags.indexOf(tagName) === -1) {
-						if (this.opts.activeButtonsStates.hasOwnProperty(tagName)) {
-							this.button.setActive(this.opts.activeButtonsStates[tagName]);
+						key = tagName;
+						if (tagName === 'pre' && current.classList.contains('woltlabHtml')) {
+							key = 'woltlab-html';
+						}
+						
+						if (this.opts.activeButtonsStates.hasOwnProperty(key)) {
+							this.button.setActive(this.opts.activeButtonsStates[key]);
 						}
 						
 						// mark as known
-						tags.push(tagName);
+						if (tagName !== 'pre') tags.push(tagName);
 					}
 					
 					current = current.parentNode;
