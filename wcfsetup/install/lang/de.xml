@@ -2637,6 +2637,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>
+		<item name="wcf.global.button.reply"><![CDATA[Antworten]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>
 		<item name="wcf.global.button.restore"><![CDATA[Wiederherstellen]]></item>
 		<item name="wcf.global.button.rss"><![CDATA[RSS-Feed]]></item>

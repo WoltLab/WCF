@@ -2579,6 +2579,7 @@ Errors are:
 		<item name="wcf.global.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
+		<item name="wcf.global.button.reply"><![CDATA[Reply]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Refresh]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
 		<item name="wcf.global.button.restore"><![CDATA[Restore]]></item>
