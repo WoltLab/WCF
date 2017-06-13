@@ -30,9 +30,23 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
 	public function getMessage() {
 		return $this->getLanguage()->getDynamicVariable('wcf.paidSubscription.expiringSubscription.notification.message', [
 			'author' => $this->author,
-			'notification' => $this->notification, 
+			'notification' => $this->notification,
 			'userNotificationObject' => $this->getUserNotificationObject()
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getEmailMessage($notificationType = 'instant') {
+		return [
+			'template' => 'email_notification_expiringPaidSubscription',
+			'application' => 'wcf',
+			'variables' => [
+				'notification' => $this->notification,
+				'subscription' => $this->getUserNotificationObject()
+			]
+		];
 	}
 	
 	/**
