@@ -45,6 +45,14 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
+			if ($element->getAttribute('class') === 'woltlabHtml') {
+				$nodeIdentifier = StringUtil::getRandomID();
+				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['rawHTML' => $element->textContent]);
+				
+				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+				continue;
+			}
+			
 			switch ($this->outputType) {
 				case 'text/html':
 					$nodeIdentifier = StringUtil::getRandomID();
@@ -74,6 +82,11 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	 * @inheritDoc
 	 */
 	public function replaceTag(array $data) {
+		// HTML bbcode
+		if (isset($data['rawHTML'])) {
+			return $data['rawHTML'];
+		}
+		
 		$content = preg_replace('/^\s*\n/', '', $data['content']);
 		$content = preg_replace('/\n\s*$/', '', $content);
 		

@@ -2497,6 +2497,7 @@ Errors are:
 		<item name="wcf.editor.button.table"><![CDATA[Table]]></item>
 		<item name="wcf.editor.button.underline"><![CDATA[Underline]]></item>
 		<item name="wcf.editor.button.undo"><![CDATA[Undo]]></item>
+		<item name="wcf.editor.button.woltlabHtml"><![CDATA[Unsafe HTML]]></item>
 		
 		<item name="wcf.editor.code.edit"><![CDATA[Edit Code]]></item>
 		<item name="wcf.editor.code.file"><![CDATA[Filename]]></item>
@@ -2512,6 +2513,9 @@ Errors are:
 		<item name="wcf.editor.format.heading3"><![CDATA[Heading 2]]></item>
 		<item name="wcf.editor.format.heading4"><![CDATA[Heading 3]]></item>
 		<item name="wcf.editor.format.paragraph"><![CDATA[Normal text]]></item>
+		
+		<item name="wcf.editor.html.description"><![CDATA[Contents will be evaluated unchecked.]]></item>
+		<item name="wcf.editor.html.title"><![CDATA[Unsafe HTML]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Insert Image]]></item>

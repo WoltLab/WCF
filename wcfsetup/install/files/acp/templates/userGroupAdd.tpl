@@ -17,6 +17,14 @@
 			
 			new WCF.ACP.User.Group.Copy({@$groupID});
 		{/if}
+		
+		{if $action == 'edit' && ($groupIsEveryone || $groupIsGuest || $groupIsUsers)}
+			elBySelAll('.jsBbcodeSelectOptionHtml', undefined, function (bbcodeHtml) {
+				elBySel('input[type="checkbox"]', bbcodeHtml).checked = true;
+				
+				elHide(bbcodeHtml);
+			});
+		{/if}
 	});
 </script>
 

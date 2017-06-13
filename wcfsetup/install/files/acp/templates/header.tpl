@@ -12,8 +12,11 @@
 	{event name='stylesheets'}
 	
 	<!-- Icons -->
-	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico">
-	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
+	<link rel="manifest" href="{@$__wcf->getPath()}images/favicon/default.manifest.json">
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon/default.favicon.ico">
+	<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
+	<meta name="theme-color" content="#3a6d9c">
 	
 	<script>
 		var SID_ARG_2ND = '';

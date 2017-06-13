@@ -64,10 +64,15 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		_bbcodeCode: function(data) {
 			data.cancel = true;
 			
+			var pre = this._editor.selection.block();
+			if (pre && pre.nodeName === 'PRE' && pre.classList.contains('woltlabHtml')) {
+				return;
+			}
+			
 			this._editor.button.toggle({}, 'pre', 'func', 'block.format');
 			
-			var pre = this._editor.selection.block();
-			if (pre && pre.nodeName === 'PRE') {
+			pre = this._editor.selection.block();
+			if (pre && pre.nodeName === 'PRE' && !pre.classList.contains('woltlabHtml')) {
 				if (pre.childElementCount === 1 && pre.children[0].nodeName === 'BR') {
 					// drop superfluous linebreak
 					pre.removeChild(pre.children[0]);
@@ -89,7 +94,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		 * @protected
 		 */
 		_observeLoad: function() {
-			elBySelAll('pre', this._editor.$editor[0], (function(pre) {
+			elBySelAll('pre:not(.woltlabHtml)', this._editor.$editor[0], (function(pre) {
 				pre.addEventListener('mousedown', this._callbackEdit);
 				this._setTitle(pre);
 			}).bind(this));

@@ -24,6 +24,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFont.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFullscreen.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabHtml.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabImage.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
@@ -70,6 +71,9 @@
 				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
 				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
 				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',
+				
+				'wcf.editor.html.description': '{lang}wcf.editor.html.description{/lang}',
+				'wcf.editor.html.title': '{lang}wcf.editor.html.title{/lang}',
 				
 				'wcf.editor.image.edit': '{lang}wcf.editor.image.edit{/lang}',
 				'wcf.editor.image.insert': '{lang}wcf.editor.image.insert{/lang}',
@@ -201,6 +205,7 @@
 					'WoltLabDropdown',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
+					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('html')}'WoltLabHtml',{/if}
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}'WoltLabImage',{/if}
 					'WoltLabInlineCode',
 					'WoltLabInsert',

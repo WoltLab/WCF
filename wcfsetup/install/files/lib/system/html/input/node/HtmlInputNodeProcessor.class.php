@@ -34,6 +34,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		],
 		'li' => ['text-center', 'text-justify', 'text-right'],
 		'p' => ['text-center', 'text-justify', 'text-right'],
+		'pre' => ['woltlabHtml'],
 		'td' => ['text-center', 'text-justify', 'text-right']
 	];
 	
@@ -104,6 +105,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$textParser = new HtmlInputNodeTextParser($this, $smileyCount);
 		$textParser->parse();
 		
+		// handle HTML bbcode
+		$allowHtml = BBCodeHandler::getInstance()->isAvailableBBCode('html');
+		
 		// strip invalid class names
 		/** @var \DOMElement $element */
 		foreach ($this->getXPath()->query('//*[@class]') as $element) {
@@ -114,7 +118,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 				}
 				
 				$classNames = explode(' ', $element->getAttribute('class'));
-				$classNames = array_filter($classNames, function ($className) use ($nodeName) {
+				$classNames = array_filter($classNames, function ($className) use ($allowHtml, $nodeName) {
+					if (!$allowHtml && $nodeName === 'pre' && $className === 'woltlabHtml') {
+						return false;
+					}
+					
 					return ($className && in_array($className, self::$allowedClassNames[$nodeName]));
 				});
 				

@@ -2554,6 +2554,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.button.table"><![CDATA[Tabelle]]></item>
 		<item name="wcf.editor.button.underline"><![CDATA[Unterstrichen]]></item>
 		<item name="wcf.editor.button.undo"><![CDATA[Rückgängig]]></item>
+		<item name="wcf.editor.button.woltlabHtml"><![CDATA[Unsicheres HTML]]></item>
 		
 		<item name="wcf.editor.code.edit"><![CDATA[Code bearbeiten]]></item>
 		<item name="wcf.editor.code.file"><![CDATA[Dateiname]]></item>
@@ -2569,6 +2570,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.format.heading3"><![CDATA[Überschrift 2]]></item>
 		<item name="wcf.editor.format.heading4"><![CDATA[Überschrift 3]]></item>
 		<item name="wcf.editor.format.paragraph"><![CDATA[Normaler Text]]></item>
+		
+		<item name="wcf.editor.html.description"><![CDATA[Der Inhalt wird unverändert ausgegeben.]]></item>
+		<item name="wcf.editor.html.title"><![CDATA[Unsicheres HTML]]></item>
 		
 		<item name="wcf.editor.image.edit"><![CDATA[Bild bearbeiten]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Bild einfügen]]></item>

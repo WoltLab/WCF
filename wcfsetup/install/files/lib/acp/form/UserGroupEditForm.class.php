@@ -102,7 +102,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'group' => $this->group,
 			'action' => 'edit',
 			'availableUserGroups' => UserGroup::getAccessibleGroups(),
-			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS
+			'groupIsEveryone' => $this->group->groupType == UserGroup::EVERYONE,
+			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS,
+			'groupIsUsers' => $this->group->groupType == UserGroup::USERS
 		]);
 		
 		// add warning when the initiator is in the group

@@ -58,8 +58,6 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	
 	/**
 	 * Loads the list of BBCodes for the HTML select element.
-	 * 
-	 * @return	string[]
 	 */
 	protected function loadBBCodeSelection() {
 		$this->bbCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());
