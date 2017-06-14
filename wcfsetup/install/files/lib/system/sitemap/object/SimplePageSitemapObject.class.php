@@ -5,6 +5,8 @@ use wcf\data\page\PageList;
 use wcf\data\DatabaseObject;
 use wcf\page\AbstractPage;
 use wcf\system\acl\simple\SimpleAclResolver;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Simple page sitemap implementation.
@@ -52,16 +54,11 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType {
 			return false;
 		}
 		
-		if ($object->permissions) {
-			$permissions = explode(',', $object->permissions);
-			foreach ($permissions as $permission) {
-				if (!self::getGuestUserProfile()->getPermission($permission)) {
-					return false;
-				}
-			}
+		if (!$object->validatePermissions()) {
+			return false; 
 		}
 		
-		if (!SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $object->pageID, self::getGuestUserProfile()->getDecoratedObject())) {
+		if (!SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $object->pageID)) {
 			return false;
 		}
 		
@@ -72,21 +69,19 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType {
 			if ($page->loginRequired) {
 				return false;
 			}
-			
-			if ($page->neededPermissions) {
-				foreach ($page->neededPermissions as $permission) {
-					if (!self::getGuestUserProfile()->getPermission($permission)) {
-						return false;
-					}
-				}
-			}
-			
-			if ($page->neededModules) {
-				foreach ($page->neededModules as $module) {
-					if (!defined($module) || !constant($module)) {
-						return false;
-					}
-				}
+				
+			try {
+				// check modules
+				$page->checkModules();
+				
+				// check permission
+				$page->checkPermissions();
+			} 
+			catch (PermissionDeniedException $e) {
+				return false;
+			} 
+			catch (IllegalLinkException $e) {
+				return false;
 			}
 		}
 		

@@ -3,6 +3,7 @@ namespace wcf\system\worker;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
+use wcf\data\user\User;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\io\File;
@@ -51,6 +52,12 @@ class SitemapRebuildWorker extends AbstractWorker {
 	public $file = null;
 	
 	/**
+	 * The user profile of the actual user.
+	 * @var User
+	 */
+	private $actualUser = null; 
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function countObjects() {
@@ -89,7 +96,10 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * @inheritDoc
 	 */
 	public function execute() {
-		$this->getWorkerData();
+		// changes session owner to 'System' during the building of sitemaps
+		$this->changeUserToGuest();
+		
+		$this->loadWorkerData();
 		
 		if (!isset($this->sitemapObjects[$this->workerData['sitemap']])) {
 			$this->workerData['finished'] = true;
@@ -172,6 +182,9 @@ class SitemapRebuildWorker extends AbstractWorker {
 		$this->workerData['sitemapLoopCount']++;
 		$this->storeWorkerData();
 		$this->closeFile();
+		
+		// change session owner back to the actual user
+		$this->changeToActualUser(); 
 	}
 	
 	/**
@@ -288,9 +301,9 @@ class SitemapRebuildWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * Fetches the current worker data and set the default values, if isn't any data stored.
+	 * Load the current worker data and set the default values, if isn't any data stored.
 	 */
-	protected function getWorkerData() {
+	protected function loadWorkerData() {
 		$this->workerData = WCF::getSession()->getVar('sitemapRebuildWorkerData');
 		
 		if ($this->loopCount == 0) {
@@ -339,5 +352,22 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 */
 	public static function getSitemapURL() {
 		return WCF::getPath() . 'sitemaps/';
+	}
+	
+	/**
+	 * Saves the actual user and changes the session owner to a guest. 
+	 */
+	private function changeUserToGuest() {
+		$this->actualUser = WCF::getUser();
+		
+		// login as system user 
+		WCF::getSession()->changeUser(new User(null, ['username' => 'System', 'userID' => 0]), true);
+	}
+	
+	/**
+	 * Changes the session back to the actual user. 
+	 */
+	private function changeToActualUser() {
+		WCF::getSession()->changeUser($this->actualUser, true);
 	}
 }

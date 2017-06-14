@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\sitemap\object;
 use wcf\data\article\content\ArticleContent;
-use wcf\data\article\Article;
 use wcf\data\DatabaseObject;
 
 /**
@@ -26,14 +25,6 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType {
 	 */
 	public function canView(DatabaseObject $object) {
 		/** @var $object ArticleContent */
-		if ($object->getArticle()->publicationStatus != Article::PUBLISHED) {
-			return false; 
-		}
-		
-		if ($object->getArticle()->getCategory()) {
-			return $object->getArticle()->getCategory()->isAccessible(self::getGuestUserProfile()->getDecoratedObject());
-		}
-		
-		return self::getGuestUserProfile()->getPermission('user.article.canRead');
+		return $object->getArticle()->canRead();
 	}
 }

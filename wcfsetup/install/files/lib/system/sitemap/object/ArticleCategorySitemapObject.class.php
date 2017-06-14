@@ -4,6 +4,7 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\category\CategoryList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 
 /**
  * Article category sitemap implementation.
@@ -38,6 +39,6 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType {
 	 */
 	public function canView(DatabaseObject $object) {
 		/** @var $object ArticleCategory */
-		return $object->isAccessible(self::getGuestUserProfile()->getDecoratedObject());
+		return $object->isAccessible(WCF::getUser());
 	}
 }

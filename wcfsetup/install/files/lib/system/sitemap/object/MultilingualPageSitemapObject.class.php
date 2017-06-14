@@ -7,6 +7,8 @@ use wcf\data\page\Page;
 use wcf\data\DatabaseObject;
 use wcf\page\AbstractPage;
 use wcf\system\acl\simple\SimpleAclResolver;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Multilingual page sitemap implementation.
@@ -59,41 +61,34 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType {
 			return false;
 		}
 		
-		if ($page->permissions) {
-			$permissions = explode(',', $object->permissions);
-			foreach ($permissions as $permission) {
-				if (!self::getGuestUserProfile()->getPermission($permission)) {
-					return false;
-				}
-			}
+		if (!$page->validatePermissions()) {
+			return false; 
 		}
 		
-		if (!SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $object->pageID, self::getGuestUserProfile()->getDecoratedObject())) {
+		if (!SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $object->pageID)) {
 			return false;
 		}
 		
 		if (!empty($page->controller)) {
-			/** @var $pageClass AbstractPage */
-			$pageClass = new $page->controller;
+			/** @var $pageInstance AbstractPage */
+			$pageInstance = new $page->controller;
 			
-			if ($pageClass->loginRequired) {
+			if ($pageInstance->loginRequired) {
 				return false;
 			}
 			
-			if ($pageClass->neededPermissions) {
-				foreach ($pageClass->neededPermissions as $permission) {
-					if (!self::getGuestUserProfile()->getPermission($permission)) {
-						return false;
-					}
-				}
+			try {
+				// check modules
+				$pageInstance->checkModules();
+				
+				// check permission
+				$pageInstance->checkPermissions();
 			}
-			
-			if ($pageClass->neededModules) {
-				foreach ($pageClass->neededModules as $module) {
-					if (!defined($module) || !constant($module)) {
-						return false;
-					}
-				}
+			catch (PermissionDeniedException $e) {
+				return false;
+			}
+			catch (IllegalLinkException $e) {
+				return false;
 			}
 		}
 		

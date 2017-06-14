@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\sitemap\object;
-use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
 
 /**
@@ -13,12 +12,6 @@ use wcf\data\DatabaseObject;
  * @since	3.1
  */
 abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectType {
-	/**
-	 * A guest user profile.
-	 * @var UserProfile
-	 */
-	protected static $userProfile = null;
-	
 	/**
 	 * @inheritDoc
 	 */
@@ -46,18 +39,5 @@ abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectTy
 	 */
 	public function canView(DatabaseObject $object) {
 		return true;
-	}
-
-	/**
-	 * Returns a guest user profile.
-	 *
-	 * @return 	UserProfile
-	 */
-	public static function getGuestUserProfile() {
-		if (self::$userProfile === null) {
-			self::$userProfile = UserProfile::getGuestUserProfile('');
-		}
-
-		return self::$userProfile;
 	}
 }

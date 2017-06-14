@@ -2,6 +2,7 @@
 namespace wcf\system\sitemap\object;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 
 /**
  * User sitemap implementation.
@@ -31,6 +32,6 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function canView(DatabaseObject $object) {
-		return self::getGuestUserProfile()->getPermission('user.profile.canViewUserProfile');
+		return WCF::getSession()->getPermission('user.profile.canViewUserProfile');
 	}
 }
