@@ -2,13 +2,12 @@
 namespace wcf\system\worker;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
-use wcf\data\ILinkableObject;
 use wcf\data\user\User;
+use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\io\File;
 use wcf\system\request\LinkHandler;
-use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\MessageUtil;
@@ -99,92 +98,95 @@ class SitemapRebuildWorker extends AbstractWorker {
 		// changes session owner to 'System' during the building of sitemaps
 		$this->changeUserToGuest();
 		
-		$this->loadWorkerData();
-		
-		if (!isset($this->sitemapObjects[$this->workerData['sitemap']])) {
-			$this->workerData['finished'] = true;
-			$this->storeWorkerData();
-		}
-		
-		// check whether we should rebuild it
-		if (!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild'] && !$this->workerData['finished']) {
-			$this->checkCache();
-		}
-		
-		if ($this->workerData['finished']) {
-			return;
-		}
-		
-		$this->openFile();
-		
-		$sitemapObject = $this->sitemapObjects[$this->workerData['sitemap']]->getProcessor();
-		$sitemapLoopCount = $this->workerData['sitemapLoopCount'];
-		
-		$objectList = $sitemapObject->getObjectList();
-		
-		if (SITEMAP_INDEX_TIME_FRAME > 0 && $sitemapObject->getLastModifiedColumn() !== null) {
-			$objectList->getConditionBuilder()->add($sitemapObject->getLastModifiedColumn() . " > ?", [
-				TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400 // one day (60 * 60 * 24)
-			]);
-		}
-		
-		$objectList->sqlLimit = $this->limit;
-		$objectList->sqlOffset = $this->limit * $sitemapLoopCount;
-		$objectList->readObjects();
-		
-		foreach ($objectList->getObjects() as $object) {
-			if (!($object instanceof ILinkableObject)) {
-				throw new ImplementationException(get_class($object), ILinkableObject::class);
+		try {
+			$this->loadWorkerData();
+			
+			if (!isset($this->sitemapObjects[$this->workerData['sitemap']])) {
+				$this->workerData['finished'] = true;
+				$this->storeWorkerData();
 			}
 			
-			$link = $object->getLink();
-			$lastModifiedTime = ($sitemapObject->getLastModifiedColumn() === null) ? null : date('c', $object->{$sitemapObject->getLastModifiedColumn()});
+			// check whether we should rebuild it
+			if (!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild'] && !$this->workerData['finished']) {
+				$this->checkCache();
+			}
 			
-			if ($sitemapObject->canView($object)) {
-				$this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [
-					// strip session links
-					'link' => MessageUtil::stripCrap($link),
-					'lastModifiedTime' => $lastModifiedTime,
-					'priority' => $this->sitemapObjects[$this->workerData['sitemap']]->priority,
-					'changeFreq' => $this->sitemapObjects[$this->workerData['sitemap']]->changeFreq
-				]));
+			if ($this->workerData['finished']) {
+				return;
+			}
+			
+			$this->openFile();
+			
+			$sitemapObject = $this->sitemapObjects[$this->workerData['sitemap']]->getProcessor();
+			$sitemapLoopCount = $this->workerData['sitemapLoopCount'];
+			
+			$objectList = $sitemapObject->getObjectList();
+			
+			if (SITEMAP_INDEX_TIME_FRAME > 0 && $sitemapObject->getLastModifiedColumn() !== null) {
+				$objectList->getConditionBuilder()->add($sitemapObject->getLastModifiedColumn() . " > ?", [
+					TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400 // one day (60 * 60 * 24)
+				]);
+			}
+			
+			$objectList->sqlLimit = $this->limit;
+			$objectList->sqlOffset = $this->limit * $sitemapLoopCount;
+			$objectList->readObjects();
+			
+			foreach ($objectList->getObjects() as $object) {
+				if (!($object instanceof ILinkableObject)) {
+					throw new ImplementationException(get_class($object), ILinkableObject::class);
+				}
 				
-				$this->workerData['dataCount']++;
-			}
-		}
-		
-		if ($this->workerData['dataCount'] + $this->limit > self::SITEMAP_OBJECT_LIMIT) {
-			$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '_' . $this->workerData['sitemapLoopCount'] . '.xml');
-			
-			$this->generateTmpFile();
-			
-			$this->workerData['dataCount'] = 0;
-		}
-		
-		// finish sitemap
-		if (count($objectList) < $this->limit) {
-			if ($this->workerData['dataCount'] > 0) {
-				$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml');
+				$link = $object->getLink();
+				$lastModifiedTime = ($sitemapObject->getLastModifiedColumn() === null) ? null : date('c', $object->{$sitemapObject->getLastModifiedColumn()});
+				
+				if ($sitemapObject->canView($object)) {
+					$this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [
+						// strip session links
+						'link' => MessageUtil::stripCrap($link),
+						'lastModifiedTime' => $lastModifiedTime,
+						'priority' => $this->sitemapObjects[$this->workerData['sitemap']]->priority,
+						'changeFreq' => $this->sitemapObjects[$this->workerData['sitemap']]->changeFreq
+					]));
+					
+					$this->workerData['dataCount']++;
+				}
 			}
 			
-			// increment data
-			$this->workerData['dataCount'] = 0;
-			$this->workerData['sitemapLoopCount'] = -1;
-			$this->workerData['sitemap']++;
-			
-			if (count($this->sitemapObjects) <= $this->workerData['sitemap']) {
-				$this->writeIndexFile();
-			} else {
+			if ($this->workerData['dataCount'] + $this->limit > self::SITEMAP_OBJECT_LIMIT) {
+				$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '_' . $this->workerData['sitemapLoopCount'] . '.xml');
+				
 				$this->generateTmpFile();
+				
+				$this->workerData['dataCount'] = 0;
 			}
+			
+			// finish sitemap
+			if (count($objectList) < $this->limit) {
+				if ($this->workerData['dataCount'] > 0) {
+					$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml');
+				}
+				
+				// increment data
+				$this->workerData['dataCount'] = 0;
+				$this->workerData['sitemapLoopCount'] = -1;
+				$this->workerData['sitemap']++;
+				
+				if (count($this->sitemapObjects) <= $this->workerData['sitemap']) {
+					$this->writeIndexFile();
+				} else {
+					$this->generateTmpFile();
+				}
+			}
+			
+			$this->workerData['sitemapLoopCount']++;
+			$this->storeWorkerData();
+			$this->closeFile();
+		} 
+		finally {
+			// change session owner back to the actual user
+			$this->changeToActualUser();
 		}
-		
-		$this->workerData['sitemapLoopCount']++;
-		$this->storeWorkerData();
-		$this->closeFile();
-		
-		// change session owner back to the actual user
-		$this->changeToActualUser(); 
 	}
 	
 	/**
