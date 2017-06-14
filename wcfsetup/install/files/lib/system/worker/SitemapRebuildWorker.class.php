@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
+use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
