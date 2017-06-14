@@ -152,17 +152,17 @@ class SitemapEditForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled
 		]);
 		
-		(new ObjectTypeAction([$this->objectType], 'update', [
+		$this->objectAction = new ObjectTypeAction([$this->objectType], 'update', [
 			'data' => [
 				'additionalData' => serialize($data)
 			]
-		]))->executeAction();
+		]);
+		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
-		WCF::getTPL()->assign([
-			'success' => true
-		]);
+		// show success message
+		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
