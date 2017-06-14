@@ -22,6 +22,8 @@ class StatisticsBoxController extends AbstractBoxController {
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
-		$this->content = WCF::getTPL()->fetch('boxStatistics', 'wcf', ['statistics' => UserStatsCacheBuilder::getInstance()->getData()], true);
+		if (WCF::getSession()->getPermission('user.profile.canViewStatistics')) {
+			$this->content = WCF::getTPL()->fetch('boxStatistics', 'wcf', ['statistics' => UserStatsCacheBuilder::getInstance()->getData()], true);
+		}
 	}
 }

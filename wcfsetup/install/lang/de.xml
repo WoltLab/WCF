@@ -482,6 +482,7 @@
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Kann Benutzerprofile sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Kann Benutzer-Online-Listen sehen]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewStatistics"><![CDATA[Kann Statistiken sehen]]></item>
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe in ihrer Signatur <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priorisierung]]></item>
