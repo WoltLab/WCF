@@ -188,4 +188,20 @@ class PackageValidationManager extends SingletonFactory {
 		
 		return true;
 	}
+	
+	/**
+	 * Returns the default filename for the given pip name. If no default filename
+	 * exists `null` is returned.
+	 * 
+	 * @param	string			$pip
+	 * @return	string|null
+	 * @since	3.1
+	 */
+	public function getDefaultFilenameForPackageInstallationPlugin($pip) {
+		if (isset($this->packageInstallationPlugins[$pip])) {
+			return call_user_func([$this->packageInstallationPlugins[$pip], 'getDefaultFilename']);
+		}
+		
+		return null;
+	}
 }

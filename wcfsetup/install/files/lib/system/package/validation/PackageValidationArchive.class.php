@@ -247,10 +247,12 @@ class PackageValidationArchive implements \RecursiveIterator {
 		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
 			$instruction = $instructions[$i];
 			if (!PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction($this->archive, $instruction['pip'], $instruction['value'])) {
+				$defaultFilename = PackageValidationManager::getInstance()->getDefaultFilenameForPackageInstallationPlugin($instruction['pip']);
+				
 				throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, [
 					'pip' => $instruction['pip'],
 					'type' => $type,
-					'value' => $instruction['value']
+					'value' => $instruction['value'] ?: $defaultFilename
 				]);
 			}
 		}
