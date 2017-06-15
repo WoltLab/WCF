@@ -22,7 +22,7 @@ class RebuildSitemapCronjob extends AbstractCronjob {
 		$worker = new SitemapRebuildWorker([]);
 		$count = 0;
 		
-		while($worker->getProgress() < 100) {
+		while ($worker->getProgress() < 100) {
 			$worker->setLoopCount($count);
 			$worker->execute();
 			$count++;

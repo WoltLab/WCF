@@ -14,6 +14,8 @@
 	</nav>
 </header>
 
+<p class="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</p>
+
 {if $sitemapObjectTypes|count}
 	<div class="section sortableListContainer">
 		<table class="table">

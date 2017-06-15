@@ -1614,6 +1614,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktiviert]]></item>
 		<item name="wcf.acp.sitemap.enabled"><![CDATA[Sitemap aktiviert]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap „{lang}wcf.acp.sitemap.objectType.{$objectType->objectType}{/lang}“ bearbeiten]]></item>
+		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Artikel]]></item>
