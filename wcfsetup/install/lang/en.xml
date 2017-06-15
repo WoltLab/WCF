@@ -574,6 +574,7 @@
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Accelerated guest view is enabled]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied despite them being granted below. Affected options have been marked with a bolt (<span class="icon icon16 fa-bolt red"></span>).]]></item>
+		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Can manage contact form]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -825,6 +826,7 @@
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Other]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
+		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Contact Form]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1287,6 +1289,8 @@
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Periodically retrieves new notifications in the background, requests are dispatched every 5 minutes. Interval decreases down to 15 minutes on inactivity.]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Enable Desktop Notifications]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Display a small window for new notifications that have been retrieved in the background. May not be supported in some browsers, e.g. Internet Explorer.]]></item>
+		<item name="wcf.acp.option.module_contact_form"><![CDATA[Enable contact form]]></item>
+		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactSettings'}{/link}">input fields and recipients</a> to better suit your needs.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2237,6 +2241,17 @@ Errors are:
 	
 	<category name="wcf.contact">
 		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
+	</category>
+	
+	<category name="wcf.acp.contact">
+		<item name="wcf.acp.contact.options"><![CDATA[Input Fields]]></item>
+		<item name="wcf.acp.contact.option.add"><![CDATA[Add Input Field]]></item>
+		<item name="wcf.acp.contact.recipients"><![CDATA[Recipients]]></item>
+		<item name="wcf.acp.contact.recipient.add"><![CDATA[Add Recipient]]></item>
+		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Edit Recipient]]></item>
+		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Disable recipient]]></item>
+		<item name="wcf.acp.contact.recipient.name"><![CDATA[Display Name]]></item>
+		<item name="wcf.acp.contact.settings"><![CDATA[Edit Contact Form]]></item>
 	</category>
 	
 	<category name="wcf.date">

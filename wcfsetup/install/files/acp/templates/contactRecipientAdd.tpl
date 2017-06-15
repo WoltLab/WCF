@@ -43,7 +43,7 @@
 		</dl>
 		
 		<dl{if $errorField === 'email'} class="formError"{/if}>
-			<dt><label for="email">{lang}wcf.acp.contact.recipient.email{/lang}</label></dt>
+			<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 			<dd>
 				{if $action === 'edit' && $recipient->isAdministrator}
 					<span>{$i18nPlainValues['email']}</span>
@@ -57,7 +57,7 @@
 							{elseif $errorType === 'multilingual'}
 								{lang}wcf.global.form.error.multilingual{/lang}
 							{else}
-								{lang}wcf.acp.contact.recipient.email.error.{@$errorType}{/lang}
+								{lang}wcf.user.email.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}

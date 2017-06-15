@@ -4,6 +4,7 @@ use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\contact\recipient\ContactRecipientAction;
 use wcf\data\contact\recipient\ContactRecipientEditor;
 use wcf\form\AbstractForm;
+use wcf\system\email\Mailbox;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -93,6 +94,16 @@ class ContactRecipientAddForm extends AbstractForm {
 			}
 			else {
 				throw new UserInputException('email', 'multilingual');
+			}
+		}
+		else {
+			foreach (I18nHandler::getInstance()->getValues('email') as $email) {
+				try {
+					new Mailbox($email);
+				}
+				catch (\DomainException $e) {
+					throw new UserInputException('email', 'invalid');
+				}
 			}
 		}
 		
