@@ -215,6 +215,19 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.rebuildSitemap">
+			<classname>wcf\system\cronjob\RebuildSitemapCronjob</classname>
+			<description>Rebuilds the sitemap</description>
+			<description language="de">Aktualisiert die Sitemap</description>
+			<startminute>0</startminute>
+			<starthour>3</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 	
 	<delete>
