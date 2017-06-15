@@ -76,6 +76,13 @@
 				<controller>wcf\acp\form\NotificationPresetSettingsForm</controller>
 				<permissions>admin.user.canEditUser</permissions>
 			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.contact.settings">
+				<parent>wcf.acp.menu.link.other</parent>
+				<controller>wcf\acp\form\ContactSettingsPage</controller>
+				<options>module_contact_form</options>
+				<permissions>admin.contact.canManageContactForm</permissions>
+			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
 				<parent>wcf.acp.menu.link.other</parent>

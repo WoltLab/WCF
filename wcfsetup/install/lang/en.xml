@@ -2235,6 +2235,10 @@ Errors are:
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
 	
+	<category name="wcf.contact">
+		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
+	</category>
+	
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
 		<item name="wcf.date.timeFormat">g:i&#xa0;a</item>

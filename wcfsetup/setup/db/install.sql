@@ -413,6 +413,17 @@ CREATE TABLE wcf1_condition (
 	conditionData MEDIUMTEXT
 );
 
+DROP TABLE IF EXISTS wcf1_contact_recipient;
+CREATE TABLE wcf1_contact_recipient (
+	recipientID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isAdministrator TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_core_object;
 CREATE TABLE wcf1_core_object (
 	objectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -2213,3 +2224,6 @@ INSERT INTO wcf1_user_rank (groupID, requiredPoints, rankTitle, cssClassName) VA
 	(3, 3000, 'wcf.user.rank.user3', ''),
 	(3, 9000, 'wcf.user.rank.user4', ''),
 	(3, 15000, 'wcf.user.rank.user5', '');
+
+-- default recipient: site administrator
+INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);

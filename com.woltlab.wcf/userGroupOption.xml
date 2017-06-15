@@ -163,6 +163,14 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			<option name="admin.contact.canManageContactForm">
+				<categoryname>admin.configuration</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+				<options>module_contact_form</options>
+			</option>
 			<option name="admin.configuration.canManageApplication">
 				<categoryname>admin.configuration.package</categoryname>
 				<optiontype>boolean</optiontype>

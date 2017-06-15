@@ -224,3 +224,4 @@ define('ENABLE_AD_ROTATION', 1);
 define('ENABLE_POLLING', 1);
 define('ENABLE_DESKTOP_NOTIFICATIONS', 1);
 define('FB_SHARE_APP_ID', '');
+define('MODULE_CONTACT_FORM', 0);
