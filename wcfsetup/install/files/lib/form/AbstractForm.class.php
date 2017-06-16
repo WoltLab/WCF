@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\page\AbstractPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
@@ -36,9 +37,9 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	
 	/**
 	 * database object action
-	 * @var	\wcf\data\AbstractDatabaseObjectAction
+	 * @var	AbstractDatabaseObjectAction
 	 */
-	public $objectAction = null;
+	public $objectAction;
 	
 	/**
 	 * additional fields
