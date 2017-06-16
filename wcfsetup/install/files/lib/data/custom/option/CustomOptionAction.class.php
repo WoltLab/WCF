@@ -25,6 +25,11 @@ abstract class CustomOptionAction extends AbstractDatabaseObjectAction implement
 	/**
 	 * @inheritDoc
 	 */
+	protected $requireACP = ['create', 'delete', 'update'];
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function validateToggle() {
 		$this->validateUpdate();
 	}
