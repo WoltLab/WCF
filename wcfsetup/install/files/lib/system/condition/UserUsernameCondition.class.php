@@ -3,6 +3,8 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
@@ -14,8 +16,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserUsernameCondition extends AbstractTextCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserUsernameCondition extends AbstractTextCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -41,8 +44,12 @@ class UserUsernameCondition extends AbstractTextCondition implements IContentCon
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
-		return mb_strpos($user->username, $condition->username) !== false;
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
+		return mb_strpos($object->username, $conditionData['username']) !== false;
 	}
 	
 	/**
@@ -51,6 +58,6 @@ class UserUsernameCondition extends AbstractTextCondition implements IContentCon
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }

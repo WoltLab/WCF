@@ -4,6 +4,8 @@ use wcf\data\condition\Condition;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -18,8 +20,9 @@ use wcf\util\ArrayUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -74,13 +77,17 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
-		$groupIDs = $user->getGroupIDs();
-		if (!empty($condition->conditionData['groupIDs']) && count(array_diff($condition->conditionData['groupIDs'], $groupIDs))) {
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
+		$groupIDs = $object->getGroupIDs();
+		if (!empty($conditionData['groupIDs']) && count(array_diff($conditionData['groupIDs'], $groupIDs))) {
 			return false;
 		}
 		
-		if (!empty($condition->conditionData['notGroupIDs']) && count(array_intersect($condition->conditionData['notGroupIDs'], $groupIDs))) {
+		if (!empty($conditionData['notGroupIDs']) && count(array_intersect($conditionData['notGroupIDs'], $groupIDs))) {
 			return false;
 		}
 		
@@ -246,6 +253,6 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }

@@ -3,6 +3,8 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
@@ -14,8 +16,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserAvatarCondition extends AbstractSelectCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserAvatarCondition extends AbstractSelectCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -72,18 +75,22 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
-		switch ($condition->userAvatar) {
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
+		switch ($conditionData['userAvatar']) {
 			case self::NO_AVATAR:
-				return !$user->avatarID && !$user->enableGravatar;
+				return !$object->avatarID && !$object->enableGravatar;
 			break;
 			
 			case self::AVATAR:
-				return $user->avatarID != 0;
+				return $object->avatarID != 0;
 			break;
 			
 			case self::GRAVATAR:
-				return $user->enableGravatar;
+				return $object->enableGravatar;
 			break;
 		}
 	}
@@ -110,6 +117,6 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }

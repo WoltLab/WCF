@@ -3,6 +3,8 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -17,8 +19,9 @@ use wcf\util\ArrayUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserLanguageCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserLanguageCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -45,8 +48,12 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
-		if (!empty($condition->conditionData['languageIDs']) && !in_array($user->languageID, $condition->languageIDs)) {
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
+		if (!empty($conditionData['languageIDs']) && !in_array($object->languageID, $conditionData['languageIDs'])) {
 			return false;
 		}
 		
@@ -119,10 +126,10 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
 	 */
 	public function showContent(Condition $condition) {
 		if (WCF::getUser()->userID) {
-			return $this->checkUser($condition, WCF::getUser());
+			return $this->checkObject(WCF::getUser(), $condition->conditionData);
 		}
 		
-		if (!empty($condition->conditionData['languageIDs']) && !in_array(WCF::getLanguage()->languageID, $condition->languageIDs)) {
+		if (!empty($condition->conditionData['languageIDs']) && !in_array(WCF::getLanguage()->languageID, $condition->conditionData['languageIDs'])) {
 			return false;
 		}
 		

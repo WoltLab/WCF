@@ -3,6 +3,8 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
@@ -15,8 +17,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -47,16 +50,18 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
-		/** @noinspection PhpUndefinedFieldInspection */
-		$greaterThan = $condition->greaterThan;
-		if ($greaterThan !== null && $user->registrationDate >= TIME_NOW - $greaterThan * 86400) {
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
+		$greaterThan = $conditionData['greaterThan'];
+		if ($greaterThan !== null && $object->registrationDate >= TIME_NOW - $greaterThan * 86400) {
 			return false;
 		}
 		
-		/** @noinspection PhpUndefinedFieldInspection */
-		$lessThan = $condition->lessThan;
-		if ($lessThan !== null && $user->registrationDate <= TIME_NOW - $lessThan * 86400) {
+		$lessThan = $conditionData['lessThan'];
+		if ($lessThan !== null && $object->registrationDate <= TIME_NOW - $lessThan * 86400) {
 			return false;
 		}
 		
@@ -76,6 +81,6 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }
