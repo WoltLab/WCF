@@ -656,6 +656,18 @@ RedactorPlugins.wbbcode = function() {
 			
 			if ($searchFor.length) {
 				var $didReplace = true;
+				// remove newlines inside an opening and closing bbcode of the same exact type
+				while ($didReplace) {
+					$didReplace = false;
+					html = html.replace(new RegExp('\\[((?:' + $searchFor.join('|') + ')=[^\\]]+?)\\]\n\\[\\/\\1\\]', 'gi'), function(matches, bbcode) {
+						$didReplace = true;
+						
+						return '[' + bbcode + '][/' + bbcode + ']';
+					});
+				}
+				
+				// join adjacent bbcodes of the same exact type
+				$didReplace = true;
 				while ($didReplace) {
 					$didReplace = false;
 					html = html.replace(new RegExp('\\[\\/((?:' + $searchFor.join('|') + ')=[^\\]]+?)\\]\n\\[\\1\\]', 'gi'), function() {
