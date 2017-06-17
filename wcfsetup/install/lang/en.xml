@@ -1293,6 +1293,37 @@
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactSettings'}{/link}">input fields and recipients</a> to better suit your needs.]]></item>
 	</category>
 	
+	<category name="wcf.acp.customOption">
+		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
+		<item name="wcf.acp.customOption.optionType"><![CDATA[Option Type]]></item>
+		<item name="wcf.acp.customOption.optionType.boolean"><![CDATA[Yes/No]]></item>
+		<item name="wcf.acp.customOption.optionType.boolean.yes"><![CDATA[Yes]]></item>
+		<item name="wcf.acp.customOption.optionType.boolean.no"><![CDATA[No]]></item>
+		<item name="wcf.acp.customOption.optionType.checkboxes"><![CDATA[Checkboxes]]></item>
+		<item name="wcf.acp.customOption.optionType.date"><![CDATA[Date]]></item>
+		<item name="wcf.acp.customOption.optionType.integer"><![CDATA[Integer]]></item>
+		<item name="wcf.acp.customOption.optionType.float"><![CDATA[Decimal]]></item>
+		<item name="wcf.acp.customOption.optionType.multiSelect"><![CDATA[Multi selection]]></item>
+		<item name="wcf.acp.customOption.optionType.radioButton"><![CDATA[Radio selection]]></item>
+		<item name="wcf.acp.customOption.optionType.select"><![CDATA[Single selection]]></item>
+		<item name="wcf.acp.customOption.optionType.text"><![CDATA[Short text]]></item>
+		<item name="wcf.acp.customOption.optionType.textarea"><![CDATA[Multiline text]]></item>
+		<item name="wcf.acp.customOption.optionType.message"><![CDATA[Multiline text (bbcode support)]]></item>
+		<item name="wcf.acp.customOption.optionType.URL"><![CDATA[Link]]></item>
+		<item name="wcf.acp.customOption.add"><![CDATA[Add Option Field]]></item>
+		<item name="wcf.acp.customOption.edit"><![CDATA[Edit Option Field]]></item>
+		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
+		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->optionTitle|language}</span>?]]></item>
+		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
+		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
+		<item name="wcf.acp.customOption.typeData"><![CDATA[Properties]]></item>
+		<item name="wcf.acp.customOption.selectOptions"><![CDATA[Options]]></item>
+		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[You can use select options in combination with selection types, but please be aware that using the colon will cause the system to use everything to the left as an internal identifier and only the part after the colon will be displayed to the user. This allows you to change the value displayed to the user without harming existing selections unless the identifier itself is being changed. Enter one select option per line.]]></item>
+		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regular Expression]]></item>
+		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[You can provide a regular expression to validate the user input.]]></item>
+		<item name="wcf.acp.customOption.required"><![CDATA[This is a required field]]></item>
+	</category>
+	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>

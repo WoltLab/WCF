@@ -1302,6 +1302,37 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontakt-Formular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 	</category>
 	
+	<category name="wcf.acp.customOption">
+		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
+		<item name="wcf.acp.customOption.optionType"><![CDATA[Feldtyp]]></item>
+		<item name="wcf.acp.customOption.optionType.boolean"><![CDATA[Ja/Nein]]></item>
+		<item name="wcf.acp.customOption.optionType.boolean.yes"><![CDATA[Ja]]></item>
+		<item name="wcf.acp.customOption.optionType.boolean.no"><![CDATA[Nein]]></item>
+		<item name="wcf.acp.customOption.optionType.checkboxes"><![CDATA[Checkboxen]]></item>
+		<item name="wcf.acp.customOption.optionType.date"><![CDATA[Datum]]></item>
+		<item name="wcf.acp.customOption.optionType.integer"><![CDATA[Ganze Zahl]]></item>
+		<item name="wcf.acp.customOption.optionType.float"><![CDATA[Dezimalzahl]]></item>
+		<item name="wcf.acp.customOption.optionType.multiSelect"><![CDATA[Multi-Select]]></item>
+		<item name="wcf.acp.customOption.optionType.radioButton"><![CDATA[Radio-Buttons]]></item>
+		<item name="wcf.acp.customOption.optionType.select"><![CDATA[Select]]></item>
+		<item name="wcf.acp.customOption.optionType.text"><![CDATA[Einzeiliger Text]]></item>
+		<item name="wcf.acp.customOption.optionType.textarea"><![CDATA[Mehrzeiliger Text]]></item>
+		<item name="wcf.acp.customOption.optionType.message"><![CDATA[Mehrzeiliger Text (BBCode-Unterstützung)]]></item>
+		<item name="wcf.acp.customOption.optionType.URL"><![CDATA[Link]]></item>
+		<item name="wcf.acp.customOption.add"><![CDATA[Eingabefeld hinzufügen]]></item>
+		<item name="wcf.acp.customOption.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
+		<item name="wcf.acp.customOption.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Eingabefeld <span class="confirmationObject">{$option->optionTitle|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Standardwert]]></item>
+		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
+		<item name="wcf.acp.customOption.typeData"><![CDATA[Eigenschaften]]></item>
+		<item name="wcf.acp.customOption.selectOptions"><![CDATA[Auswahloptionen]]></item>
+		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne, dass die Auswahl von Benutzern verloren geht.]]></item>
+		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
+		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
+		<item name="wcf.acp.customOption.required"><![CDATA[Das Feld muss zwingend ausgefüllt werden.]]></item>
+	</category>
+	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
