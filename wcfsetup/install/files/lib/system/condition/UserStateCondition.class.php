@@ -3,6 +3,8 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -15,8 +17,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserStateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserStateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -72,20 +75,22 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
-		/** @noinspection PhpUndefinedFieldInspection */
-		$userIsBanned = $condition->userIsBanned;
-		if ($userIsBanned !== null && $user->banned != $userIsBanned) {
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
+		$userIsBanned = $conditionData['userIsBanned'];
+		if ($userIsBanned !== null && $object->banned != $userIsBanned) {
 			return false;
 		}
 		
-		/** @noinspection PhpUndefinedFieldInspection */
-		$userIsEnabled = $condition->userIsEnabled;
+		$userIsEnabled = $conditionData['userIsEnabled'];
 		if ($userIsEnabled !== null) {
-			if ($userIsEnabled && $user->activationCode) {
+			if ($userIsEnabled && $object->activationCode) {
 				return false;
 			}
-			else if (!$userIsEnabled && !$user->activationCode) {
+			else if (!$userIsEnabled && !$object->activationCode) {
 				return false;
 			}
 		}
@@ -213,6 +218,6 @@ HTML;
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Condition
  * @since	3.0
  */
-class UserTimestampPropertyCondition extends AbstractTimestampCondition implements IContentCondition, IUserCondition {
+class UserTimestampPropertyCondition extends AbstractTimestampCondition implements IContentCondition, IObjectCondition {
 	use TObjectListUserCondition;
 	use TObjectUserCondition;
 	
@@ -43,6 +43,6 @@ class UserTimestampPropertyCondition extends AbstractTimestampCondition implemen
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }

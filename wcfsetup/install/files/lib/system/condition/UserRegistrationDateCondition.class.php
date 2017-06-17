@@ -3,6 +3,8 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -15,8 +17,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
-class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectCondition, IObjectListCondition {
 	use TObjectListUserCondition;
+	use TObjectUserCondition;
 	
 	/**
 	 * @inheritDoc
@@ -54,16 +57,20 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 	/**
 	 * @inheritDoc
 	 */
-	public function checkUser(Condition $condition, User $user) {
+	public function checkObject(DatabaseObject $object, array $conditionData) {
+		if (!($object instanceof User) || ($object instanceof DatabaseObjectDecorator && !($object->getDecoratedObject() instanceof User))) {
+			throw new \InvalidArgumentException("Object is no (decorated) instance of '".User::class."', instance of '".get_class($object)."' given.");
+		}
+		
 		/** @noinspection PhpUndefinedFieldInspection */
-		$registrationDateStart = $condition->registrationDateStart;
-		if ($registrationDateStart !== null && $user->registrationDate < strtotime($registrationDateStart)) {
+		$registrationDateStart = $conditionData['registrationDateStart'];
+		if ($registrationDateStart !== null && $object->registrationDate < strtotime($registrationDateStart)) {
 			return false;
 		}
 		
 		/** @noinspection PhpUndefinedFieldInspection */
-		$registrationDateEnd = $condition->registrationDateEnd;
-		if ($registrationDateEnd !== null && $user->registrationDate >= strtotime($registrationDateEnd) + 86400) {
+		$registrationDateEnd = $conditionData['registrationDateEnd'];
+		if ($registrationDateEnd !== null && $object->registrationDate >= strtotime($registrationDateEnd) + 86400) {
 			return false;
 		}
 		
@@ -171,6 +178,6 @@ HTML;
 	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
-		return $this->checkUser($condition, WCF::getUser());
+		return $this->checkObject(WCF::getUser(), $condition->conditionData);
 	}
 }
