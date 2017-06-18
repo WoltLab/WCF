@@ -109,7 +109,7 @@ class MailWorker extends AbstractWorker {
 	public function execute() {
 		$email = new Email();
 		$email->setSubject($this->mailData['subject']);
-		$from = new Mailbox($this->mailData['from']);
+		$from = new Mailbox($this->mailData['from'], (!empty($this->mailData['fromName']) ? $this->mailData['fromName'] : null));
 		$email->setSender($from);
 		$email->setReplyTo($from);
 		$variables = [

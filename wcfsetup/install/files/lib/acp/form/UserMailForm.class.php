@@ -28,10 +28,16 @@ class UserMailForm extends AbstractForm {
 	public $enableHTML = false;
 	
 	/**
-	 * sender name
+	 * sender address
 	 * @var	string
 	 */
 	public $from = '';
+	
+	/**
+	 * sender name
+	 * @var	string
+	 */
+	public $fromName = '';
 	
 	/**
 	 * list of group ids
@@ -94,6 +100,7 @@ class UserMailForm extends AbstractForm {
 		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
 		if (isset($_POST['text'])) $this->text = StringUtil::trim($_POST['text']);
 		if (isset($_POST['from'])) $this->from = StringUtil::trim($_POST['from']);
+		if (isset($_POST['fromName'])) $this->fromName = StringUtil::trim($_POST['fromName']);
 		if (isset($_POST['enableHTML'])) $this->enableHTML = true;
 	}
 	
@@ -143,6 +150,7 @@ class UserMailForm extends AbstractForm {
 			'subject' => $this->subject,
 			'text' => $this->text,
 			'from' => $this->from,
+			'fromName' => $this->fromName,
 			'enableHTML' => $this->enableHTML
 		];
 		WCF::getSession()->register('userMailData', $userMailData);
@@ -177,6 +185,7 @@ class UserMailForm extends AbstractForm {
 			}
 			
 			$this->from = MAIL_FROM_ADDRESS;
+			$this->fromName = MAIL_FROM_NAME;
 		}
 		
 		if (!empty($this->userIDs)) {
@@ -198,6 +207,7 @@ class UserMailForm extends AbstractForm {
 		WCF::getTPL()->assign([
 			'enableHTML' => $this->enableHTML,
 			'from' => $this->from,
+			'fromName' => $this->fromName,
 			'groupIDs' => $this->groupIDs,
 			'groups' => $this->groups,
 			'subject' => $this->subject,
