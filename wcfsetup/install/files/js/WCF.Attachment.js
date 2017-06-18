@@ -319,6 +319,17 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	},
 	
 	/**
+	 * Returns true if thumbnails are enabled and should be
+	 * used instead of the original images.
+	 * 
+	 * @return      {boolean}
+	 * @protected
+	 */
+	_useThumbnail: function() {
+		return elDataBool(this._fileListSelector[0], 'enable-thumbnails');
+	},
+	
+	/**
 	 * @see	WCF.Upload._success()
 	 */
 	_success: function(uploadID, data) {
@@ -373,7 +384,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				$li.data('objectID', attachmentData.attachmentID);
 				
 				if (this._editorId) {
-					if (attachmentData.tinyURL) {
+					if (attachmentData.tinyURL || (!this._useThumbnail() && attachmentData.isImage)) {
 						if (attachmentData.thumbnailURL) {
 							var $insertThumbnail = $('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
 							$insertThumbnail.children('span.button').click($.proxy(this._insert, this));
@@ -461,7 +472,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * Inserts all attachments at once.
 	 */
 	_insertAll: function() {
-		this._fileListSelector.children('li:not(.uploadFailed)').find('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain').trigger('click');
+		var selector = (this._useThumbnail()) ? '.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain' : '.jsButtonAttachmentInsertFull, .jsButtonAttachmentInsertPlain';
+		this._fileListSelector.children('li:not(.uploadFailed)').find(selector).trigger('click');
 	},
 	
 	/**
