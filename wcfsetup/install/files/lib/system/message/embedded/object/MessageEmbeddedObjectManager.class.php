@@ -71,9 +71,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Registers the embedded objects found in given message.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data
+	 * @param       boolean                 $isBulk                 true for bulk operations
 	 * @return      boolean                 true if at least one embedded object was found
 	 */
-	public function registerObjects(HtmlInputProcessor $htmlInputProcessor) {
+	public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false) {
 		$context = $htmlInputProcessor->getContext();
 		
 		$messageObjectType = $context['objectType'];
@@ -81,7 +82,13 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$messageID = $context['objectID'];
 		
 		// delete existing assignments
-		$this->removeObjects($messageObjectType, [$messageID]);
+		if ($isBulk) {
+			if (!isset($this->bulkData['remove'][$messageObjectType])) $this->bulkData['remove'][$messageObjectType] = [];
+			$this->bulkData['remove'][$messageObjectType][] = $messageID;
+		}
+		else {
+			$this->removeObjects($messageObjectType, [$messageID]);
+		}
 		
 		// prepare statement
 		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
@@ -90,7 +97,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		// call embedded object handlers
-		WCF::getDB()->beginTransaction();
+		if (!$isBulk) WCF::getDB()->beginTransaction();
 		
 		$embeddedData = $htmlInputProcessor->getEmbeddedContent();
 		$returnValue = false;
@@ -101,15 +108,52 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 			
 			if (!empty($objectIDs)) {
 				foreach ($objectIDs as $objectID) {
-					$statement->execute([$messageObjectTypeID, $messageID, $handler->objectTypeID, $objectID]);
+					$parameters = [$messageObjectTypeID, $messageID, $handler->objectTypeID, $objectID];
+					if ($isBulk) {
+						$this->bulkData['insert'][] = $parameters;
+					}
+					else {
+						$statement->execute($parameters);
+					}
 				}
 				
 				$returnValue = true;
 			}
 		}
-		WCF::getDB()->commitTransaction();
+		if (!$isBulk) WCF::getDB()->commitTransaction();
 		
 		return $returnValue;
+	}
+	
+	/**
+	 * Commits the bulk operation by performing all deletes and inserts
+	 * in one big transaction to save performance.
+	 */
+	public function commitBulkOperation() {
+		// delete existing data
+		WCF::getDB()->beginTransaction();
+		foreach ($this->bulkData['remove'] as $objectType => $objectIDs) {
+			$this->removeObjects($objectType, $objectIDs);
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// prepare statement
+		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
+					(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+			VALUES		(?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($this->bulkData['insert'] as $parameters) {
+			$statement->execute($parameters);
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// reset cache
+		$this->bulkData = [
+			'insert' => [],
+			'remove' => []
+		];
 	}
 	
 	/**
