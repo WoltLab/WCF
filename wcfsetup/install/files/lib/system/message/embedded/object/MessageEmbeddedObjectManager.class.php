@@ -59,6 +59,15 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	protected $contentLanguageID;
 	
 	/**
+	 * local cache for bulk operations
+	 * @var mixed[][]
+	 */
+	protected $bulkData = [
+		'insert' => [],
+		'remove' => []
+	];
+	
+	/**
 	 * Registers the embedded objects found in given message.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data

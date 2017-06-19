@@ -907,7 +907,8 @@ BROWSERCONFIG;
 		$this->styleEditor->setVariables($variables);
 		
 		$this->styleEditor->update([
-			'isTainted' => 1
+			'isTainted' => 1,
+			'packageName' => ''
 		]);
 	}
 }

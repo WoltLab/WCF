@@ -60,8 +60,8 @@ class UserOptionEditForm extends UserOptionAddForm {
 		I18nHandler::getInstance()->save('optionName', 'wcf.user.option.'.$this->userOption->optionName, 'wcf.user.option');
 		I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.'.$this->userOption->optionName.'.description', 'wcf.user.option');
 		
-		$additionalData = [];
-		if ($this->optionType == 'message') $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
+		$additionalData = is_array($this->userOption->additionalData) ? $this->userOption->additionalData : [];
+		if ($this->optionType === 'message' && !isset($additionalData['messageObjectType'])) $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
 		
 		$this->objectAction = new UserOptionAction([$this->userOption], 'update', ['data' => array_merge($this->additionalFields, [
 			'categoryName' => $this->categoryName,

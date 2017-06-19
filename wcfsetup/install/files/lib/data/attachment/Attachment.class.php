@@ -191,7 +191,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 */
 	public function showAsImage() {
 		if ($this->isImage) {
-			if (!$this->hasThumbnail() && ($this->width > ATTACHMENT_THUMBNAIL_WIDTH || $this->height > ATTACHMENT_THUMBNAIL_HEIGHT)) return false;
+			if (ATTACHMENT_ENABLE_THUMBNAILS && !$this->hasThumbnail() && ($this->width > ATTACHMENT_THUMBNAIL_WIDTH || $this->height > ATTACHMENT_THUMBNAIL_HEIGHT)) return false;
 			
 			if ($this->canDownload()) return true;
 			
