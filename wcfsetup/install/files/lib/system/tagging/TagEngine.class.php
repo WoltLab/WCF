@@ -219,7 +219,7 @@ class TagEngine extends SingletonFactory {
 			return null;
 		}
 		
-		$languageIDs = [14 => 2];
+		$languageIDs = [];
 		foreach ($existingTags as $tag) {
 			if (!isset($languageIDs[$tag->languageID])) $languageIDs[$tag->languageID] = 0;
 			$languageIDs[$tag->languageID]++;
