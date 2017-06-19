@@ -1,10 +1,12 @@
 <?php
 namespace wcf\data\category;
+use wcf\data\language\item\LanguageItemAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\data\IToggleContainerAction;
 use wcf\system\category\CategoryHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -40,6 +42,36 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 */
 	public function delete() {
 		$returnValue = parent::delete();
+		
+		// delete language items
+		if (!empty($this->objects)) {
+			// identify i18n labels
+			$languageVariables = [];
+			foreach ($this->objects as $category) {
+				if ($category->title === $category->getProcessor()->getI18nLangVarPrefix() . '.title.category' . $category->categoryID) {
+					$languageVariables[] = $category->title;
+				}
+				if ($category->description === $category->getProcessor()->getI18nLangVarPrefix() . '.description.category' . $category->categoryID) {
+					$languageVariables[] = $category->description;
+				}
+			}
+			
+			// remove language variables
+			if (!empty($languageVariables)) {
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add('languageItem IN (?)', [$languageVariables]);
+				
+				$sql = "SELECT	languageItemID
+					FROM	wcf".WCF_N."_language_item
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				$languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+				
+				$objectAction = new LanguageItemAction($languageItemIDs, 'delete');
+				$objectAction->executeAction();
+			}
+		}
 		
 		// call category types
 		foreach ($this->getObjects() as $categoryEditor) {
