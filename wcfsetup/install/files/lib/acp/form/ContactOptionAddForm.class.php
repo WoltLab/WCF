@@ -58,7 +58,7 @@ class ContactOptionAddForm extends AbstractCustomOptionForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->getI18nValue('optionTitle')->setLanguageItem('wcf.contact.field', 'wcf.contact', 'com.woltlab.wcf');
-		$this->getI18nValue('optionDescription')->setLanguageItem('wcf.contact.fieldDescription', 'wcf.contact', 'com.woltlab.wcf');
+		$this->getI18nValue('optionTitle')->setLanguageItem('wcf.contact.option', 'wcf.contact', 'com.woltlab.wcf');
+		$this->getI18nValue('optionDescription')->setLanguageItem('wcf.contact.optionDescription', 'wcf.contact', 'com.woltlab.wcf');
 	}
 }

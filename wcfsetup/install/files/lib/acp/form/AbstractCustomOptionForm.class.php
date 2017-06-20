@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\option\Option;
+use wcf\data\custom\option\CustomOption;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nValue;
@@ -84,15 +84,15 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * object instance
-	 * @var Option
+	 * @var CustomOption
 	 */
-	public $object;
+	public $option;
 	
 	/**
 	 * object id
 	 * @var integer
 	 */
-	public $objectID;
+	public $optionID;
 	
 	/**
 	 * available option types
@@ -134,9 +134,9 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 		}
 		
 		if ($this->action === 'edit') {
-			if (isset($_REQUEST['id'])) $this->objectID = intval($_REQUEST['id']);
-			$this->object = new $this->baseClass($this->objectID);
-			if (!$this->object->getObjectID()) {
+			if (isset($_REQUEST['id'])) $this->optionID = intval($_REQUEST['id']);
+			$this->option = new $this->baseClass($this->optionID);
+			if (!$this->option->getObjectID()) {
 				throw new IllegalLinkException();
 			}
 		}
@@ -187,6 +187,24 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function readData() {
+		if ($this->action === 'edit' && empty($_POST)) {
+			$this->readDataI18n($this->option);
+			
+			$this->optionType = $this->option->optionType;
+			$this->defaultValue = $this->option->defaultValue;
+			$this->validationPattern = $this->option->validationPattern;
+			$this->selectOptions = $this->option->selectOptions;
+			$this->required = $this->option->required;
+			$this->showOrder = $this->option->showOrder;
+		}
+		
+		parent::readData();
+	}
+	
+	/**
 	 * Returns the list of database values including additional fields.
 	 * 
 	 * @return      array
@@ -218,6 +236,11 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 			$this->reset();
 		}
 		else {
+			$this->beforeSaveI18n($this->option);
+			
+			$this->objectAction = new $this->actionClass([$this->option], 'update', ['data' => $this->getDatabaseValues()]);
+			$this->objectAction->executeAction();
+			
 			$this->saved();
 			
 			// show success message
@@ -243,7 +266,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign([
+		$variables = [
 			'defaultValue' => $this->defaultValue,
 			'validationPattern' => $this->validationPattern,
 			'optionType' => $this->optionType,
@@ -253,6 +276,13 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 			'action' => $this->action,
 			'availableOptionTypes' => self::$availableOptionTypes,
 			'optionTypesUsingSelectOptions' => self::$optionTypesUsingSelectOptions
-		]);
+		];
+		
+		if ($this->action === 'edit') {
+			$variables['option'] = $this->option;
+			$variables['optionID'] = $this->optionID;
+		}
+		
+		WCF::getTPL()->assign($variables);
 	}
 }

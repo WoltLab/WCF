@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\contact\option\ContactOptionList;
 use wcf\data\contact\recipient\ContactRecipientList;
 use wcf\page\AbstractPage;
 use wcf\system\WCF;
@@ -30,6 +31,11 @@ class ContactSettingsPage extends AbstractPage {
 	public $neededPermissions = ['admin.contact.canManageContactForm'];
 	
 	/**
+	 * @var ContactOptionList
+	 */
+	public $optionList;
+	
+	/**
 	 * @var ContactRecipientList
 	 */
 	public $recipientList;
@@ -39,6 +45,9 @@ class ContactSettingsPage extends AbstractPage {
 	 */
 	public function readData() {
 		parent::readData();
+		
+		$this->optionList = new ContactOptionList();
+		$this->optionList->readObjects();
 		
 		$this->recipientList = new ContactRecipientList();
 		$this->recipientList->readObjects();
@@ -51,6 +60,7 @@ class ContactSettingsPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'optionList' => $this->optionList,
 			'recipientList' => $this->recipientList
 		]);
 	}

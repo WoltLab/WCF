@@ -413,6 +413,21 @@ CREATE TABLE wcf1_condition (
 	conditionData MEDIUMTEXT
 );
 
+DROP TABLE IF EXISTS wcf1_contact_option;
+CREATE TABLE wcf1_contact_option (
+	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	optionTitle VARCHAR(255) NOT NULL DEFAULT '',
+	optionDescription TEXT,
+	optionType VARCHAR(255) NOT NULL DEFAULT '',
+	defaultValue MEDIUMTEXT,
+	validationPattern TEXT,
+	selectOptions MEDIUMTEXT,
+	required TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_contact_recipient;
 CREATE TABLE wcf1_contact_recipient (
 	recipientID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -2224,6 +2239,10 @@ INSERT INTO wcf1_user_rank (groupID, requiredPoints, rankTitle, cssClassName) VA
 	(3, 3000, 'wcf.user.rank.user3', ''),
 	(3, 9000, 'wcf.user.rank.user4', ''),
 	(3, 15000, 'wcf.user.rank.user5', '');
+
+-- default options: subject and message
+INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (1, 'wcf.contact.option1', 'wcf.contact.optionDescription1', 'text', 1, 1, 1);
+INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (2, 'wcf.contact.option2', '', 'textarea', 1, 1, 1);
 
 -- default recipient: site administrator
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);

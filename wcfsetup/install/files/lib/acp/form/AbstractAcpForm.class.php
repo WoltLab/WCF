@@ -101,8 +101,6 @@ abstract class AbstractAcpForm extends AbstractForm {
 	 */
 	public function readDataI18n(DatabaseObject $databaseObject) {
 		if (empty($_POST) && !empty($this->i18nValues)) {
-			I18nHandler::getInstance()->readValues();
-			
 			foreach ($this->i18nValues as $fieldName => $value) {
 				I18nHandler::getInstance()->setOptions(
 					$fieldName,
@@ -133,7 +131,7 @@ abstract class AbstractAcpForm extends AbstractForm {
 					$value->getPackageID()
 				);
 				
-				$value[$fieldName] = I18nHandler::getInstance()->getValues($fieldName)[WCF::getLanguage()->languageID];
+				$values[$fieldName] = I18nHandler::getInstance()->getValues($fieldName)[WCF::getLanguage()->languageID];
 			}
 		}
 		

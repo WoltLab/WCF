@@ -9,11 +9,13 @@
 	});
 	
 	$(function() {
+		new WCF.Action.Delete('wcf\\data\\contact\\option\\ContactOptionAction', '.jsOptionRow');
+		new WCF.Action.Toggle('wcf\\data\\contact\\option\\ContactOptionAction', $('.jsOptionRow'));
+		
 		new WCF.Action.Delete('wcf\\data\\contact\\recipient\\ContactRecipientAction', '.jsRecipient');
 		new WCF.Action.Toggle('wcf\\data\\contact\\recipient\\ContactRecipientAction', '.jsRecipient');
 	});
 </script>
-
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
@@ -32,6 +34,43 @@
 
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.acp.contact.options{/lang}</h2>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="columnID columnOptionID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
+				<th class="columnTitle columnOptionTitle">{lang}wcf.global.name{/lang}</th>
+				<th class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType{/lang}</th>
+				<th class="columnDigits columnShowOrder">{lang}wcf.acp.customOption.showOrder{/lang}</th>
+				
+				{event name='columnHeads'}
+			</tr>
+		</thead>
+		
+		<tbody>
+			{foreach from=$optionList item=option}
+				<tr class="jsOptionRow">
+					<td class="columnIcon">
+						<span class="icon icon16 fa-{if !$option->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $option->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$option->optionID}"></span>
+						<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+						{if $option->canDelete()}
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$option->optionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.customOption.delete.confirmMessage{/lang}"></span>
+						{else}
+							<span class="icon icon16 fa-times disabled"></span>
+						{/if}
+						
+						{event name='rowButtons'}
+					</td>
+					<td class="columnID">{@$option->optionID}</td>
+					<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->optionTitle|language}</a></td>
+					<td class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType.{$option->optionType}{/lang}</td>
+					<td class="columnDigits columnShowOrder">{#$option->showOrder}</td>
+					
+					{event name='columns'}
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
 </section>
 
 <section class="section">

@@ -28,6 +28,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$required		is `1` if the option has to be filled out, otherwise `0`
  * @property-read	integer		$showOrder		position of the option relation tp the other options
  * @property-read	integer		$isDisabled		is `1` if the option is disabled, otherwise `0`
+ * @property-read	integer		$originIsSystem		is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
  */
 abstract class CustomOption extends Option {
 	/**
@@ -125,5 +126,15 @@ abstract class CustomOption extends Option {
 			default:
 				return StringUtil::encodeHTML($this->optionValue);
 		}
+	}
+	
+	/**
+	 * Returns true if this option can be deleted, defaults to false for
+	 * options created through the package system.
+	 * 
+	 * @return      boolean
+	 */
+	public function canDelete() {
+		return !$this->originIsSystem;
 	}
 }
