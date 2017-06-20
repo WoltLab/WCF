@@ -5,6 +5,7 @@ use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes options.
@@ -40,13 +41,13 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['optiontype'])) $optionType = $option['optiontype'];
 		if (isset($option['defaultvalue'])) $defaultValue = WCF::getLanguage()->get($option['defaultvalue']);
 		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
-		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
+		if (isset($option['enableoptions'])) $enableOptions = StringUtil::normalizeCsv($option['enableoptions']);
 		if (isset($option['showorder'])) $showOrder = intval($option['showorder']);
 		if (isset($option['hidden'])) $hidden = intval($option['hidden']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
 		if (isset($option['selectoptions'])) $selectOptions = $option['selectoptions'];
-		if (isset($option['permissions'])) $permissions = $option['permissions'];
-		if (isset($option['options'])) $options = $option['options'];
+		if (isset($option['permissions'])) $permissions = StringUtil::normalizeCsv($option['permissions']);
+		if (isset($option['options'])) $options = StringUtil::normalizeCsv($option['options']);
 		if (isset($option['supporti18n'])) $supportI18n = $option['supporti18n'];
 		if (isset($option['requirei18n'])) $requireI18n = $option['requirei18n'];
 		

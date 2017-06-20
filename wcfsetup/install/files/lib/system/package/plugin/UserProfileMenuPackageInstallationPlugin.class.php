@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\user\profile\menu\item\UserProfileMenuItemEditor;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user profile menu items.
@@ -54,8 +55,8 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		// merge values and default values
 		return [
 			'menuItem' => $data['attributes']['name'],
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
-			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
+			'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : '',
 			'showOrder' => $showOrder,
 			'className' => $data['elements']['classname']
 		];

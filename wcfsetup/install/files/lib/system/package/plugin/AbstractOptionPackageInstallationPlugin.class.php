@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a package installation plugin for options.
@@ -120,9 +121,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			// build data block with defaults
 			$data = [
 				'categoryName' => $element->getAttribute('name'),
-				'options' => isset($data['options']) ? $data['options'] : '',
+				'options' => isset($data['options']) ? StringUtil::normalizeCsv($data['options']) : '',
 				'parentCategoryName' => isset($data['parent']) ? $data['parent'] : '',
-				'permissions' => isset($data['permissions']) ? $data['permissions'] : '',
+				'permissions' => isset($data['permissions']) ? StringUtil::normalizeCsv($data['permissions']) : '',
 				'showOrder' => isset($data['showorder']) ? intval($data['showorder']) : null
 			];
 			

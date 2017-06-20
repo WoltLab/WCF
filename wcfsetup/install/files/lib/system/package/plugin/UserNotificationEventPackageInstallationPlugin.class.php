@@ -4,6 +4,7 @@ use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user notification events.
@@ -66,8 +67,8 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			'eventName' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
 			'objectTypeID' => $this->getObjectTypeID($data['elements']['objecttype']),
-			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
 			'preset' => !empty($data['elements']['preset']) ? 1 : 0,
 			'presetMailNotificationType' => $presetMailNotificationType
 		];

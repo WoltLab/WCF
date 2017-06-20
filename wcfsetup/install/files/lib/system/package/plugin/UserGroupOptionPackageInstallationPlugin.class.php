@@ -4,6 +4,7 @@ use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user group options.
@@ -50,9 +51,9 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
 		if (!empty($option['showorder'])) $showOrder = intval($option['showorder']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
-		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
-		if (isset($option['permissions'])) $permissions = $option['permissions'];
-		if (isset($option['options'])) $options = $option['options'];
+		if (isset($option['enableoptions'])) $enableOptions = StringUtil::normalizeCsv($option['enableoptions']);
+		if (isset($option['permissions'])) $permissions = StringUtil::normalizeCsv($option['permissions']);
+		if (isset($option['options'])) $options = StringUtil::normalizeCsv($option['options']);
 		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
 		
 		// collect additional tags and their values

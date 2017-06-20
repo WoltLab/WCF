@@ -4,6 +4,7 @@ use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\WCF;
 use wcf\util\CronjobUtil;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes cronjobs.
@@ -76,7 +77,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			'cronjobName' => isset($data['attributes']['name']) ? $data['attributes']['name'] : '',
 			'description' => isset($data['elements']['description']) ? $data['elements']['description'] : '',
 			'isDisabled' => isset($data['elements']['isdisabled']) ? intval($data['elements']['isdisabled']) : 0,
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
 			'startDom' => $data['elements']['startdom'],
 			'startDow' => $data['elements']['startdow'],
 			'startHour' => $data['elements']['starthour'],

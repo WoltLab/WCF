@@ -765,6 +765,19 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Normalizes a string representing comma-separated values by making sure
+	 * that the separator is just a comma, not a combination of whitespace and
+	 * a comma.
+	 * 
+	 * @param	string		$string
+	 * @return	string
+	 * @since	3.1
+	 */
+	public static function normalizeCsv($string) {
+		return implode(',', ArrayUtil::trim(explode(',', $string)));
+	}
+	
+	/**
 	 * Forbid creation of StringUtil objects.
 	 */
 	private function __construct() {

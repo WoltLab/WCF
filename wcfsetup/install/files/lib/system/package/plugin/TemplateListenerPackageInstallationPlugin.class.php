@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\template\listener\TemplateListenerEditor;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes template listeners.
@@ -57,8 +58,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			'eventName' => $data['elements']['eventname'],
 			'niceValue' => $niceValue,
 			'name' => $data['attributes']['name'],
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
-			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
+			'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : '',
 			'templateCode' => $data['elements']['templatecode'],
 			'templateName' => $data['elements']['templatename']
 		];
