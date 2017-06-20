@@ -232,7 +232,8 @@ class HtmlInputNodeTextParser {
 					$match = $matches[$i][$j];
 					$variants = $this->getUsernameVariants($match);
 					foreach ($variants as $username) {
-						if (!isset($usernames[$username])) {
+						$username = StringUtil::trim($username);
+						if (!empty($username) && !isset($usernames[$username])) {
 							$usernames[$username] = $username;
 						}
 					}
