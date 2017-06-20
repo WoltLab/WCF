@@ -1,5 +1,5 @@
 <?php
-namespace wcf\data\contact\recipient;
+namespace wcf\data\contact\option;
 use wcf\data\custom\option\CustomOptionList;
 
 /**

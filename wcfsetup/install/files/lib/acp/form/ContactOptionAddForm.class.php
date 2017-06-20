@@ -1,8 +1,8 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\contact\recipient\ContactOption;
-use wcf\data\contact\recipient\ContactOptionAction;
-use wcf\data\contact\recipient\ContactOptionEditor;
+use wcf\data\contact\option\ContactOption;
+use wcf\data\contact\option\ContactOptionAction;
+use wcf\data\contact\option\ContactOptionEditor;
 
 /**
  * Shows the contact option add form.
