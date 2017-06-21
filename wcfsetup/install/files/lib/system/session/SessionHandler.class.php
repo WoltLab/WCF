@@ -736,6 +736,7 @@ class SessionHandler extends SingletonFactory {
 		
 		// update user reference
 		$this->user = $user;
+		$this->userID = $this->user->userID ?: 0;
 		
 		// reset caches
 		$this->groupData = null;
