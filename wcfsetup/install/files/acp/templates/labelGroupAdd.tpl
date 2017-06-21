@@ -50,7 +50,7 @@
 				<dl{if $errorField == 'groupName'} class="formError"{/if}>
 					<dt><label for="groupName">{lang}wcf.global.title{/lang}</label></dt>
 					<dd>
-						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus class="long">
+						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus class="long" maxlength="80">
 						{if $errorField == 'groupName'}
 							<small class="innerError">
 								{if $errorType == 'empty' || $errorType == 'multilingual'}
