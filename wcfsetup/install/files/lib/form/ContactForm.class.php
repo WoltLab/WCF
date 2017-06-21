@@ -20,8 +20,16 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Form
  */
 class ContactForm extends AbstractCaptchaForm {
+	/**
+	 * sender email address
+	 * @var string
+	 */
 	public $email = '';
 	
+	/**
+	 * sender name
+	 * @var string
+	 */
 	public $name = '';
 	
 	/**
@@ -63,6 +71,9 @@ class ContactForm extends AbstractCaptchaForm {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		

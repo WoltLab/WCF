@@ -2,12 +2,11 @@
 namespace wcf\data\contact\option;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\custom\option\CustomOptionAction;
-use wcf\system\email\Email;
-use wcf\system\email\Mailbox;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\Mailbox;
 use wcf\system\language\LanguageFactory;
-use wcf\system\mail\Mail;
 use wcf\system\option\ContactOptionHandler;
 
 /**

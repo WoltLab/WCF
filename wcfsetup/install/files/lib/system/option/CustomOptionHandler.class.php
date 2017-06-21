@@ -5,14 +5,20 @@ use wcf\data\option\Option;
 use wcf\system\exception\NotImplementedException;
 use wcf\system\exception\UserInputException;
 
+/**
+ * Default implementation for custom option handling.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2017 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Option
+ */
 abstract class CustomOptionHandler extends OptionHandler {
 	/**
 	 * Gets all options and option categories from cache.
 	 */
 	protected function readCache() {
 		throw new NotImplementedException();
-		
-		$this->cachedOptions = FileOptionCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
