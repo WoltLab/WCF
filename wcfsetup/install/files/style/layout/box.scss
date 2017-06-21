@@ -642,7 +642,6 @@
 		&::before {
 			background-color: $wcfSidebarBackground;
 			color: $wcfSidebarLink;
-			/* DEBUG */
 			content: attr(data-show-sidebar);
 			display: block;
 			padding: 10px 0;
