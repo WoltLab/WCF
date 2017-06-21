@@ -2363,6 +2363,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.contact.optionDescription1"><![CDATA[Kurze, prägnante Beschreibung der Anfrage.]]></item>
 		<item name="wcf.contact.option2"><![CDATA[Nachricht]]></item>
 		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
+		<item name="wcf.contact.recipientID"><![CDATA[Empfänger]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
 		<item name="wcf.contact.success"><![CDATA[Ihre Nachricht wurde erfolgreich versandt.]]></item>
