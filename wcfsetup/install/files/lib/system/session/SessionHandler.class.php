@@ -669,6 +669,7 @@ class SessionHandler extends SingletonFactory {
 		else {
 			// update user reference
 			$this->user = $user;
+			$this->userID = $this->user->userID ?: 0;
 			
 			if (!$hideSession) {
 				// update session
