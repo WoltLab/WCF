@@ -2741,6 +2741,10 @@ Errors are:
 		<item name="wcf.global.select"><![CDATA[Select]]></item>
 		<item name="wcf.global.sorting"><![CDATA[Sorting]]></item>
 		<item name="wcf.global.fontAwesome.selectIcon"><![CDATA[Select Icon]]></item>
+		<item name="wcf.global.button.hideNavigation"><![CDATA[Hide Navigation]]></item>
+		<item name="wcf.global.button.showNavigation"><![CDATA[Show Navigation]]></item>
+		<item name="wcf.global.button.hideSidebar"><![CDATA[Hide Sidebar]]></item>
+		<item name="wcf.global.button.showSidebar"><![CDATA[Show Sidebar]]></item>
 	</category>
 	
 	<category name="wcf.global.form">

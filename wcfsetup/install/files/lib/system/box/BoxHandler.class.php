@@ -191,6 +191,22 @@ class BoxHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if the left sidebar contains at least one visible menu.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function sidebarLeftHasMenu() {
+		foreach ($this->getBoxes('sidebarLeft') as $box) {
+			if ($box->getMenu() && $box->getMenu()->hasContent()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Disables the loading of the box layout for the active page.
 	 */
 	public static function disablePageLayout() {

@@ -43,7 +43,7 @@
 			{/capture}
 				
 			{if $__sidebarRightContent|trim}
-				<aside class="sidebar boxesSidebarRight">
+				<aside class="sidebar boxesSidebarRight" data-show-sidebar="{lang}wcf.global.button.showSidebar{/lang}" data-hide-sidebar="{lang}wcf.global.button.hideSidebar{/lang}">
 					<div class="boxContainer">
 						{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
 							<div class="box boxBorderless">

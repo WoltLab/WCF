@@ -2791,6 +2791,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.global.sorting"><![CDATA[Sortierung]]></item>
 		<item name="wcf.global.fontAwesome.selectIcon"><![CDATA[Icon auswählen]]></item>
+		<item name="wcf.global.button.hideNavigation"><![CDATA[Navigation verbergen]]></item>
+		<item name="wcf.global.button.showNavigation"><![CDATA[Navigation anzeigen]]></item>
+		<item name="wcf.global.button.hideSidebar"><![CDATA[Sidebar verbergen]]></item>
+		<item name="wcf.global.button.showSidebar"><![CDATA[Sidebar anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.global.form">

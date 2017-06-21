@@ -21,6 +21,8 @@ define(
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
 	var _messageGroups = null;
+	var _sidebars = [];
+	var _sidebarXsEnabled = false;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Mobile
@@ -37,6 +39,10 @@ define(
 			}, options);
 			
 			_main = elById('main');
+			
+			elBySelAll('.sidebar', undefined, function (sidebar) {
+				_sidebars.push(sidebar);
+			});
 			
 			if (Environment.touch()) {
 				document.documentElement.classList.add('touch');
@@ -59,6 +65,12 @@ define(
 				match: this.enableShadow.bind(this),
 				unmatch: this.disableShadow.bind(this),
 				setup: this.enableShadow.bind(this)
+			});
+			
+			UiScreen.on('screen-xs', {
+				match: this._enableSidebarXS.bind(this),
+				unmatch: this._disableSidebarXS.bind(this),
+				setup: this._setupSidebarXS.bind(this)
 			});
 		},
 		
@@ -288,6 +300,32 @@ define(
 					parent.classList.remove('mobileLinkShadowContainer');
 				}
 			}
+		},
+		
+		_enableSidebarXS: function() {
+			_sidebarXsEnabled = true;
+		},
+		
+		_disableSidebarXS: function() {
+			_sidebarXsEnabled = false;
+			
+			_sidebars.forEach(function (sidebar) {
+				sidebar.classList.remove('open');
+			});
+		},
+		
+		_setupSidebarXS: function() {
+			_sidebars.forEach(function (sidebar) {
+				sidebar.addEventListener('mousedown', function(event) {
+					if (_sidebarXsEnabled && event.target === sidebar) {
+						event.preventDefault();
+						
+						sidebar.classList.toggle('open');
+					}
+				});
+			});
+			
+			_sidebarXsEnabled = true;
 		}
 	};
 });

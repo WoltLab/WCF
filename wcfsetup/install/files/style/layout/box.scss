@@ -626,6 +626,47 @@
 	padding-right: 10px;
 }
 
+@include screen-xs {
+	.boxesSidebarLeft,
+	.boxesSidebarRight {
+		pointer-events: none;
+		
+		> .boxContainer {
+			pointer-events: all;
+		}
+		
+		&:not(.open) > .boxContainer {
+			display: none;
+		}
+		
+		&::before {
+			background-color: $wcfSidebarBackground;
+			color: $wcfSidebarLink;
+			/* DEBUG */
+			content: attr(data-show-sidebar);
+			display: block;
+			padding: 10px 0;
+			pointer-events: all;
+			text-align: center;
+		}
+		
+		&.open::before {
+			content: attr(data-hide-sidebar);
+			margin-bottom: 20px;
+		}
+	}
+	
+	.boxesSidebarLeft.boxesSidebarLeftHasMenu {
+		&::before {
+			content: attr(data-show-navigation);
+		}
+		
+		&.open::before {
+			content: attr(data-hide-navigation);
+		}
+	}
+}
+
 /* styling for boxes in <contentTop>/<contentBottom> position */
 .boxesContentTop,
 .boxesContentBottom {
