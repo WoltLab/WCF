@@ -2294,6 +2294,7 @@ Errors are:
 		<item name="wcf.contact.option1"><![CDATA[Subject]]></item>
 		<item name="wcf.contact.optionDescription1"><![CDATA[Short and precise description of your inquiry.]]></item>
 		<item name="wcf.contact.option2"><![CDATA[Message]]></item>
+		<item name="wcf.contact.options.required"><![CDATA[Required fields]]></item>
 		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
 		<item name="wcf.contact.recipientID"><![CDATA[Recipient]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
