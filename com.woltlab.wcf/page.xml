@@ -534,6 +534,21 @@
 			<requireObjectID>1</requireObjectID>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
 		</page>
+		<page identifier="com.woltlab.wcf.Contact">
+			<pageType>system</pageType>
+			<controller>wcf\form\ContactForm</controller>
+			<name language="de">Kontakt-Formular</name>
+			<name language="en">Contact Form</name>
+			<options>module_contact_form</options>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
+			
+			<content language="en">
+				<title>Contact</title>
+			</content>
+			<content language="de">
+				<title>Kontakt</title>
+			</content>
+		</page>
 		
 		<!-- static -->
 		<page identifier="com.woltlab.wcf.Dashboard">

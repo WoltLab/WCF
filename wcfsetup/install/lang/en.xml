@@ -2273,8 +2273,36 @@ Errors are:
 	</category>
 	
 	<category name="wcf.contact">
+		<item name="wcf.contact.data"><![CDATA[Your Data]]></item>
+		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontakt-Formular]]></item>
+		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
+
+„{@$name}“ sent you a message on {@PAGE_TITLE|language} via the contact form:
+
+{foreach from=$options item=option}
+{@$option['title']}:{if !$option['isMessage']} {@$option['value']}{else}
+{@$option['value']}{/if}
+{/foreach}]]></item>
+		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
+
+<p>„{$name}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
+
+{foreach from=$options item=option}
+<p><strong>{@$option['title']}:</strong>{if !$option['isMessage']} {@$option['value']}{else}
+{@$option['value']|newlineToBreak}{/if}</p>
+{/foreach}]]></item>
 		<item name="wcf.contact.option1"><![CDATA[Subject]]></item>
 		<item name="wcf.contact.optionDescription1"><![CDATA[Short and precise description of your inquiry.]]></item>
+		<item name="wcf.contact.option2"><![CDATA[Message]]></item>
+		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
+		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
+		<item name="wcf.contact.sender.information"><![CDATA[Your Inquiry]]></item>
+		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
+	</category>
+	
+	<category name="wcf.contact">
+		<item name="wcf.contact.option1"><![CDATA[Subject]]></item>
+		<item name="wcf.contact.optionDescription1"><![CDATA[]]></item>
 		<item name="wcf.contact.option2"><![CDATA[Message]]></item>
 		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
 	</category>

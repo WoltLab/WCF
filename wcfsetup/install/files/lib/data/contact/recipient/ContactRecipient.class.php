@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\contact\recipient;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 
 /**
  * Represents a contact recipient.
@@ -36,7 +37,7 @@ class ContactRecipient extends DatabaseObject {
 	 * @inheritDoc
 	 */
 	public function __toString() {
-		return $this->name;
+		return WCF::getLanguage()->get($this->name);
 	}
 	
 	/**

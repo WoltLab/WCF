@@ -1,6 +1,14 @@
 <?php
 namespace wcf\data\contact\option;
+use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\custom\option\CustomOptionAction;
+use wcf\system\email\Email;
+use wcf\system\email\Mailbox;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\language\LanguageFactory;
+use wcf\system\mail\Mail;
+use wcf\system\option\ContactOptionHandler;
 
 /**
  * Executes contact option related actions.
@@ -34,4 +42,48 @@ class ContactOptionAction extends CustomOptionAction {
 	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.contact.canManageContactForm'];
+	
+	/**
+	 * Sends an email to the selected recipient.
+	 */
+	public function send() {
+		$defaultLanguage = LanguageFactory::getInstance()->getDefaultLanguage();
+		
+		$recipient = new ContactRecipient($this->parameters['recipientID']);
+		/** @var ContactOptionHandler $optionHandler */
+		$optionHandler = $this->parameters['optionHandler'];
+		
+		$options = [];
+		foreach ($optionHandler->getOptions() as $option) {
+			/** @var ContactOption $object */
+			$object = $option['object'];
+			$options[] = [
+				'isMessage' => $object->isMessage(),
+				'title' => $object->getLocalizedName($defaultLanguage),
+				'value' => $object->getFormattedOptionValue()
+			];
+		}
+		
+		// build message data
+		$messageData = [
+			'options' => $options,
+			'recipient' => $recipient,
+			'name' => $this->parameters['name']
+		];
+		
+		// build mail
+		$email = new Email();
+		$email->addRecipient(new Mailbox($recipient->email));
+		$email->setSubject($defaultLanguage->get('wcf.contact.mail.subject'));
+		$email->setBody(new MimePartFacade([
+			new RecipientAwareTextMimePart('text/html', 'email_contact', 'wcf', $messageData),
+			new RecipientAwareTextMimePart('text/plain', 'email_contact', 'wcf', $messageData)
+		]));
+		
+		// add reply-to tag
+		$email->setReplyTo(new Mailbox($this->parameters['email']));
+		
+		// send mail
+		$email->send();
+	}
 }

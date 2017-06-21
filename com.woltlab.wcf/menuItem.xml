@@ -51,5 +51,11 @@
 			<title language="en">Privacy Policy</title>
 			<page>com.woltlab.wcf.PrivacyPolicy</page>
 		</item>
+		<item identifier="com.woltlab.wcf.Contact">
+			<menu>com.woltlab.wcf.FooterMenu</menu>
+			<title language="de">Kontakt</title>
+			<title language="en">Contact</title>
+			<page>com.woltlab.wcf.Contact</page>
+		</item>
 	</import>
 </data>

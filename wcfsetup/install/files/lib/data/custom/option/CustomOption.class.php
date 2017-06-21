@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\custom\option;
+use wcf\data\language\Language;
 use wcf\data\option\Option;
 use wcf\system\bbcode\MessageParser;
 use wcf\system\bbcode\SimpleMessageParser;
@@ -72,6 +73,20 @@ abstract class CustomOption extends Option {
 	}
 	
 	/**
+	 * Attempts to return the localized option name.
+	 * 
+	 * @param       Language        $language
+	 * @return      string
+	 */
+	public function getLocalizedName(Language $language) {
+		if (preg_match('~^wcf\.contact\.option\d+$~', $this->optionTitle)) {
+			return $language->get($this->optionTitle);
+		}
+		
+		return $this->optionTitle;
+	}
+	
+	/**
 	 * Returns the formatted value of this option.
 	 *
 	 * @return	string
@@ -79,7 +94,7 @@ abstract class CustomOption extends Option {
 	public function getFormattedOptionValue() {
 		switch ($this->optionType) {
 			case 'boolean':
-				return WCF::getLanguage()->get('wcf.acp.option.optionType.boolean.'.($this->optionValue ? 'yes' : 'no'));
+				return WCF::getLanguage()->get('wcf.acp.customOption.optionType.boolean.'.($this->optionValue ? 'yes' : 'no'));
 				
 			case 'date':
 				$year = $month = $day = 0;
@@ -136,5 +151,14 @@ abstract class CustomOption extends Option {
 	 */
 	public function canDelete() {
 		return !$this->originIsSystem;
+	}
+	
+	/**
+	 * Returns true if this option represents a message-type value.
+	 * 
+	 * @return      boolean
+	 */
+	public function isMessage() {
+		return ($this->optionType === 'textarea' || $this->optionType === 'message');
 	}
 }
