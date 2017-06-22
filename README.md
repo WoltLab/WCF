@@ -1,4 +1,4 @@
-WoltLab Suite Core 3.0
+WoltLab Suite Core 3.1
 ======================
 
 WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities. Cutting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
@@ -8,16 +8,17 @@ _Formerly known as [WoltLab Community Framework](https://community.woltlab.com/t
 Version notes
 -------------
 
-This is the **stable** tree of WoltLab Suite Core, changes will be rejected unless they fix an existing issue without changing the API.
+This is the **development** tree of WoltLab Suite Core representing the upcoming version of WoltLab Suite.
 
 Other versions:
+- **stable** branch: [WSC 3.0.x](https://github.com/WoltLab/WCF/tree/3.0)
 - **oldstable** branch: [WCF 2.1.x](https://github.com/WoltLab/WCF/tree/2.1)
 - **oldoldstable** branch: [WCF 2.0.x](https://github.com/WoltLab/WCF/tree/2.0)
 
 About Redactor II
 -----------------
 
-Redactor II is a WYSIWYG-editor created by Imperavi LLC., Copyright (c) 2009-2016. You can make use of Redactor II in any plugin or app for WSC 3.0 free of charge. You are not allowed to extract or re-use the editor (in entirety or in potions) for any other use unless you own a license for Redactor II.
+Redactor II is a WYSIWYG-editor created by Imperavi LLC., Copyright (c) 2009-2017. You can make use of Redactor II in any plugin or app for WSC 3.1 free of charge. You are not allowed to extract or re-use the editor (in entirety or in potions) for any other use unless you own a license for Redactor II.
 
 Please see http://imperavi.com/redactor/license/ for more information.
 
