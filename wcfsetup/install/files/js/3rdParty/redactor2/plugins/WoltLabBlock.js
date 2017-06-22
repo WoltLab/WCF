@@ -68,6 +68,22 @@ $.Redactor.prototype.WoltLabBlock = function() {
 			
 			var mpFormatUncollapsed = this.block.formatUncollapsed;
 			this.block.formatUncollapsed = (function(tag, attr, value, type) {
+				this.selection.save();
+				
+				this.selection.blocks().forEach(function(block) {
+					if (block.nodeName === 'OL' || block.nodeName === 'UL') {
+						if (block.parentNode.nodeName.toLowerCase() === tag) {
+							//return;
+						}
+						
+						var div = elCreate('div');
+						block.parentNode.insertBefore(div, block);
+						div.appendChild(block);
+					}
+				});
+				
+				this.selection.restore();
+				
 				var replaced = mpFormatUncollapsed.call(this, tag, attr, value, type);
 				
 				var block, firstBlock = null;
