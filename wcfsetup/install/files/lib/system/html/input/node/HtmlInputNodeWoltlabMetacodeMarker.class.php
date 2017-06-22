@@ -390,7 +390,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				
 				if ($element !== $endAncestor) {
 					if ($this->isBlockElement($element)) {
-						$this->wrapContent($name, $attributes, $element->firstChild, null);
+						if ($element->childNodes->length === 0) {
+							$element->appendChild($element->ownerDocument->createTextNode(''));
+						}
+						
+						$this->wrapContent($name, $attributes, $element->childNodes->item(0), null);
 					}
 					else {
 						$this->wrapContent($name, $attributes, $element, null);
