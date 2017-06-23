@@ -527,7 +527,7 @@
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
 								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png"></div>
-								<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
+								<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
 							</div>
 						</div>
 						
@@ -596,17 +596,29 @@
 									
 									<div class="spHeadline">Button</div>
 									
-									<ol id="spButton" class="inlineList" data-region="wcfButton">
-										<li><a class="button">Button</a></li>
-										<li><a class="button active">Button (Active)</a></li>
-										<li><a class="button disabled" data-region="wcfButtonDisabled">Button (Disabled)</a></li>
-									</ol>
+									<div id="spButton">
+										<div class="spInlineWrapper" data-region="wcfButton">
+											<ol class="inlineList">
+												<li><a class="button">Button</a></li>
+												<li><a class="button active">Button (Active)</a></li>
+											</ol>
+										</div>
+										<div class="spInlineWrapper" data-region="wcfButtonDisabled">
+											<ol class="inlineList">
+												<li><a class="button disabled">Button (Disabled)</a></li>
+											</ol>
+										</div>
+									</div>
 									
-									<ol id="spButtonPrimary" class="inlineList" data-region="wcfButtonPrimary">
-										<li><a class="button buttonPrimary">Primary Button</a></li>
-										<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
-										<li><a class="button disabled">Primary Button (Disabled)</a></li>
-									</ol>
+									<div id="spButtonPrimary">
+										<div class="spInlineWrapper" data-region="wcfButtonPrimary">
+											<ol class="inlineList">
+												<li><a class="button buttonPrimary">Primary Button</a></li>
+												<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
+												<li><a class="button disabled">Primary Button (Disabled)</a></li>
+											</ol>
+										</div>
+									</div>
 									
 									<div class="spHeadline">Dropdown</div>
 									
@@ -702,6 +714,12 @@
 					</div>
 					<div id="spSidebar">
 						<div id="spVariablesWrapper">
+							<div id="spSidebarButtons">
+								<ul>
+									<li><a href="#" class="button jsButtonSelectCategoryByClick">{lang}wcf.acp.style.colors.selectCategoryByClick{/lang}</a></li>
+									<li><a href="#" class="button jsButtonToggleColorPalette">{lang}wcf.acp.style.colors.toggleColorPalette{/lang}</a></li>
+								</ul>
+							</div>
 							<div class="spSidebarBox">
 								<select id="spCategories">
 									<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>

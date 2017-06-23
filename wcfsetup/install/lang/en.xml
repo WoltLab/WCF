@@ -1716,7 +1716,9 @@
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Background Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Border Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Font Color (primary)]]></item>
+		<item name="wcf.acp.style.colors.selectCategoryByClick"><![CDATA[Category Direct Selection]]></item>
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabular Lists]]></item>
+		<item name="wcf.acp.style.colors.toggleColorPalette"><![CDATA[Toggle View]]></item>
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[User Panel]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Duplicate Style]]></item>
