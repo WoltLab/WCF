@@ -716,11 +716,11 @@
 						<div id="spVariablesWrapper">
 							<div id="spSidebarButtons">
 								<ul>
-									<li><a href="#" class="button jsButtonSelectCategoryByClick">{lang}wcf.acp.style.colors.selectCategoryByClick{/lang}</a></li>
+									<li id="spSelectCategory"><a href="#" class="button jsButtonSelectCategoryByClick">{lang}wcf.acp.style.colors.selectCategoryByClick{/lang}</a></li>
 									<li><a href="#" class="button jsButtonToggleColorPalette">{lang}wcf.acp.style.colors.toggleColorPalette{/lang}</a></li>
 								</ul>
 							</div>
-							<div class="spSidebarBox">
+							<div class="spSidebarBox spSidebarBoxCategorySelection">
 								<select id="spCategories">
 									<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
 									{foreach from=$colorCategories key=spName item=spCategory}

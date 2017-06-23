@@ -259,6 +259,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				buttonSelectCategoryByClick.classList.toggle('active');
 				buttonToggleColorPalette.classList.toggle('disabled');
 				_stylePreviewWindow.classList.toggle('spShowRegions');
+				_stylePreviewRegionMarker.classList.toggle('forceHide');
 				select.disabled = !select.disabled;
 			};
 			
@@ -282,6 +283,19 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 					select.value = elData(region, 'region');
 					Core.triggerEvent(select, 'change');
 				});
+			});
+			
+			// toggle view
+			var spSelectCategory = elById('spSelectCategory');
+			buttonToggleColorPalette.addEventListener(WCF_CLICK_EVENT, function (event) {
+				event.preventDefault();
+				
+				buttonSelectCategoryByClick.classList.toggle('disabled');
+				elToggle(spSelectCategory);
+				buttonToggleColorPalette.classList.toggle('active');
+				_stylePreviewWindow.classList.toggle('spColorPalette');
+				_stylePreviewRegionMarker.classList.toggle('forceHide');
+				select.disabled = !select.disabled;
 			});
 		},
 		
