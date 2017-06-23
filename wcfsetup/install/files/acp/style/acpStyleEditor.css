@@ -153,6 +153,8 @@ html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
 		z-index: 40;
 	}
 	
+	#spWindow.spShowRegions [data-region="wcfHeader"]::after { left: 20px; transform: translateY(-50%); }
+	
 	#spWindow.spShowRegions [data-region] [data-region] { z-index: 20; }
 	#spWindow.spShowRegions [data-region] [data-region]::before { z-index: 30; }
 	#spWindow.spShowRegions + #spSidebar .jsButtonToggleColorPalette { pointer-events: none; }
