@@ -7,6 +7,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
+use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -165,8 +166,10 @@ class SitemapRebuildWorker extends AbstractWorker {
 			
 			// finish sitemap
 			if (count($objectList) < $this->limit) {
+				$closeFile = true;
 				if ($this->workerData['dataCount'] > 0) {
 					$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml');
+					$closeFile = false;
 				}
 				
 				// increment data
@@ -177,7 +180,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 				if (count($this->sitemapObjects) <= $this->workerData['sitemap']) {
 					$this->writeIndexFile();
 				} else {
-					$this->generateTmpFile();
+					$this->generateTmpFile($closeFile);
 				}
 			}
 			
@@ -225,28 +228,23 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * Writes the sitemap.xml index file and links all sitemaps.
 	 */
 	protected function writeIndexFile() {
-		if (file_exists(self::getSitemapPath() . 'sitemap.xml')) {
-			unlink(self::getSitemapPath() . 'sitemap.xml');
-		}
-		
-		touch(self::getSitemapPath() . 'sitemap.xml');
-		
-		FileUtil::makeWritable(self::getSitemapPath() . 'sitemap.xml');
-		
-		$sitemapIndex = new File(self::getSitemapPath() . 'sitemap.xml', 'w');
-		$sitemapIndex->write(WCF::getTPL()->fetch('sitemapIndex', 'wcf', [
+		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml', 'wb');
+		$file->write(WCF::getTPL()->fetch('sitemapIndex', 'wcf', [
 			'sitemaps' => $this->workerData['sitemaps']
 		]));
-		$sitemapIndex->close();
+		$file->flush();
+		$file->close();
 		
 		$this->workerData['finished'] = true;
 	}
 	
 	/**
 	 * Generates a new temporary file and appends the sitemap start.
+	 * 
+	 * @param       boolean         $closeFile      Close a previously opened handle.
 	 */
-	protected function generateTmpFile() {
-		$this->closeFile();
+	protected function generateTmpFile($closeFile = true) {
+		if ($closeFile) $this->closeFile();
 		
 		$this->workerData['tmpFile'] = FileUtil::getTemporaryFilename('sitemap_' . $this->workerData['sitemap'] . '_');
 		
@@ -263,7 +261,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			touch($this->workerData['tmpFile']);
 		}
 		
-		$this->file = new File($this->workerData['tmpFile'], 'a');
+		$this->file = new File($this->workerData['tmpFile'], 'ab');
 	}
 	
 	/**
@@ -283,15 +281,9 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 */
 	protected function finishSitemap($filename) {
 		$this->file->write(WCF::getTPL()->fetch('sitemapEnd'));
-		
-		if (file_exists(self::getSitemapPath() . $filename)) {
-			unlink(self::getSitemapPath() . $filename);
-		}
+		$this->file->close();
 		
 		rename($this->workerData['tmpFile'], self::getSitemapPath() . $filename);
-		
-		// try to unlink the tmp file 
-		@unlink($this->workerData['tmpFile']);
 		
 		// add sitemap to the successfully built sitemaps
 		$this->workerData['sitemaps'][] = self::getSitemapURL() . $filename;
