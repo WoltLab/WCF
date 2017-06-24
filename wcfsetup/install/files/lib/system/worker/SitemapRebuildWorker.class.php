@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\DatabaseObjectList;
@@ -34,13 +35,13 @@ class SitemapRebuildWorker extends AbstractWorker {
 	
 	/**
 	 * All object types for the site maps.
-	 * @var array<ObjectType>
+	 * @var ObjectType[]
 	 */
-	public $sitemapObjects = null;
+	public $sitemapObjects = [];
 	
 	/**
 	 * The current worker data.
-	 * @var array<mixed>
+	 * @var mixed[]
 	 */
 	public $workerData = [];
 	
@@ -48,13 +49,13 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * The current temporary file as File object.
 	 * @var File
 	 */
-	public $file = null;
+	public $file;
 	
 	/**
 	 * The user profile of the actual user.
 	 * @var User
 	 */
-	private $actualUser = null; 
+	private $actualUser; 
 	
 	/**
 	 * @inheritDoc
@@ -120,6 +121,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			$sitemapObject = $this->sitemapObjects[$this->workerData['sitemap']]->getProcessor();
 			$sitemapLoopCount = $this->workerData['sitemapLoopCount'];
 			
+			/** @var DatabaseObjectList $objectList */
 			$objectList = $sitemapObject->getObjectList();
 			
 			if (SITEMAP_INDEX_TIME_FRAME > 0 && $sitemapObject->getLastModifiedColumn() !== null) {
