@@ -332,7 +332,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			
 			formData.append('actionName', this._options.action);
 			formData.append('className', this._options.className);
-			formData.append('interfaceName', 'wcf\\data\\IUploadAction');
+			if (this._options.action === 'upload') {
+				formData.append('interfaceName', 'wcf\\data\\IUploadAction');
+			}
 			
 			// recursively append additional parameters to form data
 			var appendFormData = function(parameters, prefix) {
