@@ -858,9 +858,9 @@ class WCF {
 	 */
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-		$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+		$wcf = ApplicationHandler::getInstance()->getWCF();
 		
-		if ($activeApplication->domainName != $primaryApplication->domainName) {
+		if ($activeApplication->domainName !== $wcf->domainName) {
 			if (file_exists(WCF_DIR.'images/favicon.ico')) {
 				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
 				
