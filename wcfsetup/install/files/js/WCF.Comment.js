@@ -165,7 +165,7 @@ WCF.Comment.Handler = Class.extend({
 		});
 		
 		var hash = window.location.hash;
-		if (hash.match(/^(?:[^\/]+\/)?comment(\d+)(?:\/response(\d+))?/)) {
+		if (hash.match(/^#(?:[^\/]+\/)?comment(\d+)(?:\/response(\d+))?/)) {
 			var comment = elById('comment' + RegExp.$1);
 			if (comment) {
 				var response;
