@@ -79,6 +79,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 	 */
 	protected function getObjectList() {
 		$commentList = new ViewableCommentList();
+		$commentList->getConditionBuilder()->add('comment.isDisabled = ?', [0]);
 		$commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 		
 		$this->applyObjectTypeFilters($commentList);
