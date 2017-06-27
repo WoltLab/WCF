@@ -57,7 +57,10 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
 					$event->setIsAccessible();
 					
 					// add title
-					$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleComment', ['article' => $article]);
+					$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleComment', [
+						'article' => $article,
+						'commentID' => $comment->commentID
+					]);
 					$event->setTitle($text);
 					
 					// add text

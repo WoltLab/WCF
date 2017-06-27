@@ -2135,8 +2135,8 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Kommentar{if $article->comments != 1}e{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} Mal gelesen]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Mag den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Hat einen Kommentar zum Artikel <a href="{$article->getLink()}#comments">{$article->getTitle()}</a> geschrieben.]]></item>
-		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comments">{$article->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Hat einen Kommentar zum Artikel <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a> geschrieben.]]></item>
+		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> geantwortet.]]></item>
 		<item name="wcf.article.search.categories"><![CDATA[Folgende Kategorien durchsuchen]]></item>
 		<item name="wcf.article.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.article.comment"><![CDATA[Artikel-Kommentar]]></item>

@@ -2069,8 +2069,8 @@ full extend.]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Comment{if $article->comments != 1}s{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Liked the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.search.categories"><![CDATA[Search in Categories]]></item>
 		<item name="wcf.article.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.article.comment"><![CDATA[Article Comment]]></item>
