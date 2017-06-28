@@ -103,6 +103,8 @@
 					<li class="{if $objectType->getProcessor()->canEditCategory()}sortableNode {if $categoryNodeList->getDepth() == $objectType->getProcessor()->getMaximumNestingLevel()}sortableNoNesting {/if}{/if}jsCategory" data-object-id="{@$category->categoryID}"{if $collapsedCategoryIDs|is_array} data-is-open="{if $collapsedCategoryIDs[$category->categoryID]|isset}0{else}1{/if}"{/if}>
 						<span class="sortableNodeLabel">
 							<span class="title">
+								{event name='beforeTitle'}
+								
 								{if $objectType->getProcessor()->canEditCategory()}
 									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}">{$category->getTitle()}</a>
 								{else}
