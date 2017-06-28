@@ -1316,6 +1316,25 @@ CREATE TABLE wcf1_tracked_visit_type (
 	KEY (userID, visitTime)
 );
 
+DROP TABLE IF EXISTS wcf1_trophy;
+CREATE TABLE wcf1_trophy(
+	trophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(255),
+	description MEDIUMTEXT,	
+	categoryID INT(10) NOT NULL,
+	sidebarSize SMALLINT(2),
+	type SMALLINT(1) DEFAULT 1,
+	iconFile MEDIUMTEXT, 
+	iconName VARCHAR(255),
+	iconColor VARCHAR(255),
+	badgeName VARCHAR(255),
+	badgeColor VARCHAR(255),
+	customClassName VARCHAR(255),	
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	awardAutomatically TINYINT(1) NOT NULL DEFAULT 1,
+	KEY(categoryID)
+);
+
 DROP TABLE IF EXISTS wcf1_user;
 CREATE TABLE wcf1_user (
 	userID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1892,6 +1911,8 @@ ALTER TABLE wcf1_template ADD FOREIGN KEY (templateGroupID) REFERENCES wcf1_temp
 ALTER TABLE wcf1_template_group ADD FOREIGN KEY (parentTemplateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_template_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_trophy ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;

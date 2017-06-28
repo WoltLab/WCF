@@ -60,4 +60,18 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);
 	}
+	
+	/**
+	 * Returns the trophies for the category. 
+	 * 
+	 * @param 	boolean 	$includeDisabled 
+	 * @return 	Trophy[]
+	 */
+	public function getTrophies($includeDisabled = false) {
+		if ($includeDisabled) {
+			return TrophyCache::getInstance()->getTrophiesByCategoryID($this->getObjectID()); 
+		}
+		
+		return TrophyCache::getInstance()->getEnabledTrophiesByCategoryID($this->getObjectID());
+	}
 }
