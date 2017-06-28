@@ -594,6 +594,7 @@
 		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontakt-Formular verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Kann Trophäen verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Kann Trophäen verleihen]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
