@@ -4,6 +4,7 @@ use Leafo\ScssPhp\Compiler;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -120,6 +121,13 @@ class StyleCompiler extends SingletonFactory {
 		// ACP uses a slightly different layout
 		$files[] = WCF_DIR . 'acp/style/layout.scss';
 		
+		// include stylesheets from other apps in arbitrary order
+		if (PACKAGE_ID) {
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				$files = array_merge($files, $this->getAcpStylesheets($application));
+			}
+		}
+		
 		// read default values
 		$sql = "SELECT		variableName, defaultValue
 			FROM		wcf".WCF_N."_style_variable
@@ -189,6 +197,25 @@ class StyleCompiler extends SingletonFactory {
 			
 			// directory order is not deterministic in some cases
 			sort($files);
+		}
+		
+		return $files;
+	}
+	
+	/**
+	 * Returns the list of SCSS stylesheets of an application.
+	 * 
+	 * @param       Application     $application
+	 * @return      string[]
+	 */
+	protected function getAcpStylesheets(Application $application) {
+		if ($application->packageID == 1) return [];
+		
+		$files = [];
+		
+		$basePath = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $application->getPackage()->packageDir)) . 'acp/style/';
+		foreach (glob($basePath . '*.scss') as $file) {
+			$files[] = $file;
 		}
 		
 		return $files;
