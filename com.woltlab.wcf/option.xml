@@ -400,6 +400,12 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="module_trophy">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
 			<option name="module_tagging">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>

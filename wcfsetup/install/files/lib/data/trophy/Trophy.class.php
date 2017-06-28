@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\trophy;
-use wcf\data\DatabaseObject;
-use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
+use wcf\data\DatabaseObject;
+use wcf\data\ITitledLinkObject;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
