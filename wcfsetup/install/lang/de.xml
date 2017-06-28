@@ -1303,6 +1303,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Desktop-Benachrichtigungen verwenden]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund aberufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt. Einige wenige Browser, z. B. Internet Explorer, unterstützen diese Funktion nicht.]]></item>
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontakt-Formular aktivieren]]></item>
+		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontakt-Formular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
 	</category>
 	
