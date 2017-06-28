@@ -1293,6 +1293,14 @@
 		</type>
 		<!-- /sitemap -->
 		
+		<!-- trophy -->
+		<type>
+			<name>com.woltlab.wcf.trophy.category</name>
+			<definitionname>com.woltlab.wcf.category</definitionname>
+			<classname>wcf\system\category\TrophyCategoryType</classname>
+		</type>
+		<!-- /trophy -->
+		
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
