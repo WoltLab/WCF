@@ -211,17 +211,6 @@ class UserMailForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		parent::show();
-		
-		// work-around for a known Chrome bug that causes the XSS auditor
-		// to incorrectly detect JavaScript inside a textarea
-		@header('X-XSS-Protection: 0');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function show() {
 		// work-around for a known Chrome bug that causes the XSS auditor
 		// to incorrectly detect JavaScript inside a textarea
 		@header('X-XSS-Protection: 0');
