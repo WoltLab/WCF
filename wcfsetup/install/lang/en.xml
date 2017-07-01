@@ -830,6 +830,9 @@
 		<item name="wcf.acp.menu.link.other"><![CDATA[Other]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
 		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Contact Form]]></item>
+		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophies]]></item>
+		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Categories]]></item>
+		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Add Category]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">

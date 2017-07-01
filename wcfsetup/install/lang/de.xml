@@ -847,6 +847,9 @@
 		<item name="wcf.acp.menu.link.other"><![CDATA[Sonstiges]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Kontakt-Formular]]></item>
+		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophäen]]></item>
+		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Kategorien]]></item>
+		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
