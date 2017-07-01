@@ -539,7 +539,7 @@ class Email {
 	 */
 	public function debugDump() {
 		if (ob_get_level()) {
-			// discard any output generated before the exception occurred, prevents exception
+			// discard any output generated before the email was dumped, prevents email
 			// being hidden inside HTML elements and therefore not visible in browser output
 			ob_end_clean();
 			
@@ -552,6 +552,7 @@ class Email {
 		
 		$dumpBody = function ($body, $depth) use (&$dumpBody) {
 			$result = '';
+			// @codingStandardsIgnoreStart
 			if ($body instanceof mime\MimePartFacade) {
 				return $dumpBody($body->getMimePart(), $depth);
 			}
@@ -583,6 +584,7 @@ class Email {
 			else {
 				throw new \LogicException('Bug');
 			}
+			// @codingStandardsIgnoreEnd
 
 			return $result;
 		};
