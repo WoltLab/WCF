@@ -531,4 +531,67 @@ class Email {
 	public function getEmail() {
 		return $this->getHeaderString()."\r\n\r\n".$this->getBodyString();
 	}
+
+	/**
+	 * Dumps this email to STDOUT and stops the script.
+	 * 
+	 * @return	string
+	 */
+	public function debugDump() {
+		if (ob_get_level()) {
+			// discard any output generated before the email was dumped, prevents email
+			// being hidden inside HTML elements and therefore not visible in browser output
+			ob_end_clean();
+			
+			// `identity` is the default "encoding" and basically means that the client
+			// must treat the content as if the header did not appear in first place, this
+			// also overrules the gzip header if present
+			@header('Content-Encoding: identity');
+			HeaderUtil::exceptionDisableGzip();
+		}
+		
+		$dumpBody = function ($body, $depth) use (&$dumpBody) {
+			$result = '';
+			// @codingStandardsIgnoreStart
+			if ($body instanceof mime\MimePartFacade) {
+				return $dumpBody($body->getMimePart(), $depth);
+			}
+			if ($body instanceof mime\AbstractMultipartMimePart) {
+				$result .= "<fieldset><legend><h".$depth.">".get_class($body)."</h".$depth."></legend>";
+				foreach ($body->getMimeparts() as $part) {
+					$result .= $dumpBody($part, $depth + 1);
+				}
+				$result .= '</fieldset>';
+			}
+			else if ($body instanceof mime\RecipientAwareTextMimePart) {
+				$result .= "<fieldset><legend><h".$depth.">".get_class($body)."</h".$depth."></legend>";
+				if ($body instanceof mime\HtmlTextMimePart) {
+					$result .= '<iframe src="data:text/html;base64,'.base64_encode($body->getContent()).'" style="width: 100%; height: 500px; border: 0"></iframe>';
+				}
+				else {
+					$result .= "<pre>".StringUtil::encodeHTML($body->getContent())."</pre>";
+				}
+				$result .= '</fieldset>';
+			}
+			else if ($body instanceof mime\AttachmentMimePart) {
+				$result .= "<fieldset><legend><h".$depth.">".get_class($body)."</h".$depth."></legend>";
+				$result .= "<dl>".implode('', array_map(function ($item) {
+					return "<dt>".$item[0]."</dt><dd>".$item[1]."</dd>";
+				}, $body->getAdditionalHeaders()))."</dl>";
+				$result .= "<".strlen($body->getContent())." Bytes>";
+				$result .= '</fieldset>';
+			}
+			else {
+				throw new \LogicException('Bug');
+			}
+			// @codingStandardsIgnoreEnd
+
+			return $result;
+		};
+		echo "<h1>Message Headers</h1>
+<pre>".StringUtil::encodeHTML($this->getHeaderString())."</pre>
+<h1>Message Body</h1>".$dumpBody($this->body, 2);
+
+		exit;
+	}
 }
