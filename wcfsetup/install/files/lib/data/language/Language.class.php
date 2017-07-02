@@ -19,6 +19,7 @@ use wcf\system\WCF;
  * @property-read	integer		$isDefault		is `1` if the language is the default language, otherwise `0`
  * @property-read	integer		$hasContent		is `1` if the language can be selected when creating language-specific content, otherwise `0`
  * @property-read	integer		$isDisabled		is `1` if the language is disabled and thus not selectable, otherwise `0`
+ * @property-read	integer		$parentID		unique id of the parent-language
  */
 class Language extends DatabaseObject {
 	/**
@@ -44,6 +45,12 @@ class Language extends DatabaseObject {
 	 * @var	integer
 	 */
 	public $packageID = PACKAGE_ID;
+	
+	/**
+	 * the language's parent language
+	 * @var Language||null
+	 */
+	protected $parentLanguage = null;
 	
 	/**
 	 * Returns the name of this language.
@@ -104,6 +111,12 @@ class Language extends DatabaseObject {
 			return '';
 		}
 		
+		// check if the language item exists within the parental language
+		if ($this->parentID) {
+			$parentValue = LanguageFactory::getInstance()->getLanguage($this->parentID)->get($item);
+			return $parentValue;
+		}
+		
 		// return plain input
 		return $item;
 	}
@@ -125,6 +138,12 @@ class Language extends DatabaseObject {
 			$variables['__language'] = $this;
 			
 			return WCF::getTPL()->fetchString($this->dynamicItems[$item], $variables);
+		}
+		
+		// check if the dynamic language item exists within the parental language
+		if ($this->parentID) {
+			$parentValue = LanguageFactory::getInstance()->getLanguage($this->parentID)->getDynamicVariable($item, $variables, $optional);
+			if ($parentValue !== $staticItem) return $parentValue;
 		}
 		
 		return $staticItem;

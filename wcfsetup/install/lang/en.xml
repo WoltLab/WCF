@@ -663,6 +663,9 @@
 		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Enabling multilingualism provides the ability to associate user-generated content with a specific language; Newly created content is automatically associated with the user’s interface language. Users can filter content for specific languages through their settings.]]></item>
 		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Available Languages]]></item>
 		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[You need to select at least two languages.]]></item>
+		<item name="wcf.acp.language.parent"><![CDATA[Parent Language]]></item>
+		<item name="wcf.acp.language.parent.description"><![CDATA[The selected language will be used as fallback if a language is not set within the real language.]]></item>
+		<item name="wcf.acp.language.parent.error.parentsItself"><![CDATA[A Language can't be parent of itself.]]></item>
 		<item name="wcf.acp.language.setAsDefault"><![CDATA[Set As Default]]></item>
 		<item name="wcf.acp.language.variables"><![CDATA[Phrases]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Used by]]></item>

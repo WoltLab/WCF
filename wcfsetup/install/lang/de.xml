@@ -680,6 +680,9 @@
 		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Hast du{else}Haben Sie{/if} mehrere Sprachen installiert, können sich {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Mitglieder die Programmoberfläche in diesen Sprachen anzeigen lassen. Erstellte Inhalte werden durch die aktivierte Mehrsprachigkeit außerdem einer Sprache zugeordnet. Die Benutzer können in ihrem Profil auswählen, ob ausschließlich Inhalte bestimmter Sprachen angezeigt werden. Bei der Erstellung von Inhalten ist standardmäßig die aktive Oberflächensprache voreingestellt.]]></item>
 		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Inhalte in folgenden Sprachen zulassen]]></item>
 		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[Um die Mehrsprachigkeit zu nutzen, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} mindestens zwei Sprachen auswählen.]]></item>
+		<item name="wcf.acp.language.parent"><![CDATA[Übergeordnete Sprache]]></item>
+		<item name="wcf.acp.language.parent.description"><![CDATA[Die hier angegebene Sprache wird als Fallback verwendet, falls in der eigentlichen Sprache eine Sprachvariable nicht vorhanden ist.]]></item>
+		<item name="wcf.acp.language.parent.error.parentsItself"><![CDATA[Eine Sprache kann nicht ihre eigene übergeordnete Sprache sein.]]></item>
 		<item name="wcf.acp.language.setAsDefault"><![CDATA[Zur Standardsprache machen]]></item>
 		<item name="wcf.acp.language.variables"><![CDATA[Variablen]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
