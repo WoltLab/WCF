@@ -45,15 +45,16 @@
 }
 
 .googleMapsDirectionsContainer {
-	display: flex;
-	width: 100%;
-	
-	.googleMap {
-		flex: 0 0 50%;
+	@include screen-lg {
+		display: flex;
+		
+		.googleMap,
+		.googleMapsDirections {
+			flex: 0 0 50%;
+		}
 	}
 	
 	.googleMapsDirections {
-		flex: 0 0 50%;
 		height: 400px;
 		padding-left: 10px;
 		overflow-y: scroll;
