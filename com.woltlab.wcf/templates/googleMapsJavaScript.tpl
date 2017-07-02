@@ -5,6 +5,17 @@
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.map.noLocationSuggestions': '{lang}wcf.map.noLocationSuggestions{/lang}',
+			'wcf.map.route.error.not_found': '{lang}wcf.map.route.error.not_found{/lang}',
+			'wcf.map.route.error.over_query_limit': '{lang}wcf.map.route.error.over_query_limit{/lang}',
+			'wcf.map.route.error.request_denied': '{lang}wcf.map.route.error.request_denied{/lang}',
+			'wcf.map.route.origin': '{lang}wcf.map.route.origin{/lang}',
+			'wcf.map.route.planner': '{lang}wcf.map.route.planner{/lang}',
+			'wcf.map.route.travelMode': '{lang}wcf.map.route.travelMode{/lang}',
+			'wcf.map.route.travelMode.bicycling': '{lang}wcf.map.route.travelMode.bicycling{/lang}',
+			'wcf.map.route.travelMode.driving': '{lang}wcf.map.route.travelMode.driving{/lang}',
+			'wcf.map.route.travelMode.transit': '{lang}wcf.map.route.travelMode.transit{/lang}',
+			'wcf.map.route.travelMode.walking': '{lang}wcf.map.route.travelMode.walking{/lang}',
+			'wcf.map.route.viewOnGoogleMaps': '{lang}wcf.map.route.viewOnGoogleMaps{/lang}',
 			'wcf.map.showLocationSuggestions': '{lang}wcf.map.showLocationSuggestions{/lang}',
 			'wcf.map.useLocationSuggestion': '{lang}wcf.map.useLocationSuggestion{/lang}'
 		});

@@ -2823,6 +2823,18 @@ Errors are:
 	
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
+		<item name="wcf.map.route.button.calculateRoute"><![CDATA[Calculate Route]]></item>
+		<item name="wcf.map.route.error.not_found"><![CDATA[The route could not be calculated.]]></item>
+		<item name="wcf.map.route.error.over_query_limit"><![CDATA[The route could not be calculated. Too many requests have been sent to Google Maps’ API within the allowed time period.]]></item>
+		<item name="wcf.map.route.error.request_denied"><![CDATA[The route could not be calculated. This website is not allowed to use Google Maps’ directions service.]]></item>
+		<item name="wcf.map.route.origin"><![CDATA[Starting Point]]></item>
+		<item name="wcf.map.route.planner"><![CDATA[Route Planner]]></item>
+		<item name="wcf.map.route.travelMode"><![CDATA[Travel Mode]]></item>
+		<item name="wcf.map.route.travelMode.bicycling"><![CDATA[Bicycling]]></item>
+		<item name="wcf.map.route.travelMode.driving"><![CDATA[Driving]]></item>
+		<item name="wcf.map.route.travelMode.transit"><![CDATA[Transit]]></item>
+		<item name="wcf.map.route.travelMode.walking"><![CDATA[Walking]]></item>
+		<item name="wcf.map.route.viewOnGoogleMaps"><![CDATA[View on Google Maps directly]]></item>
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Suggest Locations]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Use Location]]></item>
 	</category>

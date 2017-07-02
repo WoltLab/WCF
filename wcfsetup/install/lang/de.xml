@@ -2881,6 +2881,18 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[Für den aktuellen Kartenausschnitt liegen keine Ortsvorschläge vor.]]></item>
+		<item name="wcf.map.route.button.calculateRoute"><![CDATA[Route berechnen]]></item>
+		<item name="wcf.map.route.error.not_found"><![CDATA[Die Route konnte nicht berechnet werden.]]></item>
+		<item name="wcf.map.route.error.over_query_limit"><![CDATA[Die Route konnte nicht berechnet werden. Innerhalb des zulässigen Zeitraums wurden zu viele Anfragen an die Google Maps API gesendet.]]></item>
+		<item name="wcf.map.route.error.request_denied"><![CDATA[Die Route konnte nicht berechnet werden. Diese Webseite ist nicht berechtigt ist, den Google Maps Directions-Dienst zu nutzen]]></item>
+		<item name="wcf.map.route.origin"><![CDATA[Startpunkt]]></item>
+		<item name="wcf.map.route.planner"><![CDATA[Routenplaner]]></item>
+		<item name="wcf.map.route.travelMode"><![CDATA[Verkehrsmittel]]></item>
+		<item name="wcf.map.route.travelMode.bicycling"><![CDATA[Fahrrad]]></item>
+		<item name="wcf.map.route.travelMode.driving"><![CDATA[Auto]]></item>
+		<item name="wcf.map.route.travelMode.transit"><![CDATA[Öffentliche Verkehrsmittel]]></item>
+		<item name="wcf.map.route.travelMode.walking"><![CDATA[Zu Fuß]]></item>
+		<item name="wcf.map.route.viewOnGoogleMaps"><![CDATA[Direkt bei Google Maps anschauen]]></item>
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Orte vorschlagen]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Ort verwenden]]></item>
 	</category>
