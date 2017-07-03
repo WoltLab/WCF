@@ -599,7 +599,12 @@ class Tar {
 				$longFilename = null;
 			}
 			if ($header['typeflag'] == 'L') {
-				$format = 'Z' . $header['size'] . 'filename';
+				if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+					$format = 'Z' . $header['size'] . 'filename';
+				}
+				else {
+					$format = 'a' . $header['size'] . 'filename';
+				}
 				
 				$fileData = unpack($format, $this->file->read(512));
 				$longFilename = $fileData['filename'];
