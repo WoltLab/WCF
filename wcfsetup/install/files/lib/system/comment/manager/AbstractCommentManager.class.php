@@ -86,7 +86,12 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 		}
 		
 		if (empty($this->permissionAddWithoutModeration)) {
-			return false;
+			if (ENABLE_DEBUG_MODE) {
+				throw new \RuntimeException("Missing permission name to create comments without approval.");
+			}
+			
+			// backwards-compatibility in production mode
+			return true;
 		}
 		
 		return (WCF::getSession()->getPermission($this->permissionAddWithoutModeration) ? true : false);
