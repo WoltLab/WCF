@@ -155,6 +155,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.condition.trophy</name>
+			<interfacename>wcf\system\condition\IUserCondition</interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.condition.notice</name>
 			<interfacename>wcf\system\condition\IContentCondition</interfacename>
 		</definition>
