@@ -23,14 +23,11 @@ use wcf\util\StringUtil;
  * @property-read	string		$title				the trophy title
  * @property-read	integer		$description			the trophy description
  * @property-read	integer		$categoryID			the categoryID of the trophy
- * @property-read	integer		$sidebarSize			the trophy size in the message sidebar
  * @property-read	integer		$type				the trophy type
  * @property-read	string		$iconFile			the file location of the icon
  * @property-read	string		$iconName			the icon name
  * @property-read	string		$iconColor			the icon color
- * @property-read	string		$badgeName			the icon badge name
  * @property-read	string		$badgeColor			the icon badge color
- * @property-read	string		$customClassName		a custom class for the icon
  * @property-read	integer		$isDisabled			`1` if the trophy is disabled
  * @property-read	integer		$awardAutomatically		`1` if the trophy is awarded automatically
  */
@@ -42,10 +39,15 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	const TYPE_IMAGE = 1;
 	
 	/**
-	 * The type value, if this trophy is a icon trophy (based on CSS icons).
+	 * The type value, if this trophy is a badge trophy (based on CSS icons).
 	 * @var	integer
 	 */
-	const TYPE_FA = 2;
+	const TYPE_BADGE = 2;
+	
+	/**
+	 * The default icon size. 
+	 */
+	const DEFAULT_SIZE = 32;
 	
 	/**
 	 * @inheritDoc
@@ -70,10 +72,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	 * @param	integer		$size
 	 * @return 	string
 	 */
-	public function renderTrophy($size = null) {
-		if ($size === null) {
-			$size = $this->sidebarSize;
-		}
+	public function renderTrophy($size = self::DEFAULT_SIZE) {
 		
 		switch ($this->type) {
 			case self::TYPE_IMAGE: {
@@ -81,8 +80,11 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 				break;
 			}
 			
-			case self::TYPE_FA:
-				// @TODO
+			case self::TYPE_BADGE:
+				return WCF::getTPL()->fetch('trophyBadge', 'wcf', [
+					'size' => $size,
+					'trophy' => $this
+				], true);
 			break;
 			
 			default: 
