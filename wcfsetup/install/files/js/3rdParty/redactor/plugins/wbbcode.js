@@ -426,8 +426,13 @@ RedactorPlugins.wbbcode = function() {
 			
 			html = $tmp;
 			
+			// empty lines following a table aren't recognized properly
+			html = html.replace(/<\/table>@@@wcf_empty_line@@@/g, '</table>@@@wcf_after_table_empty_line@@@');
+			
 			html = html.replace(/@@@wcf_empty_line@@@/g, '\n');
 			html = html.replace(/\n\n$/, '\n');
+			
+			html = html.replace(/@@@wcf_after_table_empty_line@@@/g, '\n\n');
 			
 			// convert all <br> into \n
 			html = html.replace(/<br>$/, '');
@@ -1246,8 +1251,8 @@ RedactorPlugins.wbbcode = function() {
 				
 				if ($line.match(/^<([a-z]+)/) || $line.match(/<\/([a-z]+)>$/)) {
 					if (this.reIsBlock.test(RegExp.$1.toUpperCase()) || RegExp.$1.toUpperCase() === 'TABLE') {
-						// check if line starts and ends with the same tag, or ends with </p>
-						if ($line.match(/^<([a-z]+).*<\/\1>/)) {
+						// check if line starts and ends with the same tag, or ends with </p> or </table>
+						if ($line.match(/^<([a-z]+).*<\/\1>/) || $line.match(/<\/table>$/)) {
 							data += $line;
 						}
 						else {
