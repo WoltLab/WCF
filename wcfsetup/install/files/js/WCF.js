@@ -6228,10 +6228,12 @@ if (COMPILER_TARGET_DEFAULT) {
 		 *
 		 * @param        integer                internalFileID
 		 * @param        FormData        formData
+		 * @return       jqXHR
 		 */
 		_sendRequest: function (internalFileID, formData) {
 			var self = this;
-			$.ajax({
+			
+			return $.ajax({
 				type: 'POST',
 				url: this._options.url,
 				enctype: 'multipart/form-data',
