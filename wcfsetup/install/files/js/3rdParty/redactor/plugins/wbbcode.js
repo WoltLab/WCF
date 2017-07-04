@@ -1246,11 +1246,22 @@ RedactorPlugins.wbbcode = function() {
 				
 				if ($line.match(/^<([a-z]+)/) || $line.match(/<\/([a-z]+)>$/)) {
 					if (this.reIsBlock.test(RegExp.$1.toUpperCase()) || RegExp.$1.toUpperCase() === 'TABLE') {
-						// check if line starts and ends with the same tag
+						// check if line starts and ends with the same tag, or ends with </p>
 						if ($line.match(/^<([a-z]+).*<\/\1>/)) {
 							data += $line;
 						}
 						else {
+							// avoid duplication of newlines inside tables
+							if ($line.match(/<\/p>$/) && ($i + 1 < $length)) {
+								data += $line;
+								
+								if ($.trim($tmp[$i + 1]).indexOf('<p') === 0) {
+									data += '<br />';
+								}
+								
+								continue;
+							}
+							
 							data += $line + '<br />';
 						}
 					}
@@ -1278,7 +1289,80 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/<td>([\s\S]+?)<\/td>/g, function(match, content) {
 				content = content.replace(/<br(?: \/)?>(<[uo]l)/g, '$1');
 				
-				return '<td>' + content.replace(/<p><br(?: \/)?><\/p>/g, '<br>').replace(/<p>/g, '').replace(/<\/p>/g, '<br>').replace(/<br>$/, '') + '</td>';
+				var tmpDiv = document.createElement('div');
+				tmpDiv.innerHTML = content;
+				var blocks = ['BR', 'DIV', 'OL', 'P', 'TABLE', 'UL'];
+				var nodes = [];
+				
+				var moveIntoParagraph = function(insertBefore) {
+					if (nodes.length > 0) {
+						p = document.createElement('p');
+						nodes.forEach(function (node) {
+							p.appendChild(node);
+						});
+						tmpDiv.insertBefore(p, insertBefore);
+						if (p.nextElementSibling && p.nextElementSibling.nodeName === 'BR') {
+							tmpDiv.removeChild(p.nextElementSibling);
+						}
+						
+						nodes = [];
+					}
+				};
+				
+				var i, length, p;
+				var allNodes = [];
+				for (i = 0, length = tmpDiv.childNodes.length; i < length; i++) {
+					allNodes.push(tmpDiv.childNodes[i]);
+				}
+				
+				allNodes.forEach(function(node) {
+					if (node.nodeType === Node.ELEMENT_NODE) {
+						if (blocks.indexOf(node.nodeName) !== -1) {
+							moveIntoParagraph(node);
+							
+							return;
+						}
+					}
+					
+					nodes.push(node);
+				});
+				
+				moveIntoParagraph(null);
+				
+				var br, parent, paragraphs = tmpDiv.querySelectorAll('p');
+				for (i = 0, length = paragraphs.length; i < length; i++) {
+					p = paragraphs[i];
+					if (p.style.getPropertyValue('text-align') !== '') {
+						// ignore paragraphs that are used to align content
+						continue;
+					}
+					
+					br = document.createElement('br');
+					parent = p.parentNode;
+					if (p.childElementCount === 1 && p.children[0].nodeName === 'BR') {
+						if (p.textContent.trim().replace(/\u200B/g, '') === '') {
+							parent.insertBefore(br, p);
+							parent.removeChild(p);
+							
+							continue;
+						}
+					}
+					
+					p.appendChild(br);
+					while (p.childNodes.length > 0) {
+						parent.insertBefore(p.childNodes[0], p);
+					}
+					parent.removeChild(p);
+				}
+				
+				if (tmpDiv.childElementCount > 0) {
+					br = tmpDiv.children[tmpDiv.childElementCount - 1];
+					if (br.nodeName === 'BR') {
+						tmpDiv.removeChild(br);
+					}
+				}
+				
+				return '<td>' + tmpDiv.innerHTML + '</td>';
 			});
 			
 			// insert list items
