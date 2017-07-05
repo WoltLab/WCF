@@ -202,7 +202,7 @@
 					'WoltLabDropdown',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
-					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}'WoltLabImage',{/if}
+					'WoltLabImage',
 					'WoltLabInlineCode',
 					'WoltLabInsert',
 					'WoltLabLine',
@@ -221,6 +221,7 @@
 				],
 				toolbarFixed: false,
 				woltlab: {
+					allowImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 					attachments: (elDataBool(element, 'disable-attachments') === false),
 					autosave: autosave,
 					allowedInlineStyles: allowedInlineStyles,

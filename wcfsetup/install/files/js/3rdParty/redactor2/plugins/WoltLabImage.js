@@ -3,8 +3,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 	
 	return {
 		init: function() {
-			var button = this.button.add('woltlabImage', '');
-			this.button.addCallback(button, this.WoltLabImage.add);
+			if (this.opts.woltlab.allowImages) {
+				var button = this.button.add('woltlabImage', '');
+				this.button.addCallback(button, this.WoltLabImage.add);
+			}
 			
 			// add support for image source when editing
 			var mpShowEdit = this.image.showEdit;
