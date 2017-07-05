@@ -101,7 +101,13 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return str_ireplace('<img', '<amp-img layout="flex-item"', $this->getHtmlOutputNodeProcessor()->getHtml());
+		$html = $this->getHtmlOutputNodeProcessor()->getHtml();
+		
+		$html = str_ireplace('<img', '<amp-img layout="flex-item"', $html);
+		$html = str_ireplace('<iframe', '<amp-iframe layout="responsive" width="480" height="300" sizes="(min-width: 480px) 480px, 100vw" ', $html);
+		$html = str_ireplace('</iframe>', '<div class="wscIframePlaceholder" placeholder=""></div></amp-iframe>', $html);
+		
+		return $html;
 	}
 	
 	/**
