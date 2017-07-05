@@ -154,7 +154,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 		
 		// set location
 		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $this->article->categoryID, $this->article->getCategory());
-		foreach ($this->article->getCategory()->getParentCategories() as $parentCategory) {
+		foreach (array_reverse($this->article->getCategory()->getParentCategories()) as $parentCategory) {
 			PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $parentCategory->categoryID, $parentCategory);
 		}
 	}
