@@ -834,6 +834,7 @@
 		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Categories]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
+		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -3565,7 +3566,20 @@ Open the link below to access the user profile:
 	</category>
 	
 	<category name="wcf.acp.trophy">
+		<item name="wcf.acp.trophy.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.trophy.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Disable Trophy]]></item>
+		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Award trophy automatically]]></item>
+		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
+		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
+		<item name="wcf.acp.trophy.type.image"><![CDATA[Image]]></item>
+		<item name="wcf.acp.trophy.badge.iconName"><![CDATA[Icon]]></item>
+		<item name="wcf.acp.trophy.badge.iconColor"><![CDATA[Icon Color]]></item>
+		<item name="wcf.acp.trophy.badge.badgeColor"><![CDATA[Badge Color]]></item>
+		<item name="wcf.acp.trophy.badge.edit"><![CDATA[Edit Badge]]></item>
+		<item name="wcf.acp.trophy.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.trophy.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be awarded with the trophy.]]></item>
+		<item name="wcf.acp.trophy.conditions.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$trophy->getTitle()}</span>?]]></item>
 	</category>
 	
