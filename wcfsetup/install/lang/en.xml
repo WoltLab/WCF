@@ -833,6 +833,7 @@
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Categories]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Add Category]]></item>
+		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -3561,6 +3562,11 @@ Open the link below to access the user profile:
 <p>The use by third parties of all published contact details for the purpose of advertising is expressly excluded. We reserve the right to take legal steps in the case of the unsolicited sending of advertising information; e.g., by means of spam mail.</p>
 <p><br></p>
 <p><small><em>Source: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
+	</category>
+	
+	<category name="wcf.acp.trophy">
+		<item name="wcf.acp.trophy.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$trophy->getTitle()}</span>?]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">

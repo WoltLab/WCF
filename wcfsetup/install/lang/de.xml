@@ -850,6 +850,7 @@
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophäen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -3574,6 +3575,11 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
 <p><br></p>
 <p><small><em>Quelle: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
+	</category>
+	
+	<category name="wcf.acp.trophy">
+		<item name="wcf.acp.trophy.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{trophy->getTitle()}</span> wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
