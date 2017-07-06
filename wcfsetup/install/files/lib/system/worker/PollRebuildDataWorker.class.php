@@ -64,7 +64,7 @@ class PollRebuildDataWorker extends AbstractRebuildDataWorker {
 			$conditionBuilder->add('poll.pollID IN (?)', [$pollIDs]);
 			$sql = "UPDATE	wcf" . WCF_N . "_poll poll
 				SET	votes = (
-						SELECT	COUNT(*)
+						SELECT	COUNT(DISTINCT userID)
 						FROM	wcf" . WCF_N . "_poll_option_vote
 						WHERE	pollID = poll.pollID
 					)

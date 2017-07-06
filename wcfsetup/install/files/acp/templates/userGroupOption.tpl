@@ -18,7 +18,7 @@
 				dd = label.parentNode.nextElementSibling;
 				if (dd !== null && dd.nodeName === 'DD') {
 					inputElements = dd.querySelectorAll('input, select, textarea');
-					isBoolean = (dd.childElementCount === 1 && dd.children[0].classList.contains('optionTypeBoolean'));
+					isBoolean = (dd.childElementCount > 0 && dd.children[0].classList.contains('optionTypeBoolean'));
 					for (var j = 0, innerLength = inputElements.length; j < innerLength; j++) {
 						inputElement = inputElements[j];
 						inputElement.name = 'values[' + groupId + ']' + (inputElement.name.slice(-2) === '[]' ? '[]' : '');

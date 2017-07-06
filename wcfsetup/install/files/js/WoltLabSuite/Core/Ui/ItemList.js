@@ -157,17 +157,13 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			}
 			
 			var data = _data.get(elementId);
-			var items = DomTraverse.childrenByClass(data.list, 'item');
-			var values = [], value, item;
-			for (var i = 0, length = items.length; i < length; i++) {
-				item = items[i];
-				value = {
-					objectId: elData(item, 'object-id'),
-					value: DomTraverse.childByTag(item, 'SPAN').textContent
-				};
-				
-				values.push(value);
-			}
+			var values = [];
+			elBySelAll('.item > span', data.list, function(span) {
+				values.push({
+					objectId: ~~elData(span, 'object-id'),
+					value: span.textContent
+				});
+			});
 			
 			return values;
 		},

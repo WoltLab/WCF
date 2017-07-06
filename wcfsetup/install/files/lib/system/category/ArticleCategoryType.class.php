@@ -25,6 +25,11 @@ class ArticleCategoryType extends AbstractCategoryType {
 	/**
 	 * @inheritDoc
 	 */
+	protected $maximumNestingLevel = 2;
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $objectTypes = ['com.woltlab.wcf.acl' => 'com.woltlab.wcf.article.category'];
 	
 	/** @noinspection PhpMissingParentCallCommonInspection */

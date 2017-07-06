@@ -38,7 +38,7 @@ define([], function() {
 					else if (property.indexOf('-moz-') === 0) {
 						_browser = 'firefox';
 					}
-					else if (property.indexOf('-webkit-') === 0) {
+					else if (_browser !== 'firefox' && property.indexOf('-webkit-') === 0) {
 						_browser = 'safari';
 					}
 				}

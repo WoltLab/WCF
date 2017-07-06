@@ -653,15 +653,22 @@ define(
 		/**
 		 * Destroys a dialog instance.
 		 * 
-		 * @param	{(string|object)}	id	element id or callback object
+		 * @param	{Object}	callbackObject  the same object that was used to invoke `_dialogSetup()` on first call
 		 */
-		destroy: function(id) {
-			id = this._getDialogId(id);
-			if (this.isOpen(id)) {
-				this.close(id);
+		destroy: function(callbackObject) {
+			if (typeof callbackObject !== 'object' || callbackObject instanceof String) {
+				throw new TypeError("Expected the callback object as parameter.");
 			}
 			
-			_dialogs.delete(id);
+			if (_dialogObjects.has(callbackObject)) {
+				var id = _dialogObjects.get(callbackObject).id;
+				if (this.isOpen(id)) {
+					this.close(id);
+				}
+				
+				_dialogs.delete(id);
+				_dialogObjects.delete(callbackObject);
+			}
 		},
 		
 		/**

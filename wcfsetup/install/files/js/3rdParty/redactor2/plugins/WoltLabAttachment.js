@@ -30,28 +30,44 @@ $.Redactor.prototype.WoltLabAttachment = function() {
 				
 				this.insert.html('<img src="' + data.url + '" class="woltlabAttachment" data-attachment-id="' + attachmentId + '" id="' + id + '">');
 				
-				window.setTimeout((function () {
-					// Safari does not properly update the caret position on insert
-					var img = elById(id);
-					if (img) {
-						img.removeAttribute('id');
-						
-						// manually set the caret after the img by using a simple text-node containing just `\u200B`
-						var text = img.nextSibling;
-						if (!text || text.nodeType !== Node.TEXT_NODE || text.textContent !== '\u200B') {
-							text = document.createTextNode('\u200B');
-							img.parentNode.insertBefore(text, img.nextSibling);
-						}
-						
-						var range = document.createRange();
-						range.selectNode(text);
-						range.collapse(false);
-						
-						var selection = window.getSelection();
-						selection.removeAllRanges();
-						selection.addRange(range);
+				img = elById(id);
+				
+				var addBlankLine = true;
+				var sibling = img;
+				while (sibling = sibling.nextSibling) {
+					if (sibling.nodeType !== Node.TEXT_NODE || sibling.textContent.replace(/\u200B/g, '').trim() !== '') {
+						addBlankLine = false;
+						break;
 					}
-				}).bind(this), 10);
+				}
+				
+				if (addBlankLine) {
+					this.caret.after(img.parentNode);
+				}
+				else {
+					window.setTimeout((function () {
+						// Safari does not properly update the caret position on insert
+						var img = elById(id);
+						if (img) {
+							img.removeAttribute('id');
+							
+							// manually set the caret after the img by using a simple text-node containing just `\u200B`
+							var text = img.nextSibling;
+							if (!text || text.nodeType !== Node.TEXT_NODE || text.textContent !== '\u200B') {
+								text = document.createTextNode('\u200B');
+								img.parentNode.insertBefore(text, img.nextSibling);
+							}
+							
+							var range = document.createRange();
+							range.selectNode(text);
+							range.collapse(false);
+							
+							var selection = window.getSelection();
+							selection.removeAllRanges();
+							selection.addRange(range);
+						}
+					}).bind(this), 10);
+				}
 			}
 			else {
 				// non-image attachment
