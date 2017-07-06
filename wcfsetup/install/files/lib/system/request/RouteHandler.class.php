@@ -314,6 +314,14 @@ class RouteHandler extends SingletonFactory {
 					}
 				}
 			}
+			
+			// translate legacy controller names
+			if (preg_match('~^(?P<controller>(?:[A-Z]+[a-z0-9]+)+)(?:/|$)~', self::$pathInfo, $matches)) {
+				$parts = preg_split('~([A-Z]+[a-z0-9]+)~', $matches['controller'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+				$parts = array_map('strtolower', $parts);
+				
+				self::$pathInfo = implode('-', $parts) . mb_substr(self::$pathInfo, mb_strlen($matches['controller']));
+			}
 		}
 		
 		return self::$pathInfo;
