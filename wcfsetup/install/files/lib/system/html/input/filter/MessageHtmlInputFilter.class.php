@@ -28,6 +28,8 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		// some inline elements to be dropped 
 		$html = str_replace('> <', '>&nbsp;<', $html);
 		
+		require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_ts3server.php');
+		
 		$html = $this->getPurifier()->purify($html);
 		
 		// work-around for a libxml bug that causes a single space between
@@ -43,10 +45,23 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	protected function getPurifier() {
 		if (self::$purifier === null) {
 			$config = \HTMLPurifier_Config::createDefault();
+			
+			// we need to prevent automatic finalization, otherwise we cannot read the default
+			// value for `URI.AllowedSchemes` below
+			$config->autoFinalize = false;
+			
 			$config->set('CSS.AllowedProperties', ['color', 'font-family', 'font-size']);
 			$config->set('HTML.ForbiddenAttributes', ['*@lang', '*@xml:lang']);
 			
+			$allowedSchemes = $config->get('URI.AllowedSchemes');
+			$allowedSchemes['ts3server'] = true;
+			$config->set('URI.AllowedSchemes', $allowedSchemes);
+			
 			$this->setAttributeDefinitions($config);
+			
+			$config->autoFinalize = false;
+			$config->finalize();
+			
 			self::$purifier = new \HTMLPurifier($config);
 		}
 		
