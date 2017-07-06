@@ -3642,15 +3642,9 @@ WCF.Message.UserMention = Class.extend({
 		var $startContainer = $orgRange.startContainer;
 		var $startOffset = $orgRange.startOffset;
 		
-		// start container might be the parent when inside a list item
-		if ($startContainer.nodeName === 'LI' && $startOffset === 1) {
-			$startContainer = $startContainer.lastChild;
-			$startOffset = $startContainer.textContent.length - 1;
-		}
-		
 		// check if `$startContainer` is an element, as it causes `$startOffset` to be
 		// relative to the child nodes instead of the actual text length
-		if ($startContainer.nodeType === Node.ELEMENT_NODE && $startOffset > 0) {
+		while ($startContainer.nodeType === Node.ELEMENT_NODE && $startOffset > 0) {
 			$startContainer = $startContainer.childNodes[$startOffset - 1];
 			$startOffset = $startContainer.textContent.length;
 		}
