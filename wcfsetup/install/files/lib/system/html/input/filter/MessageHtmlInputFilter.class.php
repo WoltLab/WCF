@@ -59,7 +59,8 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 			
 			$this->setAttributeDefinitions($config);
 			
-			$config->autoFinalize = false;
+			// enable finalization again, mimics the default behavior
+			$config->autoFinalize = true;
 			$config->finalize();
 			
 			self::$purifier = new \HTMLPurifier($config);
