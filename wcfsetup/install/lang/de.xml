@@ -3585,7 +3585,11 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Trophäe automatisch vergeben]]></item>
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophäen-Typ]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
-		<item name="wcf.acp.trophy.type.image"><![CDATA[Bild-Datei]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Bild-Datei]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein quadratisches Bild mit mindestens 64×64 Pixel hoch.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[Das Bild ist nicht quadratisch.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[Das Bild muss mindestens 64×64 Pixel groß sein.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.acp.trophy.badge.iconName"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.trophy.badge.iconColor"><![CDATA[Icon-Farbe]]></item>
 		<item name="wcf.acp.trophy.badge.badgeColor"><![CDATA[Badge-Farbe]]></item>
@@ -3593,7 +3597,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.trophy.conditions.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der die Trophäe vergeben wird.]]></item>
 		<item name="wcf.acp.trophy.conditions.error.noConditions"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Bedingungen ausgewählt.]]></item>
-		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{trophy->getTitle()}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$trophy->getTitle()}</span> wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">

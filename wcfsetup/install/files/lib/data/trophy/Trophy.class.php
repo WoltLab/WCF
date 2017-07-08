@@ -75,7 +75,10 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	public function renderTrophy($size = self::DEFAULT_SIZE) {
 		switch ($this->type) {
 			case self::TYPE_IMAGE: {
-				// @TODO
+				return WCF::getTPL()->fetch('trophyImage', 'wcf', [
+					'size' => $size,
+					'trophy' => $this
+				], true);
 				break;
 			}
 			
@@ -98,7 +101,6 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 					return $parameters['renderedTemplate']; 
 				}
 				
-				// no one has rendered the trophy ; throw an exception
 				throw new \LogicException("Unable to render the trophy with the type '". $this->type ."'.");
 			break; 
 		}

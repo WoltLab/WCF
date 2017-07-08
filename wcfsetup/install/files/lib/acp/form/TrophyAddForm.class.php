@@ -66,7 +66,7 @@ class TrophyAddForm extends AbstractAcpForm {
 	 * @var []
 	 */
 	public $availableTypes = [
-		Trophy::TYPE_IMAGE => 'image',
+		Trophy::TYPE_IMAGE => 'imageUpload',
 		Trophy::TYPE_BADGE => 'badge'
 	];
 	
@@ -77,10 +77,16 @@ class TrophyAddForm extends AbstractAcpForm {
 	public $type = Trophy::TYPE_BADGE;
 	
 	/**
-	 * the location of the uploaded icon
+	 * temporary hash for image icon
 	 * @var string
 	 */
-	public $uploadIconFile = '';
+	public $tmpHash = '';
+	
+	/**
+	 * the url for the uploaded image
+	 * @var string
+	 */
+	public $uploadedImageURL = '';
 	
 	/**
 	 * the icon name for CSS icons (FA-Icon)
@@ -139,6 +145,14 @@ class TrophyAddForm extends AbstractAcpForm {
 		$descriptionI18n = new I18nValue('description');
 		$descriptionI18n->setLanguageItem('wcf.trophy.description', 'wcf.trophy', 'com.woltlab.wcf');
 		$this->registerI18nValue($descriptionI18n);
+		
+		if (isset($_POST['tmpHash'])) {
+			$this->tmpHash = StringUtil::trim($_POST['tmpHash']);
+		}
+		
+		if (empty($this->tmpHash)) {
+			$this->tmpHash = StringUtil::getRandomID();
+		}
 	}
 	
 	/**
@@ -150,11 +164,17 @@ class TrophyAddForm extends AbstractAcpForm {
 		if (isset($_POST['categoryID'])) $this->categoryID = intval($_POST['categoryID']);
 		if (isset($_POST['type'])) $this->type = intval($_POST['type']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = intval($_POST['isDisabled']);
-		if (isset($_POST['uploadIconFile'])) $this->uploadIconFile = StringUtil::trim($_POST['uploadIconFile']);
 		if (isset($_POST['iconName'])) $this->iconName = StringUtil::trim($_POST['iconName']);
 		if (isset($_POST['iconColor'])) $this->iconColor = $_POST['iconColor'];
 		if (isset($_POST['badgeColor'])) $this->badgeColor = $_POST['badgeColor'];
-		if (isset($_POST['awardAutomatically'])) $this->awardAutomatically = intval($_POST['awardAutomatically']);
+		if (isset($_POST['awardAutomatically'])) $this->awardAutomatically = 1;
+		
+		// read file upload 
+		$fileExtension = WCF::getSession()->getVar('trophyImage-'.$this->tmpHash);
+		
+		if ($fileExtension !== null && file_exists(WCF_DIR.'images/trophy/tmp_'.$this->tmpHash.'.'.$fileExtension)) {
+			$this->uploadedImageURL = WCF::getPath().'images/trophy/tmp_'.$this->tmpHash.'.'.$fileExtension;
+		}
 		
 		$this->category = TrophyCategoryCache::getInstance()->getCategoryByID($this->categoryID);
 		
@@ -186,7 +206,15 @@ class TrophyAddForm extends AbstractAcpForm {
 		
 		switch ($this->type) {
 			case Trophy::TYPE_IMAGE:
-				// @TODO
+				$fileExtension = WCF::getSession()->getVar('trophyImage-'.$this->tmpHash);
+				
+				if ($fileExtension === null) {
+					throw new UserInputException('imageUpload');
+				}
+				
+				if (!file_exists(WCF_DIR.'images/trophy/tmp_'.$this->tmpHash.'.'.$fileExtension)) {
+					throw new UserInputException('imageUpload');
+				}
 				break;
 			
 			case Trophy::TYPE_BADGE:
@@ -229,9 +257,7 @@ class TrophyAddForm extends AbstractAcpForm {
 		parent::save();
 		
 		$data = [];
-		if ($this->type == Trophy::TYPE_IMAGE) {
-			// @ TODO 
-		} else if ($this->type == Trophy::TYPE_BADGE) {
+		if ($this->type == Trophy::TYPE_BADGE) {
 			$data['iconName'] = $this->iconName;
 			$data['iconColor'] = $this->iconColor;
 			$data['badgeColor'] = $this->badgeColor;
@@ -244,7 +270,8 @@ class TrophyAddForm extends AbstractAcpForm {
 				'categoryID' => $this->categoryID,
 				'type' => $this->type,
 				'isDisabled' => $this->isDisabled
-			])
+			]),
+			'tmpHash' => $this->tmpHash
 		]);
 		$this->objectAction->executeAction();
 		
@@ -267,10 +294,11 @@ class TrophyAddForm extends AbstractAcpForm {
 		
 		$this->isDisabled = $this->awardAutomatically = $this->categoryID = 0;
 		$this->type = Trophy::TYPE_BADGE;
-		$this->uploadIconFile = $this->iconName = '';
+		$this->iconName = $this->uploadedImageURL = '';
 		$this->iconColor = 'rgba(255, 255, 255, 1)';
 		$this->badgeColor = 'rgba(50, 92, 132, 1)';
 		$this->iconName = 'trophy';
+		$this->tmpHash = StringUtil::getRandomID();
 		
 		foreach ($this->conditions as $conditions) {
 			foreach ($conditions as $condition) {
@@ -288,7 +316,6 @@ class TrophyAddForm extends AbstractAcpForm {
 		WCF::getTPL()->assign([
 			'categoryID' => $this->categoryID,
 			'type' => $this->type,
-			'iconFile' => $this->uploadIconFile,
 			'isDisabled' => $this->isDisabled,
 			'iconName' => $this->iconName,
 			'iconColor' => $this->iconColor,
@@ -296,7 +323,9 @@ class TrophyAddForm extends AbstractAcpForm {
 			'trophyCategories' => TrophyCategoryCache::getInstance()->getCategories(),
 			'groupedObjectTypes' => $this->conditions, 
 			'awardAutomatically' => $this->awardAutomatically,
-			'availableTypes' => $this->availableTypes
+			'availableTypes' => $this->availableTypes, 
+			'tmpHash' => $this->tmpHash,
+			'uploadedImageURL' => $this->uploadedImageURL
 		]);
 	}
 }

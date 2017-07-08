@@ -49,12 +49,12 @@
 				<tr class="trophyRow">
 					<td class="columnIcon">
 						<span class="icon icon16 fa-{if !$trophy->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$trophy->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$trophy->getObjectID()}"></span>
-						<a href="{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}" data-tooltip="{lang}wcf.global.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
-						<span class="icon icon16 fa-times pointer jsDeleteButton" data-confirm-message-html="{lang __encode=true}wcf.acp.trophy.delete.confirmMessage{/lang}" data-object-id="{@$trophy->getObjectID()}" data-tooltip="{lang}wcf.global.delete{/lang}"></span>
+						<a href="{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+						<span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.trophy.delete.confirmMessage{/lang}" data-object-id="{@$trophy->getObjectID()}" title="{lang}wcf.global.button.delete{/lang}"></span>
 					</td>
 					<td class="columnID columnTrophyID">{@$trophy->trophyID}</td>
 					<td class="columnIcon">{@$trophy->renderTrophy(32)}</td>
-					<td class="columnTitle columnTrophyTitle"><a href="{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}" data-tooltip="{lang}wcf.global.edit{/lang}">{$trophy->getTitle()}</a></td>
+					<td class="columnTitle columnTrophyTitle"><a href="{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}">{$trophy->getTitle()}</a></td>
 					<td class="columnText columnCategory">{$trophy->getCategory()->getTitle()}</td>
 					
 					{event name='columns'}

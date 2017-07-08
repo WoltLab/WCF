@@ -3572,7 +3572,11 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Award trophy automatically]]></item>
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
-		<item name="wcf.acp.trophy.type.image"><![CDATA[Image]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Image]]></item>
+		<item name="wcf.acp.trophy.type.imageUpload.description"><![CDATA[Upload a square image with at least 64×64 pixels.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.notSquared"><![CDATA[The image isn't square.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.tooSmall"><![CDATA[The image must be at least 64×64 pixels.]]></item>
+		<item name="wcf.acp.trophy.imageUpload.error.noImage"><![CDATA[The uploaded file isn't a image..]]></item>
 		<item name="wcf.acp.trophy.badge.iconName"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.trophy.badge.iconColor"><![CDATA[Icon Color]]></item>
 		<item name="wcf.acp.trophy.badge.badgeColor"><![CDATA[Badge Color]]></item>

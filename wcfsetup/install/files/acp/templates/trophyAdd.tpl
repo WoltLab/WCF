@@ -11,7 +11,10 @@
 			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
 			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}',
-			'wcf.acp.trophy.badge.edit': '{lang}wcf.acp.trophy.badge.edit{/lang}'
+			'wcf.acp.trophy.badge.edit': '{lang}wcf.acp.trophy.badge.edit{/lang}',
+			'wcf.acp.trophy.imageUpload.error.notSquared': '{lang}wcf.acp.trophy.imageUpload.error.notSquared{/lang}',
+			'wcf.acp.trophy.imageUpload.error.tooSmall': '{lang}wcf.acp.trophy.imageUpload.error.tooSmall{/lang}',
+			'wcf.acp.trophy.imageUpload.error.noImage': '{lang}wcf.acp.trophy.imageUpload.error.noImage{/lang}'
 		});
 		
 		elBySel('select[name=type]').addEventListener('change', function () {
@@ -129,7 +132,7 @@
 		</dl>
 		
 		<dl>
-			<dt>{lang}wcf.acp.trophy.type{/lang}</dt>
+			<dt><label for="type">{lang}wcf.acp.trophy.type{/lang}</label></dt>
 			<dd>
 				<select name="type" id="type">
 					{foreach from=$availableTypes item=trophyType key=key}
@@ -144,10 +147,39 @@
 	
 	<section id="imageContainer" class="section"{if $type == 2} style="display: none;"{/if}>
 		<header class="sectionHeader">
-			<h2 class="sectionTitle">{lang}wcf.acp.trophy.type.image{/lang}</h2>
+			<h2 class="sectionTitle">{lang}wcf.acp.trophy.type.imageUpload{/lang}</h2>
 		</header>
 
-		{* @TODO *}
+		<dl{if $errorField == 'imageUpload'} class="formError"{/if}>
+			<dt>{lang}wcf.acp.trophy.type.imageUpload{/lang}</dt>
+			<dd>
+				<input type="hidden" name="tmpHash" value="{$tmpHash}" />
+				<div class="row">
+					<div class="col-md-6">
+						<div id="uploadIconFileButton"></div>
+						{if $errorField == 'imageUpload'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.trophy.type.imageUpload.description{/lang}</small>
+					</div>
+					<div class="col-md-6">
+						<div id="uploadIconFileContent">{if $action == 'add'}{if !$uploadedImageURL|empty}<img src="{$uploadedImageURL}">{/if}{else}{if $trophy->type == 2}<img src="{$__wcf->getPath()}images/trophy/{$trophy->iconFile}">{/if}{/if}</div>
+					</div>
+				</div>
+
+				<script data-relocate="true">
+					require(['WoltLabSuite/Core/Acp/Ui/Trophy/Upload'], function(IconUpload) {
+						new IconUpload({if $action == 'add'}0{else}{$trophy->trophyID}{/if}, '{$tmpHash}', {
+							input: 'uploadIconFile'
+						});
+					});
+				</script>
+			</dd>
+		</dl>
 	</section>
 	
 	<section id="badgeContainer" class="section"{if $type == 1} style="display: none;"{/if}>
