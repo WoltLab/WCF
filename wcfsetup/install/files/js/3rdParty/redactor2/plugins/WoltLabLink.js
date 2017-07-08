@@ -10,7 +10,8 @@ $.Redactor.prototype.WoltLabLink = function() {
 				// WoltLab modification: prevent catastrophic backtracing
 				var pattern = '((xn--)?[\\W\\w\\D\\d]+(-(?!-[\\W\\w\\D\\d])+)*\\.)+[\\W\\w]{2,}';
 				
-				var re1 = new RegExp('^(http|ftp|https)://' + pattern, 'i');
+				// WoltLab modification: added `ts3server`
+				var re1 = new RegExp('^(http|ftp|https|ts3server)://' + pattern, 'i');
 				var re2 = new RegExp('^' + pattern, 'i');
 				var re3 = new RegExp('\.(html|php)$', 'i');
 				var re4 = new RegExp('^/', 'i');

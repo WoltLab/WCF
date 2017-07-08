@@ -207,7 +207,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			$packageUpdateVersionID = $row['packageUpdateVersionID'];
 			
 			if ($minVersion !== null && Package::compareVersion($packageVersion, $minVersion) == -1) {
-				wcfDebug($minVersion, $packageVersion);
 				continue;
 			}
 			
