@@ -78,7 +78,7 @@
 			<dd>
 				<select id="parentID" name="parentID">
 					{foreach from=$languages item=language}
-						{if $action == 'edit' && $language->languageID != $languageID}<option value="{@$language->languageID}"{if $language->languageID == $parentID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>{/if}
+						{if $action != 'edit' || ($action == 'edit' && $language->languageID != $languageID)}<option value="{@$language->languageID}"{if $language->languageID == $parentID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>{/if}
 					{/foreach}
 				</select>
 				{if $errorField == 'parentID'}
