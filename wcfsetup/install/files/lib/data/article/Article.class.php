@@ -175,6 +175,9 @@ class Article extends DatabaseObject implements ILinkableObject {
 			if (isset($this->articleContents[WCF::getLanguage()->languageID])) {
 				return $this->articleContents[WCF::getLanguage()->languageID];
 			}
+			if (WCF::getLanguage()->parentID && isset($this->articleContents[WCF::getLanguage()->parentID])) {
+				return $this->articleContents[WCF::getLanguage()->parentID];
+			}
 		}
 		else {
 			if (!empty($this->articleContents[0])) {
