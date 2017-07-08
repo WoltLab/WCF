@@ -12,6 +12,7 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -142,6 +143,11 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 		$statement->execute($conditions->getParameters());
 		$row = $statement->fetchSingleRow();
 		if ($row !== false) return new PageContent(null, $row);
+		
+		$language = LanguageFactory::getInstance()->getLanguage($languageID);
+		if ($language->parentID) {
+			return $this->getPageContentByLanguage($language->parentID);
+		}
 		
 		return null;
 	}
