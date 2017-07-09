@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\user\trophy;
-use wcf\data\DatabaseObject;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\data\DatabaseObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -28,6 +28,12 @@ use wcf\util\StringUtil;
  * @property-read	string		$useCustomDescription		`1`, iif the trophy use a custom description
  */
 class UserTrophy extends DatabaseObject {
+	/**
+	 * The description text replacements. 
+	 * @var string[]
+	 */
+	private $replacements; 
+	
 	/**
 	 * Returns the trophy for the user trophy. 
 	 * 
@@ -56,17 +62,7 @@ class UserTrophy extends DatabaseObject {
 			return $this->getTrophy()->getDescription();
 		}
 		
-		$replacements = [
-			'{$username}' => $this->getUserProfile()->username
-		];
-		
-		$parameters = ['replacements' => $replacements];
-		
-		EventHandler::getInstance()->fireAction($this, 'getDescription', $parameters);
-		
-		$replacements = $parameters['replacements'];
-		
-		return nl2br(StringUtil::encodeHTML(strtr($this->description, $replacements)));
+		return nl2br(StringUtil::encodeHTML(strtr($this->description, $this->getReplacements())));
 	}
 	
 	/**
@@ -97,5 +93,26 @@ class UserTrophy extends DatabaseObject {
 		
 		// @TODO check user option canViewTrophies
 		return true;
+	}
+	
+	/**
+	 * Returns an array with replacements for the trophy. 
+	 * 
+	 * @return string[]
+	 */
+	protected function getReplacements() {
+		if ($this->replacements == null) {
+			$replacements = [
+				'{$username}' => $this->getUserProfile()->username
+			];
+			
+			$parameters = ['replacements' => $replacements];
+			
+			EventHandler::getInstance()->fireAction($this, 'getDescription', $parameters);
+			
+			$this->replacements = $parameters['replacements'];
+		}
+		
+		return $this->replacements; 
 	}
 }

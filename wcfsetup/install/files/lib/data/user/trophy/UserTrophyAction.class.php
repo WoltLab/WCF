@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user\trophy;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\UserAction;
+use wcf\data\AbstractDatabaseObjectAction;
 
 /**
  * Provides user trophy actions. 
