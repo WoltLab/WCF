@@ -1,0 +1,101 @@
+<?php
+namespace wcf\data\user\trophy;
+use wcf\data\DatabaseObject;
+use wcf\data\trophy\Trophy;
+use wcf\data\trophy\TrophyCache;
+use wcf\data\user\User;
+use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
+use wcf\system\WCF;
+use wcf\util\StringUtil;
+
+/**
+ * Represents a user trophy.
+ *
+ * @author	Joshua Ruesweg
+ * @copyright	2001-2017 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\Data\User\Trophy
+ * @since	3.1
+ *
+ * @property-read	integer		$userTrophyID			unique id of the user trophy
+ * @property-read	integer		$trophyID			trophy id
+ * @property-read	integer		$userID				user id
+ * @property-read	integer		$time				the time when the trophy was rewarded
+ * @property-read	string		$description			the custom trophy description
+ * @property-read	string		$useCustomDescription		`1`, iif the trophy use a custom description
+ */
+class UserTrophy extends DatabaseObject {
+	/**
+	 * Returns the trophy for the user trophy. 
+	 * 
+	 * @return Trophy
+	 */
+	public function getTrophy() {
+		return TrophyCache::getInstance()->getTrophyByID($this->trophyID);
+	}
+	
+	/**
+	 * Returns the user profile for the user trophy.
+	 *
+	 * @return UserProfile
+	 */
+	public function getUserProfile() {
+		return UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+	}
+	
+	/**
+	 * Returns the parsed description.
+	 * 
+	 * @return string
+	 */
+	public function getDescription() {
+		if (!$this->useCustomDescription) {
+			return $this->getTrophy()->getDescription();
+		}
+		
+		$replacements = [
+			'{$username}' => $this->getUserProfile()->username
+		];
+		
+		$parameters = ['replacements' => $replacements];
+		
+		EventHandler::getInstance()->fireAction($this, 'getDescription', $parameters);
+		
+		$replacements = $parameters['replacements'];
+		
+		return nl2br(StringUtil::encodeHTML(strtr($this->description, $replacements)));
+	}
+	
+	/**
+	 * Returns true, if the given user can see this user trophy.
+	 *
+	 * @param 	User 	$user
+	 * @return 	bool
+	 * @throws 	SystemException
+	 */
+	public function canSee(User $user = null) {
+		if ($user === null) {
+			$user = WCF::getUser();
+		}
+		
+		if (!$user->userID) {
+			$userProfile = new UserProfile(new User(null, []));
+		} else {
+			$userProfile = UserProfileRuntimeCache::getInstance()->getObject($user->userID);
+		}
+		
+		if (!$userProfile->getPermission('user.profile.trophy.canSeeTrophies')) {
+			return false;
+		}
+		
+		if ($this->getTrophy()->isDisabled()) {
+			return false;
+		}
+		
+		// @TODO check user option canViewTrophies
+		return true;
+	}
+}

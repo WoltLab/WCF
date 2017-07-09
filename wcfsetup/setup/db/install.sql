@@ -1374,6 +1374,7 @@ CREATE TABLE wcf1_user (
 	notificationMailToken VARCHAR(20) NOT NULL DEFAULT '',
 	authData VARCHAR(191) NOT NULL DEFAULT '',
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
+	trophyPoints INT(10) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),
@@ -1383,7 +1384,8 @@ CREATE TABLE wcf1_user (
 	KEY registrationData (registrationIpAddress, registrationDate),
 	KEY activityPoints (activityPoints),
 	KEY likesReceived (likesReceived),
-	KEY authData (authData)
+	KEY authData (authData),
+	KEY trophyPoints (trophyPoints)
 );
 
 DROP TABLE IF EXISTS wcf1_user_activity_event;
@@ -1516,6 +1518,17 @@ CREATE TABLE wcf1_user_ignore (
 	ignoreUserID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (userID, ignoreUserID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_trophy;
+CREATE TABLE wcf1_user_trophy(
+	userTrophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	trophyID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	time INT(10) NOT NULL DEFAULT 0,
+	description MEDIUMTEXT,
+	useCustomDescription TINYINT(1) NOT NULL DEFAULT 0,
+	KEY(trophyID, time)
 );
 
 DROP TABLE IF EXISTS wcf1_user_menu_item;
@@ -1936,6 +1949,9 @@ ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_gr
 
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_import_mapping ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
