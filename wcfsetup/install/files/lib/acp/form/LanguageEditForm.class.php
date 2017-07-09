@@ -4,6 +4,7 @@ use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -52,6 +53,24 @@ class LanguageEditForm extends LanguageAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validateParent() {
+		parent::validateParent();
+		
+		if ($this->languageID == $this->parentID) {
+			throw new UserInputException('parentID', 'parentsItself');
+		}
+		
+		$language = $this->language;
+		while ($language = LanguageFactory::getInstance()->getLanguage($language->languageID)) {
+			if ($language->languageID == $this->parentID) {
+				throw new UserInputException('parentID', 'parentsItself');
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 		
@@ -59,7 +78,8 @@ class LanguageEditForm extends LanguageAddForm {
 		$editor->update([
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
-			'languageCode' => mb_strtolower($this->languageCode)
+			'languageCode' => mb_strtolower($this->languageCode),
+			'parentID' => $this->parentID
 		]);
 		LanguageFactory::getInstance()->clearCache();
 		$this->saved();
@@ -78,6 +98,9 @@ class LanguageEditForm extends LanguageAddForm {
 			$this->countryCode = $this->language->countryCode;
 			$this->languageName = $this->language->languageName;
 			$this->languageCode = $this->language->languageCode;
+			$this->parentID = $this->language->parentID;
+			
+			if ($this->parentID) $this->parentLanguage = LanguageFactory::getInstance()->getLanguage($this->parentID);
 		}
 	}
 	

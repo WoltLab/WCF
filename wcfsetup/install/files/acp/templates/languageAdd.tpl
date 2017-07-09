@@ -72,6 +72,27 @@
 				<small>{lang}wcf.acp.language.countryCode.description{/lang}</small>
 			</dd>
 		</dl>
+
+		<dl{if $errorField == 'parentID'} class="formError"{/if}>
+			<dt><label for="parentID">{lang}wcf.acp.language.parent{/lang}</label></dt>
+			<dd>
+				<select id="parentID" name="parentID">
+					{foreach from=$languages item=language}
+						{if $action != 'edit' || ($action == 'edit' && $language->languageID != $languageID)}<option value="{@$language->languageID}"{if $language->languageID == $parentID} selected{/if}>{$language->languageName} ({$language->languageCode})</option>{/if}
+					{/foreach}
+				</select>
+				{if $errorField == 'parentID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.language.parent.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.language.parent.description{/lang}</small>
+			</dd>
+		</dl>
 		
 		{if $action == 'add'}
 			<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>

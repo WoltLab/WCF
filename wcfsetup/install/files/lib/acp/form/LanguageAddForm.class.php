@@ -58,6 +58,18 @@ class LanguageAddForm extends AbstractForm {
 	public $languages = [];
 	
 	/**
+	 * parent language id
+	 * @var	integer
+	 */
+	public $parentID = 0;
+	
+	/**
+	 * parent language object
+	 * @var	Language
+	 */
+	public $parentLanguage = null;
+	
+	/**
 	 * source language object
 	 * @var	Language
 	 */
@@ -79,6 +91,7 @@ class LanguageAddForm extends AbstractForm {
 		if (isset($_POST['languageName'])) $this->languageName = StringUtil::trim($_POST['languageName']);
 		if (isset($_POST['languageCode'])) $this->languageCode = StringUtil::trim($_POST['languageCode']);
 		if (isset($_POST['sourceLanguageID'])) $this->sourceLanguageID = intval($_POST['sourceLanguageID']);
+		if (isset($_POST['parentID'])) $this->parentID = intval($_POST['parentID']);
 	}
 	
 	/**
@@ -102,6 +115,9 @@ class LanguageAddForm extends AbstractForm {
 		
 		// source language id
 		$this->validateSource();
+		
+		// parent language id
+		$this->validateParent();
 	}
 	
 	/**
@@ -132,6 +148,19 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
+	 * Validates given parent language.
+	 */
+	protected function validateParent() {
+		if (empty($this->parentID)) return;
+		
+		// get language
+		$this->parentLanguage = LanguageFactory::getInstance()->getLanguage($this->parentID);
+		if (!$this->parentLanguage->languageID) {
+			throw new UserInputException('parentID');
+		}
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function save() {
@@ -140,7 +169,8 @@ class LanguageAddForm extends AbstractForm {
 		$this->language = LanguageEditor::create([
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
-			'languageCode' => mb_strtolower($this->languageCode)
+			'languageCode' => mb_strtolower($this->languageCode),
+			'parentID' => $this->parentID ?: null
 		]);
 		$languageEditor = new LanguageEditor($this->sourceLanguage);
 		$languageEditor->copy($this->language);
@@ -159,7 +189,7 @@ class LanguageAddForm extends AbstractForm {
 		
 		// reset values
 		$this->countryCode = $this->languageCode = $this->languageName = '';
-		$this->sourceLanguageID = 0;
+		$this->sourceLanguageID = $this->parentID = 0;
 	}
 	
 	/**
@@ -183,6 +213,8 @@ class LanguageAddForm extends AbstractForm {
 			'languageCode' => $this->languageCode,
 			'sourceLanguageID' => $this->sourceLanguageID,
 			'languages' => $this->languages,
+			'parentID' => $this->parentID,
+			'parentLanguage' => $this->parentLanguage,
 			'action' => 'add'
 		]);
 	}
