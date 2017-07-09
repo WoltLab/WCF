@@ -595,6 +595,8 @@
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Kann Trophäen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Kann Trophäen verleihen]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.trophy"><![CDATA[Trophäen]]></item>
+		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Kann Trophäen sehen]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">

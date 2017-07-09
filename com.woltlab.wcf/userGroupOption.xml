@@ -15,6 +15,9 @@
 			<category name="user.profile.avatar">
 				<parent>user.profile</parent>
 			</category>
+			<category name="user.profile.trophy">
+				<parent>user.profile</parent>
+			</category>
 			
 			<category name="user.message">
 				<parent>user</parent>
@@ -730,6 +733,12 @@ jpg
 jpeg
 png</defaultvalue>
 				<usersonly>1</usersonly>
+			</option>
+			<option name="user.profile.trophy.canSeeTrophies">
+				<categoryname>user.profile.trophy</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_trophy</options>
 			</option>
 			<!-- /user.profile -->
 			
