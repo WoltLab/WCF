@@ -835,6 +835,7 @@
 		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
+		<item name="wcf.acp.menu.link.trophy.edit"><![CDATA[Edit Trophy]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">

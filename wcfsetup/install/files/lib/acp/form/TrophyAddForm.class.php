@@ -204,6 +204,30 @@ class TrophyAddForm extends AbstractAcpForm {
 			throw new UserInputException('categoryID');
 		}
 		
+		$this->validateType();
+		
+		if ($this->awardAutomatically) {
+			$hasData = false;
+			foreach ($this->conditions as $conditions) {
+				foreach ($conditions as $condition) {
+					$condition->getProcessor()->validate();
+					
+					if (!$hasData && $condition->getProcessor()->getData() !== null) {
+						$hasData = true;
+					}
+				}
+			}
+			
+			if (!$hasData) {
+				throw new UserInputException('conditions');
+			}	
+		}
+	}
+	
+	/**
+	 * Validates the trophy type. 
+	 */
+	protected function validateType() {
 		switch ($this->type) {
 			case Trophy::TYPE_IMAGE:
 				$fileExtension = WCF::getSession()->getVar('trophyImage-'.$this->tmpHash);
@@ -230,23 +254,6 @@ class TrophyAddForm extends AbstractAcpForm {
 					throw new UserInputException('badgeColor');
 				}
 				break;
-		}
-		
-		if ($this->awardAutomatically) {
-			$hasData = false;
-			foreach ($this->conditions as $conditions) {
-				foreach ($conditions as $condition) {
-					$condition->getProcessor()->validate();
-					
-					if (!$hasData && $condition->getProcessor()->getData() !== null) {
-						$hasData = true;
-					}
-				}
-			}
-			
-			if (!$hasData) {
-				throw new UserInputException('conditions');
-			}	
 		}
 	}
 	
@@ -278,7 +285,14 @@ class TrophyAddForm extends AbstractAcpForm {
 		// transform conditions array into one-dimensional array
 		$conditions = [];
 		foreach ($this->conditions as $groupedObjectTypes) {
-			$conditions = array_merge($conditions, $groupedObjectTypes);
+			foreach ($groupedObjectTypes as $objectTypes) {
+				if (is_array($objectTypes)) {
+					$conditions = array_merge($conditions, $objectTypes);
+				}
+				else {
+					$conditions[] = $objectTypes;
+				}
+			}
 		}
 		
 		ConditionHandler::getInstance()->createConditions($this->objectAction->getReturnValues()['returnValues']->trophyID, $conditions);

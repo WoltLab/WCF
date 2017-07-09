@@ -167,7 +167,7 @@
 						<small>{lang}wcf.acp.trophy.type.imageUpload.description{/lang}</small>
 					</div>
 					<div class="col-md-6">
-						<div id="uploadIconFileContent">{if $action == 'add'}{if !$uploadedImageURL|empty}<img src="{$uploadedImageURL}">{/if}{else}{if $trophy->type == 2}<img src="{$__wcf->getPath()}images/trophy/{$trophy->iconFile}">{/if}{/if}</div>
+						<div id="uploadIconFileContent">{if $action == 'add'}{if !$uploadedImageURL|empty}<img src="{$uploadedImageURL}">{/if}{else}{if $trophy->type == 1}<img src="{$__wcf->getPath()}images/trophy/{$trophy->iconFile}">{/if}{/if}</div>
 					</div>
 				</div>
 

@@ -4,6 +4,7 @@ use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledLinkObject;
+use wcf\system\condition\ConditionHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -139,5 +140,14 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	 */
 	public function getDescription() {
 		return nl2br(StringUtil::encodeHTML(WCF::getLanguage()->get($this->description)), false); 
+	}
+	
+	/**
+	 * Returns the conditions of the trophy.
+	 *
+	 * @return	Condition[]
+	 */
+	public function getConditions() {
+		return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.trophy', $this->trophyID);
 	}
 }
