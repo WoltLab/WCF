@@ -108,7 +108,7 @@ class UserTrophy extends DatabaseObject {
 			
 			$parameters = ['replacements' => $replacements];
 			
-			EventHandler::getInstance()->fireAction($this, 'getDescription', $parameters);
+			EventHandler::getInstance()->fireAction($this, 'getReplacements', $parameters);
 			
 			$this->replacements = $parameters['replacements'];
 		}
