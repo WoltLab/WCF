@@ -1,4 +1,15 @@
 <footer id="pageFooter" class="pageFooter">
+	{if !$errorField|empty || !$errorType|empty}
+		<!--
+			DEBUG: FORM_VALIDATION_FAILED
+			
+			errorField: {if $errorField|empty}(empty){else}{$errorField|print_r:true}{/if}
+			
+			errorType: {if $errorType|empty}(empty){else}{$errorType|print_r:true}{/if}
+		
+		-->
+	{/if}
+	
 	<div id="pageFooterCopyright" class="pageFooterCopyright">
 		<div class="layoutBoundary">
 			{event name='footerContents'}
