@@ -234,6 +234,10 @@ class PackageInstallationDispatcher {
 							'debug',
 							'mail_send_method'
 						]);
+						$statement->execute([
+							1,
+							'enable_developer_tools'
+						]);
 					}
 					
 					// update options.inc.php

@@ -481,6 +481,13 @@ CREATE TABLE wcf1_cronjob_log (
 	error TEXT
 );
 
+DROP TABLE IF EXISTS wcf1_devtools_project;
+CREATE TABLE wcf1_devtools_project (
+	projectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(191) NOT NULL,
+	path TEXT
+);
+
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
 CREATE TABLE wcf1_edit_history_entry (
 	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,

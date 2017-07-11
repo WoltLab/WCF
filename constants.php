@@ -227,3 +227,4 @@ define('FB_SHARE_APP_ID', '');
 define('MODULE_CONTACT_FORM', 0);
 define('SITEMAP_INDEX_TIME_FRAME', 365);
 define('MODULE_TROPHY', 1);
+define('ENABLE_DEVELOPER_TOOLS', 0);

@@ -20,7 +20,7 @@ use wcf\util\FileUtil;
 class ApplicationHandler extends SingletonFactory {
 	/**
 	 * application cache
-	 * @var	Application[]
+	 * @var	mixed[][]
 	 */
 	protected $cache;
 	
@@ -160,6 +160,16 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns the list of application abbreviations.
+	 * 
+	 * @return      string[]
+	 * @since       3.1
+	 */
+	public function getAbbreviations() {
+		return array_keys($this->cache['abbreviation']);
 	}
 	
 	/**

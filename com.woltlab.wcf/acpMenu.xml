@@ -96,6 +96,26 @@
 				<icon>fa-plus</icon>
 			</acpmenuitem>
 			<!-- /other -->
+			
+			<!-- devtools -->
+			<acpmenuitem name="wcf.acp.menu.link.devtools">
+				<parent>wcf.acp.menu.link.configuration</parent>
+				<showorder>99</showorder>
+				<options>enable_developer_tools</options>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.devtools.project.list">
+				<parent>wcf.acp.menu.link.devtools</parent>
+				<controller>wcf\acp\page\DevtoolsProjectListPage</controller>
+				<permissions>admin.configuration.package.canInstallPackage</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.devtools.project.add">
+				<parent>wcf.acp.menu.link.devtools.project.list</parent>
+				<controller>wcf\acp\form\DevtoolsProjectAddForm</controller>
+				<permissions>admin.configuration.package.canInstallPackage</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /devtools -->
 		
 		<!-- /configuration -->
 		

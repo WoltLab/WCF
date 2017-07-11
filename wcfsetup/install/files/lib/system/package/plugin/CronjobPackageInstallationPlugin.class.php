@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */

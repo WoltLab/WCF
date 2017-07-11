@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
@@ -16,7 +17,7 @@ use wcf\util\XML;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */

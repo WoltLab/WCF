@@ -1,0 +1,198 @@
+<?php
+namespace wcf\system\devtools\pip;
+use wcf\data\devtools\project\DevtoolsProject;
+use wcf\data\package\installation\plugin\PackageInstallationPlugin;
+use wcf\data\DatabaseObjectDecorator;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\exception\NotImplementedException;
+use wcf\system\WCF;
+
+/**
+ * Wrapper class for package installation plugins for use with the sync feature.
+ *
+ * @author	Alexander Ebert
+ * @copyright	2001-2017 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Devtools\Pip
+ * @since       3.1
+ * 
+ * @method	PackageInstallationPlugin	getDecoratedObject()
+ * @mixin	PackageInstallationPlugin
+ */
+class DevtoolsPip extends DatabaseObjectDecorator {
+	/**
+	 * @inheritDoc
+	 */
+	protected static $baseClass = PackageInstallationPlugin::class;
+	
+	/**
+	 * Returns true if the PIP class can be found.
+	 * 
+	 * @return      boolean
+	 */
+	public function classExists() {
+		return class_exists($this->getDecoratedObject()->className);
+	}
+	
+	/**
+	 * Returns true if the PIP is expected to be idempotent.
+	 * 
+	 * @return      boolean
+	 */
+	public function isIdempotent() {
+		return is_subclass_of($this->getDecoratedObject()->className, IIdempotentPackageInstallationPlugin::class);
+	}
+	
+	/**
+	 * Returns the default filename of this PIP.
+	 * 
+	 * @return      string
+	 */
+	public function getDefaultFilename() {
+		return call_user_func([$this->getDecoratedObject()->className, 'getDefaultFilename']);
+	}
+	
+	/**
+	 * Returns true if the PIP exists, has a default filename and is idempotent.
+	 * 
+	 * @return      boolean
+	 */
+	public function isSupported() {
+		return $this->classExists() && $this->getDefaultFilename() && $this->isIdempotent();
+	}
+	
+	/**
+	 * Returns the first validation error.
+	 * 
+	 * @return      string
+	 */
+	public function getFirstError() {
+		if (!$this->classExists()) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.pip.error.className', ['className' => $this->getDecoratedObject()->className]);
+		}
+		else if (!$this->isIdempotent()) {
+			return WCF::getLanguage()->get('wcf.acp.devtools.pip.error.notIdempotent');
+		}
+		else if (!$this->getDefaultFilename()) {
+			return WCF::getLanguage()->get('wcf.acp.devtools.pip.error.defaultFilename');
+		}
+		
+		throw new \LogicException("Please call `isSupported()` to check for potential errors.");
+	}
+	
+	/**
+	 * Returns the list of valid targets for this pip.
+	 * 
+	 * @param       DevtoolsProject         $project
+	 * @return      string[]
+	 */
+	public function getTargets(DevtoolsProject $project) {
+		if (!$this->isSupported()) {
+			return [];
+		}
+		
+		$path = $project->path;
+		$defaultFilename = $this->getDefaultFilename();
+		$targets = [];
+		
+		// the core uses a significantly different file layout
+		if ($project->isCore()) {
+			switch ($this->getDecoratedObject()->pluginName) {
+				case 'acpTemplate':
+				case 'file':
+				case 'template':
+					// these pips are satisfied by definition
+					return [$defaultFilename];
+					
+				case 'language':
+					foreach (glob($path . 'wcfsetup/install/lang/*.xml') as $file) {
+						$targets[] = basename($file);
+					}
+					
+					// `glob()` returns files in an arbitrary order
+					sort($targets, SORT_NATURAL);
+					
+					return $targets;
+			}
+			
+			if (strpos($defaultFilename, '*') !== false) {
+				foreach (glob($path . 'com.woltlab.wcf/' . $defaultFilename) as $file) {
+					$targets[] = basename($file);
+				}
+				
+				// `glob()` returns files in an arbitrary order
+				sort($targets, SORT_NATURAL);
+			}
+			else {
+				if (file_exists($path . 'com.woltlab.wcf/' . $defaultFilename)) {
+					$targets[] = $defaultFilename;
+				}
+			}
+		}
+		else {
+			if (preg_match('~^(?<filename>.*)\.tar$~', $defaultFilename, $match)) {
+				if (is_dir($path . $match['filename'])) {
+					$targets[] = $defaultFilename;
+				}
+				
+				// check for application-specific pips too
+				foreach (ApplicationHandler::getInstance()->getAbbreviations() as $abbreviation) {
+					if (is_dir($path . $match['filename'] . '_' . $abbreviation)) {
+						$targets[] = $match['filename'] . "_{$abbreviation}.tar";
+					}
+				}
+			}
+			else {
+				if (strpos($defaultFilename, '*') !== false) {
+					foreach (glob($path . $defaultFilename) as $file) {
+						$targets[] = basename($file);
+					}
+					
+					// `glob()` returns files in an arbitrary order
+					sort($targets, SORT_NATURAL);
+				}
+				else {
+					if (file_exists($path . $defaultFilename)) {
+						$targets[] = $defaultFilename;
+					}
+				}
+			}
+		}
+		
+		return $targets;
+	}
+	
+	public function getInstructionValue(DevtoolsProject $project, $target) {
+		$defaultFilename = $this->getDefaultFilename();
+		
+		if ($project->isCore()) {
+			switch ($this->getDecoratedObject()->pluginName) {
+				case 'acpTemplate':
+				case 'file':
+				case 'template':
+					throw new NotImplementedException();
+					break;
+				
+				case 'language':
+					$filename = "wcfsetup/install/lang/{$target}";
+					$project->getPackageArchive()->getTar()->registerFile($filename, $project->path . $filename);
+					
+					return $filename;
+					
+				default:
+					$filename = "com.woltlab.wcf/{$target}";
+					$project->getPackageArchive()->getTar()->registerFile($filename, $project->path . $filename);
+					
+					return $filename;
+			}
+		}
+		else {
+			if (strpos($defaultFilename, '*') !== false) {
+				$filename = str_replace('*', $target, $defaultFilename);
+				$project->getPackageArchive()->getTar()->registerFile($filename, $project->path . $filename);
+			}
+		}
+		
+		throw new NotImplementedException();
+	}
+}

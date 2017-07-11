@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\core\object\CoreObjectEditor;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /**
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */

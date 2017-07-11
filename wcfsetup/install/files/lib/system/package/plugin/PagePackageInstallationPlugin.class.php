@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\package\PackageCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RouteHandler;
@@ -19,7 +20,7 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */

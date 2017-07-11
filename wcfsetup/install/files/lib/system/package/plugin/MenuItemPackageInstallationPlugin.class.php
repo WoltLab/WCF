@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\menu\item\MenuItem;
 use wcf\data\menu\item\MenuItemEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -14,7 +15,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */

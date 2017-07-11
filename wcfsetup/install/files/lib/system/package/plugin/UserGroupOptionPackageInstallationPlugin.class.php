@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * list of group ids by type
 	 * @var	integer[][]

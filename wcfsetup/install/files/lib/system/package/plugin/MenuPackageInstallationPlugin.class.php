@@ -6,6 +6,7 @@ use wcf\data\menu\Menu;
 use wcf\data\menu\MenuEditor;
 use wcf\data\menu\MenuList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -18,7 +19,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * box meta data per menu
 	 * @var	string[]

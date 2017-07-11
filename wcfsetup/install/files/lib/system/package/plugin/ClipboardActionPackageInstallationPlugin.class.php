@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\clipboard\action\ClipboardActionEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /**
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */

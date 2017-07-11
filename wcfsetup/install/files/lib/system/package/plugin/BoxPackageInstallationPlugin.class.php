@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -16,7 +17,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
