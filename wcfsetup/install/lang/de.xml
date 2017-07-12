@@ -275,7 +275,7 @@
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Empfänger bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Empfänger deaktivieren]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Angezeigter Name]]></item>
-		<item name="wcf.acp.contact.settings"><![CDATA[Kontakt-Formular bearbeiten]]></item>
+		<item name="wcf.acp.contact.settings"><![CDATA[Kontaktformular bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.cronjob">
@@ -609,7 +609,7 @@
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Seitenbeschleunigung für Gäste ist aktiv]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol (<span class="icon icon16 fa-bolt red"></span>) markiert.]]></item>
-		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontakt-Formular verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontaktformular verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Kann Trophäen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Kann Trophäen verleihen]]></item>
@@ -866,7 +866,7 @@
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Sonstiges]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
-		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Kontakt-Formular]]></item>
+		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Kontaktformular]]></item>
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Kategorie hinzufügen]]></item>
@@ -1333,8 +1333,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Neue Benachrichtigungen werden in periodischen Abständen automatisch abgerufen. Der Aktualisierungs-Intervall beträgt 5 Minuten und wird bei Inaktivität schrittweise auf 15 Minuten reduziert.]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Desktop-Benachrichtigungen verwenden]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund aberufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt. Einige wenige Browser, z. B. Internet Explorer, unterstützen diese Funktion nicht.]]></item>
-		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontakt-Formular aktivieren]]></item>
-		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontakt-Formular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
+		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontaktformular aktivieren]]></item>
+		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontaktformular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.option.category.module.developer"><![CDATA[Entwickler]]></item>
 		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Entwickler-Werkzeuge aktivieren]]></item>
@@ -2382,10 +2382,10 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.contact">
 		<item name="wcf.contact.data"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Anfrage]]></item>
-		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontakt-Formular]]></item>
+		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontaktformular]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hallo,
 
-„{@$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontakt-Formular auf der Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
+„{@$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf der Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
 
 {foreach from=$options item=option}
 {@$option['title']}:{if !$option['isMessage']} {@$option['value']}{else}
@@ -2393,7 +2393,7 @@ Fehler sind beispielsweise:
 {/foreach}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hallo,</h2>
 
-<p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontakt-Formular auf Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
+<p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
 
 {foreach from=$options item=option}
 <p><strong>{@$option['title']}:</strong>{if !$option['isMessage']} {@$option['value']}{else}
