@@ -352,6 +352,13 @@
 				<permissions>admin.trophy.canAwardTrophy</permissions>
 				<options>module_trophy</options>
 			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.userTrophy.add">
+				<controller>wcf\acp\form\UserTrophyAddForm</controller>
+				<parent>wcf.acp.menu.link.userTrophy.list</parent>
+				<permissions>admin.trophy.canAwardTrophy</permissions>
+				<options>module_trophy</options>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
 			<!-- /trophy -->
 		
 		<!-- /user -->

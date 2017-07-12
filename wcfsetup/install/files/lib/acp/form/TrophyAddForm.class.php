@@ -276,7 +276,8 @@ class TrophyAddForm extends AbstractAcpForm {
 				'description' => $this->description,
 				'categoryID' => $this->categoryID,
 				'type' => $this->type,
-				'isDisabled' => $this->isDisabled
+				'isDisabled' => $this->isDisabled,
+				'awardAutomatically' => $this->awardAutomatically
 			]),
 			'tmpHash' => $this->tmpHash
 		]);
