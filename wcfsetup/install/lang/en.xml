@@ -838,6 +838,8 @@
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
 		<item name="wcf.acp.menu.link.trophy.edit"><![CDATA[Edit Trophy]]></item>
+		<item name="wcf.acp.menu.link.userTrophy.list"><![CDATA[Assigned Trophies]]></item>
+		<item name="wcf.acp.menu.link.userTrophy.edit"><![CDATA[Edit assigned Trophy]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -3569,6 +3571,7 @@ Open the link below to access the user profile:
 	</category>
 	
 	<category name="wcf.acp.trophy">
+		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.trophy.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Disable Trophy]]></item>
@@ -3588,6 +3591,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be awarded with the trophy.]]></item>
 		<item name="wcf.acp.trophy.conditions.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$trophy->getTitle()}</span>?]]></item>
+		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> from <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span>?]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
