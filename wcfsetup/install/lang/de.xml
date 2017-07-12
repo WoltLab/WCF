@@ -56,11 +56,11 @@
 		<item name="wcf.acp.application.cookieDomain.error.invalid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Domain an, über die diese App erreichbar ist. Wenn die App zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „www.example.com“ lauten.]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} die Domain an, über die diese App erreichbar ist. Wenn die App zum Beispiel unter „https://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „www.example.com“ lauten.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[Dieser Pfad ist bereits durch die App „{$conflictApplication->getName()}“ belegt]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Pfad an, über den diese App erreichbar ist. Wenn die App zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „/community/forum/“ lauten.]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den Pfad an, über den diese App erreichbar ist. Wenn die App zum Beispiel unter „https://www.example.com/community/forum/“ erreichbar ist, müsste hier die korrekte Angabe „/community/forum/“ lauten.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[App bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[App bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.landingPage"><![CDATA[Einstiegsseite]]></item>
@@ -680,9 +680,9 @@
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Dieser Sprachcode wird bereits von einer anderen im System installierten Sprache verwendet.]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Vorlage]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
-		<item name="wcf.acp.language.code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} unter <a href="https://de.wikipedia.org/wiki/ISO_639-1" class="externalURL">https://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.countryCode"><![CDATA[Ländercode]]></item>
-		<item name="wcf.acp.language.countryCode.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den passenden Ländercode nach <strong>ISO 3166-1</strong> an. Weitere Informationen zu Ländercodes {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} unter <a href="http://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste" class="externalURL">http://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste</a>.]]></item>
+		<item name="wcf.acp.language.countryCode.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den passenden Ländercode nach <strong>ISO 3166-1</strong> an. Weitere Informationen zu Ländercodes {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} unter <a href="https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste" class="externalURL">https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
 		<item name="wcf.acp.language.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Sprache <span class="confirmationObject">{$language->languageName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Sprache bearbeiten]]></item>
@@ -932,9 +932,9 @@
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="https://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
-		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="http://redis.io/" class="externalURL">redis.io</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="https://redis.io/" class="externalURL">redis.io</a>.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
@@ -977,7 +977,7 @@
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookiedomain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Standardmäßig {if LANGUAGE_USE_INFORMAL_VARIANT}solltest du{else}sollten Sie{/if} dieses Feld frei lassen, da ein Ausfüllen nur in wenigen Fällen notwendig ist.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookiepfad]]></item>
-		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Der Cookiepfad wird absolut zum Document Root angegeben - also z.B. "/forum" für http://www.woltlab.de/forum.]]></item>
+		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Der Cookiepfad wird absolut zum Document Root angegeben - also z.B. "/forum" für https://www.woltlab.de/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Präfix für Cookienamen]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[Das Alias „{$urlControllerReplacementError}“ kollidiert mit einem real existierenden Controller und ist daher unzulässig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[Das Alias „{$urlControllerReplacementError}“ wird bereits verwendet.]]></item>
@@ -989,7 +989,7 @@
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
@@ -1233,7 +1233,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Link-Umschreibungen aktivieren]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „http://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „https://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „https://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
@@ -1829,7 +1829,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle.asPackage"><![CDATA[Export als Paket]]></item>
-		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, ob {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Stil „{$style->styleName}“ als Paket exportieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.woltlab.com/de/pluginstore/">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, ob {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Stil „{$style->styleName}“ als Paket exportieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://pluginstore.woltlab.com">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, welche Bestandteile des Stils „{$style->styleName}“ mit exportiert werden sollen.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
@@ -3725,7 +3725,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Eigenen Avatar hochladen]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[Eigene Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')} und maximal eine Dateigröße von {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Gravatar verwenden]]></item>
-		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Bei einem Gravatar handelt es sich um einen global verfügbaren Avatar (Global Recognized Avatar), welcher mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse („{$__wcf->user->email}“) verknüpft ist. Auf der folgenden Website {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} einen Gravatar anlegen: <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a>]]></item>
+		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Bei einem Gravatar handelt es sich um einen global verfügbaren Avatar (Global Recognized Avatar), welcher mit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse („{$__wcf->user->email}“) verknüpft ist. Auf der folgenden Website {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} einen Gravatar anlegen: <a href="https://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a>]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Zu {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse konnte kein Gravatar gefunden werden.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Keinen Avatar verwenden]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Bereits hochgeladene Avatare werden bei Auswahl dieser Option gelöscht.]]></item>
