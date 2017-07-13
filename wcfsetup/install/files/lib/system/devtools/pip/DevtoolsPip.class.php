@@ -212,6 +212,11 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 								// ignores `options.inc.php` file which is only valid for installation
 								return false;
 							}
+							else if ($filename === 'app.config.inc.php') {
+								// ignores `app.config.inc.php` file which has a dummy contents for installation
+								// and cannot be restored by WSC itself
+								return false;
+							}
 							else if ($filename === 'templates') {
 								// ignores both `templates` and `acp/templates`
 								return false;
