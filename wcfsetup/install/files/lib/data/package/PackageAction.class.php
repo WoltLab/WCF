@@ -58,7 +58,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		
 		if (empty($this->parameters['username'])) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("serverURL IN (?)", [['http://store.woltlab.com/maelstrom/', 'http://store.woltlab.com/typhoon/']]);
+			$conditions->add("serverURL REGEXP ?", ['https?://store\.woltlab\.com/[a-z]+/']);
 			$conditions->add("loginUsername <> ''");
 			$conditions->add("loginPassword <> ''");
 			
