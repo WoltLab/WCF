@@ -208,6 +208,10 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}
+							else if ($filename === 'options.inc.php') {
+								// ignores `options.inc.php` file which is only valid for installation
+								return false;
+							}
 							else if ($filename === 'templates') {
 								// ignores both `templates` and `acp/templates`
 								return false;
