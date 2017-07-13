@@ -39,6 +39,13 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	/**
 	 * @inheritDoc
 	 */
+	public function getPackage() {
+		return $this->project->getPackage();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getPackageID() {
 		return $this->project->getPackage()->packageID;
 	}
