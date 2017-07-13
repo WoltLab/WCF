@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\devtools\project;
-use wcf\data\DatabaseObject;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\DatabaseObject;
 use wcf\system\devtools\package\DevtoolsPackageArchive;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\package\validation\PackageValidationException;

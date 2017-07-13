@@ -297,8 +297,6 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 					
 					return $filename;
 			}
-			
-			
 		}
 	}
 }

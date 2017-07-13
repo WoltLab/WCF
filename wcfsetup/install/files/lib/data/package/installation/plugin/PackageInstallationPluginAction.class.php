@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\package\installation\plugin;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
@@ -51,6 +51,12 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 	 */
 	public $project;
 	
+	/**
+	 * Validates parameters to invoke a single PIP.
+	 * 
+	 * @throws      PermissionDeniedException
+	 * @throws      UserInputException
+	 */
 	public function validateInvoke() {
 		if (!ENABLE_DEVELOPER_TOOLS || !WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
 			throw new PermissionDeniedException();
@@ -77,6 +83,11 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Invokes a single PIP and returns the time needed to process it.
+	 * 
+	 * @return      string[]
+	 */
 	public function invoke() {
 		$dispatcher = new DevtoolsPackageInstallationDispatcher($this->project);
 		/** @var IIdempotentPackageInstallationPlugin $pip */
@@ -103,7 +114,6 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		VersionTracker::getInstance()->createStorageTables();
 		
 		CacheHandler::getInstance()->flushAll();
-		
 		
 		return [
 			'pluginName' => $this->packageInstallationPlugin->pluginName,
