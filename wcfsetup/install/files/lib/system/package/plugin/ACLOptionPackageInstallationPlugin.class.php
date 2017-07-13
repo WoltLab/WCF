@@ -289,4 +289,11 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	public static function getDefaultFilename() {
 		return 'aclOption.xml';
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['objectType'];
+	}
 }
