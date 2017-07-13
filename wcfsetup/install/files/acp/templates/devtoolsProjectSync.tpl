@@ -111,7 +111,7 @@
 		}
 	</style>
 {else}
-	<p class="error">{$object->validate()}</p>
+	<p class="error">{@$object->validate()}</p>
 {/if}
 
 {include file='footer'}

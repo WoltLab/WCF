@@ -106,6 +106,39 @@ class DevtoolsProject extends DatabaseObject {
 			]);
 		}
 		
+		$normalizeVersion = function($version) {
+			return preg_replace('~^(\d+)\.(\d+)\..*$~', '\\1.\\2', $version);
+		};
+		
+		if ($normalizeVersion($this->packageArchive->getPackageInfo('version')) !== $normalizeVersion($this->package->packageVersion)) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.versionMismatch', [
+				'version' => $this->packageArchive->getPackageInfo('version'),
+				'packageVersion' => $this->package->packageVersion
+			]);
+		}
+		
+		if (!$this->isCore()) {
+			$hasValidExclude = false;
+			$foundCore = false;
+			foreach ($this->packageArchive->getExcludedPackages() as $excludedPackage) {
+				if ($excludedPackage['name'] !== 'com.woltlab.wcf') continue;
+				
+				$foundCore = true;
+				if (Package::compareVersion(WCF_VERSION, $excludedPackage['version'], '<')) {
+					$hasValidExclude = true;
+					break;
+				}
+			}
+			
+			if (!$hasValidExclude) {
+				if (!$foundCore) {
+					return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.missingExclude');
+				}
+				
+				return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.excludedVersion');
+			}
+		}
+		
 		return '';
 	}
 	
