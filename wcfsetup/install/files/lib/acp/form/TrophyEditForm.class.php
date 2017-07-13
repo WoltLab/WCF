@@ -67,12 +67,17 @@ class TrophyEditForm extends TrophyAddForm {
 			$this->categoryID = $this->trophy->categoryID;
 			$this->type = $this->trophy->type;
 			$this->isDisabled = $this->trophy->isDisabled;
+			$this->iconName = $this->trophy->iconName;
+			$this->iconColor = $this->trophy->iconColor;
+			$this->badgeColor = $this->trophy->badgeColor;
+			$this->awardAutomatically = $this->trophy->awardAutomatically;
+			
+			// reset badge values for non badge trophies
 			if ($this->trophy->type != Trophy::TYPE_BADGE) {
 				$this->iconName = 'trophy';
 				$this->iconColor = 'rgba(255, 255, 255, 1)';
 				$this->badgeColor = 'rgba(50, 92, 132, 1)';	
 			}
-			$this->awardAutomatically = $this->trophy->awardAutomatically;
 			
 			$conditions = $this->trophy->getConditions();
 			$conditionsByObjectTypeID = [];
