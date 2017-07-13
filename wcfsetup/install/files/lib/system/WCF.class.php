@@ -258,7 +258,9 @@ class WCF {
 		if (ob_get_level()) {
 			// discard any output generated before the exception occurred, prevents exception
 			// being hidden inside HTML elements and therefore not visible in browser output
-			ob_end_clean();
+			// 
+			// ob_get_level() can return values > 1, if the PHP setting `output_buffering` is on
+			while (ob_get_level()) ob_end_clean();
 			
 			// `identity` is the default "encoding" and basically means that the client
 			// must treat the content as if the header did not appear in first place, this
