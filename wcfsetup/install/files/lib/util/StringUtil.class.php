@@ -521,7 +521,7 @@ final class StringUtil {
 			$forbiddenNames = explode("\n", mb_strtolower(self::unifyNewlines($filter)));
 			foreach ($forbiddenNames as $forbiddenName) {
 				// ignore empty lines in between actual values
-				$forbiddenName = StringUtil::trim($forbiddenName);
+				$forbiddenName = self::trim($forbiddenName);
 				if (empty($forbiddenName)) continue;
 				
 				if (mb_strpos($forbiddenName, '*') !== false) {
