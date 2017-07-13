@@ -291,7 +291,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$tar->registerFile($filename, $project->path . $filename);
 					}
 					else {
-						$filename = "com.woltlab.wcf/{$target}";
+						$filename = $target;
 						$tar->registerFile($filename, $project->path . $filename);
 					}
 					
