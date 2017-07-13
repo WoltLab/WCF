@@ -277,29 +277,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (options.ignoreError !== true && showError !== false) {
-				var details = '';
-				var message = '';
-				
-				if (data !== null) {
-					if (data.stacktrace) details = '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
-					else if (data.exceptionID) details = '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
-					
-					message = data.message;
-					
-					data.previous.forEach(function(previous) {
-						details += '<hr><p>' + previous.message + '</p>';
-						details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
-					});
-				}
-				else {
-					message = xhr.responseText;
-				}
-				
-				if (!message || message === 'undefined') {
-					return;
-				}
-				
-				var html = '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
+				var html = this.getErrorHtml(data, xhr);
 				
 				if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
 				UiDialog.openStatic(DomUtil.getUniqueId(), html, {
@@ -308,6 +286,39 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			this._finalize(options);
+		},
+		
+		/**
+		 * Returns the inner HTML for an error/exception display.
+		 * 
+		 * @param       {Object}                data
+		 * @param       {XMLHttpRequest}        xhr
+		 * @return      {string}
+		 */
+		getErrorHtml: function(data, xhr) {
+			var details = '';
+			var message = '';
+			
+			if (data !== null) {
+				if (data.stacktrace) details = '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
+				else if (data.exceptionID) details = '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+				
+				message = data.message;
+				
+				data.previous.forEach(function(previous) {
+					details += '<hr><p>' + previous.message + '</p>';
+					details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+				});
+			}
+			else {
+				message = xhr.responseText;
+			}
+			
+			if (!message || message === 'undefined') {
+				return;
+			}
+			
+			return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
 		},
 		
 		/**

@@ -355,4 +355,11 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			}
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['language'];
+	}
 }

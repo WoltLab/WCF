@@ -20,4 +20,15 @@ use wcf\system\package\plugin\IPackageInstallationPlugin;
  * @package	WoltLabSuite\Core\System\Devtools\Pip
  * @since       3.1
  */
-interface IIdempotentPackageInstallationPlugin extends IPackageInstallationPlugin {}
+interface IIdempotentPackageInstallationPlugin extends IPackageInstallationPlugin {
+	/**
+	 * Returns a list of package installation plugins that need to be
+	 * executed prior to a call to this PIP.
+	 * 
+	 * This method is only considered for the bulk sync in the developer
+	 * tools and has no impact on the regular installation process.
+	 * 
+	 * @return      string[]
+	 */
+	public static function getSyncDependencies();
+}

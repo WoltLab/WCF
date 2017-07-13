@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\devtools\project\DevtoolsProject;
-use wcf\form\AbstractForm;
+use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
@@ -11,10 +11,10 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\Acp\Form
+ * @package	WoltLabSuite\Core\Acp\Page
  * @since       3.1
  */
-class DevtoolsProjectSyncForm extends AbstractForm {
+class DevtoolsProjectSyncPage extends AbstractPage {
 	/**
 	 * @inheritDoc
 	 */

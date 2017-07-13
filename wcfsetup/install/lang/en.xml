@@ -353,6 +353,28 @@
 		<item name="wcf.acp.dataImport.started"><![CDATA[Import started.]]></item>
 	</category>
 	
+	<category name="wcf.acp.devtools">
+		<item name="wcf.acp.devtools.project.action"><![CDATA[Actions]]></item>
+		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
+		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
+		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
+		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
+		<item name="wcf.acp.devtools.project.sync"><![CDATA[Sync Data]]></item>
+		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Searchpattern]]></item>
+		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[This PIP does not support repeated imports and can only be processed in regular updates.]]></item>
+		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Any existing instructions in the <kbd>package.xml</kbd> will be ignored; This allows the import of PIPs that have no specific instructions provided for them yet. Only the suggested default paths are recognized, with an additional support for application suffixes for <kbd>.tar</kbd>-archives (e. g. <kbd>files_wcf.tar</kbd>) are supported.]]></item>
+		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP identifier]]></item>
+		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Show valid PIPs only]]></item>
+		<item name="wcf.acp.devtools.pip.showOnlyMatches.description"><![CDATA[Shows only PIPs that match the default paths and are qualified for repeated imports.]]></item>
+		<item name="wcf.acp.devtools.pip.target"><![CDATA[Matches]]></item>
+		<item name="wcf.acp.devtools.pip.target.noMatches"><![CDATA[(No matches)]]></item>
+		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[An error has occurred.]]></item>
+		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Ready.]]></item>
+		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
+		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Sync All]]></item>
+	</category>
+	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Error Message]]></item>
@@ -838,6 +860,8 @@
 		<item name="wcf.acp.menu.link.trophy.list"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.menu.link.trophy.add"><![CDATA[Add Trophy]]></item>
 		<item name="wcf.acp.menu.link.trophy.edit"><![CDATA[Edit Trophy]]></item>
+		<item name="wcf.acp.menu.link.devtools"><![CDATA[Developer Tools]]></item>
+		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projects]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1303,6 +1327,9 @@
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Enable contact form]]></item>
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactSettings'}{/link}">input fields and recipients</a> to better suit your needs.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophies]]></item>
+		<item name="wcf.acp.option.category.module.development"><![CDATA[Development]]></item>
+		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Enable developer tools]]></item>
+		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Enables a set of specialized tools that are used for plugin development.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">

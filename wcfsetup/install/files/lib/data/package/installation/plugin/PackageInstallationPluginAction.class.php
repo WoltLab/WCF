@@ -8,7 +8,6 @@ use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\version\VersionTracker;
@@ -85,6 +84,8 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 			'value' => $this->devtoolsPip->getInstructionValue($this->project, $this->parameters['target'])
 		]);
 		
+		$start = microtime(true);
+		
 		try {
 			$pip->update();
 		}
@@ -102,5 +103,12 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		VersionTracker::getInstance()->createStorageTables();
 		
 		CacheHandler::getInstance()->flushAll();
+		
+		
+		return [
+			'pluginName' => $this->packageInstallationPlugin->pluginName,
+			'target' => $this->parameters['target'],
+			'timeElapsed' => WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.sync.status.success', ['timeElapsed' => round(microtime(true) - $start, 3)])
+		];
 	}
 }

@@ -203,4 +203,11 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		
 		return (!$row['showOrder']) ? 1 : $row['showOrder'] + 1;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['language'];
+	}
 }

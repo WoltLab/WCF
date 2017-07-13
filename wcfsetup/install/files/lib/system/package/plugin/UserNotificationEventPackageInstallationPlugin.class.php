@@ -131,6 +131,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 *
 	 * @param       string          $objectType
 	 * @return      integer
+	 * @throws      SystemException
 	 */
 	protected function getObjectTypeID($objectType) {
 		// get object type id
@@ -147,5 +148,12 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		$row = $statement->fetchArray();
 		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$objectType."' given");
 		return $row['objectTypeID'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

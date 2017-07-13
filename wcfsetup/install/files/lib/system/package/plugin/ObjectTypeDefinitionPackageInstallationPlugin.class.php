@@ -64,4 +64,11 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 			'parameters' => $parameters
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

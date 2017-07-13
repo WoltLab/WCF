@@ -4,8 +4,9 @@ use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\plugin\PackageInstallationPlugin;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\exception\NotImplementedException;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
+use wcf\util\JSON;
 
 /**
  * Wrapper class for package installation plugins for use with the sync feature.
@@ -52,6 +53,10 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 		return call_user_func([$this->getDecoratedObject()->className, 'getDefaultFilename']);
 	}
 	
+	public function getEffectiveDefaultFilename() {
+		return './' . preg_replace('~\.tar$~', '/', $this->getDefaultFilename());
+	}
+	
 	/**
 	 * Returns true if the PIP exists, has a default filename and is idempotent.
 	 * 
@@ -59,6 +64,12 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 */
 	public function isSupported() {
 		return $this->classExists() && $this->getDefaultFilename() && $this->isIdempotent();
+	}
+	
+	public function getSyncDependencies($toJson = true) {
+		$dependencies = call_user_func([$this->getDecoratedObject()->className, 'getSyncDependencies']);
+		
+		return ($toJson) ? JSON::encode($dependencies) : $dependencies;
 	}
 	
 	/**
@@ -162,37 +173,132 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 		return $targets;
 	}
 	
+	/**
+	 * Computes and prepares the instruction value for the provided target file.
+	 * 
+	 * @param       DevtoolsProject         $project
+	 * @param       string                  $target
+	 * @return      string
+	 */
 	public function getInstructionValue(DevtoolsProject $project, $target) {
 		$defaultFilename = $this->getDefaultFilename();
+		$pluginName = $this->getDecoratedObject()->pluginName;
+		$tar = $project->getPackageArchive()->getTar();
+		$tar->reset();
 		
 		if ($project->isCore()) {
-			switch ($this->getDecoratedObject()->pluginName) {
+			switch ($pluginName) {
 				case 'acpTemplate':
 				case 'file':
 				case 'template':
-					throw new NotImplementedException();
-					break;
+					if ($pluginName === 'acpTemplate' || $pluginName === 'template') {
+						$path = ($pluginName === 'acpTemplate') ? 'wcfsetup/install/files/acp/templates/' : 'com.woltlab.wcf/templates/';
+						foreach (glob($project->path . $path . '*.tpl') as $template) {
+							$tar->registerFile(basename($template), FileUtil::unifyDirSeparator($template));
+						}
+					}
+					else {
+						$path = 'wcfsetup/install/files/';
+						
+						$directory = new \RecursiveDirectoryIterator($project->path . $path);
+						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
+							/** @var \SplFileInfo $current */
+							$filename = $current->getFilename();
+							if ($filename[0] === '.') {
+								// ignore dot files and files/directories starting with a dot
+								return false;
+							}
+							else if ($filename === 'templates') {
+								// ignores both `templates` and `acp/templates`
+								return false;
+							}
+							
+							return true;
+						});
+						
+						$iterator = new \RecursiveIteratorIterator($filter, \RecursiveIteratorIterator::SELF_FIRST);
+						foreach ($iterator as $value => $item) {
+							/** @var \SplFileInfo $item */
+							$itemPath = $item->getRealPath();
+							if (is_dir($itemPath)) continue;
+							
+							$tar->registerFile(
+								FileUtil::getRelativePath($project->path . $path, $item->getPath()) . $item->getFilename(),
+								$itemPath
+							);
+						}
+					}
+					
+					return $defaultFilename;
 				
 				case 'language':
 					$filename = "wcfsetup/install/lang/{$target}";
-					$project->getPackageArchive()->getTar()->registerFile($filename, $project->path . $filename);
+					$tar->registerFile($filename, $project->path . $filename);
 					
 					return $filename;
 					
 				default:
 					$filename = "com.woltlab.wcf/{$target}";
-					$project->getPackageArchive()->getTar()->registerFile($filename, $project->path . $filename);
+					$tar->registerFile($filename, $project->path . $filename);
 					
 					return $filename;
 			}
 		}
 		else {
-			if (strpos($defaultFilename, '*') !== false) {
-				$filename = str_replace('*', $target, $defaultFilename);
-				$project->getPackageArchive()->getTar()->registerFile($filename, $project->path . $filename);
+			switch ($pluginName) {
+				case 'acpTemplate':
+				case 'file':
+				case 'template':
+					if ($pluginName === 'acpTemplate' || $pluginName === 'template') {
+						$path = ($pluginName === 'acpTemplate') ? 'acptemplates/' : 'templates/';
+						foreach (glob($project->path . $path . '*.tpl') as $template) {
+							$tar->registerFile(basename($template), FileUtil::unifyDirSeparator($template));
+						}
+					}
+					else {
+						$path = 'files/';
+						
+						$directory = new \RecursiveDirectoryIterator($project->path . $path);
+						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
+							/** @var \SplFileInfo $current */
+							$filename = $current->getFilename();
+							if ($filename[0] === '.') {
+								// ignore dot files and files/directories starting with a dot
+								return false;
+							}
+							
+							return true;
+						});
+						
+						$iterator = new \RecursiveIteratorIterator($filter, \RecursiveIteratorIterator::SELF_FIRST);
+						foreach ($iterator as $value => $item) {
+							/** @var \SplFileInfo $item */
+							$itemPath = $item->getRealPath();
+							if (is_dir($itemPath)) continue;
+							
+							$tar->registerFile(
+								FileUtil::getRelativePath($project->path . $path, $item->getPath()) . $item->getFilename(),
+								$itemPath
+							);
+						}
+					}
+					
+					return $defaultFilename;
+				
+				default:
+					if (strpos($defaultFilename, '*') !== false) {
+						$filename = str_replace('*', $target, $defaultFilename);
+						$tar->registerFile($filename, $project->path . $filename);
+					}
+					else {
+						$filename = "com.woltlab.wcf/{$target}";
+						$tar->registerFile($filename, $project->path . $filename);
+					}
+					
+					return $filename;
 			}
+			
+			
 		}
-		
-		throw new NotImplementedException();
 	}
 }

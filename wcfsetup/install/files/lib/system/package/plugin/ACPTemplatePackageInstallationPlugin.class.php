@@ -113,4 +113,11 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 		
 		return false;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

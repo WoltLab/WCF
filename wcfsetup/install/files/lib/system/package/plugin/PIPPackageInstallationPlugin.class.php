@@ -76,4 +76,11 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			'parameters' => $parameters
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

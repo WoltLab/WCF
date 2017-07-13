@@ -86,4 +86,11 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	public static function getDefaultFilename() {
 		return 'acpSearchProvider.xml';
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

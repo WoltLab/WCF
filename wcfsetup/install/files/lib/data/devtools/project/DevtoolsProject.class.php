@@ -38,6 +38,11 @@ class DevtoolsProject extends DatabaseObject {
 	 */
 	protected $packageArchive;
 	
+	/**
+	 * Returns a list of decorated PIPs.
+	 * 
+	 * @return      DevtoolsPip[]
+	 */
 	public function getPips() {
 		$pipList = new PackageInstallationPluginList();
 		$pipList->sqlOrderBy = 'pluginName';
@@ -51,6 +56,12 @@ class DevtoolsProject extends DatabaseObject {
 		return $pips;
 	}
 	
+	/**
+	 * Validates the repository and returns the first error message, or
+	 * an empty string on success.
+	 * 
+	 * @return      string
+	 */
 	public function validate() {
 		$errorType = self::validatePath($this->path);
 		if ($errorType !== '') {
@@ -60,6 +71,11 @@ class DevtoolsProject extends DatabaseObject {
 		return $this->validatePackageXml();
 	}
 	
+	/**
+	 * Returns true if this project appears to be `WoltLab Suite Core`.
+	 * 
+	 * @return      boolean
+	 */
 	public function isCore() {
 		if ($this->isCore === null) {
 			$this->isCore = self::pathIsCore($this->path);
@@ -68,6 +84,11 @@ class DevtoolsProject extends DatabaseObject {
 		return $this->isCore;
 	}
 	
+	/**
+	 * Validates the package.xml and checks if the package is already installed.
+	 * 
+	 * @return      string
+	 */
 	public function validatePackageXml() {
 		$packageXml = $this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml';
 		$this->packageArchive = new DevtoolsPackageArchive($packageXml);
@@ -124,6 +145,12 @@ class DevtoolsProject extends DatabaseObject {
 		return '';
 	}
 	
+	/**
+	 * Returns true if the path appears to point to `WoltLab Suite Core`.
+	 * 
+	 * @param       string          $path
+	 * @return      boolean
+	 */
 	public static function pathIsCore($path) {
 		return (is_dir($path . 'com.woltlab.wcf') && file_exists($path . 'com.woltlab.wcf/package.xml'));
 	}
