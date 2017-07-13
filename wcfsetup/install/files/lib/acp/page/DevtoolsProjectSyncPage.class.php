@@ -1,5 +1,5 @@
 <?php
-namespace wcf\acp\form;
+namespace wcf\acp\page;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
