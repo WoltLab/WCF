@@ -208,6 +208,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 */
 	public static function getSyncDependencies() {
-		return ['language'];
+		return ['language', 'menu', 'page'];
 	}
 }
