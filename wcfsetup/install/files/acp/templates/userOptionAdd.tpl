@@ -100,7 +100,7 @@
 			<dl{if $errorField == 'optionType'} class="formError"{/if}>
 				<dt><label for="optionType">{lang}wcf.acp.user.option.optionType{/lang}</label></dt>
 				<dd>
-					<select name="optionType" id="optionType">
+					<select name="optionType" id="optionType"{if $action === 'edit' && $userOption->optionName === 'aboutMe'} disabled{/if}>
 						{foreach from=$availableOptionTypes item=availableOptionType}
 							<option value="{$availableOptionType}"{if $availableOptionType == $optionType} selected{/if}>{$availableOptionType}</option>
 						{/foreach}
