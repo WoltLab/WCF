@@ -868,6 +868,7 @@
 		<item name="wcf.acp.menu.link.userTrophy.add"><![CDATA[Assign Trophy]]></item>
 		<item name="wcf.acp.menu.link.userTrophy.edit"><![CDATA[Edit assigned Trophy]]></item>
 		<item name="wcf.acp.menu.link.devtools"><![CDATA[Developer Tools]]></item>
+		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projects]]></item>
 	</category>
 	
