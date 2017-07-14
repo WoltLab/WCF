@@ -26,13 +26,16 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	public function add($condition, array $parameters = []) {
 		if (!empty($parameters)) {
 			$count = 0;
-			$callback = function ($matches) use (&$count, $parameters, $condition) {
+			$callback = function () use (&$count, $parameters, $condition) {
 				if (!array_key_exists($count, $parameters)) {
 					throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '".$condition."'");
 				}
+				else if (is_array($parameters[$count]) && empty($parameters[$count])) {
+					throw new \RuntimeException("An empty array was passed for token number " . ($count + 1) . " in condition '".$condition."'");
+				}
 				
 				$result = '?';
-				if (is_array($parameters[$count]) && !empty($parameters[$count])) {
+				if (is_array($parameters[$count])) {
 					$result .= str_repeat(',?', count($parameters[$count]) - 1);
 				}
 				
