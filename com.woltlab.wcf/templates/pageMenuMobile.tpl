@@ -150,7 +150,7 @@
 					</a>
 					<ol class="menuOverlayItemList" data-title="{lang}wcf.user.language{/lang}">
 						{foreach from=$__wcf->getLanguage()->getLanguages() item=_language}
-							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-id="{@$_language->languageID}">
+							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-code="{$_language->getFixedLanguageCode()}" data-language-id="{@$_language->languageID}">
 								<a href="#" class="menuOverlayItemLink box24">
 									<img src="{$_language->getIconPath()}" alt="">
 									<span class="menuOverlayItemTitle">{$_language}</span>
