@@ -183,11 +183,14 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				}
 				
 				// fix selection marker
+				/*
 				elBySelAll('.redactor-selection-marker', div, elRemove);
 				div.appendChild(elCreate('woltlab-selection-marker'));
+				*/
 				
 				mpInsert.call(this, div.innerHTML, data);
 				
+				/*
 				var marker = elBySel('woltlab-selection-marker', this.$editor[0]);
 				if (marker) {
 					var range = document.createRange();
@@ -200,6 +203,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					
 					elRemove(marker);
 				}
+				*/
 				
 				if (pastedImages.length) {
 					window.setTimeout((function () {
