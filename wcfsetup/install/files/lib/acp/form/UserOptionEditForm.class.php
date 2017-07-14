@@ -44,6 +44,21 @@ class UserOptionEditForm extends UserOptionAddForm {
 		if (!$this->userOption->optionID) {
 			throw new IllegalLinkException();
 		}
+		
+		if ($this->userOption->optionName === 'aboutMe') {
+			self::$availableOptionTypes[] = 'aboutMe';
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readFormParameters() {
+		parent::readFormParameters();
+		
+		if ($this->userOption->optionName === 'aboutMe') {
+			$this->optionType = 'aboutMe';
+		}
 	}
 	
 	/**
