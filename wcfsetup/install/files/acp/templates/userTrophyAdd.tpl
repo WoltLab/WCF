@@ -44,7 +44,11 @@
 				<input id="user" name="user" type="text" value="{$user}"{if $action == 'edit'} disabled{/if}>
 				{if $errorField == 'user'}
 					<small class="innerError">
-						{if $errorType == 'empty'}
+						{if $errorType|is_array}
+							{foreach from=$errorType item='errorData'}
+								{lang}wcf.acp.trophy.userTrophy.user.error.{@$errorData.type}{/lang}
+							{/foreach}
+						{elseif $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{/if}
 					</small>

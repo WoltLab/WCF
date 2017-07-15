@@ -3,11 +3,12 @@ namespace wcf\acp\form;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\user\trophy\UserTrophyAction;
-use wcf\data\user\UserList;
+use wcf\data\user\UserProfile;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\language\I18nValue;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -93,16 +94,35 @@ class UserTrophyAddForm extends AbstractAcpForm {
 		if (isset($_POST['useCustomDescription'])) $this->useCustomDescription = 1;
 		
 		$this->trophy = new Trophy($this->trophyID);
-		
+	}
+	
+	/**
+	 * Validates the users. 
+	 * 
+	 * @throws UserInputException
+	 */
+	protected function validateUser() {
 		// read userIDs 
-		$userAsArray = explode(',', $this->user);
+		$userAsArray = ArrayUtil::trim(explode(',', $this->user));
 		
-		$userList = new UserList();
-		$userList->getConditionBuilder()->add('user_table.username IN (?)', [$userAsArray]);
-		$userList->readObjects();
+		$userList = UserProfile::getUserProfilesByUsername($userAsArray);
 		
-		foreach ($userList as $user) {
-			$this->userIDs[] = $user->userID;
+		$error = []; 
+		
+		foreach ($userList as $username => $user) {
+			if ($user === null) {
+				$error[] = [
+					'type' => 'notFound', 
+					'username' => $username
+				];
+			}
+			else {
+				$this->userIDs[] = $user->userID;
+			}
+		}
+		
+		if (!empty($error)) {
+			throw new UserInputException('user', $error);
 		}
 	}
 	
@@ -117,6 +137,8 @@ class UserTrophyAddForm extends AbstractAcpForm {
 				throw new UserInputException('description');
 			}
 		}
+		
+		$this->validateUser();
 		
 		if (empty($this->userIDs)) {
 			throw new UserInputException('user');
