@@ -5,6 +5,7 @@ use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\Url;
 
 /**
  * Represents a package update server.
@@ -76,18 +77,9 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function isValidServerURL($serverURL) {
-		if (trim($serverURL)) {
-			if (!$parsedURL = @parse_url($serverURL))
-				return false;
-			if (!isset($parsedURL['scheme']) || ($parsedURL['scheme'] != 'http' && $parsedURL['scheme'] != 'https'))
-				return false;
-			if (!isset($parsedURL['host']))
-				return false;
-			return true;
-		}
-		else {
-			return false;
-		}
+		$parsedURL = Url::parse($serverURL);
+		
+		return (in_array($parsedURL['scheme'], ['http', 'https']) && $parsedURL['host'] !== '');
 	}
 	
 	/**
@@ -159,7 +151,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getHighlightedURL() {
-		$host = parse_url($this->serverURL, PHP_URL_HOST);
+		$host = Url::parse($this->serverURL)['host'];
 		return str_replace($host, '<strong>'.$host.'</strong>', $this->serverURL);
 	}
 	

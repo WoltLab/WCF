@@ -11,8 +11,12 @@ define([], function() {
 	
 	if (!COMPILER_TARGET_DEFAULT) {
 		return {
+			help: function () {},
+			toggleEditorAutosave: function () {},
 			toggleEventLogging: function () {},
 			_internal_: {
+				enable: function () {},
+				editorAutosave: function () {},
 				eventLog: function() {}
 			}
 		};

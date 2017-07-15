@@ -8,6 +8,7 @@ use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Abstract implementation of a page which fires the default event actions of a
@@ -187,7 +188,7 @@ abstract class AbstractPage implements IPage {
 		
 		// check if current request URL matches the canonical URL
 		if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
-			$canonicalURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
+			$canonicalURL = Url::parse(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
 			// IIS Rewrite-Module has a bug causing the REQUEST_URI to be ISO-encoded
@@ -206,7 +207,7 @@ abstract class AbstractPage implements IPage {
 			// reduce successive forwarded slashes into a single one
 			$requestURI = preg_replace('~/{2,}~', '/', $requestURI);
 			
-			$requestURL = parse_url($requestURI);
+			$requestURL = Url::parse($requestURI);
 			$redirect = false;
 			if ($canonicalURL['path'] != $requestURL['path']) {
 				$redirect = true;
