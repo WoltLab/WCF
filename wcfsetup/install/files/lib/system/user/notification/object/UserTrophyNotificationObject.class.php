@@ -4,7 +4,7 @@ use wcf\data\user\trophy\UserTrophy;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
- * Represents a following user as a notification object.
+ * Represents a user trophy notification object.
  *
  * @author	Joshua Ruesweg
  * @copyright	2001-2017 WoltLab GmbH
@@ -16,26 +16,26 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class UserTrophyNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $baseClass = UserTrophy::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getTitle() {
 		return $this->getDecoratedObject()->getTrophy()->getTitle();
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getURL() {
 		return $this->getDecoratedObject()->getTrophy()->getLink();
 	}
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function getAuthorID() {
 		return $this->getDecoratedObject()->userID;

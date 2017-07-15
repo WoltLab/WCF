@@ -14,17 +14,17 @@ use wcf\system\user\notification\object\UserTrophyNotificationObject;
  */
 class UserTrophyNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $decoratorClassName = UserTrophyNotificationObject::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $objectClassName = UserTrophy::class;
 	
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected static $objectListClassName = UserTrophyList::class;
 }
