@@ -938,6 +938,7 @@ CREATE TABLE wcf1_package_update (
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
+	pluginStoreFileID INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 
@@ -980,7 +981,7 @@ CREATE TABLE wcf1_package_update_server (
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	status ENUM('online', 'offline') NOT NULL DEFAULT 'online',
 	errorMessage TEXT,
-	apiVersion ENUM('2.0', '2.1') NOT NULL DEFAULT '2.0',
+	apiVersion ENUM('2.0', '2.1', '3.1') NOT NULL DEFAULT '2.0',
 	metaData TEXT
 );
 

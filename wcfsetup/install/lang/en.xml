@@ -1549,6 +1549,8 @@
 		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Save credentials for this session only]]></item>
+		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
+		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Purchased Products (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Purchased Products (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[The search returned no results, because either you have not purchased any products yet, or your purchases are not compatible with this version.]]></item>

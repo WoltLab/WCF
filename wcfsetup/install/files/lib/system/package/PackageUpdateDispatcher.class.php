@@ -144,7 +144,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
 		
-		if ($updateServer->apiVersion == '2.1') {
+		$apiVersion = $updateServer->apiVersion;
+		if (in_array($apiVersion, ['2.1', '3.1'])) {
 			$metaData = $updateServer->getMetaData();
 			if (isset($metaData['list']['etag'])) $request->addHeader('if-none-match', $metaData['list']['etag']);
 			if (isset($metaData['list']['lastModified'])) $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
@@ -178,7 +179,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		// parse given package update xml
 		$allNewPackages = false;
-		if ($updateServer->apiVersion == '2.0' || $reply['statusCode'] != 304) {
+		if ($apiVersion === '2.0' || $reply['statusCode'] != 304) {
 			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
 		}
 		
@@ -189,15 +190,18 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		];
 		
 		// check if server indicates support for a newer API
-		if ($updateServer->apiVersion == '2.0' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
+		if ($updateServer->apiVersion !== '3.1' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
 			$apiVersions = explode(' ', reset($reply['httpHeaders']['wcf-update-server-api']));
-			if (in_array('2.1', $apiVersions)) {
-				$data['apiVersion'] = '2.1';
+			if (in_array('3.1', $apiVersions)) {
+				$apiVersion = $data['apiVersion'] = '3.1';
+			}
+			else if (in_array('2.1', $apiVersions)) {
+				$apiVersion = $data['apiVersion'] = '2.1';
 			}
 		}
 		
 		$metaData = [];
-		if ($updateServer->apiVersion == '2.1' || (isset($data['apiVersion']) && $data['apiVersion'] == '2.1')) {
+		if (in_array($apiVersion, ['2.1', '3.1'])) {
 			if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
 				throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
 			}
@@ -277,7 +281,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			'authorURL' => '',
 			'isApplication' => 0,
 			'packageDescription' => '',
-			'versions' => []
+			'versions' => [],
+			'pluginStoreFileID' => 0
 		];
 		
 		// parse package information
@@ -295,6 +300,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				case 'isapplication':
 					$packageInfo['isApplication'] = intval($element->nodeValue);
 				break;
+				
+				case 'pluginStoreFileID':
+					if ($updateServer->isWoltLabStoreServer()) {
+						$packageInfo['pluginStoreFileID'] = intval($element->nodeValue);
+					}
+					break;
 			}
 		}
 		
@@ -314,12 +325,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$key = '';
 		if ($this->hasAuthCode) {
-			if (preg_match('~^https?://update\.woltlab\.com~', $updateServer->serverURL)) {
-				$key = 'woltlab';
-			}
-			else if (preg_match('~^https?://store\.woltlab\.com~', $updateServer->serverURL)) {
-				$key = 'pluginstore';
-			}
+			if ($updateServer->isWoltLabUpdateServer()) $key = 'woltlab';
+			else if ($updateServer->isWoltLabStoreServer()) $key = 'pluginstore';
 		}
 		
 		// parse versions
@@ -435,7 +442,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				'packageDescription' => $packageData['packageDescription'],
 				'author' => $packageData['author'],
 				'authorURL' => $packageData['authorURL'],
-				'isApplication' => $packageData['isApplication']
+				'isApplication' => $packageData['isApplication'],
+				'pluginStoreFileID' => $packageData['pluginStoreFileID']
 			]);
 			
 			$packageUpdateID = $packageUpdate->packageUpdateID;

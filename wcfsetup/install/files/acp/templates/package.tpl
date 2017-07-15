@@ -75,6 +75,13 @@
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
 				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
+			{if $pluginStoreFileID}
+				{capture assign=_storeUrl}https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/{/capture}
+				<dl>
+					<dt>{lang}wcf.acp.pluginStore.file{/lang}</dt>
+					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$_storeUrl|rawurlencode}" class="externalURL">{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
+				</dl>
+			{/if}
 			
 			{event name='propertyFields'}
 		</div>

@@ -220,4 +220,22 @@ class PackageUpdateServer extends DatabaseObject {
 		
 		return false;
 	}
+	
+	/**
+	 * Returns true if the host is `update.woltlab.com`.
+	 * 
+	 * @return      boolean
+	 */
+	public function isWoltLabUpdateServer() {
+		return Url::parse($this->serverURL)['host'] === 'update.woltlab.com';
+	}
+	
+	/**
+	 * Returns true if the host is `store.woltlab.com`.
+	 * 
+	 * @return      boolean
+	 */
+	public function isWoltLabStoreServer() {
+		return Url::parse($this->serverURL)['host'] === 'store.woltlab.com';
+	}
 }
