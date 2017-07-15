@@ -35,10 +35,11 @@
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						
 						{foreach from=$trophyCategories item=category}
-							<option value="0" disabled>{$category->getTitle()}</option>
-							{foreach from=$category->getTrophies(true) item=trophy}
-								<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$trophy->getTitle()}</option>
-							{/foreach}
+							<optgroup label="{$category->getTitle()}">
+								{foreach from=$category->getTrophies(true) item=trophy}
+									<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>{$trophy->getTitle()}</option>
+								{/foreach}
+							</optgroup>
 						{/foreach}
 					</select>
 				</dd>
@@ -65,11 +66,11 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-		{assign var='linkParameters' value=''}
+			{assign var='linkParameters' value=''}
 			{if $trophyID}{capture append=linkParameters}&trophyID={@$trophyID|rawurlencode}{/capture}{/if}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
 			
-		{pages print=true assign=pagesLinks controller='UserTrophyList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+			{pages print=true assign=pagesLinks controller='UserTrophyList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
 	</div>
 {/hascontent}

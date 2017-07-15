@@ -60,10 +60,11 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 
 					{foreach from=$trophyCategories item=category}
-						<option value="0" disabled>{$category->getTitle()}</option>
-						{foreach from=$category->getTrophies(true) item=trophy}
-							<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$trophy->getTitle()}</option>
-						{/foreach}
+						<optgroup label="{$category->getTitle()}">
+							{foreach from=$category->getTrophies(true) item=trophy}
+								<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>{$trophy->getTitle()}</option>
+							{/foreach}
+						</optgroup>
 					{/foreach}
 				</select>
 				{if $errorField == 'trophyID'}
