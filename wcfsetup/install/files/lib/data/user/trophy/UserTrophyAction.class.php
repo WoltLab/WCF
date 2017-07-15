@@ -2,6 +2,7 @@
 namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Provides user trophy actions. 
@@ -31,6 +32,20 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 		]))->executeAction();
 		
 		return $returnValues; 
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateDelete() {
+		parent::validateDelete();
+		
+		/** @var UserTrophy $object */
+		foreach ($this->objects as $object) {
+			if ($object->getTrophy()->awardAutomatically) {
+				throw new PermissionDeniedException(); 
+			}
+		}
 	}
 	
 	/**
