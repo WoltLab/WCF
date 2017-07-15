@@ -25,9 +25,14 @@ use wcf\util\StringUtil;
  * @property-read	integer		$userID				user id
  * @property-read	integer		$time				the time when the trophy was rewarded
  * @property-read	string		$description			the custom trophy description
- * @property-read	string		$useCustomDescription		`1`, iif the trophy use a custom description
+ * @property-read	string		$useCustomDescription		`1`, if the trophy use a custom description
  */
 class UserTrophy extends DatabaseObject {
+	/**
+	 * @inheritDoc
+	 */
+	protected static $databaseTableIndexName = 'userTrophyID';
+	
 	/**
 	 * The description text replacements. 
 	 * @var string[]
