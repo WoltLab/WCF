@@ -154,6 +154,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 */
 	public static function getSyncDependencies() {
-		return [];
+		return ['objectType'];
 	}
 }
