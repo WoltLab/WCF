@@ -91,9 +91,10 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 	public function invoke() {
 		$dispatcher = new DevtoolsPackageInstallationDispatcher($this->project);
 		/** @var IIdempotentPackageInstallationPlugin $pip */
-		$pip = new $this->packageInstallationPlugin->className($dispatcher, [
-			'value' => $this->devtoolsPip->getInstructionValue($this->project, $this->parameters['target'])
-		]);
+		$pip = new $this->packageInstallationPlugin->className(
+			$dispatcher,
+			$this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
+		);
 		
 		$start = microtime(true);
 		

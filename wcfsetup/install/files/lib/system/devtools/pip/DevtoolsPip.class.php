@@ -174,17 +174,19 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * Computes and prepares the instruction value for the provided target file.
+	 * Computes and prepares the instructions for the provided target file.
 	 * 
 	 * @param       DevtoolsProject         $project
 	 * @param       string                  $target
-	 * @return      string
+	 * @return      string[]
 	 */
-	public function getInstructionValue(DevtoolsProject $project, $target) {
+	public function getInstructions(DevtoolsProject $project, $target) {
 		$defaultFilename = $this->getDefaultFilename();
 		$pluginName = $this->getDecoratedObject()->pluginName;
 		$tar = $project->getPackageArchive()->getTar();
 		$tar->reset();
+		
+		$instructions = [];
 		
 		if ($project->isCore()) {
 			switch ($pluginName) {
@@ -238,19 +240,25 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					return $defaultFilename;
+					$instructions['value'] = $defaultFilename;
+					
+					break;
 				
 				case 'language':
 					$filename = "wcfsetup/install/lang/{$target}";
 					$tar->registerFile($filename, $project->path . $filename);
 					
-					return $filename;
+					$instructions['value'] = $filename;
+					
+					break;
 					
 				default:
 					$filename = "com.woltlab.wcf/{$target}";
 					$tar->registerFile($filename, $project->path . $filename);
 					
-					return $filename;
+					$instructions['value'] = $filename;
+					
+					break;
 			}
 		}
 		else {
@@ -266,6 +274,11 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 					}
 					else {
 						$path = 'files/';
+						if (preg_match('~^files_(?<application>.*)\.tar$~', $target, $match)) {
+							$path = "files_{$match['application']}/";
+							
+							$instructions['attributes'] = ['application' => $match['application']];
+						}
 						
 						$directory = new \RecursiveDirectoryIterator($project->path . $path);
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
@@ -292,7 +305,9 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					return $defaultFilename;
+					$instructions['value'] = $defaultFilename;
+					
+					break;
 				
 				default:
 					if (strpos($defaultFilename, '*') !== false) {
@@ -304,8 +319,12 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$tar->registerFile($filename, $project->path . $filename);
 					}
 					
-					return $filename;
+					$instructions['value'] = $filename;
+					
+					break;
 			}
 		}
+		
+		return $instructions;
 	}
 }
