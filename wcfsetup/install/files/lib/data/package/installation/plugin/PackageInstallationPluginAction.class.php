@@ -8,6 +8,7 @@ use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\version\VersionTracker;
@@ -115,6 +116,11 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		VersionTracker::getInstance()->createStorageTables();
 		
 		CacheHandler::getInstance()->flushAll();
+		
+		if ($this->packageInstallationPlugin->pluginName === 'language') {
+			LanguageFactory::getInstance()->clearCache();
+			LanguageFactory::getInstance()->deleteLanguageCache();
+		}
 		
 		return [
 			'pluginName' => $this->packageInstallationPlugin->pluginName,
