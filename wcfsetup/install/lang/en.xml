@@ -1228,11 +1228,22 @@
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Rerun Test]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Attention! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you! Please read the following article for instructions: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a>. Enabling this option will rewrite URLs into a better readable representation. Examples: 
 <ul class="nativeList">
 <li>the link “http://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “http://example.com/thread/1-hello-i-am-john-doe/”</li>
 <li>the link “http://example.com/index.php?members-list/” will turn into “http://example.com/members-list/”</li>
 </ul>]]></item>
+		
+		
+		
+		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[The test has failed.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[The webserver cannot handle rewrites or it has not been configured correctly.<br>
+<br>
+Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a> or contact your hosting provider for assistance.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[The test is currently running &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[The test was successful.]]></item>
+		
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Enables the <a href="{link controller='AdList'}{/link}">advertisement management</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
