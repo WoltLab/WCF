@@ -620,6 +620,25 @@
 										</div>
 									</div>
 									
+									<div class="spHeadline">Editor</div>
+									
+									<div id="spEditor">
+										<div id="spEditorToolbar" data-region="wcfEditorButton">
+											<ul class="redactor-toolbar">
+												<li><a class="redactor-button-disabled"><span class="icon icon16 fa-file-code-o"></span></a></li>
+												<li><a><span class="icon icon16 fa-undo"></span></a></li>
+												<li><a><span class="icon icon16 fa-repeat"></span></a></li>
+												<li><a><span class="icon icon16 fa-expand"></span></a></li>
+												<li class="redactor-toolbar-separator"><a><span class="icon icon16 fa-header"></span></a></li>
+												<li class="redactor-toolbar-separator"><a><span class="icon icon16 fa-bold"></span></a></li>
+												<li><a class="dropact"><span class="icon icon16 fa-italic"></span></a></li>
+												<li><a><span class="icon icon16 fa-underline"></span></a></li>
+												<li><a><span class="icon icon16 fa-strikethrough"></span></a></li>
+											</ul>
+										</div>
+										<div id="spEditorContent"></div>
+									</div>
+									
 									<div class="spHeadline">Dropdown</div>
 									
 									<div style="position: relative">
@@ -830,6 +849,11 @@
 				'wcfButtonPrimaryTextActive': '#spButtonPrimary .button.active, #spButtonPrimary .button:hover { color: VALUE; }',
 				'wcfButtonDisabledBackground': '#spButton .button.disabled, #spButtonPrimary .button.disabled { background-color: VALUE; }',
 				'wcfButtonDisabledText': '#spButton .button.disabled, #spButtonPrimary .button.disabled { color: VALUE; }',
+				'wcfEditorButtonBackground': '#spEditor .redactor-toolbar, #spEditor .redactor-toolbar a { background-color: VALUE; }',
+				'wcfEditorButtonBackgroundActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { background-color: VALUE; }',
+				'wcfEditorButtonText': '#spEditor .redactor-toolbar a { color: VALUE; }',
+				'wcfEditorButtonTextActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { color: VALUE; }',
+				'wcfEditorButtonTextDisabled': '#spEditor .redactor-toolbar a.redactor-button-disabled { color: VALUE; }',
 				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; } __COMBO_RULE__ #spDropdown::before { border-bottom-color: VALUE; }',
 				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
 				'wcfDropdownText': '#spDropdown li { color: VALUE; }',
