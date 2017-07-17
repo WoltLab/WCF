@@ -561,7 +561,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 */
 	public function getUserTitle() {
 		if ($this->userTitle) return $this->userTitle;
-		if ($this->getRank()) return WCF::getLanguage()->get($this->getRank()->rankTitle);
+		if ($this->getRank() && $this->getRank()->showTitle()) return WCF::getLanguage()->get($this->getRank()->rankTitle);
 		
 		return '';
 	}
@@ -583,7 +583,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 						'cssClassName' => $this->cssClassName,
 						'rankImage' => $this->rankImage,
 						'repeatImage' => $this->repeatImage,
-						'requiredGender' => $this->requiredGender
+						'requiredGender' => $this->requiredGender,
+						'hideTitle' => $this->hideTitle
 					]);
 				}
 				else {

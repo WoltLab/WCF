@@ -2084,6 +2084,9 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzerrang <span class="confirmationObject">{$userRank->rankTitle|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>
+		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Rangbezeichnung ausblenden]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Es wird nur die Ranggrafik angezeigt. Dies gilt nicht, wenn der Benutzer einen individuellen Titel eingestellt hat.]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[Diese Option erfordert eine gültige Ranggrafik.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Der Pfad zur Ranggrafik kann relativ zum WCF-Verzeichnis oder absolut angegeben werden.]]></item>

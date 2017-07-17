@@ -2027,6 +2027,9 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank <span class="confirmationObject">{$userRank->rankTitle|language}</span>?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
+		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Hide title]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Hides the title of this rank. Does not work for users that have an individual title set.]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[This option requires a valid rank image.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[The path must be either relative to WCF’s directory or absolute.]]></item>
