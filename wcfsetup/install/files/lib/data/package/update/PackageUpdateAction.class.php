@@ -9,6 +9,7 @@ use wcf\data\search\Search;
 use wcf\data\search\SearchEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageInstallationScheduler;
@@ -419,6 +420,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		WCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);
 		
 		$this->readBoolean('ignoreCache', true);
+		
+		if (ENABLE_BENCHMARK) {
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.searchForUpdates.benchmark'));
+		}
 	}
 	
 	/**

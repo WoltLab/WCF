@@ -1062,7 +1062,7 @@
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
-		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Erfasst zusätzliche Daten zur Ressourcennutzung von Komponenten. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deinen{else}Ihren{/if} Authentifizierung-Code {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kundenkonto auf woltlab.com.]]></item>
@@ -1353,8 +1353,9 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontaktformular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.option.category.module.development"><![CDATA[Entwicklung]]></item>
+		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[Diese Option werden exklusiv für die Entwicklung und Fehlersuche verwendet, und sind nicht für den produktiven Einsatz geeignet.]]></item>
 		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Entwickler-Werkzeuge aktivieren]]></item>
-		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden.]]></item>
+		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -1454,6 +1455,7 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Paketname]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Updates suchen]]></item>
+		<item name="wcf.acp.package.searchForUpdates.benchmark"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}deaktiviere{else}deaktivieren Sie{/if} den Benchmark, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach Updates suchen.]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} System ist auf dem aktuellen Stand, es wurden keine ausstehenden Updates gefunden.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Paket hochladen]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Paketdatei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
