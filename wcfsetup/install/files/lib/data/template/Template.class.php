@@ -22,6 +22,12 @@ use wcf\util\FileUtil;
  * @property-read	integer		$lastModificationTime	timestamp at which the template has been edited the last time
  */
 class Template extends DatabaseObject {
+	/**
+	 * list of system critical templates
+	 * @var string[]
+	 */
+	protected static $systemCriticalTemplates = ['headIncludeJavaScript', 'wysiwyg', 'wysiwygToolbar'];
+	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc
@@ -80,5 +86,32 @@ class Template extends DatabaseObject {
 	 */
 	public function getSource() {
 		return @file_get_contents($this->getPath());
+	}
+	
+	/**
+	 * Returns true if current template is considered system critical and
+	 * may not be customized at any point.
+	 * 
+	 * @return      boolean
+	 */
+	public function canCopy() {
+		if (self::isSystemCritical($this->templateName)) {
+			// system critical templates cannot be modified, because whatever the
+			// gain of a customized version is, the damage potential is much higher
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Returns true if current template is considered system critical and
+	 * may not be customized at any point.
+	 * 
+	 * @param       string          $templateName
+	 * @return      boolean
+	 */
+	public static function isSystemCritical($templateName) {
+		return in_array($templateName, self::$systemCriticalTemplates);
 	}
 }
