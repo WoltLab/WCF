@@ -141,6 +141,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			if (isset($result[$packageUpdateID])) $packageUpdates[$packageUpdateID] = $result[$packageUpdateID];
 		}
 		
+		// no matches found
+		if (empty($packageUpdates)) {
+			WCF::getTPL()->assign(['packageUpdates' => []]);
+			
+			return ['count' => 0, 'pageCount' => 0, 'searchID' => 0, 'template' => WCF::getTPL()->fetch('packageSearchResultList')];
+		}
+		
 		$search = SearchEditor::create([
 			'userID' => WCF::getUser()->userID,
 			'searchData' => serialize($packageUpdates),
