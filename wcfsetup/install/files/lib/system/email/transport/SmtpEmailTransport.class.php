@@ -211,11 +211,16 @@ class SmtpEmailTransport implements IEmailTransport {
 				if (in_array('starttls', $this->features)) {
 					try {
 						$this->starttls();
-					}
-					catch (SystemException $e) { }
 					
-					$this->write('EHLO '.Email::getHost());
-					$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+						$this->write('EHLO '.Email::getHost());
+						$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+					}
+					catch (\Exception $e) {
+						\wcf\functions\exception\logThrowable($e);
+						$this->disconnect();
+						$this->starttls = 'none';
+						$this->connect();
+					}
 				}
 			break;
 			case 'none':
@@ -232,8 +237,13 @@ class SmtpEmailTransport implements IEmailTransport {
 		$this->write("STARTTLS");
 		$this->read([220]);
 		
-		if (!$this->connection->setTLS(true)) {
-			throw new TransientFailure('enabling TLS failed');
+		try {
+			if (!$this->connection->setTLS(true)) {
+				throw new TransientFailure('Enabling TLS failed');
+			}
+		}
+		catch (SystemException $e) {
+			throw new TransientFailure('Enabling TLS failed', 0, $e);
 		}
 	}
 	
