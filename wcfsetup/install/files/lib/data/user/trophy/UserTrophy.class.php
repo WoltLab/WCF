@@ -96,8 +96,7 @@ class UserTrophy extends DatabaseObject {
 			return false;
 		}
 		
-		// @TODO check user option canViewTrophies
-		return true;
+		return $this->getUserProfile()->isAccessible('canViewTrophies') || $user->userID == $this->userID;
 	}
 	
 	/**

@@ -3943,6 +3943,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Kann E-Mail-Adresse sehen]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Kann Online-Status sehen]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Kann Benutzerprofil sehen]]></item>
+		<item name="wcf.user.option.canViewTrophies"><![CDATA[Kann Trophäen sehen]]></item>
 		
 		<item name="wcf.user.option.category.profile"><![CDATA[Persönliche Daten]]></item>
 		<item name="wcf.user.option.category.profile.aboutMe"><![CDATA[Über mich]]></item>
