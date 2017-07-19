@@ -169,12 +169,12 @@ class LabelHandler extends SingletonFactory {
 		$accessibleLabelIDs = $this->getAccessibleLabelIDs();
 		
 		// delete previous labels
-		$conditions = new PreparedStatementConditionBuilder();
-		if ($validatePermissions) $conditions->add("labelID IN (?)", [$accessibleLabelIDs]);
-		$conditions->add("objectTypeID = ?", [$objectTypeID]);
-		$conditions->add("objectID = ?", [$objectID]);
-		
 		if (!$validatePermissions || ($validatePermissions && !empty($accessibleLabelIDs))) {
+			$conditions = new PreparedStatementConditionBuilder();
+			if ($validatePermissions) $conditions->add("labelID IN (?)", [$accessibleLabelIDs]);
+			$conditions->add("objectTypeID = ?", [$objectTypeID]);
+			$conditions->add("objectID = ?", [$objectID]);
+			
 			$sql = "DELETE FROM	wcf".WCF_N."_label_object
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
