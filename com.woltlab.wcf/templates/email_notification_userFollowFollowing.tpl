@@ -7,8 +7,8 @@
 	{lang}wcf.user.notification.follow.mail.html{/lang}
 	{assign var='user' value=$event->getAuthor()}
 	
-	{if $notificationType == 'instant'}{assign var='avatarSize' value=128}
-	{else}{assign var='avatarSize' value=64}{/if}
+	{if $notificationType == 'instant'}{assign var='avatarSize' value=48}
+	{else}{assign var='avatarSize' value=32}{/if}
 	{capture assign='userContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
