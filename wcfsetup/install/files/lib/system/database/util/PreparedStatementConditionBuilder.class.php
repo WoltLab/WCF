@@ -31,11 +31,18 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 					throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '".$condition."'");
 				}
 				else if (is_array($parameters[$count]) && empty($parameters[$count])) {
-					throw new \RuntimeException("An empty array was passed for token number " . ($count + 1) . " in condition '".$condition."'");
+					// Only throw an exception if the developer tools are active, preventing this
+					// from triggering an error for queries that are never actually executed.
+					// 
+					// This is done to preserve backwards-compatibility with earlier releases that
+					// allowed this kind of issue, effectively relying on the database to bail out.
+					if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+						throw new \RuntimeException("An empty array was passed for token number " . ($count + 1) . " in condition '" . $condition . "'");
+					}
 				}
 				
 				$result = '?';
-				if (is_array($parameters[$count])) {
+				if (is_array($parameters[$count]) && !empty($parameters[$count])) {
 					$result .= str_repeat(',?', count($parameters[$count]) - 1);
 				}
 				
