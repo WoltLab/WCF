@@ -549,6 +549,16 @@
 				<title>Kontakt</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.TrophyList">
+			<pageType>system</pageType>
+			<controller>wcf\page\TrophyListPage</controller>
+			<name language="de">Trophäen</name>
+			<name language="en">Trophies</name>
+			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<options>module_trophy</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+		</page>
 		
 		<!-- static -->
 		<page identifier="com.woltlab.wcf.Dashboard">
