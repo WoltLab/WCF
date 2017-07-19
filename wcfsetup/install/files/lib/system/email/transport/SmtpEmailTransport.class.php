@@ -117,6 +117,10 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @throws	TransientFailure
 	 */
 	protected function read(array $expectedCodes) {
+		$truncateReply = function ($reply) {
+			return StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply), 80, StringUtil::HELLIP, true);
+		};
+		
 		$code = null;
 		$reply = '';
 		do {
@@ -128,15 +132,15 @@ class SmtpEmailTransport implements IEmailTransport {
 					if (!in_array($code, $expectedCodes)) {
 						// 4xx is a transient failure
 						if (400 <= $code && $code < 500) {
-							throw new TransientFailure("Remote SMTP server reported transient error code: ".$code." in reply to '".$this->lastWrite."'");
+							throw new TransientFailure("Remote SMTP server reported transient error code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 						}
 						
 						// 5xx is a permanent failure
 						if (500 <= $code && $code < 600) {
-							throw new PermanentFailure("Remote SMTP server reported permanent error code: ".$code." in reply to '".$this->lastWrite."'");
+							throw new PermanentFailure("Remote SMTP server reported permanent error code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 						}
 						
-						throw new TransientFailure("Remote SMTP server reported not expected code: ".$code." in reply to '".$this->lastWrite."'");
+						throw new TransientFailure("Remote SMTP server reported not expected code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 					}
 				}
 				
