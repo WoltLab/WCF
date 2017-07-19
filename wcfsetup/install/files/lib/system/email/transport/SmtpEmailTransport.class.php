@@ -117,6 +117,10 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @throws	TransientFailure
 	 */
 	protected function read(array $expectedCodes) {
+		$truncateReply = function ($reply) {
+			return StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply), 80, StringUtil::HELLIP, true);
+		};
+		
 		$code = null;
 		$reply = '';
 		do {
@@ -128,15 +132,15 @@ class SmtpEmailTransport implements IEmailTransport {
 					if (!in_array($code, $expectedCodes)) {
 						// 4xx is a transient failure
 						if (400 <= $code && $code < 500) {
-							throw new TransientFailure("Remote SMTP server reported transient error code: ".$code." in reply to '".$this->lastWrite."'");
+							throw new TransientFailure("Remote SMTP server reported transient error code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 						}
 						
 						// 5xx is a permanent failure
 						if (500 <= $code && $code < 600) {
-							throw new PermanentFailure("Remote SMTP server reported permanent error code: ".$code." in reply to '".$this->lastWrite."'");
+							throw new PermanentFailure("Remote SMTP server reported permanent error code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 						}
 						
-						throw new TransientFailure("Remote SMTP server reported not expected code: ".$code." in reply to '".$this->lastWrite."'");
+						throw new TransientFailure("Remote SMTP server reported not expected code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 					}
 				}
 				
@@ -207,11 +211,16 @@ class SmtpEmailTransport implements IEmailTransport {
 				if (in_array('starttls', $this->features)) {
 					try {
 						$this->starttls();
-					}
-					catch (SystemException $e) { }
 					
-					$this->write('EHLO '.Email::getHost());
-					$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+						$this->write('EHLO '.Email::getHost());
+						$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+					}
+					catch (\Exception $e) {
+						\wcf\functions\exception\logThrowable($e);
+						$this->disconnect();
+						$this->starttls = 'none';
+						$this->connect();
+					}
 				}
 			break;
 			case 'none':
@@ -228,8 +237,13 @@ class SmtpEmailTransport implements IEmailTransport {
 		$this->write("STARTTLS");
 		$this->read([220]);
 		
-		if (!$this->connection->setTLS(true)) {
-			throw new TransientFailure('enabling TLS failed');
+		try {
+			if (!$this->connection->setTLS(true)) {
+				throw new TransientFailure('Enabling TLS failed');
+			}
+		}
+		catch (SystemException $e) {
+			throw new TransientFailure('Enabling TLS failed', 0, $e);
 		}
 	}
 	
