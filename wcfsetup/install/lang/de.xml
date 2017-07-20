@@ -396,6 +396,20 @@
 		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles Abgleichen]]></item>
 	</category>
 	
+	<category name="wcf.acp.email">
+		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
+		<item name="wcf.acp.email.smtp.test.description"><![CDATA[Testet die eingegebenen Verbindungsinformationen und Zugangsdaten, ob eine Anmeldung beim SMTP-Server möglich ist. Es wird keine E-Mail verschickt!<br><br><strong>Hinweis:</strong> Es handelt sich hierbei nur um einen sehr oberflächlichen Test. Ein erfolgreicher Versand von E-Mails kann auch beim Bestehen dieses Tests nicht abschließend garantiert werden.]]></item>
+		<item name="wcf.acp.email.smtp.test.run"><![CDATA[SMTP-Verbindung testen]]></item>
+		<item name="wcf.acp.email.smtp.test.run.success"><![CDATA[Verbindungstest erfolgreich]]></item>
+		<item name="wcf.acp.email.smtp.test.error.badAuth"><![CDATA[Benutzername und/oder Passwort wurde vom Server abgelehnt.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.host"><![CDATA[Kein SMTP-Server angegeben.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.password"><![CDATA[Das Passwort fehlt.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.user"><![CDATA[Der Benutzername fehlt.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[Der Server antwortet nicht.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[Der Server unterstützt keine Verschlüsselung.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Der Aufbau einer verschlüselten Verbindung war nicht möglich.]]></item>
+	</category>
+	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Protokollierte Fehler]]></item>
 		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Fehlermeldung]]></item>

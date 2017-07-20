@@ -6,6 +6,7 @@ use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -108,6 +109,51 @@ class SmtpEmailTransport implements IEmailTransport {
 	}
 	
 	/**
+	 * Tests the connection by establishing a connection and optionally
+	 * providing user credentials. Returns the error message or an empty
+	 * string on success.
+	 * 
+	 * @return      string
+	 */
+	public function testConnection() {
+		try {
+			$this->connect(10);
+			$this->auth();
+		}
+		catch (SystemException $e) {
+			if (strpos($e->getMessage(), 'Can not connect to') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.hostUnknown');
+			}
+			
+			return $e->getMessage();
+		}
+		catch (PermanentFailure $e) {
+			if (strpos($e->getMessage(), 'Remote SMTP server does not support EHLO') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.notTlsSupport');
+			}
+			else if (strpos($e->getMessage(), 'Remote SMTP server does not advertise STARTTLS') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.notTlsSupport');
+			}
+			else if (strpos($e->getMessage(), "Remote SMTP server reported permanent error code: 535 (") === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.badAuth');
+			}
+			
+			return $e->getMessage();
+		}
+		catch (TransientFailure $e) {
+			if (strpos($e->getMessage(), 'Enabling TLS failed') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.tlsFailed');
+			}
+			
+			return $e->getMessage();
+		}
+		
+		$this->disconnect();
+		
+		return '';
+	}
+	
+	/**
 	 * Reads a server reply and validates it against the given expected status codes.
 	 * Returns a tuple [ status code, reply text ].
 	 * 
@@ -177,10 +223,13 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * Connects to the server and enables STARTTLS if available. Bails
 	 * out if STARTTLS is not available and connection is set to 'encrypt'.
 	 * 
+	 * @param       integer         $overrideTimeout
 	 * @throws	PermanentFailure
 	 */
-	protected function connect() {
-		$this->connection = new RemoteFile($this->host, $this->port);
+	protected function connect($overrideTimeout = null) {
+		if ($overrideTimeout === null) $this->connection = new RemoteFile($this->host, $this->port);
+		else $this->connection = new RemoteFile($this->host, $this->port, $overrideTimeout);
+		
 		$this->read([220]);
 		
 		try {

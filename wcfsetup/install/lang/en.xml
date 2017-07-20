@@ -379,6 +379,20 @@
 		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Sync All]]></item>
 	</category>
 	
+	<category name="wcf.acp.email">
+		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
+		<item name="wcf.acp.email.smtp.test.description"><![CDATA[Validates the connection data and user credentials, for their basic validity. No email is sent during this process!<br><br><strong>Notice:</strong> This is only a very basic test. Passing it does not guarantee emails to be successfully delivered!]]></item>
+		<item name="wcf.acp.email.smtp.test.run"><![CDATA[Run SMTP Connection Test]]></item>
+		<item name="wcf.acp.email.smtp.test.run.success"><![CDATA[Test Passed]]></item>
+		<item name="wcf.acp.email.smtp.test.error.badAuth"><![CDATA[Username and/or password were rejected by the server.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.host"><![CDATA[Please enter a SMTP server.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.password"><![CDATA[Please enter a password.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.user"><![CDATA[Please enter a username.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[The server is not responding.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[The server does not support encryption.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Unable to establish a secure connection.]]></item>
+	</category>
+	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Error Message]]></item>

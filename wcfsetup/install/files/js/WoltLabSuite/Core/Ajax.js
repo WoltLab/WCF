@@ -26,6 +26,9 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 		 * @return	{AjaxRequest}
 		 */
 		api: function(callbackObject, data, success, failure) {
+			// Fetch AjaxRequest, as it cannot be provided because of a circular dependency
+			if (AjaxRequest === undefined) AjaxRequest = require('AjaxRequest');
+			
 			if (typeof data !== 'object') data = {};
 			
 			var request = _requests.get(callbackObject);

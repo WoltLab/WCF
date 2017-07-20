@@ -95,6 +95,7 @@
 	</div>
 </form>
 
+{include file='__optionEmailSmtpTest'}
 {include file='__optionRewriteTest'}
 
 {include file='footer'}
