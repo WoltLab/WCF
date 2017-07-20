@@ -3037,7 +3037,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>
 		<item name="wcf.message.new"><![CDATA[Neu]]></item>
 		<item name="wcf.message.error.censoredWordsFound"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält folgende zensierte Wörter: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
-		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält die folgenden BBCodes, die {if LANGUAGE_USE_INFORMAL_VARIANT}du nicht verwenden darst{else}Sie nicht verwenden dürfen{/if}: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
+		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält die folgenden BBCodes, die {if LANGUAGE_USE_INFORMAL_VARIANT}du nicht verwenden darfst{else}Sie nicht verwenden dürfen{/if}: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, {if LANGUAGE_USE_INFORMAL_VARIANT}beende die Bearbeitung bevor du fortfährst{else}beenden Sie die Bearbeitung bevor Sie fortfahren{/if}.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
