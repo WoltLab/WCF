@@ -1,3 +1,17 @@
+/*
+	This table was moved up here, because it must be created during the first iteration
+	
+	DO *NOT* MOVE IT BACK!
+*/
+DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
+CREATE TABLE wcf1_package_installation_sql_log ( 
+	packageID INT(10), 
+	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
+	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
+	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
+	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
+);
+
 /* tables */
 DROP TABLE IF EXISTS wcf1_acl_option;
 CREATE TABLE wcf1_acl_option (
@@ -438,6 +452,8 @@ CREATE TABLE wcf1_contact_recipient (
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
 );
+
+/* SQL_PARSER_OFFSET */
 
 DROP TABLE IF EXISTS wcf1_core_object;
 CREATE TABLE wcf1_core_object (
@@ -910,14 +926,7 @@ CREATE TABLE wcf1_package_installation_queue (
 	isApplication TINYINT(1) NOT NULL DEFAULT 0
 );
 
-DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
-CREATE TABLE wcf1_package_installation_sql_log ( 
-	packageID INT(10), 
-	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
-	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
-	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
-	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
-);
+/* The table `wcf1_package_installation_sql_log` can be found at the very top! */
 
 /* SQL_PARSER_OFFSET */
 
@@ -1304,6 +1313,8 @@ CREATE TABLE wcf1_template_listener (
 	
 	KEY templateName (environment, templateName)
 );
+
+/* SQL_PARSER_OFFSET */
 
 DROP TABLE IF EXISTS wcf1_tracked_visit;
 CREATE TABLE wcf1_tracked_visit (
@@ -1793,6 +1804,8 @@ ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packag
 ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (linkPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
+/* SQL_PARSER_OFFSET */
+
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (imageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
@@ -1828,6 +1841,8 @@ ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_media ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
 ALTER TABLE wcf1_media ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -1907,6 +1922,8 @@ ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_langu
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
+/* SQL_PARSER_OFFSET */
+
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
@@ -1974,6 +1991,8 @@ ALTER TABLE wcf1_user ADD FOREIGN KEY (avatarID) REFERENCES wcf1_user_avatar (av
 ALTER TABLE wcf1_user ADD FOREIGN KEY (rankID) REFERENCES wcf1_user_rank (rankID) ON DELETE SET NULL;
 ALTER TABLE wcf1_user ADD FOREIGN KEY (userOnlineGroupID) REFERENCES wcf1_user_group (groupID) ON DELETE SET NULL;
 
+/* SQL_PARSER_OFFSET */
+
 ALTER TABLE wcf1_user_avatar ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_follow ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
@@ -2037,6 +2056,8 @@ ALTER TABLE wcf1_like ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userI
 
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_comment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_comment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
