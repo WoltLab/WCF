@@ -197,6 +197,12 @@
 				<defaultvalue>1</defaultvalue>
 				<options>module_user_signature</options>
 			</option>
+			<option name="editorPastePreserveFormatting">
+				<categoryname>settings.general.interface</categoryname>
+				<optiontype>boolean</optiontype>
+				<editable>3</editable>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			
 			<!-- settings.privacy.content -->
 			<option name="canViewOnlineStatus">

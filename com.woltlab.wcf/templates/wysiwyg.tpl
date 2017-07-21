@@ -182,6 +182,7 @@
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
 				pasteImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				pastePlainText: {if !$__wcf->user->userID || $__wcf->user->editorPastePreserveFormatting}true{else}false{/if},
 				plugins: [
 					// Imperavi
 					'alignment',
