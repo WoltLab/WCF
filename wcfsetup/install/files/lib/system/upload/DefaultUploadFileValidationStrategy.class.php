@@ -45,7 +45,10 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	 */
 	public function validate(UploadFile $uploadFile) {
 		if ($uploadFile->getErrorCode() != 0) {
-			$uploadFile->setValidationErrorType('uploadFailed');
+			$additionalData = [];
+			if ($uploadFile->getErrorCode() === UPLOAD_ERR_INI_SIZE) $additionalData['phpLimitExceeded'] = true;
+			
+			$uploadFile->setValidationErrorType('uploadFailed', $additionalData);
 			return false;
 		}
 		

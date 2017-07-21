@@ -190,7 +190,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 				$result['errors'][$file->getInternalFileID()] = [
 					'filename' => $file->getFilename(),
 					'filesize' => $file->getFilesize(),
-					'errorType' => $file->getValidationErrorType()
+					'errorType' => $file->getValidationErrorType(),
+					'additionalData' => $file->getValidationErrorAdditionalData()
 				];
 			}
 		}

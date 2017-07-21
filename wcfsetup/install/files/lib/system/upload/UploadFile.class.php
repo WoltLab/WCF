@@ -53,6 +53,12 @@ class UploadFile {
 	protected $validationErrorType = '';
 	
 	/**
+	 * additional data for validation errors
+	 * @var array
+	 */
+	protected $validationErrorAdditionalData = [];
+	
+	/**
 	 * Creates a new UploadFile object.
 	 * 
 	 * @param	string		$filename
@@ -145,9 +151,11 @@ class UploadFile {
 	 * Sets the validation error type.
 	 * 
 	 * @param	string		$validationErrorType
+	 * @param       array           $additionalData
 	 */
-	public function setValidationErrorType($validationErrorType) {
+	public function setValidationErrorType($validationErrorType, array $additionalData = []) {
 		$this->validationErrorType = $validationErrorType;
+		$this->validationErrorAdditionalData = $additionalData;
 	}
 	
 	/**
@@ -157,6 +165,15 @@ class UploadFile {
 	 */
 	public function getValidationErrorType() {
 		return $this->validationErrorType;
+	}
+	
+	/**
+	 * Returns the validation error additional data array.
+	 * 
+	 * @return	array
+	 */
+	public function getValidationErrorAdditionalData() {
+		return $this->validationErrorAdditionalData;
 	}
 	
 	/**

@@ -425,7 +425,12 @@ if (COMPILER_TARGET_DEFAULT) {
 					
 					// error handling
 					if (data.returnValues && data.returnValues.errors[$internalFileID]) {
-						$errorMessage = data.returnValues.errors[$internalFileID]['errorType'];
+						var errorData = data.returnValues.errors[$internalFileID];
+						$errorMessage = errorData.errorType;
+						
+						if ($errorMessage === 'uploadFailed' && errorData.additionalData.phpLimitExceeded) {
+							$errorMessage = 'uploadPhpLimit';
+						}
 					}
 					else {
 						// unknown error

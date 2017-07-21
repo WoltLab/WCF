@@ -47,6 +47,7 @@
 			'wcf.attachment.upload.error.reachedLimit': '{lang}wcf.attachment.upload.error.reachedLimit{/lang}',
 			'wcf.attachment.upload.error.reachedRemainingLimit': '{lang}wcf.attachment.upload.error.reachedRemainingLimit{/lang}',
 			'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
+			'wcf.attachment.upload.error.uploadPhpLimit': '{lang}wcf.attachment.upload.error.uploadPhpLimit{/lang}',
 			'wcf.attachment.insert': '{lang}wcf.attachment.insert{/lang}',
 			'wcf.attachment.insertAll': '{lang}wcf.attachment.insertAll{/lang}',
 			'wcf.attachment.insertFull': '{lang}wcf.attachment.insertFull{/lang}',

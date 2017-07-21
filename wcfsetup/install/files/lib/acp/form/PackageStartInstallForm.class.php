@@ -2,9 +2,11 @@
 namespace wcf\acp\form;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\Package;
 use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\PackageArchive;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\package\PackageInstallationDispatcher;
@@ -28,9 +30,9 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * updated package object
-	 * @var	\wcf\data\package\Package
+	 * @var	Package
 	 */
-	public $package = null;
+	public $package;
 	
 	/**
 	 * data of the uploaded package
@@ -40,15 +42,15 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * archive of the installation/update package
-	 * @var	\wcf\system\package\PackageArchive
+	 * @var	PackageArchive
 	 */
-	public $archive = null;
+	public $archive;
 	
 	/**
 	 * package installation/update queue
 	 * @var	PackageInstallationQueue
 	 */
-	public $queue = null;
+	public $queue;
 	
 	/**
 	 * location of the package uploaded via style import
@@ -114,6 +116,10 @@ class PackageStartInstallForm extends AbstractForm {
 		
 		if (empty($filename)) {
 			if (empty($this->uploadPackage['tmp_name'])) {
+				if (isset($_FILES['uploadPackage']) && $_FILES['uploadPackage']['error'] === UPLOAD_ERR_INI_SIZE) {
+					throw new UserInputException('uploadPackage', 'exceedsPhpLimit');
+				}
+				
 				throw new UserInputException('uploadPackage', 'uploadFailed');
 			}
 			
