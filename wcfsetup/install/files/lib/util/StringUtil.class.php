@@ -520,6 +520,10 @@ final class StringUtil {
 		if ($filter != '') {
 			$forbiddenNames = explode("\n", mb_strtolower(self::unifyNewlines($filter)));
 			foreach ($forbiddenNames as $forbiddenName) {
+				// ignore empty lines in between actual values
+				$forbiddenName = self::trim($forbiddenName);
+				if (empty($forbiddenName)) continue;
+				
 				if (mb_strpos($forbiddenName, '*') !== false) {
 					$forbiddenName = str_replace('\*', '.*', preg_quote($forbiddenName, '/'));
 					if (preg_match('/^'.$forbiddenName.'$/s', $word)) {

@@ -157,4 +157,12 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		// clear cache immediately
 		EventListenerCacheBuilder::getInstance()->reset();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
+	
 }

@@ -209,7 +209,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
-		$progress = round((100 / 18) * ++$currentStep, 0);
+		$progress = round((100 / 25) * ++$currentStep, 0);
 		self::getTPL()->assign(['progress' => $progress]);
 	}
 	
@@ -667,9 +667,17 @@ class WCFSetup extends WCF {
 				$sqlVersion = $db->getVersion();
 				$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
 				if (stripos($sqlVersion, 'MariaDB')) {
-					// MariaDB 10.0.22+
-					if (!(version_compare($compareSQLVersion, '10.0.22') >= 0)) {
-						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '10.0.22' or greater is needed.");
+					// MariaDB 5.5.47+ or 10.0.22+ are required
+					// https://jira.mariadb.org/browse/MDEV-8756
+					if ($compareSQLVersion[0] === '5') {
+						// MariaDB 5.5.47+
+						if (!(version_compare($compareSQLVersion, '5.5.47') >= 0)) {
+							throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
+						}
+					}
+					else if (!(version_compare($compareSQLVersion, '10.0.22') >= 0)) {
+						// MariaDB 10.0.22+
+						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
 					}
 				}
 				else {

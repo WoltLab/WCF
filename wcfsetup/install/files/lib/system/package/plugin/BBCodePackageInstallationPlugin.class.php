@@ -196,4 +196,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	public static function getDefaultFilename() {
 		return 'bbcode.xml';
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

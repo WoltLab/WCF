@@ -6,6 +6,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
+use wcf\data\template\Template;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
@@ -729,6 +730,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
 				$package = null;
+				
+				if (Template::isSystemCritical($row['templateName'])) {
+					continue;
+				}
 				
 				if ($row['application'] != 'wcf') {
 					$application = ApplicationHandler::getInstance()->getApplication($row['application']);

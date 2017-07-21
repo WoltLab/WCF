@@ -14,7 +14,7 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 	/**
 	 * @exports	WoltLabSuite/Core/Ajax
 	 */
-	var Ajax = {
+	return {
 		/**
 		 * Shorthand function to perform a request against the WCF-API with overrides
 		 * for success and failure callbacks.
@@ -26,6 +26,9 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 		 * @return	{AjaxRequest}
 		 */
 		api: function(callbackObject, data, success, failure) {
+			// Fetch AjaxRequest, as it cannot be provided because of a circular dependency
+			if (AjaxRequest === undefined) AjaxRequest = require('AjaxRequest');
+			
 			if (typeof data !== 'object') data = {};
 			
 			var request = _requests.get(callbackObject);
@@ -91,9 +94,21 @@ define(['AjaxRequest', 'Core', 'ObjectMap'], function(AjaxRequest, Core, ObjectM
 			}
 			
 			var request = new AjaxRequest(options);
-			request.sendRequest();
+			request.sendRequest(false);
+		},
+		
+		/**
+		 * Returns the request object used for an earlier call to `api()`.
+		 * 
+		 * @param       {Object}        callbackObject  callback object
+		 * @return      {AjaxRequest}
+		 */
+		getRequestObject: function(callbackObject) {
+			if (!_requests.has(callbackObject)) {
+				throw new Error('Expected a previously used callback object, provided object is unknown.');
+			}
+			
+			return _requests.get(callbackObject);
 		}
 	};
-	
-	return Ajax;
 });

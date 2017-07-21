@@ -69,7 +69,8 @@ class UserRankEditForm extends UserRankAddForm {
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
-			'requiredGender' => $this->requiredGender
+			'requiredGender' => $this->requiredGender,
+			'hideTitle' => $this->hideTitle
 		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
@@ -100,6 +101,7 @@ class UserRankEditForm extends UserRankAddForm {
 			$this->requiredGender = $this->rank->requiredGender;
 			$this->repeatImage = $this->rank->repeatImage;
 			$this->rankImage = $this->rank->rankImage;
+			$this->hideTitle = $this->rank->hideTitle;
 		}
 	}
 	

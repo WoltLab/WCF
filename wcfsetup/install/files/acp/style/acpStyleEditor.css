@@ -57,6 +57,9 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spButton .button.disabled, #spButtonPrimary .button.disabled { cursor: default; }
 #spButtonPrimary { margin-top: 10px; }
 
+/* ### editor ### */
+#spEditorContent { border: 1px solid rgb(224, 224, 224); border-top-width: 0; height: 100px; }
+
 /* ### dropdown ### */
 #spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }
 

@@ -134,7 +134,7 @@ define(
 			if (setupData.source === undefined) {
 				var dialogElement = elById(setupData.id);
 				if (dialogElement === null) {
-					throw new Error("Element id '" + setupData.id + "' is invalid and no source attribute was given.");
+					throw new Error("Element id '" + setupData.id + "' is invalid and no source attribute was given. If you want to use the `html` argument instead, please add `source: null` to your dialog configuration.");
 				}
 				
 				setupData.source = document.createDocumentFragment();

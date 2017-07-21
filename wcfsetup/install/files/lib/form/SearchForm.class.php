@@ -388,6 +388,9 @@ class SearchForm extends AbstractCaptchaForm {
 		// init form
 		foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $objectType) $objectType->show($this);
 		
+		$searchPreselectObjectType = 'everywhere';
+		if (count($this->selectedObjectTypes) === 1) $searchPreselectObjectType = reset($this->selectedObjectTypes);
+		
 		WCF::getTPL()->assign([
 			'query' => $this->query,
 			'subjectOnly' => $this->subjectOnly,
@@ -398,7 +401,8 @@ class SearchForm extends AbstractCaptchaForm {
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder,
 			'selectedObjectTypes' => $this->selectedObjectTypes,
-			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes()
+			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
+			'searchPreselectObjectType' => $searchPreselectObjectType
 		]);
 	}
 	

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -357,10 +358,23 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
-		$userToGroup = [];
+		$fixUserGroupIDs = $userToGroup = [];
+		$newGroupIDs = [];
 		foreach ($this->getObjects() as $user) {
+			$groupIDs = $user->getGroupIDs();
+			if (!in_array(UserGroup::EVERYONE, $groupIDs)) {
+				$fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
+				$groupIDs[] = UserGroup::EVERYONE;
+			}
+			if (!in_array(UserGroup::USERS, $groupIDs)) {
+				if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
+				$fixUserGroupIDs[$user->userID][] = UserGroup::USERS;
+				$groupIDs[] = UserGroup::USERS;
+			}
+			$newGroupIDs[$user->userID] = $groupIDs;
+			
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('groupID IN (?)', [$user->getGroupIDs()]);
+			$conditionBuilder->add('groupID IN (?)', [$groupIDs]);
 			
 			$sql = "SELECT		groupID
 				FROM		wcf".WCF_N."_user_group
@@ -372,6 +386,24 @@ class UserProfileAction extends UserAction {
 			if ($row['groupID'] != $user->userOnlineGroupID) {
 				$userToGroup[$user->userID] = $row['groupID'];
 			}
+		}
+		
+		// add users to missing default user groups
+		if (!empty($fixUserGroupIDs)) {
+			$sql = "INSERT INTO     wcf".WCF_N."_user_to_group
+						(userID, groupID)
+				VALUES          (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($fixUserGroupIDs as $userID => $groupIDs) {
+				foreach ($groupIDs as $groupID) {
+					$statement->execute([$userID, $groupID]);
+				}
+				
+				UserStorageHandler::getInstance()->update($userID, 'groupIDs', serialize($newGroupIDs[$userID]));
+			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($userToGroup)) {

@@ -149,4 +149,11 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		$data['nextExec'] = TIME_NOW;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

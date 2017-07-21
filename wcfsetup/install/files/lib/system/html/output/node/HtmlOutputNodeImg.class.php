@@ -9,6 +9,7 @@ use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Processes images.
@@ -68,13 +69,13 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 				$element->setAttribute('class', $class);
 				
 				if (MODULE_IMAGE_PROXY) {
-					$urlComponents = parse_url($src);
-					if ($urlComponents === false) {
+					if (!Url::is($src)) {
 						// not a valid URL, discard it
 						DOMUtil::removeNode($element);
 						continue;
 					}
 					
+					$urlComponents = Url::parse($src);
 					if (empty($urlComponents['host'])) {
 						// relative URL, ignore it
 						continue;

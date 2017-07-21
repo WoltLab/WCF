@@ -13,13 +13,15 @@ define(
 		'favico',                  'enquire',                'perfect-scrollbar',      'WoltLabSuite/Core/Date/Time/Relative',
 		'Ui/SimpleDropdown',       'WoltLabSuite/Core/Ui/Mobile',  'WoltLabSuite/Core/Ui/TabMenu', 'WoltLabSuite/Core/Ui/FlexibleMenu',
 		'Ui/Dialog',               'WoltLabSuite/Core/Ui/Tooltip', 'WoltLabSuite/Core/Language',   'WoltLabSuite/Core/Environment',
-		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/JumpToTop'
+		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/JumpToTop',
+		'Devtools'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
-		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop
+		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop,
+	         Devtools
 	)
 {
 	"use strict";
@@ -50,6 +52,9 @@ define(
 			options = Core.extend({
 				enableMobileMenu: true
 			}, options);
+			
+			//noinspection JSUnresolvedVariable
+			if (window.ENABLE_DEVELOPER_TOOLS) Devtools._internal_.enable();
 			
 			Environment.setup();
 			

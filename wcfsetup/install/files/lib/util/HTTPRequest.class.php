@@ -220,7 +220,7 @@ final class HTTPRequest {
 	 * @throws	SystemException
 	 */
 	private function setURL($url) {
-		$parsedUrl = $originUrl = parse_url($url);
+		$parsedUrl = $originUrl = Url::parse($url);
 		if (empty($originUrl['scheme']) || empty($originUrl['host'])) {
 			throw new SystemException("Invalid URL '{$url}' given");
 		}
@@ -238,8 +238,8 @@ final class HTTPRequest {
 			$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		}
 		
-		if (PROXY_SERVER_HTTP) {
-			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
+		if (PROXY_SERVER_HTTP && Url::is(PROXY_SERVER_HTTP)) {
+			$parsedUrl = Url::parse(PROXY_SERVER_HTTP);
 		}
 		
 		$this->useSSL = $parsedUrl['scheme'] === 'https';

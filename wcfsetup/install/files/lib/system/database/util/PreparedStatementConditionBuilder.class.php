@@ -26,9 +26,19 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	public function add($condition, array $parameters = []) {
 		if (!empty($parameters)) {
 			$count = 0;
-			$callback = function ($matches) use (&$count, $parameters, $condition) {
+			$callback = function () use (&$count, $parameters, $condition) {
 				if (!array_key_exists($count, $parameters)) {
 					throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '".$condition."'");
+				}
+				else if (is_array($parameters[$count]) && empty($parameters[$count])) {
+					// Only throw an exception if the developer tools are active, preventing this
+					// from triggering an error for queries that are never actually executed.
+					// 
+					// This is done to preserve backwards-compatibility with earlier releases that
+					// allowed this kind of issue, effectively relying on the database to bail out.
+					if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+						throw new \RuntimeException("An empty array was passed for token number " . ($count + 1) . " in condition '" . $condition . "'");
+					}
 				}
 				
 				$result = '?';

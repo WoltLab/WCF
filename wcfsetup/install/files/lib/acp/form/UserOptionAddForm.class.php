@@ -137,7 +137,6 @@ class UserOptionAddForm extends AbstractForm {
 	 * @var	string[]
 	 */
 	public static $availableOptionTypes = [
-		'aboutMe',
 		'birthday',
 		'boolean',
 		'checkboxes',

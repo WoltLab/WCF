@@ -1372,6 +1372,12 @@
 			<definitionname>com.woltlab.wcf.category</definitionname>
 			<classname>wcf\system\category\TrophyCategoryType</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophy.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\UserTrophyNotificationObjectType</classname>
+			<category>com.woltlab.wcf.user</category>
+		</type>
 		<!-- /trophy -->
 		
 		<!-- deprecated -->

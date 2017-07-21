@@ -115,4 +115,11 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 		
 		return false;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

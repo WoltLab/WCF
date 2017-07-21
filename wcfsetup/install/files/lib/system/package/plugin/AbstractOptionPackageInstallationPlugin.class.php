@@ -322,4 +322,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) { }
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

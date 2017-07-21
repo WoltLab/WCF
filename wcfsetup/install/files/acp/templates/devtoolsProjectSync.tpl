@@ -20,98 +20,68 @@
 {if $object->validate() === ''}
 	<p class="info">{lang}wcf.acp.devtools.pip.notice{/lang}</p>
 	
-	<form method="post" action="{link controller='DevtoolsProjectSync' id=$objectID}{/link}">
-		<div class="section">
-			<dl>
-				<dt></dt>
-				<dd>
-					<label><input type="checkbox" id="syncShowOnlyMatches" checked> {lang}wcf.acp.devtools.pip.showOnlyMatches{/lang}</label>
-					<small>{lang}wcf.acp.devtools.pip.showOnlyMatches.description{/lang}</small>
-				</dd>
-			</dl>
-		</div>
-		<div class="section tabularBox jsShowOnlyMatches" id="syncPipMatches">
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="columnText">{lang}wcf.acp.devtools.pip.pluginName{/lang}</th>
-						<th class="columnText">{lang}wcf.acp.devtools.pip.defaultFilename{/lang}</th>
-						<th class="columnIcon">{lang}wcf.acp.devtools.pip.target{/lang}</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-					{foreach from=$object->getPips() item=pip}
-						{assign var=_isSupported value=$pip->isSupported()}
-						{assign var=_targets value=$pip->getTargets($object)}
-						
-						<tr data-is-supported="{if $_isSupported}true{else}false{/if}" {if !$_targets|empty} class="jsHasPipTargets"{/if}>
-							<td class="columnText">{$pip->pluginName}</td>
-							{if $_isSupported}
-								<td class="columnText"><small>{$pip->getDefaultFilename()}</small></td>
-								<td class="columnIcon">
-									{hascontent}
-										<ul class="buttonGroup">
-											{content}
-												{foreach from=$_targets item=target}
-													<li><button class="small jsInvokePip" data-plugin-name="{$pip->pluginName}" data-target="{$target}">{$target}</button></li>
-												{/foreach}
-											{/content}
-										</ul>
-									{hascontentelse}
-										<small>{lang}wcf.acp.devtools.pip.target.noMatches{/lang}</small>
-									{/hascontent}
-								</td>
+	<div class="section">
+		<dl>
+			<dt></dt>
+			<dd>
+				<label><input type="checkbox" id="syncShowOnlyMatches" checked> {lang}wcf.acp.devtools.pip.showOnlyMatches{/lang}</label>
+				<small>{lang}wcf.acp.devtools.pip.showOnlyMatches.description{/lang}</small>
+			</dd>
+		</dl>
+	</div>
+	<div class="section tabularBox jsShowOnlyMatches" id="syncPipMatches">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="columnText">{lang}wcf.acp.devtools.pip.pluginName{/lang}</th>
+					<th class="columnText">{lang}wcf.acp.devtools.pip.defaultFilename{/lang}</th>
+					<th class="columnIcon" colspan="2">{lang}wcf.acp.devtools.pip.target{/lang}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{foreach from=$object->getPips() item=pip}
+					{assign var=_isSupported value=$pip->isSupported()}
+					{assign var=_targets value=$pip->getTargets($object)}
+					{assign var=_targetCount value=$_targets|count}
+					
+					<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $_isSupported}true{else}false{/if}" {if $_targetCount} class="jsHasPipTargets" data-sync-dependencies="{$pip->getSyncDependencies(true)}"{/if}>
+						<td class="columnText" rowspan="{$_targetCount}">{$pip->pluginName}</td>
+						{if $_isSupported}
+							<td class="columnText pipDefaultFilename" rowspan="{$_targetCount}"><small>{$pip->getEffectiveDefaultFilename()}</small></td>
+							{if $_targetCount}
+								<td class="columnIcon"><button class="small jsInvokePip" data-target="{$_targets[0]}">{$_targets[0]}</button></td>
+								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[0]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</td>
 							{else}
-								<td class="columnText" colspan="2">{$pip->getFirstError()}</td>
+								<td class="columnText" colspan="2">
+									<small>{lang}wcf.acp.devtools.pip.target.noMatches{/lang}</small>
+								</td>
 							{/if}
-						</tr>
-					{/foreach}
-				</tbody>
-			</table>
-		</div>
-		
-		{event name='sections'}
-		
-		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-			{@SECURITY_TOKEN_INPUT_TAG}
-		</div>
-	</form>
+						{else}
+							<td class="columnText" colspan="3">{$pip->getFirstError()}</td>
+						{/if}
+					</tr>
+					{if $_targetCount}
+						{section name=i loop=$_targets start=1}
+							<tr data-plugin-name="{$pip->pluginName}" {if $_targetCount} class="jsHasPipTargets jsSkipTargetDetection"{/if}>
+								<td class="columnIcon"><button class="small jsInvokePip" data-target="{$_targets[$i]}">{$_targets[$i]}</button></td>
+								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[$i]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</td>
+							</tr>
+						{/section}
+					{/if}
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
 	
 	<script data-relocate="true">
-		var container = elById('syncPipMatches');
-		elById('syncShowOnlyMatches').addEventListener('change', function() {
-			container.classList.toggle('jsShowOnlyMatches');
-		});
-		
-		require(['Ajax'], function(Ajax) {
-			var that = {
-				_ajaxSetup: function() {
-					return {
-						data: {
-							actionName: 'invoke',
-							className: 'wcf\\data\\package\\installation\\plugin\\PackageInstallationPluginAction',
-							parameters: {
-								projectID: {@$object->projectID}
-							}
-						}
-					}
-				}
-			};
-			
-			elBySelAll('.jsInvokePip', container, function(button) {
-				button.addEventListener(WCF_CLICK_EVENT, function(event) {
-					event.preventDefault();
-					
-					Ajax.api(that, {
-						parameters: {
-							pluginName: elData(button, 'plugin-name'),
-							target: elData(button, 'target')
-						}
-					});
-				});
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/Sync'], function(Language, AcpUiDevtoolsProjectSync) {
+			Language.addObject({
+				'wcf.acp.devtools.sync.status.failure': '{lang}wcf.acp.devtools.sync.status.failure{/lang}',
+				'wcf.acp.devtools.sync.syncAll': '{lang}wcf.acp.devtools.sync.syncAll{/lang}'
 			});
+			
+			AcpUiDevtoolsProjectSync.init({$object->projectID});
 		});
 	</script>
 	
@@ -119,9 +89,29 @@
 		#syncPipMatches.jsShowOnlyMatches tbody > tr:not(.jsHasPipTargets) {
 			display: none;
 		}
+		
+		#syncPipMatches > table {
+			/*table-layout: fixed;*/
+		}
+		
+		#syncPipMatches td:first-child {
+			width: 300px;
+		}
+		
+		#syncPipMatches td.pipDefaultFilename {
+			width: 300px;
+		}
+		
+		#syncPipMatches td:last-child {
+			width: auto;
+		}
+		
+		.syncStatusContainer {
+			overflow: hidden;
+		}
 	</style>
 {else}
-	<p class="error">{$object->validate()}</p>
+	<p class="error">{@$object->validate()}</p>
 {/if}
 
 {include file='footer'}

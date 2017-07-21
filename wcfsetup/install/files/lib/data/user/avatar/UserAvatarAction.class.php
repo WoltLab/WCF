@@ -15,6 +15,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
 use wcf\util\ImageUtil;
+use wcf\util\Url;
 
 /**
  * Executes avatar-related actions.
@@ -189,7 +190,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			return;
 		}
 		
-		$tmp = parse_url($this->parameters['url']);
+		$tmp = Url::parse($this->parameters['url']);
 		if (!isset($tmp['path'])) {
 			@unlink($filename);
 			return;

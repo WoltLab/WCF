@@ -102,6 +102,26 @@
 			padding-left: 15px;
 		}
 		
+		.box48 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 12px;
+		}
+		
+		.box48 td.boxContent {
+			padding-left: 12px;
+		}
+		
+		.box32 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 10px;
+		}
+		
+		.box32 td.boxContent {
+			padding-left: 10px;
+		}
+		
 		.containerHeadline h3 {
 			margin: 0;
 			padding: 0;

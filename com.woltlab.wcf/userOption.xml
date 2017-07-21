@@ -197,6 +197,12 @@
 				<defaultvalue>1</defaultvalue>
 				<options>module_user_signature</options>
 			</option>
+			<option name="editorPastePreserveFormatting">
+				<categoryname>settings.general.interface</categoryname>
+				<optiontype>boolean</optiontype>
+				<editable>3</editable>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			
 			<!-- settings.privacy.content -->
 			<option name="canViewOnlineStatus">
@@ -217,6 +223,18 @@
 1:wcf.user.access.registered
 2:wcf.user.access.following
 3:wcf.user.access.nobody</selectoptions>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="canViewTrophies">
+				<categoryname>settings.privacy.content</categoryname>
+				<optiontype>select</optiontype>
+				<editable>3</editable>
+				<selectoptions>0:wcf.user.access.everyone
+1:wcf.user.access.registered
+2:wcf.user.access.following
+3:wcf.user.access.nobody</selectoptions>
+				<options>module_trophy</options>
+				<permissions>user.profile.trophy.canSeeTrophies</permissions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			

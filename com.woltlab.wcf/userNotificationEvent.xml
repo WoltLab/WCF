@@ -65,5 +65,14 @@
 			<classname>wcf\system\user\notification\event\ExpiringPaidSubscriptionUserUserNotificationEvent</classname>
 			<options>module_paid_subscription</options>
 		</event>
+		
+		<event>
+			<name>received</name>
+			<objecttype>com.woltlab.wcf.userTrophy.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserTrophyReceivedNotificationEvent</classname>
+			<preset>1</preset>
+			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+		</event>
 	</import>
 </data>

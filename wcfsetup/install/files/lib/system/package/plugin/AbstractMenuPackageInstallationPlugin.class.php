@@ -88,4 +88,11 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			'parameters' => $parameters
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

@@ -41,41 +41,54 @@
 		<dl{if $errorField == 'user'} class="formError"{/if}>
 			<dt><label for="user">{lang}wcf.acp.trophy.userTrophy.user{/lang}</label></dt>
 			<dd>
-				<input id="user" name="user" type="text" value="{$user}"{if $action == 'edit'} disabled{/if}>
-				{if $errorField == 'user'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{/if}
-					</small>
+				{if $action == 'edit'}
+					<a href="{link controller='UserEdit' id=$userTrophy->userID}{/link}">{$userTrophy->getUserProfile()->getUsername()}</a>
+				{else}
+					<input id="user" name="user" type="text" value="{$user}"{if $action == 'edit'} disabled{/if}>
+					{if $errorField == 'user'}
+						<small class="innerError">
+							{if $errorType|is_array}
+								{foreach from=$errorType item='errorData'}
+									{lang}wcf.acp.trophy.userTrophy.user.error.{@$errorData.type}{/lang}
+								{/foreach}
+							{elseif $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.trophy.userTrophy.user.description{/lang}</small>
 				{/if}
-				<small>{lang}wcf.acp.trophy.userTrophy.user.description{/lang}</small>
 			</dd>
 		</dl>
 
 		<dl{if $errorField == 'trophyID'} class="formError"{/if}>
 			<dt><label for="trophyID">{lang}wcf.acp.trophy{/lang}</label></dt>
 			<dd>
-				<select name="trophyID" id="trophyID"{if $action == 'edit'} disabled{/if}>
-					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-
-					{foreach from=$trophyCategories item=category}
-						<option value="0" disabled>{$category->getTitle()}</option>
-						{foreach from=$category->getTrophies(true) item=trophy}
-							<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$trophy->getTitle()}</option>
+				{if $action == 'edit'}
+					<a href="{link controller='TrophyEdit' id=$userTrophy->trophyID}{/link}">{$userTrophy->getTrophy()->getTitle()}</a>
+				{else}
+					<select name="trophyID" id="trophyID"{if $action == 'edit'} disabled{/if}>
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+	
+						{foreach from=$trophyCategories item=category}
+							<optgroup label="{$category->getTitle()}">
+								{foreach from=$category->getTrophies(true) item=trophy}
+									<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>{$trophy->getTitle()}</option>
+								{/foreach}
+							</optgroup>
 						{/foreach}
-					{/foreach}
-				</select>
-				{if $errorField == 'trophyID'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{elseif $errorType == 'awardAutomatically'}
-							{lang}wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically{/lang}
-						{/if}
-					</small>
+					</select>
+					{if $errorField == 'trophyID'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{elseif $errorType == 'awardAutomatically'}
+								{lang}wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.trophy.userTrophy.description{/lang}</small>
 				{/if}
-				<small>{lang}wcf.acp.trophy.userTrophy.description{/lang}</small>
 			</dd>
 		</dl>
 

@@ -19,6 +19,7 @@ requirejs.config({
 			'ColorUtil': 'WoltLabSuite/Core/ColorUtil',
 			'Core': 'WoltLabSuite/Core/Core',
 			'DateUtil': 'WoltLabSuite/Core/Date/Util',
+			'Devtools': 'WoltLabSuite/Core/Devtools',
 			'Dictionary': 'WoltLabSuite/Core/Dictionary',
 			'Dom/ChangeListener': 'WoltLabSuite/Core/Dom/Change/Listener',
 			'Dom/Traverse': 'WoltLabSuite/Core/Dom/Traverse',

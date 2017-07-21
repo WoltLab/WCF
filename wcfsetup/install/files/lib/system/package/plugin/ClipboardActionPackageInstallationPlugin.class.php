@@ -147,4 +147,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 			}
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

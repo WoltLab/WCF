@@ -275,7 +275,7 @@
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Empfänger bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Empfänger deaktivieren]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Angezeigter Name]]></item>
-		<item name="wcf.acp.contact.settings"><![CDATA[Kontakt-Formular bearbeiten]]></item>
+		<item name="wcf.acp.contact.settings"><![CDATA[Kontaktformular bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.cronjob">
@@ -377,6 +377,10 @@
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Pfad]]></item>
+		<item name="wcf.acp.devtools.project.path.error.excludedVersion"><![CDATA[Die aktuelle Core-Version wird in der <kbd>package.xml</kbd> explizit ausgeschlossen.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[In der <kbd>package.xml</kbd> fehlt die <kbd>&gt;excludedpackage&lt;</kbd>-Anweisung für <kbd>com.woltlab.wcf</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[Das Paket muss bereits installiert sein.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.versionMismatch"><![CDATA[Die Version in der <kbd>package.xml</kbd> passt nicht zur installierten Version, möglicherweise wurde eine falsches Verzeichnis ausgewählt.]]></item>
 		<item name="wcf.acp.devtools.project.sync"><![CDATA[Daten-Abgleich]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Suchmuster]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[Das PIP unterstützt keinen wiederholten Import und kann nur bei einem Update verarbeitet werden.]]></item>
@@ -386,6 +390,24 @@
 		<item name="wcf.acp.devtools.pip.showOnlyMatches.description"><![CDATA[Es werden nur PIPs angeboten, die für den wiederholten Import geeignet sind und für die es eine Entsprechung auf Basis des Standard-Dateinamens existiert.]]></item>
 		<item name="wcf.acp.devtools.pip.target"><![CDATA[Übereinstimmungen]]></item>
 		<item name="wcf.acp.devtools.pip.target.noMatches"><![CDATA[(Keine Treffer)]]></item>
+		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[Es ist ein Fehler aufgetreten.]]></item>
+		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Bereit.]]></item>
+		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
+		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles Abgleichen]]></item>
+	</category>
+	
+	<category name="wcf.acp.email">
+		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
+		<item name="wcf.acp.email.smtp.test.description"><![CDATA[Testet die eingegebenen Verbindungsinformationen und Zugangsdaten, ob eine Anmeldung beim SMTP-Server möglich ist. Es wird keine E-Mail verschickt!<br><br><strong>Hinweis:</strong> Es handelt sich hierbei nur um einen sehr oberflächlichen Test. Ein erfolgreicher Versand von E-Mails kann auch beim Bestehen dieses Tests nicht abschließend garantiert werden.]]></item>
+		<item name="wcf.acp.email.smtp.test.run"><![CDATA[SMTP-Verbindung testen]]></item>
+		<item name="wcf.acp.email.smtp.test.run.success"><![CDATA[Verbindungstest erfolgreich]]></item>
+		<item name="wcf.acp.email.smtp.test.error.badAuth"><![CDATA[Benutzername und/oder Passwort wurde vom Server abgelehnt.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.host"><![CDATA[Kein SMTP-Server angegeben.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.password"><![CDATA[Das Passwort fehlt.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.user"><![CDATA[Der Benutzername fehlt.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[Der Server antwortet nicht.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[Der Server unterstützt keine Verschlüsselung.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Der Aufbau einer verschlüselten Verbindung war nicht möglich.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">
@@ -609,7 +631,7 @@
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Kann eigene Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Seitenbeschleunigung für Gäste ist aktiv]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[Die Seitenbeschleunigung für Gäste ist aktiv, einige Berechtigungen werden daher unabhängig von den hier eingestellten Werten verweigert. Betroffene Einstellungen werden mit dem Blitz-Symbol (<span class="icon icon16 fa-bolt red"></span>) markiert.]]></item>
-		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontakt-Formular verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Kann Kontaktformular verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Kann Trophäen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Kann Trophäen verleihen]]></item>
@@ -866,7 +888,7 @@
 		<item name="wcf.acp.menu.item.parentItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.menu.link.other"><![CDATA[Sonstiges]]></item>
 		<item name="wcf.acp.menu.item.pageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
-		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Kontakt-Formular]]></item>
+		<item name="wcf.acp.menu.link.contact.settings"><![CDATA[Kontaktformular]]></item>
 		<item name="wcf.acp.menu.link.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.acp.menu.link.trophy.category.add"><![CDATA[Kategorie hinzufügen]]></item>
@@ -877,7 +899,8 @@
 		<item name="wcf.acp.menu.link.userTrophy.add"><![CDATA[Trophäe vergeben]]></item>
 		<item name="wcf.acp.menu.link.userTrophy.edit"><![CDATA[Vergebene Trophäe bearbeiten]]></item>
 		<item name="wcf.acp.menu.link.devtools"><![CDATA[Entwickler-Werkzeuge]]></item>
-		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projekte auflisten]]></item>
+		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projekte]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1053,7 +1076,7 @@
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
-		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Erfasst zusätzliche Daten zur Ressourcennutzung von Komponenten. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deinen{else}Ihren{/if} Authentifizierung-Code {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kundenkonto auf woltlab.com.]]></item>
@@ -1233,7 +1256,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Link-Umschreibungen aktivieren]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „https://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „https://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Test erneut durchführen]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „https://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[Test fehlgeschlagen]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[Die Rewrite-Unterstützung des Webservers fehlt oder wurde nicht korrekt konfiguriert.<br>
+<br>
+Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstütznung bei der Einrichtung zu erhalten.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[Test läuft &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[Test erfolgreich]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
@@ -1333,12 +1363,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Neue Benachrichtigungen werden in periodischen Abständen automatisch abgerufen. Der Aktualisierungs-Intervall beträgt 5 Minuten und wird bei Inaktivität schrittweise auf 15 Minuten reduziert.]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Desktop-Benachrichtigungen verwenden]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund aberufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt. Einige wenige Browser, z. B. Internet Explorer, unterstützen diese Funktion nicht.]]></item>
-		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontakt-Formular aktivieren]]></item>
-		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontakt-Formular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
+		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontaktformular aktivieren]]></item>
+		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontaktformular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
-		<item name="wcf.acp.option.category.module.developer"><![CDATA[Entwickler]]></item>
+		<item name="wcf.acp.option.category.module.development"><![CDATA[Entwicklung]]></item>
+		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[Diese Option werden exklusiv für die Entwicklung und Fehlersuche verwendet, und sind nicht für den produktiven Einsatz geeignet.]]></item>
 		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Entwickler-Werkzeuge aktivieren]]></item>
-		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden.]]></item>
+		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -1438,6 +1469,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Paketname]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Updates suchen]]></item>
+		<item name="wcf.acp.package.searchForUpdates.benchmark"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}deaktiviere{else}deaktivieren Sie{/if} den Benchmark, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach Updates suchen.]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} System ist auf dem aktuellen Stand, es wurden keine ausstehenden Updates gefunden.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Paket hochladen]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Paketdatei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
@@ -1601,6 +1633,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Passwort]]></item>
 		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Zugangsdaten für aktuelle Sitzung speichern]]></item>
+		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
+		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Eintrag im Plugin-Store anzeigen]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Erworbene Produkte (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Erworbene Produkte (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[Die Suche ergab keine Treffer, entweder {if LANGUAGE_USE_INFORMAL_VARIANT}hast du{else}haben Sie{/if} noch keine Produkte erworben oder diese sind nicht kompatibel.]]></item>
@@ -2066,6 +2100,9 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzerrang <span class="confirmationObject">{$userRank->rankTitle|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>
+		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Rangbezeichnung ausblenden]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Es wird nur die Ranggrafik angezeigt. Dies gilt nicht, wenn der Benutzer einen individuellen Titel eingestellt hat.]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[Diese Option erfordert eine gültige Ranggrafik.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Der Pfad zur Ranggrafik kann relativ zum WCF-Verzeichnis oder absolut angegeben werden.]]></item>
@@ -2382,10 +2419,10 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.contact">
 		<item name="wcf.contact.data"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Anfrage]]></item>
-		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontakt-Formular]]></item>
+		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontaktformular]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hallo,
 
-„{@$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontakt-Formular auf der Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
+„{@$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf der Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
 
 {foreach from=$options item=option}
 {@$option['title']}:{if !$option['isMessage']} {@$option['value']}{else}
@@ -2393,7 +2430,7 @@ Fehler sind beispielsweise:
 {/foreach}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hallo,</h2>
 
-<p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontakt-Formular auf Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
+<p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
 
 {foreach from=$options item=option}
 <p><strong>{@$option['title']}:</strong>{if !$option['isMessage']} {@$option['value']}{else}
@@ -3000,7 +3037,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>
 		<item name="wcf.message.new"><![CDATA[Neu]]></item>
 		<item name="wcf.message.error.censoredWordsFound"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält folgende zensierte Wörter: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
-		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält die folgenden BBCodes, die {if LANGUAGE_USE_INFORMAL_VARIANT}du nicht verwenden darst{else}Sie nicht verwenden dürfen{/if}: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
+		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält die folgenden BBCodes, die {if LANGUAGE_USE_INFORMAL_VARIANT}du nicht verwenden darfst{else}Sie nicht verwenden dürfen{/if}: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, {if LANGUAGE_USE_INFORMAL_VARIANT}beende die Bearbeitung bevor du fortfährst{else}beenden Sie die Bearbeitung bevor Sie fortfahren{/if}.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
@@ -3630,6 +3667,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$trophy->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Benutzer an, welche die Trophäe erhalten sollen.]]></item>
+		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[Der Benutzername „{$errorData[username]}“ konnte nicht gefunden werden.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Trophäe an, welche an die Benutzer vergeben werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} keine automatisch vergebene Trophäen manuell vergeben.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Benutzerdefinierte Trophäen-Beschreibung aktivieren]]></item>
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> von <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span> wirklich löschen?]]></item>
@@ -3872,6 +3910,8 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem gefällt {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem gefällt {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaft läuft bald ab]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophäe erhalten]]></item>
+		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe „<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>“ erhalten.]]></item>
 		
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
@@ -3917,6 +3957,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Kann E-Mail-Adresse sehen]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Kann Online-Status sehen]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Kann Benutzerprofil sehen]]></item>
+		<item name="wcf.user.option.canViewTrophies"><![CDATA[Kann Trophäen sehen]]></item>
 		
 		<item name="wcf.user.option.category.profile"><![CDATA[Persönliche Daten]]></item>
 		<item name="wcf.user.option.category.profile.aboutMe"><![CDATA[Über mich]]></item>
@@ -3945,6 +3986,8 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
 		<item name="wcf.user.option.googlePlus.description"><![CDATA[21-stellige Google-Plus-ID, Google-Plus Benutzername (+Benutzername) oder URL zum Google-Plus-Profil]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
+		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Text-Formatierung beim Einfügen in den Editor übernehmen]]></item>
+		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Die Deaktivierung dieser Option erzwingt das Einfügen aus der Zwischenablage in reiner Textform, Formatierungen werden dabei entfernt.]]></item>
 		
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{lang}wcf.user.option.{$option->optionName}{/lang}“:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[„{lang}wcf.user.option.{$option->optionName}{/lang}“ enthält:]]></item>

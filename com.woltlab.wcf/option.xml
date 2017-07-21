@@ -21,7 +21,7 @@
 				<category name="module.community">
 					<parent>module</parent>
 				</category>
-				<category name="module.developer">
+				<category name="module.development">
 					<parent>module</parent>
 				</category>
 			<!-- /modules -->
@@ -408,17 +408,17 @@
 			</option>
 			
 			<option name="enable_debug_mode">
-				<categoryname>module.developer</categoryname>
+				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="enable_benchmark">
-				<categoryname>module.developer</categoryname>
+				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="enable_developer_tools">
-				<categoryname>module.developer</categoryname>
+				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>

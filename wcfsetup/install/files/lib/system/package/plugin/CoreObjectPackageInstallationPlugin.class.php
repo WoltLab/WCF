@@ -69,4 +69,11 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	protected function cleanup() {
 		CoreObjectCacheBuilder::getInstance()->reset();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

@@ -137,4 +137,11 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
 		
 		return false;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

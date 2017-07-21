@@ -1,14 +1,14 @@
 <?php
 namespace wcf\data\package\installation\plugin;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\package\plugin\IPackageInstallationPlugin;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\version\VersionTracker;
@@ -52,6 +52,12 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 	 */
 	public $project;
 	
+	/**
+	 * Validates parameters to invoke a single PIP.
+	 * 
+	 * @throws      PermissionDeniedException
+	 * @throws      UserInputException
+	 */
 	public function validateInvoke() {
 		if (!ENABLE_DEVELOPER_TOOLS || !WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
 			throw new PermissionDeniedException();
@@ -78,12 +84,20 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Invokes a single PIP and returns the time needed to process it.
+	 * 
+	 * @return      string[]
+	 */
 	public function invoke() {
 		$dispatcher = new DevtoolsPackageInstallationDispatcher($this->project);
 		/** @var IIdempotentPackageInstallationPlugin $pip */
-		$pip = new $this->packageInstallationPlugin->className($dispatcher, [
-			'value' => $this->devtoolsPip->getInstructionValue($this->project, $this->parameters['target'])
-		]);
+		$pip = new $this->packageInstallationPlugin->className(
+			$dispatcher,
+			$this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
+		);
+		
+		$start = microtime(true);
 		
 		try {
 			$pip->update();
@@ -102,5 +116,16 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		VersionTracker::getInstance()->createStorageTables();
 		
 		CacheHandler::getInstance()->flushAll();
+		
+		if ($this->packageInstallationPlugin->pluginName === 'language') {
+			LanguageFactory::getInstance()->clearCache();
+			LanguageFactory::getInstance()->deleteLanguageCache();
+		}
+		
+		return [
+			'pluginName' => $this->packageInstallationPlugin->pluginName,
+			'target' => $this->parameters['target'],
+			'timeElapsed' => WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.sync.status.success', ['timeElapsed' => round(microtime(true) - $start, 3)])
+		];
 	}
 }

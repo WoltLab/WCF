@@ -118,7 +118,7 @@ class Installer {
 		$this->createTargetDir();
 		
 		// open source archive
-		$tar = new Tar($this->source);
+		$tar = $this->getTar($this->source);
 		
 		// distinct directories and files
 		$directories = [];
@@ -171,6 +171,16 @@ class Installer {
 		
 		// close tar
 		$tar->close();
+	}
+	
+	/**
+	 * Opens a new tar archive.
+	 * 
+	 * @param       string          $source
+	 * @return      Tar
+	 */
+	protected function getTar($source) {
+		return new Tar($source);
 	}
 	
 	/**

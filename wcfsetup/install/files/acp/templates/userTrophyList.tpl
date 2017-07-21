@@ -35,10 +35,11 @@
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						
 						{foreach from=$trophyCategories item=category}
-							<option value="0" disabled>{$category->getTitle()}</option>
-							{foreach from=$category->getTrophies(true) item=trophy}
-								<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$trophy->getTitle()}</option>
-							{/foreach}
+							<optgroup label="{$category->getTitle()}">
+								{foreach from=$category->getTrophies(true) item=trophy}
+									<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>{$trophy->getTitle()}</option>
+								{/foreach}
+							</optgroup>
 						{/foreach}
 					</select>
 				</dd>
@@ -65,11 +66,11 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-		{assign var='linkParameters' value=''}
+			{assign var='linkParameters' value=''}
 			{if $trophyID}{capture append=linkParameters}&trophyID={@$trophyID|rawurlencode}{/capture}{/if}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
 			
-		{pages print=true assign=pagesLinks controller='UserTrophyList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+			{pages print=true assign=pagesLinks controller='UserTrophyList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
 	</div>
 {/hascontent}
@@ -93,8 +94,13 @@
 			{foreach from=$objects item=userTrophy}
 				<tr class="userTrophyRow">
 					<td class="columnIcon">
-						<a href="{link controller='UserTrophyEdit' id=$userTrophy->userTrophyID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-						<span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" data-confirm-message-html="{lang __encode="true"}wcf.acp.trophy.userTrophy.delete.confirmMessage{/lang}" data-object-id="{@$userTrophy->getObjectID()}" title="{lang}wcf.global.button.delete{/lang}"></span>
+						{if $userTrophy->getTrophy()->awardAutomatically}
+							<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+							<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+						{else}
+							<a href="{link controller='UserTrophyEdit' id=$userTrophy->userTrophyID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil{if $userTrophy->getTrophy()->awardAutomatically} disabled{/if}"></span></a>
+							<span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip{if $userTrophy->getTrophy()->awardAutomatically} disabled{/if}" data-confirm-message-html="{lang __encode="true"}wcf.acp.trophy.userTrophy.delete.confirmMessage{/lang}" data-object-id="{@$userTrophy->getObjectID()}" title="{lang}wcf.global.button.delete{/lang}"></span>
+						{/if}
 					</td>
 					<td class="columnID columnUserTrophyID">{@$userTrophy->userTrophyID}</td>
 					<td class="columnText columnUsername"><a href="{link controller='UserEdit' id=$userTrophy->userID}{/link}" title="{lang}wcf.acp.user.edit{/lang}">{$userTrophy->getUserProfile()->username}</a></td>

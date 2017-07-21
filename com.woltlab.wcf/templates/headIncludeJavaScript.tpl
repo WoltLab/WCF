@@ -13,6 +13,7 @@
 	var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 	var URL_LEGACY_MODE = false;
 	var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
+	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 	
 	{if ENABLE_DEBUG_MODE}
 		{* This constant is a compiler option, it does not exist in production. *}

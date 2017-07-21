@@ -81,4 +81,11 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 			'parameters' => $parameters
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

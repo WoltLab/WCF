@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['Core', 'EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Core, EventHandler, Language, DomTraverse, UiRedactorMetacode) {
+define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Core, Devtools, EventHandler, Language, DomTraverse, UiRedactorMetacode) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -72,6 +72,12 @@ define(['Core', 'EventHandler', 'Language', 'Dom/Traverse', './Metacode'], funct
 		 * @return      {string}        message content
 		 */
 		getInitialValue: function() {
+			//noinspection JSUnresolvedVariable
+			if (window.ENABLE_DEVELOPER_TOOLS && Devtools._internal_.editorAutosave() === false) {
+				//noinspection JSUnresolvedVariable
+				return this._element.value;
+			}
+			
 			var value = '';
 			try {
 				value = window.localStorage.getItem(this._key);
@@ -231,6 +237,12 @@ define(['Core', 'EventHandler', 'Language', 'Dom/Traverse', './Metacode'], funct
 		 * @protected
 		 */
 		_saveToStorage: function() {
+			//noinspection JSUnresolvedVariable
+			if (window.ENABLE_DEVELOPER_TOOLS && Devtools._internal_.editorAutosave() === false) {
+				//noinspection JSUnresolvedVariable
+				return;
+			}
+			
 			var content = this._editor.code.get();
 			if (this._editor.utils.isEmpty(content)) {
 				content = '';

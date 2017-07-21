@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\devtools\project;
-use wcf\data\DatabaseObject;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\DatabaseObject;
 use wcf\system\devtools\package\DevtoolsPackageArchive;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\package\validation\PackageValidationException;
@@ -38,6 +38,11 @@ class DevtoolsProject extends DatabaseObject {
 	 */
 	protected $packageArchive;
 	
+	/**
+	 * Returns a list of decorated PIPs.
+	 * 
+	 * @return      DevtoolsPip[]
+	 */
 	public function getPips() {
 		$pipList = new PackageInstallationPluginList();
 		$pipList->sqlOrderBy = 'pluginName';
@@ -51,6 +56,12 @@ class DevtoolsProject extends DatabaseObject {
 		return $pips;
 	}
 	
+	/**
+	 * Validates the repository and returns the first error message, or
+	 * an empty string on success.
+	 * 
+	 * @return      string
+	 */
 	public function validate() {
 		$errorType = self::validatePath($this->path);
 		if ($errorType !== '') {
@@ -60,6 +71,11 @@ class DevtoolsProject extends DatabaseObject {
 		return $this->validatePackageXml();
 	}
 	
+	/**
+	 * Returns true if this project appears to be `WoltLab Suite Core`.
+	 * 
+	 * @return      boolean
+	 */
 	public function isCore() {
 		if ($this->isCore === null) {
 			$this->isCore = self::pathIsCore($this->path);
@@ -68,6 +84,11 @@ class DevtoolsProject extends DatabaseObject {
 		return $this->isCore;
 	}
 	
+	/**
+	 * Validates the package.xml and checks if the package is already installed.
+	 * 
+	 * @return      string
+	 */
 	public function validatePackageXml() {
 		$packageXml = $this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml';
 		$this->packageArchive = new DevtoolsPackageArchive($packageXml);
@@ -83,6 +104,39 @@ class DevtoolsProject extends DatabaseObject {
 			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.notInstalled', [
 				'package' => $this->packageArchive->getPackageInfo('name')
 			]);
+		}
+		
+		$normalizeVersion = function($version) {
+			return preg_replace('~^(\d+)\.(\d+)\..*$~', '\\1.\\2', $version);
+		};
+		
+		if ($normalizeVersion($this->packageArchive->getPackageInfo('version')) !== $normalizeVersion($this->package->packageVersion)) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.versionMismatch', [
+				'version' => $this->packageArchive->getPackageInfo('version'),
+				'packageVersion' => $this->package->packageVersion
+			]);
+		}
+		
+		if (!$this->isCore()) {
+			$hasValidExclude = false;
+			$foundCore = false;
+			foreach ($this->packageArchive->getExcludedPackages() as $excludedPackage) {
+				if ($excludedPackage['name'] !== 'com.woltlab.wcf') continue;
+				
+				$foundCore = true;
+				if (Package::compareVersion(WCF_VERSION, $excludedPackage['version'], '<')) {
+					$hasValidExclude = true;
+					break;
+				}
+			}
+			
+			if (!$hasValidExclude) {
+				if (!$foundCore) {
+					return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.missingExclude');
+				}
+				
+				return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.excludedVersion');
+			}
 		}
 		
 		return '';
@@ -124,6 +178,12 @@ class DevtoolsProject extends DatabaseObject {
 		return '';
 	}
 	
+	/**
+	 * Returns true if the path appears to point to `WoltLab Suite Core`.
+	 * 
+	 * @param       string          $path
+	 * @return      boolean
+	 */
 	public static function pathIsCore($path) {
 		return (is_dir($path . 'com.woltlab.wcf') && file_exists($path . 'com.woltlab.wcf/package.xml'));
 	}

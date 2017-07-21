@@ -78,4 +78,11 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'parameters' => $parameters
 		];
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

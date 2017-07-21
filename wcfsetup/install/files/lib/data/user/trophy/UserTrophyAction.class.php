@@ -2,6 +2,9 @@
 namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\user\notification\object\UserTrophyNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
 
 /**
  * Provides user trophy actions. 
@@ -30,7 +33,25 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 			]
 		]))->executeAction();
 		
+		UserNotificationHandler::getInstance()->fireEvent('received', 'com.woltlab.wcf.userTrophy.notification', new UserTrophyNotificationObject($returnValues), [
+			$returnValues->userID
+		]);
+		
 		return $returnValues; 
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateDelete() {
+		parent::validateDelete();
+		
+		/** @var UserTrophy $object */
+		foreach ($this->objects as $object) {
+			if ($object->getTrophy()->awardAutomatically) {
+				throw new PermissionDeniedException(); 
+			}
+		}
 	}
 	
 	/**

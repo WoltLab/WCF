@@ -152,7 +152,7 @@
 }
 
 .redactor-toolbar {
-	background-color: $wcfHeaderBackground;
+	background-color: $wcfEditorButtonBackground;
 	display: flex;
 	flex-wrap: wrap;
 	
@@ -160,7 +160,7 @@
 		flex: 0 0 auto;
 		
 		> a {
-			color: $wcfHeaderMenuLink;
+			color: $wcfEditorButtonText;
 			display: block;
 			outline: none;
 			padding: 10px;
@@ -170,15 +170,15 @@
 			
 			&.redactor-button-disabled {
 				background-color: transparent !important;
-				color: $wcfButtonDisabledText !important;
+				color: $wcfEditorButtonTextDisabled !important;
 				cursor: default;
 				pointer-events: none;
 			}
 			
 			&.redactor-act,
 			&.dropact {
-				background-color: $wcfHeaderMenuLinkBackgroundActive;
-				color: $wcfHeaderMenuLinkActive;
+				background-color: $wcfEditorButtonBackgroundActive;
+				color: $wcfEditorButtonTextActive;
 			}
 			
 			.icon {
@@ -195,8 +195,8 @@
 				// hover-styles on mobile are misleading as they stay much longer
 				// due to the click-like behavior
 				&:hover {
-					background-color: $wcfHeaderMenuLinkBackgroundActive;
-					color: $wcfHeaderMenuLinkActive;
+					background-color: $wcfEditorButtonBackgroundActive;
+					color: $wcfEditorButtonTextActive;
 				}
 			}
 		}
@@ -208,7 +208,7 @@
 				
 				&::before {
 					bottom: 7px;
-					border-left: 1px solid $wcfHeaderMenuLink;
+					border-left: 1px solid $wcfEditorButtonText;
 					content: "";
 					left: -6px;
 					opacity: .6;
@@ -231,7 +231,7 @@
 			
 			&::before {
 				bottom: 7px;
-				border-left: 1px solid $wcfHeaderMenuLink;
+				border-left: 1px solid $wcfEditorButtonText;
 				content: "";
 				left: 0;
 				opacity: .6;
@@ -245,7 +245,7 @@
 			
 			&::before {
 				bottom: 7px;
-				border-left: 1px solid $wcfHeaderMenuLink;
+				border-left: 1px solid $wcfEditorButtonText;
 				content: "";
 				left: 0;
 				opacity: .6;

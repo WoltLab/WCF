@@ -353,6 +353,46 @@
 		<item name="wcf.acp.dataImport.started"><![CDATA[Import started.]]></item>
 	</category>
 	
+	<category name="wcf.acp.devtools">
+		<item name="wcf.acp.devtools.project.action"><![CDATA[Actions]]></item>
+		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
+		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
+		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
+		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
+		<item name="wcf.acp.devtools.project.path.error.excludedVersion"><![CDATA[The current Core-version is explicitly listed as excluded in the <kbd>package.xml</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[The <kbd>package.xml</kbd> is missing the <kbd>&gt;excludedpackage&lt;</kbd>-instruction for <kbd>com.woltlab.wcf</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package must be installed already.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.versionMismatch"><![CDATA[The version shown in the <kbd>package.xml</kbd> does not match the installed version, you may have selected the wrong path.]]></item>
+		<item name="wcf.acp.devtools.project.sync"><![CDATA[Sync Data]]></item>
+		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Search Pattern]]></item>
+		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[This PIP does not support repeated imports and can only be processed in regular updates.]]></item>
+		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Any existing instructions in the <kbd>package.xml</kbd> will be ignored; This allows the import of PIPs that have no specific instructions provided for them yet. Only the suggested default paths are recognized, with an additional support for application suffixes for <kbd>.tar</kbd>-archives (e. g. <kbd>files_wcf.tar</kbd>) are supported.]]></item>
+		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP identifier]]></item>
+		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Show valid PIPs only]]></item>
+		<item name="wcf.acp.devtools.pip.showOnlyMatches.description"><![CDATA[Shows only PIPs that match the default paths and are qualified for repeated imports.]]></item>
+		<item name="wcf.acp.devtools.pip.target"><![CDATA[Matches]]></item>
+		<item name="wcf.acp.devtools.pip.target.noMatches"><![CDATA[(No matches)]]></item>
+		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[An error has occurred.]]></item>
+		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Ready.]]></item>
+		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
+		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Sync All]]></item>
+	</category>
+	
+	<category name="wcf.acp.email">
+		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
+		<item name="wcf.acp.email.smtp.test.description"><![CDATA[Validates the connection data and user credentials, for their basic validity. No email is sent during this process!<br><br><strong>Notice:</strong> This is only a very basic test. Passing it does not guarantee emails to be successfully delivered!]]></item>
+		<item name="wcf.acp.email.smtp.test.run"><![CDATA[Run SMTP Connection Test]]></item>
+		<item name="wcf.acp.email.smtp.test.run.success"><![CDATA[Test Passed]]></item>
+		<item name="wcf.acp.email.smtp.test.error.badAuth"><![CDATA[Username and/or password were rejected by the server.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.host"><![CDATA[Please enter a SMTP server.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.password"><![CDATA[Please enter a password.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.empty.user"><![CDATA[Please enter a username.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[The server is not responding.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[The server does not support encryption.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Unable to establish a secure connection.]]></item>
+	</category>
+	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Error Message]]></item>
@@ -841,6 +881,9 @@
 		<item name="wcf.acp.menu.link.userTrophy.list"><![CDATA[Assigned Trophies]]></item>
 		<item name="wcf.acp.menu.link.userTrophy.add"><![CDATA[Assign Trophy]]></item>
 		<item name="wcf.acp.menu.link.userTrophy.edit"><![CDATA[Edit assigned Trophy]]></item>
+		<item name="wcf.acp.menu.link.devtools"><![CDATA[Developer Tools]]></item>
+		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Add Project]]></item>
+		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projects]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1016,7 +1059,7 @@
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
-		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in production environments.]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Captures additional data on resource usage by individual components. It is strongly recommended to disable this option in production environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
@@ -1199,11 +1242,22 @@
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Enable url-rewrite]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Rerun Test]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Attention! This option requires a rewrite module installed on your webserver and an appropriate configuration; It will not work without any prior configuration applied by you! Please read the following article for instructions: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a>. Enabling this option will rewrite URLs into a better readable representation. Examples: 
 <ul class="nativeList">
 <li>the link “https://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “https://example.com/thread/1-hello-i-am-john-doe/”</li>
 <li>the link “https://example.com/index.php?members-list/” will turn into “https://example.com/members-list/”</li>
 </ul>]]></item>
+		
+		
+		
+		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[The test has failed.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[The webserver cannot handle rewrites or it has not been configured correctly.<br>
+<br>
+Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a> or contact your hosting provider for assistance.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[The test is currently running &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[The test was successful.]]></item>
+		
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Enables the <a href="{link controller='AdList'}{/link}">advertisement management</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
@@ -1306,6 +1360,10 @@
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Enable contact form]]></item>
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Enables the contact form, once enabled you can customize the <a href="{link controller='ContactSettings'}{/link}">input fields and recipients</a> to better suit your needs.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophies]]></item>
+		<item name="wcf.acp.option.category.module.development"><![CDATA[Development]]></item>
+		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[These options are used exclusively for development and debugging, they’re not suitable for use in production environments.]]></item>
+		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Enable developer tools]]></item>
+		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Enables a set of specialized tools that are used for plugin development. Should always be disabled in production environments.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -1405,6 +1463,7 @@
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Package Name]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Search Results]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Search for Updates]]></item>
+		<item name="wcf.acp.package.searchForUpdates.benchmark"><![CDATA[Please disable the benchmark before searching for updates.]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no updates available.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
@@ -1517,6 +1576,8 @@
 		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Save credentials for this session only]]></item>
+		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
+		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.button.search"><![CDATA[Purchased Products (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Purchased Products (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[The search returned no results, because either you have not purchased any products yet, or your purchases are not compatible with this version.]]></item>
@@ -1982,6 +2043,9 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank <span class="confirmationObject">{$userRank->rankTitle|language}</span>?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
+		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Hide title]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Hides the title of this rank. Does not work for users that have an individual title set.]]></item>
+		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[This option requires a valid rank image.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[The path must be either relative to WCF’s directory or absolute.]]></item>
@@ -3594,6 +3658,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$trophy->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[Enter the names of the users who should be awarded the trophy.]]></item>
+		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[The username “{$errorData[username]}” does not exist.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[Select the trophy who should be awarded to the users. You cannot select automatically awarded trophies.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Use custom trophy description]]></item>
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> from <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span>?]]></item>
@@ -3838,6 +3903,8 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Notify me when my comments are liked]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Notify me when replies to my comments are liked]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Notify me before a subscription will expire]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophy received]]></item>
+		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You got the trophy “<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>“.]]></item>
 		
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
@@ -3883,6 +3950,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Can View My Email Address]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Can View My Profile]]></item>
+		<item name="wcf.user.option.canViewTrophies"><![CDATA[Can View Trophies]]></item>
 		
 		<item name="wcf.user.option.category.profile"><![CDATA[Personal Data]]></item>
 		<item name="wcf.user.option.category.profile.aboutMe"><![CDATA[About Me]]></item>
@@ -3911,6 +3979,8 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
 		<item name="wcf.user.option.googlePlus.description"><![CDATA[Enter the 21 digit Google Plus user ID, Google Plus username (+Username), or the URL of your Google Plus profile.]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
+		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Preserve text formatting when pasting into the editor]]></item>
+		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>
 		
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[“{lang}wcf.user.option.{$option->optionName}{/lang}” contains:]]></item>

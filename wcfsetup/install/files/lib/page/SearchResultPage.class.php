@@ -154,6 +154,9 @@ class SearchResultPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$searchPreselectObjectType = 'everywhere';
+		if (count($this->searchData['selectedObjectTypes']) === 1) $searchPreselectObjectType = reset($this->searchData['selectedObjectTypes']);
+		
 		WCF::getTPL()->assign([
 			'query' => $this->searchData['query'],
 			'objects' => $this->messages,
@@ -166,7 +169,8 @@ class SearchResultPage extends MultipleLinkPage {
 			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
 			'resultListTemplateName' => $this->resultListTemplateName,
 			'resultListApplication' => $this->resultListApplication,
-			'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID)
+			'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID),
+			'searchPreselectObjectType' => $searchPreselectObjectType
 		]);
 	}
 	

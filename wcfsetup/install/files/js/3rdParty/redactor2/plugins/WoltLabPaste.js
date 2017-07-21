@@ -9,8 +9,12 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			// IE 11
 			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
 			
+			var firefoxPlainText = null;
+			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
+				firefoxPlainText = null;
+				
 				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
 				isKbd = (!isCode && this.utils.isCurrentOrParent('kbd'));
 				if (isCode || isKbd) {
@@ -29,6 +33,20 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						return WCF.String.escapeHTML(str);
 					}).bind(this);
 				}
+				else if (this.detect.isFirefox()) {
+					var types = e.originalEvent.clipboardData.types;
+					if (types.length === 1 && types[0] === 'text/plain') {
+						var tmp = e.originalEvent.clipboardData.getData('text/plain');
+						
+						firefoxPlainText = '';
+						tmp.split("\n").forEach(function(line) {
+							line = line.trim();
+							if (line === '') line = '<br>';
+							
+							firefoxPlainText += '<p>' + line + '</p>';
+						});
+					}
+				}
 				
 				mpInit.call(this, e);
 			}).bind(this);
@@ -45,6 +63,10 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				// pasting in IE 11 where clipboard data is more reliable
 				if (pre && (!returnValue || isIe)) {
 					return clipboardData;
+				}
+				
+				if (firefoxPlainText !== null) {
+					return firefoxPlainText;
 				}
 				
 				return returnValue;
@@ -183,11 +205,14 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				}
 				
 				// fix selection marker
+				/*
 				elBySelAll('.redactor-selection-marker', div, elRemove);
 				div.appendChild(elCreate('woltlab-selection-marker'));
+				*/
 				
 				mpInsert.call(this, div.innerHTML, data);
 				
+				/*
 				var marker = elBySel('woltlab-selection-marker', this.$editor[0]);
 				if (marker) {
 					var range = document.createRange();
@@ -200,6 +225,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					
 					elRemove(marker);
 				}
+				*/
 				
 				if (pastedImages.length) {
 					window.setTimeout((function () {
