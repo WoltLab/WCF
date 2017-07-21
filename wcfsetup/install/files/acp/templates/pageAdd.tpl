@@ -212,7 +212,7 @@
 					</dd>
 				</dl>
 				
-				{if $action != 'edit' || !$page->requireObjectID}
+				{if $action != 'edit' || (!$page->requireObjectID && !$page->excludeFromLandingPage)}
 					<dl>
 						<dt></dt>
 						<dd>

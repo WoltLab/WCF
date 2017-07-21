@@ -231,7 +231,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0,
 			'cssClassName' => isset($data['elements']['cssClassName']) ? $data['elements']['cssClassName'] : '',
 			'availableDuringOfflineMode' => (!empty($data['elements']['availableDuringOfflineMode'])) ? 1 : 0,
-			'allowSpidersToIndex' => (!empty($data['elements']['allowSpidersToIndex'])) ? 1 : 0
+			'allowSpidersToIndex' => (!empty($data['elements']['allowSpidersToIndex'])) ? 1 : 0,
+			'excludeFromLandingPage' => (!empty($data['elements']['excludeFromLandingPage'])) ? 1 : 0
 		];
 	}
 	
@@ -264,11 +265,13 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		/** @var Page $page */
 		if (!empty($row)) {
-			// allow only updating of controller and handler, everything else would overwrite user modifications
+			// allow update of `controller`, `handler` and `excludeFromLandingPage`
+			// only, prevents user modifications form being overwritten
 			if (!empty($data['controller'])) {
 				$page = parent::import($row, [
 					'controller' => $data['controller'],
-					'handler' => $data['handler']
+					'handler' => $data['handler'],
+					'excludeFromLandingPage' => $data['excludeFromLandingPage']
 				]);
 			}
 			else {

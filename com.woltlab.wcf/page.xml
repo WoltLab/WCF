@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/page.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/tornado/page.xsd">
 	<import>
 		<!-- dynamic -->
 		<page identifier="com.woltlab.wcf.MembersList">
@@ -119,6 +119,7 @@
 			<name language="en">New Email Address Verification</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>New Email Address Verification</title>
@@ -134,6 +135,7 @@
 			<name language="en">New Email Activation Code Request</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>New Email Activation Code Request</title>
@@ -148,6 +150,7 @@
 			<name language="de">Anmeldung</name>
 			<name language="en">Login</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>Login</title>
@@ -162,6 +165,7 @@
 			<name language="de">Kennwort vergessen</name>
 			<name language="en">Lost Password</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>Lost Password</title>
@@ -190,6 +194,7 @@
 			<name language="de">Neues Kennwort</name>
 			<name language="en">New Password Request</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>New Password Request</title>
@@ -218,6 +223,7 @@
 			<controller>wcf\form\RegisterForm</controller>
 			<name language="de">Registrierung</name>
 			<name language="en">Registration</name>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>Registration</title>
@@ -247,6 +253,7 @@
 			<name language="en">Complete Registration</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>Complete Registration</title>
@@ -262,6 +269,7 @@
 			<name language="en">New Activation Code Request</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">
 				<title>New Activation Code Request</title>

@@ -76,7 +76,7 @@ class PageEditForm extends PageAddForm {
 			}
 		}
 		
-		if ($this->page->requireObjectID) {
+		if ($this->page->requireObjectID || $this->page->excludeFromLandingPage) {
 			// pages that require an object id can never be set as landing page
 			$this->isLandingPage = 0;
 		}
