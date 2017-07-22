@@ -41,8 +41,10 @@
 					<xs:element name="pageType" minOccurs="1">
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
-								<xs:enumeration value="system" />
+								<xs:enumeration value="html" />
 								<xs:enumeration value="text" />
+								<xs:enumeration value="tpl" />
+								<xs:enumeration value="system" />
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
