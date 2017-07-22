@@ -76,28 +76,6 @@
 	}
 })();
 
-
-
-/**
- * Provides a hashCode() method for strings, similar to Java's String.hashCode().
- * 
- * @see	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
- */
-String.prototype.hashCode = function() {
-	var $char;
-	var $hash = 0;
-	
-	if (this.length) {
-		for (var $i = 0, $length = this.length; $i < $length; $i++) {
-			$char = this.charCodeAt($i);
-			$hash = (($hash << 5) - $hash) + $char;
-			$hash = $hash & $hash; // convert to 32bit integer
-		}
-	}
-	
-	return $hash;
-};
-
 /**
  * Adds a Fisher-Yates shuffle algorithm for arrays.
  * 
