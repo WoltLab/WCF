@@ -106,7 +106,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 			
 			$iteration = 1;
 			while (in_array($name, $projectNames)) {
-				$name = $directory . ' (' . $iteration++ . ')';
+				$name = $directory . ' (' . ($iteration++) . ')';
 			}
 			
 			(new DevtoolsProjectAction([], 'create', ['data' => [
