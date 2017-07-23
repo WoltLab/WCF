@@ -354,7 +354,6 @@
 	</category>
 	
 	<category name="wcf.acp.devtools">
-		<item name="wcf.acp.devtools.project.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
 		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[Do you really want to delete the project <span class="confirmationObject">{$object->name}</span>?]]></item>
