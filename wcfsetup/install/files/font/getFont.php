@@ -36,7 +36,7 @@ if (!empty($_GET['type'])) {
 			
 			// ignore request if client seems to already have fetched this file
 			if (($clientLastModified && $clientEtag) ? (($clientLastModified == $filemtime) && ($clientEtag == $etag)) : ($clientLastModified == $filemtime) ) {
-				header($_SERVER["SERVER_PROTOCOL"] . ' 304 Not Modified');
+				header('HTTP/1.1 304 Not Modified');
 				exit;
 			}
 			
@@ -55,13 +55,13 @@ if (!empty($_GET['type'])) {
 			die($data);
 		}
 		
-		header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
+		header('HTTP/1.1 400 Bad Request');
 		die("Invalid font '" . htmlentities($font) . "' given");
 	}
 	
-	header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
+	header('HTTP/1.1 400 Bad Request');
 	die("Invalid type '" . htmlentities($type) . "' given");
 }
 
-header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
+header('HTTP/1.1 400 Bad Request');
 die("Missing type parameter");

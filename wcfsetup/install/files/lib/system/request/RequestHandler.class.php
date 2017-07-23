@@ -78,7 +78,7 @@ class RequestHandler extends SingletonFactory {
 						throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 					}
 					else {
-						@header($_SERVER["SERVER_PROTOCOL"] . ' 503 Service Unavailable');
+						@header('HTTP/1.1 503 Service Unavailable');
 						BoxHandler::disablePageLayout();
 						NoticeHandler::disableNotices();
 						WCF::getTPL()->assign([

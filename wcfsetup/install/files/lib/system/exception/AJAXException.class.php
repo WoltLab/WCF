@@ -90,22 +90,22 @@ class AJAXException extends LoggedException {
 		$statusHeader = '';
 		switch ($errorType) {
 			case self::MISSING_PARAMETERS:
-				$statusHeader = $_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request';
+				$statusHeader = 'HTTP/1.1 400 Bad Request';
 				
 				$responseData['exceptionID'] = $exceptionID;
 				$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.badRequest');
 			break;
 			
 			case self::SESSION_EXPIRED:
-				$statusHeader = $_SERVER["SERVER_PROTOCOL"] . ' 409 Conflict';
+				$statusHeader = 'HTTP/1.1 409 Conflict';
 			break;
 			
 			case self::INSUFFICIENT_PERMISSIONS:
-				$statusHeader = $_SERVER["SERVER_PROTOCOL"] . ' 403 Forbidden';
+				$statusHeader = 'HTTP/1.1 403 Forbidden';
 			break;
 			
 			case self::BAD_PARAMETERS:
-				$statusHeader = $_SERVER["SERVER_PROTOCOL"] . ' 431 Bad Parameters';
+				$statusHeader = 'HTTP/1.1 431 Bad Parameters';
 				
 				$responseData['exceptionID'] = $exceptionID;
 			break;
@@ -113,7 +113,7 @@ class AJAXException extends LoggedException {
 			default:
 			case self::INTERNAL_ERROR:
 				//header('HTTP/1.0 418 I\'m a Teapot');
-				header($_SERVER["SERVER_PROTOCOL"] . '  503 Service Unavailable');
+				header('HTTP/1.1  503 Service Unavailable');
 				
 				$responseData['code'] = self::INTERNAL_ERROR;
 				$responseData['exceptionID'] = $exceptionID;

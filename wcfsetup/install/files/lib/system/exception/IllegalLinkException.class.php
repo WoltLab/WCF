@@ -22,7 +22,7 @@ class IllegalLinkException extends NamedUserException {
 	 * @inheritDoc
 	 */
 	public function show() {
-		@header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+		@header('HTTP/1.1 404 Not Found');
 		
 		WCF::getTPL()->assign([
 			'title' => WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink.title')
