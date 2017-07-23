@@ -142,7 +142,7 @@ class TrophyPage extends MultipleLinkPage {
 		]);
 		
 		if (count($this->objectList) === 0) {
-			@header('HTTP/1.0 404 Not Found');
+			@header('HTTP/1.1 404 Not Found');
 		}
 	}
 }

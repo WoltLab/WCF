@@ -160,7 +160,7 @@ final class HeaderUtil {
 	public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true) {
 		if ($sendStatusCode) {
 			if ($temporaryRedirect) @header('HTTP/1.1 307 Temporary Redirect');
-			else @header('HTTP/1.0 301 Moved Permanently');
+			else @header('HTTP/1.1 301 Moved Permanently');
 		}
 		
 		header('Location: '.$location);
