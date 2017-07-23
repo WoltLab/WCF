@@ -4,6 +4,7 @@ use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
@@ -46,6 +47,23 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		}
 	}
 	
+	/** @noinspection PhpMissingParentCallCommonInspection */
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateUniquePath() {
+		$sql = "SELECT  COUNT(*)
+			FROM    wcf".WCF_N."_devtools_project
+			WHERE   path = ?
+				AND projectID <> ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->path, $this->objectID]);
+		
+		if ($statement->fetchColumn()) {
+			throw new UserInputException('path', 'notUnique');
+		}
+	}
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -58,6 +76,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		}
 	}
 	
+	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
