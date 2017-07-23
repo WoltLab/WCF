@@ -501,7 +501,9 @@ DROP TABLE IF EXISTS wcf1_devtools_project;
 CREATE TABLE wcf1_devtools_project (
 	projectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(191) NOT NULL,
-	path TEXT
+	path TEXT,
+	
+	UNIQUE KEY name (name)
 );
 
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
