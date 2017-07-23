@@ -8,6 +8,7 @@ use wcf\system\email\mime\AbstractMimePart;
 use wcf\system\email\mime\IRecipientAwareMimePart;
 use wcf\system\event\EventHandler;
 use wcf\util\DateUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
