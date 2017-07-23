@@ -183,12 +183,19 @@
 					{event name='userDataRow1'}
 				</ul>
 				
-				{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
+				{hascontent}
 					<ul class="inlineList commaSeparated">
-						<li>{lang}wcf.user.usersOnline.lastActivity{/lang}: {@$user->getLastActivityTime()|time}</li>
-						{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
+						{content}
+							{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
+								<li>{lang}wcf.user.usersOnline.lastActivity{/lang}: {@$user->getLastActivityTime()|time}</li>
+								{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
+							{/if}
+							{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $user->registrationIpAddress}
+								<li>{lang}wcf.user.registrationIpAddress{/lang}: <span class="userRegistrationIpAddress">{$user->getRegistrationIpAddress()}</span></li>
+							{/if}
+						{/content}
 					</ul>
-				{/if}
+				{/hascontent}
 				
 				<dl class="plain inlineDataList">
 					{include file='userInformationStatistics'}

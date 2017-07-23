@@ -53,8 +53,8 @@ class ViewableArticleContentList extends ArticleContentList {
 				if ($articleContent->imageID && isset($images[$articleContent->imageID])) {
 					$articleContent->setImage($images[$articleContent->imageID]);
 				}
-				if ($articleContent->thumbnailImageID && isset($images[$articleContent->thumbnailImageID])) {
-					$articleContent->setThumbnailImage($images[$articleContent->thumbnailImageID]);
+				if ($articleContent->teaserImageID && isset($images[$articleContent->teaserImageID])) {
+					$articleContent->setTeaserImage($images[$articleContent->teaserImageID]);
 				}
 			}
 		}

@@ -12,6 +12,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
 use wcf\util\PasswordUtil;
+use wcf\util\UserUtil;
 
 /**
  * Represents a user.
@@ -523,5 +524,18 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			'reddit' => false,
 			'twitter' => false
 		];
+	}
+	
+	/**
+	 * Returns the registration ip address, attempts to convert to IPv4.
+	 * 
+	 * @return      string
+	 */
+	public function getRegistrationIpAddress() {
+		if ($this->registrationIpAddress) {
+			return UserUtil::convertIPv6To4($this->registrationIpAddress);
+		}
+		
+		return '';
 	}
 }

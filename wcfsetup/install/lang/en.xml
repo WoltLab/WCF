@@ -354,7 +354,6 @@
 	</category>
 	
 	<category name="wcf.acp.devtools">
-		<item name="wcf.acp.devtools.project.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
 		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[Do you really want to delete the project <span class="confirmationObject">{$object->name}</span>?]]></item>
@@ -3344,6 +3343,7 @@ Errors are:
 		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to log out?]]></item>
 		<item name="wcf.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registration Date]]></item>
+		<item name="wcf.user.registrationIpAddress"><![CDATA[Registration IP Address]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Limits visibility to content associated with the selected languages.]]></item>
 		<item name="wcf.user.unknownUser"><![CDATA[This user does not exist or has been deleted.]]></item>
