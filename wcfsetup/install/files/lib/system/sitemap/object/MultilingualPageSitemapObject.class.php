@@ -2,7 +2,6 @@
 namespace wcf\system\sitemap\object;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentList;
-use wcf\data\page\content\SitemapPageContent;
 use wcf\data\page\Page;
 use wcf\data\DatabaseObject;
 use wcf\page\AbstractPage;
