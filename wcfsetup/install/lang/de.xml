@@ -3347,6 +3347,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.logout.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dich{else}Wollen Sie sich{/if} wirklich abmelden?]]></item>
 		<item name="wcf.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
+		<item name="wcf.user.registrationIpAddress"><![CDATA[Registrierungs-IP-Adresse]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Inhaltssprachen]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Zeigt Inhalte in den ausgewählten Sprachen an]]></item>
 		<item name="wcf.user.unknownUser"><![CDATA[Dieser Benutzer existiert nicht oder wurde gelöscht.]]></item>
