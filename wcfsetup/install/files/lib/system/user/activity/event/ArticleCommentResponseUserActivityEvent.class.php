@@ -57,7 +57,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 		}
 		
 		// fetch users
-		$userIDs = $user = [];
+		$userIDs = $users = [];
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->userID;
 		}
