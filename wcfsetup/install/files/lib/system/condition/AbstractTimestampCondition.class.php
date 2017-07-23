@@ -50,7 +50,10 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 			throw new \InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
 		}
 		
-		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [0]);
+		/** @noinspection PhpUndefinedFieldInspection */
+		if ($this->object->ignoreZeroTime) {
+			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' <> ?', [0]);
+		}
 		if (isset($conditionData['endTime'])) {
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' < ?', [strtotime($conditionData['endTime']) + 86400]);
 		}
