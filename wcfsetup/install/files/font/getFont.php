@@ -23,7 +23,7 @@ if (!empty($_GET['type'])) {
 	// get parameters
 	$type = $_GET['type'];
 	$font = (!empty($_GET['font']) ? basename($_GET['font']) : 'fontawesome-webfont');
-
+	
 	if (isset($types[$type])) {
 		if (file_exists($font . '.' . $type)) {
 			$filename = $font . '.' . $type;

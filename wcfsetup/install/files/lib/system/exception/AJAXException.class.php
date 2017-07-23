@@ -113,7 +113,7 @@ class AJAXException extends LoggedException {
 			default:
 			case self::INTERNAL_ERROR:
 				//header('HTTP/1.0 418 I\'m a Teapot');
-				header('HTTP/1.1  503 Service Unavailable');
+				header('HTTP/1.1 503 Service Unavailable');
 				
 				$responseData['code'] = self::INTERNAL_ERROR;
 				$responseData['exceptionID'] = $exceptionID;
