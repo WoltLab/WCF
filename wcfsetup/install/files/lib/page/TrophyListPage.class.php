@@ -70,19 +70,6 @@ class TrophyListPage extends MultipleLinkPage {
 		
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
 		
-		// read category id, if no categoryID is selected
-		if ($this->categoryID == 0) {
-			$categories = TrophyCategoryCache::getInstance()->getEnabledCategories();
-			
-			if (count($categories)) {
-				$category = reset($categories);
-				$this->categoryID = $category->getObjectID();
-			} 
-			else {
-				throw new IllegalLinkException(); 
-			}
-		}
-		
 		$this->category = TrophyCategoryCache::getInstance()->getCategoryByID($this->categoryID);
 		
 		if ($this->category === null) {
@@ -110,16 +97,14 @@ class TrophyListPage extends MultipleLinkPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		if (!isset($_REQUEST['id'])) {
-			WCF::getTPL()->assign([
-				'canonicalURL' => $this->category->getLink()
-			]);
-		}
-		
 		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'categoryID' => $this->categoryID,
 			'categories' => TrophyCategoryCache::getInstance()->getEnabledCategories()
 		]);
+		
+		if (count($this->objectList) === 0) {
+			@header('HTTP/1.0 404 Not Found');
+		}
 	}
 }

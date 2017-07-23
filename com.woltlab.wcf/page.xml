@@ -560,9 +560,24 @@
 		<page identifier="com.woltlab.wcf.TrophyList">
 			<pageType>system</pageType>
 			<controller>wcf\page\TrophyListPage</controller>
+			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
 			<name language="de">Trophäen</name>
 			<name language="en">Trophies</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			<requireObjectID>1</requireObjectID>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<options>module_trophy</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+		</page>
+		<page identifier="com.woltlab.wcf.Trophy">
+			<pageType>system</pageType>
+			<controller>wcf\page\TrophyPage</controller>
+			<handler>wcf\system\page\handler\TrophyPageHandler</handler>
+			<name language="de">Trophäe</name>
+			<name language="en">Trophy</name>
+			<parent>com.woltlab.wcf.TrophyList</parent>
+			<hasFixedParent>1</hasFixedParent>
+			<requireObjectID>1</requireObjectID>
 			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<options>module_trophy</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
