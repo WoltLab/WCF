@@ -2196,6 +2196,9 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde auf {#$affectedObjectCount} Benutzer ausgeführt.]]></item>
 		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
 		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[Benutzerprofil-Menü Sortierung]]></item>
+		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
+		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
+		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

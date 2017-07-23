@@ -42,7 +42,11 @@
 			WCF.ACP.User.SendNewPasswordHandler.init();
 		{/if}
 		
-		require(['WoltLabSuite/Core/Acp/Ui/User/Editor'], function (AcpUiUserList) {
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/User/Editor'], function (Language, AcpUiUserList) {
+			Language.addObject({
+				'wcf.acp.user.action.sendNewPassword.confirmMessage': '{lang}wcf.acp.user.action.sendNewPassword.confirmMessage{/lang}'
+			});
+			
 			AcpUiUserList.init();
 		});
 		
@@ -108,6 +112,14 @@
 								
 								<ul class="dropdownMenu">
 									{event name='dropdownItems'}
+									
+									{if $user->userID !== $__wcf->user->userID}
+										<li><a href="{link controller='UserMail' id=$user->userID}{/link}">{lang}wcf.acp.user.action.sendMail{/lang}</a></li>
+										
+										{if $user->accessible && $__wcf->session->getPermission('admin.user.canEditPassword')}
+											<li><a href="#" class="jsSendNewPassword">{lang}wcf.acp.user.action.sendNewPassword{/lang}</a></li>
+										{/if}
+									{/if}
 									
 									{if $user->deletable}
 										<li class="dropdownDivider"></li>

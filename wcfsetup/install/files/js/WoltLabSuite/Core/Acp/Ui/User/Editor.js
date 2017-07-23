@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropdown) {
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, EventHandler, Language, UiSimpleDropdown) {
 	"use strict";
 	
 	/**
@@ -44,6 +44,28 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					event.preventDefault();
 					
 					editLink.click();
+				});
+			}
+			
+			var sendNewPassword = elBySel('.jsSendNewPassword', dropdownMenu);
+			if (sendNewPassword !== null) {
+				sendNewPassword.addEventListener(WCF_CLICK_EVENT, function (event) {
+					event.preventDefault();
+					
+					// emulate clipboard selection
+					EventHandler.fire('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.user', {
+						data: {
+							actionName: 'com.woltlab.wcf.user.sendNewPassword',
+							parameters: {
+								confirmMessage: Language.get('wcf.acp.user.action.sendNewPassword.confirmMessage'),
+								objectIDs: [userId]
+							}
+						},
+						responseData: {
+							actionName: 'com.woltlab.wcf.user.sendNewPassword',
+							objectIDs: [userId]
+						}
+					});
 				});
 			}
 		},
@@ -117,6 +139,10 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					hasItem = true;
 				}
 			}
+		},
+		
+		_sendNewPassword: function (userId) {
+			
 		}
 	};
 });

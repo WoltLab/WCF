@@ -69,6 +69,12 @@ class UserMailForm extends AbstractForm {
 	public $text = '';
 	
 	/**
+	 * single user id
+	 * @var integer
+	 */
+	public $userID = 0;
+	
+	/**
 	 * list of user ids
 	 * @var	integer[]
 	 */
@@ -85,6 +91,8 @@ class UserMailForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (isset($_GET['id'])) $this->userID = intval($_GET['id']);
 		
 		$this->activeMenuItem = ($this->action == 'all' ? 'wcf.acp.menu.link.user.mail' : ($this->action == 'group' ? 'wcf.acp.menu.link.group.mail' : 'wcf.acp.menu.link.user.management'));
 	}
@@ -168,20 +176,26 @@ class UserMailForm extends AbstractForm {
 		if (empty($_POST)) {
 			// get marked user ids
 			if (empty($this->action)) {
-				// get type id
-				$objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-				if ($objectTypeID === null) {
-					throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
+				if ($this->userID) {
+					// single user mail form
+					$this->userIDs = [$this->userID];
 				}
-				
-				// get user ids
-				$users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);
-				if (empty($users)) {
-					throw new IllegalLinkException();
+				else {
+					// get type id
+					$objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
+					if ($objectTypeID === null) {
+						throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
+					}
+					
+					// get user ids
+					$users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);
+					if (empty($users)) {
+						throw new IllegalLinkException();
+					}
+					
+					// load users
+					$this->userIDs = array_keys($users);
 				}
-				
-				// load users
-				$this->userIDs = array_keys($users);
 			}
 			
 			$this->from = MAIL_FROM_ADDRESS;
