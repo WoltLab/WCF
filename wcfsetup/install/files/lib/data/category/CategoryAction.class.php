@@ -47,7 +47,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		if (!empty($this->objects)) {
 			// identify i18n labels
 			$languageVariables = [];
-			foreach ($this->objects as $category) {
+			foreach ($this->getObjects() as $category) {
 				if ($category->title === $category->getProcessor()->getI18nLangVarPrefix() . '.title.category' . $category->categoryID) {
 					$languageVariables[] = $category->title;
 				}

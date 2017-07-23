@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\system\user\notification\object\UserTrophyNotificationObject;
 
 /**
  * Notification event for receiving a user trophy. 
@@ -8,6 +9,8 @@ namespace wcf\system\user\notification\event;
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
+ * 
+ * @method	UserTrophyNotificationObject	getUserNotificationObject()
  */
 class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent {
 	/**
@@ -38,13 +41,13 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return $this->userNotificationObject->getTrophy()->getLink();
+		return $this->getUserNotificationObject()->getTrophy()->getLink();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function checkAccess() {
-		return $this->userNotificationObject->getDecoratedObject()->canSee();
+		return $this->getUserNotificationObject()->getDecoratedObject()->canSee();
 	}
 }
