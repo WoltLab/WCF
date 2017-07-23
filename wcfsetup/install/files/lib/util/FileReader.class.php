@@ -136,7 +136,7 @@ class FileReader {
 	protected function handleHeaders() {
 		if ($this->startByte < 0 || $this->startByte >= $this->options['filesize'] || $this->endByte < $this->startByte) {
 			// invalid range given
-			$this->addHeader('', 'HTTP/1.1 416 Requested Range Not Satisfiable');
+			$this->addHeader('', $_SERVER["SERVER_PROTOCOL"] . ' 416 Requested Range Not Satisfiable');
 			$this->addHeader('Accept-Ranges', 'bytes');
 			$this->addHeader('Content-Range', 'bytes */'.$this->options['filesize']);
 			$this->invalidRange = true;
@@ -150,7 +150,7 @@ class FileReader {
 			
 			// range
 			if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
-				$this->addHeader('', 'HTTP/1.1 206 Partial Content');
+				$this->addHeader('', $_SERVER["SERVER_PROTOCOL"] . ' 206 Partial Content');
 				$this->addHeader('Content-Range', 'bytes '.$this->startByte.'-'.$this->endByte.'/'.$this->options['filesize']);
 			}
 			if ($this->options['enableRangeSupport']) {

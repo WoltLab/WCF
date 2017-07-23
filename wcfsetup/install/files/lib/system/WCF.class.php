@@ -275,7 +275,7 @@ class WCF {
 			exit;
 		}
 		
-		@header('HTTP/1.1 503 Service Unavailable');
+		@header($_SERVER["SERVER_PROTOCOL"] . ' 503 Service Unavailable');
 		try {
 			\wcf\functions\exception\printThrowable($e);
 		}

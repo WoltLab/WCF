@@ -20,7 +20,7 @@ $types = [
 ];
 
 // get parameters
-$type = $_GET['type'];
+$type = isset($_GET['type']) ? $_GET['type'] : '';
 $font = (!empty($_GET['font']) ? basename($_GET['font']) : 'fontawesome-webfont');
 
 if (!empty($type)) {
@@ -36,7 +36,7 @@ if (!empty($type)) {
 			
 			// ignore request if client seems to already have fetched this file
 			if (($clientLastModified && $clientEtag) ? (($clientLastModified == $filemtime) && ($clientEtag == $etag)) : ($clientLastModified == $filemtime) ) {
-				header("HTTP/1.1 304 Not Modified");
+				header($_SERVER["SERVER_PROTOCOL"] . ' 304 Not Modified');
 				exit;
 			}
 			
@@ -55,13 +55,13 @@ if (!empty($type)) {
 			die($data);
 		}
 		
-		header("HTTP/1.1 400 Bad Request");
+		header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
 		die("Invalid font '" . htmlentities($font) . "' given");
 	}
 	
-	header("HTTP/1.1 400 Bad Request");
+	header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
 	die("Invalid type '" . htmlentities($type) . "' given");
 }
 
-header("HTTP/1.1 400 Bad Request");
+header($_SERVER["SERVER_PROTOCOL"] . ' 400 Bad Request');
 die("Missing type parameter");

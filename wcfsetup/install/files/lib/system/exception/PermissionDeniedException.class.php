@@ -33,7 +33,7 @@ class PermissionDeniedException extends UserException {
 		}
 		SessionHandler::getInstance()->disableTracking();
 		
-		@header('HTTP/1.0 403 Forbidden');
+		@header($_SERVER["SERVER_PROTOCOL"] . ' 403 Forbidden');
 		
 		WCF::getTPL()->assign([
 			'name' => get_class($this),

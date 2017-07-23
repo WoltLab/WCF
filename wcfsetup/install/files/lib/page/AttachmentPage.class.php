@@ -164,7 +164,7 @@ class AttachmentPage extends AbstractPage {
 		
 		// etag caching
 		if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"'.$this->eTag.'"') {
-			@header('HTTP/1.1 304 Not Modified');
+			@header($_SERVER["SERVER_PROTOCOL"] . ' 304 Not Modified');
 			exit;
 		}
 		
