@@ -32,10 +32,9 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
+					<th class="columnID" colspan="3">{lang}wcf.global.objectID{/lang}</th>
 					<th class="columnText">{lang}wcf.acp.devtools.project.name{/lang}</th>
 					<th class="columnText">{lang}wcf.acp.devtools.project.path{/lang}</th>
-					<th class="columnIcon">{lang}wcf.acp.devtools.project.action{/lang}</th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -46,15 +45,15 @@
 					{foreach from=$objects item=object}
 						<tr class="jsObjectRow">
 							<td class="columnIcon">
+								<a href="{link controller='DevtoolsProjectSync' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.sync{/lang}</a>
+							</td>
+							<td class="columnIcon">
 								<a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$object->getObjectID()}" data-confirm-message-html="{lang __encode=true}wcf.acp.devtools.project.delete.confirmMessage{/lang}"></span>
 							</td>
 							<td class="columnID">{@$object->getObjectID()}</td>
 							<td class="columnText"><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}">{$object->name}</a></td>
 							<td class="columnText"><small>{$object->path}</small></td>
-							<td class="columnIcon">
-								<a href="{link controller='DevtoolsProjectSync' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.sync{/lang}</a>
-							</td>
 						</tr>
 					{/foreach}
 				{/content}
