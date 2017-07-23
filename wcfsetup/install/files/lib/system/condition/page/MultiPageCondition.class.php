@@ -2,7 +2,6 @@
 namespace wcf\system\condition\page;
 use wcf\data\condition\Condition;
 use wcf\data\page\PageCache;
-use wcf\data\page\PageNode;
 use wcf\data\page\PageNodeTree;
 use wcf\system\condition\AbstractMultiSelectCondition;
 use wcf\system\condition\AbstractSingleFieldCondition;

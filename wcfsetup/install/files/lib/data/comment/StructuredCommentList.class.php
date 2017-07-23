@@ -6,7 +6,6 @@ use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\like\LikeHandler;
-use wcf\system\WCF;
 
 /**
  * Provides a structured comment list fetching last responses for every comment.

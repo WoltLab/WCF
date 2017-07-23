@@ -2,7 +2,6 @@
 namespace wcf\data\trophy;
 use wcf\system\cache\builder\TrophyCacheBuilder;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 
 /**
  * Trophy cache management. 

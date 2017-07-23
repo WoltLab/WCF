@@ -3,7 +3,6 @@ namespace wcf\page;
 use wcf\data\user\TeamList;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 /**
  * Shows the team members list.

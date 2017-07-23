@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\box;
-use wcf\data\box\Box;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\request\LinkHandler;

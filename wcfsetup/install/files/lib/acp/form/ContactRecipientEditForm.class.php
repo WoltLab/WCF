@@ -2,10 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\contact\recipient\ContactRecipientAction;
-use wcf\data\contact\recipient\ContactRecipientEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
