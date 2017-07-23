@@ -51,6 +51,23 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validateUniqueName() {
+		$sql = "SELECT  COUNT(*)
+			FROM    wcf".WCF_N."_devtools_project
+			WHERE   name = ?
+				AND projectID <> ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->name, $this->objectID]);
+		
+		if ($statement->fetchColumn()) {
+			throw new UserInputException('name', 'notUnique');
+		}
+	}
+	
+	/** @noinspection PhpMissingParentCallCommonInspection */
+	/**
+	 * @inheritDoc
+	 */
 	protected function validateUniquePath() {
 		$sql = "SELECT  COUNT(*)
 			FROM    wcf".WCF_N."_devtools_project

@@ -377,6 +377,7 @@
 		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Projekt <span class="confirmationObject">{$object->name}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[Der Name wird bereits von einem anderen Projekt verwendet.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.devtools.project.path.error.excludedVersion"><![CDATA[Die aktuelle Core-Version wird in der <kbd>package.xml</kbd> explizit ausgeschlossen.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[In der <kbd>package.xml</kbd> fehlt die <kbd>&gt;excludedpackage&lt;</kbd>-Anweisung für <kbd>com.woltlab.wcf</kbd>.]]></item>

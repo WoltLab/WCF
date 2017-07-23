@@ -66,15 +66,7 @@ class DevtoolsProjectAddForm extends AbstractForm {
 			throw new UserInputException('name');
 		}
 		else {
-			$sql = "SELECT  COUNT(*)
-				FROM    wcf".WCF_N."_devtools_project
-				WHERE   name = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$this->name]);
-			
-			if ($statement->fetchColumn()) {
-				throw new UserInputException('name', 'notUnique');
-			}
+			$this->validateUniqueName();
 		}
 		
 		// validate path
@@ -91,6 +83,21 @@ class DevtoolsProjectAddForm extends AbstractForm {
 			$this->validateUniquePath();
 			
 			$this->path = $path;
+		}
+	}
+	
+	/**
+	 * Checks that the project name is not used by another project.
+	 */
+	protected function validateUniqueName() {
+		$sql = "SELECT  COUNT(*)
+			FROM    wcf".WCF_N."_devtools_project
+			WHERE   name = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->name]);
+		
+		if ($statement->fetchColumn()) {
+			throw new UserInputException('name', 'notUnique');
 		}
 	}
 	
