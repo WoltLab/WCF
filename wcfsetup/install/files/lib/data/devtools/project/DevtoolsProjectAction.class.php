@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\devtools\project;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\IllegalLinkException;
 
 /**
  * Executes devtools project related actions.
@@ -19,4 +20,25 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	protected $className = DevtoolsProjectEditor::class;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $requireACP = ['delete'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $permissionsDelete = ['admin.configuration.package.canInstallPackage'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateDelete() {
+		if (!ENABLE_DEVELOPER_TOOLS) {
+			throw new IllegalLinkException();
+		}
+		
+		parent::validateDelete();
+	}
 }

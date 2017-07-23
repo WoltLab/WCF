@@ -2,7 +2,7 @@
 
 <script data-relocate="true">
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsObjectRow');
+		new WCF.Action.Delete('wcf\\data\\devtools\\project\\DevtoolsProjectAction', '.jsObjectRow');
 	});
 </script>
 
