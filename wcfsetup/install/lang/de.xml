@@ -398,6 +398,11 @@
 		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Bereit.]]></item>
 		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
 		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Alles Abgleichen]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup"><![CDATA[Pfad durchsuchen]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.path"><![CDATA[Pfad]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[Alle Ordner, die sich direkt in dem angegebenen Pfad befinden, werden überprüft, ob sie ein Paket enthalten.]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.path.error.noPackages"><![CDATA[Der Pfad enthält keine neuen Pakete.]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.success"><![CDATA[Es {if $count > 1}}wurden {#$count} neue Projekte{else}ein neues Projekt{/if} hinzugefügt.]]></item>
 	</category>
 	
 	<category name="wcf.acp.email">

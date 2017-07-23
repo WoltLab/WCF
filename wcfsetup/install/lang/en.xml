@@ -381,6 +381,11 @@
 		<item name="wcf.acp.devtools.sync.status.idle"><![CDATA[Ready.]]></item>
 		<item name="wcf.acp.devtools.sync.status.success"><![CDATA[{$timeElapsed}s ({@TIME_NOW|time})]]></item>
 		<item name="wcf.acp.devtools.sync.syncAll"><![CDATA[Sync All]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup"><![CDATA[Search Path]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.path"><![CDATA[Path]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[All folders directly contained in the path will be checked whether they contain a package.]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.path.error.noPackages"><![CDATA[The path contains no new packages.]]></item>
+		<item name="wcf.acp.devtools.project.quickSetup.success"><![CDATA[{#$count} new project{if $count > 1}s have{else} has{/if} been added.]]></item>
 	</category>
 	
 	<category name="wcf.acp.email">

@@ -4,6 +4,12 @@
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\devtools\\project\\DevtoolsProjectAction', '.jsObjectRow');
 	});
+	
+	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function(AcpUiDevtoolsProjectQuickSetup, Language) {
+		Language.add('wcf.acp.devtools.project.quickSetup', '{lang}wcf.acp.devtools.project.quickSetup{/lang}');
+		
+		AcpUiDevtoolsProjectQuickSetup.init();
+	});
 </script>
 
 <header class="contentHeader">
@@ -13,6 +19,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			<li><a href="#" class="button jsDevtoolsProjectQuickSetupButton"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.devtools.project.quickSetup{/lang}</span></a></li>
 			<li><a href="{link controller='DevtoolsProjectAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.devtools.project.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
@@ -67,5 +74,19 @@
 		</ul>
 	</nav>
 </footer>
+
+<div id="projectQuickSetup" style="display: none;">
+	<dl>
+		<dt>{lang}wcf.acp.devtools.project.quickSetup.path{/lang}</dt>
+		<dd>
+			<input type="text" name="projectQuickSetupPath" id="projectQuickSetupPath" class="long" />
+			<small>{lang}wcf.acp.devtools.project.quickSetup.path.description{/lang}</small>
+		</dd>
+	</dl>
+	
+	<div class="formSubmit">
+		<button id="projectQuickSetupSubmit" class="buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
+	</div>
+</div>
 
 {include file='footer'}
