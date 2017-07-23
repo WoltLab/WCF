@@ -424,7 +424,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	IMessage	$message
 	 * @param	string		$text
 	 * @param	boolean		$renderAsString
-	 * @return	string
+	 * @return	array|string
 	 */
 	public function renderQuote(IMessage $message, $text, $renderAsString = true) {
 		$parameters = [

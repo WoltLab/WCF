@@ -191,7 +191,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	 * @param	string		$code
 	 * @param	integer		$start
 	 * @param	string		$split
-	 * @return	string
+	 * @return	string[]
 	 */
 	protected function makeLineNumbers($code, $start, $split = "\n") {
 		$lines = explode($split, $code);

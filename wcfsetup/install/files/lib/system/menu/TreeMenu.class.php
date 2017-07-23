@@ -27,7 +27,7 @@ abstract class TreeMenu extends SingletonFactory {
 	
 	/**
 	 * list of all menu items
-	 * @var	ITreeMenuItem[]
+	 * @var	ITreeMenuItem[][]
 	 */
 	public $menuItems = null;
 	

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\trophy;
+use wcf\data\condition\Condition;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\DatabaseObject;

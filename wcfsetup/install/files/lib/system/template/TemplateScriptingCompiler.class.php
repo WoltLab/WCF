@@ -193,7 +193,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$sourceContent
 	 * @param	array		$metaData
 	 * @param	boolean		$isolated
-	 * @return	string
+	 * @return	array|boolean
 	 * @throws	SystemException
 	 */
 	public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false) {
