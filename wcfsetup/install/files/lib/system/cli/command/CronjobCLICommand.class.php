@@ -42,7 +42,7 @@ class CronjobCLICommand implements IArgumentedCLICommand {
 		
 		// switch session owner to 'system' during execution of cronjobs
 		$actualUser = WCF::getUser();
-		WCF::getSession()->changeUser(new User(null, array('userID' => 0, 'username' => 'System')), true);
+		WCF::getSession()->changeUser(new User(null, ['userID' => 0, 'username' => 'System']), true);
 		WCF::getSession()->disableUpdate();
 		
 		try {
