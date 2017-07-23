@@ -361,9 +361,10 @@
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
-		<item name="wcf.acp.devtools.project.path.error.excludedVersion"><![CDATA[The current Core-version is explicitly listed as excluded in the <kbd>package.xml</kbd>.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[The <kbd>package.xml</kbd> is missing the <kbd>&gt;excludedpackage&lt;</kbd>-instruction for <kbd>com.woltlab.wcf</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.excludedVersion"><![CDATA[The current Core version is explicitly listed as excluded in the <kbd>package.xml</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[The <kbd>package.xml</kbd> is missing the <kbd>&gt;excludedpackage&lt;</kbd> instruction for <kbd>com.woltlab.wcf</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package must be installed already.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[The path is invalid.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.versionMismatch"><![CDATA[The version shown in the <kbd>package.xml</kbd> does not match the installed version, you may have selected the wrong path.]]></item>
 		<item name="wcf.acp.devtools.project.sync"><![CDATA[Sync Data]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Search Pattern]]></item>
