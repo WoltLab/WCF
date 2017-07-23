@@ -139,10 +139,6 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], functi
 					hasItem = true;
 				}
 			}
-		},
-		
-		_sendNewPassword: function (userId) {
-			
 		}
 	};
 });
