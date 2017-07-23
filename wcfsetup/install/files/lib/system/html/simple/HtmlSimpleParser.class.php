@@ -106,7 +106,7 @@ class HtmlSimpleParser extends SingletonFactory {
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
 		$this->setContext($objectType, $objectID);
 		
-		return preg_replace_callback($this->regexHandlers, function ($matches) use ($objectType, $objectID) {
+		return preg_replace_callback($this->regexHandlers, function ($matches) {
 			$data = $this->parseAttributes($matches[1]);
 			
 			return $this->replaceTag($data);

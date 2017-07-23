@@ -445,9 +445,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		$articleIDs = [];
 		foreach ($this->getObjects() as $article) {
-			$articleIDs[] = $article->articleID;
 			VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.article', $article->articleID, $this->parameters['visitTime']);
 		}
 		
