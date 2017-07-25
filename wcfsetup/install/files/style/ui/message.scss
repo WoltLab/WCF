@@ -495,7 +495,8 @@
 	
 	&:not(:first-child) {
 		> .likesSummary,
-		> .messageFooterButtons {
+		> .messageFooterButtons,
+		> .messageFooterButtonsExtra {
 			margin-top: 20px;
 		}
 	}
@@ -512,42 +513,32 @@
 		}
 		
 		@include screen-sm-down {
-			&:not(.open) {
-				display: none;
-			}
+			display: block;
+			margin-top: 0 !important;
+			pointer-events: none;
+			position: absolute;
+			right: -1px;
+			top: 9px;
 			
-			// uses pointless additional classes to increase selector specificity :(
-			&.buttonList.open {
-				@include dropdownMenu;
-				
-				display: block;
-				position: absolute;
-				visibility: visible;
-				right: 10px;
-				top: 10px;
-				
-				.button {
-					// these three are required to work around the .button default styling
-					background-color: transparent;
-					color: $wcfDropdownLink;
-					
-					@include wcfFontDefault;
-					
-					&.active {
-						background-color: $wcfDropdownBackgroundActive;
-						color: $wcfDropdownLinkActive;
-						
-						> a {
-							color: $wcfDropdownLinkActive;
-						}
-					}
-					
-					> .invisible {
-						display: inline;
-						margin-left: 5px;
-					}
-				}
+			> li {
+				height: 0;
+				overflow: hidden;
 			}
+		}
+	}
+	
+	> .messageFooterButtonsExtra {
+		@include screen-md-up {
+			flex: 1 1 auto;
+			
+			& + .messageFooterButtons {
+				flex: 0 auto;
+				margin-left: 20px;
+			}
+		}
+		
+		@include screen-sm-down {
+			display: none;
 		}
 	}
 }
@@ -585,7 +576,8 @@
 	}
 }
 	
-.messageFooterButtons {
+.messageFooterButtons,
+.messageFooterButtonsExtra {
 	@extend .buttonGroup;
 	
 	justify-content: flex-end;

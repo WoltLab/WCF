@@ -7,12 +7,15 @@
  * @module	WoltLabSuite/Core/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User'],
-	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,    UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser)
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
+	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,    UiAlignment, UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser, UiDropdownReusable)
 {
 	"use strict";
 	
 	var _buttonGroupNavigations = elByClass('buttonGroupNavigation');
+	var _callbackCloseDropdown = null;
+	var _dropdownMenu = null;
+	var _dropdownMenuMessage = null;
 	var _enabled = false;
 	var _knownMessages = new List();
 	var _main = null;
@@ -110,6 +113,8 @@ define(
 		 */
 		disableShadow: function () {
 			if (_messageGroups) this.removeShadow(_messageGroups);
+			
+			if (_dropdownMenu) _callbackCloseDropdown();
 		},
 		
 		_init: function() {
@@ -206,7 +211,7 @@ define(
 		},
 		
 		_initMessages: function() {
-			Array.prototype.forEach.call(_messages, function(message) {
+			Array.prototype.forEach.call(_messages, (function(message) {
 				if (_knownMessages.has(message)) {
 					return;
 				}
@@ -225,19 +230,19 @@ define(
 					var quickOptions = elBySel('.messageQuickOptions', message);
 					if (quickOptions && navigation.childElementCount) {
 						quickOptions.classList.add('active');
-						quickOptions.addEventListener(WCF_CLICK_EVENT, function (event) {
+						quickOptions.addEventListener(WCF_CLICK_EVENT, (function (event) {
 							if (_enabled && event.target.nodeName !== 'LABEL') {
 								event.preventDefault();
 								event.stopPropagation();
 								
-								navigation.classList.toggle('open');
+								this._toggleMobileNavigation(message, quickOptions, navigation);
 							}
-						});
+						}).bind(this));
 					}
 				}
 				
 				_knownMessages.add(message);
-			});
+			}).bind(this));
 		},
 		
 		_initMobileMenu: function() {
@@ -263,6 +268,8 @@ define(
 			elBySelAll('.jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open, .boxMenu.open', null, function (menu) {
 				menu.classList.remove('open');
 			});
+			
+			if (_enabled && _dropdownMenu) _callbackCloseDropdown();
 		},
 		
 		rebuildShadow: function(elements, linkSelector) {
@@ -326,6 +333,68 @@ define(
 			});
 			
 			_sidebarXsEnabled = true;
+		},
+		
+		_toggleMobileNavigation: function (message, quickOptions, navigation) {
+			if (_dropdownMenu === null) {
+				_dropdownMenu = elCreate('ul');
+				_dropdownMenu.className = 'dropdownMenu';
+				
+				UiDropdownReusable.init('com.woltlab.wcf.jsMobileNavigation', _dropdownMenu);
+				
+				_callbackCloseDropdown = function () {
+					_dropdownMenu.classList.remove('dropdownOpen');
+				}
+			}
+			else if (_dropdownMenu.classList.contains('dropdownOpen')) {
+				_callbackCloseDropdown();
+				
+				if (_dropdownMenuMessage === message) {
+					// toggle behavior
+					return;
+				}
+			}
+			
+			_dropdownMenu.innerHTML = '';
+			UiCloseOverlay.execute();
+			
+			this._rebuildMobileNavigation(navigation);
+			
+			var previousNavigation = navigation.previousElementSibling;
+			if (previousNavigation && previousNavigation.classList.contains('messageFooterButtonsExtra')) {
+				var divider = elCreate('li');
+				divider.className = 'dropdownDivider';
+				_dropdownMenu.appendChild(divider);
+				
+				this._rebuildMobileNavigation(previousNavigation);
+			}
+			
+			UiAlignment.set(_dropdownMenu, quickOptions, {
+				horizontal: 'right',
+				allowFlip: 'vertical'
+			});
+			_dropdownMenu.classList.add('dropdownOpen');
+			
+			_dropdownMenuMessage = message;
+		},
+		
+		_rebuildMobileNavigation: function (navigation) {
+			elBySelAll('.button', navigation, function (button) {
+				var item = elCreate('li');
+				if (button.classList.contains('active')) item.className = 'active';
+				item.innerHTML = '<a href="#">' + elBySel('span:not(.icon)', button).textContent + '</a>';
+				item.children[0].addEventListener(WCF_CLICK_EVENT, function (event) {
+					event.preventDefault();
+					event.stopPropagation();
+					
+					if (button.nodeName === 'A') button.click();
+					else Core.triggerEvent(button, WCF_CLICK_EVENT);
+					
+					_callbackCloseDropdown();
+				});
+				
+				_dropdownMenu.appendChild(item);
+			});
 		}
 	};
 });
