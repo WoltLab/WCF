@@ -3658,6 +3658,13 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 <p><small><em>Quelle: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 	</category>
 	
+	<category name="wcf.user.trophy">
+		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
+		<item name="wcf.user.trophy.showTrophies"><![CDATA[Trophäen von {$user->username} anzeigen]]></item>
+		<item name="wcf.user.trophy.noTrophies"><![CDATA[Der Benutzer hat noch keine Trophäen]]></item>
+		<item name="wcf.user.trophy.dialogTitle"><![CDATA[Trophäen von {$username}]]></item>
+	</category>
+	
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophäe]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Beschreibung]]></item>

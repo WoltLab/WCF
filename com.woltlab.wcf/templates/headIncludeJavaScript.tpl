@@ -184,6 +184,12 @@ requirejs.config({
 		WCF.System.PageNavigation.init('.pagination');
 		WCF.User.Profile.ActivityPointList.init();
 		
+		{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies')}
+			require(['WoltLabSuite/Core/Ui/User/Trophy/List'], function (UserTrophyList) {
+				new UserTrophyList();
+			});
+		{/if}
+		
 		{event name='javascriptInit'}
 		
 		{if $executeCronjobs}

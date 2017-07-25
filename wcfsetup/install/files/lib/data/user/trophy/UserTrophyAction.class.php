@@ -2,9 +2,12 @@
 namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\WCF;
 
 /**
  * Provides user trophy actions. 
@@ -20,6 +23,11 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.trophy.canAwardTrophy'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $allowGuestAccess = ['getGroupedUserTrophyList'];
 	
 	/**
 	 * @inheritDoc
@@ -77,5 +85,56 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return $returnValues;
+	}
+	
+	/**
+	 * Validates the getGroupedUserTrophyList method. 
+	 */
+	public function validateGetGroupedUserTrophyList() {
+		if (!MODULE_TROPHY) {
+			throw new IllegalLinkException();
+		}
+		
+		WCF::getSession()->checkPermissions(['user.profile.trophy.canSeeTrophies']);
+		
+		$this->readInteger('pageNo');
+		$this->readInteger('userID');
+		
+		$this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+		if (!$this->userProfile->isAccessible('canViewTrophies') && !($this->userProfile->userID == WCF::getSession()->userID)) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Returns a viewable user trophy list for a specific user. 
+	 */
+	public function getGroupedUserTrophyList() {
+		$userTrophyList = new UserTrophyList();
+		$userTrophyList->getConditionBuilder()->add('userID = ?', [$this->parameters['userID']]);
+		if (!empty($userTrophyList->sqlJoins)) $userTrophyList->sqlJoins .= ' ';
+		if (!empty($userTrophyList->sqlConditionJoins)) $userTrophyList->sqlConditionJoins .= ' ';
+		$userTrophyList->sqlJoins .= 'LEFT JOIN wcf'. WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+		$userTrophyList->sqlConditionJoins .= 'LEFT JOIN wcf'. WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+		
+		// trophy category join
+		$userTrophyList->sqlJoins .= ' LEFT JOIN wcf'. WCF_N . '_category category ON trophy.categoryID = category.categoryID';
+		$userTrophyList->sqlConditionJoins .= ' LEFT JOIN wcf'. WCF_N . '_category category ON trophy.categoryID = category.categoryID';
+		
+		$userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
+		$userTrophyList->getConditionBuilder()->add('category.isDisabled = ?', [0]);
+		$userTrophyList->sqlLimit = 10; 
+		$userTrophyList->sqlOffset = ($this->parameters['pageNo'] - 1) * 10;
+		$userTrophyList->sqlOrderBy = 'time DESC';
+		$pageCount = ceil($userTrophyList->countObjects() / 10);
+		$userTrophyList->readObjects();
+		
+		return [
+			'pageCount' => $pageCount,
+			'title' => WCF::getLanguage()->getDynamicVariable('wcf.user.trophy.dialogTitle', ['username' => $this->userProfile->username]),
+			'template' => WCF::getTPL()->fetch('groupedUserTrophyList', 'wcf', [
+				'userTrophyList' => $userTrophyList
+			])
+		];
 	}
 }

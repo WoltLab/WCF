@@ -3649,6 +3649,13 @@ Open the link below to access the user profile:
 <p><small><em>Source: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 	</category>
 	
+	<category name="wcf.user.trophy">
+		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
+		<item name="wcf.user.trophy.showTrophies"><![CDATA[Display Trophies of {$user->username}]]></item>
+		<item name="wcf.user.trophy.noTrophies"><![CDATA[The user has no trophies]]></item>
+		<item name="wcf.user.trophy.dialogTitle"><![CDATA[Trophies of {$username}]]></item>
+	</category>
+	
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Description]]></item>
