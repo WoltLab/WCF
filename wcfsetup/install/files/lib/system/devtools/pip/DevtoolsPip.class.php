@@ -311,7 +311,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 				
 				default:
 					if (strpos($defaultFilename, '*') !== false) {
-						$filename = str_replace('*', $target, $defaultFilename);
+						$filename = preg_replace('~\*.*$~', $target, $defaultFilename);
 						$tar->registerFile($filename, $project->path . $filename);
 					}
 					else {
