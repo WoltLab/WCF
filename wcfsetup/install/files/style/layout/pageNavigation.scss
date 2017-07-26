@@ -48,8 +48,33 @@
 }
 
 @include screen-sm-down {
-	.pageNavigation {
+	.breadcrumbs > ol > li {
 		display: none;
+		
+		&:last-child {
+			align-items: center;
+			color: $wcfContentDimmedText;
+			display: flex;
+			flex: 1;
+			
+			@include wcfFontDefault;
+			
+			&::before {
+				content: $fa-var-long-arrow-left;
+				flex: 0 auto;
+				font-family: FontAwesome;
+			}
+			
+			> a {
+				color: $wcfContentDimmedLink;
+				display: block;
+				flex: 1;
+				overflow: hidden;
+				padding: 5px 0 5px 10px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
 	}
 }
 
