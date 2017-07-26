@@ -1005,7 +1005,8 @@ WCF.ACP.Package.Search = Class.extend({
 		this._packageSearchResultContainer.find('.pagination').wcfPages('destroy').remove();
 		
 		if (this._pageCount > 1) {
-			$('<div class="contentNavigation" />').insertAfter(this._packageSearchResultList).wcfPages({
+			var $contentFooter = $('<footer class="contentFooter"><div class="paginationBottom"><nav /></div></footer>').insertAfter(this._packageSearchResultList);
+			$contentFooter.find('nav').wcfPages({
 				activePage: this._pageNo,
 				maxPage: this._pageCount
 			}).on('wcfpagesswitched', $.proxy(this._showPage, this));
