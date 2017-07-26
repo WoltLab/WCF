@@ -24,7 +24,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		 * Initializes the pagination.
 		 * 
 		 * @param	{Element}	element		container element
-		 * @param	{object}	options		list of initilization options
+		 * @param	{object}	options		list of initialization options
 		 */
 		init: function(element, options) {
 			this._element = element;
@@ -212,6 +212,16 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		switchPage: function(pageNo, event) {
 			if (typeof event === 'object') {
 				event.preventDefault();
+				
+				// force tooltip to vanish and strip positioning
+				if (event.currentTarget && elData(event.currentTarget, 'tooltip')) {
+					var tooltip = elById('balloonTooltip');
+					if (tooltip) {
+						Core.triggerEvent(event.currentTarget, 'mouseleave');
+						tooltip.style.removeProperty('top');
+						tooltip.style.removeProperty('bottom');
+					}
+				}
 			}
 			
 			pageNo = ~~pageNo;
