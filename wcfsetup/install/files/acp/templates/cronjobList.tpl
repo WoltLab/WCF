@@ -11,7 +11,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.cronjob.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.cronjob.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
 		<p class="contentHeaderDescription">{lang}wcf.acp.cronjob.subtitle{/lang}</p>
 	</div>
 	

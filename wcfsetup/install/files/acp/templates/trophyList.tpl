@@ -11,7 +11,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.menu.link.trophy.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.menu.link.trophy.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
 	</div>
 
 	<nav class="contentHeaderNavigation">
