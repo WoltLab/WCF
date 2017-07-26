@@ -146,6 +146,8 @@
 		
 		.messageAuthor {
 			flex: 0 0 auto;
+			/* equals the height of the avatar */
+			min-height: 48px;
 			position: relative;
 			
 			.userAvatar {
@@ -165,6 +167,14 @@
 			.userTitle,
 			.userRank {
 				margin-left: 58px;
+			}
+			
+			/* force username to be vertically centered for quick reply */
+			.messageAuthorContainer:last-child {
+				align-items: center;
+				display: flex;
+				height: 100%;
+				position: absolute;
 			}
 		}
 		
