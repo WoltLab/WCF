@@ -25,9 +25,10 @@
 		</header>
 	</div>
 	
-	<section id="main" class="main" role="main">
-		<div class="layoutBoundary">
-			<div id="content" class="content">
+	<div id="acpPageContentContainer" class="acpPageContentContainer">
+		<section id="main" class="main" role="main">
+			<div class="layoutBoundary">
+				<div id="content" class="content">
 
 {* content above was taken from 'header.tpl' *}
 				
@@ -136,4 +137,4 @@
 	</div>
 </form>
 
-{include file='footer'}
+{include file='footer' __isRescueMode=true}

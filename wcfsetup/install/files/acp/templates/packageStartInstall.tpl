@@ -67,7 +67,7 @@
 			<button class="jsButtonPackageSearch">{lang}wcf.global.button.submit{/lang}</button>
 		</div>
 		
-		<section class="section" id="packageSearchResultContainer" style="display: none;">
+		<section class="section tabularBox" id="packageSearchResultContainer" style="display: none;">
 			<h2 class="sectionTitle">{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h2>
 			
 			<div id="packageSearchResultList"></div>
