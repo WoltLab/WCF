@@ -16,8 +16,6 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 	UiUserTrophyList.prototype = {
 		/**
 		 * Initializes the user trophy list.
-		 *
-		 * @param	{object}	options		list of initialization options
 		 */
 		init: function() {
 			this._cache = new Dictionary();

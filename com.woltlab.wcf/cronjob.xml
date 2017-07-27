@@ -228,6 +228,19 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.assignTrophies">
+			<classname>wcf\system\cronjob\AssignTrophiesCronjob</classname>
+			<description>Assign trophies based on rules</description>
+			<description language="de">Ordnet Trophäen aufgrund der Regeln zu</description>
+			<startminute>*/15</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 	
 	<delete>

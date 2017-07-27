@@ -23,7 +23,7 @@ use wcf\util\StringUtil;
  *
  * @property-read	integer		$trophyID			unique id for the trophy
  * @property-read	string		$title				the trophy title
- * @property-read	integer		$description			the trophy description
+ * @property-read	string		$description			the trophy description
  * @property-read	integer		$categoryID			the categoryID of the trophy
  * @property-read	integer		$type				the trophy type
  * @property-read	string		$iconFile			the file location of the icon
