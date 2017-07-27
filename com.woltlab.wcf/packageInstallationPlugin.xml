@@ -30,6 +30,7 @@
 		<pip name="box">wcf\system\package\plugin\BoxPackageInstallationPlugin</pip>
 		<pip name="menu">wcf\system\package\plugin\MenuPackageInstallationPlugin</pip>
 		<pip name="menuItem">wcf\system\package\plugin\MenuItemPackageInstallationPlugin</pip>
+		<pip name="mediaProvider">wcf\system\package\plugin\MediaProviderPackageInstallationPlugin</pip>
 	</import>
 	<delete>
 		<pip name="pageMenu" />

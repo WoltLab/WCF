@@ -278,10 +278,13 @@ CREATE TABLE wcf1_bbcode_attribute (
 DROP TABLE IF EXISTS wcf1_bbcode_media_provider;
 CREATE TABLE wcf1_bbcode_media_provider (
 	providerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(80) NOT NULL,
+	packageID INT(10) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	regex TEXT NOT NULL,
 	html TEXT NOT NULL,
-	className varchar(255) NOT NULL DEFAULT ''
+	className varchar(255) NOT NULL DEFAULT '',
+	UNIQUE KEY name (name, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_box;
@@ -1802,6 +1805,8 @@ ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_bbcode_media_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_box ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
@@ -2271,28 +2276,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltip
 
 -- Email template group
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
-
--- media providers
--- Videos
-	-- Youtube
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html, className) VALUES ('YouTube', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/(?:#/)?watch\\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)(?:(?:\\?|&)t=(?P<start>[0-9hms]+)$)?', '', 'wcf\\system\\bbcode\\media\\provider\\YouTubeBBCodeMediaProvider');
-	-- Youtube playlist
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube Playlist', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/)playlist\\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>');
-	-- Vimeo
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Vimeo', 'https?://vimeo\\.com/(?:channels/[^/]+/)?(?P<ID>\\d+)\nhttps?://vimeo\\.com/groups/[^/]+/videos/(?P<ID>\\d+)', '<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>');
-	-- Clipfish
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Clipfish', 'http://(?:www\\.)?clipfish\\.de/(?:.*?/)?video/(?P<ID>\\d+)/', '<div style="width:464px; height:404px;"><div style="width:464px; height:384px;"><iframe src="http://www.clipfish.de/embed_video/?vid={$ID}&amp;as=0&amp;col=990000" name="Clipfish Embedded Video" width="464" height="384" align="left" marginheight="0" marginwidth="0" scrolling="no"></iframe></div></div>');
-	-- Veoh
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Veoh', 'http://(?:www\\.)?veoh\\.com/watch/v(?P<ID>\\d+[a-zA-Z0-9]+)', '<object width="410" height="341" id="veohFlashPlayer" name="veohFlashPlayer" type="application/x-shockwave-flash" data="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous"><param name="movie" value="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous" /><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="wmode" value="transparent" /></object>');
-	-- DailyMotion
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('DailyMotion', 'https?://(?:www\\.)?dailymotion\\.com/video/(?P<ID>[a-zA-Z0-9_-]+)', '<iframe width="480" height="270" src="//www.dailymotion.com/embed/video/{$ID}"></iframe>');
--- Misc
-	-- github gist
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('github gist', 'https://gist.github.com/(?P<ID>[^/]+/[0-9a-zA-Z]+)', '<script src="https://gist.github.com/{$ID}.js"> </script>');
-	-- soundcloud
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="166" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2F{$song}"></iframe>');
-	-- soundcloud set
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud set', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>');
 	
 -- default priorities
 UPDATE wcf1_user_group SET priority = 10 WHERE groupID = 3;
