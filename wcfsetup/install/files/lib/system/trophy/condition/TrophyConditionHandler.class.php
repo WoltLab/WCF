@@ -87,8 +87,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the users who fulfill all conditions of the given user group
-	 * assignment.
+	 * Returns the users who fulfill all conditions of the given trophy.
 	 *
 	 * @param	Trophy		$trophy
 	 * @return	User[]
@@ -100,6 +99,9 @@ class TrophyConditionHandler extends SingletonFactory {
 		foreach ($conditions as $condition) {
 			$condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
 		}
+		
+		// prevent multiple awards from a trophy for a user 
+		$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
 		$userList->readObjects();
 		
 		return $userList->getObjects();
@@ -125,6 +127,8 @@ class TrophyConditionHandler extends SingletonFactory {
 				$condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
 			}
 			
+			// prevent multiple awards from a trophy for a user 
+			$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
 			$outstandingCount += $userList->countObjects();
 		}
 		
