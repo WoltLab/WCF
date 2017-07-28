@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\condition;
+use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 
@@ -101,5 +102,16 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	 */
 	protected function getPropertyName() {
 		return $this->propertyName;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function setData(Condition $condition) {
+		parent::setData($condition);
+		
+		if ($this->supportsMultipleValues) {
+			$this->fieldValue = implode(',', $this->fieldValue);
+		}
 	}
 }
