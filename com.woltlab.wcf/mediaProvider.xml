@@ -55,5 +55,31 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 			<regex><![CDATA[https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>]]></html>
 		</provider>
+		
+		<provider name="instagram">
+			<title>Instagram</title>
+			<regex><![CDATA[https?://(?:www\.)?(?:instagram\.com|instagr\.am)/p/(?<ID>[a-zA-Z0-9_-]+)]]></regex>
+			<html><![CDATA[<iframe src="//instagram.com/p/{$ID}/embed/" width="560" height="640" frameborder="0" scrolling="no" allowtransparency="true"></iframe>]]></html>
+		</provider>
+		
+		<provider name="imgur">
+			<title>Imgur</title>
+			<regex><![CDATA[https?://imgur.com/(?:gallery/)?(?P<ID>[a-zA-Z0-9-]+)]]></regex>
+			<html><![CDATA[<blockquote class="imgur-embed-pub" data-id="a/{$ID}"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>]]></html>
+		</provider>
+		
+		<provider name="spotify-playlist">
+			<title>Spotify Playlist</title>
+			<regex><![CDATA[https?://play.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)
+https?://open.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)]]></regex>
+			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:user:{$USER}:playlist:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
+		</provider>
+		
+		<provider name="spotify">
+			<title>Spotify</title>
+			<regex><![CDATA[https?://play.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
+https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
+			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:{$TYPE}:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
+		</provider>
 	</import>
 </data>
