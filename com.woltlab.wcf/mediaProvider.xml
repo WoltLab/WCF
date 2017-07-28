@@ -39,13 +39,13 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 		</provider>
 		
 		<provider name="github-gist">
-			<title>Github Gist</title>
+			<title>GitHub Gist</title>
 			<regex><![CDATA[https://gist.github.com/(?P<ID>[^/]+/[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<script src="https://gist.github.com/{$ID}.js"> </script>]]></html>
 		</provider>
 		
 		<provider name="soundcloud">
-			<title>Soundcloud</title>
+			<title>SoundCloud</title>
 			<regex><![CDATA[https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<iframe width="100%" height="166" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2F{$song}"></iframe>]]></html>
 		</provider>
