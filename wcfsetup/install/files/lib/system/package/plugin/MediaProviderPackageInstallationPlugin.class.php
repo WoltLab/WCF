@@ -4,6 +4,7 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor;
 use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes media providers.
@@ -49,7 +50,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			'html' => isset($data['elements']['html']) ? $data['elements']['html'] : '',
 			'className' => isset($data['elements']['className']) ? $data['elements']['className'] : '',
 			'title' => $data['elements']['title'],
-			'regex' => $data['elements']['regex']
+			'regex' => StringUtil::unifyNewlines($data['elements']['regex'])
 		];
 	}
 	

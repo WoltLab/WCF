@@ -15,7 +15,8 @@
 		
 		<provider name="vimeo">
 			<title>Vimeo</title>
-			<regex><![CDATA[https?://vimeo\.com/(?:channels/[^/]+/)?(?P<ID>\d+)\nhttps?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
+			<regex><![CDATA[https?://vimeo\.com/(?:channels/[^/]+/)?(?P<ID>\d+)
+https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		
