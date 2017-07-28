@@ -74,7 +74,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 		if (isset($conditionData['startTime']) && $object->{$this->getPropertyName()} < strtotime($conditionData['startTime'])) {
 			return false;
 		}
-		if (isset($conditionData['endTimeTime']) && $object->{$this->getPropertyName()} >= strtotime($conditionData['endTime']) + 86400) {
+		if (isset($conditionData['endTime']) && $object->{$this->getPropertyName()} >= strtotime($conditionData['endTime']) + 86400) {
 			return false;
 		}
 		
