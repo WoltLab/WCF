@@ -6,6 +6,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -45,6 +46,8 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 				'trophyPoints' => 1
 			]
 		]))->executeAction();
+		
+		UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived', $returnValues->getObjectID(), null, $returnValues->userID);
 		
 		UserNotificationHandler::getInstance()->fireEvent('received', 'com.woltlab.wcf.userTrophy.notification', new UserTrophyNotificationObject($returnValues), [
 			$returnValues->userID

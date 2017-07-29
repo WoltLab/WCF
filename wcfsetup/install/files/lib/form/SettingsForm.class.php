@@ -192,7 +192,7 @@ class SettingsForm extends AbstractForm {
 				if (!in_array($trophyID, array_map(function ($trophy) {
 					return $trophy->trophyID; 
 				}, $this->availableTrophies))) {
-					throw new UserInputException('specialTrophies' , 'invalid');
+					throw new UserInputException('specialTrophies', 'invalid');
 				}
 			}
 		}

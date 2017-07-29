@@ -3670,6 +3670,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier ihre besonderen Trophäen aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt werden.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.tooMuch"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen auswählen.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind invalid.]]></item>
+		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Hat die Trophäe „<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>“ erhalten.]]></item>
 	</category>
 	
 	<category name="wcf.acp.trophy">
@@ -3738,6 +3739,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.likeableArticle.recentActivityEvent"><![CDATA[Like (Artikel)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.recentActivityEvent"><![CDATA[Kommentar (Artikel)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.response.recentActivityEvent"><![CDATA[Antwort (Artikel)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived"><![CDATA[Trophäe]]></item>
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>

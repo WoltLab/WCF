@@ -1378,6 +1378,11 @@
 			<classname>wcf\system\user\notification\object\type\UserTrophyNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\TrophyReceivedUserActivityEvent</classname>
+		</type>
 		<!-- /trophy -->
 		
 		<!-- deprecated -->
