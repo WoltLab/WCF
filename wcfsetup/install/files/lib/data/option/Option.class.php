@@ -82,6 +82,22 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the option with the given name or `null` if no such option exists.
+	 * 
+	 * @param	string		$optionName	name of the requested option
+	 * @return	Option|null	requested option
+	 */
+	public static function getOptionByName($optionName) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_option
+			WHERE	optionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$optionName]);
+		
+		return $statement->fetchObject(self::class);
+	}
+	
+	/**
 	 * Parses enableOptions.
 	 * 
 	 * @param	string		$optionData
