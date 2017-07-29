@@ -629,6 +629,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			$action->executeAction();
 		}
 		
+		ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.comment', [$this->comment->commentID]);
+		
 		return ['commentID' => $this->comment->commentID];
 	}
 	
@@ -660,6 +662,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			]);
 			$action->executeAction();
 		}
+		
+		ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.response', [$this->response->responseID]);
 		
 		return ['responseID' => $this->response->responseID];
 	}
