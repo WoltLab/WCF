@@ -328,15 +328,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		$specialTrophies = UserStorageHandler::getInstance()->getField('specialTrophies', $this->userID);
 		
 		if ($specialTrophies === null) {
-			// load special trophies for the user 
-			$specialTrophies = [];
-			
-			$statement = WCF::getDB()->prepareStatement("SELECT trophyID FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?");
-			$statement->execute([$this->userID]); 
-			
-			while ($trophyID = $statement->fetchColumn()) {
-				$specialTrophies[] = $trophyID; 
-			}
+			// load special trophies for the user
+			$sql = "SELECT trophyID FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->userID]);
+			$specialTrophies = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
 			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
 		}
@@ -356,8 +352,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			$conditionBuilder->add('userID = ?', [$this->userID]);
 			$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
 			
-			// reset some special trophies 
-			WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder)->execute($conditionBuilder->getParameters());
+			// reset the user special trophies 
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder; 
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
 			
 			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
 		}

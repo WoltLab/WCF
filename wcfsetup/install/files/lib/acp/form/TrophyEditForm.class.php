@@ -187,7 +187,10 @@ class TrophyEditForm extends TrophyAddForm {
 		
 		// reset special trophies, if trophy is disabled 
 		if ($this->isDisabled) {
-			WCF::getDB()->prepareStatement("DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?")->execute([$this->trophyID]);
+			$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->trophyID]); 
+			
 			UserStorageHandler::getInstance()->resetAll('specialTrophies');
 		}
 		

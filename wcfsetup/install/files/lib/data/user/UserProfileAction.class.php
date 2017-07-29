@@ -431,16 +431,21 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
+		$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?";
+		$deleteStatement = WCF::getDB()->prepareStatement($sql);
+		
+		$sql = "INSERT INTO wcf".WCF_N."_user_special_trophy (userID, trophyID) VALUES (?, ?)";
+		$insertStatement = WCF::getDB()->prepareStatement($sql);
+		
 		foreach ($this->getObjects() as $user) {
 			WCF::getDB()->beginTransaction();
 			
-			WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?")->execute([$user->userID]);
+			// delete all user special trophies for the user
+			$deleteStatement->execute([$user->userID]);
 			
 			if (!empty($this->parameters['trophyIDs'])) {
-				$statement = WCF::getDB()->prepareStatement("INSERT INTO wcf".WCF_N."_user_special_trophy (userID, trophyID) VALUES (?, ?)");
-				
 				foreach ($this->parameters['trophyIDs'] as $trophyID) {
-					$statement->execute([
+					$insertStatement->execute([
 						$user->userID, 
 						$trophyID
 					]);

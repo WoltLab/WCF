@@ -77,11 +77,14 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 * @inheritDoc
 	 */
 	public function toggle() {
+		$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?";
+		$deleteStatement = WCF::getDB()->prepareStatement($sql);
+		
 		foreach ($this->getObjects() as $trophy) {
 			$trophy->update(['isDisabled' => $trophy->isDisabled ? 0 : 1]);
 			
 			if (!$trophy->isDisabled) {
-				WCF::getDB()->prepareStatement("DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?")->execute([$trophy->trophyID]);
+				$deleteStatement->execute([$trophy->trophyID]);
 			}
 		}
 		

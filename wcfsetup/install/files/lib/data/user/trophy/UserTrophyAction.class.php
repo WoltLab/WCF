@@ -94,7 +94,10 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 			$conditionBuilder = new PreparedStatementConditionBuilder(); 
 			$conditionBuilder->add('trophyID NOT IN (?)', [array_unique($userTrophyIDs)]); 
 			$conditionBuilder->add('userID = ?', [$userID]);
-			WCF::getDB()->prepareStatement("DELETE FROM wcf". WCF_N ."_user_special_trophy ". $conditionBuilder)->execute($conditionBuilder->getParameters());
+			
+			$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy ". $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
 			
 			UserStorageHandler::getInstance()->reset([$userID], 'specialTrophies');
 		}
