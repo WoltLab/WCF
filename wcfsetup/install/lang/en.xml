@@ -628,6 +628,8 @@
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Can award trophies]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Can see trophies]]></item>
+		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximum number of special trophies]]></item> <!-- @TODO: find a better name? -->
+		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Special trophies can be individually selected by the user and displayed in the message sidebar and the user profile.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -3654,6 +3656,11 @@ Open the link below to access the user profile:
 		<item name="wcf.user.trophy.showTrophies"><![CDATA[Display Trophies of {$user->username}]]></item>
 		<item name="wcf.user.trophy.noTrophies"><![CDATA[The user has no trophies]]></item>
 		<item name="wcf.user.trophy.dialogTitle"><![CDATA[Trophies of {$username}]]></item>
+		<item name="wcf.user.trophy.trophies"><![CDATA[Trophies]]></item>
+		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Special Trophies]]></item>
+		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier ihre besonderen Trophäen aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt werden.]]></item>
+		<item name="wcf.user.trophy.specialTrophies.error.tooMuch"><![CDATA[You can choose a maximum of {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.]]></item>
+		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[The selected trophies are invalid.]]></item>
 	</category>
 	
 	<category name="wcf.acp.trophy">

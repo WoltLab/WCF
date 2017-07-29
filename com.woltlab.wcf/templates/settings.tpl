@@ -82,6 +82,36 @@
 				{event name='styleFields'}
 			</section>
 		{/if}
+		
+		{if MODULE_TROPHY && $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 0 && $availableTrophies|count}
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.user.trophy.trophies{/lang}</h2>
+				<dl{if $errorField == 'specialTrophies'} class="formError"{/if}>
+					<dt>{lang}wcf.user.trophy.specialTrophies{/lang}</dt>
+					<dd>
+						<ul class="specialTrophiesUl">
+							{if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') == 1}
+								{foreach from=$availableTrophies item=trophy}
+									<li><label><input type="radio" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {@$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
+								{/foreach}
+							{else}
+								{foreach from=$availableTrophies item=trophy}
+									<li><label><input type="checkbox" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {@$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
+								{/foreach}
+							{/if}
+						</ul>
+						{if $errorField == 'specialTrophies'}
+							<small class="innerError">
+								{lang}wcf.user.trophy.specialTrophies.error.{$errorType}{/lang}
+							</small>
+						{/if}
+						<small>{lang}wcf.user.trophy.specialTrophies.description{/lang}</small>
+					</dd>
+				</dl>
+
+				{event name='trophyFields'}
+			</section>
+		{/if}
 	{/if}
 	
 	{if !$optionTree|empty}

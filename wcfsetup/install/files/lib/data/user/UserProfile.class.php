@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\trophy\Trophy;
+use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
@@ -12,6 +14,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledLinkObject;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
@@ -314,6 +317,52 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		}
 		
 		return $this->currentLocation;
+	}
+	
+	/**
+	 * Returns the special trophies for the user. 
+	 *
+	 * @return	Trophy[]
+	 */
+	public function getSpecialTrophies() {
+		$specialTrophies = UserStorageHandler::getInstance()->getField('specialTrophies', $this->userID);
+		
+		if ($specialTrophies === null) {
+			// load special trophies for the user 
+			$specialTrophies = [];
+			
+			$statement = WCF::getDB()->prepareStatement("SELECT trophyID FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?");
+			$statement->execute([$this->userID]); 
+			
+			while ($trophyID = $statement->fetchColumn()) {
+				$specialTrophies[] = $trophyID; 
+			}
+			
+			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
+		}
+		else {
+			$specialTrophies = unserialize($specialTrophies);
+		}
+		
+		// check if the user has the permission to store these number of trophies,
+		// otherwise, delete the last trophies
+		if (count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+			$trophyDeleteIDs = [];
+			while (count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+				$trophyDeleteIDs[] = array_pop($specialTrophies);
+			}
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('userID = ?', [$this->userID]);
+			$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
+			
+			// reset some special trophies 
+			WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder)->execute($conditionBuilder->getParameters());
+			
+			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
+		}
+		
+		return TrophyCache::getInstance()->getTrophiesByID($specialTrophies); 
 	}
 	
 	/**

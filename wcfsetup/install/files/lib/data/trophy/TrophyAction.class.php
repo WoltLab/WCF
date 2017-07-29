@@ -8,6 +8,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
 use wcf\system\upload\TrophyImageUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -18,6 +19,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Trophy
  * @since	3.1
+ *
+ * @method	TrophyEditor[]		getObjects()
+ * @method	TrophyEditor		getSingleObject()
  */
 class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
 	/**
@@ -46,6 +50,17 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	/**
 	 * @inheritDoc
 	 */
+	public function delete() {
+		$returnValues = parent::delete();
+		
+		UserStorageHandler::getInstance()->resetAll('specialTrophies');
+		
+		return $returnValues;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function update() {
 		parent::update();
 		
@@ -63,9 +78,14 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $trophy) {
-			/** @var TrophyEditor $trophy */
 			$trophy->update(['isDisabled' => $trophy->isDisabled ? 0 : 1]);
+			
+			if (!$trophy->isDisabled) {
+				WCF::getDB()->prepareStatement("DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?")->execute([$trophy->trophyID]);
+			}
 		}
+		
+		UserStorageHandler::getInstance()->resetAll('specialTrophies');
 	}
 	
 	/**

@@ -1545,6 +1545,13 @@ CREATE TABLE wcf1_user_ignore (
 	UNIQUE KEY (userID, ignoreUserID)
 );
 
+DROP TABLE IF EXISTS wcf1_user_special_trophy;
+CREATE TABLE wcf1_user_special_trophy(
+	trophyID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	UNIQUE KEY (trophyID, userID)
+);
+
 DROP TABLE IF EXISTS wcf1_user_trophy;
 CREATE TABLE wcf1_user_trophy(
 	userTrophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -2047,6 +2054,9 @@ ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_u
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_message_embedded_object ADD FOREIGN KEY (messageObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_message_embedded_object ADD FOREIGN KEY (embeddedObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;

@@ -424,6 +424,36 @@ class UserProfileAction extends UserAction {
 	}
 	
 	/**
+	 * Updates the special trophies.
+	 */
+	public function updateSpecialTrophies() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->getObjects() as $user) {
+			WCF::getDB()->beginTransaction();
+			
+			WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?")->execute([$user->userID]);
+			
+			if (!empty($this->parameters['trophyIDs'])) {
+				$statement = WCF::getDB()->prepareStatement("INSERT INTO wcf".WCF_N."_user_special_trophy (userID, trophyID) VALUES (?, ?)");
+				
+				foreach ($this->parameters['trophyIDs'] as $trophyID) {
+					$statement->execute([
+						$user->userID, 
+						$trophyID
+					]);
+				}
+			}
+			
+			WCF::getDB()->commitTransaction();
+			
+			UserStorageHandler::getInstance()->reset([$user->userID], 'specialTrophies');
+		}
+	}
+	
+	/**
 	 * Returns the user option handler object.
 	 * 
 	 * @param	User		$user

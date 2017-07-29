@@ -172,6 +172,15 @@
 			</h1>
 			
 			<div class="contentHeaderDescription">
+				{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
+					<div class="specialTrophyUserContainer">
+						<ul>
+							{foreach from=$user->getSpecialTrophies() item=trophy}
+								<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32)}</a></li>
+							{/foreach}
+						</ul>
+					</div>
+				{/if}
 				<ul class="inlineList commaSeparated">
 					{if !$user->isProtected()}
 						{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}

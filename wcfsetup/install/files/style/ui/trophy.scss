@@ -41,3 +41,55 @@
 		font-size: 81px;
 	}
 }
+
+.specialTrophiesUl {
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		width: 300px; 
+		padding-bottom: 5px;
+		
+		> label {
+			display: flex; 
+			align-items: center;
+			
+			> span:last-child {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+.specialTrophyContainer > ul {
+	display: flex;
+	margin-top: 5px;
+	justify-content: center;
+	
+	> li:not(:last-child) {
+		margin-right: 5px;
+	}
+}
+
+
+@include screen-sm-down {
+	.specialTrophyContainer {
+		display: none;
+	}
+}
+
+.specialTrophyUserContainer > ul {
+	display: flex;
+	margin-top: -15px;
+	margin-bottom: 5px;
+	
+	> li:not(:last-child) {
+		margin-right: 5px;
+	}
+}
+
+
+.userProfilePreview .specialTrophyUserContainer > ul {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}

@@ -185,6 +185,12 @@ class TrophyEditForm extends TrophyAddForm {
 			ConditionHandler::getInstance()->deleteConditions(TrophyConditionHandler::CONDITION_DEFINITION_NAME, [$this->trophy->trophyID]);
 		}
 		
+		// reset special trophies, if trophy is disabled 
+		if ($this->isDisabled) {
+			WCF::getDB()->prepareStatement("DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?")->execute([$this->trophyID]);
+			UserStorageHandler::getInstance()->resetAll('specialTrophies');
+		}
+		
 		$this->saved();
 		
 		// show success message

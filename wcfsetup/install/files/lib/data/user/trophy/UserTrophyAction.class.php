@@ -3,10 +3,12 @@ namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -17,6 +19,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Trophy
  * @since	3.1
+ *
+ * @method	UserTrophyEditor[]		getObjects()
+ * @method	UserTrophyEditor		getSingleObject()
  */
 class UserTrophyAction extends AbstractDatabaseObjectAction {
 	/**
@@ -66,12 +71,33 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
+		$trophyIDs = $userIDs = []; 
+		foreach ($this->getObjects() as $object) {
+			$trophyIDs[] = $object->trophyID; 
+			$userIDs[] = $object->userID; 
+		}
+		
 		$returnValues = parent::delete();
 		
-		$updateUserTrophies = [];
+		// update user special trophies trophies
+		$userTrophies = UserTrophyList::getUserTrophies($userIDs);
+		
+		foreach ($userTrophies as $userID => $trophies) {
+			$userTrophyIDs = [];
+			foreach ($trophies as $trophy) {
+				$userTrophyIDs[] = $trophy->trophyID;
+			}
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder(); 
+			$conditionBuilder->add('trophyID NOT IN (?)', [array_unique($userTrophyIDs)]); 
+			$conditionBuilder->add('userID = ?', [$userID]);
+			WCF::getDB()->prepareStatement("DELETE FROM wcf". WCF_N ."_user_special_trophy ". $conditionBuilder)->execute($conditionBuilder->getParameters());
+			
+			UserStorageHandler::getInstance()->reset([$userID], 'specialTrophies');
+		}
 		
 		/** @var $object UserTrophyEditor */
-		foreach ($this->objects as $object) {
+		foreach ($this->getObjects() as $object) {
 			if (!isset($updateUserTrophies[$object->userID])) $updateUserTrophies[$object->userID] = 0; 
 			$updateUserTrophies[$object->userID]--;
 		}

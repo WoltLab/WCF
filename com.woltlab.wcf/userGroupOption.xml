@@ -740,6 +740,15 @@ png</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 				<options>module_trophy</options>
 			</option>
+			<option name="user.profile.trophy.maxUserSpecialTrophies">
+				<categoryname>user.profile.trophy</categoryname>
+				<optiontype>integer</optiontype>
+				<minvalue>0</minvalue>
+				<maxvalue>5</maxvalue>
+				<defaultvalue>3</defaultvalue>
+				<usersonly>1</usersonly>
+				<options>module_trophy</options>
+			</option>
 			<!-- /user.profile -->
 			
 			<option name="user.page.canAddComment">
