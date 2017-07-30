@@ -79,11 +79,11 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 		$trophies = UserTrophyList::getUserTrophies([$user->getObjectID()], false)[$user->getObjectID()];
 		$trophyIDs = array_keys($trophies);
 		
-		if (!empty($condition->conditionData['userTrophy']) && count(array_diff($condition->conditionData['userTrophy'], $trophyIDs))) {
+		if (!empty($condition->conditionData['userTrophy']) && !empty(array_diff($condition->conditionData['userTrophy'], $trophyIDs))) {
 			return false;
 		}
 		
-		if (!empty($condition->conditionData['notUserTrophy']) && count(array_intersect($condition->conditionData['notUserTrophy'], $trophyIDs))) {
+		if (!empty($condition->conditionData['notUserTrophy']) && !empty(array_intersect($condition->conditionData['notUserTrophy'], $trophyIDs))) {
 			return false;
 		}
 		
@@ -201,15 +201,6 @@ HTML;
 		if ($condition->notUserTrophy !== null) {
 			$this->notUserTrophy = $condition->notUserTrophy;
 		}
-	}
-	
-	/**
-	 * Sets the selectable user groups.
-	 *
-	 * @param	Trophy[]	$trophies
-	 */
-	public function setUserGroups(array $trophies) {
-		$this->trophies = $trophies;
 	}
 	
 	/**
