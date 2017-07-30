@@ -3704,6 +3704,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Trophäe an, welche an die Benutzer vergeben werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} keine automatisch vergebene Trophäen manuell vergeben.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Benutzerdefinierte Trophäen-Beschreibung aktivieren]]></item>
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> von <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Bevor Sie eine Trophäe hinzufügen können, müssen Sie eine <a href="{link controller='TrophyCategoryAdd'}{/link}">Kategorie hinzufügen</a>.]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
