@@ -3832,6 +3832,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.userTrophy"><![CDATA[User has Trophy]]></item>
 		<item name="wcf.user.condition.notUserTrophy"><![CDATA[User has not Trophy]]></item>
 		<item name="wcf.user.condition.notUserTrophy.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User has not Trophy” are conflicting.]]></item>
+		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophies]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">

@@ -3841,6 +3841,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.userTrophy"><![CDATA[hat Trophäe]]></item>
 		<item name="wcf.user.condition.notUserTrophy"><![CDATA[hat nicht Trophäe]]></item>
 		<item name="wcf.user.condition.notUserTrophy.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
+		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophäen]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">
