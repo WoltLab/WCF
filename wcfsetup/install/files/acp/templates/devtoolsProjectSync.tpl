@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.acp.devtools.project.sync'}
+{include file='header' pageTitle='wcf.acp.devtools.project.sync.pageTitle'}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
