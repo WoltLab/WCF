@@ -59,10 +59,12 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 			
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', [
 				'authors' => array_values($authors),
+				'commentID' => $this->getUserNotificationObject()->commentID,
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $owner,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered,
+				'responseID' => $this->getUserNotificationObject()->responseID
 			]);
 		}
 		
