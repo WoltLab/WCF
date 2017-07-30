@@ -35,12 +35,12 @@ class UserTrophyList extends DatabaseObjectList {
 		if (!$includeDisabled) {
 			if (!empty($trophyList->sqlJoins)) $trophyList->sqlJoins .= ' ';
 			if (!empty($trophyList->sqlConditionJoins)) $trophyList->sqlConditionJoins .= ' ';
-			$trophyList->sqlJoins .= 'LEFT JOIN wcf'. WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
-			$trophyList->sqlConditionJoins .= 'LEFT JOIN wcf'. WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+			$trophyList->sqlJoins .= 'LEFT JOIN wcf'.WCF_N.'_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+			$trophyList->sqlConditionJoins .= 'LEFT JOIN wcf'.WCF_N.'_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
 			
 			// trophy category join
-			$trophyList->sqlJoins .= ' LEFT JOIN wcf'. WCF_N . '_category category ON trophy.categoryID = category.categoryID';
-			$trophyList->sqlConditionJoins .= ' LEFT JOIN wcf'. WCF_N . '_category category ON trophy.categoryID = category.categoryID';
+			$trophyList->sqlJoins .= ' LEFT JOIN wcf'.WCF_N.'_category category ON trophy.categoryID = category.categoryID';
+			$trophyList->sqlConditionJoins .= ' LEFT JOIN wcf'.WCF_N.'_category category ON trophy.categoryID = category.categoryID';
 			
 			$trophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
 			$trophyList->getConditionBuilder()->add('category.isDisabled = ?', [0]);

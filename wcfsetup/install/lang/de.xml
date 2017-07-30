@@ -3838,6 +3838,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
+		<item name="wcf.user.condition.userTrophy"><![CDATA[hat Trophäe]]></item>
+		<item name="wcf.user.condition.notUserTrophy"><![CDATA[hat nicht Trophäe]]></item>
+		<item name="wcf.user.condition.notUserTrophy.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">

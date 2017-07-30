@@ -3829,6 +3829,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting Approval”.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
+		<item name="wcf.user.condition.userTrophy"><![CDATA[User has Trophy]]></item>
+		<item name="wcf.user.condition.notUserTrophy"><![CDATA[User has not Trophy]]></item>
+		<item name="wcf.user.condition.notUserTrophy.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User has not Trophy” are conflicting.]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">

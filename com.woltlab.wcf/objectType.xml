@@ -589,6 +589,12 @@
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophyCondition</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserTrophyCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
 		<!-- /user group assignment conditions -->
 		
 		<!-- trophy conditions -->
@@ -661,6 +667,12 @@
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
 			<conditiongroup>userOptions</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophyCondition</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserTrophyCondition</classname>
+			<conditiongroup>general</conditiongroup>
 		</type>
 		<!-- /trophy conditions -->
 		
@@ -781,6 +793,13 @@
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>userOptions</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophyCondition</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname>wcf\system\condition\UserTrophyCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
 		</type>
 		<!-- /notice conditions -->
 		
@@ -933,6 +952,13 @@
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>userOptions</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophyCondition</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname>wcf\system\condition\UserTrophyCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
 		</type>
 		<!-- /ad conditions -->
 		

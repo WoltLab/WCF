@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\condition\user\trophy;
 use wcf\data\trophy\category\TrophyCategoryCache;
-use wcf\data\DatabaseObjectList;
 use wcf\data\user\trophy\UserTrophyList;
+use wcf\data\DatabaseObjectList;
 use wcf\system\condition\AbstractMultiSelectCondition;
 use wcf\system\condition\IObjectListCondition;
 
