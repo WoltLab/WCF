@@ -686,12 +686,12 @@ class UserNotificationHandler extends SingletonFactory {
 		$message = $event->getEmailMessage('instant');
 		if (is_array($message)) {
 			if (!isset($message['variables'])) $message['variables'] = [];
-			$variables = [
+			$variables = array_merge($message['variables'], [
 				'notificationContent' => $message,
 				'event' => $event,
 				'notificationType' => 'instant',
-				'variables' => $message['variables']
-			];
+				'variables' => $message['variables'] // deprecated, but is kept for backwards compatibility
+			]);
 			
 			if (isset($message['message-id'])) {
 				$email->setMessageID($message['message-id']);
