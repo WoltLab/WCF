@@ -222,6 +222,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Today's Birthdays of Users Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Members List]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Users Online]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userTrophies"><![CDATA[Assigned Trophies]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Who Was Online]]></item>
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[ID is invalid.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">previous versions</a> of this box, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
@@ -3662,6 +3663,8 @@ Open the link below to access the user profile:
 		<item name="wcf.user.trophy.specialTrophies.error.tooMuch"><![CDATA[You can choose a maximum of {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[The selected trophies are invalid.]]></item>
 		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Has received the trophy “<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>”.]]></item>
+		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Excluded Trophies]]></item>
+		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Excluded Trophy Categories]]></item>
 	</category>
 	
 	<category name="wcf.acp.trophy">

@@ -226,6 +226,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Heutige Geburtstage von Benutzern, denen der aktive Nutzer folgt]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Mitglieder]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userTrophies"><![CDATA[Vergebene Trophäen]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.whoWasOnline"><![CDATA[Wer war online]]></item>
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">vorherige Versionen</a> dieser Box, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
@@ -3671,6 +3672,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.trophy.specialTrophies.error.tooMuch"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen auswählen.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind invalid.]]></item>
 		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Hat die Trophäe „<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>“ erhalten.]]></item>
+		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Ausgeschlossene Trophäen]]></item>
+		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Ausgeschlossene Trophäen Kategorien]]></item>
 	</category>
 	
 	<category name="wcf.acp.trophy">

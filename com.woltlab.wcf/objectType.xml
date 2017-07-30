@@ -1282,6 +1282,11 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\ArticleTagCloudBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophies</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\UserTrophyListBoxController</classname>
+		</type>
 		<!-- /box controllers -->
 		
 		<!-- simple acl -->
@@ -1310,6 +1315,19 @@
 			<classname>wcf\system\condition\user\activity\event\UserActivityEventExcludedObjectTypeCondition</classname>
 		</type>
 		<!-- /recent activity box condition -->
+		
+		<!-- trophy list box condition -->
+		<type>
+			<name>com.woltlab.wcf.excludedTrophies</name>
+			<definitionname>com.woltlab.wcf.box.userTrophyList.condition</definitionname>
+			<classname>wcf\system\condition\user\trophy\UserTrophyExcludedTrophiesCondition</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.excludedTrophyCategories</name>
+			<definitionname>com.woltlab.wcf.box.userTrophyList.condition</definitionname>
+			<classname>wcf\system\condition\user\trophy\UserTrophyExcludedTrophyCategoriesCondition</classname>
+		</type>
+		<!-- /trophy list box condition -->
 		
 		<!-- media -->
 		<type>
