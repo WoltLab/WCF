@@ -19,6 +19,7 @@
 .trophyIcon {
 	display: inline-block;
 	border-radius: 50%;
+	font-size: 27px;
 	
 	/* Factor: 0.5625 */
 	&.icon16 {
@@ -27,10 +28,6 @@
 	
 	&.icon32 {
 		font-size: 18px;
-	}
-	
-	&.icon48 {
-		font-size: 27px;
 	}
 	
 	&.icon64 {
