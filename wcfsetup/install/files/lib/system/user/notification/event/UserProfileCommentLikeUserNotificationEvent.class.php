@@ -2,6 +2,7 @@
 namespace wcf\system\user\notification\event;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
 
 /**
@@ -11,6 +12,8 @@ use wcf\system\WCF;
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	LikeUserNotificationObject	getUserNotificationObject()
  */
 class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
