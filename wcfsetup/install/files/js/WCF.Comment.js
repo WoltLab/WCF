@@ -871,6 +871,8 @@ WCF.Comment.Handler = Class.extend({
 	
 	_insertComment: function (data) {
 		if (data.returnValues.template === '') {
+			elRemove(this._permalinkComment);
+			
 			// comment id is invalid or there is a mismatch, silently ignore it
 			return;
 		}
@@ -892,6 +894,8 @@ WCF.Comment.Handler = Class.extend({
 	
 	_insertResponse: function(data) {
 		if (data.returnValues.template === '') {
+			elRemove(this._permalinkResponse);
+			
 			// comment id is invalid or there is a mismatch, silently ignore it
 			return;
 		}
