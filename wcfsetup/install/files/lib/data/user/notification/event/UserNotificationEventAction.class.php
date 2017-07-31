@@ -3,6 +3,7 @@ namespace wcf\data\user\notification\event;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\user\notification\event\ITestableUserNotificationEvent;
 use wcf\system\user\notification\TestableUserNotificationEventHandler;
 use wcf\system\WCF;
@@ -81,6 +82,13 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 		$events = [];
 		
 		$originalLanguage = WCF::getLanguage();
+		
+		// temporarily tell request handler that this no acp request to
+		// avoid issues with links
+		$reflectionClass = new \ReflectionClass(RequestHandler::class);
+		$reflectionProperty = $reflectionClass->getProperty('isACPRequest');
+		$reflectionProperty->setAccessible(true);
+		$reflectionProperty->setValue(RequestHandler::getInstance(), false);
 		
 		/**
 		 * Returns the output of an exception shown in the dialog.
@@ -165,13 +173,18 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 		
 		WCF::setLanguage($originalLanguage->languageID);
 		
+		$template = WCF::getTPL()->fetch('devtoolsNotificationTestDialog', 'wcf', [
+			'events' => $events,
+			'errors' => $errors,
+			'hasEmailSupport' => $hasEmailSupport
+		]);
+		
+		// reset acp request value
+		$reflectionProperty->setValue(RequestHandler::getInstance(), true);
+		
 		return [
 			'eventID' => $this->userNotificationEvent->eventID,
-			'template' => WCF::getTPL()->fetch('devtoolsNotificationTestDialog', 'wcf', [
-				'events' => $events,
-				'errors' => $errors,
-				'hasEmailSupport' => $hasEmailSupport
-			])
+			'template' => $template
 		];
 	}
 }
