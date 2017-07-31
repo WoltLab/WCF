@@ -45,7 +45,7 @@ class CategoryHandler extends SingletonFactory {
 	 * type is given, all categories grouped by object type are returned.
 	 * 
 	 * @param	string		$objectType
-	 * @return	mixed[]
+	 * @return	Category[]|Category[][]
 	 */
 	public function getCategories($objectType = null) {
 		$categories = [];
