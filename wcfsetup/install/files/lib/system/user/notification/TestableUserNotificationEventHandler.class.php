@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
+use wcf\system\cache\builder\ICacheBuilder;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
@@ -254,5 +255,19 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 		}
 		
 		return $events;
+	}
+	
+	/**
+	 * Forcefully resets the internal data of a cache builder to get up-to-date
+	 * data within the same request. This is crutial as during testing, objects
+	 * are created and used within the same request.
+	 * 
+	 * @param	ICacheBuilder	$cacheBuilder
+	 */
+	public function resetCacheBuilder(ICacheBuilder $cacheBuilder) {
+		$reflectionClass = new \ReflectionClass(get_class($cacheBuilder));
+		$reflectionProperty = $reflectionClass->getProperty('cache');
+		$reflectionProperty->setAccessible(true);
+		$reflectionProperty->setValue($cacheBuilder, []);
 	}
 }

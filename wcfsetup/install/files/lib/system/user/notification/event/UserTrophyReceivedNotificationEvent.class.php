@@ -114,13 +114,8 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
 			]
 		]))->executeAction()['returnValues'];
 		
+		TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(TrophyCacheBuilder::getInstance());
 		TrophyCache::getInstance()->clearCache();
-		
-		// work-around to reset trophy cache during this request
-		$reflectionClass = new \ReflectionClass(TrophyCacheBuilder::class);
-		$reflectionProperty = $reflectionClass->getProperty('cache');
-		$reflectionProperty->setAccessible(true);
-		$reflectionProperty->setValue(TrophyCacheBuilder::getInstance(), []);
 		
 		return [new UserTrophyNotificationObject($userTropy)];
 	}
