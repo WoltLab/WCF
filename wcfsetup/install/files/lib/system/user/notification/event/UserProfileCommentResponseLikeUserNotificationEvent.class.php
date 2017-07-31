@@ -62,10 +62,12 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message.stacked', [
 				'author' => $this->author,
 				'authors' => $authors,
+				'commentID' => $this->additionalData['commentID'],
 				'commentUser' => $commentUser,
 				'count' => $count,
 				'others' => $count - 1,
-				'owner' => $owner
+				'owner' => $owner,
+				'responseID' => $this->getResponseID()
 			]);
 		}
 		
