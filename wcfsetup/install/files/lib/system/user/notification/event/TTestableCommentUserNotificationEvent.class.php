@@ -10,6 +10,10 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * Default implementation of some methods of the testable user notification event interface
  * for comment user notificiation events.
  * 
+ * As PHP 5.5 does not support abstract static functions in traits, we require them by this documentation:
+ * - protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)
+ * 	returns the `objectID` and `objectTypeID` parameter for comment creation.
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -54,15 +58,6 @@ trait TTestableCommentUserNotificationEvent {
 		
 		return ['objectUserID' => $object->objectID];
 	}
-	
-	/**
-	 * Returns the `objectID` and `objectTypeID` parameter for comment creation.
-	 * 
-	 * @param	UserProfile	$recipient
-	 * @param	UserProfile	$author
-	 * @return	array
-	 */
-	abstract protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author);
 	
 	/**
 	 * @inheritDoc

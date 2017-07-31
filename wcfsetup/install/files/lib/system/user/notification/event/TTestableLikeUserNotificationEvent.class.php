@@ -12,7 +12,13 @@ use wcf\system\WCF;
 /**
  * Default implementation of some methods of the testable user notification event interface
  * for like user notificiation events.
- *
+ * 
+ * As PHP 5.5 does not support abstract static functions in traits, we require them by this documentation:
+ * - protected static function createTestLikeObject(UserProfile $recipient, UserProfile $author)
+ * 	creates a likable object
+ * - protected static function getTestLikeableObjectTypeName()
+ * 	returns the name of the likeable object type name
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -26,22 +32,6 @@ trait TTestableLikeUserNotificationEvent {
 	public static function canBeTriggeredByGuests() {
 		return false;
 	}
-	
-	/**
-	 * Creates a likable object.
-	 * 
-	 * @param	UserProfile	$recipient
-	 * @param	UserProfile	$author
-	 * @return	ILikeObject
-	 */
-	abstract protected static function createTestLikeObject(UserProfile $recipient, UserProfile $author);
-	
-	/**
-	 * Returns the name of the likeable object type name.
-	 * 
-	 * @return	string
-	 */
-	abstract protected static function getTestLikeableObjectTypeName();
 	
 	/**
 	 * Returns the like object for the given user notification object.
