@@ -2,11 +2,14 @@
 namespace wcf\acp\form;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyAction;
+use wcf\data\user\UserAction;
 use wcf\system\condition\ConditionHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\trophy\condition\TrophyConditionHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -192,6 +195,22 @@ class TrophyEditForm extends TrophyAddForm {
 			$statement->execute([$this->trophyID]); 
 			
 			UserStorageHandler::getInstance()->resetAll('specialTrophies');
+		}
+		
+		// update trophy points
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('trophyID = ?', [$this->trophyID]);
+		$sql = "SELECT COUNT(*) as count, userID FROM wcf".WCF_N."_user_trophy ".$conditionBuilder." GROUP BY userID";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		while ($row = $statement->fetchArray()) {
+			$userAction = new UserAction([$row['userID']], 'update', [
+				'counters' => [
+					'trophyPoints' => $row['count'] * ($this->isDisabled) ? -1 : 1
+				]
+			]);
+			$userAction->executeAction();
 		}
 		
 		$this->saved();

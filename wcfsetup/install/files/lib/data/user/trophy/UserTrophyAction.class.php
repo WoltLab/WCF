@@ -41,11 +41,14 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	public function create() {
 		$returnValues = parent::create();
 		
-		(new UserAction([$returnValues->userID], 'update', [
-			'counters' => [
-				'trophyPoints' => 1
-			]
-		]))->executeAction();
+		if (!$returnValues->getTrophy()->isDisabled()) {
+			$userAction = new UserAction([$returnValues->userID], 'update', [
+				'counters' => [
+					'trophyPoints' => 1
+				]
+			]); 
+			$userAction->executeAction(); 
+		}
 		
 		UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived', $returnValues->getObjectID(), null, $returnValues->userID);
 		
@@ -82,38 +85,43 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 		
 		$returnValues = parent::delete();
 		
-		// update user special trophies trophies
-		$userTrophies = UserTrophyList::getUserTrophies($userIDs);
-		
-		foreach ($userTrophies as $userID => $trophies) {
-			$userTrophyIDs = [];
-			foreach ($trophies as $trophy) {
-				$userTrophyIDs[] = $trophy->trophyID;
+		if (!empty($this->objects)) {
+			// update user special trophies trophies
+			$userTrophies = UserTrophyList::getUserTrophies($userIDs);
+			
+			foreach ($userTrophies as $userID => $trophies) {
+				$userTrophyIDs = [];
+				foreach ($trophies as $trophy) {
+					$userTrophyIDs[] = $trophy->trophyID;
+				}
+				
+				$conditionBuilder = new PreparedStatementConditionBuilder();
+				if (!empty($userTrophyIDs)) $conditionBuilder->add('trophyID NOT IN (?)', [array_unique($userTrophyIDs)]);
+				$conditionBuilder->add('userID = ?', [$userID]);
+				
+				$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy ". $conditionBuilder;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditionBuilder->getParameters());
+				
+				UserStorageHandler::getInstance()->reset([$userID], 'specialTrophies');
 			}
 			
-			$conditionBuilder = new PreparedStatementConditionBuilder(); 
-			$conditionBuilder->add('trophyID NOT IN (?)', [array_unique($userTrophyIDs)]); 
-			$conditionBuilder->add('userID = ?', [$userID]);
+			$updateUserTrophies = [];
+			foreach ($this->getObjects() as $object) {
+				if (!$object->getTrophy()->isDisabled()) {
+					if (!isset($updateUserTrophies[$object->userID])) $updateUserTrophies[$object->userID] = 0;
+					$updateUserTrophies[$object->userID]--;
+				}
+			}
 			
-			$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy ". $conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditionBuilder->getParameters());
-			
-			UserStorageHandler::getInstance()->reset([$userID], 'specialTrophies');
-		}
-		
-		/** @var $object UserTrophyEditor */
-		foreach ($this->getObjects() as $object) {
-			if (!isset($updateUserTrophies[$object->userID])) $updateUserTrophies[$object->userID] = 0; 
-			$updateUserTrophies[$object->userID]--;
-		}
-		
-		foreach ($updateUserTrophies as $userID => $count) {
-			(new UserAction([$userID], 'update', [
-				'counters' => [
-					'trophyPoints' => $count
-				]
-			]))->executeAction();
+			foreach ($updateUserTrophies as $userID => $count) {
+				$userAction = new UserAction([$returnValues->userID], 'update', [
+					'counters' => [
+						'trophyPoints' => $count
+					]
+				]);
+				$userAction->executeAction();
+			}
 		}
 		
 		return $returnValues;

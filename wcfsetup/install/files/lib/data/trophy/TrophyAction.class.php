@@ -1,8 +1,12 @@
 <?php
 namespace wcf\data\trophy;
+use wcf\data\user\trophy\UserTrophyAction;
+use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\IUploadAction;
+use wcf\data\user\UserAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
@@ -51,6 +55,20 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 * @inheritDoc
 	 */
 	public function delete() {
+		// update trophy points 
+		$userTrophyList = new UserTrophyList();
+		if (!empty($userTrophyList->sqlJoins)) $userTrophyList->sqlJoins .= ' ';
+		$userTrophyList->sqlJoins .= 'LEFT JOIN wcf'.WCF_N.'_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+		$userTrophyList->sqlJoins .= ' LEFT JOIN wcf'.WCF_N.'_category category ON trophy.categoryID = category.categoryID';
+		
+		$userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
+		$userTrophyList->getConditionBuilder()->add('category.isDisabled = ?', [0]);
+		$userTrophyList->getConditionBuilder()->add('user_trophy.trophyID IN (?)', [$this->getObjectIDs()]);
+		$userTrophyList->readObjects();
+		
+		$userTrophyAction = new UserTrophyAction($userTrophyList->getObjects(), 'delete');
+		$userTrophyAction->executeAction();
+		
 		$returnValues = parent::delete();
 		
 		UserStorageHandler::getInstance()->resetAll('specialTrophies');
@@ -77,14 +95,60 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 * @inheritDoc
 	 */
 	public function toggle() {
-		$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy WHERE trophyID = ?";
-		$deleteStatement = WCF::getDB()->prepareStatement($sql);
+		$enabledTrophyIDs = [];
+		$disabledTrophyIDs = [];
 		
 		foreach ($this->getObjects() as $trophy) {
 			$trophy->update(['isDisabled' => $trophy->isDisabled ? 0 : 1]);
 			
 			if (!$trophy->isDisabled) {
-				$deleteStatement->execute([$trophy->trophyID]);
+				
+				$disabledTrophyIDs[] = $trophy->trophyID;
+			}
+			else {
+				$enabledTrophyIDs[] = $trophy->trophyID;
+			}
+		}
+		
+		if (!empty($disabledTrophyIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
+			$sql = "DELETE FROM wcf". WCF_N ."_user_special_trophy ".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			// update trophy points
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
+			$sql = "SELECT COUNT(*) as count, userID FROM wcf".WCF_N."_user_trophy ".$conditionBuilder." GROUP BY userID";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			while ($row = $statement->fetchArray()) {
+				$userAction = new UserAction([$row['userID']], 'update', [
+					'counters' => [
+						'trophyPoints' => $row['count'] * -1
+					]
+				]);
+				$userAction->executeAction();
+			}
+		}
+		
+		if (!empty($enabledTrophyIDs)) {
+			// update trophy points
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('trophyID IN (?)', [$enabledTrophyIDs]);
+			$sql = "SELECT COUNT(*) as count, userID FROM wcf".WCF_N."_user_trophy ".$conditionBuilder." GROUP BY userID";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			while ($row = $statement->fetchArray()) {
+				$userAction = new UserAction([$row['userID']], 'update', [
+					'counters' => [
+						'trophyPoints' => $row['count']
+					]
+				]);
+				$userAction->executeAction();
 			}
 		}
 		
