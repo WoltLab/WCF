@@ -22,8 +22,8 @@ use wcf\system\user\notification\TestableUserNotificationEventHandler;
  * @method	UserTrophyNotificationObject	getUserNotificationObject()
  */
 class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent {
-	use TTestableUserNotificationEvent;
 	use TTestableCategorizedUserNotificationEvent;
+	use TTestableUserNotificationEvent;
 	
 	/**
 	 * @inheritDoc
