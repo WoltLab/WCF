@@ -71,7 +71,9 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 				'authors' => array_values($authors),
 				'count' => $count,
 				'others' => $count - 1,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered,
+				'commentID' => $this->getUserNotificationObject()->commentID,
+				'responseID' => $this->getUserNotificationObject()->responseID
 			]);
 		}
 		
