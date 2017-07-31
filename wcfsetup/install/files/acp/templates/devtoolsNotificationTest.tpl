@@ -22,7 +22,7 @@
 			{foreach from=$eventList item=event}
 				<dt>{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</dt>
 				<dd>
-					<a class="button small jsTestEventButton" data-event-id="{$event->eventID}" data-title="{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}">{lang}wcf.acp.devtools.notificationTest.button.test{/lang}</a>
+					<button class="small jsTestEventButton" data-event-id="{$event->eventID}" data-title="{lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}">{lang}wcf.acp.devtools.notificationTest.button.test{/lang}</button>
 				</dd>
 			{/foreach}
 		</dl>
@@ -30,7 +30,11 @@
 {/foreach}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Notification/Test'], function(AcpUiDevtoolsNotificationTest) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Notification/Test'], function(Language, AcpUiDevtoolsNotificationTest) {
+		Language.addObject({
+			'wcf.acp.devtools.notificationTest.button.test': '{lang}wcf.acp.devtools.notificationTest.button.test{/lang}'
+		});
+		
 		AcpUiDevtoolsNotificationTest.init();
 	});
 </script>

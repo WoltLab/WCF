@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup
  */
-define(['Ajax', 'Dictionary', 'Ui/Dialog'], function(Ajax, Dictionary, UiDialog) {
+define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog'], function(Ajax, Dictionary, Language, UiDialog) {
 	var _buttons = elByClass('jsTestEventButton');
 	var _titles = new Dictionary();
 	
@@ -63,6 +63,12 @@ define(['Ajax', 'Dictionary', 'Ui/Dialog'], function(Ajax, Dictionary, UiDialog)
 			});
 			
 			elById('notificationTestDialog').parentNode.scrollTop = 0;
+			
+			// restore buttons
+			Array.prototype.forEach.call(_buttons, function(button) {
+				button.innerHTML = Language.get('wcf.acp.devtools.notificationTest.button.test');
+				button.disabled = false;
+			});
 		},
 		
 		/**
@@ -106,9 +112,17 @@ define(['Ajax', 'Dictionary', 'Ui/Dialog'], function(Ajax, Dictionary, UiDialog)
 		 * @param	{Event}		event
 		 */
 		_test: function(event) {
+			var button = event.currentTarget;
+			
+			button.innerHTML = '<span class="icon icon16 fa-spinner"></span>';
+			
+			Array.prototype.forEach.call(_buttons, function(button) {
+				button.disabled = true;
+			});
+			
 			Ajax.api(this, {
 				parameters: {
-					eventID: elData(event.currentTarget, 'event-id')
+					eventID: elData(button, 'event-id')
 				}
 			});
 		}
