@@ -3942,7 +3942,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Notify me when my comments are liked]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Notify me when replies to my comments are liked]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Notify me before a subscription will expire]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophy received]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Notify me when I receive a trophy]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You got the trophy “<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>“.]]></item>
 		
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
