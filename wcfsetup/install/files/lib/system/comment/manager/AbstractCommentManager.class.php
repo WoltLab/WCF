@@ -66,7 +66,7 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	 * @inheritDoc
 	 */
 	public function canAdd($objectID) {
-		if (!VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
+		if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
 			return false;
 		}
 		
@@ -81,7 +81,7 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	 * @inheritDoc
 	 */
 	public function canAddWithoutApproval($objectID) {
-		if (!VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
+		if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
 			return false;
 		}
 		
