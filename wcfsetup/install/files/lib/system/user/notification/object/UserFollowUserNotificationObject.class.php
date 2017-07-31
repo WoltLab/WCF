@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @method	UserFollow	getDecoratedObject()
  * @mixin	UserFollow
  */
-class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IStackableUserNotificationObject {
+class UserFollowUserNotificationObject extends DatabaseObjectDecorator {
 	/**
 	 * @inheritDoc
 	 */
@@ -39,12 +39,5 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
 	 */
 	public function getAuthorID() {
 		return $this->userID;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getRelatedObjectID() {
-		return $this->followUserID;
 	}
 }
