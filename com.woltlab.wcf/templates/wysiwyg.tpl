@@ -10,7 +10,6 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/table.js?v={@LAST_UPDATE_TIME}',
 			
 			{* WoltLab *}
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAlignment.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAttachment.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabAutosave.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabBlock.js?v={@LAST_UPDATE_TIME}',
@@ -191,7 +190,6 @@
 					'WoltLabKeydown',
 					
 					// WoltLab core
-					'WoltLabAlignment',
 					'WoltLabAttachment',
 					'WoltLabAutosave',
 					'WoltLabCaret',
