@@ -200,7 +200,10 @@ class TrophyEditForm extends TrophyAddForm {
 		// update trophy points
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('trophyID = ?', [$this->trophyID]);
-		$sql = "SELECT COUNT(*) as count, userID FROM wcf".WCF_N."_user_trophy ".$conditionBuilder." GROUP BY userID";
+		$sql = "SELECT		COUNT(*) as count, userID
+			FROM		wcf".WCF_N."_user_trophy
+			".$conditionBuilder."
+			GROUP BY	userID";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		

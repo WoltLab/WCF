@@ -2,10 +2,10 @@
 namespace wcf\data\trophy;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
+use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\IUploadAction;
-use wcf\data\user\UserAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -120,7 +120,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			// update trophy points
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('trophyID IN (?)', [$disabledTrophyIDs]);
-			$sql = "SELECT COUNT(*) as count, userID FROM wcf".WCF_N."_user_trophy ".$conditionBuilder." GROUP BY userID";
+			$sql = "SELECT		COUNT(*) as count, userID
+				FROM		wcf".WCF_N."_user_trophy
+				".$conditionBuilder."
+				GROUP BY	userID";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
 			
@@ -138,7 +141,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			// update trophy points
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('trophyID IN (?)', [$enabledTrophyIDs]);
-			$sql = "SELECT COUNT(*) as count, userID FROM wcf".WCF_N."_user_trophy ".$conditionBuilder." GROUP BY userID";
+			$sql = "SELECT		COUNT(*) as count, userID
+				FROM		wcf".WCF_N."_user_trophy
+				".$conditionBuilder."
+				GROUP BY	userID";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
 			
