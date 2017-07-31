@@ -411,7 +411,7 @@
 		<item name="wcf.acp.devtools.notificationTest.instantEmail"><![CDATA[Sofortige E-Mail]]></item>
 		<item name="wcf.acp.devtools.notificationTest.instantEmail.exception"><![CDATA[Sofortige E-Mail-Fehlermeldung]]></item>
 		<item name="wcf.acp.devtools.notificationTest.message"><![CDATA[Nachricht]]></item>
-		<item name="wcf.acp.devtools.notificationTest.message.exception"><![CDATA[Nachrichtig-Fehlermeldung]]></item>
+		<item name="wcf.acp.devtools.notificationTest.message.exception"><![CDATA[Nachricht-Fehlermeldung]]></item>
 		<item name="wcf.acp.devtools.notificationTest.testCase"><![CDATA[Sprache: {$language}, Mitglieder: {#$timesTriggered}{if $canBeTriggeredByGuests}, Gäste: {#$guestsTriggered}{/if}]]></item>
 		<item name="wcf.acp.devtools.notificationTest.title.exception"><![CDATA[Titel-Fehlermeldung]]></item>
 		<item name="wcf.acp.devtools.notificationTest.contentCreationWarning"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} die Tests nicht in einem produktiven System, da während der Tests zufällige Inhalte erstellt werden.]]></item>
