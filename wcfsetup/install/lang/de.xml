@@ -1449,7 +1449,7 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Abhängigkeiten]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Apps können per CLI nicht installiert werden.]]></item>
-		<item name="wcf.acp.package.error.exceedsPhpLimit"><![CDATA[Die Datei ist größer als das PHP-Limit „max_upload_filesize“ und/oder „post_max_size“.]]></item>
+		<item name="wcf.acp.package.error.exceedsPhpLimit"><![CDATA[Die Datei ist größer als das PHP-Limit „upload_max_filesize“ und/oder „post_max_size“.]]></item>
 		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[Es ist bereits eine App installiert, die die gleiche Abkürzung besitzt.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
@@ -2269,7 +2269,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die maximale Anzahl an Dateianhängen erreicht.]]></item>
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateianhänge ausgewählt, maximal verbleibend: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
-		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[Die Datei ist größer als das PHP-Limit „max_upload_filesize“ und/oder „post_max_size“.]]></item>
+		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[Die Datei ist größer als das PHP-Limit „upload_max_filesize“ und/oder „post_max_size“.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximale Anzahl an Dateianhängen: {#$attachmentHandler->getMaxCount()}<br>
 Maximale Dateigröße: {@$attachmentHandler->getMaxSize()|filesize}<br>
 Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
