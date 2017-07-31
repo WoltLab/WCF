@@ -219,6 +219,10 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 								// and cannot be restored by WSC itself
 								return false;
 							}
+							else if ($filename === 'require.build.js') {
+								// ignore require build configuration file
+								return false;
+							}
 							else if ($filename === 'templates') {
 								// ignores both `templates` and `acp/templates`
 								return false;
@@ -286,6 +290,10 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 							$filename = $current->getFilename();
 							if ($filename[0] === '.') {
 								// ignore dot files and files/directories starting with a dot
+								return false;
+							}
+							else if ($filename === 'require.build.js') {
+								// ignore require build configuration file
 								return false;
 							}
 							
