@@ -19,6 +19,14 @@ interface ICategoryType {
 	public function afterDeletion(CategoryEditor $categoryEditor);
 	
 	/**
+	 * Is called before the given category is deleted.
+	 * 
+	 * @param	CategoryEditor	$categoryEditor
+	 * @since	3.1
+	 */
+	public function beforeDeletion(CategoryEditor $categoryEditor);
+	
+	/**
 	 * Returns true if the active user can add a category of this type.
 	 * 
 	 * @return	boolean

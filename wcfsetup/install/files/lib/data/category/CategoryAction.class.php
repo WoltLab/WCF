@@ -41,6 +41,11 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 * @inheritDoc
 	 */
 	public function delete() {
+		// call category types
+		foreach ($this->getObjects() as $categoryEditor) {
+			$categoryEditor->getProcessor()->beforeDeletion($categoryEditor);
+		}
+		
 		$returnValue = parent::delete();
 		
 		// delete language items

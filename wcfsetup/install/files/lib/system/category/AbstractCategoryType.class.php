@@ -78,6 +78,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	/**
 	 * @inheritDoc
 	 */
+	public function beforeDeletion(CategoryEditor $categoryEditor) {
+		// does nothing
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function canAddCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canAddCategory');
 	}
