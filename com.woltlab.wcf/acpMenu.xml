@@ -115,6 +115,11 @@
 				<permissions>admin.configuration.package.canInstallPackage</permissions>
 				<icon>fa-plus</icon>
 			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest">
+				<parent>wcf.acp.menu.link.devtools</parent>
+				<controller>wcf\acp\page\DevtoolsNotificationTestPage</controller>
+			</acpmenuitem>
 			<!-- /devtools -->
 		
 		<!-- /configuration -->

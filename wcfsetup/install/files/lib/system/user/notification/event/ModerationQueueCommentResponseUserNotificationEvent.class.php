@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
@@ -21,7 +22,10 @@ use wcf\system\WCF;
  *
  * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
-class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseUserNotificationEvent;
+	use TTestableModerationQueueUserNotificationEvent;
+	
 	/**
 	 * language item prefix for the notification texts
 	 * @var	string
@@ -187,5 +191,24 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	protected function prepare() {
 		CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
 		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['userID']);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	public static function canBeTriggeredByGuests() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => self::getTestUserModerationQueueEntry($author, $recipient)->queueID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')
+		];
 	}
 }

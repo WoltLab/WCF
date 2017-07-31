@@ -3,6 +3,7 @@ namespace wcf\system\user\notification\event;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
@@ -18,7 +19,9 @@ use wcf\system\WCF;
  *
  * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
-class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -130,5 +133,16 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => $recipient->userID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user.profileComment')
+		];
 	}
 }

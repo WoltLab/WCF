@@ -1,6 +1,11 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\paid\subscription\PaidSubscription;
+use wcf\data\paid\subscription\PaidSubscriptionAction;
+use wcf\data\paid\subscription\user\PaidSubscriptionUser;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
+use wcf\data\user\UserProfile;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\PaidSubscriptionUserUserNotificationObject;
 use wcf\system\WCF;
@@ -16,7 +21,9 @@ use wcf\system\WCF;
  * 
  * @method	PaidSubscriptionUserUserNotificationObject	getUserNotificationObject()
  */
-class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNotificationEvent {
+class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -65,5 +72,35 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
 		$userSubscriptionList->getConditionBuilder()->add('isActive = ?', [1]);
 		
 		return $userSubscriptionList->countObjects() > 0;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @return	PaidSubscriptionUserUserNotificationObject[]
+	 * @since	3.1
+	 */
+	public static function getTestObjects(UserProfile $recipient, UserProfile $author) {
+		/** @var PaidSubscription $paidSubscription */
+		$paidSubscription = (new PaidSubscriptionAction([], 'create', [
+			'data' => [
+				'title' => 'Test Subscription'
+			]
+		]))->executeAction()['returnValues'];
+		
+		/** @var PaidSubscriptionUser $paidSubscriptionUser */
+		$paidSubscriptionUser = (new PaidSubscriptionUserAction([], 'create', [
+			'data' => [
+				'startDate' => TIME_NOW - 24 * 24 * 60 * 60,
+				'endDate' => TIME_NOW + 24 * 60 * 60,
+				'isActive' => 1,
+				'sentExpirationNotification' => 0
+			],
+			'subscription' => $paidSubscription,
+			'user' => $recipient
+		]))->executeAction()['returnValues'];
+		
+		$paidSubscriptionUser->setSubscription($paidSubscription);
+		
+		return [new PaidSubscriptionUserUserNotificationObject($paidSubscriptionUser)];
 	}
 }

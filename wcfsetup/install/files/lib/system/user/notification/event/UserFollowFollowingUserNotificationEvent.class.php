@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\user\follow\UserFollow;
+use wcf\data\user\follow\UserFollowAction;
+use wcf\data\user\UserProfile;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 
 /**
@@ -13,7 +17,9 @@ use wcf\system\user\notification\object\UserFollowUserNotificationObject;
  * 
  * @method	UserFollowUserNotificationObject	getUserNotificationObject()
  */
-class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent {
+class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -72,5 +78,36 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->followUserID);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @return	UserFollowUserNotificationObject[]
+	 * @since	3.1
+	 */
+	public static function getTestObjects(UserProfile $recipient, UserProfile $author) {
+		$follow = UserFollow::getFollow($recipient->userID, $author->userID);
+		if (!$follow->followID) {
+			$follow = (new UserFollowAction([], 'create', [
+				'data' => [
+					'userID' => $recipient->userID,
+					'followUserID' => $author->userID,
+					'time' => TIME_NOW - 60 * 60
+				]
+			]))->executeAction()['returnValues'];
+		}
+		
+		return [new UserFollowUserNotificationObject($follow)];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @return	UserFollowUserNotificationObject
+	 * @since	3.1
+	 */
+	public static function getTestAdditionalData(IUserNotificationObject $object) {
+		/** @var UserFollowUserNotificationObject $object */
+		
+		return [$object->followUserID];
 	}
 }

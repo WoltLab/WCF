@@ -387,6 +387,23 @@
 		<item name="wcf.acp.devtools.project.quickSetup.path.description"><![CDATA[All folders directly contained in the path will be checked whether they contain a package.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.path.error.noPackages"><![CDATA[The path contains no new packages.]]></item>
 		<item name="wcf.acp.devtools.project.quickSetup.success"><![CDATA[{#$count} new project{if $count > 1}s have{else} has{/if} been added.]]></item>
+		<item name="wcf.acp.devtools.notificationTest"><![CDATA[Notification Test]]></item>
+		<item name="wcf.acp.devtools.notificationTest.button.test"><![CDATA[Test]]></item>
+		<item name="wcf.acp.devtools.notificationTest.dailyEmail"><![CDATA[Daily Email]]></item>
+		<item name="wcf.acp.devtools.notificationTest.dailyEmail.exception"><![CDATA[Daily Email Error Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.instantEmail"><![CDATA[Instant Email]]></item>
+		<item name="wcf.acp.devtools.notificationTest.instantEmail.exception"><![CDATA[Instant Email Error Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.message"><![CDATA[Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.message.exception"><![CDATA[Message Error Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.testCase"><![CDATA[Language: {$language}, Members: {#$timesTriggered}{if $canBeTriggeredByGuests}, Guests: {#$guestsTriggered}{/if}]]></item>
+		<item name="wcf.acp.devtools.notificationTest.title.exception"><![CDATA[Titel Error Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.contentCreationWarning"><![CDATA[Do not use the tests in a productive systems as random data is created during the tests.]]></item>
+		<item name="wcf.acp.devtools.notificationTest.error.generation"><![CDATA[While creating the notifications, {#$errors} errors occurred.]]></item>
+		<item name="wcf.acp.devtools.notificationTest.button.showAll"><![CDATA[All]]></item>
+		<item name="wcf.acp.devtools.notificationTest.titles"><![CDATA[Titles]]></item>
+		<item name="wcf.acp.devtools.notificationTest.messages"><![CDATA[Messages]]></item>
+		<item name="wcf.acp.devtools.notificationTest.instantEmails"><![CDATA[Instant Emails]]></item>
+		<item name="wcf.acp.devtools.notificationTest.dailyEmails"><![CDATA[Daily Emails]]></item>
 	</category>
 	
 	<category name="wcf.acp.email">
@@ -896,6 +913,7 @@
 		<item name="wcf.acp.menu.link.devtools"><![CDATA[Developer Tools]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projects]]></item>
+		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Notification Test]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">

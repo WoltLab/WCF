@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
@@ -15,7 +17,9 @@ use wcf\system\WCF;
  * 
  * @method	LikeUserNotificationObject	getUserNotificationObject()
  */
-class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseLikeUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -124,5 +128,16 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 	protected function getResponseID() {
 		// this is the `wcfN_like.objectID` value
 		return $this->getUserNotificationObject()->objectID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => $recipient->userID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user.profileComment')
+		];
 	}
 }
