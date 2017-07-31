@@ -7,13 +7,13 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
-use wcf\system\email\Email;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
+use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
 use wcf\system\exception\ImplementationException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\SingletonFactory;
 use wcf\system\user\notification\event\ITestableUserNotificationEvent;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\MathUtil;
 use wcf\util\StringUtil;
@@ -201,7 +201,6 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 		if (!is_subclass_of($className, ITestableUserNotificationEvent::class)) {
 			throw new ImplementationException($className, ITestableUserNotificationEvent::class);
 		}
-		
 		
 		$authors = $this->getAuthors();
 		$firstAuthor = reset($authors);

@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
+use wcf\data\paid\subscription\PaidSubscription;
+use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\data\user\UserProfile;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\PaidSubscriptionUserUserNotificationObject;

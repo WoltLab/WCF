@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentAction;
 use wcf\data\comment\CommentEditor;
-use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\CommentResponseAction;
 use wcf\data\user\UserProfile;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\IUserNotificationObject;

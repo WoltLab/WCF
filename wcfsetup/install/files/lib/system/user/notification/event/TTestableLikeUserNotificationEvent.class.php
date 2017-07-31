@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\like\Like;
 use wcf\data\like\object\ILikeObject;
+use wcf\data\like\Like;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\like\LikeHandler;
