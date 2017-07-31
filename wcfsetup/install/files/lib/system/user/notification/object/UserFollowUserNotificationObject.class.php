@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @method	UserFollow	getDecoratedObject()
  * @mixin	UserFollow
  */
-class UserFollowUserNotificationObject extends DatabaseObjectDecorator {
+class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
 	 * @inheritDoc
 	 */
