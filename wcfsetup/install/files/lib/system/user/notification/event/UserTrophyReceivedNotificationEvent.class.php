@@ -17,7 +17,7 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
 	 * @inheritDoc
 	 */
 	public function getTitle() {
-		return $this->getLanguage()->get('wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received');
+		return $this->getLanguage()->get('wcf.user.notification.trophy.received.title');
 	}
 	
 	/**

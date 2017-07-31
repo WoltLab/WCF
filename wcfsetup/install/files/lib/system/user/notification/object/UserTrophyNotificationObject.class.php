@@ -40,5 +40,4 @@ class UserTrophyNotificationObject extends DatabaseObjectDecorator implements IU
 	public function getAuthorID() {
 		return $this->getDecoratedObject()->userID;
 	}
-	
 }
