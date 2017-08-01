@@ -88,10 +88,11 @@ abstract class CustomOption extends Option {
 	
 	/**
 	 * Returns the formatted value of this option.
-	 *
+	 * 
+	 * @param       boolean         $forcePlaintext
 	 * @return	string
 	 */
-	public function getFormattedOptionValue() {
+	public function getFormattedOptionValue($forcePlaintext = false) {
 		switch ($this->optionType) {
 			case 'boolean':
 				return WCF::getLanguage()->get('wcf.acp.customOption.optionType.boolean.'.($this->optionValue ? 'yes' : 'no'));
@@ -128,15 +129,21 @@ abstract class CustomOption extends Option {
 					}
 				}
 				return $result;
-				
+			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'textarea':
-				return SimpleMessageParser::getInstance()->parse($this->optionValue);
-				
+				if (!$forcePlaintext) return SimpleMessageParser::getInstance()->parse($this->optionValue);
+				// fallthrough
+			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'message':
-				return MessageParser::getInstance()->parse($this->optionValue);
-				
+				if (!$forcePlaintext) return MessageParser::getInstance()->parse($this->optionValue);
+				// fallthrough
+			
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'URL':
-				return StringUtil::getAnchorTag($this->optionValue);
+				if (!$forcePlaintext) return StringUtil::getAnchorTag($this->optionValue);
+				// fallthrough
 				
 			default:
 				return StringUtil::encodeHTML($this->optionValue);
