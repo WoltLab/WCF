@@ -45,7 +45,7 @@
 				{/if}
 			{/if}
 
-			{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($userProfile->isAccessible('canViewTrophies') || $userProfile->userID == $__wcf->session->userID) && $userProfile->getSpecialTrophies()|count}
+			{if !$isReply && MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($userProfile->isAccessible('canViewTrophies') || $userProfile->userID == $__wcf->session->userID) && $userProfile->getSpecialTrophies()|count}
 				<div class="specialTrophyContainer">
 					<ul>
 						{foreach from=$userProfile->getSpecialTrophies() item=trophy}
