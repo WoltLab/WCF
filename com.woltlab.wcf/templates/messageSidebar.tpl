@@ -49,7 +49,7 @@
 				<div class="specialTrophyContainer">
 					<ul>
 						{foreach from=$userProfile->getSpecialTrophies() item=trophy}
-							<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32)}</a></li>
+							<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32, true)}</a></li>
 						{/foreach}
 					</ul>
 				</div>

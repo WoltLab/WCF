@@ -72,14 +72,16 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	 * Renders a trophy. 
 	 * 
 	 * @param	integer		$size
+	 * @param	boolean		$showTooltip
 	 * @return 	string
 	 */
-	public function renderTrophy($size = self::DEFAULT_SIZE) {
+	public function renderTrophy($size = self::DEFAULT_SIZE, $showTooltip = false) {
 		switch ($this->type) {
 			case self::TYPE_IMAGE: {
 				return WCF::getTPL()->fetch('trophyImage', 'wcf', [
 					'size' => $size,
-					'trophy' => $this
+					'trophy' => $this,
+					'showTooltip' => $showTooltip
 				], true);
 				break;
 			}
@@ -87,14 +89,16 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 			case self::TYPE_BADGE:
 				return WCF::getTPL()->fetch('trophyBadge', 'wcf', [
 					'size' => $size,
-					'trophy' => $this
+					'trophy' => $this,
+					'showTooltip' => $showTooltip
 				], true);
 			break;
 			
 			default: 
 				$parameters = [
 					'renderedTemplate' => null, 
-					'size' => $size
+					'size' => $size,
+					'showTooltip' => $showTooltip
 				];
 				
 				EventHandler::getInstance()->fireAction($this, 'renderTrophy', $parameters);
