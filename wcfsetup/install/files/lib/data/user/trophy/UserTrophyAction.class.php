@@ -115,7 +115,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 			}
 			
 			foreach ($updateUserTrophies as $userID => $count) {
-				$userAction = new UserAction([$returnValues->userID], 'update', [
+				$userAction = new UserAction([$userID], 'update', [
 					'counters' => [
 						'trophyPoints' => $count
 					]
