@@ -33,13 +33,15 @@
 {/hascontent}
 
 <div class="section">
-	<nav class="tabMenu">
-		<ul>
-			{foreach from=$categories item='menuCategory'}
-				<li{if $menuCategory->categoryID == $category->categoryID} class="active"{/if}><a href="{$menuCategory->getLink()}">{$menuCategory->getTitle()}</a></li>
-			{/foreach}
-		</ul>
-	</nav>
+	{if $categories|count > 1}
+		<nav class="tabMenu">
+			<ul>
+				{foreach from=$categories item='menuCategory'}
+					<li{if $menuCategory->categoryID == $category->categoryID} class="active"{/if}><a href="{$menuCategory->getLink()}">{$menuCategory->getTitle()}</a></li>
+				{/foreach}
+			</ul>
+		</nav>
+	{/if}
 
 	<div class="tabMenuContent">
 		{if $objects|count}
