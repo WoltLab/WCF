@@ -1236,6 +1236,7 @@
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Online-Status der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Anzahl der erhaltenen Likes der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Aktivitätspunkte der Autoren anzeigen]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_trophy_points"><![CDATA[Anzahl der Trophäen der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Ausgewählte Profilfelder der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Aktiviert die Funktion für das Taggen von Inhalten.]]></item>

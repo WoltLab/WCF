@@ -1222,6 +1222,7 @@
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Display author’s online status]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Display author’s likes received]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Display author’s activity points]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_trophy_points"><![CDATA[Display author’s trophy received]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Display Selected Author Profile Fields]]></item>
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the use of tags for content.]]></item>

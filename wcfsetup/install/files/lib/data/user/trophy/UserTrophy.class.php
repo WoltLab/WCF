@@ -84,7 +84,8 @@ class UserTrophy extends DatabaseObject {
 		
 		if (!$user->userID) {
 			$userProfile = new UserProfile(new User(null, []));
-		} else {
+		} 
+		else {
 			$userProfile = UserProfileRuntimeCache::getInstance()->getObject($user->userID);
 		}
 		
