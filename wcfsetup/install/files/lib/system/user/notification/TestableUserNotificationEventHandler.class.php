@@ -261,7 +261,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 	
 	/**
 	 * Forcefully resets the internal data of a cache builder to get up-to-date
-	 * data within the same request. This is crutial as during testing, objects
+	 * data within the same request. This is crucial as during testing, objects
 	 * are created and used within the same request.
 	 * 
 	 * @param	ICacheBuilder	$cacheBuilder

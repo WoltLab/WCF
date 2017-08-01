@@ -1,12 +1,14 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\data\trophy\category\TrophyCategory;
+use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyAction;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophy;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\cache\builder\TrophyCacheBuilder;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\TestableUserNotificationEventHandler;
@@ -84,8 +86,16 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
 			]
 		]))->executeAction()['returnValues'];
 		
-		/** @var UserTrophy $userTropy */
-		$userTropy = (new UserTrophyAction([], 'create', [
+		TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(TrophyCacheBuilder::getInstance());
+		TrophyCache::getInstance()->clearCache();
+		TrophyCache::getInstance()->init();
+		
+		TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(CategoryCacheBuilder::getInstance());
+		CategoryCacheBuilder::getInstance()->reset();
+		TrophyCategoryCache::getInstance()->init();
+		
+		/** @var UserTrophy $userTrophy */
+		$userTrophy = (new UserTrophyAction([], 'create', [
 			'data' => [
 				'trophyID' => $trophy->trophyID,
 				'userID' => $recipient->userID,
@@ -95,9 +105,6 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
 			]
 		]))->executeAction()['returnValues'];
 		
-		TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(TrophyCacheBuilder::getInstance());
-		TrophyCache::getInstance()->clearCache();
-		
-		return [new UserTrophyNotificationObject($userTropy)];
+		return [new UserTrophyNotificationObject($userTrophy)];
 	}
 }

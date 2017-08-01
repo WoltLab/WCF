@@ -138,8 +138,5 @@ class TrophyCache extends SingletonFactory {
 	public function clearCache() {
 		TrophyCacheBuilder::getInstance()->reset();
 		TrophyCacheBuilder::getInstance()->reset(['onlyEnabled' => 1]);
-		
-		// rebuild this cache
-		$this->init();
 	}
 }
