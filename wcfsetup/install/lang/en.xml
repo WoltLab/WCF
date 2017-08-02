@@ -1395,6 +1395,8 @@ Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/der
 		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[These options are used exclusively for development and debugging, they’re not suitable for use in production environments.]]></item>
 		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Enable developer tools]]></item>
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Enables a set of specialized tools that are used for plugin development. Should always be disabled in production environments.]]></item>
+		<item name="wcf.acp.option.force_login"><![CDATA[Force login]]></item>
+		<item name="wcf.acp.option.force_login.description"><![CDATA[Visitors are required to log-in themselves to access the page.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -3355,6 +3357,7 @@ Errors are:
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
+		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access to this page.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>

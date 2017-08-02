@@ -1122,6 +1122,10 @@ Pinterest</defaultvalue>
 			<!-- /user.ban -->
 			
 			<!-- user.register -->
+			<option name="force_login">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
 			<option name="register_disabled">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>

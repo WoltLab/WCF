@@ -43,6 +43,8 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 			UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($this->user, $this->username, $this->password);
 		}
 		
+		if (FORCE_LOGIN) WCF::getSession()->unregister('__wsc_forceLoginRedirect');
+		
 		// change user
 		WCF::getSession()->changeUser($this->user);
 		
@@ -65,7 +67,8 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		WCF::getTPL()->assign([
 			'useCookies' => $this->useCookies,
 			'supportsPersistentLogins' => UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins(),
-			'loginController' => LinkHandler::getInstance()->getLink('Login')
+			'loginController' => LinkHandler::getInstance()->getLink('Login'),
+			'forceLoginRedirect' => (FORCE_LOGIN && WCF::getSession()->getVar('__wsc_forceLoginRedirect') !== null)
 		]);
 	}
 	

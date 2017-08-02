@@ -1,9 +1,19 @@
 <?php
 namespace wcf\page;
+use wcf\form\DisclaimerForm;
+use wcf\form\EmailActivationForm;
+use wcf\form\EmailNewActivationCodeForm;
+use wcf\form\LoginForm;
+use wcf\form\LostPasswordForm;
+use wcf\form\NewPasswordForm;
+use wcf\form\RegisterActivationForm;
+use wcf\form\RegisterForm;
+use wcf\form\RegisterNewActivationCodeForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -181,6 +191,10 @@ abstract class AbstractPage implements IPage {
 	 * @inheritDoc
 	 */
 	public function show() {
+		if (FORCE_LOGIN && !RequestHandler::getInstance()->isACPRequest() && !WCF::getUser()->userID) {
+			$this->forceLogin();
+		}
+		
 		// check if active user is logged in
 		if ($this->loginRequired && !WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
@@ -319,5 +333,40 @@ abstract class AbstractPage implements IPage {
 				ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
 			}
 		}
+	}
+	
+	/**
+	 * Forces visitors to log-in themselves to access the site.
+	 */
+	protected function forceLogin() {
+		$allowedControllers = [
+			DisclaimerForm::class,
+			EmailActivationForm::class,
+			EmailNewActivationCodeForm::class,
+			LoginForm::class,
+			LostPasswordForm::class,
+			NewPasswordForm::class,
+			RegisterActivationForm::class,
+			RegisterForm::class,
+			RegisterNewActivationCodeForm::class
+		];
+		if (in_array(get_class($this), $allowedControllers)) {
+			// controller is allowed
+			return;
+		}
+		
+		if (WCF::getActiveRequest()->isAvailableDuringOfflineMode()) {
+			// allow access to those pages that should be always available
+			return;
+		}
+		
+		// force redirect to login form
+		WCF::getSession()->register('__wsc_forceLoginRedirect', true);
+		HeaderUtil::redirect(
+			LinkHandler::getInstance()->getLink('Login', [
+				'url' => WCF::getRequestURI()
+			])
+		);
+		exit;
 	}
 }

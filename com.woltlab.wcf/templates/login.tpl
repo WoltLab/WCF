@@ -1,5 +1,7 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
+{if $forceLoginRedirect}<p class="info">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
+
 {if !$errorField|empty && $errorField == 'cookie'}
 	<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
 {else}

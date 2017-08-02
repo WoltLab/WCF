@@ -1401,6 +1401,8 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[Diese Option werden exklusiv für die Entwicklung und Fehlersuche verwendet, und sind nicht für den produktiven Einsatz geeignet.]]></item>
 		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Entwickler-Werkzeuge aktivieren]]></item>
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.force_login"><![CDATA[Anmeldung erzwingen]]></item>
+		<item name="wcf.acp.option.force_login.description"><![CDATA[Besucher werden aufgefordert sich anzumelden, um auf die Inhalte zugreifen zu können.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -3358,6 +3360,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.userAgent"><![CDATA[Browser-Kennung]]></item>
 		<item name="wcf.user.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[Die Anmeldung erfordert den Einsatz von Cookies, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}aktiviere{else}aktivieren Sie{/if} diese, um die Anmeldung durchzuführen.]]></item>
+		<item name="wcf.user.login.forceLogin"><![CDATA[Sie müssen angemeldet sein, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Registrierung]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch kein Benutzerkonto auf unserer Seite? <a href="{link controller='Register'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Registriere dich{else}Registrieren Sie sich{/if} kostenlos</a> und {if LANGUAGE_USE_INFORMAL_VARIANT}nimm{else}nehmen Sie{/if} an unserer Community teil!]]></item>
