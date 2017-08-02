@@ -88,6 +88,12 @@ https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?channel={$CHANNEL}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		
+		<provider name="twitch-clip">
+			<title>Twitch Clip</title>
+			<regex><![CDATA[https?://clips.twitch.tv/(?<AUTHOR>([a-zA-Z0-9_]+)/)?(?<VIDEO>[a-zA-Z0-9_]+)]]></regex>
+			<html><![CDATA[<div class="videoContainer"><iframe src="https://clips.twitch.tv/embed?clip={$AUTHOR}{$VIDEO}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
+		</provider>
+		
 		<provider name="twitch-video">
 			<title>Twitch Video</title>
 			<regex><![CDATA[https?://www.twitch.tv/videos/(?<ID>[0-9]+)
