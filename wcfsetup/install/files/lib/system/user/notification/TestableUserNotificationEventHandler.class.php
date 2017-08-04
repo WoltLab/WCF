@@ -224,6 +224,8 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 			$maxGuestCount = 0;
 		}
 		
+		$unknownAuthor = UserProfile::getGuestUserProfile('Unknown Author');
+		
 		$events = [];
 		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 			for ($authorCount = $minAuthorCount; $authorCount <= $maxAuthorCount; $authorCount++) {
@@ -242,13 +244,20 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 							'language' => $language,
 							'timesTriggered' => $authorCount
 						]));
+						
 						$event->setObject(
 							$this->getUserNotification($firstAuthor, $authorCount, $guestCount, $additionalData),
 							$object,
-							$firstAuthor,
+							$authorCount ? $firstAuthor : $unknownAuthor,
 							$additionalData
 						);
-						$event->setAuthors(array_slice($authors, 0, $authorCount, true));
+						
+						if ($authorCount) {
+							$event->setAuthors(array_slice($authors, 0, $authorCount, true));
+						}
+						else {
+							$event->setAuthors([$unknownAuthor]);
+						}
 						
 						$events[] = $event;
 					}
