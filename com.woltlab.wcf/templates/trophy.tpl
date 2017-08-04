@@ -18,7 +18,7 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$trophy->getTitle()}</h1>
 			<ul class="inlineList contentHeaderMetaData">
-				<li>{@$trophy->getDescription()}</li>
+				<li>{$trophy->getDescription()}</li>
 				<li><span class="icon icon16 fa-users"></span> {@$items}</li>
 			</ul>
 		</div>
@@ -43,7 +43,7 @@
 
 				<div class="sidebarItemTitle">
 					<h3>{@$userTrophy->getUserProfile()->getAnchorTag()}</h3>
-					<small>{@$userTrophy->getDescription()} – {@$userTrophy->time|time}</small>
+					<small>{$userTrophy->getDescription()} – {@$userTrophy->time|time}</small>
 				</div>
 			</li>
 		{/foreach}

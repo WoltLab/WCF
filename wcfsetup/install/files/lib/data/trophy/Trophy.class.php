@@ -144,7 +144,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	 * @return 	string
 	 */
 	public function getDescription() {
-		return nl2br(StringUtil::encodeHTML(WCF::getLanguage()->get($this->description)), false); 
+		return WCF::getLanguage()->get($this->description);
 	}
 	
 	/**

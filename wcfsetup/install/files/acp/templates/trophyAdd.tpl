@@ -80,11 +80,11 @@
 				</dd>
 			</dl>
 			{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
-			
+
 			<dl{if $errorField == 'description'} class="formError"{/if}>
 				<dt><label for="description">{lang}wcf.acp.trophy.description{/lang}</label></dt>
 				<dd>
-					<textarea id="description" name="description" cols="40" rows="10">{$i18nPlainValues[description]}</textarea>
+					<input id="description" name="description" type="text" value="{$i18nPlainValues[description]}">
 					{if $errorField == 'description'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

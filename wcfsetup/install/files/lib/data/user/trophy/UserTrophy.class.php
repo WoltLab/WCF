@@ -67,7 +67,7 @@ class UserTrophy extends DatabaseObject {
 			return $this->getTrophy()->getDescription();
 		}
 		
-		return nl2br(StringUtil::encodeHTML(strtr($this->description, $this->getReplacements())));
+		return strtr(WCF::getLanguage()->get($this->description), $this->getReplacements());
 	}
 	
 	/**

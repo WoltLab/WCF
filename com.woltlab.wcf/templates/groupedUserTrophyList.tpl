@@ -7,7 +7,7 @@
 
 					<div class="containerHeadline">
 						<h3><a href="{link controller='Trophy' object=$userTrophy->getTrophy()}{/link}">{@$userTrophy->getTrophy()->getTitle()}</a></h3>
-						<small>{@$userTrophy->getDescription()} - {@$userTrophy->time|time}</small>
+						<small>{$userTrophy->getDescription()} - {@$userTrophy->time|time}</small>
 					</div>
 				</div>
 			</li>
