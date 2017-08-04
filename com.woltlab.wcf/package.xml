@@ -6,7 +6,7 @@
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
 		<version>3.1.0 Alpha 1</version> <!-- codename: tornado -->
-		<date>2017-02-21</date>
+		<date>2017-08-03</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -42,5 +42,34 @@
 		<instruction type="box" />
 		<instruction type="mediaProvider" />
 		<instruction type="script">acp/post_install.php</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="3.0.7">
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+		
+		<instruction type="sql" run="standalone">update_3.1.sql</instruction>
+		
+		<instruction type="file" run="standalone" />
+		
+		<instruction type="language" run="standalone" />
+		
+		<instruction type="acpMenu" />
+		<instruction type="bbcode" />
+		<instruction type="clipboardAction" />
+		<instruction type="cronjob" />
+		<instruction type="eventListener" />
+		<instruction type="menuItem" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="option" />
+		<instruction type="page" />
+		<instruction type="userGroupOption" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="userOption" />
+		
+		<instruction type="packageInstallationPlugin" />
+		<!-- new pip -->
+		<instruction type="mediaProvider" />
 	</instructions>
 </package>

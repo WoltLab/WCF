@@ -1,0 +1,159 @@
+ALTER TABLE wcf1_article ADD COLUMN isDeleted TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_article ADD COLUMN hasLabels TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE wcf1_article_content ADD COLUMN teaserImageID INT(10);
+
+ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN name VARCHAR(80) NOT NULL;
+ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN packageID INT(10) NOT NULL;
+ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN className varchar(255) NOT NULL DEFAULT '';
+ALTER TABLE wcf1_bbcode_media_provider ADD UNIQUE KEY name (name, packageID);
+
+ALTER TABLE wcf1_box ADD COLUMN lastUpdateTime INT(10) NOT NULL DEFAULT 0;
+
+ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponses MEDIUMINT(7) NOT NULL DEFAULT '0';
+ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE wcf1_comment ADD COLUMN enableHtml TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_comment ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_comment DROP KEY (objectTypeID, objectID, time);
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_comment ADD KEY (objectTypeID, objectID, isDisabled, time);
+
+ALTER TABLE wcf1_comment_response ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_comment_response DROP KEY (commentID, time);
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_comment_response ADD KEY (commentID, isDisabled, time);
+
+DROP TABLE IF EXISTS wcf1_contact_option;
+CREATE TABLE wcf1_contact_option (
+	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	optionTitle VARCHAR(255) NOT NULL DEFAULT '',
+	optionDescription TEXT,
+	optionType VARCHAR(255) NOT NULL DEFAULT '',
+	defaultValue MEDIUMTEXT,
+	validationPattern TEXT,
+	selectOptions MEDIUMTEXT,
+	required TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_contact_recipient;
+CREATE TABLE wcf1_contact_recipient (
+	recipientID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isAdministrator TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_devtools_project;
+CREATE TABLE wcf1_devtools_project (
+	projectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(191) NOT NULL,
+	path TEXT,
+	
+	UNIQUE KEY name (name)
+);
+
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_language_item ADD COLUMN languageItemOldValue MEDIUMTEXT;
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_language_item ADD COLUMN languageCustomItemDisableTime INT(10);
+
+ALTER TABLE wcf1_media ADD COLUMN categoryID INT(10);
+
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_modification_log ADD COLUMN hidden TINYINT(1) NOT NULL DEFAULT 0;
+
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_package_update ADD COLUMN pluginStoreFileID INT(10) NOT NULL DEFAULT 0;
+
+ALTER TABLE wcf1_package_update_server CHANGE COLUMN apiVersion apiVersion ENUM('2.0', '2.1', '3.1') NOT NULL DEFAULT '2.0';
+
+ALTER TABLE wcf1_page ADD COLUMN cssClassName VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE wcf1_page ADD COLUMN availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_page ADD COLUMN allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_page ADD COLUMN excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0;
+
+DROP TABLE IF EXISTS wcf1_page_box_order;
+CREATE TABLE wcf1_page_box_order (
+	pageID INT(10) NOT NULL,
+	boxID INT(10) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY pageToBox (pageID, boxID)
+);
+
+ALTER TABLE wcf1_paid_subscription_user ADD COLUMN sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE wcf1_style ADD isTainted TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_style ADD hasFavicon TINYINT(1) NOT NULL DEFAULT 0;
+
+DROP TABLE IF EXISTS wcf1_trophy;
+CREATE TABLE wcf1_trophy(
+	trophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(255),
+	description MEDIUMTEXT,	
+	categoryID INT(10) NOT NULL,
+	type SMALLINT(1) DEFAULT 1,
+	iconFile MEDIUMTEXT, 
+	iconName VARCHAR(255),
+	iconColor VARCHAR(255),
+	badgeColor VARCHAR(255),
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	awardAutomatically TINYINT(1) NOT NULL DEFAULT 0,
+	KEY(categoryID)
+);
+
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_user ADD COLUMN trophyPoints INT(10) NOT NULL DEFAULT 0;
+-- WARNING: May be slow, use a separate request?
+ALTER TABLE wcf1_user ADD KEY trophyPoints (trophyPoints);
+
+DROP TABLE IF EXISTS wcf1_user_special_trophy;
+CREATE TABLE wcf1_user_special_trophy(
+	trophyID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	UNIQUE KEY (trophyID, userID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_trophy;
+CREATE TABLE wcf1_user_trophy(
+	userTrophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	trophyID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	time INT(10) NOT NULL DEFAULT 0,
+	description MEDIUMTEXT,
+	useCustomDescription TINYINT(1) NOT NULL DEFAULT 0,
+	KEY(trophyID, time)
+);
+
+ALTER TABLE wcf1_user_rank ADD COLUMN hideTitle TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
+ALTER TABLE wcf1_bbcode_media_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_media ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
+ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
+ALTER TABLE wcf1_trophy ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
+
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonBackground', 'rgba(58, 109, 156, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonBackgroundActive', 'rgba(36, 66, 95, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonText', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextActive', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextDisabled', 'rgba(165, 165, 165, 1)');
+
+-- default options: subject and message
+INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (1, 'wcf.contact.option1', 'wcf.contact.optionDescription1', 'text', 1, 1, 1);
+INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (2, 'wcf.contact.option2', '', 'textarea', 1, 1, 1);
+
+-- default recipient: site administrator
+INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
