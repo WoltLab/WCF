@@ -33,6 +33,7 @@
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.tagging.taggableObject</definitionname>
 			<classname>wcf\system\tagging\TaggableArticle</classname>
+			<options>module_article</options>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.likeableArticle</name>
