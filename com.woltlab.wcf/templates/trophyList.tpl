@@ -43,9 +43,9 @@
 		</nav>
 	{/if}
 
-	<div class="tabMenuContent">
+	<div{if $categories|count > 1} class="tabMenuContent"{/if}>
 		{if $objects|count}
-			<ol class="section containerBoxList trophyCategoryList tripleColumned">
+			<ol class="section containerList trophyCategoryList tripleColumned">
 				{foreach from=$objects item=trophy}
 					<li class="box64">
 						<div>{@$trophy->renderTrophy(64)}</div>
