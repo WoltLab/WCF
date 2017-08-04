@@ -36,14 +36,14 @@
 {/hascontent}
 
 {if $objects|count}
-	<ol class="section containerBoxList trophyCategoryList tripleColumned">
+	<ol class="section containerList trophyCategoryList tripleColumned">
 		{foreach from=$objects item=userTrophy}
 			<li class="box64">
 				<div>{@$userTrophy->getUserProfile()->getAvatar()->getImageTag(64)}</div>
 
 				<div class="sidebarItemTitle">
 					<h3>{@$userTrophy->getUserProfile()->getAnchorTag()}</h3>
-					<small>{@$userTrophy->getDescription()} - {@$userTrophy->time|time}</small>
+					<small>{@$userTrophy->getDescription()} – {@$userTrophy->time|time}</small>
 				</div>
 			</li>
 		{/foreach}
