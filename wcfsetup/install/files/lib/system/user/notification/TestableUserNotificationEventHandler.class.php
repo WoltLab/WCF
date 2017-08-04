@@ -68,12 +68,15 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 			
 			$count = $userProfileList->countObjects();
 			
+			$languages = LanguageFactory::getInstance()->getLanguages();
+			
 			while ($count < self::MAX_AUTHOR_COUNT) {
 				$username = substr(StringUtil::getRandomID(), 0, 10);
 				
 				(new UserAction([], 'create', [
 					'data' => [
 						'email' => $username . '@example.com',
+						'languageID' => $languages[array_rand($languages)]->languageID,
 						'password' => PasswordUtil::getRandomPassword(),
 						'registrationDate' => TIME_NOW - 24 * 3600 * MathUtil::getRandomValue(10, 1000),
 						'username' => $username
