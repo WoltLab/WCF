@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\package\installation\plugin;
 use wcf\data\devtools\project\DevtoolsProject;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\option\OptionEditor;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
