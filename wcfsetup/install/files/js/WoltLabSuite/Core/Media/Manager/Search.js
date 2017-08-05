@@ -85,7 +85,9 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 					else {
 						innerInfo = elCreate('p');
 						innerInfo.className = 'innerInfo';
-						innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold');
+						innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold', {
+							minSearchLength: this._mediaManager.getOption('minSearchLength')
+						});
 						
 						DomUtil.insertAfter(innerInfo, this._input.parentNode);
 					}
