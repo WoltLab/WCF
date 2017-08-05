@@ -63,7 +63,7 @@
 
 {if $trophyCategories|count}
 	<form id="trophyForm" method="post" action="{if $action == 'add'}{link controller='TrophyAdd'}{/link}{else}{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}{/if}">
-		<section>
+		<section class="section">
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 				<dd>
