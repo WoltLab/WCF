@@ -172,7 +172,6 @@ class UserTrophyAddForm extends AbstractAcpForm {
 		}
 		
 		$this->reset();
-		
 	}
 	
 	/**
