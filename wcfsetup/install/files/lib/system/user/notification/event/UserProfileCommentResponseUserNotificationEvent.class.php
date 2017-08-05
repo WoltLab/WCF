@@ -67,8 +67,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $owner,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered,
-				'responseID' => $this->getUserNotificationObject()->responseID
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered
 			]);
 		}
 		
@@ -106,7 +105,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall/comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID;
+		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall/comment' . $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**

@@ -75,8 +75,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 				'count' => $count,
 				'others' => $count - 1,
 				'guestTimesTriggered' => $this->notification->guestTimesTriggered,
-				'commentID' => $this->getUserNotificationObject()->commentID,
-				'responseID' => $this->getUserNotificationObject()->responseID
+				'commentID' => $this->getUserNotificationObject()->commentID
 			]);
 		}
 		
@@ -124,7 +123,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		return LinkHandler::getInstance()->getLink(
 			'User',
 			['object' => WCF::getUser()],
-			'#wall/comment' . $this->getUserNotificationObject()->commentID . '/response' . $this->getUserNotificationObject()->responseID
+			'#wall/comment' . $this->getUserNotificationObject()->commentID
 		);
 	}
 	
