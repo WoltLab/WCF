@@ -89,7 +89,7 @@
 				<dl{if $errorField == 'specialTrophies'} class="formError"{/if}>
 					<dt>{lang}wcf.user.trophy.specialTrophies{/lang}</dt>
 					<dd>
-						<ul class="specialTrophiesUl">
+						<ul class="specialTrophyList">
 							{if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') == 1}
 								{foreach from=$availableTrophies item=trophy}
 									<li><label><input type="radio" name="specialTrophies[]" value="{$trophy->getObjectID()}"{if $trophy->getObjectID()|in_array:$specialTrophies} checked{/if}> {@$trophy->renderTrophy(32)} <span>{$trophy->getTitle()}</span></label></li>
