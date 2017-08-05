@@ -2,6 +2,7 @@
 namespace wcf\data\package\installation\plugin;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\option\OptionEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
@@ -9,6 +10,7 @@ use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\OptionPackageInstallationPlugin;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\version\VersionTracker;
@@ -116,6 +118,10 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 		VersionTracker::getInstance()->createStorageTables();
 		
 		CacheHandler::getInstance()->flushAll();
+		
+		if ($pip instanceof OptionPackageInstallationPlugin) {
+			OptionEditor::resetCache();
+		}
 		
 		if ($this->packageInstallationPlugin->pluginName === 'language') {
 			LanguageFactory::getInstance()->clearCache();
