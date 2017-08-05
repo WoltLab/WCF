@@ -185,7 +185,7 @@ class SettingsForm extends AbstractForm {
 			
 			// validate special trophies
 			if (count($this->specialTrophies) > WCF::getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-				throw new UserInputException('specialTrophies', 'tooMuch');
+				throw new UserInputException('specialTrophies', 'tooMany');
 			}
 			
 			foreach ($this->specialTrophies as $trophyID) {
