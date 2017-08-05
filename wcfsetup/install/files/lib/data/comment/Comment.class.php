@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\TUserContent;
 use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\util\StringUtil;
 
@@ -109,7 +110,10 @@ class Comment extends DatabaseObject implements IMessage {
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getLink($this->objectTypeID, $this->objectID);
+		/** @var ICommentManager $processor */
+		$processor = CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
+		
+		return $processor->getCommentLink($this);
 	}
 	
 	/**

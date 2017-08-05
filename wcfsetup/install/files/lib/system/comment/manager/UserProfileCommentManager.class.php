@@ -93,6 +93,21 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	/**
 	 * @inheritDoc
 	 */
+	public function getCommentLink(Comment $comment) {
+		return $this->getLink($comment->objectTypeID, $comment->objectID) . '#wall/comment' . $comment->commentID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getResponseLink(CommentResponse $response) {
+		return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
+			. '#wall/comment' . $response->commentID . '/response' . $response->responseID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		if ($isResponse) return WCF::getLanguage()->get('wcf.user.profile.content.wall.commentResponse');
 		

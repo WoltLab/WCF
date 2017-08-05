@@ -6,6 +6,7 @@ use wcf\data\IMessage;
 use wcf\data\TUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\util\StringUtil;
 
 /**
@@ -82,7 +83,10 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getLink($this->getComment()->objectTypeID, $this->getComment()->objectID);
+		/** @var ICommentManager $processor */
+		$processor = CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
+		
+		return $processor->getResponseLink($this);
 	}
 	
 	/**

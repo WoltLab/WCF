@@ -202,4 +202,19 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	public function supportsReport() {
 		return true;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCommentLink(Comment $comment) {
+		return $this->getLink($comment->objectTypeID, $comment->objectID) . '#comment' . $comment->commentID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getResponseLink(CommentResponse $response) {
+		return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
+			. '#comment' . $response->commentID . '/response' . $response->responseID;
+	}
 }

@@ -77,13 +77,29 @@ interface ICommentManager {
 	public function getCommentsPerPage();
 	
 	/**
-	 * Returns a link to given object type id and object id.
+	 * Returns a link to the commented object with the given object type id and object id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID
 	 * @return	string
 	 */
 	public function getLink($objectTypeID, $objectID);
+	
+	/**
+	 * Returns the link to the given comment.
+	 *
+	 * @param	Comment		$comment
+	 * @return	string
+	 */
+	public function getCommentLink(Comment $comment);
+	
+	/**
+	 * Returns the link to the given comment response.
+	 *
+	 * @param	CommentResponse		$response
+	 * @return	string
+	 */
+	public function getResponseLink(CommentResponse $response);
 	
 	/**
 	 * Returns the title for a comment or response.
