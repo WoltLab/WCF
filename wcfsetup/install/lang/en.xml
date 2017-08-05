@@ -3858,9 +3858,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
 		<item name="wcf.user.condition.userTrophy"><![CDATA[User has Trophy]]></item>
 		<item name="wcf.user.condition.userTrophy.description"><![CDATA[User has received the selected trophies.]]></item>
-		<item name="wcf.user.condition.notUserTrophy"><![CDATA[User has not Trophy]]></item>
+		<item name="wcf.user.condition.notUserTrophy"><![CDATA[User does not have Trophy]]></item>
 		<item name="wcf.user.condition.notUserTrophy.description"><![CDATA[User has not received the selected trophies.]]></item>
-		<item name="wcf.user.condition.notUserTrophy.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User has not Trophy” are conflicting.]]></item>
+		<item name="wcf.user.condition.notUserTrophy.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User does not have Trophy” are conflicting.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophies]]></item>
 	</category>
 	
