@@ -278,22 +278,22 @@ class WCFSetup extends WCF {
 			break;
 			
 			case 'logFiles':
-				$this->calcProgress(14);
+				$this->calcProgress(21);
 				$this->logFiles();
 			break;
 			
 			case 'installLanguage':
-				$this->calcProgress(15);
+				$this->calcProgress(22);
 				$this->installLanguage();
 			break;
 			
 			case 'createUser':
-				$this->calcProgress(16);
+				$this->calcProgress(23);
 				$this->createUser();
 			break;
 			
 			case 'installPackages':
-				$this->calcProgress(17);
+				$this->calcProgress(24);
 				$this->installPackages();
 			break;
 		}
