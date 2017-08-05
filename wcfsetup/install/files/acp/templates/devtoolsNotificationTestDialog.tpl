@@ -31,6 +31,18 @@
 				</dl>
 			{/if}
 			
+			{if $event[link]|isset}
+				<dl>
+					<dt>{lang}wcf.acp.devtools.notificationTest.link{/lang}</dt>
+					<dd><a href="{@$event[link]}">{@$event[link]}</a></dd>
+				</dl>
+			{else}
+				<dl>
+					<dt>{lang}wcf.acp.devtools.notificationTest.link.exception{/lang}</dt>
+					<dd><pre>{$event[linkException]}</pre></dd>
+				</dl>
+			{/if}
+			
 			{if $hasEmailSupport}
 				{if $event[instantEmail]|isset}
 					<dl>
@@ -82,6 +94,17 @@
 	</dl>
 </section>
 
+<section class="section notificationTestSection" id="notificationTestLinkSection" style="display: none;">
+	<h2 class="sectionTitle">{lang}wcf.acp.devtools.notificationTest.links{/lang}</h2>
+	
+	<dl>
+		{foreach from=$events item=event}
+			<dt>{$event[description]}</dt>
+			<dd>{if $event[link]|isset}<a href="{@$event[link]}">{@$event[link]}</a>{else}<pre>{$event[linkException]}</pre>{/if}</dd>
+		{/foreach}
+	</dl>
+</section>
+
 {if $hasEmailSupport}
 	<section class="section notificationTestSection" id="notificationTestInstantEmailSection" style="display: none;">
 		<h2 class="sectionTitle">{lang}wcf.acp.devtools.notificationTest.instantEmails{/lang}</h2>
@@ -110,6 +133,7 @@
 	<button class="small buttonPrimary" id="notificationTestAllSectionButton">{lang}wcf.acp.devtools.notificationTest.button.showAll{/lang}</button>
 	<button class="small button" id="notificationTestTitleSectionButton">{lang}wcf.acp.devtools.notificationTest.titles{/lang}</button>
 	<button class="small button" id="notificationTestMessageSectionButton">{lang}wcf.acp.devtools.notificationTest.messages{/lang}</button>
+	<button class="small button" id="notificationTestLinkSectionButton">{lang}wcf.acp.devtools.notificationTest.links{/lang}</button>
 	{if $hasEmailSupport}
 		<button class="small button" id="notificationTestInstantEmailSectionButton">{lang}wcf.acp.devtools.notificationTest.instantEmails{/lang}</button>
 		<button class="small button" id="notificationTestDailyEmailSectionButton">{lang}wcf.acp.devtools.notificationTest.dailyEmails{/lang}</button>

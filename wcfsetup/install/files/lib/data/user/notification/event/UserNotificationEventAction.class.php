@@ -135,6 +135,18 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 				$errors++;
 			}
 			
+			try {
+				$eventData['link'] = $event->getLink();
+			}
+			catch (\Exception $e) {
+				$eventData['linkException'] = $getRenderedException($e);
+				$errors++;
+			}
+			catch (\Throwable $e) {
+				$eventData['linkException'] = $getRenderedException($e);
+				$errors++;
+			}
+			
 			if ($event->supportsEmailNotification()) {
 				$hasEmailSupport = true;
 				

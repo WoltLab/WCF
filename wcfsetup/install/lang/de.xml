@@ -421,6 +421,9 @@
 		<item name="wcf.acp.devtools.notificationTest.messages"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.devtools.notificationTest.instantEmails"><![CDATA[Sofortige E-Mails]]></item>
 		<item name="wcf.acp.devtools.notificationTest.dailyEmails"><![CDATA[Tägliche E-Mails]]></item>
+		<item name="wcf.acp.devtools.notificationTest.link"><![CDATA[Link]]></item>
+		<item name="wcf.acp.devtools.notificationTest.link.exception"><![CDATA[Link-Fehlermeldung]]></item>
+		<item name="wcf.acp.devtools.notificationTest.links"><![CDATA[Links]]></item>
 	</category>
 	
 	<category name="wcf.acp.email">
