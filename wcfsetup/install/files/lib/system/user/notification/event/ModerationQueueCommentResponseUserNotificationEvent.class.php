@@ -101,7 +101,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return $this->getModerationQueue()->getLink() . '#comments';
+		return $this->getModerationQueue()->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**
@@ -117,6 +117,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			
 			return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.message.stacked', [
 				'authors' => array_values($authors),
+				'commentID' => $this->getUserNotificationObject()->commentID,
 				'count' => $count,
 				'others' => $count - 1,
 				'moderationQueue' => $this->getModerationQueue()
@@ -134,6 +135,8 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.message', [
 			'author' => $this->author,
 			'commentAuthor' => $commentAuthor,
+			'commentID' => $this->getUserNotificationObject()->commentID,
+			'responseID' => $this->getUserNotificationObject()->responseID,
 			'moderationQueue' => $this->getModerationQueue()
 		]);
 	}

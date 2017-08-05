@@ -108,6 +108,7 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
 		
 		return $this->getLanguage()->getDynamicVariable($this->languageItemPrefix.'.comment.message', [
 			'author' => $this->author,
+			'commentID' => $this->getUserNotificationObject()->commentID,
 			'moderationQueue' => $this->moderationQueue
 		]);
 	}
