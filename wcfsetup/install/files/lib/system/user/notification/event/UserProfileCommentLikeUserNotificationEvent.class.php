@@ -99,7 +99,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
 	 * @inheritDoc
 	 */
 	public function getEventHash() {
-		return sha1($this->eventID . '-' . $this->additionalData['objectID']);
+		return sha1($this->eventID . '-' . $this->getCommentID());
 	}
 	
 	/**
