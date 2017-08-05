@@ -3037,6 +3037,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
 		<item name="wcf.media.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
+		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[Der Suchbegriff muss mindestens {#$minSearchLength} Zeichen lang sein.]]></item>
 	</category>
 	
 	<category name="wcf.message">

@@ -2983,6 +2983,7 @@ Errors are:
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Upload Date]]></item>
 		<item name="wcf.media.search.noResults"><![CDATA[The search returned no results.]]></item>
+		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[The search term must contain at least {#$minSearchLength} character{if $minSearchLength > 1}s{/if}.]]></item>
 	</category>
 	
 	<category name="wcf.message">
