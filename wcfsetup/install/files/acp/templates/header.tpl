@@ -33,7 +33,7 @@
 		
 		{if ENABLE_DEBUG_MODE}
 			{* This constant is a compiler option, it does not exist in production. *}
-			var COMPILER_TARGET_DEFAULT = {if $__wcf->user->userID}true{else}false{/if};
+			var COMPILER_TARGET_DEFAULT = true;
 		{/if}
 	</script>
 	
