@@ -5,8 +5,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\TUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
-use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
+use wcf\system\comment\CommentHandler;
 use wcf\util\StringUtil;
 
 /**

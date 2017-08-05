@@ -3,8 +3,8 @@ namespace wcf\data\comment;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\TUserContent;
-use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
+use wcf\system\comment\CommentHandler;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\util\StringUtil;
 
