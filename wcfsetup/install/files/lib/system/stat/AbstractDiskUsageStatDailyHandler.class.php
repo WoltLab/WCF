@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\stat;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -12,14 +13,27 @@ use wcf\system\WCF;
  */
 abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandler {
 	/**
+	 * name of the filesize database table column
+	 * @var	string
+	 * @since	3.1
+	 */
+	protected $columnName = 'filesize';
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function getCounter($date, $tableName, $dateColumnName) {
-		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add($dateColumnName . ' BETWEEN ? AND ?', [$date, $date + 86399]);
+		
+		$this->addConditions($conditionBuilder);
+		
+		$sql = "SELECT	CEIL(SUM(" . $this->columnName . ") / 1000)
 			FROM	".$tableName."
-			WHERE	".$dateColumnName." BETWEEN ? AND ?";
+			" . $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$date, $date + 86399]);
+		$statement->execute($conditionBuilder->getParameters());
+		
 		return $statement->fetchColumn();
 	}
 	
@@ -27,11 +41,17 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 	 * @inheritDoc
 	 */
 	protected function getTotal($date, $tableName, $dateColumnName) {
-		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add($dateColumnName . ' < ?', [$date + 86399]);
+		
+		$this->addConditions($conditionBuilder);
+		
+		$sql = "SELECT	CEIL(SUM(" . $this->columnName . ") / 1000)
 			FROM	".$tableName."
-			WHERE	".$dateColumnName." < ?";
+			" . $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$date + 86400]);
+		$statement->execute($conditionBuilder->getParameters());
+		
 		return $statement->fetchColumn();
 	}
 	

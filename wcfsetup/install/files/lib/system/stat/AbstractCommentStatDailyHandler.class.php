@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\stat;
 use wcf\system\comment\CommentHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -78,5 +79,13 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 			'counter' => $counter,
 			'total' => $total
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected function addConditions(PreparedStatementConditionBuilder $conditionBuilder) {
+		throw new \BadMethodCallException(__CLASS__ . " does not support addConditions().");
 	}
 }
