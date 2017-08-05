@@ -3,7 +3,6 @@ namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\like\object\AbstractLikeObject;
 use wcf\data\like\Like;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -25,17 +24,6 @@ class LikeableCommentResponse extends AbstractLikeObject {
 	 * @inheritDoc
 	 */
 	protected static $baseClass = CommentResponse::class;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectType() {
-		if ($this->objectType === null) {
-			$this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->getDecoratedObject()->objectTypeID);
-		}
-		
-		return $this->objectType;
-	}
 	
 	/**
 	 * @inheritDoc

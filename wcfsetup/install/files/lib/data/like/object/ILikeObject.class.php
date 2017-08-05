@@ -36,7 +36,7 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	public function getObjectID();
 	
 	/**
-	 * Returns the object type.
+	 * Returns the likeable object type previously set via `setObjectType()`.
 	 * 
 	 * @return	ObjectType
 	 */
@@ -50,7 +50,7 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	public function updateLikeCounter($cumulativeLikes);
 	
 	/**
-	 * Sets the object type.
+	 * Sets the likable object type.
 	 * 
 	 * @param	ObjectType	$objectType
 	 */
