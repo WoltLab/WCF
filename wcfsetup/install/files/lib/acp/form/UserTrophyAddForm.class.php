@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\user\trophy\UserTrophyAction;
+use wcf\data\user\trophy\UserTrophyEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -78,7 +79,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 		parent::readParameters();
 		
 		$descriptionI18n = new I18nValue('description');
-		$descriptionI18n->setLanguageItem('wcf.user.trophy.description', 'wcf.trophy', 'com.woltlab.wcf');
+		$descriptionI18n->setLanguageItem('wcf.user.trophy.userTrophy.description', 'wcf.user.trophy', 'com.woltlab.wcf');
 		$descriptionI18n->setFlags(I18nValue::ALLOW_EMPTY);
 		$this->registerI18nValue($descriptionI18n);
 	}
@@ -160,7 +161,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 		parent::save();
 		
 		foreach ($this->userIDs as $user) {
-			(new UserTrophyAction([], 'create', [
+			$databaseObject = (new UserTrophyAction([], 'create', [
 				'data' => array_merge($this->additionalFields, [
 					'trophyID' => $this->trophy->trophyID,
 					'userID' => $user,
@@ -169,6 +170,8 @@ class UserTrophyAddForm extends AbstractAcpForm {
 					'useCustomDescription' => $this->useCustomDescription
 				])
 			]))->executeAction();
+			
+			$this->saveI18n($databaseObject, UserTrophyEditor::class);
 		}
 		
 		$this->reset();

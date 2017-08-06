@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyAction;
+use wcf\data\trophy\TrophyEditor;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nValue;
@@ -139,11 +140,11 @@ class TrophyAddForm extends AbstractAcpForm {
 		parent::readParameters();
 		
 		$titleI18n = new I18nValue('title');
-		$titleI18n->setLanguageItem('wcf.trophy.title', 'wcf.trophy', 'com.woltlab.wcf');
+		$titleI18n->setLanguageItem('wcf.user.trophy.title', 'wcf.user.trophy', 'com.woltlab.wcf');
 		$this->registerI18nValue($titleI18n);
 		
 		$descriptionI18n = new I18nValue('description');
-		$descriptionI18n->setLanguageItem('wcf.trophy.description', 'wcf.trophy', 'com.woltlab.wcf');
+		$descriptionI18n->setLanguageItem('wcf.user.trophy.description', 'wcf.user.trophy', 'com.woltlab.wcf');
 		$this->registerI18nValue($descriptionI18n);
 		
 		if (isset($_POST['tmpHash'])) {
@@ -282,6 +283,8 @@ class TrophyAddForm extends AbstractAcpForm {
 			'tmpHash' => $this->tmpHash
 		]);
 		$this->objectAction->executeAction();
+		
+		$this->saveI18n($this->objectAction->getReturnValues()['returnValues'], TrophyEditor::class);
 		
 		// transform conditions array into one-dimensional array
 		$conditions = [];
