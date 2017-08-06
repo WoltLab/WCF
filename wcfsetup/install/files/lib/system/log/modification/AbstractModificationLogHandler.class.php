@@ -52,9 +52,10 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	 * @param	integer		$time
 	 * @param	integer|null	$userID
 	 * @param	string|null	$username
+	 * @param	integer		$hidden
 	 * @return	ModificationLog
 	 */
-	public function createLog($action, $objectID, $parentObjectID = null, array $additionalData = [], $time = TIME_NOW, $userID = null, $username = null) {
+	public function createLog($action, $objectID, $parentObjectID = null, array $additionalData = [], $time = TIME_NOW, $userID = null, $username = null, $hidden = 1) {
 		// set default user data
 		if ($userID === null) {
 			if (WCF::getUser()->userID) {
@@ -82,6 +83,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 				'userID' => $userID,
 				'username' => $username,
 				'time' => $time,
+				'hidden' => $hidden,
 				'additionalData' => serialize($additionalData)
 			]
 		]);
