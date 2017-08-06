@@ -171,7 +171,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 				])
 			]))->executeAction();
 			
-			$this->saveI18n($databaseObject, UserTrophyEditor::class);
+			$this->saveI18n($databaseObject['returnValues'], UserTrophyEditor::class);
 		}
 		
 		$this->reset();

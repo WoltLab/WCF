@@ -145,6 +145,7 @@ class TrophyAddForm extends AbstractAcpForm {
 		
 		$descriptionI18n = new I18nValue('description');
 		$descriptionI18n->setLanguageItem('wcf.user.trophy.description', 'wcf.user.trophy', 'com.woltlab.wcf');
+		$descriptionI18n->setFlags(I18nValue::ALLOW_EMPTY);
 		$this->registerI18nValue($descriptionI18n);
 		
 		if (isset($_POST['tmpHash'])) {
