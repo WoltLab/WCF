@@ -250,7 +250,7 @@ class ACLHandler extends SingletonFactory {
 				foreach ($optionList as $option) {
 					$data['options'][$option->optionID] = [
 						'categoryName' => $option->categoryName,
-						'label' => WCF::getLanguage()->get('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
+						'label' => WCF::getLanguage()->getDynamicVariable('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
 						'optionName' => $option->optionName
 					];
 					
