@@ -19,7 +19,10 @@
 			<h1 class="contentTitle">{$trophy->getTitle()}</h1>
 			<ul class="inlineList contentHeaderMetaData">
 				{if !$trophy->getDescription()|empty}<li>{$trophy->getDescription()}</li>{/if}
-				<li><span class="icon icon16 fa-users"></span> {@$items}</li>
+				<li>
+					<span class="icon icon16 fa-users"></span>
+					<span>{lang}wcf.user.trophy.trophyAwarded{/lang}</span>
+				</li>
 			</ul>
 		</div>
 	</header>
