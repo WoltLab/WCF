@@ -256,7 +256,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			if (!empty($data['controller'])) {
 				$page = parent::import($row, [
 					'controller' => $data['controller'],
-					'handler' => $data['handler']
+					'handler' => $data['handler'],
+					'options' => $data['options'],
+					'permissions' => $data['permissions']
 				]);
 			}
 			else {
