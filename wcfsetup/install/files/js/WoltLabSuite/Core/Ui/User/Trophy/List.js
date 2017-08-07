@@ -32,10 +32,15 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 		
 		/**
 		 * Opens the user trophy list for a specific user.
+		 *
+		 * @param	{int}		userId
+		 * @param       {Event}         event		event object
 		 */
-		_open: function(userID) {
+		_open: function(userId, event) {
+			event.preventDefault();
+			
 			this._currentPageNo = 1; 
-			this._currentUser = userID;
+			this._currentUser = userId;
 			this._showPage();
 		},
 		
