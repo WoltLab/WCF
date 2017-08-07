@@ -110,7 +110,8 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html,
-			'className' => $this->className
+			'className' => $this->className,
+			'name' => $name
 		])]);
 		$returnValues = $this->objectAction->executeAction();
 		$this->saved();
