@@ -4,6 +4,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagCloud;
 use wcf\system\tagging\TypedTagCloud;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Box for the tag cloud.
@@ -27,7 +28,7 @@ class TagCloudBoxController extends AbstractBoxController {
 	
 	/**
 	 * needed permission to view this box
-	 * @var string
+	 * @var string|string[]
 	 */
 	protected $neededPermission = '';
 	
@@ -35,7 +36,31 @@ class TagCloudBoxController extends AbstractBoxController {
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
-		if (MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag') && (!$this->neededPermission || WCF::getSession()->getPermission($this->neededPermission))) {
+		if (MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag')) {
+			if ($this->neededPermission) {
+				if (is_string($this->neededPermission)) {
+					if (!WCF::getSession()->getPermission($this->neededPermission)) {
+						return;
+					}
+				}
+				else if (is_array($this->neededPermission)) {
+					$hasPermission = false;
+					foreach ($this->neededPermission as $permission) {
+						if (WCF::getSession()->getPermission($permission)) {
+							$hasPermission = true;
+							break;
+						}
+					}
+					
+					if (!$hasPermission) {
+						return;
+					}
+				}
+				else {
+					throw new \LogicException("\$neededPermission must not be of type '" . gettype($this->neededPermission) . "', only strings and arrays are supported.");
+				}
+			}
+			
 			$languageIDs = [];
 			if (LanguageFactory::getInstance()->multilingualismEnabled()) {
 				$languageIDs = WCF::getUser()->getLanguageIDs();
