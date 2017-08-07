@@ -44,7 +44,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.0.7">
+	<instructions type="update" fromversion="3.0.8">
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
 		

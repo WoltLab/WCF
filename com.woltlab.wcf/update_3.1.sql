@@ -6,6 +6,10 @@ ALTER TABLE wcf1_article_content ADD COLUMN teaserImageID INT(10);
 ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN name VARCHAR(80) NOT NULL;
 ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN packageID INT(10) NOT NULL;
 ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN className varchar(255) NOT NULL DEFAULT '';
+
+-- remove default media providers (they'll be re-added later during the upgrade)
+DELETE FROM wcf1_bbcode_media_provider WHERE title IN ('YouTube', 'YouTube Playlist', 'Vimeo', 'Clipfish', 'Veoh', 'DailyMotion', 'github gist', 'Soundcloud', 'Soundcloud set');
+UPDATE wcf1_bbcode_media_provider SET name = CONCAT('com.woltlab.wcf.generic', providerID);
 ALTER TABLE wcf1_bbcode_media_provider ADD UNIQUE KEY name (name, packageID);
 
 ALTER TABLE wcf1_box ADD COLUMN lastUpdateTime INT(10) NOT NULL DEFAULT 0;

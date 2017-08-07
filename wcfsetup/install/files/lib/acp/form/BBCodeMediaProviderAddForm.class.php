@@ -1,6 +1,8 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\bbcode\media\provider\BBCodeMediaProviderAction;
+use wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
@@ -101,6 +103,8 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$name = 'placeholder_'.StringUtil::getRandomID();
+		
 		// save media provider
 		$this->objectAction = new BBCodeMediaProviderAction([], 'create', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
@@ -108,8 +112,14 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 			'html' => $this->html,
 			'className' => $this->className
 		])]);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
 		$this->saved();
+		
+		/** @var BBCodeMediaProvider $provider */
+		$provider = $returnValues['returnValues'];
+		(new BBCodeMediaProviderEditor($provider))->update([
+			'name' => 'com.woltlab.wcf.generic' . $provider->providerID
+		]);
 		
 		// reset values
 		$this->title = $this->regex = $this->html = $this->className = '';
