@@ -59,14 +59,18 @@
 		<instruction type="clipboardAction" />
 		<instruction type="cronjob" />
 		<instruction type="eventListener" />
-		<instruction type="menuItem" />
 		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
 		<instruction type="option" />
-		<instruction type="page" />
 		<instruction type="userGroupOption" />
 		<instruction type="userNotificationEvent" />
 		<instruction type="userOption" />
+		
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_pageSearchIndex.php</instruction>
+		
+		<instruction type="page" />
+		<!-- contains a reference to a new page -->
+		<instruction type="menuItem" />
 		
 		<instruction type="packageInstallationPlugin" />
 		<!-- new pip -->

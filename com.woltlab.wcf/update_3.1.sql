@@ -18,16 +18,19 @@ ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponses MEDIUMINT(7) NOT NULL DE
 ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '';
 ALTER TABLE wcf1_comment ADD COLUMN enableHtml TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_comment ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_comment DROP KEY (objectTypeID, objectID, time);
--- WARNING: May be slow, use a separate request?
+
+-- WARNING: May be slow, use a separate request? // the foreign key relies on the index `objectTypeID`
+ALTER TABLE wcf1_comment DROP FOREIGN KEY objectTypeID;
+ALTER TABLE wcf1_comment DROP KEY objectTypeID;
 ALTER TABLE wcf1_comment ADD KEY (objectTypeID, objectID, isDisabled, time);
+ALTER TABLE wcf1_comment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_comment_response ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_comment_response DROP KEY (commentID, time);
--- WARNING: May be slow, use a separate request?
+-- WARNING: May be slow, use a separate request?  // the foreign key relies on the index `commentID`
+ALTER TABLE wcf1_comment_response DROP FOREIGN KEY commentID;
+ALTER TABLE wcf1_comment_response DROP KEY commentID;
 ALTER TABLE wcf1_comment_response ADD KEY (commentID, isDisabled, time);
+ALTER TABLE wcf1_comment_response ADD FOREIGN KEY (commentID) REFERENCES wcf1_comment (commentID) ON DELETE CASCADE;
 
 DROP TABLE IF EXISTS wcf1_contact_option;
 CREATE TABLE wcf1_contact_option (
@@ -94,7 +97,6 @@ CREATE TABLE wcf1_page_box_order (
 
 ALTER TABLE wcf1_paid_subscription_user ADD COLUMN sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0;
 
-ALTER TABLE wcf1_style ADD isTainted TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_style ADD hasFavicon TINYINT(1) NOT NULL DEFAULT 0;
 
 DROP TABLE IF EXISTS wcf1_trophy;
