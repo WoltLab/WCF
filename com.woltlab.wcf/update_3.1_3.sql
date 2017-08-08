@@ -1,36 +1,7 @@
-ALTER TABLE wcf1_article ADD COLUMN isDeleted TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_article ADD COLUMN hasLabels TINYINT(1) NOT NULL DEFAULT 0;
-
-ALTER TABLE wcf1_article_content ADD COLUMN teaserImageID INT(10);
-
-ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN name VARCHAR(80) NOT NULL;
-ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN packageID INT(10) NOT NULL;
-ALTER TABLE wcf1_bbcode_media_provider ADD COLUMN className varchar(255) NOT NULL DEFAULT '';
-
 -- remove default media providers (they'll be re-added later during the upgrade)
 DELETE FROM wcf1_bbcode_media_provider WHERE title IN ('YouTube', 'YouTube Playlist', 'Vimeo', 'Clipfish', 'Veoh', 'DailyMotion', 'github gist', 'Soundcloud', 'Soundcloud set');
 UPDATE wcf1_bbcode_media_provider SET name = CONCAT('com.woltlab.wcf.generic', providerID);
 ALTER TABLE wcf1_bbcode_media_provider ADD UNIQUE KEY name (name, packageID);
-
-ALTER TABLE wcf1_box ADD COLUMN lastUpdateTime INT(10) NOT NULL DEFAULT 0;
-
-ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponses MEDIUMINT(7) NOT NULL DEFAULT '0';
-ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '';
-ALTER TABLE wcf1_comment ADD COLUMN enableHtml TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_comment ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
-
--- WARNING: May be slow, use a separate request? // the foreign key relies on the index `objectTypeID`
-ALTER TABLE wcf1_comment DROP FOREIGN KEY objectTypeID;
-ALTER TABLE wcf1_comment DROP KEY objectTypeID;
-ALTER TABLE wcf1_comment ADD KEY (objectTypeID, objectID, isDisabled, time);
-ALTER TABLE wcf1_comment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_comment_response ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
--- WARNING: May be slow, use a separate request?  // the foreign key relies on the index `commentID`
-ALTER TABLE wcf1_comment_response DROP FOREIGN KEY commentID;
-ALTER TABLE wcf1_comment_response DROP KEY commentID;
-ALTER TABLE wcf1_comment_response ADD KEY (commentID, isDisabled, time);
-ALTER TABLE wcf1_comment_response ADD FOREIGN KEY (commentID) REFERENCES wcf1_comment (commentID) ON DELETE CASCADE;
 
 DROP TABLE IF EXISTS wcf1_contact_option;
 CREATE TABLE wcf1_contact_option (
@@ -67,25 +38,7 @@ CREATE TABLE wcf1_devtools_project (
 	UNIQUE KEY name (name)
 );
 
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_language_item ADD COLUMN languageItemOldValue MEDIUMTEXT;
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_language_item ADD COLUMN languageCustomItemDisableTime INT(10);
-
-ALTER TABLE wcf1_media ADD COLUMN categoryID INT(10);
-
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_modification_log ADD COLUMN hidden TINYINT(1) NOT NULL DEFAULT 0;
-
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_package_update ADD COLUMN pluginStoreFileID INT(10) NOT NULL DEFAULT 0;
-
 ALTER TABLE wcf1_package_update_server CHANGE COLUMN apiVersion apiVersion ENUM('2.0', '2.1', '3.1') NOT NULL DEFAULT '2.0';
-
-ALTER TABLE wcf1_page ADD COLUMN cssClassName VARCHAR(255) NOT NULL DEFAULT '';
-ALTER TABLE wcf1_page ADD COLUMN availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_page ADD COLUMN allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_page ADD COLUMN excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0;
 
 DROP TABLE IF EXISTS wcf1_page_box_order;
 CREATE TABLE wcf1_page_box_order (
@@ -94,10 +47,6 @@ CREATE TABLE wcf1_page_box_order (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY pageToBox (pageID, boxID)
 );
-
-ALTER TABLE wcf1_paid_subscription_user ADD COLUMN sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0;
-
-ALTER TABLE wcf1_style ADD hasFavicon TINYINT(1) NOT NULL DEFAULT 0;
 
 DROP TABLE IF EXISTS wcf1_trophy;
 CREATE TABLE wcf1_trophy(
@@ -114,11 +63,6 @@ CREATE TABLE wcf1_trophy(
 	awardAutomatically TINYINT(1) NOT NULL DEFAULT 0,
 	KEY(categoryID)
 );
-
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_user ADD COLUMN trophyPoints INT(10) NOT NULL DEFAULT 0;
--- WARNING: May be slow, use a separate request?
-ALTER TABLE wcf1_user ADD KEY trophyPoints (trophyPoints);
 
 DROP TABLE IF EXISTS wcf1_user_special_trophy;
 CREATE TABLE wcf1_user_special_trophy(
@@ -137,8 +81,6 @@ CREATE TABLE wcf1_user_trophy(
 	useCustomDescription TINYINT(1) NOT NULL DEFAULT 0,
 	KEY(trophyID, time)
 );
-
-ALTER TABLE wcf1_user_rank ADD COLUMN hideTitle TINYINT(1) NOT NULL DEFAULT 0;
 
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
 ALTER TABLE wcf1_bbcode_media_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
