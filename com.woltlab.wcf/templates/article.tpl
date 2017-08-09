@@ -3,7 +3,7 @@
 {assign var='__mainItemScope' value='itemprop="mainEntity" itemscope itemtype="http://schema.org/Article"'}
 
 {capture assign='contentHeader'}
-	<header class="contentHeader articleContentHeader{if $article->isDeleted} messageDeleted{/if}">
+	<header class="contentHeader articleContentHeader">
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle" itemprop="name headline">{$articleContent->title}</h1>
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
