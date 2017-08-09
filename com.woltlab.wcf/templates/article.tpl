@@ -3,7 +3,7 @@
 {assign var='__mainItemScope' value='itemprop="mainEntity" itemscope itemtype="http://schema.org/Article"'}
 
 {capture assign='contentHeader'}
-	<header class="contentHeader articleContentHeader">
+	<header class="contentHeader articleContentHeader{if $article->isDeleted} messageDeleted{/if}">
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle" itemprop="name headline">{$articleContent->title}</h1>
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
@@ -51,6 +51,8 @@
 				</li>
 				
 				{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
+				
+				{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
 				
 				<li class="articleLikesBadge"></li>
 				
