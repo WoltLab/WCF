@@ -159,7 +159,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			if ($this->workerData['dataCount'] + $this->limit > self::SITEMAP_OBJECT_LIMIT) {
 				$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '_' . $this->workerData['sitemapLoopCount'] . '.xml');
 				
-				$this->generateTmpFile();
+				$this->generateTmpFile(false);
 				
 				$this->workerData['dataCount'] = 0;
 			}
