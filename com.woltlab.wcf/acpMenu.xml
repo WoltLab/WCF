@@ -819,19 +819,6 @@
 	</import>
 	
 	<delete>
-		<acpmenuitem name="wcf.acp.menu.link.system" />
-		<acpmenuitem name="wcf.acp.menu.link.option.management" />
-		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport" />
-		<acpmenuitem name="wcf.acp.menu.link.captcha" />
-		<acpmenuitem name="wcf.acp.menu.link.log.stat" />
-		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults" />
-		<acpmenuitem name="wcf.acp.menu.link.display" />
-		<acpmenuitem name="wcf.acp.menu.link.dashboard" />
-		<acpmenuitem name="wcf.acp.menu.link.dashboard.list" />
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu" />
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list" />
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add" />
-		<acpmenuitem name="wcf.acp.menu.link.community" />
-		<acpmenuitem name="wcf.acp.menu.link.cronjob" />
+		<acpmenuitem name="wcf.acp.menu.link.cms.media.list" />
 	</delete>
 </data>
