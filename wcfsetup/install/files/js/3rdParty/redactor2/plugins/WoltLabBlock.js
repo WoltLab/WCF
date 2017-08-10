@@ -106,6 +106,28 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				
 				return $(firstBlock);
 			}).bind(this);
+			
+			this.block.removeAllAttr = (function(block) {
+				block = this.block.getBlocks(block);
+				
+				var returned = [];
+				$.each(block, function(i,s)
+				{
+					if (typeof s.attributes === 'undefined')
+					{
+						returned.push(s);
+					}
+					
+					// WoltLab fix: `attributes` is a live collection
+					while (s.attributes.length) {
+						s.removeAttribute(s.attributes[0].name);
+					}
+					
+					returned.push(s);
+				});
+				
+				return returned;
+			}).bind(this);
 		},
 		
 		register: function(tag, arrowKeySupport) {
