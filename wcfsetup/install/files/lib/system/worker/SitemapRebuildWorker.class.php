@@ -235,6 +235,10 @@ class SitemapRebuildWorker extends AbstractWorker {
 		$file->close();
 		
 		$this->workerData['finished'] = true;
+		
+		if ($this->workerData['tmpFile'] && file_exists($this->workerData['tmpFile'])) {
+			unlink($this->workerData['tmpFile']);
+		}
 	}
 	
 	/**
