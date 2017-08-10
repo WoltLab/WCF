@@ -15,6 +15,7 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 		Fake.prototype = {
 			init: function() {},
 			getInitialValue: function() {},
+			getMetaData: function () {},
 			watch: function() {},
 			destroy: function() {},
 			clear: function() {},
@@ -42,6 +43,7 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 		 */
 		init: function (element) {
 			this._container = null;
+			this._metaData = {};
 			this._editor = null;
 			this._element = element;
 			this._key = Core.getStoragePrefix() + elData(this._element, 'autosave');
@@ -60,6 +62,15 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			if (form !== null) {
 				form.addEventListener('submit', this.destroy.bind(this));
 			}
+			
+			// export meta data
+			EventHandler.add('com.woltlab.wcf.redactor2', 'getMetaData_' + this._element.id, (function (data) {
+				for (var key in this._metaData) {
+					if (this._metaData.hasOwnProperty(key)) {
+						data[key] = this._metaData[key];
+					}
+				}
+			}).bind(this));
 			
 			// clear editor content on reset
 			EventHandler.add('com.woltlab.wcf.redactor2', 'reset_' + this._element.id, this.hideOverlay.bind(this));
@@ -101,12 +112,23 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 					this._originalMessage = this._element.value;
 					this._restored = true;
 					
+					this._metaData = value.meta || {};
+					
 					return value.content;
 				}
 			}
 			
 			//noinspection JSUnresolvedVariable
 			return this._element.value;
+		},
+		
+		/**
+		 * Returns the stored meta data.
+		 * 
+		 * @return      {Object}
+		 */
+		getMetaData: function () {
+			return this._metaData;
 		},
 		
 		/**
@@ -142,6 +164,7 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 		 * Removed the stored message, for use after a message has been submitted.
 		 */
 		clear: function () {
+			this._metaData = {};
 			this._lastMessage = '';
 			
 			try {
@@ -258,8 +281,11 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			}
 			
 			try {
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._element.id, this._metaData);
+				
 				window.localStorage.setItem(this._key, JSON.stringify({
 					content: content,
+					meta: this._metaData,
 					timestamp: Date.now()
 				}));
 				

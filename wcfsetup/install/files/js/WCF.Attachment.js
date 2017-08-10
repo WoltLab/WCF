@@ -99,6 +99,24 @@ if (COMPILER_TARGET_DEFAULT) {
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId, this._editorUpload.bind(this));
 				
+				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId, (function (data) {
+					if (!data.tmpHashes || !Array.isArray(data.tmpHashes)) {
+						data.tmpHashes = [];
+					}
+					
+					var index = data.tmpHashes.indexOf(tmpHash);
+					
+					var count = this._fileListSelector.children('li:not(.uploadFailed)').length;
+					if (count > 0) {
+						if (index === -1) {
+							data.tmpHashes.push(tmpHash);
+						}
+					}
+					else if (index !== -1) {
+						data.tmpHashes.splice(index);
+					}
+				}).bind(this));
+				
 				var metacodeAttachUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, (function (data) {
 					var images = this._getImageAttachments();
 					var attachmentId = data.attributes[0] || 0;
@@ -129,6 +147,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'insertAttachment_' + this._editorId);
 					WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId);
 					WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + this._editorId);
+					WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId);
 					
 					WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
 				}).bind(this));
@@ -193,6 +212,13 @@ if (COMPILER_TARGET_DEFAULT) {
 		_submitInline: function (data) {
 			if (this._tmpHash) {
 				data.tmpHash = this._tmpHash;
+				
+				var metaData = {};
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
+				console.log(metaData);
+				if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
+					data.tmpHash += ',' + metaData.tmpHashes.join(',');
+				}
 			}
 		},
 		
