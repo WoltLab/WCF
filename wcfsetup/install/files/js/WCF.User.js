@@ -418,6 +418,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			// toggled and thus never initialized
 			if (this._dropdown !== null) {
 				this._dropdown.resetItems();
+				this._loadData = true;
 			}
 		}
 	});
