@@ -217,8 +217,10 @@ class SitemapRebuildWorker extends AbstractWorker {
 				if ($this->loopCount == 0) {
 					$this->loopCount = 1;
 				}
-				$this->storeWorkerData();
-			} else {
+				$this->storeWorkerData(); 
+				break;
+			} 
+			else {
 				$object = $this->sitemapObjects[$this->workerData['sitemap']];
 			}
 		}
