@@ -101,11 +101,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				}
 			};
 			
-			//noinspection JSCheckFunctionSignatures
-			var captchaId = elData(event.currentTarget, 'captcha-id');
-			if (ControllerCaptcha.has(captchaId)) {
-				parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
-			}
+			parameters = Core.extend(parameters, ControllerCaptcha.getData('commentAdd'));
 			
 			this._submit(undefined, parameters);
 		},
@@ -290,21 +286,17 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		},
 		
 		/**
-		 * @param {{returnValues:{guestDialog:string,guestDialogID:string}}} data
+		 * @param {{returnValues:{guestDialog:string}}} data
 		 * @protected
 		 */
 		_ajaxSuccess: function(data) {
-			if (!User.userId && !data.returnValues.guestDialogID) {
-				throw new Error("Missing 'guestDialogID' return value for guest.");
-			}
-			
 			if (!User.userId && data.returnValues.guestDialog) {
-				UiDialog.openStatic(data.returnValues.guestDialogID, data.returnValues.guestDialog, {
+				UiDialog.openStatic('jsDialogGuestComment', data.returnValues.guestDialog, {
 					closable: false,
 					title: Language.get('wcf.global.confirmation.title')
 				});
 				
-				var dialog = UiDialog.getDialog(data.returnValues.guestDialogID);
+				var dialog = UiDialog.getDialog('jsDialogGuestComment');
 				elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
 				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
 			}
@@ -312,7 +304,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				this._insertMessage(data);
 				
 				if (!User.userId) {
-					UiDialog.close(data.returnValues.guestDialogID);
+					UiDialog.close('jsDialogGuestComment');
 				}
 				
 				this._reset();
