@@ -417,6 +417,7 @@ WCF.User.Panel.Abstract = Class.extend({
 		// toggled and thus never initialized
 		if (this._dropdown !== null) {
 			this._dropdown.resetItems();
+			this._loadData = true;
 		}
 	}
 });
