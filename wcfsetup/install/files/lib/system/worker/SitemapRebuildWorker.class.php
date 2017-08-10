@@ -166,10 +166,9 @@ class SitemapRebuildWorker extends AbstractWorker {
 			
 			// finish sitemap
 			if (count($objectList) < $this->limit) {
-				$closeFile = true;
 				if ($this->workerData['dataCount'] > 0) {
 					$this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml');
-					$closeFile = false;
+					$this->generateTmpFile(false);
 				}
 				
 				// increment data
@@ -179,8 +178,6 @@ class SitemapRebuildWorker extends AbstractWorker {
 				
 				if (count($this->sitemapObjects) <= $this->workerData['sitemap']) {
 					$this->writeIndexFile();
-				} else {
-					$this->generateTmpFile($closeFile);
 				}
 			}
 			
