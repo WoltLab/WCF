@@ -1,6 +1,6 @@
 -- remove default media providers (they'll be re-added later during the upgrade)
 DELETE FROM wcf1_bbcode_media_provider WHERE title IN ('YouTube', 'YouTube Playlist', 'Vimeo', 'Clipfish', 'Veoh', 'DailyMotion', 'github gist', 'Soundcloud', 'Soundcloud set');
-UPDATE wcf1_bbcode_media_provider SET name = CONCAT('com.woltlab.wcf.generic', providerID);
+UPDATE wcf1_bbcode_media_provider SET name = CONCAT('com.woltlab.wcf.generic', providerID), packageID = 1;
 ALTER TABLE wcf1_bbcode_media_provider ADD UNIQUE KEY name (name, packageID);
 
 DROP TABLE IF EXISTS wcf1_contact_option;
