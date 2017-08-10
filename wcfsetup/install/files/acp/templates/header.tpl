@@ -31,10 +31,9 @@
 		var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
 		var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 		
-		{if ENABLE_DEBUG_MODE}
-			{* This constant is a compiler option, it does not exist in production. *}
-			var COMPILER_TARGET_DEFAULT = true;
-		{/if}
+		{* This constant is a compiler option, it does not exist in production. *}
+		{* Unlike the frontend, this option must be defined in the ACP at all times. *}
+		var COMPILER_TARGET_DEFAULT = true;
 	</script>
 	
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
