@@ -3,7 +3,7 @@
 {capture assign='contentHeader'}
 	<header class="contentHeader messageGroupContentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{$category->getTitle()}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
+			<h1 class="contentTitle">{$category->getTitle()}</h1>
 			<ul class="inlineList contentHeaderMetaData">
 				<li>
 					{$category->getDescription()}
