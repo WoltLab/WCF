@@ -56,7 +56,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}
+		<h1 class="contentTitle">{lang}{@$pageTitle}{/lang}</h1>
 	</div>
 	
 	{hascontent}
