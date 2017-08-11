@@ -215,7 +215,6 @@ if (COMPILER_TARGET_DEFAULT) {
 				
 				var metaData = {};
 				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'getMetaData_' + this._editorId, metaData);
-				console.log(metaData);
 				if (metaData.tmpHashes && Array.isArray(metaData.tmpHashes) && metaData.tmpHashes.length > 0) {
 					data.tmpHash += ',' + metaData.tmpHashes.join(',');
 				}
