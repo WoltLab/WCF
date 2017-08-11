@@ -454,10 +454,18 @@ EXPLANATION;
 					
 					<?php
 					$first = true;
+					$exceptions = [];
+					$current = $e;
+					do {
+						$exceptions[] = $current;
+					}
+					while ($current = $current->getPrevious());
+					
+					$e = array_pop($exceptions);
 					do {
 					?>
 					<div class="exceptionBoundary">
-						<p class="exceptionSubtitle"><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error</p>
+						<p class="exceptionSubtitle"><?php if (!empty($exceptions) && $first) { echo "Original "; } else if (empty($exceptions) && !$first) { echo "Final "; } ?>Error</p>
 						<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
 							<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
 						<?php } ?>
@@ -548,7 +556,7 @@ EXPLANATION;
 					</div>
 					<?php
 					$first = false;
-					} while ($e = $e->getPrevious());
+					} while ($e = array_pop($exceptions));
 					?>
 				<?php } ?>
 			</div>
