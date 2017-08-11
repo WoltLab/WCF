@@ -3691,7 +3691,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier ihre besonderen Trophäen aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt werden.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[You can choose a maximum of {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[The selected trophies are invalid.]]></item>
-		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Has received the trophy “<a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>”.]]></item>
+		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Has received the trophy <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Excluded Trophies]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Excluded Trophy Categories]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{if $items == 1}Awarded once{else}Awarded {#$items} times{/if}]]></item>
