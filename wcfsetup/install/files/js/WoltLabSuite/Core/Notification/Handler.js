@@ -49,7 +49,7 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
 			window.addEventListener('storage', this._onStorage.bind(this));
 			
-			this._onVisibilityChange();
+			this._onVisibilityChange(null);
 			
 			if (options.enableNotifications) {
 				switch (window.Notification.permission) {
@@ -70,19 +70,20 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 		/**
 		 * Detects when this window is hidden or restored.
 		 * 
+		 * @param       {Event}         event
 		 * @protected
 		 */
-		_onVisibilityChange: function() {
-			_inactiveSince = (document.hidden) ? Date.now() : 0;
-			
+		_onVisibilityChange: function(event) {
 			// document was hidden before
-			if (!document.hidden) {
+			if (event !== null && !document.hidden) {
 				var difference = (Date.now() - _inactiveSince) / 60000;
 				if (difference > 4) {
 					this._resetTimer();
 					this._dispatchRequest();
 				}
 			}
+			
+			_inactiveSince = (document.hidden) ? Date.now() : 0;
 		},
 		
 		/**
