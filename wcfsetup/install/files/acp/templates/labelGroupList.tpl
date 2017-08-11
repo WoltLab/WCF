@@ -20,7 +20,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.label.group.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.label.group.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

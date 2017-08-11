@@ -9,7 +9,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.page.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.page.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -99,7 +99,7 @@
 			{if $applicationPackageID}{capture append=linkParameters}&applicationPackageID={@$applicationPackageID}{/capture}{/if}
 			{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
 			{if $originIsNotSystem}{capture append=linkParameters}&originIsNotSystem=1{/capture}{/if}
-		
+			
 			{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
 	</div>
