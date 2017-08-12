@@ -111,7 +111,7 @@ define(
 			
 			if (this._availableLanguageCount > 1) {
 				this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
-				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('languageID');
+				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('mediaEditor_' + this._media.mediaID + '_languageID');
 			}
 			else {
 				this._media.languageID = LANGUAGE_ID;
@@ -264,7 +264,7 @@ define(
 									// make sure that the language chooser is initialized first
 									setTimeout(function() {
 										if (this._availableLanguageCount > 1) {
-											LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
+											LanguageChooser.setLanguageId('mediaEditor_' + this._media.mediaID + '_languageID', this._media.languageID || LANGUAGE_ID);
 										}
 										
 										var title = elBySel('input[name=title]', content);
