@@ -277,9 +277,9 @@ define(
 											LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || { }));
 										}
 										else {
-											title.value = this._media.title ? this._media.title[LANGUAGE_ID] : ''; 
-											if (altText) altText.value = this._media.altText ? this._media.altText[LANGUAGE_ID] : '';
-											if (caption) caption.value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
+											title.value = this._media.title ? this._media.title[this._media.languageID || LANGUAGE_ID] : ''; 
+											if (altText) altText.value = this._media.altText ? this._media.altText[this._media.languageID || LANGUAGE_ID] : '';
+											if (caption) caption.value = this._media.caption ? this._media.caption[this._media.languageID || LANGUAGE_ID] : '';
 										}
 										
 										if (this._availableLanguageCount > 1) {
