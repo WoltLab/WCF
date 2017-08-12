@@ -1,8 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\devtools\project\DevtoolsProjectList;
-use wcf\page\AbstractPage;
-use wcf\system\WCF;
+use wcf\page\MultipleLinkPage;
 
 /**
  * Shows a list of devtools projects.
@@ -13,11 +12,21 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Acp\Page
  * @since	3.1
  */
-class DevtoolsProjectListPage extends AbstractPage {
+class DevtoolsProjectListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $itemsPerPage = PHP_INT_MAX;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $objectListClassName = DevtoolsProjectList::class;
 	
 	/**
 	 * @inheritDoc
@@ -33,25 +42,4 @@ class DevtoolsProjectListPage extends AbstractPage {
 	 * @var DevtoolsProjectList
 	 */
 	public $objectList;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readData() {
-		parent::readData();
-		
-		$this->objectList = new DevtoolsProjectList();
-		$this->objectList->readObjects();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'objects' => $this->objectList
-		]);
-	}
 }
