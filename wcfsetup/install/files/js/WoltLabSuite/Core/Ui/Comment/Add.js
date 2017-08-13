@@ -57,7 +57,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 					UiScroll.element(this._container, (function() {
 						window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
 					}).bind(this));
-				}	
+				}
 			}).bind(this));
 			
 			// handle submit button
@@ -279,7 +279,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			// insert HTML
 			//noinspection JSCheckFunctionSignatures
 			DomUtil.insertHtml(data.returnValues.template, this._container, 'after');
-					
+			
 			UiNotification.show(Language.get('wcf.global.success.add'));
 			
 			DomChangeListener.trigger();

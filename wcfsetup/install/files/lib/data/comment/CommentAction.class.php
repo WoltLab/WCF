@@ -263,9 +263,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		CommentHandler::enforceFloodControl();
 		
 		$this->readInteger('objectID', false, 'data');
+		$this->readBoolean('requireGuestDialog', true);
 		
-		$this->validateUsername();
-		$this->validateCaptcha();
+		if (!$this->parameters['requireGuestDialog']) {
+			$this->validateUsername();
+			$this->validateCaptcha();
+		}
 		
 		$this->validateMessage(true);
 		$objectType = $this->validateObjectType();
@@ -283,11 +286,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * @return	string[]
 	 */
 	public function addComment() {
-		if (!empty($this->validationErrors)) {
-			if (!empty($this->parameters['data']['username'])) {
-				WCF::getSession()->register('username', $this->parameters['data']['username']);
+		if ($this->parameters['requireGuestDialog'] || !empty($this->validationErrors)) {
+			if (!empty($this->validationErrors)) {
+				if (!empty($this->parameters['data']['username'])) {
+					WCF::getSession()->register('username', $this->parameters['data']['username']);
+				}
+				WCF::getTPL()->assign('errorType', $this->validationErrors);
 			}
-			WCF::getTPL()->assign('errorType', $this->validationErrors);
 			
 			$guestDialog = $this->getGuestDialog();
 			return [
