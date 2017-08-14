@@ -186,6 +186,8 @@ define(
 			DomUtil.prepend(fileElement, this._target);
 			
 			DomChangeListener.trigger();
+			
+			return fileElement;
 		},
 		
 		/**
