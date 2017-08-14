@@ -101,7 +101,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				}
 			};
 			
-			parameters = Core.extend(parameters, ControllerCaptcha.getData('commentAdd'));
+			if (ControllerCaptcha.has('commentAdd')) {
+				parameters = Core.extend(parameters, ControllerCaptcha.getData('commentAdd'));
+			}
 			
 			this._submit(undefined, parameters);
 		},
