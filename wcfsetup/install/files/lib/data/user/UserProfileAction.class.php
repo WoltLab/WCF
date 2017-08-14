@@ -366,10 +366,19 @@ class UserProfileAction extends UserAction {
 				$fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
 				$groupIDs[] = UserGroup::EVERYONE;
 			}
-			if (!in_array(UserGroup::USERS, $groupIDs)) {
-				if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
-				$fixUserGroupIDs[$user->userID][] = UserGroup::USERS;
-				$groupIDs[] = UserGroup::USERS;
+			if ($user->activationCode) {
+				if (!in_array(UserGroup::GUESTS, $groupIDs)) {
+					if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
+					$fixUserGroupIDs[$user->userID][] = UserGroup::GUESTS;
+					$groupIDs[] = UserGroup::GUESTS;
+				}
+			}
+			else {
+				if (!in_array(UserGroup::USERS, $groupIDs)) {
+					if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
+					$fixUserGroupIDs[$user->userID][] = UserGroup::USERS;
+					$groupIDs[] = UserGroup::USERS;
+				}
 			}
 			$newGroupIDs[$user->userID] = $groupIDs;
 			

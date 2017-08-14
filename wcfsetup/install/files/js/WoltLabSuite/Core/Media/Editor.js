@@ -141,7 +141,7 @@ define(
 			// language and multilingualism
 			if (this._availableLanguageCount > 1) {
 				this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
-				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('languageID');
+				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('mediaEditor_' + this._media.mediaID + '_languageID');
 			}
 			else {
 				this._media.languageID = LANGUAGE_ID;
@@ -299,7 +299,7 @@ define(
 									// make sure that the language chooser is initialized first
 									setTimeout(function() {
 										if (this._availableLanguageCount > 1) {
-											LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
+											LanguageChooser.setLanguageId('mediaEditor_' + this._media.mediaID + '_languageID', this._media.languageID || LANGUAGE_ID);
 										}
 										
 										if (this._categoryIds.length) {
@@ -316,9 +316,9 @@ define(
 											LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || { }));
 										}
 										else {
-											title.value = this._media.title ? this._media.title[LANGUAGE_ID] : ''; 
-											if (altText) altText.value = this._media.altText ? this._media.altText[LANGUAGE_ID] : '';
-											if (caption) caption.value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
+											title.value = this._media.title ? this._media.title[this._media.languageID || LANGUAGE_ID] : ''; 
+											if (altText) altText.value = this._media.altText ? this._media.altText[this._media.languageID || LANGUAGE_ID] : '';
+											if (caption) caption.value = this._media.caption ? this._media.caption[this._media.languageID || LANGUAGE_ID] : '';
 										}
 										
 										if (this._availableLanguageCount > 1) {

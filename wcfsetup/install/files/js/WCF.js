@@ -4818,6 +4818,12 @@ WCF.System.ObjectStore = {
  */
 WCF.System.Captcha = {
 	/**
+	 * ids of registered captchas
+	 * @var	{string[]}
+	 */
+	_registeredCaptchas: [],
+	
+	/**
 	 * Adds a callback for a certain captcha.
 	 * 
 	 * @param	string		captchaID
@@ -4827,6 +4833,8 @@ WCF.System.Captcha = {
 		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				ControllerCaptcha.add(captchaID, callback);
+				
+				this._registeredCaptchas.push(captchaID);
 			}
 			catch (e) {
 				if (e instanceof TypeError) {
@@ -4836,7 +4844,7 @@ WCF.System.Captcha = {
 				
 				// ignore other errors
 			}
-		});
+		}.bind(this));
 	},
 	
 	/**
@@ -4846,6 +4854,10 @@ WCF.System.Captcha = {
 	 */
 	getData: function(captchaID) {
 		var returnValue;
+		
+		if (this._registeredCaptchas.indexOf(captchaID) === -1) {
+			return returnValue;
+		}
 		
 		var ControllerCaptcha = require('WoltLabSuite/Core/Controller/Captcha');
 		try {
@@ -4865,11 +4877,13 @@ WCF.System.Captcha = {
 		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				ControllerCaptcha.delete(captchaID);
+				
+				this._registeredCaptchas.splice(this._registeredCaptchas.indexOf(item), 1);
 			}
 			catch (e) {
 				// ignore errors for unknown captchas
 			}
-		});
+		}.bind(this));
 	}
 };
 
