@@ -255,6 +255,11 @@ final class PasswordUtil {
 			throw new SystemException("Cannot generate a secure random number, min and max are the same");
 		}
 		
+		// use random_int() if available
+		if (function_exists('random_int')) {
+			return mt_rand($min, $max);
+		}
+		
 		// fallback to mt_rand() if OpenSSL is not available
 		if (!function_exists('openssl_random_pseudo_bytes')) {
 			return mt_rand($min, $max);
