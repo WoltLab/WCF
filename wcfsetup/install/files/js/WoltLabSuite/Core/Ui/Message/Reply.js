@@ -283,7 +283,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		 */
 		_handleError: function(data) {
 			//noinspection JSUnresolvedVariable
-			this.throwError(this._textarea, data.returnValues.errorType);
+			this.throwError(this._textarea, data.returnValues.realErrorMessage);
 		},
 		
 		/**
@@ -397,7 +397,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._hideLoadingOverlay();
 			
 			//noinspection JSUnresolvedVariable
-			if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {
+			if (data === null || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
 				return true;
 			}
 			

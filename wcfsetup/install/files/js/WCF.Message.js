@@ -497,7 +497,9 @@ if (COMPILER_TARGET_DEFAULT) {
 				$innerError = $('<small class="innerError" />').appendTo(this._textarea.parent());
 			}
 			
-			$innerError.html((data.returnValues.errorType === 'empty' ? WCF.Language.get('wcf.global.form.error.empty') : data.returnValues.errorMessage));
+			var message = (data.returnValues.errorType === 'empty' ? WCF.Language.get('wcf.global.form.error.empty') : data.returnValues.errorMessage);
+			if (data.returnValues.realErrorMessage) message = data.returnValues.realErrorMessage;
+			$innerError.html(message);
 			
 			return false;
 		}

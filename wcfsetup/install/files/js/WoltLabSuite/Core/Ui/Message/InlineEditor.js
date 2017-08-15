@@ -696,7 +696,7 @@ define(
 			this._restoreEditor();
 			
 			//noinspection JSUnresolvedVariable
-			if (!data || data.returnValues === undefined || data.returnValues.errorType === undefined) {
+			if (!data || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
 				return true;
 			}
 			
@@ -709,7 +709,7 @@ define(
 			}
 			
 			//noinspection JSUnresolvedVariable
-			innerError.textContent = data.returnValues.errorType;
+			innerError.textContent = data.returnValues.realErrorMessage;
 			
 			return false;
 		},
