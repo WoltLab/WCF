@@ -57,6 +57,14 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['options'])) $options = StringUtil::normalizeCsv($option['options']);
 		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
 		
+		// force the `html` bbcode to be disabled by default
+		if ($optionType === 'BBCodeSelect') {
+			$defaultValue .= (empty($defaultValue) ? '' : ',') . 'html';
+			$adminDefaultValue .= (empty($adminDefaultValue) ? '' : ',') . 'html';
+			$modDefaultValue .= (empty($modDefaultValue) ? '' : ',') . 'html';
+			$userDefaultValue .= (empty($userDefaultValue) ? '' : ',') . 'html';
+		}
+		
 		// collect additional tags and their values
 		$additionalData = [];
 		foreach ($option as $tag => $value) {
