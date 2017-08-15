@@ -10,6 +10,10 @@
 			          data-disable-attachments="true"
 			          data-disable-media="true"
 			></textarea>
+			
+			{* in-template call for full backwards-compatibility *}
+			{$commentList->getCommentManager()->setDisallowedBBCodes()}
+			
 			{include file='wysiwyg'}
 			
 			<div class="formSubmit">

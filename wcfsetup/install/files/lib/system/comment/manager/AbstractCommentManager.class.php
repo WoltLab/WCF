@@ -2,6 +2,7 @@
 namespace wcf\system\comment\manager;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\Comment;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -63,6 +64,12 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	protected $permissionModEdit = '';
 	
 	/**
+	 * permission name for the list of disallowed bbcodes
+	 * @var string
+	 */
+	protected $permissionDisallowedBBCodes = 'user.comment.disallowedBBCodes';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function canAdd($objectID) {
@@ -95,6 +102,13 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 		}
 		
 		return (WCF::getSession()->getPermission($this->permissionAddWithoutModeration) ? true : false);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function setDisallowedBBCodes() {
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission($this->permissionDisallowedBBCodes)));
 	}
 	
 	/**

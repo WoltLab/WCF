@@ -142,4 +142,9 @@ interface ICommentManager {
 	 * @return	boolean
 	 */
 	public function supportsReport();
+	
+	/**
+	 * Sets the list of disallowed bbcodes.
+	 */
+	public function setDisallowedBBCodes();
 }
