@@ -42,6 +42,14 @@
 		else {
 			parent.appendChild(fragment);
 		}
+		
+		[{@$everyoneGroupID}, {@$guestGroupID}, {@$userGroupID}].forEach(function(groupID) {
+			elBySelAll('dl[data-group-id="' + groupID + '"] .jsBbcodeSelectOptionHtml', undefined, function (bbcodeHtml) {
+				elBySel('input[type="checkbox"]', bbcodeHtml).checked = true;
+				
+				elHide(bbcodeHtml);
+			});
+		});
 	})();
 </script>
 
@@ -77,7 +85,7 @@
 		</header>
 		
 		{foreach from=$groups item=group}
-			<dl>
+			<dl data-group-id="{@$group->groupID}">
 				<dt>{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}<label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
 				<dd>
 					{@$formElements[$group->groupID]}

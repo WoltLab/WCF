@@ -217,7 +217,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'priority' => $this->priority,
 			'userOnlineMarking' => $this->userOnlineMarking,
 			'showOnTeamPage' => $this->showOnTeamPage,
-			'groupIsGuest' => false
+			'groupIsGuest' => false,
+			'isBlankForm' => empty($_POST)
 		]);
 	}
 	

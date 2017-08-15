@@ -246,11 +246,16 @@ class UserGroupOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$guestGroupID = 0;
+		$everyoneGroupID = $guestGroupID = $userGroupID = 0;
 		foreach ($this->groups as $group) {
-			if ($group->groupType == UserGroup::GUESTS) {
+			if ($group->groupType == UserGroup::EVERYONE) {
+				$everyoneGroupID = $group->groupID;
+			}
+			else if ($group->groupType == UserGroup::GUESTS) {
 				$guestGroupID = $group->groupID;
-				break;
+			}
+			else if ($group->groupType == UserGroup::USERS) {
+				$userGroupID = $group->groupID;
 			}
 		}
 		
@@ -260,7 +265,9 @@ class UserGroupOptionForm extends AbstractForm {
 			'parentCategories' => $this->parentCategories,
 			'userGroupOption' => $this->userGroupOption,
 			'values' => $this->values,
-			'guestGroupID' => $guestGroupID
+			'everyoneGroupID' => $everyoneGroupID,
+			'guestGroupID' => $guestGroupID,
+			'userGroupID' => $userGroupID
 		]);
 	}
 	
