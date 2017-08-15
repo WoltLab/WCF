@@ -31,6 +31,18 @@
 		.wcfLikeCounter {
 			@include wcfFontSmall;
 		}
+		
+		> .userMessage {
+			margin-top: 10px;
+			
+			/* slightly indent code and quote boxes at the root of the
+			   message container, allows some space for shadows */
+			> .codeBox,
+			> .quoteBox {
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+		}
 	}
 	
 	.commentResponseList {
