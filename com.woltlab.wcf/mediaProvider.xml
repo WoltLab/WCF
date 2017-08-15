@@ -20,12 +20,6 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		
-		<provider name="clipfish">
-			<title>Clipfish</title>
-			<regex><![CDATA[http://(?:www\.)?clipfish\.de/(?:.*?/)?video/(?P<ID>\d+)/]]></regex>
-			<html><![CDATA[<div style="width:464px; height:404px;"><div style="width:464px; height:384px;"><iframe src="http://www.clipfish.de/embed_video/?vid={$ID}&amp;as=0&amp;col=990000" name="Clipfish Embedded Video" width="464" height="384" align="left" marginheight="0" marginwidth="0" scrolling="no"></iframe></div></div>]]></html>
-		</provider>
-		
 		<provider name="veoh">
 			<title>Veoh</title>
 			<regex><![CDATA[http://(?:www\.)?veoh\.com/watch/v(?P<ID>\d+[a-zA-Z0-9]+)]]></regex>
