@@ -622,6 +622,15 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
+			if (!isset($existingPackages[$row['package']])) {
+				if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+					throw new SystemException("Invalid package update data, identifier '" . $row['package'] . "' does not match any installed package (case-mismatch).");
+				}
+				
+				// case-mismatch, skip the update
+				continue;
+			}
+			
 			// test version
 			foreach ($existingPackages[$row['package']] as $existingVersion) {
 				if (Package::compareVersion($existingVersion['packageVersion'], $row['packageVersion'], '<')) {
