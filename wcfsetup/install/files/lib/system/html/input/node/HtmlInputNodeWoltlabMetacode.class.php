@@ -117,6 +117,10 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 				// no available converter, metacode will be handled during output generation
 				continue;
 			}
+			else if (!BBCodeHandler::getInstance()->isAvailableBBCode($name)) {
+				// skip conversion of disallowed bbcodes
+				continue;
+			}
 			
 			/** @var IMetacodeConverter $converter */
 			if ($converter->validateAttributes($attributes)) {
