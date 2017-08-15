@@ -257,7 +257,7 @@ final class PasswordUtil {
 		
 		// use random_int() if available
 		if (function_exists('random_int')) {
-			return mt_rand($min, $max);
+			return random_int($min, $max);
 		}
 		
 		// fallback to mt_rand() if OpenSSL is not available
