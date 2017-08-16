@@ -118,6 +118,8 @@ class UserNotificationHandler extends SingletonFactory {
 			'event' => $event
 		);
 		EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
+		//update recipient ids after changing by event listener
+		$recipientIDs = $parameters["recipientIDs"];
 		
 		// find existing notifications
 		$conditions = new PreparedStatementConditionBuilder();
