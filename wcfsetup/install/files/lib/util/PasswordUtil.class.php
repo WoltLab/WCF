@@ -2,6 +2,7 @@
 namespace wcf\util;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
+use wcf\util\exception\CryptoException;
 
 /**
  * Provides functions to compute password hashes.
@@ -254,23 +255,14 @@ final class PasswordUtil {
 			// not random
 			throw new SystemException("Cannot generate a secure random number, min and max are the same");
 		}
-		
-		// fallback to mt_rand() if OpenSSL is not available
-		if (!function_exists('openssl_random_pseudo_bytes')) {
+
+		try {
+			return CryptoUtil::randomInt($min, $max);
+		}
+		catch (CryptoException $e) {
+			// Backwards compatibility: This function never did throw.
 			return mt_rand($min, $max);
 		}
-		
-		$log = log($range, 2);
-		$bytes = (int) ($log / 8) + 1; // length in bytes
-		$bits = (int) $log + 1; // length in bits
-		$filter = (int) (1 << $bits) - 1; // set all lower bits to 1
-		do {
-			$rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes, $s)));
-			$rnd = $rnd & $filter; // discard irrelevant bits
-		}
-		while ($rnd >= $range);
-		
-		return $min + $rnd;
 	}
 	
 	/**
