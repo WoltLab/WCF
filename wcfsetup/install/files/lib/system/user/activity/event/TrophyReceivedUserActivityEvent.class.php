@@ -3,6 +3,7 @@ namespace wcf\system\user\activity\event;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User activity event implementation for receiving a trophy.
@@ -38,7 +39,7 @@ class TrophyReceivedUserActivityEvent extends SingletonFactory implements IUserA
 				$event->setIsAccessible();
 				
 				$event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.user.trophy.recentActivity.received', ['userTrophy' => $trophies[$event->objectID]]));
-				$event->setDescription($trophies[$event->objectID]->getDescription());
+				$event->setDescription(StringUtil::encodeHTML($trophies[$event->objectID]->getDescription()));
 			}
 			else {
 				$event->setIsOrphaned();
