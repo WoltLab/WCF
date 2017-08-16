@@ -21,7 +21,7 @@
 		<div class="boxesFooter">
 			<div class="layoutBoundary{if $__showStyleChanger} clearfix{/if}">
 				{if $__showStyleChanger}
-					<span class="styleChanger">
+					<span class="styleChanger jsOnly">
 						<a href="#" class="jsButtonStyleChanger">{lang}wcf.style.changeStyle{/lang}</a>
 					</span>
 				{/if}
