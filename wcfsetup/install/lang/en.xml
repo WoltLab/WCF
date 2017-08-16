@@ -1426,7 +1426,7 @@ Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/der
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->optionTitle|language}</span>?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
-		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
+		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on initial request.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.customOption.selectOptions"><![CDATA[Options]]></item>
 		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[You can use select options in combination with selection types, but please be aware that using the colon will cause the system to use everything to the left as an internal identifier and only the part after the colon will be displayed to the user. This allows you to change the value displayed to the user without harming existing selections unless the identifier itself is being changed. Enter one select option per line.]]></item>
