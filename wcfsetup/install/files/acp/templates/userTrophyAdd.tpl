@@ -2,14 +2,17 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList/User'], function(UiItemListUser) {
-		UiItemListUser.init('user', {
-			maxItems: 25
-		});
+		{if $action == 'add'}
+			UiItemListUser.init('user', {
+				maxItems: 25
+			});
+		{/if}
 		
 		elBySel('input[name=useCustomDescription]').addEventListener('click', function () {
 			if (elBySel('input[name=useCustomDescription]').checked) {
 				elById('userTrophyDescriptionDL').style.display = 'block';
-			} else {
+			}
+			else {
 				elById('userTrophyDescriptionDL').style.display = 'none';
 			}
 		});
@@ -20,11 +23,11 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.menu.link.userTrophy.{$action}{/lang}</h1>
 	</div>
-
+	
 	<nav class="contentHeaderNavigation">
 		<ul>
 			<li><a href="{link controller='UserTrophyList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.userTrophy.list{/lang}</span></a></li>
-
+			
 			{event name='contentHeaderNavigation'}
 		</ul>
 	</nav>
@@ -60,7 +63,7 @@
 				{/if}
 			</dd>
 		</dl>
-
+		
 		<dl{if $errorField == 'trophyID'} class="formError"{/if}>
 			<dt><label for="trophyID">{lang}wcf.acp.trophy{/lang}</label></dt>
 			<dd>
@@ -69,7 +72,7 @@
 				{else}
 					<select name="trophyID" id="trophyID"{if $action == 'edit'} disabled{/if}>
 						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-	
+						
 						{foreach from=$trophyCategories item=category}
 							<optgroup label="{$category->getTitle()}">
 								{foreach from=$category->getTrophies(true) item=trophy}
@@ -91,7 +94,7 @@
 				{/if}
 			</dd>
 		</dl>
-
+		
 		<dl>
 			<dt></dt>
 			<dd>
@@ -115,7 +118,7 @@
 			</dd>
 		</dl>
 		{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
-
+		
 		{event name='dataFields'}
 	</div>
 
