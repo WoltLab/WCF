@@ -118,24 +118,28 @@ class UserNotificationHandler extends SingletonFactory {
 			'event' => $event
 		);
 		EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
-		
-		// find existing notifications
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($recipientIDs));
-		$conditions->add("eventID = ?", array($event->eventID));
-		$conditions->add("eventHash = ?", array($event->getEventHash()));
-		$conditions->add("confirmTime = ?", array(0));
-		
-		$sql = "SELECT	notificationID, userID
-			FROM	wcf".WCF_N."_user_notification
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
+		//update recipient ids after changing by event listener
+		$recipientIDs = $parameters["recipientIDs"];
 		$notifications = array();
-		while ($row = $statement->fetchArray()) {
-			$notifications[$row['userID']] = $row['notificationID'];
-		}
 		
+		//add empty check
+		if (!empty($recipientIDs)) {
+			// find existing notifications
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("userID IN (?)", array($recipientIDs));
+			$conditions->add("eventID = ?", array($event->eventID));
+			$conditions->add("eventHash = ?", array($event->getEventHash()));
+			$conditions->add("confirmTime = ?", array(0));
+			
+			$sql = "SELECT	notificationID, userID
+			FROM	wcf" . WCF_N . "_user_notification
+			" . $conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			while ($row = $statement->fetchArray()) {
+				$notifications[$row['userID']] = $row['notificationID'];
+			}
+		}
 		// check if event supports stacking and author should be added
 		if (!empty($notifications) && $event->isStackable()) {
 			$conditions = new PreparedStatementConditionBuilder();
