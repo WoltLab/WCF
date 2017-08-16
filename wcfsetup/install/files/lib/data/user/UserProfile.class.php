@@ -602,6 +602,19 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Returns true if a permission was set to 'Never'. This is required to preserve
+	 * compatibility, while preventing ACLs from overruling a 'Never' setting.
+	 * 
+	 * @param       string          $permission
+	 * @return      boolean
+	 */
+	 public function getNeverPermission($permission) {
+		$this->loadGroupData();
+		
+		return (isset($this->groupData['__never'][$permission]));
+	}
+	
+	/**
 	 * Returns the user title of this user.
 	 * 
 	 * @return	string
