@@ -142,9 +142,13 @@ class ContactForm extends AbstractCaptchaForm {
 	public function readData() {
 		parent::readData();
 		
-		if (empty($_POST) && WCF::getUser()->userID) {
-			$this->email = WCF::getUser()->email;
-			$this->name = WCF::getUser()->username;
+		if (empty($_POST)) {
+			if (WCF::getUser()->userID) {
+				$this->email = WCF::getUser()->email;
+				$this->name = WCF::getUser()->username;
+			}
+			
+			$this->optionHandler->readData();
 		}
 	}
 	
