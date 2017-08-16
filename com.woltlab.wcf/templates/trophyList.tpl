@@ -4,11 +4,9 @@
 	<header class="contentHeader messageGroupContentHeader">
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$category->getTitle()}</h1>
-			<ul class="inlineList contentHeaderMetaData">
-				<li>
-					{$category->getDescription()}
-				</li>
-			</ul>
+			{if $category->getDescription()}
+				<p class="contentHeaderDescription">{$category->getDescription()}</p>
+			{/if}
 		</div>
 	</header>
 {/capture}

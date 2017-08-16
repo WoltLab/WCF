@@ -25,6 +25,11 @@ class TrophyCategoryType extends AbstractCategoryType {
 	 */
 	protected $maximumNestingLevel = 0;
 	
+	/**
+	 * @inheritDoc
+	 */
+	protected $forceDescription = false;
+	
 	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
