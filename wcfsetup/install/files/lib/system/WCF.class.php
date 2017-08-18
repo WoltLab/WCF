@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system;
 use wcf\data\application\Application;
+use wcf\data\application\ApplicationEditor;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
+use wcf\data\package\PackageAction;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\data\page\Page;
@@ -581,8 +583,46 @@ class WCF {
 			EmailTemplateEngine::getInstance()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 		}
 		else {
-			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement '".IApplication::class."'.");
+			$wsc = ApplicationHandler::getInstance()->getApplication('wcf');
+			$appPathTest = str_replace($wsc->domainPath, '', $application->domainPath);
+			
+			// fix packageDir column silently - works only if app is in a sub-folder of the WSC
+			if ($appPathTest != $package->packageDir && file_exists(FileUtil::getRealPath(WCF_DIR . $appPathTest) . 'lib/system/'.strtoupper($abbreviation).'Core.class.php')) {
+				$packageAction = new PackageAction([$package], 'update', ['data' => ['packageDir' => $appPathTest]]);
+				$packageAction->executeAction();
+				Package::writeConfigFile($package->packageID);
+				ApplicationEditor::resetCache();
+				$package = new Package($package->packageID);
+				$application = new Application($package->packageID);
+				
+				// update data
+				$packageDir = FileUtil::getRealPath(WCF_DIR.$appPathTest);
+				self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+				
+				// include config file
+				$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
+				if (file_exists($configPath)) {
+					require_once($configPath);
+				}
+				else {
+					throw new SystemException('Unable to load configuration for '.$package->package);
+				}
+				
+				// register template path if not within ACP
+				if (!class_exists('wcf\system\WCFACP', false)) {
+					// add template path and abbreviation
+					static::getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
+				}
+				EmailTemplateEngine::getInstance()->addApplication($abbreviation, $packageDir . 'templates/');
+				
+				// init application and assign it as template variable
+				self::$applicationObjects[$application->packageID] = call_user_func([$className, 'getInstance']);
+				static::getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
+				EmailTemplateEngine::getInstance()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
+			} else {
+				unset(self::$autoloadDirectories[$abbreviation]);
+				throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement '".IApplication::class."'.");
+			}
 		}
 		
 		// register template path in ACP
