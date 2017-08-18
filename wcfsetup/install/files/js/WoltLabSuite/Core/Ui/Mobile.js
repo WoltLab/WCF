@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
 	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,    UiAlignment, UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser, UiDropdownReusable)
 {
 	"use strict";
