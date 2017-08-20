@@ -1260,7 +1260,7 @@ RedactorPlugins.wbbcode = function() {
 							if ($line.match(/<\/p>$/) && ($i + 1 < $length)) {
 								data += $line;
 								
-								if ($.trim($tmp[$i + 1]).indexOf('<p') === 0) {
+								if (!$.trim($tmp[$i + 1]).match(/^<(?:p|table|tr|td)\s/)) {
 									data += '<br />';
 								}
 								
