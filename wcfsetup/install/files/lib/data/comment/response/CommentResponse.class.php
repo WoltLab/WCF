@@ -84,7 +84,7 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	 */
 	public function getLink() {
 		/** @var ICommentManager $processor */
-		$processor = CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
+		$processor = CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor();
 		
 		return $processor->getResponseLink($this);
 	}
