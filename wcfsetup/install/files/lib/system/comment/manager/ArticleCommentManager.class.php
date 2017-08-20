@@ -167,6 +167,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+							'comment' => $comment,
 							'articleContent' => $articleContents[$comment->objectID],
 							'like' => $like
 						]);
@@ -191,7 +192,8 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'articleContent' => $articleContents[$comment->objectID],
-							'like' => $like
+							'like' => $like,
+							'response' => $response
 						]);
 						$like->setTitle($text);
 						
