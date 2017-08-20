@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\WCF;
 
 /**
  * Provides methods for viewable likes.
@@ -44,7 +45,14 @@ class ViewableLike extends DatabaseObjectDecorator {
 	 * user profile
 	 * @var	UserProfile
 	 */
-	protected $userProfile = null;
+	protected $userProfile;
+	
+	/**
+	 * description of the object type displayed in the list of likes
+	 * @var		string
+	 * @since	3.1
+	 */
+	protected $objectTypeDescription;
 	
 	/**
 	 * Marks this like as accessible for current user.
@@ -128,5 +136,32 @@ class ViewableLike extends DatabaseObjectDecorator {
 	 */
 	public function getObjectTypeName() {
 		return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->objectType;
+	}
+	
+	/**
+	 * Sets the description of the object type displayed in the list of likes.
+	 * 
+	 * @param	string		$name
+	 * @since	3.1
+	 */
+	public function setObjectTypeDescription($name) {
+		$this->objectTypeDescription = $name;
+	}
+	
+	/**
+	 * Returns the description of the object type displayed in the list of likes.
+	 * 
+	 * If no description has been set before, `wcf.like.objectType.{$this->getObjectTypeName()}`
+	 * is returned. 
+	 * 
+	 * @return	string
+	 * @since	3.1
+	 */
+	public function getObjectTypeDescription() {
+		if ($this->objectTypeDescription !== null) {
+			return $this->objectTypeDescription;
+		}
+		
+		return WCF::getLanguage()->getDynamicVariable('wcf.like.objectType.' . $this->getObjectTypeName());
 	}
 }
