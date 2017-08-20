@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.group.option.'|concat:$userGroupOption->optionName}
 
 <script data-relocate="true">
 	(function() {
