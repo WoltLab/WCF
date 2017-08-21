@@ -3682,6 +3682,12 @@ WCF.Option.Handler = Class.extend({
 				var noElement = $('#' + elementId + '_no');
 				if (enable) noElement.enable();
 				else noElement.disable();
+				
+				var neverElement = $('#' + elementId + '_never');
+				if (neverElement.length) {
+					if (enable) neverElement.enable();
+					else neverElement.disable();
+				}
 			}
 		}
 		else {
