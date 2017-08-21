@@ -8,12 +8,16 @@ $.Redactor.prototype.WoltLabClean = function() {
 				html = html.replace(/\u200B/g, '');
 				
 				// fix ampersands being replaced
-				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				//html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				html = html.replace(/&amp;amp;/g, '@@@WCF_LITERAL_AMP@@@');
+				html = html.replace(/&amp;/g, '&amp;WCF_AMPERSAND&amp;');
 				
 				html = mpOnSet.call(this, html);
 				
 				// restore ampersands
-				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				//html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				html = html.replace(/&amp;WCF_AMPERSAND&amp;/g, '&amp;');
+				html = html.replace(/@@@WCF_LITERAL_AMP@@@/, '&amp;amp;');
 				
 				var div = elCreate('div');
 				div.innerHTML = html;
@@ -77,12 +81,14 @@ $.Redactor.prototype.WoltLabClean = function() {
 				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
 				
 				// fix ampersands being replaced
-				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				//html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				html = html.replace(/&amp;/g, '&amp;WCF_AMPERSAND&amp;');
 				
 				html = mpOnSync.call(this, html);
 				
 				// restore ampersands
-				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				//html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				html = html.replace(/&WCF_AMPERSAND&/g, '&amp;');
 				
 				div.innerHTML = html;
 				
