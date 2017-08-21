@@ -99,7 +99,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 			}
 			
 			var toolbar = this.core.toolbar()[0];
-			elBySelAll('.re-button-tooltip', toolbar, elRemove);
+			elBySelAll('.re-button-tooltip', toolbar.parentNode, elRemove);
 			
 			// enforce button order as provided with `opts.buttons`
 			var listItem, toolbarButtons = {}, toolbarOrder = [];
