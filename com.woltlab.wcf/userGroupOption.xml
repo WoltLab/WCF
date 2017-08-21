@@ -755,6 +755,7 @@ png</defaultvalue>
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<enableoptions>user.page.canAddCommentWithoutModeration</enableoptions>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.page.canAddCommentWithoutModeration">
@@ -786,6 +787,7 @@ png</defaultvalue>
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<enableoptions>user.article.canAddCommentWithoutModeration</enableoptions>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.article.canAddCommentWithoutModeration">
@@ -907,6 +909,7 @@ png</defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<options>module_user_profile_wall</options>
+				<enableoptions>user.profileComment.canAddCommentWithoutModeration</enableoptions>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.profileComment.canAddCommentWithoutModeration">
