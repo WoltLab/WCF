@@ -339,6 +339,14 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		}
 		while ($parent->nodeName === 'p' || !$this->isBlockElement($parent));
 		
+		// block elements can sometimes contain a line break after the end tag
+		// which needs to be removed to avoid it being split into a separate p
+		if ($node = $end->nextSibling) {
+			if ($node->nodeType === XML_TEXT_NODE && $node->textContent === "\n" || $node->textContent === "\r\n") {
+				DOMUtil::removeNode($node);
+			}
+		}
+		
 		$element = DOMUtil::splitParentsUntil($start, $parent);
 		if ($start !== $element) DOMUtil::insertBefore($start, $element);
 		

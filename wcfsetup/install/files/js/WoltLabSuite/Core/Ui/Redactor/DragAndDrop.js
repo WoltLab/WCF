@@ -194,6 +194,20 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 		},
 		
 		/**
+		 * Handles the global drop event.
+		 * 
+		 * @param       {Event}         event
+		 * @protected
+		 */
+		_globalDrop: function (event) {
+			if (event.target.closest('.redactor-layer') === null) {
+				event.preventDefault();
+			}
+			
+			this._dragLeave(event);
+		},
+		
+		/**
 		 * Binds listeners to global events.
 		 * 
 		 * @protected
@@ -204,7 +218,7 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 			
 			window.addEventListener('dragover', this._dragOver.bind(this));
 			window.addEventListener('dragleave', this._dragLeave.bind(this));
-			window.addEventListener('drop', this._dragLeave.bind(this));
+			window.addEventListener('drop', this._globalDrop.bind(this));
 			
 			_didInit = true;
 		}

@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.8.1
-	Updated: July 4, 2017
+	Version 2.9
+	Updated: August 13, 2017
 
 	http://imperavi.com/redactor/
 
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.8.1';
+	$.Redactor.VERSION = '2.9';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -217,6 +217,7 @@
 		},
 
         keepStyleAttr: [], // tag name array
+        keepInlineOnEnter: false,
 
 		// shortcuts
 		shortcuts: {
@@ -1106,19 +1107,15 @@
 					var returned = [];
 					$.each(block, function(i,s)
 					{
-						if (typeof s.attributes === 'undefined')
-						{
-							returned.push(s);
-						}
+						if (typeof s.attributes !== 'undefined')
+                        {
+    						while (s.attributes.length)
+    						{
+                                s.removeAttribute(s.attributes[0].name);
+                            }
+                        }
 
-						var $el = $(s);
-						var len = s.attributes.length;
-						for (var z = 0; z < len; z++)
-						{
-							$el.removeAttr(s.attributes[z].name);
-						}
-
-						returned.push($el[0]);
+						returned.push(s);
 					});
 
 					return returned;
@@ -1159,13 +1156,13 @@
 						this.sBuffer.push([current, saved]);
 					}
 
-					//this.selection.restoreInstant();
+					//this.selection.restore();
 				},
 				setRedo: function()
 				{
 					var saved = this.selection.saveInstant();
 					this.sRebuffer.push([this.core.editor().html(), saved]);
-					//this.selection.restoreInstant();
+					//this.selection.restore();
 				},
 				add: function()
 				{
@@ -1184,6 +1181,7 @@
 					this.core.editor().html(buffer[0]);
 
 					this.selection.restoreInstant(buffer[1]);
+					this.selection.restore();
 					this.observe.load();
 				},
 				redo: function()
@@ -1199,6 +1197,7 @@
 					this.core.editor().html(buffer[0]);
 
 					this.selection.restoreInstant(buffer[1]);
+					this.selection.restore();
 					this.observe.load();
 				},
 				clear: function()
@@ -1826,7 +1825,11 @@
 				    $tooltip.addClass('re-button-tooltip');
 				    $tooltip.html(title);
 
-                    $btn.append($tooltip);
+                    var self = this;
+                    var $toolbar = this.button.toolbar();
+                    var $box = $toolbar.closest('.redactor-toolbar-box');
+                    $box = ($box.length === 0) ? $toolbar : $box;
+                    $box.prepend($tooltip);
                     $btn.on('mouseover', function()
                     {
                         if ($(this).hasClass('redactor-button-disabled'))
@@ -1834,8 +1837,21 @@
                             return;
                         }
 
+                        var pos = ($toolbar.hasClass('toolbar-fixed-box')) ? $btn.offset() : $btn.position();
+                        pos = (self.opts.toolbarFixedTarget !== document) ? $btn.position() : pos;
+                        var top = ($toolbar.hasClass('toolbar-fixed-box')) ? $btn.position().top : pos.top;
+                        var height = $btn.innerHeight();
+                        var width = $btn.innerWidth();
+                        var posBox = ($toolbar.hasClass('toolbar-fixed-box')) ? 'fixed' : 'absolute';
+                        posBox = (self.opts.toolbarFixedTarget !== document) ? 'absolute' : posBox;
+                        var scrollFix = (self.opts.toolbarFixedTarget !== document) ? $toolbar.position().top : 0;
+
                         $tooltip.show();
-                        $tooltip.css('margin-left', -($tooltip.innerWidth()/2));
+                        $tooltip.css({
+                            top: (top + height + scrollFix) + 'px',
+                            left: (pos.left + width/2 - $tooltip.innerWidth()/2) + 'px',
+                            position: posBox
+                        });
 
                     }).on('mouseout', function()
                     {
@@ -5314,10 +5330,13 @@
 						var $el = $(s);
 
 						// remove style
-						$el.find(this.opts.inlineTags.join(',')).each(function()
-						{
-							$(this).removeAttr('style');
-						});
+                        var filter = '';
+                        if (this.opts.keepStyleAttr.length !== 0)
+                        {
+                            filter = ',' + this.opts.keepStyleAttr.join(',');
+                        }
+
+						$el.find(this.opts.inlineTags.join(',')).not('img' + filter).removeAttr('style');
 
 						var $parent = $el.parent();
 						if ($parent.length !== 0 && $parent[0].tagName === 'LI')
@@ -6182,6 +6201,7 @@
 							});
 
 							html = $div.html();
+							endNode = $(html).last();
 
 						}
 
@@ -6849,33 +6869,48 @@
                         return;
                     }
 
-
 					// remove inline tags in new-empty paragraph
-					setTimeout($.proxy(function()
-					{
-						var inline = this.selection.inline();
-						if (inline && this.utils.isEmpty(inline.innerHTML))
-						{
-							var parent = this.selection.block();
-							$(inline).remove();
-							//this.caret.start(parent);
+                    if (!this.opts.keepInlineOnEnter)
+                    {
+    					setTimeout($.proxy(function()
+    					{
+    						var inline = this.selection.inline();
+    						if (inline && this.utils.isEmpty(inline.innerHTML))
+    						{
+    							var parent = this.selection.block();
+    							$(inline).remove();
+    							//this.caret.start(parent);
 
-                            var range = document.createRange();
-                            range.setStart(parent, 0);
+                                var range = document.createRange();
+                                range.setStart(parent, 0);
 
-                            var textNode = document.createTextNode('\u200B');
+                                var textNode = document.createTextNode('\u200B');
 
-                            range.insertNode(textNode);
-                            range.setStartAfter(textNode);
-                            range.collapse(true);
+                                range.insertNode(textNode);
+                                range.setStartAfter(textNode);
+                                range.collapse(true);
 
-                            var sel = window.getSelection();
-            				sel.removeAllRanges();
-            				sel.addRange(range);
-						}
+                                var sel = window.getSelection();
+                				sel.removeAllRanges();
+                				sel.addRange(range);
+    						}
 
 
-					}, this), 1);
+    					}, this), 1);
+					}
+
+                    // remove last br
+                    setTimeout($.proxy(function()
+    				{
+                        var block = this.selection.block();
+                        var nodes = block.childNodes;
+                        var last = nodes[nodes.length-1];
+                        if (last && last.nodeType !== 3 && last.tagName === 'BR')
+                        {
+                            $(last).remove();
+                        }
+
+                    }, this), 1);
 				},
 				checkEvents: function(arrow, key)
 				{
@@ -7411,7 +7446,9 @@
 					// linkify
 					if (this.linkify.isKey(key))
 					{
+    					this.selection.save();
 						this.linkify.format();
+    					this.selection.restore();
 					}
 
 				}
@@ -7674,7 +7711,7 @@
 				},
 				cleanText: function(text)
 				{
-					return (typeof text === 'undefined') ? '' :$.trim(text.replace(/(<([^>]+)>)/gi, ''));
+					return (typeof text === 'undefined') ? '' : $.trim(text.replace(/(<([^>]+)>)/gi, ''));
 				},
 				getText: function(link)
 				{
@@ -7867,9 +7904,10 @@
 					this.core.editor().find(":not(iframe,img,a,pre,code,.redactor-unlink)").addBack().contents().filter($.proxy(this.linkify.isFiltered, this)).each($.proxy(this.linkify.handler, this));
 
 					// collect
+					var $el;
 					var $objects = this.core.editor().find('.redactor-linkify-object').each($.proxy(function(i,s)
 					{
-						var $el = $(s);
+						$el = $(s);
 						$el.removeClass('redactor-linkify-object');
 						if ($el.attr('class') === '')
 						{
@@ -10210,7 +10248,9 @@
 					this.button.hideButtons();
 					this.button.hideButtonsOnMobile();
 
+                    this.$toolbarBox = $('<div />').addClass('redactor-toolbar-box');
 					this.$toolbar = this.toolbar.createContainer();
+					this.$toolbarBox.append(this.$toolbar);
 
 					this.toolbar.append();
 					this.button.$toolbar = this.$toolbar;
@@ -10230,17 +10270,17 @@
 					if (this.opts.toolbarExternal)
 					{
 						this.$toolbar.addClass('redactor-toolbar-external');
-						$(this.opts.toolbarExternal).html(this.$toolbar);
+						$(this.opts.toolbarExternal).html(this.$toolbarBox);
 					}
 					else
 					{
 						if (this.opts.type === 'textarea')
 						{
-							this.$box.prepend(this.$toolbar);
+							this.$box.prepend(this.$toolbarBox);
 						}
 						else
 						{
-							this.$element.before(this.$toolbar);
+							this.$element.before(this.$toolbarBox);
 						}
 
 					}
@@ -10365,6 +10405,7 @@
 					var position = (this.detect.isDesktop()) ? 'fixed' : 'absolute';
 					var top = (this.detect.isDesktop()) ? this.opts.toolbarFixedTopOffset : ($(this.opts.toolbarFixedTarget).scrollTop() - boxTop + this.opts.toolbarFixedTopOffset);
 					var left = (this.detect.isDesktop()) ? this.core.box().offset().left : 0;
+
 
 					if (this.opts.toolbarFixedTarget !== document)
 					{
@@ -10623,7 +10664,7 @@
                     var stop = this.core.callback('uploadBeforeSend', xhr);
                     if (stop !== false)
                     {
-					    xhr.send(formData);
+                        xhr.send(formData);
 					}
 				},
 				onDrag: function(e)
