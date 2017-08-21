@@ -3676,7 +3676,10 @@ WCF.Option.Handler = Class.extend({
 			else element.disable();
 			
 			if (element.parents('.optionTypeBoolean:eq(0)')) {
-				var noElement = $('#' + element.wcfIdentify() + '_no');
+				// escape dots so that they are not recognized as class selectors
+				var elementId = element.wcfIdentify().replace(/\./g, "\\.");
+				
+				var noElement = $('#' + elementId + '_no');
 				if (enable) noElement.enable();
 				else noElement.disable();
 			}
