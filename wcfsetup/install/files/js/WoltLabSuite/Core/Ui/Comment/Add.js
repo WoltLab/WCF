@@ -102,10 +102,21 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			};
 			
 			if (ControllerCaptcha.has('commentAdd')) {
-				parameters = Core.extend(parameters, ControllerCaptcha.getData('commentAdd'));
+				var data = ControllerCaptcha.getData('commentAdd');
+				if (data instanceof Promise) {
+					data.then((function (data) {
+						parameters = Core.extend(parameters, data);
+						this._submit(undefined, parameters);
+					}).bind(this));
+				}
+				else {
+					parameters = Core.extend(parameters, data);
+					this._submit(undefined, parameters);
+				}
 			}
-			
-			this._submit(undefined, parameters);
+			else {
+				this._submit(undefined, parameters);
+			}
 		},
 		
 		/**

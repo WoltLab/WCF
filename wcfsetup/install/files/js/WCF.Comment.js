@@ -1105,10 +1105,19 @@ WCF.Comment.Handler = Class.extend({
 			data: $data
 		};
 		
-		$requestData = $.extend(WCF.System.Captcha.getData('commentAdd'), $requestData);
-		
-		this._proxy.setOption('data', $requestData);
-		this._proxy.sendRequest();
+		var $captchaData = WCF.System.Captcha.getData('commentAdd');
+		if ($captchaData instanceof Promise) {
+			$captchaData.then($.proxy(function ($captchaData) {
+				$requestData = $.extend($captchaData, $requestData);
+				this._proxy.setOption('data', $requestData);
+				this._proxy.sendRequest();
+			}, this))
+		}
+		else {
+			$requestData = $.extend($captchaData, $requestData);
+			this._proxy.setOption('data', $requestData);
+			this._proxy.sendRequest();
+		}
 	},
 	
 	/**

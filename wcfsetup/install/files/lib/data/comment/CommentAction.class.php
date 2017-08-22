@@ -902,6 +902,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 				'ajaxCaptcha' => true,
 				'captchaID' => 'commentAdd',
 				'captchaObjectType' => $captchaObjectType,
+				'supportsAsyncCaptcha' => true,
 				'username' => WCF::getSession()->getVar('username')
 			])
 		];
