@@ -25,7 +25,7 @@ ALTER TABLE wcf1_comment ADD COLUMN unfilteredResponses MEDIUMINT(7) NOT NULL DE
 ALTER TABLE wcf1_comment_response ADD COLUMN isDisabled TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_language_item ADD COLUMN languageItemOldValue MEDIUMTEXT, ADD COLUMN languageCustomItemDisableTime INT(10);
 ALTER TABLE wcf1_media ADD COLUMN categoryID INT(10);
-ALTER TABLE wcf1_modification_log ADD COLUMN hidden TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_modification_log ADD COLUMN hidden TINYINT(1) NOT NULL DEFAULT 1;
 ALTER TABLE wcf1_package_update ADD COLUMN pluginStoreFileID INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_page ADD COLUMN cssClassName VARCHAR(255) NOT NULL DEFAULT '', ADD COLUMN availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0, ADD COLUMN allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0, ADD COLUMN excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_paid_subscription_user ADD COLUMN sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0;
