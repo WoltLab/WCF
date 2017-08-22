@@ -32,7 +32,7 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 			$key = RECAPTCHA_PRIVATEKEY;
 		}
 		else if ($type === 'invisible') {
-			$key = RECAPTCHA_PRIVATEKEY;
+			$key = RECAPTCHA_PRIVATEKEY_INVISIBLE;
 		}
 		else {
 			throw new \InvalidArgumentException('$type must be either v2 or invisible.');

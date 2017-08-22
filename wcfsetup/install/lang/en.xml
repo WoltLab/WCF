@@ -1101,9 +1101,12 @@
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Displays the current WoltLab News on the Administration Control Panel’s index page.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key (reCAPTCHA v2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
-		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
+		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key (reCAPTCHA v2)]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey_invisible"><![CDATA[Public API Key (Invisible reCAPTCHA)]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Enter the keys <b>in addition</b> to the keys above if you want to use the invisible variant of reCAPTCHA.]]></item>
+		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Private API Key (Invisible reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for attachment images]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>

@@ -95,7 +95,7 @@
 		</dl>
 	</section>
 	{else}
-		{if $supportsAsyncCaptcha|isset && $supportsAsyncCaptcha}
+		{if $supportsAsyncCaptcha|isset && $supportsAsyncCaptcha && RECAPTCHA_PUBLICKEY_INVISIBLE && RECAPTCHA_PRIVATEKEY_INVISIBLE}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
 			{assign var="recaptchaBucketID" value=true|microtime|sha1}
@@ -108,7 +108,7 @@
 						<div style="width: 302px; height: 473px;">
 							<div style="width: 302px; height: 422px; position: relative;">
 								<div style="width: 302px; height: 422px; position: relative;">
-									<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:422px; border-style: none;"></iframe>
+									<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY_INVISIBLE|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:422px; border-style: none;"></iframe>
 								</div>
 								<div style="width: 300px; height: 60px; position: relative; border-style: none; bottom: 12px; left: 0; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
 									<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 290px; height: 50px; border: 1px solid #c1c1c1; margin: 5px; padding: 0px; resize: none;"></textarea>
@@ -155,7 +155,7 @@
 								
 								var promise = new Promise(function (resolve, reject) {
 									WCF.recaptcha.mapping['recaptchaBucket{$recaptchaBucketID}'] = grecaptcha.render(bucket, {
-										sitekey: '{RECAPTCHA_PUBLICKEY|encodeJS}',
+										sitekey: '{RECAPTCHA_PUBLICKEY_INVISIBLE|encodeJS}',
 										size: 'invisible',
 										badge: 'inline',
 										callback: resolve

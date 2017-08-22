@@ -769,6 +769,18 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<validationpattern>^[^/]*$</validationpattern>
 				<showorder>2</showorder>
 			</option>
+			<option name="recaptcha_publickey_invisible">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<showorder>3</showorder>
+			</option>
+			<option name="recaptcha_privatekey_invisible">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<showorder>4</showorder>
+			</option>
 			<!-- /security.antispam.recaptcha -->
 			
 			<!-- general.system.date -->
