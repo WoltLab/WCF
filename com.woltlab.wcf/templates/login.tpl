@@ -57,7 +57,7 @@
 			
 			{event name='fields'}
 			
-			{include file='captcha'}
+			{include file='captcha' supportsAsyncCaptcha=true}
 			
 			<div class="userLoginButtons">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
