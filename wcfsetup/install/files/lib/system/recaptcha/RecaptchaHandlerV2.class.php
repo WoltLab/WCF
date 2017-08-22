@@ -53,6 +53,8 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 			}
 		}
 		catch (\Exception $e) {
+			if ($e instanceof UserInputException) throw $e;
+			
 			// log error, but accept captcha
 			\wcf\functions\exception\logThrowable($e);
 		}
