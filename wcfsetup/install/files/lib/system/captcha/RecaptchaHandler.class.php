@@ -63,6 +63,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 		}
 		else {
 			// V2
+			if (isset($_POST['recaptcha-type'])) $this->challenge = $_POST['recaptcha-type'];
 			if (isset($_POST['g-recaptcha-response'])) $this->response = $_POST['g-recaptcha-response'];
 		}
 	}
@@ -86,7 +87,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 		}
 		else {
 			// V2
-			RecaptchaHandlerV2::getInstance()->validate($this->response);
+			RecaptchaHandlerV2::getInstance()->validate($this->response, $this->challenge ?: 'v2');
 		}
 	}
 }

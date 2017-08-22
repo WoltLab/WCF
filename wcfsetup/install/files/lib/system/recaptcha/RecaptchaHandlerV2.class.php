@@ -22,13 +22,23 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 	 * @param	string		$response
 	 * @throws	UserInputException
 	 */
-	public function validate($response) {
+	public function validate($response, $type = 'v2') {
 		// fail if response is empty to avoid sending api requests
 		if (empty($response)) {
 			throw new UserInputException('recaptchaString', 'false');
 		}
 		
-		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode(RECAPTCHA_PRIVATEKEY).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
+		if ($type === 'v2') {
+			$key = RECAPTCHA_PRIVATEKEY;
+		}
+		else if ($type === 'invisible') {
+			$key = RECAPTCHA_PRIVATEKEY;
+		}
+		else {
+			throw new \InvalidArgumentException('$type must be either v2 or invisible.');
+		}
+		
+		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode($key).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
 		
 		try {
 			$request->execute();

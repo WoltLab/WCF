@@ -102,6 +102,7 @@
 			<dl class="{if $errorField|isset && $errorField == 'recaptchaString'}formError{/if}">
 				<dt></dt>
 				<dd>
+					<input type="hidden" name="recaptcha-type" value="invisible">
 					<div id="recaptchaBucket{$recaptchaBucketID}"></div>
 					<noscript>
 						<div style="width: 302px; height: 473px;">
@@ -166,7 +167,8 @@
 										grecaptcha.execute(WCF.recaptcha.mapping['recaptchaBucket{$recaptchaBucketID}']);
 										return promise.then(function (token) {
 											return {
-												'g-recaptcha-response': token
+												'g-recaptcha-response': token,
+												'recaptcha-type': 'invisible'
 											};
 										});
 									});
@@ -221,6 +223,7 @@
 			<dl class="{if $errorField|isset && $errorField == 'recaptchaString'}formError{/if}">
 				<dt></dt>
 				<dd>
+				<input type="hidden" name="recaptcha-type" value="v2">
 					<div id="recaptchaBucket{$recaptchaBucketID}"></div>
 					<noscript>
 						<div style="width: 302px; height: 473px;">
@@ -281,7 +284,8 @@
 			{if $ajaxCaptcha|isset && $ajaxCaptcha}
 			WCF.System.Captcha.addCallback('{$captchaID}', function() {
 				return {
-					'g-recaptcha-response': grecaptcha.getResponse(WCF.recaptcha.mapping['recaptchaBucket{$recaptchaBucketID}'])
+					'g-recaptcha-response': grecaptcha.getResponse(WCF.recaptcha.mapping['recaptchaBucket{$recaptchaBucketID}']),
+					'type': 'v2'
 				};
 			});
 			{/if}
