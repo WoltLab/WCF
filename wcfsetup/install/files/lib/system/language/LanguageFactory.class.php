@@ -281,6 +281,23 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the list of content language ids.
+	 * 
+	 * @return      integer[]
+	 * @since       3.1
+	 */
+	public function getContentLanguageIDs() {
+		$languageIDs = [];
+		foreach ($this->getLanguages() as $language) {
+			if ($language->hasContent) {
+				$languageIDs[] = $language->languageID;
+			}
+		}
+		
+		return $languageIDs;
+	}
+	
+	/**
 	 * Makes given language the default language.
 	 * 
 	 * @param	integer		$languageID
