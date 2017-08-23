@@ -10,12 +10,14 @@ define(
 	[
 		'enquire',      'Ajax',       'Core',      'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
-		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown'
+		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown',
+		'EventHandler'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
-		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown
+		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown,
+		EventHandler
 	)
 {
 	"use strict";
@@ -97,6 +99,7 @@ define(
 				if (id && (container = elById(id))) {
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
+						elData(container, 'is-static-dialog', true);
 						elHide(container);
 						button.addEventListener(WCF_CLICK_EVENT, this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
 					}).bind(this))(button, container);
@@ -465,6 +468,13 @@ define(
 				
 				if (typeof data.onShow === 'function') {
 					data.onShow(data.content);
+				}
+				
+				if (elDataBool(data.content, 'is-static-dialog')) {
+					EventHandler.fire('com.woltlab.wcf.dialog', 'openStatic', {
+						content: data.content,
+						id: id
+					});
 				}
 				
 				// close existing dropdowns
