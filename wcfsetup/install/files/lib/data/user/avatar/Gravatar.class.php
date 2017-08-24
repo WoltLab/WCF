@@ -19,7 +19,7 @@ class Gravatar extends DefaultAvatar {
 	 * gravatar base url
 	 * @var	string
 	 */
-	const GRAVATAR_BASE = 'http://gravatar.com/avatar/%s?s=%d&r=g&d=%s';
+	const GRAVATAR_BASE = 'https://gravatar.com/avatar/%s?s=%d&r=g&d=%s';
 	
 	/**
 	 * gravatar local cache location
