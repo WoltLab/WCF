@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\event\listener;
 use wcf\data\article\AccessibleArticleList;
+use wcf\data\article\content\ArticleContentList;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\request\LinkHandler;
 
@@ -21,14 +22,36 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
 		/** @var HtmlInputNodeProcessor $eventObj */
 		
 		$regex = $this->getRegexFromLink(LinkHandler::getInstance()->getLink('Article'));
-		$articleIDs = $this->getObjectIDs($eventObj, $regex);
+		$articleContentIDs = $this->getObjectIDs($eventObj, $regex);
 		
-		if (!empty($articleIDs)) {
-			$articleList = new AccessibleArticleList();
-			$articleList->getConditionBuilder()->add('article.articleID IN (?)', [$articleIDs]);
-			$articleList->readObjects();
+		if (!empty($articleContentIDs)) {
+			// read linked article contents
+			$articleContentList = new ArticleContentList();
+			$articleContentList->getConditionBuilder()->add('article_content.articleContentID IN (?)', [$articleContentIDs]);
+			$articleContentList->readObjects();
 			
-			$this->setObjectTitles($eventObj, $regex, $articleList->getObjects());
+			// collect ids of the articles
+			$articleIDs = [];
+			foreach ($articleContentList as $articleContent) {
+				$articleIDs[] = $articleContent->articleID;
+			}
+			
+			if (!empty($articleIDs)) {
+				// read the accessible articles of the ones that are linked
+				$articleList = new AccessibleArticleList();
+				$articleList->getConditionBuilder()->add('article.articleID IN (?)', [array_unique($articleIDs)]);
+				$articleList->readObjects();
+				
+				// filter the article contents by accessibility
+				$articleContents = [];
+				foreach ($articleContentList as $articleContent) {
+					if ($articleList->search($articleContent->articleID) !== null) {
+						$articleContents[$articleContent->articleContentID] = $articleContent;
+					}
+				}
+				
+				$this->setObjectTitles($eventObj, $regex, $articleContents);
+			}
 		}
 	}
 }
