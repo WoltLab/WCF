@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\event\listener;
-use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\content\ArticleContentList;
+use wcf\data\article\AccessibleArticleList;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\request\LinkHandler;
 
