@@ -95,7 +95,11 @@ class GDImageAdapter implements IImageAdapter {
 			break;
 			
 			case IMAGETYPE_PNG:
-				$this->image = imagecreatefrompng($file);
+				// suppress warnings and properly handle errors
+				$this->image = @imagecreatefrompng($file);
+				if ($this->image === false) {
+					throw new SystemException("Could not read png image '".$file."'.");
+				}
 			break;
 			
 			default:

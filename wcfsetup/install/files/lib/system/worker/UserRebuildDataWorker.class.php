@@ -9,6 +9,7 @@ use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
@@ -160,7 +161,16 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					// make avatar quadratic
 					$width = $height = min($width, $height, UserAvatar::AVATAR_SIZE);
 					$adapter = ImageHandler::getInstance()->getAdapter();
-					$adapter->loadFile($avatar->getLocation());
+					
+					try {
+						$adapter->loadFile($avatar->getLocation());
+					}
+					catch (SystemException $e) {
+						// broken image
+						$editor->delete();
+						continue;
+					}
+					
 					$thumbnail = $adapter->createThumbnail($width, $height, false);
 					$adapter->writeImage($thumbnail, $avatar->getLocation());
 				}
@@ -168,7 +178,16 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				if ($width != UserAvatar::AVATAR_SIZE || $height != UserAvatar::AVATAR_SIZE) {
 					// resize avatar
 					$adapter = ImageHandler::getInstance()->getAdapter();
-					$adapter->loadFile($avatar->getLocation());
+					
+					try {
+						$adapter->loadFile($avatar->getLocation());
+					}
+					catch (SystemException $e) {
+						// broken image
+						$editor->delete();
+						continue;
+					}
+					
 					$adapter->resize(0, 0, $width, $height, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
 					$adapter->writeImage($adapter->getImage(), $avatar->getLocation());
 					$width = $height = UserAvatar::AVATAR_SIZE;
