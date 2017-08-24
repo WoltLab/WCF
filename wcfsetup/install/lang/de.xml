@@ -380,7 +380,7 @@
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[Der Name wird bereits von einem anderen Projekt verwendet.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.devtools.project.path.error.excludedVersion"><![CDATA[Die aktuelle Core-Version wird in der <kbd>package.xml</kbd> explizit ausgeschlossen.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[In der <kbd>package.xml</kbd> fehlt die <kbd>&gt;excludedpackage&lt;</kbd>-Anweisung für <kbd>com.woltlab.wcf</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.missingExclude"><![CDATA[In der <kbd>package.xml</kbd> fehlt die <kbd>&lt;excludedpackage&gt;</kbd>-Anweisung für <kbd>com.woltlab.wcf</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[Das Paket muss bereits installiert sein.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[Der Pfad ist ungültig.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[Der Pfad wird bereits von einem anderen Projekt verwendet.]]></item>
