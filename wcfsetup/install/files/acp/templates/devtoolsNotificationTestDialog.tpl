@@ -49,7 +49,7 @@
 						<dt>{lang}wcf.acp.devtools.notificationTest.instantEmail{/lang}</dt>
 						<dd><pre>{$event[instantEmail]}</pre></dd>
 					</dl>
-				{else}
+				{elseif $event[instantEmailException]|isset}
 					<dl>
 						<dt>{lang}wcf.acp.devtools.notificationTest.instantEmail.exception{/lang}</dt>
 						<dd><pre>{$event[instantEmailException]}</pre></dd>
@@ -111,8 +111,10 @@
 		
 		<dl>
 			{foreach from=$events item=event}
-				<dt>{$event[description]}</dt>
-				<dd><pre>{if $event[instantEmail]|isset}{$event[instantEmail]}{else}{$event[instantEmailException]}{/if}</pre></dd>
+				{if $event[instantEmail]|isset || $event[instantEmailException]|isset}
+					<dt>{$event[description]}</dt>
+					<dd><pre>{if $event[instantEmail]|isset}{$event[instantEmail]}{else}{$event[instantEmailException]}{/if}</pre></dd>
+				{/if}
 			{/foreach}
 		</dl>
 	</section>

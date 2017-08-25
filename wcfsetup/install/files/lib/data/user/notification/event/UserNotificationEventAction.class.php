@@ -162,16 +162,19 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 					$errors++;
 				}
 				
-				try {
-					$eventData['instantEmail'] = TestableUserNotificationEventHandler::getInstance()->getEmailBody($event, 'instant');
-				}
-				catch (\Exception $e) {
-					$eventData['instantEmailException'] = $getRenderedException($e);
-					$errors++;
-				}
-				catch (\Throwable $e) {
-					$eventData['instantEmailException'] = $getRenderedException($e);
-					$errors++;
+				// for instant emails, a notification can only be triggered once
+				if ($event->getNotification()->timesTriggered == 1) {
+					try {
+						$eventData['instantEmail'] = TestableUserNotificationEventHandler::getInstance()->getEmailBody($event, 'instant');
+					}
+					catch (\Exception $e) {
+						$eventData['instantEmailException'] = $getRenderedException($e);
+						$errors++;
+					}
+					catch (\Throwable $e) {
+						$eventData['instantEmailException'] = $getRenderedException($e);
+						$errors++;
+					}
 				}
 			}
 			
