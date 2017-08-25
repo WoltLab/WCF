@@ -931,6 +931,20 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 		}
 		
+		// load last response time for comment-only requests
+		if ($response === null && $comment->getDecoratedObject()->responses) {
+			$sql = "SELECT          time
+				FROM            wcf".WCF_N."_comment_response
+				WHERE           commentID = ?
+				ORDER BY        time";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute([$comment->commentID]);
+			$lastResponseTime = $statement->fetchSingleColumn();
+			if ($lastResponseTime && $lastResponseTime > 1) {
+				WCF::getTPL()->assign('commentLastResponseTime', ($lastResponseTime - 1));
+			}
+		}
+		
 		WCF::getTPL()->assign([
 			'commentCanModerate' => $this->commentProcessor->canModerate($comment->getDecoratedObject()->objectTypeID, $comment->getDecoratedObject()->objectID),
 			'commentList' => [$comment],
