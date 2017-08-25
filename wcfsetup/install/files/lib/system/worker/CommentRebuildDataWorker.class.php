@@ -18,7 +18,7 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
-	protected $limit = 50;
+	protected $limit = 500;
 	
 	/**
 	 * @var HtmlInputProcessor
