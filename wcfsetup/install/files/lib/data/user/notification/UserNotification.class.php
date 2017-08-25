@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * @property-read	integer		$baseObjectID		id of a generic base object of object that triggered the user notification or 0 if there is no such base object
  * @property-read	string		$eventHash		hash of the event the user notification represents, is used to stack notifications
  * @property-read	integer|null	$authorID		id of the user that triggered the user notification or null if there is no such user or the user was a guest
- * @property-read	integer		$timesTriggered		number of times a stacked notification has been triggered by registered users
+ * @property-read	integer		$timesTriggered		total number of times a stacked notification has been triggered by registered users and guests
  * @property-read	integer		$guestTimesTriggered	number of times a stacked notification has been triggered by guests
  * @property-read	integer		$userID			id of the user who receives the user notification
  * @property-read	integer		$time			timestamp at which the user notification has been created
