@@ -254,7 +254,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 						]));
 						
 						$event->setObject(
-							$this->getUserNotification($firstAuthor, $authorCount, $guestCount, $additionalData),
+							$this->getUserNotification($firstAuthor, $authorCount + $guestCount, $guestCount, $additionalData),
 							$object,
 							$authorCount ? $firstAuthor : $unknownAuthor,
 							$additionalData
