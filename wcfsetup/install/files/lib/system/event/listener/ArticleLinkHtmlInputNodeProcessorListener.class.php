@@ -21,7 +21,9 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
 	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		/** @var HtmlInputNodeProcessor $eventObj */
 		
-		$regex = $this->getRegexFromLink(LinkHandler::getInstance()->getLink('Article'));
+		$regex = $this->getRegexFromLink(LinkHandler::getInstance()->getLink('Article', [
+			'forceFrontend' => true
+		]));
 		$articleContentIDs = $this->getObjectIDs($eventObj, $regex);
 		
 		if (!empty($articleContentIDs)) {
