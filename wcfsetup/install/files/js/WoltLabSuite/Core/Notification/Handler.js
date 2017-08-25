@@ -93,9 +93,6 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 		 * @protected
 		 */
 		_getNextDelay: function() {
-			// TODO: DEBUG ONLY
-			return 1;
-			
 			if (_inactiveSince === 0) return 5;
 			
 			// milliseconds -> minutes
