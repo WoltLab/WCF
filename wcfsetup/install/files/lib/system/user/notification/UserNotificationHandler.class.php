@@ -18,6 +18,7 @@ use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\object\type\IUserNotificationObjectType;
 use wcf\system\user\notification\object\IUserNotificationObject;
@@ -919,7 +920,8 @@ class UserNotificationHandler extends SingletonFactory {
 				
 				return [
 					'title' => strip_tags($event->getTitle()),
-					'message' => strip_tags($event->getMessage())
+					'message' => strip_tags($event->getMessage()),
+					'link' => LinkHandler::getInstance()->getLink('NotificationConfirm', ['id' => $event->getNotification()->notificationID])
 				];
 			}
 		}
