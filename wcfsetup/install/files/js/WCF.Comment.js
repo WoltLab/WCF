@@ -877,14 +877,26 @@ WCF.Comment.Handler = Class.extend({
 			return;
 		}
 		
-		// TODO: handle 'response' value
-		
 		$(data.returnValues.template).insertBefore(this._permalinkComment);
 		var comment = this._permalinkComment.previousElementSibling;
 		comment.classList.add('commentPermalinkContainer');
 		
 		elRemove(this._permalinkComment);
 		this._permalinkComment = comment;
+		
+		if (data.returnValues.response) {
+			this._permalinkResponse = elCreate('li');
+			this._permalinkResponse.className = 'commentResponsePermalinkContainer loading';
+			this._permalinkResponse.innerHTML = '<span class="icon icon32 fa-spinner"></span>';
+			var responseList = elBySel('.commentResponseList', comment);
+			responseList.insertBefore(this._permalinkResponse, responseList.firstChild);
+			
+			this._insertResponse({
+				returnValues: {
+					template: data.returnValues.response
+				}
+			});
+		}
 		
 		//noinspection BadExpressionStatementJS
 		comment.offsetTop;

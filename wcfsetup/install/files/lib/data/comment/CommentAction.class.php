@@ -931,8 +931,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 		}
 		
-		// load last response time for comment-only requests
-		if ($response === null && $comment->getDecoratedObject()->responses) {
+		// load last response time
+		if ($comment->getDecoratedObject()->responses) {
 			$sql = "SELECT          time
 				FROM            wcf".WCF_N."_comment_response
 				WHERE           commentID = ?
