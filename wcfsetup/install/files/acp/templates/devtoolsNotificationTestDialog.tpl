@@ -112,7 +112,7 @@
 		<dl>
 			{foreach from=$events item=event}
 				<dt>{$event[description]}</dt>
-				<dd><pre>{if $event[instantEmail]|isset}{@$event[instantEmail]}{else}{$event[instantEmailException]}{/if}</pre></dd>
+				<dd><pre>{if $event[instantEmail]|isset}{$event[instantEmail]}{else}{$event[instantEmailException]}{/if}</pre></dd>
 			{/foreach}
 		</dl>
 	</section>
@@ -123,7 +123,7 @@
 		<dl>
 			{foreach from=$events item=event}
 				<dt>{$event[description]}</dt>
-				<dd><pre>{if $event[dailyEmail]|isset}{@$event[dailyEmail]}{else}{$event[dailyEmailException]}{/if}</pre></dd>
+				<dd><pre>{if $event[dailyEmail]|isset}{$event[dailyEmail]}{else}{$event[dailyEmailException]}{/if}</pre></dd>
 			{/foreach}
 		</dl>
 	</section>
