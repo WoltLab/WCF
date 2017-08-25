@@ -65,11 +65,16 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 		WCF::getDB()->beginTransaction();
 		/** @var Comment $comment */
 		foreach ($this->objectList as $comment) {
+			$commentEditor = new CommentEditor($comment);
+			
+			$commentEditor->updateResponseIDs();
+			$commentEditor->updateUnfilteredResponseIDs();
+			
 			// update message
 			if (!$comment->enableHtml) {
 				$this->getHtmlInputProcessor()->process($comment->message, 'com.woltlab.wcf.comment', $comment->commentID, true);
 				
-				(new CommentEditor($comment))->update([
+				$commentEditor->update([
 					'message' => $this->getHtmlInputProcessor()->getHtml(),
 					'enableHtml' => 1
 				]);

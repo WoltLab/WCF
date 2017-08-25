@@ -224,10 +224,17 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			//noinspection JSUnresolvedVariable
 			if (typeof pollData.notification === 'object' && typeof pollData.notification.message ===  'string') {
 				//noinspection JSUnresolvedVariable
-				new window.Notification(pollData.notification.title, {
+				var notification = new window.Notification(pollData.notification.title, {
 					body: pollData.notification.message,
 					icon: _icon
-				})
+				});
+				notification.onclick = function () {
+					window.focus();
+					notification.close();
+					
+					//noinspection JSUnresolvedVariable
+					window.location = pollData.notification.link;
+				};
 			}
 		},
 		

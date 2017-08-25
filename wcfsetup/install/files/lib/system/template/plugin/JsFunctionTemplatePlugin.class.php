@@ -88,7 +88,7 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		$this->includedFiles[$src] = true;
 		if (!ENABLE_DEBUG_MODE) {
-			if (defined('VISITOR_USE_TINY_BUILD') && VISITOR_USE_TINY_BUILD && !empty($tagArgs['hasTiny'])) {
+			if (defined('VISITOR_USE_TINY_BUILD') && VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID && !empty($tagArgs['hasTiny'])) {
 				$src .= '.tiny';
 			}
 			
