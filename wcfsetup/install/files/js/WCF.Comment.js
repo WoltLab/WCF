@@ -946,6 +946,8 @@ WCF.Comment.Handler = Class.extend({
 				this._permalinkComment = null;
 			}
 		}
+		
+		this._initComments();
 	},
 	
 	/**
