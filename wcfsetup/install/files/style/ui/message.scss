@@ -543,7 +543,10 @@
 			
 			& + .messageFooterButtons {
 				flex: 0 auto;
-				margin-left: 20px;
+				
+				> li:first-child {
+					margin-left: 20px;
+				}
 			}
 		}
 		
