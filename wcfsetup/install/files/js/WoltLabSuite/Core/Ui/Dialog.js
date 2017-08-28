@@ -393,13 +393,13 @@ define(
 						}
 					}
 					
-					if (children[0].nodeName !== 'div' || children.length > 1) {
+					if (children[0].nodeName !== 'DIV' || children.length > 1) {
 						content = elCreate('div');
 						content.id = id;
 						content.appendChild(html);
 					}
 					else {
-						content = html;
+						content = children[0];
 					}
 				}
 			}
