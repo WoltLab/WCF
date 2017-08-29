@@ -168,9 +168,11 @@
 			position: absolute;
 			right: 0;
 			
-			/* this reverts the negative margin introduced by `.formSubmit` */
-			margin-bottom: 0;
-			padding-bottom: 0;
+			@include screen-sm-up {
+				/* this reverts the negative margin introduced by `.formSubmit` */
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
 		}
 		
 		.section {
