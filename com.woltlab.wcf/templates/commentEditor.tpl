@@ -6,7 +6,7 @@
 {*include file='messageFormTabsInline'*}
 
 <div class="formSubmit">
-	<button class="buttonPrimary" data-type="save">{lang}wcf.global.button.submit{/lang}</button>
+	<button class="buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
 	
 	{include file='messageFormPreviewButton' previewMessageFieldID=$wysiwygSelector previewButtonID=$wysiwygSelector|concat:'_PreviewButton' previewMessageObjectType='com.woltlab.wcf.comment' previewMessageObjectID=$comment->commentID}
 	
