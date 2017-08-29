@@ -50,6 +50,19 @@ define(
 			var icon = elCreate('span');
 			icon.classList = 'icon icon16 fa-upload';
 			DomUtil.prepend(icon, elBySel('span', this._button));
+		},
+		
+		/**
+		 * @see	WoltLabSuite/Core/Upload#_getParameters
+		 */
+		_getParameters: function() {
+			if (this._options.categoryId) {
+				return Core.extend(MediaListUpload._super.prototype._getParameters.call(this), {
+					categoryID: this._options.categoryId
+				});
+			}
+			
+			return MediaListUpload._super.prototype._getParameters.call(this);
 		}
 	});
 	
