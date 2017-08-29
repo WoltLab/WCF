@@ -377,20 +377,22 @@ define(['Dom/Util'], function(DomUtil) {
 		 * @protected
 		 */
 		_getSelectionMarker: function (editorElement, selection) {
-			var node = selection.anchorNode;
-			
-			var tag, tags = ['DEL', 'SUB', 'SUP'];
+			var hasNode, node, tag, tags = ['DEL', 'SUB', 'SUP'];
 			for (var i = 0, length = tags.length; i < length; i++) {
 				tag = tags[i];
 				
-				var hasNode = false;
-				while (node && node !== editorElement) {
-					if (node.nodeName === tag) {
-						hasNode = true;
-						break;
+				node = selection.anchorNode;
+				hasNode = (elBySel(tag.toLowerCase(), node) !== null);
+				
+				if (!hasNode) {
+					while (node && node !== editorElement) {
+						if (node.nodeName === tag) {
+							hasNode = true;
+							break;
+						}
+						
+						node = node.parentNode;
 					}
-					
-					node = node.parentNode;
 				}
 				
 				if (hasNode) {
