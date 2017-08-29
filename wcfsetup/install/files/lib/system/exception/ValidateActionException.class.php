@@ -30,7 +30,7 @@ class ValidateActionException extends \Exception {
 		$this->errorMessage = $errorMessage;
 		if (mb_strpos($this->errorMessage, '.') === false) {
 			if (preg_match('~^[a-zA-Z0-9-_]+$~', $this->errorMessage)) {
-				$this->errorMessage = WCF::getLanguage()->get('wcf.global.form.error.'.$this->errorMessage);
+				$this->errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.global.form.error.'.$this->errorMessage);
 			}
 		}
 		else {
