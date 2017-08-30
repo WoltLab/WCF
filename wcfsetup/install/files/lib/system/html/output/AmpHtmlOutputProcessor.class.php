@@ -18,8 +18,8 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true) {
-		parent::process($html, $objectType, $objectID, $doKeywordHighlighting);
+	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true, $languageID = null) {
+		parent::process($html, $objectType, $objectID, $doKeywordHighlighting, $languageID);
 		
 		$document = $this->getHtmlOutputNodeProcessor()->getDocument();
 			
