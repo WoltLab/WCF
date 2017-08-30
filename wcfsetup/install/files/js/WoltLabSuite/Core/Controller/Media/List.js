@@ -42,6 +42,7 @@ define([
 		init: function(options) {
 			options = options || {};
 			new MediaListUpload('uploadButton', 'mediaListTableBody', {
+				categoryId: options.categoryId,
 				multiple: true
 			});
 			
