@@ -334,8 +334,28 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		// be placed inside paragraphs, but being a direct child of another block
 		// element is completely fine
 		$parent = $start;
+		$foundLi = false;
 		do {
 			$parent = $parent->parentNode;
+			if (!$foundLi && $parent->nodeName === 'li') {
+				// allow <li> if both the start and end have the same <li> as parent
+				$parentEnd = $end;
+				do {
+					$parentEnd = $parentEnd->parentNode;
+					if ($parentEnd->nodeName === 'li') {
+						if ($parent === $parentEnd) {
+							// same ancestor, exit both loops
+							break 2;
+						}
+						
+						// mismatch
+						break;
+					}
+				}
+				while ($parent);
+				
+				$foundLi = true;
+			}
 		}
 		while ($parent->nodeName === 'p' || !$this->isBlockElement($parent));
 		
