@@ -87,13 +87,18 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="3.1.0 Alpha 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
 		<instruction type="sql">update_3.1.0_alpha_1.sql</instruction>
 		
+		<!-- force cache reset -->
+		<instruction type="file">pre-update.tar</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_3.1_noop.php</instruction>
+		
+		<instruction type="file">files_update.tar</instruction>
+		
 		<instruction type="language" run="standalone" />
+		
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="eventListener" />
 		<instruction type="option" />
