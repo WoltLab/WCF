@@ -52,8 +52,7 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	public function keepAlive() {
 		// ignore sessions created by this request
 		if (WCF::getSession()->lastActivityTime == TIME_NOW) {
-			// TODO: DEBUG ONLY
-			//return [];
+			return [];
 		}
 		
 		// update last activity time

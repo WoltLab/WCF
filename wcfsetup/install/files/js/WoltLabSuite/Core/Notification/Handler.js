@@ -7,7 +7,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Notification/Handler
  */
-define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
+define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, EventHandler, StringUtil) {
 	"use strict";
 	
 	if (!('Promise' in window) || !('Notification' in window)) {
@@ -225,7 +225,7 @@ define(['Ajax', 'Core', 'EventHandler'], function(Ajax, Core, EventHandler) {
 			if (typeof pollData.notification === 'object' && typeof pollData.notification.message ===  'string') {
 				//noinspection JSUnresolvedVariable
 				var notification = new window.Notification(pollData.notification.title, {
-					body: pollData.notification.message,
+					body: StringUtil.unescapeHTML(pollData.notification.message),
 					icon: _icon
 				});
 				notification.onclick = function () {
