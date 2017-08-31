@@ -1246,7 +1246,7 @@ CREATE TABLE wcf1_style (
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
-	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.1' 
+	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.0' 
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
