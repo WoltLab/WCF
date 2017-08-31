@@ -131,34 +131,42 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_author
 						(notificationID, authorID, time)
 			VALUES			(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($notifications as $notificationData) {
-			$statement->execute([
-				$notificationData['object']->notificationID,
-				$this->parameters['authorID'] ?: null,
-				TIME_NOW
-			]);
-		}
-		WCF::getDB()->commitTransaction();
+		$authorStatement = WCF::getDB()->prepareStatement($sql);
 		
 		// update trigger count
 		$sql = "UPDATE	wcf".WCF_N."_user_notification
 			SET	timesTriggered = timesTriggered + ?,
 				guestTimesTriggered = guestTimesTriggered + ?
 			WHERE	notificationID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
+		$triggerStatement = WCF::getDB()->prepareStatement($sql);
+	
 		WCF::getDB()->beginTransaction();
+		$notificationIDs = [];
 		foreach ($notifications as $notificationData) {
-			$statement->execute([
+			$notificationIDs[] = $notificationData['object']->notificationID;
+			
+			$authorStatement->execute([
+				$notificationData['object']->notificationID,
+				$this->parameters['authorID'] ?: null,
+				TIME_NOW
+			]);
+			$triggerStatement->execute([
 				1,
 				$this->parameters['authorID'] ? 0 : 1,
 				$notificationData['object']->notificationID
 			]);
 		}
 		WCF::getDB()->commitTransaction();
+		
+		$notificationList = new UserNotificationList();
+		$notificationList->setObjectIDs($notificationIDs);
+		$notificationList->readObjects();
+		$updatedNotifications = $notificationList->getObjects();
+		
+		$notifications = array_map(function ($notificationData) use ($updatedNotifications) {
+			$notificationData['object'] = $updatedNotifications[$notificationData['object']->notificationID];
+			return $notificationData;
+		}, $notifications);
 		
 		return $notifications;
 	}
