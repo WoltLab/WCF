@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\package\Package;
+use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
 use wcf\data\template\group\TemplateGroup;
@@ -41,6 +42,12 @@ class StyleAddForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $authorURL = '';
+	
+	/**
+	 * style api version
+	 * @var string
+	 */
+	public $apiVersion = Style::API_VERSION;
 	
 	/**
 	 * list of available font families
@@ -120,6 +127,21 @@ class StyleAddForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.style.canManageStyle'];
+	
+	/**
+	 * list of variables that were added after 3.0
+	 * @var string[]
+	 */
+	public $newVariables = [
+		// 3.1
+		'wcfContentContainerBackground' => '3.1',
+		'wcfContentContainerBorder' => '3.1',
+		'wcfEditorButtonBackground' => '3.1',
+		'wcfEditorButtonBackgroundActive' => '3.1',
+		'wcfEditorButtonText' => '3.1',
+		'wcfEditorButtonTextActive' => '3.1',
+		'wcfEditorButtonTextDisabled' => '3.1'
+	];
 	
 	/**
 	 * style package name
@@ -260,6 +282,7 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['styleName'])) $this->styleName = StringUtil::trim($_POST['styleName']);
 		if (isset($_POST['styleVersion'])) $this->styleVersion = StringUtil::trim($_POST['styleVersion']);
 		if (isset($_POST['templateGroupID'])) $this->templateGroupID = intval($_POST['templateGroupID']);
+		if (isset($_POST['apiVersion']) && in_array($_POST['apiVersion'], Style::$supportedApiVersions)) $this->apiVersion = $_POST['apiVersion'];
 	}
 	
 	/**
@@ -324,10 +347,12 @@ class StyleAddForm extends AbstractForm {
 		if (!empty($this->variables['overrideScss'])) {
 			$this->parseOverrides();
 		}
+		
+		$this->validateApiVersion();
 	}
 	
 	/**
-	 * Disallow the use of `com.woltlab.*` for package names to avoid accidential collisions.
+	 * Disallow the use of `com.woltlab.*` for package names to avoid accidental collisions.
 	 * 
 	 * @throws      UserInputException
 	 */
@@ -335,6 +360,18 @@ class StyleAddForm extends AbstractForm {
 		// 3rd party styles may never have com.woltlab.* as name
 		if (strpos($this->packageName, 'com.woltlab.') !== false) {
 			throw new UserInputException('packageName', 'reserved');
+		}
+	}
+	
+	/**
+	 * Validates the style API version.
+	 * 
+	 * @throws      UserInputException
+	 * @since       3.1
+	 */
+	protected function validateApiVersion() {
+		if (!in_array($this->apiVersion, Style::$supportedApiVersions)) {
+			throw new UserInputException('apiVersion', 'invalid');
 		}
 	}
 	
@@ -443,7 +480,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfHeader' => ['wcfHeader', 'wcfHeaderSearchBox', 'wcfHeaderMenu', 'wcfHeaderMenuDropdown'],
 			'wcfNavigation' => 'wcfNavigation',
 			'wcfSidebar' => ['wcfSidebar', 'wcfSidebarDimmed', 'wcfSidebarHeadline'],
-			'wcfContent' => ['wcfContent', 'wcfContentDimmed', 'wcfContentHeadline'],
+			'wcfContent' => ['wcfContent', 'wcfContentContainer', 'wcfContentDimmed', 'wcfContentHeadline'],
 			'wcfTabularBox' => 'wcfTabularBox',
 			'wcfInput' => ['wcfInput', 'wcfInputDisabled'],
 			'wcfButton' => ['wcfButton', 'wcfButtonPrimary', 'wcfButtonDisabled'],
@@ -464,6 +501,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfSidebarDimmed' => ['text', 'link', 'linkActive'],
 			'wcfSidebarHeadline' => ['text', 'link', 'linkActive'],
 			'wcfContent' => ['background', 'border', 'borderInner', 'text', 'link', 'linkActive'],
+			'wcfContentContainer' => ['background', 'border'],
 			'wcfContentDimmed' => ['text', 'link', 'linkActive'],
 			'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
 			'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
@@ -546,7 +584,8 @@ class StyleAddForm extends AbstractForm {
 				'copyright' => $this->copyright,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
-				'authorURL' => $this->authorURL
+				'authorURL' => $this->authorURL,
+				'apiVersion' => $this->apiVersion
 			]),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
@@ -591,6 +630,7 @@ class StyleAddForm extends AbstractForm {
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',
+			'apiVersion' => $this->apiVersion,
 			'authorName' => $this->authorName,
 			'authorURL' => $this->authorURL,
 			'availableFontFamilies' => $this->availableFontFamilies,
@@ -603,13 +643,16 @@ class StyleAddForm extends AbstractForm {
 			'isTainted' => $this->isTainted,
 			'license' => $this->license,
 			'packageName' => $this->packageName,
+			'recommendedApiVersion' => Style::API_VERSION,
 			'styleDate' => $this->styleDate,
 			'styleDescription' => $this->styleDescription,
 			'styleName' => $this->styleName,
 			'styleVersion' => $this->styleVersion,
 			'templateGroupID' => $this->templateGroupID,
 			'tmpHash' => $this->tmpHash,
-			'variables' => $this->variables
+			'variables' => $this->variables,
+			'supportedApiVersions' => Style::$supportedApiVersions,
+			'newVariables' => $this->newVariables
 		]);
 	}
 }

@@ -4,6 +4,7 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -69,6 +70,18 @@ class StyleEditForm extends StyleAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validateApiVersion() {
+		if ($this->style->isTainted) {
+			parent::validateApiVersion();
+		}
+		else {
+			$this->apiVersion = $this->style->apiVersion;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
 		
@@ -112,6 +125,7 @@ class StyleEditForm extends StyleAddForm {
 		I18nHandler::getInstance()->setOptions('styleDescription', PACKAGE_ID, $this->style->styleDescription, 'wcf.style.styleDescription\d+');
 		
 		if (empty($_POST)) {
+			$this->apiVersion = $this->style->apiVersion;
 			$this->authorName = $this->style->authorName;
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
@@ -152,7 +166,8 @@ class StyleEditForm extends StyleAddForm {
 				'packageName' => $this->packageName,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
-				'authorURL' => $this->authorURL
+				'authorURL' => $this->authorURL,
+				'apiVersion' => $this->apiVersion
 			]),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables

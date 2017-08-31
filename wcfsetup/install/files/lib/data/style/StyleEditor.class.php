@@ -146,7 +146,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = [
 			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => ''
+			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => '', 'apiVersion' => '3.0'
 		];
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -220,6 +220,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							case 'license':
 								$data[$element->tagName] = $element->nodeValue;
 							break;
+							
+							case 'apiVersion':
+								if (!in_array($element->nodeValue, Style::$supportedApiVersions)) {
+									throw new SystemException("Unknown api version '".$element->nodeValue."'");
+								}
+								
+								$data['apiVersion'] = $element->nodeValue;
+								break;
 						}
 					}
 				break;
@@ -320,7 +328,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
 			'authorURL' => $data['authorURL'],
-			'packageName' => $data['packageName']
+			'packageName' => $data['packageName'],
+			'apiVersion' => $data['apiVersion']
 		];
 		
 		// check if there is an untainted style with the same package name
@@ -669,6 +678,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		$xml->writeElement('date', $this->styleDate);
 		$xml->writeElement('version', $this->styleVersion);
+		$xml->writeElement('apiVersion', $this->apiVersion);
 		if ($this->image) $xml->writeElement('image', $this->image);
 		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
 		if ($this->license) $xml->writeElement('license', $this->license);

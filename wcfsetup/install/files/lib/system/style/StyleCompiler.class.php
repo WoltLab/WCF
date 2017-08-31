@@ -93,6 +93,9 @@ class StyleCompiler extends SingletonFactory {
 			unset($variables['overrideScss']);
 		}
 		
+		// api version
+		$variables['apiVersion'] = $style->apiVersion;
+		
 		$parameters = ['scss' => ''];
 		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 		
@@ -293,13 +296,21 @@ class StyleCompiler extends SingletonFactory {
 					$variables['wcf_option_'.mb_strtolower($constantName)] = is_int($option->optionValue) ? $option->optionValue : '"'.$option->optionValue.'"';
 				}
 			}
+			
+			// api version
+			if (!isset($variables['apiVersion'])) $variables['apiVersion'] = Style::API_VERSION;
 		}
 		else {
 			// workaround during setup
 			$variables['wcf_option_attachment_thumbnail_height'] = '~"210"';
 			$variables['wcf_option_attachment_thumbnail_width'] = '~"280"';
 			$variables['wcf_option_signature_max_image_height'] = '~"150"';
+			
+			$variables['apiVersion'] = Style::API_VERSION;
 		}
+		
+		// convert into numeric value for comparison, e.g. `3.1` -> `31`
+		$variables['apiVersion'] = str_replace('.', '', $variables['apiVersion']);
 		
 		// build SCSS bootstrap
 		$scss = $this->bootstrap($variables);

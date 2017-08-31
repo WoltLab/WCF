@@ -41,6 +41,7 @@ html[dir="rtl"] #spNavigation li:first-child::after { margin-right: 5px; }
 .spHeadline:first-child { margin-top: 10px; }
 #spContentBorder { border-bottom: 1px solid #000; margin: 10px 0; }
 #spContentBorderInner { border-bottom: 1px solid #000; margin: 10px 0; }
+.spContentContainer { background-color: #fff; border: 1px solid #000; margin: 10px 0; padding: 10px; }
 
 /* ### tabular box ### */
 #spTable { border-bottom: 1px solid #000; border-spacing: 0; width: 100%; }
@@ -101,6 +102,7 @@ html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
+.spApiVersion { color: #E65100; font-family: Consolas, Courier, monospace; font-size: 12px; }
 #spSidebar .button { display: block; }
 @media (min-width: 769px) {
 	#spVariablesWrapper { position: sticky; top: 60px; }
@@ -157,6 +159,7 @@ html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
 	}
 	
 	#spWindow.spShowRegions [data-region="wcfHeader"]::after { left: 20px; transform: translateY(-50%); }
+	#spWindow.spShowRegions [data-region="wcfContent"]::after { top: 20px; transform: translateX(-50%); }
 	
 	#spWindow.spShowRegions [data-region] [data-region] { z-index: 20; }
 	#spWindow.spShowRegions [data-region] [data-region]::before { z-index: 30; }

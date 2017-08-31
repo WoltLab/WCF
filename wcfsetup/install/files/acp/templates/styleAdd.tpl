@@ -156,6 +156,17 @@
 						{/if}
 					</dd>
 				</dl>
+				<dl{if $errorField == 'apiVersion'} class="formError"{/if}>
+					<dt><label for="apiVersion">{lang}wcf.acp.style.apiVersion{/lang}</label></dt>
+					<dd>
+						<select name="apiVersion" id="apiVersion"{if !$isTainted} disabled{/if}>
+							{foreach from=$supportedApiVersions item=supportedApiVersion}
+								<option value="{$supportedApiVersion}"{if $supportedApiVersion === $apiVersion} selected{/if}>{$supportedApiVersion} ({lang}wcf.acp.style.apiVersion.{if $supportedApiVersion === $recommendedApiVersion}recommended{else}deprecated{/if}{/lang})</option>
+							{/foreach}
+						</select>
+						<small>{lang}wcf.acp.style.apiVersion.description{/lang}</small>
+					</dd>
+				</dl>
 				<dl{if $errorField == 'styleDate'} class="formError"{/if}>
 					<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
 					<dd>
@@ -548,9 +559,15 @@
 									<div data-region="wcfContent">
 										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 									
-										<div id="spContentBorderInner"></div>
-										
-										Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+										<div data-region="wcfContentContainer">
+											<div class="spContentContainer">
+												Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+												
+												<div id="spContentBorderInner"></div>
+												
+												Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+											</div>
+										</div>
 										
 										<div id="spContentBorder"></div>
 										
@@ -757,7 +774,9 @@
 							</div>
 							
 							<div class="spSidebarBox" data-category="none">
-								{lang}wcf.acp.style.colors.description{/lang}
+								<p>{lang}wcf.acp.style.colors.description{/lang}</p>
+								<p><br></p>
+								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 							</div>
 							
 							{foreach from=$colors key=spCategory item=spColors}
@@ -771,7 +790,7 @@
 													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
 												</div>
 												<div>
-													<span class="spVariable">${$spColor}</span>
+													<span class="spVariable">${$spColor}{if $newVariables[$spColor]|isset} <sup class="spApiVersion">{$newVariables[$spColor]}</sup>{/if}</span>
 													<span class="spDescription">{$spType}</span>
 												</div>
 											</li>
@@ -813,6 +832,8 @@
 				'wcfContentBackground': '#spContent { background-color: VALUE; }',
 				'wcfContentBorder': '#spContentBorder { border-color: VALUE; }',
 				'wcfContentBorderInner': '#spContentBorderInner { border-color: VALUE; }',
+				'wcfContentContainerBackground': '.spContentContainer { background-color: VALUE; }',
+				'wcfContentContainerBorder': '.spContentContainer { border-color: VALUE; }',
 				'wcfContentText': '#spContent { color: VALUE; }',
 				'wcfContentLink': '#spContent a { color: VALUE; }',
 				'wcfContentLinkActive': '#spContent a:hover { color: VALUE; }',

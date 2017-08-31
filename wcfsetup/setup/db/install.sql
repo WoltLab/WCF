@@ -1245,7 +1245,8 @@ CREATE TABLE wcf1_style (
 	imagePath VARCHAR(255) NOT NULL DEFAULT '',
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
-	hasFavicon TINYINT(1) NOT NULL DEFAULT 0
+	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
+	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.1' 
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -2160,6 +2161,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonT
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBackground', 'rgba(250, 250, 250, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorder', 'rgba(65, 121, 173, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorderInner', 'rgba(224, 224, 224, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBackground', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBorder', 'rgba(236, 241, 247, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedLink', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedLinkActive', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedText', 'rgba(125, 130, 135, 1)');

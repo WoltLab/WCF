@@ -48,6 +48,11 @@
 }
 
 @include screen-sm-down {
+	.breadcrumbs {
+		margin-bottom: -5px;
+		margin-top: 5px;
+	}
+	
 	.breadcrumbs > ol > li {
 		display: none;
 		

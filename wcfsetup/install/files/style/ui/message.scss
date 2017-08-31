@@ -301,7 +301,7 @@
 		> .messageContentLoadingOverlay {
 			align-items: center;
 			background-color: $wcfContentBackground;
-			bottom: 0;
+			bottom: -1px;
 			display: flex;
 			justify-content: center;
 			left: 0;

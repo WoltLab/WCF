@@ -1811,6 +1811,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[The input for “{$error[text]}” invalid.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[The variable “{$error[text]}” is already defined by the style editor.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[The variable “{$error[text]}” is not recognized.]]></item>
+		<item name="wcf.acp.style.apiVersion"><![CDATA[Enable Compatibility Mode with WoltLab Suite]]></item>
+		<item name="wcf.acp.style.apiVersion.deprecated"><![CDATA[deprecated]]></item>
+		<item name="wcf.acp.style.apiVersion.description"><![CDATA[Disables selected style improvements in order to maximize compatibility with styles for earlier versions of WoltLab Suite.]]></item>
+		<item name="wcf.acp.style.apiVersion.recommended"><![CDATA[current version, recommended]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Author]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Start Export]]></item>
@@ -1824,6 +1828,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.style.colors.content"><![CDATA[Content Area]]></item>
 		<item name="wcf.acp.style.colors.color"><![CDATA[Font Color]]></item>
 		<item name="wcf.acp.style.colors.description"><![CDATA[Select a category to start editing the color palette.]]></item>
+		<item name="wcf.acp.style.colors.description.apiVersion"><![CDATA[Requires WoltLab Suite {$version} or newer]]></item>
 		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Font Color (weakened)]]></item>
 		<item name="wcf.acp.style.colors.formInput"><![CDATA[Input Elements in Forms]]></item>
 		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Background Color (hover)]]></item>
