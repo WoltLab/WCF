@@ -47,6 +47,11 @@
 		margin-top: 30px;
 	}
 	
+	.content > .section .tabMenuContent > .section:first-child,
+	.content > .section .tabMenuContent > form > .section:first-child {
+		margin-top: 20px;
+	}
+	
 	// borders used to visually separate lists from adjacent containers
 	.content > .section {
 		> .messageList {
