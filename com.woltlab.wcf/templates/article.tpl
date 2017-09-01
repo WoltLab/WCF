@@ -115,89 +115,91 @@
 
 {include file='header'}
 
-{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
-	<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-		<figure class="articleImage">
-			<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
-			{if $articleContent->getImage()->caption}
-				<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
-			{/if}
-		</figure>
-		<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
-		<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
-		<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
-	</div>
-{/if}
-
-<div class="section articleContent"
-         data-object-id="{@$article->articleID}"
-         data-object-type="com.woltlab.wcf.likeableArticle"
-         data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
-         data-like-likes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->likes}{else}0{/if}"
-         data-like-dislikes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->dislikes}{else}0{/if}"
-         data-like-users='{ {if $articleLikeData[$article->articleID]|isset}{implode from=$articleLikeData[$article->articleID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode}{/if} }'
-         data-user-id="{@$article->userID}"
->
-	<div class="htmlContent">
-		{if $articleContent->teaser}
-			<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
-		{/if}
-	
-		{@$articleContent->getFormattedContent()}
-	</div>
-	
-	{if !$tags|empty}
-		<ul class="tagList articleTagList section">
-			{foreach from=$tags item=tag}
-				<li><a href="{link controller='Tagged' object=$tag}objectType=com.woltlab.wcf.article{/link}" class="tag">{$tag->name}</a></li>
-			{/foreach}
-		</ul>
+<div class="section">
+	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
+		<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+			<figure class="articleImage">
+				<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
+				{if $articleContent->getImage()->caption}
+					<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
+				{/if}
+			</figure>
+			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
+			<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
+			<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
+		</div>
 	{/if}
 	
-	<div class="section row articleLikeSection">
-		<div class="col-xs-12 col-md-6">
-			<div class="articleLikesSummery"></div>
-		</div>
-		<div class="col-xs-12 col-md-6">
-			<ul class="articleLikeButtons buttonGroup"></ul>
-		</div>
-	</div>
-</div>
-
-{if ENABLE_SHARE_BUTTONS}
-	<section class="section jsOnly">
-		<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
+	<div class="section articleContent"
+	         data-object-id="{@$article->articleID}"
+	         data-object-type="com.woltlab.wcf.likeableArticle"
+	         data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
+	         data-like-likes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->likes}{else}0{/if}"
+	         data-like-dislikes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->dislikes}{else}0{/if}"
+	         data-like-users='{ {if $articleLikeData[$article->articleID]|isset}{implode from=$articleLikeData[$article->articleID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode}{/if} }'
+	         data-user-id="{@$article->userID}"
+	>
+		<div class="htmlContent">
+			{if $articleContent->teaser}
+				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
+			{/if}
 		
-		{include file='shareButtons'}
-	</section>
-{/if}
-
-{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
-	<div class="section articleAboutAuthor">
-		<h2 class="sectionTitle">{lang}wcf.article.aboutAuthor{/lang}</h2>
+			{@$articleContent->getFormattedContent()}
+		</div>
 		
-		<div class="box128">
-			<span class="articleAboutAuthorAvatar">{@$article->getUserProfile()->getAvatar()->getImageTag(128)}</span>
-			
-			<div>
-				<div class="articleAboutAuthorText">{@$article->getUserProfile()->getFormattedUserOption('aboutMe')}</div>
-				
-				<div class="articleAboutAuthorUsername">
-					<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
-					
-					{if MODULE_USER_RANK}
-						{if $article->getUserProfile()->getUserTitle()}
-							<span class="badge userTitleBadge{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->cssClassName} {@$article->getUserProfile()->getRank()->cssClassName}{/if}">{$article->getUserProfile()->getUserTitle()}</span>
-						{/if}
-						{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->rankImage}
-							<span class="userRank">{@$article->getUserProfile()->getRank()->getImage()}</span>
-						{/if}
-					{/if}
-				</div>
+		{if !$tags|empty}
+			<ul class="tagList articleTagList section">
+				{foreach from=$tags item=tag}
+					<li><a href="{link controller='Tagged' object=$tag}objectType=com.woltlab.wcf.article{/link}" class="tag">{$tag->name}</a></li>
+				{/foreach}
+			</ul>
+		{/if}
+		
+		<div class="section row articleLikeSection">
+			<div class="col-xs-12 col-md-6">
+				<div class="articleLikesSummery"></div>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<ul class="articleLikeButtons buttonGroup"></ul>
 			</div>
 		</div>
 	</div>
-{/if}
+	
+	{if ENABLE_SHARE_BUTTONS}
+		<section class="section jsOnly">
+			<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
+			
+			{include file='shareButtons'}
+		</section>
+	{/if}
+	
+	{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
+		<div class="section articleAboutAuthor">
+			<h2 class="sectionTitle">{lang}wcf.article.aboutAuthor{/lang}</h2>
+			
+			<div class="box128">
+				<span class="articleAboutAuthorAvatar">{@$article->getUserProfile()->getAvatar()->getImageTag(128)}</span>
+				
+				<div>
+					<div class="articleAboutAuthorText">{@$article->getUserProfile()->getFormattedUserOption('aboutMe')}</div>
+					
+					<div class="articleAboutAuthorUsername">
+						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
+						
+						{if MODULE_USER_RANK}
+							{if $article->getUserProfile()->getUserTitle()}
+								<span class="badge userTitleBadge{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->cssClassName} {@$article->getUserProfile()->getRank()->cssClassName}{/if}">{$article->getUserProfile()->getUserTitle()}</span>
+							{/if}
+							{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->rankImage}
+								<span class="userRank">{@$article->getUserProfile()->getRank()->getImage()}</span>
+							{/if}
+						{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+	{/if}
+</div>
 
 <footer class="contentFooter">
 	{hascontent}
