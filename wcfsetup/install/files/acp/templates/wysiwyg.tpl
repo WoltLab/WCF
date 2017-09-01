@@ -24,6 +24,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFont.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFullscreen.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabImage.js?v={@LAST_UPDATE_TIME}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabIndent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
@@ -202,6 +203,7 @@
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
 					'WoltLabImage',
+					'WoltLabIndent',
 					'WoltLabInlineCode',
 					'WoltLabInsert',
 					'WoltLabLine',
