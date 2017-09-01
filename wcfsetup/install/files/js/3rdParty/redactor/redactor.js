@@ -5156,6 +5156,33 @@
 									return false;
 								}
 							}
+							else if (this.keydown.block.tagName === 'P' && this.keydown.block.parentNode.tagName === 'LI') {
+								// check if the <p> is empty and this is the last child
+								var p = this.keydown.block;
+								if (p.nextElementSibling === null && this.utils.isEmpty(p.innerHTML)) {
+									var li = p.parentNode;
+									
+									// only child of this <li>
+									if (p.previousElementSibling === null) {
+										var list = li.parentNode;
+										list.removeChild(li);
+										
+										var node = $(this.opts.emptyHtml)[0];
+										list.parentNode.insertBefore(node, list.nextElementSibling);
+										this.caret.setStart(node);
+										
+										return false;
+									}
+									
+									li.removeChild(p);
+									
+									var node = $('<li>' + this.opts.emptyHtml + '</li>')[0];
+									li.parentNode.insertBefore(node, li.nextElementSibling);
+									this.caret.setStart(node.children[0]);
+									
+									return false;
+								}
+							}
 						}
 						else if (!this.opts.linebreaks && !this.keydown.block)
 						{
