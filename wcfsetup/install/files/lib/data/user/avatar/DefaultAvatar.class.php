@@ -56,7 +56,7 @@ class DefaultAvatar implements IUserAvatar {
 			
 			// the <path> is basically a shorter version of a <rect>
 			$svg = <<<SVG
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="#{$backgroundColor}" d="M0 0h16v16H0z"/><text x="8" y="8" fill="#{$textColor}" text-anchor="middle" baseline-shift="-50%" dominant-baseline="ideographic" font-family="Arial" font-size="7">{$text}</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="#{$backgroundColor}" d="M0 0h16v16H0z"/><text x="8" y="8" fill="#{$textColor}" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-size="7">{$text}</text></svg>
 SVG;
 			
 			$this->src = "data:image/svg+xml;base64," . base64_encode($svg);
