@@ -9,6 +9,8 @@
 define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environment, DomChangeListener, UiAlignment) {
 	"use strict";
 	
+	var _callbackMouseEnter = null;
+	var _callbackMouseLeave = null;
 	var _elements = null;
 	var _pointer = null;
 	var _text = null;
@@ -49,6 +51,9 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 			
 			_elements = elByClass('jsTooltip');
 			
+			_callbackMouseEnter = this._mouseEnter.bind(this);
+			_callbackMouseLeave = this._mouseLeave.bind(this);
+			
 			this.init();
 			
 			DomChangeListener.add('WoltLabSuite/Core/Ui/Tooltip', this.init.bind(this));
@@ -59,21 +64,23 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 		 * Initializes tooltip elements.
 		 */
 		init: function() {
-			var element, title;
-			while (_elements.length) {
-				element = _elements[0];
+			if (_elements.length === 0) {
+				return;
+			}
+			
+			elBySelAll('.jsTooltip', undefined, function (element) {
 				element.classList.remove('jsTooltip');
 				
-				title = elAttr(element, 'title').trim();
+				var title = elAttr(element, 'title').trim();
 				if (title.length) {
 					elData(element, 'tooltip', title);
 					element.removeAttribute('title');
 					
-					element.addEventListener('mouseenter', this._mouseEnter.bind(this));
-					element.addEventListener('mouseleave', this._mouseLeave.bind(this));
-					element.addEventListener(WCF_CLICK_EVENT, this._mouseLeave.bind(this));
+					element.addEventListener('mouseenter', _callbackMouseEnter);
+					element.addEventListener('mouseleave', _callbackMouseLeave);
+					element.addEventListener(WCF_CLICK_EVENT, _callbackMouseLeave);
 				}
-			}
+			});
 		},
 		
 		/**
