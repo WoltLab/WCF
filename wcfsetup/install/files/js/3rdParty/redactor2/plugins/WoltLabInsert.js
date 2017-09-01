@@ -12,6 +12,20 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				this.placeholder.hide();
 				this.core.editor().focus();
 				
+				// Firefox may have an incorrect selection if pasting into the editor using the contextual menu
+				if (this.detect.isFirefox()) {
+					var selection = this.selection.get();
+					if (selection.anchorNode.closest('.redactor-layer') === null) {
+						this.selection.restore();
+						
+						selection = this.selection.get();
+						if (selection.anchorNode.closest('.redactor-layer') === null) {
+							this.WoltLabCaret.endOfEditor();
+							this.selection.save();
+						}
+					}
+				}
+				
 				/** @var Element */
 				var block = this.selection.block();
 				
