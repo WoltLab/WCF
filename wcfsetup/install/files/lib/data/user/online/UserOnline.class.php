@@ -72,7 +72,7 @@ class UserOnline extends UserProfile {
 						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
 						return true;
 					}
-					else if ($page->isAccessible()) {
+					else if ($page->isVisible() && $page->isAccessible()) {
 						$title = $page->getTitle();
 						if (!empty($title)) {
 							if ($page->pageType != 'system') {
