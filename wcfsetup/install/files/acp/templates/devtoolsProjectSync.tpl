@@ -46,12 +46,12 @@
 					{assign var=_targetCount value=$_targets|count}
 					
 					<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $_isSupported}true{else}false{/if}" {if $_targetCount} class="jsHasPipTargets" data-sync-dependencies="{$pip->getSyncDependencies(true)}"{/if}>
-						<td class="columnText" rowspan="{$_targetCount}">{$pip->pluginName}</td>
+						<td class="columnText"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}>{$pip->pluginName}</td>
 						{if $_isSupported}
-							<td class="columnText pipDefaultFilename" rowspan="{$_targetCount}"><small>{$pip->getEffectiveDefaultFilename()}</small></td>
+							<td class="columnText pipDefaultFilename"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}><small>{$pip->getEffectiveDefaultFilename()}</small></td>
 							{if $_targetCount}
 								<td class="columnIcon"><button class="small jsInvokePip" data-target="{$_targets[0]}">{$_targets[0]}</button></td>
-								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[0]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</td>
+								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[0]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
 							{else}
 								<td class="columnText" colspan="2">
 									<small>{lang}wcf.acp.devtools.pip.target.noMatches{/lang}</small>
@@ -65,7 +65,7 @@
 						{section name=i loop=$_targets start=1}
 							<tr data-plugin-name="{$pip->pluginName}" {if $_targetCount} class="jsHasPipTargets jsSkipTargetDetection"{/if}>
 								<td class="columnIcon"><button class="small jsInvokePip" data-target="{$_targets[$i]}">{$_targets[$i]}</button></td>
-								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[$i]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</td>
+								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[$i]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
 							</tr>
 						{/section}
 					{/if}
