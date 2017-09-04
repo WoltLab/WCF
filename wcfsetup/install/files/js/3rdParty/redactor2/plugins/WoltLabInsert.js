@@ -9,8 +9,27 @@ $.Redactor.prototype.WoltLabInsert = function() {
 			this.insert.html = (function (html, data) {
 				if (callback) callback = callback();
 				
+				var selection = window.getSelection();
+				if (selection.rangeCount && selection.anchorNode.nodeName === 'IMG') {
+					this.caret.after(selection.anchorNode);
+				}
+				
 				this.placeholder.hide();
 				this.core.editor().focus();
+				
+				// Firefox may have an incorrect selection if pasting into the editor using the contextual menu
+				if (this.detect.isFirefox()) {
+					var anchorNode = (selection.anchorNode.nodeType === Node.TEXT_NODE) ? selection.anchorNode.parentNode : selection.anchorNode;
+					if (anchorNode.closest('.redactor-layer') === null) {
+						this.selection.restore();
+						
+						anchorNode = (selection.anchorNode.nodeType === Node.TEXT_NODE) ? selection.anchorNode.parentNode : selection.anchorNode;
+						if (anchorNode.closest('.redactor-layer') === null) {
+							this.WoltLabCaret.endOfEditor();
+							this.selection.save();
+						}
+					}
+				}
 				
 				/** @var Element */
 				var block = this.selection.block();
@@ -37,6 +56,10 @@ $.Redactor.prototype.WoltLabInsert = function() {
 						// rather than using the current, empty one
 						elRemove(block);
 					}
+				}
+				
+				if (selection.rangeCount && selection.anchorNode.nodeName === 'IMG') {
+					this.caret.after(selection.anchorNode);
 				}
 			}).bind(this);
 			
