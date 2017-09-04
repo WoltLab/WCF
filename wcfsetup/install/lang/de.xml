@@ -437,7 +437,7 @@
 		<item name="wcf.acp.email.smtp.test.error.empty.user"><![CDATA[Der Benutzername fehlt.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[Der Server antwortet nicht.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[Der Server unterstützt keine Verschlüsselung.]]></item>
-		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Der Aufbau einer verschlüselten Verbindung war nicht möglich.]]></item>
+		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Der Aufbau einer verschlüsselten Verbindung war nicht möglich.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">
