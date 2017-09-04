@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\sitemap\object;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Interface for sitemap objects.
@@ -29,7 +30,7 @@ interface ISitemapObjectObjectType {
 	/**
 	 * Returns the DatabaseObjectList for the sitemap object.
 	 *
-	 * @return 	string
+	 * @return 	DatabaseObjectList
 	 */
 	public function getObjectList();
 
