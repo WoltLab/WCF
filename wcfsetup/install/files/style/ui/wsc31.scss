@@ -148,4 +148,14 @@
 	.messageTabMenuNavigation > ul > li.active > a::after {
 		border-bottom-color: $wcfContentContainerBackground;
 	}
+	
+	// use the `alert` variables rather than fixed values 
+	.innerError {
+		background-color: $wcfStatusErrorBackground;
+		color: $wcfStatusErrorText;
+		
+		&::before {
+			border-bottom-color: $wcfStatusErrorBackground;
+		}
+	}
 }
