@@ -339,7 +339,7 @@ define(
 										elById('mediaEditor_' + this._media.mediaID).parentNode.scrollTop = 0;
 										
 										DomChangeListener.trigger();
-									}.bind(this), 0);
+									}.bind(this), 200);
 								}).bind(this),
 								data: {
 									actionName: 'getEditorDialog',
