@@ -78,8 +78,7 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], funct
 			clearButton.addEventListener('click', (function(event) {
 				event.preventDefault();
 				
-				this._input.value = '';
-				this._keyup();
+				this.reset();
 			}).bind(this));
 			
 			inputAddon.appendChild(input);
@@ -92,6 +91,14 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], funct
 			this._input = input;
 			this._items = null;
 			this._fragment = null;
+		},
+		
+		/**
+		 * Resets the filter.
+		 */
+		reset: function () {
+			this._input.value = '';
+			this._keyup();
 		},
 		
 		/**

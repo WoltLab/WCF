@@ -20,7 +20,7 @@ define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], functi
 		return Fake;
 	}
 	
-	var _callback, _iconList;
+	var _callback, _iconList, _itemListFilter;
 	var _icons = [];
 	
 	/**
@@ -88,7 +88,7 @@ define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], functi
 						_iconList.innerHTML = html;
 						_iconList.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 						
-						new UiItemListFilter('fontAwesomeIcons', {
+						_itemListFilter = new UiItemListFilter('fontAwesomeIcons', {
 							callbackPrepareItem: function (item) {
 								var small = elBySel('small', item);
 								var text = small.textContent.trim();
@@ -101,6 +101,9 @@ define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], functi
 							}
 						});
 					}).bind(this),
+					onShow: function () {
+						_itemListFilter.reset();
+					},
 					title: Language.get('wcf.global.fontAwesome.selectIcon')
 				},
 				source: '<ul class="fontAwesomeIcons" id="fontAwesomeIcons"></ul>'
