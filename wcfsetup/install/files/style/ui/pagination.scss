@@ -36,6 +36,10 @@
 				height: auto;
 				line-height: inherit;
 				width: auto;
+				
+				@include screen-xs {
+					padding: 0 6px;
+				}
 			}
 			
 			&:not(:last-child) {
@@ -46,6 +50,12 @@
 				> a,
 				> span {
 					padding: 4px 8px;
+					
+					@include screen-xs {
+						padding: 4px 6px;
+						
+						@include wcfFontSmall;
+					}
 				}
 			}
 			
