@@ -51,16 +51,18 @@ trait TMessageQuickReplyGuestDialogAction {
 	 * Needs to be called before all other methods in this trait.
 	 */
 	protected function setGuestDialogCaptcha() {
-		$this->guestDialogCaptchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
-		if ($this->guestDialogCaptchaObjectType === null) {
-			throw new \LogicException("Unknown captcha object type with name '".CAPTCHA_TYPE."'");
-		}
-		
-		/** @var ICaptchaHandler $processor */
-		$processor = $this->guestDialogCaptchaObjectType->getProcessor();
-		
-		if (!$processor->isAvailable()) {
-			$this->guestDialogCaptchaObjectType = null;
+		if (CAPTCHA_TYPE) {
+			$this->guestDialogCaptchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
+			if ($this->guestDialogCaptchaObjectType === null) {
+				throw new \LogicException("Unknown captcha object type with name '" . CAPTCHA_TYPE . "'");
+			}
+			
+			/** @var ICaptchaHandler $processor */
+			$processor = $this->guestDialogCaptchaObjectType->getProcessor();
+			
+			if (!$processor->isAvailable()) {
+				$this->guestDialogCaptchaObjectType = null;
+			}
 		}
 	}
 	
