@@ -2293,6 +2293,7 @@ $.widget('wcf.messageTabMenu', {
 				return false;
 			}
 		});
+		if ($preselect === 'true') $preselect = true;
 		
 		this._tabs = [ ];
 		this._tabsByName = { };
@@ -2323,7 +2324,7 @@ $.widget('wcf.messageTabMenu', {
 			this._tabsByName[$name] = $i;
 			
 			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
-			if ($preselect == $name) {
+			if ($preselect === $name || ($preselect === true && $i === 0)) {
 				$anchor.trigger('mousedown');
 			}
 		}
