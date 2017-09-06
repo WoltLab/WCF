@@ -212,7 +212,7 @@ requirejs.config({
 			{if ENABLE_POLLING && $__wcf->user->userID}
 				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
 					NotificationHandler.setup({
-						enableNotifications: {if ENABLE_DESKTOP_NOTIFICATIONS}true{else}false{/if},
+						enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
 						icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
 						sessionKeepAlive: {@$__sessionKeepAlive}
 					});

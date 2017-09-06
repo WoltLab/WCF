@@ -12,7 +12,7 @@
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
 <a id="top"></a>
 
-<div id="pageContainer" class="pageContainer">
+<div id="pageContainer" class="pageContainer acpPageHiddenMenu">
 	<div class="pageHeaderContainer">
 		<header id="pageHeaderFacade" class="pageHeaderFacade">
 			<div class="layoutBoundary">

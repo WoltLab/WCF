@@ -25,6 +25,12 @@ class ApplicationHandler extends SingletonFactory {
 	protected $cache;
 	
 	/**
+	 * true for multi-domain setups
+	 * @var boolean
+	 */
+	protected $isMultiDomain;
+	
+	/**
 	 * list of page URLs
 	 * @var	string[]
 	 */
@@ -198,6 +204,28 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns true if this is a multi-domain setup.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function isMultiDomainSetup() {
+		if ($this->isMultiDomain === null) {
+			$this->isMultiDomain = false;
+			
+			$domainName = $this->getApplicationByID(1)->domainName;
+			foreach ($this->getApplications() as $application) {
+				if ($application->domainName !== $domainName) {
+					$this->isMultiDomain = true;
+					break;
+				}
+			}
+		}
+		
+		return $this->isMultiDomain;
 	}
 	
 	/**

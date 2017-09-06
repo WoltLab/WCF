@@ -499,11 +499,17 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<enableoptions>enable_desktop_notifications</enableoptions>
+				<enableoptions>enable_desktop_notifications,desktop_notification_package_id</enableoptions>
 			</option>
 			<option name="enable_desktop_notifications">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>desktop_notification_package_id</enableoptions>
+			</option>
+			<option name="desktop_notification_package_id">
+				<categoryname>general.page</categoryname>
+				<optiontype>desktopNotificationApplicationSelect</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="head_code">

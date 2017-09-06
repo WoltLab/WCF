@@ -1005,6 +1005,30 @@ class WCF {
 	}
 	
 	/**
+	 * Returns true if the desktop notifications should be enabled.
+	 * 
+	 * @return      boolean
+	 */
+	public function useDesktopNotifications() {
+		if (!ENABLE_DESKTOP_NOTIFICATIONS) {
+			return false;
+		}
+		else if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+			$application = ApplicationHandler::getInstance()->getApplicationByID(DESKTOP_NOTIFICATION_PACKAGE_ID);
+			// mismatch, default to Core
+			if ($application === null) $application = ApplicationHandler::getInstance()->getApplicationByID(1);
+			
+			$currentApplication = ApplicationHandler::getInstance()->getActiveApplication();
+			if ($currentApplication->domainName != $application->domainName) {
+				// different domain
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Returns true if currently active request represents the landing page.
 	 * 
 	 * @return	boolean

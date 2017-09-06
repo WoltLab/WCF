@@ -1406,6 +1406,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Enables a set of specialized tools that are used for plugin development. Should always be disabled in production environments.]]></item>
 		<item name="wcf.acp.option.force_login"><![CDATA[Force login]]></item>
 		<item name="wcf.acp.option.force_login.description"><![CDATA[Visitors are required to log-in themselves to access the page.]]></item>
+		<item name="wcf.acp.option.desktop_notification_package_id"><![CDATA[Primary Domain for Desktop Notifications]]></item>
+		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop Notifications will be enabled for the selected app only, including all other apps that use the exact same domain.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">

@@ -1412,6 +1412,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.force_login"><![CDATA[Anmeldung erzwingen]]></item>
 		<item name="wcf.acp.option.force_login.description"><![CDATA[Besucher werden aufgefordert sich anzumelden, um auf die Inhalte zugreifen zu können.]]></item>
+		<item name="wcf.acp.option.desktop_notification_package_id"><![CDATA[Primäre Domain für Desktop-Benachrichtigungen]]></item>
+		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop-Benachrichtigungen werden nur für die ausgewählte App aktiviert, einschließlich aller anderen Apps die auf der identischen Domain laufen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">

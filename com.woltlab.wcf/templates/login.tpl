@@ -8,7 +8,7 @@
 	{include file='formError'}
 {/if}
 
-<div id="loginForm" class="loginForm{if REGISTER_DISABLED} loginFormLoginOnly{/if}">
+<div id="loginForm" class="section loginForm{if REGISTER_DISABLED} loginFormLoginOnly{/if}">
 	<form method="post" action="{@$loginController}">
 		<section class="section loginFormLogin">
 			<h2 class="sectionTitle">{lang}wcf.user.login.login{/lang}</h2>
