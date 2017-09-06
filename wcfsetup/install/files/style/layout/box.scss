@@ -627,16 +627,39 @@
 }
 
 @include screen-xs {
+	.main > .layoutBoundary {
+		display: flex;
+		flex-wrap: wrap;
+		
+		> .content {
+			flex: 0 0 100%;
+			order: 3;
+		}
+		
+		> .boxesSidebarLeft {
+			order: 1;
+		}
+		
+		> .boxesSidebarRight {
+			order: 2;
+		}
+	}
+	
 	.boxesSidebarLeft,
 	.boxesSidebarRight {
+		flex: 1 0 100%;
 		pointer-events: none;
 		
 		> .boxContainer {
 			pointer-events: all;
 		}
 		
-		&:not(.open) > .boxContainer {
-			display: none;
+		&:not(.open) {
+			flex: 1 50%;
+			
+			> .boxContainer {
+				display: none;
+			}
 		}
 		
 		&::before {
@@ -663,6 +686,17 @@
 		&.open::before {
 			content: attr(data-hide-navigation);
 		}
+	}
+	
+	.boxesSidebarLeft:not(.open) + .content + .boxesSidebarRight:not(.open) {
+		border-left: 1px solid $wcfContentBackground;
+		margin-left: 10px;
+		margin-top: 0;
+	}
+	
+	.content:first-child + .boxesSidebarRight {
+		margin-bottom: 20px;
+		margin-top: 0;
 	}
 }
 
