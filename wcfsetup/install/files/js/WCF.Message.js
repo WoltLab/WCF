@@ -1209,7 +1209,6 @@ if (COMPILER_TARGET_DEFAULT) {
 				var $node = $walker.currentNode;
 				
 				if ($node.nodeType === Node.ELEMENT_NODE) {
-					console.log($node);
 					switch ($node.tagName) {
 						case 'A':
 							// \u2026 === &hellip;
