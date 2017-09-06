@@ -532,7 +532,7 @@ CREATE TABLE wcf1_event_listener (
 	packageID INT(10) NOT NULL,
 	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 	listenerName VARCHAR(191) NOT NULL,
-	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
+	eventClassName VARCHAR(255) NOT NULL DEFAULT '',
 	eventName TEXT,
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
 	inherit TINYINT(1) NOT NULL DEFAULT 0,

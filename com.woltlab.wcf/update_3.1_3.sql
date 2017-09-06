@@ -38,6 +38,8 @@ CREATE TABLE wcf1_devtools_project (
 	UNIQUE KEY name (name)
 );
 
+ALTER TABLE wcf1_event_listener CHANGE eventClassName eventClassName VARCHAR(255) NOT NULL DEFAULT '';
+
 ALTER TABLE wcf1_package_update_server CHANGE COLUMN apiVersion apiVersion ENUM('2.0', '2.1', '3.1') NOT NULL DEFAULT '2.0';
 
 DROP TABLE IF EXISTS wcf1_page_box_order;
