@@ -4,6 +4,7 @@ use wcf\data\page\PageCache;
 use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -124,6 +125,12 @@ class UserOnline extends UserProfile {
 	 * @return	string
 	 */
 	public function getBrowser() {
+		$parameters = ['browser' => '', 'userAgent' => $this->userAgent];
+		EventHandler::getInstance()->fireAction($this, 'getBrowser', $parameters);
+		if (!empty($parameters['browser'])) {
+			return $parameters['browser'];
+		}
+		
 		// lunascape
 		if (preg_match('~lunascape[ /]([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Lunascape '.$match[1];
