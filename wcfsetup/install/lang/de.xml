@@ -375,6 +375,7 @@
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Projekt bearbeiten]]></item>
 		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Projekt <span class="confirmationObject">{$object->name}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte beachten Sie die <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://docs.woltlab.com/getting-started_quick-start.html#developer-tools'|rawurlencode}" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[Der Name wird bereits von einem anderen Projekt verwendet.]]></item>

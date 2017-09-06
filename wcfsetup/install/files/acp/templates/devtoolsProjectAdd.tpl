@@ -14,6 +14,8 @@
 	</nav>
 </header>
 
+<p class="info">{lang}wcf.acp.devtools.project.introduction{/lang}</p>
+
 {include file='formError'}
 
 {if $success|isset}

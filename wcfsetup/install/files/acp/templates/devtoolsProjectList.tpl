@@ -27,6 +27,8 @@
 	</nav>
 </header>
 
+<p class="info">{lang}wcf.acp.devtools.project.introduction{/lang}</p>
+
 {hascontent}
 	<div class="section tabularBox">
 		<table class="table">
