@@ -1181,10 +1181,16 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $nodeFilter = function (node) {
 				switch (node.tagName) {
 					case 'BLOCKQUOTE':
-					case 'IMG':
 					case 'SCRIPT':
 						return NodeFilter.FILTER_REJECT;
 					
+					case 'IMG':
+						if (!node.classList.contains('smiley') || node.alt.length === 0) {
+							return NodeFilter.FILTER_REJECT;
+						}
+						// fallthrough
+					
+					//noinspection FallthroughInSwitchStatementJS
 					default:
 						return NodeFilter.FILTER_ACCEPT;
 				}
@@ -1203,6 +1209,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				var $node = $walker.currentNode;
 				
 				if ($node.nodeType === Node.ELEMENT_NODE) {
+					console.log($node);
 					switch ($node.tagName) {
 						case 'A':
 							// \u2026 === &hellip;
@@ -1234,6 +1241,11 @@ if (COMPILER_TARGET_DEFAULT) {
 						
 						case 'P':
 							$text += "\n\n";
+							break;
+							
+						// smilies
+						case 'IMG':
+							$text += " " + $node.alt + " ";
 							break;
 					}
 				}
