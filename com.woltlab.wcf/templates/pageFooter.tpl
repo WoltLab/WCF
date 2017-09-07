@@ -17,7 +17,7 @@
 		{assign var=__showStyleChanger value=false}
 	{/if}
 	
-	{if $__boxesFooter|count || $__showStyleChanger}
+	{if $__boxesFooter|count || !$boxesFooter|empty || $__showStyleChanger}
 		<div class="boxesFooter">
 			<div class="layoutBoundary{if $__showStyleChanger} clearfix{/if}">
 				{if $__showStyleChanger}
@@ -25,13 +25,19 @@
 						<a href="#" class="jsButtonStyleChanger">{lang}wcf.style.changeStyle{/lang}</a>
 					</span>
 				{/if}
-				{if $__boxesFooter|count}
+				{hascontent}
 					<div class="boxContainer">
-						{foreach from=$__boxesFooter item=box}
-							{@$box->render()}
-						{/foreach}
+						{content}
+							{if !$boxesFooter|empty}
+								{@$boxesFooter}
+							{/if}
+
+							{foreach from=$__boxesFooter item=box}
+								{@$box->render()}
+							{/foreach}
+						{/content}
 					</div>
-				{/if}
+				{/hascontent}
 			</div>
 		</div>
 	{/if}
