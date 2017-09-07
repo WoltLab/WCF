@@ -65,14 +65,15 @@ class FileOptionType extends AbstractOptionType {
 		}
 		
 		// determine location the file will be stored at
-		$package = PackageCache::getInstance()->getPackage($option->packageID);
-		$fileLocation = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir)).$option->filelocation.'.'.$file->getFileExtension();
+		$relativeFileLocation = $option->filelocation . '.' . $file->getFileExtension();
+		
+		$fileLocation = PackageCache::getInstance()->getPackage($option->packageID)->getAbsolutePackageDir() . $relativeFileLocation;
 		
 		// save file
 		$file->moveUploadedFile($fileLocation);
 		
-		// return file location as the value to store in the database
-		return $fileLocation;
+		// return relative file location as the value to store in the database
+		return $relativeFileLocation;
 	}
 	
 	/**

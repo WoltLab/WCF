@@ -192,6 +192,15 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the absolute path to the package directory with a trailing slash.
+	 * 
+	 * @return	string
+	 */
+	public function getAbsolutePackageDir() {
+		return FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $this->packageDir));
+	}
+	
+	/**
 	 * Loads package requirements.
 	 */
 	protected static function loadRequirements() {
