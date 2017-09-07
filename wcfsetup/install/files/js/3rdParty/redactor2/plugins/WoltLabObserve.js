@@ -85,37 +85,38 @@ $.Redactor.prototype.WoltLabObserve = function() {
 				var editor = this.$editor[0];
 				if (current.nodeType !== Node.ELEMENT_NODE) current = current.parentNode;
 				
-				var key, tagName, tags = [];
-				while (current !== editor) {
-					tagName = current.nodeName.toLowerCase();
-					if (tags.indexOf(tagName) === -1) {
-						key = tagName;
-						if (tagName === 'pre' && current.classList.contains('woltlabHtml')) {
-							key = 'woltlab-html';
+				if (current.closest('.redactor-layer') === editor) {
+					var key, tagName, tags = [];
+					while (current !== editor) {
+						tagName = current.nodeName.toLowerCase();
+						if (tags.indexOf(tagName) === -1) {
+							key = tagName;
+							if (tagName === 'pre' && current.classList.contains('woltlabHtml')) {
+								key = 'woltlab-html';
+							}
+							
+							if (this.opts.activeButtonsStates.hasOwnProperty(key)) {
+								this.button.setActive(this.opts.activeButtonsStates[key]);
+							}
+							
+							// mark as known
+							if (tagName !== 'pre') tags.push(tagName);
 						}
 						
-						if (this.opts.activeButtonsStates.hasOwnProperty(key)) {
-							this.button.setActive(this.opts.activeButtonsStates[key]);
-						}
-						
-						// mark as known
-						if (tagName !== 'pre') tags.push(tagName);
+						current = current.parentNode;
 					}
-					
-					current = current.parentNode;
 				}
-				
 			}).bind(this);
 			
 			this.observe.dropdowns = (function() {
 				var current = this.selection.current();
+				if (current && current.nodeType !== Node.ELEMENT_NODE) current = current.parentNode;
+				
 				var editor = this.$editor[0];
-				var isRedactor = this.utils.isRedactorParent(current);
+				var isRedactor = (current && current.closest('.redactor-layer') === editor);
 				
 				var tagName, tags = [];
-				if (current && isRedactor) {
-					if (current.nodeType !== Node.ELEMENT_NODE) current = current.parentNode;
-					
+				if (isRedactor) {
 					while (current !== editor) {
 						tagName = current.nodeName.toLowerCase();
 						if (tags.indexOf(tagName) === -1) {
