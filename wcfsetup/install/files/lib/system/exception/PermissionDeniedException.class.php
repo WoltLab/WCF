@@ -19,8 +19,9 @@ class PermissionDeniedException extends UserException {
 	/**
 	 * Creates a new PermissionDeniedException object.
 	 */
-	public function __construct() {
-		parent::__construct(WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied'));
+	public function __construct($message = null) {
+		if ($message === null) $message = WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied');
+		parent::__construct($message);
 	}
 	
 	/**
@@ -39,6 +40,7 @@ class PermissionDeniedException extends UserException {
 			'name' => get_class($this),
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
+			'message' => $this->getMessage(),
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'permissionDenied',
 			'templateNameApplication' => 'wcf'
