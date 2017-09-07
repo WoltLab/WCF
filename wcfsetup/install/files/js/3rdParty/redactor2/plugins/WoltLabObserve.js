@@ -104,10 +104,12 @@ $.Redactor.prototype.WoltLabObserve = function() {
 			this.observe.dropdowns = (function() {
 				var current = this.selection.current();
 				if (current && current.nodeType !== Node.ELEMENT_NODE) current = current.parentNode;
+				
 				var editor = this.$editor[0];
+				var isRedactor = (current && current.closest('.redactor-layer') === editor);
 				
 				var tagName, tags = [];
-				if (current && current.closest('.redactor-layer') === editor) {
+				if (isRedactor) {
 					while (current !== editor) {
 						tagName = current.nodeName.toLowerCase();
 						if (tags.indexOf(tagName) === -1) {
