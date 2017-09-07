@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.9
-	Updated: August 13, 2017
+	Version 2.10
+	Updated: September 4, 2017
 
 	http://imperavi.com/redactor/
 
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.9';
+	$.Redactor.VERSION = '2.10';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -119,6 +119,7 @@
 		direction: 'ltr',
 		spellcheck: true,
 		overrideStyles: true,
+		stylesClass: false,
 		scrollTarget: document,
 
 		focus: false,
@@ -185,6 +186,7 @@
 		linkTooltip: true,
 		linkNofollow: false,
 		linkSize: 30,
+		linkValidation: true,
 		pasteLinkTarget: false,
 
 		videoContainerClass: 'video-container',
@@ -1225,6 +1227,8 @@
 						{
 							this.$editor.html(this.opts.emptyHtml);
 						}
+
+						this.build.buildTextarea();
 					}
 					else if (this.opts.type === 'textarea')
 					{
@@ -1268,6 +1272,15 @@
 
 					return (typeof name === 'undefined') ? 'content-' + this.uuid : name;
 				},
+				buildTextarea: function()
+				{
+    				this.$textarea = $('<textarea>');
+    				this.$textarea.attr('name', this.build.getName());
+    				this.$textarea.hide();
+    				this.$element.after(this.$textarea);
+
+    				this.build.setStartAttrs();
+				},
 				loadFromTextarea: function()
 				{
 					this.$editor = $('<div />');
@@ -1278,17 +1291,21 @@
 
 					// place
 					this.$box.insertAfter(this.$element).append(this.$editor).append(this.$element);
-                    this.$editor.addClass('redactor-layer');
 
-					if (this.opts.overrideStyles)
-					{
-					    this.$editor.addClass('redactor-styles');
-					}
+                    this.build.setStartAttrs();
+
+                    // styles
+                    this.$editor.addClass('redactor-layer');
+                    if (this.opts.overrideStyles) this.$editor.addClass('redactor-styles');
 
 					this.$element.hide();
 
 					this.$box.prepend('<span class="redactor-voice-label" id="redactor-voice-' + this.uuid +'" aria-hidden="false">' + this.lang.get('accessibility-help-label') + '</span>');
-					this.$editor.attr({ 'aria-labelledby': 'redactor-voice-' + this.uuid, 'role': 'presentation' });
+
+				},
+				setStartAttrs: function()
+				{
+                    this.$editor.attr({ 'aria-labelledby': 'redactor-voice-' + this.uuid, 'role': 'presentation' });
 				},
 				startTextarea: function()
 				{
@@ -1340,6 +1357,12 @@
 					if (this.opts.structure)
 					{
 						this.core.editor().addClass('redactor-structure');
+					}
+
+					// styles class
+					if (this.opts.stylesClass)
+					{
+						this.core.editor().addClass(this.opts.stylesClass);
 					}
 
 					// options sets only in textarea mode
@@ -3084,7 +3107,7 @@
                     	{
                     		if (link.href)
                     		{
-                    			var tmp = '##%a href="' + link.href + '"';
+                    			var tmp = '##%%a href="' + link.href + '"';
                     			var attr;
                     			for (var j = 0, length = link.attributes.length; j < length; j++)
                     			{
@@ -3095,7 +3118,7 @@
                     				}
                     			}
 
-                    			link.outerHTML = tmp + '%##' + link.innerHTML + '##%/a%##';
+                    			link.outerHTML = tmp + '%%##' + link.innerHTML + '##%%/a%##';
                     		}
                     	});
                     }
@@ -3105,7 +3128,7 @@
                     // images
 					if (data.images && this.opts.pasteImages)
 					{
-						html = html.replace(/<img(.*?)src="(.*?)"(.*?[^>])>/gi, '##%img$1src="$2"$3%##');
+						html = html.replace(/<img(.*?)src="(.*?)"(.*?[^>])>/gi, '##%%img$1src="$2"$3%%##');
 					}
 
 					// plain text
@@ -3156,8 +3179,8 @@
 					// links & images
 					if ((data.links && this.opts.pasteLinks) || (data.images && this.opts.pasteImages))
 					{
-						html = html.replace(new RegExp('##%', 'gi'), '<');
-						html = html.replace(new RegExp('%##', 'gi'), '>');
+						html = html.replace(new RegExp('##%%', 'gi'), '<');
+						html = html.replace(new RegExp('%%##', 'gi'), '>');
                     }
 
 					// plain text
@@ -4325,6 +4348,7 @@
 					if (((this.opts.type === 'textarea' || this.opts.type === 'div')
 					    && (!this.detect.isFirefox() && mutation.target === this.core.editor()[0]))
 					    || (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0])
+					    || (mutation.attributeName == 'data-vivaldi-spatnav-clickable')
                     )
 					{
 						stop = true;
@@ -6201,7 +6225,10 @@
 							});
 
 							html = $div.html();
+							html = $.parseHTML(html);
+
 							endNode = $(html).last();
+
 
 						}
 
@@ -7762,7 +7789,10 @@
 					// url
 					else if (link.url.search('#') !== 0)
 					{
-						link.url = this.link.isUrl(link.url);
+    					if (this.opts.linkValidation)
+    					{
+						    link.url = this.link.isUrl(link.url);
+						}
 					}
 
 					// empty url or text or isn't url
@@ -9385,7 +9415,7 @@
 					}
 
 					// Firefox Clipboard Observe
-					if (this.detect.isFirefox() && this.opts.clipboardImageUpload)
+					if (this.detect.isFirefox() && this.opts.imageUpload && this.opts.clipboardImageUpload)
 					{
 						setTimeout($.proxy(this.paste.clipboardUpload, this), 100);
 					}
