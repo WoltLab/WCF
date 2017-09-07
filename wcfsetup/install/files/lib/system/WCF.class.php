@@ -47,7 +47,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.1.0 Alpha 2');
+define('WCF_VERSION', '3.1.0 Alpha 3');
 
 // define current unix timestamp
 define('TIME_NOW', time());
