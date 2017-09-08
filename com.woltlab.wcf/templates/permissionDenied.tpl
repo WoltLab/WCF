@@ -5,7 +5,7 @@
 
 <div class="section">
 	{if $message|isset}
-		<p>{$message}</p>
+		<p>{@$message}</p>
 	{else}
 		<p>{lang}wcf.page.error.permissionDenied{/lang}</p>
 	{/if}
