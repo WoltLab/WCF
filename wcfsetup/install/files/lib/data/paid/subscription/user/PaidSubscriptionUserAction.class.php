@@ -133,12 +133,28 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
+		$userIDs = [];
 		foreach ($this->getObjects() as $subscriptionUser) {
+			$userIDs[] = $subscriptionUser->userID;
 			$subscriptionUser->update(['isActive' => 0]);
 			
 			// update group memberships
 			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'removeGroupMemberships');
 			$action->executeAction();
+		}
+		
+		if (!empty($userIDs)) {
+			$userIDs = array_unique($userIDs);
+			
+			$subscriptionUserList = new PaidSubscriptionUserList();
+			$subscriptionUserList->getConditionBuilder()->add('isActive = ?', [1]);
+			$subscriptionUserList->getConditionBuilder()->add('userID IN (?)', [$userIDs]);
+			$subscriptionUserList->readObjects();
+			
+			if (count($subscriptionUserList->getObjects())) {
+				$action = new PaidSubscriptionUserAction($subscriptionUserList->getObjects(), 'addGroupMemberships');
+				$action->executeAction();
+			}
 		}
 	}
 	
