@@ -5,8 +5,46 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 	
 	return {
 		init: function () {
+			var selection = window.getSelection();
+			
 			var mpInit = this.keydown.init;
 			this.keydown.init = (function (e) {
+				var node;
+				
+				// remove empty whitespaces in front of an <img> when backspacing in Firefox
+				if (this.detect.isFirefox() && selection.isCollapsed && e.which === this.keyCode.BACKSPACE) {
+					node = selection.anchorNode;
+					if (node.nodeType === Node.ELEMENT_NODE && selection.anchorOffset > 0) {
+						node = node.childNodes[selection.anchorOffset];
+					}
+					
+					if (node.nodeType === Node.TEXT_NODE && node.textContent === '\u200B') {
+						var emptyNodes = [];
+						var sibling = node;
+						while (sibling = sibling.previousSibling) {
+							if (sibling.nodeType === Node.ELEMENT_NODE) {
+								if (sibling.nodeName !== 'IMG') emptyNodes = [];
+								
+								break;
+							}
+							else if (sibling.nodeType === Node.TEXT_NODE) {
+								var text = sibling.textContent;
+								if (text === '' || text === '\u200B') {
+									emptyNodes.push(sibling);
+								}
+								else {
+									emptyNodes = [];
+									break;
+								}
+							}
+						}
+						
+						if (emptyNodes.length) {
+							emptyNodes.forEach(elRemove);
+						}
+					}
+				}
+				
 				var returnValue = mpInit.call(this, e);
 				
 				if (returnValue !== false && !e.originalEvent.defaultPrevented) {
@@ -14,7 +52,6 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					
 					// 39 == right
 					if (e.which === 39 && !e.ctrlKey && !e.shiftKey && !e.metaKey && !e.altKey) {
-						var selection = window.getSelection();
 						if (!selection.isCollapsed) {
 							return;
 						}
@@ -33,7 +70,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						
 						// check if there is absolutely nothing afterwards
 						var isAtTheVeryEnd = true;
-						var node = parent;
+						node = parent;
 						while (node && node !== this.core.editor()[0]) {
 							if (node.nextSibling !== null) {
 								// strip empty text nodes
