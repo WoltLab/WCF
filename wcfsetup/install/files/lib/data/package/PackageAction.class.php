@@ -95,7 +95,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 			];
 		}
 		
-		$request = new HTTPRequest('https://api.woltlab.com/1.0/customer/purchases/list.json', [
+		$request = new HTTPRequest('https://api.woltlab.com/1.1/customer/purchases/list.json', [
 			'method' => 'POST'
 		], [
 			'username' => $this->parameters['username'],
