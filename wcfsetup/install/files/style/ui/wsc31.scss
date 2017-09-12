@@ -29,8 +29,14 @@
 			padding: 10px;
 		}
 		
-		.section {
+		> .section:first-child {
 			margin-top: 0;
+		}
+		
+		.section {
+			&:not(:first-child) {
+				margin-top: 0;
+			}
 			
 			& + .section {
 				margin-top: 40px;
