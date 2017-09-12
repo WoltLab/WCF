@@ -204,28 +204,14 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}).bind(this));
 				}
 				
-				// fix selection marker
-				/*
-				elBySelAll('.redactor-selection-marker', div, elRemove);
-				div.appendChild(elCreate('woltlab-selection-marker'));
-				*/
-				
 				mpInsert.call(this, div.innerHTML, data);
 				
-				/*
-				var marker = elBySel('woltlab-selection-marker', this.$editor[0]);
-				if (marker) {
-					var range = document.createRange();
-					range.setStartBefore(marker);
-					range.setEndBefore(marker);
-					
-					var selection = window.getSelection();
-					selection.removeAllRanges();
-					selection.addRange(range);
-					
-					elRemove(marker);
+				// check if the caret is now inside an <a> element, but at
+				// the very last position
+				var selection = window.getSelection();
+				if (selection.rangeCount && selection.anchorNode.nodeName === 'A' && selection.anchorOffset === selection.anchorNode.childNodes.length) {
+					this.caret.after(selection.anchorNode);
 				}
-				*/
 				
 				if (pastedImages.length) {
 					window.setTimeout((function () {

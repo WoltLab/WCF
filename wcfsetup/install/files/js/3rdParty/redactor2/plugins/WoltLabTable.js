@@ -6,6 +6,15 @@ $.Redactor.prototype.WoltLabTable = function() {
 			this.WoltLabEvent.register('insertedTable', (function() {
 				window.setTimeout((function () {
 					var table = this.selection.block() || this.selection.current();
+					
+					// Safari sends the caret on a journey
+					if (table === this.$editor[0]) {
+						var selection = window.getSelection();
+						if (selection.isCollapsed && selection.anchorNode === this.$editor[0] && selection.anchorOffset > 0) {
+							table = selection.anchorNode.childNodes[selection.anchorOffset - 1];
+						}
+					}
+					
 					if (table.nodeName === 'TBODY') table = table.parentNode;
 					if (table.nodeName === 'TABLE') {
 						// remove whitespaces directly inside the table element

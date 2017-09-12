@@ -33,7 +33,7 @@ $.Redactor.prototype.WoltLabInlineCode = function() {
 					}
 					
 					// fix selection position
-					if (node.innerHTML === '\u200B') {
+					/*if (node.innerHTML === '\u200B') {
 						// the caret must be at offset 0 (before the whitespace)
 						var range = selection.getRangeAt(0);
 						if (range.collapsed && range.startOffset === 1) {
@@ -41,7 +41,7 @@ $.Redactor.prototype.WoltLabInlineCode = function() {
 							
 							this.selection.restore();
 						}
-					}
+					}*/
 					
 					return;
 				}
