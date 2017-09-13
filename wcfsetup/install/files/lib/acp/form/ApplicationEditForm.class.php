@@ -183,7 +183,7 @@ class ApplicationEditForm extends AbstractForm {
 			if (!$page->pageID) {
 				throw new UserInputException('landingPageID');
 			}
-			else if ($page->requireObjectID || $page->excludeFromLandingPage) {
+			else if ($page->requireObjectID || $page->excludeFromLandingPage || $page->isDisabled) {
 				throw new UserInputException('landingPageID', 'invalid');
 			}
 		}

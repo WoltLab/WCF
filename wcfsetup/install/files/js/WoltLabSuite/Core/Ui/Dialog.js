@@ -353,12 +353,12 @@ define(
 					if (clientHeight < scrollHeight) {
 						scrollTop = element.scrollTop;
 						
-						// positive value: scrolling up
-						if (event.wheelDelta > 0 && scrollTop > 0) {
+						// negative value: scrolling up
+						if (event.deltaY < 0 && scrollTop > 0) {
 							allowScroll = true;
 							break;
 						}
-						else if (event.wheelDelta < 0 && (scrollTop + clientHeight < scrollHeight)) {
+						else if (event.deltaY > 0 && (scrollTop + clientHeight < scrollHeight)) {
 							allowScroll = true;
 							break;
 						}

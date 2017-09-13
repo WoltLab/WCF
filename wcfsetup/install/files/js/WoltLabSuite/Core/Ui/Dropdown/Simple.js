@@ -104,11 +104,11 @@ define(
 						if (menuHeight === null) menuHeight = menu.clientHeight;
 						if (menuRealHeight === null) menuRealHeight = menu.scrollHeight;
 						
-						// positive value: scrolling up
-						if (event.wheelDelta > 0 && menu.scrollTop === 0) {
+						// negative value: scrolling up
+						if (event.deltaY < 0 && menu.scrollTop === 0) {
 							event.preventDefault();
 						}
-						else if (event.wheelDelta < 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
+						else if (event.deltaY > 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
 							event.preventDefault();
 						}
 					});
