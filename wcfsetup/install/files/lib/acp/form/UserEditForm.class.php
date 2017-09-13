@@ -61,9 +61,9 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the ban expires
-	 * @var	string
+	 * @var	integer
 	 */
-	public $banExpires = '';
+	public $banExpires = 0;
 	
 	/**
 	 * user avatar object
@@ -91,9 +91,9 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the avatar will be enabled again
-	 * @var	string
+	 * @var	integer
 	 */
-	public $disableAvatarExpires = '';
+	public $disableAvatarExpires = 0;
 	
 	/**
 	 * @inheritDoc
@@ -133,10 +133,7 @@ class UserEditForm extends UserAddForm {
 		if (!empty($_POST['banned'])) $this->banned = 1;
 		if (isset($_POST['banReason'])) $this->banReason = StringUtil::trim($_POST['banReason']);
 		if ($this->banned && !isset($_POST['banNeverExpires'])) {
-			if (isset($_POST['banExpires'])) $this->banExpires = StringUtil::trim($_POST['banExpires']);
-		}
-		else {
-			$this->banExpires = '';
+			if (isset($_POST['banExpires'])) $this->banExpires = @strtotime(StringUtil::trim($_POST['banExpires']));
 		}
 		
 		if (isset($_POST['avatarType'])) $this->avatarType = $_POST['avatarType'];
@@ -145,10 +142,7 @@ class UserEditForm extends UserAddForm {
 			if (!empty($_POST['disableAvatar'])) $this->disableAvatar = 1;
 			if (isset($_POST['disableAvatarReason'])) $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
 			if ($this->disableAvatar && !isset($_POST['disableAvatarNeverExpires'])) {
-				if (isset($_POST['disableAvatarExpires'])) $this->disableAvatarExpires = StringUtil::trim($_POST['disableAvatarExpires']);
-			}
-			else {
-				$this->disableAvatarExpires = '';
+				if (isset($_POST['disableAvatarExpires'])) $this->disableAvatarExpires = @strtotime(StringUtil::trim($_POST['disableAvatarExpires']));
 			}
 		}
 	}
@@ -297,13 +291,6 @@ class UserEditForm extends UserAddForm {
 
 		// handle ban
 		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
-			if ($this->banExpires) {
-				$this->banExpires = strtotime($this->banExpires);
-			}
-			else {
-				$this->banExpires = 0;
-			}
-			
 			$data['data']['banned'] = $this->banned;
 			$data['data']['banReason'] = $this->banReason;
 			$data['data']['banExpires'] = $this->banExpires;
@@ -311,13 +298,6 @@ class UserEditForm extends UserAddForm {
 		
 		// handle disabled signature
 		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
-			if ($this->disableSignatureExpires) {
-				$this->disableSignatureExpires = strtotime($this->disableSignatureExpires);
-			}
-			else {
-				$this->disableSignatureExpires = 0;
-			}
-			
 			$data['data']['disableSignature'] = $this->disableSignature;
 			$data['data']['disableSignatureReason'] = $this->disableSignatureReason;
 			$data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
@@ -325,13 +305,6 @@ class UserEditForm extends UserAddForm {
 		
 		// handle disabled avatar
 		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
-			if ($this->disableAvatarExpires) {
-				$this->disableAvatarExpires = strtotime($this->disableAvatarExpires);
-			}
-			else {
-				$this->disableAvatarExpires = 0;
-			}
-			
 			$data['data']['disableAvatar'] = $this->disableAvatar;
 			$data['data']['disableAvatarReason'] = $this->disableAvatarReason;
 			$data['data']['disableAvatarExpires'] = $this->disableAvatarExpires;
