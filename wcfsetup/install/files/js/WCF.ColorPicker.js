@@ -156,7 +156,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._oldColor.css({backgroundColor: 'rgba(' + $rgb.r + ', ' + $rgb.g + ', ' + $rgb.b + ', ' + (this._rgba.a.val() / 100) + ')'});
 			
 			this._dialog.wcfDialog({
-				'title': WCF.Language.get('wcf.style.colorPicker')
+				backdropCloseOnClick: false,
+				title: WCF.Language.get('wcf.style.colorPicker')
 			});
 			
 			// set default focus
