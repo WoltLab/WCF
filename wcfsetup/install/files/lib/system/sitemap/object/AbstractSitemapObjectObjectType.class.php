@@ -40,4 +40,11 @@ abstract class AbstractSitemapObjectObjectType implements ISitemapObjectObjectTy
 	public function canView(DatabaseObject $object) {
 		return true;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAvailableType() {
+		return true; 
+	}
 }

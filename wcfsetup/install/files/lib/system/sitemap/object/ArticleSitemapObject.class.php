@@ -27,4 +27,11 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType {
 		/** @var $object ArticleContent */
 		return $object->getArticle()->canRead();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAvailableType() {
+		return MODULE_ARTICLE;
+	}
 }

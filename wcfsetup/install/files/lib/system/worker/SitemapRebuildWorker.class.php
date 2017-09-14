@@ -62,34 +62,43 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * @inheritDoc
 	 */
 	protected function countObjects() {
-		if ($this->count === null) {
-			// reset count
-			$this->count = 0;
-			
-			// read sitemaps
-			$sitemapObjects = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
-			foreach ($sitemapObjects as $sitemapObject) {
-				if ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled) {
-					$this->sitemapObjects[] = $sitemapObject;
-					
+		// changes session owner to 'System' during the building of sitemaps
+		$this->changeUserToGuest();
+		
+		try {
+			if ($this->count === null) {
+				// reset count
+				$this->count = 0;
+				
+				// read sitemaps
+				$sitemapObjects = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
+				foreach ($sitemapObjects as $sitemapObject) {
 					$processor = $sitemapObject->getProcessor();
 					
-					$list = $processor->getObjectList();
-					
-					if (!($list instanceof DatabaseObjectList)) {
-						throw new ParentClassException(get_class($list), DatabaseObjectList::class);
+					if ($processor->isAvailableType() && ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled)) {
+						$this->sitemapObjects[] = $sitemapObject;
+						
+						$list = $processor->getObjectList();
+						
+						if (!($list instanceof DatabaseObjectList)) {
+							throw new ParentClassException(get_class($list), DatabaseObjectList::class);
+						}
+						
+						if (SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
+							$list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
+								TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400 // one day (60 * 60 * 24)
+							]);
+						}
+						
+						// modify count, because we handle only one sitemap object per call
+						$this->count += max(1, ceil($list->countObjects() / $this->limit)) * $this->limit;
 					}
-					
-					if (SITEMAP_INDEX_TIME_FRAME > 0 && $processor->getLastModifiedColumn() !== null) {
-						$list->getConditionBuilder()->add($processor->getLastModifiedColumn() . " > ?", [
-							TIME_NOW - SITEMAP_INDEX_TIME_FRAME * 86400 // one day (60 * 60 * 24)
-						]);
-					}
-					
-					// modify count, because we handle only one sitemap object per call
-					$this->count += max(1, ceil($list->countObjects() / $this->limit)) * $this->limit;
 				}
 			}
+		}
+		finally {
+			// change session owner back to the actual user
+			$this->changeToActualUser();
 		}
 	}
 	

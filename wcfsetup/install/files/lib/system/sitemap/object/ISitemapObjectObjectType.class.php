@@ -49,4 +49,11 @@ interface ISitemapObjectObjectType {
 	 * @return 	boolean
 	 */
 	public function canView(DatabaseObject $object);
+	
+	/**
+	 * Checks the requirements (e.g. module options) for this object type.
+	 *
+	 * @return 	boolean
+	 */
+	public function isAvailableType(); 
 }
