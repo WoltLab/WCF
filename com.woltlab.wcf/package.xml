@@ -19,7 +19,9 @@
 		<instruction type="acpMenu" />
 		<instruction type="userGroupOption" />
 		<instruction type="option" />
-		<instruction type="template" />
+		
+		<instruction type="template" run="standalone" />
+		
 		<instruction type="eventListener" />
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob" />
@@ -29,7 +31,9 @@
 		<instruction type="objectType" />
 		<instruction type="acpSearchProvider" />
 		<instruction type="style">defaultStyle.tar</instruction>
-		<instruction type="userOption" />
+		
+		<instruction type="userOption" run="standalone" />
+		
 		<instruction type="bbcode" />
 		<instruction type="smiley" />
 		<instruction type="userProfileMenu" />
