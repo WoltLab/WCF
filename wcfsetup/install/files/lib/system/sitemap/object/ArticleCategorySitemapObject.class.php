@@ -40,4 +40,11 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType {
 		/** @var $object ArticleCategory */
 		return $object->isAccessible();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAvailableType() {
+		return MODULE_ARTICLE;
+	}
 }
