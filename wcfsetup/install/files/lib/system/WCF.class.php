@@ -726,8 +726,13 @@ class WCF {
 		}
 		
 		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
-		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
-		EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
+		
+		// the template engine may not be available yet, usually happens when
+		// changing the user (and thus the language id) during session init
+		if (self::$tplObj !== null) {
+			self::getTPL()->setLanguageID(self::getLanguage()->languageID);
+			EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
+		}
 	}
 	
 	/**

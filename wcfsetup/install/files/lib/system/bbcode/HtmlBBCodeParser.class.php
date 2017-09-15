@@ -231,11 +231,13 @@ class HtmlBBCodeParser extends BBCodeParser {
 				if ($openingTag && $openingTag['name'] == $tag['name']) {
 					$hideBuffer = false;
 					// insert buffered content as attribute value
-					foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-						if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
-							$openingTag['attributes'][$attribute->attributeNo] = $buffer;
-							$hideBuffer = true;
-							break;
+					if (!empty($buffer)) {
+						foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
+							if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
+								$openingTag['attributes'][$attribute->attributeNo] = $buffer;
+								$hideBuffer = true;
+								break;
+							}
 						}
 					}
 					
@@ -243,7 +245,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 					if ($this->isValidTag($openingTag)) {
 						if ($this->bbcodes[$tag['name']]->className) {
 							// difference to the original implementation: use the custom HTML element than to process them directly
-							$parsedTag = $this->compileTag($openingTag, $buffer, $tag);
+							$parsedTag = $this->compileTag($openingTag, ($hideBuffer ? '' : $buffer), $tag);
 						}
 						else {
 							// build tag
