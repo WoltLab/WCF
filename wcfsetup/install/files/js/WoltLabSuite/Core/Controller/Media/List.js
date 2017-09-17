@@ -52,6 +52,7 @@ define([
 			});
 			
 			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
+			EventHandler.add('com.woltlab.wcf.media.upload', 'removedErroneousUploadRow', this._deleteCallback.bind(this));
 			
 			var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
 			deleteAction.setCallback(this._deleteCallback);
@@ -87,10 +88,16 @@ define([
 		/**
 		 * Is triggered after media files have been deleted using the delete icon.
 		 * 
-		 * @param	{array<int>}	objectId
+		 * @param	{int[]?}	objectIds
 		 */
-		_deleteCallback: function(objectId) {
-			if (objectId.length === elByTag('tr', _tableBody).length) {
+		_deleteCallback: function(objectIds) {
+			var tableRowCount = elByTag('tr', _tableBody).length;
+			if (objectIds.length === undefined) {
+				if (!tableRowCount) {
+					window.location.reload();
+				}
+			}
+			else if (objectIds.length === tableRowCount) {
 				// table is empty, reload page
 				window.location.reload();
 			}

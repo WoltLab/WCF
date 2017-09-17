@@ -281,6 +281,8 @@ define(
 						elAttr(fileIcon, 'title', Language.get('wcf.global.button.delete'));
 						fileIcon.addEventListener(WCF_CLICK_EVENT, function (event) {
 							elRemove(event.currentTarget.parentNode.parentNode.parentNode);
+							
+							EventHandler.fire('com.woltlab.wcf.media.upload', 'removedErroneousUploadRow');
 						});
 						
 						file.classList.add('uploadFailed');
