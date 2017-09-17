@@ -2994,6 +2994,7 @@ Errors are:
 		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
+		<item name="wcf.media.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[The file has been successfully uploaded.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Upload Date]]></item>
