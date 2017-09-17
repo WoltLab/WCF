@@ -54,6 +54,7 @@ define(
 		 */
 		_success: function(uploadId, data) {
 			var icon = DomTraverse.childByClass(this._button, 'icon');
+			elData(icon, 'add-spinner', false);
 			icon.classList.remove('fa-spinner');
 			icon.classList.add('fa-upload');
 			
@@ -88,15 +89,18 @@ define(
 		},
 		
 		/**
-		 * @see	WoltLabSuite/Core/Upload#_success
+		 * @see	WoltLabSuite/Core/Upload#_upload
 		 */
 		_upload: function(event, file, blob) {
 			var uploadId = MediaListUpload._super.prototype._upload.call(this, event, file, blob);
 			
 			var icon = DomTraverse.childByClass(this._button, 'icon');
+			elData(icon, 'add-spinner', true);
 			window.setTimeout(function() {
-				icon.classList.remove('fa-upload');
-				icon.classList.add('fa-spinner');
+				if (elDataBool(icon, 'add-spinner')) {
+					icon.classList.remove('fa-upload');
+					icon.classList.add('fa-spinner');
+				}
 			}, 500);
 			
 			return uploadId;
