@@ -2663,6 +2663,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
+		<item name="wcf.media.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
