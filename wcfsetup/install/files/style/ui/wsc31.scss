@@ -189,4 +189,22 @@
 			}
 		}
 	}
+	.userMention {
+		color: $wcfSidebarLink;
+		
+		&:hover {
+			color: $wcfSidebarLinkActive;
+		}
+	}
+	.boxesSidebarLeft .box,
+	.boxesSidebarRight .box {
+		&.boxError,
+		&.boxInfo,
+		&.boxSuccess,
+		&.boxWarning {
+			.boxTitle {
+				color: inherit;
+			}
+		}
+	}
 }
