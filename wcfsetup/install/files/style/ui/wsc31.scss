@@ -179,11 +179,7 @@
 	}
 	.messageReduced  {
 		.messageTitle a {
-			color: $wcfSidebarLink;
-			
-			&:hover {
-				color: $wcfSidebarDimmedLinkActive;
-			}
+			color: $wcfSidebarText;
 		}
 		
 		.messageHeaderMetaData {
