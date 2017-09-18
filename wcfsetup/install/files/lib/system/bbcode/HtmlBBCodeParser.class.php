@@ -235,6 +235,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 						foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
 							if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
 								$openingTag['attributes'][$attribute->attributeNo] = $buffer;
+								$openingTag['useText'] = $attribute->attributeNo;
 								$hideBuffer = true;
 								break;
 							}
@@ -428,6 +429,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 			
 			// uses base64 encoding to avoid an "escape" nightmare
 			$attributes = ' data-attributes="' . base64_encode(JSON::encode($tag['attributes'])) . '"';
+			
+			if (isset($tag['useText'])) {
+				$attributes .= ' data-use-text="' . $tag['useText'] . '"';
+			}
 		}
 		
 		return '<woltlab-metacode-marker data-name="' . $name . '" data-uuid="' . $uuid . '" data-source="' . base64_encode($tag['source']) . '"' . $attributes . ' />';
