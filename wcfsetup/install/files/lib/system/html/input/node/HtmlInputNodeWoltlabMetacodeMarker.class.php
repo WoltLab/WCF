@@ -195,6 +195,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				$pairs[$uuid]['name'] = $name;
 				$pairs[$uuid]['open'] = $element;
 				$pairs[$uuid]['openSource'] = $source;
+				$pairs[$uuid]['useText'] = ($element->hasAttribute('data-use-text')) ? $element->getAttribute('data-use-text') : false;
 			}
 			else {
 				$pairs[$uuid]['close'] = $element;
@@ -249,7 +250,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				'close' => $data['close'],
 				'closeSource' => $data['closeSource'],
 				'open' => $data['open'],
-				'openSource' => $data['openSource']
+				'openSource' => $data['openSource'],
+				'useText' => $data['useText']
 			];
 		}
 		
@@ -526,8 +528,13 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		/** @var \DOMElement $end */
 		$end = $pair['close'];
 		
-		$attributes = isset($pair['attributes']) ? $pair['attributes'] : '';
-		$textNode = $start->ownerDocument->createTextNode($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
+		$attributes = isset($pair['attributes']) ? $pair['attributes'] : [];
+		$content = '';
+		if (isset($pair['useText']) && isset($attributes[$pair['useText']])) {
+			$content = array_splice($attributes, $pair['useText'])[0];
+		}
+		
+		$textNode = $start->ownerDocument->createTextNode(($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true)) . $content);
 		DOMUtil::insertBefore($textNode, $start);
 		DOMUtil::removeNode($start);
 		

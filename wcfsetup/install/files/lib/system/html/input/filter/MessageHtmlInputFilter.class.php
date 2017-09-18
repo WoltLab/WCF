@@ -108,6 +108,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 			'data-attributes' => 'Text',
 			'data-name' => 'Text',
 			'data-source' => 'Text',
+			'data-use-text' => 'Text',
 			'data-uuid' => 'Text'
 		]);
 		
