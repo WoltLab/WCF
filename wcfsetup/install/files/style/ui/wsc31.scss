@@ -164,4 +164,33 @@
 			border-bottom-color: $wcfStatusErrorBackground;
 		}
 	}
+	
+	// adjust color values to account for a significant darker sidebar background
+	.interactiveDropdownHeader .icon {
+		color: inherit;
+	}
+	.sidebar,
+	.messageSidebar {
+		dl:not(.plain) > dt,
+		dl.dataList > dt,
+		.separatorLeft::before {
+			color: $wcfSidebarDimmedText;
+		}
+	}
+	.messageReduced  {
+		.messageTitle a {
+			color: $wcfSidebarLink;
+			
+			&:hover {
+				color: $wcfSidebarDimmedLinkActive;
+			}
+		}
+		
+		.messageHeaderMetaData {
+			.messagePublicationTime,
+			> li:not(:last-child)::after {
+				color: $wcfSidebarDimmedText;
+			}
+		}
+	}
 }
