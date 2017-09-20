@@ -28,6 +28,10 @@
 			<div class="layoutBoundary">
 				<div class="boxContainer">
 					{content}
+						{if !$boxesHero|empty}
+							{@$boxesHero}
+						{/if}
+
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('hero') item=box}
 							{@$box->render()}
 						{/foreach}
