@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use TrueBV\Punycode;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
 
@@ -34,6 +35,28 @@ class Mailbox {
 	 * @throws	\DomainException
 	 */
 	public function __construct($address, $name = null, Language $language = null) {
+		// There could be multiple at-signs, but only in the localpart:
+		//   Search for the last one.
+		$atSign = strrpos($address, '@');
+		if ($atSign === false) {
+			throw new \DomainException("The given email address '".$address."' does not contain an '@'.");
+		}
+		$localpart = substr($address, 0, $atSign);
+		$domain = substr($address, $atSign + 1);
+		
+		// We don't support SMTPUTF8
+		for ($i = 0; $i < $atSign; $i++) {
+			if (ord($localpart{$i}) & 0b10000000) {
+				throw new \DomainException("The localpart of the given email address '".$address."' contains 8-bit characters.");
+			}
+		}
+		
+		// punycode the domain ...
+		$domain = (new Punycode())->encode($domain);
+		
+		// ... and rebuild address.
+		$address = $localpart.'@'.$domain;
+		
 		if (!preg_match('(^'.EmailGrammar::getGrammar('addr-spec').'$)', $address)) {
 			throw new \DomainException("The given email address '".$address."' is invalid.");
 		}
