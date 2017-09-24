@@ -7,6 +7,7 @@
         "ezyang/htmlpurifier": "4.9.*",
         "erusev/parsedown": "1.6.*",
         "pelago/emogrifier": "1.1.*",
-        "chrisjean/php-ico": "1.0.*"
+        "chrisjean/php-ico": "1.0.*",
+        "true/punycode": "~2.0"
     }
 }
