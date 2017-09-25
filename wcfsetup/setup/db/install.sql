@@ -872,6 +872,13 @@ CREATE TABLE wcf1_package (
 	KEY package (package)
 );
 
+DROP TABLE IF EXISTS wcf1_package_compatibility;
+CREATE TABLE wcf1_package_compatibility (
+	packageID INT(10) NOT NULL,
+	version SMALLINT(4) NOT NULL,
+	UNIQUE KEY compatibleVersion (packageID, version)
+);
+
 DROP TABLE IF EXISTS wcf1_package_exclusion;
 CREATE TABLE wcf1_package_exclusion (
 	packageID INT(10) NOT NULL,
@@ -954,6 +961,13 @@ CREATE TABLE wcf1_package_update (
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	pluginStoreFileID INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
+);
+
+DROP TABLE IF EXISTS wcf1_package_update_compatibility;
+CREATE TABLE wcf1_package_update_compatibility (
+	packageUpdateVersionID INT(10) NOT NULL,
+	version SMALLINT(4) NOT NULL,
+	UNIQUE KEY compatibleVersion (packageUpdateVersionID, version)
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_exclusion;
@@ -1886,6 +1900,8 @@ ALTER TABLE wcf1_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE wcf1_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_package_compatibility ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_package_exclusion ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_installation_file_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -1907,6 +1923,8 @@ ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (packageID) REFERENCES wcf1
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update ADD FOREIGN KEY (packageUpdateServerID) REFERENCES wcf1_package_update_server (packageUpdateServerID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_package_update_compatibility ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_exclusion ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
@@ -2136,7 +2154,9 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 
 -- default update servers
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualScss', '');

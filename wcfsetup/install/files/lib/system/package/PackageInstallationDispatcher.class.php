@@ -436,6 +436,21 @@ class PackageInstallationDispatcher {
 			}
 		}
 		
+		// save compatible versions
+		if (!empty($this->getArchive()->getCompatibleVersions())) {
+			$sql = "INSERT INTO     wcf".WCF_N."_package_compatibility
+						(packageID, version)
+				VALUES          (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->getArchive()->getCompatibleVersions() as $version) {
+				$statement->execute([
+					$this->queue->packageID,
+					$version
+				]);
+			}
+		}
+		
 		// insert requirements and dependencies
 		$requirements = $this->getArchive()->getAllExistingRequirements();
 		if (!empty($requirements)) {

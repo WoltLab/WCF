@@ -76,7 +76,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	 */
 	protected function setAttributeDefinitions(\HTMLPurifier_Config $config) {
 		$definition = $config->getHTMLDefinition(true);
-		
+		wcfDebug($config->get('HTML.AllowedAttributes'));
 		// code
 		$definition->addAttribute('pre', 'data-file', 'Text');
 		$definition->addAttribute('pre', 'data-line', 'Number');

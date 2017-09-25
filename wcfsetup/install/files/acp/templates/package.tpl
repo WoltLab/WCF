@@ -82,6 +82,18 @@
 					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$_storeUrl|rawurlencode}" class="externalURL">{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
 				</dl>
 			{/if}
+			{if $package->packageID != 1}
+				<dl>
+					<dt>{lang}wcf.acp.package.apiVersions{/lang}</dt>
+					<dd>
+						{if $compatibleVersions|empty}
+							<small>{lang}wcf.acp.package.apiVersions.missing{/lang}</small>
+						{else}
+							{implode from=$compatibleVersions item=version glue=', '}{$version}{/implode}
+						{/if}
+					</dd>
+				</dl>
+			{/if}
 			
 			{event name='propertyFields'}
 		</div>

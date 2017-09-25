@@ -674,7 +674,8 @@
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
-		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[WoltLab Suite&trade; Version]]></item>
+		<item name="wcf.acp.index.system.software.apiVersion"><![CDATA[WoltLab Suite&trade; API-version]]></item>
+		<item name="wcf.acp.index.system.software.legacyApiVersions"><![CDATA[Older, still supported, API-versions]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Operating System]]></item>
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Web Server]]></item>
@@ -1443,6 +1444,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 	</category>
 	
 	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.apiVersions"><![CDATA[Supported WoltLab Suite&trade; API-versions]]></item>
+		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[This package does not provide any compatibility data.]]></item>
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Developer]]></item>
@@ -1571,6 +1574,9 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package {if $package === null}“{$packageName}”{else}“{$package}”{/if} in version “{$packageVersion}” or higher, {if $package === null}but it is neither installed nor shipped.{else}but only version “{$package->packageVersion}” is installed.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[The package “{lang}{$packageName}{/lang}” is already installed in version “{$packageVersion}”.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[The API version  API-Version “{$version}” is invalid.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[This package was created for {if $isOlderVersion}an older{else}a newer{/if} version of WoltLab Suite and is not compatible.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[This package does not contain any data on API compatibility, the installation is prevented while the developer tools are enabled.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
 	</category>
 	

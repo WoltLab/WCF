@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * list of excluded packages grouped by package
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	protected static $excludedPackages = [];
 	
@@ -25,7 +25,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * package archive object
 	 * @var	PackageArchive
 	 */
-	protected $archive = null;
+	protected $archive;
 	
 	/**
 	 * list of direct requirements delivered by this package
@@ -43,19 +43,19 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * exception occurred during validation
 	 * @var	\Exception
 	 */
-	protected $exception = null;
+	protected $exception;
 	
 	/**
 	 * associated package object
 	 * @var	Package
 	 */
-	protected $package = null;
+	protected $package;
 	
 	/**
 	 * parent package validation archive object
 	 * @var	PackageValidationArchive
 	 */
-	protected $parent = null;
+	protected $parent;
 	
 	/**
 	 * children pointer
@@ -196,6 +196,29 @@ class PackageValidationArchive implements \RecursiveIterator {
 				'packageVersion' => $package->packageVersion,
 				'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
 			]);
+		}
+		
+		// check if this package exposes compatible api versions
+		$compatibleVersions = $this->archive->getCompatibleVersions();
+		if (!empty($compatibleVersions)) {
+			$isCompatible = $isOlderVersion = false;
+			foreach ($compatibleVersions as $version) {
+				if (WCF::isSupportedApiVersion($version)) {
+					$isCompatible = true;
+					break;
+				}
+				else if ($version < WSC_API_VERSION) {
+					$isOlderVersion = true;
+				}
+			}
+			
+			if (!$isCompatible) {
+				
+				throw new PackageValidationException(PackageValidationException::INCOMPATIBLE_API_VERSION, ['isOlderVersion' => $isOlderVersion]);
+			}
+		}
+		else if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+			throw new PackageValidationException(PackageValidationException::MISSING_API_VERSION);
 		}
 		
 		// package is not installed yet

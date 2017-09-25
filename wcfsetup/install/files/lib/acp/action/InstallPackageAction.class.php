@@ -30,13 +30,13 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * PackageInstallationDispatcher object
 	 * @var	PackageInstallationDispatcher
 	 */
-	public $installation = null;
+	public $installation;
 	
 	/**
 	 * PackageInstallationQueue object
 	 * @var	PackageInstallationQueue
 	 */
-	public $queue = null;
+	public $queue;
 	
 	/**
 	 * current queue id

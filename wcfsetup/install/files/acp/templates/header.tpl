@@ -30,6 +30,7 @@
 		var URL_LEGACY_MODE = false;
 		var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
 		var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
+		var WSC_API_VERSION = {@WSC_API_VERSION};
 		
 		{* This constant is a compiler option, it does not exist in production. *}
 		{* Unlike the frontend, this option must be defined in the ACP at all times. *}

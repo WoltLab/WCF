@@ -20,6 +20,12 @@ class PackagePage extends AbstractPage {
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
+	 * list of compatible API versions
+	 * @var integer[]
+	 */
+	public $compatibleVersions = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
@@ -68,6 +74,20 @@ class PackagePage extends AbstractPage {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->package->package]);
 		$this->pluginStoreFileID = intval($statement->fetchSingleColumn());
+		
+		$sql = "SELECT          version
+			FROM            wcf".WCF_N."_package_compatibility
+			WHERE           packageID = ?
+					AND version >= ?
+			ORDER BY        version";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->package->packageID,
+			WSC_API_VERSION
+		]);
+		while ($version = $statement->fetchColumn()) {
+			$this->compatibleVersions[] = $version;
+		}
 	}
 	
 	/**
@@ -77,6 +97,7 @@ class PackagePage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'compatibleVersions' => $this->compatibleVersions,
 			'package' => $this->package,
 			'pluginStoreFileID' => $this->pluginStoreFileID
 		]);
