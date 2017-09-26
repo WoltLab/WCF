@@ -152,6 +152,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 					setup: this.WoltLabButton._setupToggleButton.bind(this)
 				});
 			}).bind(this));
+			
+			// prevent drag & drop of toolbar buttons
+			this.$toolbar[0].addEventListener('dragstart', function (event) {
+				event.preventDefault();
+			});
 		},
 		
 		_handleCustomButton: function (bbcode) {
