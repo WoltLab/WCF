@@ -360,7 +360,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				if (data.links && this.opts.pasteLinks) {
 					elBySelAll('a', div, function(link) {
 						if (link.href) {
-							link.outerHTML = '##%%a href="' + link.href + '"%%##' + link.innerHTML + '##%%/a%##';
+							link.outerHTML = '##%%a href="' + link.href + '"%%##' + link.innerHTML + '##%%/a%%##';
 						}
 					});
 					
