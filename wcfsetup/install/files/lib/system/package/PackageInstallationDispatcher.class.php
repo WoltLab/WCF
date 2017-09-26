@@ -388,6 +388,12 @@ class PackageInstallationDispatcher {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->queue->packageID]);
 			
+			// delete old compatibility versions
+			$sql = "DELETE FROM	wcf".WCF_N."_package_compatibility
+				WHERE		packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->queue->packageID]);
+			
 			// delete old requirements and dependencies
 			$sql = "DELETE FROM	wcf".WCF_N."_package_requirement
 				WHERE		packageID = ?";
