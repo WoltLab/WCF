@@ -213,7 +213,6 @@ class PackageValidationArchive implements \RecursiveIterator {
 			}
 			
 			if (!$isCompatible) {
-				
 				throw new PackageValidationException(PackageValidationException::INCOMPATIBLE_API_VERSION, ['isOlderVersion' => $isOlderVersion]);
 			}
 		}
