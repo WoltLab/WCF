@@ -12,6 +12,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\user\group\IUserGroupGroupOptionType;
 use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
 
@@ -221,6 +222,10 @@ class UserGroupOptionForm extends AbstractForm {
 		// create form elements for each group
 		foreach ($this->groups as $group) {
 			$optionValue = isset($this->values[$group->groupID]) ? $this->values[$group->groupID] : '';
+			if ($this->optionType instanceof IUserGroupGroupOptionType) {
+				$this->optionType->setUserGroup($group);
+			}
+			
 			$this->formElements[$group->groupID] = $this->optionType->getFormElement($this->userGroupOption, $optionValue);
 		}
 	}

@@ -9,7 +9,7 @@
 		var fragment = document.createDocumentFragment();
 		fragment.appendChild(container);
 		
-		var dd, groupId, id, inputElements, isBoolean, label, labels = container.getElementsByTagName('label');
+		var dd, groupId, id, inputElement, inputElements, isBoolean, label, labels = container.getElementsByTagName('label');
 		for (var i = 0, length = labels.length; i < length; i++) {
 			label = labels[i];
 			id = label.getAttribute('for') || '';

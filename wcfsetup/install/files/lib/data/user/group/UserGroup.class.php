@@ -181,6 +181,16 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
+	 * Returns true if this is the 'Users' group.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function isUsers() {
+		return $this->groupType == self::USERS;
+	}
+	
+	/**
 	 * Returns true if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
