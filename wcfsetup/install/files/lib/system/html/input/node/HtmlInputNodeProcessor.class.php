@@ -39,6 +39,19 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	];
 	
 	/**
+	 * List of HTML elements that should allow for custom CSS using
+	 * the `style`-attribute.
+	 * 
+	 * Unfortunately, HTMLPurifier offers no *sane* way to limit this
+	 * attribute to some elements only.
+	 * 
+	 * @var string[]
+	 */
+	public static $allowedStyleElements = [
+		'span'
+	];
+	
+	/**
 	 * list of HTML elements that are treated as empty, that means
 	 * they don't generate any (indirect) output at all
 	 * 
@@ -228,6 +241,15 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			}
 			
 			$node = $node->nextSibling;
+		}
+		
+		// remove style attributes from non-whitelisted elements
+		$elements = $this->getDocument()->getElementsByTagName('*');
+		for ($i = 0, $length = $elements->length; $i < $length; $i++) {
+			$element = $elements->item($i);
+			if ($element->hasAttribute('style') && !in_array($element->nodeName, self::$allowedStyleElements)) {
+				$element->removeAttribute('style');
+			}
 		}
 	}
 	
