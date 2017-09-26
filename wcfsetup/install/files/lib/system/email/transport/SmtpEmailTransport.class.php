@@ -358,7 +358,7 @@ class SmtpEmailTransport implements IEmailTransport {
 		
 		$this->write('RSET');
 		$this->read([250]);
-		$this->write('MAIL FROM:<'.$email->getSender()->getAddress().'>');
+		$this->write('MAIL FROM:<'.$envelopeFrom->getAddress().'>');
 		$this->read([250]);
 		$this->write('RCPT TO:<'.$envelopeTo->getAddress().'>');
 		$this->read([250, 251]);
