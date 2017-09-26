@@ -68,7 +68,7 @@ class HtmlInputNodeTextParser {
 		\\B                                             # any non-word character, whitespace, string start is fine
 		@
 		(
-			([^',\s][^,\s]{2,})(?:\s[^@,\s][^,\s]*)?	# either at most two strings,
+			([^',\s][^,\s]{1,})(?:\s[^@,\s][^,\s]*)?	# either at most two strings,
 									# not containing the whitespace or the comma,
 									# not starting with a single quote
 									# the second string not starting with the at sign
