@@ -530,7 +530,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		
 		$attributes = isset($pair['attributes']) ? $pair['attributes'] : [];
 		$content = '';
-		if (isset($pair['useText']) && isset($attributes[$pair['useText']])) {
+		if (isset($pair['useText']) && $pair['useText'] !== false && isset($attributes[$pair['useText']])) {
 			$content = array_splice($attributes, $pair['useText'])[0];
 		}
 		

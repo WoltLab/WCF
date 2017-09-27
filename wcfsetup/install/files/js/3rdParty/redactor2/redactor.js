@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.10
-	Updated: September 4, 2017
+	Version 2.11
+	Updated: September 20, 2017
 
 	http://imperavi.com/redactor/
 
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.10';
+	$.Redactor.VERSION = '2.11';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -3118,7 +3118,7 @@
                     				}
                     			}
 
-                    			link.outerHTML = tmp + '%%##' + link.innerHTML + '##%%/a%##';
+                    			link.outerHTML = tmp + '%%##' + link.innerHTML + '##%%/a%%##';
                     		}
                     	});
                     }
