@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.1.0 Alpha 4</version> <!-- codename: tornado -->
-		<date>2017-09-19</date>
+		<version>3.1.0 Beta 1</version> <!-- codename: tornado -->
+		<date>2017-09-27</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -48,59 +48,12 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<!--
-	<instructions type="update" fromversion="3.0.8">
-		<instruction type="acpTemplate" />
-		<instruction type="template" />
-		
-		<instruction type="file">files_pre_sql.tar</instruction>
-		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_addColumn.php</instruction>
-		
-		<instruction type="sql" run="standalone">update_3.1_1.sql</instruction>
-		<instruction type="sql" run="standalone">update_3.1_2.sql</instruction>
-		<instruction type="sql" run="standalone">update_3.1_3.sql</instruction>
-		<instruction type="sql" run="standalone">update_3.1_4.sql</instruction>
-		
-		<instruction type="file" run="standalone" />
-		
-		<instruction type="language" run="standalone" />
-		
-		<instruction type="acpMenu" />
-		<instruction type="bbcode" />
-		<instruction type="clipboardAction" />
-		<instruction type="cronjob" />
-		<instruction type="eventListener" />
-		<instruction type="objectTypeDefinition" />
-		<instruction type="objectType" />
-		<instruction type="option" run="standalone" />
-		<instruction type="userGroupOption" />
-		<instruction type="userNotificationEvent" />
-		<instruction type="userOption" />
-		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_pageSearchIndex.php</instruction>
-		
-		<instruction type="page" />
-	-->
-		<!-- contains a reference to a new page -->
-	<!--
-		<instruction type="menuItem" />
-		
-		<instruction type="packageInstallationPlugin" />
-	-->	<!-- new pip -->
-	<!--
-		<instruction type="mediaProvider" />
-		
-		<instruction type="style">defaultStyle.tar</instruction>
-		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
-	</instructions>
-	-->
-	
-	<instructions type="update" fromversion="3.1.0 Alpha 3">
+	<instructions type="update" fromversion="3.1.0 Alpha 4">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="sql">update_3.1.0_beta_1.sql</instruction>
 		
 		<instruction type="language" />
 	</instructions>
