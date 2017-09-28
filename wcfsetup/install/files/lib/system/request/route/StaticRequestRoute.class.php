@@ -100,8 +100,9 @@ class StaticRequestRoute extends DynamicRequestRoute {
 			}
 			
 			$this->routeData['application'] = $this->staticApplication;
-			$this->routeData['controller'] = $controller;
+			$this->routeData['controller'] = ControllerMap::transformController($this->staticController);
 			$this->routeData['isDefaultController'] = false;
+			$this->routeData['isRenamedController'] = (strcasecmp($controller, $this->staticController) !== 0);
 			
 			return true;
 		}

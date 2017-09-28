@@ -38,7 +38,7 @@ class RouteHandler extends SingletonFactory {
 	 * current path info component
 	 * @var	string
 	 */
-	protected static $pathInfo = null;
+	protected static $pathInfo;
 	
 	/**
 	 * HTTP protocol, either 'http://' or 'https://'
@@ -50,19 +50,25 @@ class RouteHandler extends SingletonFactory {
 	 * HTTP encryption
 	 * @var	boolean
 	 */
-	protected static $secure = null;
+	protected static $secure;
 	
 	/**
 	 * list of application abbreviation and default controller name
 	 * @var	string[]
 	 */
-	protected $defaultControllers = null;
+	protected $defaultControllers;
 	
 	/**
-	 * true, if default controller is used (support for custom landing page)
+	 * true if the default controller is used (support for custom landing page)
 	 * @var	boolean
 	 */
 	protected $isDefaultController = false;
+	
+	/**
+	 * true if the controller was renamed and has already been transformed
+	 * @var boolean
+	 */
+	protected $isRenamedController = false;
 	
 	/**
 	 * list of available routes
@@ -74,7 +80,7 @@ class RouteHandler extends SingletonFactory {
 	 * parsed route data
 	 * @var	array
 	 */
-	protected $routeData = null;
+	protected $routeData;
 	
 	/**
 	 * Sets default routes.
@@ -131,6 +137,11 @@ class RouteHandler extends SingletonFactory {
 				$this->isDefaultController = $this->routeData['isDefaultController'];
 				unset($this->routeData['isDefaultController']);
 				
+				if (isset($this->routeData['isRenamedController'])) {
+					$this->isRenamedController = $this->routeData['isRenamedController'];
+					unset($this->routeData['isRenamedController']);
+				}
+				
 				$this->registerRouteData();
 				return true;
 			}
@@ -146,6 +157,16 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public function isDefaultController() {
 		return $this->isDefaultController;
+	}
+	
+	
+	/**
+	 * Returns true if the controller was renamed and has already been transformed.
+	 * 
+	 * @return      boolean
+	 */
+	public function isRenamedController() {
+		return $this->isRenamedController;
 	}
 	
 	/**

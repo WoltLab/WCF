@@ -40,7 +40,7 @@ class LookupRequestRoute implements IRequestRoute {
 					-
 					(?P<title>[^/]+)
 				)?
-				/
+				/?
 			)?
 		$~x';
 		

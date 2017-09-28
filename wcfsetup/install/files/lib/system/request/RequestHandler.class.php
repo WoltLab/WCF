@@ -159,7 +159,7 @@ class RequestHandler extends SingletonFactory {
 					exit;
 				}
 				
-				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest());
+				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
 				if (is_string($classData)) {
 					$this->redirect($routeData, $application, $classData);
 				}
@@ -191,6 +191,10 @@ class RequestHandler extends SingletonFactory {
 			}
 		}
 		catch (SystemException $e) {
+			if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE && defined('ENABLE_DEVELOPER_TOOLS') && ENABLE_DEVELOPER_TOOLS) {
+				throw $e;
+			}
+			
 			throw new IllegalLinkException();
 		}
 	}

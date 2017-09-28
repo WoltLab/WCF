@@ -57,10 +57,11 @@ class ControllerMap extends SingletonFactory {
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	url controller
 	 * @param	boolean		$isAcpRequest	true if this is an ACP request
+	 * @param       boolean         $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
 	 * @return	mixed		array containing className, controller and pageType or a string containing the controller name for aliased controllers
 	 * @throws	SystemException
 	 */
-	public function resolve($application, $controller, $isAcpRequest) {
+	public function resolve($application, $controller, $isAcpRequest, $skipCustomUrls = false) {
 		// validate controller
 		if (!preg_match('~^[a-z][a-z0-9]+(?:\-[a-z][a-z0-9]+)*$~', $controller)) {
 			throw new SystemException("Malformed controller name '" . $controller . "'");
@@ -88,16 +89,21 @@ class ControllerMap extends SingletonFactory {
 		if ($classData === null) {
 			throw new SystemException("Unknown controller '" . $controller . "'");
 		}
-		else if (!$isAcpRequest) {
-			// handle controllers with a custom url
-			$controller = $classData['controller'];
+		else {
+			// the ACP does not support custom urls at all
+			if ($isAcpRequest) $skipCustomUrls = true;
 			
-			if (isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
-				return $this->customUrls['reverse'][$application][$controller];
-			}
-			else if ($application !== 'wcf') {
-				if (isset($this->customUrls['reverse']['wcf']) && isset($this->customUrls['reverse']['wcf'][$controller])) {
-					return $this->customUrls['reverse']['wcf'][$controller];
+			if (!$skipCustomUrls) {
+				// handle controllers with a custom url
+				$controller = $classData['controller'];
+				
+				if (isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+					return $this->customUrls['reverse'][$application][$controller];
+				}
+				else if ($application !== 'wcf') {
+					if (isset($this->customUrls['reverse']['wcf']) && isset($this->customUrls['reverse']['wcf'][$controller])) {
+						return $this->customUrls['reverse']['wcf'][$controller];
+					}
 				}
 			}
 		}
