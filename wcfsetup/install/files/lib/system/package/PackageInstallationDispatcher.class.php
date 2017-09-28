@@ -196,6 +196,15 @@ class PackageInstallationDispatcher {
 						'wcf_uuid'
 					]);
 					
+					if (file_exists(WCF_DIR . 'cookiePrefix.txt')) {
+						$statement->execute([
+							COOKIE_PREFIX,
+							'cookie_prefix'
+						]);
+						
+						@unlink(WCF_DIR . 'cookiePrefix.txt');
+					}
+					
 					$user = new User(1);
 					$statement->execute([
 						$user->username,

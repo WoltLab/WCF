@@ -8,7 +8,12 @@
  */
 define('LAST_UPDATE_TIME', TIME_NOW);
 
-define('COOKIE_PREFIX', 'wsc30_');
+$prefix = 'wsc30_';
+if (file_exists(WCF_DIR . 'cookiePrefix.txt')) {
+	$prefix = file_get_contents(WCF_DIR . 'cookiePrefix.txt');
+}
+define('COOKIE_PREFIX', $prefix);
+
 define('COOKIE_PATH', '');
 define('COOKIE_DOMAIN', '');
 

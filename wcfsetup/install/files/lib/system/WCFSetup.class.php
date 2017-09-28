@@ -1206,8 +1206,31 @@ class WCFSetup extends WCF {
 			]);
 		}
 		
+		// determine randomized cookie prefix
+		$prefix = 'wsc30_';
+		if (!self::$developerMode) {
+			$cookieNames = array_keys($_COOKIE);
+			while (true) {
+				$prefix = 'wsc_' . substr(sha1(mt_rand()), 0, 6) . '_';
+				$isValid = true;
+				foreach ($cookieNames as $cookieName) {
+					if (strpos($cookieName, $prefix) === 0) {
+						$isValid = false;
+						break;
+					}
+				}
+				
+				if ($isValid) {
+					break;
+				}
+			}
+			
+			// the options have not been imported yet
+			file_put_contents(WCF_DIR . 'cookiePrefix.txt', $prefix);
+		}
+		
 		// login as admin
-		define('COOKIE_PREFIX', 'wsc30_');
+		define('COOKIE_PREFIX', $prefix);
 		
 		$factory = new ACPSessionFactory();
 		$factory->load();
