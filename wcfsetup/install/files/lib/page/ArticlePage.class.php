@@ -111,8 +111,11 @@ class ArticlePage extends AbstractArticlePage {
 		
 		if ($this->articleContent->getTeaserImage()) {
 			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getTeaserImage()->getLink(), true);
-			MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getImage()->width, true);
-			MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getImage()->height, true);
+			
+			if ($this->articleContent->getImage()) {
+				MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getImage()->width, true);
+				MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getImage()->height, true);
+			}
 		}
 		
 		// add tags as keywords
