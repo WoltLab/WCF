@@ -10,6 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
+use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
@@ -177,12 +178,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' ('.$statusCode.')');
 		}
 		
-		// parse given package update xml
-		$allNewPackages = false;
-		if ($apiVersion === '2.0' || $reply['statusCode'] != 304) {
-			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
-		}
-		
 		$data = [
 			'lastUpdateTime' => TIME_NOW,
 			'status' => 'online',
@@ -198,6 +193,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			else if (in_array('2.1', $apiVersions)) {
 				$apiVersion = $data['apiVersion'] = '2.1';
 			}
+		}
+		
+		// parse given package update xml
+		$allNewPackages = false;
+		if ($apiVersion === '2.0' || $reply['statusCode'] != 304) {
+			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body'], $apiVersion);
 		}
 		
 		$metaData = [];
@@ -243,10 +244,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * 
 	 * @param       PackageUpdateServer     $updateServer
 	 * @param       string                  $content
+	 * @param       string                  $apiVersion
 	 * @return      array
 	 * @throws      SystemException
 	 */
-	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content) {
+	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content, $apiVersion) {
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
@@ -260,7 +262,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
-			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package);
+			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package, $apiVersion);
 		}
 		
 		return $allNewPackages;
@@ -272,9 +274,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param       PackageUpdateServer     $updateServer
 	 * @param       \DOMXPath               $xpath
 	 * @param       \DOMElement             $package
+	 * @param       string                  $apiVersion
 	 * @return      array
+	 * @throws      PackageValidationException
 	 */
-	protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package) {
+	protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package, $apiVersion) {
 		// define default values
 		$packageInfo = [
 			'author' => '',
@@ -416,6 +420,29 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							'licenseURL' => $child->hasAttribute('url') ? $child->getAttribute('url') : ''
 						];
 					break;
+					
+					case 'compatibility':
+						if ($apiVersion !== '3.1') continue;
+						
+						$packageInfo['versions'][$versionNo]['compatibility'] = [];
+						
+						/** @var \DOMElement $compatibleVersion */
+						foreach ($xpath->query('child::*', $child) as $compatibleVersion) {
+							if ($compatibleVersion->nodeName === 'api' && $compatibleVersion->hasAttribute('version')) {
+								$versionNumber = $compatibleVersion->getAttribute('version');
+								if (!preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $versionNumber)) {
+									if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+										throw new PackageValidationException(PackageValidationException::INVALID_API_VERSION, ['version' => $versionNumber]);
+									}
+									else {
+										continue;
+									}
+								}
+								
+								$packageInfo['versions'][$versionNo]['compatibility'][] = $versionNumber;
+							}
+						}
+					break;
 				}
 			}
 		}
@@ -431,7 +458,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 */
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
 		// insert updates
-		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = [];
+		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
 		WCF::getDB()->beginTransaction();
 		foreach ($allNewPackages as $identifier => $packageData) {
 			// create new database entry
@@ -508,6 +535,16 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							];
 						}
 					}
+					
+					// register compatibility versions of this update package version.
+					if (isset($versionData['compatibility'])) {
+						foreach ($versionData['compatibility'] as $version) {
+							$compatibilityInserts[] = [
+								'packageUpdateVersionID' => $packageUpdateVersionID,
+								'version' => $version
+							];
+						}
+					}
 				}
 			}
 		}
@@ -579,6 +616,22 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			}
 			WCF::getDB()->commitTransaction();
 		}
+		
+		// insert compatibility versions
+		if (!empty($compatibilityInserts)) {
+			$sql = "INSERT INTO     wcf".WCF_N."_package_update_compatibility
+						(packageUpdateVersionID, version)
+				VALUES          (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
+			foreach ($compatibilityInserts as $versionData) {
+				$statement->execute([
+					$versionData['packageUpdateVersionID'],
+					$versionData['version']
+				]);
+			}
+			WCF::getDB()->commitTransaction();
+		}
 	}
 	
 	/**
@@ -587,6 +640,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param	boolean		$removeRequirements
 	 * @param	boolean		$removeOlderMinorReleases
 	 * @return	array
+	 * @throws      SystemException
 	 */
 	public function getAvailableUpdates($removeRequirements = true, $removeOlderMinorReleases = false) {
 		$updates = [];
