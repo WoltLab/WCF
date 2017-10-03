@@ -198,4 +198,15 @@ class MemcachedCacheSource implements ICacheSource {
 		
 		return $flush.'_'.$cacheName;
 	}
+	
+	/**
+	 * Returns the Memcached server version
+	 * 
+	 * @return	string
+	 */
+	public function getMemcachedVersion() {
+		$versions = $this->memcached->getVersion();
+		
+		return reset($versions);
+	}
 }
