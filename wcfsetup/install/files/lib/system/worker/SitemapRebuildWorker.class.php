@@ -9,6 +9,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
+use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -93,6 +94,9 @@ class SitemapRebuildWorker extends AbstractWorker {
 						// modify count, because we handle only one sitemap object per call
 						$this->count += max(1, ceil($list->countObjects() / $this->limit)) * $this->limit;
 					}
+					else {
+						$this->deleteSitemaps($sitemapObject->objectType);
+					}
 				}
 			}
 		}
@@ -130,6 +134,11 @@ class SitemapRebuildWorker extends AbstractWorker {
 			
 			$sitemapObject = $this->sitemapObjects[$this->workerData['sitemap']]->getProcessor();
 			$sitemapLoopCount = $this->workerData['sitemapLoopCount'];
+			
+			// delete all previously created sitemap files so that no more relics remain in the system
+			if ($sitemapLoopCount === 0) {
+				$this->deleteSitemaps($this->sitemapObjects[$this->workerData['sitemap']]->objectType);
+			}
 			
 			/** @var DatabaseObjectList $objectList */
 			$objectList = $sitemapObject->getObjectList();
@@ -360,6 +369,23 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 */
 	public static function getSitemapURL() {
 		return WCF::getPath() . 'sitemaps/';
+	}
+	
+	/**
+	 * Unlink the sitemap files for a given object type name.
+	 * 
+	 * @param 	string		$objectTypeName
+	 */
+	private function deleteSitemaps($objectTypeName) {
+		$files = @glob(self::getSitemapPath().$objectTypeName.'*.xml');
+		if (is_array($files)) {
+			$regex = new Regex(preg_quote($objectTypeName).'(_[0-9]*|).xml');
+			foreach ($files as $filename) {
+				if ($regex->match(basename($filename))) {
+					unlink($filename);
+				}
+			}
+		}
 	}
 	
 	/**
