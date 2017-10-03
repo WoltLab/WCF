@@ -78,13 +78,13 @@ class CacheListPage extends AbstractPage {
 			
 			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
-				$this->cacheData['version'] = WCF_VERSION;
+				$this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getMemcachedVersion();
 			break;
 			
 			case 'wcf\system\cache\source\RedisCacheSource':
 				// set version
 				/** @noinspection PhpUndefinedMethodInspection */
-				$this->cacheData['version'] = 'Redis '.CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
+				$this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
 			break;
 		}
 		
