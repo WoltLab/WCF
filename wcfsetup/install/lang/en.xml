@@ -647,7 +647,7 @@
 		<item name="wcf.acp.group.option.user.page.canDeleteComment"><![CDATA[Can delete their comments]]></item>
 		<item name="wcf.acp.group.option.user.page.canEditComment"><![CDATA[Can edit their comments]]></item>
 		<item name="wcf.acp.group.excludedInTinyBuild"><![CDATA[Accelerated guest view is enabled]]></item>
-		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied despite them being granted below. Affected options have been marked with a bolt (<span class="icon icon16 fa-bolt red"></span>).]]></item>
+		<item name="wcf.acp.group.excludedInTinyBuild.notice"><![CDATA[The accelerated guest view has been enabled, causing some permissions to be denied, despite them being granted below. Affected options have been marked with a bolt (<span class="icon icon16 fa-bolt red"></span>).]]></item>
 		<item name="wcf.acp.group.option.admin.contact.canManageContactForm"><![CDATA[Can manage contact form]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.group.option.admin.trophy.canManageTrophy"><![CDATA[Can manage trophies]]></item>
@@ -1393,7 +1393,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Enable ad rotation]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[If there is more than one ad per placeholder, a random ad will be displayed every time. Disabling this option will display all ads simultaneously.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Enable accelerated guest view (experimental)]]></item>
-		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Enables a specialized view mode for guests and search engines alike, providing greatly reduced JavaScript files to achieve faster loading and page rendering times.<br><strong>Warning:</strong> This mode is highly restricted and reduces the abilities of guests to interact with your site, such as creating new content. Please review your installed plugins before enabling to see if they are compatible with this setting.]]></item>
+		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Enables a specialized view mode for guests and search engines alike, providing greatly reduced JavaScript files to achieve faster loading and page rendering.<br><strong>Warning:</strong> This mode is highly restricted and reduces the abilities of guests to interact with your site, such as creating new content. Please review your installed plugins before enabling to see if they are compatible with this setting.]]></item>
 		<item name="wcf.acp.option.fb_share_app_id"><![CDATA[Facebook App ID]]></item>
 		<item name="wcf.acp.option.fb_share_app_id.description"><![CDATA[You can obtain the app ID from your <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fapps%2Fregister%3Flocale%3Den_US">app’s dashboard</a>, and is used with the Open Graph tags for sharing.]]></item>
 		<item name="wcf.acp.option.enable_polling"><![CDATA[Enable Background Notifications]]></item>
