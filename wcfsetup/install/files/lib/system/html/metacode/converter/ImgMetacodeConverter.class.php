@@ -30,6 +30,15 @@ class ImgMetacodeConverter extends AbstractMetacodeConverter {
 	 */
 	public function validateAttributes(array $attributes) {
 		$count = count($attributes);
-		return ($count > 0 && $count < 4);
+		if ($count > 0 && $count < 4) {
+			// reject data URIs
+			if (preg_match('~^\s*data:~', $attributes[0])) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 }
