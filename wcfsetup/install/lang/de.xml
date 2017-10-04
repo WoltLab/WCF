@@ -3014,7 +3014,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.map.route.button.calculateRoute"><![CDATA[Route berechnen]]></item>
 		<item name="wcf.map.route.error.not_found"><![CDATA[Die Route konnte nicht berechnet werden.]]></item>
 		<item name="wcf.map.route.error.over_query_limit"><![CDATA[Die Route konnte nicht berechnet werden. Innerhalb des zulässigen Zeitraums wurden zu viele Anfragen an die Google Maps API gesendet.]]></item>
-		<item name="wcf.map.route.error.request_denied"><![CDATA[Die Route konnte nicht berechnet werden. Diese Webseite ist nicht berechtigt ist, den Google Maps Directions-Dienst zu nutzen]]></item>
+		<item name="wcf.map.route.error.request_denied"><![CDATA[Die Route konnte nicht berechnet werden. Diese Webseite ist nicht berechtigt, den Google Maps Directions-Dienst zu nutzen.]]></item>
 		<item name="wcf.map.route.origin"><![CDATA[Startpunkt]]></item>
 		<item name="wcf.map.route.planner"><![CDATA[Routenplaner]]></item>
 		<item name="wcf.map.route.travelMode"><![CDATA[Verkehrsmittel]]></item>
