@@ -2418,7 +2418,7 @@ Errors are:
 	
 	<category name="wcf.contact">
 		<item name="wcf.contact.data"><![CDATA[Your Data]]></item>
-		<item name="wcf.contact.mail.subject"><![CDATA[Neue Nachricht über das Kontakt-Formular]]></item>
+		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
 
 „{@$name}“ sent you a message on {@PAGE_TITLE|language} via the contact form:
