@@ -121,12 +121,14 @@ class EditHistoryManager extends SingletonFactory {
 			WHERE		revertTo.objectID = vandalizedEntries2.objectID
 				AND	revertTo.objectTypeID = vandalizedEntries2.objectTypeID
 				AND	(	revertTo.obsoletedAt <= ?
+					OR	revertTo.time <= ?
 					OR	revertTo.userID NOT IN(".$userIDPlaceholders."))
 			GROUP BY revertTo.objectTypeID, revertTo.objectID";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array_merge(
 			[TIME_NOW - $timeframe],
 			$userIDs,
+			[TIME_NOW - $timeframe],
 			[TIME_NOW - $timeframe],
 			$userIDs
 		));
