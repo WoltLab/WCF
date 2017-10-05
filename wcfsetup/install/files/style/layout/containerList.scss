@@ -183,7 +183,8 @@
 			flex-wrap: wrap;
 			
 			> li {
-				overflow: hidden;
+				// this will cause the mobile drop-down menu to be cut-off
+				// overflow: hidden;
 				padding-right: 15px;
 				
 				.containerBoxContent {
