@@ -52,7 +52,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 						'content' => $element->textContent,
 						'file' => $element->getAttribute('data-file'),
 						'highlighter' => $element->getAttribute('data-highlighter'),
-						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1
+						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1,
+						'skipInnerContent' => true
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
