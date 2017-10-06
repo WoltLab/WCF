@@ -182,6 +182,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 				$this->workerData['dataCount'] = 0;
 			}
 			
+			$closeFile = true;
 			// finish sitemap
 			if (count($objectList) < $this->limit) {
 				if ($this->workerData['dataCount'] > 0) {
@@ -196,12 +197,13 @@ class SitemapRebuildWorker extends AbstractWorker {
 				
 				if (count($this->sitemapObjects) <= $this->workerData['sitemap']) {
 					$this->writeIndexFile();
+					$closeFile = false;
 				}
 			}
 			
 			$this->workerData['sitemapLoopCount']++;
 			$this->storeWorkerData();
-			$this->closeFile();
+			if ($closeFile) $this->closeFile();
 		} 
 		finally {
 			// change session owner back to the actual user
@@ -253,6 +255,8 @@ class SitemapRebuildWorker extends AbstractWorker {
 		$file->close();
 		
 		$this->workerData['finished'] = true;
+		
+		$this->closeFile();
 		
 		if ($this->workerData['tmpFile'] && file_exists($this->workerData['tmpFile'])) {
 			unlink($this->workerData['tmpFile']);
