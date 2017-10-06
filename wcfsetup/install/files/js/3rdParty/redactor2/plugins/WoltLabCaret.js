@@ -288,6 +288,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				}
 			}
 			
+			// click occured inside the boundaries of the block
+			if (insertBefore === undefined) {
+				return;
+			}
+			
 			// check if there is already a paragraph in place
 			var sibling = block[(insertBefore ? 'previous' : 'next') + 'ElementSibling'];
 			if (sibling && sibling.nodeName === 'P') {
