@@ -65,6 +65,68 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			this.$editor[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabCaret._handleEditorClick.bind(this));
 			
 			this.WoltLabCaret._initInternalRange();
+			
+			var mpSaveInstant = this.selection.saveInstant;
+			this.selection.saveInstant = (function() {
+				mpSaveInstant.call(this);
+				
+				this.saved.isAtNodeStart = false;
+				
+				var selection = window.getSelection();
+				if (selection.rangeCount && !selection.isCollapsed) {
+					var range = selection.getRangeAt(0);
+					if (range.startContainer.nodeType === Node.TEXT_NODE && range.startOffset === 0) {
+						this.saved.isAtNodeStart = true;
+					}
+				}
+			}).bind(this);
+			
+			var mpRestoreInstant = this.selection.restoreInstant;
+			this.selection.restoreInstant = (function(saved) {
+				if (typeof saved === 'undefined' && !this.saved) {
+					return;
+				}
+				
+				var localSaved = (typeof saved !== 'undefined') ? saved : this.saved;
+				
+				mpRestoreInstant.call(this, saved);
+				
+				if (localSaved.isAtNodeStart === true) {
+					var selection = window.getSelection();
+					if (selection.rangeCount && !selection.isCollapsed) {
+						var range = selection.getRangeAt(0);
+						var start = range.startContainer;
+						
+						if (localSaved.node === start) {
+							// selection is valid
+							return;
+						}
+						
+						// find the parent <p>
+						while (start !== null && start.nodeName !== 'P') start = start.parentNode;
+						
+						if (start !== null) {
+							// check if the next element sibling is an empty <p>
+							start = start.nextElementSibling;
+							if (start !== null && start.nodeName === 'P' && start.textContent.replace(/\u200B/g, '').length === 0) {
+								start = start.nextElementSibling;
+								
+								var parent = localSaved.node;
+								while (parent !== null && parent !== start) parent = parent.parentNode;
+								
+								if (parent === start) {
+									// force selection to start with the original start node
+									range = range.cloneRange();
+									range.setStart(localSaved.node, 0);
+									
+									selection.removeAllRanges();
+									selection.addRange(range);
+								}
+							}
+						}
+					}
+				}
+			}).bind(this);
 		},
 		
 		paragraphAfterBlock: function (block) {
