@@ -65,10 +65,10 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 		}
 		
 		if (isset($conditionData['userTrophy'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['trophyIDs'], count($conditionData['trophyIDs'])]);
+			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['userTrophy'], count($conditionData['userTrophy'])]);
 		}
 		if (isset($conditionData['notUserTrophy'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$conditionData['notTrophyIDs']]);
+			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$conditionData['notUserTrophy']]);
 		}
 	}
 	
