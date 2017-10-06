@@ -236,6 +236,18 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}).bind(this), 50);
 				}
 				
+				// cleanup any stray text fragments caused by paragraphs
+				// being replaced by the clipboard contents
+				var node, badNodes = [];
+				var editor = this.core.editor()[0];
+				for (i = 0, length = editor.childNodes.length; i < length; i++) {
+					node = editor.childNodes[i];
+					if (node.nodeType === Node.TEXT_NODE && node.textContent === '\u200B') {
+						badNodes.push(node);
+					}
+				}
+				badNodes.forEach(elRemove);
+				
 				this.rtePaste = false;
 			}).bind(this);
 			
