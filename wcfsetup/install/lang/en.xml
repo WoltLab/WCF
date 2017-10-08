@@ -3399,7 +3399,7 @@ Open the link below to access the user profile:
 	<category name="wcf.user.condition">
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
-		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Your Avatar]]></item>
+		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Own Avatar]]></item>
 		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
 		<item name="wcf.user.condition.avatar.noAvatar"><![CDATA[No Avatar]]></item>
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Contents]]></item>
