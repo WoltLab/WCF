@@ -106,32 +106,4 @@ class TrophyConditionHandler extends SingletonFactory {
 		
 		return $userList->getObjects();
 	}
-	
-	/**
-	 * Returns the outstanding trophy assignment count. 
-	 * 
-	 * @return	integer
-	 */
-	public function getOutstandingTrophyAssignmentCount() {
-		$trophyList = new TrophyList();
-		$trophyList->getConditionBuilder()->add('awardAutomatically = ?', [1]);
-		$trophyList->getConditionBuilder()->add('isDisabled = ?', [0]);
-		$trophyList->readObjects();
-		
-		$outstandingCount = 0;
-		foreach ($trophyList as $trophy) {
-			$userList = new UserList();
-			
-			$conditions = $trophy->getConditions();
-			foreach ($conditions as $condition) {
-				$condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
-			}
-			
-			// prevent multiple awards from a trophy for a user 
-			$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
-			$outstandingCount += $userList->countObjects();
-		}
-		
-		return $outstandingCount; 
-	}
 }
