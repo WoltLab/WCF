@@ -118,24 +118,23 @@ class DevtoolsProject extends DatabaseObject {
 		}
 		
 		if (!$this->isCore()) {
-			$hasValidExclude = false;
-			$foundCore = false;
-			foreach ($this->packageArchive->getExcludedPackages() as $excludedPackage) {
-				if ($excludedPackage['name'] !== 'com.woltlab.wcf') continue;
-				
-				$foundCore = true;
-				if (Package::compareVersion(WCF_VERSION, $excludedPackage['version'], '<')) {
-					$hasValidExclude = true;
+			$compatibleVersions = $this->packageArchive->getCompatibleVersions();
+			if (empty($compatibleVersions)) {
+				return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.missingCompatibility');
+			}
+			$isCompatible = $isOlderVersion = false;
+			foreach ($compatibleVersions as $version) {
+				if (WCF::isSupportedApiVersion($version)) {
+					$isCompatible = true;
 					break;
+				}
+				else if ($version < WSC_API_VERSION) {
+					$isOlderVersion = true;
 				}
 			}
 			
-			if (!$hasValidExclude) {
-				if (!$foundCore) {
-					return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.missingExclude');
-				}
-				
-				return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.excludedVersion');
+			if (!$isCompatible) {
+				return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.unsupportedCompatibility', ['isOlderVersion' => $isOlderVersion]);
 			}
 		}
 		
