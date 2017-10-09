@@ -224,20 +224,20 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		/** @var \DOMNode $node */
 		$node = $this->getDocument()->getElementsByTagName('body')->item(0)->firstChild;
-		$hX = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 		while ($node) {
 			if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName === 'woltlab-metacode-marker') {
 				$node = $appendToPreviousParagraph($node);
 			}
 			else if ($node->nodeType === XML_TEXT_NODE) {
+				// text node contains only a line break
 				if ($node->textContent === "\n" || $node->textContent === "\r\n") {
-					$sibling = $node->previousSibling;
-					if ($sibling !== null && in_array($sibling->nodeName, $hX)) {
-						// ignore this node entirely
+					// check if the previous node is a <p>, otherwise ignore this node entirely
+					if ($node->previousSibling === null || $node->previousSibling->nodeName !== 'p') {
 						$node = $node->nextSibling;
 						continue;
 					}
 				}
+				
 				$node = $appendToPreviousParagraph($node);
 			}
 			
