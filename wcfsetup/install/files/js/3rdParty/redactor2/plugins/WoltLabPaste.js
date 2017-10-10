@@ -36,15 +36,23 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				else if (this.detect.isFirefox()) {
 					var types = e.originalEvent.clipboardData.types;
 					if (types.length === 1 && types[0] === 'text/plain') {
-						var tmp = e.originalEvent.clipboardData.getData('text/plain');
+						var tmp = WCF.String.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
 						
 						firefoxPlainText = '';
-						tmp.split("\n").forEach(function(line) {
-							line = line.trim();
-							if (line === '') line = '<br>';
-							
-							firefoxPlainText += '<p>' + line + '</p>';
-						});
+						var lines = tmp.split("\n");
+						if (lines.length === 1) {
+							// paste single-line content as real plain text
+							firefoxPlainText = tmp;
+						}
+						else {
+							// plain newline characters do not work out well, mimic HTML instead
+							lines.forEach(function (line) {
+								line = line.trim();
+								if (line === '') line = '<br>';
+								
+								firefoxPlainText += '<p>' + line + '</p>';
+							});
+						}
 					}
 				}
 				
