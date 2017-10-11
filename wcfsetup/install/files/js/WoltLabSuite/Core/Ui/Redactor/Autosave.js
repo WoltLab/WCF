@@ -46,6 +46,8 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			this._metaData = {};
 			this._editor = null;
 			this._element = element;
+			this._isActive = true;
+			this._isPending = false;
 			this._key = Core.getStoragePrefix() + elData(this._element, 'autosave');
 			this._lastMessage = '';
 			this._originalMessage = '';
@@ -74,6 +76,19 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			
 			// clear editor content on reset
 			EventHandler.add('com.woltlab.wcf.redactor2', 'reset_' + this._element.id, this.hideOverlay.bind(this));
+			
+			document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
+		},
+		
+		_onVisibilityChange: function () {
+			if (document.hidden) {
+				this._isActive = false;
+				this._isPending = true;
+			}
+			else {
+				this._isActive = true;
+				this._isPending = false;
+			}
 		},
 		
 		/**
@@ -146,6 +161,8 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			this._timer = window.setInterval(this._saveToStorage.bind(this), _frequency * 1000);
 			
 			this._saveToStorage();
+			
+			this._isPending = false;
 		},
 		
 		/**
@@ -158,6 +175,7 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			
 			window.clearInterval(this._timer);
 			this._timer = null;
+			this._isPending = false;
 		},
 		
 		/**
@@ -260,6 +278,13 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 		 * @protected
 		 */
 		_saveToStorage: function() {
+			if (!this._isActive) {
+				if (!this._isPending) return;
+				
+				// save one last time before suspending
+				this._isPending = false;
+			}
+			
 			//noinspection JSUnresolvedVariable
 			if (window.ENABLE_DEVELOPER_TOOLS && Devtools._internal_.editorAutosave() === false) {
 				//noinspection JSUnresolvedVariable
