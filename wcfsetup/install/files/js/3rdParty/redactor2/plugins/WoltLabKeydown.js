@@ -45,6 +45,47 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					}
 				}
 				
+				// delete the current line on backspace and delete, if it is empty, and move
+				// the caret into the adjacent element, rather than pulling content out
+				if (e.which === this.keyCode.BACKSPACE || e.which === this.keyCode.DELETE) {
+					if (selection.isCollapsed) {
+						var range = selection.getRangeAt(0);
+						var container = range.startContainer;
+						if (container.nodeType === Node.TEXT_NODE) container = container.parentNode;
+						if (container.nodeName === 'P' && container.childNodes.length === 1 && container.childNodes[0].textContent === '\u200B') {
+							// simple comparison to check that at least one sibling is not null
+							if (container.previousElementSibling !== container.nextElementSibling) {
+								var caretEnd = null, caretStart = null;
+								
+								if (e.which === this.keyCode.BACKSPACE) {
+									if (container.previousElementSibling === null) {
+										caretStart = container.nextElementSibling;
+									}
+									else {
+										caretEnd = container.previousElementSibling;
+									}
+								}
+								else {
+									if (container.nextElementSibling === null) {
+										caretEnd = container.previousElementSibling;
+									}
+									else {
+										caretStart = container.nextElementSibling;
+									}
+								}
+								
+								elRemove(container);
+								
+								if (caretStart === null) this.caret.end(caretEnd);
+								else this.caret.start(caretStart);
+								
+								e.preventDefault();
+								return;
+							}
+						}
+					}
+				}
+				
 				var returnValue = mpInit.call(this, e);
 				
 				if (returnValue !== false && !e.originalEvent.defaultPrevented) {
