@@ -344,6 +344,10 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				$parentEnd = $end;
 				do {
 					$parentEnd = $parentEnd->parentNode;
+					if ($parentEnd === null) {
+						break;
+					}
+					
 					if ($parentEnd->nodeName === 'li') {
 						if ($parent === $parentEnd) {
 							// same ancestor, exit both loops
@@ -354,7 +358,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 						break;
 					}
 				}
-				while ($parent);
+				while ($parentEnd);
 				
 				$foundLi = true;
 			}
