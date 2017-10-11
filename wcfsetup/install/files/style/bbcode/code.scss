@@ -71,6 +71,9 @@
 			align-items: center;
 			display: flex;
 			
+			/* required to avoid layout jumping caused by the dynamically added 24px button */
+			min-height: 24px;
+			
 			> .codeBoxHeadline {
 				flex: 1 1 auto;
 				padding: 0 10px;
