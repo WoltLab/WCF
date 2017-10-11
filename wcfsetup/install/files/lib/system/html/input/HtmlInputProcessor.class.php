@@ -5,6 +5,7 @@ use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\html\AbstractHtmlProcessor;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -75,6 +76,42 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 */
 	public function processIntermediate($html) {
 		$this->getHtmlInputNodeProcessor()->load($this, $html);
+	}
+	
+	/**
+	 * Reprocesses a message by transforming the message into an editor-like
+	 * state using plain bbcodes instead of metacode elements.
+	 * 
+	 * @param       string          $html           html string
+	 * @param       string          $objectType     object type identifier
+	 * @param       integer         $objectID       object id
+	 * @since       3.1
+	 */
+	public function reprocess($html, $objectType, $objectID) {
+		$this->processIntermediate($html);
+		
+		// revert embedded bbcodes for re-evaluation
+		$metacodes = DOMUtil::getElements($this->getHtmlInputNodeProcessor()->getDocument(), 'woltlab-metacode');
+		foreach ($metacodes as $metacode) {
+			$name = $metacode->getAttribute('data-name');
+			$attributes = $this->getHtmlInputNodeProcessor()->parseAttributes($metacode->getAttribute('data-attributes'));
+			
+			$bbcodeAttributes = '';
+			foreach ($attributes as $attribute) {
+				if (!empty($bbcodeAttributes)) $bbcodeAttributes .= ',';
+				$bbcodeAttributes .= "'" . addcslashes($attribute, "'") . "'";
+			}
+			
+			$text = $metacode->ownerDocument->createTextNode('[' . $name . (!empty($bbcodeAttributes) ? '=' . $bbcodeAttributes : '') . ']');
+			$metacode->insertBefore($text, $metacode->firstChild);
+			
+			$text = $metacode->ownerDocument->createTextNode('[/' . $name . ']');
+			$metacode->appendChild($text);
+			
+			DOMUtil::removeNode($metacode, true);
+		}
+		
+		$this->process($html, $objectType, $objectID, false);
 	}
 	
 	/**

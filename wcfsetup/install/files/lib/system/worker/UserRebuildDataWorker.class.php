@@ -121,23 +121,30 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 						'signature' => $htmlInputProcessor->getHtml(),
 						'signatureEnableHtml' => 1
 					]);
-					
-					if ($user->aboutMe) {
+				}
+				else {
+					$htmlInputProcessor->reprocess($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
+					$user->update(['signature' => $htmlInputProcessor->getHtml()]);
+				}
+				
+				if ($user->aboutMe) {
+					if (!$user->signatureEnableHtml) {
 						$htmlInputProcessor->process($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID, true);
-						$html = $htmlInputProcessor->getHtml();
-						// MySQL's TEXT type allows for 65,535 bytes, hence we need to count
-						// the bytes rather than the actual amount of characters
-						if (strlen($html) > 65535) {
-							// content does not fit the available space, and any
-							// attempts to truncate it will yield awkward results
-							$html = '';
-						}
-						
-						$statement->execute([
-							$html,
-							$user->userID
-						]);
 					}
+					else {
+						$htmlInputProcessor->reprocess($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID);
+					}
+					
+					$html = $htmlInputProcessor->getHtml();
+					// MySQL's TEXT type allows for 65,535 bytes, hence we need to count
+					// the bytes rather than the actual amount of characters
+					if (strlen($html) > 65535) {
+						// content does not fit the available space, and any
+						// attempts to truncate it will yield awkward results
+						$html = '';
+					}
+					
+					$statement->execute([$html, $user->userID]);
 				}
 			}
 			WCF::getDB()->commitTransaction();

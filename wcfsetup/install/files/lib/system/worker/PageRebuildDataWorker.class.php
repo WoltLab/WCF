@@ -81,7 +81,14 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker {
 			}
 			
 			// update embedded objects
-			$this->getHtmlInputProcessor()->processEmbeddedContent($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
+			$data = [];
+			if ($page->pageType == 'text') {
+				$this->getHtmlInputProcessor()->process($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
+				$data['content'] = $this->getHtmlInputProcessor()->getHtml();
+			}
+			else {
+				$this->getHtmlInputProcessor()->processEmbeddedContent($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
+			}
 			
 			$hasEmbeddedObjects = 0;
 			if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor())) {
@@ -89,8 +96,12 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker {
 			}
 			
 			if ($hasEmbeddedObjects != $pageContent->hasEmbeddedObjects) {
+				$data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
+			}
+			
+			if (!empty($data)) {
 				$pageContentEditor = new PageContentEditor($pageContent);
-				$pageContentEditor->update(['hasEmbeddedObjects' => $hasEmbeddedObjects]);
+				$pageContentEditor->update($data);
 			}
 		}
 	}

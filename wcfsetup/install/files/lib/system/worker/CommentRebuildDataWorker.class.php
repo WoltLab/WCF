@@ -79,6 +79,10 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 					'enableHtml' => 1
 				]);
 			}
+			else {
+				$this->getHtmlInputProcessor()->reprocess($comment->message, 'com.woltlab.wcf.comment', $comment->commentID);
+				$commentEditor->update(['message' => $this->getHtmlInputProcessor()->getHtml()]);
+			}
 		}
 		WCF::getDB()->commitTransaction();
 	}
