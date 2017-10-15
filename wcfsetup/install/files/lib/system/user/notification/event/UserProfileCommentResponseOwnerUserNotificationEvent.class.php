@@ -103,7 +103,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
 		return [
-			'template' => 'email_notification_userProfileCommentResponseOwner',
+			'template' => 'email_notification_commentResponseOwner',
 			'application' => 'wcf',
 			'in-reply-to' => [$messageID],
 			'references' => [$messageID],
@@ -111,7 +111,8 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 				'commentAuthor' => $commentAuthor,
 				'commentID' => $this->getUserNotificationObject()->commentID,
 				'owner' => $owner,
-				'responseID' => $this->getUserNotificationObject()->responseID
+				'responseID' => $this->getUserNotificationObject()->responseID,
+				'languageVariablePrefix' => 'wcf.user.notification.commentResponseOwner'
 			]
 		];
 	}

@@ -89,14 +89,15 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
 		return [
-			'template' => 'email_notification_userProfileCommentResponse',
+			'template' => 'email_notification_commentResponse',
 			'application' => 'wcf',
 			'in-reply-to' => [$messageID],
 			'references' => [$messageID],
 			'variables' => [
 				'commentID' => $this->getUserNotificationObject()->commentID,
 				'owner' => $owner,
-				'responseID' => $this->getUserNotificationObject()->responseID
+				'responseID' => $this->getUserNotificationObject()->responseID,
+				'languageVariablePrefix' => 'wcf.user.notification.commentResponse'
 			]
 		];
 	}

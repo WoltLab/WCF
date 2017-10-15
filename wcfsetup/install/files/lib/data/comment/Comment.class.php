@@ -93,6 +93,27 @@ class Comment extends DatabaseObject implements IMessage {
 	}
 	
 	/**
+	 * Returns a version of this message optimized for use in emails.
+	 *
+	 * @param	string	$mimeType	Either 'text/plain' or 'text/html'
+	 * @return	string
+	 */
+	public function getMailText($mimeType = 'text/plain') {
+		switch ($mimeType) {
+			case 'text/plain':
+				$processor = new HtmlOutputProcessor();
+				$processor->setOutputType('text/plain');
+				$processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+				
+				return $processor->getHtml();
+			case 'text/html':
+				return $this->getSimplifiedFormattedMessage();
+		}
+		
+		throw new \LogicException('Unreachable');
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
