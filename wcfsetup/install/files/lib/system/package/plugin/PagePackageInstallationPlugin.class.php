@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\package\PackageCache;
 use wcf\data\page\Page;
+use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -38,19 +39,16 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_page
-			WHERE		identifier = ?
-					AND packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		WCF::getDB()->beginTransaction();
+		$pages = [];
 		foreach ($items as $item) {
-			$statement->execute([
-				$item['attributes']['identifier'],
-				$this->installation->getPackageID()
-			]);
+			$page = Page::getPageByIdentifier($item['attributes']['identifier']);
+			if ($page !== null && $page->pageID && $page->packageID == $this->installation->getPackageID()) $pages[] = $page;
 		}
-		WCF::getDB()->commitTransaction();
+		
+		if (!empty($pages)) {
+			$pageAction = new PageAction($pages, 'delete');
+			$pageAction->executeAction();
+		}
 	}
 	
 	/**
@@ -316,6 +314,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 						$content['metaKeywords'],
 						$content['customURL']
 					]);
+					
+					// generate template if page's type is 'tpl'
+					$page = new Page($pageID);
+					if ($page->pageType == 'tpl') {
+						file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+					}
 				}
 			}
 			WCF::getDB()->commitTransaction();
