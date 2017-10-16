@@ -30,6 +30,12 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	public $className = '';
 	
 	/**
+	 * media provider package id
+	 * @var	integer
+	 */
+	public $packageID = PACKAGE_ID;
+	
+	/**
 	 * html value
 	 * @var	string
 	 */
@@ -111,6 +117,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 			'regex' => $this->regex,
 			'html' => $this->html,
 			'className' => $this->className,
+			'packageID' => $this->packageID,
 			'name' => $name
 		])]);
 		$returnValues = $this->objectAction->executeAction();
