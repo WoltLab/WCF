@@ -26,29 +26,29 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 	 * @inheritDoc
 	 */
 	protected $descriptions = [
-		'userTrophy' => 'wcf.user.condition.userTrophy.description',
-		'notUserTrophy' => 'wcf.user.condition.notUserTrophy.description'
+		'userTrophyIDs' => 'wcf.user.condition.userTrophyIDs.description',
+		'notUserTrophyIDs' => 'wcf.user.condition.notUserTrophyIDs.description'
 	];
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected $labels = [
-		'userTrophy' => 'wcf.user.condition.userTrophy',
-		'notUserTrophy' => 'wcf.user.condition.notUserTrophy'
+		'userTrophyIDs' => 'wcf.user.condition.userTrophyIDs',
+		'notUserTrophyIDs' => 'wcf.user.condition.notUserTrophyIDs'
 	];
 	
 	/**
 	 * ids of the selected trophies the user has earned
 	 * @var	integer[]
 	 */
-	protected $userTrophy = [];
+	protected $userTrophyIDs = [];
 	
 	/**
 	 * ids of the selected trophies the user has not earned
 	 * @var	integer[]
 	 */
-	protected $notUserTrophy = [];
+	protected $notUserTrophyIDs = [];
 	
 	/**
 	 * selectable trophies
@@ -64,11 +64,11 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
 		
-		if (isset($conditionData['userTrophy'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['userTrophy'], count($conditionData['userTrophy'])]);
+		if (isset($conditionData['userTrophyIDs'])) {
+			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['userTrophyIDs'], count($conditionData['userTrophyIDs'])]);
 		}
-		if (isset($conditionData['notUserTrophy'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$conditionData['notUserTrophy']]);
+		if (isset($conditionData['notUserTrophyIDs'])) {
+			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$conditionData['notUserTrophyIDs']]);
 		}
 	}
 	
@@ -79,11 +79,11 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 		$trophies = UserTrophyList::getUserTrophies([$user->getObjectID()], false)[$user->getObjectID()];
 		$trophyIDs = array_keys($trophies);
 		
-		if (!empty($condition->conditionData['userTrophy']) && !empty(array_diff($condition->conditionData['userTrophy'], $trophyIDs))) {
+		if (!empty($condition->conditionData['userTrophyIDs']) && !empty(array_diff($condition->conditionData['userTrophyIDs'], $trophyIDs))) {
 			return false;
 		}
 		
-		if (!empty($condition->conditionData['notUserTrophy']) && !empty(array_intersect($condition->conditionData['notUserTrophy'], $trophyIDs))) {
+		if (!empty($condition->conditionData['notUserTrophyIDs']) && !empty(array_intersect($condition->conditionData['notUserTrophyIDs'], $trophyIDs))) {
 			return false;
 		}
 		
@@ -96,11 +96,11 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 	public function getData() {
 		$data = [];
 		
-		if (!empty($this->userTrophy)) {
-			$data['userTrophy'] = $this->userTrophy;
+		if (!empty($this->userTrophyIDs)) {
+			$data['userTrophyIDs'] = $this->userTrophyIDs;
 		}
-		if (!empty($this->notUserTrophy)) {
-			$data['notUserTrophy'] = $this->notUserTrophy;
+		if (!empty($this->notUserTrophyIDs)) {
+			$data['notUserTrophyIDs'] = $this->notUserTrophyIDs;
 		}
 		
 		if (!empty($data)) {
@@ -119,20 +119,20 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 		}
 		
 		return <<<HTML
-<dl{$this->getErrorClass('userTrophy')}>
-	<dt>{$this->getLabel('userTrophy')}</dt>
+<dl{$this->getErrorClass('userTrophyIDs')}>
+	<dt>{$this->getLabel('userTrophyIDs')}</dt>
 	<dd>
-		{$this->getOptionElements('userTrophy')}
-		{$this->getDescriptionElement('userTrophy')}
-		{$this->getErrorMessageElement('userTrophy')}
+		{$this->getOptionElements('userTrophyIDs')}
+		{$this->getDescriptionElement('userTrophyIDs')}
+		{$this->getErrorMessageElement('userTrophyIDs')}
 	</dd>
 </dl>
-<dl{$this->getErrorClass('notUserTrophy')}>
-	<dt>{$this->getLabel('notUserTrophy')}</dt>
+<dl{$this->getErrorClass('notUserTrophyIDs')}>
+	<dt>{$this->getLabel('notUserTrophyIDs')}</dt>
 	<dd>
-		{$this->getOptionElements('notUserTrophy')}
-		{$this->getDescriptionElement('notUserTrophy')}
-		{$this->getErrorMessageElement('notUserTrophy')}
+		{$this->getOptionElements('notUserTrophyIDs')}
+		{$this->getDescriptionElement('notUserTrophyIDs')}
+		{$this->getErrorMessageElement('notUserTrophyIDs')}
 	</dd>
 </dl>
 HTML;
@@ -179,27 +179,27 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function readFormParameters() {
-		if (isset($_POST['userTrophy'])) $this->userTrophy = ArrayUtil::toIntegerArray($_POST['userTrophy']);
-		if (isset($_POST['notUserTrophy'])) $this->notUserTrophy = ArrayUtil::toIntegerArray($_POST['notUserTrophy']);
+		if (isset($_POST['userTrophyIDs'])) $this->userTrophyIDs = ArrayUtil::toIntegerArray($_POST['userTrophyIDs']);
+		if (isset($_POST['notUserTrophyIDs'])) $this->notUserTrophyIDs = ArrayUtil::toIntegerArray($_POST['notUserTrophyIDs']);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->userTrophy = [];
-		$this->notUserTrophy = [];
+		$this->userTrophyIDs = [];
+		$this->notUserTrophyIDs = [];
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		if ($condition->userTrophy !== null) {
-			$this->userTrophy = $condition->userTrophy;
+		if ($condition->userTrophyIDs !== null) {
+			$this->userTrophyIDs = $condition->userTrophyIDs;
 		}
-		if ($condition->notUserTrophy !== null) {
-			$this->notUserTrophy = $condition->notUserTrophy;
+		if ($condition->notUserTrophyIDs !== null) {
+			$this->notUserTrophyIDs = $condition->notUserTrophyIDs;
 		}
 	}
 	
@@ -208,25 +208,25 @@ HTML;
 	 */
 	public function validate() {
 		$trophies = $this->getTrophies();
-		foreach ($this->userTrophy as $trophyID) {
+		foreach ($this->userTrophyIDs as $trophyID) {
 			if (!isset($trophies[$trophyID])) {
-				$this->errorMessages['userTrophy'] = 'wcf.global.form.error.noValidSelection';
+				$this->errorMessages['userTrophyIDs'] = 'wcf.global.form.error.noValidSelection';
 				
-				throw new UserInputException('userTrophy', 'noValidSelection');
+				throw new UserInputException('userTrophyIDs', 'noValidSelection');
 			}
 		}
-		foreach ($this->notUserTrophy as $trophyID) {
+		foreach ($this->notUserTrophyIDs as $trophyID) {
 			if (!isset($trophies[$trophyID])) {
-				$this->errorMessages['notUserTrophy'] = 'wcf.global.form.error.noValidSelection';
+				$this->errorMessages['notUserTrophyIDs'] = 'wcf.global.form.error.noValidSelection';
 				
-				throw new UserInputException('notUserTrophy', 'noValidSelection');
+				throw new UserInputException('notUserTrophyIDs', 'noValidSelection');
 			}
 		}
 		
-		if (count(array_intersect($this->notUserTrophy, $this->userTrophy))) {
-			$this->errorMessages['notUserTrophy'] = 'wcf.user.condition.notUserTrophy.error.userTrophyIntersection';
+		if (count(array_intersect($this->notUserTrophyIDs, $this->userTrophyIDs))) {
+			$this->errorMessages['notUserTrophyIDs'] = 'wcf.user.condition.notUserTrophy.error.userTrophyIntersection';
 			
-			throw new UserInputException('notUserTrophy', 'userTrophyIntersection');
+			throw new UserInputException('notUserTrophyIDs', 'userTrophyIntersection');
 		}
 	}
 	
