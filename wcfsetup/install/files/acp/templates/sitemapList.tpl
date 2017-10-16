@@ -34,7 +34,6 @@
 				{foreach from=$sitemapObjectTypes item=object}
 					<tr class="sitemapObjectRow">
 						<td class="columnIcon">
-							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.acp.sitemap.{if $object->isDisabled}isDisabled{else}enabled{/if}{/lang}" class="jsTooltip"><span class="icon icon16 fa{if !$object->isDisabled}-check{/if}-square-o"></span></a>
 							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 						</td>
 						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
