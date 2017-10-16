@@ -1,5 +1,11 @@
 {include file='header' pageTitle='wcf.acp.menu.link.maintenance.sitemap'}
 
+<script data-relocate="true">
+	$(function() {
+		new WCF.Action.Toggle('wcf\\data\\object\\type\\SitemapObjectTypeAction', '.sitemapObjectRow');
+	});
+</script>
+
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.menu.link.maintenance.sitemap{/lang}</h1>
@@ -34,7 +40,7 @@
 				{foreach from=$sitemapObjectTypes item=object}
 					<tr class="sitemapObjectRow">
 						<td class="columnIcon">
-							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.acp.sitemap.{if $object->isDisabled}isDisabled{else}enabled{/if}{/lang}" class="jsTooltip"><span class="icon icon16 fa{if !$object->isDisabled}-check{/if}-square-o"></span></a>
+							<span class="icon icon16 fa-{if !$object->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$object->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$object->objectTypeID}"></span>
 							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 						</td>
 						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>
