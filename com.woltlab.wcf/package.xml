@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.1.18">
+	<instructions type="update" fromversion="2.1.19">
 		<instruction type="file">files_pre_update.tar</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_pre_sql.php</instruction>
 		<instruction type="sql">update_part1.sql</instruction>
