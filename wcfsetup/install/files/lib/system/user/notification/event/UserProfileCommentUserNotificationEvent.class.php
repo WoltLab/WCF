@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
@@ -84,7 +83,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
 			'application' => 'wcf',
 			'variables' => [
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'owner' => new User($this->getUserNotificationObject()->objectID),
+				'owner' => UserProfileRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
 				'languageVariablePrefix' => 'wcf.user.notification.comment'
 			]
 		];
