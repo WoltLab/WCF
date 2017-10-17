@@ -40,6 +40,10 @@ if (COMPILER_TARGET_DEFAULT) {
 					this._labelList.push($($input.next('span')));
 				}
 			}, this));
+			
+			if (this._labelInput[0].value.length > 0) {
+				this._keyPressed();
+			}
 		},
 		
 		/**
