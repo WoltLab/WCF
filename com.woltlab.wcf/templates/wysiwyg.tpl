@@ -84,6 +84,7 @@
 				'wcf.editor.image.float.left': '{lang}wcf.editor.image.float.left{/lang}',
 				'wcf.editor.image.float.right': '{lang}wcf.editor.image.float.right{/lang}',
 				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
+				'wcf.editor.image.source.error.insecure': '{lang}wcf.editor.image.source.error.insecure{/lang}',
 				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
 				
 				'wcf.editor.link.add': '{lang}wcf.editor.link.add{/lang}',
@@ -235,6 +236,7 @@
 					buttons: buttonOptions,
 					buttonMobile: buttonMobile,
 					customButtons: customButtons,
+					forceSecureImages: {if MESSAGE_FORCE_SECURE_IMAGES}true{else}false{/if},
 					highlighters: highlighters,
 					media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 					mediaUrl: '{link controller='Media' id=-123456789 thumbnail='void' forceFrontend=true}{/link}'

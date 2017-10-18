@@ -1373,6 +1373,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[„Über den Autor“ anzeigen]]></item>
 		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Bilder]]></item>
 		<item name="wcf.acp.option.module_article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Nur sichere Bilder in Nachrichten erlauben]]></item>
+		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Bilder dürfen nur über das verschlüsselte „https“-Protokoll eingebunden werden. Bereits in bestehenden Nachrichten hinterlegte Bilder werden zwangsweise auf dieses Protokoll umgeschrieben.]]></item>
 		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Zwischenspeicherung von externen Bilder aktivieren]]></item>
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Nur Bilder aus unverschlüsselten Quellen zwischenspeichern]]></item>
@@ -2804,6 +2806,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.image.float.left"><![CDATA[Links]]></item>
 		<item name="wcf.editor.image.float.right"><![CDATA[Rechts]]></item>
 		<item name="wcf.editor.image.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.editor.image.source.error.insecure"><![CDATA[Unsichere Adressen („http://“) wurden für Bilder deaktiviert, bitte verwenden Sie nur sichere Adressen („https://“).]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
 		
 		<item name="wcf.editor.link.add"><![CDATA[Link einfügen]]></item>

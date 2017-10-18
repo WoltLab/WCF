@@ -91,7 +91,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					if ($this->bypassProxy($urlComponents['host'])) {
 						// check if page was requested over a secure connection
 						// but the link is insecure
-						if (RouteHandler::secureConnection() && $urlComponents['scheme'] === 'http') {
+						if ((MESSAGE_FORCE_SECURE_IMAGES || RouteHandler::secureConnection()) && $urlComponents['scheme'] === 'http') {
 							// rewrite protocol to `https`
 							$element->setAttribute('src', preg_replace('~^http~', 'https', $src));
 						}
@@ -126,6 +126,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						
 						$element->setAttribute('srcset', $srcset);
 					}
+				}
+				else if (MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
+					// rewrite protocol to `https`
+					$element->setAttribute('src', preg_replace('~^http~', 'https', $src));
 				}
 			}
 		}

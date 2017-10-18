@@ -1366,6 +1366,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
 		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Images]]></item>
 		<item name="wcf.acp.option.module_article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Allow secure images only]]></item>
+		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Images may only be embedded using the encrypted “https”-protocol. Images in already existing messages will be force-rewritten to use the secure protocol.]]></item>
 		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable image proxy]]></item>
 		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
@@ -2752,6 +2754,7 @@ Errors are:
 		<item name="wcf.editor.image.float.left"><![CDATA[Left]]></item>
 		<item name="wcf.editor.image.float.right"><![CDATA[Right]]></item>
 		<item name="wcf.editor.image.source"><![CDATA[Source]]></item>
+		<item name="wcf.editor.image.source.error.insecure"><![CDATA[Insecure sources (“http://”) for images have been disabled, please use secure sources only (“https://”).]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		
 		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>
