@@ -3217,8 +3217,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Inhalt löschen]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den gemeldeten Inhalt wirklich löschen?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Begründung (optional)]]></item>
-		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung löschen]]></item>
-		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diese Meldung wirklich löschen?]]></item>
+		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung schließen]]></item>
+		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diese Meldung wirklich schließen?]]></item>
 		<item name="wcf.moderation.report.removeReport.markAsJustified"><![CDATA[Meldung zusätzlich als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>

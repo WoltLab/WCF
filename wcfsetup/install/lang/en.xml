@@ -3164,8 +3164,8 @@ Errors are:
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Content]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
-		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>
-		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to delete this report?]]></item>
+		<item name="wcf.moderation.report.removeReport"><![CDATA[Close Report]]></item>
+		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to close this report?]]></item>
 		<item name="wcf.moderation.report.removeReport.markAsJustified"><![CDATA[Also mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
