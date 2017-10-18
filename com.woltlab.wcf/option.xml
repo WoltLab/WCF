@@ -1068,6 +1068,7 @@ Pinterest</defaultvalue>
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<enableoptions>image_proxy_insecure_only,image_proxy_expiration,image_proxy_host_whitelist</enableoptions>
 			</option>
 			<option name="image_proxy_insecure_only">
 				<categoryname>message.general.image</categoryname>
