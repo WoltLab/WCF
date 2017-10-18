@@ -13,6 +13,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\OptionPackageInstallationPlugin;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
+use wcf\system\style\StyleHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
@@ -123,9 +124,22 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 			OptionEditor::resetCache();
 		}
 		
-		if ($this->packageInstallationPlugin->pluginName === 'language') {
-			LanguageFactory::getInstance()->clearCache();
-			LanguageFactory::getInstance()->deleteLanguageCache();
+		switch ($this->packageInstallationPlugin->pluginName) {
+			case 'file':
+				StyleHandler::resetStylesheets(false);
+				break;
+				
+			case 'language':
+				LanguageFactory::getInstance()->clearCache();
+				LanguageFactory::getInstance()->deleteLanguageCache();
+				break;
+				
+			case 'acpTemplate':
+			case 'template':
+			case 'templateListener':
+				// resets the compiled templates
+				LanguageFactory::getInstance()->deleteLanguageCache();
+				break;
 		}
 		
 		return [
