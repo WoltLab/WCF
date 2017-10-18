@@ -263,7 +263,7 @@
 	</div>
 {/if}
 
-{if $relatedArticles|count}
+{if $relatedArticles !== null && $relatedArticles|count}
 	<section class="section relatedArticles">
 		<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
 		
