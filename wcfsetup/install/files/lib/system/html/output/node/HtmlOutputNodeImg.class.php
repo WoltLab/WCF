@@ -2,8 +2,10 @@
 namespace wcf\system\html\output\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
@@ -81,6 +83,22 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						continue;
 					}
 					
+					if (IMAGE_PROXY_INSECURE_ONLY && $urlComponents['scheme'] === 'https') {
+						// proxy is enabled for insecure connections only
+						continue;
+					}
+					
+					if ($this->bypassProxy($urlComponents['host'])) {
+						// check if page was requested over a secure connection
+						// but the link is insecure
+						if (RouteHandler::secureConnection() && $urlComponents['scheme'] === 'http') {
+							// rewrite protocol to `https`
+							$element->setAttribute('src', preg_replace('~^http~', 'https', $src));
+						}
+						
+						continue;
+					}
+					
 					$element->setAttribute('data-valid', 'true');
 					
 					if (!empty($urlComponents['path']) && preg_match('~\.svg~', basename($urlComponents['path']))) {
@@ -111,6 +129,63 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Validates the domain name against the list of own domains
+	 * and whitelisted ones with wildcard support.
+	 * 
+	 * @param       string          $hostname
+	 * @return      boolean
+	 */
+	protected function bypassProxy($hostname) {
+		static $hosts = null;
+		static $validHosts = [];
+		
+		if ($hosts === null) {
+			$whitelist = explode("\n", StringUtil::unifyNewlines(IMAGE_PROXY_HOST_WHITELIST));
+			foreach ($whitelist as $host) {
+				$isWildcard = false;
+				if (mb_strpos($host, '*') !== false) {
+					$host = preg_replace('~^(\*\.)+~', '', $host);
+					if (mb_strpos($host, '*') !== false || $host === '') {
+						// bad host
+						continue;
+					}
+					
+					$isWildcard = true;
+				}
+				
+				$host = mb_strtolower($host);
+				if (!isset($hosts[$host])) $hosts[$host] = $isWildcard;
+			}
+			
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				$host = mb_strtolower($application->domainName);
+				if (!isset($hosts[$host])) $hosts[$host] = false;
+			}
+		}
+		
+		$hostname = mb_strtolower($hostname);
+		if (isset($hosts[$hostname]) || isset($validHosts[$hostname])) {
+			return true;
+		}
+		else {
+			// check wildcard hosts
+			foreach ($hosts as $host => $isWildcard) {
+				if ($isWildcard && mb_strpos($hostname, $host) !== false) {
+					// the prepended dot will ensure that `example.com` matches only
+					// on domains like `foo.example.com` but not on `bar-example.com`
+					if (StringUtil::endsWith($hostname, '.' . $host)) {
+						$validHosts[$hostname] = $hostname;
+						
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
