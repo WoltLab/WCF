@@ -181,8 +181,8 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * @param	{Element}	el		reference element
 		 */
 		insertAfter: function(newEl, el) {
-			if (el.nextElementSibling !== null) {
-				el.parentNode.insertBefore(newEl, el.nextElementSibling);
+			if (el.nextSibling !== null) {
+				el.parentNode.insertBefore(newEl, el.nextSibling);
 			}
 			else {
 				el.parentNode.appendChild(newEl);
