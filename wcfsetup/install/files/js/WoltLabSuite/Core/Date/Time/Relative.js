@@ -22,8 +22,6 @@ define(['Dom/ChangeListener', 'Language', 'WoltLabSuite/Core/Date/Util', 'WoltLa
 		 * Transforms <time> elements on init and binds event listeners.
 		 */
 		setup: function() {
-			this._refresh();
-			
 			new Repeating(this._refresh.bind(this), 60000);
 			
 			DomChangeListener.add('WoltLabSuite/Core/Date/Time/Relative', this._refresh.bind(this));
