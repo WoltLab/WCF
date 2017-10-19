@@ -6,7 +6,7 @@
 			</div>
 			
 			<p><small>{@$boxComment->getExcerpt(50)}</small></p>
-			<p><small><a href="{link controller='User' object=$boxComment->getUserProfile()}{/link}" class="userLink" data-user-id="{@$boxComment->userID}">{$boxComment->username}</a> - {@$boxComment->time|time}</small></p>
+			<p><small><a href="{link controller='User' object=$boxComment->getUserProfile()}{/link}" class="userLink" data-user-id="{@$boxComment->userID}">{$boxComment->username}</a> <span class="separatorLeft">{@$boxComment->time|time}</span></small></p>
 		</li>
 	{/foreach}
 </ul>
