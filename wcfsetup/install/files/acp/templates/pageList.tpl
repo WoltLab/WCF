@@ -76,6 +76,7 @@
 				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="originIsNotSystem" value="1"{if $originIsNotSystem} checked{/if}> {lang}wcf.acp.page.originIsNotSystem{/lang}</label>
+					<label><input type="checkbox" name="controllerCustomURL" value="1"{if $controllerCustomURL} checked{/if}> {lang}wcf.acp.page.customURL{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -99,6 +100,7 @@
 			{if $applicationPackageID}{capture append=linkParameters}&applicationPackageID={@$applicationPackageID}{/capture}{/if}
 			{if $pageType}{capture append=linkParameters}&pageType={@$pageType|rawurlencode}{/capture}{/if}
 			{if $originIsNotSystem}{capture append=linkParameters}&originIsNotSystem=1{/capture}{/if}
+			{if $controllerCustomURL}{capture append=linkParameters}&controllerCustomURL=1{/capture}{/if}
 			
 			{pages print=true assign=pagesLinks controller="PageList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
@@ -147,6 +149,9 @@
 						<td class="columnTitle columnName">{if $page->isLandingPage}<span class="icon icon16 fa-home jsTooltip" title="{lang}wcf.acp.page.isLandingPage{/lang}"></span> {/if}<a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnURL">
 							{$page->getDisplayLink()}
+							{if $page->controllerCustomURL}
+								<span class="icon icon16 fa-exclamation-circle blue jsTooltip" title="{lang}wcf.acp.page.customURL{/lang}"></span>
+							{/if}
 						</td>
 						<td class="columnText columnPageType">{lang}wcf.acp.page.type.{@$page->pageType}{/lang}</td>
 						<td class="columnDate columnLastUpdateTime">{@$page->lastUpdateTime|time}</td>

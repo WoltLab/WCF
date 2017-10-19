@@ -99,6 +99,12 @@ class PageListPage extends SortablePage {
 	public $originIsNotSystem = 0;
 	
 	/**
+	 * filters the list of pages showing only pages with custom urls
+	 * @var boolean
+	 */
+	public $controllerCustomURL = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -111,6 +117,7 @@ class PageListPage extends SortablePage {
 		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
 		if (!empty($_REQUEST['showPageAddDialog'])) $this->showPageAddDialog = 1;
 		if (!empty($_REQUEST['originIsNotSystem'])) $this->originIsNotSystem = 1;
+		if (!empty($_REQUEST['controllerCustomURL'])) $this->controllerCustomURL = 1;
 		
 		// get available applications
 		$applicationList = new ApplicationList();
@@ -142,6 +149,9 @@ class PageListPage extends SortablePage {
 		if ($this->originIsNotSystem) {
 			$this->objectList->getConditionBuilder()->add('page.originIsSystem = ?', [0]);
 		}
+		if ($this->controllerCustomURL) {
+			$this->objectList->getConditionBuilder()->add("page.controllerCustomURL <> ''");
+		}
 	}
 	
 	/**
@@ -159,7 +169,8 @@ class PageListPage extends SortablePage {
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'showPageAddDialog' => $this->showPageAddDialog,
-			'originIsNotSystem' => $this->originIsNotSystem
+			'originIsNotSystem' => $this->originIsNotSystem,
+			'controllerCustomURL' => $this->controllerCustomURL
 		]);
 	}
 }
