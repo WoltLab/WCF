@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\DatabaseObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 
 /**
@@ -152,6 +153,12 @@ class Style extends DatabaseObject {
 	}
 	
 	protected function getFaviconPath($filename, $absolutePath = true) {
+		if ($filename === 'manifest.json') {
+			if (ApplicationHandler::getInstance()->getActiveApplication()->domainName !== ApplicationHandler::getInstance()->getApplicationByID(1)->domainName) {
+				return WCF::getPath() . 'images/favicon/corsProxy.php?type=manifest' . ($this->hasFavicon ? '&amp;styleID=' . $this->styleID : '');
+			}
+		}
+		
 		$path = 'images/favicon/'. ($this->hasFavicon ? $this->styleID : 'default') . ".{$filename}";
 		if ($absolutePath) {
 			return WCF::getPath() . $path;
