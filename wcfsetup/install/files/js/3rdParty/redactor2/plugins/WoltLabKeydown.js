@@ -691,8 +691,14 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					this.code.syncFire = false;
 					this.keydown.removeEmptyLists();
 					
+					var filter = '';
+					if (this.opts.keepStyleAttr.length !== 0) {
+						filter = ',' + this.opts.keepStyleAttr.join(',');
+					}
+					
 					// WoltLab modification: allow style tag on `<span>`
-					this.core.editor().find('*[style]').not('span, img, #redactor-image-box, #redactor-image-editter').removeAttr('style');
+					var $styleTags = this.core.editor().find('*[style]');
+					$styleTags.not('span, img, figure, iframe, #redactor-image-box, #redactor-image-editter, [data-redactor-style-cache], [data-redactor-span]' + filter).removeAttr('style');
 					
 					this.keydown.formatEmpty(e);
 					
