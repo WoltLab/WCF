@@ -231,7 +231,6 @@ define(
 					if (quickOptions && navigation.childElementCount) {
 						quickOptions.classList.add('active');
 						quickOptions.addEventListener(WCF_CLICK_EVENT, (function (event) {
-							console.log(event);
 							if (_enabled && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
 								event.preventDefault();
 								event.stopPropagation();
