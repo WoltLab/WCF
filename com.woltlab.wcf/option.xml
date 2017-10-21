@@ -1521,6 +1521,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>2</minvalue>
 				<maxvalue>100</maxvalue>
 			</option>
+			<option name="poll_full_width">
+				<categoryname>message.general.poll</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<!-- /message.general.poll -->
 			
 			<!-- cms.media.thumbnail -->

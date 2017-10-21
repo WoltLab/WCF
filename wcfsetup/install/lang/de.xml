@@ -1264,6 +1264,7 @@
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
+		<item name="wcf.acp.option.poll_full_width"><![CDATA[Umfrage über die gesamte Breite darstellen]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Mitgliederliste]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer-Code]]></item>

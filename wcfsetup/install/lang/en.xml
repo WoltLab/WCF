@@ -1249,6 +1249,7 @@
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Poll Options]]></item>
+		<item name="wcf.acp.option.poll_full_width"><![CDATA[Display polls over the entire width]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
