@@ -512,6 +512,11 @@
 				<optiontype>desktopNotificationApplicationSelect</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="page_logo_link_to_app_default">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="head_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>

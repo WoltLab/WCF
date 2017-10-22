@@ -644,6 +644,15 @@ class WCF {
 	}
 	
 	/**
+	 * Returns the invoked application.
+	 * 
+	 * @return      Application
+	 */
+	public static function getActiveApplication() {
+		return ApplicationHandler::getInstance()->getActiveApplication();
+	}
+	
+	/**
 	 * Loads an application on runtime, do not use this outside the package installation.
 	 * 
 	 * @param	integer		$packageID

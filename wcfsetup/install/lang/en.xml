@@ -1417,6 +1417,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.force_login.description"><![CDATA[Visitors are required to log-in themselves to access the page.]]></item>
 		<item name="wcf.acp.option.desktop_notification_package_id"><![CDATA[Primary Domain for Desktop Notifications]]></item>
 		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop Notifications will be enabled for the selected app only, including all other apps that use the exact same domain.]]></item>
+		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Page logo links to the start page of the active app]]></item>
+		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Disabling this option will cause the link to always point to the global landing page instead. This option enforces the behavior known from previous versions when disabled.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">

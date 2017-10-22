@@ -123,6 +123,22 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
+				if (!empty($parameters['application']) && $abbreviation !== 'wcf') {
+					$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+					if ($application === null) {
+						throw new \RuntimeException("Unknown abbreviation '" . $abbreviation . "'.");
+					}
+					
+					$landingPage = PageCache::getInstance()->getPage($application->landingPageID);
+					if ($landingPage === null) {
+						$landingPage = PageCache::getInstance()->getPageByController(WCF::getApplicationObject($application)->getPrimaryController());
+					}
+					
+					if ($landingPage !== null) {
+						return $landingPage->getLink();
+					}
+				}
+				
 				return PageCache::getInstance()->getLandingPage()->getLink();
 			}
 		}
