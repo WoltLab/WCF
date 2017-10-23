@@ -2845,8 +2845,12 @@ Errors are:
 		<item name="wcf.global.exception.title"><![CDATA[An error has occured]]></item>
 		<item name="wcf.global.exception.subtitle"><![CDATA[Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.filter.button.clear"><![CDATA[Clear Filter]]></item>
+		<item name="wcf.global.filter.button.visibility"><![CDATA[Visibility Filter]]></item>
 		<item name="wcf.global.filter.error.noMatches"><![CDATA[Filter does not match anything.]]></item>
 		<item name="wcf.global.filter.placeholder"><![CDATA[Filter by name]]></item>
+		<item name="wcf.global.filter.visibility.activeOnly"><![CDATA[Show marked items only]]></item>
+		<item name="wcf.global.filter.visibility.highlightActive"><![CDATA[Highlight marked items]]></item>
+		<item name="wcf.global.filter.visibility.showAll"><![CDATA[Show all]]></item>
 		<item name="wcf.global.success"><![CDATA[The action completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>

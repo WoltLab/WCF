@@ -2897,8 +2897,12 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.exception.title"><![CDATA[Ein Fehler ist aufgetreten]]></item>
 		<item name="wcf.global.exception.subtitle"><![CDATA[Interner Fehlercode: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.filter.button.clear"><![CDATA[Filter löschen]]></item>
+		<item name="wcf.global.filter.button.visibility"><![CDATA[Ansicht filtern]]></item>
 		<item name="wcf.global.filter.error.noMatches"><![CDATA[Keine Übereinstimmungen gefunden.]]></item>
 		<item name="wcf.global.filter.placeholder"><![CDATA[Nach Name filtern]]></item>
+		<item name="wcf.global.filter.visibility.activeOnly"><![CDATA[Nur markierte Einträge anzeigen]]></item>
+		<item name="wcf.global.filter.visibility.highlightActive"><![CDATA[Aktive Einträge hervorheben]]></item>
+		<item name="wcf.global.filter.visibility.showAll"><![CDATA[Alles anzeigen]]></item>
 		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Die Änderungen wurden gespeichert.]]></item>

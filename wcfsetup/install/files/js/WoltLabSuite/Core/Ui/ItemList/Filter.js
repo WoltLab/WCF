@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList/Filter
  */
-define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], function (Core, EventKey, Language, List, StringUtil, DomUtil) {
+define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/SimpleDropdown'], function (Core, EventKey, Language, List, StringUtil, DomUtil, UiSimpleDropdown) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -15,7 +15,10 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], funct
 			init: function() {},
 			_buildItems: function() {},
 			_prepareItem: function() {},
-			_keyup: function() {}
+			_keyup: function() {},
+			_toggleVisibility: function () {},
+			_setupVisibilityFilter: function () {},
+			_setVisibility: function () {}
 		};
 		return Fake;
 	}
@@ -50,6 +53,8 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], funct
 				throw new Error("Filter only works with elements with the CSS class 'scrollableCheckboxList'.");
 			}
 			
+			elData(element, 'filter', 'showAll');
+			
 			var container = elCreate('div');
 			container.className = 'itemListFilter';
 			
@@ -81,12 +86,22 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], funct
 				this.reset();
 			}).bind(this));
 			
+			var visibilityButton = elCreate('a');
+			visibilityButton.href = '#';
+			visibilityButton.className = 'button inputSuffix jsTooltip';
+			visibilityButton.title = Language.get('wcf.global.filter.button.visibility');
+			visibilityButton.innerHTML = '<span class="icon icon16 fa-eye"></span>';
+			visibilityButton.addEventListener(WCF_CLICK_EVENT, this._toggleVisibility.bind(this));
+			
 			inputAddon.appendChild(input);
 			inputAddon.appendChild(clearButton);
+			inputAddon.appendChild(visibilityButton);
 			
 			container.appendChild(inputAddon);
 			
 			this._container = container;
+			this._dropdown = null;
+			this._dropdownId = '';
 			this._element = element;
 			this._input = input;
 			this._items = null;
@@ -210,6 +225,120 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util'], funct
 					DomUtil.insertAfter(innerError, this._container);
 				}
 			}
+		},
+		
+		/**
+		 * Toggles the visibility mode for marked items.
+		 *
+		 * @param       {Event}         event
+		 * @protected
+		 */
+		_toggleVisibility: function (event) {
+			event.preventDefault();
+			event.stopPropagation();
+			
+			var button = event.currentTarget;
+			if (this._dropdown === null) {
+				var dropdown = elCreate('ul');
+				dropdown.className = 'dropdownMenu';
+				
+				['activeOnly', 'highlightActive', 'showAll'].forEach((function (type) {
+					var link = elCreate('a');
+					elData(link, 'type', type);
+					link.href = '#';
+					link.textContent = Language.get('wcf.global.filter.visibility.' + type);
+					link.addEventListener(WCF_CLICK_EVENT, this._setVisibility.bind(this));
+					
+					var li = elCreate('li');
+					li.appendChild(link);
+					
+					if (type === 'showAll') {
+						li.className = 'active';
+						
+						var divider = elCreate('li');
+						divider.className = 'dropdownDivider';
+						dropdown.appendChild(divider);
+					}
+					
+					dropdown.appendChild(li);
+				}).bind(this));
+				
+				UiSimpleDropdown.initFragment(button, dropdown);
+				
+				// add `active` classes required for the visibility filter
+				this._setupVisibilityFilter();
+				
+				this._dropdown = dropdown;
+				this._dropdownId = button.id;
+			}
+			
+			UiSimpleDropdown.toggleDropdown(button.id, button);
+		},
+		
+		/**
+		 * Set-ups the visibility filter by assigning an active class to the
+		 * list items that hold the checkboxes and observing the checkboxes
+		 * for any changes.
+		 *
+		 * This process involves quite a few DOM changes and new event listeners,
+		 * therefore we'll delay this until the filter has been accessed for
+		 * the first time, because none of these changes matter before that.
+		 *
+		 * @protected
+		 */
+		_setupVisibilityFilter: function () {
+			var nextSibling = this._element.nextSibling;
+			var parent = this._element.parentNode;
+			var scrollTop = this._element.scrollTop;
+			
+			// mass-editing of DOM elements is slow while they're part of the document 
+			var fragment = document.createDocumentFragment();
+			fragment.appendChild(this._element);
+			
+			elBySelAll('li', this._element, function(li) {
+				var checkbox = elBySel('input[type="checkbox"]', li);
+				if (checkbox.checked) li.classList.add('active');
+				
+				checkbox.addEventListener('change', function() {
+					li.classList[(checkbox.checked ? 'add' : 'remove')]('active');
+				});
+			});
+			
+			// re-insert the modified DOM
+			parent.insertBefore(this._element, nextSibling);
+			this._element.scrollTop = scrollTop;
+		},
+		
+		/**
+		 * Sets the visibility of marked items.
+		 *
+		 * @param       {Event}         event
+		 * @protected
+		 */
+		_setVisibility: function (event) {
+			event.preventDefault();
+			
+			var link = event.currentTarget;
+			var type = elData(link, 'type');
+			
+			UiSimpleDropdown.close(this._dropdownId);
+			
+			if (elData(this._element, 'filter') === type) {
+				// filter did not change
+				return;
+			}
+			
+			elData(this._element, 'filter', type);
+			
+			elBySel('.active', this._dropdown).classList.remove('active');
+			link.parentNode.classList.add('active');
+			
+			var button = elById(this._dropdownId);
+			button.classList[(type === 'showAll' ? 'remove' : 'add')]('active');
+			
+			var icon = elBySel('.icon', button);
+			icon.classList[(type === 'showAll' ? 'add' : 'remove')]('fa-eye');
+			icon.classList[(type === 'showAll' ? 'remove' : 'add')]('fa-eye-slash');
 		}
 	};
 	
