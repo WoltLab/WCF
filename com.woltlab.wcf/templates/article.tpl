@@ -165,14 +165,6 @@
 		</div>
 	</div>
 	
-	{if ENABLE_SHARE_BUTTONS}
-		<section class="section jsOnly">
-			<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
-			
-			{include file='shareButtons'}
-		</section>
-	{/if}
-	
 	{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
 		<div class="section articleAboutAuthor">
 			<h2 class="sectionTitle">{lang}wcf.article.aboutAuthor{/lang}</h2>
@@ -200,6 +192,18 @@
 		</div>
 	{/if}
 </div>
+
+{if ENABLE_SHARE_BUTTONS}
+	{capture assign='footerBoxes'}
+		<section class="box boxFullWidth jsOnly">
+			<h2 class="boxTitle">{lang}wcf.message.share{/lang}</h2>
+			
+			<div class="boxContent">
+				{include file='shareButtons'}
+			</div>
+		</section>
+	{/capture}
+{/if}
 
 <footer class="contentFooter">
 	{hascontent}
