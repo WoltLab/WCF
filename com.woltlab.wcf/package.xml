@@ -57,5 +57,7 @@
 		
 		<instruction type="mediaProvider" />
 		<instruction type="option" />
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_beta1_to_beta2.php</instruction>
 	</instructions>
 </package>
