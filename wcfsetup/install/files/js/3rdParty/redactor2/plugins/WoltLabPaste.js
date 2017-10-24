@@ -84,11 +84,11 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
-				if (pastedHtml !== null) {
-					return pastedHtml;
-				}
-				else if (pastedPlainText) {
-					return pastedPlainText;
+				if (pastedHtml !== null || pastedPlainText !== null) {
+					// prevent page scrolling
+					this.tmpScrollTop = undefined;
+					
+					return pastedHtml || pastedPlainText;
 				}
 				
 				var returnValue = mpGetPasteBoxCode.call(this, pre);
