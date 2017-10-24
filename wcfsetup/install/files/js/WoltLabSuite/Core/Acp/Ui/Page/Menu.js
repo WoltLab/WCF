@@ -64,7 +64,7 @@ define(['Dictionary', 'EventHandler', 'perfect-scrollbar', 'Ui/Screen'], functio
 					perfectScrollbar.destroy(_acpPageMenu);
 					perfectScrollbar.destroy(_acpPageSubMenu);
 					
-					_perfectScrollbarActive = true;
+					_perfectScrollbarActive = false;
 				},
 				setup: enablePerfectScrollbar
 			});
