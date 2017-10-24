@@ -9,11 +9,11 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			// IE 11
 			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
 			
-			var firefoxPlainText = null;
+			var pastedHtml = null, pastedPlainText = null;
 			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
-				firefoxPlainText = null;
+				pastedPlainText = pastedHtml = null;
 				
 				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
 				isKbd = (!isCode && this.utils.isCurrentOrParent('kbd'));
@@ -33,16 +33,16 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						return WCF.String.escapeHTML(str);
 					}).bind(this);
 				}
-				else if (this.detect.isFirefox()) {
+				else if (!isIe) {
 					var types = e.originalEvent.clipboardData.types;
 					if (types.length === 1 && types[0] === 'text/plain') {
 						var tmp = WCF.String.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
 						
-						firefoxPlainText = '';
+						pastedPlainText = '';
 						var lines = tmp.split("\n");
 						if (lines.length === 1) {
 							// paste single-line content as real plain text
-							firefoxPlainText = tmp;
+							pastedPlainText = tmp;
 						}
 						else {
 							// plain newline characters do not work out well, mimic HTML instead
@@ -50,17 +50,47 @@ $.Redactor.prototype.WoltLabPaste = function() {
 								line = line.trim();
 								if (line === '') line = '<br>';
 								
-								firefoxPlainText += '<p>' + line + '</p>';
+								pastedPlainText += '<p>' + line + '</p>';
 							});
 						}
 					}
+					else if (types.indexOf('text/html') !== -1) {
+						pastedHtml = e.originalEvent.clipboardData.getData('text/html');
+						
+						if (pastedHtml.match(/^<html>.+<body>(.+)<\/body>\s*<\/html>$/)) {
+							pastedHtml = RegExp.$1;
+						}
+						else {
+							pastedHtml = null;
+						}
+					}
+				}
+				
+				if (pastedPlainText !== null || pastedHtml !== null) {
+					e.preventDefault();
 				}
 				
 				mpInit.call(this, e);
 			}).bind(this);
 			
+			var mpCreatePasteBox = this.paste.createPasteBox;
+			this.paste.createPasteBox = (function (pre) {
+				if (pastedHtml === null && pastedPlainText === null) {
+					return mpCreatePasteBox.call(this, pre);
+				}
+				
+				// do nothing
+			}).bind(this);
+			
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
+				if (pastedHtml !== null) {
+					return pastedHtml;
+				}
+				else if (pastedPlainText) {
+					return pastedPlainText;
+				}
+				
 				var returnValue = mpGetPasteBoxCode.call(this, pre);
 				
 				if (isKbd) {
@@ -71,10 +101,6 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				// pasting in IE 11 where clipboard data is more reliable
 				if (pre && (!returnValue || isIe)) {
 					return clipboardData;
-				}
-				
-				if (firefoxPlainText !== null) {
-					return firefoxPlainText;
 				}
 				
 				return returnValue;
