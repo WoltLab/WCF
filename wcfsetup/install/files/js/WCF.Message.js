@@ -840,6 +840,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					editorPrefix: this._messageEditorIDPrefix,
 					
 					messageSelector: this._messageContainerSelector,
+					quoteManager: quoteManager || null,
 					
 					callbackDropdownInit: this._callbackDropdownInit.bind(this)
 				});
