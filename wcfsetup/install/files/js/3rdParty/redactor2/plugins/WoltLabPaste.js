@@ -143,7 +143,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			this.paste.detectClipboardUpload = (function (e) {
 				e = e.originalEvent || e;
 				
-				var file;
+				var file = null;
 				if (isIe) {
 					if (!window.clipboardData.files.length) {
 						return false;
@@ -157,45 +157,70 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				else {
 					var clipboard = e.clipboardData;
 					
-					// prevent safari fake url
+					// Safari
 					var types = clipboard.types;
 					if (Array.isArray(types) && types.indexOf('public.tiff') !== -1) {
-						e.preventDefault();
-						return false;
-					}
-					
-					if (!clipboard.items || !clipboard.items.length) {
-						return;
-					}
-					
-					if (this.detect.isWebkit()) {
-						var item, hasFile = false, hasHtml = false;
-						for (var i = 0, length = clipboard.items.length; i < length; i++) {
-							item = clipboard.items[i];
-							if (item.kind === 'string' && item.type === 'text/html') hasHtml = true;
-							else if (item.kind === 'file') hasFile = true;
+						if (clipboard.files.length === 0) {
+							// pasted an `<img>` element from clipboard
+							return;
 						}
-						
-						// pasted an `<img>` element from clipboard
-						if (hasFile && hasHtml) {
-							return false;
-						}
-					}
-					
-					var cancelPaste = false;
-					file = clipboard.items[0].getAsFile();
-					if (file === null) {
-						if (this.detect.isWebkit() && clipboard.items.length > 1) {
-							file = clipboard.items[1].getAsFile();
+						else if (clipboard.files.length === 1) {
+							// This may not work if the file was copied from Finder for whatever
+							// reasons and it is not possible to try/catch this error (wow!).
+							// 
+							// It does not have any side-effects when failing other than canceling
+							// out the `paste` event, which is pretty much what we're looking for
+							// anyway. It does work from certain apps, but Safari exposes too little
+							// information to tell them apart, so we just have to try it.
+							// 
+							// See https://bugs.webkit.org/show_bug.cgi?id=171504
+							file = clipboard.files[0];
 							cancelPaste = true;
 							
 							if (file !== null) {
 								e.preventDefault();
 							}
 						}
-						
-						if (file === null) {
+						else {
+							e.preventDefault();
 							return false;
+						}
+					}
+					
+					if (file === null) {
+						if (!clipboard.items || !clipboard.items.length) {
+							return;
+						}
+						
+						if (this.detect.isWebkit()) {
+							var item, hasFile = false, hasHtml = false;
+							for (var i = 0, length = clipboard.items.length; i < length; i++) {
+								item = clipboard.items[i];
+								if (item.kind === 'string' && item.type === 'text/html') hasHtml = true;
+								else if (item.kind === 'file') hasFile = true;
+							}
+							
+							// pasted an `<img>` element from clipboard
+							if (hasFile && hasHtml) {
+								return false;
+							}
+						}
+						
+						var cancelPaste = false;
+						file = clipboard.items[0].getAsFile();
+						if (file === null) {
+							if (this.detect.isWebkit() && clipboard.items.length > 1) {
+								file = clipboard.items[1].getAsFile();
+								cancelPaste = true;
+								
+								if (file !== null) {
+									e.preventDefault();
+								}
+							}
+							
+							if (file === null) {
+								return false;
+							}
 						}
 					}
 				}
