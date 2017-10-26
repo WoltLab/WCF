@@ -62,7 +62,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						
 						// remove document fragments
 						if (pastedHtml.match(/^<html>[\s\S]*?<body>([\s\S]+)<\/body>\s*<\/html>$/)) {
-							pastedHtml = RegExp.$1;
+							pastedHtml = RegExp.$1.replace(/^\s*(?:<!--StartFragment-->)(.+)(?:<!--EndFragment-->)?\s*$/, '$1');
 						}
 					}
 				}
@@ -166,6 +166,20 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					
 					if (!clipboard.items || !clipboard.items.length) {
 						return;
+					}
+					
+					if (this.detect.isWebkit()) {
+						var item, hasFile = false, hasHtml = false;
+						for (var i = 0, length = clipboard.items.length; i < length; i++) {
+							item = clipboard.items[i];
+							if (item.kind === 'string' && item.type === 'text/html') hasHtml = true;
+							else if (item.kind === 'file') hasFile = true;
+						}
+						
+						// pasted an `<img>` element from clipboard
+						if (hasFile && hasHtml) {
+							return false;
+						}
 					}
 					
 					var cancelPaste = false;
