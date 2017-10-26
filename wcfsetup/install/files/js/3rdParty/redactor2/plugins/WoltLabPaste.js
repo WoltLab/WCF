@@ -55,13 +55,14 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						}
 					}
 					else if (types.indexOf('text/html') !== -1) {
+						// handles all major browsers except iOS Safari which does not expose `text/html`,
+						// but instead gives us `public.rtf` (which of course is completely useless)
+						// https://bugs.webkit.org/show_bug.cgi?id=19893
 						pastedHtml = e.originalEvent.clipboardData.getData('text/html');
 						
-						if (pastedHtml.match(/^<html>.+<body>(.+)<\/body>\s*<\/html>$/)) {
+						// remove document fragments
+						if (pastedHtml.match(/^<html>[\s\S]*?<body>([\s\S]+)<\/body>\s*<\/html>$/)) {
 							pastedHtml = RegExp.$1;
-						}
-						else {
-							pastedHtml = null;
 						}
 					}
 				}
@@ -76,17 +77,47 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var mpCreatePasteBox = this.paste.createPasteBox;
 			this.paste.createPasteBox = (function (pre) {
 				if (pastedHtml === null && pastedPlainText === null) {
-					return mpCreatePasteBox.call(this, pre);
+					mpCreatePasteBox.call(this, pre);
 				}
 				
 				// do nothing
 			}).bind(this);
+			
+			require(['Environment'], (function(Environment) {
+				if (Environment.platform() === 'ios' && Environment.browser() === 'safari') {
+					var mpAppendPasteBox = this.paste.appendPasteBox;
+					this.paste.appendPasteBox = (function() {
+						// iOS doesn't like `position: fixed` and font-sizes below 16px that much
+						this.$pasteBox.css({
+							fontSize: '16px',
+							height: '1px',
+							left: '1px',
+							overflow: 'hidden',
+							position: 'absolute',
+							top: (~~(window.innerHeight / 4) + window.pageYOffset) + 'px',
+							width: '1px'
+						});
+						
+						mpAppendPasteBox.call(this);
+					}).bind(this);
+				}
+			}).bind(this));
 			
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
 				if (pastedHtml !== null || pastedPlainText !== null) {
 					// prevent page scrolling
 					this.tmpScrollTop = undefined;
+					
+					// DEBUG CODE TO VERIFY PASTE HANDLING -- REMOVE BEFORE RELEASE
+					var box = elBySel('.redactor-box');
+					var p = box.nextSibling;
+					if (p === null || p.nodeName !== 'P') {
+						p = elCreate('p');
+						box.parentNode.insertBefore(p, box.nextSibling);
+					}
+					
+					p.textContent = WCF.getUUID();
 					
 					return pastedHtml || pastedPlainText;
 				}
