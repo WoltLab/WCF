@@ -150,22 +150,46 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			this.core.editor().on('keydown.redactor', this.keydown.init.bind(this));
 			
 			this.keydown.onArrowDown = (function() {
-				var tags = this.WoltLabKeydown._getBlocks();
+				var next, tag, tags = this.WoltLabKeydown._getBlocks();
 				
 				for (var i = 0; i < tags.length; i++) {
-					if (tags[i]) {
-						this.keydown.insertAfterLastElement(tags[i]);
+					tag = tags[i];
+					if (tag) {
+						if (!this.utils.isEndOfElement(tag)) {
+							continue;
+						}
+						
+						next = tag.nextElementSibling;
+						if (next !== null && next.nodeName === 'P') {
+							break;
+						}
+						
+						this.keydown.insertAfterLastElement(tag);
 						return false;
 					}
 				}
 			}).bind(this);
 			
 			this.keydown.onArrowUp = (function() {
-				var tags = this.WoltLabKeydown._getBlocks();
+				var previous, tag, tags = this.WoltLabKeydown._getBlocks();
 				
 				for (var i = 0; i < tags.length; i++) {
-					if (tags[i]) {
-						this.keydown.insertBeforeFirstElement(tags[i]);
+					tag = tags[i];
+					if (tag) {
+						if (!this.utils.isStartOfElement(tag)) {
+							continue;
+						}
+						
+						previous = tag.previousElementSibling;
+						if (previous !== null && previous.nodeName !== 'P') {
+							var p = $(this.opts.emptyHtml)[0];
+							tag.parentNode.insertBefore(p, tag);
+							
+							this.caret.setEnd(p);
+							break;
+						}
+						
+						this.keydown.insertBeforeFirstElement(tag);
 						return false;
 					}
 				}
