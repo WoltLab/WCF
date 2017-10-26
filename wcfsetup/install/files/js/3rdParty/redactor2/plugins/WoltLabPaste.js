@@ -1,6 +1,8 @@
 $.Redactor.prototype.WoltLabPaste = function() {
 	"use strict";
 	
+	var _environment = null;
+	
 	return {
 		init: function () {
 			var clipboardData = null;
@@ -10,6 +12,41 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
 			
 			var pastedHtml = null, pastedPlainText = null;
+			
+			// special `init()` implementation for Chrome on Android which seems to have
+			// some serious issues with `setTimeout()` during a `paste` event
+			var mpInitChromeOnAndroid = (function (e) {
+				this.rtePaste = true;
+				var pre = !!(this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
+				
+				this.utils.saveScroll();
+				this.selection.save();
+				this.paste.createPasteBox(pre);
+				
+				var html = this.paste.getPasteBoxCode(pre);
+				
+				// buffer
+				this.buffer.set();
+				this.selection.restore();
+				
+				this.utils.restoreScroll();
+				
+				// paste info
+				var data = this.clean.getCurrentType(html);
+				
+				// clean
+				html = this.clean.onPaste(html, data);
+				
+				// callback
+				var returned = this.core.callback('paste', html);
+				html = (typeof returned === 'undefined') ? html : returned;
+				
+				this.paste.insert(html, data);
+				this.rtePaste = false;
+				
+				// clean pre breaklines
+				if (pre) this.clean.cleanPre();
+			}).bind(this);
 			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
@@ -71,20 +108,18 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					e.preventDefault();
 				}
 				
-				mpInit.call(this, e);
-			}).bind(this);
-			
-			var mpCreatePasteBox = this.paste.createPasteBox;
-			this.paste.createPasteBox = (function (pre) {
-				if (pastedHtml === null && pastedPlainText === null) {
-					mpCreatePasteBox.call(this, pre);
+				if (_environment.platform() === 'android' && _environment.browser() === 'chrome') {
+					mpInitChromeOnAndroid(e);
 				}
-				
-				// do nothing
+				else {
+					mpInit.call(this, e);
+				}
 			}).bind(this);
 			
 			require(['Environment'], (function(Environment) {
-				if (Environment.platform() === 'ios' && Environment.browser() === 'safari') {
+				_environment = Environment;
+				
+				if (_environment.platform() === 'ios') {
 					var mpAppendPasteBox = this.paste.appendPasteBox;
 					this.paste.appendPasteBox = (function() {
 						// iOS doesn't like `position: fixed` and font-sizes below 16px that much
@@ -102,6 +137,15 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}).bind(this);
 				}
 			}).bind(this));
+			
+			var mpCreatePasteBox = this.paste.createPasteBox;
+			this.paste.createPasteBox = (function (pre) {
+				if (pastedHtml === null && pastedPlainText === null) {
+					mpCreatePasteBox.call(this, pre);
+				}
+				
+				// do nothing
+			}).bind(this);
 			
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
