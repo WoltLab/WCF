@@ -153,16 +153,6 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					// prevent page scrolling
 					this.tmpScrollTop = undefined;
 					
-					// DEBUG CODE TO VERIFY PASTE HANDLING -- REMOVE BEFORE RELEASE
-					var box = elBySel('.redactor-box');
-					var p = box.nextSibling;
-					if (p === null || p.nodeName !== 'P') {
-						p = elCreate('p');
-						box.parentNode.insertBefore(p, box.nextSibling);
-					}
-					
-					p.textContent = WCF.getUUID();
-					
 					return pastedHtml || pastedPlainText;
 				}
 				
