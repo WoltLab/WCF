@@ -21,7 +21,7 @@ use wcf\system\WCF;
  */
 class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @var	inheritDoc
+	 * @inheritDoc
 	 */
 	protected $requireACP = ['testEvent'];
 	
