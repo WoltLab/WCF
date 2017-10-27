@@ -165,7 +165,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						}
 						
 						this.keydown.insertAfterLastElement(tag);
-						return false;
+						return;
 					}
 				}
 			}).bind(this);
@@ -176,8 +176,8 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				for (var i = 0; i < tags.length; i++) {
 					tag = tags[i];
 					if (tag) {
-						if (!this.utils.isStartOfElement(tag)) {
-							continue;
+						if (!this.utils.isStartOfElement()) {
+							break;
 						}
 						
 						previous = tag.previousElementSibling;
@@ -185,12 +185,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 							var p = $(this.opts.emptyHtml)[0];
 							tag.parentNode.insertBefore(p, tag);
 							
-							this.caret.setEnd(p);
+							this.caret.end(p);
 							break;
 						}
 						
 						this.keydown.insertBeforeFirstElement(tag);
-						return false;
+						return;
 					}
 				}
 			}).bind(this);
