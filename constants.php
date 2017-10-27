@@ -93,6 +93,7 @@ define('PROFILE_MAIL_USE_CAPTCHA', 1);
 define('SEARCH_USE_CAPTCHA', 1);
 define('RECAPTCHA_PUBLICKEY', '');
 define('RECAPTCHA_PRIVATEKEY', '');
+define('RECAPTCHA_PRIVATEKEY_INVISIBLE', '');
 define('TIMEZONE', 'Europe/London');
 define('GOOGLE_MAPS_ZOOM', '13');
 define('GOOGLE_MAPS_TYPE', 'hybrid');
