@@ -46,6 +46,12 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					return;
 				}
 				
+				// calling `caret.end()` on `<p><br></p>` will cause a new
+				// blank line to be inserted after the node instead
+				if (node.nodeName === 'P' && node.childNodes.length === 1 && node.childNodes[0].nodeName === 'BR') {
+					return this.caret.before(node.childNodes[0]);
+				}
+				
 				return mpEnd.call(this, node);
 			}).bind(this);
 			
