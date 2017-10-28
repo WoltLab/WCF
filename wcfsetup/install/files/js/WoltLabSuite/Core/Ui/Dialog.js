@@ -547,7 +547,7 @@ define(
 				var floatWidth = parseFloat(window.getComputedStyle(data.content).width);
 				var needsFix = (Math.round(floatWidth) % 2) !== 0;
 				
-				data.content.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+				data.content.parentNode.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
 			}
 		},
 		
