@@ -51,7 +51,7 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
 		
 		$options = [];
 		foreach ($objectTypes as $objectType) {
-			$options[$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.user.recentActivity.' . $objectType->objectType);
+			$options[$objectType->objectTypeID] = WCF::getLanguage()->getDynamicVariable('wcf.user.recentActivity.' . $objectType->objectType);
 		}
 		
 		return $options;
