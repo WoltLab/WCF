@@ -153,12 +153,15 @@ $.Redactor.prototype.WoltLabSource = function() {
 			// lists have additional whitespace inside
 			html = html.replace(new RegExp('<(ol|ul)(' + patternTagAttributes + ')>\\s*', 'g'), '<$1$2>\n');
 			
+			// closing lists may have an adjacent closing list item, causing a depth mismatch
+			html = html.replace(/(<\/[ou]l>)<\/li>/g, '$1\n</li>');
+			
 			// split by line break
 			var parts = html.split(/\n/);
 			var depth = 0;
 			var i, length, line;
 			var reIsBlockStart = new RegExp('^<(' + blockTags + ')');
-			var reIsBlockEnd = new RegExp('^</(?:' + blockTags + ')>$');
+			var reIsBlockEnd = new RegExp('^</(' + blockTags + ')>$');
 			var increaseDepth = false;
 			for (i = 0, length = parts.length; i < length; i++) {
 				line = parts[i];
@@ -170,7 +173,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 					}
 				}
 				else if (line.match(reIsBlockEnd)) {
-					depth--;
+					if (blocksAsInline.indexOf(RegExp.$1) === -1) {
+						depth--;
+					}
 				}
 				
 				if (depth > 0) {
