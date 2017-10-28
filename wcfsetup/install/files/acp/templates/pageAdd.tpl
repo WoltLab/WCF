@@ -475,9 +475,13 @@
 						<script data-relocate="true">
 							require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
 								Language.addObject({
+									'wcf.global.filter.button.visibility': '{lang}wcf.global.filter.button.visibility{/lang}',
 									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
 									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',
-									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}'
+									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}',
+									'wcf.global.filter.visibility.activeOnly': '{lang}wcf.global.filter.visibility.activeOnly{/lang}',
+									'wcf.global.filter.visibility.highlightActive': '{lang}wcf.global.filter.visibility.highlightActive{/lang}',
+									'wcf.global.filter.visibility.showAll': '{lang}wcf.global.filter.visibility.showAll{/lang}'
 								});
 								
 								new UiItemListFilter('boxVisibilitySettings');
