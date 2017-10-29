@@ -45,6 +45,7 @@
 						<option value="{@$package->packageID}"{if $selectedPackages[$package->packageID]|isset} selected{/if}>{lang}{$package->packageName}{/lang} {section name=i loop=$loop}&nbsp;{/section}&nbsp;&nbsp;{$package->package}</option>
 					{/foreach}
 				</select>
+				<small>{lang}wcf.global.multiSelect{/lang}</small>
 			</dd>
 		</dl>
 		
