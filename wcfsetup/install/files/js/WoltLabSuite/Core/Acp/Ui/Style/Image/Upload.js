@@ -12,11 +12,12 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 	/**
 	 * @constructor
 	 */
-	function AcpUiStyleImageUpload(styleId, tmpHash) {
+	function AcpUiStyleImageUpload(styleId, tmpHash, is2x) {
+		this._is2x = (is2x === true);
 		this._styleId = ~~styleId;
 		this._tmpHash = tmpHash;
 		
-		Upload.call(this, 'uploadImage', 'styleImage', {
+		Upload.call(this, 'uploadImage' + (this._is2x ? '2x' : ''), 'styleImage' + (this._is2x ? '2x' : ''), {
 			className: 'wcf\\data\\style\\StyleAction'
 		});
 	}
@@ -33,6 +34,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 		 */
 		_getParameters: function() {
 			return {
+				is2x: this._is2x,
 				styleId: this._styleId,
 				tmpHash: this._tmpHash
 			};

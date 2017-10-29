@@ -4,7 +4,6 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -26,7 +25,7 @@ class StyleEditForm extends StyleAddForm {
 	 * style object
 	 * @var	Style
 	 */
-	public $style = null;
+	public $style;
 	
 	/**
 	 * style id

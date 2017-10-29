@@ -1888,6 +1888,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Use fluid width]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102px × 64px, exceeding images will be scaled.]]></item>
+		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>
+		<item name="wcf.acp.style.image2x.description"><![CDATA[This image is used on high resolution displays such as the Apple Retina or 4K/UHD-displays. The image must be double times the dimensions of the normal image to work.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Image Path]]></item>
 		<item name="wcf.acp.style.imagePath.description"><![CDATA[The path for optional images for your style, the directory should be located within “images”.]]></item>
 		<item name="wcf.acp.style.importStyle"><![CDATA[Import Style]]></item>

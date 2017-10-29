@@ -220,30 +220,47 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			return;
 		}
 		
-		$fileExtension = WCF::getSession()->getVar('stylePreview-'.$this->parameters['tmpHash']);
-		if ($fileExtension !== null) {
-			$oldFilename = WCF_DIR.'images/stylePreview-'.$this->parameters['tmpHash'].'.'.$fileExtension;
-			if (file_exists($oldFilename)) {
-				$filename = 'stylePreview-'.$style->styleID.'.'.$fileExtension;
-				if (@rename($oldFilename, WCF_DIR.'images/'.$filename)) {
-					// delete old file if it has a different file extension
-					if ($style->image != $filename) {
-						@unlink(WCF_DIR.'images/'.$style->image);
-						
-						// update filename in database
-						$sql = "UPDATE	wcf".WCF_N."_style
-							SET	image = ?
-							WHERE	styleID = ?";
-						$statement = WCF::getDB()->prepareStatement($sql);
-						$statement->execute([
-							$filename,
-							$style->styleID
-						]);
+		foreach (['', '@2x'] as $type) {
+			$fileExtension = WCF::getSession()->getVar('stylePreview-' . $this->parameters['tmpHash'] . $type);
+			if ($fileExtension !== null) {
+				$oldFilename = WCF_DIR . 'images/stylePreview-' . $this->parameters['tmpHash'] . $type . '.' . $fileExtension;
+				if (file_exists($oldFilename)) {
+					$filename = 'stylePreview-' . $style->styleID . $type . '.' . $fileExtension;
+					if (@rename($oldFilename, WCF_DIR . 'images/' . $filename)) {
+						// delete old file if it has a different file extension
+						if ($type === '') {
+							if ($style->image != $filename) {
+								@unlink(WCF_DIR . 'images/' . $style->image);
+								
+								// update filename in database
+								$sql = "UPDATE	wcf" . WCF_N . "_style
+									SET	image = ?
+									WHERE	styleID = ?";
+								$statement = WCF::getDB()->prepareStatement($sql);
+								$statement->execute([
+									$filename, $style->styleID
+								]);
+							}
+						}
+						else {
+							if ($style->image2x != $filename) {
+								@unlink(WCF_DIR . 'images/' . $style->image2x);
+								
+								// update filename in database
+								$sql = "UPDATE	wcf" . WCF_N . "_style
+									SET	image2x = ?
+									WHERE	styleID = ?";
+								$statement = WCF::getDB()->prepareStatement($sql);
+								$statement->execute([
+									$filename, $style->styleID
+								]);
+							}
+						}
 					}
-				}
-				else {
-					// remove temp file
-					@unlink($oldFilename);
+					else {
+						// remove temp file
+						@unlink($oldFilename);
+					}
 				}
 			}
 		}
@@ -340,6 +357,7 @@ BROWSERCONFIG;
 			throw new PermissionDeniedException();
 		}
 		
+		$this->readBoolean('is2x', true);
 		$this->readString('tmpHash');
 		$this->readInteger('styleID', true);
 		
@@ -373,6 +391,8 @@ BROWSERCONFIG;
 		$files = $this->parameters['__files']->getFiles();
 		$file = $files[0];
 		
+		$multiplier = ($this->parameters['is2x']) ? 2 : 1;
+		
 		try {
 			if (!$file->getValidationErrorType()) {
 				// shrink preview image if necessary
@@ -391,11 +411,11 @@ BROWSERCONFIG;
 							throw new UserInputException('image');
 					}
 					
-					if ($imageData[0] > Style::PREVIEW_IMAGE_MAX_WIDTH || $imageData[1] > Style::PREVIEW_IMAGE_MAX_HEIGHT) {
+					if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH * $multiplier) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT * $multiplier)) {
 						$adapter = ImageHandler::getInstance()->getAdapter();
 						$adapter->loadFile($fileLocation);
 						$fileLocation = FileUtil::getTemporaryFilename();
-						$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT, false);
+						$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH * $multiplier, Style::PREVIEW_IMAGE_MAX_HEIGHT * $multiplier, false);
 						$adapter->writeImage($thumbnail, $fileLocation);
 					}
 				}
@@ -404,23 +424,23 @@ BROWSERCONFIG;
 				}
 				
 				// move uploaded file
-				if (@copy($fileLocation, WCF_DIR.'images/stylePreview-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension())) {
+				if (@copy($fileLocation, WCF_DIR.'images/stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension())) {
 					@unlink($fileLocation);
 					
 					// store extension within session variables
-					WCF::getSession()->register('stylePreview-'.$this->parameters['tmpHash'], $file->getFileExtension());
+					WCF::getSession()->register('stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : ''), $file->getFileExtension());
 					
 					if ($this->parameters['styleID']) {
 						$this->updateStylePreviewImage($this->style);
 						
 						return [
-							'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['styleID'].'.'.$file->getFileExtension()
+							'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['styleID'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension()
 						];
 					}
 					
 					// return result
 					return [
-						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension()
+						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension()
 					];
 				}
 				else {

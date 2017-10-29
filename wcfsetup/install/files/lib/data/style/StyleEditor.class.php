@@ -144,7 +144,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xpath = $xml->xpath();
 		
 		$data = [
-			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
+			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'image2x' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
 			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => '', 'apiVersion' => '3.0'
 		];
@@ -217,6 +217,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							
 							case 'copyright':
 							case 'image':
+							case 'image2x':
 							case 'license':
 								$data[$element->tagName] = $element->nodeValue;
 							break;
@@ -500,33 +501,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleData['packageID'] = $packageID;
 			$style = new StyleEditor(self::create($styleData));
 			
-			// import preview image
-			if (!empty($data['image'])) {
-				$fileExtension = mb_substr($data['image'], mb_strrpos($data['image'], '.'));
-				$index = $tar->getIndexByFilename($data['image']);
-				if ($index !== false) {
-					$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
-					$tar->extract($index, $filename);
-					FileUtil::makeWritable($filename);
-			
-					if (file_exists($filename)) {
-						try {
-							if (($imageData = getimagesize($filename)) !== false) {
-								switch ($imageData[2]) {
-									case IMAGETYPE_PNG:
-									case IMAGETYPE_JPEG:
-									case IMAGETYPE_GIF:
-										$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
-								}
-							}
-						}
-						catch (SystemException $e) {
-							// broken image
-						}
-					}
-				}
-			}
-			
 			// handle descriptions
 			if (!empty($data['description'])) {
 				self::saveLocalizedDescriptions($style, $data['description']);
@@ -553,6 +527,35 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleData['variables'] = $variables;
 			
 			$style->update($styleData);
+		}
+		
+		// import preview image
+		foreach (['image', 'image2x'] as $type) {
+			if (!empty($data[$type])) {
+				$fileExtension = mb_substr($data[$type], mb_strrpos($data[$type], '.'));
+				$index = $tar->getIndexByFilename($data[$type]);
+				if ($index !== false) {
+					$filename = WCF_DIR . 'images/stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension;
+					$tar->extract($index, $filename);
+					FileUtil::makeWritable($filename);
+					
+					if (file_exists($filename)) {
+						try {
+							if (($imageData = getimagesize($filename)) !== false) {
+								switch ($imageData[2]) {
+									case IMAGETYPE_PNG:
+									case IMAGETYPE_JPEG:
+									case IMAGETYPE_GIF:
+										$style->update([$type => 'stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension]);
+								}
+							}
+						}
+						catch (SystemException $e) {
+							// broken image
+						}
+					}
+				}
+			}
 		}
 		
 		$tar->close();
@@ -651,6 +654,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if ($this->image && @file_exists(WCF_DIR.'images/'.$this->image)) {
 			$styleTar->add(WCF_DIR.'images/'.$this->image, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image)));
 		}
+		if ($this->image2x && @file_exists(WCF_DIR.'images/'.$this->image2x)) {
+			$styleTar->add(WCF_DIR.'images/'.$this->image2x, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image2x)));
+		}
 		
 		// fetch style description
 		$sql = "SELECT		language.languageCode, language_item.languageItemValue
@@ -680,6 +686,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->writeElement('version', $this->styleVersion);
 		$xml->writeElement('apiVersion', $this->apiVersion);
 		if ($this->image) $xml->writeElement('image', $this->image);
+		if ($this->image2x) $xml->writeElement('image2x', $this->image2x);
 		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
 		if ($this->license) $xml->writeElement('license', $this->license);
 		$xml->endElement();

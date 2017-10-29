@@ -34,7 +34,9 @@
 		{foreach from=$objects item=style}
 			<li>
 				<div class="box64">
-					<span><img src="{@$style->getPreviewImage()}" alt=""></span>
+					<span>
+						<img src="{@$style->getPreviewImage()}" srcset="{@$style->getPreviewImage2x()} 2x" height="64" alt="">
+					</span>
 					<div class="details">
 						<div class="containerHeadline">
 							<h3><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h3>

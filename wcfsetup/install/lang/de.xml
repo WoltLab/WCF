@@ -1945,6 +1945,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>
+		<item name="wcf.acp.style.image2x.description"><![CDATA[Diese Grafik wird für hochauflösende Bildschirme (z. B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet und muss doppelt so groß sein wie das normale Vorschaubild.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
 		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Stil eigene Grafiken benötigt, {if LANGUAGE_USE_INFORMAL_VARIANT}solltest du{else}sollten Sie{/if} diese in einem Unterordner des Ordners „images“ ablegen. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.importStyle"><![CDATA[Stil importieren]]></item>

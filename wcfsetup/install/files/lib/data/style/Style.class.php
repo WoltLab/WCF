@@ -22,6 +22,7 @@ use wcf\system\WCF;
  * @property-read	string		$styleVersion		version number of the style
  * @property-read	string		$styleDate		date when the used version of the style has been published
  * @property-read	string		$image			link or path (relative to `WCF_DIR`) to the preview image of the style
+ * @property-read	string		$image2x		link or path (relative to `WCF_DIR`) to the preview image of the style (2x version)
  * @property-read	string		$copyright		copyright text of the style
  * @property-read	string		$license		name of the style's license 
  * @property-read	string		$authorName		name(s) of the style's author(s)
@@ -134,6 +135,19 @@ class Style extends DatabaseObject {
 		}
 		
 		return WCF::getPath().'images/stylePreview.png';
+	}
+	
+	/**
+	 * Returns the style preview image path (2x version).
+	 * 
+	 * @return	string
+	 */
+	public function getPreviewImage2x() {
+		if ($this->image2x && file_exists(WCF_DIR.'images/'.$this->image2x)) {
+			return WCF::getPath().'images/'.$this->image2x;
+		}
+		
+		return WCF::getPath().'images/stylePreview@2x.png';
 	}
 	
 	public function getFaviconAppleTouchIcon() {

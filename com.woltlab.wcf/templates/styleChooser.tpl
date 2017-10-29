@@ -3,7 +3,7 @@
 		<li data-style-id="{@$style->styleID}">
 			<div class="box64">
 				<span>
-					<img src="{@$style->getPreviewImage()}" alt="">
+					<img src="{@$style->getPreviewImage()}" srcset="{@$style->getPreviewImage2x()} 2x" height="64" alt="">
 				</span>
 				<div class="details">
 					<div class="containerHeadline">

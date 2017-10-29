@@ -13,7 +13,8 @@
 		});
 		
 		{if $action == 'edit'}new AcpUiStyleFaviconUpload({@$style->styleID});{/if}
-		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
+		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', false);
+		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', true);
 		
 		new UiToggleInput('input[name="useGoogleFont"]', {
 			show: ['#wcfFontFamilyGoogleContainer']
@@ -253,6 +254,16 @@
 						</div>
 						<div id="uploadImage"></div>
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
+					</dd>
+				</dl>
+				<dl{if $errorField == 'image'} class="formError"{/if}>
+					<dt><label for="image2x">{lang}wcf.acp.style.image2x{/lang}</label></dt>
+					<dd>
+						<div class="selectedImagePreview">
+							<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview@2x.png{else}{@$style->getPreviewImage2x()}{/if}" alt="" id="styleImage2x">
+						</div>
+						<div id="uploadImage2x"></div>
+						<small>{lang}wcf.acp.style.image2x.description{/lang}</small>
 					</dd>
 				</dl>
 				{if $availableTemplateGroups|count}
