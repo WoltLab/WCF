@@ -16,7 +16,8 @@
 	
 	// sheet-like presentation of content containers
 	.content > .section,
-	.content > form {
+	.content > form,
+	.sectionContainer {
 		border: 1px solid $wcfContentContainerBorder;
 		background-color: $wcfContentContainerBackground;
 		padding: 20px;
@@ -44,12 +45,18 @@
 		}
 	}
 	
+	.content > .section + .sectionContainer,
+	.content > form + .sectionContainer {
+		margin-top: 40px;
+	}
+	
 	.content > form {
 		margin-top: 40px;
 	}
 	
 	.contentHeader + .section,
-	.contentHeader + form {
+	.contentHeader + form,
+	.contentHeader + .sectionContainer {
 		margin-top: 30px;
 	}
 	
