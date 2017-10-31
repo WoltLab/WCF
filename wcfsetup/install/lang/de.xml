@@ -1528,7 +1528,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Paketname]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Updates suchen]]></item>
-		<item name="wcf.acp.package.searchForUpdates.benchmark"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}deaktiviere{else}deaktivieren Sie{/if} den Benchmark, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach Updates suchen.]]></item>
+		<item name="wcf.acp.package.searchForUpdates.benchmark"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}deaktiviere{else}deaktivieren Sie{/if} den Benchmark, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach Updates {if LANGUAGE_USE_INFORMAL_VARIANT}suchst{else}suchen{/if}.]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} System ist auf dem aktuellen Stand, es wurden keine ausstehenden Updates gefunden.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Paket hochladen]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Paketdatei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
