@@ -233,15 +233,15 @@ define(['Language'], function(Language) {
 		 */
 		getTimeElement: function(date) {
 			var time = elCreate('time');
-			time.classList = 'datetime';
+			time.className = 'datetime';
 			
 			var formattedDate = this.formatDate(date);
 			var formattedTime = this.formatTime(date);
 			
 			elAttr(time, 'datetime', this.format(date, 'c'));
 			elData(time, 'timestamp', (date.getTime() - date.getMilliseconds()) / 1000);
-			elData(time, 'date', this.formatDate(date));
-			elData(time, 'time', this.formatTime(date));
+			elData(time, 'date', formattedDate);
+			elData(time, 'time', formattedTime);
 			elData(time, 'offset', date.getTimezoneOffset() * 60); // PHP returns minutes, JavaScript returns seconds
 			
 			if (date.getTime() > new Date().getTime()) {
