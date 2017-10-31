@@ -99,60 +99,60 @@ define(
 					fileElement.removeAttribute('id');
 					DomUtil.identify(fileElement);
 				}
+				
+				var cells = elByTag('TD', fileElement), cell;
+				for (var i = 0, length = cells.length; i < length; i++) {
+					cell = cells[i];
 					
-					var cells = elByTag('TD', fileElement), cell;
-					for (var i = 0, length = cells.length; i < length; i++) {
-						cell = cells[i];
-						
-						if (cell.classList.contains('columnMark')) {
-							elBySelAll('[data-object-id]', cell, elHide);
-						}
-						else if (cell.classList.contains('columnIcon')) { 
-							elBySelAll('[data-object-id]', cell, elHide);
-							
-							elByClass('mediaEditButton', cell)[0].classList.add('jsMediaEditButton');
-							elData(elByClass('jsDeleteButton', cell)[0], 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage', {
-								title: file.name
-							}));
-						}
-						else if (cell.classList.contains('columnFilename')) {
-							// replace copied image with spinner
-							var image = elByTag('IMG', cell);
-							
-							if (!image.length) {
-								image = elByClass('icon48', cell);
-							}
-							
-							var spinner = elCreate('span');
-							spinner.classList = 'icon icon48 fa-spinner mediaThumbnail';
-							
-							DomUtil.replaceElement(image[0], spinner);
-							
-							// replace title and uploading user
-							var ps = elBySelAll('.box48 > div > p', cell);
-							ps[0].textContent = file.name;
-							
-							var userLink = elByTag('A', ps[1])[0];
-							if (!userLink) {
-								userLink = elCreate('a');
-								elByTag('SMALL', ps[1])[0].appendChild(userLink);
-							}
-							
-							userLink.setAttribute('href', User.getLink());
-							userLink.textContent = User.username;
-						}
-						else if (cell.classList.contains('columnUploadTime')) {
-							cell.innerHTML = '';
-							cell.append(DateUtil.getTimeElement(new Date(), new Date()));
-						}
-						else if (cell.classList.contains('columnDigits')) {
-							cell.textContent = FileUtil.formatFilesize(file.size);
-						}
-						else {
-							// empty the other cells
-							cell.innerHTML = '';
-						}
+					if (cell.classList.contains('columnMark')) {
+						elBySelAll('[data-object-id]', cell, elHide);
 					}
+					else if (cell.classList.contains('columnIcon')) {
+						elBySelAll('[data-object-id]', cell, elHide);
+						
+						elByClass('mediaEditButton', cell)[0].classList.add('jsMediaEditButton');
+						elData(elByClass('jsDeleteButton', cell)[0], 'confirm-message-html', Language.get('wcf.media.delete.confirmMessage', {
+							title: file.name
+						}));
+					}
+					else if (cell.classList.contains('columnFilename')) {
+						// replace copied image with spinner
+						var image = elByTag('IMG', cell);
+						
+						if (!image.length) {
+							image = elByClass('icon48', cell);
+						}
+						
+						var spinner = elCreate('span');
+						spinner.classList = 'icon icon48 fa-spinner mediaThumbnail';
+						
+						DomUtil.replaceElement(image[0], spinner);
+						
+						// replace title and uploading user
+						var ps = elBySelAll('.box48 > div > p', cell);
+						ps[0].textContent = file.name;
+						
+						var userLink = elByTag('A', ps[1])[0];
+						if (!userLink) {
+							userLink = elCreate('a');
+							elByTag('SMALL', ps[1])[0].appendChild(userLink);
+						}
+						
+						userLink.setAttribute('href', User.getLink());
+						userLink.textContent = User.username;
+					}
+					else if (cell.classList.contains('columnUploadTime')) {
+						cell.innerHTML = '';
+						cell.append(DateUtil.getTimeElement(new Date(), new Date()));
+					}
+					else if (cell.classList.contains('columnDigits')) {
+						cell.textContent = FileUtil.formatFilesize(file.size);
+					}
+					else {
+						// empty the other cells
+						cell.innerHTML = '';
+					}
+				}
 				
 				DomUtil.prepend(fileElement, this._target);
 				
