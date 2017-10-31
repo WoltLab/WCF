@@ -226,7 +226,7 @@ define(['Language'], function(Language) {
 		 * 
 		 * Note: The actual content of the element is empty and is expected
 		 * to be automatically updated by `WoltLabSuite/Core/Date/Time/Relative`
-		 * after the DOM change listener has been triggered.
+		 * (for dates not in the future) after the DOM change listener has been triggered.
 		 * 
 		 * @param	{Date}		date	displayed date
 		 * @return	{HTMLElement}	`time` element
@@ -234,6 +234,9 @@ define(['Language'], function(Language) {
 		getTimeElement: function(date) {
 			var time = elCreate('time');
 			time.classList = 'datetime';
+			
+			var formattedDate = this.formatDate(date);
+			var formattedTime = this.formatTime(date);
 			
 			elAttr(time, 'datetime', this.format(date, 'c'));
 			elData(time, 'timestamp', (date.getTime() - date.getMilliseconds()) / 1000);
@@ -243,6 +246,8 @@ define(['Language'], function(Language) {
 			
 			if (date.getTime() > new Date().getTime()) {
 				elData(time, 'is-future-date', 'true');
+				
+				time.textContent = Language.get('wcf.date.dateTimeFormat').replace('%time%', formattedTime).replace('%date%', formattedDate);
 			}
 			
 			return time;
