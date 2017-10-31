@@ -75,6 +75,18 @@
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
 				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
+			{if $package->license != ''}
+				<dl>
+					<dt>{lang}wcf.acp.package.license{/lang}</dt>
+					<dd>
+						{if $package->licenseURL != ''}
+							<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->licenseURL|rawurlencode}" class="externalURL">{$package->license}</a>
+						{else}
+							{$package->license}
+						{/if}
+					</dd>
+				</dl>
+			{/if}
 			{if $pluginStoreFileID}
 				{capture assign=_storeUrl}https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/{/capture}
 				<dl>

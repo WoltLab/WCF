@@ -97,6 +97,16 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="license" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="language" type="xs:string" />
+							<xs:attribute name="url" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="applicationdirectory" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 			<xs:element name="packageurl" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
 			<xs:element name="isapplication" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />

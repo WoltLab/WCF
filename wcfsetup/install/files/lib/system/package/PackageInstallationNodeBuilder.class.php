@@ -418,6 +418,8 @@ class PackageInstallationNodeBuilder {
 				'isApplication' => $this->installation->getArchive()->getPackageInfo('isApplication'),
 				'author' => $this->installation->getArchive()->getAuthorInfo('author'),
 				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
+				'license' => $this->installation->getArchive()->getLocalizedPackageInfo('license'),
+				'licenseURL' => $this->installation->getArchive()->getLocalizedPackageInfo('licenseURL') !== null ? $this->installation->getArchive()->getLocalizedPackageInfo('licenseURL') : '',
 				'installDate' => TIME_NOW,
 				'updateDate' => TIME_NOW,
 				'requirements' => $this->requirements
