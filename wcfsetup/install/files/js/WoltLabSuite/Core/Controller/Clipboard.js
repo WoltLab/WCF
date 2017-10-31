@@ -365,6 +365,11 @@ define(
 			if (fireEvent) {
 				triggerEvent();
 			}
+
+			//noinspection JSUnresolvedVariable
+			if (data.parameters.refreshPageAfterExecution === 'true') {
+				window.location.reload();
+			}
 		},
 		
 		/**
@@ -410,6 +415,11 @@ define(
 				
 				this._loadMarkedItems();
 			}).bind(this));
+
+			//noinspection JSUnresolvedVariable
+			if (data.parameters.refreshPageAfterExecution === 'true') {
+				window.location.reload();
+			}
 		},
 		
 		/**

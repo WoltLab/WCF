@@ -34,6 +34,12 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	protected $supportedActions = [];
 	
 	/**
+	 * list of clipboard actions which need a reload of the page after execution
+	 * @var	string[]
+	 */
+	protected $refreshPageActions = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
@@ -50,6 +56,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 		if (in_array($action->actionName, $this->actionClassActions)) {
 			$item->addParameter('actionName', $action->actionName);
 			$item->addParameter('className', $this->getClassName());
+			$item->addParameter('refreshPageAfterExecution', in_array($action->actionName, $this->refreshPageActions) ? 'true' : 'false');
 		}
 		
 		// validate objects if relevant method exists and set valid object ids
