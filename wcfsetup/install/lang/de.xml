@@ -1733,6 +1733,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warnung: Die Ausführung dieser Aktion kann bei umfangreichen Datenbanken sehr lange dauern.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Kommentare aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Aktualisiert die Kommentare]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response"><![CDATA[Antworten auf Kommentare aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response.description"><![CDATA[Aktualisiert die Antworten auf Kommentare]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page"><![CDATA[Seiten aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Aktualisiert den Suchindex für CMS-Seiten]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Sitemap aktualisieren]]></item>

@@ -52,7 +52,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * captcha object type used for comments
 	 * @var	ObjectType
 	 */
-	public $captchaObjectType = null;
+	public $captchaObjectType;
 	
 	/**
 	 * @inheritDoc
@@ -63,13 +63,13 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * comment object
 	 * @var	Comment
 	 */
-	protected $comment = null;
+	protected $comment;
 	
 	/**
 	 * comment processor
 	 * @var	ICommentManager
 	 */
-	protected $commentProcessor = null;
+	protected $commentProcessor;
 	
 	/**
 	 * @var HtmlInputProcessor
@@ -80,19 +80,19 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * response object
 	 * @var	CommentResponse
 	 */
-	protected $response = null;
+	protected $response;
 	
 	/**
 	 * comment object created by addComment()
 	 * @var	Comment
 	 */
-	public $createdComment = null;
+	public $createdComment;
 	
 	/**
 	 * response object created by addResponse()
 	 * @var	CommentResponse
 	 */
-	public $createdResponse = null;
+	public $createdResponse;
 	
 	/**
 	 * errors occurring through the validation of addComment or addResponse
@@ -456,6 +456,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
 			'message' => $this->parameters['data']['message'],
+			'enableHtml' => 1,
 			'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1
 		]);
 		$this->createdResponse->setComment($this->comment);

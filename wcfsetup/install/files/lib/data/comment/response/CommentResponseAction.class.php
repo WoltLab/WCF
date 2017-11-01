@@ -3,14 +3,20 @@ namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\comment\CommentHandler;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
+use wcf\util\MessageUtil;
 
 /**
  * Executes comment response-related actions.
@@ -39,13 +45,30 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	 * comment object
 	 * @var	Comment
 	 */
-	public $comment = null;
+	public $comment;
 	
 	/**
 	 * comment manager object
-	 * @var	\wcf\system\comment\manager\ICommentManager
+	 * @var	ICommentManager
 	 */
-	public $commentManager = null;
+	public $commentManager;
+	
+	/**
+	 * comment processor
+	 * @var	ICommentManager
+	 */
+	protected $commentProcessor;
+	
+	/**
+	 * @var HtmlInputProcessor
+	 */
+	protected $htmlInputProcessor;
+	
+	/**
+	 * response object
+	 * @var	CommentResponse
+	 */
+	protected $response;
 	
 	/**
 	 * @inheritDoc
@@ -193,5 +216,143 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			'lastResponseTime' => $lastResponseTime,
 			'template' => WCF::getTPL()->fetch('commentResponseList')
 		];
+	}
+	
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateBeginEdit() {
+		$this->response = $this->getSingleObject();
+		
+		// validate object type id
+		$objectType = $this->validateObjectType();
+		
+		// validate object id and permissions
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canEditResponse($this->response->getDecoratedObject())) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function beginEdit() {
+		WCF::getTPL()->assign([
+			'response' => $this->response,
+			'wysiwygSelector' => 'commentResponseEditor'.$this->response->responseID
+		]);
+		
+		return [
+			'actionName' => 'beginEdit',
+			'template' => WCF::getTPL()->fetch('commentResponseEditor', 'wcf')
+		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateSave() {
+		$this->validateBeginEdit();
+		
+		$this->validateMessage();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function save() {
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
+		$action = new CommentResponseAction([$this->response], 'update', [
+			'data' => [
+				'message' => $htmlInputProcessor->getHtml()
+			]
+		]);
+		$action->executeAction();
+		
+		return [
+			'actionName' => 'save',
+			'message' => (new CommentResponse($this->response->responseID))->getFormattedMessage()
+		];
+	}
+	
+	/**
+	 * Validates message parameter.
+	 *
+	 * @throws      UserInputException
+	 */
+	protected function validateMessage() {
+		$this->readString('message', false, 'data');
+		$this->parameters['data']['message'] = MessageUtil::stripCrap($this->parameters['data']['message']);
+		
+		if (empty($this->parameters['data']['message'])) {
+			throw new UserInputException('message');
+		}
+		
+		CommentHandler::enforceCensorship($this->parameters['data']['message']);
+		
+		$this->setDisallowedBBCodes();
+		$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
+		
+		// search for disallowed bbcodes
+		$disallowedBBCodes = $htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
+		}
+		
+		if ($htmlInputProcessor->appearsToBeEmpty()) {
+			throw new UserInputException('message');
+		}
+		
+		$this->parameters['htmlInputProcessor'] = $htmlInputProcessor;
+	}
+	
+	/**
+	 * Validates object type id parameter.
+	 *
+	 * @param       integer         $objectTypeID
+	 * @return	ObjectType
+	 * @throws	UserInputException
+	 */
+	protected function validateObjectType($objectTypeID = null) {
+		if ($objectTypeID === null) {
+			$this->readInteger('objectTypeID', false, 'data');
+			$objectTypeID = $this->parameters['data']['objectTypeID'];
+		}
+		
+		$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
+		if ($objectType === null) {
+			throw new UserInputException('objectTypeID');
+		}
+		
+		return $objectType;
+	}
+	
+	/**
+	 * Sets the list of disallowed bbcodes for comments.
+	 */
+	protected function setDisallowedBBCodes() {
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
+	}
+	
+	/**
+	 * Returns the current html input processor or a new one if `$message` is not null.
+	 *
+	 * @param       string|null     $message        source message
+	 * @param       integer         $objectID       object id
+	 * @return      HtmlInputProcessor
+	 */
+	public function getHtmlInputProcessor($message = null, $objectID = 0) {
+		if ($message === null) {
+			return $this->htmlInputProcessor;
+		}
+		
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment', $objectID);
+		
+		return $this->htmlInputProcessor;
 	}
 }

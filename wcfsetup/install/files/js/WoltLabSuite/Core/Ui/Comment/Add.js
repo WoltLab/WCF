@@ -1,13 +1,21 @@
 /**
  * Handles the comment add feature.
  * 
+ * Warning: This implementation is also used for responses, but in a slightly
+ *          modified version. Changes made to this class need to be verified
+ *          against the response implementation.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Comment/Add
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', 'WoltLabSuite/Core/Ui/Scroll', 'EventKey', 'User', 'WoltLabSuite/Core/Controller/Captcha'],
-	function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha) {
+define([
+	'Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', 'WoltLabSuite/Core/Ui/Scroll', 'EventKey', 'User', 'WoltLabSuite/Core/Controller/Captcha'
+],
+function(
+	Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha
+) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -16,6 +24,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			init: function() {},
 			_submitGuestDialog: function() {},
 			_submit: function() {},
+			_getParameters: function () {},
 			_validate: function() {},
 			throwError: function() {},
 			_showLoadingOverlay: function() {},
@@ -43,7 +52,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		 */
 		init: function(container) {
 			this._container = container;
-			this._content = elBySel('.commentListAddComment', this._container);
+			this._content = elBySel('.jsOuterEditorContainer', this._container);
 			this._textarea = elBySel('.wysiwygTextarea', this._container);
 			this._editor = null;
 			this._loadingOverlay = null;
@@ -54,7 +63,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 					
 					this._content.classList.remove('collapsed');
 					
-					UiScroll.element(this._container, (function() {
+					UiScroll.element(this._container, (function () {
 						window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
 					}).bind(this));
 				}
@@ -139,14 +148,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._showLoadingOverlay();
 			
 			// build parameters
-			var commentList = this._container.closest('.commentList');
-			var parameters = {
-				data: {
-					message: this._getEditor().code.get(),
-					objectID: elData(commentList, 'object-id'),
-					objectTypeID: elData(commentList, 'object-type-id')
-				}
-			};
+			var parameters = this._getParameters();
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters.data);
 			
@@ -157,6 +159,24 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			Ajax.api(this, Core.extend({
 				parameters: parameters
 			}, additionalParameters));
+		},
+		
+		/**
+		 * Returns the request parameters to add a comment.
+		 * 
+		 * @return      {{data: {message: string, objectID: number, objectTypeID: number}}}
+		 * @protected
+		 */
+		_getParameters: function () {
+			var commentList = this._container.closest('.commentList');
+			
+			return {
+				data: {
+					message: this._getEditor().code.get(),
+					objectID: ~~elData(commentList, 'object-id'),
+					objectTypeID: ~~elData(commentList, 'object-type-id')
+				}
+			};
 		},
 		
 		/**
@@ -282,10 +302,10 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		},
 		
 		/**
-		 * Inserts the rendered message into the post list, unless the post is on the next
-		 * page in which case a redirect will be performed instead.
+		 * Inserts the rendered message.
 		 * 
 		 * @param       {Object}        data    response data
+		 * @return      {Element}       scroll target
 		 * @protected
 		 */
 		_insertMessage: function(data) {
@@ -296,6 +316,8 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			UiNotification.show(Language.get('wcf.global.success.add'));
 			
 			DomChangeListener.trigger();
+			
+			return this._container.nextElementSibling;
 		},
 		
 		/**
@@ -314,7 +336,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
 			}
 			else {
-				this._insertMessage(data);
+				var scrollTarget = this._insertMessage(data);
 				
 				if (!User.userId) {
 					UiDialog.close('jsDialogGuestComment');
@@ -325,7 +347,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				this._hideLoadingOverlay();
 				
 				window.setTimeout((function () {
-					UiScroll.element(this._container.nextElementSibling);
+					UiScroll.element(scrollTarget);
 				}).bind(this), 100);
 			}
 		},

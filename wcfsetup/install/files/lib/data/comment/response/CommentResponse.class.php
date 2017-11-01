@@ -7,6 +7,7 @@ use wcf\data\TUserContent;
 use wcf\system\bbcode\SimpleMessageParser;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\util\StringUtil;
 
 /**
@@ -23,6 +24,7 @@ use wcf\util\StringUtil;
  * @property-read	integer|null	$userID		id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
  * @property-read	string		$username	name of the user or guest who wrote the comment response
  * @property-read	string		$message	comment response message
+ * @property-read       integer         $enableHtml     is 1 if HTML will rendered in the comment response, otherwise 0
  * @property-read	integer		$isDisabled	is 1 if the comment response is disabled, otherwise 0
  */
 class CommentResponse extends DatabaseObject implements IMessage {
@@ -38,7 +40,58 @@ class CommentResponse extends DatabaseObject implements IMessage {
 	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		return SimpleMessageParser::getInstance()->parse($this->message);
+		$processor = new HtmlOutputProcessor();
+		$processor->process($this->message, 'com.woltlab.wcf.comment.response', $this->responseID);
+		
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * Returns a simplified version of the formatted message.
+	 * 
+	 * @return	string
+	 */
+	public function getSimplifiedFormattedMessage() {
+		$processor = new HtmlOutputProcessor();
+		$processor->setOutputType('text/simplified-html');
+		$processor->process($this->message, 'com.woltlab.wcf.comment.response', $this->responseID);
+		
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * Returns a version of this message optimized for use in emails.
+	 * 
+	 * @param	string	$mimeType	Either 'text/plain' or 'text/html'
+	 * @return	string
+	 */
+	public function getMailText($mimeType = 'text/plain') {
+		switch ($mimeType) {
+			case 'text/plain':
+				$processor = new HtmlOutputProcessor();
+				$processor->setOutputType('text/plain');
+				$processor->process($this->message, 'com.woltlab.wcf.comment.response', $this->responseID);
+				
+				return $processor->getHtml();
+			case 'text/html':
+				return $this->getSimplifiedFormattedMessage();
+		}
+		
+		throw new \LogicException('Unreachable');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getExcerpt($maxLength = 255) {
+		return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getMessage() {
+		return $this->message;
 	}
 	
 	/**
@@ -63,20 +116,6 @@ class CommentResponse extends DatabaseObject implements IMessage {
 		if ($this->commentID == $comment->commentID) {
 			$this->comment = $comment;
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getExcerpt($maxLength = 255) {
-		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getMessage() {
-		return $this->message;
 	}
 	
 	/**

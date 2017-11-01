@@ -103,6 +103,10 @@
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.comment.response</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.paidSubscription</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
@@ -469,6 +473,12 @@
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\CommentRebuildDataWorker</classname>
+			<nicevalue>120</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.comment.response</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\CommentResponseRebuildDataWorker</classname>
 			<nicevalue>120</nicevalue>
 		</type>
 		<type>

@@ -14,7 +14,7 @@
 			'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
 		});
 		
-		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}', '{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}', '{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}');
+		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike')}
 			require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
 				var canDislike = {if LIKE_ENABLE_DISLIKE}true{else}false{/if};

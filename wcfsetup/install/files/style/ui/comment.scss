@@ -154,6 +154,14 @@
 	}
 }
 
+.commentResponse .commentEditorContainer {
+	~ .containerHeadline,
+	~ .userMessage,
+	~ .buttonGroupNavigation {
+		display: none;
+	}
+}
+
 .commentListAddComment,
 .commentEditorContainer {
 	.formSubmit {

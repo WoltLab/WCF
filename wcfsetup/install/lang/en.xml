@@ -1675,6 +1675,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warning: This action may take a while to complete on large databases.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Rebuild Comments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Rebuilds the comments.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response"><![CDATA[Rebuild Comment Responses]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response.description"><![CDATA[Rebuilds the comment responses.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page"><![CDATA[Rebuild Pages]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Rebuilds the page search index.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Rebuild Sitemap]]></item>

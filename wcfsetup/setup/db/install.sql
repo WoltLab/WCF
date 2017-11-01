@@ -416,6 +416,7 @@ CREATE TABLE wcf1_comment_response (
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
 	message TEXT NOT NULL,
+	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	
 	KEY (commentID, isDisabled, time),
