@@ -69,6 +69,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			}).bind(this);
 			
 			this.$editor[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabCaret._handleEditorClick.bind(this));
+			this.$editor[0].addEventListener('mouseup', this.WoltLabCaret._handleEditorMouseUp.bind(this));
 			
 			this.WoltLabCaret._initInternalRange();
 			
@@ -376,6 +377,59 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			block.parentNode.insertBefore(p, (insertBefore ? block : block.nextSibling));
 			
 			this.caret.end(p);
+		},
+		
+		_handleEditorMouseUp: function (event) {
+			var anchorNode, sibling;
+			
+			var selection = window.getSelection();
+			if (!selection.isCollapsed) return;
+			
+			// click occured inside the editor padding
+			if (event.target === this.$editor[0]) {
+				anchorNode = selection.anchorNode;
+				if (anchorNode.nodeType === Node.TEXT_NODE) anchorNode = anchorNode.parentNode;
+				
+				// click occured before a `<kbd>` element
+				if (anchorNode.nodeName === 'KBD') {
+					sibling = anchorNode.previousSibling;
+					if (sibling === null || sibling.textContent !== '\u200b') {
+						sibling = document.createTextNode('\u200b');
+						anchorNode.parentNode.insertBefore(sibling, anchorNode);
+					}
+					
+					this.caret.before(sibling);
+				}
+			}
+			else if (event.target.nodeName === 'KBD') {
+				var kbd = event.target;
+				
+				// check if the user clicked on a `<kbd>` element, but the browser placed the caret to the left
+				anchorNode = selection.anchorNode;
+				if (anchorNode.nodeType === Node.TEXT_NODE) {
+					// check if the first next sibling is the `<kbd>` while skipping all empty text nodes
+					sibling = anchorNode;
+					while (sibling = sibling.nextSibling) {
+						if (sibling.nodeType !== Node.TEXT_NODE || (sibling.textContent !== '' && sibling.textContent !== '\u200b')) {
+							break;
+						}
+					}
+					
+					if (sibling === kbd) {
+						if (kbd.childNodes.length === 0 || kbd.childNodes[0].textContent !== '\u200b') {
+							var textNode = document.createTextNode('\u200b');
+							kbd.insertBefore(textNode, kbd.firstChild);
+						}
+						
+						var range = document.createRange();
+						range.setStartAfter(kbd.childNodes[0]);
+						range.setEndAfter(kbd.childNodes[0]);
+						
+						selection.removeAllRanges();
+						selection.addRange(range);
+					}
+				}
+			}
 		},
 		
 		_addParagraphAfterBlock: function (block) {
