@@ -825,6 +825,7 @@
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.style.globalValues"><![CDATA[Stilunabhängiges CSS und SCSS]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Stil importieren]]></item>
 		<item name="wcf.acp.menu.link.style.list"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.menu.link.configuration"><![CDATA[Konfiguration]]></item>
@@ -1945,6 +1946,9 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Schriftgröße]]></item>
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
+		<item name="wcf.acp.style.globalValues"><![CDATA[Stilunabhängiges CSS und SCSS]]></item>
+		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuelle Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
+		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>

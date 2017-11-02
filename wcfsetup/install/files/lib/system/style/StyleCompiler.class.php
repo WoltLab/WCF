@@ -35,6 +35,12 @@ class StyleCompiler extends SingletonFactory {
 	public static $supportedOptionType = ['boolean', 'integer'];
 	
 	/**
+	 * file used to store global SCSS declarations, relative to `WCF_DIR`
+	 * @var string
+	 */
+	const FILE_GLOBAL_VALUES = 'style/ui/zzz_wsc_style_global_values.scss';
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
@@ -63,7 +69,17 @@ class StyleCompiler extends SingletonFactory {
 			1
 		]);
 		while ($row = $statement->fetchArray()) {
+			// the global values will always be evaluated last
+			if ($row['filename'] === self::FILE_GLOBAL_VALUES) {
+				continue;
+			}
+			
 			$files[] = Application::getDirectory($row['application']).$row['filename'];
+		}
+		
+		// global SCSS
+		if (file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
+			$files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
 		}
 		
 		// get style variables

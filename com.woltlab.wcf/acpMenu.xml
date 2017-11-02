@@ -603,6 +603,12 @@
 				<permissions>admin.style.canManageStyle</permissions>
 				<icon>fa-plus</icon>
 			</acpmenuitem>
+				
+			<acpmenuitem name="wcf.acp.menu.link.style.globalValues">
+				<controller>wcf\acp\form\StyleGlobalValuesForm</controller>
+				<parent>wcf.acp.menu.link.style</parent>
+				<permissions>admin.style.canManageStyle</permissions>
+			</acpmenuitem>
 			<!-- /style -->
 			
 			<!-- template -->

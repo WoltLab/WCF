@@ -807,6 +807,7 @@
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.style"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Add Style]]></item>
+		<item name="wcf.acp.menu.link.style.globalValues"><![CDATA[Global CSS and SCSS]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Import Style]]></item>
 		<item name="wcf.acp.menu.link.style.list"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.menu.link.configuration"><![CDATA[Configuration]]></item>
@@ -1888,6 +1889,9 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Font Size]]></item>
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Use fluid width]]></item>
+		<item name="wcf.acp.style.globalValues"><![CDATA[Global CSS and SCSS]]></item>
+		<item name="wcf.acp.style.globalValues.description"><![CDATA[The CSS and SCSS entered below is applied to all styles, but custom values in styles take precedence.]]></item>
+		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102px × 64px, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>
