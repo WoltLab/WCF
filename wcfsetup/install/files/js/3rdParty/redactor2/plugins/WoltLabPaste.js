@@ -98,7 +98,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						pastedHtml = e.originalEvent.clipboardData.getData('text/html');
 						
 						// remove document fragments
-						if (pastedHtml.match(/^<html>[\s\S]*?<body>([\s\S]+)<\/body>\s*<\/html>$/)) {
+						if (pastedHtml.trim().match(/^<html[^>]*>[\s\S]*?<body[^>]*>([\s\S]+)<\/body>[\s\S]*?<\/html>$/)) {
 							pastedHtml = RegExp.$1.replace(/^\s*(?:<!--StartFragment-->)(.+)(?:<!--EndFragment-->)?\s*$/, '$1');
 						}
 					}
