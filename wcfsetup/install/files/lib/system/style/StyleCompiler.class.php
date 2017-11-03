@@ -233,8 +233,11 @@ class StyleCompiler extends SingletonFactory {
 		$files = [];
 		
 		$basePath = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $application->getPackage()->packageDir)) . 'acp/style/';
-		foreach (glob($basePath . '*.scss') as $file) {
-			$files[] = $file;
+		$result = glob($basePath . '*.scss');
+		if (is_array($result)) {
+			foreach ($result as $file) {
+				$files[] = $file;
+			}
 		}
 		
 		return $files;
