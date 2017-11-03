@@ -41,6 +41,13 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	protected $sourceBBCodes = [];
 	
 	/**
+	 * list of HTML tags that should have a trailing newline when converted
+	 * to text/plain content
+	 * @var string[]
+	 */
+	public static $plainTextNewlineTags = ['br', 'li', 'td', 'tr'];
+	
+	/**
 	 * HtmlOutputNodeProcessor constructor.
 	 */
 	public function __construct() {
@@ -142,14 +149,16 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 					$node->parentNode->removeChild($node);
 				}
 				
-				// convert `<br>` into `\n`
-				$brs = $this->getDocument()->getElementsByTagName('br');
-				while ($brs->length) {
-					$br = $brs->item(0);
-					
-					$newline = $this->getDocument()->createTextNode("\n");
-					$br->parentNode->insertBefore($newline, $br);
-					DOMUtil::removeNode($br);
+				// insert a trailing newline for certain elements, such as `<br>` or `<li>`
+				foreach (self::$plainTextNewlineTags as $tagName) {
+					$elements = $this->getDocument()->getElementsByTagName($tagName);
+					while ($elements->length) {
+						$element = $elements->item(0);
+						
+						$newline = $this->getDocument()->createTextNode("\n");
+						$element->parentNode->insertBefore($newline, $element->nextSibling);
+						DOMUtil::removeNode($element, true);
+					}
 				}
 				
 				// remove all other elements
