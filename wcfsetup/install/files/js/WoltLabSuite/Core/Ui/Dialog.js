@@ -565,6 +565,11 @@ define(
 			
 			elAttr(data.dialog, 'aria-hidden', 'true');
 			
+			// avoid keyboard focus on a now hidden element 
+			if (document.activeElement.closest('.dialogContainer') === data.dialog) {
+				document.activeElement.blur();
+			}
+			
 			if (typeof data.onClose === 'function') {
 				data.onClose(id);
 			}
