@@ -48,7 +48,10 @@ nbactions.xml
 *.sublime-*
 
 # Textmate
-*.tmproj 
+*.tmproj
+
+# Visual Studio Code
+.vscode/
 
 # WoltLab Suite
 # Ignore packages build directly in the workspace. They can however be added manually via git add, if wanted.
