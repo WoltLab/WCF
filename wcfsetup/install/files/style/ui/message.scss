@@ -630,6 +630,11 @@
 	}
 }
 
+/* margin between items in the list of quoted messages */
+#messageQuoteList .messageReduced + .messageReduced {
+	margin-top: 20px;
+}
+
 .messageQuoteItemList {
 	/* we need `!important` here to override defaults used for `.htmlContent`
 	   and `.messageText` */
