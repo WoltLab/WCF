@@ -307,7 +307,7 @@
 					require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 						UiItemList.init(
 							'tagSearchInput',
-							[{if !$tags[0]|empty}{implode from=$tags[0] item=tag}'{$tag|encodeJS}'{/implode}{/if}],
+							[{if !$tags[0]|empty}{implode from=$tags[0] item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
 							{
 								ajax: {
 									className: 'wcf\\data\\tag\\TagAction'
@@ -457,7 +457,7 @@
 								require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 									UiItemList.init(
 										'tagSearchInput{@$availableLanguage->languageID}',
-										[{if !$tags[$availableLanguage->languageID]|empty}{implode from=$tags[$availableLanguage->languageID] item=tag}'{$tag|encodeJS}'{/implode}{/if}],
+										[{if !$tags[$availableLanguage->languageID]|empty}{implode from=$tags[$availableLanguage->languageID] item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
 										{
 											ajax: {
 												className: 'wcf\\data\\tag\\TagAction'

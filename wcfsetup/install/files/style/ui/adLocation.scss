@@ -47,9 +47,9 @@
 .wcfAdLocationFooterContent {
 	.adsbygoogle {
 		@include screen-xs {
-			// half banner
-			height: 60px;
-			width: 234px;
+			// mobile leaderboard
+			height: 50px;
+			width: 320px;
 		}
 		
 		@include screen-sm-up {
@@ -90,9 +90,9 @@
 		}
 		
 		@include screen-lg {
-			// square
-			height: 250px;
-			width: 250px;
+			// wide skyscraper
+			height: 600px;
+			width: 160px;
 		}
 	}
 }

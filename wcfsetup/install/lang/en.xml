@@ -3275,6 +3275,7 @@ Errors are:
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>
+		<item name="wcf.acp.page.parentPage.error.invalid"><![CDATA[The selected page is invalid.]]></item>
 		<item name="wcf.acp.page.parentPage.none"><![CDATA[None]]></item>
 		<item name="wcf.acp.page.type"><![CDATA[Page Type]]></item>
 		<item name="wcf.acp.page.type.html"><![CDATA[HTML]]></item>

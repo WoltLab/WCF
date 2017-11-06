@@ -1630,6 +1630,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Seite verwendet.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Übergeordnete Seite]]></item>
+		<item name="wcf.acp.page.parentPage.error.invalid"><![CDATA[Die ausgewählte Seite ist ungültig.]]></item>
 		<item name="wcf.acp.page.parentPage.none"><![CDATA[Keine]]></item>
 		<item name="wcf.acp.page.type"><![CDATA[Seiten-Typ]]></item>
 		<item name="wcf.acp.page.type.html"><![CDATA[HTML]]></item>

@@ -252,7 +252,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 							// build tag
 							$parsedTag = $this->buildOpeningTag($openingTag);
 							$closingTag = $this->buildClosingTag($tag);
-							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $buffer.$closingTag;
+							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $closingTag;
 						}
 					}
 					else {
