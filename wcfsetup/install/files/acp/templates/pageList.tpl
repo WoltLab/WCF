@@ -149,7 +149,7 @@
 						<td class="columnTitle columnName">{if $page->isLandingPage}<span class="icon icon16 fa-home jsTooltip" title="{lang}wcf.acp.page.isLandingPage{/lang}"></span> {/if}<a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnURL">
 							{$page->getDisplayLink()}
-							{if $page->controllerCustomURL}
+							{if $page->controllerCustomURL || $page->pageType !== 'system'}
 								<span class="icon icon16 fa-exclamation-circle blue jsTooltip" title="{lang}wcf.acp.page.customURL{/lang}"></span>
 							{/if}
 						</td>

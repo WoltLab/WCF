@@ -150,7 +150,7 @@ class PageListPage extends SortablePage {
 			$this->objectList->getConditionBuilder()->add('page.originIsSystem = ?', [0]);
 		}
 		if ($this->controllerCustomURL) {
-			$this->objectList->getConditionBuilder()->add("page.controllerCustomURL <> ''");
+			$this->objectList->getConditionBuilder()->add("(page.controllerCustomURL <> ? OR page.pageType <> ?)", ['', 'system']);
 		}
 	}
 	
