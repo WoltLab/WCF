@@ -109,6 +109,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 		
 		// update counters
+		/** @var ICommentManager[] $processors */
 		$processors = [];
 		$groupCommentIDs = $commentIDs = [];
 		foreach ($this->getObjects() as $comment) {
@@ -119,7 +120,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 				$groupCommentIDs[$comment->objectTypeID] = [];
 			}
 			
-			$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
+			if (!$comment->isDisabled) {
+				$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
+			}
+			
 			$groupCommentIDs[$comment->objectTypeID][] = $comment->commentID;
 			$commentIDs[] = $comment->commentID;
 		}

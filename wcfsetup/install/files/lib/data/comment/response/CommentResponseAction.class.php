@@ -96,6 +96,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		$comments = $commentList->getObjects();
 		
 		// update counters
+		/** @var ICommentManager[] $processors */
 		$processors = $responseIDs = $updateComments = [];
 		foreach ($this->getObjects() as $response) {
 			$objectTypeID = $comments[$response->commentID]->objectTypeID;
@@ -107,7 +108,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			}
 			$responseIDs[$objectTypeID][] = $response->responseID;
 			
-			if (!$ignoreCounters) {
+			if (!$ignoreCounters && !$response->isDisabled) {
 				$processors[$objectTypeID]->updateCounter($comments[$response->commentID]->objectID, -1);
 				
 				if (!isset($updateComments[$response->commentID])) {
@@ -126,9 +127,11 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			foreach ($comments as $comment) {
 				$commentEditor = new CommentEditor($comment);
 				$commentEditor->updateResponseIDs();
-				$commentEditor->updateCounters([
-					'responses' => -1 * $updateComments[$comment->commentID]
-				]);
+				if (isset($updateComments[$comment->commentID])) {
+					$commentEditor->updateCounters([
+						'responses' => -1 * $updateComments[$comment->commentID]
+					]);
+				}
 			}
 		}
 		
