@@ -281,7 +281,11 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 					toggleSelectionMode();
 					
 					select.value = elData(region, 'region');
-					Core.triggerEvent(select, 'change');
+					
+					// Firefox does not trigger this event while the click handler is still active
+					window.setTimeout(function() {
+						Core.triggerEvent(select, 'change');
+					}, 10);
 				});
 			});
 			
