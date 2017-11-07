@@ -340,7 +340,7 @@ class BoxAddForm extends AbstractForm {
 		$this->validateBoxPosition();
 		
 		// validate link
-		if ($this->linkType == 'internal') {
+		if ($this->boxType !== 'system' && $this->linkType == 'internal') {
 			$this->externalURL = '';
 			
 			if (!$this->linkPageID) {
@@ -364,7 +364,7 @@ class BoxAddForm extends AbstractForm {
 				}
 			}
 		}
-		else if ($this->linkType == 'external') {
+		else if ($this->boxType !== 'system' && $this->linkType == 'external') {
 			$this->linkPageID = $this->linkPageObjectID = null;
 			
 			if (empty($this->externalURL)) {
