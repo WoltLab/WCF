@@ -125,7 +125,7 @@
 			
 			AcpBootstrap.setup({
 				bootstrap: {
-					enableMobileMenu: {if $__isLogin|empty}true{else}false{/if}
+					enableMobileMenu: {if PACKAGE_ID && $__isLogin|empty}true{else}false{/if}
 				}
 			});
 			
