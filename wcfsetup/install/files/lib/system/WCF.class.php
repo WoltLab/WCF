@@ -25,6 +25,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
 use wcf\system\session\SessionFactory;
@@ -205,7 +206,8 @@ class WCF {
 				}
 			}
 			
-			// execute shutdown actions of user storage handler
+			// execute shutdown actions of storage handlers
+			RegistryHandler::getInstance()->shutdown();
 			UserStorageHandler::getInstance()->shutdown();
 		}
 		catch (\Exception $exception) {

@@ -1155,6 +1155,15 @@ CREATE TABLE wcf1_poll_option_vote (
 	UNIQUE KEY vote (pollID, optionID, userID)
 );
 
+DROP TABLE IF EXISTS wcf1_registry;
+CREATE TABLE wcf1_registry (
+	packageID INT(10) NOT NULL,
+	field VARCHAR(191) NOT NULL,
+	fieldValue MEDIUMTEXT,
+	
+	UNIQUE KEY uniqueField (packageID, field)
+);
+
 DROP TABLE IF EXISTS wcf1_search;
 CREATE TABLE wcf1_search (
 	searchID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1955,6 +1964,8 @@ ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (box
 
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_registry ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
