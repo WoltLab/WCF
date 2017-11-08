@@ -41,6 +41,12 @@ class StyleCompiler extends SingletonFactory {
 	const FILE_GLOBAL_VALUES = 'style/ui/zzz_wsc_style_global_values.scss';
 	
 	/**
+	 * registry keys for data storage
+	 * @var string
+	 */
+	const REGISTRY_GLOBAL_VALUES = 'styleGlobalValues';
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
