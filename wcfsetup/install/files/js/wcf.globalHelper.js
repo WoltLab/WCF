@@ -106,6 +106,34 @@
 	};
 	
 	/**
+	 * Returns the closest element (parent for text nodes), optionally matching
+	 * the provided selector.
+	 * 
+	 * @param       {Node}          node            start node
+	 * @param       {string=}       selector        optional CSS selector
+	 * @return      {Element}       closest matching element
+	 */
+	window.elClosest = function (node, selector) {
+		if (!(node instanceof Node)) {
+			throw new TypeError('Provided element is not a Node.');
+		}
+		
+		// retrieve the parent element for text nodes
+		if (node.nodeType === Node.TEXT_NODE) {
+			node = node.parentNode;
+			
+			// text node had no parent
+			if (node === null) return null;
+		}
+		
+		if (typeof selector !== 'string') selector = '';
+		
+		if (selector.length === 0) return node;
+		
+		return node.closest(selector);
+	};
+	
+	/**
 	 * Shorthand function to retrieve or set a 'data-' attribute.
 	 * 
 	 * @param	{Element}	element		target element
