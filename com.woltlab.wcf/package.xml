@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.1.0 Beta 2</version> <!-- codename: tornado -->
-		<date>2017-10-25</date>
+		<version>3.1.0 Beta 3</version> <!-- codename: tornado -->
+		<date>2017-11-10</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -48,16 +48,20 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.1.0 Beta 1">
+	<instructions type="update" fromversion="3.1.0 Beta 2">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
+		<instruction type="sql" run="standalone">update_3.1.0_beta_3.sql</instruction>
+		
 		<instruction type="language" />
 		
+		<instruction type="acpMenu" />
 		<instruction type="mediaProvider" />
+		<instruction type="objectType" />
 		<instruction type="option" />
 		
-		<instruction type="script">acp/update_com.woltlab.wcf_beta1_to_beta2.php</instruction>
+		<instruction type="style">defaultStyle.tar</instruction>
 	</instructions>
 </package>
