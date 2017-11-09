@@ -227,7 +227,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 			$this->workerData['sitemap']++;
 			
 			if (!isset($this->sitemapObjects[$this->workerData['sitemap']])) {
-				$this->writeIndexFile();
+				$this->writeIndexFile(false);
 				
 				// if we don't have to refresh any data, we set loopCount to one
 				// so that we no init a new $workerData session
@@ -245,8 +245,10 @@ class SitemapRebuildWorker extends AbstractWorker {
 	
 	/**
 	 * Writes the sitemap.xml index file and links all sitemaps.
+	 * 
+	 * @param       boolean         $closeFile      Close a previously opened handle.
 	 */
-	protected function writeIndexFile() {
+	protected function writeIndexFile($closeFile = true) {
 		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml', 'wb');
 		$file->write(WCF::getTPL()->fetch('sitemapIndex', 'wcf', [
 			'sitemaps' => $this->workerData['sitemaps']
@@ -256,7 +258,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 		
 		$this->workerData['finished'] = true;
 		
-		$this->closeFile();
+		if ($closeFile) $this->closeFile();
 		
 		if ($this->workerData['tmpFile'] && file_exists($this->workerData['tmpFile'])) {
 			unlink($this->workerData['tmpFile']);
