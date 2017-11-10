@@ -242,7 +242,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);
 				
-				html = html.replace(/@@@WOLTLAB-BR-MARKER@@@/g, '<woltlab-br-marker></woltlab-br-marker>');
+				html = html.replace(/\n*@@@WOLTLAB-BR-MARKER@@@/g, '<woltlab-br-marker></woltlab-br-marker>');
 				html = html.replace(/(<p>)?\s*@@@WOLTLAB-P-ALIGN-(left|right|center|justify)@@@/g, function (match, p, alignment) {
 					if (p) {
 						return '<p class="text-' + alignment + '">';
