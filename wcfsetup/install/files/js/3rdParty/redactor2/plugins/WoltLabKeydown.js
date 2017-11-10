@@ -246,7 +246,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 								if (current.childNodes.length === 0) {
 									remove = true;
 								}
-								else if (current.textContent.replace(/\u200B/g, '') === '') {
+								else if (current.textContent.replace(/\u200B/g, '').trim() === '') {
 									remove = true;
 									
 									// check if there are only <span> elements
