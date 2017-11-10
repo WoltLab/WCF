@@ -172,6 +172,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 				}
 				
+				var isOffice = (elBySel('.MsoNormal', div) !== null);
+				
 				var elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
 				for (i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
@@ -194,6 +196,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 									strong = elCreate('strong');
 									element.parentNode.insertBefore(strong, element);
 									strong.appendChild(element);
+								}
+							}
+							else if (isOffice && property === 'margin-bottom' && element.nodeName === 'P') {
+								// office sometimes uses a margin-bottom value of exactly 12pt to create spacing between paragraphs
+								styleValue = element.style.getPropertyValue(property);
+								if (styleValue.match(/^12(?:\.0)?pt$/)) {
+									var p = elCreate('p');
+									p.innerHTML = '<br>';
+									element.parentNode.insertBefore(p, element.nextSibling);
 								}
 							}
 							
@@ -260,8 +271,18 @@ $.Redactor.prototype.WoltLabClean = function() {
 						var p = elCreate('p');
 						p.innerHTML = '<br>';
 						
+						var emptySiblings = true;
 						while (marker.nextSibling) {
+							if (emptySiblings && marker.nextSibling.textContent.replace(/\u200B/g, '').trim().length !== 0) {
+								emptySiblings = false;
+							}
+							
 							p.appendChild(marker.nextSibling);
+						}
+						
+						if (!emptySiblings) {
+							// the <br> is not required when there is text afterwards
+							elRemove(p.firstElementChild);
 						}
 						
 						var previous = marker.previousSibling;
