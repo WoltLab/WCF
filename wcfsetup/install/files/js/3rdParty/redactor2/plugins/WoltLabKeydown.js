@@ -15,7 +15,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				if (this.detect.isFirefox() && selection.isCollapsed && e.which === this.keyCode.BACKSPACE) {
 					node = selection.anchorNode;
 					if (node.nodeType === Node.ELEMENT_NODE && selection.anchorOffset > 0) {
-						node = node.childNodes[selection.anchorOffset];
+						node = node.childNodes[selection.anchorOffset - 1];
 					}
 					
 					if (node.nodeType === Node.TEXT_NODE && node.textContent === '\u200B') {
