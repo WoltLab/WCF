@@ -172,6 +172,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 				}
 				
+				var isOffice = (elBySel('.MsoNormal', div) !== null);
+				
 				var elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
 				for (i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
@@ -194,6 +196,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 									strong = elCreate('strong');
 									element.parentNode.insertBefore(strong, element);
 									strong.appendChild(element);
+								}
+							}
+							else if (isOffice && property === 'margin-bottom' && element.nodeName === 'P') {
+								// office sometimes uses a margin-bottom value of exactly 12pt to create spacing between paragraphs
+								styleValue = element.style.getPropertyValue(property);
+								if (styleValue.match(/^12(?:\.0)?pt$/)) {
+									var p = elCreate('p');
+									p.innerHTML = '<br>';
+									element.parentNode.insertBefore(p, element.nextSibling);
 								}
 							}
 							
@@ -242,7 +253,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);
 				
-				html = html.replace(/@@@WOLTLAB-BR-MARKER@@@/g, '<woltlab-br-marker></woltlab-br-marker>');
+				html = html.replace(/\n*@@@WOLTLAB-BR-MARKER@@@\n*/g, '<woltlab-br-marker></woltlab-br-marker>');
 				html = html.replace(/(<p>)?\s*@@@WOLTLAB-P-ALIGN-(left|right|center|justify)@@@/g, function (match, p, alignment) {
 					if (p) {
 						return '<p class="text-' + alignment + '">';
@@ -255,13 +266,34 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				elBySelAll('woltlab-br-marker', div, function (marker) {
 					var parent = marker.parentNode;
+					if (parent === null) {
+						// marker was already removed, ignore it
+						return;
+					}
 					
 					if (parent.nodeName === 'P') {
 						var p = elCreate('p');
 						p.innerHTML = '<br>';
 						
+						var isDoubleBr = false;
+						var sibling = marker.nextSibling;
+						if (sibling && sibling.nodeName === 'WOLTLAB-BR-MARKER') {
+							// equals <br><br> and should be converted into an empty line, splitting the ancestors
+							isDoubleBr = true;
+						}
+						
+						var emptySiblings = !isDoubleBr;
 						while (marker.nextSibling) {
+							if (emptySiblings && marker.nextSibling.textContent.replace(/\u200B/g, '').trim().length !== 0) {
+								emptySiblings = false;
+							}
+							
 							p.appendChild(marker.nextSibling);
+						}
+						
+						if (!emptySiblings) {
+							// the <br> is not required when there is text afterwards, or if this is a <br><br> match
+							elRemove(p.firstElementChild);
 						}
 						
 						var previous = marker.previousSibling;
@@ -270,6 +302,12 @@ $.Redactor.prototype.WoltLabClean = function() {
 						}
 						
 						parent.parentNode.insertBefore(p, parent.nextSibling);
+						
+						if (isDoubleBr) {
+							p = elCreate('p');
+							p.innerHTML = '<br>';
+							parent.parentNode.insertBefore(p, parent.nextSibling);
+						}
 					}
 					else {
 						parent.insertBefore(elCreate('br'), marker);
@@ -293,6 +331,22 @@ $.Redactor.prototype.WoltLabClean = function() {
 								remove = false;
 							}
 						});
+					}
+					else if (p.textContent.trim().length === 0) {
+						elBySelAll('span', p, function (span) {
+							if (!span.hasAttribute('style') || !span.style.length) {
+								while (span.childNodes.length) {
+									span.parentNode.insertBefore(span.childNodes[0], span);
+								}
+								
+								elRemove(span);
+							}
+						});
+						
+						if (p.children.length === 0) {
+							// fix <p>&nbsp;</p> pasted from Office
+							p.innerHTML = '<br>';
+						}
 					}
 					
 					if (remove) {
