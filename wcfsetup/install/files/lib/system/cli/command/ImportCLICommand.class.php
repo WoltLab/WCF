@@ -139,7 +139,7 @@ class ImportCLICommand implements ICLICommand {
 			FROM	wcf".WCF_N."_import_mapping";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->get('wcf.acp.dataImport.existingMapping.notice')));
 			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.existingMapping.confirmMessage') . ' [YN]');
 			

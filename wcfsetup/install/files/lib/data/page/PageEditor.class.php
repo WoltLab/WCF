@@ -66,7 +66,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 				AND applicationPackageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$customURL, $packageID]);
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			return false;
 		}
 		
@@ -81,7 +81,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 				)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$customURL, $packageID]);
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			return false;
 		}
 		

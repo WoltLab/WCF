@@ -35,7 +35,7 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			FROM	wcf".WCF_N."_ad";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$maxShowOrder = $statement->fetchColumn();
+		$maxShowOrder = $statement->fetchSingleColumn();
 		if (!$maxShowOrder) $maxShowOrder = 0;
 		
 		if (!$showOrder || $showOrder > $maxShowOrder) {

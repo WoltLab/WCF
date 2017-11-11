@@ -90,6 +90,6 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 			FROM	wcf".WCF_N."_user";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$this->startDate = $statement->fetchColumn();
+		$this->startDate = $statement->fetchSingleColumn();
 	}
 }

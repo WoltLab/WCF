@@ -271,7 +271,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 					)";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$optionType]);
-			$objectTypeID = $statement->fetchColumn();
+			$objectTypeID = $statement->fetchSingleColumn();
 			if ($objectTypeID === false) {
 				throw new SystemException("unknown object type '".$optionType."' given");
 			}

@@ -59,7 +59,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->name, $this->objectID]);
 		
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('name', 'notUnique');
 		}
 	}
@@ -76,7 +76,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->path, $this->objectID]);
 		
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('path', 'notUnique');
 		}
 	}

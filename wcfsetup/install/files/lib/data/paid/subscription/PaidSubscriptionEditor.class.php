@@ -33,7 +33,7 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
 			FROM	wcf".WCF_N."_paid_subscription";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$maxShowOrder = $statement->fetchColumn();
+		$maxShowOrder = $statement->fetchSingleColumn();
 		if (!$maxShowOrder) $maxShowOrder = 0;
 		
 		if (!$showOrder || $showOrder > $maxShowOrder) {

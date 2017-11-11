@@ -68,7 +68,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 			ModerationQueue::STATUS_PROCESSING
 		]);
 		
-		return $statement->fetchColumn() > 0;
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**

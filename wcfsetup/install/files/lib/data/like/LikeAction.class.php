@@ -242,7 +242,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			$this->parameters['data']['objectID'],
 			$this->objectType->objectTypeID
 		]);
-		$pageCount = ceil($statement->fetchColumn() / 20);
+		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		$sql = "SELECT		userID, likeValue
 			FROM		wcf".WCF_N."_like

@@ -354,6 +354,6 @@ class LanguageFactory extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([TIME_NOW - 86400 * 7]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 }

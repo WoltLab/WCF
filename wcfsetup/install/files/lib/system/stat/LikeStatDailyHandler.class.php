@@ -24,7 +24,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 				AND likeValue = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$date, $date + 86399, $this->likeValue]);
-		$counter = intval($statement->fetchColumn());
+		$counter = intval($statement->fetchSingleColumn());
 		
 		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_like
@@ -32,7 +32,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 				AND likeValue = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$date + 86400, $this->likeValue]);
-		$total = intval($statement->fetchColumn());
+		$total = intval($statement->fetchSingleColumn());
 		
 		return [
 			'counter' => $counter,

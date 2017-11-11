@@ -44,7 +44,7 @@ class UserAuthenticationFailure extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**
@@ -61,6 +61,6 @@ class UserAuthenticationFailure extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 }

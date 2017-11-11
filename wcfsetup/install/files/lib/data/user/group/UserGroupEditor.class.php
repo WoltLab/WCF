@@ -127,8 +127,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(['admin.user.accessibleGroups']);
-		$optionID = $statement->fetchColumn();
-		$statement->closeCursor();
+		$optionID = $statement->fetchSingleColumn();
 		
 		if (!$optionID) throw new SystemException("Unable to find 'admin.user.accessibleGroups' user option");
 		
