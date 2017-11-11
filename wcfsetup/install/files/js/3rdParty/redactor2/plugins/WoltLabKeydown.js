@@ -231,20 +231,20 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					
 					// empty list exit
 					if (this.keydown.block.tagName === 'LI') {
+						// WoltLab modification: own list handling
 						var current = this.selection.current();
-						var $parent = $(current).closest('li', this.$editor[0]);
-						// WoltLab modification: this was a call to $.parents() that did
-						// escape Redactor
-						var $list = $parent.parentsUntil(this.$editor[0], 'ul,ol').last();
+						var listItem = elClosest(current, 'li');
 						
-						if ($parent.length !== 0 && this.utils.isEmpty($parent.html()) && $list.next().length === 0 && this.utils.isEmpty($list.find("li").last().html())) {
-							$list.find("li").last().remove();
-							
-							var node = $(this.opts.emptyHtml);
-							$list.after(node);
-							this.caret.start(node);
-							
-							return false;
+						// We want to offload as much as possible to the browser, which already
+						// includes a handling of the enter key in an empty list item. Unfortunately,
+						// they do not recognize this at all times, in particular certain white-spaces
+						// and <br> may not always play well.
+						if (this.utils.isRedactorParent(listItem) && this.utils.isEmpty(listItem.innerHTML)) {
+							// the current item is empty and there is no adjacent one, force clear the
+							// contents to enable browser recognition
+							if (listItem.nextElementSibling === null) {
+								listItem.innerHTML = '';
+							}
 						}
 					}
 					
