@@ -89,18 +89,70 @@ $.Redactor.prototype.WoltLabList = function() {
 				}
 			}).bind(this);
 			
-			var mpCombineAfterAndBefore = this.list.combineAfterAndBefore;
 			this.list.combineAfterAndBefore = (function(block) {
-				var returnValue = mpCombineAfterAndBefore.call(this, block);
+				var $prev = $(block).prev();
+				var $next = $(block).next();
+				var isEmptyBlock = (block && block.tagName === 'P' && (block.innerHTML === '<br>' || block.innerHTML === ''));
+				var isBlockWrapped = ($prev.closest('ol, ul', this.core.editor()[0]).length === 1 && $next.closest('ol, ul', this.core.editor()[0]).length === 1);
 				
-				if (returnValue) {
+				var isEffectivelyEmptyBlock = false;
+				if (isBlockWrapped && !isEmptyBlock) {
+					// check if the current block _is_ actually empty, but
+					// Redactor does not recognize it due to format elements
+					if (block.textContent.replace(/\u200b/g, '').trim().length === 0) {
+						// check that only inline format elements are present
+						var inlineElements = ['A', 'B', 'BR', 'EM', 'I', 'STRONG', 'U'];
+						var isEmpty = true;
+						elBySelAll('*', block, function(element) {
+							if (inlineElements.indexOf(element.nodeName) !== -1) {
+								return;
+							}
+							
+							// only allow spans if they have no CSS classes set
+							if (element.nodeName === 'SPAN' && element.className.trim() === '') {
+								return;
+							}
+							
+							isEmpty = false;
+						});
+						
+						if (isEmpty) {
+							isEffectivelyEmptyBlock = true;
+							isEmptyBlock = true;
+						}
+					}
+				}
+				
+				if (isEmptyBlock && isBlockWrapped) {
+					// remove "empty" item instead
+					if (block.nodeName === 'LI' && isEffectivelyEmptyBlock) {
+						$prev.append(this.marker.get());
+						elRemove(block);
+						
+						this.selection.restore();
+						
+						return true;
+					}
+					
+					$prev.children('li').last().append(this.marker.get());
+					$prev.append($next.contents());
+					
+					// WoltLab modification
 					var list = block.nextElementSibling;
 					if ((list.nodeName === 'OL' || list.nodeName === 'UL') && list.childElementCount === 0) {
 						elRemove(list);
 					}
+					
+					if (isEffectivelyEmptyBlock) {
+						elRemove(block);
+					}
+					
+					this.selection.restore();
+					
+					return true;
 				}
 				
-				return returnValue;
+				return false;
 			}).bind(this);
 		}
 	};
