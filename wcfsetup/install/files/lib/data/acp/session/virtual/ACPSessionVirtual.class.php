@@ -65,6 +65,6 @@ class ACPSessionVirtual extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$sessionID]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 }

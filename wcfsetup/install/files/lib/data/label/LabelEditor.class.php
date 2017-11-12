@@ -63,7 +63,7 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			WHERE	groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$groupID]);
-		$maxShowOrder = $statement->fetchColumn() ?: 0;
+		$maxShowOrder = $statement->fetchSingleColumn() ?: 0;
 		
 		if (!$showOrder || $showOrder > $maxShowOrder) {
 			$showOrder = $maxShowOrder + 1;

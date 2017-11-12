@@ -105,7 +105,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$objectID]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

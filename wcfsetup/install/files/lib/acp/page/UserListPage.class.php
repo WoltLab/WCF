@@ -224,7 +224,7 @@ class UserListPage extends SortablePage {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->conditions->getParameters());
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

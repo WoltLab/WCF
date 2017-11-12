@@ -280,6 +280,6 @@ class BoxHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$pageID]);
 		
-		return $statement->fetchColumn() > 0;
+		return $statement->fetchSingleColumn() > 0;
 	}
 }

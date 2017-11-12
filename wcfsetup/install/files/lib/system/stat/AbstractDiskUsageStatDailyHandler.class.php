@@ -34,7 +34,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**
@@ -52,7 +52,7 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

@@ -96,7 +96,7 @@ class DevtoolsProjectAddForm extends AbstractForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->name]);
 		
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('name', 'notUnique');
 		}
 	}
@@ -111,7 +111,7 @@ class DevtoolsProjectAddForm extends AbstractForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->path]);
 		
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			throw new UserInputException('path', 'notUnique');
 		}
 	}

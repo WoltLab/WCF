@@ -51,7 +51,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 			$date,
 			$date + 86399
 		]);
-		$counter = $statement->fetchColumn();
+		$counter = $statement->fetchSingleColumn();
 		
 		$sql = "SELECT (
 				SELECT	COUNT(*)
@@ -73,7 +73,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 			$objectTypeID,
 			$date + 86400
 		]);
-		$total = $statement->fetchColumn();
+		$total = $statement->fetchSingleColumn();
 		
 		return [
 			'counter' => $counter,
