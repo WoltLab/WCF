@@ -1,5 +1,5 @@
 /**
- * Provides the interface logic to add and edit menu items.
+ * Provides the interface logic to add and edit boxes.
  *
  * @author	Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH
