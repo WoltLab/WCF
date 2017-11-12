@@ -401,8 +401,67 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			
 			var mpOnTab = this.keydown.onTab;
 			this.keydown.onTab = (function(e, key) {
-				if (!this.keydown.pre && $(this.selection.current()).closest('ul, ol', this.core.editor()[0]).length === 0) {
-					return true;
+				if (!this.keydown.pre) {
+					var closestRelevantBlock = $(this.selection.current()).closest('ul, ol, td', this.core.editor()[0]);
+					if (closestRelevantBlock.length === 0) {
+						// ignore tab, the browser's default action will be executed
+						return true;
+					}
+					
+					closestRelevantBlock = closestRelevantBlock[0];
+					if (closestRelevantBlock.nodeName === 'TD') {
+						var target = null;
+						
+						if (e.originalEvent.shiftKey) {
+							target = closestRelevantBlock.previousElementSibling;
+							
+							// first `<td>` of current `<tr>`
+							if (target === null) {
+								target = closestRelevantBlock.parentNode.previousElementSibling;
+								
+								if (target !== null) {
+									// set focus to last `<td>`
+									target = target.lastElementChild;
+								}
+							}
+						}
+						else {
+							target = closestRelevantBlock.nextElementSibling;
+							
+							// last `<td>` of current `<tr>`
+							if (target === null) {
+								target = closestRelevantBlock.parentNode.nextElementSibling;
+								
+								// last `<tr>`
+								if (target === null) {
+									this.table.addRowBelow();
+									
+									target = closestRelevantBlock.parentNode.nextElementSibling;
+								}
+								
+								// set focus to first `<td>`
+								target = target.firstElementChild;
+							}
+						}
+						
+						if (target !== null) {
+							if (this.utils.isEmpty(target.innerHTML)) {
+								// `<td>` is empty
+								this.caret.end(target);
+							}
+							else {
+								// select the entire content
+								var range = document.createRange();
+								range.selectNodeContents(target);
+								
+								selection.removeAllRanges();
+								selection.addRange(range);
+							}
+						}
+						
+						e.originalEvent.preventDefault();
+						return false;
+					}
 				}
 				
 				return mpOnTab.call(this, e, key);
