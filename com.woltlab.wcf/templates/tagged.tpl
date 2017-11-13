@@ -13,7 +13,7 @@
 {/capture}
 
 {capture assign='sidebarLeft'}
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedMenu">
 		<h2 class="boxTitle">{lang}wcf.tagging.objectTypes{/lang}</h2>
 		
 		<nav class="boxContent">
@@ -25,7 +25,7 @@
 		</nav>
 	</section>
 	
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedTagCloud">
 		<h2 class="boxTitle">{lang}wcf.tagging.tags{/lang}</h2>
 		
 		<div class="boxContent">

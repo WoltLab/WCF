@@ -1,6 +1,6 @@
 {if !$user->isProtected()}
 	{if $followingCount}
-		<section class="box">
+		<section class="box" data-static-box-identifier="com.woltlab.wcf.UserProfileFollowing">
 			<h2 class="boxTitle">{lang}wcf.user.profile.following{/lang} <span class="badge">{#$followingCount}</span></h2>
 			
 			<div class="boxContent">
@@ -18,7 +18,7 @@
 	{/if}
 	
 	{if $followerCount}
-		<section class="box">
+		<section class="box" data-static-box-identifier="com.woltlab.wcf.UserProfileFollowers">
 			<h2 class="boxTitle">{lang}wcf.user.profile.followers{/lang} <span class="badge">{#$followerCount}</span></h2>
 			
 			<div class="boxContent">
@@ -36,7 +36,7 @@
 	{/if}
 	
 	{if $visitorCount}
-		<section class="box">
+		<section class="box" data-static-box-identifier="com.woltlab.wcf.UserProfileVisitors">
 			<h2 class="boxTitle">{lang}wcf.user.profile.visitors{/lang} <span class="badge">{#$visitorCount}</span></h2>
 			
 			<div class="boxContent">

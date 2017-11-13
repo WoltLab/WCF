@@ -9,7 +9,7 @@
 {/capture}
 
 {capture assign='sidebarRight'}
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.UsersOnlineListSorting">
 		<form method="post" action="{link controller='UsersOnlineList'}{/link}">
 			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
 				
@@ -41,7 +41,7 @@
 		</form>
 	</section>
 	
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.UsersOnlineListInfo">
 		<h2 class="boxTitle">{lang}wcf.user.usersOnline{/lang}</h2>
 		
 		<div class="boxContent">

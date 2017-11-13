@@ -3,7 +3,7 @@
 {capture assign='contentTitle'}{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span>{/capture}
 
 {capture assign='sidebarRight'}
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.ModerationListFilters">
 		{* moderation type *}
 		<h2 class="boxTitle">{lang}wcf.moderation.filterByType{/lang}</h2>
 		
