@@ -46,10 +46,11 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * followed by an object id.
 	 * 
 	 * @param	string		$link
+	 * @param       string          $defaultAnchor
 	 * @return	Regex
 	 */
-	protected function getRegexFromLink($link) {
-		return new Regex('^(' . preg_replace('~^https?~', 'https?', preg_quote($link)) . '(\d+)-.*?)$');
+	protected function getRegexFromLink($link, $defaultAnchor = '') {
+		return new Regex('^(' . preg_replace('~^https?~', 'https?', preg_quote($link)) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
 	}
 	
 	/**
