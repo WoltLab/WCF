@@ -26,25 +26,31 @@ class ClipboardHandler extends SingletonFactory {
 	 * cached list of actions
 	 * @var	array
 	 */
-	protected $actionCache = null;
+	protected $actionCache;
 	
 	/**
 	 * cached list of clipboard item types
 	 * @var	mixed[][]
 	 */
-	protected $cache = null;
+	protected $cache;
 	
 	/**
 	 * list of marked items
 	 * @var	DatabaseObject[][]
 	 */
-	protected $markedItems = null;
+	protected $markedItems;
 	
 	/**
 	 * cached list of page actions
 	 * @var	array
 	 */
-	protected $pageCache = null;
+	protected $pageCache;
+	
+	/**
+	 * list of page class names
+	 * @var string[]
+	 */
+	protected $pageClasses = [];
 	
 	/**
 	 * page object id
@@ -309,12 +315,14 @@ class ClipboardHandler extends SingletonFactory {
 			$pages = [$page];
 		}
 		
+		$this->pageClasses = [];
 		$this->pageObjectID = 0;
 		
 		// get objects
 		$this->loadMarkedItems();
 		if (empty($this->markedItems)) return null;
 		
+		$this->pageClasses = $pages;
 		$this->pageObjectID = $pageObjectID;
 		
 		// fetch action ids
@@ -417,6 +425,15 @@ class ClipboardHandler extends SingletonFactory {
 		$statement->execute($conditionBuilder->getParameters());
 		
 		return $statement->fetchSingleColumn() ? 1 : 0;
+	}
+	
+	/**
+	 * Returns the list of page class names.
+	 * 
+	 * @return      string[]
+	 */
+	public function getPageClasses() {
+		return $this->pageClasses;
 	}
 	
 	/**
