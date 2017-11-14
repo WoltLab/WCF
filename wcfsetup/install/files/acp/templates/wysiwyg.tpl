@@ -104,6 +104,10 @@
 				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}',
 				'wcf.editor.quote.url.error.invalid': '{lang}wcf.editor.quote.url.error.invalid{/lang}',
 				
+				'wcf.editor.table.cols': '{lang}wcf.editor.table.cols{/lang}',
+				'wcf.editor.table.insertTable': '{lang}wcf.editor.table.insertTable{/lang}',
+				'wcf.editor.table.rows': '{lang}wcf.editor.table.rows{/lang}',
+				
 				'wcf.editor.source.error.active': '{lang}wcf.editor.source.error.active{/lang}',
 				
 				'wcf.editor.spoiler.label': '{lang}wcf.editor.spoiler.label{/lang}',
@@ -194,6 +198,7 @@
 					
 					// WoltLab specials
 					'WoltLabBlock',
+					'WoltLabDropdown',
 					'WoltLabEvent',
 					'WoltLabKeydown',
 					
@@ -205,7 +210,6 @@
 					'WoltLabCode',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}'WoltLabColor',{/if}
 					'WoltLabDragAndDrop',
-					'WoltLabDropdown',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('html')}'WoltLabHtml',{/if}

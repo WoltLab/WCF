@@ -198,6 +198,7 @@
 					
 					// WoltLab specials
 					'WoltLabBlock',
+					'WoltLabDropdown',
 					'WoltLabEvent',
 					'WoltLabKeydown',
 					
@@ -209,7 +210,6 @@
 					'WoltLabCode',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}'WoltLabColor',{/if}
 					'WoltLabDragAndDrop',
-					'WoltLabDropdown',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}'WoltLabFont',{/if}
 					'WoltLabFullscreen',
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('html')}'WoltLabHtml',{/if}
