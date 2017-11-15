@@ -70,8 +70,6 @@ define(
 			UiDialog.setup();
 			UiTooltip.setup();
 			
-			new UiPageJumpToTop();
-			
 			// convert method=get into method=post
 			var forms = elBySelAll('form[method=get]');
 			for (var i = 0, length = forms.length; i < length; i++) {
@@ -84,11 +82,17 @@ define(
 				};
 			}
 			
-			// DEBUG ONLY
 			var interval = 0;
 			interval = window.setInterval(function() {
 				if (typeof window.jQuery === 'function') {
 					window.clearInterval(interval);
+					
+					// the 'jump to top' button triggers style recalculation/layout,
+					// putting it at the end of the jQuery queue avoids trashing the
+					// layout too early and thus delaying the page initialization
+					window.jQuery(function() {
+						new UiPageJumpToTop();
+					});
 					
 					window.jQuery.holdReady(false);
 				}
