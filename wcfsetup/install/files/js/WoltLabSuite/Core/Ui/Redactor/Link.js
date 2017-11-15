@@ -1,4 +1,4 @@
-define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
+define(['Core', 'EventKey', 'Language', 'Ui/Dialog'], function(Core, EventKey, Language, UiDialog) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -60,6 +60,22 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 						if (small !== null) {
 							elRemove(small);
 						}
+					},
+					onSetup: function (content) {
+						var submitButton = elBySel('.formSubmit > .buttonPrimary', content);
+						
+						if (submitButton !== null) {
+							elBySelAll('input[type="url"], input[type="text"]', content, function (input) {
+								input.addEventListener('keyup', function (event) {
+									if (EventKey.Enter(event)) {
+										Core.triggerEvent(submitButton, 'click');
+									}
+								});
+							});
+						}
+					},
+					onShow: function () {
+						elById('redactor-link-url').focus();
 					}
 				},
 				source: '<dl>'
