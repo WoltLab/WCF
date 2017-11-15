@@ -266,7 +266,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			
 			// use default avatar
 			if ($this->avatar === null) {
-				$this->avatar = new DefaultAvatar($this->userID ? $this->username : '');
+				$this->avatar = new DefaultAvatar($this->username ?: '');
 			}
 		}
 		
