@@ -73,6 +73,20 @@
 	.comment[data-is-disabled="1"] .jsCommentShowAddResponse {
 		display: none;
 	}
+	
+	@include screen-sm-up {
+		.jsCommentResponseAdd {
+			padding-left: 20px;
+		}
+	}
+	
+	/* hide avatar on smartphones to give more room to the editor */
+	@include screen-xs {
+		.jsCommentAdd > .userAvatarImage,
+		.jsCommentResponseAdd > .userAvatarImage {
+			display: none;
+		}
+	}
 }
 
 .commentListAddComment {
