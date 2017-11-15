@@ -72,7 +72,22 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				}
 				else if (!isIe) {
 					var types = e.originalEvent.clipboardData.types;
-					if (types.length === 1 && types[0] === 'text/plain') {
+					var hasContent = false;
+					if (types.indexOf('text/html') !== -1) {
+						// handles all major browsers except iOS Safari which does not expose `text/html`,
+						// but instead gives us `public.rtf` (which of course is completely useless)
+						// https://bugs.webkit.org/show_bug.cgi?id=19893
+						pastedHtml = e.originalEvent.clipboardData.getData('text/html');
+						
+						// remove document fragments
+						if (pastedHtml.trim().match(/^<html[^>]*>[\s\S]*?<body[^>]*>([\s\S]+)<\/body>[\s\S]*?<\/html>$/)) {
+							pastedHtml = RegExp.$1.replace(/^\s*(?:<!--StartFragment-->)(.+)(?:<!--EndFragment-->)?\s*$/, '$1');
+						}
+						
+						hasContent = (pastedHtml.trim().length !== 0);
+					}
+					
+					if (!hasContent && types.indexOf('text/plain') !== -1) {
 						var tmp = WCF.String.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
 						
 						pastedPlainText = '';
@@ -90,18 +105,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 								pastedPlainText += '<p>' + line + '</p>';
 							});
 						}
-					}
-					else if (types.indexOf('text/html') !== -1) {
-						// handles all major browsers except iOS Safari which does not expose `text/html`,
-						// but instead gives us `public.rtf` (which of course is completely useless)
-						// https://bugs.webkit.org/show_bug.cgi?id=19893
-						pastedHtml = e.originalEvent.clipboardData.getData('text/html');
-						
-						// remove document fragments
-						if (pastedHtml.trim().match(/^<html[^>]*>[\s\S]*?<body[^>]*>([\s\S]+)<\/body>[\s\S]*?<\/html>$/)) {
-							pastedHtml = RegExp.$1.replace(/^\s*(?:<!--StartFragment-->)(.+)(?:<!--EndFragment-->)?\s*$/, '$1');
-						}
-					}
+					} 
 				}
 				
 				if (pastedPlainText !== null || pastedHtml !== null) {
