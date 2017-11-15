@@ -32,7 +32,13 @@
 									{/implode}
 								};
 								
-								new WCF.Language.Chooser('languageIDContainer', 'languageID', {@$languageID}, $languages);
+								require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
+									LanguageChooser.init('languageIDContainer', 'languageID', {@$languageID}, $languages);
+									
+									var small = elCreate('small');
+									small.innerHTML = '{lang}wcf.user.language.description{/lang}';
+									elById('languageIDContainer').appendChild(small);
+								});
 							});
 						</script>
 						<noscript>
