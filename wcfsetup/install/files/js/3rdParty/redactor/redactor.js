@@ -4424,7 +4424,7 @@
 					// clear text decoration
 					if (tag != 'span')
 					{
-						this.$editor.find(this.opts.inlineTags.join(', ')).each($.proxy(function(i,s)
+						this.$editor.find(this.opts.inlineTags.join(', ') + ', a').each($.proxy(function(i,s)
 						{
 							var $el = $(s);
 
@@ -4436,7 +4436,7 @@
 							}
 
 							var property = $el.css('text-decoration');
-							if (property === 'line-through')
+							if (property.indexOf('line-through') === 0)
 							{
 								$el.css('text-decoration', '');
 								this.utils.removeEmptyAttr($el, 'style');
