@@ -29,12 +29,16 @@
 		});
 		
 		elBySel('input[name=awardAutomatically]').addEventListener('change', function () {
-			if (elBySel('input[name=awardAutomatically]').checked) {
-				elBySel('.conditionSection').style.display = 'block';
-			} 
-			else {
-				elBySel('.conditionSection').style.display = 'none';
-			}
+			var awardAutomatically = elBySel('input[name=awardAutomatically]').checked;
+
+			elBySelAll('.conditionSection', null, function(section) {
+				if ( awardAutomatically ) {
+					section.style.display = 'block';
+				}
+				else {
+					section.style.display = 'none';
+				}
+			});
 		});
 		
 		BadgeHandler.init(); 
