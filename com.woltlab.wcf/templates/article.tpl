@@ -148,14 +148,14 @@
 		</div>
 		
 		{if !$tags|empty}
-			<ul class="tagList articleTagList section">
+			<ul class="tagList articleTagList">
 				{foreach from=$tags item=tag}
 					<li><a href="{link controller='Tagged' object=$tag}objectType=com.woltlab.wcf.article{/link}" class="tag">{$tag->name}</a></li>
 				{/foreach}
 			</ul>
 		{/if}
 		
-		<div class="section row articleLikeSection">
+		<div class="row articleLikeSection">
 			<div class="col-xs-12 col-md-6">
 				<div class="articleLikesSummery"></div>
 			</div>
