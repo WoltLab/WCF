@@ -94,11 +94,9 @@ https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?video=v{$ID}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		
-		<provider name="facebook-video">
-			<title>Facebook Video</title>
-			<regex><![CDATA[https://(?:.+?\.)?facebook\.com/(?:[a-zA-Z0-9_]+/)?video(?:s/|\.php)(?:\?id=|\?v=)?(?<ID>[0-9]+)]]></regex>
-			<html><![CDATA[<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fvideo.php%3Fv%3D{$ID}&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>]]></html>
-		</provider>
 	</import>
+	
+	<delete>
+		<provider name="facebook-video" />
+	</delete>
 </data>
