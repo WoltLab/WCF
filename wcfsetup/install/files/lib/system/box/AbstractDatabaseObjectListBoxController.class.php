@@ -202,7 +202,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 			$this->loadContent();
 		}
 		
-		return count($this->objectList) > 0;
+		return ($this->objectList !== null && count($this->objectList) > 0);
 	}
 	
 	/**
