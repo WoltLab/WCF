@@ -209,6 +209,12 @@ define(
 		openStatic: function(id, html, options, createOnly) {
 			document.documentElement.classList.add('pageOverlayActive');
 			
+			if (Environment.platform() !== 'desktop') {
+				if (!this.isOpen(id)) {
+					UiScreen.scrollDisable();
+				}
+			}
+			
 			if (_dialogs.has(id)) {
 				this._updateDialog(id, html);
 			}
@@ -246,17 +252,12 @@ define(
 			// are focused, this will freeze the screen and force Safari to scroll
 			// to the input field
 			if (Environment.platform() === 'ios') {
-				UiScreen.scrollDisable();
-				
 				window.setTimeout((function () {
 					var input = elBySel('input, textarea', data.content);
 					if (input !== null) {
 						input.focus();
 					}
 				}).bind(this), 200);
-			}
-			else if (Environment.platform() !== 'desktop') {
-				UiScreen.scrollDisable();
 			}
 			
 			return data;
