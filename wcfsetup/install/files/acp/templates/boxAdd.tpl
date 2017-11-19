@@ -65,7 +65,7 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
+<form id="formContainer" method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
