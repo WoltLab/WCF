@@ -664,10 +664,10 @@ class TemplateScriptingCompiler {
 		
 		// check arguments
 		if (!isset($args['from'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'from' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo));
+			throw new SystemException(static::formatSyntaxError("missing 'from' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo));
 		}
 		if (!isset($args['item'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'item' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo));
+			throw new SystemException(static::formatSyntaxError("missing 'item' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo));
 		}
 		
 		$foreachProp = '';
@@ -675,19 +675,27 @@ class TemplateScriptingCompiler {
 			$foreachProp = "\$this->v['tpl']['foreach'][".$args['name']."]";
 		}
 		
+		$foreachHash = "\$_foreach_".StringUtil::getRandomID();
+		
 		$phpCode = "<?php\n";
+		$phpCode .= $foreachHash." = ".$args['from'].";\n";
+		$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
+		$phpCode .= "if (is_array(".$foreachHash.") || (".$foreachHash." instanceof \\Countable)) {\n";
+		$phpCode .= $foreachHash."_cnt = count(".$foreachHash.");\n";
+		$phpCode .= "}\n";
+		
 		if (!empty($foreachProp)) {
-			$phpCode .= $foreachProp."['total'] = count(".$args['from'].");\n";
+			$phpCode .= $foreachProp."['total'] = ".$foreachHash."_cnt;\n";
 			$phpCode .= $foreachProp."['show'] = (".$foreachProp."['total'] > 0 ? true : false);\n";
 			$phpCode .= $foreachProp."['iteration'] = 0;\n";
 		}
-		$phpCode .= "if (count(".$args['from'].") > 0) {\n";
+		$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		
 		if (isset($args['key'])) {
-			$phpCode .= "foreach (".$args['from']." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
 		}
 		else {
-			$phpCode .= "foreach (".$args['from']." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
 		}
 		
 		if (!empty($foreachProp)) {
