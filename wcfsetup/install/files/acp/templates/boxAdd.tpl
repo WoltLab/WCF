@@ -5,7 +5,7 @@
 	
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
-			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
+			AcpUiBoxControllerHandler.init();
 		});
 	{else}
 		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
@@ -253,7 +253,9 @@
 			
 			<div id="boxConditions">
 				{if $boxController && $boxController->getProcessor()|is_subclass_of:'wcf\system\box\IConditionBoxController'}
-					{@$boxController->getProcessor()->getConditionsTemplate()}
+					<div class="boxConditionsContainer" id="boxConditions{@$boxController->objectTypeID}">
+						{@$boxController->getProcessor()->getConditionsTemplate()}
+					</div>
 				{/if}
 			</div>
 		</div>
