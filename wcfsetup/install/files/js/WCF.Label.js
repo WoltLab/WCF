@@ -281,5 +281,14 @@ WCF.Label.Chooser = Class.extend({
 				$('<input type="hidden" name="labelIDs[' + $groupID + ']" value="' + $group.data('labelID') + '" />').appendTo($formSubmit);
 			}
 		}
+	},
+	
+	/**
+	 * Destroys the label chooser by destroying the used dropdowns.
+	 */
+	destroy: function() {
+		for (var groupID in this._groups) {
+			WCF.Dropdown.destroy(this._groups[groupID].wcfIdentify());
+		}
 	}
 });
