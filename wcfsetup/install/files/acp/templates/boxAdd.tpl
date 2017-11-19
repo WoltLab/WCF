@@ -5,7 +5,7 @@
 	
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
-			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
+			AcpUiBoxControllerHandler.init();
 		});
 	{else}
 		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
@@ -65,7 +65,7 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
+<form id="formContainer" method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
@@ -249,7 +249,9 @@
 			
 			<div id="boxConditions">
 				{if $boxController && $boxController->getProcessor()|is_subclass_of:'wcf\system\box\IConditionBoxController'}
-					{@$boxController->getProcessor()->getConditionsTemplate()}
+					<div class="boxConditionsContainer" id="boxConditions{@$boxController->objectTypeID}">
+						{@$boxController->getProcessor()->getConditionsTemplate()}
+					</div>
 				{/if}
 			</div>
 		</div>

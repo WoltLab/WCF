@@ -12,20 +12,17 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 	var _boxControllerContainer = elById('boxControllerContainer');
 	var _boxController = elById('boxControllerID');
 	var _boxConditions = elById('boxConditions');
-	var _templates = new Dictionary();
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
 	 */
 	return {
-		init: function(initialObjectTypeId) {
+		init: function() {
 			_boxController.addEventListener('change', this._updateConditions.bind(this));
 			
-			if (initialObjectTypeId) {
-				_templates.set(~~initialObjectTypeId, _boxConditions.innerHTML);
-			}
-			
 			elShow(_boxControllerContainer);
+			
+			_boxController.closest('form').addEventListener('submit', this._submit.bind(this));
 			
 			this._updateConditions();
 		},
@@ -50,9 +47,29 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			_templates.set(~~data.returnValues.objectTypeID, data.returnValues.template);
+			var boxConditions = elCreate('div');
+			boxConditions.id = 'boxConditions' + data.returnValues.objectTypeID;
+			boxConditions.className = 'boxConditionsContainer';
+			DomUtil.setInnerHtml(boxConditions, data.returnValues.template);
 			
-			DomUtil.setInnerHtml(_boxConditions, data.returnValues.template);
+			_boxConditions.appendChild(boxConditions);
+		},
+		
+		/**
+		 * Removes obsolete box conditions containers before submitting the form.
+		 * 
+		 * @param	{Event}		event
+		 */
+		_submit: function(event) {
+			var boxConditionsContainers = elBySelAll('.boxConditionsContainer');
+			var targetId = 'boxConditions' + ~~_boxController.value, boxConditionsContainer;
+			
+			for (var i = 0, length = boxConditionsContainers.length; i < length; i++) {
+				boxConditionsContainer = boxConditionsContainers[i];
+				if (boxConditionsContainer.id !== targetId) {
+					elRemove(boxConditionsContainer);
+				}
+			}
 		},
 		
 		/**
@@ -63,14 +80,13 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		_updateConditions: function() {
 			var objectTypeId = ~~_boxController.value;
 			
-			if (_templates.has(objectTypeId)) {
-				if (_templates.get(objectTypeId) !== null) {
-					_boxConditions.innerHTML = _templates.get(objectTypeId);
-				}
+			elBySelAll('.boxConditionsContainer', undefined, elHide);
+			
+			var boxConditions = elById('boxConditions' + objectTypeId);
+			if (boxConditions) {
+				elShow(boxConditions);
 			}
 			else {
-				_templates.set(objectTypeId, null);
-				
 				Ajax.api(this, {
 					parameters: {
 						objectTypeID: objectTypeId
