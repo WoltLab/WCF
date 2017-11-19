@@ -1,12 +1,12 @@
 /**
  * Provides the interface logic to add and edit boxes.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
  */
-define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
+define(['Ajax', 'Dom/Util', 'EventHandler'], function(Ajax, DomUtil, EventHandler) {
 	"use strict";
 	
 	var _boxControllerContainer = elById('boxControllerContainer');
@@ -17,14 +17,14 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 	 * @exports	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
 	 */
 	return {
-		init: function() {
+		init: function(initialObjectTypeId) {
 			_boxController.addEventListener('change', this._updateConditions.bind(this));
 			
 			elShow(_boxControllerContainer);
 			
-			_boxController.closest('form').addEventListener('submit', this._submit.bind(this));
-			
-			this._updateConditions();
+			if (initialObjectTypeId === undefined) {
+				this._updateConditions();
+			}
 		},
 		
 		/**
@@ -47,29 +47,7 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			var boxConditions = elCreate('div');
-			boxConditions.id = 'boxConditions' + data.returnValues.objectTypeID;
-			boxConditions.className = 'boxConditionsContainer';
-			DomUtil.setInnerHtml(boxConditions, data.returnValues.template);
-			
-			_boxConditions.appendChild(boxConditions);
-		},
-		
-		/**
-		 * Removes obsolete box conditions containers before submitting the form.
-		 * 
-		 * @param	{Event}		event
-		 */
-		_submit: function(event) {
-			var boxConditionsContainers = elBySelAll('.boxConditionsContainer');
-			var targetId = 'boxConditions' + ~~_boxController.value, boxConditionsContainer;
-			
-			for (var i = 0, length = boxConditionsContainers.length; i < length; i++) {
-				boxConditionsContainer = boxConditionsContainers[i];
-				if (boxConditionsContainer.id !== targetId) {
-					elRemove(boxConditionsContainer);
-				}
-			}
+			DomUtil.setInnerHtml(_boxConditions, data.returnValues.template);
 		},
 		
 		/**
@@ -78,21 +56,13 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		 * @protected
 		 */
 		_updateConditions: function() {
-			var objectTypeId = ~~_boxController.value;
+			EventHandler.fire('com.woltlab.wcf.boxControllerHandler', 'updateConditions');
 			
-			elBySelAll('.boxConditionsContainer', undefined, elHide);
-			
-			var boxConditions = elById('boxConditions' + objectTypeId);
-			if (boxConditions) {
-				elShow(boxConditions);
-			}
-			else {
-				Ajax.api(this, {
-					parameters: {
-						objectTypeID: objectTypeId
-					}
-				});
-			}
+			Ajax.api(this, {
+				parameters: {
+					objectTypeID: ~~_boxController.value
+				}
+			});
 		}
 	};
 });
