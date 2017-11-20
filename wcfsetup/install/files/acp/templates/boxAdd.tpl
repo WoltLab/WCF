@@ -7,33 +7,33 @@
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
 			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
 		});
-	{else}
-		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
-			Language.addObject({
-				'wcf.page.pageObjectID': '{lang}wcf.page.pageObjectID{/lang}',
-				{foreach from=$pageNodeList item=pageNode}
-					{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{@$pageNode->identifier}{/lang}{/capture}
-					{if $pageObjectIDLanguageItem}
-						'wcf.page.pageObjectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
-					{/if}
-					{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{@$pageNode->identifier}{/lang}{/capture}
-					{if $pageObjectIDLanguageItem}
-						'wcf.page.pageObjectID.search.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
-					{/if}
-				{/foreach}
-				'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
-				'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
-				'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}'
-			});
-			
-			var handlers = new Dictionary();
-			{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
-				handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
-			{/foreach}
-			
-			AcpUiBoxHandler.init(handlers);
-		});
 	{/if}
+	
+	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
+		Language.addObject({
+			'wcf.page.pageObjectID': '{lang}wcf.page.pageObjectID{/lang}',
+			{foreach from=$pageNodeList item=pageNode}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{@$pageNode->identifier}{/lang}{/capture}
+				{if $pageObjectIDLanguageItem}
+					'wcf.page.pageObjectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+				{/if}
+				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{@$pageNode->identifier}{/lang}{/capture}
+				{if $pageObjectIDLanguageItem}
+					'wcf.page.pageObjectID.search.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+				{/if}
+			{/foreach}
+			'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
+			'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
+			'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}'
+		});
+		
+		var handlers = new Dictionary();
+		{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
+			handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
+		{/foreach}
+		
+		AcpUiBoxHandler.init(handlers, '{$boxType}');
+	});
 	
 	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
 		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {

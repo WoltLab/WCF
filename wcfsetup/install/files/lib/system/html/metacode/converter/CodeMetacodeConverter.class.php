@@ -67,6 +67,34 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter {
 		
 		$element->appendChild($fragment);
 		
+		// strip all newline characters, this process requires the element to be part of the DOM,
+		// otherwise xpath won't match the text nodes 
+		$body = $element->ownerDocument->getElementsByTagName('body')->item(0);
+		$body->appendChild($element);
+		
+		$xpath = new \DOMXPath($element->ownerDocument);
+		$replaceNodes = [];
+		/** @var \DOMText $textNode */
+		foreach ($xpath->query('//text()', $element) as $textNode) {
+			if (mb_strpos($textNode->textContent, "\n") !== false) {
+				$replaceNodes[] = $textNode;
+			}
+		}
+		
+		/** @var \DOMText $node */
+		foreach ($replaceNodes as $node) {
+			$newText = preg_replace('~\r?\n~', '', $node->textContent);
+			if ($newText !== '') {
+				$newNode = $node->ownerDocument->createTextNode($newText);
+				$node->parentNode->insertBefore($newNode, $node);
+			}
+			
+			$node->parentNode->removeChild($node);
+		}
+		
+		// remove the element again
+		$body->removeChild($element);
+		
 		// convert code lines
 		$childNodes = DOMUtil::getChildNodes($element);
 		/** @var \DOMElement $node */
