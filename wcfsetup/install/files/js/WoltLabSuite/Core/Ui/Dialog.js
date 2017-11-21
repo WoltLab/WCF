@@ -273,12 +273,7 @@ define(
 		 * @param	{string}	        title		dialog title
 		 */
 		setTitle: function(id, title) {
-			if (typeof id === 'object') {
-				var dialogData = _dialogObjects.get(id);
-				if (dialogData !== undefined) {
-					id = dialogData.id;
-				}
-			}
+			id = this._getDialogId(id);
 			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
@@ -494,6 +489,8 @@ define(
 		 * @param	{string}	id	element id
 		 */
 		rebuild: function(id) {
+			id = this._getDialogId(id);
+			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
@@ -595,12 +592,7 @@ define(
 		 * @param	{(string|object)}	id	element id or callback object
 		 */
 		close: function(id) {
-			if (typeof id === 'object') {
-				var dialogData = _dialogObjects.get(id);
-				if (dialogData !== undefined) {
-					id = dialogData.id;
-				}
-			}
+			id = this._getDialogId(id);
 			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
