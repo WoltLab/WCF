@@ -2204,6 +2204,7 @@ full extend.]]></item>
 	
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[Do you really want to terminate the execution?]]></item>
+		<item name="wcf.acp.worker.success"><![CDATA[Task completed]]></item>
 	</category>
 	
 	<category name="wcf.ajax">

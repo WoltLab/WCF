@@ -1567,44 +1567,10 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
  * @param	string		title
  * @param	object		parameters
  * @param	object		callback
+ * 
+ * @deprecated  3.1 - please use `WoltLabSuite/Core/Acp/Ui/Worker` instead
  */
 WCF.ACP.Worker = Class.extend({
-	/**
-	 * worker aborted
-	 * @var	boolean
-	 */
-	_aborted: false,
-	
-	/**
-	 * callback invoked after worker completed
-	 * @var	object
-	 */
-	_callback: null,
-	
-	/**
-	 * dialog id
-	 * @var	string
-	 */
-	_dialogID: null,
-	
-	/**
-	 * dialog object
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * dialog title
-	 * @var	string
-	 */
-	_title: '',
-	
 	/**
 	 * Initializes a new worker instance.
 	 * 
@@ -1613,81 +1579,23 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	string		title
 	 * @param	object		parameters
 	 * @param	object		callback
-	 * @param	object		confirmMessage
 	 */
 	init: function(dialogID, className, title, parameters, callback) {
-		this._aborted = false;
-		this._callback = callback || null;
-		this._dialogID = dialogID + 'Worker';
-		this._dialog = null;
-		this._proxy = new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
+		if (typeof callback === 'function') {
+			throw new Error("The callback parameter is no longer supported, please migrate to 'WoltLabSuite/Core/Acp/Ui/Worker'.");
+		}
+		
+		require(['WoltLabSuite/Core/Acp/Ui/Worker'], function(AcpUiWorker) {
+			new AcpUiWorker({
+				// dialog
+				dialogId: dialogID,
+				dialogTitle: title,
+				
+				// ajax
 				className: className,
-				parameters: parameters || { }
-			},
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this),
-			url: 'index.php?worker-proxy/&t=' + SECURITY_TOKEN
+				parameters: parameters
+			});
 		});
-		this._title = title;
-	},
-	
-	/**
-	 * Handles response from server.
-	 * 
-	 * @param	object		data
-	 */
-	_success: function(data) {
-		// init binding
-		if (this._dialog === null) {
-			this._dialog = $('<div id="' + this._dialogID + '" />').hide().appendTo(document.body);
-			this._dialog.wcfDialog({
-				closeConfirmMessage: WCF.Language.get('wcf.acp.worker.abort.confirmMessage'),
-				closeViaModal: false,
-				onClose: $.proxy(function() {
-					this._aborted = true;
-					this._proxy.abortPrevious();
-					
-					window.location.reload();
-				}, this),
-				title: this._title
-			});
-		}
-		
-		if (this._aborted) {
-			return;
-		}
-		
-		if (data.template) {
-			this._dialog.html(data.template);
-		}
-		
-		// update progress
-		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
-		
-		// worker is still busy with its business, carry on
-		if (data.progress < 100) {
-			// send request for next loop
-			this._proxy.setOption('data', {
-				className: data.className,
-				loopCount: data.loopCount,
-				parameters: data.parameters
-			});
-			this._proxy.sendRequest();
-		}
-		else if (this._callback !== null) {
-			this._callback(this, data);
-		}
-		else {
-			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check');
-			
-			// display continue button
-			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function() { window.location = data.proceedURL; });
-			
-			this._dialog.wcfDialog('render');
-		}
 	}
 });
 

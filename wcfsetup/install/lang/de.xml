@@ -2268,6 +2268,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 	
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Ausführung wirklich abbrechen?]]></item>
+		<item name="wcf.acp.worker.success"><![CDATA[Aufgabe abgeschlossen]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
