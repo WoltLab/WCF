@@ -23,6 +23,13 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			this.caret.end = (function (node) {
 				node = this.caret.prepare(node);
 				
+				// handle trailing lists
+				if (node.nodeName === 'OL' || node.nodeName === 'UL') {
+					node = node.lastElementChild;
+					
+					if (node === null) node = node.parentNode;
+				}
+				
 				var useCustomRange = false;
 				if (node.nodeType === Node.ELEMENT_NODE && node.lastChild && node.lastChild.nodeName === 'P') {
 					useCustomRange = true;
