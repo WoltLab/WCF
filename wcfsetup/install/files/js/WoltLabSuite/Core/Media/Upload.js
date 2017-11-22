@@ -124,7 +124,7 @@ define(
 						}
 						
 						var spinner = elCreate('span');
-						spinner.classList = 'icon icon48 fa-spinner mediaThumbnail';
+						spinner.className = 'icon icon48 fa-spinner mediaThumbnail';
 						
 						DomUtil.replaceElement(image[0], spinner);
 						

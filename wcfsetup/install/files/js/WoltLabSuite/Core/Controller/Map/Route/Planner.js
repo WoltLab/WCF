@@ -191,7 +191,7 @@ define([
 				
 				if (this._errorMessage === undefined) {
 					this._errorMessage = elCreate('small');
-					this._errorMessage.classList = 'innerError';
+					this._errorMessage.className = 'innerError';
 					
 					DomUtil.insertAfter(this._errorMessage, this._originInput);
 				}

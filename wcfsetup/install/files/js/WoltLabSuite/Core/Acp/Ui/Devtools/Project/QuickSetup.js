@@ -108,7 +108,7 @@ define([
 			
 			if (createPathError && innerError === null) {
 				innerError = elCreate('small');
-				innerError.classList = 'innerError';
+				innerError.className = 'innerError';
 				
 				DomUtil.insertAfter(innerError, _pathInput);
 			}

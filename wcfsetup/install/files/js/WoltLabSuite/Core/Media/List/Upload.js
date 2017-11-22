@@ -48,7 +48,7 @@ define(
 			MediaListUpload._super.prototype._createButton.call(this);
 			
 			var icon = elCreate('span');
-			icon.classList = 'icon icon16 fa-upload';
+			icon.className = 'icon icon16 fa-upload';
 			DomUtil.prepend(icon, elBySel('span', this._button));
 		},
 		
