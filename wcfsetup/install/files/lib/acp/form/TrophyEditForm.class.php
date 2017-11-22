@@ -197,23 +197,25 @@ class TrophyEditForm extends TrophyAddForm {
 			UserStorageHandler::getInstance()->resetAll('specialTrophies');
 		}
 		
-		// update trophy points
-		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('trophyID = ?', [$this->trophyID]);
-		$sql = "SELECT		COUNT(*) as count, userID
+		if ($this->isDisabled != $this->trophy->isDisabled) {
+			// update trophy points
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('trophyID = ?', [$this->trophyID]);
+			$sql = "SELECT		COUNT(*) as count, userID
 			FROM		wcf".WCF_N."_user_trophy
 			".$conditionBuilder."
 			GROUP BY	userID";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
-		
-		while ($row = $statement->fetchArray()) {
-			$userAction = new UserAction([$row['userID']], 'update', [
-				'counters' => [
-					'trophyPoints' => $row['count'] * ($this->isDisabled) ? -1 : 1
-				]
-			]);
-			$userAction->executeAction();
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			while ($row = $statement->fetchArray()) {
+				$userAction = new UserAction([$row['userID']], 'update', [
+					'counters' => [
+						'trophyPoints' => $row['count'] * ($this->isDisabled) ? -1 : 1
+					]
+				]);
+				$userAction->executeAction();
+			}
 		}
 		
 		$this->saved();
