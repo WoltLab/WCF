@@ -30,7 +30,7 @@
 		
 		elBySel('input[name=awardAutomatically]').addEventListener('change', function () {
 			var awardAutomatically = elBySel('input[name=awardAutomatically]').checked;
-			elBySelAll('.conditionSection', null, (awardAutomatically ? 'elShow' : 'elHide'))
+			elBySelAll('.conditionSection', null, window[(awardAutomatically ? 'elShow' : 'elHide')]);
 		});
 		
 		BadgeHandler.init(); 
