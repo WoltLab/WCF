@@ -83,7 +83,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
 			}
 			else if (actionData.data.actionName === 'com.woltlab.wcf.article.setCategory') {
 				try {
-					dialog = UiDialog.getDialog('articleCategoryDialog');
+					UiDialog.getDialog('articleCategoryDialog');
 					UiDialog.openStatic('articleCategoryDialog');
 				}
 				catch (e) {
@@ -123,11 +123,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
 				UiDialog.close('articleCategoryDialog');
 			}
 			else if (innerErrors.length === 0) {
-				var innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.innerText = Language.get('wcf.global.form.error.empty');
-				
-				DomUtil.insertAfter(innerError, select);
+				elInnerError(select, Language.get('wcf.global.form.error.empty'));
 			}
 		},
 		

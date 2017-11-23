@@ -79,6 +79,7 @@ function(
 			window.jQuery(this._textarea).redactor('code.set', html);
 			window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
 			
+			// the error message can appear anywhere in the container, not exclusively after the textarea
 			var innerError = elBySel('.innerError', this._textarea.parentNode);
 			if (innerError !== null) elRemove(innerError);
 		},

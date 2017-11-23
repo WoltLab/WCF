@@ -42,13 +42,9 @@ define(['Core', 'Dom/Traverse', 'Language', 'Upload', 'Ui/Notification'], functi
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */
 		_success: function(uploadId, data) {
-			var error = DomTraverse.childByClass(this._button.parentNode, 'innerError');
+			elInnerError(this._button, false);
 			
 			this._target.innerHTML = "<img src=\"" + data.returnValues.url + "?timestamp=" + Date.now() + "\" />";
-			
-			if (error) {
-				elRemove(error);
-			}
 			
 			UINotification.show();
 		},
@@ -57,15 +53,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Upload', 'Ui/Notification'], functi
 		 * @see	WoltLabSuite/Core/Upload#_failure
 		 */
 		_failure: function(uploadId, data, responseText, xhr, requestOptions) {
-			var error = DomTraverse.childByClass(this._button.parentNode, 'innerError');
-			if (!error) {
-				error = elCreate('small');
-				error.className = 'innerError';
-				
-				this._button.parentNode.appendChild(error);
-			}
-			
-			error.textContent = Language.get('wcf.acp.trophy.imageUpload.error.' + data.returnValues.errorType);
+			elInnerError(this._button, Language.get('wcf.acp.trophy.imageUpload.error.' + data.returnValues.errorType)=;
 			
 			// remove previous images 
 			this._target.innerHTML = "";

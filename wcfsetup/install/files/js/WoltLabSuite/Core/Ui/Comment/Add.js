@@ -88,16 +88,8 @@ function(
 			
 			var usernameInput = elBySel('input[name=username]', event.currentTarget.closest('.dialogContent'));
 			if (usernameInput.value === '') {
-				var error = DomTraverse.nextByClass(usernameInput, 'innerError');
-				if (!error) {
-					error = elCreate('small');
-					error.className = 'innerError';
-					error.innerText = Language.get('wcf.global.form.error.empty');
-					
-					DomUtil.insertAfter(error, usernameInput);
-					
-					usernameInput.closest('dl').classList.add('formError');
-				}
+				elInnerError(usernameInput, Language.get('wcf.global.form.error.empty'));
+				usernameInput.closest('dl').classList.add('formError');
 				
 				return;
 			}
@@ -187,10 +179,7 @@ function(
 		 */
 		_validate: function() {
 			// remove all existing error elements
-			var errorMessages = elByClass('innerError', this._container);
-			while (errorMessages.length) {
-				elRemove(errorMessages[0]);
-			}
+			elBySelAll('.innerError', this._container, elRemove);
 			
 			// check if editor contains actual content
 			if (this._getEditor().utils.isEmpty()) {
@@ -217,11 +206,7 @@ function(
 		 * @param       {string}        message         error message
 		 */
 		throwError: function(element, message) {
-			var error = elCreate('small');
-			error.className = 'innerError';
-			error.textContent = (message === 'empty' ? Language.get('wcf.global.form.error.empty') : message);
-			
-			DomUtil.insertAfter(error, element);
+			elInnerError(element, (message === 'empty' ? Language.get('wcf.global.form.error.empty') : message));
 		},
 		
 		/**

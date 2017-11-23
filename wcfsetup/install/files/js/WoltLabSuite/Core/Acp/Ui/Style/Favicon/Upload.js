@@ -41,26 +41,17 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */
 		_success: function(uploadId, data) {
-			var error = DomTraverse.childByClass(this._button.parentNode, 'innerError');
+			var errorMessage = '';
 			if (data.returnValues.url) {
 				elAttr(this._target, 'src', data.returnValues.url + '?timestamp=' + Date.now());
-				
-				if (error) {
-					elRemove(error);
-				}
 				
 				UiNotification.show();
 			}
 			else if (data.returnValues.errorType) {
-				if (!error) {
-					error = elCreate('small');
-					error.className = 'innerError';
-					
-					this._button.parentNode.appendChild(error);
-				}
-				
-				error.textContent = Language.get('wcf.acp.style.favicon.error.' + data.returnValues.errorType);
+				errorMessage = Language.get('wcf.acp.style.favicon.error.' + data.returnValues.errorType);
 			}
+			
+			elInnerError(this._button, errorMessage);
 		}
 	});
 	

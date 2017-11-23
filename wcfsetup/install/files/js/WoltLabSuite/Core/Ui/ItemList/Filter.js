@@ -209,22 +209,7 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 			this._container.insertBefore(this._fragment.firstChild, this._container.firstChild);
 			this._value = value;
 			
-			var innerError = this._container.nextElementSibling;
-			if (innerError && !innerError.classList.contains('innerError')) innerError = null;
-			
-			if (hasVisibleItems) {
-				if (innerError) {
-					elRemove(innerError);
-				}
-			}
-			else {
-				if (!innerError) {
-					innerError = elCreate('small');
-					innerError.className = 'innerError';
-					innerError.textContent = Language.get('wcf.global.filter.error.noMatches');
-					DomUtil.insertAfter(innerError, this._container);
-				}
-			}
+			elInnerError(this._container, (hasVisibleItems) ? false : Language.get('wcf.global.filter.error.noMatches'));
 		},
 		
 		/**

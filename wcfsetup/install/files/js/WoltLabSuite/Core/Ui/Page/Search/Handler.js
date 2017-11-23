@@ -56,10 +56,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 			
 			// no matches
 			if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-				var innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = Language.get('wcf.page.pageObjectID.search.noResults');
-				DomUtil.insertAfter(innerError, _searchInput);
+				elInnerError(_searchInput, Language.get('wcf.page.pageObjectID.search.noResults'));
 				
 				return;
 			}
@@ -99,8 +96,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 		 * @protected
 		 */
 		_resetList: function() {
-			var innerError = _searchInput.nextElementSibling;
-			if (innerError && innerError.classList.contains('innerError')) elRemove(innerError);
+			elInnerError(_searchInput, false);
 			
 			_resultList.innerHTML = '';
 			

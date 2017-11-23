@@ -52,8 +52,7 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 			_buttonRunTest.disabled = true;
 			_buttonRunTest.innerHTML = '<span class="icon icon16 fa-spinner"></span> ' + Language.get('wcf.global.loading');
 			
-			var innerError = _buttonRunTest.nextElementSibling;
-			if (innerError && innerError.classList.contains('innerError')) elRemove(innerError);
+			elInnerError(_buttonRunTest, false);
 			
 			window.setTimeout((function () {
 				Ajax.api(this, {
@@ -95,12 +94,7 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 			if (success) _buttonRunTest.innerHTML = '<span class="icon icon16 fa-check green"></span> ' + Language.get('wcf.acp.email.smtp.test.run.success');
 			else _buttonRunTest.innerHTML = Language.get('wcf.acp.email.smtp.test.run');
 			
-			if (errorMessage) {
-				var innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = errorMessage;
-				_buttonRunTest.parentNode.insertBefore(innerError, _buttonRunTest.nextElementSibling);
-			}
+			if (errorMessage) elInnerError(_buttonRunTest, errorMessage);
 		},
 		
 		_ajaxSetup: function () {

@@ -169,7 +169,7 @@ define([
 		_setRoute: function(result, status) {
 			AjaxStatus.hide();
 			
-			if (status == 'OK') {
+			if (status === 'OK') {
 				elShow(this._map.getDiv().parentNode);
 				
 				google.maps.event.trigger(this._map, 'resize');
@@ -179,9 +179,7 @@ define([
 				elShow(DomTraverse.parentByTag(this._travelMode, 'DL'));
 				elShow(this._googleLink);
 				
-				if (this._errorMessage) {
-					elHide(this._errorMessage);
-				}
+				elInnerError(this._originInput, false);
 			}
 			else {
 				// map irrelevant errors to not found error
@@ -189,17 +187,7 @@ define([
 					status = 'NOT_FOUND';
 				}
 				
-				if (this._errorMessage === undefined) {
-					this._errorMessage = elCreate('small');
-					this._errorMessage.className = 'innerError';
-					
-					DomUtil.insertAfter(this._errorMessage, this._originInput);
-				}
-				else {
-					elShow(this._errorMessage);
-				}
-				
-				this._errorMessage.textContent = Language.get('wcf.map.route.error.' + status.toLowerCase());
+				elInnerError(this._originInput, Language.get('wcf.map.route.error.' + status.toLowerCase()));
 			}
 		},
 		

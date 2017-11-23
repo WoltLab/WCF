@@ -190,17 +190,15 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			
 			var id = 'redactor-quote-' + this._elementId;
 			var urlInput = elById(id + '-url');
-			var innerError = elBySel('.innerError', urlInput.parentNode);
-			if (innerError !== null) elRemove(innerError);
 			
 			var url = urlInput.value.replace(/\u200B/g, '').trim();
 			// simple test to check if it at least looks like it could be a valid url
 			if (url.length && !/^https?:\/\/[^\/]+/.test(url)) {
-				innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = Language.get('wcf.editor.quote.url.error.invalid');
-				urlInput.parentNode.insertBefore(innerError, urlInput.nextElementSibling);
+				elInnerError(urlInput, Language.get('wcf.editor.quote.url.error.invalid'));
 				return;
+			}
+			else {
+				elInnerError(urlInput, false);
 			}
 			
 			// set author

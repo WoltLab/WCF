@@ -67,7 +67,7 @@ define([
 		 */
 		_ajaxSuccess: function(data) {
 			if (data.returnValues.errorMessage) {
-				this._showPathError(data.returnValues.errorMessage);
+				elInnerError(_pathInput, data.returnValues.errorMessage);
 				
 				_submitButton.disabled = false;
 				
@@ -97,26 +97,6 @@ define([
 		},
 		
 		/**
-		 * Returns the error element for the path input in the dialog or
-		 * `null` if no exists yet.
-		 *
-		 * @param	{boolean}	createPathError	if `true` and inner error element does not exist, it will be created
-		 * @return	{HTMLElement?}	path error element
-		 */
-		_getPathError: function(createPathError) {
-			var innerError = DomTraverse.nextByClass(_pathInput, 'innerError');
-			
-			if (createPathError && innerError === null) {
-				innerError = elCreate('small');
-				innerError.className = 'innerError';
-				
-				DomUtil.insertAfter(innerError, _pathInput);
-			}
-			
-			return innerError;
-		},
-		
-		/**
 		 * Handles the `[ENTER]` key to submit the form.
 		 *
 		 * @param	{object}	event		event object
@@ -136,10 +116,7 @@ define([
 			_pathInput.focus();
 			
 			// hide error
-			var innerError = this._getPathError();
-			if (innerError) {
-				elHide(innerError);
-			}
+			elInnerError(_pathInput, false);
 		},
 		
 		/**
@@ -150,24 +127,12 @@ define([
 		},
 		
 		/**
-		 * Shows the path error message.
-		 * 
-		 * @param	{string}	errorMessage	path error emssage
-		 */
-		_showPathError: function(errorMessage) {
-			var innerError = this._getPathError(true);
-			innerError.textContent = errorMessage;
-			
-			elShow(innerError);
-		},
-		
-		/**
 		 * Is called if the dialog form is submitted.
 		 */
 		_submit: function() {
 			// check if path is empty
 			if (_pathInput.value === '') {
-				this._showPathError(Language.get('wcf.global.form.error.empty'));
+				elInnerError(_pathInput, Language.get('wcf.global.form.error.empty'));
 				
 				return;
 			}

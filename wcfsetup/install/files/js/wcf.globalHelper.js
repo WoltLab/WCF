@@ -174,6 +174,54 @@
 	};
 	
 	/**
+	 * Displays or removes an error message below the provided element.
+	 * 
+	 * @param       {Element}       element         DOM element
+	 * @param       {string?}       errorMessage    error message; `false`, `null` and `undefined` are treated as an empty string
+	 * @param       {boolean?}      isHtml          defaults to false, causes `errorMessage` to be treated as text only
+	 * @return      {?Element}      the inner error element or null if it was removed
+	 */
+	window.elInnerError = function (element, errorMessage, isHtml) {
+		var parent = element.parentNode;
+		if (parent === null) {
+			throw new Error('Only elements that have a parent element or document are valid.');
+		}
+		
+		if (typeof errorMessage !== 'string') {
+			if (errorMessage === undefined || errorMessage === null || errorMessage === false) {
+				errorMessage = '';
+			}
+			else {
+				throw new TypeError('The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.');
+			}
+		}
+		
+		var innerError = element.nextElementSibling;
+		if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
+			if (errorMessage === '') {
+				innerError = null;
+			}
+			else {
+				innerError = elCreate('small');
+				innerError.className = 'innerError';
+				parent.insertBefore(innerError, element.nextSibling);
+			}
+		}
+		
+		if (errorMessage === '') {
+			if (innerError !== null) {
+				parent.removeChild(innerError);
+				innerError = null;
+			}
+		}
+		else {
+			innerError[(isHtml ? 'innerHTML' : 'textContent')] = errorMessage;
+		}
+		
+		return innerError;
+	};
+	
+	/**
 	 * Shorthand function to remove an element.
 	 * 
 	 * @param	{Node}	        element		DOM node

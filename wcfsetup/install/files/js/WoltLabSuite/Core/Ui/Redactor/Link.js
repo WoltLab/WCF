@@ -38,15 +38,7 @@ define(['Core', 'EventKey', 'Language', 'Ui/Dialog'], function(Core, EventKey, L
 			}
 			else {
 				var url = elById('redactor-link-url');
-				var small = (url.nextElementSibling && url.nextElementSibling.nodeName === 'SMALL') ? url.nextElementSibling : null;
-				
-				if (small === null) {
-					small = elCreate('small');
-					small.className = 'innerError';
-					url.parentNode.appendChild(small);
-				}
-				
-				small.textContent = Language.get((url.value.trim() === '' ? 'wcf.global.form.error.empty' : 'wcf.editor.link.error.invalid'));
+				elInnerError(url, Language.get((url.value.trim() === '' ? 'wcf.global.form.error.empty' : 'wcf.editor.link.error.invalid')));
 			}
 		},
 		

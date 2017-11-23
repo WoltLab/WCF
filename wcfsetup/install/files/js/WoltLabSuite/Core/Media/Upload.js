@@ -287,15 +287,12 @@ define(
 						
 						file.classList.add('uploadFailed');
 						
-						var small = elCreate('small');
-						small.classList.add('innerError');
-						small.textContent = Language.get('wcf.media.upload.error.' + error.errorType, {
-							filename: error.filename
-						});
-						
 						var p = elBySelAll('.columnFilename .box48 > div > p', file)[1];
 						
-						DomUtil.insertAfter(small, p);
+						elInnerError(p, Language.get('wcf.media.upload.error.' + error.errorType, {
+							filename: error.filename
+						}));
+						
 						elRemove(p);
 					}
 				}

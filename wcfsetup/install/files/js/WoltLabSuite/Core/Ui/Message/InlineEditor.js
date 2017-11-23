@@ -505,10 +505,7 @@ define(
 		 */
 		_validate: function(parameters) {
 			// remove all existing error elements
-			var errorMessages = elByClass('innerError', this._activeElement);
-			while (errorMessages.length) {
-				elRemove(errorMessages[0]);
-			}
+			elBySelAll('.innerError', this._activeElement, elRemove);
 			
 			var data = {
 				api: this,
@@ -528,11 +525,7 @@ define(
 		 * @param       {string}        message         error message
 		 */
 		throwError: function(element, message) {
-			var error = elCreate('small');
-			error.className = 'innerError';
-			error.textContent = message;
-			
-			DomUtil.insertAfter(error, element);
+			elInnerError(element, message);
 		},
 		
 		/**
@@ -700,16 +693,8 @@ define(
 				return true;
 			}
 			
-			var innerError = elBySel('.innerError', elementData.messageBodyEditor);
-			if (innerError === null) {
-				innerError = elCreate('small');
-				innerError.className = 'innerError';
-				
-				DomUtil.insertAfter(innerError, editor);
-			}
-			
 			//noinspection JSUnresolvedVariable
-			innerError.textContent = data.returnValues.realErrorMessage;
+			elInnerError(editor, data.returnValues.realErrorMessage);
 			
 			return false;
 		},
