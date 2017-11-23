@@ -113,6 +113,7 @@ class AJAXException extends LoggedException {
 			break;
 			
 			default:
+			case self::ILLEGAL_LINK:
 			case self::INTERNAL_ERROR:
 				//header('HTTP/1.1 418 I\'m a Teapot');
 				header('HTTP/1.1 503 Service Unavailable');
