@@ -94,6 +94,12 @@ https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?video=v{$ID}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
 		</provider>
+		
+		<provider name="jodel">
+			<title>Jodel</title>
+			<regex><![CDATA[https?://share.jodel.com/post\?postId=(?<postID>[0-9a-zA-Z]+)(\&ojFilter=(?<ojFilter>[a-zA-Z]+))?]]></regex>
+			<html><![CDATA[<iframe height="300px" width="100%" src="https://share.jodel.com/post/preview?postId={$postID}&ojFilter={$ojFilter}" style="border-radius:3px"></iframe>]]></html>
+		</provider>
 	</import>
 	
 	<delete>
