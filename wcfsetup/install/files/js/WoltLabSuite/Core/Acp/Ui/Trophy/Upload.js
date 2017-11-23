@@ -53,7 +53,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Upload', 'Ui/Notification'], functi
 		 * @see	WoltLabSuite/Core/Upload#_failure
 		 */
 		_failure: function(uploadId, data, responseText, xhr, requestOptions) {
-			elInnerError(this._button, Language.get('wcf.acp.trophy.imageUpload.error.' + data.returnValues.errorType)=;
+			elInnerError(this._button, Language.get('wcf.acp.trophy.imageUpload.error.' + data.returnValues.errorType));
 			
 			// remove previous images 
 			this._target.innerHTML = "";
