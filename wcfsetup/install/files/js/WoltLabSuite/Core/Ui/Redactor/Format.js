@@ -394,7 +394,7 @@ define(['Dom/Util'], function(DomUtil) {
 			for (var i = 0, length = tags.length; i < length; i++) {
 				tag = tags[i];
 				
-				node = selection.anchorNode;
+				node = elClosest(selection.anchorNode);
 				hasNode = (elBySel(tag.toLowerCase(), node) !== null);
 				
 				if (!hasNode) {
