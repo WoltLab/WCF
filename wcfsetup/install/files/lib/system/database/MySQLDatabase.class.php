@@ -52,13 +52,8 @@ class MySQLDatabase extends Database {
 				catch (\PDOException $e) {
 					// 1049 = Unknown database
 					if ($this->pdo->errorInfo()[1] == 1049) {
-						try {
-							$this->pdo->exec("CREATE DATABASE " . $this->database);
-							$this->pdo->exec("USE " . $this->database);
-						}
-						catch (\PDOException $e) {
-							wcfDebug($e);
-						}
+						$this->pdo->exec("CREATE DATABASE " . $this->database);
+						$this->pdo->exec("USE " . $this->database);
 					}
 					else {
 						throw $e;
