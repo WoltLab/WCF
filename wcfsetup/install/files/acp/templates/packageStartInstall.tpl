@@ -64,7 +64,7 @@
 		</div>
 		
 		<div class="formSubmit">
-			<button class="jsButtonPackageSearch">{lang}wcf.global.button.submit{/lang}</button>
+			<button class="jsButtonPackageSearch buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 		</div>
 		
 		<section class="section tabularBox" id="packageSearchResultContainer" style="display: none;">
