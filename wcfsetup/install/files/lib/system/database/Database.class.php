@@ -90,6 +90,12 @@ abstract class Database {
 	protected $activeTransactions = 0;
 	
 	/**
+	 * attempts to create the database after the connection has been established
+	 * @var boolean
+	 */
+	protected $tryToCreateDatabase = false;
+	
+	/**
 	 * Creates a Database Object.
 	 * 
 	 * @param	string		$host			SQL database server host address
@@ -98,14 +104,16 @@ abstract class Database {
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
 	 * @param	boolean		$failsafeTest
+	 * @param       boolean         $tryToCreateDatabase
 	 */
-	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false) {
+	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
 		$this->database = $database;
 		$this->failsafeTest = $failsafeTest;
+		$this->tryToCreateDatabase = $tryToCreateDatabase;
 		
 		// connect database
 		$this->connect();

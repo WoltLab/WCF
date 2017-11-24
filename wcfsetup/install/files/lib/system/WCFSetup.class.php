@@ -10,6 +10,7 @@ use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\util\SQLParser;
 use wcf\system\database\MySQLDatabase;
+use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
@@ -458,7 +459,7 @@ class WCFSetup extends WCF {
 		}
 		
 		$documentRoot = FileUtil::unifyDirSeparator(realpath($_SERVER['DOCUMENT_ROOT']));
-		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+		if (self::$developerMode && (isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR']) || DevtoolsSetup::getInstance()->useDefaultInstallPath())) {
 			// resolve path relative to document root
 			$relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
 			foreach ($packages as $application => $packageData) {
@@ -616,12 +617,25 @@ class WCFSetup extends WCF {
 	 * Shows the page for configuring the database connection.
 	 */
 	protected function configureDB() {
+		$attemptConnection = isset($_POST['send']);
+		
 		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST'])) {
 			$dbHost = $_ENV['WCFSETUP_DBHOST'];
 			$dbUser = $_ENV['WCFSETUP_DBUSER'];
 			$dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];
 			$dbName = $_ENV['WCFSETUP_DBNAME'];
 			$dbNumber = 1;
+			
+			$attemptConnection = true;
+		}
+		else if (self::$developerMode && ($config = DevtoolsSetup::getInstance()->getDatabaseConfig()) !== null) {
+			$dbHost = $config['host'];
+			$dbUser = $config['username'];
+			$dbPassword = $config['password'];
+			$dbName = $config['dbName'];
+			$dbNumber = $config['dbNumber'];
+			
+			if ($config['auto']) $attemptConnection = true;
 		}
 		else {
 			$dbHost = 'localhost';
@@ -631,7 +645,7 @@ class WCFSetup extends WCF {
 			$dbNumber = 1;
 		}
 		
-		if (isset($_POST['send']) || (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST']))) {
+		if ($attemptConnection) {
 			if (isset($_POST['dbHost'])) $dbHost = $_POST['dbHost'];
 			if (isset($_POST['dbUser'])) $dbUser = $_POST['dbUser'];
 			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
@@ -652,7 +666,7 @@ class WCFSetup extends WCF {
 				// check connection data
 				/** @var \wcf\system\database\Database $db */
 				try {
-					$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
+					$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
 				}
 				catch (DatabaseException $e) {
 					// work-around for older MySQL versions that don't know utf8mb4

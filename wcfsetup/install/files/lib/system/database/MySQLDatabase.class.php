@@ -39,8 +39,32 @@ class MySQLDatabase extends Database {
 			// throw PDOException instead of dumb false return values
 			$driverOptions[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 			
-			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
+			$dsn = 'mysql:host='.$this->host.';port='.$this->port;
+			if (!$this->tryToCreateDatabase) $dsn .= ';dbname='.$this->database;
+			
+			$this->pdo = new \PDO($dsn, $this->user, $this->password, $driverOptions);
 			$this->setAttributes();
+			
+			if ($this->tryToCreateDatabase) {
+				try {
+					$this->pdo->exec("USE ".$this->database);
+				}
+				catch (\PDOException $e) {
+					// 1049 = Unknown database
+					if ($this->pdo->errorInfo()[1] == 1049) {
+						try {
+							$this->pdo->exec("CREATE DATABASE " . $this->database);
+							$this->pdo->exec("USE " . $this->database);
+						}
+						catch (\PDOException $e) {
+							wcfDebug($e);
+						}
+					}
+					else {
+						throw $e;
+					}
+				}
+			}
 		}
 		catch (\PDOException $e) {
 			throw new GenericDatabaseException("Connecting to MySQL server '".$this->host."' failed", $e);

@@ -11,11 +11,13 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
@@ -247,6 +249,27 @@ class PackageInstallationDispatcher {
 							1,
 							'enable_developer_tools'
 						]);
+						
+						foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
+							$statement->execute([
+								$optionValue,
+								$optionName
+							]);
+						}
+						
+						foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
+							(new UserAction([], 'create', [
+								'data' => [
+									'email' => $newUser['email'],
+									'password' => $newUser['password'],
+									'username' => $newUser['username']
+								],
+								'groups' => [
+									1,
+									3
+								]
+							]))->executeAction();
+						}
 					}
 					
 					// update options.inc.php

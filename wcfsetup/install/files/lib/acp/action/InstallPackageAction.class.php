@@ -4,6 +4,7 @@ use wcf\action\AbstractDialogAction;
 use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\cache\CacheHandler;
+use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\search\SearchIndexManager;
