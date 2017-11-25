@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\template\group;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
 use wcf\data\template\TemplateList;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
