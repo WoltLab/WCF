@@ -13,6 +13,9 @@
         "option": {
             "captcha_type": "",
             "module_cookie_policy_page": "0"
+        },
+        "devtools": {
+            "importFromPath": "C:/inetpub/wwwroot/wcf/"
         }
     },
     "user": [

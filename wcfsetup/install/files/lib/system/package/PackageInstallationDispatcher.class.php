@@ -2,6 +2,7 @@
 namespace wcf\system\package;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
+use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\LanguageList;
@@ -268,6 +269,12 @@ class PackageInstallationDispatcher {
 									1,
 									3
 								]
+							]))->executeAction();
+						}
+						
+						if (($importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath()) !== '') {
+							(new DevtoolsProjectAction([], 'quickSetup', [
+								'path' => $importPath
 							]))->executeAction();
 						}
 					}

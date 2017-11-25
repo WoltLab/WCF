@@ -110,6 +110,15 @@ class DevtoolsSetup extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the base path for projects that should be automatically imported.
+	 * 
+	 * @return      string
+	 */
+	public function getDevtoolsImportPath() {
+		return (isset($this->configuration['configuration']['devtools']) && !empty($this->configuration['configuration']['devtools']['importFromPath'])) ? $this->configuration['configuration']['devtools']['importFromPath'] : '';
+	}
+	
+	/**
 	 * Returns the raw configuration data.
 	 * 
 	 * @return array
