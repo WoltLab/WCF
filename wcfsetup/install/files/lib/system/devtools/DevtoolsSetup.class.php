@@ -96,7 +96,7 @@ class DevtoolsSetup extends SingletonFactory {
 	 * @return      array|\Generator
 	 */
 	public function getUsers() {
-		if (empty($this->configuration['user'])) return [];
+		if (empty($this->configuration['user'])) return;
 		
 		foreach ($this->configuration['user'] as $user) {
 			if ($user['username'] === 'root') throw new \LogicException("The 'root' user is automatically created.");
