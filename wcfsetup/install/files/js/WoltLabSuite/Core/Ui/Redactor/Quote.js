@@ -20,7 +20,8 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			_save: function() {},
 			_setTitle: function() {},
 			_delete: function() {},
-			_dialogSetup: function() {}
+			_dialogSetup: function() {},
+			_dialogSubmit: function() {}
 		};
 		return Fake;
 	}
@@ -182,12 +183,9 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		/**
 		 * Saves the changes to the quote's properties.
 		 * 
-		 * @param       {Event}         event           event object
 		 * @protected
 		 */
-		_save: function(event) {
-			event.preventDefault();
-			
+		_dialogSubmit: function() {
 			var id = 'redactor-quote-' + this._elementId;
 			var urlInput = elById(id + '-url');
 			
@@ -267,7 +265,6 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
 					}).bind(this),
 					
@@ -282,19 +279,19 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					+ '<dl>'
 						+ '<dt><label for="' + idAuthor + '">' + Language.get('wcf.editor.quote.author') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="' + idAuthor + '" class="long">'
+							+ '<input type="text" id="' + idAuthor + '" class="long" data-dialog-submit-on-enter="true">'
 						+ '</dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="' + idUrl + '">' + Language.get('wcf.editor.quote.url') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="' + idUrl + '" class="long">'
+							+ '<input type="text" id="' + idUrl + '" class="long" data-dialog-submit-on-enter="true">'
 							+ '<small>' + Language.get('wcf.editor.quote.url.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
 				+ '</div>'
 				+ '<div class="formSubmit">'
-					+ '<button id="' + idButtonSave + '" class="buttonPrimary">' + Language.get('wcf.global.button.save') + '</button>'
+					+ '<button id="' + idButtonSave + '" class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.save') + '</button>'
 					+ '<button id="' + idButtonDelete + '">' + Language.get('wcf.global.button.delete') + '</button>'
 				+ '</div>'
 			};

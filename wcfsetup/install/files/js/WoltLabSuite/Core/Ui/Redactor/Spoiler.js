@@ -16,10 +16,10 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			_bbcodeSpoiler: function() {},
 			_observeLoad: function() {},
 			_edit: function() {},
-			_save: function() {},
 			_setTitle: function() {},
 			_delete: function() {},
-			_dialogSetup: function() {}
+			_dialogSetup: function() {},
+			_dialogSubmit: function() {}
 		};
 		return Fake;
 	}
@@ -116,12 +116,9 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		/**
 		 * Saves the changes to the spoiler's properties.
 		 * 
-		 * @param       {Event}         event           event object
 		 * @protected
 		 */
-		_save: function(event) {
-			event.preventDefault();
-			
+		_dialogSubmit: function() {
 			elData(this._spoiler, 'label', elById('redactor-spoiler-' + this._elementId + '-label').value);
 			
 			this._setTitle(this._spoiler);
@@ -180,7 +177,6 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
 					}).bind(this),
 					
@@ -194,13 +190,13 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					+ '<dl>'
 						+ '<dt><label for="' + idLabel + '">' + Language.get('wcf.editor.spoiler.label') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="' + idLabel + '" class="long">'
+							+ '<input type="text" id="' + idLabel + '" class="long" data-dialog-submit-on-enter="true">'
 							+ '<small>' + Language.get('wcf.editor.spoiler.label.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
 				+ '</div>'
 				+ '<div class="formSubmit">'
-					+ '<button id="' + idButtonSave + '" class="buttonPrimary">' + Language.get('wcf.global.button.save') + '</button>'
+					+ '<button id="' + idButtonSave + '" class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.save') + '</button>'
 					+ '<button id="' + idButtonDelete + '">' + Language.get('wcf.global.button.delete') + '</button>'
 				+ '</div>'
 			};

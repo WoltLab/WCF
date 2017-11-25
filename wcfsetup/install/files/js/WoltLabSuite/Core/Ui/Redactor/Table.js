@@ -11,7 +11,6 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 		return Fake;
 	}
 	
-	var _boundListener = false;
 	var _callback = null;
 	
 	return {
@@ -19,15 +18,9 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 			UiDialog.open(this);
 			
 			_callback = options.submitCallback;
-			
-			if (!_boundListener) {
-				_boundListener = true;
-				
-				elById('redactor-modal-button-action').addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
-			}
 		},
 		
-		_submit: function() {
+		_dialogSubmit: function() {
 			// check if rows and cols are within the boundaries
 			var isValid = true;
 			['rows', 'cols'].forEach(function(type) {
@@ -56,14 +49,14 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 				},
 				source: '<dl>'
 						+ '<dt><label for="redactor-table-rows">' + Language.get('wcf.editor.table.rows') + '</label></dt>'
-						+ '<dd><input type="number" id="redactor-table-rows" class="small" min="1" max="100" value="2"></dd>'
+						+ '<dd><input type="number" id="redactor-table-rows" class="small" min="1" max="100" value="2" data-dialog-submit-on-enter="true"></dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="redactor-table-cols">' + Language.get('wcf.editor.table.cols') + '</label></dt>'
-						+ '<dd><input type="number" id="redactor-table-cols" class="small" min="1" max="100" value="3"></dd>'
+						+ '<dd><input type="number" id="redactor-table-cols" class="small" min="1" max="100" value="3" data-dialog-submit-on-enter="true"></dd>'
 					+ '</dl>'
 					+ '<div class="formSubmit">'
-						+ '<button id="redactor-modal-button-action" class="buttonPrimary">' + Language.get('wcf.global.button.insert') + '</button>'
+						+ '<button id="redactor-modal-button-action" class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.insert') + '</button>'
 					+ '</div>'
 			};
 		}

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Template/Group/Copy
  */
-define(['Ajax', 'EventKey', 'Language', 'Ui/Dialog', 'Ui/Notification'], function(Ajax, EventKey, Language, UiDialog, UiNotification) {
+define(['Ajax', 'Language', 'Ui/Dialog', 'Ui/Notification'], function(Ajax, Language, UiDialog, UiNotification) {
 	"use strict";
 	
 	var _name = null;
@@ -40,34 +40,13 @@ define(['Ajax', 'EventKey', 'Language', 'Ui/Dialog', 'Ui/Notification'], functio
 			UiDialog.open(this);
 		},
 		
-		/**
-		 * Submits the values for the new template group.
-		 * 
-		 * @param       {Event}         event
-		 * @protected
-		 */
-		_submit: function (event) {
-			event.preventDefault();
-			
-			var valid = true;
-			[_name, _folderName].forEach(function (input) {
-				if (input.value.trim() === '') {
-					elInnerError(input, Language.get('wcf.global.form.error.empty'));
-					valid = false;
-				}
-				else {
-					elInnerError(input, false);
+		_dialogSubmit: function () {
+			Ajax.api(this, {
+				parameters: {
+					templateGroupName: _name.value,
+					templateGroupFolderName: _folderName.value
 				}
 			});
-			
-			if (valid) {
-				Ajax.api(this, {
-					parameters: {
-						templateGroupName: _name.value,
-						templateGroupFolderName: _folderName.value
-					}
-				});
-			}
 		},
 		
 		_ajaxSuccess: function (data) {
@@ -83,32 +62,24 @@ define(['Ajax', 'EventKey', 'Language', 'Ui/Dialog', 'Ui/Notification'], functio
 			return {
 				id: 'templateGroupCopy',
 				options: {
-					onSetup: (function (content) {
+					onSetup: (function () {
 						['Name', 'FolderName'].forEach((function(type) {
 							var input = elById('copyTemplateGroup' + type);
 							input.value = elById('templateGroup' + type).value;
 							
 							if (type === 'Name') _name = input;
 							else _folderName = input;
-							
-							input.addEventListener('keydown', (function (event) {
-								if (EventKey.Enter(event)) {
-									this._submit(event);
-								}
-							}).bind(this));
 						}).bind(this));
-						
-						elBySel('.formSubmit > button[data-type="submit"]', content).addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
 					}).bind(this),
 					title: Language.get('wcf.acp.template.group.copy')
 				},
 				source: '<dl>' +
 					'<dt><label for="copyTemplateGroupName">' + Language.get('wcf.global.name') + '</label></dt>' +
-					'<dd><input type="text" id="copyTemplateGroupName" class="long"></dd>' +
+					'<dd><input type="text" id="copyTemplateGroupName" class="long" data-dialog-submit-on-enter="true" required></dd>' +
 				'</dl>' +
 				'<dl>' +
 					'<dt><label for="copyTemplateGroupFolderName">' + Language.get('wcf.acp.template.group.folderName') + '</label></dt>' +
-					'<dd><input type="text" id="copyTemplateGroupFolderName" class="long"></dd>' +
+					'<dd><input type="text" id="copyTemplateGroupFolderName" class="long" data-dialog-submit-on-enter="true" required></dd>' +
 				'</dl>' +
 				'<div class="formSubmit">' +
 					'<button class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.submit') + '</button>' +
