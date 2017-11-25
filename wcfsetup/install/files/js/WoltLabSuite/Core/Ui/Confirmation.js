@@ -20,7 +20,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 	 * 
 	 * @exports	WoltLabSuite/Core/Ui/Confirmation
 	 */
-	var UiConfirmation = {
+	return {
 		/**
 		 * Shows the confirmation dialog.
 		 * 
@@ -166,6 +166,4 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 			_confirmButton.focus();
 		}
 	};
-	
-	return UiConfirmation;
 });

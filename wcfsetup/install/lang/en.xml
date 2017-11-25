@@ -1977,6 +1977,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.template.lastModificationTime"><![CDATA[Last Modification]]></item>
 		<item name="wcf.acp.template.group.list"><![CDATA[Template Groups]]></item>
 		<item name="wcf.acp.template.group.add"><![CDATA[Add Template Group]]></item>
+		<item name="wcf.acp.template.group.copy"><![CDATA[Copy Template Group]]></item>
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>

@@ -2036,6 +2036,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.template.lastModificationTime"><![CDATA[Letzte Änderung]]></item>
 		<item name="wcf.acp.template.group.list"><![CDATA[Templategruppen]]></item>
 		<item name="wcf.acp.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
+		<item name="wcf.acp.template.group.copy"><![CDATA[Templategruppe kopieren]]></item>
 		<item name="wcf.acp.template.group.edit"><![CDATA[Templategruppe bearbeiten]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.error.noGroups"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein eigenes Template erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
