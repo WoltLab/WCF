@@ -11,13 +11,13 @@ define(
 		'enquire',      'Ajax',       'Core',      'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
 		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown',
-		'EventHandler'
+		'EventHandler', 'List',       'EventKey'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
 		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown,
-		EventHandler
+		EventHandler,   List,         EventKey
 	)
 {
 	"use strict";
@@ -25,10 +25,14 @@ define(
 	var _activeDialog = null;
 	var _container = null;
 	var _dialogs = new Dictionary();
-	var _dialogObjects = new ObjectMap();
 	var _dialogFullHeight = false;
+	var _dialogObjects = new ObjectMap();
+	var _dialogToObject = new Dictionary();
 	var _keyupListener = null;
 	var _staticDialogs = elByClass('jsStaticDialog');
+	
+	// list of supported `input[type]` values for dialog submit
+	var _validInputTypes = ['number', 'password', 'search', 'tel', 'text', 'url'];
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Dialog
@@ -192,6 +196,7 @@ define(
 			}
 			
 			_dialogObjects.set(callbackObject, dialogData);
+			_dialogToObject.set(setupData.id, callbackObject);
 			
 			return this.openStatic(setupData.id, setupData.source, setupData.options, createOnly);
 		},
@@ -416,7 +421,10 @@ define(
 				header: header,
 				onBeforeClose: options.onBeforeClose,
 				onClose: options.onClose,
-				onShow: options.onShow
+				onShow: options.onShow,
+				
+				submitButton: null,
+				inputFields: new List()
 			});
 			
 			DomUtil.prepend(dialog, _container);
@@ -546,6 +554,88 @@ define(
 				var needsFix = (Math.round(floatWidth) % 2) !== 0;
 				
 				data.content.parentNode.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+			}
+			
+			var callbackObject = _dialogToObject.get(id);
+			//noinspection JSUnresolvedVariable
+			if (callbackObject !== undefined && typeof callbackObject._dialogSubmit === 'function') {
+				var inputFields = elBySelAll('input[data-dialog-submit-on-enter="true"]', data.content);
+				
+				var submitButton = elBySel('.formSubmit > input[type="submit"], .formSubmit > button[data-type="submit"]', data.content);
+				if (submitButton === null) {
+					// check if there is at least one input field with submit handling,
+					// otherwise we'll assume the dialog has not been populated yet
+					if (inputFields.length === 0) {
+						console.warn("Broken dialog, expected a submit button.", data.content);
+					}
+					
+					return;
+				}
+				
+				if (data.submitButton !== submitButton) {
+					data.submitButton = submitButton;
+					
+					submitButton.addEventListener(WCF_CLICK_EVENT, (function (event) {
+						event.preventDefault();
+						
+						this._submit(id);
+					}).bind(this));
+					
+					// bind input fields
+					var inputField, _callbackKeydown = null;
+					for (var i = 0, length = inputFields.length; i < length; i++) {
+						inputField = inputFields[i];
+						
+						if (data.inputFields.has(inputField)) continue;
+						
+						if (_validInputTypes.indexOf(inputField.type) === -1) {
+							console.warn("Unsupported input type.", inputField);
+							continue;
+						}
+						
+						data.inputFields.add(inputField);
+						
+						if (_callbackKeydown === null) {
+							_callbackKeydown = (function (event) {
+								if (EventKey.Enter(event)) {
+									event.preventDefault();
+									
+									this._submit(id);
+								}
+							}).bind(this);
+						}
+						inputField.addEventListener('keydown', _callbackKeydown);
+					}
+				}
+			}
+		},
+		
+		/**
+		 * Submits the dialog.
+		 * 
+		 * @param       {string}        id      dialog id
+		 * @protected
+		 */
+		_submit: function (id) {
+			var data = _dialogs.get(id);
+			
+			var isValid = true;
+			data.inputFields.forEach(function (inputField) {
+				if (inputField.required) {
+					if (inputField.value.trim() === '') {
+						elInnerError(inputField, Language.get('wcf.global.form.error.empty'));
+						
+						isValid = false;
+					}
+					else {
+						elInnerError(inputField, false);
+					}
+				}
+			});
+			
+			if (isValid) {
+				//noinspection JSUnresolvedFunction
+				_dialogToObject.get(id)._dialogSubmit();
 			}
 		},
 		
