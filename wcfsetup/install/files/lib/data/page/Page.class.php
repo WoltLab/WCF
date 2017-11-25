@@ -264,7 +264,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 			1,
 			$this->pageID
 		]);
-		WCF::getDB()->commitTransaction();
 		
 		$sql = "UPDATE	wcf".WCF_N."_application
 			SET	landingPageID = ?
