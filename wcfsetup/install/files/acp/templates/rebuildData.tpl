@@ -60,6 +60,8 @@
 	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
 {/if}
 
+{event name='afterContentHeader'}
+
 <section class="section">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.acp.rebuildData{/lang}</h2>
