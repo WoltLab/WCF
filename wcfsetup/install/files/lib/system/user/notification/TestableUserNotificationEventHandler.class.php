@@ -152,6 +152,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 	/**
 	 * Returns the recipient of the notifications who is the active user.
 	 * 
+	 * @param	Language|null	$language
 	 * @return	UserProfile
 	 */
 	public function getRecipient(Language $language = null) {

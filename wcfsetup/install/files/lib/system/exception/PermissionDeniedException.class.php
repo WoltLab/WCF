@@ -18,6 +18,8 @@ use wcf\system\WCFACP;
 class PermissionDeniedException extends UserException {
 	/**
 	 * Creates a new PermissionDeniedException object.
+	 * 
+	 * @param	string|null	$message	custom error message
 	 */
 	public function __construct($message = null) {
 		if ($message === null) $message = WCF::getLanguage()->getDynamicVariable('wcf.page.error.permissionDenied');
