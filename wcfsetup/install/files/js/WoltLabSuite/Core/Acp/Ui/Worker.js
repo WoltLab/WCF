@@ -96,7 +96,7 @@ define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function(Ajax, Core, Language,
 		
 		_ajaxFailure: function () {
 			var dialog = UiDialog.getDialog(this);
-			if (dialog !== null) {
+			if (dialog !== undefined) {
 				var spinner = elBySel('.fa-spinner', dialog.content);
 				spinner.classList.remove('fa-spinner');
 				spinner.classList.add('fa-times');
