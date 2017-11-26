@@ -243,24 +243,36 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		if ($this->avatar === null) {
 			if (!$this->disableAvatar) {
 				if ($this->canSeeAvatar()) {
+					/** @var IUserAvatar $avatar */
+					$avatar = null;
+					
 					if ($this->avatarID) {
 						if (!$this->fileHash) {
 							$data = UserStorageHandler::getInstance()->getField('avatar', $this->userID);
 							if ($data === null) {
-								$this->avatar = new UserAvatar($this->avatarID);
+								$avatar = new UserAvatar($this->avatarID);
 								UserStorageHandler::getInstance()->update($this->userID, 'avatar', serialize($this->avatar));
 							}
 							else {
-								$this->avatar = unserialize($data);
+								$avatar = unserialize($data);
 							}
 						}
 						else {
-							$this->avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
+							$avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
 						}
 					}
 					else if (MODULE_GRAVATAR && $this->enableGravatar) {
-						$this->avatar = new Gravatar($this->userID, $this->email, ($this->gravatarFileExtension ?: 'png'));
+						$avatar = new Gravatar($this->userID, $this->email, ($this->gravatarFileExtension ?: 'png'));
 					}
+					
+					$parameters = [
+						'avatar' => $avatar	
+					];
+					
+					// notify 3rd party components
+					EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
+					
+					$this->avatar = $parameters['avatar'];
 				}
 			}
 			
