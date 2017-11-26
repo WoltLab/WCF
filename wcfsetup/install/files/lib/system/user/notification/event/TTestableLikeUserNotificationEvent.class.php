@@ -64,6 +64,7 @@ trait TTestableLikeUserNotificationEvent {
 	 * @return	LikeUserNotificationObject[]
 	 */
 	public static function getTestObjects(UserProfile $recipient, UserProfile $author) {
+		/** @var ILikeObject $likeObject */
 		$likeObject = self::createTestLikeObject($recipient, $author);
 		$likeObject->setObjectType(LikeHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()));
 		

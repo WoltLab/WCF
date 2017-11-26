@@ -39,10 +39,11 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function create() {
-		$returnValues = parent::create();
+		/** @var UserTrophy $userTrophy */
+		$userTrophy = parent::create();
 		
-		if (!$returnValues->getTrophy()->isDisabled()) {
-			$userAction = new UserAction([$returnValues->userID], 'update', [
+		if (!$userTrophy->getTrophy()->isDisabled()) {
+			$userAction = new UserAction([$userTrophy->userID], 'update', [
 				'counters' => [
 					'trophyPoints' => 1
 				]
@@ -50,13 +51,13 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 			$userAction->executeAction(); 
 		}
 		
-		UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived', $returnValues->getObjectID(), null, $returnValues->userID);
+		UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived', $userTrophy->getObjectID(), null, $userTrophy->userID);
 		
-		UserNotificationHandler::getInstance()->fireEvent('received', 'com.woltlab.wcf.userTrophy.notification', new UserTrophyNotificationObject($returnValues), [
-			$returnValues->userID
+		UserNotificationHandler::getInstance()->fireEvent('received', 'com.woltlab.wcf.userTrophy.notification', new UserTrophyNotificationObject($userTrophy), [
+			$userTrophy->userID
 		]);
 		
-		return $returnValues; 
+		return $userTrophy; 
 	}
 	
 	/**
