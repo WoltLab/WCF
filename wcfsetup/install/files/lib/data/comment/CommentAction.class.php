@@ -206,6 +206,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		];
 	}
 	
+	/**
+	 * Validates the `loadComment` action.
+	 */
 	public function validateLoadComment() {
 		$this->readInteger('objectID', false, 'data');
 		$this->readInteger('responseID', true, 'data');
@@ -231,6 +234,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 	}
 	
+	/**
+	 * Returns a rendered comment.
+	 * 
+	 * @return	string[]
+	 */
 	public function loadComment() {
 		if ($this->comment === null) {
 			return ['template' => ''];
@@ -243,10 +251,18 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		return (is_array($returnValues)) ? $returnValues : ['template' => $returnValues];
 	}
 	
+	/**
+	 * Validates the `loadResponse` action.
+	 */
 	public function validateLoadResponse() {
 		$this->validateLoadComment();
 	}
 	
+	/**
+	 * Returns a rendered comment.
+	 *
+	 * @return	string[]
+	 */
 	public function loadResponse() {
 		if ($this->comment === null || $this->response === null) {
 			return ['template' => ''];

@@ -97,7 +97,9 @@ abstract class AbstractAcpForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * Reads the i18n data for the given object.
+	 * 
+	 * @param	DatabaseObject		$databaseObject
 	 */
 	public function readDataI18n(DatabaseObject $databaseObject) {
 		if (empty($_POST) && !empty($this->i18nValues)) {
@@ -112,6 +114,13 @@ abstract class AbstractAcpForm extends AbstractForm {
 		}
 	}
 	
+	/**
+	 * Saves the i18n data for the given database object befor the changes of
+	 * the given database object are saved.
+	 * 
+	 * @param	DatabaseObject	$databaseObject
+	 * @return	string[]
+	 */
 	public function beforeSaveI18n(DatabaseObject $databaseObject) {
 		$values = [];
 		
@@ -139,7 +148,11 @@ abstract class AbstractAcpForm extends AbstractForm {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * Saves the i18n data for the given database object after the given database
+	 * object has been created.
+	 *
+	 * @param	DatabaseObject	$databaseObject
+	 * @return	string[]
 	 */
 	public function saveI18n(DatabaseObject $databaseObject, $editorClass) {
 		$data = [];

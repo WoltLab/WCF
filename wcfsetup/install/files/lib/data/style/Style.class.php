@@ -150,22 +150,49 @@ class Style extends DatabaseObject {
 		return WCF::getPath().'images/stylePreview@2x.png';
 	}
 	
+	/**
+	 * Returns the absolute path to the apple touch icon.
+	 * 
+	 * @return	string
+	 */
 	public function getFaviconAppleTouchIcon() {
 		return $this->getFaviconPath('apple-touch-icon.png');
 	}
 	
+	/**
+	 * Returns the absolute path to the `manifest.json` file.
+	 * 
+	 * @return	string
+	 */
 	public function getFaviconManifest() {
 		return $this->getFaviconPath('manifest.json');
 	}
 	
+	/**
+	 * Returns the absolute path to the `browserconfig.xml` file.
+	 *
+	 * @return	string
+	 */
 	public function getFaviconBrowserconfig() {
 		return $this->getFaviconPath('browserconfig.xml');
 	}
 	
+	/**
+	 * Returns the relative path to the favicon.
+	 * 
+	 * @return	string
+	 */
 	public function getRelativeFavicon() {
 		return $this->getFaviconPath('favicon.ico', false);
 	}
 	
+	/**
+	 * Returns the path to a favicon-related file.
+	 * 
+	 * @param	string		$filename	name of the file
+	 * @param	boolean		$absolutePath	if `true`, the absolute path is returned, otherwise the path relative to WCF is returned
+	 * @return	string
+	 */
 	protected function getFaviconPath($filename, $absolutePath = true) {
 		if ($filename === 'manifest.json') {
 			if (ApplicationHandler::getInstance()->getActiveApplication()->domainName !== ApplicationHandler::getInstance()->getApplicationByID(1)->domainName) {
