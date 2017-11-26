@@ -245,6 +245,7 @@ class PageEditForm extends PageAddForm {
 			if ($this->page->isDisabled) $this->isDisabled = 1;
 			if ($this->page->availableDuringOfflineMode) $this->availableDuringOfflineMode = 1;
 			if ($this->page->allowSpidersToIndex) $this->allowSpidersToIndex = 1;
+			else $this->allowSpidersToIndex = 0;
 			
 			foreach ($this->page->getPageContents() as $languageID => $content) {
 				$this->title[$languageID] = $content->title;
