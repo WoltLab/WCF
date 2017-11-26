@@ -106,6 +106,7 @@ class RequestHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$application
 	 * @throws	IllegalLinkException
+	 * @throws	SystemException
 	 */
 	protected function buildRequest($application) {
 		try {
