@@ -48,7 +48,6 @@ class UserTrophyImporter extends AbstractImporter {
 				];
 			}
 			
-			
 			$this->importI18nValues($items, 'wcf.user.trophy', 'com.woltlab.wcf');
 			
 			(new UserTrophyEditor($userTrophy))->update($updateData);
