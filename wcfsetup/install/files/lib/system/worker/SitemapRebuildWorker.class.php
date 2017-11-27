@@ -249,7 +249,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * @param       boolean         $closeFile      Close a previously opened handle.
 	 */
 	protected function writeIndexFile($closeFile = true) {
-		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml', 'wb');
+		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');
 		$file->write(WCF::getTPL()->fetch('sitemapIndex', 'wcf', [
 			'sitemaps' => $this->workerData['sitemaps']
 		]));
