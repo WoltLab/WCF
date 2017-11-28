@@ -40,10 +40,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 				
 				/** @var Smiley $smiley */
 				$smiley = SmileyCache::getInstance()->getSmileyByCode($code);
-				if ($smiley === null) {
+				if ($smiley === null || $this->outputType === 'text/plain') {
 					// output as raw code instead
-					$element->parentNode->insertBefore($element->ownerDocument->createTextNode($code), $element);
-					$element->parentNode->removeChild($element);
+					$htmlNodeProcessor->replaceElementWithText($element, ' ' . $code . ' ', false);
 				}
 				else {
 					// enforce database values for src, srcset and style

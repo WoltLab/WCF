@@ -53,16 +53,29 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 			}
 			
 			$value = StringUtil::trim($element->textContent);
-			if (!empty($value) && $value === $href && mb_strlen($value) > 60) {
-				while ($element->childNodes->length) {
-					DOMUtil::removeNode($element->childNodes->item(0));
+			
+			if ($this->outputType === 'text/html' || $this->outputType === 'text/simplified-html') {
+				if (!empty($value) && $value === $href && mb_strlen($value) > 60) {
+					while ($element->childNodes->length) {
+						DOMUtil::removeNode($element->childNodes->item(0));
+					}
+					
+					$element->appendChild(
+						$element->ownerDocument->createTextNode(
+							mb_substr($value, 0, 30) . StringUtil::HELLIP . mb_substr($value, -25)
+						)
+					);
 				}
-				
-				$element->appendChild(
-					$element->ownerDocument->createTextNode(
-						mb_substr($value, 0, 30) . StringUtil::HELLIP . mb_substr($value, -25)
-					)
-				);
+			}
+			else if ($this->outputType === 'text/plain') {
+				if (!empty($value) && $value !== $href) {
+					$text = $value . ' [URL:' . $href . ']';
+				}
+				else {
+					$text = $href;
+				}
+
+				$htmlNodeProcessor->replaceElementWithText($element, $text, false);
 			}
 		}
 	}
