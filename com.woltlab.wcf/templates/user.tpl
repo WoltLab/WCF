@@ -150,7 +150,17 @@
 		{/if}>
 		{if MODULE_USER_COVER_PHOTO}
 			<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
-				{if $user->userID == $__wcf->user->userID}<a href="#" class="button small jsButtonEditCoverPhoto"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>{/if}
+				{if $user->userID == $__wcf->user->userID && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
+					<div class="userProfileManageCoverPhoto dropdown jsOnly">
+						<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>
+						<ul class="dropdownMenu">
+							{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
+								<li><a href="#" class="jsButtonUploadCoverPhoto jsStaticDialog" data-dialog-id="userProfileCoverPhotoUpload">{lang}wcf.user.coverPhoto.upload{/lang}</a></li>
+							{/if}
+							<li><a href="#" class="jsButtonDeleteCoverPhoto"{if !$user->coverPhotoHash} style="display:none;"{/if}>{lang}wcf.user.coverPhoto.delete{/lang}</a></li>
+						</ul>
+					</div>
+				{/if}
 			</div>
 		{/if}
 		<div class="contentHeaderIcon">
@@ -330,6 +340,44 @@
 	</div>
 {else}
 	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
+{/if}
+
+{if MODULE_USER_COVER_PHOTO && $user->userID == $__wcf->user->userID}
+	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
+		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
+			{lang}wcf.user.coverPhoto.description{/lang}
+			
+			{if $__wcf->user->disableCoverPhoto}
+				<p class="error">{lang}wcf.user.coverPhoto.error.disabled{/lang}</p>
+			{else}
+				<div id="coverPhotoUploadPreview"></div>
+				
+				{* placeholder for the upload button *}
+				<div id="coverPhotoUploadButtonContainer"></div>
+			{/if}
+		</div>
+		<script data-relocate="true">
+			require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Upload'], function (Language, UiUserCoverPhotoUpload) {
+				Language.addObject({
+					'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
+					'wcf.user.coverPhoto.upload.error.tooSmall': '{lang}wcf.user.coverPhoto.upload.error.tooSmall{/lang}',
+					'wcf.user.coverPhoto.upload.error.tooLarge': '{lang}wcf.user.coverPhoto.upload.error.tooLarge{/lang}',
+					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}',
+					'wcf.user.coverPhoto.upload.error.badImage': '{lang}wcf.user.coverPhoto.upload.error.badImage{/lang}',
+					'wcf.user.coverPhoto.upload.success': '{lang}wcf.user.coverPhoto.upload.success{/lang}'
+				});
+				
+				{if !$__wcf->user->disableCoverPhoto}
+					new UiUserCoverPhotoUpload();
+				{/if}
+			});
+		</script>
+	{/if}
+	<script data-relocate="true">
+		require(['WoltLabSuite/Core/Ui/User/CoverPhoto/Delete'], function (UiUserCoverPhotoDelete) {
+			UiUserCoverPhotoDelete.init();
+		})
+	</script>
 {/if}
 
 {include file='footer'}

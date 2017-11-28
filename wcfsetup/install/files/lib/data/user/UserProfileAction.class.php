@@ -11,10 +11,14 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\option\user\UserOptionHandler;
+use wcf\system\upload\UploadFile;
+use wcf\system\upload\UploadHandler;
+use wcf\system\upload\UserCoverPhotoUploadFileValidationStrategy;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\FileUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -36,7 +40,13 @@ class UserProfileAction extends UserAction {
 	 * user profile object
 	 * @var	UserProfile
 	 */
-	public $userProfile = null;
+	public $userProfile;
+	
+	/**
+	 * uploaded file
+	 * @var	UploadFile
+	 */
+	public $uploadFile;
 	
 	/**
 	 * Validates parameters for signature preview.
@@ -465,6 +475,112 @@ class UserProfileAction extends UserAction {
 			
 			UserStorageHandler::getInstance()->reset([$user->userID], 'specialTrophies');
 		}
+	}
+	
+	/**
+	 * Validates the 'uploadCoverPhoto' method.
+	 *
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 * @since	3.1
+	 */
+	public function validateUploadCoverPhoto() {
+		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+		
+		WCF::getSession()->checkPermissions(['user.profile.coverPhoto.canUploadCoverPhoto']);
+		
+		// validate uploaded file
+		if (!isset($this->parameters['__files']) || count($this->parameters['__files']->getFiles()) != 1) {
+			throw new UserInputException('files');
+		}
+		
+		/** @var UploadHandler $uploadHandler */
+		$uploadHandler = $this->parameters['__files'];
+		
+		$this->uploadFile = $uploadHandler->getFiles()[0];
+		
+		$uploadHandler->validateFiles(new UserCoverPhotoUploadFileValidationStrategy());
+	}
+	
+	/**
+	 * Uploads a cover photo.
+	 * 
+	 * @since	3.1
+	 */
+	public function uploadCoverPhoto() {
+		if ($this->uploadFile->getValidationErrorType()) {
+			return [
+				'filesize' => $this->uploadFile->getFilesize(),
+				'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.' . $this->uploadFile->getValidationErrorType(), [
+					'file' => $this->uploadFile
+				]),
+				'errorType' => $this->uploadFile->getValidationErrorType()
+			];
+		}
+		
+		// delete old cover photo
+		if (WCF::getUser()->coverPhotoHash) {
+			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
+		}
+		
+		// update user
+		(new UserEditor(WCF::getUser()))->update([
+			// always generate a new hash to invalidate the browser cache and to avoid filename guessing
+			'coverPhotoHash' => StringUtil::getRandomID(),
+			'coverPhotoExtension' => $this->uploadFile->getFileExtension()
+		]);
+		
+		// force-reload the user profile to use a predictable code-path to fetch the cover photo
+		UserProfileRuntimeCache::getInstance()->removeObject(WCF::getUser()->userID);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID);
+		$coverPhoto = $userProfile->getCoverPhoto();
+		
+		// check images directory and create subdirectory if necessary
+		$dir = dirname($coverPhoto->getLocation());
+		if (!@file_exists($dir)) {
+			FileUtil::makePath($dir);
+		}
+		
+		if (@move_uploaded_file($this->uploadFile->getLocation(), $coverPhoto->getLocation())) {
+			return [
+				'url' => $coverPhoto->getURL()
+			];
+		}
+		else {
+			return [
+				'filesize' => $this->uploadFile->getFilesize(),
+				'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.uploadFailed', [
+					'file' => $this->uploadFile
+				]),
+				'errorType' => 'uploadFailed'
+			];
+		}
+	}
+	
+	public function validateDeleteCoverPhoto() {
+		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	public function deleteCoverPhoto() {
+		if (WCF::getUser()->coverPhotoHash) {
+			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
+			
+			(new UserEditor(WCF::getUser()))->update([
+				'coverPhotoHash' => null,
+				'coverPhotoExtension' => ''
+			]);
+		}
+		
+		// force-reload the user profile to use a predictable code-path to fetch the cover photo
+		UserProfileRuntimeCache::getInstance()->removeObject(WCF::getUser()->userID);
+		
+		return [
+			'url' => UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->getURL()
+		];
 	}
 	
 	/**

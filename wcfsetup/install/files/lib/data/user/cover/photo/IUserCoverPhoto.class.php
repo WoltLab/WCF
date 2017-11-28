@@ -10,6 +10,10 @@ namespace wcf\data\user\cover\photo;
  * @package	WoltLabSuite\Core\Data\User\Cover\Photo
  */
 interface IUserCoverPhoto {
+	/**
+	 * Deletes this cover photo.
+	 */
+	public function delete();
 	
 	/**
 	 * Returns the physical location of this cover photo.

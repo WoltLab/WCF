@@ -15,6 +15,13 @@ class DefaultUserCoverPhoto implements IUserCoverPhoto {
 	/**
 	 * @inheritDoc
 	 */
+	public function delete() {
+		/* NOP */
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getLocation() {
 		return WCF_DIR . 'images/coverPhotos/' . $this->getFilename();
 	}

@@ -1426,6 +1426,10 @@ CREATE TABLE wcf1_user (
 	authData VARCHAR(191) NOT NULL DEFAULT '',
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	trophyPoints INT(10) NOT NULL DEFAULT 0,
+	coverPhotoHash CHAR(40) DEFAULT NULL,
+	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
+	disableCoverPhoto TINYINT(1) NOT NULL DEFAULT 0,
+	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),

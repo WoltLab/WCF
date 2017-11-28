@@ -3920,7 +3920,18 @@ Open the link below to access the user profile:
 	</category>
 	
 	<category name="wcf.user.coverPhoto">
+		<item name="wcf.user.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
+		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete your cover photo? This will replace your current photo with the default image.]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
+		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[The file has an invalid extension.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.maxSize"><![CDATA[The file is too big.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.maxWidth"><![CDATA[The image is too wide.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.minHeight"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">

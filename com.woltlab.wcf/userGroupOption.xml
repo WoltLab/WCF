@@ -749,6 +749,13 @@ png</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			<option name="user.profile.coverPhoto.maxSize">
+				<categoryname>user.profile.coverPhoto</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>500000</defaultvalue>
+				<minvalue>100000</minvalue>
+				<usersonly>1</usersonly>
+			</option>
 			
 			<option name="user.profile.trophy.canSeeTrophies">
 				<categoryname>user.profile.trophy</categoryname>

@@ -50,6 +50,15 @@ class UserCoverPhoto implements IUserCoverPhoto {
 	/**
 	 * @inheritDoc
 	 */
+	public function delete() {
+		if (file_exists($this->getLocation())) {
+			@unlink($this->getLocation());
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getLocation() {
 		return WCF_DIR . 'images/coverPhotos/' . $this->getFilename();
 	}
