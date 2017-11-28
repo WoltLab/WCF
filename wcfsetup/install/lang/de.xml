@@ -3927,6 +3927,10 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophäen]]></item>
 	</category>
 	
+	<category name="wcf.user.coverPhoto">
+		<item name="wcf.user.coverPhoto.edit"><![CDATA[Profilbild bearbeiten]]></item>
+	</category>
+	
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
 		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "Keine Benachrichtigungen" } else if (data.returnValues.count == 1) { "Eine Benachrichtigung" } else { data.returnValues.count + " Benachrichtigungen" }]]></item>

@@ -15,6 +15,9 @@
 			<category name="user.profile.avatar">
 				<parent>user.profile</parent>
 			</category>
+			<category name="user.profile.coverPhoto">
+				<parent>user.profile</parent>
+			</category>
 			<category name="user.profile.trophy">
 				<parent>user.profile</parent>
 			</category>
@@ -734,6 +737,19 @@ jpeg
 png</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			
+			<option name="user.profile.coverPhoto.canSeeCoverPhotos">
+				<categoryname>user.profile.coverPhoto</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.profile.coverPhoto.canUploadCoverPhoto">
+				<categoryname>user.profile.coverPhoto</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			
 			<option name="user.profile.trophy.canSeeTrophies">
 				<categoryname>user.profile.trophy</categoryname>
 				<optiontype>boolean</optiontype>
