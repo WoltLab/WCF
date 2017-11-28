@@ -406,6 +406,21 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\ArticleCommentResponseImporter</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.trophy.category</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\TrophyCategoryImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.trophy</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\TrophyImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userTrophy</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\UserTrophyImporter</classname>
+		</type>
 		<!-- /importers -->
 		
 		<!-- rebuild data workers -->

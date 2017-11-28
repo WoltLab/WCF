@@ -370,6 +370,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="module_user_cover_photo">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			
 			<option name="module_like">
 				<categoryname>module.community</categoryname>
@@ -1121,6 +1126,7 @@ Pinterest</defaultvalue>
 				<optiontype>integer</optiontype>
 				<defaultvalue>8</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="register_password_must_contain_lower_case">
 				<categoryname>user.password</categoryname>
@@ -1192,6 +1198,7 @@ Pinterest</defaultvalue>
 				<defaultvalue>3</defaultvalue>
 				<minvalue>3</minvalue>
 				<maxvalue>100</maxvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="register_username_max_length">
 				<categoryname>user.register</categoryname>
@@ -1199,6 +1206,7 @@ Pinterest</defaultvalue>
 				<defaultvalue>25</defaultvalue>
 				<minvalue>3</minvalue>
 				<maxvalue>100</maxvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="register_username_force_ascii">
 				<categoryname>user.register</categoryname>
@@ -1288,6 +1296,7 @@ retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<defaultvalue>25</defaultvalue>
 				<options>module_user_rank</options>
 				<minvalue>0</minvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="user_forbidden_titles">
 				<categoryname>user.title</categoryname>
@@ -1481,6 +1490,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>30</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>255</maxvalue>
+				<suffix>chars</suffix>
 				<options>module_tagging</options>
 			</option>
 			

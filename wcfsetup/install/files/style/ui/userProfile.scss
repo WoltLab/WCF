@@ -29,6 +29,30 @@
 		display: flex;
 		flex-wrap: wrap;
 		
+		.contentHeaderNavigation {
+			flex: 0 0 100%;
+		}
+	}
+	
+	@include screen-sm {
+		.contentHeaderIcon {
+			display: block;
+			flex: 0 0 96px;
+			margin-right: 15px;
+			
+			img {
+				width: 96px !important;
+				height: 96px !important;
+			}
+		}
+		
+		.contentHeaderTitle {
+			flex: 0 0 calc(100% - 111px);
+			max-width: calc(100% - 11px);
+		}
+	}
+	
+	@include screen-xs {
 		.contentHeaderIcon {
 			display: block;
 			flex: 0 0 48px;
@@ -45,12 +69,6 @@
 			max-width: calc(100% - 58px);
 		}
 		
-		.contentHeaderNavigation {
-			flex: 0 0 100%;
-		}
-	}
-	
-	@include screen-xs {
 		.contentHeaderNavigation {
 			.userProfileButtonContainer {
 				display: flex;
@@ -75,6 +93,124 @@
 		.contentHeaderIcon {
 			flex: 0 0 128px;
 			margin-right: 20px;
+		}
+	}
+}
+
+/* user profile cover photo */
+.userProfileUserWithCoverPhoto {
+	padding-top: 165px;
+	position: relative;
+	
+	.userProfileCoverPhoto {
+		background: no-repeat center;
+		background-size: cover;
+		border-radius: 3px;
+		height: 200px;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		
+		&::after {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, .5) 100%);
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+			bottom: 0;
+			content: "";
+			display: block;
+			left: 0;
+			pointer-events: none;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+		
+		.jsButtonEditCoverPhoto {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+		}
+	}
+	
+	.contentHeaderTitle {
+		/* avoid being covered by the photo */
+		z-index: 10;
+	}
+	
+	.userProfileUsername {
+		color: #fff;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+	}
+	
+	@include screen-md-up {
+		.contentHeaderIcon {
+			flex: 0 0 138px;
+			margin-top: -29px; /* 35px photo overlap - (128px height / 2) */
+			padding-left: 10px;
+		}
+		
+		.contentHeaderDescription {
+			margin-top: 15px !important;
+		}
+		
+		.contentHeaderNavigation {
+			padding-top: 45px;
+		}
+	}
+	
+	@include screen-sm-up {
+		.contentHeaderIcon .badgeOnline {
+			left: 10px !important;
+		}
+		
+		.userProfileUsername + .badge {
+			margin-left: 5px;
+		}
+	}
+	
+	@include screen-sm {
+		padding-top: 170px;
+		
+		.contentHeaderIcon {
+			margin-top: -18px; /* 30px photo overlap - (96px height / 2) */
+			padding-left: 5px;
+		}
+		
+		.contentHeaderDescription {
+			margin-top: 10px !important;
+		}
+	}
+	
+	@include screen-xs {
+		padding-top: 120px;
+		
+		.userProfileCoverPhoto {
+			height: 150px;
+		}
+		
+		.contentHeaderIcon {
+			margin-top: 6px; /* 30px photo overlap - (48px height / 2) */
+			padding-left: 5px;
+		}
+		
+		.contentTitle {
+			margin-bottom: 35px;
+			position: relative;
+		}
+		
+		.userProfileUsername {
+			display: block;
+		}
+		
+		.userProfileUsername + .badge {
+			margin-left: 0;
+			position: absolute;
+			top: 35px !important;
+		}
+		
+		.contentHeaderDescription {
+			margin-left: -58px;
 		}
 	}
 }

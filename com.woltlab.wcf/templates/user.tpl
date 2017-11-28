@@ -133,7 +133,7 @@
 {/capture}
 
 {capture assign='contentHeader'}
-	<header class="contentHeader userProfileUser"{if $isAccessible}
+	<header class="contentHeader userProfileUser{if MODULE_USER_COVER_PHOTO} userProfileUserWithCoverPhoto{/if}"{if $isAccessible}
 		data-object-id="{@$user->userID}"
 		{if $__wcf->session->getPermission('admin.user.canBanUser')}
 			data-banned="{@$user->banned}"
@@ -148,6 +148,11 @@
 			data-is-disabled="{if $user->activationCode}true{else}false{/if}"
 		{/if}
 		{/if}>
+		{if MODULE_USER_COVER_PHOTO}
+			<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
+				{if $user->userID == $__wcf->user->userID}<a href="#" class="button small jsButtonEditCoverPhoto"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>{/if}
+			</div>
+		{/if}
 		<div class="contentHeaderIcon">
 			{if $user->userID == $__wcf->user->userID}
 				<a href="{link controller='AvatarEdit'}{/link}" class="jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag(128)}</a>
@@ -159,7 +164,7 @@
 		
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">
-				{$user->username}
+				<span class="userProfileUsername">{if $user->username === 'root'}Alexander Ebert{else}{$user->username}{/if}</span>
 				{if $user->banned}<span class="icon icon24 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}
 				{if MODULE_USER_RANK}
 					{if $user->getUserTitle()}

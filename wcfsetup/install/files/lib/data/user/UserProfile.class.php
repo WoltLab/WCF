@@ -6,6 +6,9 @@ use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
 use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
+use wcf\data\user\cover\photo\IUserCoverPhoto;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
@@ -43,49 +46,55 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * list of ignored user ids
 	 * @var	integer[]
 	 */
-	protected $ignoredUserIDs = null;
+	protected $ignoredUserIDs;
 	
 	/**
 	 * list of follower user ids
 	 * @var	integer[]
 	 */
-	protected $followerUserIDs = null;
+	protected $followerUserIDs;
 	
 	/**
 	 * list of following user ids
 	 * @var	integer[]
 	 */
-	protected $followingUserIDs = null;
+	protected $followingUserIDs;
 	
 	/**
 	 * user avatar
 	 * @var	IUserAvatar
 	 */
-	protected $avatar = null;
+	protected $avatar;
 	
 	/**
 	 * user rank object
 	 * @var	UserRank
 	 */
-	protected $rank = null;
+	protected $rank;
 	
 	/**
 	 * age of this user
 	 * @var	integer
 	 */
-	protected $__age = null;
+	protected $__age;
 	
 	/**
 	 * group data and permissions
 	 * @var	mixed[][]
 	 */
-	protected $groupData = null;
+	protected $groupData;
 	
 	/**
 	 * current location of this user.
 	 * @var	string
 	 */
-	protected $currentLocation = null;
+	protected $currentLocation;
+	
+	/**
+	 * user cover photo
+	 * @var UserCoverPhoto
+	 */
+	protected $coverPhoto;
 	
 	const GENDER_MALE = 1;
 	const GENDER_FEMALE = 2;
@@ -280,6 +289,37 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 */
 	public function canSeeAvatar() {
 		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.avatar.canSeeAvatars'));
+	}
+	
+	/**
+	 * Returns the user's cover photo.
+	 * 
+	 * @return      IUserCoverPhoto
+	 */
+	public function getCoverPhoto() {
+		if ($this->coverPhoto === null) {
+			if (!$this->disableCoverPhoto && $this->coverPhotoHash) {
+				if ($this->canSeeCoverPhoto()) {
+					$this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash, $this->coverPhotoExtension);
+				}
+			}
+			
+			// use default cover photo
+			if ($this->coverPhoto === null) {
+				$this->coverPhoto = new DefaultUserCoverPhoto();
+			}
+		}
+		
+		return $this->coverPhoto;
+	}
+	
+	/**
+	 * Returns true if the active user can view the cover photo of this user.
+	 *
+	 * @return      boolean
+	 */
+	public function canSeeCoverPhoto() {
+		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.coverPhoto.canSeeCoverPhotos'));
 	}
 	
 	/**
