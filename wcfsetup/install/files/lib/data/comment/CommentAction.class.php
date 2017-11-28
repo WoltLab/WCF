@@ -771,6 +771,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		if (!$this->commentProcessor->canEditComment($this->comment->getDecoratedObject())) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->setDisallowedBBCodes();
 	}
 	
 	/**

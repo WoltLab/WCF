@@ -236,6 +236,8 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		if (!$this->commentProcessor->canEditResponse($this->response->getDecoratedObject())) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->setDisallowedBBCodes();
 	}
 	
 	/**
