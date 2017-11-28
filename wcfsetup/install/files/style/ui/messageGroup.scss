@@ -90,6 +90,21 @@
 		}
 	}
 	
+	.messageDisabled .columnAvatar::before {
+		color: rgb(0, 140, 0);
+		content: $fa-var-eye-slash;
+		
+		@include screen-md-up {
+			left: 13px;
+			top: -2px;
+		}
+		
+		@include screen-sm-down {
+			left: 3px;
+			top: -4px;
+		}
+	}
+	
 	.messageDeleted .columnAvatar::before {
 		color: rgb(180, 0, 0);
 		content: $fa-var-trash-o;
@@ -103,21 +118,6 @@
 		
 		@include screen-sm-down {
 			left: 7px;
-			top: -4px;
-		}
-	}
-	
-	.messageDisabled .columnAvatar::before {
-		color: rgb(0, 140, 0);
-		content: $fa-var-eye-slash;
-		
-		@include screen-md-up {
-			left: 13px;
-			top: -2px;
-		}
-		
-		@include screen-sm-down {
-			left: 3px;
 			top: -4px;
 		}
 	}
@@ -430,17 +430,17 @@
 		}
 	}
 	
-	&.messageDeleted > .contentHeaderIcon::before {
-		color: rgb(180, 0, 0);
-		content: $fa-var-trash-o;
-		left: 11px;
-		top: -12px;
-	}
-	
 	&.messageDisabled > .contentHeaderIcon::before {
 		color: rgb(0, 140, 0);
 		content: $fa-var-eye-slash;
 		left: 4px;
+		top: -12px;
+	}
+	
+	&.messageDeleted > .contentHeaderIcon::before {
+		color: rgb(180, 0, 0);
+		content: $fa-var-trash-o;
+		left: 11px;
 		top: -12px;
 	}
 }
