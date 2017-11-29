@@ -3,12 +3,14 @@ namespace wcf\acp\form;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarAction;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -45,7 +47,7 @@ class UserEditForm extends UserAddForm {
 	 * user editor object
 	 * @var	UserEditor
 	 */
-	public $user = null;
+	public $user;
 	
 	/**
 	 * ban status
@@ -69,7 +71,7 @@ class UserEditForm extends UserAddForm {
 	 * user avatar object
 	 * @var	UserAvatar
 	 */
-	public $userAvatar = null;
+	public $userAvatar;
 	
 	/**
 	 * avatar type
@@ -94,6 +96,30 @@ class UserEditForm extends UserAddForm {
 	 * @var	integer
 	 */
 	public $disableAvatarExpires = 0;
+	
+	/**
+	 * user cover photo object
+	 * @var UserCoverPhoto
+	 */
+	public $userCoverPhoto;
+	
+	/**
+	 * true to disable this cover photo
+	 * @var	boolean
+	 */
+	public $disableCoverPhoto = 0;
+	
+	/**
+	 * reason
+	 * @var	string
+	 */
+	public $disableCoverPhotoReason = '';
+	
+	/**
+	 * date when the cover photo will be enabled again
+	 * @var	integer
+	 */
+	public $disableCoverPhotoExpires = 0;
 	
 	/**
 	 * @inheritDoc
@@ -145,6 +171,14 @@ class UserEditForm extends UserAddForm {
 				if (isset($_POST['disableAvatarExpires'])) $this->disableAvatarExpires = @strtotime(StringUtil::trim($_POST['disableAvatarExpires']));
 			}
 		}
+		
+		if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+			if (!empty($_POST['disableCoverPhoto'])) $this->disableCoverPhoto = 1;
+			if (isset($_POST['disableCoverPhotoReason'])) $this->disableCoverPhotoReason = StringUtil::trim($_POST['disableCoverPhotoReason']);
+			if ($this->disableCoverPhoto && !isset($_POST['disableCoverPhotoNeverExpires'])) {
+				if (isset($_POST['disableCoverPhotoExpires'])) $this->disableCoverPhotoExpires = @strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires']));
+			}
+		}
 	}
 	
 	/**
@@ -161,9 +195,14 @@ class UserEditForm extends UserAddForm {
 		
 		parent::readData();
 		
-		// get avatar object
+		// get the avatar object
 		if ($this->avatarType == 'custom') {
 			$this->userAvatar = new UserAvatar($this->user->avatarID);
+		}
+		
+		// get the user cover photo object
+		if ($this->user->coverPhotoHash) {
+			$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto();
 		}
 	}
 	
@@ -191,9 +230,14 @@ class UserEditForm extends UserAddForm {
 		$this->disableSignature = $this->user->disableSignature;
 		$this->disableSignatureReason = $this->user->disableSignatureReason;
 		$this->disableSignatureExpires = $this->user->disableSignatureExpires;
+		
 		$this->disableAvatar = $this->user->disableAvatar;
 		$this->disableAvatarReason = $this->user->disableAvatarReason;
 		$this->disableAvatarExpires = $this->user->disableAvatarExpires;
+		
+		$this->disableCoverPhoto = $this->user->disableCoverPhoto;
+		$this->disableCoverPhotoReason = $this->user->disableCoverPhotoReason;
+		$this->disableCoverPhotoExpires = $this->user->disableCoverPhotoExpires;
 		
 		if ($this->user->avatarID) $this->avatarType = 'custom';
 		else if (MODULE_GRAVATAR && $this->user->enableGravatar) $this->avatarType = 'gravatar';
@@ -218,7 +262,11 @@ class UserEditForm extends UserAddForm {
 			'disableAvatarReason' => $this->disableAvatarReason,
 			'disableAvatarExpires' => $this->disableAvatarExpires,
 			'userAvatar' => $this->userAvatar,
-			'banExpires' => $this->banExpires
+			'banExpires' => $this->banExpires,
+			'userCoverPhoto' => $this->userCoverPhoto,
+			'disableCoverPhoto' => $this->disableCoverPhoto,
+			'disableCoverPhotoReason' => $this->disableCoverPhotoReason,
+			'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires
 		]);
 	}
 	
@@ -308,6 +356,13 @@ class UserEditForm extends UserAddForm {
 			$data['data']['disableAvatar'] = $this->disableAvatar;
 			$data['data']['disableAvatarReason'] = $this->disableAvatarReason;
 			$data['data']['disableAvatarExpires'] = $this->disableAvatarExpires;
+		}
+		
+		// handle disabled cover photo
+		if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+			$data['data']['disableCoverPhoto'] = $this->disableCoverPhoto;
+			$data['data']['disableCoverPhotoReason'] = $this->disableCoverPhotoReason;
+			$data['data']['disableCoverPhotoExpires'] = $this->disableCoverPhotoExpires;
 		}
 		
 		$this->objectAction = new UserAction([$this->userID], 'update', $data);

@@ -575,7 +575,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								case IMAGETYPE_PNG:
 								case IMAGETYPE_JPEG:
 								case IMAGETYPE_GIF:
-									$style->update(['coverPhotoExtension' => $fileExtension]);
+									$style->update(['coverPhotoExtension' => mb_substr($fileExtension, 1)]);
 							}
 						}
 					}

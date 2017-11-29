@@ -65,5 +65,21 @@ class UserBanCronjob extends AbstractCronjob {
 			0,
 			TIME_NOW
 		]);
+		
+		// enable cover photos
+		$sql = "UPDATE	wcf".WCF_N."_user
+			SET	disableCoverPhoto = ?,
+				disableCoverPhotoExpires = ?
+			WHERE	disableCoverPhoto = ?
+				AND disableCoverPhotoExpires <> ?
+				AND disableCoverPhotoExpires <= ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			0,
+			0,
+			1,
+			0,
+			TIME_NOW
+		]);
 	}
 }

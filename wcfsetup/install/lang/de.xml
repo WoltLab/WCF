@@ -2204,6 +2204,11 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.disableAvatar.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableAvatar.expires.description"><![CDATA[Der Avatar des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableAvatar.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto"><![CDATA[Profilbild sperren]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.reason"><![CDATA[Begründung]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[Das Profilbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[Die Signatur des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
@@ -3931,9 +3936,12 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 	</category>
 	
 	<category name="wcf.user.coverPhoto">
+		<item name="wcf.user.coverPhoto"><![CDATA[Profilbild]]></item>
 		<item name="wcf.user.coverPhoto.delete"><![CDATA[Profilbild löschen]]></item>
 		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dein{else}Wollen Sie Ihr{/if} Profilbild wirklich löschen? Nach dem Löschen wird wieder das Standard-Bild angezeigt.]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Profilbild bearbeiten]]></item>
+		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoHash} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Profilbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Profilbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
+		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Profilbild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Profilbild hochladen]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>

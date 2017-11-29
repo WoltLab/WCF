@@ -197,7 +197,7 @@ class Style extends DatabaseObject {
 			return $this->styleID . '.' . $this->coverPhotoExtension;
 		}
 		
-		return 'default.png';
+		return 'default.jpg';
 	}
 	
 	/**

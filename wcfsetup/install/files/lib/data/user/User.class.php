@@ -67,6 +67,7 @@ use wcf\util\UserUtil;
  * @property-read       string          $coverPhotoHash                 hash of the user's cover photo
  * @property-read	string		$coverPhotoExtension		extension of the user's cover photo file
  * @property-read       integer         $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
+ * @property-read	string		$disableCoverPhotoReason	reason why the user's cover photo is disabled
  * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {

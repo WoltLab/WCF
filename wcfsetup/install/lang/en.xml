@@ -2145,6 +2145,11 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.disableAvatar.expires"><![CDATA[Unblocking]]></item>
 		<item name="wcf.acp.user.disableAvatar.expires.description"><![CDATA[The avatar of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.acp.user.disableAvatar.neverExpires"><![CDATA[Permanently Block]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto"><![CDATA[Block Cover Photo]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.reason"><![CDATA[Reason]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Unblocking]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[The cover photo of the user will automatically be unblocked at the set time.]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Unblocking]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[The signature of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
@@ -3923,9 +3928,12 @@ Open the link below to access the user profile:
 	</category>
 	
 	<category name="wcf.user.coverPhoto">
+		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete your cover photo? This will replace your current photo with the default image.]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
+		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoHash}have banned your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
+		<item name="wcf.user.coverPhoto.noImage"><![CDATA[The user has not yet uploaded a cover photo.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
