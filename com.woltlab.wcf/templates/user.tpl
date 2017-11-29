@@ -174,7 +174,7 @@
 		
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">
-				<span class="userProfileUsername">{if $user->username === 'root'}Alexander Ebert{else}{$user->username}{/if}</span>
+				<span class="userProfileUsername">{$user->username}</span>
 				{if $user->banned}<span class="icon icon24 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}
 				{if MODULE_USER_RANK}
 					{if $user->getUserTitle()}
