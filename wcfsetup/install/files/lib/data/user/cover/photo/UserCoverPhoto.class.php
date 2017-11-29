@@ -29,10 +29,10 @@ class UserCoverPhoto implements IUserCoverPhoto {
 	 */
 	protected $userID;
 	
-	const MAX_HEIGHT = 400;
-	const MAX_WIDTH = 1600;
+	const MAX_HEIGHT = 800;
+	const MAX_WIDTH = 2000;
 	const MIN_HEIGHT = 200;
-	const MIN_WIDTH = 800;
+	const MIN_WIDTH = 500;
 	
 	/**
 	 * UserCoverPhoto constructor.
@@ -75,5 +75,23 @@ class UserCoverPhoto implements IUserCoverPhoto {
 	 */
 	public function getFilename() {
 		return substr($this->coverPhotoHash, 0, 2) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . $this->coverPhotoExtension;
+	}
+	
+	/**
+	 * Returns the minimum and maximum dimensions for cover photos.
+	 * 
+	 * @return      array
+	 */
+	public static function getCoverPhotoDimensions() {
+		return [
+			'max' => [
+				'height' => self::MAX_HEIGHT,
+				'width' => self::MAX_WIDTH
+			],
+			'min' => [
+				'height' => self::MIN_HEIGHT,
+				'width' => self::MIN_WIDTH
+			]
+		];
 	}
 }

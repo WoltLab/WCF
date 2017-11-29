@@ -345,8 +345,6 @@
 {if MODULE_USER_COVER_PHOTO && $user->userID == $__wcf->user->userID}
 	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
-			{lang}wcf.user.coverPhoto.description{/lang}
-			
 			{if $__wcf->user->disableCoverPhoto}
 				<p class="error">{lang}wcf.user.coverPhoto.error.disabled{/lang}</p>
 			{else}
@@ -354,6 +352,7 @@
 				
 				{* placeholder for the upload button *}
 				<div id="coverPhotoUploadButtonContainer"></div>
+				<small>{lang}wcf.user.coverPhoto.upload.description{/lang}</small>
 			{/if}
 		</div>
 		<script data-relocate="true">

@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
 use wcf\data\user\group\UserGroup;
@@ -162,7 +163,8 @@ class UserPage extends AbstractPage {
 			'followingCount' => $this->followingList->countObjects(),
 			'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
 			'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
-			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs())
+			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
+			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions()
 		]);
 	}
 	
