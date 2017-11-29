@@ -145,7 +145,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		$data = [
 			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'image2x' => '', 'copyright' => '', 'default' => false,
-			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
+			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '', 'coverPhoto' => '',
 			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => '', 'apiVersion' => '3.0'
 		];
 		
@@ -219,6 +219,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							case 'image':
 							case 'image2x':
 							case 'license':
+							case 'coverPhoto':
 								$data[$element->tagName] = $element->nodeValue;
 							break;
 							
@@ -558,6 +559,33 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
+		// import cover photo
+		if (!empty($data['coverPhoto'])) {
+			$fileExtension = mb_substr($data['coverPhoto'], mb_strrpos($data['coverPhoto'], '.'));
+			$index = $tar->getIndexByFilename($data['coverPhoto']);
+			if ($index !== false) {
+				$filename = WCF_DIR . 'images/coverPhotos/' . $style->styleID . $fileExtension;
+				$tar->extract($index, $filename);
+				FileUtil::makeWritable($filename);
+				
+				if (file_exists($filename)) {
+					try {
+						if (($imageData = getimagesize($filename)) !== false) {
+							switch ($imageData[2]) {
+								case IMAGETYPE_PNG:
+								case IMAGETYPE_JPEG:
+								case IMAGETYPE_GIF:
+									$style->update(['coverPhotoExtension' => $fileExtension]);
+							}
+						}
+					}
+					catch (SystemException $e) {
+						// broken image
+					}
+				}
+			}
+		}
+		
 		$tar->close();
 		
 		return $style;
@@ -658,6 +686,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleTar->add(WCF_DIR.'images/'.$this->image2x, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image2x)));
 		}
 		
+		// append cover photo
+		$coverPhoto = ($this->coverPhotoExtension) ? WCF_DIR.'images/coverPhotos/'.$this->styleID.'.'.$this->coverPhotoExtension : '';
+		if ($coverPhoto && @file_exists($coverPhoto)) {
+			$styleTar->add($coverPhoto, '', FileUtil::addTrailingSlash(dirname($coverPhoto)));
+		}
+		
 		// fetch style description
 		$sql = "SELECT		language.languageCode, language_item.languageItemValue
 			FROM		wcf".WCF_N."_language_item language_item
@@ -687,6 +721,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->writeElement('apiVersion', $this->apiVersion);
 		if ($this->image) $xml->writeElement('image', $this->image);
 		if ($this->image2x) $xml->writeElement('image2x', $this->image2x);
+		if ($coverPhoto) $xml->writeElement('coverPhoto', basename(FileUtil::unifyDirSeparator($coverPhoto)));
 		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
 		if ($this->license) $xml->writeElement('license', $this->license);
 		$xml->endElement();
