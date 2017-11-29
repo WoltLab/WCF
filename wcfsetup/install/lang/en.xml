@@ -1871,6 +1871,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Duplicate Style]]></item>
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Do you really want to duplicate the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
+		<item name="wcf.acp.style.coverPhoto"><![CDATA[Default Cover Photo]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth}×{$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG and PNG.]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Edit Style]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Export as package]]></item>
@@ -1882,6 +1884,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Options]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
+		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Cover Photo]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>

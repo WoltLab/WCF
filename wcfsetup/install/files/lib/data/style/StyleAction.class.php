@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
@@ -100,6 +101,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			
 			// create favicon data
 			$this->updateFavicons($style->getDecoratedObject());
+			
+			// handle the cover photo
+			$this->updateCoverPhoto($style->getDecoratedObject());
 			
 			// reset stylesheet
 			StyleHandler::getInstance()->resetStylesheet($style->getDecoratedObject());
@@ -270,6 +274,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 * Updates style favicon files.
 	 * 
 	 * @param       Style           $style
+	 * @since       3.1
 	 */
 	protected function updateFavicons(Style $style) {
 		$styleID = $style->styleID;
@@ -345,6 +350,31 @@ MANIFEST;
 </browserconfig>
 BROWSERCONFIG;
 			file_put_contents(WCF_DIR . "images/favicon/{$styleID}.browserconfig.xml", $browserconfig);
+		}
+	}
+	
+	/**
+	 * Updates the style cover photo.
+	 * 
+	 * @param       Style           $style
+	 * @since       3.1
+	 */
+	protected function updateCoverPhoto(Style $style) {
+		$styleID = $style->styleID;
+		$fileExtension = WCF::getSession()->getVar('styleCoverPhoto-'.$styleID);
+		if ($fileExtension) {
+			// remove old image
+			if ($style->coverPhotoExtension) {
+				@unlink(WCF_DIR . 'images/coverPhotos/' . $style->getCoverPhoto());
+			}
+			
+			rename(
+				WCF_DIR . 'images/coverPhotos/' . $styleID . '.tmp.' . $fileExtension,
+				WCF_DIR . 'images/coverPhotos/' . $styleID . '.' . $fileExtension
+			);
+			
+			(new StyleEditor($style))->update(['coverPhotoExtension' => $fileExtension]);
+			WCF::getSession()->unregister('styleCoverPhoto-'.$style->styleID);
 		}
 	}
 	
@@ -558,6 +588,8 @@ BROWSERCONFIG;
 	
 	/**
 	 * Validates parameters to upload a favicon.
+	 * 
+	 * @since       3.1
 	 */
 	public function validateUploadFavicon() {
 		// ignore tmp hash, uploading is supported for existing styles only
@@ -571,6 +603,7 @@ BROWSERCONFIG;
 	 * Handles favicon upload.
 	 *
 	 * @return	string[]
+	 * @since       3.1
 	 */
 	public function uploadFavicon() {
 		// save files
@@ -618,6 +651,84 @@ BROWSERCONFIG;
 				}
 				else {
 					throw new UserInputException('favicon', 'uploadFailed');
+				}
+			}
+		}
+		catch (UserInputException $e) {
+			$file->setValidationErrorType($e->getType());
+		}
+		
+		return ['errorType' => $file->getValidationErrorType()];
+	}
+	
+	/**
+	 * Validates parameters to upload a cover photo.
+	 *
+	 * @since       3.1
+	 */
+	public function validateUploadCoverPhoto() {
+		// ignore tmp hash, uploading is supported for existing styles only
+		// and files will be finally processed on form submit
+		$this->parameters['tmpHash'] = '@@@WCF_INVALID_TMP_HASH@@@';
+		
+		$this->validateUpload();
+	}
+	
+	/**
+	 * Handles the cover photo upload.
+	 *
+	 * @return	string[]
+	 * @since       3.1
+	 */
+	public function uploadCoverPhoto() {
+		// save files
+		/** @noinspection PhpUndefinedMethodInspection */
+		/** @var UploadFile[] $files */
+		$files = $this->parameters['__files']->getFiles();
+		$file = $files[0];
+		
+		try {
+			if (!$file->getValidationErrorType()) {
+				$fileLocation = $file->getLocation();
+				try {
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new UserInputException('coverPhoto');
+					}
+					switch ($imageData[2]) {
+						case IMAGETYPE_PNG:
+						case IMAGETYPE_JPEG:
+						case IMAGETYPE_GIF:
+							// fine
+							break;
+						default:
+							throw new UserInputException('coverPhoto');
+					}
+					
+					if ($imageData[0] < UserCoverPhoto::MIN_WIDTH) {
+						throw new UserInputException('coverPhoto', 'minWidth');
+					}
+					else if ($imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
+						throw new UserInputException('coverPhoto', 'minHeight');
+					}
+				}
+				catch (SystemException $e) {
+					throw new UserInputException('coverPhoto');
+				}
+				
+				// move uploaded file
+				if (@copy($fileLocation, WCF_DIR.'images/coverPhotos/'.$this->style->styleID.'.tmp.'.$file->getFileExtension())) {
+					@unlink($fileLocation);
+					
+					// store extension within session variables
+					WCF::getSession()->register('styleCoverPhoto-'.$this->style->styleID, $file->getFileExtension());
+					
+					// return result
+					return [
+						'url' => WCF::getPath().'images/coverPhotos/'.$this->style->styleID.'.tmp.'.$file->getFileExtension()
+					];
+				}
+				else {
+					throw new UserInputException('coverPhoto', 'uploadFailed');
 				}
 			}
 		}

@@ -1930,6 +1930,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich duplizieren?]]></item>
+		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Profilbild]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Dateiendung sind GIF, JPG, JPEG und PNG zulässig.]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
@@ -1941,6 +1943,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, welche Bestandteile des Stils „{$style->styleName}“ mit exportiert werden sollen.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
+		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Profilbild]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Globale Einstellungen]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Breite]]></item>

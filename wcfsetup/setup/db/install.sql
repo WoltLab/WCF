@@ -1271,6 +1271,7 @@ CREATE TABLE wcf1_style (
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
+	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
 	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.0' 
 );
 

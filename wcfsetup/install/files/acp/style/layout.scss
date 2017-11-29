@@ -371,3 +371,14 @@ $wcfAcpSubMenuWidth: 300px;
 		margin-bottom: 5px;
 	}
 }
+
+#coverPhotoPreview {
+	background: no-repeat center center;
+	background-size: cover;
+	height: 200px;
+	margin-bottom: 5px;
+	
+	@include screen-xs {
+		height: 150px;
+	}
+}

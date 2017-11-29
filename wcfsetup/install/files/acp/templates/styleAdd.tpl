@@ -5,20 +5,35 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input'], function(AcpUiStyleFaviconUpload, AcpUiStyleImageUpload, AcpUiStyleEditor, UiToggleInput) {
+	require([
+		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
+	], function(
+		AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload, AcpUiStyleImageUpload, AcpUiStyleEditor, UiToggleInput, Language
+	) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
 			styleRuleMap: styleRuleMap
 		});
 		
-		{if $action == 'edit'}new AcpUiStyleFaviconUpload({@$style->styleID});{/if}
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', false);
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', true);
 		
 		new UiToggleInput('input[name="useGoogleFont"]', {
 			show: ['#wcfFontFamilyGoogleContainer']
 		});
+		
+		{if $action === 'edit'}
+			Language.addObject({
+				'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
+				'wcf.user.coverPhoto.upload.error.minHeight': '{lang}wcf.user.coverPhoto.upload.error.minHeight{/lang}',
+				'wcf.user.coverPhoto.upload.error.minWidth': '{lang}wcf.user.coverPhoto.upload.error.minWidth{/lang}',
+				'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}'
+			});
+			
+			new AcpUiStyleFaviconUpload({@$style->styleID});
+			new AcpUiStyleCoverPhotoUpload({@$style->styleID});
+		{/if}
 	});
 	
 	$(function() {
@@ -46,7 +61,7 @@
 		
 		$('.jsUnitSelect').change(function(event) {
 			var $target = $(event.currentTarget);
-			$target.prev().attr('step', (($target.val() == 'em' || $target.val() == 'rem') ? '0.01' : '1'));
+			$target.prev().attr('step', (($target.val() === 'em' || $target.val() === 'rem') ? '0.01' : '1'));
 		}).trigger('change');
 	});
 </script>
@@ -308,7 +323,7 @@
 				{event name='fileFields'}
 			</section>
 			
-			{if $action == 'edit'}
+			{if $action === 'edit'}
 				<section class="section">
 					<h2 class="sectionTitle">{lang}wcf.acp.style.general.favicon{/lang}</h2>
 					
@@ -316,7 +331,7 @@
 						<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
 						<dd>
 							<div class="selectedFaviconPreview">
-								<img src="{if $action == 'add'}{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png{else}{@$style->getFaviconAppleTouchIcon()}{/if}" alt="" id="faviconImage" style="height: 32px; width: 32px;">
+								<img src="{@$style->getFaviconAppleTouchIcon()}" alt="" id="faviconImage" style="height: 32px; width: 32px;">
 							</div>
 							<div id="uploadFavicon"></div>
 							<small>{lang}wcf.acp.style.favicon.description{/lang}</small>
@@ -324,6 +339,21 @@
 					</dl>
 					
 					{event name='faviconFields'}
+				</section>
+				
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
+					
+					<dl>
+						<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
+						<dd>
+							<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
+							<div id="uploadCoverPhoto"></div>
+							<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
+						</dd>
+					</dl>
+					
+					{event name='coverPhotoFields'}
 				</section>
 			{/if}
 			

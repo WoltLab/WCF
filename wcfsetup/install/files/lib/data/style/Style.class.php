@@ -31,6 +31,7 @@ use wcf\system\WCF;
  * @property-read	string		$packageName		package identifier used to export the style as a package or empty (thus style cannot be exported as package)
  * @property-read	integer		$isTainted		is `0` if the original declarations of an imported or installed style are not and cannot be altered, otherwise `1`
  * @property-read	integer		$hasFavicon		is `0` if the default favicon data should be used
+ * @property-read	integer		$coverPhotoExtension	extension of the style's cover photo file
  * @property-read       string          $apiVersion             the style's compatibility version, possible values: '3.0' or '3.1'
  */
 class Style extends DatabaseObject {
@@ -184,6 +185,19 @@ class Style extends DatabaseObject {
 	 */
 	public function getRelativeFavicon() {
 		return $this->getFaviconPath('favicon.ico', false);
+	}
+	
+	/**
+	 * Returns the cover photo filename.
+	 * 
+	 * @return      string
+	 */
+	public function getCoverPhoto() {
+		if ($this->coverPhotoExtension) {
+			return $this->styleID . '.' . $this->coverPhotoExtension;
+		}
+		
+		return 'default.png';
 	}
 	
 	/**

@@ -37,10 +37,6 @@ class DefaultUserCoverPhoto implements IUserCoverPhoto {
 	 * @inheritDoc
 	 */
 	public function getFilename() {
-		/*if ($coverPhoto = StyleHandler::getInstance()->getStyle()->getDefaultCoverPhoto()) {
-			return $coverPhoto;
-		}*/
-		
-		return 'default.png';
+		return StyleHandler::getInstance()->getStyle()->getCoverPhoto();
 	}
 }

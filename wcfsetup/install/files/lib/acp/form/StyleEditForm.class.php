@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
@@ -207,7 +208,9 @@ class StyleEditForm extends StyleAddForm {
 			'action' => 'edit',
 			'isTainted' => $this->style->isTainted,
 			'style' => $this->style,
-			'styleID' => $this->styleID
+			'styleID' => $this->styleID,
+			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
+			'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH
 		]);
 	}
 }
