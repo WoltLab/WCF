@@ -47,9 +47,14 @@ define(
 		_createButton: function() {
 			MediaListUpload._super.prototype._createButton.call(this);
 			
+			var span = elBySel('span', this._button);
+			
+			var space = document.createTextNode(' ');
+			DomUtil.prepend(space, span);
+			
 			var icon = elCreate('span');
 			icon.className = 'icon icon16 fa-upload';
-			DomUtil.prepend(icon, elBySel('span', this._button));
+			DomUtil.prepend(icon, span);
 		},
 		
 		/**
