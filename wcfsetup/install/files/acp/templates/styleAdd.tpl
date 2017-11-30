@@ -6,9 +6,11 @@
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
 	require([
-		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
+		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete', 'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload',
+		'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
 	], function(
-		AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload, AcpUiStyleImageUpload, AcpUiStyleEditor, UiToggleInput, Language
+		AcpUiStyleCoverPhotoDelete, AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload, AcpUiStyleImageUpload,
+		AcpUiStyleEditor, UiToggleInput, Language
 	) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
@@ -24,15 +26,20 @@
 		});
 		
 		{if $action === 'edit'}
-			Language.addObject({
-				'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
-				'wcf.user.coverPhoto.upload.error.minHeight': '{lang}wcf.user.coverPhoto.upload.error.minHeight{/lang}',
-				'wcf.user.coverPhoto.upload.error.minWidth': '{lang}wcf.user.coverPhoto.upload.error.minWidth{/lang}',
-				'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}'
-			});
-			
 			new AcpUiStyleFaviconUpload({@$style->styleID});
-			new AcpUiStyleCoverPhotoUpload({@$style->styleID});
+			
+			{if MODULE_USER_COVER_PHOTO}
+				Language.addObject({
+					'wcf.acp.style.coverPhoto.delete.confirmMessage': '{lang}wcf.acp.style.coverPhoto.delete.confirmMessage{/lang}',
+					'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
+					'wcf.user.coverPhoto.upload.error.minHeight': '{lang}wcf.user.coverPhoto.upload.error.minHeight{/lang}',
+					'wcf.user.coverPhoto.upload.error.minWidth': '{lang}wcf.user.coverPhoto.upload.error.minWidth{/lang}',
+					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}'
+				});
+				
+				AcpUiStyleCoverPhotoDelete.init({@$style->styleID});
+				new AcpUiStyleCoverPhotoUpload({@$style->styleID});
+			{/if}
 		{/if}
 	});
 	
@@ -340,21 +347,25 @@
 					
 					{event name='faviconFields'}
 				</section>
-				
-				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
-					
-					<dl>
-						<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
-						<dd>
-							<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
-							<div id="uploadCoverPhoto"></div>
-							<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					{event name='coverPhotoFields'}
-				</section>
+			
+				{if MODULE_USER_COVER_PHOTO}
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
+						
+						<dl>
+							<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
+							<dd>
+								<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
+								<div id="uploadCoverPhoto">
+									<button class="jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</button>
+								</div>
+								<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
+							</dd>
+						</dl>
+						
+						{event name='coverPhotoFields'}
+					</section>
+				{/if}
 			{/if}
 			
 			{event name='generalFieldsets'}

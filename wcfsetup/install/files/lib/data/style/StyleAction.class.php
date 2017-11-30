@@ -55,19 +55,19 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['copy', 'delete', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo', 'uploadLogoMobile'];
+	protected $requireACP = ['copy', 'delete', 'deleteCoverPhoto', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadCoverPhoto', 'uploadLogo', 'uploadLogoMobile'];
 	
 	/**
 	 * style object
 	 * @var	Style
 	 */
-	public $style = null;
+	public $style;
 	
 	/**
 	 * style editor object
 	 * @var	StyleEditor
 	 */
-	public $styleEditor = null;
+	public $styleEditor;
 	
 	/**
 	 * @inheritDoc
@@ -667,6 +667,10 @@ BROWSERCONFIG;
 	 * @since       3.1
 	 */
 	public function validateUploadCoverPhoto() {
+		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+		
 		// ignore tmp hash, uploading is supported for existing styles only
 		// and files will be finally processed on form submit
 		$this->parameters['tmpHash'] = '@@@WCF_INVALID_TMP_HASH@@@';
@@ -737,6 +741,38 @@ BROWSERCONFIG;
 		}
 		
 		return ['errorType' => $file->getValidationErrorType()];
+	}
+	
+	/**
+	 * Validates the parameters to delete a style's default cover photo.
+	 * 
+	 * @throws      PermissionDeniedException
+	 * @throws      UserInputException
+	 * @since       3.1
+	 */
+	public function validateDeleteCoverPhoto() {
+		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->styleEditor = $this->getSingleObject();
+		if (!$this->styleEditor->coverPhotoExtension) {
+			throw new UserInputException('objectIDs');
+		}
+	}
+	
+	/**
+	 * Deletes a style's default cover photo.
+	 * 
+	 * @return      string[]
+	 * @since       3.1
+	 */
+	public function deleteCoverPhoto() {
+		$this->styleEditor->deleteCoverPhoto();
+		
+		return [
+			'url' => WCF::getPath().'images/coverPhotos/'.(new Style($this->styleEditor->styleID))->getCoverPhoto()
+		];
 	}
 	
 	/**

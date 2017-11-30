@@ -125,6 +125,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
+	 * Deletes the style's default cover photo.
+	 */
+	public function deleteCoverPhoto() {
+		if ($this->coverPhotoExtension) {
+			@unlink(WCF_DIR.'images/coverPhotos/'.$this->styleID.'.'.$this->coverPhotoExtension);
+			
+			$this->update([
+				'coverPhotoExtension' => ''
+			]);
+		}
+	}
+	
+	/**
 	 * Reads the data of a style exchange format file.
 	 * 
 	 * @param	Tar	$tar
