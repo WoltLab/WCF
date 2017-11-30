@@ -109,8 +109,8 @@ final class CronjobUtil {
 			
 			switch ($fieldName) {
 				case 'dow':
-					if (strlen($fieldValue) == 3 && in_array($fieldName, $dayNames)) {
-						$fieldValue = $dayNames[$fieldValue];
+					if (strlen($fieldValue) == 3 && in_array($fieldValue, $dayNames)) {
+						$fieldValue = array_search($fieldValue, $dayNames);
 					}
 					// When specifying day of week, both day 0 and day 7
 					// will be considered Sunday. -- crontab(5) 
@@ -121,7 +121,7 @@ final class CronjobUtil {
 				
 				case 'month':
 					if (strlen($fieldValue) == 3 && in_array($fieldValue, $monthNames)) {
-						$fieldValue = $monthNames[$fieldValue] + 1;
+						$fieldValue = array_search($fieldValue, $monthNames) + 1;
 					}
 				break;
 			}
