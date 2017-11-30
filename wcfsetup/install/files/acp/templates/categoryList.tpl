@@ -140,7 +140,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
+		<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 {hascontentelse}
 	<p class="info">{@$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</p>
