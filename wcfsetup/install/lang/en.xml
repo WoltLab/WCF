@@ -592,6 +592,7 @@
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Can block avatars]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableCoverPhoto"><![CDATA[Can block cover photos]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Can block signatures]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Can manage automatic user group assignments]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Add User Group Automatic Assignment]]></item>
@@ -659,6 +660,10 @@
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Can see trophies]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximum number of special trophies]]></item> <!-- @TODO: find a better name? -->
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Special trophies can be individually selected by the user and displayed in the message sidebar and the user profile.]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Cover Photos]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Can view  users’ cover photos]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Can upload their cover photo]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">

@@ -610,6 +610,7 @@
 		<item name="wcf.acp.group.button.choose"><![CDATA[Benutzergruppe wählen]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Kann Avatar sperren]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableCoverPhoto"><![CDATA[Kann Profilbild sperren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Kann Signatur sperren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Kann automatische Gruppenzuordnungen verwalten]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Automatische Benutzergruppen-Zuordnung hinzufügen]]></item>
@@ -677,6 +678,10 @@
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Kann Trophäen sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximale Anzahl an besonderen Trophäen]]></item> <!-- @TODO: find a better name? -->
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Besondere Trophäen können vom Benutzer individuell ausgewählt werden und werden in der Message-Sidebar und im Benutzerprofil angezeigt.]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Profilbilder]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Kann Profilbilder sehen]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Kann eigenes Profilbild hochladen]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
