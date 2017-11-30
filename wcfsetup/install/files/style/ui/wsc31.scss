@@ -237,4 +237,12 @@
 			top: -1px;
 		}
 	}
+	
+	// tab menu overflow
+	.tabMenuOverlayLeft {
+		background: linear-gradient(to left, transparentize($wcfContentContainerBackground, 100%) 0%, $wcfContentContainerBackground 50%);
+	}
+	.tabMenuOverlayRight {
+		background: linear-gradient(to right, transparentize($wcfContentContainerBackground, 100%) 0%, $wcfContentContainerBackground 50%);
+	}
 }
