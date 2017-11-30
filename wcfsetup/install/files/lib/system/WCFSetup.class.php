@@ -1221,7 +1221,7 @@ class WCFSetup extends WCF {
 		}
 		
 		// determine randomized cookie prefix
-		$prefix = 'wsc30_';
+		$prefix = 'wsc31_';
 		if (!self::$developerMode) {
 			$cookieNames = array_keys($_COOKIE);
 			while (true) {
