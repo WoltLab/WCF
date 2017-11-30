@@ -99,7 +99,9 @@ class MenuEditForm extends MenuAddForm {
 			$boxAction->executeAction();
 		}
 		
-		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID, $this->aclValues);
+		if ($this->menu->identifier !== 'com.woltlab.wcf.MainMenu') {
+			SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID, $this->aclValues);
+		}
 		
 		$this->saved();
 		
