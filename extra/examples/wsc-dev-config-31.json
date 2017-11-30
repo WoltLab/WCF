@@ -7,7 +7,8 @@
             "username": "root",
             "dbNumber": "2"
         },
-        "useDefaultInstallPath": true
+        "useDefaultInstallPath": true,
+        "forceStaticCookiePrefix": true
     },
     "configuration": {
         "option": {

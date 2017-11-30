@@ -1220,9 +1220,14 @@ class WCFSetup extends WCF {
 			]);
 		}
 		
-		// determine randomized cookie prefix
+		// determine the (randomized) cookie prefix
+		$useRandomCookiePrefix = true;
+		if (self::$developerMode && DevtoolsSetup::getInstance()->forceStaticCookiePrefix()) {
+			$useRandomCookiePrefix = false;
+		}
+		
 		$prefix = 'wsc31_';
-		if (!self::$developerMode) {
+		if ($useRandomCookiePrefix) {
 			$cookieNames = array_keys($_COOKIE);
 			while (true) {
 				$prefix = 'wsc_' . substr(sha1(mt_rand()), 0, 6) . '_';

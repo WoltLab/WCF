@@ -80,12 +80,26 @@ class DevtoolsSetup extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if a static cookie prefix should be used, instead of the randomized
+	 * value used for non-dev-mode installations.
+	 * 
+	 * @return      boolean
+	 */
+	public function forceStaticCookiePrefix() {
+		return (isset($this->configuration['setup']) && isset($this->configuration['setup']['forceStaticCookiePrefix']) && $this->configuration['setup']['forceStaticCookiePrefix'] === true);
+	}
+	
+	/**
 	 * List of option values that will be set after the setup has completed.
 	 * 
 	 * @return      string[]
 	 */
 	public function getOptionOverrides() {
 		if (!isset($this->configuration['configuration']) || empty($this->configuration['configuration']['option'])) return [];
+		
+		if (isset($this->configuration['configuration']['option']['cookie_prefix'])) {
+			throw new \DomainException("The 'cookie_prefix' option cannot be set during the setup, consider using the 'forceStaticCookiePrefix' setting instead.");
+		}
 		
 		return $this->configuration['configuration']['option'];
 	}
