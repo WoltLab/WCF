@@ -78,6 +78,7 @@ class CacheListPage extends AbstractPage {
 			
 			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
+				/** @noinspection PhpUndefinedMethodInspection */
 				$this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getMemcachedVersion();
 			break;
 			
