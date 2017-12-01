@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\email\mime;
-use wcf\system\email\EmailGrammar;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 

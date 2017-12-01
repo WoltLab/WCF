@@ -4,7 +4,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagCloud;
 use wcf\system\tagging\TypedTagCloud;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Box for the tag cloud.

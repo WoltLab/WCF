@@ -7,7 +7,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\upload\IUploadFileValidationStrategy;
 use wcf\system\upload\UploadHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Option type implementation for uploading a file.

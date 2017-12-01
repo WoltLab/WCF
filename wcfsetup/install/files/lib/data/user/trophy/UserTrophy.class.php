@@ -9,7 +9,6 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a user trophy.
