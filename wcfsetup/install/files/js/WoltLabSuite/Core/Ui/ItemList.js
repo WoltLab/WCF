@@ -16,6 +16,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 	var _callbackKeyDown = null;
 	var _callbackKeyPress = null;
 	var _callbackKeyUp = null;
+	var _callbackPaste = null;
 	var _callbackRemoveItem = null;
 	var _callbackBlur = null;
 	
@@ -207,6 +208,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			_callbackKeyDown = this._keyDown.bind(this);
 			_callbackKeyPress = this._keyPress.bind(this);
 			_callbackKeyUp = this._keyUp.bind(this);
+			_callbackPaste = this._paste.bind(this);
 			_callbackRemoveItem = this._removeItem.bind(this);
 			_callbackBlur = this._blur.bind(this);
 		},
@@ -236,6 +238,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			element.addEventListener('keydown', _callbackKeyDown);
 			element.addEventListener('keypress', _callbackKeyPress);
 			element.addEventListener('keyup', _callbackKeyUp);
+			element.addEventListener('paste', _callbackPaste);
 			element.addEventListener('blur', _callbackBlur);
 			
 			element.parentNode.insertBefore(list, element);
@@ -342,7 +345,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		/**
 		 * Handles the `[ENTER]` and `[,]` key to add an item to the list unless it is restricted.
 		 * 
-		 * @param	{object}	event		event object
+		 * @param	{Event}         event		event object
 		 */
 		_keyPress: function(event) {
 			if (EventKey.Enter(event) || EventKey.Comma(event)) {
@@ -358,6 +361,32 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 					this._addItem(event.currentTarget.id, { objectId: 0, value: value });
 				}
 			}
+		},
+		
+		/**
+		 * Splits comma-separated values being pasted into the input field.
+		 * 
+		 * @param       {Event}         event
+		 * @protected
+		 */
+		_paste: function (event) {
+			var text = '';
+			if (typeof window.clipboardData === 'object') {
+				// IE11
+				text = window.clipboardData.getData('Text');
+			}
+			else {
+				text = event.clipboardData.getData('text/plain');
+			}
+			
+			text.split(/,/).forEach((function(item) {
+				item = item.trim();
+				if (item.length !== 0) {
+					this._addItem(event.currentTarget.id, { objectId: 0, value: item });
+				}
+			}).bind(this));
+			
+			event.preventDefault();
 		},
 		
 		/**
