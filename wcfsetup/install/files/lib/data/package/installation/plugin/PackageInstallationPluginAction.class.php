@@ -130,6 +130,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 				break;
 				
 			case 'language':
+			case 'menuItem':
 				LanguageFactory::getInstance()->clearCache();
 				LanguageFactory::getInstance()->deleteLanguageCache();
 				break;
