@@ -111,7 +111,7 @@ define(
 						else if (event.deltaY > 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
 							event.preventDefault();
 						}
-					});
+					}, { passive: false });
 				}
 			}
 			

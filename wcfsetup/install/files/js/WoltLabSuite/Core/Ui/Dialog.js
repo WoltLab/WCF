@@ -53,7 +53,7 @@ define(
 				if (event.target === _container) {
 					event.preventDefault();
 				}
-			});
+			}, { passive: false });
 			
 			elById('content').appendChild(_container);
 			
@@ -375,7 +375,7 @@ define(
 				if (allowScroll === false) {
 					event.preventDefault();
 				}
-			});
+			}, { passive: false });
 			
 			var content;
 			if (element === null) {
