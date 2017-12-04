@@ -121,15 +121,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
 				if (data.pre || this.utils.isCurrentOrParent('kbd')) {
-					// prevent method call when data.pre is true
-					var mpRemoveEmptyInlineTags = this.clean.removeEmptyInlineTags;
-					this.clean.removeEmptyInlineTags = function(html) { return html; };
+					// instead of calling the original method, we'll use a subset of the cleaning
+					// tasks in order to avoid malformed HTML being sanitized by Redactor
+					if (data.pre && this.opts.preSpaces) {
+						html = html.replace(/\t/g, new Array(this.opts.preSpaces + 1).join(' '));
+					}
 					
-					html = mpOnPaste.call(this, html, data, insert);
-					
-					this.clean.removeEmptyInlineTags = mpRemoveEmptyInlineTags;
-					
-					return html;
+					return WCF.String.escapeHTML(html);
 				}
 				
 				var div = elCreate('div');
