@@ -736,6 +736,17 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $sourceLanguageID]);
 		
+		// create tpl files
+		$sql = "SELECT  *
+			FROM    wcf".WCF_N."_box_content
+			WHERE   boxID IN (SELECT boxID FROM wcf".WCF_N."_box WHERE boxType = ?)
+				AND languageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(['tpl', $destinationLanguageID]);
+		while ($row = $statement->fetchArray()) {
+			file_put_contents(WCF_DIR . 'templates/__cms_box_' . $row['boxID'] . '_' . $destinationLanguageID . '.tpl', $row['content']);
+		}
+		
 		// media content
 		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_media_content
 						(mediaID, languageID, title, caption, altText)
@@ -753,6 +764,17 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$destinationLanguageID, $destinationLanguageID, $sourceLanguageID]);
+		
+		// create tpl files
+		$sql = "SELECT  *
+			FROM    wcf".WCF_N."_page_content
+			WHERE   pageID IN (SELECT pageID FROM wcf".WCF_N."_page WHERE pageType = ?)
+				AND languageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(['tpl', $destinationLanguageID]);
+		while ($row = $statement->fetchArray()) {
+			file_put_contents(WCF_DIR . 'templates/__cms_page_' . $row['pageID'] . '_' . $destinationLanguageID . '.tpl', $row['content']);
+		}
 		
 		PageEditor::resetCache();
 	}
