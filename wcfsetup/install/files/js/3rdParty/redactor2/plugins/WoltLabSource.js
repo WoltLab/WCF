@@ -67,6 +67,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 				// use jQuery to parse, its parser is much more graceful
 				var div = $('<div />').html(this.source.$textarea.val());
 				stripIcons(div[0]);
+				
 				this.source.$textarea.val(div[0].innerHTML);
 				
 				mpHide.call(this);
@@ -197,6 +198,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 			for (i = 0, length = backup.length; i < length; i++) {
 				html = html.replace('@@@WCF_PRE_BACKUP_' + i + '@@@', backup[i]);
 			}
+			
+			// remove the trailing newline in front of <pre>
+			html = html.replace(/\r?\n<\/pre>/g, '</pre>');
 			
 			return html.trim();
 		}

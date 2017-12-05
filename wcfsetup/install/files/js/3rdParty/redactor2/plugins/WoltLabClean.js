@@ -42,6 +42,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
+				// enforce at least a single whitespace inside certain block elements
+				elBySelAll('pre, woltlab-quote, woltlab-spoiler', div, function (element) {
+					if (element.childElementCount === 0 && (element.textContent.length === 0 || element.textContent.match(/^\r?\n$/))) {
+						element.textContent = '\u200B';
+					}
+				});
+				
 				html = div.innerHTML;
 				
 				return html;
