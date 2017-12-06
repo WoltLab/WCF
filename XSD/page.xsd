@@ -61,6 +61,7 @@
 					<xs:element name="allowSpidersToIndex" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="excludeFromLandingPage" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="cssClassName" type="woltlab_varchar" minOccurs="0" />
+					<xs:element name="controllerCustomURL" type="xs:string" minOccurs="0" />
 				</xs:choice>
 			</xs:extension>
 		</xs:complexContent>
