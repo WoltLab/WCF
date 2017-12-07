@@ -31,7 +31,7 @@
 				
 				<li>
 					<span class="icon icon16 fa-clock-o"></span>
-					<span>{@$article->time|time}</span>
+					<a href="{$article->getLink()}">{@$article->time|time}</a>
 					<meta itemprop="datePublished" content="{@$article->time|date:'c'}">
 					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
 				</li>
