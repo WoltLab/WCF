@@ -425,7 +425,8 @@
 			position: absolute;
 		}
 		
-		> img {
+		> img,
+		> .icon:first-child {
 			visibility: hidden;
 		}
 	}
