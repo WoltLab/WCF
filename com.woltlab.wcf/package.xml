@@ -53,7 +53,7 @@
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">files_update.tar</instruction>
 		
-		<instruction type="sql">update_3.1.0_beta_4</instruction>
+		<instruction type="sql">update_3.1.0_beta_4.sql</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_3.1.0_beta_4_addColumn.php</instruction>
 		
 		<instruction type="language" />
