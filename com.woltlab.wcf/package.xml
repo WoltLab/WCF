@@ -51,7 +51,7 @@
 	<instructions type="update" fromversion="3.1.0 Beta 3">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="sql">update_3.1.0_beta_4.sql</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_3.1.0_beta_4_addColumn.php</instruction>
