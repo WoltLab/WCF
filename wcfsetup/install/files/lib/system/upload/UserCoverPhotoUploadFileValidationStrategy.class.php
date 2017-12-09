@@ -11,7 +11,7 @@ use wcf\util\FileUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Gallery\System\Upload
+ * @package	WoltLabSuite\Core\System\Upload
  * @since	3.1
  */
 class UserCoverPhotoUploadFileValidationStrategy implements IUploadFileValidationStrategy {
