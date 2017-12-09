@@ -34,6 +34,9 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 			
 			//noinspection SillyAssignmentJS
 			smiley.outerHTML = smiley.outerHTML;
+			
+			// force-save the caret position
+			this.WoltLabCaret.forceSelectionSave();
 		}
 	}
 };

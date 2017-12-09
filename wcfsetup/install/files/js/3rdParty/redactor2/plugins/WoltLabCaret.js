@@ -179,6 +179,8 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				internalRange = (selection.rangeCount) ? selection.getRangeAt(0).cloneRange() : null;
 			};
 			
+			this.WoltLabCaret.forceSelectionSave = saveRange;
+			
 			var restoreRange = function () {
 				if (internalRange === null) return;
 				
