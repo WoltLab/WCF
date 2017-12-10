@@ -146,6 +146,7 @@ a {
 		
 		> .section {
 			display: table-cell;
+			vertical-align: top;
 			width: 49%;
 			
 			& + .section {
