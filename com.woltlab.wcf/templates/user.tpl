@@ -157,7 +157,7 @@
 							{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 								<li><a href="#" class="jsButtonUploadCoverPhoto jsStaticDialog" data-dialog-id="userProfileCoverPhotoUpload">{lang}wcf.user.coverPhoto.upload{/lang}</a></li>
 							{/if}
-							<li><a href="#" class="jsButtonDeleteCoverPhoto"{if !$user->coverPhotoHash} style="display:none;"{/if}>{lang}wcf.user.coverPhoto.delete{/lang}</a></li>
+							<li{if !$user->coverPhotoHash} style="display:none;"{/if}><a href="#" class="jsButtonDeleteCoverPhoto">{lang}wcf.user.coverPhoto.delete{/lang}</a></li>
 						</ul>
 					</div>
 				{/if}
@@ -374,9 +374,13 @@
 		</script>
 	{/if}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/User/CoverPhoto/Delete'], function (UiUserCoverPhotoDelete) {
+		require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Delete'], function (Language, UiUserCoverPhotoDelete) {
+			Language.addObject({
+				'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}'
+			});
+			
 			UiUserCoverPhotoDelete.init();
-		})
+		});
 	</script>
 {/if}
 
