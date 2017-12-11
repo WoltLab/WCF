@@ -119,6 +119,8 @@
 			</dd>
 		</dl>
 		
+		{event name='categoryFields'}
+		
 		{if $labelGroups|count}
 			{foreach from=$labelGroups item=labelGroup}
 				{if $labelGroup|count}
@@ -320,6 +322,8 @@
 				</script>
 			{/if}
 			
+			{event name='informationFields'}
+			
 			<dl{if $errorField == 'teaser'} class="formError"{/if}>
 				<dt><label for="teaser0">{lang}wcf.acp.article.teaser{/lang}</label></dt>
 				<dd>
@@ -363,6 +367,8 @@
 					{/if}
 				</dd>
 			</dl>
+			
+			{event name='messageFields'}
 		</div>
 	{else}
 		<div class="section tabMenuContainer">
@@ -470,6 +476,8 @@
 							</script>
 						{/if}
 						
+						{event name='informationFieldsMultilingual'}
+						
 						<dl{if $errorField == 'teaser'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="teaser{@$availableLanguage->languageID}">{lang}wcf.acp.article.teaser{/lang}</label></dt>
 							<dd>
@@ -513,11 +521,15 @@
 								{/if}
 							</dd>
 						</dl>
+						
+						{event name='messageFieldsMultilingual'}
 					</div>
 				</div>
 			{/foreach}
 		</div>
 	{/if}
+	
+	{event name='sections'}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">

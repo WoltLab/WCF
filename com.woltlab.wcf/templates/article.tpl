@@ -130,6 +130,8 @@
 		</div>
 	{/if}
 	
+	{event name='beforeArticleContent'}
+	
 	<div class="section articleContent"
 	         data-object-id="{@$article->articleID}"
 	         data-object-type="com.woltlab.wcf.likeableArticle"
@@ -145,6 +147,8 @@
 			{/if}
 		
 			{@$articleContent->getFormattedContent()}
+			
+			{event name='htmlArticleContent'}
 		</div>
 		
 		{if !$tags|empty}
@@ -164,6 +168,8 @@
 			</div>
 		</div>
 	</div>
+	
+	{event name='afterArticleContent'}
 	
 	{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
 		<div class="section articleAboutAuthor">
@@ -214,6 +220,8 @@
 		</nav>
 	{/hascontent}
 </footer>
+
+{event name='afterFooter'}
 
 {if $previousArticle || $nextArticle}
 	<div class="section articleNavigation">
@@ -320,6 +328,8 @@
 		</ul>
 	</section>
 {/if}
+
+{event name='beforeComments'}
 
 {if $article->enableComments}
 	{if $commentList|count || $commentCanAdd}
