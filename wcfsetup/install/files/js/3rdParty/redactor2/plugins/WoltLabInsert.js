@@ -67,7 +67,16 @@ $.Redactor.prototype.WoltLabInsert = function() {
 			this.insert.text = (function (text) {
 				if (callback) callback = callback();
 				
+				this.core.editor().focus();
+				this.selection.restore();
+				if (elClosest(window.getSelection().anchorNode, '.redactor-layer') !== this.core.editor()[0]) {
+					this.WoltLabCaret.endOfEditor();
+					console.log("fixed selection");
+				}
+				
 				mpText.call(this, text);
+				
+				this.selection.saveInstant();
 			}).bind(this);
 		}
 	};
