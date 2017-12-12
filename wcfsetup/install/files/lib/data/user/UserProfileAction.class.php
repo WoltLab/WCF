@@ -86,6 +86,8 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates user profile preview.
+	 * 
+	 * @throws	UserInputException
 	 */
 	public function validateGetUserProfile() {
 		WCF::getSession()->checkPermissions(['user.profile.canViewUserProfile']);
@@ -128,6 +130,8 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates detailed activity point list
+	 * 
+	 * @throws	UserInputException
 	 */
 	public function validateGetDetailedActivityPointList() {
 		if (count($this->objectIDs) != 1) {
@@ -177,6 +181,9 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates parameters to begin profile inline editing.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validateBeginEdit() {
 		if (!empty($this->objectIDs) && count($this->objectIDs) == 1) {
@@ -218,6 +225,8 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates parameters to save changes to user profile.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateSave() {
 		$this->validateBeginEdit();
@@ -559,12 +568,22 @@ class UserProfileAction extends UserAction {
 		}
 	}
 	
+	/**
+	 * Validates the `deleteCoverPhoto` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 */
 	public function validateDeleteCoverPhoto() {
 		if (!MODULE_USER_COVER_PHOTO) {
 			throw new PermissionDeniedException();
 		}
 	}
 	
+	/**
+	 * Deletes the cover photo of the active user.
+	 * 
+	 * @return	string[]	link to the new cover photo
+	 */
 	public function deleteCoverPhoto() {
 		if (WCF::getUser()->coverPhotoHash) {
 			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();

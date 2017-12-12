@@ -173,6 +173,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates parameters to load comments.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateLoadComments() {
 		$this->readInteger('lastCommentTime', false, 'data');
@@ -208,6 +210,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates the `loadComment` action.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateLoadComment() {
 		$this->readInteger('objectID', false, 'data');
@@ -278,6 +282,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates parameters to add a comment.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateAddComment() {
 		CommentHandler::enforceFloodControl();
@@ -423,6 +429,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates parameters to add a response.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateAddResponse() {
 		CommentHandler::enforceFloodControl();
@@ -532,6 +540,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		];
 	}
 	
+	/**
+	 * Publishes a response.
+	 */
 	public function triggerPublicationResponse() {
 		if (!empty($this->parameters['commentProcessor'])) {
 			$objectType = null;
@@ -634,6 +645,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 	}
 	
+	/**
+	 * Validates the `enable` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 */
 	public function validateEnable() {
 		$this->comment = $this->getSingleObject()->getDecoratedObject();
 		
@@ -644,6 +660,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 	}
 	
+	/**
+	 * Enables a comment.
+	 * 
+	 * @return	integer[]
+	 */
 	public function enable() {
 		if ($this->comment === null) $this->comment = reset($this->objects);
 		
@@ -660,6 +681,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		return ['commentID' => $this->comment->commentID];
 	}
 	
+	/**
+	 * Validates the `enableResponse` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 */
 	public function validateEnableResponse() {
 		$this->readInteger('responseID', false, 'data');
 		$this->response = new CommentResponse($this->parameters['data']['responseID']);
@@ -676,6 +703,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 	}
 	
+	/**
+	 * Enables a response.
+	 * 
+	 * @return	integer[]
+	 */
 	public function enableResponse() {
 		if ($this->comment === null) $this->comment = reset($this->objects);
 		if ($this->response === null) $this->response = reset($this->parameters['responses']);
@@ -696,6 +728,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates parameters to edit a comment or a response.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validatePrepareEdit() {
 		// validate response id
@@ -821,6 +856,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates parameters to remove a comment or response.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validateRemove() {
 		// validate comment id or response id
@@ -875,6 +913,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates the 'getGuestDialog' action.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateGetGuestDialog() {
 		if (WCF::getUser()->userID) {
@@ -1065,6 +1105,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates comment id parameter.
+	 * 
+	 * @throws	UserInputException
 	 */
 	protected function validateCommentID() {
 		$this->readInteger('commentID', false, 'data');
@@ -1077,6 +1119,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates response id parameter.
+	 * 
+	 * @throws	UserInputException
 	 */
 	protected function validateResponseID() {
 		if (isset($this->parameters['data']['responseID'])) {
@@ -1110,6 +1154,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates the captcha challenge.
+	 * 
+	 * @throws	SystemException
 	 */
 	protected function validateCaptcha() {
 		if (WCF::getUser()->userID) return;
