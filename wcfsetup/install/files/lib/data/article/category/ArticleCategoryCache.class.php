@@ -3,6 +3,7 @@ namespace wcf\data\article\category;
 use wcf\data\article\Article;
 use wcf\data\category\Category;
 use wcf\system\category\CategoryHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -28,12 +29,18 @@ class ArticleCategoryCache extends SingletonFactory {
 	protected function initArticles() {
 		$this->articles = [];
 		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('publicationStatus = ?', [Article::PUBLISHED]);
+		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			$conditionBuilder->add('isDeleted = ?', [0]);
+		}
+		
 		$sql = "SELECT		COUNT(*) AS count, categoryID
 			FROM		wcf" . WCF_N . "_article
-			WHERE           publicationStatus = ?
+			".$conditionBuilder."           
 			GROUP BY	categoryID";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([Article::PUBLISHED]);
+		$statement->execute($conditionBuilder->getParameters());
 		$articles = $statement->fetchMap('categoryID', 'count');
 		
 		$categoryToParent = [];
