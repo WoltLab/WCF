@@ -4,7 +4,7 @@
 	{else}
 		<img src="{$media->getLink()}" alt="{$media->altText}" title="{$media->title}" data-width="{@$media->width}" data-height="{@$media->height}">
 	{/if}
-		
+	
 	{if $media->caption}
 		<span class="mediaBBCodeCaption">{$media->caption}</span>
 	{/if}
