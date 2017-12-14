@@ -155,10 +155,6 @@ class ArticleSearch extends AbstractSearchableObjectType {
 	public function show(IForm $form = null) {
 		/** @var SearchForm $form */
 		
-		$categoryTree = new CategoryNodeTree('com.woltlab.wcf.article.category');
-		$categoryList = $categoryTree->getIterator();
-		$categoryList->setMaxDepth(0);
-		
 		// get existing values
 		if ($form !== null && isset($form->searchData['additionalData']['com.woltlab.wcf.article'])) {
 			$this->articleCategoryIDs = $form->searchData['additionalData']['com.woltlab.wcf.article']['articleCategoryIDs'];
@@ -166,7 +162,7 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		
 		WCF::getTPL()->assign([
 			'articleCategoryIDs' => $this->articleCategoryIDs,
-			'articleCategoryList' => $categoryList
+			'articleCategoryList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator()
 		]);
 	}
 	
