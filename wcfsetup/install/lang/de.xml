@@ -1436,6 +1436,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop-Benachrichtigungen werden nur für die ausgewählte App aktiviert, einschließlich aller anderen Apps die auf der identischen Domain laufen.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Seitenlogo verlinkt auf die Startseite der aktiven App]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Deaktiviere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} diese Option, damit das Logo stets auf die globale Startseite verlinkt. Die Deaktivierung entspricht dem Verhalten in früheren Versionen.]]></item>
+		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Profilbilder aktivieren]]></item>
+		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Profilbildern.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
