@@ -1,4 +1,9 @@
 <?php
+
+use wcf\data\option\OptionEditor;
+use wcf\system\cache\builder\StyleCacheBuilder;
+use wcf\system\cache\CacheHandler;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 
 /**
@@ -37,3 +42,8 @@ while ($row = $statement->fetchArray()) {
 	]);
 }
 WCF::getDB()->commitTransaction();
+
+// flush style cache since there are some new style variables which are tried to load from cache
+OptionEditor::resetCache();
+CacheHandler::getInstance()->flush(StyleCacheBuilder::getInstance(), []);
+StyleHandler::resetStylesheets();
