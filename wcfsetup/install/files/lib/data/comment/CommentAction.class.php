@@ -296,7 +296,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			$this->validateCaptcha();
 		}
 		
-		$this->validateMessage(true);
+		$this->validateMessage();
 		$objectType = $this->validateObjectType();
 		
 		// validate object id and permissions
@@ -477,13 +477,16 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			];
 		}
 		
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
 		// create response
 		$this->createdResponse = CommentResponseEditor::create([
 			'commentID' => $this->comment->commentID,
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
-			'message' => $this->parameters['data']['message'],
+			'message' => $htmlInputProcessor->getHtml(),
 			'enableHtml' => 1,
 			'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1
 		]);
@@ -1046,12 +1049,11 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	}
 	
 	/**
-	 * Validates message parameter.
+	 * Validates message parameters.
 	 * 
-	 * @param       bool  $isComment
 	 * @throws      UserInputException
 	 */
-	protected function validateMessage($isComment = false) {
+	protected function validateMessage() {
 		$this->readString('message', false, 'data');
 		$this->parameters['data']['message'] = MessageUtil::stripCrap($this->parameters['data']['message']);
 		
@@ -1061,25 +1063,20 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		
 		CommentHandler::enforceCensorship($this->parameters['data']['message']);
 		
-		if ($isComment) {
-			$this->setDisallowedBBCodes();
-			$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
-			
-			// search for disallowed bbcodes
-			$disallowedBBCodes = $htmlInputProcessor->validate();
-			if (!empty($disallowedBBCodes)) {
-				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
-			}
-			
-			if ($htmlInputProcessor->appearsToBeEmpty()) {
-				throw new UserInputException('message');
-			}
-			
-			$this->parameters['htmlInputProcessor'] = $htmlInputProcessor;
+		$this->setDisallowedBBCodes();
+		$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
+		
+		// search for disallowed bbcodes
+		$disallowedBBCodes = $htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
 		}
-		else {
-			unset($this->parameters['htmlInputProcessor']);
+		
+		if ($htmlInputProcessor->appearsToBeEmpty()) {
+			throw new UserInputException('message');
 		}
+		
+		$this->parameters['htmlInputProcessor'] = $htmlInputProcessor;
 	}
 	
 	/**
