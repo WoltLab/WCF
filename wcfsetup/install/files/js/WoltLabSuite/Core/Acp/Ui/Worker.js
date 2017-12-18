@@ -41,6 +41,11 @@ define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function(Ajax, Core, Language,
 			}, options);
 			this._options.dialogId += 'Worker';
 			
+			// update title
+			if (UiDialog.getDialog(this._options.dialogId) !== undefined) {
+				UiDialog.setTitle(this._options.dialogId, this._options.dialogTitle);
+			}
+			
 			this._request = Ajax.api(this);
 		},
 		
