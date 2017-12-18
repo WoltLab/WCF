@@ -71,7 +71,6 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				this.selection.restore();
 				if (elClosest(window.getSelection().anchorNode, '.redactor-layer') !== this.core.editor()[0]) {
 					this.WoltLabCaret.endOfEditor();
-					console.log("fixed selection");
 				}
 				
 				mpText.call(this, text);
