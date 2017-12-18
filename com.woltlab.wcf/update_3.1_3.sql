@@ -34,7 +34,7 @@ CREATE TABLE wcf1_devtools_project (
 	projectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(191) NOT NULL,
 	path TEXT,
-	
+
 	UNIQUE KEY name (name)
 );
 
@@ -54,10 +54,10 @@ DROP TABLE IF EXISTS wcf1_trophy;
 CREATE TABLE wcf1_trophy(
 	trophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(255),
-	description MEDIUMTEXT,	
+	description MEDIUMTEXT,
 	categoryID INT(10) NOT NULL,
 	type SMALLINT(1) DEFAULT 1,
-	iconFile MEDIUMTEXT, 
+	iconFile MEDIUMTEXT,
 	iconName VARCHAR(255),
 	iconColor VARCHAR(255),
 	badgeColor VARCHAR(255),

@@ -63,4 +63,52 @@
 		<instruction type="option" />
 		<instruction type="userGroupOption" />
 	</instructions>
+
+	<instructions type="update" fromversion="3.0.11 pl 1">
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+
+		<instruction type="file">files_pre_sql.tar</instruction>
+
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_addColumn.php</instruction>
+
+		<instruction type="sql" run="standalone">update_3.1_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_2.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_3.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_4.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_5.sql</instruction>
+
+		<instruction type="file" run="standalone" />
+
+		<instruction type="sql" run="standalone">update_3.1.0_beta_4.sql</instruction>
+
+		<instruction type="language" run="standalone" />
+
+		<instruction type="acpMenu" />
+		<instruction type="bbcode" />
+		<instruction type="clipboardAction" />
+		<instruction type="cronjob" />
+		<instruction type="eventListener" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="option" run="standalone" />
+		<instruction type="userGroupOption" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="userOption" />
+
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_pageSearchIndex.php</instruction>
+
+		<instruction type="page" />
+
+		<!-- contains a reference to a new page -->
+		<instruction type="menuItem" />
+
+		<instruction type="packageInstallationPlugin" />
+		<!-- new pip -->
+		<instruction type="mediaProvider" />
+
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
+
+		<instruction type="style">defaultStyle.tar</instruction>
+	</instructions>
 </package>
