@@ -104,6 +104,7 @@ WCF.Comment.Handler = Class.extend({
 		this._responseRevert = null;
 		this._responses = {};
 		this._scrollTarget = null;
+		this._onResponsesLoaded = null;
 		
 		this._container = $('#' + $.wcfEscapeID(this._containerID));
 		if (!this._container.length) {
@@ -562,6 +563,11 @@ WCF.Comment.Handler = Class.extend({
 	_showAddResponse: function(event) {
 		event.preventDefault();
 		
+		// pending request
+		if (this._onResponsesLoaded !== null) {
+			return;
+		}
+		
 		// API is missing
 		if (this._responseAdd === null) {
 			console.error("Missing response API.");
@@ -581,34 +587,42 @@ WCF.Comment.Handler = Class.extend({
 		
 		var $placeholder = $(event.currentTarget);
 		var $commentID = $placeholder.data('commentID');
+		
+		this._onResponsesLoaded = (function() {
+			$placeholder.hide();
+			
+			if (responseContainer.parentNode && responseContainer.parentNode.classList.contains('jsCommentResponseAddContainer')) {
+				// strip the parent element, it is used as a work-around
+				elRemove(responseContainer.parentNode);
+			}
+			
+			var commentOptionContainer = this._commentButtonList[$commentID][0].closest('.commentOptionContainer');
+			commentOptionContainer.parentNode.insertBefore(responseContainer, commentOptionContainer.nextSibling);
+			
+			if (typeof this._responseCache[$commentID] === 'string') {
+				this._responseAdd.setContent(this._responseCache[$commentID]);
+			}
+			else {
+				this._responseAdd.setContent('');
+			}
+			
+			this._responseRevert = (function () {
+				this._responseCache[$commentID] = this._responseAdd.getContent();
+				
+				elRemove(responseContainer);
+				$placeholder.show();
+			}).bind(this);
+			
+			this._onResponsesLoaded = null;
+		}).bind(this);
+		
 		if ($placeholder.prev().hasClass('jsCommentLoadNextResponses')) {
 			this._loadResponsesExecute($commentID, true);
 			$placeholder.parent().children('.button').disable();
 		}
-		
-		$placeholder.hide();
-		
-		if (responseContainer.parentNode && responseContainer.parentNode.classList.contains('jsCommentResponseAddContainer')) {
-			// strip the parent element, it is used as a work-around
-			elRemove(responseContainer.parentNode);
-		}
-		
-		var commentOptionContainer = this._commentButtonList[$commentID][0].closest('.commentOptionContainer');
-		commentOptionContainer.parentNode.insertBefore(responseContainer, commentOptionContainer.nextSibling);
-		
-		if (typeof this._responseCache[$commentID] === 'string') {
-			this._responseAdd.setContent(this._responseCache[$commentID]);
-		}
 		else {
-			this._responseAdd.setContent('');
+			this._onResponsesLoaded();
 		}
-		
-		this._responseRevert = (function () {
-			this._responseCache[$commentID] = this._responseAdd.getContent();
-			
-			elRemove(responseContainer);
-			$placeholder.show();
-		}).bind(this);
 	},
 	
 	/**
@@ -820,6 +834,9 @@ WCF.Comment.Handler = Class.extend({
 				this._permalinkResponse = null;
 			}
 		}
+		
+		// check if there is a pending reply request
+		if (this._onResponsesLoaded !== null) this._onResponsesLoaded();
 	},
 	
 	/**

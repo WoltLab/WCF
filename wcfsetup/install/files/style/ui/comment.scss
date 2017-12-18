@@ -74,6 +74,11 @@
 		display: none;
 	}
 	
+	/* prevents the author avatar link to be stretched downwards */
+	.comment > .box48 > a:first-child {
+		align-self: flex-start;
+	}
+	
 	@include screen-sm-up {
 		.jsCommentResponseAdd {
 			padding-left: 20px;
