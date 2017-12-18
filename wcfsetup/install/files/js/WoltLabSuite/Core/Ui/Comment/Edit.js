@@ -230,6 +230,13 @@ define(
 			// remove all existing error elements
 			elBySelAll('.innerError', this._activeElement, elRemove);
 			
+			// check if editor contains actual content
+			var editorElement = elById(this._getEditorId());
+			if (window.jQuery(editorElement).data('redactor').utils.isEmpty()) {
+				this.throwError(editorElement, Language.get('wcf.global.form.error.empty'));
+				return false;
+			}
+			
 			var data = {
 				api: this,
 				parameters: parameters,
