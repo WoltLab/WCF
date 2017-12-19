@@ -517,7 +517,7 @@ class Email {
 		// force synchronous execution, see https://github.com/WoltLab/WCF/issues/2501
 		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
 			foreach ($jobs as $job) {
-				BackgroundQueueHandler::getInstance()->performJob($job);
+				BackgroundQueueHandler::getInstance()->performJob($job, true);
 			}
 		}
 		else {
