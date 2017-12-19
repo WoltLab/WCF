@@ -609,6 +609,7 @@ pdf</defaultvalue>
 				<defaultvalue>15</defaultvalue>
 				<admindefaultvalue>0</admindefaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>seconds</suffix>
 			</option>
 			<option name="user.comment.disallowedBBCodes">
 				<categoryname>user.message.comment</categoryname>
@@ -625,6 +626,7 @@ pdf</defaultvalue>
 				<minvalue>100</minvalue>
 				<maxvalue>65535</maxvalue>
 				<usersonly>1</usersonly>
+				<suffix>chars</suffix>
 				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.disallowedBBCodes">
@@ -666,6 +668,7 @@ pdf</defaultvalue>
 				<optiontype>inverseInteger</optiontype>
 				<defaultvalue>182</defaultvalue>
 				<usersonly>1</usersonly>
+				<suffix>days</suffix>
 			</option>
 			<option name="user.profile.canEditUserTitle">
 				<categoryname>user.profile</categoryname>
@@ -714,6 +717,7 @@ pdf</defaultvalue>
 				<admindefaultvalue>10000</admindefaultvalue>
 				<minvalue>100</minvalue>
 				<maxvalue>65535</maxvalue>
+				<suffix>chars</suffix>
 			</option>
 			
 			<option name="user.profile.avatar.canSeeAvatars">

@@ -547,7 +547,7 @@
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Mindestzeit zwischen zwei Kommentaren]]></item>
-		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentaren oder Antworten vergehen muss. [Zeit in Sekunden, 0 für unbeschränkt]]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentaren oder Antworten vergehen muss. [0 für unbeschränkt]]]></item>
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
@@ -583,7 +583,7 @@
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Mitglieder dieser Benutzergruppe auf der Team-Seite anzeigen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Kann Benutzer aktivieren]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Umbenennung]]></item>
-		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [Zeit in Tagen]]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können.]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht blockiert werden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like-System]]></item>
