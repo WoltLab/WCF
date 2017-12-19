@@ -84,9 +84,10 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * don't want to miss the automated error handling mechanism of the
 	 * queue.
 	 * 
-	 * @param	AbstractBackgroundJob	$job	The job to perform.
+	 * @param	AbstractBackgroundJob	$job	                        The job to perform.
+	 * @param       boolean                 $debugSynchronousExecution      Disables fail-safe mechanisms, errors will no longer be suppressed.
 	 */
-	public function performJob(AbstractBackgroundJob $job) {
+	public function performJob(AbstractBackgroundJob $job, $debugSynchronousExecution = false) {
 		$user = WCF::getUser();
 		
 		try {
@@ -97,6 +98,11 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$job->perform();
 		}
 		catch (\Throwable $e) {
+			// do not suppress exceptions for debugging purposes, see https://github.com/WoltLab/WCF/issues/2501
+			if ($debugSynchronousExecution) {
+				throw $e;
+			}
+			
 			// gotta catch 'em all
 			$job->fail();
 			
@@ -113,6 +119,11 @@ class BackgroundQueueHandler extends SingletonFactory {
 			}
 		}
 		catch (\Exception $e) {
+			// do not suppress exceptions for debugging purposes, see https://github.com/WoltLab/WCF/issues/2501
+			if ($debugSynchronousExecution) {
+				throw $e;
+			}
+			
 			// gotta catch 'em all
 			$job->fail();
 			

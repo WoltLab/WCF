@@ -513,8 +513,17 @@ class Email {
 	 */
 	public function send() {
 		$jobs = $this->getJobs();
-		BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
-		BackgroundQueueHandler::getInstance()->forceCheck();
+		
+		// force synchronous execution, see https://github.com/WoltLab/WCF/issues/2501
+		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+			foreach ($jobs as $job) {
+				BackgroundQueueHandler::getInstance()->performJob($job);
+			}
+		}
+		else {
+			BackgroundQueueHandler::getInstance()->enqueueIn($jobs);
+			BackgroundQueueHandler::getInstance()->forceCheck();
+		}
 	}
 	
 	/**
