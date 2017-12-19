@@ -48,11 +48,24 @@
 		<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
 		<dd>{@$archive->getPackageInfo('date')|date}</dd>
 	</dl>
-	
+
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.url{/lang}</dt>
 			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+		</dl>
+	{/if}
+
+	{if $archive->getLocalizedPackageInfo('license') != ''}
+		<dl>
+			<dt>{lang}wcf.acp.package.license{/lang}</dt>
+			<dd>
+				{if $archive->getLocalizedPackageInfo('licenseURL') != ''}
+					<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getLocalizedPackageInfo('licenseURL')|rawurlencode}" class="externalURL">{$archive->getLocalizedPackageInfo('license')}</a>
+				{else}
+					{$archive->getLocalizedPackageInfo('license')}
+				{/if}
+			</dd>
 		</dl>
 	{/if}
 	

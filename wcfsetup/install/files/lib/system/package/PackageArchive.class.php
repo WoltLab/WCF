@@ -195,6 +195,7 @@ class PackageArchive {
 					$name = $element->tagName;
 					if ($name == 'packagename') $name = 'packageName';
 					else if ($name == 'packagedescription') $name = 'packageDescription';
+					else if ($name == 'license' && $element->hasAttribute('url')) $this->packageInfo['licenseURL'][$languageCode] = $element->getAttribute('url');
 					
 					$this->packageInfo[$name][$languageCode] = $element->nodeValue;
 				break;
