@@ -419,7 +419,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				if (data.links && this.opts.pasteLinks) {
 					elBySelAll('a', div, function(link) {
 						if (link.href) {
-							link.outerHTML = '##%%a href="' + link.href + '"%%##' + link.innerHTML + '##%%/a%%##';
+							link.outerHTML = '#####[a href="' + link.href + '"]#####' + link.innerHTML + '#####[/a]#####';
 						}
 					});
 					
@@ -431,7 +431,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				if (data.images && this.opts.pasteImages) {
 					elBySelAll('img', div, function(image) {
 						if (image.src) {
-							var tmp = '##%%img src="' + image.src + '"';
+							var tmp = '#####[img src="' + image.src + '"';
 							var attr;
 							for (var j = 0, length = image.attributes.length; j < length; j++) {
 								attr = image.attributes.item(j);
@@ -440,7 +440,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 								}
 							}
 							
-							image.outerHTML = tmp + '%%##';
+							image.outerHTML = tmp + ']#####';
 						}
 					});
 					
