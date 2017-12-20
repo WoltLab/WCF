@@ -680,31 +680,37 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
-			var firefoxKnownQuotes = [];
-			var firefoxDetectStrayQuotes = (function() {
-				elBySelAll('woltlab-quote', this.core.editor()[0], function(quote) {
-					if (quote.parentNode === null) {
-						// ignore quotes that have already been handled
+			var getSelectorForCustomElements = (function() {
+				return this.opts.blockTags.filter(function(tagName) {
+					return tagName.indexOf('-') !== -1;
+				}).join(',');
+			}).bind(this);
+			
+			var firefoxKnownCustomElements = [];
+			var firefoxDetectSplitCustomElements = (function() {
+				elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
+					if (element.parentNode === null) {
+						// ignore elements that have already been handled
 						return;
 					}
 					
-					if (firefoxKnownQuotes.indexOf(quote) === -1) {
-						// quote did not exist prior to the backspace/delete action
+					if (firefoxKnownCustomElements.indexOf(element) === -1) {
+						// element did not exist prior to the backspace/delete action
 						return;
 					}
 					
 					['nextElementSibling', 'previousElementSibling'].forEach(function(elementSibling) {
-						var next, sibling = quote[elementSibling];
-						while (sibling !== null && sibling.nodeName === 'WOLTLAB-QUOTE' && firefoxKnownQuotes.indexOf(sibling) === -1) {
-							// move all child nodes into the "real" quote
+						var next, sibling = element[elementSibling];
+						while (sibling !== null && sibling.nodeName === element.nodeName && firefoxKnownCustomElements.indexOf(sibling) === -1) {
+							// move all child nodes into the "real" element
 							if (elementSibling === 'previousElementSibling') {
 								for (var i = sibling.childNodes.length - 1; i >= 0; i--) {
-									quote.insertBefore(sibling.childNodes[i], quote.firstChild);
+									element.insertBefore(sibling.childNodes[i], element.firstChild);
 								}
 							}
 							else {
 								while (sibling.childNodes.length > 0) {
-									quote.appendChild(sibling.childNodes[0]);
+									element.appendChild(sibling.childNodes[0]);
 								}
 							}
 							
@@ -716,7 +722,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					});
 				});
 				
-				firefoxKnownQuotes = [];
+				firefoxKnownCustomElements = [];
 			}).bind(this);
 			
 			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
@@ -732,8 +738,8 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					}
 					else {
 						if (e.which === this.keyCode.BACKSPACE || e.which === this.keyCode.DELETE) {
-							elBySelAll('woltlab-quote', this.core.editor()[0], function(quote) {
-								firefoxKnownQuotes.push(quote);	
+							elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
+								firefoxKnownCustomElements.push(element);	
 							});
 						}
 					}
@@ -742,8 +748,8 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				// remove style tag
 				setTimeout($.proxy(function()
 				{
-					if (firefoxKnownQuotes.length > 0) {
-						firefoxDetectStrayQuotes();
+					if (firefoxKnownCustomElements.length > 0) {
+						firefoxDetectSplitCustomElements();
 					}
 					
 					this.code.syncFire = false;
