@@ -454,6 +454,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				return (elBySel('img', element) === null && element.textContent.replace(/\u200B/g, '').trim() === '');
 			};
 			
+			// Firefox misbehaves when backspacing/deleting inside custom elements,
+			// causing the element to  be split into (at least) two separate blocks.
+			// The code below aims to solve this by detect these fragmented elements
+			// and merge them again.
+			// 
+			// See https://bugzilla.mozilla.org/show_bug.cgi?id=1329639
 			var firefoxHandleBackspace = (function(e) {
 				var parent;
 				var block = this.selection.block();
@@ -674,20 +680,72 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
+			var firefoxKnownQuotes = [];
+			var firefoxDetectStrayQuotes = (function() {
+				elBySelAll('woltlab-quote', this.core.editor()[0], function(quote) {
+					if (quote.parentNode === null) {
+						// ignore quotes that have already been handled
+						return;
+					}
+					
+					if (firefoxKnownQuotes.indexOf(quote) === -1) {
+						// quote did not exist prior to the backspace/delete action
+						return;
+					}
+					
+					['nextElementSibling', 'previousElementSibling'].forEach(function(elementSibling) {
+						var next, sibling = quote[elementSibling];
+						while (sibling !== null && sibling.nodeName === 'WOLTLAB-QUOTE' && firefoxKnownQuotes.indexOf(sibling) === -1) {
+							// move all child nodes into the "real" quote
+							if (elementSibling === 'previousElementSibling') {
+								for (var i = sibling.childNodes.length - 1; i >= 0; i--) {
+									quote.insertBefore(sibling.childNodes[i], quote.firstChild);
+								}
+							}
+							else {
+								while (sibling.childNodes.length > 0) {
+									quote.appendChild(sibling.childNodes[0]);
+								}
+							}
+							
+							// continue with the next sibling
+							next = sibling[elementSibling];
+							elRemove(sibling);
+							sibling = next;
+						}
+					});
+				});
+				
+				firefoxKnownQuotes = [];
+			}).bind(this);
+			
 			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
 				//noinspection JSValidateTypes
-				if (this.detect.isFirefox() && this.selection.isCollapsed()) {
-					if (e.which === this.keyCode.BACKSPACE) {
-						firefoxHandleBackspace(e);
+				if (this.detect.isFirefox()) {
+					if (this.selection.isCollapsed()) {
+						if (e.which === this.keyCode.BACKSPACE) {
+							firefoxHandleBackspace(e);
+						}
+						else if (e.which === this.keyCode.DELETE) {
+							firefoxHandleDelete(e);
+						}
 					}
-					else if (e.which === this.keyCode.DELETE) {
-						firefoxHandleDelete(e);
+					else {
+						if (e.which === this.keyCode.BACKSPACE || e.which === this.keyCode.DELETE) {
+							elBySelAll('woltlab-quote', this.core.editor()[0], function(quote) {
+								firefoxKnownQuotes.push(quote);	
+							});
+						}
 					}
 				}
 				
 				// remove style tag
 				setTimeout($.proxy(function()
 				{
+					if (firefoxKnownQuotes.length > 0) {
+						firefoxDetectStrayQuotes();
+					}
+					
 					this.code.syncFire = false;
 					this.keydown.removeEmptyLists();
 					
