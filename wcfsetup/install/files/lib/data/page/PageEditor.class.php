@@ -30,6 +30,20 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	protected static $baseClass = Page::class;
 	
 	/**
+	 * Creates or updates the page's template file.
+	 * 
+	 * @param       integer         $languageID     language id or `null`
+	 * @param       string          $content        template content
+	 */
+	public function updateTemplate($languageID, $content) {
+		if ($this->pageType !== 'tpl') {
+			throw new \RuntimeException("Only tpl-type pages support template files.");
+		}
+		
+		file_put_contents(WCF_DIR . 'templates/' . $this->getTplName(($languageID ?: null)) . '.tpl', $content);
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public static function resetCache() {

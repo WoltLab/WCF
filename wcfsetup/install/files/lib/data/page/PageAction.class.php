@@ -135,8 +135,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 		// save template
 		if ($page->pageType == 'tpl') {
 			if (!empty($this->parameters['content'])) {
+				$pageEditor = new PageEditor($page);
 				foreach ($this->parameters['content'] as $languageID => $content) {
-					file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+					$pageEditor->updateTemplate($languageID ?: null, $content['content']);
 				}
 			}
 		}
@@ -232,7 +233,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 				// save template
 				if ($page->pageType == 'tpl') {
 					foreach ($this->parameters['content'] as $languageID => $content) {
-						file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+						$page->updateTemplate($languageID ?: null, $content['content']);
 					}
 				}
 				

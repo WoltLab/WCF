@@ -336,7 +336,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					// generate template if page's type is 'tpl'
 					$page = new Page($pageID);
 					if ($page->pageType == 'tpl') {
-						file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+						(new PageEditor($page))->updateTemplate($languageID, $content['content']);
 					}
 				}
 			}
