@@ -149,6 +149,24 @@
 	}
 }
 
+.commentListAddCommentResponse {
+	&.loading {
+		height: 150px;
+		position: relative;
+		
+		> .commentListAddCommentResponseEditorContainer {
+			display: none;
+		}
+		
+		> .commentLoadingOverlay {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		}
+	}
+}
+
 .commentListAddCommentEditorContainer > .jsCommentAddRequiresApproval {
 	margin-top: 0;
 }
