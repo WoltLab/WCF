@@ -43,7 +43,10 @@
 			{/capture}
 				
 			{if $__sidebarRightContent|trim}
-				<aside class="sidebar boxesSidebarRight" data-show-sidebar="{lang}wcf.global.button.showSidebar{/lang}" data-hide-sidebar="{lang}wcf.global.button.hideSidebar{/lang}">
+				{if !$__sidebarRightShow|isset}{assign var='__sidebarRightShow' value='wcf.global.button.showSidebar'|language}{/if}
+				{if !$__sidebarRightHide|isset}{assign var='__sidebarRightHide' value='wcf.global.button.hideSidebar'|language}{/if}
+				
+				<aside class="sidebar boxesSidebarRight" data-show-sidebar="{$__sidebarRightShow}" data-hide-sidebar="{$__sidebarRightHide}">
 					<div class="boxContainer">
 						{if MODULE_WCF_AD && $__disableAds|empty && $__wcf->getAdHandler()->getAds('com.woltlab.wcf.sidebar.top')}
 							<div class="box boxBorderless">
