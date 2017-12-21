@@ -416,6 +416,7 @@ define(
 			
 			_dialogs.set(id, {
 				backdropCloseOnClick: options.backdropCloseOnClick,
+				closable: options.closable,
 				content: content,
 				dialog: dialog,
 				header: header,
@@ -455,7 +456,7 @@ define(
 			}
 			
 			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
-				if (elAttr(_container, 'aria-hidden') === 'true') {
+				if (data.closable && elAttr(_container, 'aria-hidden') === 'true') {
 					window.addEventListener('keyup', _keyupListener);
 				}
 				
@@ -714,7 +715,9 @@ define(
 				elAttr(_container, 'aria-hidden', 'true');
 				elData(_container, 'close-on-click', 'false');
 				
-				window.removeEventListener('keyup', _keyupListener);
+				if (data.closable) {
+					window.removeEventListener('keyup', _keyupListener);
+				}
 				document.documentElement.classList.remove('pageOverlayActive');
 			}
 			else {
