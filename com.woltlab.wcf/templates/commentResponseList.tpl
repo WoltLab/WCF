@@ -35,7 +35,7 @@
 						</h3>
 					</div>
 					
-					<div class="userMessage" itemprop="text">{@$response->getFormattedMessage()}</div>
+					<div class="htmlContent userMessage" itemprop="text">{@$response->getFormattedMessage()}</div>
 					
 					<nav class="jsMobileNavigation buttonGroupNavigation">
 						<ul class="buttonList iconList">

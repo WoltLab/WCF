@@ -42,7 +42,7 @@
 							</h3>
 						</div>
 						
-						<div class="userMessage" itemprop="text">{@$comment->getFormattedMessage()}</div>
+						<div class="htmlContent userMessage" itemprop="text">{@$comment->getFormattedMessage()}</div>
 						
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList">
