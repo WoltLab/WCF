@@ -436,10 +436,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		CommentHandler::enforceFloodControl();
 		
 		$this->readInteger('objectID', false, 'data');
-		$this->validateMessage();
+		$this->readBoolean('requireGuestDialog', true);
 		
-		$this->validateUsername();
-		$this->validateCaptcha();
+		if (!$this->parameters['requireGuestDialog']) {
+			$this->validateUsername();
+			$this->validateCaptcha();
+		}
+		
+		$this->validateMessage();
 		
 		// validate comment id
 		$this->validateCommentID();
@@ -464,7 +468,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * @return	array
 	 */
 	public function addResponse() {
-		if (!empty($this->validationErrors)) {
+		if ($this->parameters['requireGuestDialog'] || !empty($this->validationErrors)) {
 			if (!empty($this->parameters['data']['username'])) {
 				WCF::getSession()->register('username', $this->parameters['data']['username']);
 			}
