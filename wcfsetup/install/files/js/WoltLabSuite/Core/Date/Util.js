@@ -244,7 +244,7 @@ define(['Language'], function(Language) {
 			elData(time, 'time', formattedTime);
 			elData(time, 'offset', date.getTimezoneOffset() * 60); // PHP returns minutes, JavaScript returns seconds
 			
-			if (date.getTime() > new Date().getTime()) {
+			if (date.getTime() > Date.now()) {
 				elData(time, 'is-future-date', 'true');
 				
 				time.textContent = Language.get('wcf.date.dateTimeFormat').replace('%time%', formattedTime).replace('%date%', formattedDate);
