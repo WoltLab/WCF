@@ -35,7 +35,8 @@ function(
 			_insertMessage: function() {},
 			_ajaxSuccess: function() {},
 			_ajaxFailure: function() {},
-			_ajaxSetup: function() {}
+			_ajaxSetup: function() {},
+			_cancelGuestDialog: function() {}
 		};
 		return Fake;
 	}
@@ -318,6 +319,7 @@ function(
 				
 				var dialog = UiDialog.getDialog('jsDialogGuestComment');
 				elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
+				elBySel('button[data-type="cancel"]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._cancelGuestDialog.bind(this));
 				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
 			}
 			else {
@@ -358,6 +360,15 @@ function(
 				},
 				silent: true
 			};
+		},
+		
+		/**
+		 * Cancels the guest dialog and restores the comment editor.
+		 */
+		_cancelGuestDialog: function() {
+			UiDialog.close('jsDialogGuestComment');
+			
+			this._hideLoadingOverlay();
 		}
 	};
 	
