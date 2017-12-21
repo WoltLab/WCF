@@ -79,6 +79,7 @@ a.button {
 		background-color: $wcfButtonDisabledBackground !important;
 		color: $wcfButtonDisabledText !important;
 		cursor: not-allowed !important;
+		pointer-events: none;
 	}
 }
 
