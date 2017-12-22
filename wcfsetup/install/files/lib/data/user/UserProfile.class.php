@@ -270,6 +270,18 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 					else if (MODULE_GRAVATAR && $this->enableGravatar) {
 						$this->avatar = new Gravatar($this->userID, $this->email, ($this->gravatarFileExtension ?: 'png'));
 					}
+					else {
+						$parameters = ['avatar' => null];
+						EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
+						
+						if ($parameters['avatar'] !== null) {
+							if (!($parameters['avatar'] instanceof IUserAvatar)) {
+								throw new \RuntimeException("Object '".get_class($parameters['avatar'])."' does not implement '".IUserAvatar::class."'.");
+							}
+							
+							$this->avatar = $parameters['avatar'];
+						}
+					}
 				}
 			}
 			
