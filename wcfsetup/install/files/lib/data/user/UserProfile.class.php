@@ -19,6 +19,7 @@ use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -276,7 +277,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 						
 						if ($parameters['avatar'] !== null) {
 							if (!($parameters['avatar'] instanceof IUserAvatar)) {
-								throw new \RuntimeException("Object '".get_class($parameters['avatar'])."' does not implement '".IUserAvatar::class."'.");
+								throw new ImplementationException(get_class($parameters['avatar']), IUserAvatar::class);
 							}
 							
 							$this->avatar = $parameters['avatar'];
