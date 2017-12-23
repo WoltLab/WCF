@@ -86,7 +86,7 @@
 	</section>
 {/hascontent}
 
-{if $relatedArticles|count}
+{if $relatedArticles !== null && $relatedArticles|count}
 	{hascontent}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
