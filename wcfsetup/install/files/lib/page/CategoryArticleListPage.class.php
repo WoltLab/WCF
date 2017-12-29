@@ -33,14 +33,19 @@ class CategoryArticleListPage extends ArticleListPage {
 	/**
 	 * @inheritDoc
 	 */
+	public $controllerName = 'CategoryArticleList';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readParameters() {
-		parent::readParameters();
-		
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
 		$this->category = ArticleCategory::getCategory($this->categoryID);
 		if ($this->category === null) {
 			throw new IllegalLinkException();
 		}
+		$this->controllerParameters['object'] = $this->category;
+		parent::readParameters();
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('CategoryArticleList', [
 			'object' => $this->category
@@ -64,6 +69,8 @@ class CategoryArticleListPage extends ArticleListPage {
 	 */
 	protected function initObjectList() {
 		$this->objectList = new CategoryArticleList($this->categoryID, true);
+		
+		$this->applyFilters();
 	}
 	
 	/**
@@ -86,7 +93,8 @@ class CategoryArticleListPage extends ArticleListPage {
 		
 		WCF::getTPL()->assign([
 			'categoryID' => $this->categoryID,
-			'category' => $this->category
+			'category' => $this->category,
+			'controllerObject' => $this->category
 		]);
 	}
 }
