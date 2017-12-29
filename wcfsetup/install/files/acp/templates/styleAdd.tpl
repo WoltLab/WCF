@@ -357,7 +357,7 @@
 							<dd>
 								<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
 								<div id="uploadCoverPhoto">
-									<button class="jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</button>
+									<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
 								</div>
 								<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
 							</dd>
