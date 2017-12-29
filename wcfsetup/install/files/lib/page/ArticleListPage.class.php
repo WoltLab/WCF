@@ -1,7 +1,7 @@
 <?php
 namespace wcf\page;
-use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\AccessibleArticleList;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\label\LabelHandler;
