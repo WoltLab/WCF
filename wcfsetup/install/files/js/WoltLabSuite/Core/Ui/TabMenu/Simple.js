@@ -276,7 +276,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 				window.history.replaceState(
 					undefined,
 					undefined,
-					window.location.href.replace(/#[^#]+$/, '') + '#' + name
+					window.location.href.replace(/#+[^#]+$/, '') + '#' + name
 				);
 			}
 			
