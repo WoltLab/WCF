@@ -8,6 +8,7 @@ namespace wcf\system\version;
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Version
+ * @since	3.1
  * 
  * @property-read	integer		$versionID		unique id of the tracked version entry
  * @property-read	integer		$objectID		id of the edited object

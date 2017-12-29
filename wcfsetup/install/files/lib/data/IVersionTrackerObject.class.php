@@ -8,6 +8,7 @@ namespace wcf\data;
  * @copyright	2001-2017 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
+ * @since	3.1
  */
 interface IVersionTrackerObject extends IUserContent {
 	/**
