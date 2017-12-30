@@ -3,6 +3,105 @@ $.Redactor.prototype.WoltLabIndent = function() {
 	
 	return {
 		init: function () {
+			// Firefox's `execCommand('outdent')` is broken and yields invalid HTML
+			if (this.detect.isFirefox()) {
+				var marker1, marker2;
+				
+				var mpDecrease = this.indent.decrease;
+				this.indent.decrease = (function () {
+					if (!this.list.get()) {
+						return;
+					}
+					
+					var $current = $(this.selection.current()).closest('li', this.core.editor()[0]);
+					var $list = $current.closest('ul, ol', this.core.editor()[0]);
+					
+					// check if there is a parent list
+					if ($list.parent().closest('ul, ol', this.core.editor()[0]).length === 0) {
+						// `execCommand('outdent')` fails if the caret is inside the list's root and there
+						// is at least one more list inside (nesting). Firefox simply does nothing in this
+						// case, see https://bugzilla.mozilla.org/show_bug.cgi?id=485466
+						var current = $current[0];
+						if (elBySel('ul, ol', current) !== null) {
+							this.buffer.set();
+							this.selection.save();
+							
+							// first we need to check if we have any siblings that need to be moved into separate lists
+							var sibling = current.previousElementSibling;
+							
+							// move the current item and all following siblings into a new list
+							var newList, parent;
+							if (sibling !== null) {
+								newList = elCreate(current.parentNode.nodeName.toLowerCase());
+								while (sibling.nextSibling) {
+									newList.appendChild(sibling.nextSibling);
+								}
+								
+								parent = sibling.parentNode;
+								parent.parentNode.insertBefore(newList, parent.nextSibling);
+							}
+							
+							// move the following sibling into a new list
+							if (current.nextElementSibling !== null) {
+								newList = elCreate(current.parentNode.nodeName.toLowerCase());
+								while (current.nextSibling) {
+									newList.appendChild(current.nextSibling);
+								}
+								
+								parent = current.parentNode;
+								parent.parentNode.insertBefore(newList, parent.nextSibling);
+							}
+							
+							// unwrap the current list
+							parent = current.parentNode;
+							while (current.childNodes.length) {
+								parent.parentNode.insertBefore(current.childNodes[0], parent);
+							}
+							elRemove(parent);
+							
+							this.selection.restore();
+							return;
+						}
+					}
+					else {
+						elBySelAll('woltlab-list-marker', this.core.editor()[0], elRemove);
+						
+						this.selection.save();
+						
+						marker1 = elCreate('woltlab-list-marker');
+						$current[0].insertBefore(marker1, $current[0].firstChild);
+						
+						marker2 = elCreate('woltlab-list-marker');
+						$current[0].appendChild(marker2);
+						
+						this.selection.restore();
+					}
+					
+					mpDecrease.call(this);
+				}).bind(this);
+				
+				var mpRemoveEmpty = this.indent.removeEmpty;
+				this.indent.removeEmpty = (function () {
+					if (marker1 && marker1.parentNode) {
+						var sibling, li = elCreate('li');
+						while (sibling = marker1.nextSibling) {
+							if (sibling === marker2) break;
+							
+							li.appendChild(sibling);
+						}
+						
+						marker1.parentNode.insertBefore(li, marker1);
+						
+						elBySelAll('woltlab-list-marker', this.core.editor()[0], elRemove);
+						
+						marker1 = undefined;
+						marker2 = undefined;
+					}
+					
+					mpRemoveEmpty.call(this);
+				}).bind(this);
+			}
+			
 			this.indent.normalize = (function() {
 				this.core.editor().find('li').each($.proxy(function (i, s) {
 					var $el = $(s);
@@ -18,6 +117,11 @@ $.Redactor.prototype.WoltLabIndent = function() {
 					
 					var $parent = $el.parent();
 					if ($parent.length !== 0 && $parent[0].tagName === 'LI') {
+						// WoltLab modification: move not only the current li, but also all following siblings
+						while (s.nextSibling) {
+							s.appendChild(s.nextSibling);
+						}
+						
 						$parent.after($el);
 						return;
 					}
