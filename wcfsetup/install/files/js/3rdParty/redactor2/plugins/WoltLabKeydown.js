@@ -209,11 +209,17 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					if (this.keydown.block.tagName === 'LI') {
 						var current = this.selection.current();
 						var $parent = $(current).closest('li', this.$editor[0]);
-						// WoltLab modification: this was a call to $.parents() that did
-						// escape Redactor
-						var $list = $parent.parentsUntil(this.$editor[0], 'ul,ol').last();
+						var $list = $parent.parents('ul,ol', this.$editor[0]).last();
 						
 						if ($parent.length !== 0 && this.utils.isEmpty($parent.html()) && $list.next().length === 0 && this.utils.isEmpty($list.find("li").last().html())) {
+							// WoltLab modification: Check if there direct parent list is itself part of a list, in
+							// which case we should rather decrease the indentation by one level. 
+							var parentList = $parent[0].closest('ul,ol');
+							if ($list[0] !== parentList) {
+								this.indent.decrease();
+								return false;
+							}
+							
 							$list.find("li").last().remove();
 							
 							var node = $(this.opts.emptyHtml);
