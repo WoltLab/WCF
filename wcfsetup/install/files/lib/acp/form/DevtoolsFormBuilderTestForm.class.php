@@ -9,6 +9,7 @@ use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\FormDocument;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\request\LinkHandler;
@@ -78,7 +79,6 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 					BooleanFormField::create('isDisabled')
 						->label('Foo is Disabled')
 						->description('If Foo is disabled, it is indeed disabled.')
-						->autoFocus()
 						->addValidator(new FormFieldValidator('notSelected', function(BooleanFormField $field) {
 							if (!$field->getValue()) {
 								$field->addValidationError(new FormFieldValidationError(
@@ -95,10 +95,12 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						->appendChild(
 							FormContainer::create('fooGeneral')
 								->appendChildren([
-									BooleanFormField::create('someSetting')
-										->label('Immuatable Field')
-										->immutable()
-										->value(true)
+									IntegerFormField::create('counter')
+										->label('Some Counter')
+										->minimum(10)
+										->maximum(100)
+										->value(20)
+										->suffix('wcf.acp.option.suffix.days')
 								])
 						),
 					TabFormContainer::create('tab2')
