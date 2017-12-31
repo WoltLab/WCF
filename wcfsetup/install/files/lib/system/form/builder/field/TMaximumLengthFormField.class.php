@@ -20,7 +20,7 @@ trait TMaximumLengthFormField {
 	/**
 	 * Returns the maximum length of the values of this field or `null` if no placeholder
 	 * has been set.
-	 *
+	 * 
 	 * @return	null|int
 	 */
 	public function getMaximumLength() {
@@ -30,10 +30,10 @@ trait TMaximumLengthFormField {
 	/**
 	 * Sets the maximum length of the values of this field. If `null` is passed, the
 	 * maximum length is removed.
-	 *
+	 * 
 	 * @param	null|int	$maximumLength	maximum field value length
 	 * @return	static				this field
-	 *
+	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
 	public function maximumLength($maximumLength = null) {
@@ -43,7 +43,14 @@ trait TMaximumLengthFormField {
 			}
 			
 			if ($maximumLength <= 0) {
-				throw new \InvalidArgumentException("Maximum length must be positive, '" . $maximumLength . "' given.");
+				throw new \InvalidArgumentException("Maximum length must be positive, '{$maximumLength}' given.");
+			}
+			
+			if ($this instanceof IMinimumLengthFormField) {
+				$minimumLength = $this->getMinimumLength();
+				if ($minimumLength !== null && $minimumLength > $maximumLength) {
+					throw new \InvalidArgumentException("Minimum length ({$minimumLength}) cannot be greater than maximum length ({$maximumLength}).");
+				}
 			}
 		}
 		

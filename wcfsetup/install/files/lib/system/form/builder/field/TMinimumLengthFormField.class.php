@@ -43,7 +43,14 @@ trait TMinimumLengthFormField {
 			}
 			
 			if ($minimumLength < 0) {
-				throw new \InvalidArgumentException("Minimum length must be non-negative, '" . $minimumLength . "' given.");
+				throw new \InvalidArgumentException("Minimum length must be non-negative, '{$minimumLength}' given.");
+			}
+			
+			if ($this instanceof IMaximumLengthFormField) {
+				$maximumLength = $this->getMaximumLength();
+				if ($maximumLength !== null && $minimumLength > $maximumLength) {
+					throw new \InvalidArgumentException("Minimum length ({$minimumLength}) cannot be greater than maximum length ({$maximumLength}).");
+				}
 			}
 		}
 		
