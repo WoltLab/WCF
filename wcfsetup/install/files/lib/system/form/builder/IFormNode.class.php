@@ -10,7 +10,7 @@ namespace wcf\system\form\builder;
  * @package	WoltLabSuite\Core\System\Form\Builder
  * @since	3.2
  */
-interface IFormNode extends \RecursiveIterator {
+interface IFormNode {
 	/**
 	 * Adds the given CSS class to this node and returns this node.
 	 * 

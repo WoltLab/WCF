@@ -10,7 +10,7 @@ namespace wcf\system\form\builder;
  * @package	WoltLabSuite\Core\System\Form\Builder
  * @since	3.2
  */
-interface IFormParentNode extends \Countable, IFormNode {
+interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	/**
 	 * Appends the given node to this node and returns this node.
 	 * 
