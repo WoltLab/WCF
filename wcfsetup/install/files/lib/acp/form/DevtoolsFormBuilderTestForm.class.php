@@ -6,6 +6,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\FormDocument;
@@ -104,6 +105,16 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						->label('Tab 2')
 				])
 		]);
+		
+		$this->form->getDataHandler()->add(new CustomFormFieldDataProcessor('isDisabledToString', function(IFormDocument $document, array $parameters) {
+			unset($parameters['data']['isDisabled']);
+			
+			/** @var null|BooleanFormField $node */
+			$node = $document->getNodeById('isDisabled');
+			$parameters['isDisabled'] = $node->getValue() ? 'true' : 'false';
+			
+			return $parameters;
+		}));
 	}
 	
 	/**
