@@ -12,8 +12,8 @@ namespace wcf\system\form\builder\field;
  */
 interface IMinimumLengthFormField {
 	/**
-	 * Returns the minimum length of the values of this field or `null` if no placeholder
-	 * has been set.
+	 * Returns the minimum length of the values of this field or `null` if no minimum
+	 * length has been set.
 	 * 
 	 * @return	null|int
 	 */

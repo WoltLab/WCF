@@ -12,8 +12,8 @@ namespace wcf\system\form\builder\field;
  */
 interface IMaximumLengthFormField {
 	/**
-	 * Returns the maximum length of the values of this field or `null` if no placeholder
-	 * has been set.
+	 * Returns the maximum length of the values of this field or `null` if no maximum
+	 * length has been set.
 	 * 
 	 * @return	null|int
 	 */
