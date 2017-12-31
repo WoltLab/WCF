@@ -43,7 +43,7 @@ class CustomFormFieldDataProcessor implements IFormFieldDataProcessor {
 		
 		$this->id = $id;
 		
-		// validate prcoessor function
+		// validate processor function
 		$parameters = (new \ReflectionFunction($processor))->getParameters();
 		if (count($parameters) !== 2) {
 			throw new \InvalidArgumentException(
