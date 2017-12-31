@@ -109,10 +109,18 @@ trait TFormParentNode {
 	/**
 	 * Returns an iterator for the current child node.
 	 * 
-	 * @return	IFormChildNode		iterator for the current child node
+	 * @return	null|IFormParentNode		iterator for the current child node
 	 */
 	public function getChildren() {
-		return $this->__children[$this->index];
+		$node = $this->__children[$this->index];
+		if ($node instanceof IFormParentNode) {
+			return $node;
+		}
+		
+		// signal leafs to \RecursiveIteratorIterator so that leaves do no have to
+		// implement \RecursiveIterator; exception will be ignored because of the
+		// constructor flag `\RecursiveIteratorIterator::CATCH_GET_CHILD`
+		throw new \BadMethodCallException();
 	}
 	
 	/**
@@ -121,7 +129,7 @@ trait TFormParentNode {
 	 * @return	\RecursiveIteratorIterator	recursive iterator for this node
 	 */
 	public function getIterator() {
-		return new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST);
+		return new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST, \RecursiveIteratorIterator::CATCH_GET_CHILD);
 	}
 	
 	/**
