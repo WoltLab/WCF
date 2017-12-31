@@ -178,10 +178,6 @@ trait TFormParentNode {
 	 * @return	bool
 	 */
 	public function hasValidationErrors() {
-		if ($this instanceof IFormField && !empty($this->getValidationErrors())) {
-			return true;
-		}
-		
 		foreach ($this->children() as $child) {
 			if ($child instanceof IFormField) {
 				if (!empty($child->getValidationErrors())) {
