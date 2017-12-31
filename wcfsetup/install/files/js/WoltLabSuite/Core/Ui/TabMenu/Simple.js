@@ -273,7 +273,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					});
 				}
 				
-				var location = window.location.href.replace(/#[^#]+$/, '');
+				var location = window.location.href.replace(/#+[^#]*$/, '');
 				if (TabMenuSimple.getIdentifierFromHash() === name) {
 					location += window.location.hash;
 				}
@@ -389,7 +389,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 	};
 	
 	TabMenuSimple.getIdentifierFromHash = function () {
-		if (window.location.hash.match(/^#([^\/]+)+(?:\/.+)?/)) {
+		if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
 			return RegExp.$1;
 		}
 		

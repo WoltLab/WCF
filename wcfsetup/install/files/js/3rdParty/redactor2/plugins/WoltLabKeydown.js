@@ -640,11 +640,24 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 								if (sibling.nodeName === 'P') {
 									sibling.appendChild(this.marker.get());
 									
+									var node;
 									while (block.childNodes.length) {
-										sibling.appendChild(block.childNodes[0]);
+										node = block.childNodes[0];
+										
+										// avoid moving contents that follows a `<br>`
+										if (node.nodeName === 'BR') {
+											elRemove(node);
+											break;
+										}
+										
+										sibling.appendChild(node);
 									}
 									
-									elRemove(block);
+									// blocks may be non-empty if they contained a `<br>` somehwere after the original caret position
+									if (block.childNodes.length === 0) {
+										elRemove(block);
+									}
+									
 									this.selection.restore();
 								}
 								else {

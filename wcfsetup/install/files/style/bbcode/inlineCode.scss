@@ -27,6 +27,13 @@ kbd {
 	word-wrap: break-word;
 }
 
+@supports (-webkit-overflow-scrolling: touch) {
+	.inlineCode,
+	kbd {
+		-webkit-box-decoration-break: initial;
+	}
+}
+
 /* This pseudo element will cause a trailing caret to be displayed inside the element, right after
    the last character in the `<kbd>`. Without it, browsers may render the caret either on top or
    slightly after the right border. */
