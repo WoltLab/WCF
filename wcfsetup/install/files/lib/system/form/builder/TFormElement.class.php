@@ -57,7 +57,7 @@ trait TFormElement {
 	 * and returns this element. If `null` is passed, the element description
 	 * is removed.
 	 *
-	 * @param	null|string	$languageItem	language item containing the element description or `null` to unsed description
+	 * @param	null|string	$languageItem	language item containing the element description or `null` to unset description
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this element
 	 *
