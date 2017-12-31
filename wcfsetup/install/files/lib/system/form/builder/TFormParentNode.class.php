@@ -274,22 +274,15 @@ trait TFormParentNode {
 	}
 	
 	/**
-	 * Validates the node and returns `true` if no error occured. If any error occured,
-	 * `false` is returned.
+	 * Validates the node.
 	 * 
 	 * Note: A `IFormParentNode` object may only return `true` if all of its child
 	 * nodes are valid. A `IFormField` object is valid if its value is valid.
-	 *
-	 * @return	bool
 	 */
 	public function validate() {
 		foreach ($this->children() as $child) {
-			if (!$child->validate()) {
-				return false;
-			}
+			$child->validate();
 		}
-		
-		return true;
 	}
 	
 	/**
