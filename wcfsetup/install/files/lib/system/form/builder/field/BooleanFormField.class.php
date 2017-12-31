@@ -29,7 +29,7 @@ class BooleanFormField extends AbstractFormField {
 	 */
 	public function readValue() {
 		if (isset($_POST[$this->getPrefixedId()])) {
-			$this->__value = true;
+			$this->__value = $_POST[$this->getPrefixedId()] === '1';
 		}
 	}
 	
