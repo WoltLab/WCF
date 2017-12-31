@@ -24,7 +24,7 @@ interface IPlaceholderFormField {
 	 * and returns this element. If `null` is passed, the placeholder value is
 	 * removed.
 	 * 
-	 * @param	null|string	$languageItem	language item containing the placeholder or `null` to unset description
+	 * @param	null|string	$languageItem	language item containing the placeholder or `null` to unset placeholder
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this field
 	 * 
