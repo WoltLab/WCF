@@ -184,7 +184,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			};
 			
 			var element;
-			select.addEventListener('change', function() {
+			var callbackChange = function() {
 				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
 				elHide(element);
 				
@@ -194,7 +194,8 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				
 				// set region marker
 				_updateRegionMarker();
-			});
+			};
+			select.addEventListener('change', callbackChange);
 			
 			// apply CSS rules
 			var style = elCreate('style');
@@ -282,10 +283,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 					
 					select.value = elData(region, 'region');
 					
-					// Firefox does not trigger this event while the click handler is still active
-					window.setTimeout(function() {
-						Core.triggerEvent(select, 'change');
-					}, 10);
+					// Programmatically trigger the change event handler, rather than dispatching an event,
+					// because Firefox fails to execute the event if it has previously been disabled.
+					// See https://bugzilla.mozilla.org/show_bug.cgi?id=1426856
+					callbackChange();
 				});
 			});
 			
