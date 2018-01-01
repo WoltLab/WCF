@@ -14,6 +14,12 @@
 
 {if $data|isset}
 	<div class="section">
+		<h2 class="sectionTitle">Post Data</h2>
+		
+		<pre>{$tpl[post]|var_dump}</pre>
+	</div>
+	
+	<div class="section">
 		<h2 class="sectionTitle">Form Data</h2>
 		
 		<pre>{$data|var_dump}</pre>
