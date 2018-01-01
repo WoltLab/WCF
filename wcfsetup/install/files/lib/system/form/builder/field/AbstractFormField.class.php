@@ -109,7 +109,7 @@ abstract class AbstractFormField implements IFormField {
 		return WCF::getTPL()->fetch(
 			$this->templateName,
 			'wcf',
-			['field' => $this],
+			array_merge($this->getHtmlVariables(), ['field' => $this]),
 			true
 		);
 	}

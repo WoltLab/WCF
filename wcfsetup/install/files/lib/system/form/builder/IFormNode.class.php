@@ -68,11 +68,19 @@ interface IFormNode {
 	public function getDocument();
 	
 	/**
-	 * Returns the HTML representation of this node.
+	 * Returns the html representation of this node.
 	 *
-	 * @return	string		HTML representation of node
+	 * @return	string		html representation of node
 	 */
 	public function getHtml();
+	
+	/**
+	 * Returns additional template variables used to generate the html representation
+	 * of this node.
+	 * 
+	 * @return	array		additional template variables
+	 */
+	public function getHtmlVariables();
 	
 	/**
 	 * Returns the id of the form node.

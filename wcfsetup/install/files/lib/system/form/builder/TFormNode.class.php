@@ -120,6 +120,16 @@ trait TFormNode {
 	abstract public function getDocument();
 	
 	/**
+	 * Returns additional template variables used to generate the html representation
+	 * of this node.
+	 *
+	 * @return	array		additional template variables
+	 */
+	public function getHtmlVariables() {
+		return [];
+	}
+	
+	/**
 	 * Returns the id of the form node.
 	 *
 	 * @return	string		node id

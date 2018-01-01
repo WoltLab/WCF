@@ -124,9 +124,9 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return WCF::getTPL()->fetch('__form', 'wcf', [
+		return WCF::getTPL()->fetch('__form', 'wcf', array_merge($this->getHtmlVariables(), [
 			'form' => $this
-		]);
+		]));
 	}
 	
 	/**
