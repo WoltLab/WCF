@@ -207,7 +207,9 @@ trait TFormParentNode {
 		$didInsertNode = false;
 		foreach ($this->children() as $index => $existingChild) {
 			if ($existingChild->getId() === $referenceNodeId) {
-				array_splice($this->__children, $index, 0, $child);
+				array_splice($this->__children, $index, 0, [$child]);
+				
+				$child->parent($this);
 				
 				$didInsertNode = true;
 				break;
