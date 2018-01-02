@@ -1371,6 +1371,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>
 		<item name="wcf.acp.page.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.page.application.error.missing"><![CDATA[Keine App festgelegt, Seite kann nicht angezeigt werden.]]></item>
 		<item name="wcf.acp.page.boxes"><![CDATA[Ausgewählte Boxen auf dieser Seite anzeigen]]></item>
 		<item name="wcf.acp.page.button.viewPage"><![CDATA[Vorschau anzeigen]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Inhalt]]></item>

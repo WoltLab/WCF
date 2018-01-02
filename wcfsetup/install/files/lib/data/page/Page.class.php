@@ -157,9 +157,19 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 				'forceFrontend' => true
 			]);
 		}
-		else {
-			return LinkHandler::getInstance()->getCmsLink($this->pageID);
+		else if ($this->applicationPackageID === null) {
+			// we cannot reliably generate a link for an orphaned page
+			return '';
 		}
+		
+		try {
+			LinkHandler::getInstance()->getCmsLink($this->pageID);
+		}
+		catch (\Error $e) {
+			wcfDebug($this, $this->applicationPackageID);
+		}
+		
+		return LinkHandler::getInstance()->getCmsLink($this->pageID);
 	}
 	
 	/**

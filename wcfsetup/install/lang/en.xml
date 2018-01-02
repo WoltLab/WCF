@@ -2837,6 +2837,7 @@ Errors are:
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
 		<item name="wcf.acp.page.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.page.application.error.missing"><![CDATA[No app specified, page cannot be accessed.]]></item>
 		<item name="wcf.acp.page.boxes"><![CDATA[Display the Selected Boxes on This Page]]></item>
 		<item name="wcf.acp.page.button.viewPage"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>

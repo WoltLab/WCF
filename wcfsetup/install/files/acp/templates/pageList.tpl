@@ -138,7 +138,11 @@
 						<td class="columnID columnPageID">{@$page->pageID}</td>
 						<td class="columnTitle columnName">{if $page->isLandingPage}<span class="icon icon16 fa-home jsTooltip" title="{lang}wcf.acp.page.isLandingPage{/lang}"></span> {/if}<a href="{link controller='PageEdit' id=$page->pageID}{/link}">{$page->name}</a></td>
 						<td class="columnText columnURL">
-							{$page->getDisplayLink()}
+							{if $page->applicationPackageID === null}
+								<span class="icon icon16 fa-exclamation-triangle red"></span> <span>{lang}wcf.acp.page.application.error.missing{/lang}</span>
+							{else}
+								{$page->getDisplayLink()}
+							{/if}
 						</td>
 						<td class="columnText columnPageType">{lang}wcf.acp.page.type.{@$page->pageType}{/lang}</td>
 						<td class="columnDate columnLastUpdateTime">{@$page->lastUpdateTime|time}</td>
