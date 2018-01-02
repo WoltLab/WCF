@@ -166,13 +166,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 			return '';
 		}
 		
-		try {
-			LinkHandler::getInstance()->getCmsLink($this->pageID);
-		}
-		catch (\Error $e) {
-			wcfDebug($this, $this->applicationPackageID);
-		}
-		
 		return LinkHandler::getInstance()->getCmsLink($this->pageID);
 	}
 	

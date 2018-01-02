@@ -97,7 +97,9 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
 
         // PHP 5.3 and later support this functionality natively
         if (function_exists('idn_to_ascii')) {
-            $string = idn_to_ascii($string);
+        	// WoltLab modification: backport of a change in a to-be-released version for PHP 7.2 compatibility
+	        // see https://github.com/ezyang/htmlpurifier/commit/ce0ede24ded2e05489f5bab50cc53426599532e4
+	        $string = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
 
         // If we have Net_IDNA2 support, we can support IRIs by
         // punycoding them. (This is the most portable thing to do,
