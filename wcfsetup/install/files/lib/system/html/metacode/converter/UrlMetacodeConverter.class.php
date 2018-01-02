@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\metacode\converter;
+use wcf\util\StringUtil;
 
 /**
  * Converts url bbcode into `<a>`.
@@ -20,6 +21,26 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter {
 		$href = (!empty($attributes[0])) ? $attributes[0] : '';
 		if (empty($href)) {
 			$href = $fragment->textContent;
+		}
+		
+		// check if the link is empty, use the href value instead
+		$useHrefAsValue = false;
+		if ($fragment->childNodes->length === 0) {
+			$useHrefAsValue = true;
+		}
+		else if ($fragment->childNodes->length === 1) {
+			$node = $fragment->childNodes->item(0);
+			if ($node->nodeType === XML_TEXT_NODE && StringUtil::trim($node->textContent) === '') {
+				$useHrefAsValue = true;
+			}
+		}
+		
+		if ($useHrefAsValue) {
+			if ($fragment->childNodes->length === 1) {
+				$fragment->removeChild($fragment->childNodes->item(0));
+			}
+			
+			$fragment->appendChild($fragment->ownerDocument->createTextNode($href));
 		}
 		
 		$element->setAttribute('href', $href);
