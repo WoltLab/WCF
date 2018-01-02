@@ -610,7 +610,7 @@
 		<item name="wcf.acp.group.button.choose"><![CDATA[Benutzergruppe wählen]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Kann Avatar sperren]]></item>
-		<item name="wcf.acp.group.option.admin.user.canDisableCoverPhoto"><![CDATA[Kann Profilbild sperren]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableCoverPhoto"><![CDATA[Kann Titelbild sperren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Kann Signatur sperren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Kann automatische Gruppenzuordnungen verwalten]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Automatische Benutzergruppen-Zuordnung hinzufügen]]></item>
@@ -678,9 +678,9 @@
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Kann Trophäen sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximale Anzahl an besonderen Trophäen]]></item> <!-- @TODO: find a better name? -->
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Besondere Trophäen können vom Benutzer individuell ausgewählt werden und werden in der Message-Sidebar und im Benutzerprofil angezeigt.]]></item>
-		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Profilbilder]]></item>
-		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Kann Profilbilder sehen]]></item>
-		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Kann eigenes Profilbild hochladen]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Titelbilder]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Kann Titelbilder sehen]]></item>
+		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Kann eigenes Titelbild hochladen]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 	</category>
 	
@@ -1436,8 +1436,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop-Benachrichtigungen werden nur für die ausgewählte App aktiviert, einschließlich aller anderen Apps die auf der identischen Domain laufen.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Seitenlogo verlinkt auf die Startseite der aktiven App]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Deaktiviere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} diese Option, damit das Logo stets auf die globale Startseite verlinkt. Die Deaktivierung entspricht dem Verhalten in früheren Versionen.]]></item>
-		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Profilbilder aktivieren]]></item>
-		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Profilbildern.]]></item>
+		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
+		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -1938,8 +1938,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich duplizieren?]]></item>
-		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Profilbild]]></item>
-		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Standard-Profilbild dieses Stils wirklich löschen? Nach dem Löschen wird das allgemeine, Stil-unabhängige Standard-Profilbild verwendet.]]></item>
+		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Titelbild in Benutzerprofilen]]></item>
+		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Standard-Titelbild dieses Stils wirklich löschen? Nach dem Löschen wird das allgemeine, Stil-unabhängige Standard-Titelbild verwendet.]]></item>
 		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG und PNG zulässig.]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
@@ -1952,7 +1952,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, welche Bestandteile des Stils „{$style->styleName}“ mit exportiert werden sollen.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
-		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Profilbild]]></item>
+		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Titelbild in Benutzerprofilen]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Globale Einstellungen]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Breite]]></item>
@@ -2213,10 +2213,10 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.disableAvatar.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableAvatar.expires.description"><![CDATA[Der Avatar des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableAvatar.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.acp.user.disableCoverPhoto"><![CDATA[Profilbild sperren]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto"><![CDATA[Titelbild sperren]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.reason"><![CDATA[Begründung]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
-		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[Das Profilbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
+		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[Das Titelbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[Die Signatur des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
@@ -3945,13 +3945,13 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 	</category>
 	
 	<category name="wcf.user.coverPhoto">
-		<item name="wcf.user.coverPhoto"><![CDATA[Profilbild]]></item>
-		<item name="wcf.user.coverPhoto.delete"><![CDATA[Profilbild löschen]]></item>
-		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dein{else}Wollen Sie Ihr{/if} Profilbild wirklich löschen? Nach dem Löschen wird wieder das Standard-Bild angezeigt.]]></item>
-		<item name="wcf.user.coverPhoto.edit"><![CDATA[Profilbild bearbeiten]]></item>
-		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoHash} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Profilbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Profilbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
-		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Profilbild hochgeladen.]]></item>
-		<item name="wcf.user.coverPhoto.upload"><![CDATA[Profilbild hochladen]]></item>
+		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>
+		<item name="wcf.user.coverPhoto.delete"><![CDATA[Titelbild löschen]]></item>
+		<item name="wcf.user.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dein{else}Wollen Sie Ihr{/if} Titelbild wirklich löschen? Nach dem Löschen wird wieder das Standard-Bild angezeigt.]]></item>
+		<item name="wcf.user.coverPhoto.edit"><![CDATA[Titelbild bearbeiten]]></item>
+		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoHash} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Titelbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Titelbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
+		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Titelbild hochgeladen.]]></item>
+		<item name="wcf.user.coverPhoto.upload"><![CDATA[Titelbild hochladen]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
