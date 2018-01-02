@@ -116,9 +116,13 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			// use the value for English
 			$name = $data['elements']['name']['en'];
 		}
-		else {
+		else if (isset($data['elements']['name'][''])) {
 			// fallback to the display name without/empty language attribute
 			$name = $data['elements']['name'][''];
+		}
+		else {
+			// use whichever value is present, regardless of the language
+			$name = reset($data['elements']['name']);
 		}
 		
 		$parentPageID = null;
