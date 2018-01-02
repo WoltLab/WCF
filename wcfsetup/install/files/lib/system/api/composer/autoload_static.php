@@ -31,6 +31,17 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
             array (
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
             ),
+            'PEAR' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/pear_exception',
+            ),
+        ),
+        'N' => 
+        array (
+            'Net' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/net_idna2',
+            ),
         ),
         'H' => 
         array (
