@@ -511,7 +511,10 @@ final class FileUtil {
 			self::$finfo = new \finfo(FILEINFO_MIME_TYPE);
 		}
 		
-		return self::$finfo->file($filename) ?: 'application/octet-stream';
+		// \finfo->file() can fail for files that contain only 1 byte, because libmagic expects at least
+		// a few bytes in order to determine the type. See https://bugs.php.net/bug.php?id=64684
+		$mimeType = @self::$finfo->file($filename);
+		return $mimeType ?: 'application/octet-stream';
 	}
 	
 	/**
