@@ -13,13 +13,24 @@ use wcf\system\background\BackgroundQueueHandler;
  */
 class BackgroundQueuePerformAction extends AbstractAction {
 	/**
+	 * number of jobs that will be processed per invocation
+	 * @var integer
+	 */
+	public static $jobsPerRun = 5;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function execute() {
 		parent::execute();
 		
 		header('Content-type: application/json');
-		BackgroundQueueHandler::getInstance()->performNextJob();
+		for ($i = 0; $i < self::$jobsPerRun; $i++) {
+			if (BackgroundQueueHandler::getInstance()->performNextJob() === false) {
+				// there were no more jobs
+				break;
+			}
+		}
 		echo BackgroundQueueHandler::getInstance()->getRunnableCount();
 		exit;
 	}
