@@ -847,6 +847,7 @@
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
 			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
@@ -1014,6 +1015,7 @@
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
 			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
