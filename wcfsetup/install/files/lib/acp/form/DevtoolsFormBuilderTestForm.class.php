@@ -6,6 +6,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -76,6 +77,11 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 				->description('wcf.global.description')
 				->addClass('someSection')
 				->appendChildren([
+					TextFormField::create('title')
+						->label('wcf.global.title')
+						->i18n()
+						->i18nRequired()
+						->required(),
 					BooleanFormField::create('isDisabled')
 						->label('Foo is Disabled')
 						->description('If Foo is disabled, it is indeed disabled.')
