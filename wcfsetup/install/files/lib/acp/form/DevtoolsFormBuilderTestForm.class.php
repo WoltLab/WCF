@@ -138,6 +138,8 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 		
 		$this->data = $this->form->getData();
 		
+		$this->buildForm();
+		
 		WCF::getTPL()->assign('success', true);
 	}
 	
