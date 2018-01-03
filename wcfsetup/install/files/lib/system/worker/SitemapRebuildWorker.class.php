@@ -122,6 +122,11 @@ class SitemapRebuildWorker extends AbstractWorker {
 				$this->storeWorkerData();
 			}
 			
+			// write sitemap index file if we have no active sitemap objects to prevent an outdated index file
+			if (empty($this->sitemapObjects) && $this->loopCount == 0) {
+				$this->writeIndexFile();
+			}
+			
 			// check whether we should rebuild it
 			if (!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild'] && !$this->workerData['finished']) {
 				$this->checkCache();
