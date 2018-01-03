@@ -66,6 +66,12 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 							callbackSwitch: this._showPage.bind(this)
 						});
 					}
+					
+					// scroll to the list start
+					var container = dialog.content.parentNode;
+					if (container.scrollTop > 0) {
+						container.scrollTop = 0;
+					}
 				}
 			}
 			else {

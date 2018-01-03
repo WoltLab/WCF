@@ -150,6 +150,8 @@ class BackgroundQueueHandler extends SingletonFactory {
 	/**
 	 * Performs the (single) job that is due next.
 	 * This method automatically handles requeuing in case of failure.
+	 * 
+	 * @return      boolean         true if this call attempted to execute a job regardless of its result
 	 */
 	public function performNextJob() {
 		WCF::getDB()->beginTransaction();
@@ -169,7 +171,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$row = $statement->fetchSingleRow();
 			if (!$row) {
 				// nothing to do here
-				return;
+				return false;
 			}
 			
 			// lock job
@@ -189,7 +191,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 				// somebody stole the job
 				// this cannot happen unless MySQL violates it's contract to lock the row
 				// -> silently ignore, there will be plenty of other opportunities to perform a job
-				return;
+				return true;
 			}
 			WCF::getDB()->commitTransaction();
 			$committed = true;
@@ -221,6 +223,8 @@ class BackgroundQueueHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$row['jobID']]);
 		}
+		
+		return true;
 	}
 	
 	/**

@@ -7,5 +7,7 @@ $baseDir = $vendorDir;
 
 return array(
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
+    'PEAR' => array($vendorDir . '/pear/pear_exception'),
+    'Net' => array($vendorDir . '/pear/net_idna2'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
 );
