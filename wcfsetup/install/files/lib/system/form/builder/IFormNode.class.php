@@ -137,6 +137,18 @@ interface IFormNode {
 	public function id($id);
 	
 	/**
+	 * Is called once after all nodes have been added to the document this node belongs to.
+	 * 
+	 * This method enables this node to perform actions that require the whole document having
+	 * finished constructing itself and every parent-child relationship being established.
+	 * 
+	 * @return	static				this node
+	 * 
+	 * @throws	\BadMethodCallException		if this node has already been populated
+	 */
+	public function populate();
+	
+	/**
 	 * Removes the given CSS class and returns this node.
 	 * 
 	 * If this node does not have the given CSS class, this method silently
@@ -169,18 +181,18 @@ interface IFormNode {
 	
 	/**
 	 * Checks if the given attribute name class a string and a valid attribute name.
-	 *
+	 * 
 	 * @param	mixed		$name		checked argument name
-	 *
+	 * 
 	 * @throws	\InvalidArgumentException	if the given attribute name is no string or otherwise invalid
 	 */
 	public static function validateAttribute($name);
 	
 	/**
 	 * Checks if the given parameter class a string and a valid node class.
-	 *
+	 * 
 	 * @param	mixed		$class		checked class
-	 *
+	 * 
 	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
 	 */
 	public static function validateClass($class);

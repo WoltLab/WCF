@@ -108,6 +108,8 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 				])
 		]);
 		
+		$this->form->build();
+		
 		$this->form->getDataHandler()->add(new CustomFormFieldDataProcessor('isDisabledToString', function(IFormDocument $document, array $parameters) {
 			unset($parameters['data']['isDisabled']);
 			

@@ -30,6 +30,12 @@ trait TFormNode {
 	protected $__id;
 	
 	/**
+	 * is `true` if node has already been populated and is `false` otherwise 
+	 * @var	bool
+	 */
+	protected $isPopulated = false;
+	
+	/**
 	 * list of attribute names that may not be set using `attribute()`
 	 * @var	string[]
 	 */
@@ -208,6 +214,27 @@ trait TFormNode {
 		
 		return $this;
 	}
+	
+	/**
+	 * Is called once after all nodes have been added to the document this node belongs to.
+	 * 
+	 * This method enables this node to perform actions that require the whole document having
+	 * finished constructing itself and every parent-child relationship being established.
+	 * 
+	 * @return	static				this node
+	 * 
+	 * @throws	\BadMethodCallException		if this node has already been populated
+	 */
+	public function populate() {
+		if ($this->isPopulated) {
+			throw new \BadMethodCallException('Node has already been populated');
+		}
+		
+		$this->isPopulated = true;
+		
+		return $this;
+	}
+	
 	
 	/**
 	 * Removes the given CSS class and returns this node.

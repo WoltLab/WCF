@@ -51,6 +51,12 @@ class FormDocument implements IFormDocument {
 	protected $enctype = '';
 	
 	/**
+	 * is `true` if form document has already been built and is `false` otherwise
+	 * @var	bool
+	 */
+	protected $isBuilt = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function action($action) {
@@ -59,6 +65,24 @@ class FormDocument implements IFormDocument {
 		}
 		
 		$this->__action = $action;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function build() {
+		if ($this->isBuilt) {
+			throw new \BadMethodCallException("Form document has already been built.");
+		}
+		
+		/** @var IFormNode $node */
+		foreach ($this->getIterator() as $node) {
+			$node->populate();
+		}
+		
+		$this->isBuilt = true;
 		
 		return $this;
 	}

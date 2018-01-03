@@ -23,6 +23,19 @@ interface IFormDocument extends IFormParentNode {
 	public function action($action);
 	
 	/**
+	 * Is called once after all nodes have been added to this document.
+	 * 
+	 * This method is intended to trigger `TODO` to allow nodes to perform actions that
+	 * require the whole document having finished constructing itself and every parent-
+	 * -child relationship being established.
+	 * 
+	 * @return	static				this document
+	 * 
+	 * @throws	\BadMethodCallException		if this document has already been built
+	 */
+	public function build();
+	
+	/**
 	 * Returns the `action` property of the HTML `form` element.
 	 * 
 	 * @return	string				form action
