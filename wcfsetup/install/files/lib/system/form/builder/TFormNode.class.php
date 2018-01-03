@@ -194,10 +194,15 @@ trait TFormNode {
 	 * @param	string		$id	new id of node
 	 * @return	static			this node
 	 * 
+	 * @throws	\BadMethodCallException		if id has already been set
 	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
 	 */
 	public function id($id) {
 		static::validateId($id);
+		
+		if ($this->__id !== null) {
+			throw new \BadMethodCallException("Id has already been set.");
+		}
 		
 		$this->__id = $id;
 		

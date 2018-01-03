@@ -131,6 +131,7 @@ interface IFormNode {
 	 * @param	string		$id		new id of node
 	 * @return	static				this node
 	 * 
+	 * @throws	\BadMethodCallException		if id has already been set
 	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
 	 */
 	public function id($id);
