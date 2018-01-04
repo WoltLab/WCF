@@ -86,6 +86,32 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					}
 				}
 				
+				// Redactor's own work-around for backspacing in Firefox at the start of a block
+				// is flawed when the previous element is a list. Their current implementation
+				// inserts the content straight into the list element, rather than appending it
+				// to the last possible location inside a <li>.
+				if (e.which === this.keyCode.BACKSPACE && this.detect.isFirefox()) {
+					var block = this.selection.block();
+					if (block && block.tagName === 'P' && this.utils.isStartOfElement(block)) {
+						var previousBlock = block.previousElementSibling;
+						if (previousBlock && (previousBlock.nodeName === 'OL' || previousBlock.nodeName === 'UL')) {
+							this.buffer.set();
+							this.selection.save();
+							
+							var listItem = previousBlock.lastElementChild;
+							while (block.childNodes.length) {
+								listItem.appendChild(block.childNodes[0]);
+							}
+							
+							elRemove(block);
+							this.selection.restore();
+							
+							e.preventDefault();
+							return;
+						}
+					}
+				}
+				
 				var returnValue = mpInit.call(this, e);
 				
 				if (returnValue !== false && !e.originalEvent.defaultPrevented) {
