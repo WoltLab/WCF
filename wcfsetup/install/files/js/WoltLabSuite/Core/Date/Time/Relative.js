@@ -55,7 +55,11 @@ define(['Dom/ChangeListener', 'Language', 'WoltLabSuite/Core/Date/Util', 'WoltLa
 			
 			var date = new Date();
 			var timestamp = (date.getTime() - date.getMilliseconds()) / 1000;
-			if (_offset === null) _offset = timestamp - window.TIME_NOW;
+			// initialize server / client time offset in minute granularity
+			if (_offset === null) {
+				_offset = timestamp - window.TIME_NOW;
+				_offset = (_offset >= 0 ? Math.floor(_offset / 60) : Math.ceil(_offset / 60)) * 60;
+			}
 			
 			for (var i = 0, length = _elements.length; i < length; i++) {
 				var element = _elements[i];
