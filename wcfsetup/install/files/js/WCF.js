@@ -3682,8 +3682,10 @@ WCF.Date.Time = Class.extend({
 	_refresh: function() {
 		this._date = new Date();
 		this._timestamp = (this._date.getTime() - this._date.getMilliseconds()) / 1000;
+		// initialize server / client time offset in minute granularity
 		if (this._offset === null) {
 			this._offset = this._timestamp - TIME_NOW;
+			this._offset = (this._offset >= 0 ? Math.floor(this._offset / 60) : Math.ceil(this._offset / 60)) * 60;
 		}
 		
 		this._elements.each($.proxy(this._refreshElement, this));
