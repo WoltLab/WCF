@@ -44,12 +44,6 @@ class HtmlInputNodeTextParser {
 	protected $smileyCount = 0;
 	
 	/**
-	 * list of smilies by smiley code
-	 * @var Smiley[]
-	 */
-	protected $smilies = [];
-	
-	/**
 	 * @var string[]
 	 */
 	protected $sourceBBCodes = [];
@@ -59,6 +53,12 @@ class HtmlInputNodeTextParser {
 	 * @var	string
 	 */
 	protected static $illegalChars = '[^\x0-\x2C\x2E\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+';
+	
+	/**
+	 * list of smilies by smiley code
+	 * @var Smiley[]
+	 */
+	protected static $smilies;
 	
 	/**
 	 * regex for user mentions
@@ -91,34 +91,40 @@ class HtmlInputNodeTextParser {
 		if (MODULE_SMILEY) {
 			$this->smileyCount = $smileyCount;
 			
-			// get smilies
-			$smilies = SmileyCache::getInstance()->getSmilies();
-			$categories = SmileyCache::getInstance()->getCategories();
-			
-			foreach ($smilies as $categoryID => $categorySmilies) {
-				if (!array_key_exists($categoryID ?: null, $categories) || $categories[$categoryID ?: null]->isDisabled) continue;
+			if (self::$smilies === null) {
+				self::$smilies = [];
 				
-				/** @var Smiley $smiley */
-				foreach ($categorySmilies as $smiley) {
-					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = $smiley;
+				// get smilies
+				$smilies = SmileyCache::getInstance()->getSmilies();
+				$categories = SmileyCache::getInstance()->getCategories();
+				
+				foreach ($smilies as $categoryID => $categorySmilies) {
+					if (!array_key_exists($categoryID ?: null, $categories) || $categories[$categoryID ?: null]->isDisabled) continue;
+					
+					/** @var Smiley $smiley */
+					foreach ($categorySmilies as $smiley) {
+						foreach ($smiley->smileyCodes as $smileyCode) {
+							self::$smilies[$smileyCode] = $smiley;
+						}
 					}
 				}
+				
+				uksort(self::$smilies, function ($a, $b) {
+					$lengthA = mb_strlen($a);
+					$lengthB = mb_strlen($b);
+					
+					if ($lengthA < $lengthB) {
+						return 1;
+					}
+					else {
+						if ($lengthA === $lengthB) {
+							return 0;
+						}
+					}
+					
+					return -1;
+				});
 			}
-			
-			uksort($this->smilies, function($a, $b) {
-				$lengthA = mb_strlen($a);
-				$lengthB = mb_strlen($b);
-				
-				if ($lengthA < $lengthB) {
-					return 1;
-				}
-				else if ($lengthA === $lengthB) {
-					return 0;
-				}
-				
-				return -1;
-			});
 		}
 	}
 	
@@ -457,7 +463,7 @@ class HtmlInputNodeTextParser {
 				'difficult' => []
 			];
 			
-			foreach ($this->smilies as $smileyCode => $smiley) {
+			foreach (self::$smilies as $smileyCode => $smiley) {
 				$smileyCode = preg_quote($smileyCode, '~');
 				
 				if (preg_match('~^\\\:.+\\\:$~', $smileyCode)) {
@@ -544,7 +550,7 @@ class HtmlInputNodeTextParser {
 				}
 				
 				$this->smileyCount++;
-				$smiley = $this->smilies[$smileyCode];
+				$smiley = self::$smilies[$smileyCode];
 				$element = $text->ownerDocument->createElement('img');
 				$element->setAttribute('src', $smiley->getURL());
 				$element->setAttribute('class', 'smiley');
