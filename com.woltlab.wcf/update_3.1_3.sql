@@ -40,6 +40,20 @@ CREATE TABLE wcf1_devtools_project (
 
 ALTER TABLE wcf1_event_listener CHANGE eventClassName eventClassName VARCHAR(255) NOT NULL DEFAULT '';
 
+DROP TABLE IF EXISTS wcf1_package_compatibility;
+CREATE TABLE wcf1_package_compatibility (
+	packageID INT(10) NOT NULL,
+	version SMALLINT(4) NOT NULL,
+	UNIQUE KEY compatibleVersion (packageID, version)
+);
+
+DROP TABLE IF EXISTS wcf1_package_update_compatibility;
+CREATE TABLE wcf1_package_update_compatibility (
+	packageUpdateVersionID INT(10) NOT NULL,
+	version SMALLINT(4) NOT NULL,
+	UNIQUE KEY compatibleVersion (packageUpdateVersionID, version)
+);
+
 ALTER TABLE wcf1_package_update_server CHANGE COLUMN apiVersion apiVersion ENUM('2.0', '2.1', '3.1') NOT NULL DEFAULT '2.0';
 
 DROP TABLE IF EXISTS wcf1_page_box_order;
@@ -48,6 +62,15 @@ CREATE TABLE wcf1_page_box_order (
 	boxID INT(10) NOT NULL,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY pageToBox (pageID, boxID)
+);
+
+DROP TABLE IF EXISTS wcf1_registry;
+CREATE TABLE wcf1_registry (
+	packageID INT(10) NOT NULL,
+	field VARCHAR(191) NOT NULL,
+	fieldValue MEDIUMTEXT,
+	
+	UNIQUE KEY uniqueField (packageID, field)
 );
 
 DROP TABLE IF EXISTS wcf1_trophy;
@@ -87,13 +110,19 @@ CREATE TABLE wcf1_user_trophy(
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
 ALTER TABLE wcf1_bbcode_media_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_media ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
+ALTER TABLE wcf1_package_compatibility ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_package_update_compatibility ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
+ALTER TABLE wcf1_registry ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_trophy ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
+
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBackground', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBorder', 'rgba(236, 241, 247, 1)');
