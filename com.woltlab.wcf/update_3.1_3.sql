@@ -138,3 +138,6 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 
 -- default recipient: site administrator
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
+
+-- force-enable the visibility of all non-system pages (the page.xml is shortly after and sets the exact values)
+ALTER TABLE wcf1_page SET allowSpidersToIndex = 1 WHERE pageType <> 'system';
