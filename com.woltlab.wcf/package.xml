@@ -90,7 +90,7 @@
 		<!-- new pip -->
 		<instruction type="mediaProvider" />
 		
-		<instruction type="defaultStyle.tar" />
+		<instruction type="style">defaultStyle.tar</instruction>
 		
 		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
 	</instructions>
