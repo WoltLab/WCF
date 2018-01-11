@@ -497,7 +497,7 @@ class RegisterForm extends UserAddForm {
 		// notify admin
 		if (REGISTER_ADMIN_NOTIFICATION) {
 			// get default language
-			$language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
+			$language = LanguageFactory::getInstance()->getDefaultLanguage();
 			
 			$email = new Email();
 			$email->addRecipient(new Mailbox(MAIL_ADMIN_ADDRESS, null, $language));

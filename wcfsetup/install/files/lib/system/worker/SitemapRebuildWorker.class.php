@@ -7,6 +7,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
+use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
 use wcf\system\request\LinkHandler;
@@ -119,6 +120,11 @@ class SitemapRebuildWorker extends AbstractWorker {
 			if (!isset($this->sitemapObjects[$this->workerData['sitemap']])) {
 				$this->workerData['finished'] = true;
 				$this->storeWorkerData();
+			}
+			
+			// write sitemap index file if we have no active sitemap objects to prevent an outdated index file
+			if (empty($this->sitemapObjects) && $this->loopCount == 0) {
+				$this->writeIndexFile();
 			}
 			
 			// check whether we should rebuild it
@@ -247,6 +253,7 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * Writes the sitemap.xml index file and links all sitemaps.
 	 * 
 	 * @param       boolean         $closeFile      Close a previously opened handle.
+	 * @throws      SystemException
 	 */
 	protected function writeIndexFile($closeFile = true) {
 		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');

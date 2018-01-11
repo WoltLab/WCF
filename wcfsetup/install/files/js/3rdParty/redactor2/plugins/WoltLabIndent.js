@@ -103,6 +103,16 @@ $.Redactor.prototype.WoltLabIndent = function() {
 			}
 			
 			this.indent.normalize = (function() {
+				// `document.execCommand('outdent')` can spawn a `<br>` if there is whitespace in the DOM
+				// see https://bugzilla.mozilla.org/show_bug.cgi?id=1428073
+				if (this.detect.isFirefox()) {
+					var block = this.selection.block();
+					if (block && block.nodeName === 'P') {
+						var br = block.previousElementSibling;
+						if (br && br.nodeName === 'BR') elRemove(br);
+					}
+				}
+				
 				this.core.editor().find('li').each($.proxy(function (i, s) {
 					var $el = $(s);
 					

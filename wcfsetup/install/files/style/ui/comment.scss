@@ -92,6 +92,13 @@
 			display: none;
 		}
 	}
+	
+	/* mobile drop-down menus are sometimes cut off due to the overflow */
+	@include screen-md-down {
+		.commentContentContainer {
+			overflow: visible;
+		}
+	}
 }
 
 .commentListAddComment {
