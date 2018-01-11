@@ -6,6 +6,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -92,7 +93,32 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 									'You have to select Yes for this field!'
 								));
 							}
-						}))
+						})),
+					SingleSelectionFormField::create('year')
+						->label('Year')
+						->options(function() {
+							return [
+								'(no selection)',
+								2016 => 2016,
+								2017 => 2017,
+								2018 => 2018,
+								2019 => 2019
+							];
+						}),
+					SingleSelectionFormField::create('month')
+						->label('Month')
+						->options([
+							'Spring' => [
+								3 => 'March',
+								4 => 'April',
+								5 => 'May'
+							],
+							'Summer' => [
+								6 => 'June',
+								7 => 'July',
+								8 => 'August'
+							]
+						])
 				]),
 			TabMenuFormContainer::create('tabMenu')
 				->appendChildren([
