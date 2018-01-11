@@ -73,8 +73,8 @@
 		<instruction type="clipboardAction" />
 		<instruction type="cronjob" />
 		<instruction type="eventListener" />
-		<instruction type="objectType" />
 		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
 		<instruction type="option" />
 		<instruction type="userGroupOption" />
 		<instruction type="userNotificationEvent" />
