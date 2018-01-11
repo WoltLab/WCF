@@ -1,4 +1,5 @@
 <?php
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -37,3 +38,6 @@ while ($row = $statement->fetchArray()) {
 	]);
 }
 WCF::getDB()->commitTransaction();
+
+// the upgrade added a bunch of new style variables
+StyleCacheBuilder::getInstance()->reset(); 
