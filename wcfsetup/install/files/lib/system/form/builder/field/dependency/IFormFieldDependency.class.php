@@ -24,16 +24,20 @@ interface IFormFieldDependency {
 	/**
 	 * Sets the node whose availability depends on the value of a field.
 	 * 
-	 * @param	IFormNode	$node	depending node
-	 * @return	static			this dependency
+	 * @param	IFormNode	$node		dependent node
+	 * @return	static				this dependency
+	 * 
+	 * @throws	\BadMethodCallException		if no dependent node has been set
 	 */
 	public function dependentNode(IFormNode $node);
 	
 	/**
 	 * Sets the field the availability of the node dependents on.
 	 * 
-	 * @param	IFormField	$field		dependent field
+	 * @param	IFormField	$field		field
 	 * @return	static				this dependency
+	 * 
+	 * @throws	\BadMethodCallException		if no field has been set
 	 */
 	public function field(IFormField $field);
 	

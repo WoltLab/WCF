@@ -60,6 +60,10 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function getDependentNode() {
+		if ($this->__dependentNode === null) {
+			throw new \BadMethodCallException("Dependent node has not been set.");
+		}
+		
 		return $this->__dependentNode;
 	}
 	
@@ -67,6 +71,10 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function getField() {
+		if ($this->__field === null) {
+			throw new \BadMethodCallException("Field has not been set.");
+		}
+		
 		return $this->__field;
 	}
 	
