@@ -28,16 +28,21 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 	 * @inheritDoc
 	 */
 	public function validate() {
-		$this->i18nValidate();
-		
-		$value = $this->getValue();
-		if ($this->hasPlainValue()) {
-			$this->validateText($value);
+		if ($this->isI18n()) {
+			$this->i18nValidate();
+			
+			$value = $this->getValue();
+			if ($this->hasPlainValue()) {
+				$this->validateText($value);
+			}
+			else {
+				foreach ($value as $languageID => $languageValue) {
+					$this->validateText($languageValue, $languageID);
+				}
+			}
 		}
 		else {
-			foreach ($value as $languageID => $languageValue) {
-				$this->validateText($languageValue, $languageID);
-			}
+			$this->validateText($this->getValue());
 		}
 		
 		parent::validate();

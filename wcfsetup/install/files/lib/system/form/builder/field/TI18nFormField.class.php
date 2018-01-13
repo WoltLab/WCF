@@ -4,6 +4,7 @@ use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\I18nHandler;
+use wcf\util\StringUtil;
 
 /**
  * Provides default implementations of `II18nFormField` methods and other i18n-related methods.
@@ -36,12 +37,16 @@ trait TI18nFormField {
 	 * @return	array		additional template variables
 	 */
 	public function getHtmlVariables() {
-		I18nHandler::getInstance()->assignVariables();
+		if ($this->isI18n()) {
+			I18nHandler::getInstance()->assignVariables();
+			
+			return [
+				'elementIdentifier' => $this->getPrefixedId(),
+				'forceSelection' => $this->isI18nRequired()
+			];
+		}
 		
-		return [
-			'elementIdentifier' => $this->getPrefixedId(),
-			'forceSelection' => $this->isI18nRequired()
-		];
+		return [];
 	}
 	
 	/**
@@ -50,14 +55,18 @@ trait TI18nFormField {
 	 * @return	mixed
 	 */
 	public function getValue() {
-		if ($this->hasPlainValue()) {
-			return I18nHandler::getInstance()->getValue($this->getPrefixedId());
-		}
-		else if ($this->hasI18nValues()) {
-			return I18nHandler::getInstance()->getValues($this->getPrefixedId());
+		if ($this->isI18n()) {
+			if ($this->hasPlainValue()) {
+				return I18nHandler::getInstance()->getValue($this->getPrefixedId());
+			}
+			else if ($this->hasI18nValues()) {
+				return I18nHandler::getInstance()->getValues($this->getPrefixedId());
+			}
+			
+			return '';
 		}
 		
-		return '';
+		return $this->__value;
 	}
 	
 	/**
@@ -80,7 +89,6 @@ trait TI18nFormField {
 		return I18nHandler::getInstance()->isPlainValue($this->getPrefixedId());
 	}
 	
-	
 	/**
 	 * Returns `true` if this field provides a value that can simply be stored
 	 * in a column of the database object's database table and returns `false`
@@ -93,7 +101,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function hasSaveValue() {
-		return $this->hasPlainValue();
+		return !$this->isI18n() || $this->hasPlainValue();
 	}
 	
 	/**
@@ -131,6 +139,7 @@ trait TI18nFormField {
 		}
 		
 		$this->__i18nRequired = $i18nRequired;
+		$this->i18n();
 		
 		return $this;
 	}
@@ -169,17 +178,17 @@ trait TI18nFormField {
 		if ($this->isI18n()) {
 			I18nHandler::getInstance()->unregister($this->getPrefixedId());
 			I18nHandler::getInstance()->register($this->getPrefixedId());
-		}
-		
-		/** @var IFormDocument $document */
-		$document = $this->getDocument();
-		$document->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
-			if ($this->hasI18nValues()) {
-				$parameters[$this->getId() . '_i18n'] = $this->getValue();
-			}
 			
-			return $parameters;
-		}));
+			/** @var IFormDocument $document */
+			$document = $this->getDocument();
+			$document->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
+				if ($this->hasI18nValues()) {
+					$parameters[$this->getId() . '_i18n'] = $this->getValue();
+				}
+				
+				return $parameters;
+			}));
+		}
 		
 		return $this;
 	}
@@ -190,7 +199,12 @@ trait TI18nFormField {
 	 * @return	static		this field
 	 */
 	public function readValue() {
-		I18nHandler::getInstance()->readValues();
+		if ($this->isI18n()) {
+			I18nHandler::getInstance()->readValues();
+		}
+		else if (isset($_POST[$this->getPrefixedId()]) && is_string($_POST[$this->getPrefixedId()])) {
+			$this->__value = StringUtil::trim($_POST[$this->getPrefixedId()]);
+		}
 		
 		return $this;
 	}
@@ -207,6 +221,8 @@ trait TI18nFormField {
 		if (!is_string($value)) {
 			throw new \InvalidArgumentException("Given value is no string, " . gettype($value) . " given.");
 		}
+		
+		// TODO: check implementation for i18n fields
 		
 		return parent::value($value);
 	}
