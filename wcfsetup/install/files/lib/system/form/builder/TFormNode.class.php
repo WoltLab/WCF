@@ -19,6 +19,12 @@ trait TFormNode {
 	protected $__attributes = [];
 	
 	/**
+	 * `true` if this node is available and `false` otherwise
+	 * @var	bool
+	 */
+	protected $__available = true;
+	
+	/**
 	 * CSS classes of this node
 	 * @var	string[]
 	 */
@@ -104,6 +110,38 @@ trait TFormNode {
 		}
 		
 		$this->__attributes[$name] = $value;
+		
+		return $this;
+	}
+	
+	/**
+	 * Sets if this node is available and returns this node.
+	 *
+	 * By default, every node is available. This methods makes it easier to create forms
+	 * that contains node that are only avaiable if certain options have specific values
+	 * or the active user has specific permissions, for example. Furthermore, fields
+	 * themselves are also able to mark themselves as unavailable, for example, a selection
+	 * field without any options. A `IFormContainer` is automatically unavailable if it
+	 * contains no available children.
+	 *
+	 * Unavailable fields produce no output, their value is not read, they are not validated
+	 * and they are not checked for save values.
+	 * 
+	 * Note: Form field dependencies manage dynamic availability of form nodes based on
+	 * form field values while this method manages static availability that is independent
+	 * of form field values and only depends on external factors.
+	 * 
+	 * @param	bool		$available	determines if node is available
+	 * @return	static				this node
+	 *
+	 * @throws	\InvalidArgumentException	if the given value is no bool
+	 */
+	public function available($available = true) {
+		if (!is_bool($available)) {
+			throw new \InvalidArgumentException("Given value is no bool, " . gettype($available) . " given.");
+		}
+		
+		$this->__available = $available;
 		
 		return $this;
 	}
@@ -305,6 +343,30 @@ trait TFormNode {
 		$this->__id = $id;
 		
 		return $this;
+	}
+	
+	/**
+	 * Returns `true` if this node is available and returns `false` otherwise.
+	 *
+	 * If the node's own availability has not been explicitly set, it is assumed to be `true`.
+	 *
+	 * @return	bool
+	 *
+	 * @see		IFormNode::available()
+	 */
+	public function isAvailable() {
+		if ($this->__available && $this instanceof IFormParentNode) {
+			/** @var IFormChildNode $child */
+			foreach ($this as $child) {
+				if ($child->isAvailable()) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		return $this->__available;
 	}
 	
 	/**

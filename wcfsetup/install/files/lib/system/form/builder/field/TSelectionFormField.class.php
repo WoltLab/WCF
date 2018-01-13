@@ -37,6 +37,20 @@ trait TSelectionFormField {
 	}
 	
 	/**
+	 * Returns `true` if this node is available and returns `false` otherwise.
+	 * 
+	 * If the node's availability has not been explicitly set, `true` is returned.
+	 * 
+	 * @return	bool
+	 * 
+	 * @see		IFormNode::available()
+	 */
+	public function isAvailable() {
+		// selections without any possible values are not available
+		return !empty($this->possibleValues) && parent::isAvailable();
+	}
+	
+	/**
 	 * Sets the possible options of this selection and returns this field.
 	 * 
 	 * @param	array|callable		$options	selectable options or callable returning the options

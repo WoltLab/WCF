@@ -41,7 +41,7 @@ class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {
 					$this->getData($childNode, $data);
 				}
 			}
-			else if ($node instanceof IFormField && $node->hasSaveValue()) {
+			else if ($node instanceof IFormField && $node->isAvailable() && $node->hasSaveValue()) {
 				$data[$node->getId()] = $node->getSaveValue();
 			}
 		}

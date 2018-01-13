@@ -2,7 +2,10 @@
 	<nav class="menu">
 		<ul>
 			{foreach from=$container item='child'}
-				<li><a href="{@$__wcf->getAnchor($child->getPrefixedId())}">{@$container->getLabel()}</a></li>
+				{if $child->isAvailable()}
+					{assign var='__tabMenuFormContainerChildId' value=$child->getPrefixedId()|concat:'Container'}
+					<li{if !$child->checkDependencies()} style="display: none;"{/if}><a href="{@$__wcf->getAnchor($__tabMenuFormContainerChildId)}">{@$child->getLabel()}</a></li>
+				{/if}
 			{/foreach}
 		</ul>
 	</nav>

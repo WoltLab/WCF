@@ -166,7 +166,7 @@ class FormDocument implements IFormDocument {
 	public function loadValuesFromObject(IStorableObject $object) {
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
-			if ($node instanceof IFormField) {
+			if ($node instanceof IFormField && $node->isAvailable()) {
 				$node->loadValueFromObject($object);
 			}
 		}

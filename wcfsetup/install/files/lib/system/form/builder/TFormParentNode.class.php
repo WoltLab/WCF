@@ -246,12 +246,14 @@ trait TFormParentNode {
 	 * @return	static		this node
 	 */
 	public function readValues() {
-		foreach ($this->children() as $child) {
-			if ($child instanceof IFormParentNode) {
-				$child->readValues();
-			}
-			else if ($child instanceof IFormField && !$child->isImmutable()) {
-				$child->readValue();
+		if ($this->isAvailable()) {
+			foreach ($this->children() as $child) {
+				if ($child instanceof IFormParentNode) {
+					$child->readValues();
+				}
+				else if ($child instanceof IFormField && $child->isAvailable() && !$child->isImmutable()) {
+					$child->readValue();
+				}
 			}
 		}
 		
@@ -282,11 +284,11 @@ trait TFormParentNode {
 	 * nodes are valid. A `IFormField` object is valid if its value is valid.
 	 */
 	public function validate() {
-		if ($this->checkDependencies()) {
+		if ($this->isAvailable() && $this->checkDependencies()) {
 			foreach ($this->children() as $child) {
 				// call `checkDependencies()` on form fields here so that their validate
 				// method does not have to do it
-				if ($child instanceof IFormField && !$child->checkDependencies()) {
+				if ($child instanceof IFormField && $child->isAvailable() && !$child->checkDependencies()) {
 					continue;
 				}
 				

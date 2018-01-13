@@ -49,6 +49,30 @@ interface IFormNode {
 	public function attribute($name, $value = null);
 	
 	/**
+	 * Sets if this node is available and returns this node.
+	 * 
+	 * By default, every node is available. This methods makes it easier to create forms
+	 * that contains node that are only avaiable if certain options have specific values
+	 * or the active user has specific permissions, for example. Furthermore, fields
+	 * themselves are also able to mark themselves as unavailable, for example, a selection
+	 * field without any options. A `IFormContainer` is automatically unavailable if it
+	 * contains no available children.
+	 * 
+	 * Unavailable fields produce no output, their value is not read, they are not validated
+	 * and they are not checked for save values.
+	 * 
+	 * Note: Form field dependencies manage dynamic availability of form nodes based on
+	 * form field values while this method manages static availability that is independent
+	 * of form field values and only depends on external factors.
+	 * 
+	 * @param	bool		$available	determines if node is available
+	 * @return	static				this node
+	 * 
+	 * @throws	\InvalidArgumentException	if the given value is no bool
+	 */
+	public function available($available = true);
+	
+	/**
 	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
 	 *
 	 * @return	bool
@@ -174,6 +198,17 @@ interface IFormNode {
 	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
 	 */
 	public function id($id);
+	
+	/**
+	 * Returns `true` if this node is available and returns `false` otherwise.
+	 * 
+	 * If the node's availability has not been explicitly set, `true` is returned.
+	 * 
+	 * @return	bool
+	 * 
+	 * @see		IFormNode::available()
+	 */
+	public function isAvailable();
 	
 	/**
 	 * Is called once after all nodes have been added to the document this node belongs to.
