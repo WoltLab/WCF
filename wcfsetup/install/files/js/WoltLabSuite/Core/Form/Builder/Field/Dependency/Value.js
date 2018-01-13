@@ -26,9 +26,8 @@ define(['./Abstract', 'Core'], function(Abstract, Core) {
 				throw new Error("Values have not been set.");
 			}
 			
-			// do not use `Array.prototype.indexOf()` as use a weak comparision
+			// do not use `Array.prototype.indexOf()` as we use a weak comparision
 			for (var i = 0, length = this._values.length; i < length; i++) {
-				console.log(this._values[i], this._field.value);
 				if (this._values[i] == this._field.value) {
 					return true;
 				}
