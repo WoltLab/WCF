@@ -26,7 +26,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function checkDependency() {
-		return !empty($this->getField()->getValue());
+		return in_array($this->getField()->getValue(), $this->getValues());
 	}
 	
 	/**

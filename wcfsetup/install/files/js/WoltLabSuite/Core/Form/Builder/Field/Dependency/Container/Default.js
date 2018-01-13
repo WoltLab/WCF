@@ -23,6 +23,11 @@ define(['./Abstract', 'Core', '../Manager'], function(Abstract, Core, Dependency
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default#checkContainer
 		 */
 		checkContainer: function() {
+			// only consider containers that have not been hidden by their own dependencies
+			if (DependencyManager.isHiddenByDependencies(this._container)) {
+				return;
+			}
+			
 			var containerIsVisible = !elIsHidden(this._container);
 			var containerShouldBeVisible = false;
 			

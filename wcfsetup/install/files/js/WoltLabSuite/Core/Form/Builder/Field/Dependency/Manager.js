@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
  * @since	3.2
  */
-define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
+define(['Dictionary', 'EventHandler', 'List'], function(Dictionary, EventHandler, List) {
 	"use strict";
 	
 	/**
@@ -26,6 +26,13 @@ define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
 	var _checkContainersAgain = true;
 	
 	/**
+	 * list of containers hidden due to their own dependencies
+	 * @type	{List}
+	 * @private
+	 */
+	var _dependencyHiddenNodes = new List();
+	
+	/**
 	 * list if fields for which event listeners have been registered
 	 * @type	{Dictionary}
 	 * @private
@@ -40,6 +47,28 @@ define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
 	var _nodeDependencies = new Dictionary();
 	
 	return {
+		/**
+		 * Hides the given node because of its own dependencies.
+		 * 
+		 * @param	{HTMLElement}	node	hidden node
+		 * @protected
+		 */
+		_hide: function(node) {
+			elHide(node);
+			_dependencyHiddenNodes.add(node.id);
+		},
+		
+		/**
+		 * Shows the given node because of its own dependencies.
+		 *
+		 * @param	{HTMLElement}	node	shown node
+		 * @protected
+		 */
+		_show: function(node) {
+			elShow(node);
+			_dependencyHiddenNodes.delete(node.id);
+		},
+		
 		/**
 		 * Registers a new form field dependency.
 		 * 
@@ -88,14 +117,14 @@ define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
 				for (var i = 0, length = nodeDependencies.length; i < length; i++) {
 					// if any dependency is met, the element is visible
 					if (nodeDependencies[i].checkDependency()) {
-						elShow(dependentNode);
+						this._show(dependentNode);
 						return;
 					}
 				}
 				
 				// no node dependencies is met
-				elHide(dependentNode);
-			});
+				this._hide(dependentNode);
+			}.bind(this));
 			
 			// delete dependencies for removed elements
 			for (var i = 0, length = obsoleteNodes.length; i < length; i++) {
@@ -146,5 +175,15 @@ define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
 				this.checkContainers();
 			}
 		},
+		
+		/**
+		 * Returns `true` if the given node has been hidden because of its own dependencies.
+		 * 
+		 * @param	{HTMLElement}	node	checked node
+		 * @return	{boolean}
+		 */
+		isHiddenByDependencies: function(node) {
+			return _dependencyHiddenNodes.has(container.id);
+		}
 	};
 });
