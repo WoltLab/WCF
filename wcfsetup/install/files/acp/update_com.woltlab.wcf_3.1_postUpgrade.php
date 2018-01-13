@@ -1,4 +1,6 @@
 <?php
+use wcf\data\option\OptionEditor;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -37,3 +39,9 @@ while ($row = $statement->fetchArray()) {
 	]);
 }
 WCF::getDB()->commitTransaction();
+
+// the upgrade added a bunch of new style variables
+StyleCacheBuilder::getInstance()->reset();
+
+// force-update the list of options
+OptionEditor::resetCache();

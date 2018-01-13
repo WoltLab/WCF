@@ -73,8 +73,8 @@
 		<instruction type="clipboardAction" />
 		<instruction type="cronjob" />
 		<instruction type="eventListener" />
-		<instruction type="objectType" />
 		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
 		<instruction type="option" />
 		<instruction type="userGroupOption" />
 		<instruction type="userNotificationEvent" />
@@ -90,9 +90,9 @@
 		<!-- new pip -->
 		<instruction type="mediaProvider" />
 		
-		<instruction type="defaultStyle.tar" />
-		
 		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
+		
+		<instruction type="style">defaultStyle.tar</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="3.1.0 Beta 5">
