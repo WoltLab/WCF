@@ -183,7 +183,7 @@ define(['Dictionary', 'EventHandler', 'List'], function(Dictionary, EventHandler
 		 * @return	{boolean}
 		 */
 		isHiddenByDependencies: function(node) {
-			return _dependencyHiddenNodes.has(container.id);
+			return _dependencyHiddenNodes.has(node.id);
 		}
 	};
 });
