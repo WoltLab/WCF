@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
 
 /**
  * Provides default implementations of `ISelectionFormField` methods.
@@ -58,7 +59,7 @@ trait TSelectionFormField {
 		}
 		
 		// validate options and read possible values
-		$validateOptions = function($array) use (&$validateOptions) {
+		$validateOptions = function(array &$array) use (&$validateOptions) {
 			foreach ($array as $key => $value) {
 				if (is_array($value)) {
 					$validateOptions($value);
@@ -73,6 +74,11 @@ trait TSelectionFormField {
 					}
 					
 					$this->possibleValues[] = $key;
+					
+					// fetch language item value
+					if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', $value)) {
+						$array[$key] = WCF::getLanguage()->getDynamicVariable($value);
+					}
 				}
 			}
 		};
