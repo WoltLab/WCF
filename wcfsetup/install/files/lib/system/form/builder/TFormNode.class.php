@@ -110,14 +110,34 @@ trait TFormNode {
 	
 	/**
 	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
-	 *
+	 * 
 	 * @return	bool
 	 */
 	public function checkDependencies() {
-		foreach ($this->dependencies as $dependency) {
-			if (!$dependency->checkDependency()) {
+		if ($this instanceof IFormParentNode) {
+			if (count($this) > 0) {
+				/** @var IFormChildNode $child */
+				foreach ($this as $child) {
+					if ($child->checkDependencies()) {
+						return true;
+					}
+				}
+				
 				return false;
 			}
+			
+			// container with no children
+			return false;
+		}
+		
+		if (!empty($this->dependencies)) {
+			foreach ($this->dependencies as $dependency) {
+				if ($dependency->checkDependency()) {
+					return true;
+				}
+			}
+			
+			return false;
 		}
 		
 		return true;

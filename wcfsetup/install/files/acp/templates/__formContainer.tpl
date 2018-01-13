@@ -14,3 +14,9 @@
 </section>
 
 {include file='__formContainerDependencies'}
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {
+		new DefaultContainerDependency('{@$container->getPrefixedId()}Container');
+	});
+</script>

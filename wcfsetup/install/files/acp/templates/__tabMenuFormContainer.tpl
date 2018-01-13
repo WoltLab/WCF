@@ -3,7 +3,7 @@
 		<ul>
 			{foreach from=$container item='child'}
 				{assign var='__tabMenuFormContainerChildId' value=$child->getPrefixedId()|concat:'Container'}
-				<li><a href="{@$__wcf->getAnchor($__tabMenuFormContainerChildId)}">{@$child->getLabel()}</a></li>
+				<li{if !$child->checkDependencies()} style="display: none;"{/if}><a href="{@$__wcf->getAnchor($__tabMenuFormContainerChildId)}">{@$child->getLabel()}</a></li>
 			{/foreach}
 		</ul>
 	</nav>
@@ -12,3 +12,9 @@
 </div>
 
 {include file='__formContainerDependencies'}
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/TabMenu'], function(TabMenuContainerDependency) {
+		new TabMenuContainerDependency('{@$container->getPrefixedId()}Container');
+	});
+</script>

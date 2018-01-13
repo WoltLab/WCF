@@ -3,3 +3,9 @@
 </div>
 
 {include file='__formContainerDependencies'}
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Tab'], function(TabContainerDependency) {
+		new TabContainerDependency('{@$container->getPrefixedId()}Container');
+	});
+</script>

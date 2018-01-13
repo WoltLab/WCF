@@ -4,11 +4,26 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency
+ * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
  * @since	3.2
  */
-define(['Dictionary'], function(Dictionary) {
+define(['Dictionary', 'EventHandler'], function(Dictionary, EventHandler) {
 	"use strict";
+	
+	/**
+	 * is `true` if containters are currently checked for their availablility, otherwise `false`
+	 * @type	{boolean}
+	 * @private
+	 */
+	var _checkingContainers = false;
+	
+	/**
+	 * is `true` if containter will be checked again after the current check for their availablility
+	 * has finished, otherwise `false`
+	 * @type	{boolean}
+	 * @private
+	 */
+	var _checkContainersAgain = true;
 	
 	/**
 	 * list if fields for which event listeners have been registered
@@ -86,6 +101,50 @@ define(['Dictionary'], function(Dictionary) {
 			for (var i = 0, length = obsoleteNodes.length; i < length; i++) {
 				_nodeDependencies.delete(obsoleteNodes.id);
 			}
-		}
+			
+			this.checkContainers();
+		},
+		
+		/**
+		 * Adds the given callback to the list of callbacks called when checking containers.
+		 * 
+		 * @param	{function}	callback
+		 */
+		addContainerCheckCallback: function(callback) {
+			if (typeof callback !== 'function') {
+				throw new TypeError("Expected a valid callback for parameter 'callback'.");
+			}
+			
+			EventHandler.add('com.woltlab.wcf.form.builder.dependency', 'checkContainers', callback);
+		},
+		
+		/**
+		 * Checks the containers for their availablility.
+		 * 
+		 * If this function is called while containers are currently checked, the containers
+		 * will be checked after the current check has been finished completely.
+		 */
+		checkContainers: function() {
+			// check if containers are currently being checked
+			if (_checkingContainers === true) {
+				// and if that is the case, calling this method indicates, that after the current round,
+				// containters should be checked to properly propagate changes in children to their parents
+				_checkContainersAgain = true;
+				
+				return;
+			}
+			
+			// starting to check containers also resets the flag to check containers again after the current check 
+			_checkingContainers = true;
+			_checkContainersAgain = false;
+			
+			EventHandler.fire('com.woltlab.wcf.form.builder.dependency', 'checkContainers');
+			
+			// finish checking containers and check if containters should be checked again
+			_checkingContainers = false;
+			if (_checkContainersAgain) {
+				this.checkContainers();
+			}
+		},
 	};
 });

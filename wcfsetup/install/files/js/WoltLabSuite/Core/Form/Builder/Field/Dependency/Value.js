@@ -4,7 +4,7 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency
+ * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Value
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since	3.2
  */

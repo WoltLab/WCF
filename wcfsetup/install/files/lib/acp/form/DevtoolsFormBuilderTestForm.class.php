@@ -98,6 +98,12 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 								));
 							}
 						})),
+					IntegerFormField::create('counter')
+						->label('Some Counter')
+						->minimum(10)
+						->maximum(100)
+						->value(20)
+						->suffix('wcf.acp.option.suffix.days'),
 					SingleSelectionFormField::create('year')
 						->label('Year')
 						->options(function() {
@@ -131,12 +137,6 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						->appendChild(
 							FormContainer::create('fooGeneral')
 								->appendChildren([
-									IntegerFormField::create('counter')
-										->label('Some Counter')
-										->minimum(10)
-										->maximum(100)
-										->value(20)
-										->suffix('wcf.acp.option.suffix.days'),
 									BooleanFormField::create('isCool')
 										->label('Foo and Bar are cool names')
 								])
