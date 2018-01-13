@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder;
+use wcf\system\form\builder\field\dependency\IFormFieldDependency;
 
 /**
  * Represents a general form node providing common methods of all nodes.
@@ -22,6 +23,19 @@ interface IFormNode {
 	public function addClass($class);
 	
 	/**
+	 * Adds a dependency on the value of a `IFormField` so that this node is
+	 * only available if the field satisfies the given dependency and returns
+	 * this element.
+	 * 
+	 * This method is expected to set the dependent node of the given dependency
+	 * to this element.
+	 * 
+	 * @param	IFormFieldDependency	$dependency	added node dependency
+	 * @return	static					this node
+	 */
+	public function addDependency(IFormFieldDependency $dependency);
+	
+	/**
 	 * Adds an additional attribute to this node and returns this node.
 	 * 
 	 * The value of an existing attribute is overwritten by the new value.
@@ -33,6 +47,13 @@ interface IFormNode {
 	 * @throws	\InvalidArgumentException	if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
 	 */
 	public function attribute($name, $value = null);
+	
+	/**
+	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
+	 *
+	 * @return	bool
+	 */
+	public function checkDependencies();
 	
 	/**
 	 * Returns the value of the additional attribute of this node with the given name.
@@ -57,6 +78,13 @@ interface IFormNode {
 	 * @return	string[]	CSS classes of node
 	 */
 	public function getClasses();
+	
+	/**
+	 * Returns all of the node's dependencies.
+	 * 
+	 * @return	IFormFieldDependency[]		node's dependencies
+	 */
+	public function getDependencies();
 	
 	/**
 	 * Returns the form document this node belongs to.
@@ -126,6 +154,17 @@ interface IFormNode {
 	public function hasClass($class);
 	
 	/**
+	 * Returns `true` if this node has a dependency with the given id and
+	 * returns `false` otherwise.
+	 * 
+	 * @param	string		$dependencyId	id of the checked dependency
+	 * @return	bool
+	 * 
+	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
+	 */
+	public function hasDependency($dependencyId);
+	
+	/**
 	 * Sets the id of the node.
 	 * 
 	 * @param	string		$id		new id of node
@@ -160,6 +199,16 @@ interface IFormNode {
 	 * @throws	\InvalidArgumentException	if the given class is no string or otherwise invalid
 	 */
 	public function removeClass($class);
+	
+	/**
+	 * Removes the dependency with the given id and returns this node.
+	 * 
+	 * @param	string		$dependencyId	id of the removed dependency
+	 * @return	static				this node
+	 * 
+	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid or no such dependency exists
+	 */
+	public function removeDependency($dependencyId);
 	
 	/**
 	 * Validates the node.

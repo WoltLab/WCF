@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\builder;
-use wcf\system\form\builder\field\dependency\IFormFieldDependency;
 use wcf\system\WCF;
 
 /**
@@ -26,31 +25,6 @@ trait TFormElement {
 	 * @var	string
 	 */
 	protected $__label;
-	
-	/**
-	 * dependencies of this element
-	 * @var	IFormFieldDependency[]
-	 */
-	protected $dependencies = [];
-	
-	/**
-	 * Adds a dependency on the value of a `IFormField` so that this element is
-	 * only available if the field satisfies the given dependency and returns
-	 * this element.
-	 *
-	 * This method is expected to set the dependent element of the given dependency
-	 * to this element.
-	 *
-	 * @param	IFormFieldDependency		$dependency	added element dependency
-	 * @return	static						this element
-	 */
-	public function addDependency(IFormFieldDependency $dependency) {
-		$this->dependencies[] = $dependency;
-		
-		$dependency->dependentElement($this);
-		
-		return $this;
-	}
 	
 	/**
 	 * Sets the description of this element using the given language item
@@ -93,7 +67,7 @@ trait TFormElement {
 	
 	/**
 	 * Returns the label of this element or `null` if no label has been set.
-	 *
+	 * 
 	 * @return	null|string	element label
 	 */
 	public function getLabel() {
@@ -101,33 +75,14 @@ trait TFormElement {
 	}
 	
 	/**
-	 * Returns `true` if this element has a dependency with the given id and
-	 * returns `false` otherwise.
-	 * 
-	 * @param	string		$dependencyId	id of the checked dependency
-	 * @return	bool
-	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
-	 */
-	public function hasDependency($dependencyId) {
-		foreach ($this->dependencies as $dependency) {
-			if ($dependency->getId() === $dependencyId) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	/**
 	 * Sets the label of this element using the given language item and
 	 * returns this element. If `null` is passed, the element label is
 	 * removed.
-	 *
+	 * 
 	 * @param	null|string	$languageItem	language item containing the element label or `null` to unset label
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this element
-	 *
+	 * 
 	 * @throws	\InvalidArgumentException	if the given label is no string or otherwise is invalid
 	 */
 	public function label($languageItem = null, array $variables = []) {
@@ -147,25 +102,5 @@ trait TFormElement {
 		}
 		
 		return $this;
-	}
-	
-	/**
-	 * Removes the dependency with the given id and returns this element.
-	 * 
-	 * @param	string		$dependencyId	id of the removed dependency
-	 * @return	static				this field
-	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid or no such dependency exists
-	 */
-	public function removeDependency($dependencyId) {
-		foreach ($this->dependencies as $key => $dependency) {
-			if ($dependency->getId() === $dependencyId) {
-				unset($this->dependencies[$key]);
-				
-				return $this;
-			}
-		}
-		
-		throw new \InvalidArgumentException("Unknown dependency with id '{$dependencyId}'.");
 	}
 }

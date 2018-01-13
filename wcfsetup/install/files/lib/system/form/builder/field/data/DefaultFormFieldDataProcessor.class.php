@@ -3,6 +3,7 @@ namespace wcf\system\form\builder\field\data;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
+use wcf\system\form\builder\IFormParentNode;
 
 /**
  * Default field data processor that maps the form fields to entries in
@@ -21,13 +22,22 @@ class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {
 	 */
 	public function __invoke(IFormDocument $document, array $parameters) {
 		$parameters['data'] = [];
-		/** @var IFormNode $node */
-		foreach ($document->getIterator() as $node) {
-			if ($node instanceof IFormField && $node->hasSaveValue()) {
-				$parameters['data'][$node->getId()] = $node->getSaveValue();
-			}
-		}
+		
+		$this->getData($document, $parameters['data']);
 		
 		return $parameters;
+	}
+	
+	protected function getData(IFormNode $node, array &$data) {
+		if ($node->checkDependencies()) {
+			if ($node instanceof IFormParentNode) {
+				foreach ($node as $childNode) {
+					$this->getData($childNode, $data);
+				}
+			}
+			else if ($node instanceof IFormField && $node->hasSaveValue()) {
+				$data[$node->getId()] = $node->getSaveValue();;
+			}
+		}
 	}
 }

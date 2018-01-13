@@ -1,4 +1,4 @@
-<section id="{@$container->getPrefixedId()}" class="section{foreach from=$container->getClasses() item='class'} {$class}{/foreach}"{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}>
+<section id="{@$container->getPrefixedId()}Container" class="section{foreach from=$container->getClasses() item='class'} {$class}{/foreach}"{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{if !$container->checkDependencies()} style="display: none;"{/if}>
 	{if $container->getLabel() !== null}
 		{if $container->getDescription() !== null}
 			<header class="sectionHeader">
@@ -12,3 +12,5 @@
 	
 	{include file='__formContainerChildren'}
 </section>
+
+{include file='__formContainerDependencies'}

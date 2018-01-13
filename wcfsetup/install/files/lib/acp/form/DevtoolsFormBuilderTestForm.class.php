@@ -6,6 +6,8 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -78,6 +80,8 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 				->description('wcf.global.description')
 				->addClass('someSection')
 				->appendChildren([
+					TextFormField::create('name')
+						->label('wcf.global.name'),
 					TextFormField::create('title')
 						->label('wcf.global.title')
 						->i18n()
@@ -98,7 +102,7 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						->label('Year')
 						->options(function() {
 							return [
-								'(no selection)',
+								'' => '(no selection)',
 								2016 => 2016,
 								2017 => 2017,
 								2018 => 2018,
@@ -132,13 +136,40 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 										->minimum(10)
 										->maximum(100)
 										->value(20)
-										->suffix('wcf.acp.option.suffix.days')
+										->suffix('wcf.acp.option.suffix.days'),
+									BooleanFormField::create('isCool')
+										->label('Foo and Bar are cool names')
 								])
 						),
 					TabFormContainer::create('tab2')
 						->label('Tab 2')
 				])
 		]);
+		
+		// add dependencies
+		$this->form->getNodeById('month')
+			->addDependency(
+				NonEmptyFormFieldDependency::create('year')
+					->field($this->form->getNodeById('year'))
+			)
+			->addDependency(
+				NonEmptyFormFieldDependency::create('name')
+					->field($this->form->getNodeById('name'))
+			)
+			->addDependency(
+				NonEmptyFormFieldDependency::create('isDisabled')
+					->field($this->form->getNodeById('isDisabled'))
+			);
+		
+		$this->form->getNodeById('isCool')
+			->addDependency(
+				ValueFormFieldDependency::create('name')
+					->field($this->form->getNodeById('name'))
+					->values([
+						'Foo',
+						'Bar'
+					])
+			);
 		
 		$this->form->build();
 		

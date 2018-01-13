@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder;
+use wcf\system\form\builder\field\dependency\IFormFieldDependency;
 
 /**
  * Provides default implementations of `IFormNode` methods.
@@ -28,6 +29,12 @@ trait TFormNode {
 	 * @var	string
 	 */
 	protected $__id;
+	
+	/**
+	 * dependencies of this node
+	 * @var	IFormFieldDependency[]
+	 */
+	protected $dependencies = [];
 	
 	/**
 	 * is `true` if node has already been populated and is `false` otherwise 
@@ -60,6 +67,25 @@ trait TFormNode {
 	}
 	
 	/**
+	 * Adds a dependency on the value of a `IFormField` so that this node is
+	 * only available if the field satisfies the given dependency and returns
+	 * this node.
+	 * 
+	 * This method is expected to set the dependent node of the given dependency
+	 * to this node.
+	 * 
+	 * @param	IFormFieldDependency		$dependency	added node dependency
+	 * @return	static						this node
+	 */
+	public function addDependency(IFormFieldDependency $dependency) {
+		$this->dependencies[] = $dependency;
+		
+		$dependency->dependentNode($this);
+		
+		return $this;
+	}
+	
+	/**
 	 * Adds an additional attribute to this node and returns this node.
 	 *
 	 * The value of an existing attribute is overwritten by the new value.
@@ -80,6 +106,21 @@ trait TFormNode {
 		$this->__attributes[$name] = $value;
 		
 		return $this;
+	}
+	
+	/**
+	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
+	 *
+	 * @return	bool
+	 */
+	public function checkDependencies() {
+		foreach ($this->dependencies as $dependency) {
+			if (!$dependency->checkDependency()) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -114,6 +155,15 @@ trait TFormNode {
 	 */
 	public function getClasses() {
 		return $this->__classes;
+	}
+	
+	/**
+	 * Returns all of the node's dependencies.
+	 * 
+	 * @return	IFormFieldDependency[]		node's dependencies
+	 */
+	public function getDependencies() {
+		return $this->dependencies;
 	}
 	
 	/**
@@ -195,6 +245,25 @@ trait TFormNode {
 	}
 	
 	/**
+	 * Returns `true` if this node has a dependency with the given id and
+	 * returns `false` otherwise.
+	 * 
+	 * @param	string		$dependencyId	id of the checked dependency
+	 * @return	bool
+	 * 
+	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
+	 */
+	public function hasDependency($dependencyId) {
+		foreach ($this->dependencies as $dependency) {
+			if ($dependency->getId() === $dependencyId) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Sets the id of the node.
 	 *
 	 * @param	string		$id	new id of node
@@ -259,12 +328,32 @@ trait TFormNode {
 	}
 	
 	/**
+	 * Removes the dependency with the given id and returns this node.
+	 * 
+	 * @param	string		$dependencyId	id of the removed dependency
+	 * @return	static				this field
+	 * 
+	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid or no such dependency exists
+	 */
+	public function removeDependency($dependencyId) {
+		foreach ($this->dependencies as $key => $dependency) {
+			if ($dependency->getId() === $dependencyId) {
+				unset($this->dependencies[$key]);
+				
+				return $this;
+			}
+		}
+		
+		throw new \InvalidArgumentException("Unknown dependency with id '{$dependencyId}'.");
+	}
+	
+	/**
 	 * Creates a new element with the given id.
 	 * 
 	 * @param	string		$id	node id
 	 * @return	static
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string, already used by another element, or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given id is no string, already used by another node, or otherwise is invalid
 	 */
 	public static function create($id) {
 		return (new static)->id($id);

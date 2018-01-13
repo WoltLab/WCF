@@ -282,8 +282,16 @@ trait TFormParentNode {
 	 * nodes are valid. A `IFormField` object is valid if its value is valid.
 	 */
 	public function validate() {
-		foreach ($this->children() as $child) {
-			$child->validate();
+		if ($this->checkDependencies()) {
+			foreach ($this->children() as $child) {
+				// call `checkDependencies()` on form fields here so that their validate
+				// method does not have to do it
+				if ($child instanceof IFormField && !$child->checkDependencies()) {
+					continue;
+				}
+				
+				$child->validate();
+			}
 		}
 	}
 	

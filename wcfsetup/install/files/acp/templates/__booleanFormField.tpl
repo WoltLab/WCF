@@ -2,7 +2,7 @@
 
 <ol class="flexibleButtonGroup">
 	<li>
-		<input type="radio" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="1"{if $field->isAutofocused()} autofocus{/if}{if $field->isRequired()} required{/if}{if $field->isImmutable()} disabled{/if}{if $field->getValue()} checked{/if}>
+		<input type="radio" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="1" data-no-input-id="{@$field->getPrefixedId()}_no"{if $field->isAutofocused()} autofocus{/if}{if $field->isRequired()} required{/if}{if $field->isImmutable()} disabled{/if}{if $field->getValue()} checked{/if}>
 		<label for="{@$field->getPrefixedId()}" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.global.form.boolean.yes{/lang}</label>
 	</li>
 	<li>
