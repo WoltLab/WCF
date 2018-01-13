@@ -77,9 +77,23 @@ class FormDocument implements IFormDocument {
 			throw new \BadMethodCallException("Form document has already been built.");
 		}
 		
+		$nodeIds = [];
+		$doubleNodeIds = [];
+		
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
+			if (in_array($node->getId(), $nodeIds)) {
+				$doubleNodeIds[] = $node->getId();
+			}
+			else {
+				$nodeIds[] = $node->getId();
+			}
+			
 			$node->populate();
+		}
+		
+		if (!empty($doubleNodeIds)) {
+			throw new \LogicException("Non-unique node id" . (count($doubleNodeIds) > 1 ? 's' : '') . " '" . implode("', '", $doubleNodeIds) . "'.");
 		}
 		
 		$this->isBuilt = true;
