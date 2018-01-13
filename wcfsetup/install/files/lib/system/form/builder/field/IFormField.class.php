@@ -27,7 +27,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	/**
 	 * Sets whether this field is auto-focused and returns this field.
 	 * 
-	 * @param	bool		$autoFocus	determined if field is auto-focused
+	 * @param	bool		$autoFocus	determines if field is auto-focused
 	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no bool
@@ -103,7 +103,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	/**
 	 * Sets whether the value of this field is immutable and returns this field.
 	 * 
-	 * @param	bool		$immutable	determined if field value is immutable
+	 * @param	bool		$immutable	determines if field value is immutable
 	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no bool
@@ -162,7 +162,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	/**
 	 * Sets whether it is required to fill out this field and returns this field.
 	 * 
-	 * @param	bool		$required	determined if field has to be filled out
+	 * @param	bool		$required	determines if field has to be filled out
 	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no bool

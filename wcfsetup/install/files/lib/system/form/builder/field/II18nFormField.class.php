@@ -30,7 +30,7 @@ interface II18nFormField extends IFormField {
 	/**
 	 * Sets whether this field is supports i18n input and returns this field.
 	 * 
-	 * @param	bool		$i18n		determined if field is supports i18n input
+	 * @param	bool		$i18n		determines if field is supports i18n input
 	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no bool
@@ -43,7 +43,7 @@ interface II18nFormField extends IFormField {
 	 * If this method sets that the field's value must be i18n input, it also must
 	 * ensure that i18n support is enabled.
 	 * 
-	 * @param	bool		$i18nRequired		determined if field value must be i18n input
+	 * @param	bool		$i18nRequired		determines if field value must be i18n input
 	 * @return	static					this field
 	 *
 	 * @throws	\InvalidArgumentException		if the given value is no bool
