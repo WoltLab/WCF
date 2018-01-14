@@ -60,7 +60,7 @@ class ACLHandler extends SingletonFactory {
 		}
 		
 		$values = null;
-		if (isset($this->__readValues[$objectTypeID])) {
+		if (array_key_exists($objectTypeID, $this->__readValues)) {
 			$values = $this->__readValues[$objectTypeID];
 		}
 		else if (isset($_POST['aclValues'])) {
@@ -169,7 +169,7 @@ class ACLHandler extends SingletonFactory {
 	 * @since	3.2
 	 */
 	public function resetValues($objectTypeID) {
-		$this->__readValues[$objectTypeID] = [];
+		$this->__readValues[$objectTypeID] = null;
 	}
 	
 	/**

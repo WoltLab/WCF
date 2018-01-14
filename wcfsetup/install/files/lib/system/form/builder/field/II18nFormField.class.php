@@ -12,6 +12,15 @@ namespace wcf\system\form\builder\field;
  */
 interface II18nFormField extends IFormField {
 	/**
+	 * Returns the pattern for the language item used to save the i18n values.
+	 * 
+	 * @return	string				language item pattern
+	 * 
+	 * @throws	\BadMethodCallException		if i18n is disabled for this field or no language item has been set
+	 */
+	public function getLanguageItemPattern();
+	
+	/**
 	 * Returns `true` if the current field value is a i18n value and returns `false`
 	 * otherwise or if no value has been set.
 	 * 
@@ -65,4 +74,16 @@ interface II18nFormField extends IFormField {
 	 * @return	bool
 	 */
 	public function isI18nRequired();
+	
+	/**
+	 * Sets the pattern for the language item used to save the i18n values
+	 * and returns this field.
+	 * 
+	 * @param	string		$pattern	language item pattern
+	 * @return	static				this field
+	 * 
+	 * @throws	\BadMethodCallException		if i18n is disabled for this field
+	 * @throws	\InvalidArgumentException	if the given pattern is no string or otherwise invalid
+	 */
+	public function languageItemPattern($pattern);
 }

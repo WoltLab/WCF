@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
+use wcf\data\IStorableObject;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\acl\ACLHandler;
@@ -24,16 +25,16 @@ class AclFormField extends AbstractFormField {
 	protected $__categoryName;
 	
 	/**
-	 * id of the edited object or null if no object is edited
-	 * @var	null|int
-	 */
-	protected $__objectID;
-	
-	/**
 	 * acl object type
 	 * @var	null|ObjectType
 	 */
 	protected $__objectType;
+	
+	/**
+	 * id of the edited object or `null` if no object is edited
+	 * @var	null|int
+	 */
+	protected $objectID;
 	
 	/**
 	 * @inheritDoc
@@ -98,7 +99,7 @@ class AclFormField extends AbstractFormField {
 	 * @return	null|int
 	 */
 	public function getObjectID() {
-		return $this->__objectID;
+		return $this->objectID;
 	}
 	
 	/**
@@ -124,32 +125,14 @@ class AclFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Sets the id of the edited object and returns this field.
-	 * 
-	 * If no object is edited, this method must not be called.
-	 * 
-	 * @param	int		$objectID	id of edited object
-	 * @return	static		$this		this field
-	 *
-	 * @throws	\BadMethodCallException		if object id has already been set
-	 * @throws	\InvalidArgumentException	if given object id is no integer or otherwise invalid
+	 * @inheritDoc
 	 */
-	public function objectID($objectID) {
-		if ($this->__objectID !== null) {
-			throw new \BadMethodCallException("Object id has already been set.");
+	public function loadValueFromObject(IStorableObject $object) {
+		$this->objectID = $object->{$object::getDatabaseTableIndexName()};
+		
+		if ($this->objectID === null) {
+			throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
 		}
-		
-		if (!is_int($objectID)) {
-			throw new \InvalidArgumentException("Given object id is no integer, '" . gettype($objectID) . "' given.");
-		}
-		
-		if ($objectID <= 0) {
-			throw new \InvalidArgumentException("Given object id is not positive");
-		}
-		
-		$this->__objectID = $objectID;
-		
-		return $this;
 	}
 	
 	/**

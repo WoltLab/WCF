@@ -270,10 +270,10 @@ class I18nHandler extends SingletonFactory {
 	/**
 	 * Saves language variable for i18n.
 	 * 
-	 * @param	string		$elementID
-	 * @param	string		$languageVariable
-	 * @param	string		$languageCategory
-	 * @param	integer		$packageID
+	 * @param	string|string[]		$elementID		either the id of the element or externally passed array `languageID => value`
+	 * @param	string			$languageVariable
+	 * @param	string			$languageCategory
+	 * @param	integer			$packageID
 	 */
 	public function save($elementID, $languageVariable, $languageCategory, $packageID = PACKAGE_ID) {
 		// get language category id
@@ -289,7 +289,12 @@ class I18nHandler extends SingletonFactory {
 			$languageIDs = array_keys($this->availableLanguages);
 		}
 		else {
-			$languageIDs = array_keys($this->i18nValues[$elementID]);
+			if (is_array($elementID)) {
+				$languageIDs = array_keys($elementID);
+			}
+			else {
+				$languageIDs = array_keys($this->i18nValues[$elementID]);
+			}
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
@@ -321,10 +326,20 @@ class I18nHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($insertLanguageIDs as $languageID) {
+				if (is_array($elementID)) {
+					$value = $elementID[$languageID];
+				}
+				else if (isset($this->i18nValues[$elementID])) {
+					$value = $this->i18nValues[$elementID][$languageID];
+				}
+				else {
+					$value = $this->plainValues[$elementID];
+				}
+				
 				$statement->execute([
 					$languageID,
 					$languageVariable,
-					isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID],
+					$value,
 					0,
 					$languageCategoryID,
 					$packageID
@@ -341,8 +356,18 @@ class I18nHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($updateLanguageIDs as $languageID) {
+				if (is_array($elementID)) {
+					$value = $elementID[$languageID];
+				}
+				else if (isset($this->i18nValues[$elementID])) {
+					$value = $this->i18nValues[$elementID][$languageID];
+				}
+				else {
+					$value = $this->plainValues[$elementID];
+				}
+				
 				$statement->execute([
-					isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID],
+					$value,
 					0,
 					$languageItemIDs[$languageID]
 				]);

@@ -1,9 +1,12 @@
 <?php
 namespace wcf\system\form\builder\field;
+use wcf\data\IStorableObject;
+use wcf\data\language\item\LanguageItemList;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\I18nHandler;
+use wcf\system\Regex;
 use wcf\util\StringUtil;
 
 /**
@@ -31,6 +34,12 @@ trait TI18nFormField {
 	protected $__i18nRequired;
 	
 	/**
+	 * pattern for the language item used to save the i18n values
+	 * @var	null|string
+	 */
+	protected $__languageItemPattern;
+	
+	/**
 	 * Returns additional template variables used to generate the html representation
 	 * of this node.
 	 * 
@@ -47,6 +56,25 @@ trait TI18nFormField {
 		}
 		
 		return [];
+	}
+	
+	/**
+	 * Returns the pattern for the language item used to save the i18n values.
+	 * 
+	 * @return	string				language item pattern
+	 * 
+	 * @throws	\BadMethodCallException		if i18n is disabled for this field or no language item has been set
+	 */
+	public function getLanguageItemPattern() {
+		if (!$this->isI18n()) {
+			throw new \BadMethodCallException("You can only get the language item pattern for fields with i18n enabled.");
+		}
+		
+		if ($this->__languageItemPattern === null) {
+			throw new \BadMethodCallException("Language item pattern has not been set.");
+		}
+		
+		return $this->__languageItemPattern;
 	}
 	
 	/**
@@ -187,6 +215,66 @@ trait TI18nFormField {
 	}
 	
 	/**
+	 * Sets the pattern for the language item used to save the i18n values
+	 * and returns this field.
+	 * 
+	 * @param	string		$pattern	language item pattern
+	 * @return	static				this field
+	 * 
+	 * @throws	\BadMethodCallException		if i18n is disabled for this field
+	 * @throws	\InvalidArgumentException	if the given pattern is no string or otherwise invalid
+	 */
+	public function languageItemPattern($pattern) {
+		if (!$this->isI18n()) {
+			throw new \BadMethodCallException("The language item pattern can only be set for fields with i18n enabled.");
+		}
+		
+		if (!is_string($pattern)) {
+			throw new \InvalidArgumentException("Given pattern is no string, '" . gettype($pattern) . "' given.");
+		}
+		if (!Regex::compile($pattern)->isValid()) {
+			throw new \InvalidArgumentException("Given pattern is invalid.");
+		}
+		
+		$this->__languageItemPattern = $pattern;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function loadValueFromObject(IStorableObject $object) {
+		if (isset($object->{$this->getId()})) {
+			if ($this->isI18n()) {
+				$value = $object->{$this->getId()};
+				
+				// do not use `I18nHandler::setOptions()` because then `I18nHandler` only
+				// reads the values when assigning the template variables and the values
+				// are not available in this class via `getValue()`
+				if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
+					$languageItemList = new LanguageItemList();
+					$languageItemList->getConditionBuilder()->add('languageItem = ?', [$value]);
+					$languageItemList->readObjects();
+					
+					$values = [];
+					foreach ($languageItemList as $languageItem) {
+						$values[$languageItem->languageID] = $languageItem->languageItemValue;
+					}
+					
+					I18nHandler::getInstance()->setValues($this->getId(), $values);
+				}
+				else {
+					I18nHandler::getInstance()->setValue($this->getId(), $value);
+				}
+			}
+			else {
+				$this->__value = $object->{$this->getId()};
+			}
+		}
+	}
+	
+	/**
 	 * Is called once after all nodes have been added to the document this node belongs to.
 	 * 
 	 * This method enables this node to perform actions that require the whole document having
@@ -197,6 +285,8 @@ trait TI18nFormField {
 	 * @throws	\BadMethodCallException		if this node has already been populated
 	 */
 	public function populate() {
+		parent::populate();
+		
 		if ($this->isI18n()) {
 			I18nHandler::getInstance()->unregister($this->getPrefixedId());
 			I18nHandler::getInstance()->register($this->getPrefixedId());
