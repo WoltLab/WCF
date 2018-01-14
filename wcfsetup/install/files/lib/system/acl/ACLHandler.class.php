@@ -43,8 +43,9 @@ class ACLHandler extends SingletonFactory {
 	
 	/**
 	 * explicitly read acl values grouped by object type id
-	 * @var	array
-	 * @see	ACLHandler::readValues()
+	 * @var		array
+	 * @see		ACLHandler::readValues()
+	 * @since	3.2
 	 */
 	protected $__readValues = [];
 	
@@ -132,6 +133,7 @@ class ACLHandler extends SingletonFactory {
 	 * using form builder, you do not need this method.
 	 * 
 	 * @param	integer		$objectTypeID
+	 * @since	3.2
 	 */
 	public function readValues($objectTypeID) {
 		$this->__readValues[$objectTypeID] = [];
@@ -164,6 +166,7 @@ class ACLHandler extends SingletonFactory {
 	 * using form builder, you do not need this method.
 	 * 
 	 * @param	integer		$objectTypeID
+	 * @since	3.2
 	 */
 	public function resetValues($objectTypeID) {
 		$this->__readValues[$objectTypeID] = [];
