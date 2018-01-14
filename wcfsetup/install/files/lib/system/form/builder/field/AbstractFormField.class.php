@@ -97,7 +97,7 @@ abstract class AbstractFormField implements IFormField {
 			throw new \InvalidArgumentException("Given value is no bool, " . gettype($autoFocus) . " given.");
 		}
 		
-		$this->__autoFocus = true;
+		$this->__autoFocus = $autoFocus;
 		
 		return $this;
 	}
@@ -170,7 +170,7 @@ abstract class AbstractFormField implements IFormField {
 			throw new \InvalidArgumentException("Given value is no bool, " . gettype($immutable) . " given.");
 		}
 		
-		$this->__immutable = true;
+		$this->__immutable = $immutable;
 		
 		return $this;
 	}
@@ -224,7 +224,7 @@ abstract class AbstractFormField implements IFormField {
 			throw new \InvalidArgumentException("Given value is no bool, " . gettype($required) . " given.");
 		}
 		
-		$this->__required = true;
+		$this->__required = $required;
 		
 		return $this;
 	}
