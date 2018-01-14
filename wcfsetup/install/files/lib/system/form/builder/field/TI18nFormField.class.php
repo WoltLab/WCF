@@ -234,7 +234,7 @@ trait TI18nFormField {
 	 * nodes are valid. A `IFormField` object is valid if its value is valid.
 	 */
 	public function validate() {
-		if (!I18nHandler::getInstance()->validateValue($this->getPrefixedId(), $this->isI18nRequired(), $this->isRequired())) {
+		if (!I18nHandler::getInstance()->validateValue($this->getPrefixedId(), $this->isI18nRequired(), !$this->isRequired())) {
 			if ($this->hasPlainValue()) {
 				$this->addValidationError(new FormFieldValidationError('empty'));
 			}
