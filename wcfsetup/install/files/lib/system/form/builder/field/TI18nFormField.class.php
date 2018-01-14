@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\IStorableObject;
 use wcf\data\language\item\LanguageItemList;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
