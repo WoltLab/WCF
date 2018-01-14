@@ -84,7 +84,7 @@ class I18nHandler extends SingletonFactory {
 	 */
 	public function unregister($elementID) {
 		$index = array_search($elementID, $this->elementIDs);
-		if ($index === false) {
+		if ($index !== false) {
 			unset($this->elementIDs[$index]);
 		}
 		
