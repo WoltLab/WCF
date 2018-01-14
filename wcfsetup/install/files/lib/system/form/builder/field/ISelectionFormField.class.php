@@ -23,6 +23,10 @@ interface ISelectionFormField {
 	/**
 	 * Sets the possible options of this field and returns this field.
 	 * 
+	 * Note: If PHP considers the key of the first selectable option to be empty
+	 * and the this field is nullable, then the save value of that key is `null`
+	 * instead of the given empty value.
+	 * 
 	 * @param	array|callable		$options	selectable options or callable returning the options
 	 * @return	static					this field
 	 * 

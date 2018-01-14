@@ -50,8 +50,30 @@ trait TI18nFormField {
 	}
 	
 	/**
-	 * Returns the value of this field or `null` if no value has been set.
+	 * Returns the field value saved in the database.
 	 *
+	 * This method is useful if the actual returned by `getValue()`
+	 * cannot be stored in the database as-is. If the return value of
+	 * `getValue()` is, however, the actual value that should be stored
+	 * in the database, this method is expected to call `getValue()`
+	 * internally.
+	 *
+	 * @return	mixed
+	 */
+	public function getSaveValue() {
+		if (!$this->hasSaveValue()) {
+			return null;
+		}
+		else if ($this->getValue() === null && $this instanceof INullableFormField && !$this->isNullable()) {
+			return '';
+		}
+		
+		return parent::getSaveValue();
+	}
+	
+	/**
+	 * Returns the value of this field or `null` if no value has been set.
+	 * 
 	 * @return	mixed
 	 */
 	public function getValue() {

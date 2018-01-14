@@ -13,9 +13,10 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class IntegerFormField extends AbstractFormField implements IMaximumFormField, IMinimumFormField, IPlaceholderFormField, ISuffixedFormField {
+class IntegerFormField extends AbstractFormField implements IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
 	use TMaximumFormField;
 	use TMinimumFormField;
+	use TNullableFormField;
 	use TPlaceholderFormField;
 	use TSuffixedFormField;
 	
@@ -23,6 +24,17 @@ class IntegerFormField extends AbstractFormField implements IMaximumFormField, I
 	 * @inheritDoc
 	 */
 	protected $templateName = '__integerFormField';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getSaveValue() {
+		if ($this->getValue() === null && !$this->isNullable()) {
+			return 0;
+		}
+		
+		return parent::getSaveValue();
+	}
 	
 	/**
 	 * @inheritDoc

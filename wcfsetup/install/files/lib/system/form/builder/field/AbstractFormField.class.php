@@ -34,7 +34,7 @@ abstract class AbstractFormField implements IFormField {
 	protected $__immutable = false;
 	
 	/**
-	 * true` if this field has to be filled out and returns `false` otherwise
+	 * `true` if this field has to be filled out and returns `false` otherwise
 	 * @var	bool
 	 */
 	protected $__required = false;

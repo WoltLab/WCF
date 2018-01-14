@@ -37,6 +37,25 @@ trait TSelectionFormField {
 	}
 	
 	/**
+	 * Returns the field value saved in the database.
+	 * 
+	 * This method is useful if the actual returned by `getValue()`
+	 * cannot be stored in the database as-is. If the return value of
+	 * `getValue()` is, however, the actual value that should be stored
+	 * in the database, this method is expected to call `getValue()`
+	 * internally.
+	 * 
+	 * @return	mixed
+	 */
+	public function getSaveValue() {
+		if (empty($this->getValue()) && array_search($this->getValue(), $this->possibleValues) === 0 && $this instanceof INullableFormField && $this->isNullable()) {
+			return null;
+		}
+		
+		return parent::getSaveValue();
+	}
+	
+	/**
 	 * Returns `true` if this node is available and returns `false` otherwise.
 	 * 
 	 * If the node's availability has not been explicitly set, `true` is returned.
@@ -52,6 +71,10 @@ trait TSelectionFormField {
 	
 	/**
 	 * Sets the possible options of this selection and returns this field.
+	 * 
+	 * Note: If PHP considers the key of the first selectable option to be empty
+	 * and the this field is nullable, then the save value of that key is `null`
+	 * instead of the given empty value.
 	 * 
 	 * @param	array|callable		$options	selectable options or callable returning the options
 	 * @return	static					this field
