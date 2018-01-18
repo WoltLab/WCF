@@ -55,12 +55,12 @@ class IntegerFormField extends AbstractFormField implements IMaximumFormField, I
 			}
 		}
 		else {
-			if ($this->getValue() < $this->getMinimum()) {
+			if ($this->getMinimum() !== null && $this->getValue() < $this->getMinimum()) {
 				$this->addValidationError(new FormFieldValidationError('minimum', 'wcf.global.form.integer.error.minimum', [
 					'minimum' => $this->getMinimum()
 				]));
 			}
-			else if ($this->getValue() > $this->getMaximum()) {
+			else if ($this->getMaximum() !== null && $this->getValue() > $this->getMaximum()) {
 				$this->addValidationError(new FormFieldValidationError('maximum', 'wcf.global.form.integer.error.maximum', [
 					'maximum' => $this->getMaximum()
 				]));
