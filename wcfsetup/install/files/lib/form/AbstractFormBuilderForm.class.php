@@ -159,7 +159,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			if ($this->formObject instanceof IRouteController) {
 				$parameters['object'] = $this->formObject;
 			}
-			else if (method_exists($this->formObject, 'getObjectID')) {
+			else {
 				$object = $this->formObject;
 				
 				$parameters['id'] = $object->{$object::getDatabaseTableIndexName()};
