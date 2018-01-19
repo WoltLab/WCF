@@ -186,3 +186,7 @@
 .mediaManagerCategoryList {
 	margin-bottom: 5px;
 }
+
+.button.jsMediaSelectButton + .button {
+	margin-left: 5px;
+}
