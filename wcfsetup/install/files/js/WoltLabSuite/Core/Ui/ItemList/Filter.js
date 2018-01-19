@@ -42,7 +42,8 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 			this._value = '';
 			
 			this._options = Core.extend({
-				callbackPrepareItem: undefined
+				callbackPrepareItem: undefined,
+				enableVisibilityFilter: true
 			}, options);
 			
 			var element = elById(elementId);
@@ -86,16 +87,18 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 				this.reset();
 			}).bind(this));
 			
-			var visibilityButton = elCreate('a');
-			visibilityButton.href = '#';
-			visibilityButton.className = 'button inputSuffix jsTooltip';
-			visibilityButton.title = Language.get('wcf.global.filter.button.visibility');
-			visibilityButton.innerHTML = '<span class="icon icon16 fa-eye"></span>';
-			visibilityButton.addEventListener(WCF_CLICK_EVENT, this._toggleVisibility.bind(this));
-			
 			inputAddon.appendChild(input);
 			inputAddon.appendChild(clearButton);
-			inputAddon.appendChild(visibilityButton);
+			
+			if (this._options.enableVisibilityFilter) {
+				var visibilityButton = elCreate('a');
+				visibilityButton.href = '#';
+				visibilityButton.className = 'button inputSuffix jsTooltip';
+				visibilityButton.title = Language.get('wcf.global.filter.button.visibility');
+				visibilityButton.innerHTML = '<span class="icon icon16 fa-eye"></span>';
+				visibilityButton.addEventListener(WCF_CLICK_EVENT, this._toggleVisibility.bind(this));
+				inputAddon.appendChild(visibilityButton);
+			}
 			
 			container.appendChild(inputAddon);
 			
