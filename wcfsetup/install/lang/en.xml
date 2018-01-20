@@ -2460,6 +2460,7 @@ Errors are:
 
 „{@$name}“ sent you a message on {@PAGE_TITLE|language} via the contact form:
 
+Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
 {@$option['title']}:{if !$option['isMessage']} {@$option['value']}{else}
 {@$option['value']}{/if}
@@ -2467,7 +2468,8 @@ Errors are:
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
 
 <p>„{$name}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
-
+<p><br></p>
+<p>Email: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
 <p><strong>{@$option['title']}:</strong>{if !$option['isMessage']} {@$option['value']}{else}
 {@$option['value']|newlineToBreak}{/if}</p>

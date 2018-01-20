@@ -67,7 +67,8 @@ class ContactOptionAction extends CustomOptionAction {
 		$messageData = [
 			'options' => $options,
 			'recipient' => $recipient,
-			'name' => $this->parameters['name']
+			'name' => $this->parameters['name'],
+			'emailAddress' => $this->parameters['email']
 		];
 		
 		// build mail
