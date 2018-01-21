@@ -6,6 +6,7 @@ use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\I18nHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\util\StringUtil;
 
@@ -246,30 +247,16 @@ trait TI18nFormField {
 	 */
 	public function loadValueFromObject(IStorableObject $object) {
 		if (isset($object->{$this->getId()})) {
+			$value = $object->{$this->getId()};
+			
 			if ($this->isI18n()) {
-				$value = $object->{$this->getId()};
-				
 				// do not use `I18nHandler::setOptions()` because then `I18nHandler` only
 				// reads the values when assigning the template variables and the values
 				// are not available in this class via `getValue()`
-				if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
-					$languageItemList = new LanguageItemList();
-					$languageItemList->getConditionBuilder()->add('languageItem = ?', [$value]);
-					$languageItemList->readObjects();
-					
-					$values = [];
-					foreach ($languageItemList as $languageItem) {
-						$values[$languageItem->languageID] = $languageItem->languageItemValue;
-					}
-					
-					I18nHandler::getInstance()->setValues($this->getId(), $values);
-				}
-				else {
-					I18nHandler::getInstance()->setValue($this->getId(), $value);
-				}
+				$this->setStringValue($value);
 			}
 			else {
-				$this->__value = $object->{$this->getId()};
+				$this->__value = $value;
 			}
 		}
 	}
@@ -322,21 +309,60 @@ trait TI18nFormField {
 	}
 	
 	/**
+	 * Sets the value of this form field based on the given string value.
+	 * If the value is a language item matching the language item pattern,
+	 * the relevant language items are loaded and their values are used as
+	 * field values.
+	 * 
+	 * @param	string		$value		set value
+	 */
+	protected function setStringValue($value) {
+		if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
+			$languageItemList = new LanguageItemList();
+			$languageItemList->getConditionBuilder()->add('languageItem = ?', [$value]);
+			$languageItemList->readObjects();
+			
+			$values = [];
+			foreach ($languageItemList as $languageItem) {
+				$values[$languageItem->languageID] = $languageItem->languageItemValue;
+			}
+			
+			I18nHandler::getInstance()->setValues($this->getId(), $values);
+		}
+		else {
+			I18nHandler::getInstance()->setValue($this->getId(), $value);
+		}
+	}
+	
+	/**
 	 * Sets the value of this field and returns this field.
 	 * 
-	 * @param	mixed		$value		new field value
-	 * @return	static				this field
+	 * @param	string|string[]		$value		new field value
+	 * @return	static					this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given value is of an invalid type or otherwise is invalid
+	 * @throws	\InvalidArgumentException		if the given value is of an invalid type or otherwise is invalid
 	 */
 	public function value($value) {
-		if (!is_string($value)) {
-			throw new \InvalidArgumentException("Given value is no string, " . gettype($value) . " given.");
+		if ($this->isI18n()) {
+			if (is_string($value)) {
+				$this->setStringValue($value);
+			}
+			else if (is_array($value)) {
+				I18nHandler::getInstance()->setValues($value);
+			}
+			else {
+				throw new \InvalidArgumentException("Given value is neither a string nor an array, " . gettype($value) . " given.");
+			}
+		}
+		else {
+			if (!is_string($value)) {
+				throw new \InvalidArgumentException("Given value is no string, " . gettype($value) . " given.");
+			}
+			
+			return parent::value($value);
 		}
 		
-		// TODO: check implementation for i18n fields
-		
-		return parent::value($value);
+		return $this;
 	}
 	
 	/**
