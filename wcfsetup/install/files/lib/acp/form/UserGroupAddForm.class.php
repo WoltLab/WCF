@@ -188,6 +188,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// reset values
 		$this->groupName = '';
+		$this->priority = 0;
 		$this->optionValues = array();
 		
 		I18nHandler::getInstance()->reset();
