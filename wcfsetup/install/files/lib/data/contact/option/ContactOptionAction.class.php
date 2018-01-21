@@ -56,6 +56,11 @@ class ContactOptionAction extends CustomOptionAction {
 		foreach ($optionHandler->getOptions() as $option) {
 			/** @var ContactOption $object */
 			$object = $option['object'];
+			if ($object->optionType === 'date' && !$object->getOptionValue()) {
+				// skip empty dates
+				continue;
+			}
+			
 			$options[] = [
 				'isMessage' => $object->isMessage(),
 				'title' => $object->getLocalizedName($defaultLanguage),
