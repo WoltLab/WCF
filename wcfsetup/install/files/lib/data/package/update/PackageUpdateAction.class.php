@@ -11,6 +11,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageInstallationScheduler;
 use wcf\system\package\PackageUpdateDispatcher;
@@ -569,6 +570,29 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$stack = $scheduler->getPackageInstallationStack();
+		
+		// detect major upgrades of the Core itself
+		if ($queueType === 'update') {
+			for ($i = 0, $length = count($stack); $i < $length; $i++) {
+				$update = $stack[$i];
+				if ($update['package'] === 'com.woltlab.wcf') {
+					preg_match('~^(?P<version>\d+\.\d+)\.~', $update['fromversion'], $matchFromVersion);
+					preg_match('~^(?P<version>\d+\.\d+)\.~', $update['toVersion'], $matchToVersion);
+					if ($matchFromVersion['version'] != $matchToVersion['version']) {
+						// version mismatch, this is a major upgrade
+						if ($i > 0) {
+							// the Core upgrade must be the first package in the stack, but there appears to be
+							// at least one package in front of the queue, therefore there are outstanding
+							// updates for the previous version line
+							throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.outstandingUpdates'));
+						}
+					}
+					
+					break;
+				}
+			}
+		}
+		
 		$queueID = null;
 		if (!empty($stack)) {
 			$parentQueueID = 0;
