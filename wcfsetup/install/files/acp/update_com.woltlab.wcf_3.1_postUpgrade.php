@@ -1,5 +1,7 @@
 <?php
 use wcf\data\option\OptionEditor;
+use wcf\data\package\update\server\PackageUpdateServerEditor;
+use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\WCF;
 
@@ -39,6 +41,23 @@ while ($row = $statement->fetchArray()) {
 	]);
 }
 WCF::getDB()->commitTransaction();
+
+// inserts update servers, unless they exist already
+$updateServers = new PackageUpdateServerList();
+$updateServers->readObjects();
+$hasServer = ['update' => false, 'store' => false];
+foreach ($updateServers as $updateServer) {
+	if (preg_match('~https?://(?P<server>update|store)\.woltlab\.com/tornado/~', $updateServer->serverURL, $matches)) {
+		$hasServer[$matches['server']] = true;
+	}
+}
+
+foreach ($hasServer as $type => $serverExists) {
+	if (!$serverExists) {
+		PackageUpdateServerEditor::create(['serverURL' => "http://{$type}.woltlab.com/tornado/"]);
+	}
+}
+
 
 // the upgrade added a bunch of new style variables
 StyleCacheBuilder::getInstance()->reset();

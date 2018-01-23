@@ -121,8 +121,7 @@ ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (user
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
 
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
+-- update servers are added through a script to avoid collisions
 
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBackground', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBorder', 'rgba(236, 241, 247, 1)');
