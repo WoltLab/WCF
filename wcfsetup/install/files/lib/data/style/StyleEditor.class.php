@@ -40,8 +40,17 @@ use wcf\util\XMLWriter;
  * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
+	/**
+	 * @deprecated 3.1 use the compatibility api versions instead
+	 */
 	const EXCLUDE_WCF_VERSION = '3.2.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
+	
+	/**
+	 * list of compatible API versions
+	 * @var integer[]
+	 */
+	public static $compatibilityApiVersions = [2018];
 	
 	/**
 	 * @inheritDoc
@@ -888,7 +897,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$xml->endElement();
 			
 			$xml->startElement('compatibility');
-			$xml->writeElement('api', '', ['version' => 2018]);
+			foreach (self::$compatibilityApiVersions as $apiVersion) {
+				$xml->writeElement('api', '', ['version' => $apiVersion]);
+			}
 			$xml->endElement();
 			
 			$xml->startElement('instructions', ['type' => 'install']);
