@@ -129,7 +129,7 @@ class XMLWriter {
 		}
 		
 		// content
-		$this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
+		if ($cdata !== '') $this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
 		
 		$this->endElement();
 	}
