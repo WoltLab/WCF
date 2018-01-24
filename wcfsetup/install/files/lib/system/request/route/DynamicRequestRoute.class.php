@@ -265,6 +265,10 @@ class DynamicRequestRoute implements IRequestRoute {
 			}
 			
 			$this->routeData['isDefaultController'] = (!isset($this->routeData['controller']));
+			if ($this->routeData['isDefaultController'] && empty($requestURL)) {
+				// pretend that this controller has been renamed
+				$this->routeData['isRenamedController'] = true;
+			}
 			
 			return true;
 		}
