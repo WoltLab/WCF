@@ -15,10 +15,10 @@ define(['./Abstract', 'Core', 'Dom/Util', '../Manager'], function(Abstract, Core
 	/**
 	 * @constructor
 	 */
-	function Tab(containerId) {
+	function TabMenu(containerId) {
 		this.init(containerId);
 	};
-	Core.inherit(Tab, Abstract, {
+	Core.inherit(TabMenu, Abstract, {
 		/**
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default#checkContainer
 		 */
@@ -53,5 +53,5 @@ define(['./Abstract', 'Core', 'Dom/Util', '../Manager'], function(Abstract, Core
 		}
 	});
 	
-	return Tab;
+	return TabMenu;
 });
