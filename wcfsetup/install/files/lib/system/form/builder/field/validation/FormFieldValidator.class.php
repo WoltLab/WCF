@@ -38,7 +38,7 @@ class FormFieldValidator implements IFormFieldValidator {
 			throw new \InvalidArgumentException("The validation function must expect one parameter, instead " . count($parameters) . " parameters are expected.");
 		}
 		$parameterClass = $parameters[0]->getClass();
-		if ($parameterClass === null || !is_subclass_of($parameterClass->getName(), IFormField::class)) {
+		if ($parameterClass === null || ($parameterClass->getName() !== IFormField::class && !is_subclass_of($parameterClass->getName(), IFormField::class))) {
 			throw new \InvalidArgumentException(
 				"The validation function's parameter must be an instance of '" . IFormField::class . "', instead " .
 				($parameterClass === null ? 'any' : "'" . $parameterClass->getName() . "'") . " parameter is expected."
