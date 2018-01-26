@@ -271,7 +271,17 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 				case 'file':
 				case 'template':
 					if ($pluginName === 'acpTemplate' || $pluginName === 'template') {
-						$path = ($pluginName === 'acpTemplate') ? 'acptemplates/' : 'templates/';
+						$pathPrefix = ($pluginName === 'acpTemplate') ? 'acptemplates' : 'templates';
+						
+						if (preg_match('~^'.$pathPrefix.'_(?<application>.*)\.tar$~', $target, $match)) {
+							$path = "{$pathPrefix}_{$match['application']}/";
+							
+							$instructions['attributes'] = ['application' => $match['application']];
+						}
+						else {
+							$path = "{$pathPrefix}/";
+						}
+						
 						foreach (glob($project->path . $path . '*.tpl') as $template) {
 							$tar->registerFile(basename($template), FileUtil::unifyDirSeparator($template));
 						}
