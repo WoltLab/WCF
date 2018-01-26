@@ -40,7 +40,6 @@ class SimpleAclFormField extends AbstractFormField {
 		return false;
 	}
 	
-	
 	/**
 	 * @inheritDoc
 	 */
