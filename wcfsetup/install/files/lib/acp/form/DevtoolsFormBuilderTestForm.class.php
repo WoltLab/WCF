@@ -12,6 +12,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\SimpleAclFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\FormDocument;
@@ -143,6 +144,10 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						),
 					TabFormContainer::create('tab2')
 						->label('Tab 2')
+						->appendChildren([
+							SimpleAclFormField::create('objectAccess')
+								->label('Object can be accessed')
+						])
 				])
 		]);
 		
