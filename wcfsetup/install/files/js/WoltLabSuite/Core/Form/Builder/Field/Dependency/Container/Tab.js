@@ -9,7 +9,7 @@
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since	3.2
  */
-define(['./Abstract', 'Core', 'Dom/Util', '../Manager'], function(Abstract, Core, DomUtil, DependencyManager) {
+define(['./Abstract', 'Core', 'Dom/Util', '../Manager', 'Ui/TabMenu'], function(Abstract, Core, DomUtil, DependencyManager, UiTabMenu) {
 	"use strict";
 	
 	/**
@@ -51,6 +51,13 @@ define(['./Abstract', 'Core', 'Dom/Util', '../Manager'], function(Abstract, Core
 				else {
 					elHide(this._container);
 					elHide(tabMenuListItem);
+					
+					var tabMenu = UiTabMenu.getTabMenu(DomUtil.identify(tabMenuListItem.closest('.tabMenuContainer')));
+					
+					// check if currently active tab will be hidden
+					if (tabMenu.getActiveTab() === tabMenuListItem) {
+						tabMenu.selectFirstVisible();
+					}
 				}
 				
 				// check containers again to make sure parent containers can react to

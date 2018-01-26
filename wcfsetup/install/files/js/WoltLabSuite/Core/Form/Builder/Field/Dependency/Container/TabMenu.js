@@ -9,7 +9,7 @@
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since	3.2
  */
-define(['./Abstract', 'Core', 'Dom/Util', '../Manager'], function(Abstract, Core, DomUtil, DependencyManager) {
+define(['./Abstract', 'Core', 'Dom/Util', '../Manager', 'Ui/TabMenu'], function(Abstract, Core, DomUtil, DependencyManager, UiTabMenu) {
 	"use strict";
 	
 	/**
@@ -41,6 +41,8 @@ define(['./Abstract', 'Core', 'Dom/Util', '../Manager'], function(Abstract, Core
 			if (containerIsVisible !== containerShouldBeVisible) {
 				if (containerShouldBeVisible) {
 					elShow(this._container);
+					
+					UiTabMenu.getTabMenu(DomUtil.identify(this._container)).selectFirstVisible();
 				}
 				else {
 					elHide(this._container);
