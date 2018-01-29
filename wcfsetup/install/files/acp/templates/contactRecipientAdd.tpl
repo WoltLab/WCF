@@ -74,12 +74,14 @@
 			</dd>
 		</dl>
 		
-		<dl>
-			<dt></dt>
-			<dd>
-				<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.contact.recipient.isDisabled{/lang}</label>
-			</dd>
-		</dl>
+		{if $action != 'edit' || !$recipient->isAdministrator}
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.contact.recipient.isDisabled{/lang}</label>
+				</dd>
+			</dl>
+		{/if}
 		
 		{event name='dataFields'}
 	</div>
