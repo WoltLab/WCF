@@ -143,7 +143,7 @@ define(
 					}
 					else if (cell.classList.contains('columnUploadTime')) {
 						cell.innerHTML = '';
-						cell.append(DateUtil.getTimeElement(new Date()));
+						cell.appendChild(DateUtil.getTimeElement(new Date()));
 					}
 					else if (cell.classList.contains('columnDigits')) {
 						cell.textContent = FileUtil.formatFilesize(file.size);
