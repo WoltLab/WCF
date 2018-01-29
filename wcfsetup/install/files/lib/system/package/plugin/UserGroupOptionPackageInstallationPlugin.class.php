@@ -4,6 +4,7 @@ use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -56,6 +57,10 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['permissions'])) $permissions = StringUtil::normalizeCsv($option['permissions']);
 		if (isset($option['options'])) $options = StringUtil::normalizeCsv($option['options']);
 		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
+		
+		if (empty($optionType)) {
+			throw new SystemException("Expected a non-empty 'optiontype' value for the option  '".$optionName."'.");
+		}
 		
 		// force the `html` bbcode to be disabled by default
 		if ($optionType === 'BBCodeSelect') {
