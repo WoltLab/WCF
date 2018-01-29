@@ -32,14 +32,14 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 		_initUi: function (checkbox) {
 			var html = '<dt>' + Language.get('wcf.acp.email.smtp.test') + '</dt>';
 			html += '<dd>';
-			html += '<button>' + Language.get('wcf.acp.email.smtp.test.run') + '</button>';
+			html += '<a href="#" class="button">' + Language.get('wcf.acp.email.smtp.test.run') + '</a>';
 			html += '<small>' + Language.get('wcf.acp.email.smtp.test.description') + '</small>';
 			html += '</dd>';
 			
 			_container = elCreate('dl');
 			_container.innerHTML = html;
 			
-			_buttonRunTest = elBySel('button', _container);
+			_buttonRunTest = elBySel('a', _container);
 			_buttonRunTest.addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this));
 			
 			var insertAfter = checkbox.closest('dl');
@@ -55,11 +55,13 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 			elInnerError(_buttonRunTest, false);
 			
 			window.setTimeout((function () {
+				var startTls = elBySel('input[name="values[mail_smtp_starttls]"]:checked');
+				
 				Ajax.api(this, {
 					parameters: {
 						host: elById('mail_smtp_host').value,
 						port: elById('mail_smtp_port').value,
-						startTls: elBySel('input[name="values[mail_smtp_starttls]"]:checked').value,
+						startTls: (startTls) ? startTls.value : '',
 						user: elById('mail_smtp_user').value,
 						password: elById('mail_smtp_password').value
 					}
