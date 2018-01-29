@@ -8,6 +8,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfileAction;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -110,10 +111,19 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				WHERE   userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
+			// retrieve permissions
+			$userIDs = [];
+			foreach ($users as $user) {
+				$userIDs[] = $user->userID;
+			}
+			$userPermissions = $this->getBulkUserPermissions($userIDs, ['user.message.disallowedBBCodes', 'user.signature.disallowedBBCodes']);
+			
 			$htmlInputProcessor = new HtmlInputProcessor();
 			WCF::getDB()->beginTransaction();
 			/** @var UserEditor $user */
 			foreach ($users as $user) {
+				BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.signature.disallowedBBCodes')));
+				
 				if (!$user->signatureEnableHtml) {
 					$htmlInputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID, true);
 					
@@ -128,6 +138,8 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 				}
 				
 				if ($user->aboutMe) {
+					BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.message.disallowedBBCodes')));
+					
 					if (!$user->signatureEnableHtml) {
 						$htmlInputProcessor->process($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID, true);
 					}

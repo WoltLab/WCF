@@ -3,6 +3,7 @@ namespace wcf\system\worker;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\WCF;
 
@@ -62,6 +63,13 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 			return;
 		}
 		
+		// retrieve permissions
+		$userIDs = [];
+		foreach ($this->objectList as $comment) {
+			$userIDs[] = $comment->userID;
+		}
+		$userPermissions = $this->getBulkUserPermissions($userIDs, ['user.comment.disallowedBBCodes']);
+		
 		WCF::getDB()->beginTransaction();
 		/** @var Comment $comment */
 		foreach ($this->objectList as $comment) {
@@ -69,6 +77,8 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 			
 			$commentEditor->updateResponseIDs();
 			$commentEditor->updateUnfilteredResponseIDs();
+			
+			BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', $this->getBulkUserPermissionValue($userPermissions, $comment->userID, 'user.comment.disallowedBBCodes')));
 			
 			// update message
 			if (!$comment->enableHtml) {
