@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\worker;
-use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
+use wcf\data\DatabaseObjectList;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
