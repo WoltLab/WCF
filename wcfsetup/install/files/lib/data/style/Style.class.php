@@ -76,8 +76,29 @@ class Style extends DatabaseObject {
 				return '';
 			}
 			
-			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), 1\)$/', $this->variables[$variableName], $matches)) {
-				return sprintf('#%02x%02x%02x', $matches[1], $matches[2], $matches[3]);
+			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), (1|0\.\d+)\)$/', $this->variables[$variableName], $matches)) {
+				$r = $matches[1];
+				$g = $matches[2];
+				$b = $matches[3];
+				$a = floatval($matches[4]);
+				
+				// calculate alpha value assuming a white canvas, source rgb will be (255,255,255) or #fff
+				// see https://stackoverflow.com/a/2049362
+				if ($a < 1) {
+					$r = ((1 - $a) * 255) + ($a * $r);
+					$g = ((1 - $a) * 255) + ($a * $g);
+					$b = ((1 - $a) * 255) + ($a * $b);
+					
+					$clamp = function($v) {
+						return max(0, min(255, intval($v)));
+					};
+					
+					$r = $clamp($r);
+					$g = $clamp($g);
+					$b = $clamp($b);
+				}
+				
+				return sprintf('#%02x%02x%02x', $r, $g, $b);
 			}
 			
 			return $this->variables[$variableName];
