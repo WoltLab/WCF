@@ -317,6 +317,20 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			foreach ($this->content as $boxID => $contentData) {
 				$boxEditor = $this->boxes[$boxID];
 				
+				// expand non-i18n value
+				if ($boxEditor->boxType === 'system' && count($contentData) === 1 && isset($contentData[''])) {
+					foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+						$insertStatement->execute([
+							$boxID,
+							$language->languageID,
+							$contentData['']['title'],
+							''
+						]);
+					}
+					
+					continue;
+				}
+				
 				foreach ($contentData as $languageCode => $content) {
 					$languageID = null;
 					if ($languageCode != '') {
