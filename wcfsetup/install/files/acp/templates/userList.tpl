@@ -114,7 +114,9 @@
 									{event name='dropdownItems'}
 									
 									{if $user->userID !== $__wcf->user->userID}
-										<li><a href="{link controller='UserMail' id=$user->userID}{/link}">{lang}wcf.acp.user.action.sendMail{/lang}</a></li>
+										{if $__wcf->session->getPermission('admin.user.canMailUser')}
+											<li><a href="{link controller='UserMail' id=$user->userID}{/link}">{lang}wcf.acp.user.action.sendMail{/lang}</a></li>
+										{/if}
 										
 										{if $user->accessible && $__wcf->session->getPermission('admin.user.canEditPassword')}
 											<li><a href="#" class="jsSendNewPassword">{lang}wcf.acp.user.action.sendNewPassword{/lang}</a></li>
