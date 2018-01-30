@@ -6,6 +6,9 @@
 	<meta name="robots" content="noindex">
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
+	{* work-around for Microsoft Edge that sometimes does not apply this style, if it was set via an external stylesheet *}
+	<style>ol, ul { list-style: none; }</style>
+	
 	<!-- Stylesheets -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet">
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
