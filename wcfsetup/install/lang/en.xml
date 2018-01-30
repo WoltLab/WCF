@@ -1308,6 +1308,9 @@
 <br>
 Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a> or contact your hosting provider for assistance.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[The test is currently running &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Test Result]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Failed]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status.success"><![CDATA[Pass]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[The test was successful.]]></item>
 		
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>

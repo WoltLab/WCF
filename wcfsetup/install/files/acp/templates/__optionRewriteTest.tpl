@@ -15,6 +15,8 @@
 				<p>{lang}wcf.acp.option.url_omit_index_php.test.failure{/lang}</p>
 			</div>
 			<p>{lang}wcf.acp.option.url_omit_index_php.test.failure.description{/lang}</p>
+			<p style="margin-top: 20px">{lang}wcf.acp.option.url_omit_index_php.test.status{/lang}</p>
+			<ul id="dialogRewriteTestFailureResults"></ul>
 		</div>
 		
 		<div class="formSubmit">
@@ -22,12 +24,19 @@
 		</div>
 	</div>
 	<script data-relocate="true">
-		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Option/RewriteTest'], function (Language, AcpUiOptionRewriteTest) {
+		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Option/RewriteTest'], function (Dictionary, Language, AcpUiOptionRewriteTest) {
 			Language.addObject({
-				'wcf.acp.option.url_omit_index_php': '{lang}wcf.acp.option.url_omit_index_php{/lang}'
+				'wcf.acp.option.url_omit_index_php': '{lang}wcf.acp.option.url_omit_index_php{/lang}',
+				'wcf.acp.option.url_omit_index_php.test.status.failure': '{lang}wcf.acp.option.url_omit_index_php.test.status.failure{/lang}',
+				'wcf.acp.option.url_omit_index_php.test.status.success': '{lang}wcf.acp.option.url_omit_index_php.test.status.success{/lang}'
 			});
 			
-			AcpUiOptionRewriteTest.init('{$__wcf->getPath()}core-rewrite-test/?uuidHash={'sha256'|hash:WCF_UUID}');
+			var apps = Dictionary.fromObject({
+				{* this bypasses the route system to force rewritten urls *}
+				{implode from=$rewriteTestApplications item=$rewriteTestApplication}'{$rewriteTestApplication->getPackage()|encodeJS}': '{$__wcf->getPath($rewriteTestApplication->getAbbreviation())}core-rewrite-test/?uuidHash={'sha256'|hash:WCF_UUID}'{/implode}
+			});
+			
+			AcpUiOptionRewriteTest.init(apps);
 		});
 	</script>
 {/if}
