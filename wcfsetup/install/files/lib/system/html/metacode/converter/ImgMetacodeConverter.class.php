@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\metacode\converter;
+use wcf\util\StringUtil;
 
 /**
  * Converts img bbcode into `<img>`.
@@ -16,7 +17,7 @@ class ImgMetacodeConverter extends AbstractMetacodeConverter {
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
 		$element = $fragment->ownerDocument->createElement('img');
-		$element->setAttribute('src', $attributes[0]);
+		$element->setAttribute('src', StringUtil::decodeHTML($attributes[0]));
 		
 		if (isset($attributes[1]) && in_array($attributes[1], ['left', 'right'])) {
 			$element->setAttribute('class', 'messageFloatObject'.ucfirst($attributes[1]));

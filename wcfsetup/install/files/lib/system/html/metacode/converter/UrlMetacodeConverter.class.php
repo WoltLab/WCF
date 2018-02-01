@@ -23,6 +23,8 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter {
 			$href = $fragment->textContent;
 		}
 		
+		$href = StringUtil::decodeHTML($href);
+		
 		// check if the link is empty, use the href value instead
 		$useHrefAsValue = false;
 		if ($fragment->childNodes->length === 0) {

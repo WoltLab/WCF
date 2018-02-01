@@ -61,7 +61,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter {
 				break;
 		}
 		
-		$element->setAttribute('data-file', $file);
+		$element->setAttribute('data-file', StringUtil::decodeHTML($file));
 		$element->setAttribute('data-highlighter', $highlighter);
 		$element->setAttribute('data-line', $line);
 		
