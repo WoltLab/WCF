@@ -284,6 +284,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		return ControllerMap::getInstance()->lookup($application, $controller);
+		return ControllerMap::getInstance()->lookup($application, $controller, !$this->isACP());
 	}
 }
