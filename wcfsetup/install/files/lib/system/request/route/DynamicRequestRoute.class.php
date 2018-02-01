@@ -204,7 +204,7 @@ class DynamicRequestRoute implements IRequestRoute {
 			}
 		}
 		
-		if ($this->isACP || !URL_OMIT_INDEX_PHP) {
+		if ($this->isACP() || !URL_OMIT_INDEX_PHP) {
 			if (!empty($link)) {
 				$link = 'index.php?' . $link;
 			}
