@@ -183,9 +183,6 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 */
 	public function getDisplayLink() {
 		$link = preg_replace('~^https?://~', '', $this->getLink());
-		if ($this->controllerCustomURL) {
-			$link = preg_replace('~(index\.php\?)[^/]+/$~', "\$1{$this->controllerCustomURL}/", $link);
-		}
 		
 		if (URL_OMIT_INDEX_PHP) {
 			$link = str_replace('index.php?', '', $link);
