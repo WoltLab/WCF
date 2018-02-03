@@ -763,7 +763,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// append style info file to style tar
 		$styleTar->addString(self::INFO_FILE, $xml->endDocument());
-		unset($string);
 		
 		// create variable list
 		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/styleVariables.xsd');
@@ -782,7 +781,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// append variable list to style tar
 		$styleTar->addString('variables.xml', $xml->endDocument());
-		unset($string);
 		
 		if ($templates && $this->templateGroupID) {
 			$templateGroup = new TemplateGroup($this->templateGroupID);
