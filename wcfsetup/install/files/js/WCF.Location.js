@@ -44,6 +44,14 @@ WCF.Location.Util = {
 WCF.Location.GoogleMaps = { };
 
 /**
+ * After an authentican error, Google Maps tries to call the `gm_authFailure` function.
+ * (see https://developers.google.com/maps/documentation/javascript/events#auth-errors)
+ */
+function gm_authFailure() {
+	WCF.System.Event.fireEvent('com.woltlab.wcf.googleMaps', 'authenticationFailure');
+};
+
+/**
  * Handles the global Google Maps settings.
  */
 WCF.Location.GoogleMaps.Settings = {
