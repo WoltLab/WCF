@@ -54,6 +54,20 @@ class ContactRecipientEditForm extends ContactRecipientAddForm {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		parent::validate();
+		
+		if ($this->recipient->isAdministrator) {
+			$this->isDisabled = 0;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readData() {
 		parent::readData();
 		

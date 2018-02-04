@@ -202,7 +202,7 @@ class UserEditForm extends UserAddForm {
 		
 		// get the user cover photo object
 		if ($this->user->coverPhotoHash) {
-			$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto();
+			$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
 		}
 	}
 	

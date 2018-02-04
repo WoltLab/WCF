@@ -63,7 +63,7 @@
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title">{lang}wcf.global.title{/lang}</label></dt>
 				<dd>
-					<input id="title" name="title" type="text" value="{$i18nPlainValues[title]}">
+					<input id="title" name="title" type="text" value="{$i18nPlainValues[title]}" class="medium">
 					{if $errorField == 'title'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -80,7 +80,7 @@
 			<dl{if $errorField == 'description'} class="formError"{/if}>
 				<dt><label for="description">{lang}wcf.acp.trophy.description{/lang}</label></dt>
 				<dd>
-					<input id="description" name="description" type="text" value="{$i18nPlainValues[description]}">
+					<input id="description" name="description" type="text" value="{$i18nPlainValues[description]}" class="long">
 					{if $errorField == 'description'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

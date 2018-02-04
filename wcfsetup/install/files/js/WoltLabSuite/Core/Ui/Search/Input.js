@@ -110,24 +110,25 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		_keyup: function(event) {
 			// handle dropdown keyboard navigation
 			if (this._activeItem !== null) {
-				if (!UiSimpleDropdown.isOpen(this._dropdownContainerId)) {
-					return;
+				if (UiSimpleDropdown.isOpen(this._dropdownContainerId)) {
+					if (EventKey.ArrowUp(event)) {
+						event.preventDefault();
+						
+						return this._keyboardPreviousItem();
+					}
+					else if (EventKey.ArrowDown(event)) {
+						event.preventDefault();
+						
+						return this._keyboardNextItem();
+					}
+					else if (EventKey.Enter(event)) {
+						event.preventDefault();
+						
+						return this._keyboardSelectItem();
+					}
 				}
-				
-				if (EventKey.ArrowUp(event)) {
-					event.preventDefault();
-					
-					return this._keyboardPreviousItem();
-				}
-				else if (EventKey.ArrowDown(event)) {
-					event.preventDefault();
-					
-					return this._keyboardNextItem();
-				}
-				else if (EventKey.Enter(event)) {
-					event.preventDefault();
-					
-					return this._keyboardSelectItem();
+				else {
+					this._activeItem = null;
 				}
 			}
 			

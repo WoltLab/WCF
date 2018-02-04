@@ -200,7 +200,7 @@ class HtmlInputNodeTextParser {
 				$value = $this->parseEmail($node, $value);
 			}
 			
-			if ($this->smileyCount !== 50) {
+			if (MODULE_SMILEY && $this->smileyCount !== 50) {
 				$value = $this->parseSmiley($node, $value);
 			}
 			

@@ -40,7 +40,9 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			throw new \RuntimeException("Only tpl-type pages support template files.");
 		}
 		
-		file_put_contents(WCF_DIR . 'templates/' . $this->getTplName(($languageID ?: null)) . '.tpl', $content);
+		$filename = WCF_DIR . 'templates/' . $this->getTplName(($languageID ?: null)) . '.tpl';
+		file_put_contents($filename, $content);
+		WCF::resetZendOpcache($filename);
 	}
 	
 	/**

@@ -27,9 +27,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped 
 		$html = str_replace('> <', '>&nbsp;<', $html);
-		
-		require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_ts3server.php');
-		
+	
 		$html = $this->getPurifier()->purify($html);
 		
 		// work-around for a libxml bug that causes a single space between
@@ -44,6 +42,8 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	 */
 	protected function getPurifier() {
 		if (self::$purifier === null) {
+			require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_ts3server.php');
+			
 			$config = \HTMLPurifier_Config::createDefault();
 			
 			// we need to prevent automatic finalization, otherwise we cannot read the default

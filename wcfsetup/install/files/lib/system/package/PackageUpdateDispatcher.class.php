@@ -822,11 +822,13 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			ON		(pus.packageUpdateServerID = pu.packageUpdateServerID)
 			WHERE		pu.package = ?
 					AND puv.packageVersion = ?
+					AND puv.isAccessible = ?
 					AND pus.isDisabled = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$package,
 			$version,
+			1,
 			0
 		]);
 		$versions = $statement->fetchAll(\PDO::FETCH_ASSOC);

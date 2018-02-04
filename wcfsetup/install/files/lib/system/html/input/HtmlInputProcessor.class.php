@@ -111,7 +111,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 			DOMUtil::removeNode($metacode, true);
 		}
 		
-		$this->process($html, $objectType, $objectID, false);
+		$this->process($this->getHtml(), $objectType, $objectID, false);
 	}
 	
 	/**

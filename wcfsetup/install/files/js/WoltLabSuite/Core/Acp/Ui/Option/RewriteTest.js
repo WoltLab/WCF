@@ -9,6 +9,7 @@
 define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language, UiDialog) {
 	"use strict";
 	
+	var _apps;
 	var _buttonStartTest = elById('rewriteTestStart');
 	var _callbackChange = null;
 	var _option = elById('url_omit_index_php');
@@ -23,9 +24,9 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 		 * Initializes the rewrite test, but aborts early if URL rewriting was
 		 * enabled at page init.
 		 * 
-		 * @param       {string}        testUrl
+		 * @param       {Dictionary}    apps
 		 */
-		init: function (testUrl) {
+		init: function (apps) {
 			if (_option.checked) {
 				// option is already enabled, ignore it
 				return;
@@ -33,7 +34,7 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 			
 			_callbackChange = this.onChange.bind(this);
 			_option.addEventListener('change', _callbackChange);
-			_testUrl = testUrl;
+			_apps = apps;
 		},
 		
 		/**
@@ -61,25 +62,47 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 			_buttonStartTest.disabled = true;
 			this._setStatus('running');
 			
-			var failure = (function () {
-				window.setTimeout((function() {
-					_buttonStartTest.disabled = false;
+			var tests = [];
+			_apps.forEach(function (url, app) {
+				tests.push(new Promise(function (resolve, reject) {
+					var failure = function() {
+						reject({ app: app, pass: false });
+					};
 					
-					this._setStatus('failure');
-				}).bind(this), 500);
-			}).bind(this);
+					var request = new AjaxRequest({
+						ignoreError: true,
+						// bypass the LinkHandler, because rewrites aren't enabled yet
+						url: url,
+						success: function(data) {
+							if (!data.hasOwnProperty('core_rewrite_test') || data.core_rewrite_test !== 'passed') {
+								failure();
+							}
+							else {
+								resolve({app: app, pass: true});
+							}
+						},
+						failure: failure
+					});
+					request.sendRequest(false);
+				}));
+			});
 			
-			var request = new AjaxRequest({
-				ignoreError: true,
-				// bypass the LinkHandler, because rewrites aren't enabled yet
-				url: _testUrl,
-				success: (function (data) {
-					if (!data.hasOwnProperty('core_rewrite_test') || data.core_rewrite_test !== 'passed') {
-						failure();
-						return;
+			Promise.all(tests.map(function(test) {
+				// wait for all promises, even if some are rejected
+				// this will also cause `then()` to be always called
+				return test.catch(function(result) {
+					return result;
+				});
+			})).then((function(results) {
+				var passed = true;
+				results.forEach(function(result) {
+					if (!result.pass) {
+						passed = false;
 					}
-					
-					window.setTimeout((function() {
+				});
+				
+				window.setTimeout((function() {
+					if (passed) {
 						_testPassed = true;
 						
 						this._setStatus('success');
@@ -91,12 +114,20 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 								UiDialog.close(this);
 							}
 						}).bind(this), 1000);
-					}).bind(this), 500);
-				}).bind(this),
-				
-				failure: failure
-			});
-			request.sendRequest(false);
+					}
+					else {
+						_buttonStartTest.disabled = false;
+						
+						var html = '';
+						results.forEach(function(result) {
+							html += '<li><span class="badge label ' + (result.pass ? 'green' : 'red') + '">' + Language.get('wcf.acp.option.url_omit_index_php.test.status.' + (result.pass ? 'success' : 'failure')) + '</span> ' + result.app + '</li>';
+						});
+						elById('dialogRewriteTestFailureResults').innerHTML = html;
+						
+						this._setStatus('failure');
+					}
+				}).bind(this), 500);
+			}).bind(this));
 		},
 		
 		/**

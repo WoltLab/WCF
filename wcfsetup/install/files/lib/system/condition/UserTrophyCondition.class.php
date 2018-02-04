@@ -224,7 +224,7 @@ HTML;
 		}
 		
 		if (count(array_intersect($this->notUserTrophyIDs, $this->userTrophyIDs))) {
-			$this->errorMessages['notUserTrophyIDs'] = 'wcf.user.condition.notUserTrophy.error.userTrophyIntersection';
+			$this->errorMessages['notUserTrophyIDs'] = 'wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection';
 			
 			throw new UserInputException('notUserTrophyIDs', 'userTrophyIntersection');
 		}

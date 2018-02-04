@@ -92,7 +92,11 @@
 					<dd>
 						{foreach from=$columnOptions item=optionData}
 							{assign var='option' value=$optionData.object}
-							<label><input type="checkbox" name="columns[]" value="{$option->optionName}"{if $option->optionName|in_array:$columns} checked{/if}> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+							
+							{* the 'about me' field does not qualify for display *}
+							{if $option->optionName !== 'aboutMe'}
+								<label><input type="checkbox" name="columns[]" value="{$option->optionName}"{if $option->optionName|in_array:$columns} checked{/if}> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+							{/if}
 						{/foreach}
 					</dd>
 				</dl>

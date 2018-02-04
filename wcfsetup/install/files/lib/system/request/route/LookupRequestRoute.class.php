@@ -35,6 +35,7 @@ class LookupRequestRoute implements IRequestRoute {
 		$regex = '~^
 			(?P<controller>.+?)
 			(?:
+				/
 				(?P<id>[0-9]+)
 				(?:
 					-

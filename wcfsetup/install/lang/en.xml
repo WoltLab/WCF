@@ -1308,6 +1308,9 @@
 <br>
 Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F25-setting-up-user-friendly-urls%2F" class="externalURL">Setting up user friendly URLs</a> or contact your hosting provider for assistance.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[The test is currently running &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Test Result]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Failed]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status.success"><![CDATA[Pass]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[The test was successful.]]></item>
 		
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
@@ -1549,6 +1552,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved.]]></item>
+		<item name="wcf.acp.package.update.error.outstandingUpdates"><![CDATA[Please install all outstanding updates before attempting to migrate to a newer version.]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}License and serial number{else}Username and password{/if} have been accepted by the server, but they do not grant you the permission to download this commercial product.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[You are not allowed to access this package.]]></item>
@@ -2460,16 +2464,18 @@ Errors are:
 
 „{@$name}“ sent you a message on {@PAGE_TITLE|language} via the contact form:
 
+Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
-{@$option['title']}:{if !$option['isMessage']} {@$option['value']}{else}
+{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else}
 {@$option['value']}{/if}
 {/foreach}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
 
 <p>„{$name}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
-
+<p><br></p>
+<p>Email: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
-<p><strong>{@$option['title']}:</strong>{if !$option['isMessage']} {@$option['value']}{else}
+<p><strong>{@$option['title']}:</strong> {if !$option['isMessage']}{@$option['value']}{else}
 {@$option['value']|newlineToBreak}{/if}</p>
 {/foreach}]]></item>
 		<item name="wcf.contact.option1"><![CDATA[Subject]]></item>

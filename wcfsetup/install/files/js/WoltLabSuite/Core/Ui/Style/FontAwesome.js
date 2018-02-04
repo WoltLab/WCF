@@ -98,7 +98,8 @@ define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], functi
 									span: small,
 									text: text
 								};
-							}
+							},
+							enableVisibilityFilter: false
 						});
 					}).bind(this),
 					onShow: function () {

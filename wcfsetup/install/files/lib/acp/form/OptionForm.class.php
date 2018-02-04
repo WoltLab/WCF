@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\style\StyleHandler;
@@ -108,7 +109,8 @@ class OptionForm extends AbstractOptionListForm {
 		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'optionName' => $this->optionName,
-			'optionTree' => $this->optionTree
+			'optionTree' => $this->optionTree,
+			'rewriteTestApplications' => ApplicationHandler::getInstance()->getApplications()
 		]);
 	}
 	

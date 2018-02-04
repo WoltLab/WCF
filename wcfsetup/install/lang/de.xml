@@ -1316,6 +1316,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 <br>
 Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstütznung bei der Einrichtung zu erhalten.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[Test läuft &hellip;]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Testergebnis]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Fehlgeschlagen]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.test.status.success"><![CDATA[Erfolgreich]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[Test erfolgreich]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
@@ -1422,7 +1425,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.enable_polling"><![CDATA[Hintergrund-Aktualisierung von Benachrichtigungen aktivieren]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Neue Benachrichtigungen werden in periodischen Abständen automatisch abgerufen. Der Aktualisierungs-Intervall beträgt 5 Minuten und wird bei Inaktivität schrittweise auf 15 Minuten reduziert.]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Desktop-Benachrichtigungen verwenden]]></item>
-		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund aberufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt. Einige wenige Browser, z. B. Internet Explorer, unterstützen diese Funktion nicht.]]></item>
+		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund abgerufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt. Einige wenige Browser, z. B. Internet Explorer, unterstützen diese Funktion nicht.]]></item>
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontaktformular aktivieren]]></item>
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontaktformular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
@@ -1556,6 +1559,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[Die Paketliste konnte nicht abgerufen werden]]></item>
+		<item name="wcf.acp.package.update.error.outstandingUpdates"><![CDATA[Bitte installiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} zuerst alle ausstehenden Updates, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} auf eine neue Version {if LANGUAGE_USE_INFORMAL_VARIANT}umsteigst{else}umsteigen{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben sind ungültig, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if} wurden vom Server akzeptiert, es handelt sich aber um einer kommerzielles Produkt auf das diese Zugangsdaten keinen Zugriff haben.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} nicht berechtigt auf dieses Paket zuzugreifen.]]></item>
@@ -2526,16 +2530,18 @@ Fehler sind beispielsweise:
 
 „{@$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf der Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
 
+E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
-{@$option['title']}:{if !$option['isMessage']} {@$option['value']}{else}
+{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else}
 {@$option['value']}{/if}
 {/foreach}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hallo,</h2>
 
 <p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
-
+<p><br></p>
+<p>E-Mail-Adresse: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
-<p><strong>{@$option['title']}:</strong>{if !$option['isMessage']} {@$option['value']}{else}
+<p><strong>{@$option['title']}:</strong> {if !$option['isMessage']}{@$option['value']}{else}
 {@$option['value']|newlineToBreak}{/if}</p>
 {/foreach}]]></item>
 		<item name="wcf.contact.option1"><![CDATA[Betreff]]></item>

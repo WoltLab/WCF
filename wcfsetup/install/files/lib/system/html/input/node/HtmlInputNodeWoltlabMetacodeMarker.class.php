@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
@@ -94,7 +95,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		EventHandler::getInstance()->fireAction($this, 'filterGroups', $data);
 		
 		foreach ($groups as $name => $pairs) {
-			if (!in_array($name, $data['bbcodes'])) {
+			if (!in_array($name, $data['bbcodes']) || !BBCodeHandler::getInstance()->isAvailableBBCode($name)) {
 				foreach ($pairs as $pair) {
 					$pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
 					$this->convertToBBCode($name, $pair);
@@ -503,6 +504,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			case 'code':
 			case 'div':
 			case 'p':
+			case 'td':
 			case 'woltlab-quote':
 			case 'woltlab-spoiler':
 				return true;

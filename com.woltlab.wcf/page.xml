@@ -149,7 +149,6 @@
 			<controller>wcf\form\LoginForm</controller>
 			<name language="de">Anmeldung</name>
 			<name language="en">Login</name>
-			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
 			
 			<content language="en">

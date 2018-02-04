@@ -307,13 +307,16 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns the user's cover photo.
 	 * 
+	 * @param       boolean         $isACP          override ban on cover photo
 	 * @return      IUserCoverPhoto
 	 */
-	public function getCoverPhoto() {
+	public function getCoverPhoto($isACP = false) {
 		if ($this->coverPhoto === null) {
-			if (!$this->disableCoverPhoto && $this->coverPhotoHash) {
-				if ($this->canSeeCoverPhoto()) {
-					$this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash, $this->coverPhotoExtension);
+			if ($this->coverPhotoHash) {
+				if ($isACP || !$this->disableCoverPhoto) {
+					if ($this->canSeeCoverPhoto()) {
+						$this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash, $this->coverPhotoExtension);
+					}
 				}
 			}
 			

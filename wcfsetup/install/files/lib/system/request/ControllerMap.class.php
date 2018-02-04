@@ -156,16 +156,21 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	controller class, e.g. 'MembersList'
+	 * @param       boolean         $forceFrontend  force transformation for frontend
 	 * @return	string		url representation of controller, e.g. 'members-list'
 	 */
-	public function lookup($application, $controller) {
+	public function lookup($application, $controller, $forceFrontend = null) {
 		$lookupKey = $application . '-' . $controller;
 		
 		if (isset($this->lookupCache[$lookupKey])) {
 			return $this->lookupCache[$lookupKey];
 		}
 		
-		if (!class_exists(WCFACP::class, false) && isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+		if ($forceFrontend === null) {
+			$forceFrontend = !class_exists(WCFACP::class, false);
+		}
+		
+		if ($forceFrontend && isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
 			$urlController = $this->customUrls['reverse'][$application][$controller];
 		}
 		else {

@@ -17,7 +17,7 @@ class SpoilerMetacodeConverter extends AbstractMetacodeConverter {
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
 		$element = $fragment->ownerDocument->createElement('woltlab-spoiler');
-		$element->setAttribute('data-label', (!empty($attributes[0])) ? StringUtil::trim($attributes[0]) : '');
+		$element->setAttribute('data-label', (!empty($attributes[0])) ? StringUtil::trim(StringUtil::decodeHTML($attributes[0])) : '');
 		$element->appendChild($fragment);
 		
 		return $element;

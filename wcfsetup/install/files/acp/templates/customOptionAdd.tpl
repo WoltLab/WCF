@@ -10,6 +10,8 @@
 			else {
 				$('#selectOptionsDL').hide();
 			}
+			
+			window[($value === 'boolean' ? 'elHide' : 'elShow')](elById('validationPatternDL'));
 		});
 		$('#optionType').trigger('change');
 	});
@@ -108,7 +110,7 @@
 		</dd>
 	</dl>
 	
-	<dl{if $errorField == 'validationPattern'} class="formError"{/if}>
+	<dl id="validationPatternDL"{if $errorField == 'validationPattern'} class="formError"{/if}>
 		<dt><label for="validationPattern">{lang}wcf.acp.customOption.validationPattern{/lang}</label></dt>
 		<dd>
 			<input type="text" id="validationPattern" name="validationPattern" value="{$validationPattern}" class="long">

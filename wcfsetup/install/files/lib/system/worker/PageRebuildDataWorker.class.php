@@ -2,8 +2,10 @@
 namespace wcf\system\worker;
 use wcf\data\page\content\PageContentEditor;
 use wcf\data\page\content\PageContentList;
+use wcf\data\page\Page;
 use wcf\data\page\PageList;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 
@@ -65,6 +67,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker {
 		$pageContentList->getConditionBuilder()->add('page_content.pageID IN (?)', [$this->objectList->getObjectIDs()]);
 		$pageContentList->readObjects();
 		foreach ($pageContentList as $pageContent) {
+			/** @var Page $page */
 			$page = $pages[$pageContent->pageID];
 			if ($page->pageType == 'text' || $page->pageType == 'html') {
 				// update search index
@@ -85,18 +88,18 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker {
 			if ($page->pageType == 'text') {
 				$this->getHtmlInputProcessor()->process($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
 				$data['content'] = $this->getHtmlInputProcessor()->getHtml();
+				
+				$hasEmbeddedObjects = 0;
+				if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor())) {
+					$hasEmbeddedObjects = 1;
+				}
+				
+				if ($hasEmbeddedObjects != $pageContent->hasEmbeddedObjects) {
+					$data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
+				}
 			}
-			else {
-				$this->getHtmlInputProcessor()->processEmbeddedContent($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
-			}
-			
-			$hasEmbeddedObjects = 0;
-			if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor())) {
-				$hasEmbeddedObjects = 1;
-			}
-			
-			if ($hasEmbeddedObjects != $pageContent->hasEmbeddedObjects) {
-				$data['hasEmbeddedObjects'] = $hasEmbeddedObjects;
+			else if ($page->pageType == 'html' || $page->pageType == 'tpl') {
+				HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content', $pageContent->pageContentID, $pageContent->content);
 			}
 			
 			if (!empty($data)) {
