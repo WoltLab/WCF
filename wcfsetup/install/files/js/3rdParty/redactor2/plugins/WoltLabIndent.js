@@ -71,6 +71,21 @@ $.Redactor.prototype.WoltLabIndent = function() {
 						marker1 = elCreate('woltlab-list-marker');
 						$current[0].insertBefore(marker1, $current[0].firstChild);
 						
+						// Firefox fails to outdent the item when it contains a trailing `<br>`
+						var lastELement = $current[0].lastElementChild;
+						if (lastELement.nodeName === 'BR') {
+							// verify that there is no text after the br
+							var text = '';
+							var sibling = lastELement;
+							while (sibling.nextSibling) {
+								text += sibling.textContent;
+							}
+							
+							if (text.replace(/\u200B/g, '').trim() === '') {
+								elRemove(lastELement);
+							}
+						}
+						
 						marker2 = elCreate('woltlab-list-marker');
 						$current[0].appendChild(marker2);
 						
