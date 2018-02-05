@@ -726,7 +726,6 @@ class WCFSetup extends WCF {
 					throw new SystemException("MySQLnd is not being used for database communication.");
 				}
 				
-				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
 				
