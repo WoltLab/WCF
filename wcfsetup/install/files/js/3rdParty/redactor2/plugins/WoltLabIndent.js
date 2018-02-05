@@ -102,6 +102,24 @@ $.Redactor.prototype.WoltLabIndent = function() {
 				}).bind(this);
 			}
 			
+			this.indent.repositionItem = (function($item) {
+				var $next = $item.next();
+				if ($next.length !== 0 && ($next[0].tagName !== 'UL' || $next[0].tagName !== 'OL')) {
+					$item.append($next);
+				}
+				
+				var $prev = $item.prev();
+				if ($prev.length !== 0 && $prev[0].tagName !== 'LI') {
+					this.selection.save();
+					// WoltLab modification
+					//var $li = $item.parents('li', this.core.editor()[0]);
+					var $li = $item.closest('li', this.core.editor()[0]);
+					// WoltLab modification END
+					$li.after($item);
+					this.selection.restore();
+				}
+			}).bind(this);
+			
 			this.indent.normalize = (function() {
 				// `document.execCommand('outdent')` can spawn a `<br>` if there is whitespace in the DOM
 				// see https://bugzilla.mozilla.org/show_bug.cgi?id=1428073
