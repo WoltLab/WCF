@@ -696,6 +696,7 @@
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[The accelerated guest view improves the page responsiveness and loading times for both visitors and search engines alike, please consider <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">enabling it</a>.]]></item>
+		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using ReCAPTCHA without an individual website key is no longer supported by Google.]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
