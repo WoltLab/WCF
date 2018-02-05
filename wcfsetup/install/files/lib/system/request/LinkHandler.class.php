@@ -41,7 +41,7 @@ class LinkHandler extends SingletonFactory {
 	 * @inheritDoc
 	 */
 	protected function init() {
-		$this->titleRegex = new Regex('[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+');
+		$this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
 		
 		if (defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
 			$replacements = explode("\n", StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT)));
