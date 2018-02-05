@@ -72,17 +72,17 @@ $.Redactor.prototype.WoltLabIndent = function() {
 						$current[0].insertBefore(marker1, $current[0].firstChild);
 						
 						// Firefox fails to outdent the item when it contains a trailing `<br>`
-						var lastELement = $current[0].lastElementChild;
-						if (lastELement.nodeName === 'BR') {
+						var lastElement = $current[0].lastElementChild;
+						if (lastElement.nodeName === 'BR') {
 							// verify that there is no text after the br
 							var text = '';
-							var sibling = lastELement;
+							var sibling = lastElement;
 							while (sibling.nextSibling) {
 								text += sibling.textContent;
 							}
 							
 							if (text.replace(/\u200B/g, '').trim() === '') {
-								elRemove(lastELement);
+								elRemove(lastElement);
 							}
 						}
 						
