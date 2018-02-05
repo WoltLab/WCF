@@ -467,6 +467,7 @@
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Support Forums]]></item>
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
+		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using ReCAPTCHA without an individual website key is no longer supported by Google.]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">

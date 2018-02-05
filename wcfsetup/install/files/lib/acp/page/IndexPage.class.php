@@ -61,8 +61,14 @@ class IndexPage extends AbstractPage {
 			$usersAwaitingApproval = $row['count'];
 		}
 		
+		$recaptchaWithoutKey = false;
+		if (CAPTCHA_TYPE == 'com.woltlab.wcf.recaptcha' && (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY)) {
+			$recaptchaWithoutKey = true;
+		}
+		
 		WCF::getTPL()->assign(array(
 			'inRescueMode' => RequestHandler::getInstance()->inRescueMode(),
+			'recaptchaWithoutKey' => $recaptchaWithoutKey,
 			'server' => $this->server,
 			'usersAwaitingApproval' => $usersAwaitingApproval
 		));
