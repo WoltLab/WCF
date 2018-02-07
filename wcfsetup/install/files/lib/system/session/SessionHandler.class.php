@@ -364,7 +364,7 @@ class SessionHandler extends SingletonFactory {
 	 * Registers a session variable.
 	 * 
 	 * @param	string		$key
-	 * @param	string		$value
+	 * @param	mixed		$value
 	 */
 	public function register($key, $value) {
 		$this->variables[$key] = $value;
@@ -382,7 +382,8 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the value of a session variable.
+	 * Returns the value of a session variable or `null` if the session
+	 * variable does not exist.
 	 * 
 	 * @param	string		$key
 	 * @return	mixed
