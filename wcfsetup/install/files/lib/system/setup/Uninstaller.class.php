@@ -38,7 +38,7 @@ class Uninstaller {
 	 * Creates a new Uninstaller object.
 	 * 
 	 * @param	string		$targetDir
-	 * @param	array		$files
+	 * @param	string[]	$files
 	 * @param	boolean		$deleteEmptyTargetDir
 	 * @param	boolean		$deleteEmptyDirectories
 	 */

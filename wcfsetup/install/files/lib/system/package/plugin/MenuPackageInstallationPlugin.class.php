@@ -22,7 +22,7 @@ use wcf\system\WCF;
 class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * box meta data per menu
-	 * @var	string[]
+	 * @var	array
 	 */
 	public $boxData = [];
 	

@@ -37,7 +37,7 @@ class RescueModeForm extends AbstractCaptchaForm {
 	public $applications;
 	
 	/**
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	public $applicationValues = [];
 	

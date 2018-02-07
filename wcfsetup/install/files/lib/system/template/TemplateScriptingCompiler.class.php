@@ -166,7 +166,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of static includes per template
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	protected $staticIncludes = [];
 	

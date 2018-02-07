@@ -102,7 +102,6 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	
 	/**
 	 * @inheritDoc
-	 * @return	UserFollowUserNotificationObject
 	 * @since	3.1
 	 */
 	public static function getTestAdditionalData(IUserNotificationObject $object) {

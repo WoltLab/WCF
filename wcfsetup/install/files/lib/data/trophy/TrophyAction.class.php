@@ -40,8 +40,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	
 	/**
 	 * @inheritDoc
+	 * @return	Trophy
 	 */
 	public function create() {
+		/** @var Trophy $trophy */
 		$trophy = parent::create();
 		
 		if (isset($this->parameters['tmpHash']) && $this->parameters['data']['type'] === Trophy::TYPE_IMAGE) {

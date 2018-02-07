@@ -52,7 +52,7 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * list of column values
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	public $columnValues = [];
 	
