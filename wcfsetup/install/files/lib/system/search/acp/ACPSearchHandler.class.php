@@ -4,7 +4,6 @@ use wcf\data\acp\search\provider\ACPSearchProvider;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\exception\ImplementationException;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**

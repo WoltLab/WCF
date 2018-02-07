@@ -9,7 +9,6 @@ use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;

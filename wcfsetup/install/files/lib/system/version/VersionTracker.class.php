@@ -8,7 +8,6 @@ use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
 use wcf\data\IVersionTrackerObject;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\IAJAXInvokeAction;

@@ -7,7 +7,6 @@ use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
