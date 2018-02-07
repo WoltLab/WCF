@@ -198,7 +198,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction {
 	 *
 	 * @param       string          $name   object type name
 	 * @return      ObjectType      target object
-	 * @throws      SystemException
+	 * @throws      \InvalidArgumentException
 	 */
 	public function getObjectType($name) {
 		foreach ($this->availableObjectTypes as $objectType) {

@@ -253,7 +253,6 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * Writes the sitemap.xml index file and links all sitemaps.
 	 * 
 	 * @param       boolean         $closeFile      Close a previously opened handle.
-	 * @throws      SystemException
 	 */
 	protected function writeIndexFile($closeFile = true) {
 		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');

@@ -42,7 +42,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * @param	integer		$limit
 	 * @param       string          $providerName
 	 * @return	ACPSearchResultList[]
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	public function search($query, $limit = 10, $providerName = '') {
 		$data = [];

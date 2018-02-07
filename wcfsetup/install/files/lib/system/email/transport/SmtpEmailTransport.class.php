@@ -379,7 +379,6 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @param	Mailbox		$envelopeTo
 	 * @throws	\Exception
 	 * @throws	PermanentFailure
-	 * @throws	TransientFailure
 	 * @throws	SystemException
 	 */
 	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {

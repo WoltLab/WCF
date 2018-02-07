@@ -540,6 +540,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @param	string		$queueType
 	 * @return	array
+	 * @throws	SystemException
 	 */
 	protected function createQueue($queueType) {
 		if (isset($this->parameters['authData'])) {

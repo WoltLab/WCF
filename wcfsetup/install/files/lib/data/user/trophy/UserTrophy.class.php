@@ -74,7 +74,6 @@ class UserTrophy extends DatabaseObject {
 	 *
 	 * @param 	User 	$user
 	 * @return 	bool
-	 * @throws 	SystemException
 	 */
 	public function canSee(User $user = null) {
 		if ($user === null) {
