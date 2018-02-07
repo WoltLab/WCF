@@ -147,6 +147,31 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
+	 * Returns the list of variables that exist, but have no explicit values for this style.
+	 * 
+	 * @return      string[]
+	 */
+	public function getImplicitVariables() {
+		$sql = "SELECT          variable.variableName
+			FROM            wcf".WCF_N."_style_variable variable
+			LEFT JOIN       wcf".WCF_N."_style_variable_value variable_value
+			ON              (variable_value.variableID = variable.variableID AND variable_value.styleID = ?)
+			WHERE           variable.variableName LIKE ?
+					AND variable_value.variableValue IS NULL";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->styleID,
+			'wcf%'
+		]);
+		$variableNames = [];
+		while ($variableName = $statement->fetchColumn()) {
+			$variableNames[] = $variableName;
+		}
+		
+		return $variableNames;
+	}
+	
+	/**
 	 * Reads the data of a style exchange format file.
 	 * 
 	 * @param	Tar	$tar
@@ -543,9 +568,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			$individualScss = Style::splitLessVariables($variables['individualScss']);
 			$variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
+			unset($styleData['variables']['individualScss']);
 			
 			$overrideScss = Style::splitLessVariables($variables['overrideScss']);
 			$variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'], $overrideScss['custom']);
+			unset($styleData['variables']['overrideScss']);
+			
+			// import variables that have not been explicitly defined before
+			$implicitVariables = $style->getImplicitVariables();
+			foreach ($styleData['variables'] as $variableName => $variableValue) {
+				if (in_array($variableName, $implicitVariables)) {
+					$variables[$variableName] = $variableValue;
+				}
+			}
 			
 			$styleData['variables'] = $variables;
 			
