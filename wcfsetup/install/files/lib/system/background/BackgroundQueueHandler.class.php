@@ -86,6 +86,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * 
 	 * @param	AbstractBackgroundJob	$job	                        The job to perform.
 	 * @param       boolean                 $debugSynchronousExecution      Disables fail-safe mechanisms, errors will no longer be suppressed.
+	 * @throws	\Throwable
 	 */
 	public function performJob(AbstractBackgroundJob $job, $debugSynchronousExecution = false) {
 		$user = WCF::getUser();

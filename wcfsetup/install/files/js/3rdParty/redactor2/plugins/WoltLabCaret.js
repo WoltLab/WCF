@@ -1,6 +1,8 @@
 $.Redactor.prototype.WoltLabCaret = function() {
 	"use strict";
 	
+	var _isSafari = false;
+	
 	return {
 		init: function () {
 			var mpAfter = this.caret.after;
@@ -15,9 +17,14 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			}).bind(this);
 			
 			var iOS = false;
-			require(['Environment'], function (Environment) {
+			require(['Environment'], (function (Environment) {
 				iOS = (Environment.platform() === 'ios');
-			});
+				
+				_isSafari = (Environment.platform() === 'desktop' && Environment.browser() === 'safari');
+				if (_isSafari) {
+					this.core.editor()[0].classList.add('jsSafariMarginClickTarget')
+				}
+			}).bind(this));
 			
 			var mpEnd = this.caret.end;
 			this.caret.end = (function (node) {
@@ -309,13 +316,25 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				}
 			}
 			
+			// Safari moves the caret before triggering the `click` event, causing the
+			// selection to appear at the first possible text node, even if it is nowhere
+			// near the click position.
+			var isSafariMarginHit = false;
+			if (_isSafari && this.utils.isBlockTag(event.target.nodeName)) {
+				// check if the click occured inside the margin at the block's bottom
+				if (event.clientY > event.target.getBoundingClientRect().bottom) {
+					block = event.target;
+					isSafariMarginHit = true;
+				}
+			}
+			
 			// get block element that received the click
 			var targetBlock = event.target;
 			while (targetBlock && !this.utils.isBlockTag(targetBlock.nodeName)) {
 				targetBlock = targetBlock.parentNode;
 			}
 			
-			if (!targetBlock || targetBlock === block) {
+			if (!targetBlock || (!isSafariMarginHit && targetBlock === block)) {
 				return;
 			}
 			

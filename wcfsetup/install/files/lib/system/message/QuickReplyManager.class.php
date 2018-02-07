@@ -9,7 +9,6 @@ use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -99,7 +98,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	mixed[][]			$parameters
 	 * @param	string				$containerClassName
 	 * @param	string				$containerDecoratorClassName
-	 * @throws	SystemException
+	 * @throws	ParentClassException
 	 * @throws	UserInputException
 	 */
 	public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '') {

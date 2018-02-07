@@ -45,7 +45,7 @@ class MessageQuoteManager extends SingletonFactory {
 	
 	/**
 	 * list of quote messages by quote id
-	 * @var	string[]
+	 * @var	array
 	 */
 	protected $quoteData = [];
 	

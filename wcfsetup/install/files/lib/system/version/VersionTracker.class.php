@@ -8,7 +8,6 @@ use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
 use wcf\data\IVersionTrackerObject;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\IAJAXInvokeAction;
@@ -198,7 +197,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction {
 	 *
 	 * @param       string          $name   object type name
 	 * @return      ObjectType      target object
-	 * @throws      SystemException
+	 * @throws      \InvalidArgumentException
 	 */
 	public function getObjectType($name) {
 		foreach ($this->availableObjectTypes as $objectType) {

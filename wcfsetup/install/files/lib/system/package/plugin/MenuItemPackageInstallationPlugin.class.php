@@ -188,7 +188,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @param	integer		$menuID
 	 * @param	integer		$parentItemID
 	 * @return	integer
-	 * @throws	\wcf\system\database\DatabaseException
 	 */
 	protected function getItemOrder($menuID, $parentItemID = null) {
 		$sql = "SELECT	MAX(showOrder) AS showOrder

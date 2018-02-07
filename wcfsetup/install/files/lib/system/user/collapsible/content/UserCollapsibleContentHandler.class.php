@@ -3,7 +3,6 @@ namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
-use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -253,7 +252,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function resetAll($objectType, $objectID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);

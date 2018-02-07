@@ -717,6 +717,15 @@ class WCFSetup extends WCF {
 					throw new SystemException("Support for InnoDB is missing.");
 				}
 				
+				// check for PHP's MySQL native driver
+				$sql = "SELECT 1";
+				$statement = $db->prepareStatement($sql);
+				$statement->execute();
+				// MySQL native driver understands data types, libmysqlclient does not
+				if ($statement->fetchSingleColumn() !== 1) {
+					throw new SystemException("MySQLnd is not being used for database communication.");
+				}
+				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
 				

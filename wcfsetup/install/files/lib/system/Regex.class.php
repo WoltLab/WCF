@@ -124,7 +124,6 @@ final class Regex {
 	 * 
 	 * @param	string		$regex
 	 * @param	integer		$modifier
-	 * @throws	SystemException
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter

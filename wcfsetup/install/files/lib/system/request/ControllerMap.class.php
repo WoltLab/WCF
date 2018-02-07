@@ -19,12 +19,12 @@ use wcf\system\WCFACP;
  */
 class ControllerMap extends SingletonFactory {
 	/**
-	 * @var	string[][]
+	 * @var	array
 	 */
 	protected $ciControllers;
 	
 	/**
-	 * @var	string[][]
+	 * @var	array
 	 */
 	protected $customUrls;
 	

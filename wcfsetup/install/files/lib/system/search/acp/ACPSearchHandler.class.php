@@ -4,7 +4,6 @@ use wcf\data\acp\search\provider\ACPSearchProvider;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\exception\ImplementationException;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -42,7 +41,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * @param	integer		$limit
 	 * @param       string          $providerName
 	 * @return	ACPSearchResultList[]
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	public function search($query, $limit = 10, $providerName = '') {
 		$data = [];

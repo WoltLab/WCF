@@ -307,7 +307,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * @param	string|string[]		$page
 	 * @param	integer			$pageObjectID
 	 * @return	array|null
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	public function getEditorItems($page, $pageObjectID) {
 		$pages = $page;

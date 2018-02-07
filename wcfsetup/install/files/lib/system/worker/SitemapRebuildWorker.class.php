@@ -7,7 +7,6 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\ILinkableObject;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
 use wcf\system\request\LinkHandler;
@@ -253,7 +252,6 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * Writes the sitemap.xml index file and links all sitemaps.
 	 * 
 	 * @param       boolean         $closeFile      Close a previously opened handle.
-	 * @throws      SystemException
 	 */
 	protected function writeIndexFile($closeFile = true) {
 		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');

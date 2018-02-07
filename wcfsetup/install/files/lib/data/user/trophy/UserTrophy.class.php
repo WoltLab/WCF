@@ -7,7 +7,6 @@ use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -74,7 +73,6 @@ class UserTrophy extends DatabaseObject {
 	 *
 	 * @param 	User 	$user
 	 * @return 	bool
-	 * @throws 	SystemException
 	 */
 	public function canSee(User $user = null) {
 		if ($user === null) {

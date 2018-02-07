@@ -2,7 +2,6 @@
 namespace wcf\data;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -53,7 +52,7 @@ trait TMultiCategoryObject {
 	 * Returns the categories of the object.
 	 *
 	 * @return	AbstractDecoratedCategory[]
-	 * @throws	SystemException
+	 * @throws	ParentClassException
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {

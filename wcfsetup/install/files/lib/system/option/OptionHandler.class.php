@@ -344,7 +344,7 @@ class OptionHandler implements IOptionHandler {
 	 * 
 	 * @param	string		$optionType
 	 * @return	string
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	protected function getClassName($optionType) {
 		$optionType = StringUtil::firstCharToUpperCase($optionType);

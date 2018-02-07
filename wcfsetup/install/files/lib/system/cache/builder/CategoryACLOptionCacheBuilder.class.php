@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\category\Category;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
 
@@ -17,6 +18,7 @@ class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 	 */
 	public function rebuild(array $parameters) {
 		$data = [];
+		/** @var Category[] $categories */
 		foreach (CategoryHandler::getInstance()->getCategories() as $objectTypeName => $categories) {
 			$objectType = CategoryHandler::getInstance()->getObjectTypeByName($objectTypeName);
 			$aclObjectType = $objectType->getProcessor()->getObjectTypeName('com.woltlab.wcf.acl');
