@@ -31,7 +31,7 @@ $.Redactor.prototype.WoltLabDropdown = function() {
 					}
 				}
 				
-				if (fragment.childElementCount > 0) {
+				if (fragment.children.length > 0) {
 					$dropdown[0].rel = name;
 					$dropdown[0].appendChild(fragment);
 				}
