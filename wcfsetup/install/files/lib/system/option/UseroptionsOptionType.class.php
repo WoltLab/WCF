@@ -59,7 +59,7 @@ class UseroptionsOptionType extends AbstractOptionType {
 	/**
 	 * Returns the list of available user options.
 	 * 
-	 * @return	string
+	 * @return	string[]
 	 */
 	protected static function getUserOptions() {
 		if (self::$userOptions === null) {

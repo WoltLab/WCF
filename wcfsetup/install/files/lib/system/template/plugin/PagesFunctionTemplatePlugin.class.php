@@ -64,8 +64,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * Generates HTML code for 'previous' link.
 	 * 
-	 * @param	type		$link
-	 * @param	type		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
 	 * @return	string
 	 */
 	protected function makePreviousLink($link, $pageNo) {
@@ -80,8 +80,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * Generates HTML code for 'next' link.
 	 * 
-	 * @param	type		$link
-	 * @param	type		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
 	 * @return	string
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
