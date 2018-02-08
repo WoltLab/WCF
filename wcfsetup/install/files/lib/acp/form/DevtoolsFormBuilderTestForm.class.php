@@ -8,6 +8,7 @@ use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\TagFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -129,7 +130,9 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 								7 => 'July',
 								8 => 'August'
 							]
-						])
+						]),
+					TagFormField::create('tags')
+						->objectType('com.woltlab.wbb.thread')
 				]),
 			TabMenuFormContainer::create('tabMenu')
 				->appendChildren([
