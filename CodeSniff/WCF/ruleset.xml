@@ -42,7 +42,7 @@
 	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing" />
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
-	<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />
+	<!--TODO:<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />-->
 	<rule ref="WCF.Methods.MethodDeclaration" />
 	<rule ref="WCF.Namespaces.ClassMustBeImported" />
 	<rule ref="WCF.Namespaces.UseDeclaration" />
