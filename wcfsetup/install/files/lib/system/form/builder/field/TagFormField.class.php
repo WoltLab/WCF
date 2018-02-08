@@ -3,6 +3,7 @@ namespace wcf\system\form\builder\field;
 use wcf\data\IStorableObject;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\tag\Tag;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
@@ -39,17 +40,6 @@ class TagFormField extends AbstractFormField {
 	public function __construct() {
 		$this->description('wcf.tagging.tags.description');
 		$this->label('wcf.tagging.tags');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getHtmlVariables() {
-		return [
-			'tagInputDescription' => $this->getDescription(),
-			'tagInputLabel' => $this->getLabel(),
-			'tagInputSuffix' => $this->getPrefixedId()
-		];
 	}
 	
 	/**
@@ -153,5 +143,47 @@ class TagFormField extends AbstractFormField {
 		if (isset($_POST[$this->getPrefixedId()]) && is_array($_POST[$this->getPrefixedId()])) {
 			$this->__value = ArrayUtil::trim($_POST[$this->getPrefixedId()]);
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value) {
+		if (!is_array($value)) {
+			throw new \InvalidArgumentException("Given value is no array, " . gettype($value) . " given.");
+		}
+		
+		$stringTags = [];
+		$stringValues = null;
+		
+		foreach ($value as $tag) {
+			if (is_string($tag)) {
+				if ($stringValues === null) {
+					$stringValues = true;
+				}
+				
+				if ($stringValues === false) {
+					throw new \InvalidArgumentException("Given value array contains mixed values, all values have to be either strings or `" . Tag::class . "` objects.");
+				}
+				
+				$stringTags[] = $tag;
+			}
+			else if ($tag instanceof Tag) {
+				if ($stringValues === null) {
+					$stringValues = false;
+				}
+				
+				if ($stringValues === true) {
+					throw new \InvalidArgumentException("Given value array contains mixed values, all values have to be either strings or `" . Tag::class . "` objects.");
+				}
+				
+				$stringTags[] = $tag->name;
+			}
+			else {
+				throw new \InvalidArgumentException("Given value array contains invalid value of type " . gettype($tag) . ".");
+			}
+		}
+		
+		return parent::value($stringTags);
 	}
 }
