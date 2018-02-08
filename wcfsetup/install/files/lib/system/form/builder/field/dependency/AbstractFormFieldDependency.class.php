@@ -41,7 +41,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function dependentNode(IFormNode $node) {
+	public function dependentNode(IFormNode $node): IFormFieldDependency {
 		$this->__dependentNode = $node;
 		
 		return $this;
@@ -50,7 +50,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function field(IFormField $field) {
+	public function field(IFormField $field): IFormFieldDependency {
 		$this->__field = $field;
 		
 		return $this;
@@ -59,7 +59,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function getDependentNode() {
+	public function getDependentNode(): IFormNode {
 		if ($this->__dependentNode === null) {
 			throw new \BadMethodCallException("Dependent node has not been set.");
 		}
@@ -70,7 +70,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function getField() {
+	public function getField(): IFormField {
 		if ($this->__field === null) {
 			throw new \BadMethodCallException("Field has not been set.");
 		}
@@ -81,14 +81,14 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function getId() {
+	public function getId(): string {
 		return $this->__id;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
+	public function getHtml(): string {
 		if ($this->templateName === null) {
 			throw new \LogicException("Template name is not set.");
 		}
@@ -106,11 +106,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * 
 	 * @throws	\InvalidArgumentException	if given id no string or otherwise invalid
 	 */
-	protected function id($id) {
-		if (!is_string($id)) {
-			throw new \InvalidArgumentException("Given id is no string, " . gettype($id) . " given.");
-		}
-		
+	protected function id(string $id): IFormFieldDependency {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}
@@ -123,7 +119,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public static function create($id) {
+	public static function create(string $id): IFormFieldDependency {
 		return (new static)->id($id);
 	}
 }

@@ -20,9 +20,9 @@ interface IFormElement extends IFormNode {
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this element
 	 * 
-	 * @throws	\InvalidArgumentException	if the given description is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given description is invalid
 	 */
-	public function description($languageItem = null, array $variables = []);
+	public function description($languageItem = null, array $variables = []): IFormElement;
 	
 	/**
 	 * Returns the description of this element or `null` if no description has been set.
@@ -47,7 +47,7 @@ interface IFormElement extends IFormNode {
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this element
 	 * 
-	 * @throws	\InvalidArgumentException	if the given label is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given label is invalid
 	 */
-	public function label($languageItem = null, array $variables = []);
+	public function label($languageItem = null, array $variables = []): IFormElement;
 }

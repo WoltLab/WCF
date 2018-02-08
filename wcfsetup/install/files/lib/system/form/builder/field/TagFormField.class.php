@@ -7,6 +7,7 @@ use wcf\data\IStorableObject;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 use wcf\system\tagging\TagEngine;
 use wcf\util\ArrayUtil;
 
@@ -49,7 +50,7 @@ class TagFormField extends AbstractFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if object type has not been set
 	 */
-	public function getObjectType() {
+	public function getObjectType(): ObjectType {
 		if ($this->__objectType === null) {
 			throw new \BadMethodCallException("Object type has not been set.");
 		}
@@ -60,14 +61,14 @@ class TagFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue() {
+	public function hasSaveValue(): bool {
 		return false;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValueFromObject(IStorableObject $object): IFormField {
 		$objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($objectID === null) {
@@ -100,15 +101,11 @@ class TagFormField extends AbstractFormField {
 	 * @return	static				this field
 	 * 
 	 * @throws	\BadMethodCallException		if object type has already been set
-	 * @throws	\InvalidArgumentException	if given object type name is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if given object type name is invalid
 	 */
-	public function objectType($objectType) {
+	public function objectType(string $objectType): TagFormField {
 		if ($this->__objectType !== null) {
 			throw new \BadMethodCallException("Object type has already been set.");
-		}
-		
-		if (!is_string($objectType)) {
-			throw new \InvalidArgumentException("Given object type name is no string, '" . gettype($objectType) . "' given.");
 		}
 		
 		try {
@@ -124,7 +121,7 @@ class TagFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function populate() {
+	public function populate(): IFormNode {
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			if ($this->getValue() !== null && !empty($this->getValue())) {
 				$parameters['tags'] = $this->getValue();
@@ -139,16 +136,18 @@ class TagFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if (isset($_POST[$this->getPrefixedId()]) && is_array($_POST[$this->getPrefixedId()])) {
 			$this->__value = ArrayUtil::trim($_POST[$this->getPrefixedId()]);
 		}
+		
+		return $this;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value) {
+	public function value($value): IFormField {
 		if (!is_array($value)) {
 			throw new \InvalidArgumentException("Given value is no array, " . gettype($value) . " given.");
 		}

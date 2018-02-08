@@ -32,11 +32,11 @@ trait TMinimumLengthFormField {
 	 * minimum length is removed.
 	 * 
 	 * @param	null|int	$minimumLength	minimum field value length
-	 * @return	static				this field
+	 * @return	IMinimumLengthFormField		this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum length is no integer or otherwise invalid
 	 */
-	public function minimumLength($minimumLength = null) {
+	public function minimumLength($minimumLength = null): IMinimumLengthFormField {
 		if ($minimumLength !== null) {
 			if (!is_int($minimumLength)) {
 				throw new \InvalidArgumentException("Given minimum length is no int, '" . gettype($minimumLength) . "' given.");

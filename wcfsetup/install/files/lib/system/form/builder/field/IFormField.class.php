@@ -22,17 +22,15 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	IFormFieldValidationError	$error	validation error
 	 * @return	static					this field
 	 */
-	public function addValidationError(IFormFieldValidationError $error);
+	public function addValidationError(IFormFieldValidationError $error): IFormField;
 	
 	/**
 	 * Sets whether this field is auto-focused and returns this field.
 	 * 
 	 * @param	bool		$autoFocus	determines if field is auto-focused
 	 * @return	static				this field
-	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no bool
 	 */
-	public function autoFocus($autoFocus = true);
+	public function autoFocus(bool $autoFocus = true): IFormField;
 	
 	/**
 	 * Adds the given validation error to this field and returns this field.
@@ -40,7 +38,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	IFormFieldValidator	$validator
 	 * @return	static			this field
 	 */
-	public function addValidator(IFormFieldValidator $validator);
+	public function addValidator(IFormFieldValidator $validator): IFormField;
 	
 	/**
 	 * Returns the field value saved in the database.
@@ -60,14 +58,14 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @return	IFormFieldValidationError[]	field validation errors
 	 */
-	public function getValidationErrors();
+	public function getValidationErrors(): array;
 	
 	/**
 	 * Returns all field value validators of this field.
 	 *
 	 * @return	IFormFieldValidator[]		field value validators of this field
 	 */
-	public function getValidators();
+	public function getValidators(): array;
 	
 	/**
 	 * Returns the value of this field or `null` if no value has been set.
@@ -83,9 +81,9 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	string		$validatorId	id of the checked validator
 	 * @return	bool
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function hasValidator($validatorId);
+	public function hasValidator(string $validatorId): bool;
 	
 	/**
 	 * Returns `true` if this field provides a value that can simply be stored
@@ -98,17 +96,15 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @return	bool
 	 */
-	public function hasSaveValue();
+	public function hasSaveValue(): bool;
 	
 	/**
 	 * Sets whether the value of this field is immutable and returns this field.
 	 * 
 	 * @param	bool		$immutable	determines if field value is immutable
 	 * @return	static				this field
-	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no bool
 	 */
-	public function immutable($immutable = true);
+	public function immutable(bool $immutable = true): IFormField;
 	
 	/**
 	 * Returns `true` if this field is auto-focused and returns `false` otherwise.
@@ -116,7 +112,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @return	bool
 	 */
-	public function isAutoFocused();
+	public function isAutoFocused(): bool;
 	
 	/**
 	 * Returns `true` if the value of this field is immutable and returns `false`
@@ -124,7 +120,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @return	bool
 	 */
-	public function isImmutable();
+	public function isImmutable(): bool;
 	
 	/**
 	 * Returns `true` if this field has to be filled out and returns `false` otherwise.
@@ -132,7 +128,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @return	bool
 	 */
-	public function isRequired();
+	public function isRequired(): bool;
 	
 	/**
 	 * Loads the field value from the given object and returns this field.
@@ -140,14 +136,14 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	IStorableObject		$object		object used to load field value
 	 * @return	static					this field
 	 */
-	public function loadValueFromObject(IStorableObject $object);
+	public function loadValueFromObject(IStorableObject $object): IFormField;
 	
 	/**
 	 * Reads the value of this field from request data and return this field.
 	 * 
 	 * @return	static		this field
 	 */
-	public function readValue();
+	public function readValue(): IFormField;
 	
 	/**
 	 * Removes the field value validator with the given id and returns this field.
@@ -155,19 +151,17 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	string		$validatorId	id of the removed validator
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid or no such validator exists
+	 * @throws	\InvalidArgumentException	if the given id is invalid or no such validator exists
 	 */
-	public function removeValidator($validatorId);
+	public function removeValidator(string $validatorId): IFormField;
 	
 	/**
 	 * Sets whether it is required to fill out this field and returns this field.
 	 * 
 	 * @param	bool		$required	determines if field has to be filled out
 	 * @return	static				this field
-	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no bool
 	 */
-	public function required($required = true);
+	public function required(bool $required = true): IFormField;
 	
 	/**
 	 * Sets the value of this field and returns this field.
@@ -177,5 +171,5 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is of an invalid type or otherwise is invalid
 	 */
-	public function value($value);
+	public function value($value): IFormField;
 }

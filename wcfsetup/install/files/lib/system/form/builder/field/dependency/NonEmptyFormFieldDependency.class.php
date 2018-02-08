@@ -19,7 +19,7 @@ class NonEmptyFormFieldDependency extends AbstractFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function checkDependency() {
+	public function checkDependency(): bool {
 		return !empty($this->getField()->getValue());
 	}
 }

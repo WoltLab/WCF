@@ -20,7 +20,7 @@ class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function __invoke(IFormDocument $document, array $parameters) {
+	public function __invoke(IFormDocument $document, array $parameters): array {
 		$parameters['data'] = [];
 		
 		$this->getData($document, $parameters['data']);

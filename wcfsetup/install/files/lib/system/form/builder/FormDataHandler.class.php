@@ -22,14 +22,16 @@ class FormDataHandler implements IFormDataHandler {
 	/**
 	 * @inheritDoc
 	 */
-	public function add(IFormFieldDataProcessor $processor) {
+	public function add(IFormFieldDataProcessor $processor): IFormDataHandler {
 		$this->processors[] = $processor;
+		
+		return $this;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getData(IFormDocument $document) {
+	public function getData(IFormDocument $document): array {
 		$parameters = [];
 		foreach ($this->processors as $processor) {
 			$parameters = $processor($document, $parameters);

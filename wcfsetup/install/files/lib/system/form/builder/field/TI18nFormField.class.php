@@ -5,8 +5,8 @@ use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 use wcf\system\language\I18nHandler;
-use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\util\StringUtil;
 
@@ -32,7 +32,7 @@ trait TI18nFormField {
 	 * `true` if this field requires i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18nRequired;
+	protected $__i18nRequired = false;
 	
 	/**
 	 * pattern for the language item used to save the i18n values
@@ -46,7 +46,7 @@ trait TI18nFormField {
 	 * 
 	 * @return	array		additional template variables
 	 */
-	public function getHtmlVariables() {
+	public function getHtmlVariables(): array {
 		if ($this->isI18n()) {
 			I18nHandler::getInstance()->assignVariables();
 			
@@ -66,7 +66,7 @@ trait TI18nFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if i18n is disabled for this field or no language item has been set
 	 */
-	public function getLanguageItemPattern() {
+	public function getLanguageItemPattern(): string {
 		if (!$this->isI18n()) {
 			throw new \BadMethodCallException("You can only get the language item pattern for fields with i18n enabled.");
 		}
@@ -126,7 +126,7 @@ trait TI18nFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function hasI18nValues() {
+	public function hasI18nValues(): bool {
 		return I18nHandler::getInstance()->hasI18nValues($this->getPrefixedId());
 	}
 	
@@ -136,7 +136,7 @@ trait TI18nFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function hasPlainValue() {
+	public function hasPlainValue(): bool {
 		return I18nHandler::getInstance()->isPlainValue($this->getPrefixedId());
 	}
 	
@@ -151,7 +151,7 @@ trait TI18nFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function hasSaveValue() {
+	public function hasSaveValue(): bool {
 		return !$this->isI18n() || $this->hasPlainValue();
 	}
 	
@@ -159,15 +159,9 @@ trait TI18nFormField {
 	 * Sets whether this field is supports i18n input and returns this field.
 	 * 
 	 * @param	bool		$i18n		determines if field supports i18n input
-	 * @return	static				this field
-	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no bool
+	 * @return	II18nFormField			this field
 	 */
-	public function i18n($i18n = true) {
-		if (!is_bool($i18n)) {
-			throw new \InvalidArgumentException("Given value is no bool, " . gettype($i18n) . " given.");
-		}
-		
+	public function i18n(bool $i18n = true): II18nFormField {
 		$this->__i18n = $i18n;
 		
 		return $this;
@@ -180,15 +174,9 @@ trait TI18nFormField {
 	 * ensure that i18n support is enabled.
 	 *
 	 * @param	bool		$i18nRequired		determines if field value must be i18n input
-	 * @return	static					this field
-	 *
-	 * @throws	\InvalidArgumentException		if the given value is no bool
+	 * @return	II18nFormField				this field
 	 */
-	public function i18nRequired($i18nRequired = true) {
-		if (!is_bool($i18nRequired)) {
-			throw new \InvalidArgumentException("Given value is no bool, " . gettype($i18nRequired) . " given.");
-		}
-		
+	public function i18nRequired(bool $i18nRequired = true): II18nFormField {
 		$this->__i18nRequired = $i18nRequired;
 		$this->i18n();
 		
@@ -201,7 +189,7 @@ trait TI18nFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isI18n() {
+	public function isI18n(): bool {
 		return $this->__i18n;
 	}
 	
@@ -211,7 +199,7 @@ trait TI18nFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isI18nRequired() {
+	public function isI18nRequired(): bool {
 		return $this->__i18nRequired;
 	}
 	
@@ -220,19 +208,16 @@ trait TI18nFormField {
 	 * and returns this field.
 	 * 
 	 * @param	string		$pattern	language item pattern
-	 * @return	static				this field
+	 * @return	II18nFormField			this field
 	 * 
 	 * @throws	\BadMethodCallException		if i18n is disabled for this field
-	 * @throws	\InvalidArgumentException	if the given pattern is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given pattern is invalid
 	 */
-	public function languageItemPattern($pattern) {
+	public function languageItemPattern(string $pattern): II18nFormField {
 		if (!$this->isI18n()) {
 			throw new \BadMethodCallException("The language item pattern can only be set for fields with i18n enabled.");
 		}
 		
-		if (!is_string($pattern)) {
-			throw new \InvalidArgumentException("Given pattern is no string, '" . gettype($pattern) . "' given.");
-		}
 		if (!Regex::compile($pattern)->isValid()) {
 			throw new \InvalidArgumentException("Given pattern is invalid.");
 		}
@@ -245,7 +230,7 @@ trait TI18nFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValueFromObject(IStorableObject $object): IFormField {
 		if (isset($object->{$this->getId()})) {
 			$value = $object->{$this->getId()};
 			
@@ -269,11 +254,11 @@ trait TI18nFormField {
 	 * This method enables this node to perform actions that require the whole document having
 	 * finished constructing itself and every parent-child relationship being established.
 	 * 
-	 * @return	static				this node
+	 * @return	IFormNode			this node
 	 * 
 	 * @throws	\BadMethodCallException		if this node has already been populated
 	 */
-	public function populate() {
+	public function populate(): IFormNode {
 		parent::populate();
 		
 		if ($this->isI18n()) {
@@ -297,9 +282,9 @@ trait TI18nFormField {
 	/**
 	 * Reads the value of this field from request data and return this field.
 	 * 
-	 * @return	static		this field
+	 * @return	IFormField	this field
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if ($this->isI18n()) {
 			I18nHandler::getInstance()->readValues();
 		}
@@ -318,7 +303,7 @@ trait TI18nFormField {
 	 * 
 	 * @param	string		$value		set value
 	 */
-	protected function setStringValue($value) {
+	protected function setStringValue(string $value) {
 		if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
 			$languageItemList = new LanguageItemList();
 			$languageItemList->getConditionBuilder()->add('languageItem = ?', [$value]);
@@ -329,10 +314,10 @@ trait TI18nFormField {
 				$values[$languageItem->languageID] = $languageItem->languageItemValue;
 			}
 			
-			I18nHandler::getInstance()->setValues($this->getId(), $values);
+			I18nHandler::getInstance()->setValues($this->getPrefixedId(), $values);
 		}
 		else {
-			I18nHandler::getInstance()->setValue($this->getId(), $value);
+			I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value);
 		}
 	}
 	
@@ -340,17 +325,17 @@ trait TI18nFormField {
 	 * Sets the value of this field and returns this field.
 	 * 
 	 * @param	string|string[]		$value		new field value
-	 * @return	static					this field
+	 * @return	IFormField				this field
 	 * 
 	 * @throws	\InvalidArgumentException		if the given value is of an invalid type or otherwise is invalid
 	 */
-	public function value($value) {
+	public function value($value): IFormField {
 		if ($this->isI18n()) {
 			if (is_string($value)) {
 				$this->setStringValue($value);
 			}
 			else if (is_array($value)) {
-				I18nHandler::getInstance()->setValues($value);
+				I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
 			}
 			else {
 				throw new \InvalidArgumentException("Given value is neither a string nor an array, " . gettype($value) . " given.");

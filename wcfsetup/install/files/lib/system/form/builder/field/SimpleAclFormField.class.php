@@ -3,6 +3,7 @@ namespace wcf\system\form\builder\field;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 
 /**
  * Implementation of a form field for setting simple acl.
@@ -25,7 +26,7 @@ class SimpleAclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtmlVariables() {
+	public function getHtmlVariables(): array {
 		return [
 			'__aclSimplePrefix' => $this->getPrefixedId(),
 			'__aclInputName' => $this->getPrefixedId(),
@@ -36,14 +37,14 @@ class SimpleAclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue() {
+	public function hasSaveValue(): bool {
 		return false;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function populate() {
+	public function populate(): IFormNode {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
@@ -60,9 +61,11 @@ class SimpleAclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if (isset($_POST[$this->getPrefixedId()]) && is_array($_POST[$this->getPrefixedId()])) {
 			$this->__value = $_POST[$this->getPrefixedId()];
 		}
+		
+		return $this;
 	}
 }

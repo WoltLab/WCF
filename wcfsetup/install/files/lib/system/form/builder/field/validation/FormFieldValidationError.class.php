@@ -33,11 +33,7 @@ class FormFieldValidationError implements IFormFieldValidationError {
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct($type, $languageItem = null, array $information = []) {
-		if (!is_string($type)) {
-			throw new \InvalidArgumentException("Given error type is no string, '" . gettype($type) . "' given.'");
-		}
-		
+	public function __construct(string $type, $languageItem = null, array $information = []) {
 		if ($languageItem === null) {
 			$languageItem = 'wcf.global.form.error.' . $type;
 		}
@@ -53,7 +49,7 @@ class FormFieldValidationError implements IFormFieldValidationError {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
+	public function getHtml(): string {
 		return WCF::getTPL()->fetch('__formFieldError', 'wcf', [
 			'error' => $this
 		]);
@@ -62,21 +58,21 @@ class FormFieldValidationError implements IFormFieldValidationError {
 	/**
 	 * @inheritDoc
 	 */
-	public function getInformation() {
+	public function getInformation(): array {
 		return $this->information;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getMessage() {
+	public function getMessage(): string {
 		return WCF::getLanguage()->getDynamicVariable($this->languageItem, $this->information);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getType() {
+	public function getType(): string {
 		return $this->type;
 	}
 }

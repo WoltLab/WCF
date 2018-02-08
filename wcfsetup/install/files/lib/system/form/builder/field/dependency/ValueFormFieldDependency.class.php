@@ -25,7 +25,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function checkDependency() {
+	public function checkDependency(): bool {
 		return in_array($this->getField()->getValue(), $this->getValues());
 	}
 	
@@ -36,7 +36,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * 
 	 * @throws	\BadMethodCallException		if no values have been set
 	 */
-	public function getValues() {
+	public function getValues(): array {
 		if ($this->__values === null) {
 			throw new \BadMethodCallException("Values have not been set for dependency '{$this->getId()}' on node '{$this->getDependentNode()->getId()}'.");
 		}
@@ -52,7 +52,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * 
 	 * @throws	\InvalidArgumentException	if given values are invalid
 	 */
-	public function values(array $values) {
+	public function values(array $values): ValueFormFieldDependency {
 		if (empty($values)) {
 			throw new \InvalidArgumentException("Given values are empty.");
 		}

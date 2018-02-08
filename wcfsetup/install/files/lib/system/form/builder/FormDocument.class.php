@@ -59,11 +59,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function action($action) {
-		if (!is_string($action)) {
-			throw new \InvalidArgumentException("Given action is no string, '" . gettype($action) . "' given.");
-		}
-		
+	public function action(string $action): IFormDocument {
 		$this->__action = $action;
 		
 		return $this;
@@ -72,7 +68,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function build() {
+	public function build(): IFormDocument {
 		if ($this->isBuilt) {
 			throw new \BadMethodCallException("Form document has already been built.");
 		}
@@ -104,7 +100,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAction() {
+	public function getAction(): string {
 		if ($this->__action === null) {
 			throw new \BadMethodCallException("Action has not been set.");
 		}
@@ -115,14 +111,14 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getData() {
+	public function getData(): array {
 		return $this->getDataHandler()->getData($this);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getDataHandler() {
+	public function getDataHandler(): IFormDataHandler {
 		if ($this->dataHandler === null) {
 			$this->dataHandler = new FormDataHandler();
 			$this->dataHandler->add(new DefaultFormFieldDataProcessor());
@@ -134,7 +130,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getDocument() {
+	public function getDocument(): IFormDocument {
 		return $this;
 	}
 	
@@ -161,7 +157,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
+	public function getHtml(): string {
 		return WCF::getTPL()->fetch('__form', 'wcf', array_merge($this->getHtmlVariables(), [
 			'form' => $this
 		]));
@@ -170,26 +166,28 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getMethod() {
+	public function getMethod(): string {
 		return $this->__method;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValuesFromObject(IStorableObject $object) {
+	public function loadValuesFromObject(IStorableObject $object): IFormDocument {
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
 			if ($node instanceof IFormField && $node->isAvailable()) {
 				$node->loadValueFromObject($object);
 			}
 		}
+		
+		return $this;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getPrefix() {
+	public function getPrefix(): string {
 		if ($this->__prefix === null) {
 			return '';
 		}
@@ -200,24 +198,24 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function method($method) {
-		if (!is_string($method)) {
-			throw new \InvalidArgumentException("Given method is no string, " . gettype($method) . " given.");
-		}
-		
+	public function method(string $method): IFormDocument {
 		if ($method !== 'get' && $method !== 'post') {
 			throw new \InvalidArgumentException("Invalid method '{$method}' given.");
 		}
 		
 		$this->__method = $method;
+		
+		return $this;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function prefix($prefix) {
+	public function prefix(string $prefix): IFormDocument {
 		static::validateId($prefix);
 		
 		$this->__prefix = $prefix;
+		
+		return $this;
 	}
 }

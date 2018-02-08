@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class SingleSelectionFormField extends AbstractFormField implements INullableFormField {
+class SingleSelectionFormField extends AbstractFormField implements INullableFormField, ISelectionFormField {
 	use TNullableFormField;
 	use TSelectionFormField;
 	

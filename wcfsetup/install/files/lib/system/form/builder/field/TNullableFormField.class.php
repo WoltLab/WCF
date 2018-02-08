@@ -25,7 +25,7 @@ trait TNullableFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isNullable() {
+	public function isNullable(): bool {
 		return $this->__nullable;
 	}
 	
@@ -33,15 +33,9 @@ trait TNullableFormField {
 	 * Sets whether this field supports `null` as its value and returns this field.
 	 * 
 	 * @param	bool	$nullable		determines if field supports `null` as its value
-	 * @return	static				this node
-	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no boolean
+	 * @return	INullableFormField		this node
 	 */
-	public function nullable($nullable = true) {
-		if (!is_bool($nullable)) {
-			throw new \InvalidArgumentException("Given value is no bool, " . gettype($nullable) . " given.");
-		}
-		
+	public function nullable(bool $nullable = true): INullableFormField {
 		$this->__nullable = $nullable;
 		
 		return $this;

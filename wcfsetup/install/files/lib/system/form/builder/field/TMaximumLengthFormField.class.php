@@ -32,11 +32,11 @@ trait TMaximumLengthFormField {
 	 * maximum length is removed.
 	 * 
 	 * @param	null|int	$maximumLength	maximum field value length
-	 * @return	static				this field
+	 * @return	IMaximumLengthFormField		this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
-	public function maximumLength($maximumLength = null) {
+	public function maximumLength($maximumLength = null): IMaximumLengthFormField {
 		if ($maximumLength !== null) {
 			if (!is_int($maximumLength)) {
 				throw new \InvalidArgumentException("Given maximum length is no int, '" . gettype($maximumLength) . "' given.");

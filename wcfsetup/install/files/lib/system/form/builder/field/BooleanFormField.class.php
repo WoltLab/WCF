@@ -27,10 +27,12 @@ class BooleanFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if (isset($_POST[$this->getPrefixedId()])) {
 			$this->__value = $_POST[$this->getPrefixedId()] === '1';
 		}
+		
+		return $this;
 	}
 	
 	/**
@@ -47,7 +49,7 @@ class BooleanFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value) {
+	public function value($value): IFormField {
 		if (!is_bool($value)) {
 			throw new \InvalidArgumentException("Given value is no bool, " . gettype($value) . " given.");
 		}

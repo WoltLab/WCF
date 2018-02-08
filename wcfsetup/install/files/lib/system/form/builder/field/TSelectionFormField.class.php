@@ -32,7 +32,7 @@ trait TSelectionFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
-	public function getOptions() {
+	public function getOptions(): array {
 		return $this->__options;
 	}
 	
@@ -64,7 +64,7 @@ trait TSelectionFormField {
 	 * 
 	 * @see		IFormNode::available()
 	 */
-	public function isAvailable() {
+	public function isAvailable(): bool {
 		// selections without any possible values are not available
 		return !empty($this->possibleValues) && parent::isAvailable();
 	}
@@ -82,7 +82,7 @@ trait TSelectionFormField {
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options) {
+	public function options($options): ISelectionFormField {
 		if (!is_array($options) && !is_callable($options)) {
 			throw new \InvalidArgumentException("Given options are neither an array nor a callable, " . gettype($options) . " given.");
 		}
@@ -130,10 +130,12 @@ trait TSelectionFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if (isset($_POST[$this->getPrefixedId()]) && is_string($_POST[$this->getPrefixedId()])) {
 			$this->__value = $_POST[$this->getPrefixedId()];
 		}
+		
+		return $this;
 	}
 	
 	/**

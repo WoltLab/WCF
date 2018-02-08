@@ -18,7 +18,7 @@ interface ISelectionFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
-	public function getOptions();
+	public function getOptions(): array;
 	
 	/**
 	 * Sets the possible options of this field and returns this field.
@@ -33,5 +33,5 @@ interface ISelectionFormField {
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options);
+	public function options($options): ISelectionFormField;
 }

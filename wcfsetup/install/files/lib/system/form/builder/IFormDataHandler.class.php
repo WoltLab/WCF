@@ -20,7 +20,7 @@ interface IFormDataHandler {
 	 * @param	IFormFieldDataProcessor		$processor	added field data processor
 	 * @return	static						this data handler
 	 */
-	public function add(IFormFieldDataProcessor $processor);
+	public function add(IFormFieldDataProcessor $processor): IFormDataHandler;
 	
 	/**
 	 * Returns the data from the given form that is passed as the parameters
@@ -29,5 +29,5 @@ interface IFormDataHandler {
 	 * @param	IFormDocument	$document	processed form document
 	 * @return	array				data passed to database object action
 	 */
-	public function getData(IFormDocument $document);
+	public function getData(IFormDocument $document): array;
 }

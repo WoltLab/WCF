@@ -18,9 +18,9 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	string		$action		form action
 	 * @return	static				this document
 	 * 
-	 * @throws	\InvalidArgumentException	if the given action is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given action is invalid
 	 */
-	public function action($action);
+	public function action(string $action): IFormDocument;
 	
 	/**
 	 * Is called once after all nodes have been added to this document.
@@ -33,7 +33,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\BadMethodCallException		if this document has already been built
 	 */
-	public function build();
+	public function build(): IFormDocument;
 	
 	/**
 	 * Returns the `action` property of the HTML `form` element.
@@ -42,7 +42,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\BadMethodCallException		if no action has been set
 	 */
-	public function getAction();
+	public function getAction(): string;
 	
 	/**
 	 * Returns the array passed as the `$parameters` argument of the constructor
@@ -50,7 +50,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	array		data passed to database object action
 	 */
-	public function getData();
+	public function getData(): array;
 	
 	/**
 	 * Returns the data handler for this document that is used to process the
@@ -62,7 +62,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	IFormDataHandler	form data handler
 	 */
-	public function getDataHandler();
+	public function getDataHandler(): IFormDataHandler;
 	
 	/**
 	 * Returns the encoding type of this form. If the form contains any
@@ -79,7 +79,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	string		form method
 	 */
-	public function getMethod();
+	public function getMethod(): string;
 	
 	/**
 	 * Returns the global form prefix that is prepended to form elements' names and ids to
@@ -89,7 +89,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	string		global form element prefix
 	 */
-	public function getPrefix();
+	public function getPrefix(): string;
 	
 	/**
 	 * Loads the field values from the given object and returns this document.
@@ -99,7 +99,7 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	IStorableObject		$object		object used to load field values
 	 * @return	static					this document
 	 */
-	public function loadValuesFromObject(IStorableObject $object);
+	public function loadValuesFromObject(IStorableObject $object): IFormDocument;
 	
 	/**
 	 * Sets the `method` property of the HTML `form` element and returns this document.
@@ -107,9 +107,9 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	string		$method		form method
 	 * @return	static				this document
 	 * 
-	 * @throws	\InvalidArgumentException	if the given method is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given method is invalid
 	 */
-	public function method($method);
+	public function method(string $method): IFormDocument;
 	
 	/**
 	 * Sets the global form prefix that is prepended to form elements' names and ids to
@@ -121,7 +121,7 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	string		$prefix		global form prefix
 	 * @return	static				this document
 	 * 
-	 * @throws	\InvalidArgumentException	if the given prefix is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given prefix is invalid
 	 */
-	public function prefix($prefix);
+	public function prefix(string $prefix): IFormDocument;
 }

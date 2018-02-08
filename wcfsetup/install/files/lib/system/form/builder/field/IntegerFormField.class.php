@@ -39,10 +39,12 @@ class IntegerFormField extends AbstractFormField implements IMaximumFormField, I
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if (isset($_POST[$this->getPrefixedId()]) && $_POST[$this->getPrefixedId()] !== '') {
 			$this->__value = intval($_POST[$this->getPrefixedId()]);
 		}
+		
+		return $this;
 	}
 	
 	/**
@@ -73,7 +75,7 @@ class IntegerFormField extends AbstractFormField implements IMaximumFormField, I
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value) {
+	public function value($value): IFormField {
 		if ($value !== null && !is_int($value)) {
 			throw new \InvalidArgumentException("Given value is neither `null` nor an integer, " . gettype($value) . " given.");
 		}

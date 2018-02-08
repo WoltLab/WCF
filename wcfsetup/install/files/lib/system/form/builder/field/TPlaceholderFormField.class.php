@@ -35,11 +35,11 @@ trait TPlaceholderFormField {
 	 * 
 	 * @param	null|string	$languageItem	language item containing the placeholder or `null` to unset description
 	 * @param	array		$variables	additional variables used when resolving the language item
-	 * @return	static				this field
+	 * @return	IPlaceholderFormField		this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no string or otherwise invalid
 	 */
-	public function placeholder($languageItem = null, array $variables = []) {
+	public function placeholder($languageItem = null, array $variables = []): IPlaceholderFormField {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting placeholder of field '{$this->getId()}'");

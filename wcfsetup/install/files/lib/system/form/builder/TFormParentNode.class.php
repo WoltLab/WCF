@@ -28,11 +28,11 @@ trait TFormParentNode {
 	 * Appends the given node to this node and returns this node.
 	 * 
 	 * @param	IFormChildNode		$child		appended child
-	 * @return	static					this node
+	 * @return	IFormParentNode				this node
 	 * 
 	 * @throws	\InvalidArgumentException		if the given child node cannot be appended
 	 */
-	public function appendChild(IFormChildNode $child) {
+	public function appendChild(IFormChildNode $child): IFormParentNode {
 		$this->__children[] = $child;
 		
 		$child->parent($this);
@@ -44,11 +44,11 @@ trait TFormParentNode {
 	 * Appends the given children to this node and returns this node.
 	 * 
 	 * @param	IFormChildNode[]	$children	appended children
-	 * @return	static					this node
+	 * @return	IFormParentNode				this node
 	 * 
 	 * @throws	\InvalidArgumentException		if any of the given child nodes is invalid or cannot be appended
 	 */
-	public function appendChildren(array $children) {
+	public function appendChildren(array $children): IFormParentNode {
 		foreach ($children as $child) {
 			$this->appendChild($child);
 		}
@@ -63,7 +63,7 @@ trait TFormParentNode {
 	 * @param	string		$nodeId		id of searched node
 	 * @return	bool
 	 */
-	public function contains($nodeId) {
+	public function contains(string $nodeId): bool {
 		static::validateId($nodeId);
 		
 		foreach ($this->children() as $child) {
@@ -84,7 +84,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	IFormChildNode[]	children of this node
 	 */
-	public function children() {
+	public function children(): array {
 		return $this->__children;
 	}
 	
@@ -93,7 +93,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	int	number of children
 	 */
-	public function count() {
+	public function count(): int {
 		return count($this->__children);
 	}
 	
@@ -102,7 +102,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	IFormChildNode		current child node
 	 */
-	public function current() {
+	public function current(): IFormChildNode {
 		return $this->__children[$this->index];
 	}
 	
@@ -128,7 +128,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	\RecursiveIteratorIterator	recursive iterator for this node
 	 */
-	public function getIterator() {
+	public function getIterator(): \RecursiveIteratorIterator {
 		return new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST, \RecursiveIteratorIterator::CATCH_GET_CHILD);
 	}
 	
@@ -141,9 +141,9 @@ trait TFormParentNode {
 	 * @param	string		$nodeId		id of the requested node
 	 * @return	null|IFormNode			requested node
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function getNodeById($nodeId) {
+	public function getNodeById(string $nodeId) {
 		static::validateId($nodeId);
 		
 		foreach ($this->children() as $child) {
@@ -167,7 +167,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	bool
 	 */
-	public function hasChildren() {
+	public function hasChildren(): bool {
 		return !empty($this->__children);
 	}
 	
@@ -177,7 +177,7 @@ trait TFormParentNode {
 	 *
 	 * @return	bool
 	 */
-	public function hasValidationErrors() {
+	public function hasValidationErrors(): bool {
 		foreach ($this->children() as $child) {
 			if ($child instanceof IFormField) {
 				if (!empty($child->getValidationErrors())) {
@@ -199,11 +199,11 @@ trait TFormParentNode {
 	 *
 	 * @param	IFormChildNode		$child			inserted child node
 	 * @param	string			$referenceNodeId	id of the node before which the given node is inserted
-	 * @return	static						this node
+	 * @return	IFormParentNode					this node
 	 *
 	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
 	 */
-	public function insertBefore(IFormChildNode $child, $referenceNodeId) {
+	public function insertBefore(IFormChildNode $child, string $referenceNodeId): IFormParentNode {
 		$didInsertNode = false;
 		foreach ($this->children() as $index => $existingChild) {
 			if ($existingChild->getId() === $referenceNodeId) {
@@ -228,7 +228,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	int	element key during the iteration
 	 */
-	public function key() {
+	public function key(): int {
 		return $this->index;
 	}
 	
@@ -243,9 +243,9 @@ trait TFormParentNode {
 	 * Reads the value of this node and its children from request data and
 	 * return this field.
 	 * 
-	 * @return	static		this node
+	 * @return	IFormParentNode		this node
 	 */
-	public function readValues() {
+	public function readValues(): IFormParentNode {
 		if ($this->isAvailable()) {
 			foreach ($this->children() as $child) {
 				if ($child instanceof IFormParentNode) {
@@ -273,7 +273,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	bool
 	 */
-	public function valid() {
+	public function valid(): bool {
 		return isset($this->__children[$this->index]);
 	}
 	

@@ -19,7 +19,7 @@ interface IFormFieldDependency {
 	 * 
 	 * @return	bool
 	 */
-	public function checkDependency();
+	public function checkDependency(): bool;
 	
 	/**
 	 * Sets the node whose availability depends on the value of a field.
@@ -29,7 +29,7 @@ interface IFormFieldDependency {
 	 * 
 	 * @throws	\BadMethodCallException		if no dependent node has been set
 	 */
-	public function dependentNode(IFormNode $node);
+	public function dependentNode(IFormNode $node): IFormFieldDependency;
 	
 	/**
 	 * Sets the field the availability of the node dependents on.
@@ -39,43 +39,43 @@ interface IFormFieldDependency {
 	 * 
 	 * @throws	\BadMethodCallException		if no field has been set
 	 */
-	public function field(IFormField $field);
+	public function field(IFormField $field): IFormFieldDependency;
 	
 	/**
 	 * Returns the node whose availability depends on the value of a field.
 	 * 
 	 * @return	IFormNode	dependent node
 	 */
-	public function getDependentNode();
+	public function getDependentNode(): IFormNode;
 	
 	/**
 	 * Returns the field the availability of the element dependents on.
 	 * 
 	 * @return	IFormField	field controlling element availability
 	 */
-	public function getField();
+	public function getField(): IFormField;
 	
 	/**
 	 * Returns the JavaScript code required to ensure this dependency in the template.
 	 * 
 	 * @return	string		dependency JavaScript code
 	 */
-	public function getHtml();
+	public function getHtml(): string;
 	
 	/**
 	 * Returns the id of this dependency.
 	 * 
 	 * @return	string		id of the dependency 
 	 */
-	public function getId();
+	public function getId(): string;
 	
 	/**
 	 * Creates a new dependency with the given id.
 	 * 
-	 * @param	string		$id
-	 * @return	static		newly created dependency
+	 * @param	string		$id		id of the created dependency
+	 * @return	static				newly created dependency
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function create($id);
+	public static function create(string $id): IFormFieldDependency;
 }

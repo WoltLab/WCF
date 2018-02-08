@@ -32,11 +32,7 @@ class CustomFormFieldDataProcessor implements IFormFieldDataProcessor {
 	 * 
 	 * @throws	\InvalidArgumentException	if either id or processor callable are invalid
 	 */
-	public function __construct($id, callable $processor) {
-		if (!is_string($id)) {
-			throw new \InvalidArgumentException("Given id is no string, " . gettype($id) . " given.");
-		}
-		
+	public function __construct(string $id, callable $processor) {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}
@@ -68,7 +64,7 @@ class CustomFormFieldDataProcessor implements IFormFieldDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function __invoke(IFormDocument $document, array $parameters) {
+	public function __invoke(IFormDocument $document, array $parameters): array {
 		$parameters = call_user_func($this->processor, $document, $parameters);
 		
 		if (!is_array($parameters)) {

@@ -19,15 +19,13 @@ interface INullableFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isNullable();
+	public function isNullable(): bool;
 	
 	/**
 	 * Sets whether this field supports `null` as its value and returns this field.
 	 * 
 	 * @param	bool	$nullable		determines if field supports `null` as its value
 	 * @return	static				this node
-	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no boolean
 	 */
-	public function nullable($nullable = true);
+	public function nullable(bool $nullable = true): INullableFormField;
 }

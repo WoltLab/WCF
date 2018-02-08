@@ -28,7 +28,7 @@ interface IPlaceholderFormField {
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given value is invalid
 	 */
-	public function placeholder($languageItem = null, array $variables = []);
+	public function placeholder($languageItem = null, array $variables = []): IPlaceholderFormField;
 }

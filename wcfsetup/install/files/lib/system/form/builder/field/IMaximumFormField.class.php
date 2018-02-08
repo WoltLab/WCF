@@ -28,5 +28,5 @@ interface IMaximumFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum is no integer or otherwise invalid
 	 */
-	public function maximum($maximum = null);
+	public function maximum($maximum = null): IMaximumFormField;
 }

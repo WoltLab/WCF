@@ -7,6 +7,7 @@ use wcf\system\acl\ACLHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 
 /**
  * Implementation of a form field for setting acl option values.
@@ -55,12 +56,10 @@ class AclFormField extends AbstractFormField {
 	 * @param	string		$categoryName	name of/filter for the acl option categories
 	 * @return	static		$this		this field
 	 * 
-	 * @throws	\InvalidArgumentException	if given category name is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if given category name is invalid
 	 */
-	public function categoryName($categoryName) {
-		if (!is_string($categoryName)) {
-			throw new \InvalidArgumentException("Given category name is no string, '" . gettype($categoryName) . "' given.");
-		}
+	public function categoryName(string $categoryName): AclFormField {
+		// TODO: validation
 		
 		$this->__categoryName = $categoryName;
 		
@@ -80,7 +79,7 @@ class AclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtmlVariables() {
+	public function getHtmlVariables(): array {
 		ACLHandler::getInstance()->assignVariables($this->getObjectType()->objectTypeID);
 		
 		$includeAclJavaScript = !static::$includedAclJavaScript;
@@ -109,7 +108,7 @@ class AclFormField extends AbstractFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if object type has not been set
 	 */
-	public function getObjectType() {
+	public function getObjectType(): ObjectType {
 		if ($this->__objectType === null) {
 			throw new \BadMethodCallException("Object type has not been set.");
 		}
@@ -120,14 +119,14 @@ class AclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue() {
+	public function hasSaveValue(): bool {
 		return false;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValueFromObject(IStorableObject $object): IFormField {
 		$this->objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($this->objectID === null) {
@@ -144,15 +143,11 @@ class AclFormField extends AbstractFormField {
 	 * @return	static				this field
 	 * 
 	 * @throws	\BadMethodCallException		if object type has already been set
-	 * @throws	\InvalidArgumentException	if given object type name is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if given object type name is invalid
 	 */
-	public function objectType($objectType) {
+	public function objectType(string $objectType): IFormField {
 		if ($this->__objectType !== null) {
 			throw new \BadMethodCallException("Object type has already been set.");
-		}
-		
-		if (!is_string($objectType)) {
-			throw new \InvalidArgumentException("Given object type name is no string, '" . gettype($objectType) . "' given.");
 		}
 		
 		try {
@@ -171,7 +166,7 @@ class AclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function populate() {
+	public function populate(): IFormNode {
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			$parameters['aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
 			
@@ -184,7 +179,9 @@ class AclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID);
+		
+		return $this;
 	}
 }

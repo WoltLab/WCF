@@ -28,7 +28,7 @@ class MultilineTextFormField extends TextFormField {
 	 * 
 	 * @return	int	number of textarea rows
 	 */
-	public function getRows() {
+	public function getRows(): int {
 		return $this->__rows;
 	}
 	
@@ -38,13 +38,9 @@ class MultilineTextFormField extends TextFormField {
 	 * @param	int	$rows			number of textarea rows
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if given number of rows is no integer or otherwise invalid
+	 * @throws	\InvalidArgumentException	if given number of rows is invalid
 	 */
-	public function rows($rows) {
-		if (!is_int($rows)) {
-			throw new \InvalidArgumentException("Given number of rows is no integer, '" . gettype($rows) . "' given.");
-		}
-		
+	public function rows(int $rows): MultilineTextFormField {
 		if ($rows <= 0) {
 			throw new \InvalidArgumentException("Given number of rows is not positive.");
 		}  

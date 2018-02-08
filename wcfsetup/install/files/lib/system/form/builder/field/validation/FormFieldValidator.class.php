@@ -27,7 +27,7 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct($id, callable $validator) {
+	public function __construct(string $id, callable $validator) {
 		static::validateId($id);
 		
 		$this->id = $id;
@@ -58,18 +58,14 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function getId() {
+	public function getId(): string {
 		return $this->id;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public static function validateId($id) {
-		if (!is_string($id)) {
-			throw new \InvalidArgumentException("Given id is no string, " . gettype($id) . " given.");
-		}
-		
+	public static function validateId(string $id) {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}
