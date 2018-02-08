@@ -36,7 +36,7 @@ trait TMaximumFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum is no integer or otherwise invalid
 	 */
-	public function maximum($maximum = null): IMaximumFormField {
+	public function maximum(int $maximum = null): IMaximumFormField {
 		if ($maximum !== null) {
 			if (!is_int($maximum)) {
 				throw new \InvalidArgumentException("Given maximum is no int, '" . gettype($maximum) . "' given.");

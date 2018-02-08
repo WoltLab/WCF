@@ -36,7 +36,7 @@ trait TMinimumFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum is no integer or otherwise invalid
 	 */
-	public function minimum($minimum = null): IMinimumFormField {
+	public function minimum(int $minimum = null): IMinimumFormField {
 		if ($minimum !== null) {
 			if (!is_int($minimum)) {
 				throw new \InvalidArgumentException("Given minimum is no int, '" . gettype($minimum) . "' given.");

@@ -39,7 +39,7 @@ trait TPlaceholderFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no string or otherwise invalid
 	 */
-	public function placeholder($languageItem = null, array $variables = []): IPlaceholderFormField {
+	public function placeholder(string $languageItem = null, array $variables = []): IPlaceholderFormField {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting placeholder of field '{$this->getId()}'");

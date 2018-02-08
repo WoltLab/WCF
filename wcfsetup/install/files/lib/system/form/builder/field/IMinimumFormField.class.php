@@ -28,5 +28,5 @@ interface IMinimumFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum is no integer or otherwise invalid
 	 */
-	public function minimum($minimum = null): IMinimumFormField;
+	public function minimum(int $minimum = null): IMinimumFormField;
 }

@@ -36,7 +36,7 @@ trait TMaximumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
-	public function maximumLength($maximumLength = null): IMaximumLengthFormField {
+	public function maximumLength(int $maximumLength = null): IMaximumLengthFormField {
 		if ($maximumLength !== null) {
 			if (!is_int($maximumLength)) {
 				throw new \InvalidArgumentException("Given maximum length is no int, '" . gettype($maximumLength) . "' given.");

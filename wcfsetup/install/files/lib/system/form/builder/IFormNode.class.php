@@ -46,7 +46,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
 	 */
-	public function attribute(string $name, $value = null): IFormNode;
+	public function attribute(string $name, string $value = null): IFormNode;
 	
 	/**
 	 * Sets if this node is available and returns this node.

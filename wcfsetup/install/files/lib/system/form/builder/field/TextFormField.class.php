@@ -59,7 +59,7 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 	 * @param	string		$text		validated text
 	 * @param	null|int	$languageID	language id of validated text or `null` for monolingual text
 	 */
-	protected function validateText(string $text, $languageID = null) {
+	protected function validateText(string $text, int $languageID = null) {
 		if ($this->getMinimumLength() !== null && mb_strlen($text) < $this->getMinimumLength()) {
 			$this->addValidationError(new FormFieldValidationError('minimumLength', 'wcf.global.form.text.error.minimumLength', [
 				'languageID' => $languageID,

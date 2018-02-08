@@ -28,5 +28,5 @@ interface IMaximumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
-	public function maximumLength($maximumLength = null): IMaximumLengthFormField;
+	public function maximumLength(int $maximumLength = null): IMaximumLengthFormField;
 }

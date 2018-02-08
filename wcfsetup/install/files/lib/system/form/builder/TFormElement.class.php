@@ -37,7 +37,7 @@ trait TFormElement {
 	 *
 	 * @throws	\InvalidArgumentException	if the given description is no string or otherwise is invalid
 	 */
-	public function description($languageItem = null, array $variables = []): IFormElement {
+	public function description(string $languageItem = null, array $variables = []): IFormElement {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting description of element '{$this->getId()}'");
@@ -85,7 +85,7 @@ trait TFormElement {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given label is no string or otherwise is invalid
 	 */
-	public function label($languageItem = null, array $variables = []): IFormElement {
+	public function label(string $languageItem = null, array $variables = []): IFormElement {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting label of element '{$this->getId()}'");
