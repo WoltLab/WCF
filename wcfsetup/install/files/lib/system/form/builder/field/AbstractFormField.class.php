@@ -203,6 +203,8 @@ abstract class AbstractFormField implements IFormField {
 		if (isset($object->{$this->getId()})) {
 			$this->__value = $object->{$this->getId()};
 		}
+		
+		return $this;
 	}
 	
 	/**

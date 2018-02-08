@@ -133,6 +133,8 @@ class AclFormField extends AbstractFormField {
 		if ($this->objectID === null) {
 			throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
 		}
+		
+		return $this;
 	}
 	
 	/**

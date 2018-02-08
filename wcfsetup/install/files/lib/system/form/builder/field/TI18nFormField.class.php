@@ -259,6 +259,8 @@ trait TI18nFormField {
 				$this->__value = $value;
 			}
 		}
+		
+		return $this;
 	}
 	
 	/**
