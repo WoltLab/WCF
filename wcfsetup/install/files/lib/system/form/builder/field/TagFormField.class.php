@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\IStorableObject;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
+use wcf\data\IStorableObject;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
