@@ -70,13 +70,15 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			this.selection.saveInstant = (function() {
 				mpSaveInstant.call(this);
 				
-				this.saved.isAtNodeStart = false;
-				
-				var selection = window.getSelection();
-				if (selection.rangeCount && !selection.isCollapsed) {
-					var range = selection.getRangeAt(0);
-					if (range.startContainer.nodeType === Node.TEXT_NODE && range.startOffset === 0) {
-						this.saved.isAtNodeStart = true;
+				if (this.saved) {
+					this.saved.isAtNodeStart = false;
+					
+					var selection = window.getSelection();
+					if (selection.rangeCount && !selection.isCollapsed) {
+						var range = selection.getRangeAt(0);
+						if (range.startContainer.nodeType === Node.TEXT_NODE && range.startOffset === 0) {
+							this.saved.isAtNodeStart = true;
+						}
 					}
 				}
 			}).bind(this);
