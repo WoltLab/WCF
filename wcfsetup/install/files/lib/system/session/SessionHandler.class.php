@@ -358,7 +358,7 @@ class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function checkSecurityToken($token) {
-		return CryptoUtil::secureCompare($this->getSecurityToken(), $token);
+		return \hash_equals($this->getSecurityToken(), $token);
 	}
 	
 	/**

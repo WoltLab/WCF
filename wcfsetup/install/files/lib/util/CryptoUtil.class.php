@@ -74,31 +74,13 @@ final class CryptoUtil {
 	}
 
 	/**
-	 * Compares two strings in a constant time manner.
-	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
-	 * 
-	 * @param	string		$hash1
-	 * @param	string		$hash2
-	 * @return	boolean
+	 * @deprecated	Use\hash_equals directly.
 	 */
 	public static function secureCompare($hash1, $hash2) {
 		$hash1 = (string) $hash1;
 		$hash2 = (string) $hash2;
 		
-		if (function_exists('hash_equals')) {
-			return hash_equals($hash1, $hash2);
-		}
-		
-		if (strlen($hash1) !== strlen($hash2)) {
-			return false;
-		}
-		
-		$result = 0;
-		for ($i = 0, $length = strlen($hash1); $i < $length; $i++) {
-			$result |= ord($hash1[$i]) ^ ord($hash2[$i]);
-		}
-		
-		return ($result === 0);
+		return \hash_equals($hash1, $hash2);
 	}
 	
 	/**
