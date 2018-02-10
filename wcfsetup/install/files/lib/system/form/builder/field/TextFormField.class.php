@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Implementation of a form field for single-line text values.
@@ -61,19 +62,12 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 	 * @param	null|int	$languageID	language id of validated text or `null` for monolingual text
 	 */
 	protected function validateText(string $text, int $languageID = null) {
-		if ($this->getMinimumLength() !== null && mb_strlen($text) < $this->getMinimumLength()) {
-			$this->addValidationError(new FormFieldValidationError('minimumLength', 'wcf.global.form.text.error.minimumLength', [
-				'languageID' => $languageID,
-				'length' => mb_strlen($text),
-				'minimumLength' => $this->getMinimumLength()
-			]));
+		$language = null;
+		if ($languageID !== null) {
+			$language = LanguageFactory::getInstance()->getLanguage($languageID);
 		}
-		else if ($this->getMaximumLength() !== null && mb_strlen($text) > $this->getMaximumLength()) {
-			$this->addValidationError(new FormFieldValidationError('maximumLength', 'wcf.global.form.text.error.maximumLength', [
-				'languageID' => $languageID,
-				'length' => mb_strlen($text),
-				'maximumLength' => $this->getMaximumLength()
-			]));
-		}
+		
+		$this->validateMinimumLength($text, $language);
+		$this->validateMaximumLength($text, $language);
 	}
 }

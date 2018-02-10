@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
+use wcf\data\language\Language;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
  * Provides default implementations of `IMaximumLengthFormField` methods.
@@ -58,5 +60,21 @@ trait TMaximumLengthFormField {
 		$this->__maximumLength = $maximumLength;
 		
 		return $this;
+	}
+	
+	/**
+	 * Validates the maximum length of the given text.
+	 * 
+	 * @param	string		$text		validated text
+	 * @param	null|Language	$language	language of the validated text
+	 */
+	public function validateMaximumLength(string $text, Language $language = null) {
+		if ($this->getMaximumLength() !== null && mb_strlen($text) > $this->getMaximumLength()) {
+			$this->addValidationError(new FormFieldValidationError('maximumLength', 'wcf.global.form.text.error.maximumLength', [
+				'language' => $language,
+				'length' => mb_strlen($text),
+				'maximumLength' => $this->getMaximumLength()
+			]));
+		}
 	}
 }

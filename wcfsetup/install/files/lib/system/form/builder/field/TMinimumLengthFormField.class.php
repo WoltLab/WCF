@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
+use wcf\data\language\Language;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
  * Provides default implementations of `IMinimumLengthFormField` methods.
@@ -58,5 +60,21 @@ trait TMinimumLengthFormField {
 		$this->__minimumLength = $minimumLength;
 		
 		return $this;
+	}
+	
+	/**
+	 * Validates the minimum length of the given text.
+	 * 
+	 * @param	string		$text		validated text
+	 * @param	null|Language	$language	language of the validated text
+	 */
+	public function validateMinimumLength(string $text, Language $language = null) {
+		if ($this->getMinimumLength() !== null && mb_strlen($text) < $this->getMinimumLength()) {
+			$this->addValidationError(new FormFieldValidationError('minimumLength', 'wcf.global.form.text.error.minimumLength', [
+				'language' => $language,
+				'length' => mb_strlen($text),
+				'minimumLength' => $this->getMinimumLength()
+			]));
+		}
 	}
 }
