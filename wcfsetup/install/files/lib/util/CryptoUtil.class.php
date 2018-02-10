@@ -72,7 +72,7 @@ final class CryptoUtil {
 	}
 
 	/**
-	 * @deprecated	Use\hash_equals directly.
+	 * @deprecated	Use \hash_equals() directly.
 	 */
 	public static function secureCompare($hash1, $hash2) {
 		$hash1 = (string) $hash1;
@@ -82,14 +82,14 @@ final class CryptoUtil {
 	}
 	
 	/**
-	 * @deprecated	Use random_bytes()
+	 * @deprecated	Use \random_bytes() directly.
 	 */
 	public static function randomBytes($n) {
 		return random_bytes($n);
 	}
 	
 	/**
-	 * @deprecated	Use random_int()
+	 * @deprecated	Use \random_int() directly.
 	 */
 	public static function randomInt($min, $max) {
 		$range = $max - $min;
