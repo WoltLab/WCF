@@ -19,7 +19,9 @@ use wcf\system\form\builder\IFormNode;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class AclFormField extends AbstractFormField {
+class AclFormField extends AbstractFormField implements IObjectTypeFormField {
+	use TObjectTypeFormField;
+	
 	/**
 	 * name of/filter for the name(s) of the shown acl option categories 
 	 * @var	null|string
