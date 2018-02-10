@@ -135,6 +135,8 @@ namespace wcf\functions\exception {
 							return array_map(function () {
 								return '[redacted]';
 							}, $item);
+						case 'resource':
+							return 'resource('.get_resource_type($item).')';
 						default:
 							return $item;
 					}
@@ -543,6 +545,8 @@ EXPLANATION;
 														}, $keys)).']';
 													case 'object':
 														return get_class($item);
+													case 'resource':
+														return 'resource('.get_resource_type($item).')';
 												}
 												
 												throw new \LogicException('Unreachable');
