@@ -17,7 +17,7 @@ class IsDisabledFormField extends BooleanFormField {
 	 */
 	public static function create(string $id = null): IFormNode {
 		if ($id !== null) {
-			throw new \InvalidArgumentException("This method does not expect any parameters. The id of form fields of this class are always 'isDisabled'.");
+			throw new \InvalidArgumentException("This method does not expect any parameters. The id of form fields of this class is always 'isDisabled'.");
 		}
 		
 		return parent::create('isDisabled');
