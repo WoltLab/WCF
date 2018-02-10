@@ -47,7 +47,7 @@ class TwitterAuthAction extends AbstractAction {
 				// fetch access_token
 				$oauthHeader = [
 					'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
-					'oauth_nonce' => StringUtil::getRandomID(),
+					'oauth_nonce' => bin2hex(\random_bytes(20)),
 					'oauth_signature_method' => 'HMAC-SHA1',
 					'oauth_timestamp' => TIME_NOW,
 					'oauth_version' => '1.0',
@@ -84,7 +84,7 @@ class TwitterAuthAction extends AbstractAction {
 				// perform login
 				else {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
-						$password = StringUtil::getRandomID();
+						$password = bin2hex(\random_bytes(20));
 						$userEditor = new UserEditor($user);
 						$userEditor->update(['password' => $password]);
 						
@@ -115,7 +115,7 @@ class TwitterAuthAction extends AbstractAction {
 					try {
 						$oauthHeader = [
 							'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
-							'oauth_nonce' => StringUtil::getRandomID(),
+							'oauth_nonce' => bin2hex(\random_bytes(20)),
 							'oauth_signature_method' => 'HMAC-SHA1',
 							'oauth_timestamp' => TIME_NOW,
 							'oauth_version' => '1.0',
@@ -168,7 +168,7 @@ class TwitterAuthAction extends AbstractAction {
 			$oauthHeader = [
 				'oauth_callback' => $callbackURL,
 				'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
-				'oauth_nonce' => StringUtil::getRandomID(),
+				'oauth_nonce' => bin2hex(\random_bytes(20)),
 				'oauth_signature_method' => 'HMAC-SHA1',
 				'oauth_timestamp' => TIME_NOW,
 				'oauth_version' => '1.0'
