@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;

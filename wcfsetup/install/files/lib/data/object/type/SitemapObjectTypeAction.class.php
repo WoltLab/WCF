@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\object\type;
 use wcf\data\IToggleAction;
 use wcf\system\exception\IllegalLinkException;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\moderation\queue\report;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\moderation\queue\IModerationQueueHandler;

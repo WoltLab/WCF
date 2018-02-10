@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\box;
 use wcf\data\box\content\BoxContentList;
 use wcf\data\DatabaseObjectList;

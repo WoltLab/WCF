@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\exception\UserException;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\email;
 use wcf\data\user\User;
 use wcf\system\email\mime\HtmlTextMimePart;

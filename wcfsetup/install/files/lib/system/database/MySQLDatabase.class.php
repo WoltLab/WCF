@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\database;
 use wcf\system\database\editor\MySQLDatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;

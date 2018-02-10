@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\bbcode;
 use wcf\system\exception\SystemException;
 use wcf\util\DOMUtil;

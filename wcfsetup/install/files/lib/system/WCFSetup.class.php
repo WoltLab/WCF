@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\worker;
 use wcf\data\like\object\LikeObjectList;
 use wcf\data\like\Like;

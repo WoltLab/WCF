@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\comment;
 use wcf\data\like\object\AbstractLikeObject;
 use wcf\data\like\Like;

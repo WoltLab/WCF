@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\upload;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\system\exception\SystemException;

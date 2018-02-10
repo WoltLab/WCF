@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\message\quote;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;

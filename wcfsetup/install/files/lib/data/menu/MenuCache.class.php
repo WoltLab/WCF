@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\menu;
 use wcf\data\menu\item\MenuItemList;
 use wcf\system\cache\builder\MenuCacheBuilder;

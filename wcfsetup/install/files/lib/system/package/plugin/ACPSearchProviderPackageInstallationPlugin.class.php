@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\acp\search\provider\ACPSearchProviderEditor;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;

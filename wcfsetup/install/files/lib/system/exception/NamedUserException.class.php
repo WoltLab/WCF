@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\exception;
 use wcf\system\box\BoxHandler;
 use wcf\system\session\SessionHandler;

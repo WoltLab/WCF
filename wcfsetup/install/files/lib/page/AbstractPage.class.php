@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\page;
 use wcf\form\DisclaimerForm;
 use wcf\form\EmailActivationForm;

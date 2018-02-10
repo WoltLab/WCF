@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\bbcode;
 use wcf\system\SingletonFactory;
 use wcf\util\ArrayUtil;

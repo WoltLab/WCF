@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\menu;
 use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;

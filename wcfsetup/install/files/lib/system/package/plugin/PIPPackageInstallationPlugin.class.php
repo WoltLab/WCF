@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\package\installation\plugin\PackageInstallationPluginEditor;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;

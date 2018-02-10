@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\option\category;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;

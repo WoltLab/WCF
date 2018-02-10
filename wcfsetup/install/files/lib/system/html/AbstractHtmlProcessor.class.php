@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\html;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\InvalidObjectTypeException;

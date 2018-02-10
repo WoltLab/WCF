@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\object\type\definition;
 use wcf\data\DatabaseObjectList;
 

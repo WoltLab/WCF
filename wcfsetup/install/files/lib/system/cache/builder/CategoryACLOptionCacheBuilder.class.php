@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cache\builder;
 use wcf\data\category\Category;
 use wcf\system\acl\ACLHandler;

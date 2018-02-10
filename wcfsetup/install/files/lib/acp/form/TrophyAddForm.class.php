@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\category\Category;
 use wcf\data\object\type\ObjectType;

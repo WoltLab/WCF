@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\captcha;
 use wcf\data\captcha\question\CaptchaQuestion;
 use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\package;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\SingletonFactory;

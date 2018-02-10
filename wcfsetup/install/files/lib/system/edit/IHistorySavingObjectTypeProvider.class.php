@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\edit;
 use wcf\data\object\type\IObjectTypeProvider;
 use wcf\system\exception\PermissionDeniedException;

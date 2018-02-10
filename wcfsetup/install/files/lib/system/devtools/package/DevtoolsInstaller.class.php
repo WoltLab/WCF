@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\devtools\package;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\system\setup\Installer;

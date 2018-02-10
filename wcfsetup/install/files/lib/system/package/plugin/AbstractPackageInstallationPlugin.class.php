@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\system\event\EventHandler;
 use wcf\system\package\PackageArchive;

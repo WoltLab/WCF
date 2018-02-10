@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cache\runtime;
 use wcf\data\user\User;
 use wcf\data\user\UserList;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\page;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;

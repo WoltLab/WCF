@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\category;
 use wcf\data\category\CategoryEditor;
 use wcf\data\user\trophy\UserTrophyAction;

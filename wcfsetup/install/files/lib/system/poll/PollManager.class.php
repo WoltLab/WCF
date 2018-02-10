@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\poll;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\sitemap\object;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentList;

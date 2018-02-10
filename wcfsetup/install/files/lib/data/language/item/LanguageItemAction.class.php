@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\language\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;

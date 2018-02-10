@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\action;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\WCF;

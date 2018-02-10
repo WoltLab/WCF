@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\util;
 use wcf\data\language\Language;
 use wcf\data\user\User;

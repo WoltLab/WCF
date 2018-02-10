@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\acl;
 use wcf\data\acl\option\category\ACLOptionCategory;
 use wcf\data\acl\option\category\ACLOptionCategoryList;

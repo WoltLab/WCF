@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\application;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\builder\ApplicationCacheBuilder;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\user\group\UserGroupList;
 use wcf\page\SortablePage;

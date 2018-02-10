@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\form;
 use wcf\system\recaptcha\RecaptchaHandler;
 use wcf\system\recaptcha\RecaptchaHandlerV2;

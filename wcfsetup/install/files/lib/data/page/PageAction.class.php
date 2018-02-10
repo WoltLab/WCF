@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\page;
 use wcf\data\box\Box;
 use wcf\data\page\content\PageContent;

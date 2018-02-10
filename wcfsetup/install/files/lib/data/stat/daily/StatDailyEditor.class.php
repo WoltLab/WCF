@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\stat\daily;
 use wcf\data\DatabaseObjectEditor;
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\payment\type;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogAction;

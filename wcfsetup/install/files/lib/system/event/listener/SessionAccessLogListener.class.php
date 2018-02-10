@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\event\listener;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;

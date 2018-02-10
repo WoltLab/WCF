@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\user\notification\event;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;

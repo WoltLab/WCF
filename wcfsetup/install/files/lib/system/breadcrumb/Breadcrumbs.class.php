@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\breadcrumb;
 use wcf\data\page\PageCache;
 use wcf\system\page\PageLocationManager;

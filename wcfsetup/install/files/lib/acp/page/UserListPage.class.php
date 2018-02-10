@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\ViewableUserOption;

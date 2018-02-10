@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\package\installation\plugin;
 use wcf\data\DatabaseObjectEditor;
 

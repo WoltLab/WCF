@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\bulk\processing;
 use wcf\util\StringUtil;
 use wcf\system\WCF;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\box\content;
 use wcf\data\media\ViewableMedia;
 use wcf\data\DatabaseObject;

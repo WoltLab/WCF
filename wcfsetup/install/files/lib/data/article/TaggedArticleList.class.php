@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\article;
 use wcf\data\tag\Tag;
 use wcf\system\tagging\TagEngine;

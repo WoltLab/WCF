@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\email;
 use TrueBV\Punycode;
 use wcf\data\language\Language;

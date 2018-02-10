@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\user\activity\event;
 use wcf\data\box\Box;
 use wcf\data\user\User;

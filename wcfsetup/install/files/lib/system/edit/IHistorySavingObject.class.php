@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\edit;
 use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\IDatabaseObjectProcessor;

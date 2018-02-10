@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\media;
 use wcf\system\WCF;
 

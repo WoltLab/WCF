@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\comment;
 use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\user\UserProfile;

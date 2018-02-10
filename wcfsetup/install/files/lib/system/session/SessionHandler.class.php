@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\session;
 use wcf\data\acp\session\virtual\ACPSessionVirtual;
 use wcf\data\acp\session\virtual\ACPSessionVirtualAction;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\mail;
 use wcf\data\language\Language;
 use wcf\system\WCF;

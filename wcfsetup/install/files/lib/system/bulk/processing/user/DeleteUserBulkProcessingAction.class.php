@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\bulk\processing\user;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;

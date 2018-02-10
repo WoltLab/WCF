@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\article\content;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\comment\CommentHandler;

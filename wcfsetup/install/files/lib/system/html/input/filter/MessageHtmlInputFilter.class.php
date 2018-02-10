@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\html\input\filter;
 use wcf\system\event\EventHandler;
 

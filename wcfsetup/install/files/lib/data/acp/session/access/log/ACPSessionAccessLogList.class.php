@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\acp\session\access\log;
 use wcf\data\DatabaseObjectList;
 

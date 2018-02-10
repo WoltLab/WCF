@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\label\group;
 use wcf\data\label\Label;
 use wcf\data\user\User;

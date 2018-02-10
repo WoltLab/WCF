@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\style;
 use Leafo\ScssPhp\Compiler;
 use wcf\data\application\Application;

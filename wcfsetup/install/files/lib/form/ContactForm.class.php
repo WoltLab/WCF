@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\form;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\recipient\ContactRecipientList;

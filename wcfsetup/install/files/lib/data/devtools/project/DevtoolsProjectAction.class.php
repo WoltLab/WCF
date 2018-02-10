@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\devtools\project;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;

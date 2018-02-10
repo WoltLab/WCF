@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\message;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IAttachmentMessageQuickReplyAction;

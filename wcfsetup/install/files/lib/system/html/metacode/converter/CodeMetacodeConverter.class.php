@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\html\metacode\converter;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\user\notification\object\type;
 use wcf\data\comment\Comment;
 

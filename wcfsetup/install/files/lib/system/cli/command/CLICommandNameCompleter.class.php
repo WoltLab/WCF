@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cli\command;
 use phpline\console\completer\Completer;
 

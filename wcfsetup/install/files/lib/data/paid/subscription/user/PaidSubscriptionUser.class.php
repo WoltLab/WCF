@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\paid\subscription\user;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\user\User;
