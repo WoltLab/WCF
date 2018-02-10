@@ -154,9 +154,9 @@ class GDImageAdapter implements IImageAdapter {
 		}
 		
 		// resize image
-		$image = imagecreatetruecolor(intval($width), intval($height));
+		$image = imagecreatetruecolor((int) $width, (int) $height);
 		imagealphablending($image, false);
-		imagecopyresampled($image, $this->image, 0, 0, intval($x), intval($y), intval($width), intval($height), intval($sourceWidth), intval($sourceHeight));
+		imagecopyresampled($image, $this->image, 0, 0, (int) $x, (int) $y, (int) $width, (int) $height, (int) $sourceWidth, (int) $sourceHeight);
 		imagesavealpha($image, true);
 		
 		return $image;
@@ -169,7 +169,7 @@ class GDImageAdapter implements IImageAdapter {
 		$image = imagecreatetruecolor($width, $height);
 		imagealphablending($image, false);
 		
-		imagecopy($image, $this->image, 0, 0, intval($originX), intval($originY), intval($width), intval($height));
+		imagecopy($image, $this->image, 0, 0, (int) $originX, (int) $originY, (int) $width, (int) $height);
 		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
@@ -183,7 +183,7 @@ class GDImageAdapter implements IImageAdapter {
 		$image = imagecreatetruecolor($targetWidth, $targetHeight);
 		imagealphablending($image, false);
 		
-		imagecopyresampled($image, $this->image, 0, 0, intval($originX), intval($originY), intval($targetWidth), intval($targetHeight), intval($originWidth), intval($originHeight));
+		imagecopyresampled($image, $this->image, 0, 0, (int) $originX, (int) $originY, (int) $targetWidth, (int) $targetHeight, (int) $originWidth, (int) $originHeight);
 		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
