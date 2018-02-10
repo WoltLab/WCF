@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\user\online\UsersOnlineList;
 use wcf\data\user\UserProfile;

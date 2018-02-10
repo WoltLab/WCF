@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\user\group;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
@@ -242,7 +243,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 		if (!PACKAGE_ID && $this->groupID == 4) return true;
 		
 		$groupIDs = array_keys(self::getGroupsByType());
-		$accessibleGroupIDs = explode(',', $this->getGroupOption('admin.user.accessibleGroups'));
+		$accessibleGroupIDs = explode(',', (string) $this->getGroupOption('admin.user.accessibleGroups'));
 		
 		// no differences -> all groups are included
 		return count(array_diff($groupIDs, $accessibleGroupIDs)) == 0 ? true : false;

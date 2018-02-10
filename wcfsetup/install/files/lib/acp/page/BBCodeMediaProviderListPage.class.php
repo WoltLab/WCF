@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\bbcode\media\provider\BBCodeMediaProviderList;
 use wcf\page\SortablePage;

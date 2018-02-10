@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\worker;
 use wcf\data\poll\PollList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

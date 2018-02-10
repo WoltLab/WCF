@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\box;
 use wcf\data\box\content\BoxContent;
 use wcf\data\condition\Condition;
@@ -136,7 +137,9 @@ class Box extends DatabaseObject {
 		parent::handleData($data);
 		
 		// handle condition data
-		$this->data['additionalData'] = @unserialize($data['additionalData']);
+		if ($data['additionalData'] !== null) {
+			$this->data['additionalData'] = @unserialize($data['additionalData']);
+		}
 		if (!is_array($this->data['additionalData'])) {
 			$this->data['additionalData'] = [];
 		}

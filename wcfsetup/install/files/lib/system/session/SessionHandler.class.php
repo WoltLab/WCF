@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\session;
 use wcf\data\acp\session\virtual\ACPSessionVirtual;
 use wcf\data\acp\session\virtual\ACPSessionVirtualAction;
@@ -400,8 +401,13 @@ class SessionHandler extends SingletonFactory {
 	 * Initializes session variables.
 	 */
 	protected function loadVariables() {
-		@$this->variables = unserialize($this->session->sessionVariables);
-		if (!is_array($this->variables)) {
+		if ($this->session->sessionVariables !== null) {
+			$this->variables = @unserialize($this->session->sessionVariables);
+			if (!is_array($this->variables)) {
+				$this->variables = [];
+			}
+		}
+		else {
 			$this->variables = [];
 		}
 	}

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\user\notification\event\recipient;
 use wcf\data\user\UserList;
 

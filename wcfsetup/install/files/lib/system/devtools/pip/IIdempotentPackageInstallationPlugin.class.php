@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\devtools\pip;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\package;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -337,7 +338,10 @@ class PackageArchive {
 			$this->requirements['com.woltlab.wcf'] = ['name' => 'com.woltlab.wcf'];
 		}
 		
-		if ($this->package != null) {
+		// during installations, `Package::$packageVersion` can be `null` which causes issues
+		// in `PackageArchive::filterUpdateInstructions()`; as update instructions are not needed
+		// for installations, not filtering update instructions is okay
+		if ($this->package !== null && $this->package->packageVersion !== null) {
 			$this->filterUpdateInstructions();
 		}
 		

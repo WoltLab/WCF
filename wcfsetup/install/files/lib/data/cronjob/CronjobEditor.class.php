@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\cronjob;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageList;

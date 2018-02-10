@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
@@ -205,6 +206,10 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		// use table index as array index
+		if ($this->indexToObject === null) {
+			$this->indexToObject = [];
+		}
+		
 		$objects = [];
 		foreach ($this->objects as $object) {
 			$objectID = $object->getObjectID();

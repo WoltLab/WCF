@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\util;
 use phpline\internal\AnsiUtil;
 use wcf\system\CLIWCF;

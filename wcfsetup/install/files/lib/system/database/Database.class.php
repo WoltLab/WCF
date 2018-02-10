@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\database;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\editor\DatabaseEditor;

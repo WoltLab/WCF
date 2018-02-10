@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\option\user\group;
 use wcf\system\option\IOptionType;
 

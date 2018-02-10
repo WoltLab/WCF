@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\bbcode\attribute;
 use wcf\data\DatabaseObjectList;
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\action;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;

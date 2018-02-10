@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\form;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;

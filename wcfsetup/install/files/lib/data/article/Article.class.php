@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;

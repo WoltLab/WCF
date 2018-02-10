@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\like\object;
 use wcf\data\like\Like;
 use wcf\data\object\type\ObjectType;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
@@ -29,6 +30,10 @@ class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin {
 		if (isset($tagArgs[1])) $length = intval($tagArgs[1]);
 		if (isset($tagArgs[2])) $etc = $tagArgs[2];
 		if (isset($tagArgs[3])) $breakWords = $tagArgs[3];
+		
+		if ($string === null) {
+			return '';
+		}
 		
 		return StringUtil::truncate($string, $length, $etc, $breakWords);
 	}

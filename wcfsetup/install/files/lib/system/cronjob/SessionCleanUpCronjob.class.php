@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cronjob;
 use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 use wcf\data\acp\session\ACPSessionEditor;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cli\command;
 use wcf\system\CLIWCF;
 use Zend\Console\Exception\RuntimeException as ArgvException;

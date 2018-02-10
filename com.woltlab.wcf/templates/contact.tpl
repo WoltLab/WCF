@@ -7,7 +7,7 @@
 		<h2 class="sectionTitle">{lang}wcf.contact.sender.information{/lang}</h2>
 		
 		<dl{if $errorField == 'name'} class="formError"{/if}>
-			<dt><label for="name">{lang}wcf.contact.sender{/lang}</label></dt>
+			<dt><label for="name">{lang}wcf.contact.sender{/lang}</label> <span class="customOptionRequired">*</span></dt>
 			<dd>
 				<input type="text" id="name" name="name" value="{$name}" required class="long">
 				{if $errorField == 'name'}
@@ -23,7 +23,7 @@
 		</dl>
 		
 		<dl{if $errorField == 'email'} class="formError"{/if}>
-			<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
+			<dt><label for="email">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span></dt>
 			<dd>
 				<input type="email" id="email" name="email" value="{$email}" required class="medium">
 				{if $errorField == 'email'}

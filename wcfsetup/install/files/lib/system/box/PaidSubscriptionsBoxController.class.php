@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;

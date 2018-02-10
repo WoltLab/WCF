@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\util;
 use wcf\data\language\Language;
 use wcf\data\user\User;
@@ -413,7 +414,7 @@ final class DateUtil {
 	 */
 	public static function validateDate($date) {
 		if (preg_match('~^(?P<year>[0-9]{4})-(?P<month>[0-9]{2})-(?P<day>[0-9]{2})~', $date, $matches)) {
-			if (!checkdate($matches['month'], $matches['day'], $matches['year'])) {
+			if (!checkdate(intval($matches['month']), intval($matches['day']), intval($matches['year']))) {
 				throw new SystemException("Date '".$date."' is invalid");
 			}
 		}

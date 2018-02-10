@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\util;
 
 /**
@@ -82,7 +83,7 @@ final class ExifUtil {
 	 */
 	public static function getExifData($filename) {
 		if (function_exists('exif_read_data')) {
-			$exifData = @exif_read_data($filename, null, true);
+			$exifData = @exif_read_data($filename, '', true);
 			if ($exifData !== false) {
 				return $exifData;
 			}

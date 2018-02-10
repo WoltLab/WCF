@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\page;
 use wcf\data\search\Search;
 use wcf\data\user\User;

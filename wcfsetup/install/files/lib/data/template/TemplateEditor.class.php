@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\template;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\io\File;

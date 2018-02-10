@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\importer;
 use wcf\data\user\object\watch\UserObjectWatch;
 use wcf\data\user\object\watch\UserObjectWatchEditor;

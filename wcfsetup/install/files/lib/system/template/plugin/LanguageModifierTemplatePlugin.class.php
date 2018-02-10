@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
@@ -19,6 +20,10 @@ class LanguageModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
+		if ($tagArgs[0] === null) {
+			return '';
+		}
+		
 		if (($lang = $tplObj->get('__language')) === null) {
 			$lang = WCF::getLanguage();
 		}

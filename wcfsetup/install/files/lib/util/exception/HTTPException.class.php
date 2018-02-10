@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\util\exception;
 use wcf\system\exception\IExtraInformationException;
 use wcf\system\exception\SystemException;

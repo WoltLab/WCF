@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\template\listener;
 use wcf\data\AbstractDatabaseObjectAction;
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 // @codingStandardsIgnoreFile
 /**
  * Teamspeak 3 direct join protocol

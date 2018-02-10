@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\util;
 use wcf\system\exception\SystemException;
 
@@ -197,7 +198,7 @@ final class CronjobUtil {
 		
 		if ($addAnDay) {
 			$date = explode('.', date("d.m.Y", $timeBase));
-			$timeBase = mktime(0, 0, 1, $date[1], $date[0] + 1, $date[2]);
+			$timeBase = mktime(0, 0, 1, intval($date[1]), intval($date[0] + 1, $date[2]));
 		}
 		
 		$day = date('j', $timeBase);

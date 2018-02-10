@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\user\option;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;

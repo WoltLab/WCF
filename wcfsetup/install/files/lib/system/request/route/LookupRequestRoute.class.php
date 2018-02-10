@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\request\route;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\ControllerMap;

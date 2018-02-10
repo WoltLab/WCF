@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\label\object\type;
 use wcf\system\SingletonFactory;
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\acp\session\virtual;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\util\UserUtil;

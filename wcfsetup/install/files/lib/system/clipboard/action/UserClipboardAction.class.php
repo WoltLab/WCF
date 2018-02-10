@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;

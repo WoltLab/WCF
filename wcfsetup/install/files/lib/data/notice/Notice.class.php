@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\notice;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;

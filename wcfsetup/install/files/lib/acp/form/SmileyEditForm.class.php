@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyAction;

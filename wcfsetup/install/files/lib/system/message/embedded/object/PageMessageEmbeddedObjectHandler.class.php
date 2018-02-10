@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\message\embedded\object;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;

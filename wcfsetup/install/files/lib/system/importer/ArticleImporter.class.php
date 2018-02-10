@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\importer;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\article\Article;

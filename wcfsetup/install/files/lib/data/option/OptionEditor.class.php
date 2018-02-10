@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\option;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\data\DatabaseObjectEditor;
@@ -144,7 +145,18 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		// get all options
 		$options = Option::getOptions();
 		foreach ($options as $optionName => $option) {
-			$writer->write("if (!defined('".$optionName."')) define('".$optionName."', ".(($option->optionType == 'boolean' || $option->optionType == 'integer') ? intval($option->optionValue) : "'".addcslashes($option->optionValue, "'\\")."'").");\n");
+			$writeValue = $option->optionValue;
+			if ($writeValue === null) {
+				$writeValue = "''";
+			}
+			else if ($option->optionType == 'boolean' || $option->optionType == 'integer') {
+				$writeValue = intval($option->optionValue);
+			}
+			else {
+				$writeValue = "'".addcslashes($option->optionValue, "'\\")."'";
+			}
+			
+			$writer->write("if (!defined('{$optionName}')) define('{$optionName}', {$writeValue});\n");
 		}
 		unset($options);
 		

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
 use wcf\system\cache\CacheHandler;
@@ -124,7 +125,7 @@ class CacheListPage extends AbstractPage {
 		if (is_array($files)) {
 			/** @var \SplFileInfo $file */
 			foreach ($files as $file) {
-				if ($ignore !== null && $ignore->match($file)) {
+				if ($ignore !== null && $ignore->match($file->getPath())) {
 					continue;
 				}
 				

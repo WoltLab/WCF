@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system;
 use wcf\system\exception\SystemException;
 
@@ -224,7 +225,7 @@ final class Regex {
 		if ($flags & self::SPLIT_NON_EMPTY_ONLY) $splitFlags |= PREG_SPLIT_NO_EMPTY;
 		if ($flags & self::CAPTURE_SPLIT_DELIMITER) $splitFlags |= PREG_SPLIT_DELIM_CAPTURE;
 		
-		return $this->checkResult(preg_split($this->regex, $string, null, $splitFlags), 'split');
+		return $this->checkResult(preg_split($this->regex, $string, -1, $splitFlags), 'split');
 	}
 	// @codingStandardsIgnoreEnd
 	

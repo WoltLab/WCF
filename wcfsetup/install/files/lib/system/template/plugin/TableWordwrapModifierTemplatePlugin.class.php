@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
 
@@ -22,6 +23,10 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$width = 30;
 		$break = "\xE2\x80\x8B";
 		$string = $tagArgs[0];
+		
+		if ($string === null) {
+			return '';
+		}
 		
 		$result = '';
 		$substrings = explode(' ', $string);

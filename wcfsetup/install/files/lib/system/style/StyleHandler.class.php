@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
 use wcf\data\style\Style;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cache\builder;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\WCF;

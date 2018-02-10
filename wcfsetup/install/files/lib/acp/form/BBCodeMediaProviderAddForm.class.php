@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\bbcode\media\provider\BBCodeMediaProviderAction;

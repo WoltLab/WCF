@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\article\category;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\label\group\ViewableLabelGroup;

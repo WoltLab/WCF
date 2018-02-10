@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\condition;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;

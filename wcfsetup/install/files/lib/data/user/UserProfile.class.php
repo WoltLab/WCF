@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\user;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\action;
 use wcf\data\search\SearchEditor;
 use wcf\action\AbstractAction;

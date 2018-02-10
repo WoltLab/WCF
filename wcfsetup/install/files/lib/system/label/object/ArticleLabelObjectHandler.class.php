@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\label\object;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\label\LabelHandler;

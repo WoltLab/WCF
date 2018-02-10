@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\option\user;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\User;

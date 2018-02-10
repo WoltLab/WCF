@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\cache;
 use wcf\system\cache\builder\ICacheBuilder;
 use wcf\system\cache\source\DiskCacheSource;

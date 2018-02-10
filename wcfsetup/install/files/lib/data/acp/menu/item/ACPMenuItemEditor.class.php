@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\acp\menu\item;
 use wcf\data\DatabaseObjectEditor;
 

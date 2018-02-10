@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\html\input\node;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\bbcode\BBCodeHandler;

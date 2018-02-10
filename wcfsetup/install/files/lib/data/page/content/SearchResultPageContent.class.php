@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\data\page\content;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\DatabaseObjectDecorator;
