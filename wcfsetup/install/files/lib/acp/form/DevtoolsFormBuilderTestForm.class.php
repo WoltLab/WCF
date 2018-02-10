@@ -9,6 +9,7 @@ use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -86,8 +87,7 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 				->appendChildren([
 					TextFormField::create('name')
 						->label('wcf.global.name'),
-					TextFormField::create('title')
-						->label('wcf.global.title')
+					TitleFormField::create('title')
 						->i18n()
 						->i18nRequired()
 						->required(),
