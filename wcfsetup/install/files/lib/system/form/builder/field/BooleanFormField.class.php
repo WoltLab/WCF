@@ -49,6 +49,7 @@ class BooleanFormField extends AbstractFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static		this field
 	 */
 	public function value($value): IFormField {
 		if (!is_bool($value)) {

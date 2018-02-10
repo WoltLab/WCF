@@ -34,7 +34,7 @@ trait TFormElement {
 	 *
 	 * @param	null|string	$languageItem	language item containing the element description or `null` to unset description
 	 * @param	array		$variables	additional variables used when resolving the language item
-	 * @return	IFormElement			this element
+	 * @return	static				this element
 	 *
 	 * @throws	\InvalidArgumentException	if the given description is no string or otherwise is invalid
 	 */
@@ -82,7 +82,7 @@ trait TFormElement {
 	 * 
 	 * @param	null|string	$languageItem	language item containing the element label or `null` to unset label
 	 * @param	array		$variables	additional variables used when resolving the language item
-	 * @return	IFormElement			this element
+	 * @return	static				this element
 	 * 
 	 * @throws	\InvalidArgumentException	if the given label is no string or otherwise is invalid
 	 */

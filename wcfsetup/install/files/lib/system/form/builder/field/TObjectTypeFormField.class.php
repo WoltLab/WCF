@@ -40,7 +40,7 @@ trait TObjectTypeFormField {
 	 * Sets the name of the object type and returns this field.
 	 * 
 	 * @param	string		$objectType	object type name
-	 * @return	IObjectTypeFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\BadMethodCallException		if object type has already been set
 	 * @throws	\UnexpectedValueException	if object type definition returned by `getObjectTypeDefinition()` is unknown

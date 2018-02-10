@@ -33,7 +33,7 @@ trait TMaximumFormField {
 	 * maximum is removed.
 	 * 
 	 * @param	null|int	$maximum	maximum field value
-	 * @return	IMaximumFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum is no integer or otherwise invalid
 	 */

@@ -75,6 +75,7 @@ class IntegerFormField extends AbstractFormField implements IMaximumFormField, I
 	
 	/**
 	 * @inheritDoc
+	 * @return	static		this field
 	 */
 	public function value($value): IFormField {
 		if ($value !== null && !is_int($value)) {

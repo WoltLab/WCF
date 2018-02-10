@@ -110,6 +110,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static		this field
 	 */
 	public function value($value): IFormField {
 		if (!is_array($value)) {

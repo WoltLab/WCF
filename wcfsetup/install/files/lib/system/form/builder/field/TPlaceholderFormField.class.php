@@ -36,7 +36,7 @@ trait TPlaceholderFormField {
 	 * 
 	 * @param	null|string	$languageItem	language item containing the placeholder or `null` to unset description
 	 * @param	array		$variables	additional variables used when resolving the language item
-	 * @return	IPlaceholderFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is no string or otherwise invalid
 	 */

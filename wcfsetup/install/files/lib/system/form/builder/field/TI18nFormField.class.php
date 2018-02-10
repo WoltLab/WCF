@@ -175,7 +175,7 @@ trait TI18nFormField {
 	 * ensure that i18n support is enabled.
 	 *
 	 * @param	bool		$i18nRequired		determines if field value must be i18n input
-	 * @return	II18nFormField				this field
+	 * @return	static					this field
 	 */
 	public function i18nRequired(bool $i18nRequired = true): II18nFormField {
 		$this->__i18nRequired = $i18nRequired;
@@ -326,7 +326,7 @@ trait TI18nFormField {
 	 * Sets the value of this field and returns this field.
 	 * 
 	 * @param	string|string[]		$value		new field value
-	 * @return	IFormField				this field
+	 * @return	static					this field
 	 * 
 	 * @throws	\InvalidArgumentException		if the given value is of an invalid type or otherwise is invalid
 	 */

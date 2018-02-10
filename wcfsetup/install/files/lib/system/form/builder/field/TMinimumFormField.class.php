@@ -33,7 +33,7 @@ trait TMinimumFormField {
 	 * minimum is removed.
 	 * 
 	 * @param	null|int	$minimum	minimum field value
-	 * @return	IMinimumFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum is no integer or otherwise invalid
 	 */

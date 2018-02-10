@@ -59,7 +59,7 @@ trait TFormNode {
 	 * Adds the given CSS class to this node and returns this node.
 	 * 
 	 * @param	string		$class		added CSS class name
-	 * @return	IFormNode			this node
+	 * @return	static				this node
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
@@ -82,7 +82,7 @@ trait TFormNode {
 	 * to this node.
 	 * 
 	 * @param	IFormFieldDependency		$dependency	added node dependency
-	 * @return	IFormNode					this node
+	 * @return	static					this node
 	 */
 	public function addDependency(IFormFieldDependency $dependency): IFormNode {
 		$this->dependencies[] = $dependency;
@@ -99,7 +99,7 @@ trait TFormNode {
 	 * 
 	 * @param	string		$name		attribute name
 	 * @param	null|string	$value		attribute value
-	 * @return	IFormNode			this node
+	 * @return	static				this node
 	 * 
 	 * @throws	\InvalidArgumentException	if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
 	 */
@@ -133,7 +133,7 @@ trait TFormNode {
 	 * of form field values and only depends on external factors.
 	 * 
 	 * @param	bool		$available	determines if node is available
-	 * @return	IFormNode			this node
+	 * @return	static				this node
 	 */
 	public function available(bool $available = true): IFormNode {
 		$this->__available = $available;
@@ -323,7 +323,7 @@ trait TFormNode {
 	 * Sets the id of the node.
 	 *
 	 * @param	string		$id	new id of node
-	 * @return	IFormNode		this node
+	 * @return	static			this node
 	 * 
 	 * @throws	\BadMethodCallException		if id has already been set
 	 * @throws	\InvalidArgumentException	if the given id is invalid
@@ -370,7 +370,7 @@ trait TFormNode {
 	 * This method enables this node to perform actions that require the whole document having
 	 * finished constructing itself and every parent-child relationship being established.
 	 * 
-	 * @return	IFormNode			this node
+	 * @return	static				this node
 	 * 
 	 * @throws	\BadMethodCallException		if this node has already been populated
 	 */
@@ -392,7 +392,7 @@ trait TFormNode {
 	 * ignores that fact.
 	 * 
 	 * @param	string		$class		removed CSS class
-	 * @return	IFormNode			this node
+	 * @return	static				this node
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
@@ -411,7 +411,7 @@ trait TFormNode {
 	 * Removes the dependency with the given id and returns this node.
 	 * 
 	 * @param	string		$dependencyId	id of the removed dependency
-	 * @return	IFormNode			this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid or no such dependency exists
 	 */
@@ -431,7 +431,7 @@ trait TFormNode {
 	 * Creates a new element with the given id.
 	 * 
 	 * @param	string		$id	node id
-	 * @return	IFormNode		this node
+	 * @return	static		this node
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is already used by another node, or otherwise is invalid
 	 */

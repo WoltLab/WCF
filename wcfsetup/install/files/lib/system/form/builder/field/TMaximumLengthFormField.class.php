@@ -35,7 +35,7 @@ trait TMaximumLengthFormField {
 	 * maximum length is removed.
 	 * 
 	 * @param	null|int	$maximumLength	maximum field value length
-	 * @return	IMaximumLengthFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */

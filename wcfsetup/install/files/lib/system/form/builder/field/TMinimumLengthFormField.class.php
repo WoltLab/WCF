@@ -35,7 +35,7 @@ trait TMinimumLengthFormField {
 	 * minimum length is removed.
 	 * 
 	 * @param	null|int	$minimumLength	minimum field value length
-	 * @return	IMinimumLengthFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum length is no integer or otherwise invalid
 	 */

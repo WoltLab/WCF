@@ -34,7 +34,7 @@ trait TSuffixedFormField {
 	 * 
 	 * @param	null|string	$languageItem	language item containing the suffix or `null` to unset suffix
 	 * @param	array		$variables	additional variables used when resolving the language item
-	 * @return	ISuffixedFormField		this field
+	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given language item is no string or otherwise invalid
 	 */

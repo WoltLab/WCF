@@ -29,7 +29,7 @@ trait TFormParentNode {
 	 * Appends the given node to this node and returns this node.
 	 * 
 	 * @param	IFormChildNode		$child		appended child
-	 * @return	IFormParentNode				this node
+	 * @return	static					this node
 	 * 
 	 * @throws	\InvalidArgumentException		if the given child node cannot be appended
 	 */
@@ -45,7 +45,7 @@ trait TFormParentNode {
 	 * Appends the given children to this node and returns this node.
 	 * 
 	 * @param	IFormChildNode[]	$children	appended children
-	 * @return	IFormParentNode				this node
+	 * @return	static					this node
 	 * 
 	 * @throws	\InvalidArgumentException		if any of the given child nodes is invalid or cannot be appended
 	 */
@@ -200,7 +200,7 @@ trait TFormParentNode {
 	 *
 	 * @param	IFormChildNode		$child			inserted child node
 	 * @param	string			$referenceNodeId	id of the node before which the given node is inserted
-	 * @return	IFormParentNode					this node
+	 * @return	static						this node
 	 *
 	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
 	 */
