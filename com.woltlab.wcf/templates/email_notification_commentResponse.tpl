@@ -29,7 +29,7 @@
 					</h3>
 				</div>
 				<div>
-                    {@$comment->getMailText($mimeType)}
+					{@$comment->getMailText($mimeType)}
 				</div>
 			</td>
 		</tr>
