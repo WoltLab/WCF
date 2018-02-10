@@ -63,14 +63,6 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		try {
 			parent::__run();
 		}
-		catch (\Exception $e) {
-			if ($e instanceof AJAXException) {
-				throw $e;
-			}
-			else {
-				$this->throwException($e);
-			}
-		}
 		catch (\Throwable $e) {
 			if ($e instanceof AJAXException) {
 				throw $e;
@@ -103,9 +95,6 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		// execute action
 		try {
 			$this->invoke();
-		}
-		catch (\Exception $e) {
-			$this->throwException($e);
 		}
 		catch (\Throwable $e) {
 			$this->throwException($e);

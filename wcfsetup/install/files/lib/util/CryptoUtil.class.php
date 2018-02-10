@@ -132,9 +132,6 @@ final class CryptoUtil {
 		catch (\Throwable $e) {
 			throw new CryptoException('Cannot generate a secure stream of bytes.', $e);
 		}
-		catch (\Exception $e) {
-			throw new CryptoException('Cannot generate a secure stream of bytes.', $e);
-		}
 	}
 	
 	/**

@@ -178,9 +178,6 @@ namespace wcf\functions\exception {
 				$exceptionExplanation = str_replace('{$logFile}', $logFile, WCF::getLanguage()->get('wcf.global.exception.explanation', true));
 			}
 		}
-		catch (\Exception $e) {
-			// ignore
-		}
 		catch (\Throwable $e) {
 			// ignore
 		}

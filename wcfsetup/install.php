@@ -504,9 +504,6 @@ function handleException($e) {
 	catch (\Throwable $exception) {
 		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
 	}
-	catch (\Exception $exception) {
-		die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
-	}
 }
 
 /**

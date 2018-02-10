@@ -299,14 +299,6 @@ class WCF {
 			echo "\n\nwas handled.</pre>";
 			exit;
 		}
-		catch (\Exception $e2) {
-			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
-			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
-			echo "\n\nwas thrown while:\n\n";
-			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
-			echo "\n\nwas handled.</pre>";
-			exit;
-		}
 	}
 	
 	/**

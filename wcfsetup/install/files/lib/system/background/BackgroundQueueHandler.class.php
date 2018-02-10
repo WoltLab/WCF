@@ -120,27 +120,6 @@ class BackgroundQueueHandler extends SingletonFactory {
 				\wcf\functions\exception\logThrowable($e);
 			}
 		}
-		catch (\Exception $e) {
-			// do not suppress exceptions for debugging purposes, see https://github.com/WoltLab/WCF/issues/2501
-			if ($debugSynchronousExecution) {
-				throw $e;
-			}
-			
-			// gotta catch 'em all
-			$job->fail();
-			
-			if ($job->getFailures() <= $job::MAX_FAILURES) {
-				$this->enqueueIn($job, $job->retryAfter());
-				
-				if (WCF::debugModeIsEnabled()) {
-					\wcf\functions\exception\logThrowable($e);
-				}
-			}
-			else {
-				// job failed too often: log
-				\wcf\functions\exception\logThrowable($e);
-			}
-		}
 		finally {
 			if (!WCF::debugModeIsEnabled()) {
 				ob_end_clean();
@@ -211,10 +190,6 @@ class BackgroundQueueHandler extends SingletonFactory {
 			}
 		}
 		catch (\Throwable $e) {
-			// job is completely broken: log
-			\wcf\functions\exception\logThrowable($e);
-		}
-		catch (\Exception $e) {
 			// job is completely broken: log
 			\wcf\functions\exception\logThrowable($e);
 		}
