@@ -9,6 +9,7 @@ use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IsDisabledFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -91,7 +92,7 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						->i18n()
 						->i18nRequired()
 						->required(),
-					BooleanFormField::create('isDisabled')
+					IsDisabledFormField::create()
 						->label('Foo is Disabled')
 						->description('If Foo is disabled, it is indeed disabled.')
 						->addValidator(new FormFieldValidator('notSelected', function(BooleanFormField $field) {
