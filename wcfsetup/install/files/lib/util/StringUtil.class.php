@@ -24,13 +24,13 @@ final class StringUtil {
 	 * utf8 bytes of the HORIZONTAL ELLIPSIS (U+2026)
 	 * @var	string
 	 */
-	const HELLIP = "\xE2\x80\xA6";
+	const HELLIP = "\u{2026}";
 	
 	/**
 	 * utf8 bytes of the MINUS SIGN (U+2212)
 	 * @var	string
 	 */
-	const MINUS = "\xE2\x88\x92";
+	const MINUS = "\u{2212}";
 	
 	/**
 	 * Alias to php sha1() function.
