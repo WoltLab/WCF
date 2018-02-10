@@ -1,10 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\data\IStorableObject;
-use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -23,12 +20,8 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class TagFormField extends AbstractFormField {
-	/**
-	 * taggable object type
-	 * @var	null|ObjectType
-	 */
-	protected $__objectType;
+class TagFormField extends AbstractFormField implements IObjectTypeFormField {
+	use TObjectTypeFormField;
 	
 	/**
 	 * @inheritDoc
@@ -44,18 +37,10 @@ class TagFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Returns the taggable object type.
-	 * 
-	 * @return	ObjectType			taggable object type
-	 * 
-	 * @throws	\BadMethodCallException		if object type has not been set
+	 * @inheritDoc
 	 */
-	public function getObjectType(): ObjectType {
-		if ($this->__objectType === null) {
-			throw new \BadMethodCallException("Object type has not been set.");
-		}
-		
-		return $this->__objectType;
+	public function getObjectTypeDefinition(): string {
+		return 'com.woltlab.wcf.tagging.taggableObject';
 	}
 	
 	/**
@@ -89,30 +74,6 @@ class TagFormField extends AbstractFormField {
 		$this->__value = [];
 		foreach ($tags as $tag) {
 			$this->__value[] = $tag->name;
-		}
-		
-		return $this;
-	}
-	
-	/**
-	 * Sets the name of the taggable object type and returns this field.
-	 * 
-	 * @param	string		$objectType	taggable object type name
-	 * @return	static				this field
-	 * 
-	 * @throws	\BadMethodCallException		if object type has already been set
-	 * @throws	\InvalidArgumentException	if given object type name is invalid
-	 */
-	public function objectType(string $objectType): TagFormField {
-		if ($this->__objectType !== null) {
-			throw new \BadMethodCallException("Object type has already been set.");
-		}
-		
-		try {
-			$this->__objectType = ObjectTypeCache::getInstance()->getObjectType(TagEngine::getInstance()->getObjectTypeID($objectType));
-		}
-		catch (InvalidObjectTypeException $e) {
-			throw new \InvalidArgumentException("Given object type name is no valid taggable object type.");
 		}
 		
 		return $this;

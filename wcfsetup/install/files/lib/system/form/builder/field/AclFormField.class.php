@@ -26,12 +26,6 @@ class AclFormField extends AbstractFormField {
 	protected $__categoryName;
 	
 	/**
-	 * acl object type
-	 * @var	null|ObjectType
-	 */
-	protected $__objectType;
-	
-	/**
 	 * id of the edited object or `null` if no object is edited
 	 * @var	null|int
 	 */
@@ -102,18 +96,10 @@ class AclFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Returns the acl object type. 
-	 * 
-	 * @return	ObjectType			acl object type
-	 * 
-	 * @throws	\BadMethodCallException		if object type has not been set
+	 * @inheritDoc
 	 */
-	public function getObjectType(): ObjectType {
-		if ($this->__objectType === null) {
-			throw new \BadMethodCallException("Object type has not been set.");
-		}
-		
-		return $this->__objectType;
+	public function getObjectTypeDefinition(): string {
+		return 'com.woltlab.wcf.acl';
 	}
 	
 	/**
@@ -132,33 +118,6 @@ class AclFormField extends AbstractFormField {
 		if ($this->objectID === null) {
 			throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
 		}
-		
-		return $this;
-	}
-	
-	/**
-	 * Sets the name of the acl object type and returns this field.
-	 * 
-	 * @param	string		$objectType	acl object type name
-	 * @return	static				this field
-	 * 
-	 * @throws	\BadMethodCallException		if object type has already been set
-	 * @throws	\InvalidArgumentException	if given object type name is invalid
-	 */
-	public function objectType(string $objectType): IFormField {
-		if ($this->__objectType !== null) {
-			throw new \BadMethodCallException("Object type has already been set.");
-		}
-		
-		try {
-			$this->__objectType = ObjectTypeCache::getInstance()->getObjectType(ACLHandler::getInstance()->getObjectTypeID($objectType));
-		}
-		catch (SystemException $e) {
-			throw new \InvalidArgumentException("Given object type name is no valid acl object type.");
-		}
-		
-		// reset old values from previous request
-		ACLHandler::getInstance()->resetValues($this->__objectType->objectTypeID);
 		
 		return $this;
 	}
