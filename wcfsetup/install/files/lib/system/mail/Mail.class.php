@@ -462,7 +462,7 @@ class Mail {
 	 * Creates a boundary for multipart/mixed mail.
 	 */
 	protected function setBoundary() {
-		$this->boundary = "==Multipart_Boundary_x".StringUtil::getRandomID()."x";
+		$this->boundary = "==Multipart_Boundary_x".bin2hex(\random_bytes(20))."x";
 	}
 	
 	/**

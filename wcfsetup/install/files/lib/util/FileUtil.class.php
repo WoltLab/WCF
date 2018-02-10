@@ -120,7 +120,7 @@ final class FileUtil {
 	public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = TMP_DIR) {
 		$dir = self::addTrailingSlash($dir);
 		do {
-			$tmpFile = $dir.$prefix.StringUtil::getRandomID().$extension;
+			$tmpFile = $dir.$prefix.bin2hex(\random_bytes(20)).$extension;
 		}
 		while (file_exists($tmpFile));
 		

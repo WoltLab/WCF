@@ -30,7 +30,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 	 * Sets the multipart boundary.
 	 */
 	public function __construct() {
-		$this->boundary = "WoltLab_Suite=_".StringUtil::getRandomID();
+		$this->boundary = "WoltLab_Suite=_".bin2hex(\random_bytes(20));
 		$this->parts = new \SplObjectStorage();
 	}
 	

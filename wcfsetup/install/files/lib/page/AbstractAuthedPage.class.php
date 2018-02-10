@@ -36,7 +36,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			list($userID, $token) = array_pad(explode('-', StringUtil::trim($_REQUEST['at']), 2), 2, null);
 			
 			if (WCF::getUser()->userID) {
-				if ($userID == WCF::getUser()->userID && CryptoUtil::secureCompare(WCF::getUser()->accessToken, $token)) {
+				if ($userID == WCF::getUser()->userID && \hash_equals(WCF::getUser()->accessToken, $token)) {
 					// everything is fine, but we are already logged in
 					return;
 				}
@@ -47,7 +47,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			}
 			else {
 				$user = new User($userID);
-				if (CryptoUtil::secureCompare($user->accessToken, $token)) {
+				if (\hash_equals($user->accessToken, $token)) {
 					// token is valid -> change user
 					SessionHandler::getInstance()->changeUser($user, true);
 				}

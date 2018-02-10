@@ -274,7 +274,7 @@ class SessionHandler extends SingletonFactory {
 	 * attacker.
 	 */
 	protected function changeSessionID() {
-		$newSessionID = StringUtil::getRandomID();
+		$newSessionID = bin2hex(\random_bytes(20));
 		
 		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
@@ -337,7 +337,7 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function initSecurityToken() {
 		if ($this->getVar('__SECURITY_TOKEN') === null) {
-			$this->register('__SECURITY_TOKEN', StringUtil::getRandomID());
+			$this->register('__SECURITY_TOKEN', bin2hex(\random_bytes(20)));
 		}
 	}
 	
@@ -358,7 +358,7 @@ class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function checkSecurityToken($token) {
-		return CryptoUtil::secureCompare($this->getSecurityToken(), $token);
+		return \hash_equals($this->getSecurityToken(), $token);
 	}
 	
 	/**
@@ -538,7 +538,7 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		// create new session hash
-		$sessionID = StringUtil::getRandomID();
+		$sessionID = bin2hex(\random_bytes(20));
 		
 		// get user automatically
 		$this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginAutomatically(call_user_func([$this->sessionClassName, 'supportsPersistentLogins']));
@@ -796,7 +796,7 @@ class SessionHandler extends SingletonFactory {
 				if ($sessionCount) {
 					// save session
 					$sessionData = [
-						'sessionID' => StringUtil::getRandomID(),
+						'sessionID' => bin2hex(\random_bytes(20)),
 						'userID' => $user->userID,
 						'ipAddress' => UserUtil::getIpAddress(),
 						'userAgent' => UserUtil::getUserAgent(),

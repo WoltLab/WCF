@@ -165,7 +165,7 @@ final class HTTPRequest {
 				$this->addHeader('content-type', 'application/x-www-form-urlencoded');
 			}
 			else {
-				$boundary = StringUtil::getRandomID();
+				$boundary = bin2hex(\random_bytes(20));
 				$this->addHeader('content-type', 'multipart/form-data; boundary='.$boundary);
 				
 				// source of the iterators: http://stackoverflow.com/a/7623716/782822

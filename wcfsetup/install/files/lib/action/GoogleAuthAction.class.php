@@ -89,7 +89,7 @@ class GoogleAuthAction extends AbstractAction {
 				// perform login
 				else {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
-						$password = StringUtil::getRandomID();
+						$password = bin2hex(\random_bytes(20));
 						$userEditor = new UserEditor($user);
 						$userEditor->update(['password' => $password]);
 						
@@ -143,7 +143,7 @@ class GoogleAuthAction extends AbstractAction {
 		}
 		
 		// start auth by redirecting to google
-		$token = StringUtil::getRandomID();
+		$token = bin2hex(\random_bytes(20));
 		WCF::getSession()->register('__googleInit', $token);
 		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+email&response_type=code");
 		$this->executed();

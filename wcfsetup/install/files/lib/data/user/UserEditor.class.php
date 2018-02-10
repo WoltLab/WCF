@@ -50,7 +50,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		}
 		
 		// create accessToken for AbstractAuthedPage
-		$parameters['accessToken'] = StringUtil::getRandomID();
+		$parameters['accessToken'] = bin2hex(\random_bytes(20));
 		
 		// handle registration date
 		if (!isset($parameters['registrationDate'])) $parameters['registrationDate'] = TIME_NOW;
@@ -86,7 +86,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			else {
 				$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
 			}
-			$parameters['accessToken'] = StringUtil::getRandomID();
+			$parameters['accessToken'] = bin2hex(\random_bytes(20));
 			
 			// update accessToken
 			$this->accessToken = $parameters['accessToken'];

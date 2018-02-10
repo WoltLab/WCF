@@ -100,7 +100,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		// generate a new lost password key
-		$lostPasswordKey = bin2hex(CryptoUtil::randomBytes(20));
+		$lostPasswordKey = bin2hex(\random_bytes(20));
 		
 		// save key and request time in database
 		$this->objectAction = new UserAction([$this->user], 'update', [

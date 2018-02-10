@@ -90,7 +90,7 @@ class GithubAuthAction extends AbstractAction {
 				// perform login
 				else {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
-						$password = StringUtil::getRandomID();
+						$password = bin2hex(\random_bytes(20));
 						$userEditor = new UserEditor($user);
 						$userEditor->update(['password' => $password]);
 						
@@ -157,7 +157,7 @@ class GithubAuthAction extends AbstractAction {
 		}
 		
 		// start auth by redirecting to github
-		$token = StringUtil::getRandomID();
+		$token = bin2hex(\random_bytes(20));
 		WCF::getSession()->register('__githubInit', $token);
 		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
 		$this->executed();

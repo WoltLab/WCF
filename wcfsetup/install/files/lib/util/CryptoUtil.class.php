@@ -7,8 +7,6 @@ use wcf\util\exception\CryptoException;
  * Contains cryptographic helper functions.
  * Features:
  * - Creating secure signatures based on the Keyed-Hash Message Authentication Code algorithm
- * - Constant time comparison function
- * - Generating a string of random bytes
  * 
  * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH
@@ -74,76 +72,24 @@ final class CryptoUtil {
 	}
 
 	/**
-	 * Compares two strings in a constant time manner.
-	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
-	 * 
-	 * @param	string		$hash1
-	 * @param	string		$hash2
-	 * @return	boolean
+	 * @deprecated	Use \hash_equals() directly.
 	 */
 	public static function secureCompare($hash1, $hash2) {
 		$hash1 = (string) $hash1;
 		$hash2 = (string) $hash2;
 		
-		if (function_exists('hash_equals')) {
-			return hash_equals($hash1, $hash2);
-		}
-		
-		if (strlen($hash1) !== strlen($hash2)) {
-			return false;
-		}
-		
-		$result = 0;
-		for ($i = 0, $length = strlen($hash1); $i < $length; $i++) {
-			$result |= ord($hash1[$i]) ^ ord($hash2[$i]);
-		}
-		
-		return ($result === 0);
+		return \hash_equals($hash1, $hash2);
 	}
 	
 	/**
-	 * Generates a string of N random bytes.
-	 * This function effectively is a polyfill for the PHP 7 `random_bytes` function.
-	 * 
-	 * Requires either PHP 7 or 'openssl_random_pseudo_bytes' and throws a CryptoException
-	 * if no sufficiently random data could be obtained.
-	 * 
-	 * @param	int		$n
-	 * @return	string
-	 * @throws	CryptoException
+	 * @deprecated	Use \random_bytes() directly.
 	 */
 	public static function randomBytes($n) {
-		try {
-			if (function_exists('random_bytes')) {
-				$bytes = random_bytes($n);
-				if ($bytes === false) throw new CryptoException('Cannot generate a secure stream of bytes.');
-				
-				return $bytes;
-			}
-			
-			$bytes = openssl_random_pseudo_bytes($n, $s);
-			if (!$s) throw new CryptoException('Cannot generate a secure stream of bytes.');
-			
-			return $bytes;
-		}
-		catch (CryptoException $e) {
-			throw $e;
-		}
-		catch (\Throwable $e) {
-			throw new CryptoException('Cannot generate a secure stream of bytes.', $e);
-		}
+		return random_bytes($n);
 	}
 	
 	/**
-	 * Generates a random number.
-	 * This function effectively is a polyfill for the PHP 7 `random_int` function.
-	 * 
-	 * Requires that self::randomBytes() does not throw.
-	 * 
-	 * @param	int	$min
-	 * @param	int	$max
-	 * @return	int
-	 * @throws	CryptoException
+	 * @deprecated	Use \random_int() directly.
 	 */
 	public static function randomInt($min, $max) {
 		$range = $max - $min;
@@ -151,22 +97,8 @@ final class CryptoUtil {
 			// not random
 			throw new CryptoException("Cannot generate a secure random number, min and max are the same");
 		}
-		
-		if (function_exists('random_int')) {
-			return random_int($min, $max);
-		}
-		
-		$log = log($range, 2);
-		$bytes = (int) ($log / 8) + 1; // length in bytes
-		$bits = (int) $log + 1; // length in bits
-		$filter = (int) (1 << $bits) - 1; // set all lower bits to 1
-		do {
-			$rnd = hexdec(bin2hex(self::randomBytes($bytes)));
-			$rnd = $rnd & $filter; // discard irrelevant bits
-		}
-		while ($rnd > $range);
-		
-		return $min + $rnd;
+
+		return random_int($min, $max);
 	}
 	
 	/**

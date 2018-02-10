@@ -421,7 +421,7 @@ class RegisterForm extends UserAddForm {
 			}
 			
 			// create fake password
-			$this->password = StringUtil::getRandomID();
+			$this->password = bin2hex(\random_bytes(20));
 		}
 		
 		$this->additionalFields['languageID'] = $this->languageID;

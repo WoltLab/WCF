@@ -151,7 +151,6 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 "Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
 "Stack Trace: (?P<stack>\[[^\n]+\])", Regex::DOT_ALL);
 		
-		$isPhp7 = version_compare(PHP_VERSION, '7.0.0') >= 0;
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
 			if ($i < $this->startIndex || $i > $this->endIndex) {
@@ -166,15 +165,12 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			$matches = $exceptionRegex->getMatches();
 			$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
 			
-			$chainMatches = array_map(function ($item) use ($isPhp7) {
-				if ($item['information'] === '-') $item['information'] = null;
+			$chainMatches = array_map(function ($item) {
+				if ($item['information'] === '-') {
+					$item['information'] = null;
+				}
 				else {
-					if ($isPhp7) {
-						$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
-					}
-					else {
-						$item['information'] = unserialize(base64_decode($item['information']));
-					}
+					$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
 				}
 				
 				$item['stack'] = JSON::decode($item['stack']);

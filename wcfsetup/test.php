@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
-	<title>WoltLab Suite 3.1 System Requirements</title>
+	<title>WoltLab Suite 3.2 System Requirements</title>
 </head>
 <body>
 <?php
 /**
- * Tests the support of PHP 5.5.4 or greater.
+ * Tests the support of PHP 7.0.22 or greater.
  * ><p><b>Support for PHP is missing.<br>PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
@@ -18,7 +18,7 @@
 // php version
 $phpVersion = phpversion();
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
-$neededPhpVersion = '5.5.4';
+$neededPhpVersion = '7.0.22';
 $configArray = @ini_get_all();
 if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	?>

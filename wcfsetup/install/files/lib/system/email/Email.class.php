@@ -172,7 +172,7 @@ class Email {
 	 */
 	public function getMessageID() {
 		if ($this->messageID === null) {
-			$this->messageID = StringUtil::getRandomID();
+			$this->messageID = bin2hex(\random_bytes(20));
 		}
 		
 		return '<'.$this->messageID.'@'.self::getHost().'>';

@@ -96,7 +96,7 @@ class FacebookAuthAction extends AbstractAction {
 				// perform login
 				else {
 					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
-						$password = StringUtil::getRandomID();
+						$password = bin2hex(\random_bytes(20));
 						$userEditor = new UserEditor($user);
 						$userEditor->update(['password' => $password]);
 						
@@ -146,7 +146,7 @@ class FacebookAuthAction extends AbstractAction {
 		}
 		
 		// start auth by redirecting to facebook
-		$token = StringUtil::getRandomID();
+		$token = bin2hex(\random_bytes(20));
 		WCF::getSession()->register('__facebookInit', $token);
 		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_about_me,user_birthday,user_location,user_website");
 		$this->executed();
