@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\WCF;
@@ -113,7 +114,7 @@ trait TSelectionFormField {
 					$this->possibleValues[] = $key;
 					
 					// fetch language item value
-					if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', $value)) {
+					if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $value)) {
 						$array[$key] = WCF::getLanguage()->getDynamicVariable($value);
 					}
 				}

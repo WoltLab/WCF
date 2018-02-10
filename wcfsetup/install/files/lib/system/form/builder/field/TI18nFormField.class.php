@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\language\item\LanguageItemList;
 use wcf\data\IStorableObject;

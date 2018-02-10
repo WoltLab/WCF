@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
@@ -72,8 +73,8 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 		$this->form = FormDocument::create('testForm')
 			->action(LinkHandler::getInstance()->getLink('DevtoolsFormBuilderTest'))
 			->attribute('data-foo', 'bar')
-			->attribute('data-baz', true)
-			->attribute('data-bar', 12)
+			->attribute('data-baz', 'true')
+			->attribute('data-bar', '12')
 			->addClass('formContainer');
 		
 		$this->form->appendChildren([
