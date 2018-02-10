@@ -20,6 +20,10 @@ class LanguageModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
+		if ($tagArgs[0] === null) {
+			return '';
+		}
+		
 		if (($lang = $tplObj->get('__language')) === null) {
 			$lang = WCF::getLanguage();
 		}

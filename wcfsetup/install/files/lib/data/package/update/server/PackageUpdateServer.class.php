@@ -99,9 +99,12 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		// session data
-		$packageUpdateAuthData = @unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
-		if ($packageUpdateAuthData !== null && isset($packageUpdateAuthData[$this->packageUpdateServerID])) {
-			$authData = $packageUpdateAuthData[$this->packageUpdateServerID];
+		$packageUpdateAuthData = WCF::getSession()->getVar('packageUpdateAuthData');
+		if ($packageUpdateAuthData !== null) {
+			$packageUpdateAuthData = @unserialize($packageUpdateAuthData);
+			if ($packageUpdateAuthData !== null && isset($packageUpdateAuthData[$this->packageUpdateServerID])) {
+				$authData = $packageUpdateAuthData[$this->packageUpdateServerID];
+			}
 		}
 		
 		return $authData;

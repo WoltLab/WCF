@@ -44,7 +44,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 		else {
 			$targetNodes = [];
 			foreach ($nodes as $node) {
-				$parts = preg_split('~(\[\*\])~', $node->textContent, null, PREG_SPLIT_DELIM_CAPTURE);
+				$parts = preg_split('~(\[\*\])~', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE);
 				$parent = $node->parentNode;
 				foreach ($parts as $part) {
 					switch ($part) {

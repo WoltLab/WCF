@@ -71,7 +71,11 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 			$linkParameters['id'] = $this->optionCategoryID;
 		}
 		
-		return LinkHandler::getInstance()->getLink($this->controller, $linkParameters, WCF::getLanguage()->get($this->menuItemLink));
+		return LinkHandler::getInstance()->getLink(
+			$this->controller,
+			$linkParameters,
+			$this->menuItemLink ? WCF::getLanguage()->get($this->menuItemLink) : ''
+		);
 	}
 	
 	/**

@@ -137,7 +137,9 @@ class Box extends DatabaseObject {
 		parent::handleData($data);
 		
 		// handle condition data
-		$this->data['additionalData'] = @unserialize($data['additionalData']);
+		if ($data['additionalData'] !== null) {
+			$this->data['additionalData'] = @unserialize($data['additionalData']);
+		}
 		if (!is_array($this->data['additionalData'])) {
 			$this->data['additionalData'] = [];
 		}

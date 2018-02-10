@@ -206,6 +206,10 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		// use table index as array index
+		if ($this->indexToObject === null) {
+			$this->indexToObject = [];
+		}
+		
 		$objects = [];
 		foreach ($this->objects as $object) {
 			$objectID = $object->getObjectID();

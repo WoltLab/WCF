@@ -248,8 +248,13 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	 */
 	protected function handleData($data) {
 		// handle additional data
-		$data['additionalData'] = @unserialize($data['additionalData']);
-		if (!is_array($data['additionalData'])) {
+		if (isset($data['additionalData'])) {
+			$data['additionalData'] = @unserialize($data['additionalData']);
+			if (!is_array($data['additionalData'])) {
+				$data['additionalData'] = [];
+			}
+		}
+		else {
 			$data['additionalData'] = [];
 		}
 		

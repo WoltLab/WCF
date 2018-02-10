@@ -24,6 +24,10 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$break = "\xE2\x80\x8B";
 		$string = $tagArgs[0];
 		
+		if ($string === null) {
+			return '';
+		}
+		
 		$result = '';
 		$substrings = explode(' ', $string);
 		

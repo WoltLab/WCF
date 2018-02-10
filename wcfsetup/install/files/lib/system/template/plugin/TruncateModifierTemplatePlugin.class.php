@@ -31,6 +31,10 @@ class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin {
 		if (isset($tagArgs[2])) $etc = $tagArgs[2];
 		if (isset($tagArgs[3])) $breakWords = $tagArgs[3];
 		
+		if ($string === null) {
+			return '';
+		}
+		
 		return StringUtil::truncate($string, $length, $etc, $breakWords);
 	}
 }

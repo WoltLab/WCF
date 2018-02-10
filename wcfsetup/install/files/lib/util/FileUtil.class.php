@@ -544,7 +544,7 @@ final class FileUtil {
 					
 					self::$mode = '0666';
 					
-					$tmpFilename = '__permissions_'.sha1(time()).'.txt';
+					$tmpFilename = '__permissions_'.sha1((string) time()).'.txt';
 					@touch($tmpFilename);
 					
 					// create a new file and check the file owner, if it is the same

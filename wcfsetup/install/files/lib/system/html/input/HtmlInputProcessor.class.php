@@ -238,7 +238,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	protected function convertToHtml($html) {
 		$html = StringUtil::encodeHTML($html);
 		$html = preg_replace('/\[attach=(\d+)\]/', "[attach=\\1,'none','2']", $html);
-		$parts = preg_split('~(\n+)~', $html, null, PREG_SPLIT_DELIM_CAPTURE);
+		$parts = preg_split('~(\n+)~', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
 		
 		$openParagraph = false;
 		$html = '';

@@ -54,7 +54,7 @@ class GDImageAdapter implements IImageAdapter {
 	 */
 	public function __construct() {
 		// suppress warnings like "recoverable error: Invalid SOS parameters for sequential JPEG"
-		@ini_set('gd.jpeg_ignore_warning', 1);
+		@ini_set('gd.jpeg_ignore_warning', '1');
 	}
 	
 	/**
@@ -154,9 +154,9 @@ class GDImageAdapter implements IImageAdapter {
 		}
 		
 		// resize image
-		$image = imagecreatetruecolor($width, $height);
+		$image = imagecreatetruecolor(intval($width), intval($height));
 		imagealphablending($image, false);
-		imagecopyresampled($image, $this->image, 0, 0, $x, $y, $width, $height, $sourceWidth, $sourceHeight);
+		imagecopyresampled($image, $this->image, 0, 0, intval($x), intval($y), intval($width), intval($height), intval($sourceWidth), intval($sourceHeight));
 		imagesavealpha($image, true);
 		
 		return $image;
@@ -169,7 +169,7 @@ class GDImageAdapter implements IImageAdapter {
 		$image = imagecreatetruecolor($width, $height);
 		imagealphablending($image, false);
 		
-		imagecopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
+		imagecopy($image, $this->image, 0, 0, intval($originX), intval($originY), intval($width), intval($height));
 		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height
@@ -183,7 +183,7 @@ class GDImageAdapter implements IImageAdapter {
 		$image = imagecreatetruecolor($targetWidth, $targetHeight);
 		imagealphablending($image, false);
 		
-		imagecopyresampled($image, $this->image, 0, 0, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
+		imagecopyresampled($image, $this->image, 0, 0, intval($originX), intval($originY), intval($targetWidth), intval($targetHeight), intval($originWidth), intval($originHeight));
 		imagesavealpha($image, true);
 		
 		// reload image to update image resource, width and height

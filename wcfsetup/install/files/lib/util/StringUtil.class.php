@@ -48,7 +48,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return self::getHash(microtime() . uniqid(mt_rand(), true));
+		return self::getHash(microtime() . uniqid((string) mt_rand(), true));
 	}
 	
 	/**
@@ -96,7 +96,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeHTML($string) {
-		return @htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+		return @htmlspecialchars((string) $string, ENT_COMPAT, 'UTF-8');
 	}
 	
 	/**
@@ -199,13 +199,13 @@ final class StringUtil {
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
 		// round
-		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
+		$double = (string) round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
 		
 		// consider as integer, if no decimal places found
 		if (!$maxDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
 			return self::formatInteger($match[1]);
 		}
-				
+		
 		// remove last 0
 		if ($maxDecimals < 2 && substr($double, -1) == '0') $double = substr($double, 0, -1);
 		

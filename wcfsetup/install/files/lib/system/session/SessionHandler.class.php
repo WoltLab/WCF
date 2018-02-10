@@ -401,8 +401,13 @@ class SessionHandler extends SingletonFactory {
 	 * Initializes session variables.
 	 */
 	protected function loadVariables() {
-		@$this->variables = unserialize($this->session->sessionVariables);
-		if (!is_array($this->variables)) {
+		if ($this->session->sessionVariables !== null) {
+			$this->variables = @unserialize($this->session->sessionVariables);
+			if (!is_array($this->variables)) {
+				$this->variables = [];
+			}
+		}
+		else {
 			$this->variables = [];
 		}
 	}
