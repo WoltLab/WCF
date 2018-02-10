@@ -107,6 +107,10 @@ abstract class AbstractFormField implements IFormField {
 			throw new \LogicException("\$templateName property has not been set.");
 		}
 		
+		if ($this->requiresLabel() && $this->getLabel() === null) {
+			throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
+		}
+		
 		return WCF::getTPL()->fetch(
 			$this->templateName,
 			'wcf',

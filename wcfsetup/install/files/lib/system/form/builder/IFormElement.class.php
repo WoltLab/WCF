@@ -51,4 +51,11 @@ interface IFormElement extends IFormNode {
 	 * @throws	\InvalidArgumentException	if the given label is invalid
 	 */
 	public function label(string $languageItem = null, array $variables = []): IFormElement;
+	
+	/**
+	 * Returns `true` if this element requires a label to be set.
+	 * 
+	 * @return	bool
+	 */
+	public function requiresLabel(): bool;
 }

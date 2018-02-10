@@ -39,6 +39,13 @@ class BooleanFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
+	public function requiresLabel(): bool {
+		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function validate() {
 		if ($this->isRequired() && !$this->getValue()) {
 			$this->addValidationError(new FormFieldValidationError('empty'));

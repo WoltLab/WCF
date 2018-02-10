@@ -104,4 +104,14 @@ trait TFormElement {
 		
 		return $this;
 	}
+	
+	/**
+	 * Returns `true` if this element requires a label to be set.
+	 * 
+	 * @return	bool
+	 */
+	public function requiresLabel(): bool {
+		// by default, form elements do not require a label 
+		return false;
+	}
 }
