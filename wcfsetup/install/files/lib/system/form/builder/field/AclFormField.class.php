@@ -126,6 +126,8 @@ class AclFormField extends AbstractFormField {
 	 * @inheritDoc
 	 */
 	public function populate(): IFormNode {
+		parent::populate();
+		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			$parameters['aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
 			
