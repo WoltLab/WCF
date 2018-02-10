@@ -17,6 +17,7 @@ use wcf\system\form\builder\field\SimpleAclFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TagFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\WysiwygFormField;
 use wcf\system\form\builder\FormDocument;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\request\LinkHandler;
@@ -133,7 +134,11 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 							]
 						]),
 					TagFormField::create('tags')
-						->objectType('com.woltlab.wbb.thread')
+						->objectType('com.woltlab.wbb.thread'),
+					WysiwygFormField::create('message')
+						->label('Message')
+						->objectType('com.woltlab.wbb.post')
+						->autosaveId('test')
 				]),
 			TabMenuFormContainer::create('tabMenu')
 				->appendChildren([
