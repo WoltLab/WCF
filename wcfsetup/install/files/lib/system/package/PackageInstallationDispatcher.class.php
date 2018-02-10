@@ -225,7 +225,7 @@ class PackageInstallationDispatcher {
 					
 					try {
 						$statement->execute([
-							bin2hex(CryptoUtil::randomBytes(20)),
+							bin2hex(\random_bytes(20)),
 							'signature_secret'
 						]);
 					}

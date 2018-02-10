@@ -7,8 +7,6 @@ use wcf\util\exception\CryptoException;
  * Contains cryptographic helper functions.
  * Features:
  * - Creating secure signatures based on the Keyed-Hash Message Authentication Code algorithm
- * - Constant time comparison function
- * - Generating a string of random bytes
  * 
  * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2017 WoltLab GmbH
@@ -84,36 +82,10 @@ final class CryptoUtil {
 	}
 	
 	/**
-	 * Generates a string of N random bytes.
-	 * This function effectively is a polyfill for the PHP 7 `random_bytes` function.
-	 * 
-	 * Requires either PHP 7 or 'openssl_random_pseudo_bytes' and throws a CryptoException
-	 * if no sufficiently random data could be obtained.
-	 * 
-	 * @param	int		$n
-	 * @return	string
-	 * @throws	CryptoException
+	 * @deprecated	Use random_bytes()
 	 */
 	public static function randomBytes($n) {
-		try {
-			if (function_exists('random_bytes')) {
-				$bytes = random_bytes($n);
-				if ($bytes === false) throw new CryptoException('Cannot generate a secure stream of bytes.');
-				
-				return $bytes;
-			}
-			
-			$bytes = openssl_random_pseudo_bytes($n, $s);
-			if (!$s) throw new CryptoException('Cannot generate a secure stream of bytes.');
-			
-			return $bytes;
-		}
-		catch (CryptoException $e) {
-			throw $e;
-		}
-		catch (\Throwable $e) {
-			throw new CryptoException('Cannot generate a secure stream of bytes.', $e);
-		}
+		return random_bytes($n);
 	}
 	
 	/**

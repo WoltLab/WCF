@@ -203,7 +203,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			
 			// generate token if not present
 			if (!$user->notificationMailToken) {
-				$token = bin2hex(CryptoUtil::randomBytes(10));
+				$token = bin2hex(\random_bytes(10));
 				$editor = new UserEditor($user);
 				$editor->update(['notificationMailToken' => $token]);
 				

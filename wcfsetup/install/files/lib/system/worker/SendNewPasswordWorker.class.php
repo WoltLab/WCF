@@ -97,7 +97,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 */
 	protected function resetPassword(UserEditor $userEditor) {
 		try {
-			$lostPasswordKey = bin2hex(CryptoUtil::randomBytes(20));
+			$lostPasswordKey = bin2hex(\random_bytes(20));
 			$lastLostPasswordRequestTime = TIME_NOW;
 		}
 		catch (CryptoException $e) {
