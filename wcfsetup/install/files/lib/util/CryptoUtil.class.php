@@ -117,15 +117,7 @@ final class CryptoUtil {
 	}
 	
 	/**
-	 * Generates a random number.
-	 * This function effectively is a polyfill for the PHP 7 `random_int` function.
-	 * 
-	 * Requires that self::randomBytes() does not throw.
-	 * 
-	 * @param	int	$min
-	 * @param	int	$max
-	 * @return	int
-	 * @throws	CryptoException
+	 * @deprecated	Use random_int()
 	 */
 	public static function randomInt($min, $max) {
 		$range = $max - $min;
@@ -133,22 +125,8 @@ final class CryptoUtil {
 			// not random
 			throw new CryptoException("Cannot generate a secure random number, min and max are the same");
 		}
-		
-		if (function_exists('random_int')) {
-			return random_int($min, $max);
-		}
-		
-		$log = log($range, 2);
-		$bytes = (int) ($log / 8) + 1; // length in bytes
-		$bits = (int) $log + 1; // length in bits
-		$filter = (int) (1 << $bits) - 1; // set all lower bits to 1
-		do {
-			$rnd = hexdec(bin2hex(self::randomBytes($bytes)));
-			$rnd = $rnd & $filter; // discard irrelevant bits
-		}
-		while ($rnd > $range);
-		
-		return $min + $rnd;
+
+		return random_int($min, $max);
 	}
 	
 	/**

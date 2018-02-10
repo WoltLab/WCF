@@ -229,13 +229,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Generates secure random numbers using OpenSSL.
-	 * 
-	 * @see		http://de1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
-	 * @param	integer		$min
-	 * @param	integer		$max
-	 * @return	integer
-	 * @throws	SystemException
+	 * @deprecated	Use random_int()
 	 */
 	public static function secureRandomNumber($min, $max) {
 		$range = $max - $min;
