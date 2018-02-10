@@ -115,10 +115,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 			try {
 				$eventData['title'] = $event->getTitle();
 			}
-			catch (\Exception $e) {
-				$eventData['titleException'] = $getRenderedException($e);
-				$errors++;
-			}
 			catch (\Throwable $e) {
 				$eventData['titleException'] = $getRenderedException($e);
 				$errors++;
@@ -127,10 +123,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 			try {
 				$eventData['message'] = $event->getMessage();
 			}
-			catch (\Exception $e) {
-				$eventData['messageException'] = $getRenderedException($e);
-				$errors++;
-			}
 			catch (\Throwable $e) {
 				$eventData['messageException'] = $getRenderedException($e);
 				$errors++;
@@ -138,10 +130,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 			
 			try {
 				$eventData['link'] = $event->getLink();
-			}
-			catch (\Exception $e) {
-				$eventData['linkException'] = $getRenderedException($e);
-				$errors++;
 			}
 			catch (\Throwable $e) {
 				$eventData['linkException'] = $getRenderedException($e);
@@ -154,10 +142,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 				try {
 					$eventData['dailyEmail'] = TestableUserNotificationEventHandler::getInstance()->getEmailBody($event, 'daily');
 				}
-				catch (\Exception $e) {
-					$eventData['dailyEmailException'] = $getRenderedException($e);
-					$errors++;
-				}
 				catch (\Throwable $e) {
 					$eventData['dailyEmailException'] = $getRenderedException($e);
 					$errors++;
@@ -167,10 +151,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 				if ($event->getNotification()->timesTriggered == 1) {
 					try {
 						$eventData['instantEmail'] = TestableUserNotificationEventHandler::getInstance()->getEmailBody($event, 'instant');
-					}
-					catch (\Exception $e) {
-						$eventData['instantEmailException'] = $getRenderedException($e);
-						$errors++;
 					}
 					catch (\Throwable $e) {
 						$eventData['instantEmailException'] = $getRenderedException($e);

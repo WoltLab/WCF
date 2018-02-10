@@ -24,9 +24,6 @@ class LoggedException extends \Exception {
 			try {
 				\wcf\functions\exception\logThrowable($this);
 			}
-			catch (\Exception $e) {
-				
-			}
 			catch (\Throwable $e) {
 				
 			}
