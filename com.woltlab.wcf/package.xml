@@ -98,7 +98,13 @@
 	<!-- WARNING: RE-IMPORT ALL PAGE.XML-PIPS ALONG WITH THE NEXT UPDATE (3.1.0) -->
 	
 	<instructions type="update" fromversion="3.1.0 RC 3">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
 		<instruction type="sql">update_3.1.0.rc.4.sql</instruction>
+		
+		<instruction type="language" />
 		
 		<instruction type="page" />
 	</instructions>
