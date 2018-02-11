@@ -588,7 +588,7 @@
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Supportforum]]></item>
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
-		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von ReCAPTCHA ohne einen individuelle Website-Schlüssel wird von Google nicht mehr unterstützt.]]></item>
+		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von ReCAPTCHA ohne einen individuellen Website-Schlüssel wird von Google nicht mehr unterstützt.]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
