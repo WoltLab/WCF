@@ -44,7 +44,7 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 			}
 		}
 		else {
-			if ($this->isRequired() && $this->getValue() === '') {
+			if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
 				$this->addValidationError(new FormFieldValidationError('empty'));
 			}
 			else {
