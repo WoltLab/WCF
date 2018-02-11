@@ -143,4 +143,5 @@ INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, o
 -- This value isn't valid by definition, but because it is considered to be a true-ish
 -- value, we can use this to imply an "implicit yes" without breaking any checks. Check
 -- the PagePackageInstallationPlugin to see what this magic value is good for.
-UPDATE wcf1_page SET allowSpidersToIndex = 2;
+UPDATE wcf1_page SET allowSpidersToIndex = 1 WHERE pageType <> 'system';
+UPDATE wcf1_page SET allowSpidersToIndex = 2 WHERE pageType = 'system';
