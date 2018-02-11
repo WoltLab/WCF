@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\IFormNode;
 
 /**
  * Implementation of a form field for disabling an object.
@@ -12,14 +11,12 @@ use wcf\system\form\builder\IFormNode;
  * @since	3.2
  */
 class IsDisabledFormField extends BooleanFormField {
+	use TForcedIdFormField;
+	
 	/**
 	 * @inheritDoc
 	 */
-	public static function create(string $id = null): IFormNode {
-		if ($id !== null) {
-			throw new \InvalidArgumentException("This method does not expect any parameters. The id of form fields of this class is always 'isDisabled'.");
-		}
-		
-		return parent::create('isDisabled');
+	protected static function getForcedId(): string {
+		return 'isDisabled';
 	}
 }

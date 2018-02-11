@@ -11,10 +11,19 @@ namespace wcf\system\form\builder\field;
  * @since	3.2
  */
 class TitleFormField extends TextFormField {
+	use TForcedIdFormField;
+	
 	/**
 	 * Creates a new instance of `TitleFormField`.
 	 */
 	public function __construct() {
 		$this->label('wcf.global.title');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected static function getForcedId(): string {
+		return 'title';
 	}
 }

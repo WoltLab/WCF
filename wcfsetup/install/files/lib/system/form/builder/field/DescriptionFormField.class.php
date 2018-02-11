@@ -11,10 +11,19 @@ namespace wcf\system\form\builder\field;
  * @since	3.2
  */
 class DescriptionFormField extends MultilineTextFormField {
+	use TForcedIdFormField;
+	
 	/**
 	 * Creates a new instance of `DescriptionFormField`.
 	 */
 	public function __construct() {
 		$this->label('wcf.global.description');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected static function getForcedId(): string {
+		return 'description';
 	}
 }

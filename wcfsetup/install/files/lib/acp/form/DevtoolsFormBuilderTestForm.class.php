@@ -88,7 +88,7 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 				->appendChildren([
 					TextFormField::create('name')
 						->label('wcf.global.name'),
-					TitleFormField::create('title')
+					TitleFormField::create()
 						->i18n()
 						->i18nRequired()
 						->required(),
