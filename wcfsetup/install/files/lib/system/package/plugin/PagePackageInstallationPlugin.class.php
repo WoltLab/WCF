@@ -270,12 +270,23 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			// allow update of `controller`, `handler` and `excludeFromLandingPage`
 			// only, prevents user modifications form being overwritten
 			if (!empty($data['controller'])) {
+				$allowSpidersToIndex = $row['allowSpidersToIndex'];
+				if ($allowSpidersToIndex == 2) {
+					// The value `2` resolves to be true-ish, eventually resulting in the same behavior
+					// when setting it to `1`. This value is special to the 3.0 -> 3.1 upgrade, because
+					// it force-enables the visibility, while also being some sort of indicator for non-
+					// user-modified values. The page edit form will set it to either `1` or `0`, there-
+					// fore `2` means that we can safely update the value w/o breaking the user's choice. 
+					$allowSpidersToIndex = $data['allowSpidersToIndex'];
+				}
+				
 				$page = parent::import($row, [
 					'controller' => $data['controller'],
 					'handler' => $data['handler'],
 					'options' => $data['options'],
 					'permissions' => $data['permissions'],
-					'excludeFromLandingPage' => $data['excludeFromLandingPage']
+					'excludeFromLandingPage' => $data['excludeFromLandingPage'],
+					'allowSpidersToIndex' => $allowSpidersToIndex
 				]);
 			}
 			else {

@@ -138,5 +138,9 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 -- default recipient: site administrator
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
 
--- force-enable the visibility of all non-system pages (the page.xml is shortly after and sets the exact values)
-UPDATE wcf1_page SET allowSpidersToIndex = 1 WHERE pageType <> 'system';
+-- Force-enable the visibility of *all* pages by setting `allowSpidersToIndex` to `2`.
+-- 
+-- This value isn't valid by definition, but because it is considered to be a true-ish
+-- value, we can use this to imply an "implicit yes" without breaking any checks. Check
+-- the PagePackageInstallationPlugin to see what this magic value is good for.
+UPDATE wcf1_page SET allowSpidersToIndex = 2;

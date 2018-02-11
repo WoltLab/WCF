@@ -95,6 +95,8 @@
 		<instruction type="style">defaultStyle.tar</instruction>
 	</instructions>
 	
+	<!-- WARNING: RE-IMPORT ALL PAGE.XML-PIPS ALONG WITH THE NEXT UPDATE (3.1.0) -->
+	
 	<instructions type="update" fromversion="3.1.0 RC 2">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
