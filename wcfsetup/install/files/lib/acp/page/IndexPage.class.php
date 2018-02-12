@@ -1,7 +1,9 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
+use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -58,12 +60,24 @@ class IndexPage extends AbstractPage {
 		}
 		
 		$recaptchaWithoutKey = false;
+		$recaptchaKeyLink = '';
 		if (CAPTCHA_TYPE == 'com.woltlab.wcf.recaptcha' && (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY)) {
 			$recaptchaWithoutKey = true;
+			
+			$optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
+			$categorySecurity = $optionCategories['security'];
+			$recaptchaKeyLink = LinkHandler::getInstance()->getLink(
+				'Option',
+				[
+					'id' => $categorySecurity->categoryID,
+					'optionName' => 'recaptcha_publickey'
+				], '#security.antispam'
+			);
 		}
 		
 		WCF::getTPL()->assign([
 			'recaptchaWithoutKey' => $recaptchaWithoutKey,
+			'recaptchaKeyLink' => $recaptchaKeyLink,
 			'server' => $this->server,
 			'usersAwaitingApproval' => $usersAwaitingApproval
 		]);
