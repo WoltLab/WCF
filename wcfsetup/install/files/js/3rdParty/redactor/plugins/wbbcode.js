@@ -1953,6 +1953,27 @@ RedactorPlugins.wbbcode = function() {
 							
 							data.cancel = true;
 						}
+						
+						// Firefox is unable to backspace an empty table
+						if (this.utils.browser('mozilla')) {
+							var block = this.selection.getBlock();
+							if (block && block.nodeName === 'TD') {
+								var table = block.closest('table');
+								var isEmpty = true;
+								
+								var tds = table.querySelectorAll('td');
+								for (var i = 0, length = tds.length; i < length; i++) {
+									if (!this.utils.isEmpty(tds[i].innerHTML)) {
+										isEmpty = false;
+										break;
+									}
+								}
+								
+								if (isEmpty) {
+									this.selection.selectElement(table);
+								}
+							}
+						}
 					}
 				break;
 				
