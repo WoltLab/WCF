@@ -71,7 +71,7 @@ class IndexPage extends AbstractPage {
 				[
 					'id' => $categorySecurity->categoryID,
 					'optionName' => 'recaptcha_publickey'
-				], '#security.antispam'
+				], '#category_security.antispam'
 			);
 		}
 		
