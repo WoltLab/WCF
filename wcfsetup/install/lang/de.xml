@@ -470,7 +470,7 @@
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Supportforum]]></item>
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
-		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von ReCAPTCHA ohne einen individuelle Website-Schlüssel wird von Google nicht mehr unterstützt.]]></item>
+		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von reCAPTCHA ohne einen individuelle Website-Schlüssel wird von Google nicht mehr unterstützt.<br><br>Für eine weitere Nutzung müssen Sie <a href="{$recaptchaKeyLink}">einen Schlüssel in den Optionen hinterlegen</a>, unterhalb des Eingabefeldes befindet sich eine Anleitung zum Anfordern des Schlüssels.]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
