@@ -2551,6 +2551,12 @@ WCF.Message.Quote.Manager = Class.extend({
 	_supportPaste: false,
 	
 	/**
+	 * pasting was temporarily enabled due to an alternative editor being set
+	 * @var boolean
+	 */
+	_supportPasteOverride: false,
+	
+	/**
 	 * Initializes the quote manager.
 	 * 
 	 * @param	integer		count
@@ -2574,6 +2580,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		this._removeOnSubmit = [ ];
 		this._showQuotes = null;
 		this._supportPaste = false;
+		this._supportPasteOverride = false;
 		
 		if (elementID) {
 			this._editorElement = $('#' + elementID);
@@ -2614,6 +2621,12 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * @param	jQuery		element
 	 */
 	setAlternativeEditor: function(element) {
+		if (!this._editorElementAlternative && !this._supportPaste) {
+			this._hasTemplate = false;
+			this._supportPaste = true;
+			this._supportPasteOverride = true;
+		}
+		
 		this._editorElementAlternative = element;
 	},
 	
@@ -2621,6 +2634,12 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Clears alternative editor element.
 	 */
 	clearAlternativeEditor: function() {
+		if (this._supportPasteOverride) {
+			this._hasTemplate = false;
+			this._supportPaste = false;
+			this._supportPasteOverride = false;
+		}
+		
 		this._editorElementAlternative = null;
 	},
 	
