@@ -249,6 +249,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @throws      SystemException
 	 */
 	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content, $apiVersion) {
+		$isTrustedServer = $updateServer->isTrustedServer();
+		
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
@@ -262,7 +264,17 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
-			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package, $apiVersion);
+			$name = $package->getAttribute('name');
+			if (strpos($name, 'com.woltlab.') === 0 && !$isTrustedServer) {
+				if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+					throw new SystemException("The server '".$updateServer->serverURL."' attempted to provide an official WoltLab package, but is not authorized.");
+				}
+				
+				// silently ignore this package to avoid unexpected errors for regular users
+				continue;
+			}
+			
+			$allNewPackages[$name] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package, $apiVersion);
 		}
 		
 		return $allNewPackages;

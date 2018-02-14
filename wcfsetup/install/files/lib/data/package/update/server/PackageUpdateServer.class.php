@@ -241,6 +241,35 @@ class PackageUpdateServer extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true if this server is trusted and is therefore allowed to distribute
+	 * official updates for packages whose identifier starts with "com.woltlab.".
+	 * 
+	 * Internal mirrors in enterprise environments are supported through the optional
+	 * PHP constant `UPDATE_SERVER_TRUSTED_MIRROR`, adding it to the `config.inc.php`
+	 * of the Core is considered to be a safe practice.
+	 * 
+	 * Example:
+	 *   define('UPDATE_SERVER_TRUSTED_MIRROR', 'mirror.example.com');
+	 * 
+	 * @return      boolean
+	 */
+	public final function isTrustedServer() {
+		$host = Url::parse($this->serverURL)['host'];
+		
+		// the official server is always considered to be trusted
+		if ($host === 'update.woltlab.com') {
+			return true;
+		}
+		
+		// custom override to allow testing and mirrors in enterprise environments
+		if (defined('UPDATE_SERVER_TRUSTED_MIRROR') && $host === UPDATE_SERVER_TRUSTED_MIRROR) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Resets all update servers into their original state and purges
 	 * the package cache.
 	 */
