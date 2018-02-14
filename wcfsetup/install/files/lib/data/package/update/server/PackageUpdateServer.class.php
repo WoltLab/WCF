@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\util\Url;
  * Represents a package update server.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Server
  *
@@ -237,5 +238,32 @@ class PackageUpdateServer extends DatabaseObject {
 	 */
 	public function isWoltLabStoreServer() {
 		return Url::parse($this->serverURL)['host'] === 'store.woltlab.com';
+	}
+	
+	/**
+	 * Resets all update servers into their original state and purges
+	 * the package cache.
+	 */
+	public static function resetAll() {
+		// purge package cache
+		WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_package_update")->execute();
+		
+		PackageUpdateCacheBuilder::getInstance()->reset();
+		
+		// reset servers into their original state
+		$sql = "UPDATE  wcf".WCF_N."_package_update_server
+			SET     lastUpdateTime = ?,
+				status = ?,
+				errorMessage = ?,
+				apiVersion = ?,
+				metaData = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			0,
+			'online',
+			'',
+			'2.0',
+			null
+		]);
 	}
 }
