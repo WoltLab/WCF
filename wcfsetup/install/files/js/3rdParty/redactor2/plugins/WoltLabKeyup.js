@@ -14,8 +14,36 @@ $.Redactor.prototype.WoltLabKeyup = function() {
 			var editor = this.$editor[0];
 			
 			var selection = window.getSelection();
-			var node = selection.anchorNode;
 			var parent = null;
+			
+			if (this.detect.isFirefox()) {
+				var anchorNode = selection.anchorNode;
+				if (anchorNode.nodeType === Node.TEXT_NODE && selection.anchorOffset === 0) {
+					parent = anchorNode.parentNode;
+					if (parent.childNodes[0] === anchorNode) {
+						anchorNode = anchorNode.parentNode;
+					}
+				}
+				
+				if (anchorNode.nodeName === 'LI') {
+					// check if this is a nested list
+					var list = anchorNode.parentNode;
+					parent = list.parentNode;
+					
+					// Firefox does not handle nested lists well, yielding untargetable list items
+					// see https://bugzilla.mozilla.org/show_bug.cgi?id=1428073
+					if (parent.nodeName === 'LI' && list.previousSibling === null) {
+						parent.insertBefore(this.marker.get(), list);
+						parent.insertBefore(elCreate('br'), list);
+						
+						this.selection.restore();
+						
+						return;
+					}
+				}
+			}
+			
+			var node = selection.anchorNode;
 			while (node.parentNode) {
 				if (node.parentNode === editor) {
 					parent = node;

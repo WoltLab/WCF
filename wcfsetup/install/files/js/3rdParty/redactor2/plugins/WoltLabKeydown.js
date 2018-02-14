@@ -100,6 +100,28 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 								}
 							}
 						}
+						else if (this.detect.isWebkit() && container.nodeName === 'LI' && e.which === this.keyCode.DELETE) {
+							// check if caret is at the end of the list item, and if there is an adjacent list item
+							var anchorNode = selection.anchorNode;
+							if (anchorNode.nodeType === Node.TEXT_NODE && anchorNode.textContent.length === selection.anchorOffset && anchorNode.parentNode.lastChild === anchorNode) {
+								var nextItem = container.nextElementSibling;
+								if (nextItem && nextItem.nodeName === 'LI') {
+									this.buffer.set();
+									
+									this.selection.save();
+									
+									while (nextItem.childNodes.length) {
+										container.appendChild(nextItem.childNodes[0]);
+									}
+									elRemove(nextItem);
+									
+									this.selection.restore();
+									
+									e.preventDefault();
+									return;
+								}
+							}
+						}
 					}
 				}
 				
