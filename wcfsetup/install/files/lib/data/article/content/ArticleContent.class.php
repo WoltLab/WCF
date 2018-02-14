@@ -80,9 +80,11 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 			return nl2br(StringUtil::encodeHTML($this->teaser), false);
 		}
 		else {
-			$htmlInputProcessor = new HtmlInputProcessor();
-			$htmlInputProcessor->processIntermediate($this->content);
-			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlInputProcessor->getTextContent(), 500)), false);
+			$htmlOutputProcessor = new HtmlOutputProcessor();
+			$htmlOutputProcessor->setOutputType('text/plain');
+			$htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
+			
+			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
 		}
 	}
 	
