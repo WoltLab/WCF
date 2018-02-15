@@ -257,33 +257,43 @@
 				.boxImage {
 					float: left;
 				}
-				
-				.boxTitle,
-				.boxContent {
-					@include screen-md-down {
-						margin-left: calc(30% + 15px);
-					}
-					
-					@include screen-lg {
-						margin-left: calc(30% + 30px);
-					}
-				}
 			}
 			
 			&:nth-child(even) {
 				.boxImage {
 					float: right;
 				}
-				
-				.boxTitle,
-				.boxContent {
-					@include screen-md-down {
-						margin-right: calc(30% + 15px);
-					}
-					
-					@include screen-lg {
-						margin-right: calc(30% + 30px);
-					}
+			}
+		}
+	}
+	
+	@include screen-sm-md {
+		.boxWithImage {
+			&:nth-child(odd) {
+				.boxImage {
+					margin: 0 10px 10px 0;
+				}
+			}
+			
+			&:nth-child(even) {
+				.boxImage {
+					margin: 0 0 10px 10px;
+				}
+			}
+		}
+	}
+	
+	@include screen-lg {
+		.boxWithImage {
+			&:nth-child(odd) {
+				.boxImage {
+					margin: 0 20px 20px 0;
+				}
+			}
+			
+			&:nth-child(even) {
+				.boxImage {
+					margin: 0 0 20px 20px;
 				}
 			}
 		}
@@ -663,22 +673,23 @@
 	@include screen-sm-up {
 		.boxWithImage {
 			@include clearfix;
-			
-			.boxTitle,
-			.boxContent {
-				@include screen-md-down {
-					margin-left: calc(30% + 15px);
-				}
-				
-				@include screen-lg {
-					margin-left: calc(30% + 30px);
-				}
-			}
 		}
 		
 		.boxImage {
 			float: left;
 			width: 30%;
+		}
+	}
+	
+	@include screen-sm-md {
+		.boxImage {
+			margin: 0 10px 10px 0;
+		}
+	}
+	
+	@include screen-lg {
+		.boxImage {
+			margin: 0 20px 20px 0;
 		}
 	}
 }
@@ -827,22 +838,23 @@
 	@include screen-sm-up {
 		.boxWithImage {
 			@include clearfix;
-			
-			.boxTitle,
-			.boxContent {
-				@include screen-md-down {
-					margin-left: calc(30% + 15px);
-				}
-				
-				@include screen-lg {
-					margin-left: calc(30% + 30px);
-				}
-			}
 		}
 		
 		.boxImage {
 			float: left;
 			width: 30%;
+		}
+	}
+	
+	@include screen-sm-md {
+		.boxImage {
+			margin: 0 10px 10px 0;
+		}
+	}
+	
+	@include screen-lg {
+		.boxImage {
+			margin: 0 20px 20px 0;
 		}
 	}
 	
