@@ -2555,6 +2555,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.recipientID"><![CDATA[Empfänger]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
+		<item name="wcf.contact.privacyPolicyConsent.title"><![CDATA[Einwilligungserklärung Datenschutz]]></item>
+		<item name="wcf.contact.privacyPolicyConsent.text"><![CDATA[Mit Setzen dieses Häkchens im nebenstehenden Kontrollkästchen {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} einverstanden, dass die von Ihnen angegebenen Daten elektronisch erhoben und gespeichert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Daten werden dabei nur streng zweckgebunden zur Bearbeitung und Beantwortung {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Anfrage genutzt. Diese Einwilligung {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} jederzeit durch Nachricht an uns widerrufen. Im Falle des Widerrufs werden Ihre Daten umgehend gelöscht. Weitere Informationen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du der{else}entnehmen Sie der{/if} <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a>{if LANGUAGE_USE_INFORMAL_VARIANT} entnehmen{/if}.]]></item>
 		<item name="wcf.contact.success"><![CDATA[Ihre Nachricht wurde erfolgreich versandt.]]></item>
 	</category>
 	

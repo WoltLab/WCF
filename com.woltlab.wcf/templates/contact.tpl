@@ -70,6 +70,20 @@
 		{include file='customOptionFieldList'}
 		
 		{event name='optionFields'}
+		
+		<dl{if $errorField == 'privacyPolicyConsent'} class="formError"{/if}>
+			<dt><label for="privacyPolicyConsent">{lang}wcf.contact.privacyPolicyConsent.title{/lang}</label> <span class="customOptionRequired">*</span></dt>
+			<dd>
+				<label><input type="checkbox" id="privacyPolicyConsent" name="privacyPolicyConsent" value="1"> {lang}wcf.contact.privacyPolicyConsent.text{/lang}</label>
+				{if $errorField == 'privacyPolicyConsent'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
 	</section>
 	
 	{event name='sections'}
