@@ -68,19 +68,21 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var mpSaveInstant = this.selection.saveInstant;
 			this.selection.saveInstant = (function() {
-				mpSaveInstant.call(this);
+				var saved = mpSaveInstant.call(this);
 				
-				if (this.saved) {
-					this.saved.isAtNodeStart = false;
+				if (saved) {
+					saved.isAtNodeStart = false;
 					
 					var selection = window.getSelection();
 					if (selection.rangeCount && !selection.isCollapsed) {
 						var range = selection.getRangeAt(0);
 						if (range.startContainer.nodeType === Node.TEXT_NODE && range.startOffset === 0) {
-							this.saved.isAtNodeStart = true;
+							saved.isAtNodeStart = true;
 						}
 					}
 				}
+				
+				return saved;
 			}).bind(this);
 			
 			var mpRestoreInstant = this.selection.restoreInstant;
