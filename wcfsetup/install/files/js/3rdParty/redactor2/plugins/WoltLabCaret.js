@@ -95,9 +95,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				
 				mpRestoreInstant.call(this, saved);
 				
+				var selection = window.getSelection();
+				if (!selection.rangeCount) return;
+				
 				if (localSaved.isAtNodeStart === true) {
-					var selection = window.getSelection();
-					if (selection.rangeCount && !selection.isCollapsed) {
+					if (!selection.isCollapsed) {
 						var range = selection.getRangeAt(0);
 						var start = range.startContainer;
 						
@@ -127,6 +129,21 @@ $.Redactor.prototype.WoltLabCaret = function() {
 									selection.addRange(range);
 								}
 							}
+						}
+					}
+				}
+				else if (selection.isCollapsed) {
+					var anchorNode = selection.anchorNode;
+					var editor = this.core.editor()[0];
+					
+					// Restoring a selection may fail if the node does was removed from the DOM,
+					// causing the caret to be inside a text node with the editor being the
+					// direct parent. We can safely move the caret inside the adjacent container,
+					// using `caret.start()`.
+					if (anchorNode.nodeType === Node.TEXT_NODE && anchorNode.parentNode === editor && selection.anchorOffset === anchorNode.textContent.length) {
+						var p = anchorNode.nextElementSibling;
+						if (p && p.nodeName === 'P') {
+							this.caret.start(p);
 						}
 					}
 				}
