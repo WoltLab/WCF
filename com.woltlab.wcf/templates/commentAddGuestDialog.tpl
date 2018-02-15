@@ -15,6 +15,20 @@
 				{/if}
 			</dd>
 		</dl>
+		
+		<dl{if $errorType[privacyPolicyConsent]|isset} class="formError"{/if}>
+			<dt><label for="privacyPolicyConsent">{lang}wcf.comment.privacyPolicyConsent.title{/lang}</label></dt>
+			<dd>
+				<label><input type="checkbox" id="privacyPolicyConsent" name="privacyPolicyConsent" value="1"> {lang}wcf.comment.privacyPolicyConsent.text{/lang}</label>
+				{if $errorType[privacyPolicyConsent]|isset}
+					<small class="innerError">
+						{if $errorType[privacyPolicyConsent] == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{/if}
+					</small>
+				{/if}
+			</dd>
+		</dl>
 	</div>
 	
 	{include file='captcha'}

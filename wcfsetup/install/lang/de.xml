@@ -2509,6 +2509,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Datum]]></item>
+		<item name="wcf.comment.privacyPolicyConsent.title"><![CDATA[Einwilligungserklärung Datenschutz]]></item>
+		<item name="wcf.comment.privacyPolicyConsent.text"><![CDATA[Mit Setzen dieses Häkchens im nebenstehenden Kontrollkästchen {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} einverstanden, dass die von Ihnen angegebenen Daten elektronisch erhoben und gespeichert werden. Diese Einwilligung {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} jederzeit durch Nachricht an uns widerrufen. Im Falle des Widerrufs werden Ihre Daten umgehend gelöscht. Weitere Informationen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du der{else}entnehmen Sie der{/if} <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a>{if LANGUAGE_USE_INFORMAL_VARIANT} entnehmen{/if}.]]></item>
 	</category>
 	
 	<category name="wcf.condition">

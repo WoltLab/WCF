@@ -2443,6 +2443,8 @@ Errors are:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
+		<item name="wcf.comment.privacyPolicyConsent.title"><![CDATA[Privacy Policy Consent]]></item>
+		<item name="wcf.comment.privacyPolicyConsent"><![CDATA[By ticking the adjacent box, you agree to the electronic recording and storage of your data. You can revoke this agreement at any time by sending us a message. In the event of revocation, data will be deleted immediately. For further information, please refer to the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a>.]]></item>
 	</category>
 	
 	<category name="wcf.condition">
