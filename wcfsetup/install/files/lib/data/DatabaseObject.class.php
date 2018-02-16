@@ -42,6 +42,24 @@ abstract class DatabaseObject implements IStorableObject {
 	protected static $sortOrder = null;
 	
 	/**
+	 * The list of derived database table names based on the class name.
+	 * 
+	 * WARNING: This is strictly an internal lookup table. DO NOT USE IT.
+	 * 
+	 * @var string[] 
+	 */
+	protected static $_derivedDatabaseTableName = [];
+	
+	/**
+	 * The list of derived database table aliases based on the class name.
+	 * 
+	 * WARNING: This is strictly an internal lookup table. DO NOT USE IT.
+	 * 
+	 * @var string[]
+	 */
+	protected static $_derivedDatabaseTableAlias = [];
+	
+	/**
 	 * object data
 	 * @var	array
 	 */
@@ -134,12 +152,11 @@ abstract class DatabaseObject implements IStorableObject {
 			return $classParts[0].WCF_N.'_'.static::$databaseTableName;
 		}
 		
-		static $databaseTableName = null;
-		if ($databaseTableName === null) {
-			$databaseTableName = $classParts[0].WCF_N.'_'.strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
+		if (!isset(self::$_derivedDatabaseTableName[$className])) {
+			self::$_derivedDatabaseTableName[$className] = $classParts[0].WCF_N.'_'.strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
 		}
 		
-		return $databaseTableName;
+		return self::$_derivedDatabaseTableName[$className];
 	}
 	
 	/**
@@ -150,13 +167,13 @@ abstract class DatabaseObject implements IStorableObject {
 			return static::$databaseTableName;
 		}
 		
-		static $databaseTableNameAlias = null;
-		if ($databaseTableNameAlias === null) {
-			$classParts = explode('\\', get_called_class());
-			$databaseTableNameAlias = strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
+		$className = get_called_class();
+		if (!isset(self::$_derivedDatabaseTableAlias[$className])) {
+			$classParts = explode('\\', $className);
+			self::$_derivedDatabaseTableAlias[$className] = strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
 		}
 		
-		return $databaseTableNameAlias;
+		return self::$_derivedDatabaseTableAlias[$className];
 	}
 	
 	/**
