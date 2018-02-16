@@ -105,7 +105,7 @@ html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
 .spApiVersion { color: #E65100; font-family: Consolas, Courier, monospace; font-size: 12px; }
 #spSidebar .button { display: block; }
 @media (min-width: 769px) {
-	#spVariablesWrapper { position: sticky; top: 60px; }
+	#spVariablesWrapper { position: -webkit-sticky; position: sticky; top: 60px; }
 }
 
 /* ### style region marker ### */
