@@ -46,6 +46,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				ignoreError: false,
 				pinData: false,
 				silent: false,
+				includeRequestedWith: true,
 				
 				// callbacks
 				failure: null,
@@ -67,7 +68,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (this._options.url.indexOf(WSC_API_URL) === 0) {
-				// allows allow credentials when querying the very own server
+				this._options.includeRequestedWith = true;
+				// always include credentials when querying the very own server
 				this._options.withCredentials = true;
 			}
 			
@@ -113,7 +115,9 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			if (this._options.contentType) {
 				this._xhr.setRequestHeader('Content-Type', this._options.contentType);
 			}
-			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			if (this._options.withCredentials || this._options.includeRequestedWith) {
+				this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			}
 			if (this._options.withCredentials) {
 				this._xhr.withCredentials = true;
 			}

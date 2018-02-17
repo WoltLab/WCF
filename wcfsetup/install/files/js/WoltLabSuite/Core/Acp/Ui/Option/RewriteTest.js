@@ -73,6 +73,8 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 						ignoreError: true,
 						// bypass the LinkHandler, because rewrites aren't enabled yet
 						url: url,
+						type: 'GET',
+						includeRequestedWith: false,
 						success: function(data) {
 							if (!data.hasOwnProperty('core_rewrite_test') || data.core_rewrite_test !== 'passed') {
 								failure();
