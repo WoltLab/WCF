@@ -160,14 +160,14 @@ class ControllerMap extends SingletonFactory {
 	 * @return	string		url representation of controller, e.g. 'members-list'
 	 */
 	public function lookup($application, $controller, $forceFrontend = null) {
-		$lookupKey = $application . '-' . $controller;
+		if ($forceFrontend === null) {
+			$forceFrontend = !class_exists(WCFACP::class, false);
+		}
+		
+		$lookupKey = ($forceFrontend ? '' : 'acp-') . $application . '-' . $controller;
 		
 		if (isset($this->lookupCache[$lookupKey])) {
 			return $this->lookupCache[$lookupKey];
-		}
-		
-		if ($forceFrontend === null) {
-			$forceFrontend = !class_exists(WCFACP::class, false);
 		}
 		
 		if ($forceFrontend && isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
