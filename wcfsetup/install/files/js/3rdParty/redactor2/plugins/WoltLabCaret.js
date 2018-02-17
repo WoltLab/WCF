@@ -148,6 +148,85 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					}
 				}
 			}).bind(this);
+			
+			this.selection.nodes = (function(tag) {
+				var filter = (typeof tag === 'undefined') ? [] : (($.isArray(tag)) ? tag : [tag]);
+				
+				var sel = this.selection.get();
+				var range = this.selection.range(sel);
+				var nodes = [];
+				var resultNodes = [];
+				
+				if (this.utils.isCollapsed()) {
+					nodes = [this.selection.current()];
+				}
+				else {
+					var node = range.startContainer;
+					var endNode = range.endContainer;
+					
+					// single node
+					if (node === endNode) {
+						return [node];
+					}
+					
+					// iterate
+					var commonAncestorContainer = range.commonAncestorContainer;
+					while (node && node !== endNode) {
+						// WoltLab modification: prevent `node` from breaking out of the `commonAncestorContainer`
+						//nodes.push(node = this.selection.nextNode(node));
+						nodes.push(node = this.selection.nextNode(node, commonAncestorContainer));
+					}
+					
+					// partially selected nodes
+					node = range.startContainer;
+					while (node && node !== commonAncestorContainer) {
+						nodes.unshift(node);
+						node = node.parentNode;
+					}
+				}
+				
+				// remove service nodes
+				$.each(nodes, function (i, s) {
+					if (s) {
+						var tagName = (s.nodeType !== 1) ? false : s.tagName.toLowerCase();
+						
+						if ($(s).hasClass('redactor-script-tag') || $(s).hasClass('redactor-selection-marker')) {
+							return;
+						}
+						else if (tagName && filter.length !== 0 && $.inArray(tagName, filter) === -1) {
+							return;
+						}
+						else {
+							resultNodes.push(s);
+						}
+					}
+				});
+				
+				return (resultNodes.length === 0) ? [] : resultNodes;
+			}).bind(this);
+			
+			// WoltLab modification: Added the `container` parameter
+			this.selection.nextNode = function(node, container) {
+				if (node.hasChildNodes()) {
+					return node.firstChild;
+				}
+				else {
+					while (node && !node.nextSibling) {
+						node = node.parentNode;
+						
+						// WoltLab modification: do not allow the `node` to escape `container`
+						if (container && node === container) {
+							return null;
+						}
+					}
+					
+					if (!node) {
+						return null;
+					}
+					
+					return node.nextSibling;
+				}
+			};
 		},
 		
 		paragraphAfterBlock: function (block) {
