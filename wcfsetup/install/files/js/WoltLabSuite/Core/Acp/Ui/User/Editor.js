@@ -98,7 +98,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], functi
 				item.innerHTML = '<a href="#"></a>';
 				
 				link = item.children[0];
-				link.textContent = elData(button, 'tooltip');
+				link.textContent = elData(button, 'tooltip') || button.title;
 				(function(button) {
 					link.addEventListener(WCF_CLICK_EVENT, function (event) {
 						event.preventDefault();
