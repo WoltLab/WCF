@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * 	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */

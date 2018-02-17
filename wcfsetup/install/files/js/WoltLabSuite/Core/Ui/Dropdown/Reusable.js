@@ -2,7 +2,7 @@
  * Simple interface to work with reusable dropdowns that are not bound to a specific item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dropdown/Reusable
  */

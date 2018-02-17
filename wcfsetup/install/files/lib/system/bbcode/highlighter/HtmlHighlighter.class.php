@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Highlights syntax of (x)html documents including style and script blocks.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */

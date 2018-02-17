@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Handles common data resources for comment-related user notifications
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment
  * @deprecated	3.0, use CommentRuntimeCache and UserProfileRuntimeCache

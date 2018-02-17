@@ -9,7 +9,7 @@ use wcf\util\XML;
  * SetupLanguage is a modification of Language used during the setup process.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
  */

@@ -8,7 +8,7 @@ namespace wcf\system\page\handler;
  * directly to achieve better upwards-compatibility in case of interface changes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Page\Handler
  * @since	3.0

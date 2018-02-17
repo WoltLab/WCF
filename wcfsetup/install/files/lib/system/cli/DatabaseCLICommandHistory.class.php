@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * A phpline history that saves the items in database.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */

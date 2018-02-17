@@ -5,7 +5,7 @@ namespace wcf\system\exception;
  * Denotes an Exception with extra information for the human reader.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Exception
  * @since	3.0

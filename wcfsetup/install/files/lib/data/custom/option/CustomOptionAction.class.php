@@ -7,7 +7,7 @@ use wcf\data\IToggleAction;
  * Executes option-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Custom\Option
  * @since	3.1
