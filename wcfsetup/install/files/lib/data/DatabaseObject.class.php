@@ -134,12 +134,12 @@ abstract class DatabaseObject implements IStorableObject {
 			return $classParts[0].WCF_N.'_'.static::$databaseTableName;
 		}
 		
-		static $databaseTableName = null;
-		if ($databaseTableName === null) {
-			$databaseTableName = $classParts[0].WCF_N.'_'.strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
+		static $databaseTableNames = [];
+		if (!isset($databaseTableNames[$className])) {
+			$databaseTableNames[$className] = $classParts[0].WCF_N.'_'.strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
 		}
 		
-		return $databaseTableName;
+		return $databaseTableNames[$className];
 	}
 	
 	/**
@@ -150,13 +150,14 @@ abstract class DatabaseObject implements IStorableObject {
 			return static::$databaseTableName;
 		}
 		
-		static $databaseTableNameAlias = null;
-		if ($databaseTableNameAlias === null) {
-			$classParts = explode('\\', get_called_class());
-			$databaseTableNameAlias = strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
+		$className = get_called_class();
+		static $databaseTableAliases = [];
+		if (!isset($databaseTableAliases[$className])) {
+			$classParts = explode('\\', $className);
+			$databaseTableAliases[$className] = strtolower(implode('_', preg_split('~(?=[A-Z](?=[a-z]))~', array_pop($classParts), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
 		}
 		
-		return $databaseTableNameAlias;
+		return $databaseTableAliases[$className];
 	}
 	
 	/**
