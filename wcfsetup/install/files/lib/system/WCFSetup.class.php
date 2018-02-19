@@ -718,6 +718,7 @@ class WCFSetup extends WCF {
 				}
 				
 				// check for PHP's MySQL native driver
+				/*
 				$sql = "SELECT 1";
 				$statement = $db->prepareStatement($sql);
 				$statement->execute();
@@ -725,6 +726,7 @@ class WCFSetup extends WCF {
 				if ($statement->fetchSingleColumn() !== 1) {
 					throw new SystemException("MySQLnd is not being used for database communication.");
 				}
+				*/
 				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
