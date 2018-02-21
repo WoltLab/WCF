@@ -97,7 +97,8 @@
 	
 	<instructions type="update" fromversion="3.1.0 RC 4">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
+		
+		<instruction type="file" run="standalone">files_update.tar</instruction>
 		
 		<instruction type="language" />
 	</instructions>
