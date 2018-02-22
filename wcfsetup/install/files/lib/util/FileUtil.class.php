@@ -611,8 +611,8 @@ final class FileUtil {
 			}
 			
 			// PHP supports 'K', 'M' and 'G' shorthand notation
-			if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
-				switch ($matches[2]) {
+			if (preg_match('~^(\d+)\s*([KMG])$~i', $memoryLimit, $matches)) {
+				switch (strtoupper($matches[2])) {
 					case 'K':
 						self::$memoryLimit = $matches[1] * 1024;
 					break;
