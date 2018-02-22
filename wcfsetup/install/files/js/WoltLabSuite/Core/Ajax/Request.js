@@ -245,6 +245,13 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 					if (data && data.returnValues && data.returnValues.template !== undefined) {
 						data.returnValues.template = data.returnValues.template.trim();
 					}
+					
+					// force-invoke the background queue
+					if (data && data.forceBackgroundQueuePerform) {
+						require(['WoltLabSuite/Core/BackgroundQueue'], function(BackgroundQueue) {
+							BackgroundQueue.invoke();
+						});
+					}
 				}
 				
 				options.success(data, xhr.responseText, xhr, options.data);
