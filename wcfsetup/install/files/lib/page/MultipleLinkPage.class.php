@@ -110,6 +110,8 @@ abstract class MultipleLinkPage extends AbstractPage {
 		// initialize database object list
 		$this->initObjectList();
 		
+		EventHandler::getInstance()->fireAction($this, 'afterInitObjectList');
+		
 		// calculates page number
 		$this->calculateNumberOfPages();
 		
