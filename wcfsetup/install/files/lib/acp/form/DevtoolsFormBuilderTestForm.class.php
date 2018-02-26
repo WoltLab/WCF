@@ -11,6 +11,7 @@ use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IsDisabledFormField;
 use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\UserFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -149,7 +150,14 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 							FormContainer::create('fooGeneral')
 								->appendChildren([
 									BooleanFormField::create('isCool')
-										->label('Foo and Bar are cool names')
+										->label('Foo and Bar are cool names'),
+									UserFormField::create('coolUser')
+										->label('The cool user')
+										->required(),
+									UserFormField::create('niceUsers')
+										->label('Nice users')
+										->multiple(true)
+										->minimumMultiples(2)
 								])
 						),
 					TabFormContainer::create('tab2')
