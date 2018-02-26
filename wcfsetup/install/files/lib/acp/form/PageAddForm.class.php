@@ -471,7 +471,8 @@ class PageAddForm extends AbstractForm {
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = 0;
 		$this->applicationPackageID = 1;
 		$this->name = '';
-		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->boxIDs = $this->aclValues = [];
+		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->aclValues = [];
+		$this->boxIDs = $this->getDefaultBoxIDs();
 	}
 	
 	/**
@@ -482,10 +483,21 @@ class PageAddForm extends AbstractForm {
 		
 		// set default values
 		if (empty($_POST)) {
-			foreach ($this->availableBoxes as $box) {
-				if ($box->visibleEverywhere) $this->boxIDs[] = $box->boxID;
-			}
+			$this->boxIDs = $this->getDefaultBoxIDs();
 		}
+	}
+	
+	/**
+	 * Returns the list of box ids that are enabled by default.
+	 * 
+	 * @return      integer[]
+	 */
+	protected function getDefaultBoxIDs() {
+		$boxIDs = [];
+		foreach ($this->availableBoxes as $box) {
+			if ($box->visibleEverywhere) $boxIDs[] = $box->boxID;
+		}
+		return $boxIDs;
 	}
 	
 	/**
