@@ -88,7 +88,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @inheritDoc
 	 */
 	public function hasSaveValue(): bool {
-		return true;
+		return false;
 	}
 	
 	/**
