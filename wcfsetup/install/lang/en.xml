@@ -3269,6 +3269,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.search.name"><![CDATA[Search Page Names]]></item>
 		<item name="wcf.page.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.page.comment"><![CDATA[Page Comment]]></item>
+		<item name="wcf.page.commentResponse"><![CDATA[Reply to Page Comment]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">

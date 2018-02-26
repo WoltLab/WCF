@@ -3324,6 +3324,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.search.name"><![CDATA[Seitennamen durchsuchen]]></item>
 		<item name="wcf.page.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.comment"><![CDATA[Seiten-Kommentar]]></item>
+		<item name="wcf.page.commentResponse"><![CDATA[Antwort auf Seiten-Kommentar]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
