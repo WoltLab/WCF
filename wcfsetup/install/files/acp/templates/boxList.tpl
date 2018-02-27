@@ -134,7 +134,7 @@
 						</td>
 						<td class="columnID columnBoxID">{@$box->boxID}</td>
 						<td class="columnTitle columnName"><a href="{link controller='BoxEdit' id=$box->boxID}{/link}">{$box->name}</a></td>
-						<td class="columnText columnBoxType">{$box->boxType}</td>
+						<td class="columnText columnBoxType">{lang}wcf.acp.box.type.{@$box->boxType}{/lang}</td>
 						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$box->position}{/lang}</td>
 						<td class="columnDigits columnShowOrder">{#$box->showOrder}</td>
 						

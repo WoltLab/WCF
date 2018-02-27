@@ -2,7 +2,7 @@
  * User editing capabilities for the user list.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
@@ -98,7 +98,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], functi
 				item.innerHTML = '<a href="#"></a>';
 				
 				link = item.children[0];
-				link.textContent = elData(button, 'tooltip');
+				link.textContent = elData(button, 'tooltip') || button.title;
 				(function(button) {
 					link.addEventListener(WCF_CLICK_EVENT, function (event) {
 						event.preventDefault();

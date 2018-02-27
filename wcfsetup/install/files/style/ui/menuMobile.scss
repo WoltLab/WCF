@@ -256,6 +256,7 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 .menuOverlayItemLink.active,
 .menuOverlayItemLinkIcon.active {
 	background-color: $wcfHeaderMenuLinkBackgroundActive;
+	color: $wcfHeaderMenuLinkActive;
 }
 
 .menuOverlayTitle {

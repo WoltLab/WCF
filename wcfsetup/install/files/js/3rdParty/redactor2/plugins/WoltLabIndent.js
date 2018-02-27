@@ -77,7 +77,7 @@ $.Redactor.prototype.WoltLabIndent = function() {
 							// verify that there is no text after the br
 							var text = '';
 							var sibling = lastElement;
-							while (sibling.nextSibling) {
+							while (sibling = sibling.nextSibling) {
 								text += sibling.textContent;
 							}
 							

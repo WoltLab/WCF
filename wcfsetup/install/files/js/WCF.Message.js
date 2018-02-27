@@ -4,7 +4,7 @@
  * Message related classes for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Message = { };
@@ -1599,6 +1599,12 @@ if (COMPILER_TARGET_DEFAULT) {
 		_supportPaste: false,
 		
 		/**
+		 * pasting was temporarily enabled due to an alternative editor being set
+		 * @var boolean
+		 */
+		_supportPasteOverride: false,
+		
+		/**
 		 * Initializes the quote manager.
 		 *
 		 * @param        {int}                count
@@ -1621,6 +1627,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._insertQuotes = true;
 			this._removeOnSubmit = [];
 			this._supportPaste = false;
+			this._supportPasteOverride = false;
 			
 			if (elementID) {
 				var element = $('#' + elementID);
@@ -1671,6 +1678,12 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        {(string|jQuery)}       elementId       element id or jQuery element
 		 */
 		setAlternativeEditor: function (elementId) {
+			if (!this._editorIdAlternative && !this._supportPaste) {
+				this._hasTemplate = false;
+				this._supportPaste = true;
+				this._supportPasteOverride = true;
+			}
+			
 			if (typeof elementId === 'object') elementId = elementId[0].id;
 			this._editorIdAlternative = elementId;
 		},
@@ -1679,6 +1692,12 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Clears alternative editor element id.
 		 */
 		clearAlternativeEditor: function () {
+			if (this._supportPasteOverride) {
+				this._hasTemplate = false;
+				this._supportPaste = false;
+				this._supportPasteOverride = false;
+			}
+			
 			this._editorIdAlternative = '';
 		},
 		
