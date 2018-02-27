@@ -182,6 +182,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._rgba.a.val(parseInt(element.data('alpha')));
 			}
 			else {
+				// implicit support for initial rgb()-values
+				if (element.data('color').match(/^rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)$/)) {
+					element.data('color', 'rgba(' + RegExp.$1 + ', ' + RegExp.$2 + ', ' + RegExp.$3 + ', 1)');
+				}
+				
 				if (this._rgbaRegExp === null) {
 					this._rgbaRegExp = new RegExp("^rgba\\((\\d{1,3}), ?(\\d{1,3}), ?(\\d{1,3}), ?(1|1\\.00?|0|0?\\.[0-9]{1,2})\\)$");
 				}
