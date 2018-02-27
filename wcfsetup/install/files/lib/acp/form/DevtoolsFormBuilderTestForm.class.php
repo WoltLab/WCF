@@ -12,6 +12,7 @@ use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IsDisabledFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\UserFormField;
+use wcf\system\form\builder\field\UsernameFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -164,7 +165,9 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 						->label('Tab 2')
 						->appendChildren([
 							SimpleAclFormField::create('objectAccess')
-								->label('Object can be accessed')
+								->label('Object can be accessed'),
+							UsernameFormField::create('newUsername')
+								->label('A new username')
 						])
 				])
 		]);
