@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Processes a HTML string and renders the final output for display.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -46,7 +46,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * to text/plain content
 	 * @var string[]
 	 */
-	public static $plainTextNewlineTags = ['br', 'li', 'td', 'tr'];
+	public static $plainTextNewlineTags = ['br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'tr'];
 	
 	/**
 	 * HtmlOutputNodeProcessor constructor.

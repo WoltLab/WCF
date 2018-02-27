@@ -17,7 +17,7 @@
 <ul class="scrollableCheckboxList" id="{@$pageCheckboxListContainerID}">
 	{foreach from=$pageNodeList item=pageNode}
 		<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-			<label><input type="checkbox" name="{@$pageCheckboxID}[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
+			<label><input type="checkbox" name="{@$pageCheckboxID}[]" value="{@$pageNode->pageID}" data-identifier="{@$pageNode->identifier}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
 		</li>
 	{/foreach}
 </ul>

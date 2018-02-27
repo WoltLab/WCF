@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * Represents an article content.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
@@ -81,9 +81,11 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 			return nl2br(StringUtil::encodeHTML($this->teaser), false);
 		}
 		else {
-			$htmlInputProcessor = new HtmlInputProcessor();
-			$htmlInputProcessor->processIntermediate($this->content);
-			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlInputProcessor->getTextContent(), 500)), false);
+			$htmlOutputProcessor = new HtmlOutputProcessor();
+			$htmlOutputProcessor->setOutputType('text/plain');
+			$htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
+			
+			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
 		}
 	}
 	

@@ -92,6 +92,7 @@ $.Redactor.prototype.WoltLabTable = function() {
 			}
 			table += '</table>';
 			
+			this.selection.restore();
 			this.buffer.set();
 			
 			var current = this.selection.current();

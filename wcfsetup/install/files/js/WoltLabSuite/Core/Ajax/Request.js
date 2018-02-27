@@ -4,7 +4,7 @@
  * In case you want to issue JSONP requests, please use `AjaxJsonp` instead.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ajax/Request
  */
@@ -46,6 +46,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				ignoreError: false,
 				pinData: false,
 				silent: false,
+				includeRequestedWith: true,
 				
 				// callbacks
 				failure: null,
@@ -67,7 +68,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (this._options.url.indexOf(WSC_API_URL) === 0) {
-				// allows allow credentials when querying the very own server
+				this._options.includeRequestedWith = true;
+				// always include credentials when querying the very own server
 				this._options.withCredentials = true;
 			}
 			
@@ -113,7 +115,9 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			if (this._options.contentType) {
 				this._xhr.setRequestHeader('Content-Type', this._options.contentType);
 			}
-			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			if (this._options.withCredentials || this._options.includeRequestedWith) {
+				this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			}
 			if (this._options.withCredentials) {
 				this._xhr.withCredentials = true;
 			}
@@ -240,6 +244,13 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 					// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
 					if (data && data.returnValues && data.returnValues.template !== undefined) {
 						data.returnValues.template = data.returnValues.template.trim();
+					}
+					
+					// force-invoke the background queue
+					if (data && data.forceBackgroundQueuePerform) {
+						require(['WoltLabSuite/Core/BackgroundQueue'], function(BackgroundQueue) {
+							BackgroundQueue.invoke();
+						});
 					}
 				}
 				

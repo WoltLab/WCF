@@ -714,7 +714,7 @@
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[Die Seitenbeschleunigung für Gäste verbessert die Ladezeiten für Besucher und Suchmaschinen, es wird empfohlen diese <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">zu aktivieren</a>.]]></item>
-		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von ReCAPTCHA ohne einen individuelle Website-Schlüssel wird von Google nicht mehr unterstützt.]]></item>
+		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von reCAPTCHA ohne einen individuellen Website-Schlüssel wird von Google nicht mehr unterstützt.<br><br>Für eine weitere Nutzung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} <a href="{$recaptchaKeyLink}">einen Schlüssel in den Optionen hinterlegen</a>, unterhalb des Eingabefeldes befindet sich eine Anleitung zum Anfordern des Schlüssels.]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
@@ -3324,6 +3324,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.search.name"><![CDATA[Seitennamen durchsuchen]]></item>
 		<item name="wcf.page.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.comment"><![CDATA[Seiten-Kommentar]]></item>
+		<item name="wcf.page.commentResponse"><![CDATA[Antwort auf Seiten-Kommentar]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

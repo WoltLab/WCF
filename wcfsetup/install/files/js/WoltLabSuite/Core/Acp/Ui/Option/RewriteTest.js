@@ -2,7 +2,7 @@
  * Automatic URL rewrite support testing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
  */
@@ -73,6 +73,8 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 						ignoreError: true,
 						// bypass the LinkHandler, because rewrites aren't enabled yet
 						url: url,
+						type: 'GET',
+						includeRequestedWith: false,
 						success: function(data) {
 							if (!data.hasOwnProperty('core_rewrite_test') || data.core_rewrite_test !== 'passed') {
 								failure();

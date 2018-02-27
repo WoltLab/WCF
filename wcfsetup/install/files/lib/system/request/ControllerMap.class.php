@@ -13,7 +13,7 @@ use wcf\system\WCFACP;
  * Resolves incoming requests and performs lookups for controller to url mappings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -161,14 +161,14 @@ class ControllerMap extends SingletonFactory {
 	 * @return	string		url representation of controller, e.g. 'members-list'
 	 */
 	public function lookup($application, $controller, $forceFrontend = null) {
-		$lookupKey = $application . '-' . $controller;
+		if ($forceFrontend === null) {
+			$forceFrontend = !class_exists(WCFACP::class, false);
+		}
+		
+		$lookupKey = ($forceFrontend ? '' : 'acp-') . $application . '-' . $controller;
 		
 		if (isset($this->lookupCache[$lookupKey])) {
 			return $this->lookupCache[$lookupKey];
-		}
-		
-		if ($forceFrontend === null) {
-			$forceFrontend = !class_exists(WCFACP::class, false);
 		}
 		
 		if ($forceFrontend && isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {

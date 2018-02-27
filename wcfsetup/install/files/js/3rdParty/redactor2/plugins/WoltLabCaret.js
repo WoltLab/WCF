@@ -89,19 +89,21 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var mpSaveInstant = this.selection.saveInstant;
 			this.selection.saveInstant = (function() {
-				mpSaveInstant.call(this);
+				var saved = mpSaveInstant.call(this);
 				
-				if (this.saved) {
-					this.saved.isAtNodeStart = false;
+				if (saved) {
+					saved.isAtNodeStart = false;
 					
 					var selection = window.getSelection();
 					if (selection.rangeCount && !selection.isCollapsed) {
 						var range = selection.getRangeAt(0);
 						if (range.startContainer.nodeType === Node.TEXT_NODE && range.startOffset === 0) {
-							this.saved.isAtNodeStart = true;
+							saved.isAtNodeStart = true;
 						}
 					}
 				}
+				
+				return saved;
 			}).bind(this);
 			
 			var mpRestoreInstant = this.selection.restoreInstant;
@@ -114,9 +116,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				
 				mpRestoreInstant.call(this, saved);
 				
+				var selection = window.getSelection();
+				if (!selection.rangeCount) return;
+				
 				if (localSaved.isAtNodeStart === true) {
-					var selection = window.getSelection();
-					if (selection.rangeCount && !selection.isCollapsed) {
+					if (!selection.isCollapsed) {
 						var range = selection.getRangeAt(0);
 						var start = range.startContainer;
 						
@@ -149,7 +153,101 @@ $.Redactor.prototype.WoltLabCaret = function() {
 						}
 					}
 				}
+				else if (selection.isCollapsed) {
+					var anchorNode = selection.anchorNode;
+					var editor = this.core.editor()[0];
+					
+					// Restoring a selection may fail if the node does was removed from the DOM,
+					// causing the caret to be inside a text node with the editor being the
+					// direct parent. We can safely move the caret inside the adjacent container,
+					// using `caret.start()`.
+					if (anchorNode.nodeType === Node.TEXT_NODE && anchorNode.parentNode === editor && selection.anchorOffset === anchorNode.textContent.length) {
+						var p = anchorNode.nextElementSibling;
+						if (p && p.nodeName === 'P') {
+							this.caret.start(p);
+						}
+					}
+				}
 			}).bind(this);
+			
+			this.selection.nodes = (function(tag) {
+				var filter = (typeof tag === 'undefined') ? [] : (($.isArray(tag)) ? tag : [tag]);
+				
+				var sel = this.selection.get();
+				var range = this.selection.range(sel);
+				var nodes = [];
+				var resultNodes = [];
+				
+				if (this.utils.isCollapsed()) {
+					nodes = [this.selection.current()];
+				}
+				else {
+					var node = range.startContainer;
+					var endNode = range.endContainer;
+					
+					// single node
+					if (node === endNode) {
+						return [node];
+					}
+					
+					// iterate
+					var commonAncestorContainer = range.commonAncestorContainer;
+					while (node && node !== endNode) {
+						// WoltLab modification: prevent `node` from breaking out of the `commonAncestorContainer`
+						//nodes.push(node = this.selection.nextNode(node));
+						nodes.push(node = this.selection.nextNode(node, commonAncestorContainer));
+					}
+					
+					// partially selected nodes
+					node = range.startContainer;
+					while (node && node !== commonAncestorContainer) {
+						nodes.unshift(node);
+						node = node.parentNode;
+					}
+				}
+				
+				// remove service nodes
+				$.each(nodes, function (i, s) {
+					if (s) {
+						var tagName = (s.nodeType !== 1) ? false : s.tagName.toLowerCase();
+						
+						if ($(s).hasClass('redactor-script-tag') || $(s).hasClass('redactor-selection-marker')) {
+							return;
+						}
+						else if (tagName && filter.length !== 0 && $.inArray(tagName, filter) === -1) {
+							return;
+						}
+						else {
+							resultNodes.push(s);
+						}
+					}
+				});
+				
+				return (resultNodes.length === 0) ? [] : resultNodes;
+			}).bind(this);
+			
+			// WoltLab modification: Added the `container` parameter
+			this.selection.nextNode = function(node, container) {
+				if (node.hasChildNodes()) {
+					return node.firstChild;
+				}
+				else {
+					while (node && !node.nextSibling) {
+						node = node.parentNode;
+						
+						// WoltLab modification: do not allow the `node` to escape `container`
+						if (container && node === container) {
+							return null;
+						}
+					}
+					
+					if (!node) {
+						return null;
+					}
+					
+					return node.nextSibling;
+				}
+			};
 		},
 		
 		paragraphAfterBlock: function (block) {

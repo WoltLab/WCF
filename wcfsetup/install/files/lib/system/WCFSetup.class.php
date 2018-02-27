@@ -44,7 +44,7 @@ define('ENABLE_BENCHMARK', 0);
  * Executes the installation of the basic WCF systems.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -719,6 +719,7 @@ class WCFSetup extends WCF {
 				}
 				
 				// check for PHP's MySQL native driver
+				/*
 				$sql = "SELECT 1";
 				$statement = $db->prepareStatement($sql);
 				$statement->execute();
@@ -726,6 +727,7 @@ class WCFSetup extends WCF {
 				if ($statement->fetchSingleColumn() !== 1) {
 					throw new SystemException("MySQLnd is not being used for database communication.");
 				}
+				*/
 				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
