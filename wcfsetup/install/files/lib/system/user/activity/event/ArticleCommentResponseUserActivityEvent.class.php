@@ -45,15 +45,21 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 		}
 		
 		// fetch articles
-		$articleIDs = $articles = [];
+		$articleContentIDs = [];
 		foreach ($comments as $comment) {
-			$articleIDs[] = $comment->objectID;
+			$articleContentIDs[] = $comment->objectID;
 		}
-		if (!empty($articleIDs)) {
+		
+		$articles = $articleContentToArticle = [];
+		if (!empty($articleContentIDs)) {
 			$articleList = new ViewableArticleList();
-			$articleList->setObjectIDs($articleIDs);
+			$articleList->getConditionBuilder()->add("article.articleID IN (SELECT articleID FROM wcf".WCF_N."_article_content WHERE articleContentID IN (?))", [$articleContentIDs]);
 			$articleList->readObjects();
-			$articles = $articleList->getObjects();
+			foreach ($articleList as $article) {
+				$articles[$article->articleID] = $article;
+				
+				$articleContentToArticle[$article->getArticleContent()->articleContentID] = $article->articleID;
+			}
 		}
 		
 		// fetch users
@@ -73,8 +79,8 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 			if (isset($responses[$event->objectID])) {
 				$response = $responses[$event->objectID];
 				$comment = $comments[$response->commentID];
-				if (isset($articles[$comment->objectID]) && isset($users[$comment->userID])) {
-					$article = $articles[$comment->objectID];
+				if (isset($articleContentToArticle[$comment->objectID]) && isset($users[$comment->userID])) {
+					$article = $articles[$articleContentToArticle[$comment->objectID]];
 					
 					// check permissions
 					if (!$article->canRead()) {
