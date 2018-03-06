@@ -36,7 +36,6 @@ class UserFormField extends AbstractFormField implements IMultipleFormField, INu
 			}
 		}
 		
-		
 		return $this;
 	}
 	
