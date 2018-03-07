@@ -58,7 +58,6 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
 					
 					// check permissions
 					if (!$article->canRead()) {
-						wcfDebug("nope");
 						continue;
 					}
 					$event->setIsAccessible();
