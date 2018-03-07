@@ -52,6 +52,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 			> header,
 			> footer {
 				opacity: 0;
+				pointer-events: none;
 				visibility: hidden;
 				
 				transition: visibility 0s linear .24s, opacity .24s linear;
@@ -59,6 +60,7 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 			
 			> div > ul > li.pointer {
 				opacity: 0;
+				pointer-events: none;
 			}
 		}
 		

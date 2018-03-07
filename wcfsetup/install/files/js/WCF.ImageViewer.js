@@ -368,6 +368,10 @@ $.widget('ui.wcfImageViewer', {
 				setTimeout($.proxy(function() {
 					if (this._isMobile && !this._container.hasClass('maximized')) {
 						this._toggleView();
+						
+						this._container[0].addEventListener(WCF_CLICK_EVENT, (function (event) {
+							if (!event.isDefaultPrevented && this._isMobile) this._toggleView();
+						}).bind(this));
 					}
 				}, this), 500);
 			}
@@ -933,6 +937,8 @@ $.widget('ui.wcfImageViewer', {
 	_enableMobileView: function() {
 		this._container.addClass('wcfImageViewerMobile');
 		
+		// the swipe-support conflicts with the ability to zoom in-and-out on images
+		/*
 		var self = this;
 		this._ui.imageContainer.swipe({
 			swipeLeft: function(event) {
@@ -955,6 +961,7 @@ $.widget('ui.wcfImageViewer', {
 				}
 			}
 		});
+		*/
 		
 		this._isMobile = true;
 	},
@@ -964,7 +971,7 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_disableMobileView: function() {
 		this._container.removeClass('wcfImageViewerMobile');
-		this._ui.imageContainer.swipe('destroy');
+		//this._ui.imageContainer.swipe('destroy');
 		
 		this._isMobile = false;
 	},

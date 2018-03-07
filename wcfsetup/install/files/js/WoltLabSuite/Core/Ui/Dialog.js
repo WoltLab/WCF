@@ -468,7 +468,14 @@ define(
 				// set focus on first applicable element
 				var focusElement = elBySel('.jsDialogAutoFocus', data.dialog);
 				if (focusElement !== null && focusElement.offsetParent !== null) {
-					focusElement.focus();
+					if (focusElement.id === 'username' || focusElement.name === 'username') {
+						if (Environment.browser() === 'safari' && Environment.platform() === 'ios') {
+							// iOS Safari's username/password autofill breaks if the input field is focused 
+							focusElement = null;
+						}
+					}
+					
+					if (focusElement) focusElement.focus();
 				}
 				
 				if (typeof data.onShow === 'function') {
