@@ -288,17 +288,29 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		},
 		
 		/**
+		 * Returns true if the input accepts new items.
+		 * 
+		 * @param       {string}        elementId       input element id
+		 * @return      {boolean}       true if at least one more item can be added
+		 * @protected
+		 */
+		_acceptsNewItems: function (elementId) {
+			var data = _data.get(elementId);
+			if (data.options.maxItems === -1) {
+				return true;
+			}
+			
+			return (data.list.childElementCount - 1 < data.options.maxItems);
+		},
+		
+		/**
 		 * Enforces the maximum number of items.
 		 * 
 		 * @param	{string}	elementId	input element id
 		 */
 		_handleLimit: function(elementId) {
 			var data = _data.get(elementId);
-			if (data.options.maxItems === -1) {
-				return;
-			}
-			
-			if (data.list.childElementCount - 1 < data.options.maxItems) {
+			if (this._acceptsNewItems(elementId)) {
 				if (data.element.disabled) {
 					data.element.disabled = false;
 					data.element.removeAttribute('placeholder');
@@ -379,10 +391,19 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 				text = event.clipboardData.getData('text/plain');
 			}
 			
+			var element = event.currentTarget;
+			var elementId = element.id;
+			var maxLength = ~~elAttr(element, 'maxLength');
+			
 			text.split(/,/).forEach((function(item) {
 				item = item.trim();
-				if (item.length !== 0) {
-					this._addItem(event.currentTarget.id, { objectId: 0, value: item });
+				if (maxLength && item.length > maxLength) {
+					// truncating items provides a better UX than throwing an error or silently discarding it
+					item = item.substr(0, maxLength);
+				}
+				
+				if (item.length > 0 && this._acceptsNewItems(elementId)) {
+					this._addItem(elementId, {objectId: 0, value: item});
 				}
 			}).bind(this));
 			
