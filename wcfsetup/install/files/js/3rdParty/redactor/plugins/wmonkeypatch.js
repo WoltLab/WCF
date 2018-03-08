@@ -1265,6 +1265,17 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.paste.insert = (function(html) {
 				$fixSelection();
 				
+				// iOS Safari will automatically convert a single pasted link into an anchor element
+				if ($.browser.iOS) {
+					var div = $('<div />').html(html)[0];
+					if (div.childElementCount === 1) {
+						var link = div.children[0];
+						if (link.nodeName === 'A' && link.textContent === link.href) {
+							html = link.textContent;
+						}
+					}
+				}
+				
 				$mpInsert.call(this, html);
 				
 				setTimeout((function() {
