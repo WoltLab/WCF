@@ -6,7 +6,7 @@
 
 {include file='userMenuSidebar'}
 
-{include file='header'}
+{include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 {include file='formError'}
 
