@@ -66,6 +66,7 @@ $(function() {
 		var $config = {
 			autosave: false,
 			buttons: $buttons,
+			convertLinks: false,
 			convertImageLinks: false,
 			convertUrlLinks: false,
 			convertVideoLinks: false,
