@@ -250,22 +250,10 @@ define(
 				_pageMenuMain = new UiPageMenuMain();
 				_pageMenuUser = new UiPageMenuUser();
 			}
-			
-			elBySelAll('.boxMenu:not(.forceOpen)', null, function(boxMenu) {
-				boxMenu.addEventListener(WCF_CLICK_EVENT, function(event) {
-					event.stopPropagation();
-					
-					if (event.target === boxMenu) {
-						event.preventDefault();
-						
-						boxMenu.classList.add('open');
-					}
-				});
-			});
 		},
 		
 		_closeAllMenus: function() {
-			elBySelAll('.jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open, .boxMenu.open', null, function (menu) {
+			elBySelAll('.jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open', null, function (menu) {
 				menu.classList.remove('open');
 			});
 			
