@@ -11,6 +11,11 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			
 			var firefoxPlainText = null;
 			
+			var isIosSafari = false;
+			require(['Environment'], function (Environment) {
+				isIosSafari = (Environment.platform() === 'ios' && Environment.browser() === 'safari');
+			});
+			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
 				firefoxPlainText = null;
@@ -75,6 +80,17 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				
 				if (firefoxPlainText !== null) {
 					return firefoxPlainText;
+				}
+				
+				if (isIosSafari) {
+					var div = elCreate('div');
+					div.innerHTML = returnValue;
+					if (div.childElementCount === 1) {
+						var link = div.children[0];
+						if (link.nodeName === 'A' && link.textContent === link.href) {
+							returnValue = link.textContent;
+						}
+					}
 				}
 				
 				return returnValue;
