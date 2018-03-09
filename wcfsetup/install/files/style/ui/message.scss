@@ -631,6 +631,18 @@
 		}
 	}
 	
+	.messageTitle {
+		color: $wcfSidebarHeadlineText;
+		
+		a {
+			color: $wcfSidebarHeadlineLink;
+			
+			&:hover {
+				color: $wcfSidebarHeadlineLinkActive;
+			}
+		}
+	}
+	
 	@include screen-md-up {
 		.messageBody,
 		.messageFooter {
