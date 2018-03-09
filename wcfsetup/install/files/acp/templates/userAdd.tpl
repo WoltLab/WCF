@@ -506,6 +506,15 @@
 								<div id="coverPhotoPreview" style="background-image: url({$userCoverPhoto->getURL()})"></div>
 							</dd>
 						</dl>
+					
+						{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
+							<dl>
+								<dt></dt>
+								<dd>
+									<label><input type="checkbox" id="deleteCoverPhoto" name="deleteCoverPhoto" value="1"{if $deleteCoverPhoto == 1} checked{/if}> {lang}wcf.acp.user.deleteCoverPhoto{/lang}</label>
+								</dd>
+							</dl>
+						{/if}
 					{else}
 						<p class="info">{lang}wcf.user.coverPhoto.noImage{/lang}</p>
 					{/if}

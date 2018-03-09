@@ -2223,6 +2223,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[Das Titelbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
+		<item name="wcf.acp.user.deleteCoverPhoto"><![CDATA[Titelbild löschen]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[Die Signatur des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>

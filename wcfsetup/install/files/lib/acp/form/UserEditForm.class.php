@@ -122,6 +122,12 @@ class UserEditForm extends UserAddForm {
 	public $disableCoverPhotoExpires = 0;
 	
 	/**
+	 * true to delete the current cover photo
+	 * @var boolean
+	 */
+	public $deleteCoverPhoto = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -173,6 +179,7 @@ class UserEditForm extends UserAddForm {
 		}
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto')) {
+			if (isset($_POST['deleteCoverPhoto'])) $this->deleteCoverPhoto = 1;
 			if (!empty($_POST['disableCoverPhoto'])) $this->disableCoverPhoto = 1;
 			if (isset($_POST['disableCoverPhotoReason'])) $this->disableCoverPhotoReason = StringUtil::trim($_POST['disableCoverPhotoReason']);
 			if ($this->disableCoverPhoto && !isset($_POST['disableCoverPhotoNeverExpires'])) {
@@ -266,7 +273,8 @@ class UserEditForm extends UserAddForm {
 			'userCoverPhoto' => $this->userCoverPhoto,
 			'disableCoverPhoto' => $this->disableCoverPhoto,
 			'disableCoverPhotoReason' => $this->disableCoverPhotoReason,
-			'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires
+			'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires,
+			'deleteCoverPhoto' => $this->deleteCoverPhoto
 		]);
 	}
 	
@@ -363,6 +371,15 @@ class UserEditForm extends UserAddForm {
 			$data['data']['disableCoverPhoto'] = $this->disableCoverPhoto;
 			$data['data']['disableCoverPhotoReason'] = $this->disableCoverPhotoReason;
 			$data['data']['disableCoverPhotoExpires'] = $this->disableCoverPhotoExpires;
+			
+			if ($this->deleteCoverPhoto) {
+				UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto()->delete();
+				
+				$data['data']['coverPhotoHash'] = null;
+				$data['data']['coverPhotoExtension'] = '';
+				
+				UserProfileRuntimeCache::getInstance()->removeObject($this->userID);
+			}
 		}
 		
 		$this->objectAction = new UserAction([$this->userID], 'update', $data);
@@ -391,6 +408,9 @@ class UserEditForm extends UserAddForm {
 		
 		// reset password
 		$this->password = $this->confirmPassword = '';
+		
+		// reload user when deleting the cover photo
+		if ($this->deleteCoverPhoto) $this->user = new User($this->userID);
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
