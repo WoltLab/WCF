@@ -2,7 +2,7 @@
 	background-color: $wcfContentBackground;
 	position: relative;
 	
-	&:not(:first-child) {
+	&:not(:first-child):not(.redactorBoxFullscreen) {
 		margin-top: 20px;
 	}
 	
