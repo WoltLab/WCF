@@ -1,7 +1,9 @@
 $.Redactor.prototype.WoltLabCaret = function() {
 	"use strict";
 	
+	var _iOS = false;
 	var _isSafari = false;
+	var _touchstartTarget;
 	
 	return {
 		init: function () {
@@ -16,14 +18,32 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				mpAfter.call(this, node);
 			}).bind(this);
 			
-			var iOS = false;
+			var editor = this.core.editor()[0];
 			require(['Environment'], (function (Environment) {
-				iOS = (Environment.platform() === 'ios');
+				_iOS = (Environment.platform() === 'ios');
+				_isSafari = (Environment.browser() === 'safari');
 				
-				_isSafari = (Environment.platform() === 'desktop' && Environment.browser() === 'safari');
 				if (_isSafari) {
-					this.core.editor()[0].classList.add('jsSafariMarginClickTarget')
+					editor.classList.add('jsSafariMarginClickTarget');
 				}
+				
+				var handleEditorClick = this.WoltLabCaret._handleEditorClick.bind(this);
+				var handleEditorMouseUp = this.WoltLabCaret._handleEditorMouseUp.bind(this);
+				if (_isSafari && _iOS) {
+					editor.addEventListener('touchstart', function(e) {
+						_touchstartTarget = e.target;
+					}, { passive: true });
+					
+					editor.addEventListener('touchend', (function (event) {
+						handleEditorClick(event);
+						handleEditorMouseUp(event);
+					}).bind(this));
+				}
+				else {
+					editor.addEventListener(WCF_CLICK_EVENT, handleEditorClick);
+					editor.addEventListener('mouseup', handleEditorMouseUp);
+				}
+				
 			}).bind(this));
 			
 			var mpEnd = this.caret.end;
@@ -41,7 +61,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				if (node.nodeType === Node.ELEMENT_NODE && node.lastChild && node.lastChild.nodeName === 'P') {
 					useCustomRange = true;
 				}
-				else if (iOS) {
+				else if (_iOS) {
 					var editor = this.core.editor()[0];
 					if (node.parentNode === editor && editor.innerHTML === '<p><br></p>') {
 						useCustomRange = true;
@@ -81,9 +101,6 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				
 				return returnValues;
 			}).bind(this);
-			
-			this.$editor[0].addEventListener(WCF_CLICK_EVENT, this.WoltLabCaret._handleEditorClick.bind(this));
-			this.$editor[0].addEventListener('mouseup', this.WoltLabCaret._handleEditorMouseUp.bind(this));
 			
 			this.WoltLabCaret._initInternalRange();
 			
@@ -395,9 +412,18 @@ $.Redactor.prototype.WoltLabCaret = function() {
 		},
 		
 		_handleEditorClick: function (event) {
+			var clientY = event.clientY;
 			if (!this.selection.get().isCollapsed) {
-				// ignore text selection
-				return;
+				if (_isSafari && _iOS && _touchstartTarget === event.target && this.utils.isBlockTag(_touchstartTarget.nodeName)) {
+					// Treat this as a collapsed selection instead, because the iOS Safari
+					// breaks event delegation and refuses to trigger click-style events
+					// for non-link/non-input elements. Thanks Apple.
+					clientY = event.changedTouches[0].clientY;
+				}
+				else {
+					// ignore text selection
+					return;
+				}
 			}
 			
 			var block = this.selection.block();
@@ -422,7 +448,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var isSafariMarginHit = false;
 			if (_isSafari && this.utils.isBlockTag(event.target.nodeName)) {
 				// check if the click occured inside the margin at the block's bottom
-				if (event.clientY > event.target.getBoundingClientRect().bottom) {
+				if (clientY > event.target.getBoundingClientRect().bottom) {
 					block = event.target;
 					isSafariMarginHit = true;
 				}
@@ -465,11 +491,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			while (parent) {
 				rect = parent.getBoundingClientRect();
 				
-				if (event.clientY < rect.top) {
+				if (clientY < rect.top) {
 					insertBefore = true;
 					block = parent;
 				}
-				else if (event.clientY > rect.bottom) {
+				else if (clientY > rect.bottom) {
 					insertBefore = false;
 					block = parent;
 				}
@@ -511,7 +537,16 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var anchorNode, sibling;
 			
 			var selection = window.getSelection();
-			if (!selection.isCollapsed) return;
+			if (!selection.isCollapsed) {
+				if (_isSafari && _iOS && _touchstartTarget === event.target && this.utils.isBlockTag(_touchstartTarget.nodeName)) {
+					// Treat this as a collapsed selection instead, because the iOS Safari
+					// breaks event delegation and refuses to trigger click-style events
+					// for non-link/non-input elements. Thanks Apple.
+				}
+				else {
+					return;
+				}
+			}
 			
 			// click occured inside the editor padding
 			if (event.target === this.$editor[0]) {
