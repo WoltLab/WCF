@@ -7069,8 +7069,16 @@ jQuery.fn.extend({
 				UiDialog.rebuild(id);
 			}
 			else if (method === 'option') {
-				if (args.length === 3 && args[1] === 'title' && typeof args[2] === 'string') {
-					UiDialog.setTitle(id, args[2]);
+				if (args.length === 3) {
+					if (args[1] === 'title' && typeof args[2] === 'string') {
+						UiDialog.setTitle(id, args[2]);
+					}
+					else if (args[1].indexOf('on') === 0) {
+						UiDialog.setCallback(id, args[1], args[2]);
+					}
+					else if (args[1] === 'closeConfirmMessage' && args[2] === null) {
+						UiDialog.setCallback(id, 'onBeforeClose', null);
+					}
 				}
 			}
 			else {
