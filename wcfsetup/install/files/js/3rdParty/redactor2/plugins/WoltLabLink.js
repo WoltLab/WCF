@@ -33,6 +33,21 @@ $.Redactor.prototype.WoltLabLink = function() {
 			
 			this.link.show = this.WoltLabLink.show.bind(this);
 			
+			var mpParse = this.link.parse;
+			this.link.parse = (function(link) {
+				var isHttps = false;
+				if (link.url.match(/^(https:)?\/\//)) {
+					isHttps = true;
+				}
+				
+				link = mpParse.call(this, link);
+				
+				// the link validation assumes http:// regardless of the previously set value
+				if (isHttps) link.url = link.url.replace(/^http:/, 'https:');
+				
+				return link;
+			}).bind(this);
+			
 			require(['WoltLabSuite/Core/Ui/Redactor/Link'], function(UiRedactorLink) {
 				_dialogApi = UiRedactorLink;
 			});
