@@ -1431,7 +1431,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontaktformular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.option.category.module.development"><![CDATA[Entwicklung]]></item>
-		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[Diese Option werden exklusiv für die Entwicklung und Fehlersuche verwendet, und sind nicht für den produktiven Einsatz geeignet.]]></item>
+		<item name="wcf.acp.option.category.module.development.notice"><![CDATA[Diese Optionen werden exklusiv für die Entwicklung und Fehlersuche verwendet, und sind nicht für den produktiven Einsatz geeignet.]]></item>
 		<item name="wcf.acp.option.enable_developer_tools"><![CDATA[Entwickler-Werkzeuge aktivieren]]></item>
 		<item name="wcf.acp.option.enable_developer_tools.description"><![CDATA[Aktiviert spezielle Werkzeuge die für die Plugin-Entwicklung verwendet werden. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.force_login"><![CDATA[Anmeldung erzwingen]]></item>
