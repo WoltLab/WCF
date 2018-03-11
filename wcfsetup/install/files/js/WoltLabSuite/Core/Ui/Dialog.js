@@ -30,6 +30,7 @@ define(
 	var _dialogToObject = new Dictionary();
 	var _keyupListener = null;
 	var _staticDialogs = elByClass('jsStaticDialog');
+	var _validCallbacks = ['onBeforeClose', 'onClose', 'onShow'];
 	
 	// list of supported `input[type]` values for dialog submit
 	var _validInputTypes = ['number', 'password', 'search', 'tel', 'text', 'url'];
@@ -289,6 +290,37 @@ define(
 			if (dialogTitle.length) {
 				dialogTitle[0].textContent = title;
 			}
+		},
+		
+		/**
+		 * Sets a callback function on runtime.
+		 * 
+		 * @param       {(string|object)}       id              element id
+		 * @param       {string}                key             callback identifier
+		 * @param       {?function}             value           callback function or `null`
+		 */
+		setCallback: function(id, key, value) {
+			if (typeof id === 'object') {
+				var dialogData = _dialogObjects.get(id);
+				if (dialogData !== undefined) {
+					id = dialogData.id;
+				}
+			}
+			
+			var data = _dialogs.get(id);
+			if (data === undefined) {
+				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
+			}
+			
+			if (_validCallbacks.indexOf(key) === -1) {
+				throw new Error("Invalid callback identifier, '" + key + "' is not recognized.");
+			}
+			
+			if (typeof value !== 'function' && value !== null) {
+				throw new Error("Only functions or the 'null' value are acceptable callback values ('" + typeof value+ "' given).");
+			}
+			
+			data[key] = value;
 		},
 		
 		/**
