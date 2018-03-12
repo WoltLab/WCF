@@ -8,7 +8,7 @@ use wcf\system\WCF;
 
 /**
  * Contains header-related functions.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -35,7 +35,7 @@ final class HeaderUtil {
 	
 	/**
 	 * Alias to php setcookie() function.
-	 *
+	 * 
 	 * @param	string		$name
 	 * @param	string		$value
 	 * @param	integer		$expire
@@ -48,10 +48,10 @@ final class HeaderUtil {
 			$cookieDomain = explode(':', $cookieDomain, 2)[0];
 		}
 		
-		$sameSitePolicy = "";
+		$sameSitePolicy = '';
 		$sameSiteOption = COOKIE_SAME_SITE_ATTRIBUTE;
-		if ($sameSiteOption != "none") {
-			$sameSitePolicy = "; SameSite=".COOKIE_SAME_SITE_ATTRIBUTE;
+		if ($sameSiteOption != 'none') {
+			$sameSitePolicy = '; SameSite='.COOKIE_SAME_SITE_ATTRIBUTE;
 		}
 		
 		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly'.$sameSitePolicy, false);
@@ -113,7 +113,7 @@ final class HeaderUtil {
 	
 	/**
 	 * Parses the rendered output.
-	 *
+	 * 
 	 * @param	string		$output
 	 * @return	string
 	 */
@@ -162,7 +162,7 @@ final class HeaderUtil {
 	
 	/**
 	 * Redirects the user agent to given location.
-	 *
+	 * 
 	 * @param	string		$location
 	 * @param	boolean		$sendStatusCode
 	 * @param	boolean		$temporaryRedirect
@@ -178,7 +178,7 @@ final class HeaderUtil {
 	
 	/**
 	 * Does a delayed redirect.
-	 *
+	 * 
 	 * @param	string		$location
 	 * @param	string		$message
 	 * @param	integer		$delay

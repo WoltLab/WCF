@@ -618,8 +618,7 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<optiontype>select</optiontype>
 				<defaultvalue>none</defaultvalue>
 				<selectoptions>none:wcf.acp.option.cookie_same_site_attribute.none
-					lax:wcf.acp.option.cookie_same_site_attribute.lax
-					strict:wcf.acp.option.cookie_same_site_attribute.strict</selectoptions>
+lax:wcf.acp.option.cookie_same_site_attribute.lax</selectoptions>
 			</option>
 			<!-- /general.system.cookie-->
 			
