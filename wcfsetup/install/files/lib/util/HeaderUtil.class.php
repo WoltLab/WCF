@@ -47,13 +47,12 @@ final class HeaderUtil {
 		if ($addDomain && strpos($cookieDomain, ':') !== false) {
 			$cookieDomain = explode(':', $cookieDomain, 2)[0];
 		}
-	    
-	    	$sameSitePolicy = "";
-	    	$sameSiteOption = COOKIE_SAME_SITE_ATTRIBUTE;
-	    	if ($sameSiteOption != "none") {
-	    		$sameSitePolicy = "; SameSite=".COOKIE_SAME_SITE_ATTRIBUTE;
-		}
 		
+		$sameSitePolicy = "";
+		$sameSiteOption = COOKIE_SAME_SITE_ATTRIBUTE;
+		if ($sameSiteOption != "none") {
+			$sameSitePolicy = "; SameSite=".COOKIE_SAME_SITE_ATTRIBUTE;
+		}
 		
 		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly'.$sameSitePolicy, false);
 	}
