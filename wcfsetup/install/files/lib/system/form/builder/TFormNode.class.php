@@ -283,7 +283,7 @@ trait TFormNode {
 	public function hasAttribute(string $name): bool {
 		static::validateAttribute($name);
 		
-		return array_search($name, $this->__attributes) !== false;
+		return isset($this->__attributes[$name]);
 	}
 	
 	/**
