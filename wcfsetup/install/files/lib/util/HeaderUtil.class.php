@@ -49,8 +49,7 @@ final class HeaderUtil {
 		}
 		
 		$sameSitePolicy = '';
-		$sameSiteOption = COOKIE_SAME_SITE_ATTRIBUTE;
-		if ($sameSiteOption != 'none') {
+		if (COOKIE_SAME_SITE_ATTRIBUTE != 'none') {
 			$sameSitePolicy = '; SameSite='.COOKIE_SAME_SITE_ATTRIBUTE;
 		}
 		
