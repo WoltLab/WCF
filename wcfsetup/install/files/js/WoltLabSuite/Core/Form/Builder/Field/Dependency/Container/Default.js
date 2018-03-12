@@ -32,7 +32,13 @@ define(['./Abstract', 'Core', '../Manager'], function(Abstract, Core, Dependency
 			var containerShouldBeVisible = false;
 			
 			var children = this._container.children;
-			for (var i = 0, length = children.length; i < length; i++) {
+			var start = 0;
+			// ignore container header for visibility considerations
+			if (this._container.children.item(0).tagName === 'H2' || this._container.children.item(0).tagName === 'HEADER') {
+				var start = 1;
+			}
+			
+			for (var i = start, length = children.length; i < length; i++) {
 				if (!elIsHidden(children.item(i))) {
 					containerShouldBeVisible = true;
 				}
