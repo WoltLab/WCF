@@ -1051,6 +1051,11 @@
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookiepfad]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Der Cookiepfad wird absolut zum Document Root angegeben - also z.B. "/forum" für https://www.woltlab.de/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Präfix für Cookienamen]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute"><![CDATA[Cookies vor externen Zugriffen schützen]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.description"><![CDATA[Fügt beim Setzen von Cookies zusätzlich das <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://en.wikipedia.org/wiki/HTTP_cookie#SameSite_cookie|rawurlencode}" class="externalURL">„SameSite“</a> Attribut hinzu, um das Nutzen der Cookies bei externer Referenzierung dieser Seite zu verhindern.]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.none"><![CDATA[Deaktiviert]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.lax"><![CDATA[Locker]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.strict"><![CDATA[Strikt]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[Das Alias „{$urlControllerReplacementError}“ kollidiert mit einem real existierenden Controller und ist daher unzulässig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[Das Alias „{$urlControllerReplacementError}“ wird bereits verwendet.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[Dem Controller „{$urlControllerReplacementError}“ wurde bereits ein Alias zugewiesen.]]></item>

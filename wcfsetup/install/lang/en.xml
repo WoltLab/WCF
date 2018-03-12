@@ -1033,6 +1033,11 @@
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Value should be absolute to Document Root, e.g. “/forum” for “https://www.woltlab.com/forum”.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute"><![CDATA[Protect cookies against external access]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.description"><![CDATA[Appends the <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://en.wikipedia.org/wiki/HTTP_cookie#SameSite_cookie|rawurlencode}" class="externalURL">„SameSite“</a> attribute to new cookies, to prevent the cross-site usage of cookies.]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.none"><![CDATA[Deactivated]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.lax"><![CDATA[Lax]]></item>
+		<item name="wcf.acp.option.cookie_same_site_attribute.strict"><![CDATA[Strict]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[The alias “{$urlControllerReplacementError}” equals an existing controller and cannot be used.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[The alias “{$urlControllerReplacementError}” is already in use.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[The controller “{$urlControllerReplacementError}” has already been aliased.]]></item>

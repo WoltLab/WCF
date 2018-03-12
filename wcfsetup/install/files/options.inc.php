@@ -17,6 +17,7 @@ define('COOKIE_PREFIX', $prefix);
 
 define('COOKIE_PATH', '');
 define('COOKIE_DOMAIN', '');
+define('COOKIE_SAME_SITE_ATTRIBUTE', 'none');
 
 define('HTTP_ENABLE_GZIP', 0);
 define('HTTP_GZIP_LEVEL', 1);
