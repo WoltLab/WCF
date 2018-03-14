@@ -88,7 +88,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			if ($this->getValue() !== null && !empty($this->getValue())) {
-				$parameters['tags'] = $this->getValue();
+				$parameters[$this->getId()] = $this->getValue();
 			}
 			
 			return $parameters;
