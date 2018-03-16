@@ -14,6 +14,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\IsDisabledFormField;
+use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\SimpleAclFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TagFormField;
@@ -141,7 +142,15 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 					WysiwygFormField::create('message')
 						->label('Message')
 						->objectType('com.woltlab.wbb.post')
-						->autosaveId('test')
+						->autosaveId('test'),
+					ItemListFormField::create('itemListDefault')
+						->label('Item list'),
+					ItemListFormField::create('itemListCsv')
+						->label('Item list')
+						->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_CSV),
+					ItemListFormField::create('itemListArray')
+						->label('Item list')
+						->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_ARRAY)
 				]),
 			TabMenuFormContainer::create('tabMenu')
 				->appendChildren([
