@@ -198,7 +198,7 @@ abstract class AbstractFormField implements IFormField {
 	 */
 	public function loadValueFromObject(IStorableObject $object): IFormField {
 		if (isset($object->{$this->getId()})) {
-			$this->__value = $object->{$this->getId()};
+			$this->value($object->{$this->getId()});
 		}
 		
 		return $this;

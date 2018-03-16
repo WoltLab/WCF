@@ -106,14 +106,51 @@ class ItemListFormField extends AbstractFormField {
 	 * 
 	 * @param	string			$saveValueTyp	type of the returned save value
 	 * @return	ItemListFormField			this field
-	 * @throws	\BadMethodCallException			if save value type has already been set 
+	 * @throws	\BadMethodCallException			if save value type has already been set
+	 * @throws	\InvalidArgumentException		if given save value type is invalid
 	 */
 	public function saveValueType(string $saveValueType): ItemListFormField {
 		if ($this->saveValueType !== null) {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}
 		
+		if ($saveValueType !== self::SAVE_VALUE_TYPE_ARRAY && $saveValueType !== self::SAVE_VALUE_TYPE_CSV) {
+			throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}'.");
+		}
+		
 		$this->saveValueType = $saveValueType;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value): IFormField {
+		switch ($this->getSaveValueType()) {
+			case self::SAVE_VALUE_TYPE_ARRAY:
+				if (is_array($value)) {
+					$this->__value = $value;
+				}
+				else {
+					throw new \InvalidArgumentException("Given value is no array, '" . gettype($value) . "' given.");
+				}
+				
+				break;
+				
+			case self::SAVE_VALUE_TYPE_CSV:
+				if (is_string($value)) {
+					$this->__value = explode(',', $value);
+				}
+				else {
+					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
+				}
+				
+				break;
+				
+			default:
+				throw new \LogicException("Unreachable");
+		}
 		
 		return $this;
 	}
