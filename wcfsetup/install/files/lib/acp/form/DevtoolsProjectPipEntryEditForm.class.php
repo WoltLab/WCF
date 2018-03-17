@@ -5,6 +5,7 @@ use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -39,6 +40,10 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
+		if (!empty($_POST)) {
+			$this->pipObject->getPip()->setEditedEntryIdentifier($this->identifier);
+		}
+		
 		parent::readData();
 		
 		if (empty($_POST)) {
@@ -46,6 +51,15 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm {
 				throw new IllegalLinkException();
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function addPipFormFields() {
+		$this->form->formMode(IFormDocument::FORM_MODE_UPDATE);
+		
+		parent::addPipFormFields();
 	}
 	
 	/**

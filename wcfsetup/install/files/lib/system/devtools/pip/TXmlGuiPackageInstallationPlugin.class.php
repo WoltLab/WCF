@@ -21,6 +21,12 @@ use wcf\util\XML;
  */
 trait TXmlGuiPackageInstallationPlugin {
 	/**
+	 * dom element representing the original data of the edited element
+	 * @var	null|\DOMElement
+	 */
+	protected $editedEntry;
+	
+	/**
 	 * Adds a new entry of this pip based on the data provided by the given
 	 * form.
 	 *
@@ -162,17 +168,32 @@ XML;
 	}
 	
 	/**
+	 * Informs the pip of the identifier of the edited entry if the form to
+	 * edit that entry has been submitted.
+	 *
+	 * @param	string		$identifier
+	 * 
+	 * @throws	\InvalidArgumentException	if no such entry exists
+	 */
+	public function setEditedEntryIdentifier(string $identifier) {
+		$this->editedEntry = $this->getElementByIdentifier($this->getProjectXml(), $identifier);
+		
+		if ($this->editedEntry === null) {
+			throw new \InvalidArgumentException("Unknown entry with identifier '{$identifier}'.");
+		}
+	}
+	
+	/**
 	 * Adds the data of the pip entry with the given identifier into the
 	 * given form and returns `true`. If no entry with the given identifier
 	 * exists, `false` is returned.
 	 *
-	 * @param	IFormDocument		$document
 	 * @param	string			$identifier
-	 * @param	bool
+	 * @param	IFormDocument		$document
+	 * @return	bool
 	 */
 	public function setEntryData(string $identifier, IFormDocument $document): bool {
 		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
 		
 		$element = $this->getElementByIdentifier($xml, $identifier);
 		if ($element === null) {
