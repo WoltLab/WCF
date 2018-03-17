@@ -117,13 +117,20 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
+	 * @param	\DOMXPath	$xpath
+	 * @return	\DOMNodeList
+	 */
+	protected function getImportElements(\DOMXPath $xpath) {
+		return $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
+	}
+	
+	/**
 	 * Imports or updates items.
 	 * 
 	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importItems(\DOMXPath $xpath) {
-		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
-		foreach ($elements as $element) {
+		foreach ($this->getImportElements($xpath) as $element) {
 			$data = [
 				'attributes' => [],
 				'elements' => [],
