@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\util\ArrayUtil;
@@ -41,10 +42,29 @@ class ItemListFormField extends AbstractFormField {
 	const SAVE_VALUE_TYPE_CSV = 'csv';
 	
 	/**
+	 * save value return type so that space-separated list with the item values
+	 * will be returned
+	 * @var	string
+	 */
+	const SAVE_VALUE_TYPE_SSV = 'ssv';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getSaveValue() {
-		return is_array($this->getValue()) ? implode(',', $this->getValue()) : '';
+		switch ($this->getSaveValueType()) {
+			case self::SAVE_VALUE_TYPE_ARRAY:
+				return '';
+			
+			case self::SAVE_VALUE_TYPE_CSV:
+				return implode(',', $this->getValue());
+			
+			case self::SAVE_VALUE_TYPE_SSV:
+				return implode(' ', $this->getValue());
+			
+			default:
+				throw new \LogicException("Unreachable");
+		}
 	}
 	
 	/**
@@ -66,8 +86,8 @@ class ItemListFormField extends AbstractFormField {
 	 * @inheritDoc
 	 */
 	public function hasSaveValue(): bool {
-		// only a string can be returned as a simple save value
-		return $this->getSaveValueType() === self::SAVE_VALUE_TYPE_CSV;
+		// arrays cannot be returned as a simple save value
+		return $this->getSaveValueType() !== self::SAVE_VALUE_TYPE_ARRAY;
 	}
 	
 	/**
@@ -104,7 +124,7 @@ class ItemListFormField extends AbstractFormField {
 	/**
 	 * Sets the type of the returned save value (see `SAVE_VALUE_TYPE_*` constants).
 	 * 
-	 * @param	string			$saveValueTyp	type of the returned save value
+	 * @param	string			$saveValueType	type of the returned save value
 	 * @return	ItemListFormField			this field
 	 * @throws	\BadMethodCallException			if save value type has already been set
 	 * @throws	\InvalidArgumentException		if given save value type is invalid
@@ -114,7 +134,7 @@ class ItemListFormField extends AbstractFormField {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}
 		
-		if ($saveValueType !== self::SAVE_VALUE_TYPE_ARRAY && $saveValueType !== self::SAVE_VALUE_TYPE_CSV) {
+		if ($saveValueType !== self::SAVE_VALUE_TYPE_ARRAY && $saveValueType !== self::SAVE_VALUE_TYPE_CSV && $saveValueType !== self::SAVE_VALUE_TYPE_SSV) {
 			throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}'.");
 		}
 		
@@ -137,10 +157,20 @@ class ItemListFormField extends AbstractFormField {
 				}
 				
 				break;
-				
+			
 			case self::SAVE_VALUE_TYPE_CSV:
 				if (is_string($value)) {
 					$this->__value = explode(',', $value);
+				}
+				else {
+					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
+				}
+				
+				break;
+			
+			case self::SAVE_VALUE_TYPE_SSV:
+				if (is_string($value)) {
+					$this->__value = explode(' ', $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
@@ -153,5 +183,47 @@ class ItemListFormField extends AbstractFormField {
 		}
 		
 		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		if (is_array($this->getValue())) {
+			$invalidItems = [];
+			foreach ($this->getValue() as $item) {
+				switch ($this->getSaveValueType()) {
+					case self::SAVE_VALUE_TYPE_CSV:
+						if (strpos($item, ',') !== false) {
+							$invalidItems[] = $item;
+						}
+						
+						break;
+					
+					case self::SAVE_VALUE_TYPE_SSV:
+						if (strpos($item, ' ') !== false) {
+							$invalidItems[] = $item;
+						}
+						
+						break;
+					
+					default:
+						throw new \LogicException("Unreachable");
+				}
+			}
+			
+			if (!empty($invalidItems)) {
+				$this->addValidationError(new FormFieldValidationError(
+					'separator',
+					'wcf.form.field.itemList.error.separator',
+					[
+						'invalidItems' => $invalidItems,
+						'separator' => $this->getSaveValueType() === self::SAVE_VALUE_TYPE_CSV ? ',' : ' '
+					]
+				));
+			}
+		}
+		
+		parent::validate();
 	}
 }
