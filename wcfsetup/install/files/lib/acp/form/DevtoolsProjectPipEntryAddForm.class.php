@@ -85,6 +85,10 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 		else {
 			throw new IllegalLinkException();
 		}
+		
+		if (!$this->pipObject->supportsGui()) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
@@ -148,6 +152,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'pip' => $this->pip,
+			'pipObject' => $this->pipObject,
 			'project' => $this->project
 		]);
 	}

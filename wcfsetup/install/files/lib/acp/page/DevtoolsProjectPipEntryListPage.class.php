@@ -85,6 +85,10 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		else {
 			throw new IllegalLinkException();
 		}
+		
+		if (!$this->pipObject->supportsGui()) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
