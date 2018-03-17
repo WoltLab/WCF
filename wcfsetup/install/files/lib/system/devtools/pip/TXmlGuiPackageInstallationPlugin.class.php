@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -158,6 +159,42 @@ XML;
 		$project = $this->installation->getProject();
 		
 		return $project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . static::getDefaultFilename();
+	}
+	
+	/**
+	 * Adds the data of the pip entry with the given identifier into the
+	 * given form and returns `true`. If no entry with the given identifier
+	 * exists, `false` is returned.
+	 *
+	 * @param	IFormDocument		$document
+	 * @param	string			$identifier
+	 * @param	bool
+	 */
+	public function setEntryData(string $identifier, IFormDocument $document): bool {
+		$xml = $this->getProjectXml();
+		$xpath = $xml->xpath();
+		
+		$element = $this->getElementByIdentifier($xml, $identifier);
+		if ($element === null) {
+			return false;
+		}
+		
+		$data = [];
+		foreach ($element->childNodes as $childNode) {
+			$data[$childNode->nodeName] = $childNode->nodeValue;
+		}
+		
+		/** @var IFormNode $node */
+		foreach ($document->getIterator() as $node) {
+			// `data-tag` is used to map the field id to the xml element tag
+			$key = $node->hasAttribute('data-tag') ? $node->getAttribute('data-tag') : $node->getId();
+			
+			if ($node instanceof IFormField && $node->isAvailable() && isset($data[$key])) {
+				$node->value($data[$key]);
+			}
+		}
+		
+		return true;
 	}
 	
 	/**
