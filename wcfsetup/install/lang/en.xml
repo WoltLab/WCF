@@ -1686,6 +1686,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName"><![CDATA[Definition Name]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[The name of an object type definitions consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <code>{$project->getPackage()->package}.type</code>]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[The given name is already used by another definition.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[The given name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName"><![CDATA[PHP Interface]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName.description"><![CDATA[If a PHP interface is given, every object type of this definition must provide the name of a PHP class that implements the interface.]]></item>

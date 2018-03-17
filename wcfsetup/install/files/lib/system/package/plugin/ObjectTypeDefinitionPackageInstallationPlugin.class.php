@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\object\type\definition\ObjectTypeDefinitionEditor;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
@@ -120,6 +121,27 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 									)
 								);
 							}
+						}
+					}
+				}))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if ($formField->getValue()) {
+						$objectTypeDefinition = ObjectTypeCache::getInstance()->getDefinitionByName($formField->getValue());
+						
+						// the definition name is not unique if such an object type definition
+						// already exists and (a) a new definition is added or (b) an existing
+						// definition is edited but the new definition name is not the old definition
+						// name so that the existing definition is not the definition currently edited
+						if ($objectTypeDefinition !== null && (
+							$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+							$this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $formField->getValue()
+						)) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique'
+								)
+							);
 						}
 					}
 				})),
