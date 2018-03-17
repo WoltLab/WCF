@@ -78,6 +78,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return [];
@@ -85,6 +86,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
 		$form->getNodeById('data')->appendChildren([
@@ -165,6 +167,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.2
 	 */
 	public function getElementIdentifier(\DOMElement $element): string {
 		return $element->getElementsByTagName('name')->item(0)->nodeValue;
@@ -172,6 +175,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.2
 	 */
 	public function getEntryList(): IDevtoolsPipEntryList {
 		$xml = $this->getProjectXml();
@@ -198,6 +202,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.2
 	 */
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
@@ -219,6 +224,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
 		$definition = $document->createElement('definition');
