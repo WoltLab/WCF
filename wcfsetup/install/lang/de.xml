@@ -3963,7 +3963,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Titelbild hochladen]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[Das Bild ist zu hoch.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxSize"><![CDATA[Die Datei ist zu groß.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxWidth"><![CDATA[Das Bild ist zu breit.]]></item>
