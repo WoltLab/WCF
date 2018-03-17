@@ -1,4 +1,4 @@
-<ol class="boxMenu forceOpen">
+<ol class="boxMenu">
 	{foreach from=$categoryList item=categoryItem}
 		<li{if $activeCategory && $activeCategory->categoryID == $categoryItem->categoryID} class="active"{/if} data-category-id="{@$categoryItem->categoryID}">
 			<a href="{@$categoryItem->getLink()}" class="boxMenuLink">

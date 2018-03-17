@@ -82,6 +82,9 @@ function(
 			// the error message can appear anywhere in the container, not exclusively after the textarea
 			var innerError = elBySel('.innerError', this._textarea.parentNode);
 			if (innerError !== null) elRemove(innerError);
+			
+			this._content.classList.remove('collapsed');
+			this._focusEditor();
 		},
 		
 		_getParameters: function () {

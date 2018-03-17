@@ -64,15 +64,24 @@ function(
 					
 					this._content.classList.remove('collapsed');
 					
-					UiScroll.element(this._container, (function () {
-						window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
-					}).bind(this));
+					this._focusEditor();
 				}
 			}).bind(this));
 			
 			// handle submit button
 			var submitButton = elBySel('button[data-type="save"]', this._container);
 			submitButton.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
+		},
+		
+		/**
+		 * Scrolls the editor into view and sets the caret to the end of the editor.
+		 * 
+		 * @protected
+		 */
+		_focusEditor: function () {
+			UiScroll.element(this._container, (function () {
+				window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
+			}).bind(this));
 		},
 		
 		/**

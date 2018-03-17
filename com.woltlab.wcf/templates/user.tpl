@@ -133,8 +133,7 @@
 {/capture}
 
 {capture assign='contentHeader'}
-	<header class="contentHeader userProfileUser{if MODULE_USER_COVER_PHOTO} userProfileUserWithCoverPhoto{/if}"{if $isAccessible}
-		data-object-id="{@$user->userID}"
+	<header class="contentHeader userProfileUser{if MODULE_USER_COVER_PHOTO} userProfileUserWithCoverPhoto{/if}" data-object-id="{@$user->userID}"{if $isAccessible}
 		{if $__wcf->session->getPermission('admin.user.canBanUser')}
 			data-banned="{@$user->banned}"
 		{/if}
