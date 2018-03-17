@@ -25,7 +25,7 @@
 			</dd>
 		</dl>
 		
-		
+		<input type="hidden" name="captchaQuestion" value="{$captchaQuestion}">
 	</section>
 	
 	{if !$ajaxCaptcha|empty}

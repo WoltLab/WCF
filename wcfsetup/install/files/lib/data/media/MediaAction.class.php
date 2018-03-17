@@ -237,6 +237,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 * @return	array
 	 */
 	protected function getI18nMediaData(MediaList $mediaList) {
+		if (!count($mediaList)) return [];
+		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('mediaID IN (?)', [$mediaList->getObjectIDs()]);
 		

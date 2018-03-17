@@ -2,7 +2,7 @@
 	background-color: $wcfContentBackground;
 	position: relative;
 	
-	&:not(:first-child) {
+	&:not(:first-child):not(.redactorBoxFullscreen) {
 		margin-top: 20px;
 	}
 	
@@ -123,7 +123,14 @@
 				left: 0;
 				position: absolute;
 				right: 0;
-				transform: translateY(20px); // this is the value of `padding-bottom`
+				
+				@include screen-md-up {
+					transform: translateY(20px); // this is the value of `padding-bottom`
+				}
+				
+				@include screen-sm-down {
+					transform: translateY(10px); // this is the value of `padding-bottom`
+				}
 			}
 		}
 		

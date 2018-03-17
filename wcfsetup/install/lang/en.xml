@@ -2187,6 +2187,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Unblocking]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[The cover photo of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Permanently Block]]></item>
+		<item name="wcf.acp.user.deleteCoverPhoto"><![CDATA[Delete Cover Photo]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Unblocking]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[The signature of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
