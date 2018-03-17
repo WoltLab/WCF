@@ -1463,6 +1463,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.customOption.optionType.URL"><![CDATA[Link]]></item>
 		<item name="wcf.acp.customOption.add"><![CDATA[Eingabefeld hinzufügen]]></item>
 		<item name="wcf.acp.customOption.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
+		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Eingabefeld <span class="confirmationObject">{$option->optionTitle|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Standardwert]]></item>
