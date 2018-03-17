@@ -1,6 +1,6 @@
 {include file='userMenuSidebar'}
 
-{include file='header'}
+{include file='header' __sidebarLeftHasMenu=true}
 
 {hascontent}
 	<div class="paginationTop">

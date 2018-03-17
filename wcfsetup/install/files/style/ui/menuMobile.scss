@@ -259,6 +259,10 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 	color: $wcfHeaderMenuLinkActive;
 }
 
+.menuOverlayItemLinkIcon.active > .icon::before {
+	color: $wcfHeaderMenuLinkActive;
+}
+
 .menuOverlayTitle {
 	color: rgba($wcfHeaderMenuLink, .7);
 	overflow: hidden;
