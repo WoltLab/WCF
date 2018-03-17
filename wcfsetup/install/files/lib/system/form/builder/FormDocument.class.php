@@ -27,6 +27,12 @@ class FormDocument implements IFormDocument {
 	protected $__action;
 	
 	/**
+	 * form mode (see `self::FORM_MODE_*` constants)
+	 * @var	null|string
+	 */
+	protected $__formMode;
+	
+	/**
 	 * `method` property of the HTML `form` element
 	 * @var	string
 	 */
@@ -101,6 +107,23 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function formMode(string $formMode): IFormDocument {
+		if ($this->__formMode !== null) {
+			throw new \BadMethodCallException("Form mode has already been set");
+		}
+		
+		if ($formMode !== self::FORM_MODE_CREATE && $formMode !== self::FORM_MODE_UPDATE) {
+			throw new \InvalidArgumentException("Unknown form mode '{$formMode}' given.");
+		}
+		
+		$this->__formMode = $formMode;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getAction(): string {
 		if ($this->__action === null) {
 			throw new \BadMethodCallException("Action has not been set.");
@@ -158,6 +181,17 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getFormMode(): string {
+		if ($this->__formMode === null) {
+			$this->__formMode = self::FORM_MODE_CREATE;
+		}
+		
+		return $this->__formMode;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getHtml(): string {
 		return WCF::getTPL()->fetch('__form', 'wcf', array_merge($this->getHtmlVariables(), [
 			'form' => $this
@@ -174,7 +208,20 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getPrefix(): string {
+		if ($this->__prefix === null) {
+			return '';
+		}
+		
+		return $this->__prefix . '_';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function loadValuesFromObject(IStorableObject $object): IFormDocument {
+		$this->formMode(self::FORM_MODE_UPDATE);
+		
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
 			if ($node instanceof IFormField && $node->isAvailable()) {
@@ -183,17 +230,6 @@ class FormDocument implements IFormDocument {
 		}
 		
 		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getPrefix(): string {
-		if ($this->__prefix === null) {
-			return '';
-		}
-		
-		return $this->__prefix . '_';
 	}
 	
 	/**
