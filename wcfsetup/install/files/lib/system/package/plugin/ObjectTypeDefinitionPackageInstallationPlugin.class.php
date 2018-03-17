@@ -7,9 +7,9 @@ use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
