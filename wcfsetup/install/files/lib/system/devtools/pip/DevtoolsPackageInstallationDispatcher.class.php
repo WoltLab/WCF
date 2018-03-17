@@ -17,7 +17,7 @@ use wcf\system\package\PackageInstallationDispatcher;
  */
 class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatcher {
 	/**
-	 * @var DevtoolsPackageArchive
+	 * @var	DevtoolsProject
 	 */
 	protected $project;
 	
@@ -64,5 +64,15 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
 		/** @noinspection PhpParamsInspection */
 		return new DevtoolsInstaller($this->project, $targetDir, $sourceArchive, $fileHandler);
+	}
+	
+	/**
+	 * Returns the project the installation dispatcher is created for.
+	 * 
+	 * @return	DevtoolsProject
+	 * @since	3.2
+	 */
+	public function getProject() {
+		return $this->project;
 	}
 }

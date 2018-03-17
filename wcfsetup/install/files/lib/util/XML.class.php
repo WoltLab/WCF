@@ -188,4 +188,75 @@ class XML {
 			throw new SystemException($message);
 		}
 	}
+	
+	/**
+	 * Returns the dom document object this object is working with.
+	 * 
+	 * @return	\DOMDocument
+	 * @since	3.2
+	 */
+	public function getDocument() {
+		return $this->document;
+	}
+	
+	/**
+	 * Writes the xml structure into the given file.
+	 * 
+	 * @param	string		$fileLocation	location of file
+	 * @param	bool		$cdata		indicates of values are escaped using cdata
+	 * @since	3.2
+	 */
+	public function write($fileLocation, $cdata = false) {
+		$schemaParts = explode(' ', $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation'));
+		
+		$writer = new XMLWriter();
+		// TODO: additional attributes of main element
+		$writer->beginDocument($this->document->documentElement->nodeName, $schemaParts[0], $schemaParts[1]);
+		foreach ($this->document->documentElement->childNodes as $childNode) {
+			$this->writeElement($writer, $childNode, $cdata);
+		}
+		$writer->endDocument($fileLocation);
+	}
+	
+	/**
+	 * Writes the given element using the given xml writer.
+	 * 
+	 * @param	XMLWriter	$writer		xml writer
+	 * @param	\DOMElement	$element	written element
+	 * @param	bool		$cdata		indicates if element value is escaped using cdata
+	 * @since	3.2
+	 */
+	protected function writeElement(XMLWriter $writer, \DOMElement $element, $cdata) {
+		if ($element->childNodes->length === 1 && $element->firstChild instanceof \DOMText) {
+			$writer->writeElement($element->nodeName, $element->firstChild->nodeValue, $this->getAttributes($element), $cdata);
+		}
+		else {
+			$writer->startElement($element->nodeName, $this->getAttributes($element));
+			foreach ($element->childNodes as $childNode) {
+				// only consider dom elements, ignore comments
+				if ($childNode instanceof \DOMElement) {
+					$this->writeElement($writer, $childNode, $cdata);
+				}
+			}
+			$writer->endElement();
+		}
+	}
+	
+	/**
+	 * Returns an array with the attribute values of the given dom element
+	 * (with the attribute names as array keys).
+	 * 
+	 * @param	\DOMElement	$element	elements whose attributes will be returned
+	 * @return	array				attributes
+	 * @since	3.2
+	 */
+	protected function getAttributes(\DOMElement $element) {
+		$attributes = [];
+		/** @var \DOMNode $attribute */
+		foreach ($element->attributes as $attribute) {
+			$attributes[$attribute->nodeName] = $attribute->nodeValue;
+		}
+		
+		return $attributes;
+	}
 }

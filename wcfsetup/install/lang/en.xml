@@ -377,6 +377,7 @@
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Sync Data - {$object->name}]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Search Pattern]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[This PIP does not support repeated imports and can only be processed in regular updates.]]></item>
+		<item name="wcf.acp.devtools.pip.error.noGuiSupport"><![CDATA[This PIP does not support managing entries via a graphical user interface.]]></item>
 		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Any existing instructions in the <kbd>package.xml</kbd> will be ignored; This allows the import of PIPs that have no specific instructions provided for them yet. Only the suggested default paths are recognized, with an additional support for application suffixes for <kbd>.tar</kbd>-archives (e. g. <kbd>files_wcf.tar</kbd>) are supported.]]></item>
 		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP identifier]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Show valid PIPs only]]></item>
@@ -412,6 +413,18 @@
 		<item name="wcf.acp.devtools.notificationTest.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.devtools.notificationTest.link.exception"><![CDATA[Link Error Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.links"><![CDATA[Links]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.add"><![CDATA[Add {$pip} Entry]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.add.pageTitle"><![CDATA[Add {$pip} Entry - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.button.add"><![CDATA[Add Entry]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.list"><![CDATA[{$pip} Entries]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.list.pageTitle"><![CDATA[{$pip} Entries - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.edit"><![CDATA[Edit {$pip} Entry]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.edit.pageTitle"><![CDATA[Edit {$pip} Entry - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.list"><![CDATA[Package Installation Plugins]]></item>
+		<item name="wcf.acp.devtools.project.pip.list.pageTitle"><![CDATA[Package Installation Plugins - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pips"><![CDATA[PIPs]]></item>
+		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly"><![CDATA[Show PIPs supporting GUI only]]></item>
+		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly.description"><![CDATA[Show only PIPs that support managing entries via a graphical user interface.]]></item>
 	</category>
 	
 	<category name="wcf.acp.email">
@@ -2849,6 +2862,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.fullscreen"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.global.button.hide"><![CDATA[Hide]]></item>
 		<item name="wcf.global.button.insert"><![CDATA[Insert]]></item>
+		<item name="wcf.global.button.list"><![CDATA[List]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.reply"><![CDATA[Reply]]></item>

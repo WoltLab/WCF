@@ -120,8 +120,9 @@ class XMLWriter {
 	 * @param	string		$element
 	 * @param	string		$cdata
 	 * @param	string[]	$attributes
+	 * @param	bool		$writeAsCdata
 	 */
-	public function writeElement($element, $cdata, array $attributes = []) {
+	public function writeElement($element, $cdata, array $attributes = [], $writeAsCdata = true) {
 		$this->startElement($element);
 		
 		// write attributes
@@ -130,7 +131,14 @@ class XMLWriter {
 		}
 		
 		// content
-		if ($cdata !== '') $this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
+		if ($cdata !== '') {
+			if ($writeAsCdata) {
+				$this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
+			}
+			else {
+				$this->xml->text($cdata);
+			}
+		}
 		
 		$this->endElement();
 	}

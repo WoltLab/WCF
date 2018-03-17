@@ -395,6 +395,7 @@
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Daten-Abgleich - {$object->name}]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Suchmuster]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[Das PIP unterstützt keinen wiederholten Import und kann nur bei einem Update verarbeitet werden.]]></item>
+		<item name="wcf.acp.devtools.pip.error.noGuiSupport"><![CDATA[Das PIP unterstützt keinen Verwaltung von Einträgen mittels einer grafischen Benutzeroberfläche.]]></item>
 		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Bestehende Anweisungen in der <kbd>package.xml</kbd> werden nicht berücksichtigt; es können somit auch PIPs importiert werden, für die noch keine Anweisungen hinterlegt worden sind. Es werden nur die Standardpfade bei der Suche verwendet, zusätzlich werden anwendungsbezogene Suffixe (z. B. <kbd>files_wcf.tar</kbd>) für <kbd>.tar</kbd>-basierte PIPs unterstützt.]]></item>
 		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP-Bezeichner]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Zeige nur übereinstimmende PIPs an]]></item>
@@ -430,6 +431,18 @@
 		<item name="wcf.acp.devtools.notificationTest.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.devtools.notificationTest.link.exception"><![CDATA[Link-Fehlermeldung]]></item>
 		<item name="wcf.acp.devtools.notificationTest.links"><![CDATA[Links]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.add"><![CDATA[{$pip}-Eintrag hinzufügen]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.add.pageTitle"><![CDATA[{$pip}-Eintrag hinzufügen - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.button.add"><![CDATA[Eintrag hinzufügen]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.list"><![CDATA[{$pip}-Einträge]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.list.pageTitle"><![CDATA[{$pip}-Einträge - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.edit"><![CDATA[{$pip}-Eintrag bearbeiten]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.edit.pageTitle"><![CDATA[{$pip}-Eintrag bearbeiten - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.list"><![CDATA[Package Installation Plugins]]></item>
+		<item name="wcf.acp.devtools.project.pip.list.pageTitle"><![CDATA[Package Installation Plugins - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pips"><![CDATA[PIPs]]></item>
+		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly"><![CDATA[Zeige nur PIPs mit GUI-Unterstützung an]]></item>
+		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly.description"><![CDATA[Es werden nur PIPs angeboten, die die Verwaltung von Einträgen mittels einer grafischen Benutzeroberfläche unterstützen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.email">
@@ -2903,6 +2916,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.fullscreen"><![CDATA[Vollbildmodus]]></item>
 		<item name="wcf.global.button.hide"><![CDATA[Ausblenden]]></item>
 		<item name="wcf.global.button.insert"><![CDATA[Einfügen]]></item>
+		<item name="wcf.global.button.list"><![CDATA[Auflistung]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>

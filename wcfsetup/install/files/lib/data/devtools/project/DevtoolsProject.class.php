@@ -51,7 +51,10 @@ class DevtoolsProject extends DatabaseObject {
 		
 		$pips = [];
 		foreach ($pipList as $pip) {
-			$pips[] = new DevtoolsPip($pip);
+			$pip = new DevtoolsPip($pip);
+			$pip->setProject($this);
+			
+			$pips[] = $pip;
 		}
 		
 		return $pips;

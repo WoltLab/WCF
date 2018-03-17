@@ -5,6 +5,7 @@ use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\plugin\PackageInstallationPlugin;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
@@ -22,6 +23,20 @@ use wcf\util\JSON;
  * @mixin	PackageInstallationPlugin
  */
 class DevtoolsPip extends DatabaseObjectDecorator {
+	/**
+	 * project the pip object belongs to
+	 * @var	DevtoolsProject
+	 * @since	3.2
+	 */
+	protected $project;
+	
+	/**
+	 * package installation plugin object
+	 * @var	IPackageInstallationPlugin
+	 * @since	3.2
+	 */
+	protected $pip;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -67,10 +82,61 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 		return $this->classExists() && $this->getDefaultFilename() && $this->isIdempotent();
 	}
 	
+	/**
+	 * Returns `true` if this pip supports adding and editing entries via a gui.
+	 * 
+	 * @return	boolean
+	 * @since	3.2
+	 */
+	public function supportsGui() {
+		return $this->isSupported() && is_subclass_of($this->getDecoratedObject()->className, IGuiPackageInstallationPlugin::class);;
+	}
+	
 	public function getSyncDependencies($toJson = true) {
 		$dependencies = call_user_func([$this->getDecoratedObject()->className, 'getSyncDependencies']);
 		
 		return ($toJson) ? JSON::encode($dependencies) : $dependencies;
+	}
+	
+	/**
+	 * Returns the project this object belongs to.
+	 * 
+	 * @return	DevtoolsProject
+	 * @since	3.2
+	 */
+	public function getProject() {
+		return $this->project;
+	}
+	
+	/**
+	 * Sets the project this object belongs to.
+	 * 
+	 * @param	DevtoolsProject		$project
+	 * @since	3.2
+	 */
+	public function setProject(DevtoolsProject $project) {
+		$this->project = $project;
+	}
+	
+	/**
+	 * Returns the package installation plugin object for this pip.
+	 * 
+	 * Note: No target will be set for the package installation plugin object.
+	 * 
+	 * @return	IPackageInstallationPlugin
+	 * @since	3.2
+	 */
+	public function getPip() {
+		if ($this->pip === null) {
+			$className = $this->getDecoratedObject()->className;
+			
+			$this->pip = new $className(
+				new DevtoolsPackageInstallationDispatcher($this->getProject())
+				// no target
+			);
+		}
+		
+		return $this->pip;
 	}
 	
 	/**
