@@ -249,15 +249,23 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
+		$boxContentIDs = [];
 		foreach ($this->getObjects() as $box) {
-			if ($box->boxType == 'tpl') {
-				foreach ($box->getBoxContents() as $languageID => $content) {
+			foreach ($box->getBoxContents() as $languageID => $content) {
+				if ($box->boxType == 'tpl') {
 					$file = WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
 					if (file_exists($file)) {
 						@unlink($file);
 					}
 				}
+				
+				$boxContentIDs[] = $content->boxContentID;
 			}
+		}
+		
+		if (!empty($boxContentIDs)) {
+			// update embedded objects
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.box.content', $boxContentIDs);
 		}
 		
 		parent::delete();
