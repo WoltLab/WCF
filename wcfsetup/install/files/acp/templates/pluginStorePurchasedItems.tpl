@@ -22,15 +22,17 @@
 
 {foreach from=$wcfMajorReleases item=wcfMajorRelease}
 	{if !$productData[$wcfMajorRelease]|empty}
-		{if !$updateServers[$wcfMajorRelease]|isset}
-			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.missing{/lang}</p>
-		{else if $updateServers[$wcfMajorRelease]->isDisabled}
-			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.disabled{/lang}</p>
-		{else if $updateServers[$wcfMajorRelease]->lastUpdateTime == 0}
-			<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate{/lang}</p>
-		{/if}
-		
-		<div class="section tabularBox">
+		<section class="section tabularBox">
+			<h2 class="sectionTitle">{lang}wcf.acp.pluginStore.purchasedItems.wcfMajorRelease{/lang}</h2>
+			
+			{if !$updateServers[$wcfMajorRelease]|isset}
+				<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.missing{/lang}</p>
+			{else if $updateServers[$wcfMajorRelease]->isDisabled}
+				<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.disabled{/lang}</p>
+			{else if $updateServers[$wcfMajorRelease]->lastUpdateTime == 0}
+				<p class="warning">{lang}wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate{/lang}</p>
+			{/if}
+			
 			<table class="table">
 				<thead>
 					<tr>
@@ -65,7 +67,7 @@
 					{/foreach}
 				</tbody>
 			</table>
-		</div>
+		</section>
 	{/if}
 {/foreach}
 
