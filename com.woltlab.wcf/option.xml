@@ -540,7 +540,7 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue>wsc30_</defaultvalue>
-				<validationpattern>.+</validationpattern>
+				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
 			
