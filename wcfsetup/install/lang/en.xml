@@ -219,7 +219,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.staffOnlineList"><![CDATA[Staff-Members Online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.statistics"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysBirthdays"><![CDATA[Today’s Birthdays]]></item>
-		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Today's Birthdays of Users Followed by Active User]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Today’s Birthdays of Users Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Members List]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Users Online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userTrophies"><![CDATA[Assigned Trophies]]></item>
@@ -1335,7 +1335,7 @@ Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/der
 		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Prune Log Entries]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Failed login attempt logs will be removed after the following days. Raising the limit will provide a longer history, but at the expense of increased database storage usage.]]></item>
 		<item name="wcf.acp.option.signature_secret"><![CDATA[Secret Key]]></item>
-		<item name="wcf.acp.option.signature_secret.description"><![CDATA[A secret key that serves the purpose of validating data to prevent tampering. Keep this key secret! A random key was generated for you during installation, you don't need to change it. Note: This key must be at least 15 characters long.]]></item>
+		<item name="wcf.acp.option.signature_secret.description"><![CDATA[A secret key that serves the purpose of validating data to prevent tampering. Keep this key secret! A random key was generated for you during installation, you don’t need to change it. Note: This key must be at least 15 characters long.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
@@ -2699,7 +2699,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.timezone.pacific.noumea"><![CDATA[(UTC+11:00) Solomon Islands, New Caledonia]]></item>
 		<item name="wcf.date.timezone.pacific.auckland"><![CDATA[(UTC+12:00) Auckland, Wellington]]></item>
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fiji]]></item>
-		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nuku'alofa]]></item>
+		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nukuʻalofa]]></item>
 		<item name="wcf.date.timezone.pacific.apia"><![CDATA[(UTC+13:00) Samoa]]></item>
 		
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
