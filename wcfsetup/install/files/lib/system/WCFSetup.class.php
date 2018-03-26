@@ -1024,7 +1024,8 @@ class WCFSetup extends WCF {
 						'email' => $email,
 						'languageID' => $languageID,
 						'password' => $password,
-						'username' => $username
+						'username' => $username,
+						'signatureEnableHtml' => 1
 					],
 					'groups' => [
 						1,
