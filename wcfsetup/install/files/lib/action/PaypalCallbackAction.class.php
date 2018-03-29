@@ -43,7 +43,7 @@ class PaypalCallbackAction extends AbstractAction {
 				throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
 			}
 			
-			if (strstr($content, "VERIFIED") === false) {
+			if (strpos($content, "VERIFIED") === false) {
 				throw new SystemException('request not validated');
 			}
 			
