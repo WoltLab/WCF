@@ -358,7 +358,7 @@
 			require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Upload'], function (Language, UiUserCoverPhotoUpload) {
 				Language.addObject({
 					'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}',
-					'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
+					'wcf.user.coverPhoto.upload.error.fileExtension': '{lang}wcf.user.coverPhoto.upload.error.fileExtension{/lang}',
 					'wcf.user.coverPhoto.upload.error.tooSmall': '{lang}wcf.user.coverPhoto.upload.error.tooSmall{/lang}',
 					'wcf.user.coverPhoto.upload.error.tooLarge': '{lang}wcf.user.coverPhoto.upload.error.tooLarge{/lang}',
 					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}',
