@@ -67,7 +67,7 @@
 
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true controller="ExceptionLogView" link="pageNo=%d&logFile=$logFile"}{/content}
+		{content}{pages print=true assign=pagesLinks controller="ExceptionLogView" link="pageNo=%d&logFile=$logFile"}{/content}
 	</div>
 {/hascontent}
 
@@ -127,6 +127,14 @@
 					<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
 				</dl>
 			</section>
+			
+			<footer class="contentFooter">
+				{hascontent}
+					<div class="paginationBottom">
+						{content}{@$pagesLinks}{/content}
+					</div>
+				{/hascontent}
+			</footer>
 		{/foreach}
 	{elseif $exceptionID}
 		<p class="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</p>
