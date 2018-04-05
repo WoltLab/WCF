@@ -4,6 +4,8 @@ namespace wcf\system\application;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
+use wcf\data\package\Package;
+use wcf\data\package\PackageList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
@@ -238,5 +240,38 @@ class ApplicationHandler extends SingletonFactory {
 		
 		$applicationAction = new ApplicationAction($applicationList->getObjects(), 'rebuild');
 		$applicationAction->executeAction();
+	}
+	
+	/**
+	 * Replaces `app1_` in the given string with the correct installation number:
+	 * `app{WCF_N_}`.
+	 * 
+	 * This method can either be used for database table names directly or for
+	 * queries, for example.
+	 * 
+	 * @param	string		$string		string to be processed
+	 * @param	bool		$skipCache	if `true`, no caches will be used and relevant application packages will be read from database directly
+	 * @return	string				processed string
+	 * @since	3.2
+	 */
+	public static function insertRealDatabaseTableNames($string, $skipCache = false) {
+		if ($skipCache) {
+			$packageList = new PackageList();
+			$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
+			$packageList->readObjects();
+			
+			foreach ($packageList as $package) {
+				$abbreviation = Package::getAbbreviation($package->package);
+				
+				$string = str_replace($abbreviation . '1_', $abbreviation . WCF_N . '_', $string);
+			}
+		}
+		else {
+			foreach (static::getInstance()->getAbbreviations() as $abbreviation) {
+				$string = str_replace($abbreviation . '1_', $abbreviation . WCF_N . '_', $string);
+			}
+		}
+		
+		return $string;
 	}
 }
