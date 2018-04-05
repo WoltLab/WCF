@@ -245,4 +245,9 @@
 	.tabMenuOverlayRight {
 		background: linear-gradient(to right, transparentize($wcfContentContainerBackground, 100%) 0%, $wcfContentContainerBackground 50%);
 	}
+	
+	// background-color when saving messages
+	.messageContent.loading > .messageContentLoadingOverlay {
+		background-color: $wcfContentContainerBackground;
+	}
 }

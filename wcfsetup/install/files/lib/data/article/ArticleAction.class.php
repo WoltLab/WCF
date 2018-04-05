@@ -333,6 +333,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		
 		$this->unmarkItems();
 		
+		// reset storage
+		if (ARTICLE_ENABLE_VISIT_TRACKING) {
+			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+		}
+		
 		return ['objectIDs' => $this->objectIDs];
 	}
 	
@@ -354,6 +359,11 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$this->unmarkItems();
+		
+		// reset storage
+		if (ARTICLE_ENABLE_VISIT_TRACKING) {
+			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+		}
 		
 		return ['objectIDs' => $this->objectIDs];
 	}

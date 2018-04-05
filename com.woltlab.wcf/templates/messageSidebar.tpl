@@ -56,9 +56,7 @@
 			{/if}
 		{else}
 			<div class="userAvatar">
-				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}">{@$userProfile->getAvatar()->getImageTag(128)}</a>
-				
-				{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
+				<span>{@$userProfile->getAvatar()->getImageTag(128)}</span>
 			</div>
 			
 			<div class="messageAuthorContainer">

@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace wcf\system\bulk\processing\user;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
+use wcf\system\email\EmailGrammar;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -28,6 +29,12 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	 * @var	string
 	 */
 	public $from = '';
+	
+	/**
+	 * sender name
+	 * @var	string
+	 */
+	public $fromName = '';
 	
 	/**
 	 * identifier for the mail worker
@@ -64,6 +71,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 				'action' => '',
 				'enableHTML' => $this->enableHTML,
 				'from' => $this->from,
+				'fromName' => $this->fromName,
 				'groupIDs' => '',
 				'subject' => $this->subject,
 				'text' => $this->text,
@@ -79,6 +87,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 	public function getHTML() {
 		if (!count($_POST)) {
 			$this->from = MAIL_FROM_ADDRESS;
+			$this->fromName = MAIL_FROM_NAME;
 		}
 		
 		return WCF::getTPL()->fetch('sendMailUserBulkProcessing', 'wcf', [
@@ -86,7 +95,8 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 			'from' => $this->from,
 			'mailID' => $this->mailID,
 			'subject' => $this->subject,
-			'text' => $this->text
+			'text' => $this->text,
+			'fromName' => $this->fromName
 		]);
 	}
 	
@@ -98,6 +108,7 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 		if (isset($_POST['from'])) $this->from = StringUtil::trim($_POST['from']);
 		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
 		if (isset($_POST['text'])) $this->text = StringUtil::trim($_POST['text']);
+		if (isset($_POST['fromName'])) $this->fromName = StringUtil::trim($_POST['fromName']);
 	}
 	
 	/**
@@ -114,6 +125,9 @@ class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction 
 		
 		if (empty($this->from)) {
 			throw new UserInputException('from');
+		}
+		else if (!preg_match('(^'.EmailGrammar::getGrammar('addr-spec').'$)', $this->from)) {
+			throw new UserInputException('from', 'invalid');
 		}
 	}
 }

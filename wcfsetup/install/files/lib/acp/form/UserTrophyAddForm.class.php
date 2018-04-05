@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
+use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyEditor;
 use wcf\data\user\UserProfile;
@@ -199,7 +200,23 @@ class UserTrophyAddForm extends AbstractAcpForm {
 			'trophyID' => $this->trophyID,
 			'user' => $this->user,
 			'trophyCategories' => TrophyCategoryCache::getInstance()->getCategories(),
-			'useCustomDescription' => $this->useCustomDescription
+			'useCustomDescription' => $this->useCustomDescription, 
+			'hasSuitableTrophy' => $this->hasSuitableTrophy()
 		]);
+	}
+	
+	/**
+	 * Returns true if trophies exist that are not automatically awarded. 
+	 * 
+	 * @return bool
+	 */
+	private function hasSuitableTrophy() {
+		foreach (TrophyCache::getInstance()->getTrophies() as $trophy) {
+			if (!$trophy->awardAutomatically) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

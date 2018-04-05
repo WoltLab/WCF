@@ -19,6 +19,6 @@ class GetUpdateInfoCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
-		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
 	}
 }

@@ -3753,8 +3753,21 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $tagName = element.getTagName();
 			
 			if ($tagName == 'select' || ($tagName == 'input' && (element.attr('type') == 'checkbox' || element.attr('type') == 'file' || element.attr('type') == 'radio'))) {
-				if (enable) element.enable();
-				else element.disable();
+				if ($tagName === 'input' && element[0].type === 'radio') {
+					if (!element[0].checked) {
+						if (enable) element.enable();
+						else element.disable();
+					}
+					else {
+						// Skip active radio buttons, this preserves the value on submit,
+						// while the user is still unable to move the selection to the other,
+						// now disabled options.
+					}
+				}
+				else {
+					if (enable) element.enable();
+					else element.disable();
+				}
 				
 				if (element.parents('.optionTypeBoolean:eq(0)')) {
 					// escape dots so that they are not recognized as class selectors

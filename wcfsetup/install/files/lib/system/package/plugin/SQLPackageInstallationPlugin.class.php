@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
-use wcf\data\package\Package;
-use wcf\data\package\PackageList;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationSQLParser;
@@ -30,16 +29,8 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		
 		// extract sql file from archive
 		if ($queries = $this->getSQL($this->instruction['value'])) {
-			// replace app1_ with app{WCF_N}_ in the table names for
-			// all applications
-			$packageList = new PackageList();
-			$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
-			$packageList->readObjects();
-			foreach ($packageList as $package) {
-				$abbreviation = Package::getAbbreviation($package->package);
-				
-				$queries = str_replace($abbreviation.'1_', $abbreviation.WCF_N.'_', $queries);
-			}
+			// replace app1_ with app{WCF_N}_ in the table names for all applications
+			$queries = ApplicationHandler::insertRealDatabaseTableNames($queries, true);
 			
 			// check queries
 			$parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());
