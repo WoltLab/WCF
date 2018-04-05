@@ -2,14 +2,17 @@
 declare(strict_types=1);
 namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\image\ImageHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\upload\UploadFile;
@@ -530,6 +533,20 @@ class UserProfileAction extends UserAction {
 			];
 		}
 		
+		try {
+			// shrink cover photo if necessary
+			$fileLocation = $this->enforceCoverPhotoDimensions($this->uploadFile->getLocation());
+		}
+		catch (UserInputException $e) {
+			return [
+				'filesize' => $this->uploadFile->getFilesize(),
+				'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.' . $e->getType(), [
+					'file' => $this->uploadFile
+				]),
+				'errorType' => $e->getType()
+			];
+		}
+		
 		// delete old cover photo
 		if (WCF::getUser()->coverPhotoHash) {
 			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
@@ -553,7 +570,9 @@ class UserProfileAction extends UserAction {
 			FileUtil::makePath($dir);
 		}
 		
-		if (@move_uploaded_file($this->uploadFile->getLocation(), $coverPhoto->getLocation())) {
+		if (@copy($fileLocation, $coverPhoto->getLocation())) {
+			@unlink($fileLocation);
+			
 			return [
 				'url' => $coverPhoto->getURL()
 			];
@@ -619,5 +638,41 @@ class UserProfileAction extends UserAction {
 		$optionHandler->setUser($user);
 		
 		return $optionHandler;
+	}
+	
+	/**
+	 * Enforces dimensions for given cover photo.
+	 *
+	 * @param	string		$filename
+	 * @return	string
+	 * @throws	UserInputException
+	 */
+	protected function enforceCoverPhotoDimensions($filename) {
+		$imageData = getimagesize($filename);
+		if ($imageData[0] > UserCoverPhoto::MAX_WIDTH || $imageData[1] > UserCoverPhoto::MAX_HEIGHT) {
+			try {
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($filename);
+				$filename = FileUtil::getTemporaryFilename();
+				$thumbnail = $adapter->createThumbnail(UserCoverPhoto::MAX_WIDTH, UserCoverPhoto::MAX_HEIGHT);
+				$adapter->writeImage($thumbnail, $filename);
+			}
+			catch (SystemException $e) {
+				throw new UserInputException('coverPhoto', 'maxSize');
+			}
+			
+			// check dimensions (after shrink)
+			$imageData = getimagesize($filename);
+			if ($imageData[0] < UserCoverPhoto::MIN_WIDTH || $imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
+				throw new UserInputException('coverPhoto', 'maxSize');
+			}
+			
+			// check filesize (after shrink)
+			if (@filesize($filename) > WCF::getSession()->getPermission('user.profile.coverPhoto.maxSize')) {
+				throw new UserInputException('coverPhoto', 'maxSize');
+			}
+		}
+		
+		return $filename;
 	}
 }

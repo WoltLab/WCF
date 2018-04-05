@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\html\output\node;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -49,6 +50,6 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode {
 		WCF::getTPL()->assign([
 			'buttonLabel' => $data['label']
 		]);
-		return WCF::getTPL()->fetch('spoilerMetaCode');
+		return WCF::getTPL()->fetch((HtmlBBCodeParser::getInstance()->getIsGoogleAmp() ? 'spoilerAmpMetaCode' : 'spoilerMetaCode'));
 	}
 }

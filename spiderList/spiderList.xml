@@ -1405,7 +1405,7 @@
 	</spider>
 	<spider ident="yacybot">
 		<name>YaCy-Bot</name>
-		<url>http://yacy.net/yacy/bot.html</url>
+		<url>https://yacy.net/bot.html</url>
 	</spider>
 	<spider ident="YahooYSMcm">
 		<name>Yahoo Publisher Network</name>

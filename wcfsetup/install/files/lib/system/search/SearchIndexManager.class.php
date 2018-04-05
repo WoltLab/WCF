@@ -4,7 +4,7 @@ namespace wcf\system\search;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\Package;
-use wcf\data\package\PackageList;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\search\mysql\MysqlSearchIndexManager;
 use wcf\system\SingletonFactory;
@@ -177,22 +177,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 			$tableName = $objectType->searchindex;
 			
 			if (!empty($tableName)) {
-				if (empty(self::$packages)) {
-					$packageList = new PackageList();
-					$packageList->getConditionBuilder()->add('package.isApplication = ?', [1]);
-					$packageList->readObjects();
-					
-					self::$packages = $packageList->getObjects();
-				}
-				
-				// replace app1_ with app{WCF_N}_ in the table name
-				foreach (self::$packages as $package) {
-					$abbreviation = Package::getAbbreviation($package->package);
-					
-					$tableName = str_replace($abbreviation.'1_', $abbreviation.WCF_N.'_', $tableName);
-				}
-				
-				return $tableName;
+				return ApplicationHandler::insertRealDatabaseTableNames($tableName, true);
 			}
 		}
 		

@@ -220,7 +220,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		foreach ($nodes as $node) {
 			$split = preg_split('+'.$keywordPattern.'+i', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE);
 			$count = count($split);
-			if ($count == 1) return;
+			if ($count == 1) continue;
 			
 			for ($i = 0; $i < $count; $i++) {
 				// text

@@ -10,6 +10,18 @@
 	</dd>
 </dl>
 
+<dl{if $errorField == 'fromName'} class="formError"{/if}>
+	<dt><label for="fromName">{lang}wcf.acp.user.sendMail.fromName{/lang}</label></dt>
+	<dd>
+		<input type="text" id="fromName" name="fromName" value="{$fromName}" class="long">
+		{if $errorField == 'fromName'}
+			<small class="innerError">
+				{lang}wcf.acp.user.sendMail.subject.fromName.{@$errorType}{/lang}
+			</small>
+		{/if}
+	</dd>
+</dl>
+
 <dl{if $errorField == 'from'} class="formError"{/if}>
 	<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 	<dd>

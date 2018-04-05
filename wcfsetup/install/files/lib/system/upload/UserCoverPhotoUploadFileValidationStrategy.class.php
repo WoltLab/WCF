@@ -42,7 +42,7 @@ class UserCoverPhotoUploadFileValidationStrategy implements IUploadFileValidatio
 		// check image data
 		$imageData = $uploadFile->getImageData();
 		if ($imageData === null) {
-			$uploadFile->setValidationErrorType('noImage');
+			$uploadFile->setValidationErrorType('uploadFailed');
 			
 			return false;
 		}
