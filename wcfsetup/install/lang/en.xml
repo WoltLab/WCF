@@ -154,7 +154,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Display button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.io%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.com%2Fv4.7.0%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
 	</category>
 	
 	<category name="wcf.acp.box">
@@ -219,7 +219,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.staffOnlineList"><![CDATA[Staff-Members Online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.statistics"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysBirthdays"><![CDATA[Today’s Birthdays]]></item>
-		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Today's Birthdays of Users Followed by Active User]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.todaysFollowingBirthdays"><![CDATA[Today’s Birthdays of Users Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userList"><![CDATA[Members List]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userOnlineList"><![CDATA[Users Online]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.userTrophies"><![CDATA[Assigned Trophies]]></item>
@@ -1335,7 +1335,7 @@ Please follow the instructions described in <a href="{@$__wcf->getPath()}acp/der
 		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Prune Log Entries]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Failed login attempt logs will be removed after the following days. Raising the limit will provide a longer history, but at the expense of increased database storage usage.]]></item>
 		<item name="wcf.acp.option.signature_secret"><![CDATA[Secret Key]]></item>
-		<item name="wcf.acp.option.signature_secret.description"><![CDATA[A secret key that serves the purpose of validating data to prevent tampering. Keep this key secret! A random key was generated for you during installation, you don't need to change it. Note: This key must be at least 15 characters long.]]></item>
+		<item name="wcf.acp.option.signature_secret.description"><![CDATA[A secret key that serves the purpose of validating data to prevent tampering. Keep this key secret! A random key was generated for you during installation, you don’t need to change it. Note: This key must be at least 15 characters long.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
@@ -1456,6 +1456,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.customOption.optionType.URL"><![CDATA[Link]]></item>
 		<item name="wcf.acp.customOption.add"><![CDATA[Add Option Field]]></item>
 		<item name="wcf.acp.customOption.edit"><![CDATA[Edit Option Field]]></item>
+		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->optionTitle|language}</span>?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
@@ -1667,6 +1668,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The Update-Server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
@@ -2697,7 +2699,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.timezone.pacific.noumea"><![CDATA[(UTC+11:00) Solomon Islands, New Caledonia]]></item>
 		<item name="wcf.date.timezone.pacific.auckland"><![CDATA[(UTC+12:00) Auckland, Wellington]]></item>
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fiji]]></item>
-		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nuku'alofa]]></item>
+		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nukuʻalofa]]></item>
 		<item name="wcf.date.timezone.pacific.apia"><![CDATA[(UTC+13:00) Samoa]]></item>
 		
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
@@ -3802,6 +3804,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Use custom trophy description]]></item>
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> from <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span>?]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Please <a href="{link controller='TrophyCategoryAdd'}{/link}">add a category</a> before creating trophies.]]></item>
+		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Please <a href="{link controller='TrophyAdd'}{/link}">add a trophy</a> that is not automatically awarded before you award trophies.]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
@@ -3955,7 +3958,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
-		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[The file has an invalid extension.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxSize"><![CDATA[The file is too big.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxWidth"><![CDATA[The image is too wide.]]></item>

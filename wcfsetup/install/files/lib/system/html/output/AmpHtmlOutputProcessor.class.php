@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\html\output;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\util\DOMUtil;
 
 /**
@@ -102,7 +103,17 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		$html = $this->getHtmlOutputNodeProcessor()->getHtml();
+		// temporarily enable AMP output mode for bbcodes
+		HtmlBBCodeParser::getInstance()->setIsGoogleAmp(true);
+		
+		try {
+			$html = $this->getHtmlOutputNodeProcessor()->getHtml();
+		}
+		finally {
+			// disable AMP output again in order to prevent interference with other
+			// content types that may be processed in the same request
+			HtmlBBCodeParser::getInstance()->setIsGoogleAmp(false);
+		}
 		
 		$html = preg_replace_callback('/<img([^>]+)>/i', function($match) {
 			$attributes = str_replace('data-width="', 'width="', $match[1]);
