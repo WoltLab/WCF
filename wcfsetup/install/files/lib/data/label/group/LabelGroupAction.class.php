@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\label\group;
+use wcf\data\label\LabelAction;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -48,12 +49,31 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
+		// remove labels and their potential language variables
+		if (!empty($this->objectIDs)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add('groupID IN (?)', [$this->objectIDs]);
+			
+			$sql = "SELECT	labelID
+					FROM	wcf".WCF_N."_label
+					".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$labelIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+			
+			if (!empty($labelIDs)) {
+				$objectAction = new LabelAction($labelIDs, 'delete');
+				$objectAction->executeAction();
+			}
+		}
+		
 		$count = parent::delete();
 		
 		if (!empty($this->objects)) {
 			// identify i18n labels
-			$languageVariables = [];
+			$languageVariables = $groupIDs = [];
 			foreach ($this->objects as $labelGroup) {
+				$groupIDs = $labelGroup->groupID;
 				if ($labelGroup->groupName === 'wcf.acp.label.group' . $labelGroup->groupID) {
 					$languageVariables[] = $labelGroup->groupName;
 				}
