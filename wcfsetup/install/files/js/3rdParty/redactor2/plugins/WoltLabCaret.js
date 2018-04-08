@@ -33,6 +33,10 @@ $.Redactor.prototype.WoltLabCaret = function() {
 						useCustomRange = true;
 					}
 				}
+				else if (node.nodeName === 'P' && node.childNodes.length === 0) {
+					node.innerHTML = '\u200B';
+					useCustomRange = true;
+				}
 				
 				if (useCustomRange) {
 					var selection = window.getSelection();
