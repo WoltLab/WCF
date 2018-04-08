@@ -79,6 +79,9 @@ class AttachmentBBCode extends AbstractBBCode {
 						$thumbnail = ($attachment->thumbnailWidth >= $thumbnail) ? true : false;
 					}
 				}
+				else if ($thumbnail === 'false') {
+					$thumbnail = false;
+				}
 				else if ($thumbnail !== false) {
 					$thumbnail = true;
 				}
