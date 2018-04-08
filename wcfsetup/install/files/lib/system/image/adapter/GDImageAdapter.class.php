@@ -114,6 +114,9 @@ class GDImageAdapter implements IImageAdapter {
 		$this->type = IMAGETYPE_PNG;
 		$this->setColor(0xFF, 0xFF, 0xFF);
 		$this->color = null;
+		
+		$this->width = $width;
+		$this->height = $height;
 	}
 	
 	/**
