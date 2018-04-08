@@ -110,6 +110,9 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function createEmptyImage($width, $height) {
 		$this->imagick->newImage($width, $height, 'white');
+		
+		$this->width = $width;
+		$this->height = $height;
 	}
 	
 	/**
