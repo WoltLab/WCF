@@ -133,7 +133,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		}
 		
 		$float = 'none';
-		$thumbnail = null;
+		$thumbnail = 'original';
 		
 		if (preg_match('~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~', $element->getAttribute('src'), $matches)) {
 			$thumbnail = $matches['thumbnail'];
