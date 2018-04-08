@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\system\exception\SystemException;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -495,5 +496,36 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 */
 	protected function isValidBBCodeName($name) {
 		return preg_match($this->validBBCodePattern, $name) === 1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
+		// work-around for the broken `[wsm]` conversion in earlier versions
+		static $targetAttribute;
+		if ($targetAttribute === null) {
+			$bbcodes = BBCodeHandler::getInstance()->getBBCodes();
+			foreach ($bbcodes as $bbcode) {
+				if ($bbcode->bbcodeTag === 'wsm') {
+					$targetAttribute = false;
+					foreach ($bbcode->getAttributes() as $attribute) {
+						if ($attribute->attributeNo == 1) {
+							$targetAttribute = $attribute;
+						}
+					}
+					
+					break;
+				}
+			}
+		}
+		if ($targetAttribute && $definedTagAttribute === $targetAttribute) {
+			if (isset($tagAttributes[1]) && $tagAttributes[1] === '') {
+				// allow the 2nd attribute of `[wsm]` to be empty for compatibility reasons
+				return true;
+			}
+		}
+		
+		return parent::isValidTagAttribute($tagAttributes, $definedTagAttribute);
 	}
 }
