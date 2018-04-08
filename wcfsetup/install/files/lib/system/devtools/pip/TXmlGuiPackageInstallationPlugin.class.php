@@ -4,6 +4,7 @@ namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
@@ -36,7 +37,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		$xml = $this->getProjectXml();
 		$document = $xml->getDocument();
 		
-		$this->writeEntry($document, $form);
+		$newElement = $this->writeEntry($document, $form);
 		$this->sortDocument($document);
 		
 		/** @var DevtoolsProject $project */
@@ -45,6 +46,8 @@ trait TXmlGuiPackageInstallationPlugin {
 		// TODO: while creating/testing the gui, write into a temporary file
 		// $xml->write($this->getXmlFileLocation($project));
 		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
+		
+		$this->saveObject($newElement);
 	}
 	
 	/**
@@ -56,7 +59,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	string			$identifier
 	 * @return	string			new identifier
 	 */
-	public function editEntry(IFormDocument $form, string $identifier): string{
+	public function editEntry(IFormDocument $form, string $identifier): string {
 		$xml = $this->getProjectXml();
 		$document = $xml->getDocument();
 		
@@ -74,6 +77,8 @@ trait TXmlGuiPackageInstallationPlugin {
 		// TODO: while creating/testing the gui, write into a temporary file
 		// $xml->write($this->getXmlFileLocation($project));
 		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
+		
+		$this->saveObject($newEntry, $element);
 		
 		return $this->getElementIdentifier($newEntry);
 	}
@@ -96,6 +101,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	/**
 	 * Returns the `import` element with the given identifier.
 	 * 
+	 * @param	XML	$xml
 	 * @param	string	$identifier
 	 * @return	\DOMElement|null
 	 */
@@ -108,6 +114,14 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		return null;
 	}
+	
+	/**
+	 * Extracts the PIP object data from the given XML element.
+	 *
+	 * @param	\DOMElement	$element
+	 * @return	array
+	 */
+	abstract protected function getElementData(\DOMElement $element): array;
 	
 	/**
 	 * Returns the identifier of the given `import` element.
@@ -141,7 +155,7 @@ XML;
 	 * 
 	 * @return	XML
 	 */
-	protected function getProjectXml() {
+	protected function getProjectXml(): XML {
 		$fileLocation = $this->getXmlFileLocation();
 		
 		$xml = new XML();
@@ -160,11 +174,37 @@ XML;
 	 * 
 	 * @return	string
 	 */
-	protected function getXmlFileLocation() {
+	protected function getXmlFileLocation(): string {
 		/** @var DevtoolsProject $project */
 		$project = $this->installation->getProject();
 		
 		return $project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . static::getDefaultFilename();
+	}
+	
+	/**
+	 * Saves an object represented by an XML element in the database by either
+	 * creating a new element (if `$oldElement = null`) or updating an existing
+	 * element.
+	 *
+	 * @param	\DOMElement		$newElement	XML element with new data
+	 * @param	\DOMElement|null	$oldElement	XML element with old data
+	 */
+	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
+		$newElementData = $this->getElementData($newElement);
+		
+		if ($oldElement === null) {
+			call_user_func([$this->className, 'create'], $newElementData);
+		}
+		else {
+			$sqlData = $this->findExistingItem($this->getElementData($oldElement));
+			
+			$statement = WCF::getDB()->prepareStatement($sqlData['sql']);
+			$statement->execute($sqlData['parameters']);
+			
+			$baseClass = call_user_func([$this->className, 'getBaseClass']);
+			$itemEditor = new $this->className(new $baseClass(null, $statement->fetchArray()));
+			$itemEditor->update($newElementData);
+		}
 	}
 	
 	/**
