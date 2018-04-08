@@ -169,6 +169,24 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @inheritDoc
 	 * @since	3.2
 	 */
+	protected function getElementData(\DOMElement $element): array {
+		$data = [
+			'definitionName' => $element->getElementsByTagName('name')->item(0)->nodeValue,
+			'packageID' => $this->installation->getPackage()->packageID
+		];
+		
+		$interfaceName = $element->getElementsByTagName('interfacename')->item(0);
+		if ($interfaceName) {
+			$data['interfaceName'] = $interfaceName->nodeValue;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
 	public function getElementIdentifier(\DOMElement $element): string {
 		return $element->getElementsByTagName('name')->item(0)->nodeValue;
 	}
