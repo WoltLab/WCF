@@ -99,7 +99,16 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 			$bbcodeAttributes = '';
 			foreach ($attributes as $attribute) {
 				if (!empty($bbcodeAttributes)) $bbcodeAttributes .= ',';
-				$bbcodeAttributes .= "'" . addcslashes($attribute, "'") . "'";
+				
+				if ($attribute === true) $bbcodeAttributes .= 'true';
+				else if ($attribute === false) $bbcodeAttributes .= 'false';
+				else if (is_string($attribute) || is_numeric($attribute)) {
+					$bbcodeAttributes .= "'" . addcslashes($attribute, "'") . "'";
+				}
+				else {
+					// discard anything that is not string-like
+					$bbcodeAttributes .= "''";
+				}
 			}
 			
 			$text = $metacode->ownerDocument->createTextNode('[' . $name . (!empty($bbcodeAttributes) ? '=' . $bbcodeAttributes : '') . ']');
