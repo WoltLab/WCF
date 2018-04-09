@@ -2446,6 +2446,8 @@ Errors are:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
+		<item name="wcf.comment.privacyPolicyConsent.title"><![CDATA[Privacy Policy Consent]]></item>
+		<item name="wcf.comment.privacyPolicyConsent"><![CDATA[By ticking the adjacent box, you agree to the electronic recording and storage of your data. You can revoke this agreement at any time by sending us a message. In the event of revocation, data will be deleted immediately. For further information, please refer to the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a>.]]></item>
 	</category>
 	
 	<category name="wcf.condition">
@@ -2490,6 +2492,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.recipientID"><![CDATA[Recipient]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[Your Inquiry]]></item>
+		<item name="wcf.contact.privacyPolicyConsent.title"><![CDATA[Privacy Policy Consent]]></item>
+		<item name="wcf.contact.privacyPolicyConsent.text"><![CDATA[By ticking the adjacent box, you agree to the electronic recording and storage of your data. Your data will only be used for processing and responding to your enquiry. You can revoke this agreement at any time by sending us a message. In the event of revocation, data will be deleted immediately. For further information, please refer to the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a>.]]></item>
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
 	</category>
 	

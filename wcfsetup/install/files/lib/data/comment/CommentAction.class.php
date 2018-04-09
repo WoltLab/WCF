@@ -293,6 +293,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		
 		if (!$this->parameters['requireGuestDialog']) {
 			$this->validateUsername();
+			$this->validatePrivacyPolicyConsent();
 			$this->validateCaptcha();
 		}
 		
@@ -440,6 +441,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		
 		if (!$this->parameters['requireGuestDialog']) {
 			$this->validateUsername();
+			$this->validatePrivacyPolicyConsent();
 			$this->validateCaptcha();
 		}
 		
@@ -1129,6 +1131,20 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 		if ($this->response === null || !$this->response->responseID) {
 			throw new UserInputException('responseID');
+		}
+	}
+	
+	/**
+	 * Validates the privacy policy consent.
+	 */
+	protected function validatePrivacyPolicyConsent() {
+		if (WCF::getUser()->userID) return;
+		
+		try {
+			$this->readInteger('privacyPolicyConsent', false, 'data');
+		}
+		catch (UserInputException $e) {
+			$this->validationErrors['privacyPolicyConsent'] = $e->getType();
 		}
 	}
 	

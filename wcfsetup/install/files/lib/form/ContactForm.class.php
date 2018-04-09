@@ -33,6 +33,12 @@ class ContactForm extends AbstractCaptchaForm {
 	public $name = '';
 	
 	/**
+	 * privacy policy consent acceptance
+	 * @var string
+	 */
+	public $privacyPolicyConsent = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_CONTACT_FORM'];
@@ -81,6 +87,7 @@ class ContactForm extends AbstractCaptchaForm {
 		
 		if (isset($_POST['email'])) $this->email = StringUtil::trim($_POST['email']);
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
+		if (isset($_POST['privacyPolicyConsent'])) $this->privacyPolicyConsent = 1;
 		if (isset($_POST['recipientID'])) $this->recipientID = intval($_POST['recipientID']);
 	}
 	
@@ -111,6 +118,10 @@ class ContactForm extends AbstractCaptchaForm {
 		
 		if (empty($this->name)) {
 			throw new UserInputException('name');
+		}
+		
+		if (empty($this->privacyPolicyConsent)) {
+			throw new UserInputException('privacyPolicyConsent');
 		}
 		
 		$recipients = $this->recipientList->getObjects();
