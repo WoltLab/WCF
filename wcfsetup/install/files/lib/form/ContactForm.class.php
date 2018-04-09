@@ -54,6 +54,12 @@ class ContactForm extends AbstractCaptchaForm {
 	public $recipientList;
 	
 	/**
+	 * user has confirmed the privacy policy
+	 * @var boolean
+	 */
+	public $privacyPolicyConfirmed = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -82,6 +88,7 @@ class ContactForm extends AbstractCaptchaForm {
 		if (isset($_POST['email'])) $this->email = StringUtil::trim($_POST['email']);
 		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
 		if (isset($_POST['recipientID'])) $this->recipientID = intval($_POST['recipientID']);
+		if (!empty($_POST['privacyPolicyConfirmed'])) $this->privacyPolicyConfirmed = 1;
 	}
 	
 	/**
@@ -133,6 +140,11 @@ class ContactForm extends AbstractCaptchaForm {
 			if (!$isValid) {
 				throw new UserInputException('recipientID', 'invalid');
 			}
+		}
+		
+		// privacy policy
+		if (!$this->privacyPolicyConfirmed) {
+			throw new UserInputException('privacyPolicyConfirmed');
 		}
 	}
 	
@@ -186,7 +198,8 @@ class ContactForm extends AbstractCaptchaForm {
 			'email' => $this->email,
 			'name' => $this->name,
 			'options' => $this->optionHandler->getOptions(),
-			'recipientList' => $this->recipientList
+			'recipientList' => $this->recipientList,
+			'privacyPolicyConfirmed' => $this->privacyPolicyConfirmed
 		]);
 	}
 }

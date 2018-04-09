@@ -2557,6 +2557,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
 		<item name="wcf.contact.success"><![CDATA[Ihre Nachricht wurde erfolgreich versandt.]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich habe die <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a> gelesen und stimme dieser zu. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	
 	<category name="wcf.date">
