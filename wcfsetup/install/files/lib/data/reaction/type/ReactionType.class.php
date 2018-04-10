@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\data\reaction\type;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 
 /**
  * Represents an object type definition.
@@ -56,7 +57,48 @@ class ReactionType extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	public function getTitle() {
+	protected static $databaseTableIndexName = 'reactionTypeID';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle():string {
 		return WCF::getLanguage()->get($this->reactionTitle);
+	}
+	
+	/**
+	 * Renders the reaction icon.
+	 * 
+	 * @return 	string
+	 */
+	public function renderIcon():string {
+		switch ($this->iconType) {
+			case self::ICON_TYPE_ICON: {
+				return WCF::getTPL()->fetch('reactionTypeIcon', 'wcf', [
+					'reactionType' => $this
+				], true);
+				break;
+			}
+			
+			case self::ICON_TYPE_IMAGE:
+				return WCF::getTPL()->fetch('reactionTypeImage', 'wcf', [
+					'reactionType' => $this
+				], true);
+				break;
+			
+			default:
+				$parameters = [
+					'renderedTemplate' => null
+				];
+				
+				EventHandler::getInstance()->fireAction($this, 'renderIcon', $parameters);
+				
+				if ($parameters['renderedTemplate']) {
+					return $parameters['renderedTemplate'];
+				}
+				
+				throw new \LogicException("Unable to render the reaction type icon with the type '". $this->type ."'.");
+				break;
+		}
 	}
 }
