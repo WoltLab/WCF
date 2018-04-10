@@ -5,7 +5,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Represents an object type definition.
+ * Represents a reaction type.
  *
  * @author	Joshua Ruesweg
  * @copyright	2001-2018 WoltLab GmbH
@@ -15,13 +15,13 @@ use wcf\system\WCF;
  *
  * @property-read	integer		$reactionTypeID		unique id of the reaction type
  * @property-read	string		$reactionTitle
- * @property-read	integer		$type   		type of the reaction (1 is positive, 2 is neutral and 3 is negative)
+ * @property-read	integer		$type   		type of the reaction (1 is positive, 0 is neutral and -1 is negative)
  * @property-read	integer		$showOrder		position of the reaction type in relation to the other reaction types
  * @property-read	integer		$iconType		the icon type of the reaction
  * @property-read	string		$iconFile		the file location of the icon
  * @property-read	string		$iconName		the icon name
- * @property-read	string		$iconColor              the icon color
- * @property-read       integer		$isDisabled	        is `1` if the ad is disabled and thus not shown, otherwise `0`
+ * @property-read	string		$iconColor		the icon color
+ * @property-read       integer		$isDisabled		is `1` if the reaction type is disabled and thus not shown, otherwise `0`
  */
 class ReactionType extends DatabaseObject {
 	/**
