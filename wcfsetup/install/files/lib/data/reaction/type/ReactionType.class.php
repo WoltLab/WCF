@@ -73,12 +73,11 @@ class ReactionType extends DatabaseObject {
 	 */
 	public function renderIcon(): string {
 		switch ($this->iconType) {
-			case self::ICON_TYPE_ICON: {
+			case self::ICON_TYPE_ICON:
 				return WCF::getTPL()->fetch('reactionTypeIcon', 'wcf', [
 					'reactionType' => $this
 				], true);
 				break;
-			}
 			
 			case self::ICON_TYPE_IMAGE:
 				return WCF::getTPL()->fetch('reactionTypeImage', 'wcf', [
