@@ -62,7 +62,7 @@ class ReactionType extends DatabaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	public function getTitle():string {
+	public function getTitle(): string {
 		return WCF::getLanguage()->get($this->reactionTitle);
 	}
 	
@@ -71,7 +71,7 @@ class ReactionType extends DatabaseObject {
 	 * 
 	 * @return 	string
 	 */
-	public function renderIcon():string {
+	public function renderIcon(): string {
 		switch ($this->iconType) {
 			case self::ICON_TYPE_ICON: {
 				return WCF::getTPL()->fetch('reactionTypeIcon', 'wcf', [
